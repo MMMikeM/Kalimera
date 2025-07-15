@@ -3,8 +3,10 @@ import {
 	BookOpen,
 	Clock,
 	FileText,
+	Layers,
 	Lightbulb,
 	Search,
+	Target,
 	Users,
 	Download,
 	X,
@@ -16,7 +18,10 @@ import { Button } from "./ui";
 import { exportOptions, downloadMarkdown } from "../utils/markdown-export";
 
 // Section components
-import ArticlesAndCases from "./ArticlesAndCases";
+import CoreRules from "./CoreRules";
+import DailyPatterns from "./DailyPatterns";
+import AdvancedCases from "./AdvancedCases";
+import CasePractice from "./CasePractice";
 import PresentTense from "./PresentTense";
 import OtherTenses from "./OtherTenses";
 import EssentialWords from "./EssentialWords";
@@ -34,6 +39,8 @@ const GreekReference: React.FC = () => {
 			Users: <Users size={16} />,
 			Clock: <Clock size={16} />,
 			FileText: <FileText size={16} />,
+			Layers: <Layers size={16} />,
+			Target: <Target size={16} />,
 		};
 		return iconMap[iconName as keyof typeof iconMap] || null;
 	};
@@ -50,8 +57,14 @@ const GreekReference: React.FC = () => {
 
 	const renderContent = () => {
 		switch (activeTab) {
-			case "articles":
-				return <ArticlesAndCases />;
+			case "core-rules":
+				return <CoreRules />;
+			case "daily-patterns":
+				return <DailyPatterns />;
+			case "advanced-cases":
+				return <AdvancedCases />;
+			case "case-practice":
+				return <CasePractice />;
 			case "present":
 				return <PresentTense />;
 			case "other-tenses":
@@ -61,7 +74,7 @@ const GreekReference: React.FC = () => {
 			case "search":
 				return <SearchWords />;
 			default:
-				return <ArticlesAndCases />;
+				return <DailyPatterns />;
 		}
 	};
 

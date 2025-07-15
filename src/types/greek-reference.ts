@@ -120,6 +120,32 @@ export interface QuickRule {
 export interface CaseRecognition {
 	patterns: RecognitionPattern[];
 	quickRules: QuickRule[];
+	quickSpotCheck?: QuickSpotCheck[];
+}
+
+export interface QuickSpotCheck {
+	pattern: string;
+	meaning: string;
+	examples: string[];
+}
+
+export interface ArticleFormula {
+	formula: string;
+	examples: string[];
+	explanation: string;
+}
+
+export interface MovableNuExample {
+	text: string;
+	reason: string;
+}
+
+export interface MovableNuRule {
+	rule: string;
+	examples: {
+		keep: MovableNuExample[];
+		drop: MovableNuExample[];
+	};
 }
 
 export interface CommonMistake {
@@ -129,7 +155,10 @@ export interface CommonMistake {
 }
 
 export type TabId =
-	| "articles"
+	| "core-rules"
+	| "daily-patterns"
+	| "advanced-cases"
+	| "case-practice"
 	| "present"
 	| "other-tenses"
 	| "vocabulary"
