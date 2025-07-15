@@ -2,25 +2,28 @@ import { tv } from "tailwind-variants";
 import type { ReactNode } from "react";
 
 export const monoTextVariants = tv({
-	base: "font-mono",
+	base: "font-mono tracking-wide leading-relaxed",
 	variants: {
 		variant: {
 			default: "text-gray-900",
-			primary: "text-blue-600",
-			secondary: "text-purple-600",
-			success: "text-green-600",
-			warning: "text-yellow-600",
-			error: "text-red-600",
-			masculine: "text-blue-600",
-			feminine: "text-pink-600",
-			neuter: "text-green-600",
+			primary: "text-blue-600 font-semibold",
+			secondary: "text-purple-600 font-medium",
+			success: "text-green-600 font-medium",
+			warning: "text-yellow-700 font-medium",
+			error: "text-red-600 font-medium",
+			masculine: "text-blue-600 font-semibold",
+			feminine: "text-pink-600 font-semibold",
+			neuter: "text-green-600 font-semibold",
+			highlighted:
+				"bg-gradient-to-r from-blue-100 to-indigo-100 text-blue-800 px-2 py-1 rounded font-semibold",
 		},
 		size: {
 			xs: "text-xs",
 			sm: "text-sm",
 			md: "text-base",
-			lg: "text-lg",
-			xl: "text-xl",
+			lg: "text-lg font-medium",
+			xl: "text-xl font-medium",
+			"2xl": "text-2xl font-semibold",
 		},
 		weight: {
 			normal: "font-normal",
@@ -29,6 +32,18 @@ export const monoTextVariants = tv({
 			bold: "font-bold",
 		},
 	},
+	compoundVariants: [
+		{
+			variant: ["masculine", "feminine", "neuter"],
+			size: "lg",
+			class: "text-xl",
+		},
+		{
+			variant: "highlighted",
+			size: ["lg", "xl"],
+			class: "px-3 py-1.5",
+		},
+	],
 	defaultVariants: {
 		variant: "default",
 		size: "md",
@@ -46,8 +61,9 @@ export interface MonoTextProps extends React.HTMLAttributes<HTMLSpanElement> {
 		| "error"
 		| "masculine"
 		| "feminine"
-		| "neuter";
-	size?: "xs" | "sm" | "md" | "lg" | "xl";
+		| "neuter"
+		| "highlighted";
+	size?: "xs" | "sm" | "md" | "lg" | "xl" | "2xl";
 	weight?: "normal" | "medium" | "semibold" | "bold";
 	children: ReactNode;
 }
