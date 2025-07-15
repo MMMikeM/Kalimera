@@ -90,65 +90,73 @@ const GreekReference: React.FC = () => {
 	];
 
 	const ArticlesContent = () => (
-		<div className="space-y-6">
+		<div className="space-y-10">
 			<InfoBox
 				variant="info"
 				title='The "Tin Tis Toun" Mystery Solved!'
-				icon={<Lightbulb size={16} />}
+				icon={<Lightbulb size={20} />}
 			>
 				These are all forms of "the" - they change based on gender, number, and
 				case!
 			</InfoBox>
 
-			<div className="grid md:grid-cols-2 gap-6">
-				<div>
-					<h3 className="text-lg font-bold mb-3">Definite Article "The"</h3>
+			<div className="grid lg:grid-cols-2 gap-8">
+				<div className="space-y-4">
 					<Table
+						title="Definite Article 'The' (Singular)"
 						headers={["Case", "Masculine", "Feminine", "Neuter"]}
 						headerColors={[
 							"",
-							"text-blue-600",
-							"text-pink-600",
-							"text-green-600",
+							"text-blue-600 font-bold",
+							"text-pink-600 font-bold",
+							"text-green-600 font-bold",
 						]}
 						rows={DEFINITE_ARTICLES.singular.map(renderArticleForm)}
 					/>
 				</div>
 
-				<div>
-					<h3 className="text-lg font-bold mb-3">Plural Forms</h3>
+				<div className="space-y-4">
 					<Table
+						title="Plural Forms"
 						headers={["Case", "Masculine", "Feminine", "Neuter"]}
 						headerColors={[
 							"",
-							"text-blue-600",
-							"text-pink-600",
-							"text-green-600",
+							"text-blue-600 font-bold",
+							"text-pink-600 font-bold",
+							"text-green-600 font-bold",
 						]}
 						rows={DEFINITE_ARTICLES.plural.map(renderArticleForm)}
 					/>
 				</div>
 			</div>
 
-			<div className="bg-yellow-50 p-4 rounded-lg">
-				<h4 className="font-bold text-yellow-800 mb-2">
-					🧠 Memory Aid: The "ν" Rule
-				</h4>
-				<p className="text-yellow-700">
+			<InfoBox variant="warning" title='Memory Aid: The "ν" Rule' icon="🧠">
+				<p className="mb-3">
 					Add "ν" to τον/την/το when the next word starts with: vowel, κ, π, τ,
 					ξ, ψ, γκ, μπ, ντ
 				</p>
-				<p className="text-yellow-700 mt-1">
-					<strong>Examples:</strong> τον άντρα (ton andra), την ώρα (tin ora)
-				</p>
-			</div>
+				<div className="bg-white/50 rounded-lg p-4 mt-4">
+					<div className="font-semibold text-yellow-800 mb-2">Examples:</div>
+					<div className="space-y-2">
+						<div>
+							<MonoText variant="warning" size="lg">
+								τον άντρα
+							</MonoText>{" "}
+							(ton andra)
+						</div>
+						<div>
+							<MonoText variant="warning" size="lg">
+								την ώρα
+							</MonoText>{" "}
+							(tin ora)
+						</div>
+					</div>
+				</div>
+			</InfoBox>
 
-			<div className="grid md:grid-cols-2 gap-4">
-				<div className="bg-green-50 p-4 rounded-lg">
-					<h4 className="font-bold text-green-800">
-						✅ When to use Accusative
-					</h4>
-					<ul className="text-green-700 mt-2 space-y-1">
+			<div className="grid lg:grid-cols-2 gap-6">
+				<InfoBox variant="success" title="When to use Accusative" icon="✅">
+					<ul className="space-y-2">
 						<li>
 							• Direct object: "I see <em>the man</em>"
 						</li>
@@ -159,10 +167,10 @@ const GreekReference: React.FC = () => {
 							• Time expressions: "on <em>Monday</em>"
 						</li>
 					</ul>
-				</div>
-				<div className="bg-blue-50 p-4 rounded-lg">
-					<h4 className="font-bold text-blue-800">✅ When to use Nominative</h4>
-					<ul className="text-blue-700 mt-2 space-y-1">
+				</InfoBox>
+
+				<InfoBox variant="info" title="When to use Nominative" icon="📝">
+					<ul className="space-y-2">
 						<li>
 							• Subject: "<em>The man</em> is tall"
 						</li>
@@ -170,56 +178,52 @@ const GreekReference: React.FC = () => {
 							• After "to be": "He is <em>a teacher</em>"
 						</li>
 					</ul>
-				</div>
+				</InfoBox>
 			</div>
 		</div>
 	);
 
 	const PresentTenseContent = () => (
-		<div className="space-y-6">
+		<div className="space-y-10">
 			<InfoBox
 				variant="purple"
 				title="Two Main Families"
-				icon={<Lightbulb size={16} />}
+				icon={<Lightbulb size={20} />}
 			>
 				Almost every Greek verb fits into one of these two patterns!
 			</InfoBox>
 
-			<div className="grid md:grid-cols-2 gap-6">
-				<Card variant="bordered">
-					<h3 className="text-lg font-bold mb-3 text-blue-600">
+			<div className="grid lg:grid-cols-2 gap-8">
+				<Card variant="bordered" padding="lg">
+					<h3 className="text-xl font-bold mb-4 text-blue-600">
 						Family 1: Active (-ω verbs)
 					</h3>
 
-					<div className="bg-blue-50 p-3 rounded mb-4">
-						<h4 className="font-bold">🎵 The Rhythm:</h4>
-						<p className="font-mono text-lg">
+					<InfoBox variant="info" size="sm" title="🎵 The Rhythm">
+						<MonoText variant="highlighted" size="lg">
 							-ω, -εις, -ει, -ουμε, -ετε, -ουν(ε)
-						</p>
+						</MonoText>
+					</InfoBox>
+
+					<div className="mt-6 space-y-6">
+						<Table
+							title="Type A: κάνω (I do) - stress on stem"
+							rows={VERB_CONJUGATIONS.kano.map((conj) => [
+								conj.person,
+								renderVerbForm(conj, "bg-blue-200"),
+								conj.english,
+							])}
+						/>
+
+						<Table
+							title="Type B: μιλάω (I speak) - stress on ending"
+							rows={VERB_CONJUGATIONS.milao.map((conj) => [
+								conj.person,
+								renderVerbForm(conj, "bg-blue-200"),
+								conj.english,
+							])}
+						/>
 					</div>
-
-					<h4 className="font-semibold mb-2">
-						Type A: κάνω (I do) - stress on stem
-					</h4>
-					<Table
-						rows={VERB_CONJUGATIONS.kano.map((conj) => [
-							conj.person,
-							renderVerbForm(conj, "bg-blue-200"),
-							conj.english,
-						])}
-						className="mb-4"
-					/>
-
-					<h4 className="font-semibold mb-2">
-						Type B: μιλάω (I speak) - stress on ending
-					</h4>
-					<Table
-						rows={VERB_CONJUGATIONS.milao.map((conj) => [
-							conj.person,
-							renderVerbForm(conj, "bg-blue-200"),
-							conj.english,
-						])}
-					/>
 				</Card>
 
 				<div className="border rounded-lg p-4">
@@ -761,42 +765,51 @@ const GreekReference: React.FC = () => {
 	};
 
 	return (
-		<div className="max-w-6xl mx-auto p-4">
-			<header className="text-center mb-6">
-				<h1 className="text-3xl font-bold text-gray-800 mb-2">
-					Greek Conjugation Reference
-				</h1>
-				<p className="text-gray-600">
-					Your comprehensive pattern-based guide to Greek grammar
-				</p>
-			</header>
+		<div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+			<div className="max-w-7xl mx-auto p-6">
+				<header className="text-center mb-12 pt-8">
+					<div className="relative">
+						<h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent mb-4 leading-tight">
+							Greek Conjugation Reference
+						</h1>
+						<div className="absolute -inset-1 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 rounded-lg opacity-5 blur-xl"></div>
+					</div>
+					<p className="text-xl text-gray-600 font-medium mt-4 max-w-2xl mx-auto leading-relaxed">
+						Your comprehensive pattern-based guide to Greek grammar
+					</p>
+				</header>
 
-			<nav className="mb-6">
-				<div className="flex flex-wrap gap-2 justify-center">
-					{TABS.map((tab) => (
-						<Button
-							key={tab.id}
-							onClick={() => setActiveTab(tab.id as TabId)}
-							active={activeTab === tab.id}
-							variant="secondary"
-						>
-							{getIcon(tab.icon)}
-							{tab.label}
-						</Button>
-					))}
-				</div>
-			</nav>
+				<nav className="mb-10">
+					<div className="flex flex-wrap gap-3 justify-center p-2 bg-white/60 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20">
+						{TABS.map((tab) => (
+							<Button
+								key={tab.id}
+								onClick={() => setActiveTab(tab.id as TabId)}
+								active={activeTab === tab.id}
+								variant="secondary"
+								size="lg"
+								className="shadow-sm"
+							>
+								{getIcon(tab.icon)}
+								{tab.label}
+							</Button>
+						))}
+					</div>
+				</nav>
 
-			<main className="bg-white rounded-lg shadow-lg p-6">
-				{renderContent()}
-			</main>
+				<main className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/30 p-8 mb-8">
+					{renderContent()}
+				</main>
 
-			<footer className="text-center mt-6 text-sm text-gray-500">
-				<p>
-					💡 Remember: Patterns over memorization! Once you know the family, you
-					know the conjugation.
-				</p>
-			</footer>
+				<footer className="text-center mt-8 mb-8">
+					<div className="bg-gradient-to-r from-blue-100 to-purple-100 rounded-2xl p-6 shadow-lg border border-white/30">
+						<p className="text-lg text-gray-700 font-medium">
+							💡 Remember: Patterns over memorization! Once you know the family,
+							you know the conjugation.
+						</p>
+					</div>
+				</footer>
+			</div>
 		</div>
 	);
 };
