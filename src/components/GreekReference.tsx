@@ -1,0 +1,804 @@
+import React, { useState } from "react";
+import {
+	BookOpen,
+	Clock,
+	FileText,
+	Lightbulb,
+	Search,
+	Users,
+} from "lucide-react";
+import {
+	ALL_WORDS,
+	COLORS,
+	DEFAULT_TAB,
+	DEFINITE_ARTICLES,
+	FREQUENCY_ADVERBS,
+	FUTURE_TENSE_EXAMPLES,
+	LIKES_CONSTRUCTION,
+	NUMBERS,
+	PAST_TENSE_EXAMPLES,
+	SUMMER_VOCABULARY,
+	TABS,
+	TIME_EXPRESSIONS,
+	TIMES_OF_DAY,
+	TRANSPORTATION,
+	USEFUL_EXPRESSIONS,
+	VERB_CATEGORIES,
+	VERB_CONJUGATIONS,
+} from "../constants/greek-reference";
+import type {
+	ArticleForm,
+	TabId,
+	VerbConjugation,
+	WordInfo,
+} from "../types/greek-reference";
+import {
+	Button,
+	Card,
+	InfoBox,
+	Badge,
+	MonoText,
+	SearchInput,
+	Table,
+} from "./ui";
+
+const GreekReference: React.FC = () => {
+	const [activeTab, setActiveTab] = useState<TabId>(DEFAULT_TAB);
+	const [searchTerm, setSearchTerm] = useState("");
+	const [searchResults, setSearchResults] = useState<WordInfo[]>([]);
+
+	// Helper function to get icon component
+	const getIcon = (iconName: string) => {
+		const iconMap = {
+			Search: <Search size={16} />,
+			BookOpen: <BookOpen size={16} />,
+			Users: <Users size={16} />,
+			Clock: <Clock size={16} />,
+			FileText: <FileText size={16} />,
+		};
+		return iconMap[iconName as keyof typeof iconMap] || null;
+	};
+
+	// Helper function to render highlighted verb forms
+	const renderVerbForm = (conjugation: VerbConjugation, colorClass: string) => {
+		if (!conjugation.highlighted) {
+			return <MonoText>{conjugation.form}</MonoText>;
+		}
+
+		const parts = conjugation.form.split(conjugation.highlighted);
+		return (
+			<MonoText>
+				{parts[0]}
+				<span className={colorClass}>{conjugation.highlighted}</span>
+				{parts[1]}
+			</MonoText>
+		);
+	};
+
+	// Helper function to render article forms with colors
+	const renderArticleForm = (form: ArticleForm) => [
+		form.case,
+		<MonoText key={`${form.case}-m`} variant="masculine">
+			{form.masculine}
+		</MonoText>,
+		<MonoText key={`${form.case}-f`} variant="feminine">
+			{form.feminine}
+		</MonoText>,
+		<MonoText key={`${form.case}-n`} variant="neuter">
+			{form.neuter}
+		</MonoText>,
+	];
+
+	const ArticlesContent = () => (
+		<div className="space-y-6">
+			<InfoBox
+				variant="info"
+				title='The "Tin Tis Toun" Mystery Solved!'
+				icon={<Lightbulb size={16} />}
+			>
+				These are all forms of "the" - they change based on gender, number, and
+				case!
+			</InfoBox>
+
+			<div className="grid md:grid-cols-2 gap-6">
+				<div>
+					<h3 className="text-lg font-bold mb-3">Definite Article "The"</h3>
+					<Table
+						headers={["Case", "Masculine", "Feminine", "Neuter"]}
+						headerColors={[
+							"",
+							"text-blue-600",
+							"text-pink-600",
+							"text-green-600",
+						]}
+						rows={DEFINITE_ARTICLES.singular.map(renderArticleForm)}
+					/>
+				</div>
+
+				<div>
+					<h3 className="text-lg font-bold mb-3">Plural Forms</h3>
+					<Table
+						headers={["Case", "Masculine", "Feminine", "Neuter"]}
+						headerColors={[
+							"",
+							"text-blue-600",
+							"text-pink-600",
+							"text-green-600",
+						]}
+						rows={DEFINITE_ARTICLES.plural.map(renderArticleForm)}
+					/>
+				</div>
+			</div>
+
+			<div className="bg-yellow-50 p-4 rounded-lg">
+				<h4 className="font-bold text-yellow-800 mb-2">
+					🧠 Memory Aid: The "ν" Rule
+				</h4>
+				<p className="text-yellow-700">
+					Add "ν" to τον/την/το when the next word starts with: vowel, κ, π, τ,
+					ξ, ψ, γκ, μπ, ντ
+				</p>
+				<p className="text-yellow-700 mt-1">
+					<strong>Examples:</strong> τον άντρα (ton andra), την ώρα (tin ora)
+				</p>
+			</div>
+
+			<div className="grid md:grid-cols-2 gap-4">
+				<div className="bg-green-50 p-4 rounded-lg">
+					<h4 className="font-bold text-green-800">
+						✅ When to use Accusative
+					</h4>
+					<ul className="text-green-700 mt-2 space-y-1">
+						<li>
+							• Direct object: "I see <em>the man</em>"
+						</li>
+						<li>
+							• After prepositions: "to <em>the house</em>"
+						</li>
+						<li>
+							• Time expressions: "on <em>Monday</em>"
+						</li>
+					</ul>
+				</div>
+				<div className="bg-blue-50 p-4 rounded-lg">
+					<h4 className="font-bold text-blue-800">✅ When to use Nominative</h4>
+					<ul className="text-blue-700 mt-2 space-y-1">
+						<li>
+							• Subject: "<em>The man</em> is tall"
+						</li>
+						<li>
+							• After "to be": "He is <em>a teacher</em>"
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	);
+
+	const PresentTenseContent = () => (
+		<div className="space-y-6">
+			<InfoBox
+				variant="purple"
+				title="Two Main Families"
+				icon={<Lightbulb size={16} />}
+			>
+				Almost every Greek verb fits into one of these two patterns!
+			</InfoBox>
+
+			<div className="grid md:grid-cols-2 gap-6">
+				<Card variant="bordered">
+					<h3 className="text-lg font-bold mb-3 text-blue-600">
+						Family 1: Active (-ω verbs)
+					</h3>
+
+					<div className="bg-blue-50 p-3 rounded mb-4">
+						<h4 className="font-bold">🎵 The Rhythm:</h4>
+						<p className="font-mono text-lg">
+							-ω, -εις, -ει, -ουμε, -ετε, -ουν(ε)
+						</p>
+					</div>
+
+					<h4 className="font-semibold mb-2">
+						Type A: κάνω (I do) - stress on stem
+					</h4>
+					<Table
+						rows={VERB_CONJUGATIONS.kano.map((conj) => [
+							conj.person,
+							renderVerbForm(conj, "bg-blue-200"),
+							conj.english,
+						])}
+						className="mb-4"
+					/>
+
+					<h4 className="font-semibold mb-2">
+						Type B: μιλάω (I speak) - stress on ending
+					</h4>
+					<Table
+						rows={VERB_CONJUGATIONS.milao.map((conj) => [
+							conj.person,
+							renderVerbForm(conj, "bg-blue-200"),
+							conj.english,
+						])}
+					/>
+				</Card>
+
+				<div className="border rounded-lg p-4">
+					<h3 className="text-lg font-bold mb-3 text-green-600">
+						Family 2: Passive (-ομαι verbs)
+					</h3>
+
+					<div className="bg-green-50 p-3 rounded mb-4">
+						<h4 className="font-bold">🎵 The Rhythm:</h4>
+						<p className="font-mono text-lg">
+							-ομαι, -εσαι, -εται, -όμαστε, -εστε, -ονται
+						</p>
+					</div>
+
+					<h4 className="font-semibold mb-2">Type A: έρχομαι (I come)</h4>
+					<Table
+						rows={VERB_CONJUGATIONS.erhomai.map((conj) => [
+							conj.person,
+							renderVerbForm(conj, "bg-green-200"),
+							conj.english,
+						])}
+						className="mb-4"
+					/>
+
+					<h4 className="font-semibold mb-2">Type B: θυμάμαι (I remember)</h4>
+					<Table
+						rows={VERB_CONJUGATIONS.thymamai.map((conj) => [
+							conj.person,
+							renderVerbForm(conj, "bg-green-200"),
+							conj.english,
+						])}
+					/>
+				</div>
+			</div>
+
+			<div className="bg-orange-50 p-4 rounded-lg">
+				<h4 className="font-bold text-orange-800 mb-2">🧠 Memory Tips</h4>
+				<div className="grid md:grid-cols-2 gap-4 text-orange-700">
+					<div>
+						<p>
+							<strong>Active verbs (-ω):</strong> Someone DOES something
+						</p>
+						<p>
+							<strong>Passive verbs (-ομαι):</strong> Look passive but often
+							mean active actions
+						</p>
+					</div>
+					<div>
+						<p>
+							<strong>Pattern recognition:</strong> Learn the "I" form (εγώ) and
+							you know the family!
+						</p>
+						<p>
+							<strong>έρχομαι = -ομαι family</strong>
+						</p>
+						<p>
+							<strong>κάνω = -ω family</strong>
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<div className="bg-red-50 p-4 rounded-lg">
+				<h4 className="font-bold text-red-800 mb-2">
+					⚡ Irregular Verbs - Must Memorize!
+				</h4>
+				<div className="bg-red-100 p-2 rounded mb-3">
+					<p className="text-sm text-red-700">
+						These don't follow the standard patterns - learn them individually!
+					</p>
+				</div>
+
+				<div className="grid md:grid-cols-2 gap-4 mb-4">
+					<div>
+						<h5 className="font-semibold mb-2">πάω (I go)</h5>
+						<Table
+							rows={VERB_CONJUGATIONS.pao.map((conj) => [
+								conj.person,
+								conj.form,
+								conj.english,
+							])}
+						/>
+					</div>
+
+					<div>
+						<h5 className="font-semibold mb-2">λέω (I say)</h5>
+						<Table
+							rows={VERB_CONJUGATIONS.leo.map((conj) => [
+								conj.person,
+								conj.form,
+								conj.english,
+							])}
+						/>
+					</div>
+				</div>
+
+				<div className="grid md:grid-cols-2 gap-4 mb-4">
+					<div>
+						<h5 className="font-semibold mb-2">τρώω (I eat) - drops ω</h5>
+						<Table
+							rows={VERB_CONJUGATIONS.troo.map((conj) => [
+								conj.person,
+								conj.form,
+								conj.english,
+							])}
+						/>
+					</div>
+
+					<div>
+						<h5 className="font-semibold mb-2">είμαι (I am)</h5>
+						<Table
+							rows={VERB_CONJUGATIONS.eimai.map((conj) => [
+								conj.person,
+								conj.form,
+								conj.english,
+							])}
+						/>
+					</div>
+				</div>
+
+				<div className="bg-orange-100 p-3 rounded">
+					<h6 className="font-bold text-orange-800 mb-2">🧠 Memory Notes:</h6>
+					<div className="text-sm text-orange-700 space-y-1">
+						<p>
+							<strong>πάω:</strong> Alternative form is πηγαίνω (follows normal
+							Type A pattern)
+						</p>
+						<p>
+							<strong>λέω:</strong> Notice how it drops the final ω in most
+							forms
+						</p>
+						<p>
+							<strong>τρώω:</strong> Similar to λέω - drops the final ω
+						</p>
+						<p>
+							<strong>τα λέμε:</strong> "see ya later" (literally "we say them")
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
+
+	const OtherTensesContent = () => (
+		<div className="space-y-6">
+			<InfoBox variant="purple" title="Future Reference - Key Patterns">
+				These follow the same base patterns as present tense, just with
+				different markers.
+			</InfoBox>
+
+			<div className="grid md:grid-cols-2 gap-6">
+				<div className="border rounded-lg p-4">
+					<h3 className="text-lg font-bold mb-3">
+						Simple Future (θα + present)
+					</h3>
+					<div className="bg-blue-50 p-3 rounded mb-3">
+						<p>
+							<strong>Formula:</strong> θα + present tense forms
+						</p>
+					</div>
+					<Table
+						headers={["Person", "θα κάνω", "English"]}
+						rows={FUTURE_TENSE_EXAMPLES.map((conj) => [
+							conj.person,
+							conj.form,
+							conj.english,
+						])}
+					/>
+				</div>
+
+				<div className="border rounded-lg p-4">
+					<h3 className="text-lg font-bold mb-3">
+						Past Simple - Basic Pattern
+					</h3>
+					<div className="bg-green-50 p-3 rounded mb-3">
+						<p>
+							<strong>Key:</strong> Often starts with έ- and changes endings
+						</p>
+					</div>
+					<Table
+						headers={["Person", "έκανα", "English"]}
+						rows={PAST_TENSE_EXAMPLES.map((conj) => [
+							conj.person,
+							conj.form,
+							conj.english,
+						])}
+					/>
+				</div>
+			</div>
+
+			<div className="bg-yellow-50 p-4 rounded-lg">
+				<h4 className="font-bold text-yellow-800 mb-2">
+					🎯 Focus on Present First!
+				</h4>
+				<p className="text-yellow-700">
+					Master the present tense patterns before diving deep into other
+					tenses. The same verb families apply - just with different time
+					markers.
+				</p>
+			</div>
+		</div>
+	);
+
+	const VocabularyContent = () => (
+		<div className="space-y-6">
+			<InfoBox variant="success" title="Quick Verb Reference">
+				From your Greek learning materials - organized by conjugation pattern.
+			</InfoBox>
+
+			{VERB_CATEGORIES.map((category) => (
+				<div key={category.id} className="border rounded-lg p-4">
+					<h3 className="text-lg font-bold mb-3">{category.title}</h3>
+					<div className="grid md:grid-cols-2 gap-4">
+						{category.verbs.map((verb) => (
+							<div
+								key={verb.id}
+								className="flex justify-between items-center p-2 bg-gray-50 rounded"
+							>
+								<div>
+									<span className="font-mono text-lg">{verb.greek}</span>
+									<span className="text-gray-600 ml-2">{verb.english}</span>
+								</div>
+								<span className="text-xs bg-blue-100 px-2 py-1 rounded">
+									{verb.pattern}
+								</span>
+							</div>
+						))}
+					</div>
+				</div>
+			))}
+
+			<div className="border rounded-lg p-4 mb-6">
+				<h3 className="text-lg font-bold mb-3">Telling Time - Τι ώρα είναι;</h3>
+				<div className="bg-blue-50 p-3 rounded mb-3">
+					<p className="text-sm text-blue-700">
+						<strong>🕐 Pattern:</strong> Είναι + time / Η ώρα είναι + time
+					</p>
+				</div>
+				<div className="grid md:grid-cols-2 gap-4">
+					<div>
+						<h5 className="font-semibold mb-2">Basic Time Structure</h5>
+						<div className="space-y-1 text-sm">
+							<div>
+								<span className="font-mono">είναι μία</span> - it's one o'clock
+							</div>
+							<div>
+								<span className="font-mono">είναι δύο</span> - it's two o'clock
+							</div>
+							<div>
+								<span className="font-mono">είναι μία ακριβώς</span> - it's
+								exactly one
+							</div>
+							<div>
+								<span className="font-mono">τι ώρα είναι;</span> - what time is
+								it?
+							</div>
+						</div>
+					</div>
+					<div>
+						<h5 className="font-semibold mb-2">Minutes & Fractions</h5>
+						<div className="space-y-1 text-sm">
+							<div>
+								<span className="font-mono">και τέταρτο</span> - quarter past
+							</div>
+							<div>
+								<span className="font-mono">και μισή</span> - half past
+							</div>
+							<div>
+								<span className="font-mono">παρά τέταρτο</span> - quarter to
+							</div>
+							<div>
+								<span className="font-mono">παρά πέντε</span> - five to
+							</div>
+							<div>
+								<span className="font-mono">και είκοσι πέντε</span> -
+								twenty-five past
+							</div>
+						</div>
+					</div>
+				</div>
+				<div className="bg-green-50 p-3 rounded mt-3">
+					<p className="text-sm text-green-700">
+						<strong>🕒 "At" times:</strong> στη μία (at one), στις τρεις (at
+						three), στις τέσσερις (at four)
+					</p>
+				</div>
+			</div>
+
+			<div className="border rounded-lg p-4 mb-6">
+				<h3 className="text-lg font-bold mb-3">Times of Day</h3>
+				<div className="grid md:grid-cols-5 gap-2 text-sm">
+					{TIMES_OF_DAY.map((time) => (
+						<div key={time.id} className="text-center">
+							<div className="font-mono text-lg">{time.greek}</div>
+							<div className="text-gray-600">{time.english}</div>
+							<div className="text-xs">{time.timeRange}</div>
+						</div>
+					))}
+				</div>
+			</div>
+
+			<div className="border rounded-lg p-4 mb-6">
+				<h3 className="text-lg font-bold mb-3">Transportation Vocabulary</h3>
+				<div className="grid md:grid-cols-2 gap-4">
+					<div>
+						<h5 className="font-semibold mb-2">Vehicles</h5>
+						<div className="space-y-1 text-sm">
+							{TRANSPORTATION.vehicles.map((vehicle) => (
+								<div key={vehicle.id}>
+									<span className="font-mono">{vehicle.greek}</span> -{" "}
+									{vehicle.english}
+								</div>
+							))}
+						</div>
+					</div>
+					<div>
+						<h5 className="font-semibold mb-2">Actions</h5>
+						<div className="space-y-1 text-sm">
+							{TRANSPORTATION.actions.map((action) => (
+								<div key={action.id}>
+									<span className="font-mono">{action.greek}</span> -{" "}
+									{action.english}
+								</div>
+							))}
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div className="border rounded-lg p-4 mb-6">
+				<h3 className="text-lg font-bold mb-3">Adverbs of Frequency</h3>
+				<div className="bg-yellow-50 p-3 rounded mb-3">
+					<p className="text-sm text-yellow-700">
+						<strong>�� Remember:</strong> ποτέ = never, πότε = when (question)
+					</p>
+				</div>
+				<div className="grid md:grid-cols-2 gap-2 text-sm">
+					<div className="space-y-1">
+						{FREQUENCY_ADVERBS.slice(0, 6).map((adverb) => (
+							<div key={adverb.id}>
+								<span className="font-mono">{adverb.greek}</span> -{" "}
+								{adverb.english}
+							</div>
+						))}
+					</div>
+					<div className="space-y-1">
+						{FREQUENCY_ADVERBS.slice(6).map((adverb) => (
+							<div key={adverb.id}>
+								<span className="font-mono">{adverb.greek}</span> -{" "}
+								{adverb.english}
+							</div>
+						))}
+					</div>
+				</div>
+			</div>
+
+			<div className="border rounded-lg p-4 mb-6">
+				<h3 className="text-lg font-bold mb-3">
+					Likes Construction - μου αρέσει/αρέσουν
+				</h3>
+				<div className="bg-blue-50 p-3 rounded mb-3">
+					<p className="text-sm text-blue-700">
+						<strong>Pattern:</strong> [Person] αρέσει (for one thing) / αρέσουν
+						(for many things)
+					</p>
+				</div>
+				<div className="grid md:grid-cols-2 gap-4">
+					<div>
+						<h5 className="font-semibold mb-2">Single thing (αρέσει)</h5>
+						<div className="space-y-1 text-sm">
+							{LIKES_CONSTRUCTION.singular.map((like) => (
+								<div key={like.id}>
+									<span className="font-mono">{like.greek}</span> -{" "}
+									{like.english}
+								</div>
+							))}
+						</div>
+					</div>
+					<div>
+						<h5 className="font-semibold mb-2">Multiple things (αρέσουν)</h5>
+						<div className="space-y-1 text-sm">
+							{LIKES_CONSTRUCTION.plural.map((like) => (
+								<div key={like.id}>
+									<span className="font-mono">{like.greek}</span> -{" "}
+									{like.english}
+								</div>
+							))}
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div className="grid md:grid-cols-2 gap-4 mb-6">
+				<div className="border rounded-lg p-4">
+					<h4 className="font-bold mb-2">Summer & Beach Vocabulary</h4>
+					<div className="space-y-1 text-sm">
+						{SUMMER_VOCABULARY.map((word) => (
+							<div key={word.id}>
+								<span className="font-mono">{word.greek}</span> - {word.english}
+							</div>
+						))}
+					</div>
+				</div>
+
+				<div className="border rounded-lg p-4">
+					<h4 className="font-bold mb-2">Time Expressions</h4>
+					<div className="space-y-1 text-sm">
+						{TIME_EXPRESSIONS.map((expr) => (
+							<div key={expr.id}>
+								<span className="font-mono">{expr.greek}</span> - {expr.english}
+							</div>
+						))}
+					</div>
+				</div>
+			</div>
+
+			<div className="grid md:grid-cols-3 gap-4">
+				<div className="border rounded-lg p-4">
+					<h4 className="font-bold mb-2">Numbers (1-10)</h4>
+					<div className="space-y-1 text-sm">
+						{NUMBERS.map((number) => (
+							<div key={number}>{number}</div>
+						))}
+					</div>
+				</div>
+
+				<div className="border rounded-lg p-4">
+					<h4 className="font-bold mb-2">Colors</h4>
+					<div className="space-y-1 text-sm">
+						{COLORS.map((color) => (
+							<div key={color}>{color}</div>
+						))}
+					</div>
+				</div>
+
+				<div className="border rounded-lg p-4">
+					<h4 className="font-bold mb-2">Useful Expressions</h4>
+					<div className="space-y-1 text-sm">
+						{USEFUL_EXPRESSIONS.map((expr) => (
+							<div key={expr.id}>
+								<span className="font-mono">{expr.greek}</span> - {expr.english}
+							</div>
+						))}
+					</div>
+				</div>
+			</div>
+		</div>
+	);
+
+	const SearchContent = () => {
+		const handleSearch = (term: string) => {
+			setSearchTerm(term);
+			if (term.length > 0) {
+				const results = ALL_WORDS.filter(
+					(word) =>
+						word.greek.toLowerCase().includes(term.toLowerCase()) ||
+						word.english.toLowerCase().includes(term.toLowerCase()),
+				);
+				setSearchResults(results);
+			} else {
+				setSearchResults([]);
+			}
+		};
+
+		return (
+			<div className="space-y-6">
+				<InfoBox variant="purple" title="Quick Lookup">
+					Search Greek or English words from your materials.
+				</InfoBox>
+
+				<SearchInput
+					placeholder="Search Greek or English..."
+					value={searchTerm}
+					onChange={(e) => handleSearch(e.target.value)}
+				/>
+
+				{searchResults.length > 0 && (
+					<div className="space-y-2">
+						<h4 className="font-bold">Search Results:</h4>
+						{searchResults.map((result) => (
+							<div
+								key={result.id}
+								className="flex justify-between items-center p-3 bg-gray-50 rounded-lg"
+							>
+								<div>
+									<MonoText variant="primary" size="lg">
+										{result.greek}
+									</MonoText>
+									<span className="text-gray-700 ml-3">{result.english}</span>
+								</div>
+								<div className="flex gap-2">
+									<Badge variant="default">{result.type}</Badge>
+									{result.family && (
+										<Badge variant="primary">{result.family}</Badge>
+									)}
+								</div>
+							</div>
+						))}
+					</div>
+				)}
+
+				{searchTerm && searchResults.length === 0 && (
+					<div className="text-center py-8 text-gray-500">
+						No results found for "{searchTerm}"
+					</div>
+				)}
+
+				<div className="bg-gray-50 p-4 rounded-lg">
+					<h4 className="font-bold mb-2">💡 Search Tips</h4>
+					<ul className="text-sm text-gray-700 space-y-1">
+						<li>• Type in Greek or English to find matches</li>
+						<li>
+							• Search will find partial matches (e.g., "καλ" finds "καλημέρα")
+						</li>
+						<li>
+							• Look for the verb family tags to know conjugation patterns
+						</li>
+					</ul>
+				</div>
+			</div>
+		);
+	};
+
+	const renderContent = () => {
+		switch (activeTab) {
+			case "articles":
+				return <ArticlesContent />;
+			case "present":
+				return <PresentTenseContent />;
+			case "other-tenses":
+				return <OtherTensesContent />;
+			case "vocabulary":
+				return <VocabularyContent />;
+			case "search":
+				return <SearchContent />;
+			default:
+				return <ArticlesContent />;
+		}
+	};
+
+	return (
+		<div className="max-w-6xl mx-auto p-4">
+			<header className="text-center mb-6">
+				<h1 className="text-3xl font-bold text-gray-800 mb-2">
+					Greek Conjugation Reference
+				</h1>
+				<p className="text-gray-600">
+					Your comprehensive pattern-based guide to Greek grammar
+				</p>
+			</header>
+
+			<nav className="mb-6">
+				<div className="flex flex-wrap gap-2 justify-center">
+					{TABS.map((tab) => (
+						<Button
+							key={tab.id}
+							onClick={() => setActiveTab(tab.id as TabId)}
+							active={activeTab === tab.id}
+							variant="secondary"
+						>
+							{getIcon(tab.icon)}
+							{tab.label}
+						</Button>
+					))}
+				</div>
+			</nav>
+
+			<main className="bg-white rounded-lg shadow-lg p-6">
+				{renderContent()}
+			</main>
+
+			<footer className="text-center mt-6 text-sm text-gray-500">
+				<p>
+					💡 Remember: Patterns over memorization! Once you know the family, you
+					know the conjugation.
+				</p>
+			</footer>
+		</div>
+	);
+};
+
+export default GreekReference;
