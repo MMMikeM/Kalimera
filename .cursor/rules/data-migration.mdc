@@ -1,0 +1,64 @@
+# Data Migration & Seeding Patterns
+
+## Migration Strategy
+Based on [database-seeding.plan.md](mdc:database-seeding.plan.md) - transform existing frontend data into relational PostgreSQL structure.
+
+## Current Data Sources
+- **Vocabulary**: ~470 words in `src/constants/vocabulary.ts` (ALL_WORDS array)
+- **Verb Conjugations**: 20+ verbs in `src/constants/verbs.ts`
+- **Article Forms**: Complete system in `src/constants/articles.ts`
+- **Grammar Rules**: Case patterns in `src/constants/recognition.ts`
+- **Markdown Notes**: Unstructured notes like [8 July.md](mdc:8 July.md)
+
+## Required Seeder Structure
+
+### Seeder Organization
+```
+src/db/seeders/
+├── vocabulary-seeder.ts       # Transform ALL_WORDS array
+├── verb-seeder.ts            # Convert conjugations to grammar rules
+├── articles-seeder.ts        # Article forms and case examples
+├── notes-seeder.ts           # Parse markdown notes to lessons
+└── quiz-seeder.ts            # Auto-generate quiz questions
+```
+
+### Migration Patterns
+```typescript
+// Transform existing constants to database records
+import { ALL_WORDS } from '../../constants/vocabulary';
+import { NewVocabulary } from '../schema';
+
+const vocabularyEntries: NewVocabulary[] = ALL_WORDS.map(word => ({
+  greek_text: word.greek,
+  english_translation: word.english,
+  category: word.type,
+  pronunciation: extractPronunciation(word.greek),
+}));
+```
+
+### Markdown Parsing
+```typescript
+// Structure unstructured notes into lesson sections
+function parseJuly8Content(content: string): Omit<NewLessonSection, 'lesson_id'>[] {
+  return [
+    {
+      section_type: 'vocabulary',
+      title: 'New Vocabulary',
+      content: 'στο γραφείο (to the office)...',
+      order_index: 0
+    }
+  ];
+}
+```
+
+## Data Transformation Rules
+1. **Preserve all existing data** - no content loss during migration
+2. **Structure unstructured** - markdown → lesson sections  
+3. **Relational over JSONB** - split complex data into related tables
+4. **Auto-generate quizzes** - create quiz questions from vocabulary data
+5. **Maintain relationships** - link vocabulary to lessons, examples to grammar rules
+
+## Required Scripts
+- `npm run db:migrate-seed` - Complete migration
+- `npm run db:reset` - Drop and rebuild
+- Individual seeders for development

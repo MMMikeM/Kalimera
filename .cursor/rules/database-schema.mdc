@@ -1,0 +1,48 @@
+---
+description: Database schema and Kysely query patterns for Greek learning app
+globs: src/db/**/*,**/*.ts,**/*.tsx
+---
+
+# Database Schema & Kysely Patterns
+
+## Database Architecture
+This project uses **PostgreSQL with Kysely** for type-safe database operations. **NO JSONB** - use fully relational structure.
+
+## Core Schema Reference
+Key tables from [rewrite.plan.md](mdc:rewrite.plan.md):
+- `lessons` + `lesson_sections` (structured content)
+- `vocabulary` (Greek/English with pronunciation) 
+- `grammar_rules` + `grammar_examples` (relational examples)
+- `quiz_questions` + `quiz_options` (no JSONB options)
+
+## Required Patterns
+
+### Database Queries
+```typescript
+// Always use transactions for multi-table operations
+await db.transaction().execute(async (trx) => {
+  const lesson = await trx.insertInto('lessons').values(data).returningAll().executeTakeFirstOrThrow();
+  await trx.insertInto('lesson_sections').values(sections).execute();
+});
+
+// Use type-safe imports
+import { NewVocabulary, Vocabulary } from '../schema';
+import db from '../index';
+```
+
+### File Organization
+- `src/db/schema.ts` - TypeScript schema definitions
+- `src/db/queries/` - Organized by domain (lessons.ts, vocabulary.ts, etc.)
+- `src/db/migrations/` - Kysely migration files
+- `src/db/seeders/` - Data seeding scripts
+
+### Type Safety Requirements
+- Always use `Generated<number>` for auto-increment IDs
+- Use `Selectable<Table>`, `Insertable<Table>`, `Updateable<Table>` types
+- Import schema types: `import { Database } from './schema'`
+
+## Anti-Patterns
+❌ No JSONB columns - use relational tables instead
+❌ No raw SQL - use Kysely query builder  
+❌ No untyped database operations
+❌ No direct database access - use query functions

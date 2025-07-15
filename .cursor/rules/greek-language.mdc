@@ -1,0 +1,85 @@
+# Greek Language Patterns & Data Handling
+
+## Greek Text Requirements
+Based on existing data patterns in `src/constants/` and [8 July.md](mdc:8 July.md).
+
+## Vocabulary Data Structure
+
+### Required Fields
+```typescript
+interface GreekVocabulary {
+  greek_text: string;           // Greek characters (e.g., "στο γραφείο")
+  english_translation: string; // English meaning
+  pronunciation?: string;       // Transliteration (e.g., "sto grafeio")
+  category: string;            // directional, verb, noun, etc.
+  example_sentence_greek?: string;
+  example_sentence_english?: string;
+}
+```
+
+### Category Classifications
+- `directional` - έξω, μέσα, πάνω, κάτω, etc.
+- `verb` - κάνω, είμαι, πάω, etc.
+- `noun` - σπίτι, καφές, μάθημα, etc.
+- `adjective` - δυνατός, μεγάλος, etc.
+- `phrase` - καλή όρεξη, τι γίνεται, etc.
+- `grammar` - articles, cases, pronouns
+
+## Grammar Pattern Structure
+
+### Grammar Rules Format
+```typescript
+interface GrammarPattern {
+  title: string;                    // "Like/Dislike with Pronouns"
+  pattern: string;                 // "ΔΕΝ+μου +ΑΡΕΣΕΙ/ΑΡΕΣΟΥΝ"
+  description: string;             // Usage explanation
+  examples: GrammarExample[];      // Related examples
+  category: 'cases' | 'tenses' | 'pronouns' | 'articles';
+}
+```
+
+### Case System Patterns
+- **Nominative** - Subject (ο καφές είναι ζεστός)
+- **Accusative** - Direct object (βλέπω τον καφέ)  
+- **Genitive** - Possession (το σπίτι του πατέρα)
+
+## Pronunciation Guidelines
+
+### Transliteration Mapping
+```typescript
+const pronunciationMap = new Map([
+  ['έξω', 'exo'],
+  ['μέσα', 'mesa'], 
+  ['κάτω', 'kato'],
+  ['πάνω', 'pano'],
+  ['μπροστά', 'brosta'],
+  ['πίσω', 'piso'],
+  ['δίπλα', 'dipla']
+]);
+```
+
+## Learning Content Organization
+
+### Lesson Section Types
+- `vocabulary` - Word lists with translations
+- `grammar` - Grammar rules and patterns  
+- `examples` - Example sentences and usage
+- `notes` - Additional learning notes
+
+### Difficulty Levels
+1. **Beginner** - Basic vocabulary, present tense
+2. **Intermediate** - Cases, complex grammar
+3. **Advanced** - Irregular verbs, complex sentences
+
+## Data Migration Rules
+1. **Preserve Greek characters** - proper UTF-8 encoding
+2. **Include pronunciation** when available from notes
+3. **Categorize systematically** - consistent category naming
+4. **Link related content** - vocabulary → grammar rules → examples
+5. **Maintain context** - preserve example sentences and usage notes
+
+## Required Patterns
+- Always include Greek text validation
+- Provide pronunciation for new vocabulary
+- Link vocabulary to grammar concepts
+- Categorize content for search and filtering
