@@ -1,23 +1,33 @@
+// Articles and cases
 import {
-	CASE_EXAMPLES,
-	CASE_RECOGNITION,
-	COLORS,
-	COMMON_MISTAKES,
 	DEFINITE_ARTICLES,
-	FREQUENCY_ADVERBS,
-	FUTURE_TENSE_EXAMPLES,
-	LIKES_CONSTRUCTION,
-	NUMBERS,
-	PAST_TENSE_EXAMPLES,
+	CASE_EXAMPLES,
 	PREPOSITION_PATTERNS,
+} from "../constants/articles";
+
+// Verbs
+import {
+	VERB_CONJUGATIONS,
+	FUTURE_TENSE_EXAMPLES,
+	PAST_TENSE_EXAMPLES,
+	VERB_CATEGORIES,
+} from "../constants/verbs";
+
+// Recognition and learning aids
+import { CASE_RECOGNITION, COMMON_MISTAKES } from "../constants/recognition";
+
+// Vocabulary
+import {
+	TIMES_OF_DAY,
+	FREQUENCY_ADVERBS,
+	LIKES_CONSTRUCTION,
 	SUMMER_VOCABULARY,
 	TIME_EXPRESSIONS,
-	TIMES_OF_DAY,
-	TRANSPORTATION,
+	NUMBERS,
+	COLORS,
 	USEFUL_EXPRESSIONS,
-	VERB_CATEGORIES,
-	VERB_CONJUGATIONS,
-} from "../constants/greek-reference";
+	TRANSPORTATION,
+} from "../constants/vocabulary";
 import type { ArticleForm, VerbConjugation } from "../types/greek-reference";
 
 // Utility to escape markdown special characters
