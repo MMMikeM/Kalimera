@@ -9,29 +9,40 @@ import {
 	Download,
 	X,
 } from "lucide-react";
+// Config and navigation
+import { TABS, DEFAULT_TAB } from "../constants/config";
+
+// Articles and cases
+import {
+	DEFINITE_ARTICLES,
+	CASE_EXAMPLES,
+	PREPOSITION_PATTERNS,
+} from "../constants/articles";
+
+// Verbs
+import {
+	VERB_CONJUGATIONS,
+	FUTURE_TENSE_EXAMPLES,
+	PAST_TENSE_EXAMPLES,
+	VERB_CATEGORIES,
+} from "../constants/verbs";
+
+// Recognition and learning aids
+import { CASE_RECOGNITION, COMMON_MISTAKES } from "../constants/recognition";
+
+// Vocabulary
 import {
 	ALL_WORDS,
-	CASE_EXAMPLES,
-	CASE_RECOGNITION,
-	COLORS,
-	COMMON_MISTAKES,
-	DEFAULT_TAB,
-	DEFINITE_ARTICLES,
-	FREQUENCY_ADVERBS,
-	FUTURE_TENSE_EXAMPLES,
-	LIKES_CONSTRUCTION,
-	NUMBERS,
-	PAST_TENSE_EXAMPLES,
-	PREPOSITION_PATTERNS,
-	SUMMER_VOCABULARY,
-	TABS,
-	TIME_EXPRESSIONS,
 	TIMES_OF_DAY,
-	TRANSPORTATION,
+	FREQUENCY_ADVERBS,
+	LIKES_CONSTRUCTION,
+	SUMMER_VOCABULARY,
+	TIME_EXPRESSIONS,
+	NUMBERS,
+	COLORS,
 	USEFUL_EXPRESSIONS,
-	VERB_CATEGORIES,
-	VERB_CONJUGATIONS,
-} from "../constants/greek-reference";
+	TRANSPORTATION,
+} from "../constants/vocabulary";
 import type {
 	ArticleForm,
 	TabId,
