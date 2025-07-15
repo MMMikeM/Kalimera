@@ -1,11 +1,15 @@
 import {
+	CASE_EXAMPLES,
+	CASE_RECOGNITION,
 	COLORS,
+	COMMON_MISTAKES,
 	DEFINITE_ARTICLES,
 	FREQUENCY_ADVERBS,
 	FUTURE_TENSE_EXAMPLES,
 	LIKES_CONSTRUCTION,
 	NUMBERS,
 	PAST_TENSE_EXAMPLES,
+	PREPOSITION_PATTERNS,
 	SUMMER_VOCABULARY,
 	TIME_EXPRESSIONS,
 	TIMES_OF_DAY,
@@ -68,12 +72,31 @@ const verbConjugationToRow = (conj: VerbConjugation): string[] => [
 export const exportArticlesSection = (): string => {
 	let markdown = "# Articles & Cases\n\n";
 
+	// Quick rules first - most important
+	markdown += "## 🎯 Quick Case Rules - Master These First!\n\n";
+	CASE_RECOGNITION.quickRules.forEach((rule) => {
+		markdown += `### ${rule.question} → ${rule.answer}\n`;
+		markdown += `**Example:** ${rule.example}\n\n`;
+	});
+
 	markdown += '## The "Tin Tis Toun" Mystery Solved!\n\n';
 	markdown +=
-		'These are all forms of "the" - they change based on gender, number, and case!\n\n';
+		'These are all forms of "the" - they change based on gender, number, and case! Focus on **accusative (objects)** and **genitive (possession)** first.\n\n';
 
-	// Singular articles table
-	markdown += "### Definite Article 'The' (Singular)\n\n";
+	// Article tables - reorganized by importance
+	markdown += "### 🔥 Most Important: Accusative & Genitive Forms\n\n";
+	const importantForms = DEFINITE_ARTICLES.singular.filter(
+		(form) => form.case.includes("Acc") || form.case.includes("Gen"),
+	);
+	const importantRows = importantForms.map(articleFormToRow);
+	markdown += arrayToMarkdownTable(
+		["Case", "Masculine", "Feminine", "Neuter"],
+		importantRows,
+	);
+	markdown += "\n\n";
+
+	// Complete singular table
+	markdown += "### Complete Singular Forms\n\n";
 	const singularRows = DEFINITE_ARTICLES.singular.map(articleFormToRow);
 	markdown += arrayToMarkdownTable(
 		["Case", "Masculine", "Feminine", "Neuter"],
@@ -90,22 +113,61 @@ export const exportArticlesSection = (): string => {
 	);
 	markdown += "\n\n";
 
+	// Practical examples by case - THE CORE LEARNING SECTION
+	markdown += "## 💡 How to Actually Use Each Case\n\n";
+
+	// Accusative examples
+	markdown +=
+		"### Accusative (τον/την/το) - Objects & Directions [MOST USED]\n\n";
+	CASE_EXAMPLES.accusative.forEach((example) => {
+		markdown += `- **${example.greek}** - ${example.english}\n`;
+		markdown += `  *${example.explanation}*\n\n`;
+	});
+
+	// Genitive examples
+	markdown += '### Genitive (του/της) - Possession & "Of" [ESSENTIAL]\n\n';
+	CASE_EXAMPLES.genitive.forEach((example) => {
+		markdown += `- **${example.greek}** - ${example.english}\n`;
+		markdown += `  *${example.explanation}*\n\n`;
+	});
+
+	// Nominative examples
+	markdown += "### Nominative (ο/η/το) - Subjects\n\n";
+	CASE_EXAMPLES.nominative.forEach((example) => {
+		markdown += `- **${example.greek}** - ${example.english}\n`;
+		markdown += `  *${example.explanation}*\n\n`;
+	});
+
+	// Preposition patterns
+	markdown += "## 📍 Essential Preposition Patterns\n\n";
+	PREPOSITION_PATTERNS.forEach((pattern) => {
+		markdown += `### ${pattern.preposition} + ${pattern.case}\n`;
+		markdown += `**${pattern.example}** - ${pattern.english}\n\n`;
+	});
+
 	// Memory aids
-	markdown += '## Memory Aid: The "ν" Rule\n\n';
+	markdown += '## 🧠 Memory Aid: The "ν" Rule\n\n';
 	markdown +=
 		'Add "ν" to τον/την/το when the next word starts with: vowel, κ, π, τ, ξ, ψ, γκ, μπ, ντ\n\n';
 	markdown += "**Examples:**\n";
 	markdown += "- **τον άντρα** (ton andra)\n";
 	markdown += "- **την ώρα** (tin ora)\n\n";
 
-	markdown += "## When to use Accusative\n";
-	markdown += '- Direct object: "I see *the man*"\n';
-	markdown += '- After prepositions: "to *the house*"\n';
-	markdown += '- Time expressions: "on *Monday*"\n\n';
+	// Recognition patterns
+	markdown += "## 🔍 Quick Recognition Tips\n\n";
+	CASE_RECOGNITION.patterns.forEach((pattern) => {
+		markdown += `### ${pattern.pattern}\n`;
+		markdown += `${pattern.rule}\n`;
+		markdown += `Examples: ${pattern.examples.join(", ")}\n\n`;
+	});
 
-	markdown += "## When to use Nominative\n";
-	markdown += '- Subject: "*The man* is tall"\n';
-	markdown += '- After "to be": "He is *a teacher*"\n\n';
+	// Common mistakes
+	markdown += "## ⚠️ Avoid These Common Mistakes\n\n";
+	COMMON_MISTAKES.forEach((mistake) => {
+		markdown += `### ❌ Wrong: ${mistake.wrong}\n`;
+		markdown += `### ✅ Correct: ${mistake.correct}\n`;
+		markdown += `**Why:** ${mistake.explanation}\n\n`;
+	});
 
 	return markdown;
 };
