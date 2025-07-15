@@ -1,0 +1,72 @@
+# File Structure & TanStack Router Patterns
+
+## Project Architecture
+Based on [rewrite.plan.md](mdc:rewrite.plan.md) - file-based routing with TanStack Router.
+
+## Required Directory Structure
+
+### Routes (`src/routes/`)
+```
+src/routes/
+├── __root.tsx                 # Root layout with navigation
+├── index.tsx                  # Dashboard/home page
+├── reference/                 # Reference materials
+│   ├── index.tsx             # Reference home
+│   ├── vocabulary.tsx        # Searchable vocabulary
+│   ├── grammar.tsx           # Grammar rules
+│   └── search.tsx            # Global search
+├── lessons/                   # Lesson system
+│   ├── index.tsx             # Lessons overview
+│   ├── $categoryId.tsx       # Category view
+│   └── $categoryId.$lessonId.tsx  # Individual lesson
+├── quiz/                      # Quiz system
+│   ├── index.tsx             # Quiz dashboard
+│   ├── practice.tsx          # Practice mode
+│   └── $lessonId.tsx         # Lesson-specific quiz
+└── progress/                  # Progress tracking
+    ├── index.tsx             # Progress overview
+    └── analytics.tsx         # Detailed analytics
+```
+
+### Database Structure (`src/db/`)
+```
+src/db/
+├── index.ts                   # Database & Kysely initialization
+├── schema.ts                  # TypeScript database schema
+├── migrations/                # Kysely migrations
+├── queries/                   # Type-safe Kysely queries
+│   ├── lessons.ts
+│   ├── vocabulary.ts
+│   └── quiz.ts
+└── seeders/                   # Data seeding scripts
+```
+
+## TanStack Router Patterns
+
+### Route File Naming
+- `index.tsx` - Index routes (`/path/`)
+- `$param.tsx` - Dynamic routes (`/path/:param`)
+- `$param.$nested.tsx` - Nested dynamic routes (`/path/:param/:nested`)
+
+### Route Component Structure
+```typescript
+import { createFileRoute } from '@tanstack/react-router'
+
+export const Route = createFileRoute('/path')({
+  component: () => <div>Content</div>,
+  loader: async () => {
+    // Data loading logic
+  },
+})
+```
+
+### Required Imports
+- Always import from `@tanstack/react-router`
+- Use proper route creation patterns
+- Implement proper TypeScript types for route params
+
+## File Organization Rules
+1. **Domain-based organization** in `src/db/queries/`
+2. **Feature-based routing** in `src/routes/`
+3. **Shared components** in `src/components/`
+4. **Database operations** separated from UI components

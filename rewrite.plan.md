@@ -1,11 +1,13 @@
 # Greek Learning App Rewrite Plan
 
 ## Overview
-Rewrite the Greek language learning app using TanStack Router for file-based routing and better-sqlite3 for local data persistence. The new architecture focuses on three main pillars: Reference materials, Lesson state tracking, and Interactive quizzes.
+
+Rewrite the Greek language learning app using TanStack Router for file-based routing and PostgreSQL for robust data persistence. The new architecture focuses on three main pillars: Reference materials, Lesson state tracking, and Interactive quizzes.
 
 ## Architecture Changes
 
 ### Current Structure → New Structure
+
 ```
 Current: Component-based SPA
 New: File-based routed app with local database
@@ -19,6 +21,7 @@ Components → Routes + Database
 ## Technology Stack
 
 ### Core Technologies
+
 - **TanStack Router**: File-based routing with type safety
 - **PostgreSQL**: Robust relational database for data persistence
 - **Kysely**: Type-safe SQL query builder for TypeScript
@@ -27,6 +30,7 @@ Components → Routes + Database
 - **Vite**: Build tool
 
 ### Key Features from Documentation
+
 - File-based routing with automatic code splitting
 - Pathless layout routes for shared UI
 - Route-level authentication/guards
@@ -41,13 +45,30 @@ Components → Routes + Database
 ### Tables Structure
 
 ```sql
--- User progress and settings
-CREATE TABLE user_settings (
+-- Core user table
+CREATE TABLE users (
   id SERIAL PRIMARY KEY,
-  name VARCHAR NOT NULL,
+  username VARCHAR(50) UNIQUE NOT NULL,
+  email VARCHAR(255) UNIQUE NOT NULL,
+  password_hash VARCHAR NOT NULL, -- Or use an auth provider
   created_at TIMESTAMP DEFAULT NOW(),
   updated_at TIMESTAMP DEFAULT NOW()
 );
+
+-- User progress and settings
+CREATE TABLE user_settings (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  settings JSONB DEFAULT '{}', -- Flexible settings storage
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW()
+);
+
+-- ENUMs for data integrity
+CREATE TYPE lesson_section_type AS ENUM ('vocabulary', 'grammar', 'examples', 'notes', 'dialogue');
+CREATE TYPE quiz_question_type AS ENUM ('multiple_choice', 'translation', 'fill_blank', 'matching', 'pronunciation');
+CREATE TYPE lesson_focus_area AS ENUM ('vocabulary', 'grammar', 'conversation', 'reading', 'listening');
+CREATE TYPE grammar_category AS ENUM ('cases', 'tenses', 'pronouns', 'articles', 'verbs', 'adjectives');
 
 -- Lesson categories and metadata
 CREATE TABLE lesson_categories (
@@ -66,7 +87,7 @@ CREATE TABLE lessons (
   description TEXT,
   lesson_date DATE,
   order_index INTEGER,
-  focus_area VARCHAR, -- grammar, vocabulary, conversation, etc.
+  focus_area lesson_focus_area,
   notes TEXT,
   created_at TIMESTAMP DEFAULT NOW()
 );
@@ -75,7 +96,7 @@ CREATE TABLE lessons (
 CREATE TABLE lesson_sections (
   id SERIAL PRIMARY KEY,
   lesson_id INTEGER NOT NULL REFERENCES lessons(id),
-  section_type VARCHAR NOT NULL, -- vocabulary, grammar, examples, notes
+  section_type lesson_section_type NOT NULL,
   title VARCHAR,
   content TEXT NOT NULL,
   order_index INTEGER,
@@ -102,7 +123,7 @@ CREATE TABLE grammar_rules (
   title VARCHAR NOT NULL,
   description TEXT NOT NULL,
   pattern VARCHAR, -- e.g., "ΔΕΝ+μου +ΑΡΕΣΕΙ/ΑΡΕΣΟΥΝ"
-  category VARCHAR, -- cases, tenses, pronouns, etc.
+  category grammar_category,
   difficulty_level INTEGER DEFAULT 1,
   lesson_id INTEGER REFERENCES lessons(id),
   created_at TIMESTAMP DEFAULT NOW()
@@ -122,6 +143,7 @@ CREATE TABLE grammar_examples (
 -- User progress tracking
 CREATE TABLE user_progress (
   id SERIAL PRIMARY KEY,
+  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   lesson_id INTEGER NOT NULL REFERENCES lessons(id),
   completed BOOLEAN DEFAULT FALSE,
   score DECIMAL(5,2), -- percentage or points with precision
@@ -135,7 +157,7 @@ CREATE TABLE user_progress (
 CREATE TABLE quiz_questions (
   id SERIAL PRIMARY KEY,
   lesson_id INTEGER REFERENCES lessons(id),
-  question_type VARCHAR NOT NULL, -- multiple_choice, translation, fill_blank, etc.
+  question_type quiz_question_type NOT NULL,
   question_text TEXT NOT NULL,
   correct_answer TEXT NOT NULL,
   explanation TEXT,
@@ -154,9 +176,23 @@ CREATE TABLE quiz_options (
   created_at TIMESTAMP DEFAULT NOW()
 );
 
+-- Quiz sessions to group attempts
+CREATE TABLE quiz_sessions (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  lesson_id INTEGER REFERENCES lessons(id),
+  started_at TIMESTAMP DEFAULT NOW(),
+  completed_at TIMESTAMP,
+  score DECIMAL(5,2),
+  total_questions INTEGER,
+  correct_answers INTEGER
+);
+
 -- Quiz attempts and results (simplified, no JSONB)
 CREATE TABLE quiz_attempts (
   id SERIAL PRIMARY KEY,
+  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  session_id INTEGER REFERENCES quiz_sessions(id) ON DELETE CASCADE,
   question_id INTEGER NOT NULL REFERENCES quiz_questions(id),
   user_answer TEXT NOT NULL,
   is_correct BOOLEAN NOT NULL,
@@ -172,8 +208,18 @@ CREATE TABLE daily_patterns (
   pattern_english VARCHAR NOT NULL,
   usage_context VARCHAR,
   frequency_score INTEGER DEFAULT 1, -- how common/important
-  examples JSONB DEFAULT '[]',
   lesson_id INTEGER REFERENCES lessons(id),
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Daily pattern examples (relational structure)
+CREATE TABLE daily_pattern_examples (
+  id SERIAL PRIMARY KEY,
+  pattern_id INTEGER NOT NULL REFERENCES daily_patterns(id) ON DELETE CASCADE,
+  greek_example TEXT NOT NULL,
+  english_translation TEXT NOT NULL,
+  context TEXT,
+  order_index INTEGER,
   created_at TIMESTAMP DEFAULT NOW()
 );
 
@@ -190,6 +236,7 @@ CREATE INDEX idx_vocabulary_english_text ON vocabulary USING gin(to_tsvector('en
 ## File Structure
 
 ### Route Structure (TanStack Router)
+
 ```
 src/routes/
 ├── __root.tsx                 # Root layout with navigation
@@ -221,6 +268,7 @@ src/routes/
 ```
 
 ### Database Integration Structure
+
 ```
 src/db/
 ├── index.ts                   # Database & Kysely initialization
@@ -240,7 +288,9 @@ src/db/
 ## Implementation Plan
 
 ### Phase 1: Database Setup & Migration
+
 1. **Database initialization with Kysely**
+
    ```typescript
    // src/db/index.ts
    import { Pool } from 'pg';
@@ -268,6 +318,7 @@ src/db/
    ```
 
 2. **Database schema definition**
+
    ```typescript
    // src/db/schema.ts
    import { 
@@ -279,6 +330,7 @@ src/db/
    } from 'kysely';
    
    export interface Database {
+     users: UsersTable;
      user_settings: UserSettingsTable;
      lesson_categories: LessonCategoriesTable;
      lessons: LessonsTable;
@@ -289,8 +341,33 @@ src/db/
      user_progress: UserProgressTable;
      quiz_questions: QuizQuestionsTable;
      quiz_options: QuizOptionsTable;
+     quiz_sessions: QuizSessionsTable;
      quiz_attempts: QuizAttemptsTable;
      daily_patterns: DailyPatternsTable;
+     daily_pattern_examples: DailyPatternExamplesTable;
+   }
+   
+   // ENUM types
+   export type LessonSectionType = 'vocabulary' | 'grammar' | 'examples' | 'notes' | 'dialogue';
+   export type QuizQuestionType = 'multiple_choice' | 'translation' | 'fill_blank' | 'matching' | 'pronunciation';
+   export type LessonFocusArea = 'vocabulary' | 'grammar' | 'conversation' | 'reading' | 'listening';
+   export type GrammarCategory = 'cases' | 'tenses' | 'pronouns' | 'articles' | 'verbs' | 'adjectives';
+   
+   export interface UsersTable {
+     id: Generated<number>;
+     username: string;
+     email: string;
+     password_hash: string;
+     created_at: ColumnType<Date, string | undefined, never>;
+     updated_at: ColumnType<Date, string | undefined, never>;
+   }
+   
+   export interface UserSettingsTable {
+     id: Generated<number>;
+     user_id: number;
+     settings: Record<string, any>; // JSONB
+     created_at: ColumnType<Date, string | undefined, never>;
+     updated_at: ColumnType<Date, string | undefined, never>;
    }
    
    export interface VocabularyTable {
@@ -313,7 +390,7 @@ src/db/
      description: string | null;
      lesson_date: string | null;
      order_index: number | null;
-     focus_area: string | null;
+     focus_area: LessonFocusArea | null;
      notes: string | null;
      created_at: ColumnType<Date, string | undefined, never>;
    }
@@ -321,7 +398,7 @@ src/db/
    export interface LessonSectionsTable {
      id: Generated<number>;
      lesson_id: number;
-     section_type: string; // vocabulary, grammar, examples, notes
+     section_type: LessonSectionType;
      title: string | null;
      content: string;
      order_index: number | null;
@@ -333,7 +410,7 @@ src/db/
      title: string;
      description: string;
      pattern: string | null;
-     category: string | null;
+     category: GrammarCategory | null;
      difficulty_level: number;
      lesson_id: number | null;
      created_at: ColumnType<Date, string | undefined, never>;
@@ -352,7 +429,7 @@ src/db/
    export interface QuizQuestionsTable {
      id: Generated<number>;
      lesson_id: number | null;
-     question_type: string;
+     question_type: QuizQuestionType;
      question_text: string;
      correct_answer: string;
      explanation: string | null;
@@ -370,14 +447,59 @@ src/db/
      created_at: ColumnType<Date, string | undefined, never>;
    }
    
+   export interface QuizSessionsTable {
+     id: Generated<number>;
+     user_id: number;
+     lesson_id: number | null;
+     started_at: ColumnType<Date, string | undefined, never>;
+     completed_at: ColumnType<Date, string | undefined, string | undefined>;
+     score: number | null;
+     total_questions: number | null;
+     correct_answers: number | null;
+   }
+   
    export interface QuizAttemptsTable {
      id: Generated<number>;
+     user_id: number;
+     session_id: number | null;
      question_id: number;
      user_answer: string;
      is_correct: boolean;
      time_taken: number | null;
      hints_used: number;
      attempted_at: ColumnType<Date, string | undefined, never>;
+   }
+   
+   export interface UserProgressTable {
+     id: Generated<number>;
+     user_id: number;
+     lesson_id: number;
+     completed: boolean;
+     score: number | null;
+     time_spent: number | null;
+     attempts: number;
+     completed_at: ColumnType<Date, string | undefined, string | undefined>;
+     created_at: ColumnType<Date, string | undefined, never>;
+   }
+   
+   export interface DailyPatternsTable {
+     id: Generated<number>;
+     pattern_greek: string;
+     pattern_english: string;
+     usage_context: string | null;
+     frequency_score: number;
+     lesson_id: number | null;
+     created_at: ColumnType<Date, string | undefined, never>;
+   }
+   
+   export interface DailyPatternExamplesTable {
+     id: Generated<number>;
+     pattern_id: number;
+     greek_example: string;
+     english_translation: string;
+     context: string | null;
+     order_index: number | null;
+     created_at: ColumnType<Date, string | undefined, never>;
    }
    
    export type Vocabulary = Selectable<VocabularyTable>;
@@ -407,9 +529,34 @@ src/db/
    export type QuizOption = Selectable<QuizOptionsTable>;
    export type NewQuizOption = Insertable<QuizOptionsTable>;
    export type QuizOptionUpdate = Updateable<QuizOptionsTable>;
+   
+   export type User = Selectable<UsersTable>;
+   export type NewUser = Insertable<UsersTable>;
+   export type UserUpdate = Updateable<UsersTable>;
+   
+   export type UserSettings = Selectable<UserSettingsTable>;
+   export type NewUserSettings = Insertable<UserSettingsTable>;
+   export type UserSettingsUpdate = Updateable<UserSettingsTable>;
+   
+   export type QuizSession = Selectable<QuizSessionsTable>;
+   export type NewQuizSession = Insertable<QuizSessionsTable>;
+   export type QuizSessionUpdate = Updateable<QuizSessionsTable>;
+   
+   export type UserProgress = Selectable<UserProgressTable>;
+   export type NewUserProgress = Insertable<UserProgressTable>;
+   export type UserProgressUpdate = Updateable<UserProgressTable>;
+   
+   export type DailyPattern = Selectable<DailyPatternsTable>;
+   export type NewDailyPattern = Insertable<DailyPatternsTable>;
+   export type DailyPatternUpdate = Updateable<DailyPatternsTable>;
+   
+   export type DailyPatternExample = Selectable<DailyPatternExamplesTable>;
+   export type NewDailyPatternExample = Insertable<DailyPatternExamplesTable>;
+   export type DailyPatternExampleUpdate = Updateable<DailyPatternExamplesTable>;
    ```
 
 3. **Kysely migration system**
+
    ```typescript
    // src/db/migrations/001_initial_schema.ts
    import { Kysely, sql } from 'kysely';
@@ -435,10 +582,11 @@ src/db/
          col.references('lesson_categories.id').notNull()
        )
        .addColumn('title', 'varchar', (col) => col.notNull())
-       .addColumn('content', 'jsonb', (col) => col.notNull())
+       .addColumn('description', 'text')
        .addColumn('lesson_date', 'date')
        .addColumn('order_index', 'integer')
-       .addColumn('metadata', 'jsonb', (col) => col.defaultTo(sql`'{}'`))
+       .addColumn('focus_area', 'lesson_focus_area')
+       .addColumn('notes', 'text')
        .addColumn('created_at', 'timestamp', (col) =>
          col.defaultTo(sql`now()`).notNull()
        )
@@ -491,13 +639,16 @@ src/db/
    - Set up grammar rules and patterns with type safety
 
 ### Phase 2: TanStack Router Setup
+
  1. **Install dependencies**
+
    ```bash
    npm install @tanstack/react-router @tanstack/router-plugin pg kysely
    npm install -D @types/pg
    ```
 
 2. **Vite configuration**
+
    ```typescript
    // vite.config.ts
    import { defineConfig } from 'vite'
@@ -516,6 +667,7 @@ src/db/
    ```
 
 3. **Root layout with navigation**
+
    ```typescript
    // src/routes/__root.tsx
    import { createRootRoute, Outlet } from '@tanstack/react-router'
@@ -558,6 +710,7 @@ src/db/
 **From `8 July.md`, extract and categorize:**
 
 1. **Lessons with sections (structured, no JSONB):**
+
    ```typescript
    // src/db/queries/lessons.ts
    import db from '../index';
@@ -644,6 +797,7 @@ src/db/
    ```
 
 2. **Vocabulary entries with Kysely:**
+
    ```typescript
    // src/db/queries/vocabulary.ts
    import db from '../index';
@@ -687,6 +841,7 @@ src/db/
    ```
 
 2. **Grammar patterns with relational structure:**
+
    ```typescript
    // src/db/queries/grammar.ts
    import db from '../index';
@@ -775,25 +930,15 @@ src/db/
        { greek_example: 'σου αρέσει', english_translation: 'you like', notes: 'singular object' },
        { greek_example: 'του αρέσει', english_translation: 'he likes', notes: 'singular object' },
        { greek_example: 'μου αρέσουν', english_translation: 'I like', notes: 'plural objects' }
-       ],
-       category: 'pronouns',
-       difficulty_level: 2
-     },
-     {
-       title: 'Time Expressions',
-       pattern: 'όταν + past tense',
-       description: 'Expressing past events and conditions',
-       examples: [
-         { greek: 'όταν ήμουν παιδί', english: 'when I was a kid', context: 'past condition' },
-         { greek: 'όταν μιλάω με την πεθερά μου νευριάζω', english: 'when I speak with my mother in law I get nervous', context: 'habitual action' }
-       ],
-       category: 'tenses',
-       difficulty_level: 3
-     }
+     ]
    };
+
+   // Usage
+   await insertGrammarRuleWithExamples(grammarRuleData.rule, grammarRuleData.examples);
    ```
 
 3. **Quiz questions with options (relational structure):**
+
    ```typescript
    // src/db/queries/quiz.ts
    import db from '../index';
@@ -865,6 +1010,7 @@ src/db/
    ```
 
 4. **Daily patterns with database integration:**
+
    ```typescript
    // src/db/queries/patterns.ts
    import db from '../index';
@@ -906,6 +1052,7 @@ src/db/
 ## Key Features & Improvements
 
 ### Kysely Integration Benefits
+
 1. **Type Safety**: Compile-time validation of all database operations
 2. **IntelliSense**: Full autocompletion for tables, columns, and query methods
 3. **Refactoring Safety**: Schema changes are caught at compile time
@@ -914,12 +1061,14 @@ src/db/
 6. **Performance**: Compiled queries with optimal SQL generation
 
 ### Enhanced Learning Experience
+
 1. **Spaced Repetition**: Quiz system with intelligent scheduling
 2. **Progress Analytics**: Visual progress tracking and statistics
 3. **Contextual Learning**: Related vocabulary and grammar linked together
 4. **Search & Discovery**: Powerful search across all content types
 
 ### Data Management
+
 1. **Robust Database**: PostgreSQL with ACID compliance and reliability
 2. **Type-Safe Queries**: Kysely provides compile-time query validation
 3. **Migration Management**: Version-controlled schema changes with Kysely migrations
@@ -929,6 +1078,7 @@ src/db/
 7. **Scalability**: Easy to scale from local development to production
 
 ### User Experience
+
 1. **Fast Navigation**: File-based routing with code splitting
 2. **Type Safety**: Full TypeScript integration
 3. **Responsive Design**: Mobile-first approach
@@ -937,12 +1087,14 @@ src/db/
 ## Migration Strategy
 
 ### From Current App
+
 1. **Extract existing data** from components into database
 2. **Preserve current UI patterns** but enhance with routing
 3. **Gradual migration** - implement new features alongside existing
 4. **Data validation** - ensure no content is lost in transition
 
 ### Testing Strategy
+
 1. **Database tests** for data integrity
 2. **Route tests** for navigation flows
 3. **Integration tests** for quiz system
@@ -951,6 +1103,7 @@ src/db/
 ## Future Enhancements
 
 ### Advanced Features
+
 1. **Audio Integration**: Pronunciation guides
 2. **Image Support**: Visual vocabulary cards
 3. **Sync**: Cloud backup and multi-device sync
@@ -958,6 +1111,7 @@ src/db/
 5. **Community Features**: Shared lessons and progress
 
 ### Technical Improvements
+
 1. **PWA Support**: Offline capability
 2. **Performance Monitoring**: Query optimization
 3. **Advanced Analytics**: Learning pattern analysis
@@ -966,6 +1120,7 @@ src/db/
 ## PostgreSQL Development Setup
 
 ### Local Development
+
 ```bash
 # Using Docker for local PostgreSQL
 docker run --name greek-learning-db \
@@ -981,6 +1136,7 @@ createdb greek_learning
 ```
 
 ### Environment Variables
+
 ```bash
 # .env.local
 DATABASE_HOST=localhost
@@ -991,6 +1147,7 @@ DATABASE_PASSWORD=your_password
 ```
 
 ### Production Deployment
+
 - **Supabase**: Managed PostgreSQL with real-time features
 - **Railway**: Simple PostgreSQL deployment
 - **Neon**: Serverless PostgreSQL with branching
@@ -999,6 +1156,7 @@ DATABASE_PASSWORD=your_password
 ## PostgreSQL Advantages for Language Learning
 
 ### Advanced Features
+
 1. **Relational Structure**: Fully normalized schema with predictable data structures
 2. **Type Safety**: Complete TypeScript type safety with Kysely throughout the application
 3. **Array Types**: Multiple tags and categories per vocabulary item
@@ -1008,6 +1166,7 @@ DATABASE_PASSWORD=your_password
 7. **Triggers**: Automatic timestamp updates and data validation
 
 ### Relational Design Benefits
+
 1. **Predictable Rendering**: All data structures are known at compile time
 2. **Type-Safe Queries**: No guessing about JSONB structure, full TypeScript support
 3. **Better Performance**: Normalized queries are more efficient than JSON operations
@@ -1016,6 +1175,7 @@ DATABASE_PASSWORD=your_password
 6. **Data Integrity**: Foreign key constraints ensure referential integrity
 
 ### Performance Benefits
+
 1. **Connection Pooling**: Efficient resource management
 2. **Query Optimization**: Advanced query planner
 3. **Concurrent Access**: Multiple users without locking issues
@@ -1025,27 +1185,31 @@ DATABASE_PASSWORD=your_password
 ## Timeline
 
 ### Week 1-2: Foundation
+
 - PostgreSQL setup and connection
 - Database schema and migrations with Kysely
 - Basic routing setup with TanStack Router
 - Data import from current notes
 
 ### Week 3-4: Core Features
+
 - Reference system with full-text search
 - Lesson structure with relational sections
 - Progress tracking with analytics
 - Tag-based vocabulary organization
 
 ### Week 5-6: Quiz System
+
 - Advanced question types with relational options
 - Results tracking and analytics
 - Spaced repetition algorithms
 - Performance insights
 
 ### Week 7-8: Polish & Testing
+
 - Advanced search functionality
 - Performance optimization
 - Database query optimization
 - Comprehensive testing
 
-This rewrite will transform the Greek learning app into a comprehensive, production-ready learning platform with PostgreSQL's robust relational features, fully type-safe database operations via Kysely, and modern routing with TanStack Router. The relational design ensures predictable data structures, better performance, and complete type safety throughout the application. 
+This rewrite will transform the Greek learning app into a comprehensive, production-ready learning platform with PostgreSQL's robust relational features, fully type-safe database operations via Kysely, and modern routing with TanStack Router. The relational design ensures predictable data structures, better performance, and complete type safety throughout the application.
