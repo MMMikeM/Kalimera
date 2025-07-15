@@ -86,6 +86,48 @@ export interface TransportationData {
 	actions: VocabularyItem[];
 }
 
+export interface CaseExample {
+	greek: string;
+	english: string;
+	explanation: string;
+}
+
+export interface CaseExamples {
+	nominative: CaseExample[];
+	accusative: CaseExample[];
+	genitive: CaseExample[];
+}
+
+export interface PrepositionPattern {
+	preposition: string;
+	case: string;
+	example: string;
+	english: string;
+}
+
+export interface RecognitionPattern {
+	pattern: string;
+	rule: string;
+	examples: string[];
+}
+
+export interface QuickRule {
+	question: string;
+	answer: string;
+	example: string;
+}
+
+export interface CaseRecognition {
+	patterns: RecognitionPattern[];
+	quickRules: QuickRule[];
+}
+
+export interface CommonMistake {
+	wrong: string;
+	correct: string;
+	explanation: string;
+}
+
 export type TabId =
 	| "articles"
 	| "present"
