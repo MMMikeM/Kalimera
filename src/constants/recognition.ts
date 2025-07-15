@@ -17,6 +17,33 @@ export const CASE_RECOGNITION = {
 			examples: ["του πατέρα", "της μητέρας", "των παιδιών"],
 		},
 	],
+	quickSpotCheck: [
+		{
+			pattern: "Ends in -ν?",
+			meaning: "Probably accusative object",
+			examples: ["βλέπω τον καφέ", "αγοράζω την εφημερίδα"],
+		},
+		{
+			pattern: "After στο/στη/στον?",
+			meaning: "Going somewhere (accusative)",
+			examples: ["πηγαίνω στο σπίτι", "στη δουλειά"],
+		},
+		{
+			pattern: '"του/της + name"?',
+			meaning: "Belongs to them (genitive)",
+			examples: ["της Μαρίας", "του Νίκου"],
+		},
+		{
+			pattern: "After με/από/για?",
+			meaning: "These prepositions = accusative",
+			examples: ["με τον φίλο", "από το σπίτι"],
+		},
+		{
+			pattern: "Time expressions?",
+			meaning: "Usually accusative",
+			examples: ["τη Δευτέρα", "το πρωί"],
+		},
+	],
 	quickRules: [
 		{
 			question: "WHO does it?",
