@@ -91,13 +91,21 @@ CREATE TABLE noun_details (
   notes TEXT -- for irregular patterns
 );
 
--- Grammatical details for verbs (only when needed)  
+-- Grammatical details for verbs (only when needed)
 CREATE TABLE verb_details (
   vocab_id INTEGER PRIMARY KEY REFERENCES vocabulary(id) ON DELETE CASCADE,
   infinitive VARCHAR NOT NULL,
   conjugation_family VARCHAR NOT NULL, -- '-ω', '-ομαι', 'irregular'
-  present_forms JSONB, -- {ego: "κάνω", esy: "κάνεις", etc.}
   notes TEXT -- for irregular patterns
+);
+
+-- Individual verb conjugations (fully relational, no JSON)
+CREATE TABLE verb_conjugations (
+  id SERIAL PRIMARY KEY,
+  verb_details_id INTEGER NOT NULL REFERENCES verb_details(vocab_id) ON DELETE CASCADE,
+  tense VARCHAR NOT NULL, -- e.g., 'present', 'future', 'past'
+  person VARCHAR NOT NULL, -- e.g., 'ego', 'esy', 'aftos'
+  form VARCHAR NOT NULL -- e.g., 'κάνω', 'κάνεις'
 );
 
 -- Tracks user's grammatical weak spots based on practice performance.
