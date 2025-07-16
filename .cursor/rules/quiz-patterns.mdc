@@ -1,133 +1,79 @@
-# Quiz System & Learning Patterns
+# Practice & Learning Patterns
 
-## Quiz Architecture
+## Practice System Architecture
 
-Based on [rewrite.plan.md](mdc:rewrite.plan.md) relational quiz structure with auto-generated content.
+Based on [rewrite.plan.md](mdc:rewrite.plan.md), the system is centered on user-driven practice sessions that target specific learning goals, such as mastering new vocabulary, drilling problem words, or focusing on identified weak areas.
 
-## Quiz Data Structure
+## Core Data Structures
 
-### Question Types
+### Practice Session (`practice_sessions` table)
+
+A record of a single practice activity.
 
 ```typescript
-type QuestionType = 
-  | 'multiple_choice'    // What does "μέσα" mean?
-  | 'translation'        // Translate: "I go to work"
-  | 'fill_blank'        // Complete: "μου ______" (like/dislike)
-  | 'pronunciation'     // How do you say "outside"?
+interface PracticeSession {
+  id: Generated<number>;
+  session_type: 'vocab_quiz' | 'case_drill' | 'problem_words' | 'weak_area_focus';
+  category?: string; // e.g., 'food', 'travel'
+  focus_area?: string; // e.g., 'accusative_singular', 'feminine_nouns'
+  // ... metrics like total_questions, correct_answers, timestamps
+}
 ```
 
-### Relational Quiz Structure (No JSONB)
+### Practice Attempt (`practice_attempts` table)
+
+A record of a single question-and-answer attempt within a session.
 
 ```typescript
-interface QuizQuestion {
-  id: number;
-  question_type: QuestionType;
+interface PracticeAttempt {
+  id: Generated<number>;
+  session_id: number;
+  vocabulary_id: number; // The word being tested
   question_text: string;
   correct_answer: string;
-  explanation?: string;
-  difficulty: 1 | 2 | 3 | 4 | 5;
-  tags: string[];
-}
-
-interface QuizOption {
-  id: number;
-  question_id: number;
-  option_text: string;
+  user_answer: string;
   is_correct: boolean;
-  order_index: number;
 }
 ```
 
-## Auto-Generation Patterns
+### Weak Area (`weak_areas` table)
+
+An aggregated table, populated by analyzing incorrect `practice_attempts`, that identifies specific grammatical concepts the user struggles with.
+
+```typescript
+interface WeakArea {
+  id: Generated<number>;
+  area_type: 'case' | 'gender' | 'verb_family';
+  area_identifier: string; // e.g., 'genitive_plural', 'neuter', '-ομαι'
+  mistake_count: number;
+}
+```
+
+## Practice Generation Patterns
 
 ### From Vocabulary Data
 
-```typescript
-// Generate "What does X mean?" questions
-const vocabularyQuiz = vocabulary.map(word => ({
-  question_type: 'multiple_choice',
-  question_text: `What does "${word.greek_text}" mean in English?`,
-  correct_answer: word.english_translation,
-  explanation: `${word.greek_text} (${word.pronunciation}) means ${word.english_translation}`,
-  options: generateDistractors(word.english_translation, word.category)
-}));
-```
+Practice questions should be generated dynamically from the user's `vocabulary` table based on the chosen `session_type`.
 
-### From Grammar Rules
+- **New Words**: Quiz on words with `difficulty_level: 0`.
+- **Problem Words**: Quiz on words where `is_problem_word: true`.
+- **Category Focus**: Quiz on words from a specific `category`.
 
-```typescript
-// Generate grammar pattern questions
-const grammarQuiz = grammarRules.map(rule => ({
-  question_type: 'fill_blank',
-  question_text: `Complete the pattern: ${rule.pattern.replace(/μου/, '_____')}`,
-  correct_answer: 'μου',
-  explanation: rule.description
-}));
-```
+### From Weak Area Data
+
+When the `session_type` is `'weak_area_focus'`, the practice session should generate questions that specifically target the concepts identified in the `weak_areas` table. For example, if "accusative singular" is a weak area, the system should generate drills asking the user to provide the correct accusative form for various nouns.
 
 ## Learning Progression
 
-### Difficulty Scaling
+Progression is managed directly on the `vocabulary` table through user actions and practice results.
 
-1. **Level 1** - Basic vocabulary recognition
-2. **Level 2** - Grammar pattern completion  
-3. **Level 3** - Translation tasks
-4. **Level 4** - Complex sentence construction
-5. **Level 5** - Contextual usage
-
-### Spaced Repetition Logic
-
-```typescript
-interface UserProgress {
-  question_id: number;
-  last_attempted: Date;
-  success_rate: number;
-  next_review: Date;
-  attempts: number;
-}
-```
-
-## Quiz Generation Rules
-
-### Content Sources
-
-- **Directional words** from [8 July.md](mdc:8 July.md) → spatial relationship quizzes
-- **Verb conjugations** from `src/constants/verbs.ts` → conjugation practice
-- **Case patterns** from `src/constants/articles.ts` → case recognition quizzes
-- **Grammar rules** → pattern completion exercises
-
-### Question Distribution
-
-- 40% Vocabulary recognition
-- 30% Grammar pattern completion
-- 20% Translation tasks
-- 10% Pronunciation/listening
-
-## Analytics & Progress
-
-### Track Learning Metrics
-
-```typescript
-interface QuizAnalytics {
-  total_questions: number;
-  correct_answers: number;
-  average_time_per_question: number;
-  weak_categories: string[];
-  improvement_areas: string[];
-}
-```
-
-### Adaptive Learning
-
-- Increase difficulty on consistent success
-- Repeat challenging concepts more frequently
-- Focus on weak vocabulary categories
-- Adjust question types based on performance
+- **Difficulty Level**: The user can manually set a word's difficulty (`new`, `learning`, `mastered`). This can also be updated automatically based on quiz performance.
+- **Problem Words**: The user can manually flag a word as a problem. This can also be done automatically after repeated incorrect answers.
+- **Mistake Count**: The `mistake_count` on a vocabulary item is incremented with each incorrect `practice_attempt`.
 
 ## Required Implementation Patterns
 
-1. **Relational structure** - questions + options tables, no JSONB
-2. **Auto-generation** - create quizzes from existing vocabulary/grammar data
-3. **Progress tracking** - detailed analytics per question/category
-4. **Adaptive difficulty** - adjust based on user performance
-5. **Category focus** - target weak areas for additional practice
+1. **Dynamic Generation**: Practice questions are generated on-the-fly from the user's data, not stored in a separate quiz table.
+2. **Feedback Loop**: The results of `practice_attempts` must feed back into the system by updating the `vocabulary` table's learning metrics and populating the `weak_areas` table.
+3. **User-Driven Focus**: The user should always be in control of what they want to practice.
+4. **Simplicity**: The system should avoid the complexity of pre-defined quizzes and focus on flexible, targeted drills.
