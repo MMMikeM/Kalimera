@@ -1,3 +1,62 @@
+---
+alwaysApply: true
+---
+
+# Database Schema & Kysely Patterns
+
+## Database Architecture
+
+This project uses **PostgreSQL with Kysely** for type-safe database operations. While relational structures are preferred, **JSONB is acceptable for specific, justified use cases** like storing verb conjugation maps.
+
+## Core Schema Reference
+
+Key tables from [rewrite.plan.md](mdc:rewrite.plan.md):
+
+- `vocabulary` (The central table for all words, with status and learning metrics)
+- `noun_details` (Gender and case forms for nouns)
+- `verb_details` (Conjugation families and forms, using JSONB)
+- `practice_sessions` (Tracks a user's practice session)
+- `practice_attempts` (Tracks individual answers within a session)
+- `weak_areas` (Aggregates and identifies grammatical weak spots)
+
+## Required Patterns
+
+### Database Queries
+
+```typescript
+// Always use transactions for multi-table operations
+await db.transaction().execute(async (trx) => {
+  const newWord = await trx.insertInto('vocabulary').values(data).returningAll().executeTakeFirstOrThrow();
+  // ... other related inserts
+});
+
+// Use type-safe imports
+import { NewVocabulary, Vocabulary, VocabularyUpdate } from '../schema';
+import db from '../index';
+```
+
+### File Organization
+
+- `src/db/schema.ts` - TypeScript schema definitions
+- `src/db/migrations/` - Kysely migration files
+- `src/db/seed.ts` - A unified script for seeding all necessary data
+
+### Type Safety Requirements
+
+- Always use `Generated<T>` for auto-incrementing or default fields.
+- Use `Selectable<Table>`, `Insertable<Table>`, `Updateable<Table>` types.
+- Import schema types: `import { Database } from './schema'`
+
+## Anti-Patterns
+
+❌ No **unjustified** JSONB columns - model relationally first.
+❌ No raw SQL - use the Kysely query builder.
+❌ No untyped database operations.
+❌ No direct database access from UI components - use dedicated query files if needed.
+
+❌ No raw SQL - use Kysely query builder  
+❌ No untyped database operations
+❌ No direct database access - use query functions
 # Database Schema & Kysely Patterns
 
 ## Database Architecture

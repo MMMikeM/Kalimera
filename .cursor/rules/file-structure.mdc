@@ -1,3 +1,55 @@
+---
+alwaysApply: true
+---
+
+# File Structure & Component Organization
+
+## Project Architecture
+
+Based on [rewrite.plan.md](mdc:rewrite.plan.md) - a user-workflow-centric component architecture.
+
+## Required Directory Structure
+
+### Core Components (`src/components/`)
+
+```
+src/components/
+├── QuickReference.tsx           # Main dashboard for quick lookups
+│   └── reference/
+│       ├── ArticlesAndCases.tsx # Static component for article/case rules
+│       ├── PronounGuide.tsx     # Static component for personal pronouns
+│       └── VerbPatterns.tsx     # Static component for verb conjugation patterns
+│
+├── CategoryVocabulary.tsx       # Main component for studying vocabulary by category
+│
+├── TargetedPractice.tsx         # Dashboard for choosing practice modes
+│
+├── WordInbox.tsx                # Quick-add component for new words
+└── WordProcessor.tsx            # Form to enrich and process words from the inbox
+```
+
+### Database Structure (`src/db/`)
+
+```
+src/db/
+├── index.ts                   # Database & Kysely initialization
+├── schema.ts                  # TypeScript database schema
+└── migrations/                # Kysely migration files for schema changes
+```
+
+### Data-Related Scripts (`src/scripts/`)
+
+```
+src/scripts/
+└── seed.ts                    # Unified script for seeding initial data
+```
+
+## Component & File Organization Rules
+
+1. **Feature-based components** are the primary organizational unit.
+2. **Static reference components** are grouped under a `reference/` directory.
+3. **Database operations** should be handled within server-side logic or dedicated scripts, not directly in UI components.
+4. **Initial data seeding** is managed by a single, clear script.
 # File Structure & Component Organization
 
 ## Project Architecture

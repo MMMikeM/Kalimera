@@ -1,3 +1,95 @@
+---
+alwaysApply: true
+---
+
+# TypeScript Patterns & Type Safety
+
+## Core Type Safety Requirements
+
+This project enforces **complete type safety** throughout the application stack.
+
+## Database Type Patterns
+
+### Always Import Schema Types
+
+```typescript
+// Required imports for all database operations
+import {
+  Database,
+  Vocabulary, NewVocabulary, VocabularyUpdate,
+  NounDetails, NewNounDetails,
+  VerbDetails, NewVerbDetails
+} from '../schema';
+```
+
+### Type-Safe Query Patterns
+
+```typescript
+// Use proper Kysely types
+const vocabulary: Vocabulary[] = await db
+  .selectFrom('vocabulary')
+  .selectAll()
+  .where('category', '=', category)
+  .execute();
+
+// Transaction types
+await db.transaction().execute(async (trx: Transaction<Database>) => {
+  // trx operations
+});
+```
+
+## Route Type Patterns
+
+### TanStack Router Types
+
+```typescript
+import { createFileRoute } from '@tanstack/react-router'
+
+// Properly typed route with params
+export const Route = createFileRoute('/lessons/$categoryId/$lessonId')({
+  component: LessonComponent,
+  loader: async ({ params }) => {
+    // params.categoryId and params.lessonId are typed
+  },
+})
+```
+
+## Component Type Patterns
+
+### Props Interfaces
+
+```typescript
+interface VocabularyCardProps {
+  vocabulary: Vocabulary;  // Use database types
+  onUpdate?: (id: number, data: VocabularyUpdate) => void;
+}
+```
+
+### Greek Learning Domain Types
+
+```typescript
+// Use specific types for Greek learning concepts
+type PracticeMode = 'vocab_quiz' | 'weak_areas' | 'case_drill' | 'problem_words';
+type WordStatus = 'unprocessed' | 'processed';
+type WordDifficulty = 0 | 1 | 2; // New, Learning, Mastered
+```
+
+## Required Type Safety Rules
+
+1. **No `any` types** - use proper TypeScript types
+2. **Database operations** must use schema types
+3. **Route params** must be properly typed
+4. **Component props** must have interfaces
+5. **Greek text handling** - always specify string encoding
+6. **Query results** must be typed with schema types
+
+## Anti-Patterns
+
+❌ `any` type usage
+❌ Untyped database queries  
+❌ Missing component prop interfaces
+❌ Raw SQL without types
+❌ Untyped route parameters
 # TypeScript Patterns & Type Safety
 
 ## Core Type Safety Requirements
