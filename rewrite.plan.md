@@ -623,8 +623,11 @@ src/
 The goal of this stage is to build a fully functional, self-contained learning tool that you can start using immediately.
 
 - **Database Setup**:
-  - [ ] Implement the full schema in `docker-compose.yml` including `vocabulary` (with `status` and `example` fields) and the new `weak_areas` table.
+  - [x] Setup PostgreSQL service using `docker-compose.yml`.
+  - [x] Define the database connection, schema types, and initial migration file.
+  - [x] Create and successfully run the migration script to build the database schema.
 - **Data Migration**:
+  - [ ] Create a seeding script to populate the database from `src/constants/*.ts` files.
   - [ ] Update the `import-vocabulary.ts` script to import existing words and correctly set their `status` to `'processed'`.
 - **Quick Reference UI**:
   - [ ] Build the static `QuickReference` dashboard with its child components (`ArticlesAndCases`, `PronounGuide`, etc.).
