@@ -10,12 +10,12 @@ This project enforces **complete type safety** throughout the application stack.
 
 ```typescript
 // Required imports for all database operations
-import { 
+import {
+  Database,
   Vocabulary, NewVocabulary, VocabularyUpdate,
-  Lesson, NewLesson, LessonUpdate,
-  GrammarRule, NewGrammarRule 
+  NounDetails, NewNounDetails,
+  VerbDetails, NewVerbDetails
 } from '../schema';
-import { Database } from '../schema';
 ```
 
 ### Type-Safe Query Patterns
@@ -57,7 +57,7 @@ export const Route = createFileRoute('/lessons/$categoryId/$lessonId')({
 ```typescript
 interface VocabularyCardProps {
   vocabulary: Vocabulary;  // Use database types
-  onEdit?: (vocab: VocabularyUpdate) => void;
+  onUpdate?: (id: number, data: VocabularyUpdate) => void;
 }
 ```
 
@@ -65,9 +65,9 @@ interface VocabularyCardProps {
 
 ```typescript
 // Use specific types for Greek learning concepts
-type SectionType = 'vocabulary' | 'grammar' | 'examples' | 'notes';
-type QuestionType = 'multiple_choice' | 'translation' | 'fill_blank';
-type VerbPattern = 'Type A' | 'Type B' | 'Irregular';
+type PracticeMode = 'vocab_quiz' | 'weak_areas' | 'case_drill' | 'problem_words';
+type WordStatus = 'unprocessed' | 'processed';
+type WordDifficulty = 0 | 1 | 2; // New, Learning, Mastered
 ```
 
 ## Required Type Safety Rules
