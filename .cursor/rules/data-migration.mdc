@@ -1,3 +1,63 @@
+---
+alwaysApply: true
+---
+
+# Data Migration & Seeding Patterns
+
+## Migration Strategy
+
+Based on [rewrite.plan.md](mdc:rewrite.plan.md) - transform existing frontend data constants into our new relational PostgreSQL schema using a unified seeding script.
+
+## Current Data Sources
+
+- **Vocabulary**: ~470 words in `src/constants/vocabulary.ts` (`ALL_WORDS` array)
+- **Verb Conjugations**: 20+ verbs in `src/constants/verbs.ts`
+- **Article Forms**: System in `src/constants/articles.ts`
+
+## Seeding Structure
+
+### Unified Seeder (`src/scripts/seed.ts`)
+
+A single script responsible for populating all necessary tables. It should be idempotent, meaning it can be run multiple times without creating duplicate data.
+
+### Migration Logic
+
+```typescript
+// src/scripts/seed.ts
+import { db } from '../db';
+import { ALL_WORDS } from '../constants/vocabulary';
+import { VERBS } from '../constants/verbs';
+import { ARTICLES } from '../constants/articles';
+import { NewVocabulary, NewVerbDetails, NewNounDetails } from '../db/schema';
+
+async function seed() {
+  // 1. Seed Vocabulary
+  // Transform and insert words from ALL_WORDS, setting status to 'processed'
+  
+  // 2. Seed Noun Details
+  // For words identified as nouns, insert their grammatical details
+  
+  // 3. Seed Verb Details
+  // For words identified as verbs, insert their conjugation patterns
+}
+
+seed().catch((e) => {
+  console.error('Seeding failed:', e);
+  process.exit(1);
+});
+```
+
+## Data Transformation Rules
+
+1. **Source of Truth**: The `src/constants/*.ts` files are the initial source.
+2. **Idempotency**: The script should check if data exists before inserting to prevent duplicates (e.g., using `ON CONFLICT DO NOTHING`).
+3. **Status Field**: All vocabulary seeded from the constants must have its `status` set to `'processed'`.
+4. **Relational Linking**: The script must correctly associate `noun_details` and `verb_details` records with their parent `vocabulary` record.
+
+## Required Scripts
+
+- `pnpm db:seed` - Run the unified seeding script.
+- `pnpm db:reset` - A script to drop all tables, re-run migrations, and re-seed the database for a clean state.
 # Data Migration & Seeding Patterns
 
 ## Migration Strategy

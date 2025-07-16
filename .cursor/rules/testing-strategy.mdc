@@ -1,0 +1,10 @@
+---
+alwaysApply: true
+---
+# Testing Strategy
+
+This project prioritizes logic and data layer testing over UI testing.
+
+- **Focus on**: Unit and integration tests for business logic, data access, and API endpoints.
+- **Avoid**: End-to-end UI tests that simulate user interaction with the browser. Components should be tested based on their props and state, not their rendered output.
+- **Tools**: Use `vitest` for running tests.

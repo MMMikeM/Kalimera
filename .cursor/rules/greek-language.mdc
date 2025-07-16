@@ -1,3 +1,85 @@
+---
+alwaysApply: true
+---
+
+# Greek Language Patterns & Data Handling
+
+## Greek Text Requirements
+
+Based on existing data patterns in `src/constants/` and our new user-centric schema.
+
+## Vocabulary Data Structure
+
+### Core Vocabulary (`vocabulary` table)
+
+This is the central table for every word, phrase, or concept.
+
+```typescript
+interface Vocabulary {
+  id: Generated<number>;
+  greek_text: string;
+  english_translation: string;
+  pronunciation?: string;
+  category?: string; // e.g., 'family', 'food', 'directions', 'time'
+  example_greek?: string;
+  example_english?: string;
+  status: 'unprocessed' | 'processed';
+  // ... learning metric fields like difficulty_level, mistake_count, etc.
+}
+```
+
+### Noun Details (`noun_details` table)
+
+Grammatical information linked to a vocabulary entry of type 'noun'.
+
+```typescript
+interface NounDetails {
+  vocab_id: number; // Foreign key to vocabulary.id
+  gender: 'masculine' | 'feminine' | 'neuter';
+  // ... fields for nominative, accusative, genitive cases (singular & plural)
+}
+```
+
+### Verb Details (`verb_details` table)
+
+Grammatical information linked to a vocabulary entry of type 'verb'.
+
+```typescript
+interface VerbDetails {
+  vocab_id: number; // Foreign key to vocabulary.id
+  conjugation_family: string; // e.g., '-ω', '-ομαι'
+  present_forms?: Record<string, string>; // JSONB: { ego: "κάνω", esy: "κάνεις" }
+}
+```
+
+## Pronunciation Guidelines
+
+### Transliteration
+
+When seeding or processing words, a consistent transliteration should be applied to generate the `pronunciation` field.
+
+```typescript
+const pronunciationMap = new Map([
+  ['έξω', 'exo'],
+  ['μέσα', 'mesa'],
+  // ... more mappings
+]);
+```
+
+## Data Handling Rules
+
+1. **Preserve Greek characters** with proper UTF-8 encoding.
+2. **User-centric categories**: Use practical categories like 'food', 'family', 'travel', not abstract grammatical ones.
+3. **Context is key**: Always strive to include `example_greek` and `example_english` sentences.
+4. **Link grammatical details**: Ensure `noun_details` and `verb_details` are correctly linked to a `vocabulary` entry.
+5. **Status management**: Words enter as `'unprocessed'` and are moved to `'processed'` after enrichment.
+
+## Required Patterns
+
+- All `greek_text` should be validated or sanitized.
+- The `pronunciation` field should be generated for new words if possible.
+- Link vocabulary to its specific grammatical details.
+- Categorize content for effective filtering and practice.
 # Greek Language Patterns & Data Handling
 
 ## Greek Text Requirements

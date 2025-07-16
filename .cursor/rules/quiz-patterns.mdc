@@ -1,3 +1,86 @@
+---
+alwaysApply: true
+---
+
+# Practice & Learning Patterns
+
+## Practice System Architecture
+
+Based on [rewrite.plan.md](mdc:rewrite.plan.md), the system is centered on user-driven practice sessions that target specific learning goals, such as mastering new vocabulary, drilling problem words, or focusing on identified weak areas.
+
+## Core Data Structures
+
+### Practice Session (`practice_sessions` table)
+
+A record of a single practice activity.
+
+```typescript
+interface PracticeSession {
+  id: Generated<number>;
+  session_type: 'vocab_quiz' | 'case_drill' | 'problem_words' | 'weak_area_focus';
+  category?: string; // e.g., 'food', 'travel'
+  focus_area?: string; // e.g., 'accusative_singular', 'feminine_nouns'
+  // ... metrics like total_questions, correct_answers, timestamps
+}
+```
+
+### Practice Attempt (`practice_attempts` table)
+
+A record of a single question-and-answer attempt within a session.
+
+```typescript
+interface PracticeAttempt {
+  id: Generated<number>;
+  session_id: number;
+  vocabulary_id: number; // The word being tested
+  question_text: string;
+  correct_answer: string;
+  user_answer: string;
+  is_correct: boolean;
+}
+```
+
+### Weak Area (`weak_areas` table)
+
+An aggregated table, populated by analyzing incorrect `practice_attempts`, that identifies specific grammatical concepts the user struggles with.
+
+```typescript
+interface WeakArea {
+  id: Generated<number>;
+  area_type: 'case' | 'gender' | 'verb_family';
+  area_identifier: string; // e.g., 'genitive_plural', 'neuter', '-ομαι'
+  mistake_count: number;
+}
+```
+
+## Practice Generation Patterns
+
+### From Vocabulary Data
+
+Practice questions should be generated dynamically from the user's `vocabulary` table based on the chosen `session_type`.
+
+- **New Words**: Quiz on words with `difficulty_level: 0`.
+- **Problem Words**: Quiz on words where `is_problem_word: true`.
+- **Category Focus**: Quiz on words from a specific `category`.
+
+### From Weak Area Data
+
+When the `session_type` is `'weak_area_focus'`, the practice session should generate questions that specifically target the concepts identified in the `weak_areas` table. For example, if "accusative singular" is a weak area, the system should generate drills asking the user to provide the correct accusative form for various nouns.
+
+## Learning Progression
+
+Progression is managed directly on the `vocabulary` table through user actions and practice results.
+
+- **Difficulty Level**: The user can manually set a word's difficulty (`new`, `learning`, `mastered`). This can also be updated automatically based on quiz performance.
+- **Problem Words**: The user can manually flag a word as a problem. This can also be done automatically after repeated incorrect answers.
+- **Mistake Count**: The `mistake_count` on a vocabulary item is incremented with each incorrect `practice_attempt`.
+
+## Required Implementation Patterns
+
+1. **Dynamic Generation**: Practice questions are generated on-the-fly from the user's data, not stored in a separate quiz table.
+2. **Feedback Loop**: The results of `practice_attempts` must feed back into the system by updating the `vocabulary` table's learning metrics and populating the `weak_areas` table.
+3. **User-Driven Focus**: The user should always be in control of what they want to practice.
+4. **Simplicity**: The system should avoid the complexity of pre-defined quizzes and focus on flexible, targeted drills.
 # Practice & Learning Patterns
 
 ## Practice System Architecture
