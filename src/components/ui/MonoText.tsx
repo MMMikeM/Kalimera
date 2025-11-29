@@ -1,5 +1,5 @@
-import { tv } from "tailwind-variants";
 import type { ReactNode } from "react";
+import { tv } from "tailwind-variants";
 
 export const monoTextVariants = tv({
 	base: "font-mono tracking-wide leading-relaxed",

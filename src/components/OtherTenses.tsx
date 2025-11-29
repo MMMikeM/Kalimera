@@ -1,4 +1,4 @@
-import React from "react";
+import type React from "react";
 import { FUTURE_TENSE_EXAMPLES, PAST_TENSE_EXAMPLES } from "../constants/verbs";
 import { InfoBox, Table } from "./ui";
 

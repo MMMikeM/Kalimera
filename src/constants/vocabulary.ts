@@ -1,10 +1,10 @@
 import type {
-	WordInfo,
-	TimeOfDay,
 	FrequencyAdverb,
 	LikeConstruction,
-	VocabularyItem,
+	TimeOfDay,
 	TransportationData,
+	VocabularyItem,
+	WordInfo,
 } from "../types/greek-reference";
 
 // Comprehensive vocabulary for search functionality
@@ -155,7 +155,7 @@ export const ALL_WORDS: WordInfo[] = [
 	{
 		id: "v-fotografizo",
 		greek: "φωτογραφίζω",
-		english: "to take picture",
+		english: "to take a picture",
 		type: "verb",
 		family: "-ω",
 	},

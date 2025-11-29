@@ -1,6 +1,6 @@
-import { tv } from "tailwind-variants";
 import { Search } from "lucide-react";
 import type { ReactNode } from "react";
+import { tv } from "tailwind-variants";
 
 export const searchInputVariants = tv({
 	base: "relative",

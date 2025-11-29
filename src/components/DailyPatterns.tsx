@@ -1,7 +1,7 @@
-import React from "react";
 import { Lightbulb, Target } from "lucide-react";
+import type React from "react";
 import { CASE_EXAMPLES } from "../constants/articles";
-import { Card, InfoBox, Badge, MonoText } from "./ui";
+import { Badge, Card, InfoBox, MonoText } from "./ui";
 
 const DailyPatterns: React.FC = () => {
 	return (
@@ -21,8 +21,10 @@ const DailyPatterns: React.FC = () => {
 					</Badge>
 				</div>
 				<InfoBox variant="success" title="Learning Strategy" className="mb-6">
-					Master these high-frequency patterns first! They appear in 80% of daily conversations. 
-					Focus on <strong>recognition over memorization</strong> - see the pattern, understand the context.
+					Master these high-frequency patterns first! They appear in 80% of
+					daily conversations. Focus on{" "}
+					<strong>recognition over memorization</strong> - see the pattern,
+					understand the context.
 				</InfoBox>
 			</Card>
 
@@ -269,11 +271,7 @@ const DailyPatterns: React.FC = () => {
 								},
 							].map((example, index) => (
 								<div key={index} className="p-3 bg-amber-100 rounded-lg">
-									<MonoText
-										variant="warning"
-										size="lg"
-										className="block mb-1"
-									>
+									<MonoText variant="warning" size="lg" className="block mb-1">
 										{example.greek}
 									</MonoText>
 									<div className="text-gray-700 text-sm mb-1">
@@ -299,26 +297,48 @@ const DailyPatterns: React.FC = () => {
 				className="bg-gradient-to-r from-purple-50 to-violet-50 border-2 border-purple-200"
 			>
 				<h2 className="text-xl font-bold text-center mb-4 text-purple-800 flex items-center justify-center gap-2">
-					<Target size={20} />
-					💪 Practice Strategy
+					<Target size={20} />💪 Practice Strategy
 				</h2>
 				<div className="grid md:grid-cols-2 gap-6">
 					<div>
-						<h3 className="text-lg font-bold text-purple-700 mb-3">✨ Daily Practice</h3>
+						<h3 className="text-lg font-bold text-purple-700 mb-3">
+							✨ Daily Practice
+						</h3>
 						<ul className="space-y-2 text-sm text-gray-700">
-							<li>• Start with <strong>one theme per day</strong> (Coffee & Food Monday, etc.)</li>
-							<li>• <strong>Say examples out loud</strong> - hearing helps memory</li>
-							<li>• <strong>Focus on context</strong> - when would you say this?</li>
-							<li>• <strong>Notice the "why"</strong> hints - they build pattern recognition</li>
+							<li>
+								• Start with <strong>one theme per day</strong> (Coffee & Food
+								Monday, etc.)
+							</li>
+							<li>
+								• <strong>Say examples out loud</strong> - hearing helps memory
+							</li>
+							<li>
+								• <strong>Focus on context</strong> - when would you say this?
+							</li>
+							<li>
+								• <strong>Notice the "why"</strong> hints - they build pattern
+								recognition
+							</li>
 						</ul>
 					</div>
 					<div>
-						<h3 className="text-lg font-bold text-purple-700 mb-3">🎯 Next Steps</h3>
+						<h3 className="text-lg font-bold text-purple-700 mb-3">
+							🎯 Next Steps
+						</h3>
 						<ul className="space-y-2 text-sm text-gray-700">
-							<li>• When confused, check <strong>"Core Rules"</strong> tab for grammar</li>
-							<li>• Use <strong>"Case Practice"</strong> to test yourself</li>
-							<li>• Try <strong>"Search Words"</strong> to find specific examples</li>
-							<li>• Remember: <strong>patterns over memorization!</strong></li>
+							<li>
+								• When confused, check <strong>"Core Rules"</strong> tab for
+								grammar
+							</li>
+							<li>
+								• Use <strong>"Case Practice"</strong> to test yourself
+							</li>
+							<li>
+								• Try <strong>"Search Words"</strong> to find specific examples
+							</li>
+							<li>
+								• Remember: <strong>patterns over memorization!</strong>
+							</li>
 						</ul>
 					</div>
 				</div>
@@ -330,11 +350,12 @@ const DailyPatterns: React.FC = () => {
 				title="Need the Grammar Rules?"
 				icon={<Lightbulb size={18} />}
 			>
-				Confused about why we use τον vs την vs το? Head to the <strong>"Core Rules"</strong> tab 
-				for the complete grammar reference, then come back here to practice!
+				Confused about why we use τον vs την vs το? Head to the{" "}
+				<strong>"Core Rules"</strong> tab for the complete grammar reference,
+				then come back here to practice!
 			</InfoBox>
 		</div>
 	);
 };
 
-export default DailyPatterns; 
+export default DailyPatterns;

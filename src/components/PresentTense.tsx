@@ -1,5 +1,5 @@
-import React from "react";
 import { Lightbulb } from "lucide-react";
+import type React from "react";
 import { VERB_CONJUGATIONS } from "../constants/verbs";
 import type { VerbConjugation } from "../types/greek-reference";
 import { Card, InfoBox, MonoText, Table } from "./ui";

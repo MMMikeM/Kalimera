@@ -1,7 +1,7 @@
-import React from "react";
 import { Lightbulb } from "lucide-react";
+import type React from "react";
 import { CASE_RECOGNITION, COMMON_MISTAKES } from "../constants/recognition";
-import { Card, InfoBox, Badge, MonoText } from "./ui";
+import { Badge, Card, InfoBox, MonoText } from "./ui";
 
 const CasePractice: React.FC = () => {
 	return (
