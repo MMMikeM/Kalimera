@@ -1,6 +1,6 @@
+import type { ReactNode } from "react";
 import React from "react";
 import { tv } from "tailwind-variants";
-import type { ReactNode } from "react";
 
 export const tableVariants = tv({
 	base: "w-full border-collapse overflow-hidden",

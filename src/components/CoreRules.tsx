@@ -1,9 +1,9 @@
-import React from "react";
-import { Lightbulb, Target, AlertCircle } from "lucide-react";
-import { 
-	DEFINITE_ARTICLES, 
-	ARTICLE_FORMULAS, 
-	MOVABLE_NU_RULE 
+import { AlertCircle, Lightbulb, Target } from "lucide-react";
+import type React from "react";
+import {
+	ARTICLE_FORMULAS,
+	DEFINITE_ARTICLES,
+	MOVABLE_NU_RULE,
 } from "../constants/articles";
 import { CASE_RECOGNITION } from "../constants/recognition";
 import type { ArticleForm } from "../types/greek-reference";
@@ -61,7 +61,8 @@ const CoreRules: React.FC = () => {
 				icon={<Lightbulb size={20} />}
 			>
 				These are all forms of "the" - they change based on gender, number, and
-				case! This is your definitive reference for understanding the Greek article system.
+				case! This is your definitive reference for understanding the Greek
+				article system.
 			</InfoBox>
 
 			{/* Essential Formulas - Critical for Understanding */}
@@ -88,7 +89,12 @@ const CoreRules: React.FC = () => {
 							</div>
 							<div className="space-y-1">
 								{formula.examples.map((example, i) => (
-									<MonoText key={i} variant="success" size="sm" className="block">
+									<MonoText
+										key={i}
+										variant="success"
+										size="sm"
+										className="block"
+									>
 										{example}
 									</MonoText>
 								))}
@@ -136,8 +142,7 @@ const CoreRules: React.FC = () => {
 				className="bg-gradient-to-r from-amber-50 to-yellow-50 border-2 border-amber-200"
 			>
 				<h2 className="text-xl font-bold text-center mb-4 text-amber-800 flex items-center justify-center gap-2">
-					<Target size={20} />
-					🔍 Quick Spot Check - Instant Recognition
+					<Target size={20} />🔍 Quick Spot Check - Instant Recognition
 				</h2>
 				<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
 					{CASE_RECOGNITION.quickSpotCheck?.map((check, index) => (
@@ -153,7 +158,12 @@ const CoreRules: React.FC = () => {
 							</div>
 							<div className="space-y-1">
 								{check.examples.map((example, i) => (
-									<MonoText key={i} variant="warning" size="sm" className="block">
+									<MonoText
+										key={i}
+										variant="warning"
+										size="sm"
+										className="block"
+									>
 										{example}
 									</MonoText>
 								))}
@@ -170,8 +180,7 @@ const CoreRules: React.FC = () => {
 				className="bg-gradient-to-r from-slate-50 to-gray-50 border-2 border-slate-200"
 			>
 				<h2 className="text-xl font-bold text-center mb-4 text-slate-800 flex items-center justify-center gap-2">
-					<AlertCircle size={20} />
-					📝 The -ν Rule: When to Keep, When to Drop
+					<AlertCircle size={20} />📝 The -ν Rule: When to Keep, When to Drop
 				</h2>
 				<InfoBox
 					variant="info"
@@ -188,7 +197,10 @@ const CoreRules: React.FC = () => {
 						</h3>
 						<div className="space-y-3">
 							{MOVABLE_NU_RULE.examples.keep.map((example, index) => (
-								<div key={index} className="p-3 bg-green-100 rounded-lg border border-green-200">
+								<div
+									key={index}
+									className="p-3 bg-green-100 rounded-lg border border-green-200"
+								>
 									<MonoText variant="success" size="lg" className="block mb-1">
 										{example.text}
 									</MonoText>
@@ -205,7 +217,10 @@ const CoreRules: React.FC = () => {
 						</h3>
 						<div className="space-y-3">
 							{MOVABLE_NU_RULE.examples.drop.map((example, index) => (
-								<div key={index} className="p-3 bg-red-100 rounded-lg border border-red-200">
+								<div
+									key={index}
+									className="p-3 bg-red-100 rounded-lg border border-red-200"
+								>
 									<MonoText variant="error" size="lg" className="block mb-1">
 										{example.text}
 									</MonoText>
@@ -225,11 +240,12 @@ const CoreRules: React.FC = () => {
 				title="Using This Reference"
 				icon={<Target size={18} />}
 			>
-				This page is your grammar rulebook. Once you understand these patterns, 
-				head to <strong>"Daily Patterns"</strong> to see them in action with real examples!
+				This page is your grammar rulebook. Once you understand these patterns,
+				head to <strong>"Daily Patterns"</strong> to see them in action with
+				real examples!
 			</InfoBox>
 		</div>
 	);
 };
 
-export default CoreRules; 
+export default CoreRules;

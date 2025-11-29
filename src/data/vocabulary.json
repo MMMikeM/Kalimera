@@ -1,0 +1,647 @@
+[
+	{
+		"greek_text": "κάνω",
+		"english_translation": "to do/make",
+		"word_type": "verb"
+	},
+	{
+		"greek_text": "είμαι",
+		"english_translation": "to be",
+		"word_type": "verb"
+	},
+	{
+		"greek_text": "έχω",
+		"english_translation": "to have",
+		"word_type": "verb"
+	},
+	{
+		"greek_text": "έρχομαι",
+		"english_translation": "to come",
+		"word_type": "verb"
+	},
+	{
+		"greek_text": "θυμάμαι",
+		"english_translation": "to remember",
+		"word_type": "verb"
+	},
+	{
+		"greek_text": "πάω",
+		"english_translation": "to go",
+		"word_type": "verb"
+	},
+	{
+		"greek_text": "λέω",
+		"english_translation": "to say",
+		"word_type": "verb"
+	},
+	{
+		"greek_text": "τρώω",
+		"english_translation": "to eat",
+		"word_type": "verb"
+	},
+	{
+		"greek_text": "μένω",
+		"english_translation": "to stay/live",
+		"word_type": "verb"
+	},
+	{
+		"greek_text": "οδηγώ",
+		"english_translation": "to drive",
+		"word_type": "verb"
+	},
+	{
+		"greek_text": "ζω",
+		"english_translation": "to live",
+		"word_type": "verb"
+	},
+	{
+		"greek_text": "αργώ",
+		"english_translation": "to be late",
+		"word_type": "verb"
+	},
+	{
+		"greek_text": "τηλεφωνώ",
+		"english_translation": "to phone",
+		"word_type": "verb"
+	},
+	{
+		"greek_text": "ξυπνάω",
+		"english_translation": "to wake up",
+		"word_type": "verb"
+	},
+	{
+		"greek_text": "κολυμπάω",
+		"english_translation": "to swim",
+		"word_type": "verb"
+	},
+	{
+		"greek_text": "φοράω",
+		"english_translation": "to wear",
+		"word_type": "verb"
+	},
+	{
+		"greek_text": "πηγαίνω",
+		"english_translation": "to go",
+		"word_type": "verb"
+	},
+	{
+		"greek_text": "κοιμάμαι",
+		"english_translation": "to sleep",
+		"word_type": "verb"
+	},
+	{
+		"greek_text": "λυπάμαι",
+		"english_translation": "to feel sorry",
+		"word_type": "verb"
+	},
+	{
+		"greek_text": "φοβάμαι",
+		"english_translation": "to be afraid",
+		"word_type": "verb"
+	},
+	{
+		"greek_text": "γίνομαι",
+		"english_translation": "to become",
+		"word_type": "verb"
+	},
+	{
+		"greek_text": "σκέφτομαι",
+		"english_translation": "to think",
+		"word_type": "verb"
+	},
+	{
+		"greek_text": "φωτογραφίζω",
+		"english_translation": "to take a picture",
+		"word_type": "verb"
+	},
+	{
+		"greek_text": "χαλαρώνω",
+		"english_translation": "to relax/chill",
+		"word_type": "verb"
+	},
+	{
+		"greek_text": "ταξιδεύω",
+		"english_translation": "to travel",
+		"word_type": "verb"
+	},
+	{
+		"greek_text": "κάθομαι",
+		"english_translation": "to sit",
+		"word_type": "verb"
+	},
+	{
+		"greek_text": "ακούω",
+		"english_translation": "to listen/hear",
+		"word_type": "verb"
+	},
+	{
+		"greek_text": "παίρνω",
+		"english_translation": "to take",
+		"word_type": "verb"
+	},
+	{
+		"greek_text": "περνάω",
+		"english_translation": "to cross/spend",
+		"word_type": "verb"
+	},
+	{
+		"greek_text": "ξεκινάω",
+		"english_translation": "to start/depart",
+		"word_type": "verb"
+	},
+	{
+		"greek_text": "φεύγω",
+		"english_translation": "to leave",
+		"word_type": "verb"
+	},
+	{
+		"greek_text": "περιμένω",
+		"english_translation": "to wait",
+		"word_type": "verb"
+	},
+	{
+		"greek_text": "δουλεύω",
+		"english_translation": "to work",
+		"word_type": "verb"
+	},
+	{
+		"greek_text": "ο",
+		"english_translation": "the (masc.)",
+		"word_type": "article"
+	},
+	{
+		"greek_text": "η",
+		"english_translation": "the (fem.)",
+		"word_type": "article"
+	},
+	{
+		"greek_text": "το",
+		"english_translation": "the (neut.)",
+		"word_type": "article"
+	},
+	{
+		"greek_text": "τον",
+		"english_translation": "the (masc. acc.)",
+		"word_type": "article"
+	},
+	{
+		"greek_text": "την",
+		"english_translation": "the (fem. acc.)",
+		"word_type": "article"
+	},
+	{
+		"greek_text": "τους",
+		"english_translation": "the (masc. pl. acc.)",
+		"word_type": "article"
+	},
+	{
+		"greek_text": "τις",
+		"english_translation": "the (fem. pl. acc.)",
+		"word_type": "article"
+	},
+	{
+		"greek_text": "τα",
+		"english_translation": "the (neut. pl.)",
+		"word_type": "article"
+	},
+	{
+		"greek_text": "ποτέ",
+		"english_translation": "never",
+		"word_type": "adverb"
+	},
+	{
+		"greek_text": "σχεδόν ποτέ",
+		"english_translation": "almost never",
+		"word_type": "adverb"
+	},
+	{
+		"greek_text": "σπάνια",
+		"english_translation": "rarely",
+		"word_type": "adverb"
+	},
+	{
+		"greek_text": "καμιά φορά",
+		"english_translation": "sometimes",
+		"word_type": "phrase"
+	},
+	{
+		"greek_text": "κάπου κάπου",
+		"english_translation": "from time to time",
+		"word_type": "phrase"
+	},
+	{
+		"greek_text": "πότε πότε",
+		"english_translation": "occasionally",
+		"word_type": "phrase"
+	},
+	{
+		"greek_text": "μερικές φορές",
+		"english_translation": "sometimes",
+		"word_type": "phrase"
+	},
+	{
+		"greek_text": "συχνά",
+		"english_translation": "often",
+		"word_type": "adverb"
+	},
+	{
+		"greek_text": "πολλές φορές",
+		"english_translation": "many times",
+		"word_type": "phrase"
+	},
+	{
+		"greek_text": "συνήθως",
+		"english_translation": "usually",
+		"word_type": "adverb"
+	},
+	{
+		"greek_text": "σχεδόν πάντα",
+		"english_translation": "almost always",
+		"word_type": "adverb"
+	},
+	{
+		"greek_text": "πάντα",
+		"english_translation": "always",
+		"word_type": "adverb"
+	},
+	{
+		"greek_text": "μου αρέσει",
+		"english_translation": "I like (one thing)",
+		"word_type": "phrase"
+	},
+	{
+		"greek_text": "μου αρέσουν",
+		"english_translation": "I like (multiple things)",
+		"word_type": "phrase"
+	},
+	{
+		"greek_text": "σου αρέσει",
+		"english_translation": "you like (one thing)",
+		"word_type": "phrase"
+	},
+	{
+		"greek_text": "του αρέσει",
+		"english_translation": "he/it likes",
+		"word_type": "phrase"
+	},
+	{
+		"greek_text": "της αρέσει",
+		"english_translation": "she/it likes",
+		"word_type": "phrase"
+	},
+	{
+		"greek_text": "το καλοκαίρι",
+		"english_translation": "summer",
+		"word_type": "noun"
+	},
+	{
+		"greek_text": "η θάλασσα",
+		"english_translation": "sea",
+		"word_type": "noun"
+	},
+	{
+		"greek_text": "η παραλία",
+		"english_translation": "beach",
+		"word_type": "noun"
+	},
+	{
+		"greek_text": "ο ήλιος",
+		"english_translation": "sun",
+		"word_type": "noun"
+	},
+	{
+		"greek_text": "η ζέστη",
+		"english_translation": "the heat/warmth",
+		"word_type": "noun"
+	},
+	{
+		"greek_text": "το ξενοδοχείο",
+		"english_translation": "hotel",
+		"word_type": "noun"
+	},
+	{
+		"greek_text": "το ταξίδι",
+		"english_translation": "trip/journey",
+		"word_type": "noun"
+	},
+	{
+		"greek_text": "η ξαπλώστρα",
+		"english_translation": "sunbed",
+		"word_type": "noun"
+	},
+	{
+		"greek_text": "το μαγιό",
+		"english_translation": "swimming costume",
+		"word_type": "noun"
+	},
+	{
+		"greek_text": "το καπέλο",
+		"english_translation": "hat",
+		"word_type": "noun"
+	},
+	{
+		"greek_text": "η βαλίτσα",
+		"english_translation": "suitcase",
+		"word_type": "noun"
+	},
+	{
+		"greek_text": "το παγωτό",
+		"english_translation": "ice cream",
+		"word_type": "noun"
+	},
+	{
+		"greek_text": "το ροδάκινο",
+		"english_translation": "peach",
+		"word_type": "noun"
+	},
+	{
+		"greek_text": "το ψάρι",
+		"english_translation": "fish",
+		"word_type": "noun"
+	},
+	{
+		"greek_text": "το καρπούζι",
+		"english_translation": "watermelon",
+		"word_type": "noun"
+	},
+	{
+		"greek_text": "το πεπόνι",
+		"english_translation": "melon",
+		"word_type": "noun"
+	},
+	{
+		"greek_text": "κάθε μέρα",
+		"english_translation": "every day",
+		"word_type": "phrase"
+	},
+	{
+		"greek_text": "η μέρα",
+		"english_translation": "day",
+		"word_type": "noun"
+	},
+	{
+		"greek_text": "το μεσημέρι",
+		"english_translation": "midday",
+		"word_type": "noun"
+	},
+	{
+		"greek_text": "το απόγευμα",
+		"english_translation": "afternoon",
+		"word_type": "noun"
+	},
+	{
+		"greek_text": "το βράδυ",
+		"english_translation": "evening",
+		"word_type": "noun"
+	},
+	{
+		"greek_text": "η νύχτα",
+		"english_translation": "night",
+		"word_type": "noun"
+	},
+	{
+		"greek_text": "οι διακοπές",
+		"english_translation": "holidays",
+		"word_type": "noun"
+	},
+	{
+		"greek_text": "πότε",
+		"english_translation": "when (question)",
+		"word_type": "adverb"
+	},
+	{
+		"greek_text": "πού",
+		"english_translation": "where",
+		"word_type": "adverb"
+	},
+	{
+		"greek_text": "τι",
+		"english_translation": "what",
+		"word_type": "pronoun"
+	},
+	{
+		"greek_text": "που",
+		"english_translation": "that/which/who",
+		"word_type": "conjunction"
+	},
+	{
+		"greek_text": "καλημέρα",
+		"english_translation": "good morning",
+		"word_type": "phrase"
+	},
+	{
+		"greek_text": "ευχαριστώ",
+		"english_translation": "thank you",
+		"word_type": "phrase"
+	},
+	{
+		"greek_text": "παρακαλώ",
+		"english_translation": "please/you're welcome",
+		"word_type": "phrase"
+	},
+	{
+		"greek_text": "ναι",
+		"english_translation": "yes",
+		"word_type": "adverb"
+	},
+	{
+		"greek_text": "όχι",
+		"english_translation": "no",
+		"word_type": "adverb"
+	},
+	{
+		"greek_text": "φυσικά",
+		"english_translation": "of course",
+		"word_type": "phrase"
+	},
+	{
+		"greek_text": "επίσης",
+		"english_translation": "also",
+		"word_type": "adverb"
+	},
+	{
+		"greek_text": "κάτι",
+		"english_translation": "something",
+		"word_type": "pronoun"
+	},
+	{
+		"greek_text": "τα πάντα",
+		"english_translation": "everything",
+		"word_type": "phrase"
+	},
+	{
+		"greek_text": "ότι",
+		"english_translation": "that",
+		"word_type": "conjunction"
+	},
+	{
+		"greek_text": "ό,τι",
+		"english_translation": "whatever",
+		"word_type": "pronoun"
+	},
+	{
+		"greek_text": "όλα",
+		"english_translation": "everything",
+		"word_type": "pronoun"
+	},
+	{
+		"greek_text": "τι γίνεται",
+		"english_translation": "what's happening",
+		"word_type": "phrase"
+	},
+	{
+		"greek_text": "τα λέμε",
+		"english_translation": "see ya later",
+		"word_type": "phrase"
+	},
+	{
+		"greek_text": "αργά",
+		"english_translation": "late",
+		"word_type": "adverb"
+	},
+	{
+		"greek_text": "πάρα πολύ",
+		"english_translation": "very much",
+		"word_type": "phrase"
+	},
+	{
+		"greek_text": "ζωηρός",
+		"english_translation": "full of life",
+		"word_type": "adjective"
+	},
+	{
+		"greek_text": "άτακτος",
+		"english_translation": "naughty",
+		"word_type": "adjective"
+	},
+	{
+		"greek_text": "μικρός",
+		"english_translation": "small",
+		"word_type": "adjective"
+	},
+	{
+		"greek_text": "μεγάλος",
+		"english_translation": "big",
+		"word_type": "adjective"
+	},
+	{
+		"greek_text": "όταν",
+		"english_translation": "when (conjunction)",
+		"word_type": "conjunction"
+	},
+	{
+		"greek_text": "τι ώρα είναι",
+		"english_translation": "what time is it",
+		"word_type": "phrase"
+	},
+	{
+		"greek_text": "η ώρα",
+		"english_translation": "the time/hour",
+		"word_type": "noun"
+	},
+	{
+		"greek_text": "ακριβώς",
+		"english_translation": "exactly",
+		"word_type": "adverb"
+	},
+	{
+		"greek_text": "τέταρτο",
+		"english_translation": "quarter",
+		"word_type": "noun"
+	},
+	{
+		"greek_text": "μισή",
+		"english_translation": "half",
+		"word_type": "adjective"
+	},
+	{
+		"greek_text": "παρά",
+		"english_translation": "minus/to (time)",
+		"word_type": "preposition"
+	},
+	{
+		"greek_text": "και",
+		"english_translation": "and / also / past (time)",
+		"word_type": "conjunction"
+	},
+	{
+		"greek_text": "στη μία",
+		"english_translation": "at one o'clock",
+		"word_type": "phrase"
+	},
+	{
+		"greek_text": "στις τρεις",
+		"english_translation": "at three o'clock",
+		"word_type": "phrase"
+	},
+	{
+		"greek_text": "στις τέσσερις",
+		"english_translation": "at four o'clock",
+		"word_type": "phrase"
+	},
+	{
+		"greek_text": "το τρένο",
+		"english_translation": "train",
+		"word_type": "noun"
+	},
+	{
+		"greek_text": "το ταξί",
+		"english_translation": "taxi",
+		"word_type": "noun"
+	},
+	{
+		"greek_text": "ο ταξιτζής",
+		"english_translation": "taxi driver",
+		"word_type": "noun"
+	},
+	{
+		"greek_text": "το αεροπλάνο",
+		"english_translation": "airplane",
+		"word_type": "noun"
+	},
+	{
+		"greek_text": "το τρόλεϊ",
+		"english_translation": "trolley",
+		"word_type": "noun"
+	},
+	{
+		"greek_text": "το ταξιδιωτικό γραφείο",
+		"english_translation": "travel agency",
+		"word_type": "phrase"
+	},
+	{
+		"greek_text": "η φίλη",
+		"english_translation": "girlfriend/female friend",
+		"word_type": "noun"
+	},
+	{
+		"greek_text": "το μάθημα",
+		"english_translation": "lesson/class",
+		"word_type": "noun"
+	},
+	{
+		"greek_text": "ελληνικά",
+		"english_translation": "Greek (language)",
+		"word_type": "noun"
+	},
+	{
+		"greek_text": "το διάλειμμα",
+		"english_translation": "break/recess",
+		"word_type": "noun"
+	},
+	{
+		"greek_text": "το πρωί",
+		"english_translation": "morning",
+		"word_type": "noun"
+	},
+	{
+		"greek_text": "το βράδυ",
+		"english_translation": "evening",
+		"word_type": "noun"
+	},
+	{
+		"greek_text": "η νύχτα",
+		"english_translation": "night",
+		"word_type": "noun"
+	}
+]

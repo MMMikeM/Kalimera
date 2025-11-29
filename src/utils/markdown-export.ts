@@ -1,32 +1,30 @@
 // Articles and cases
 import {
-	DEFINITE_ARTICLES,
 	CASE_EXAMPLES,
+	DEFINITE_ARTICLES,
 	PREPOSITION_PATTERNS,
 } from "../constants/articles";
-
+// Recognition and learning aids
+import { CASE_RECOGNITION, COMMON_MISTAKES } from "../constants/recognition";
 // Verbs
 import {
-	VERB_CONJUGATIONS,
 	FUTURE_TENSE_EXAMPLES,
 	PAST_TENSE_EXAMPLES,
 	VERB_CATEGORIES,
+	VERB_CONJUGATIONS,
 } from "../constants/verbs";
-
-// Recognition and learning aids
-import { CASE_RECOGNITION, COMMON_MISTAKES } from "../constants/recognition";
 
 // Vocabulary
 import {
-	TIMES_OF_DAY,
+	COLORS,
 	FREQUENCY_ADVERBS,
 	LIKES_CONSTRUCTION,
+	NUMBERS,
 	SUMMER_VOCABULARY,
 	TIME_EXPRESSIONS,
-	NUMBERS,
-	COLORS,
-	USEFUL_EXPRESSIONS,
+	TIMES_OF_DAY,
 	TRANSPORTATION,
+	USEFUL_EXPRESSIONS,
 } from "../constants/vocabulary";
 import type { ArticleForm, VerbConjugation } from "../types/greek-reference";
 

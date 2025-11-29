@@ -1,4 +1,4 @@
-import type { TabInfo, TabId } from "../types/greek-reference";
+import type { TabId, TabInfo } from "../types/greek-reference";
 
 // Navigation tabs configuration
 export const TABS: TabInfo[] = [

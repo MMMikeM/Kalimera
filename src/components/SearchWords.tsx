@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import type React from "react";
+import { useState } from "react";
 import { ALL_WORDS } from "../constants/vocabulary";
 import type { WordInfo } from "../types/greek-reference";
-import { InfoBox, Badge, MonoText, SearchInput } from "./ui";
+import { Badge, InfoBox, MonoText, SearchInput } from "./ui";
 
 const SearchWords: React.FC = () => {
 	const [searchTerm, setSearchTerm] = useState("");

@@ -1,15 +1,15 @@
-import React from "react";
+import type React from "react";
 import { VERB_CATEGORIES } from "../constants/verbs";
 import {
-	TIMES_OF_DAY,
+	COLORS,
 	FREQUENCY_ADVERBS,
 	LIKES_CONSTRUCTION,
+	NUMBERS,
 	SUMMER_VOCABULARY,
 	TIME_EXPRESSIONS,
-	NUMBERS,
-	COLORS,
-	USEFUL_EXPRESSIONS,
+	TIMES_OF_DAY,
 	TRANSPORTATION,
+	USEFUL_EXPRESSIONS,
 } from "../constants/vocabulary";
 import { InfoBox } from "./ui";
 

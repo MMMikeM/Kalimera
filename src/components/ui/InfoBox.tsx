@@ -1,5 +1,5 @@
-import { tv } from "tailwind-variants";
 import type { ReactNode } from "react";
+import { tv } from "tailwind-variants";
 
 export const infoBoxVariants = tv({
 	base: "p-6 rounded-xl border-l-4 backdrop-blur-sm relative overflow-hidden",

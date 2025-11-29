@@ -1,7 +1,7 @@
-import React from "react";
 import { Lightbulb } from "lucide-react";
+import type React from "react";
 import { CASE_EXAMPLES, PREPOSITION_PATTERNS } from "../constants/articles";
-import { Card, InfoBox, Badge, MonoText } from "./ui";
+import { Badge, Card, InfoBox, MonoText } from "./ui";
 
 const AdvancedCases: React.FC = () => {
 	return (
@@ -177,11 +177,7 @@ const AdvancedCases: React.FC = () => {
 								},
 							].map((example, index) => (
 								<div key={index} className="p-3 bg-green-100 rounded-lg">
-									<MonoText
-										variant="success"
-										size="lg"
-										className="block mb-1"
-									>
+									<MonoText variant="success" size="lg" className="block mb-1">
 										{example.greek}
 									</MonoText>
 									<div className="text-gray-700 text-sm mb-1">

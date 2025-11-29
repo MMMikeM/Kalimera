@@ -1,31 +1,31 @@
-import React, { useState } from "react";
 import {
 	BookOpen,
 	Clock,
+	Download,
 	FileText,
 	Layers,
 	Lightbulb,
 	Search,
 	Target,
 	Users,
-	Download,
 	X,
 } from "lucide-react";
+import type React from "react";
+import { useState } from "react";
 // Config and navigation
-import { TABS, DEFAULT_TAB } from "../constants/config";
+import { DEFAULT_TAB, TABS } from "../constants/config";
 import type { TabId } from "../types/greek-reference";
-import { Button } from "./ui";
-import { exportOptions, downloadMarkdown } from "../utils/markdown-export";
-
+import { downloadMarkdown, exportOptions } from "../utils/markdown-export";
+import AdvancedCases from "./AdvancedCases";
+import CasePractice from "./CasePractice";
 // Section components
 import CoreRules from "./CoreRules";
 import DailyPatterns from "./DailyPatterns";
-import AdvancedCases from "./AdvancedCases";
-import CasePractice from "./CasePractice";
-import PresentTense from "./PresentTense";
-import OtherTenses from "./OtherTenses";
 import EssentialWords from "./EssentialWords";
+import OtherTenses from "./OtherTenses";
+import PresentTense from "./PresentTense";
 import SearchWords from "./SearchWords";
+import { Button } from "./ui";
 
 const GreekReference: React.FC = () => {
 	const [activeTab, setActiveTab] = useState<TabId>(DEFAULT_TAB);

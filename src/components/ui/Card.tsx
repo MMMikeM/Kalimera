@@ -1,5 +1,5 @@
-import { tv } from "tailwind-variants";
 import type { ReactNode } from "react";
+import { tv } from "tailwind-variants";
 
 export const cardVariants = tv({
 	base: "rounded-lg",
