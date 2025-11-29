@@ -69,11 +69,10 @@ kanena - none
 enas mia ena
 knaenas, kamia, kanena
 
-enas mia ena 
+enas mia ena
 
-
-
-
-
-11,12,14, 17
-3, 
+3,
+11,
+12,
+14,
+17

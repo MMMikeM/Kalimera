@@ -53,6 +53,8 @@
 
 - **PostgreSQL**: Production-ready database with Docker Compose
 - **Kysely**: Type-safe queries
+- **Express/Hono**: Lightweight API server (Required because browsers cannot connect to Postgres directly)
+- **React Query**: For managing server state (fetching/caching vocabulary)
 - **Enhanced React components**: Organized around user workflow
 - **Fast static lookups**: No database calls for grammar reference
 
@@ -91,21 +93,37 @@ CREATE TABLE noun_details (
   notes TEXT -- for irregular patterns
 );
 
--- Grammatical details for verbs (only when needed)
+-- Grammatical details for verbs (denormalized with nullable fields)
 CREATE TABLE verb_details (
   vocab_id INTEGER PRIMARY KEY REFERENCES vocabulary(id) ON DELETE CASCADE,
   infinitive VARCHAR NOT NULL,
   conjugation_family VARCHAR NOT NULL, -- '-ω', '-ομαι', 'irregular'
-  notes TEXT -- for irregular patterns
-);
 
--- Individual verb conjugations (fully relational, no JSON)
-CREATE TABLE verb_conjugations (
-  id SERIAL PRIMARY KEY,
-  verb_details_id INTEGER NOT NULL REFERENCES verb_details(vocab_id) ON DELETE CASCADE,
-  tense VARCHAR NOT NULL, -- e.g., 'present', 'future', 'past'
-  person VARCHAR NOT NULL, -- e.g., 'ego', 'esy', 'aftos'
-  form VARCHAR NOT NULL -- e.g., 'κάνω', 'κάνεις'
+  -- Present Tense Forms
+  present_ego VARCHAR,
+  present_esy VARCHAR,
+  present_aftos VARCHAR,
+  present_emeis VARCHAR,
+  present_eseis VARCHAR,
+  present_aftoi VARCHAR,
+
+  -- Past Tense (Aorist) Forms
+  past_ego VARCHAR,
+  past_esy VARCHAR,
+  past_aftos VARCHAR,
+  past_emeis VARCHAR,
+  past_eseis VARCHAR,
+  past_aftoi VARCHAR,
+
+  -- Future Tense Forms
+  future_ego VARCHAR,
+  future_esy VARCHAR,
+  future_aftos VARCHAR,
+  future_emeis VARCHAR,
+  future_eseis VARCHAR,
+  future_aftoi VARCHAR,
+
+  notes TEXT -- for irregular patterns
 );
 
 -- Tracks user's grammatical weak spots based on practice performance.
@@ -590,30 +608,53 @@ export async function importVocabularyData() {
 ## App Structure (User Workflow-Focused)
 
 ```
-src/
-├── components/
-│   ├── QuickReference.tsx           # NEW: Fast grammar lookup
-│   ├── reference/
-│   │   ├── ArticlesAndCases.tsx     # Static: το vs τον vs του
-│   │   ├── PronounGuide.tsx         # Static: σου vs εσύ confusion
-│   │   ├── VerbPatterns.tsx         # Static: conjugation families  
-│   │   └── PrepositionGuide.tsx     # Static: με τον, στο, από το
-│   ├── CategoryVocabulary.tsx       # NEW: By usage category
-│   ├── TargetedPractice.tsx         # NEW: Weak area practice
-│   ├── ProblemWords.tsx             # NEW: Consistently missed words
-│   ├── WordInbox.tsx                # NEW: Quick-add words to an inbox
-│   ├── WordProcessor.tsx            # NEW: Manually process words from the inbox
-│   └── ... (existing components)
-├── constants/
-│   ├── recognition.ts               # KEEP: Static grammar patterns
-│   ├── verbs.ts                    # KEEP: Static verb tables  
-│   ├── articles.ts                 # KEEP: Static article rules
-│   └── vocabulary.ts               # MIGRATE: Move to database
-└── db/ 
-    ├── index.ts                    # Database connection
-    ├── schema.ts                   # User-focused types
     └── migrations/
         └── import-vocabulary.ts     # Category-based import
+├── server/                      # NEW: API Layer
+│   ├── index.ts                 # Server entry point
+│   └── routes/
+│       ├── vocabulary.ts        # /api/vocabulary
+│       └── practice.ts          # /api/practice
+```
+
+## Detailed Implementation Specs
+
+### 1. API Layer (The "Missing Link")
+
+Since browsers cannot connect directly to PostgreSQL, we need a lightweight API server.
+
+**Stack:** Express (or Hono) + Kysely.
+**Proxy:** Vite will proxy `/api` requests to this server.
+
+#### API Endpoints
+- `GET /api/vocabulary?category=food`: Fetch words.
+- `POST /api/vocabulary`: Add to inbox.
+- `PUT /api/vocabulary/:id`: Update (process) a word.
+- `POST /api/practice/session`: Start a session.
+- `POST /api/practice/attempt`: Submit an answer.
+
+### 2. Frontend Routing (React Router)
+
+- `/`: **Dashboard** (Quick Reference + Daily Stats)
+- `/study`: **CategoryVocabulary** (The main study interface)
+- `/practice`: **TargetedPractice** (Quiz selection)
+    - `/practice/quiz/:sessionId`: Active quiz view
+- `/inbox`: **WordInbox** (Quick add & Process)
+
+### 3. AI Integration Details (Stage 2)
+
+**The Prompt Strategy:**
+When the user clicks "Auto-fill", we send the Greek word to the LLM with this prompt:
+
+> "Analyze the Greek word '${greekWord}'. Return a JSON object with:
+> - `english_translation`: Best single-word translation
+> - `word_type`: 'noun', 'verb', 'adjective', etc.
+> - `gender`: 'masculine', 'feminine', 'neuter' (if noun, else null)
+> - `category`: Best fit from [family, food, directions, time, emotions, daily_activities]
+> - `example_greek`: A simple, beginner-friendly example sentence.
+> - `example_english`: Translation of the example."
+
+This structured output maps directly to our `vocabulary` table columns.
 ```
 
 ## Implementation Steps (Staged Approach)
