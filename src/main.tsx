@@ -1,16 +1,18 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import "./index.css";
-import App from "./App.tsx";
+import { StrictMode, startTransition } from "react";
+import { hydrateRoot } from "react-dom/client";
+import { HydratedRouter } from "react-router/dom";
 
 const root = document.getElementById("root");
 
 if (!root) {
-	throw new Error("Root element not found");
+  throw new Error("Root element not found");
 }
 
-createRoot(root).render(
-	<StrictMode>
-		<App />
-	</StrictMode>,
-);
+startTransition(() => {
+  hydrateRoot(
+    root,
+    <StrictMode>
+      <HydratedRouter />
+    </StrictMode>
+  );
+});
