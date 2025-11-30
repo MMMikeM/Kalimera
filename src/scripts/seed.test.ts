@@ -4,7 +4,6 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { beforeAll, describe, expect, it } from "vitest";
 import type {
-	NewVerbConjugation,
 	NewVerbDetails,
 	NewVocabulary,
 } from "../db/schema";
@@ -57,7 +56,7 @@ describe("Data Seeding Pipeline", () => {
 	});
 
 	it("should have valid verb conjugation data", () => {
-		const verbConjugations: NewVerbConjugation[] = JSON.parse(
+		const verbConjugations: any[] = JSON.parse(
 			fs.readFileSync(path.join(dataDir, "verbConjugations.json"), "utf-8"),
 		);
 		expect(verbConjugations.length).toBeGreaterThan(0);
