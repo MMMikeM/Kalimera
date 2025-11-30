@@ -10,7 +10,7 @@ export interface Database {
 	vocabulary: VocabularyTable;
 	noun_details: NounDetailsTable;
 	verb_details: VerbDetailsTable;
-	verb_conjugations: VerbConjugationsTable;
+	// verb_conjugations: VerbConjugationsTable; // TODO: Define this table
 	practice_sessions: PracticeSessionsTable;
 	practice_attempts: PracticeAttemptsTable;
 	weak_areas: WeakAreasTable;
