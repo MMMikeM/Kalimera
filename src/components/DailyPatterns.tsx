@@ -1,6 +1,5 @@
 import { Lightbulb, Target } from "lucide-react";
 import type React from "react";
-import { CASE_EXAMPLES } from "../constants/articles";
 import { Badge, Card, InfoBox, MonoText } from "./ui";
 
 const DailyPatterns: React.FC = () => {
