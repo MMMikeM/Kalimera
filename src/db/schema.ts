@@ -8,9 +8,10 @@ import type {
 
 export interface Database {
 	vocabulary: VocabularyTable;
+	tags: TagsTable;
+	vocabulary_tags: VocabularyTagsTable;
 	noun_details: NounDetailsTable;
 	verb_details: VerbDetailsTable;
-	// verb_conjugations: VerbConjugationsTable; // TODO: Define this table
 	practice_sessions: PracticeSessionsTable;
 	practice_attempts: PracticeAttemptsTable;
 	weak_areas: WeakAreasTable;
@@ -40,11 +41,43 @@ export interface VocabularyTable {
 	review_count: ColumnType<number, number | undefined, number>;
 	last_reviewed: ColumnType<Date, string | undefined, string> | null;
 	created_at: ColumnType<Date, string | undefined, never>;
+	gender: "masculine" | "feminine" | "neuter" | null;
+	metadata: ColumnType<
+		Record<string, unknown> | null,
+		Record<string, unknown> | undefined,
+		Record<string, unknown>
+	>;
 }
 
 export type Vocabulary = Selectable<VocabularyTable>;
 export type NewVocabulary = Insertable<VocabularyTable>;
 export type VocabularyUpdate = Updateable<VocabularyTable>;
+
+// Tags Table
+export interface TagsTable {
+	id: Generated<number>;
+	slug: string;
+	name: string;
+	description: string | null;
+	is_system: ColumnType<boolean, boolean | undefined, boolean>;
+	display_order: ColumnType<number, number | undefined, number>;
+	created_at: ColumnType<Date, string | undefined, never>;
+}
+
+export type Tag = Selectable<TagsTable>;
+export type NewTag = Insertable<TagsTable>;
+export type TagUpdate = Updateable<TagsTable>;
+
+// Vocabulary Tags Join Table (many-to-many)
+export interface VocabularyTagsTable {
+	vocabulary_id: number;
+	tag_id: number;
+	display_order: ColumnType<number, number | undefined, number>;
+}
+
+export type VocabularyTag = Selectable<VocabularyTagsTable>;
+export type NewVocabularyTag = Insertable<VocabularyTagsTable>;
+export type VocabularyTagUpdate = Updateable<VocabularyTagsTable>;
 
 // Noun Details Table
 export interface NounDetailsTable {
