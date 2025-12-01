@@ -1,6 +1,5 @@
 import { Lightbulb } from "lucide-react";
-import { VERB_CONJUGATIONS } from "../constants/verbs";
-import type { VerbConjugation } from "../types/greek-reference";
+import { VERB_CONJUGATIONS, type VerbConjugation } from "../constants/verbs";
 import { Card, InfoBox, MonoText, Table } from "../components/ui";
 
 export function meta() {
