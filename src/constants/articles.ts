@@ -1,4 +1,9 @@
-import type { ArticleForm } from "../types/greek-reference";
+export interface ArticleForm {
+	case: string;
+	masculine: string;
+	feminine: string;
+	neuter: string;
+}
 
 // Definite article forms (standard order: Nom → Acc → Gen)
 export const DEFINITE_ARTICLES = {

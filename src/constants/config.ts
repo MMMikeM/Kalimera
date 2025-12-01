@@ -1,4 +1,8 @@
-import type { TabId, TabInfo } from "../types/greek-reference";
+export interface TabInfo {
+	id: string;
+	label: string;
+	icon: string;
+}
 
 // Navigation tabs configuration
 export const TABS: TabInfo[] = [
@@ -11,6 +15,3 @@ export const TABS: TabInfo[] = [
 	{ id: "vocabulary", label: "Essential Words", icon: "BookOpen" },
 	{ id: "search", label: "Quick Search", icon: "Search" },
 ];
-
-// Default tab ID - start with daily patterns for practical learning first
-export const DEFAULT_TAB: TabId = "daily-patterns";
