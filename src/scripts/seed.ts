@@ -7,6 +7,7 @@ import {
 	COMMANDS,
 	DAILY_PATTERNS,
 	FREQUENCY_ADVERBS,
+	LESSONS,
 	LIKES_CONSTRUCTION,
 	NOUNS,
 	NUMBERS,
@@ -303,6 +304,92 @@ async function seed() {
 					},
 				});
 				linkTag(vocabId, patternTagMap[category]);
+			}
+		}
+
+		// Seed lessons
+		console.log("Seeding lessons...");
+		for (const [date, lesson] of Object.entries(LESSONS)) {
+			const lessonTag = `lesson-${date}`;
+			console.log(`  Lesson ${date}: ${lesson.meta.topic}`);
+
+			// Seed lesson verbs
+			for (const verb of lesson.verbs) {
+				const vocabId = await insertVocab({
+					greek_text: verb.lemma,
+					english_translation: verb.english,
+					word_type: "verb",
+					status: "processed",
+					metadata: { lessonDate: date },
+				});
+				linkTag(vocabId, "verb");
+				linkTag(vocabId, lessonTag);
+
+				await trx
+					.insertInto("verb_details")
+					.values({
+						vocab_id: vocabId,
+						infinitive: verb.lemma,
+						conjugation_family: verb.conjugationFamily,
+					})
+					.onConflict((oc) => oc.column("vocab_id").doNothing())
+					.execute();
+			}
+
+			// Seed lesson nouns
+			for (const noun of lesson.nouns) {
+				const displayText = formatNounWithArticle(noun.lemma, noun.gender);
+				const vocabId = await insertVocab({
+					greek_text: displayText,
+					english_translation: noun.english,
+					word_type: "noun",
+					gender: noun.gender,
+					status: "processed",
+					metadata: { lessonDate: date },
+				});
+				linkTag(vocabId, "noun");
+				linkTag(vocabId, lessonTag);
+			}
+
+			// Seed lesson adverbs
+			for (const adverb of lesson.adverbs) {
+				const vocabId = await insertVocab({
+					greek_text: adverb.lemma,
+					english_translation: adverb.english,
+					word_type: "adverb",
+					status: "processed",
+					metadata: { lessonDate: date },
+				});
+				linkTag(vocabId, "adverb");
+				linkTag(vocabId, lessonTag);
+			}
+
+			// Seed lesson adjectives
+			if ("adjectives" in lesson) {
+				for (const adj of lesson.adjectives) {
+					const vocabId = await insertVocab({
+						greek_text: adj.lemma,
+						english_translation: adj.english,
+						word_type: "adjective",
+						status: "processed",
+						metadata: { lessonDate: date },
+					});
+					linkTag(vocabId, "adjective");
+					linkTag(vocabId, lessonTag);
+				}
+			}
+
+			// Seed lesson phrases
+			for (const phrase of lesson.phrases) {
+				const vocabId = await insertVocab({
+					greek_text: phrase.text,
+					english_translation: phrase.english,
+					word_type: "phrase",
+					status: "processed",
+					metadata: { ...phrase.metadata, lessonDate: date },
+				});
+				linkTag(vocabId, "phrase");
+				linkTag(vocabId, lessonTag);
 			}
 		}
 
