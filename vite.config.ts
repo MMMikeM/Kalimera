@@ -16,13 +16,5 @@ export default defineConfig(({ isSsrBuild, command }) => ({
 					},
 				}
 			: undefined,
-	plugins: [
-		tailwindcss(),
-		reactRouter({
-			async getLoadContext() {
-				const { db } = await import("./src/db");
-				return { db };
-			},
-		}),
-	],
+	plugins: [tailwindcss(), reactRouter()],
 }));

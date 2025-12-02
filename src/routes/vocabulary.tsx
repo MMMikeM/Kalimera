@@ -1,10 +1,54 @@
 import type React from "react";
 import type { Route } from "./+types/vocabulary";
-import { and, eq } from "drizzle-orm";
+import { and, eq, inArray } from "drizzle-orm";
 import { vocabulary, vocabularyTags, tags, verbDetails } from "../db/schema";
 import { InfoBox } from "../components/ui";
 
-// Helper to group verbs by their conjugation pattern
+const VOCABULARY_TAGS = [
+	"people",
+	"time-of-day",
+	"time-expression",
+	"position",
+	"expression",
+	"command",
+	"question",
+	"likes-singular",
+	"likes-plural",
+	"shopping",
+	"household",
+	"color",
+	"number",
+	"transport-vehicle",
+	"transport-action",
+	"frequency",
+	"summer",
+] as const;
+
+type TagSlug = (typeof VOCABULARY_TAGS)[number];
+
+interface VocabItem {
+	id: number;
+	greek: string;
+	english: string;
+	wordType: string | null;
+	metadata: unknown;
+	tagSlug: string;
+}
+
+const groupByTag = (items: VocabItem[]): Record<TagSlug, VocabItem[]> => {
+	const result = {} as Record<TagSlug, VocabItem[]>;
+	for (const tag of VOCABULARY_TAGS) {
+		result[tag] = [];
+	}
+	for (const item of items) {
+		const tag = item.tagSlug as TagSlug;
+		if (result[tag]) {
+			result[tag].push(item);
+		}
+	}
+	return result;
+};
+
 const groupVerbsByPattern = (
 	verbs: Array<{
 		id: number;
@@ -34,8 +78,10 @@ const groupVerbsByPattern = (
 };
 
 export async function loader({ context }: Route.LoaderArgs) {
-	const { db } = context;
-	const getByTag = (slug: string) =>
+	// Use context.db in production, fallback to direct import for dev
+	const db = context?.db ?? (await import("../db")).db;
+
+	const [allVocab, verbs] = await Promise.all([
 		db
 			.select({
 				id: vocabulary.id,
@@ -43,90 +89,61 @@ export async function loader({ context }: Route.LoaderArgs) {
 				english: vocabulary.englishTranslation,
 				wordType: vocabulary.wordType,
 				metadata: vocabulary.metadata,
+				tagSlug: tags.slug,
 			})
 			.from(vocabulary)
 			.innerJoin(vocabularyTags, eq(vocabularyTags.vocabularyId, vocabulary.id))
 			.innerJoin(tags, eq(tags.id, vocabularyTags.tagId))
-			.where(and(eq(tags.slug, slug), eq(vocabulary.status, "processed")))
-			.orderBy(vocabulary.greekText);
+			.where(
+				and(
+					eq(vocabulary.status, "processed"),
+					inArray(tags.slug, [...VOCABULARY_TAGS])
+				)
+			)
+			.orderBy(vocabulary.greekText),
 
-	const [
-		people,
-		timesOfDay,
-		timeExpressions,
-		positionAdverbs,
-		usefulExpressions,
-		commands,
-		questionWords,
-		likesSingular,
-		likesPlural,
-		shopping,
-		household,
-		colors,
-		numbers,
-		transportVehicles,
-		transportActions,
-		frequencyAdverbs,
-		summerVocabulary,
-		commonResponses,
-		opinionPhrases,
-	] = await Promise.all([
-		getByTag("people"),
-		getByTag("time-of-day"),
-		getByTag("time-expression"),
-		getByTag("position"),
-		getByTag("expression"),
-		getByTag("command"),
-		getByTag("question"),
-		getByTag("likes-singular"),
-		getByTag("likes-plural"),
-		getByTag("shopping"),
-		getByTag("household"),
-		getByTag("color"),
-		getByTag("number"),
-		getByTag("transport-vehicle"),
-		getByTag("transport-action"),
-		getByTag("frequency"),
-		getByTag("summer"),
-		getByTag("responses"),
-		getByTag("opinions"),
+		db
+			.select({
+				id: vocabulary.id,
+				greek: vocabulary.greekText,
+				english: vocabulary.englishTranslation,
+				pattern: verbDetails.conjugationFamily,
+			})
+			.from(vocabulary)
+			.leftJoin(verbDetails, eq(verbDetails.vocabId, vocabulary.id))
+			.where(and(eq(vocabulary.wordType, "verb"), eq(vocabulary.status, "processed"))),
 	]);
 
-	const verbs = await db
-		.select({
-			id: vocabulary.id,
-			greek: vocabulary.greekText,
-			english: vocabulary.englishTranslation,
-			pattern: verbDetails.conjugationFamily,
-		})
-		.from(vocabulary)
-		.leftJoin(verbDetails, eq(verbDetails.vocabId, vocabulary.id))
-		.where(and(eq(vocabulary.wordType, "verb"), eq(vocabulary.status, "processed")));
+	const byTag = groupByTag(allVocab);
 
 	return {
 		verbCategories: groupVerbsByPattern(verbs),
-		people,
-		timesOfDay: timesOfDay.map((t) => ({
+		people: byTag.people,
+		timesOfDay: byTag["time-of-day"].map((t) => ({
 			...t,
 			timeRange: (t.metadata as Record<string, unknown> | null)?.timeRange as
 				| string
 				| undefined,
 		})),
-		timeExpressions,
-		positionAdverbs,
-		usefulExpressions,
-		commands,
-		questionWords,
-		likesConstruction: { singular: likesSingular, plural: likesPlural },
-		shopping,
-		household,
-		colors,
-		numbers,
-		transportation: { vehicles: transportVehicles, actions: transportActions },
-		frequencyAdverbs,
-		summerVocabulary,
-		commonResponses,
-		opinionPhrases,
+		timeExpressions: byTag["time-expression"],
+		positionAdverbs: byTag.position,
+		usefulExpressions: byTag.expression,
+		commands: byTag.command,
+		questionWords: byTag.question,
+		likesConstruction: {
+			singular: byTag["likes-singular"],
+			plural: byTag["likes-plural"],
+		},
+		shopping: byTag.shopping,
+		household: byTag.household,
+		colors: byTag.color,
+		numbers: byTag.number,
+		transportation: {
+			vehicles: byTag["transport-vehicle"],
+			actions: byTag["transport-action"],
+		},
+		frequencyAdverbs: byTag.frequency,
+		summerVocabulary: byTag.summer,
 	};
 }
 
@@ -283,33 +300,6 @@ const EssentialWords: React.FC<{ loaderData: Route.ComponentProps["loaderData"] 
 					{loaderData.questionWords.map((q) => (
 						<div key={q.id}>
 							<span className="font-mono">{q.greek}</span> - {q.english}
-						</div>
-					))}
-				</div>
-			</div>
-
-			<div className="border rounded-lg p-4">
-				<h3 className="text-lg font-bold mb-3">Common Responses & Reactions</h3>
-				<div className="bg-yellow-50 p-3 rounded mb-3">
-					<p className="text-sm text-yellow-700">
-						Things people commonly say to you - useful for understanding conversations
-					</p>
-				</div>
-				<div className="grid md:grid-cols-3 gap-2 text-sm">
-					{loaderData.commonResponses.map((response) => (
-						<div key={response.id}>
-							<span className="font-mono">{response.greek}</span> - {response.english}
-						</div>
-					))}
-				</div>
-			</div>
-
-			<div className="border rounded-lg p-4">
-				<h3 className="text-lg font-bold mb-3">Opinion & Feeling Expressions</h3>
-				<div className="grid md:grid-cols-3 gap-2 text-sm">
-					{loaderData.opinionPhrases.map((opinion) => (
-						<div key={opinion.id}>
-							<span className="font-mono">{opinion.greek}</span> - {opinion.english}
 						</div>
 					))}
 				</div>

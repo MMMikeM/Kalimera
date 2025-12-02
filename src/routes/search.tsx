@@ -14,7 +14,8 @@ interface VocabularyWithTags {
 }
 
 export async function loader({ context }: Route.LoaderArgs) {
-	const { db } = context;
+	// Use context.db in production, fallback to direct import for dev
+	const db = context?.db ?? (await import("../db")).db;
 	try {
 		const vocabularyData = await db
 			.select({
