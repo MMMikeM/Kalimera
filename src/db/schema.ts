@@ -60,7 +60,6 @@ export interface TagsTable {
 	name: string;
 	description: string | null;
 	is_system: ColumnType<boolean, boolean | undefined, boolean>;
-	display_order: ColumnType<number, number | undefined, number>;
 	created_at: ColumnType<Date, string | undefined, never>;
 }
 
@@ -72,7 +71,6 @@ export type TagUpdate = Updateable<TagsTable>;
 export interface VocabularyTagsTable {
 	vocabulary_id: number;
 	tag_id: number;
-	display_order: ColumnType<number, number | undefined, number>;
 }
 
 export type VocabularyTag = Selectable<VocabularyTagsTable>;

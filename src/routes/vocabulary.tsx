@@ -51,7 +51,7 @@ export async function loader(_args: Route.LoaderArgs) {
 			])
 			.where("tags.slug", "=", slug)
 			.where("vocabulary.status", "=", "processed")
-			.orderBy("vocabulary_tags.display_order")
+			.orderBy("vocabulary.greek_text")
 			.execute();
 
 	const [
