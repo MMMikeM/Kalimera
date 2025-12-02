@@ -28,7 +28,7 @@ export async function loader(_args: Route.LoaderArgs) {
 				"verb_details.conjugation_family as family",
 				// Subquery to get comma-separated tags
 				sql<string>`(
-					SELECT string_agg(t.name, ', ' ORDER BY t.display_order)
+					SELECT string_agg(t.name, ', ' ORDER BY t.name)
 					FROM vocabulary_tags vt
 					JOIN tags t ON t.id = vt.tag_id
 					WHERE vt.vocabulary_id = vocabulary.id
