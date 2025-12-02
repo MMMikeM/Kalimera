@@ -15,6 +15,9 @@ export interface Database {
 	practice_sessions: PracticeSessionsTable;
 	practice_attempts: PracticeAttemptsTable;
 	weak_areas: WeakAreasTable;
+	vocabulary_skills: VocabularySkillsTable;
+	grammar_patterns: GrammarPatternsTable;
+	example_sentences: ExampleSentencesTable;
 }
 
 // Vocabulary Table
@@ -47,6 +50,10 @@ export interface VocabularyTable {
 		Record<string, unknown> | undefined,
 		Record<string, unknown>
 	>;
+	// SRS fields
+	next_review_at: ColumnType<Date, string | undefined, string> | null;
+	interval_days: ColumnType<number, number | undefined, number>;
+	ease_factor: ColumnType<number, number | undefined, number>;
 }
 
 export type Vocabulary = Selectable<VocabularyTable>;
@@ -176,3 +183,55 @@ export interface WeakAreasTable {
 export type WeakArea = Selectable<WeakAreasTable>;
 export type NewWeakArea = Insertable<WeakAreasTable>;
 export type WeakAreaUpdate = Updateable<WeakAreasTable>;
+
+// Vocabulary Skills Table (recognition vs production tracking)
+export interface VocabularySkillsTable {
+	vocabulary_id: number;
+	skill_type: "recognition" | "production";
+	next_review_at: ColumnType<Date, string | undefined, string> | null;
+	interval_days: ColumnType<number, number | undefined, number>;
+	ease_factor: ColumnType<number, number | undefined, number>;
+	review_count: ColumnType<number, number | undefined, number>;
+	last_reviewed_at: ColumnType<Date, string | undefined, string> | null;
+}
+
+export type VocabularySkill = Selectable<VocabularySkillsTable>;
+export type NewVocabularySkill = Insertable<VocabularySkillsTable>;
+export type VocabularySkillUpdate = Updateable<VocabularySkillsTable>;
+
+// Grammar Patterns Table (case usage examples with SRS)
+export interface GrammarPatternsTable {
+	id: Generated<number>;
+	case_type: "accusative" | "genitive" | "nominative" | "vocative";
+	context: string;
+	greek: string;
+	english: string;
+	explanation: string | null;
+	why_this_case: string | null;
+	// SRS fields
+	next_review_at: ColumnType<Date, string | undefined, string> | null;
+	interval_days: ColumnType<number, number | undefined, number>;
+	ease_factor: ColumnType<number, number | undefined, number>;
+	review_count: ColumnType<number, number | undefined, number>;
+	created_at: ColumnType<Date, string | undefined, never>;
+}
+
+export type GrammarPattern = Selectable<GrammarPatternsTable>;
+export type NewGrammarPattern = Insertable<GrammarPatternsTable>;
+export type GrammarPatternUpdate = Updateable<GrammarPatternsTable>;
+
+// Example Sentences Table (multiple examples per vocabulary item)
+export interface ExampleSentencesTable {
+	id: Generated<number>;
+	vocabulary_id: number;
+	greek_text: string;
+	english_text: string;
+	audio_url: string | null;
+	source: string | null;
+	grammar_pattern_id: number | null;
+	created_at: ColumnType<Date, string | undefined, never>;
+}
+
+export type ExampleSentence = Selectable<ExampleSentencesTable>;
+export type NewExampleSentence = Insertable<ExampleSentencesTable>;
+export type ExampleSentenceUpdate = Updateable<ExampleSentencesTable>;

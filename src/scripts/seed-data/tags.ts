@@ -34,6 +34,14 @@ export const SYSTEM_TAGS = {
 	dailyTime: { slug: "daily-time", name: "Daily - Time & Schedule" },
 	dailyFamily: { slug: "daily-family", name: "Daily - Family & Relationships" },
 
+	// Conversation context tags
+	discourseMarkers: { slug: "discourse-markers", name: "Discourse Markers" },
+	responses: { slug: "responses", name: "Common Responses" },
+	opinions: { slug: "opinions", name: "Opinion & Feeling" },
+	conversationArriving: { slug: "conversation-arriving", name: "Arriving & Leaving" },
+	conversationFood: { slug: "conversation-food", name: "Food & Hospitality" },
+	conversationSmalltalk: { slug: "conversation-smalltalk", name: "Small Talk" },
+
 	// Word type tags
 	verb: { slug: "verb", name: "Verbs" },
 	noun: { slug: "noun", name: "Nouns" },

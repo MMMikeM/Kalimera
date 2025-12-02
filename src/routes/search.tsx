@@ -97,6 +97,8 @@ export default function SearchRoute({ loaderData }: Route.ComponentProps) {
 				placeholder="Search Greek, English, or tags..."
 				value={searchTerm}
 				onChange={(e) => handleSearch(e.target.value)}
+				onClear={() => handleSearch("")}
+				autoFocus
 			/>
 
 			{searchResults.length > 0 && (
