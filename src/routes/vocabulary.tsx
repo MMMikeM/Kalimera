@@ -1,6 +1,7 @@
 import type React from "react";
 import type { Route } from "./+types/vocabulary";
-import { db } from "../db";
+import { and, eq } from "drizzle-orm";
+import { vocabulary, vocabularyTags, tags, verbDetails } from "../db/schema";
 import { InfoBox } from "../components/ui";
 
 // Helper to group verbs by their conjugation pattern
@@ -32,27 +33,22 @@ const groupVerbsByPattern = (
 	return Object.values(groups);
 };
 
-export async function loader(_args: Route.LoaderArgs) {
+export async function loader({ context }: Route.LoaderArgs) {
+	const { db } = context;
 	const getByTag = (slug: string) =>
 		db
-			.selectFrom("vocabulary")
-			.innerJoin(
-				"vocabulary_tags",
-				"vocabulary_tags.vocabulary_id",
-				"vocabulary.id"
-			)
-			.innerJoin("tags", "tags.id", "vocabulary_tags.tag_id")
-			.select([
-				"vocabulary.id",
-				"vocabulary.greek_text as greek",
-				"vocabulary.english_translation as english",
-				"vocabulary.word_type",
-				"vocabulary.metadata",
-			])
-			.where("tags.slug", "=", slug)
-			.where("vocabulary.status", "=", "processed")
-			.orderBy("vocabulary.greek_text")
-			.execute();
+			.select({
+				id: vocabulary.id,
+				greek: vocabulary.greekText,
+				english: vocabulary.englishTranslation,
+				wordType: vocabulary.wordType,
+				metadata: vocabulary.metadata,
+			})
+			.from(vocabulary)
+			.innerJoin(vocabularyTags, eq(vocabularyTags.vocabularyId, vocabulary.id))
+			.innerJoin(tags, eq(tags.id, vocabularyTags.tagId))
+			.where(and(eq(tags.slug, slug), eq(vocabulary.status, "processed")))
+			.orderBy(vocabulary.greekText);
 
 	const [
 		people,
@@ -96,19 +92,16 @@ export async function loader(_args: Route.LoaderArgs) {
 		getByTag("opinions"),
 	]);
 
-	// Fetch verb categories from DB
 	const verbs = await db
-		.selectFrom("vocabulary")
-		.leftJoin("verb_details", "verb_details.vocab_id", "vocabulary.id")
-		.select([
-			"vocabulary.id",
-			"vocabulary.greek_text as greek",
-			"vocabulary.english_translation as english",
-			"verb_details.conjugation_family as pattern",
-		])
-		.where("vocabulary.word_type", "=", "verb")
-		.where("vocabulary.status", "=", "processed")
-		.execute();
+		.select({
+			id: vocabulary.id,
+			greek: vocabulary.greekText,
+			english: vocabulary.englishTranslation,
+			pattern: verbDetails.conjugationFamily,
+		})
+		.from(vocabulary)
+		.leftJoin(verbDetails, eq(verbDetails.vocabId, vocabulary.id))
+		.where(and(eq(vocabulary.wordType, "verb"), eq(vocabulary.status, "processed")));
 
 	return {
 		verbCategories: groupVerbsByPattern(verbs),

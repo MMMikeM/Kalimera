@@ -1,7 +1,7 @@
 import type { Route } from "./+types/search";
 import { useState } from "react";
-import { sql } from "kysely";
-import { db } from "../db";
+import { sql, eq } from "drizzle-orm";
+import { vocabulary, verbDetails } from "../db/schema";
 import { Badge, InfoBox, MonoText, SearchInput } from "../components/ui";
 
 interface VocabularyWithTags {
@@ -13,44 +13,39 @@ interface VocabularyWithTags {
 	tags: string[];
 }
 
-// Loader to fetch vocabulary from database with tags
-export async function loader(_args: Route.LoaderArgs) {
+export async function loader({ context }: Route.LoaderArgs) {
+	const { db } = context;
 	try {
-		// Fetch vocabulary with aggregated tags using a subquery
-		const vocabulary = await db
-			.selectFrom("vocabulary")
-			.leftJoin("verb_details", "verb_details.vocab_id", "vocabulary.id")
-			.select([
-				"vocabulary.id",
-				"vocabulary.greek_text as greek",
-				"vocabulary.english_translation as english",
-				"vocabulary.word_type as type",
-				"verb_details.conjugation_family as family",
-				// Subquery to get comma-separated tags
-				sql<string>`(
-					SELECT string_agg(t.name, ', ' ORDER BY t.name)
+		const vocabularyData = await db
+			.select({
+				id: vocabulary.id,
+				greek: vocabulary.greekText,
+				english: vocabulary.englishTranslation,
+				type: vocabulary.wordType,
+				family: verbDetails.conjugationFamily,
+				tagNames: sql<string>`(
+					SELECT group_concat(t.name, ', ')
 					FROM vocabulary_tags vt
 					JOIN tags t ON t.id = vt.tag_id
-					WHERE vt.vocabulary_id = vocabulary.id
-				)`.as("tag_names"),
-			])
-			.where("vocabulary.status", "=", "processed")
-			.execute();
+					WHERE vt.vocabulary_id = ${vocabulary.id}
+				)`,
+			})
+			.from(vocabulary)
+			.leftJoin(verbDetails, eq(verbDetails.vocabId, vocabulary.id))
+			.where(eq(vocabulary.status, "processed"));
 
-		// Transform to include tags array
-		const vocabularyWithTags: VocabularyWithTags[] = vocabulary.map((v) => ({
+		const vocabularyWithTags: VocabularyWithTags[] = vocabularyData.map((v) => ({
 			id: v.id,
 			greek: v.greek,
 			english: v.english,
 			type: v.type,
 			family: v.family,
-			tags: v.tag_names ? v.tag_names.split(", ") : [],
+			tags: v.tagNames ? v.tagNames.split(", ") : [],
 		}));
 
 		return { vocabulary: vocabularyWithTags };
 	} catch (error) {
 		console.error("Database error:", error);
-		// Fall back to empty array if database fails
 		return { vocabulary: [] as VocabularyWithTags[] };
 	}
 }
