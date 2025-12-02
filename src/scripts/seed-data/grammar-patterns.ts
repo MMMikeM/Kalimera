@@ -142,6 +142,12 @@ export const CASE_PATTERNS: Record<Case, Record<string, GrammarPattern[]>> = {
 				explanation: "everyday objects",
 				whyThisCase: "key of what? → genitive",
 			},
+			{
+				greek: "στο σπίτι του γιατρού",
+				english: "at the doctor's house",
+				explanation: "profession + possession",
+				whyThisCase: "γιατρός → γιατρού (genitive)",
+			},
 		],
 	},
 	nominative: {},

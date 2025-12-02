@@ -1,195 +1,188 @@
-import { Lightbulb, Target } from "lucide-react";
+import { MessageCircle, DoorOpen, Utensils, Users, Link } from "lucide-react";
 import type React from "react";
-import type { Route } from "./+types/daily-patterns";
-import { db } from "../db";
-import { Badge, Card, InfoBox, MonoText } from "../components/ui";
-
-interface DailyPatternItem {
-	id: number;
-	greek: string;
-	english: string;
-	explanation?: string;
-	whyThisCase?: string;
-}
-
-export async function loader(_args: Route.LoaderArgs) {
-	const getByTag = async (slug: string): Promise<DailyPatternItem[]> => {
-		const results = await db
-			.selectFrom("vocabulary")
-			.innerJoin(
-				"vocabulary_tags",
-				"vocabulary_tags.vocabulary_id",
-				"vocabulary.id"
-			)
-			.innerJoin("tags", "tags.id", "vocabulary_tags.tag_id")
-			.select([
-				"vocabulary.id",
-				"vocabulary.greek_text as greek",
-				"vocabulary.english_translation as english",
-				"vocabulary.metadata",
-			])
-			.where("tags.slug", "=", slug)
-			.where("vocabulary.status", "=", "processed")
-			.orderBy("vocabulary.greek_text")
-			.execute();
-
-		return results.map((r) => ({
-			id: r.id,
-			greek: r.greek,
-			english: r.english,
-			explanation: (r.metadata as Record<string, unknown> | null)
-				?.explanation as string | undefined,
-			whyThisCase: (r.metadata as Record<string, unknown> | null)
-				?.whyThisCase as string | undefined,
-		}));
-	};
-
-	const [coffeeFood, houseLocation, timeSchedule, family] = await Promise.all([
-		getByTag("daily-coffee"),
-		getByTag("daily-house"),
-		getByTag("daily-time"),
-		getByTag("daily-family"),
-	]);
-
-	return {
-		coffeeFood,
-		houseLocation,
-		timeSchedule,
-		family,
-	};
-}
+import type { Route } from "./+types/conversations";
+import { Card, InfoBox, MonoText } from "../components/ui";
+import {
+	ARRIVING_PHRASES,
+	FOOD_PHRASES,
+	SMALLTALK_PHRASES,
+	DISCOURSE_MARKERS,
+	type Phrase,
+} from "../scripts/seed-data/vocabulary";
 
 export function meta() {
 	return [
-		{ title: "Daily Patterns - Greek Conjugation Reference" },
+		{ title: "Conversations - Greek Conjugation Reference" },
 		{
 			name: "description",
-			content: "Common Greek phrases and daily usage patterns",
+			content: "Real situations with family and friends",
 		},
 	];
 }
 
-const PatternCard: React.FC<{
+const SituationCard: React.FC<{
 	title: string;
-	icon: string;
-	items: DailyPatternItem[];
+	icon: React.ReactNode;
+	youllHear: Phrase[];
+	responses: Phrase[];
 	colorClass: string;
 	bgClass: string;
 	textClass: string;
-}> = ({ title, icon, items, colorClass, bgClass, textClass }) => (
+}> = ({ title, icon, youllHear, responses, colorClass, bgClass, textClass }) => (
 	<Card variant="bordered" padding="lg" className={`${colorClass} ${bgClass}`}>
-		<h3 className={`text-lg font-bold mb-4 ${textClass} flex items-center gap-2`}>
+		<h3
+			className={`text-lg font-bold mb-4 ${textClass} flex items-center gap-2`}
+		>
 			{icon} {title}
 		</h3>
-		<div className="space-y-3">
-			{items.map((item) => (
-				<div key={item.id} className={`p-3 ${bgClass.replace("/30", "-100")} rounded-lg`}>
+
+		{/* What you'll hear section */}
+		<div className="mb-6">
+			<h4 className={`font-semibold ${textClass} mb-3 text-sm`}>
+				What you'll hear:
+			</h4>
+			<div className="space-y-2">
+				{youllHear.map((phrase, idx) => (
+					<div
+						key={idx}
+						className={`p-3 ${bgClass.replace("/30", "-100")} rounded-lg`}
+					>
+						<MonoText variant="highlighted" size="lg" className="block mb-1">
+							{phrase.text}
+						</MonoText>
+						<div className="text-gray-700 text-sm">{phrase.english}</div>
+					</div>
+				))}
+			</div>
+		</div>
+
+		{/* Simple responses section */}
+		<div>
+			<h4 className={`font-semibold ${textClass} mb-3 text-sm`}>
+				Simple responses:
+			</h4>
+			<div className="space-y-2">
+				{responses.map((phrase, idx) => (
+					<div
+						key={idx}
+						className={`p-3 ${bgClass.replace("/30", "-50")} rounded-lg`}
+					>
+						<MonoText variant="highlighted" size="lg" className="block mb-1">
+							{phrase.text}
+						</MonoText>
+						<div className="text-gray-700 text-sm">{phrase.english}</div>
+					</div>
+				))}
+			</div>
+		</div>
+	</Card>
+);
+
+const MarkersCard: React.FC = () => (
+	<Card
+		variant="bordered"
+		padding="lg"
+		className="border-purple-200 bg-purple-50/30"
+	>
+		<h3 className="text-lg font-bold mb-2 text-purple-700 flex items-center gap-2">
+			<Link size={20} /> Words You'll Hear Constantly
+		</h3>
+		<p className="text-sm text-purple-600 mb-4">
+			These don't translate directly but appear in every conversation
+		</p>
+
+		<div className="space-y-2">
+			{DISCOURSE_MARKERS.map((marker, idx) => (
+				<div key={idx} className="p-3 bg-purple-100 rounded-lg">
 					<MonoText variant="highlighted" size="lg" className="block mb-1">
-						{item.greek}
+						{marker.text}
 					</MonoText>
-					<div className="text-gray-700 text-sm mb-1">{item.english}</div>
-					{item.explanation && (
-						<div className={`${textClass.replace("700", "600")} text-xs italic mb-1`}>
-							{item.explanation}
-						</div>
-					)}
-					{item.whyThisCase && (
-						<div className={`${textClass.replace("700", "800")} text-xs font-medium ${bgClass.replace("/30", "-50")} px-2 py-1 rounded`}>
-							{item.whyThisCase}
-						</div>
-					)}
+					<div className="text-gray-700 text-sm">{marker.english}</div>
 				</div>
 			))}
 		</div>
 	</Card>
 );
 
-const DailyPatterns: React.FC<{
-	loaderData: Route.ComponentProps["loaderData"];
-}> = ({ loaderData }) => {
-	const { coffeeFood, houseLocation, timeSchedule, family } = loaderData;
+const Conversations: React.FC = () => {
+	const arrivingResponses: Phrase[] = [
+		{ text: "Γεια σας", english: "Hello (formal)" },
+		{ text: "Ευχαριστώ πολύ", english: "Thank you very much" },
+		{ text: "Τα λέμε", english: "See you" },
+	];
+
+	const foodResponses: Phrase[] = [
+		{ text: "Ναι, ευχαριστώ", english: "Yes, thank you" },
+		{ text: "Όχι, ευχαριστώ", english: "No, thank you" },
+		{ text: "Είναι πολύ νόστιμο", english: "It's very delicious" },
+		{ text: "Χόρτασα", english: "I'm full" },
+	];
+
+	const smalltalkResponses: Phrase[] = [
+		{ text: "Καλά ευχαριστώ", english: "Good, thank you" },
+		{ text: "Δεν ξέρω ακόμα", english: "I don't know yet" },
+		{ text: "Πολύ καλά", english: "Very good" },
+	];
 
 	return (
 		<div className="space-y-10">
-			{/* Priority Banner */}
+			{/* Page Header */}
 			<Card
 				variant="elevated"
 				padding="lg"
-				className="bg-gradient-to-r from-emerald-50 to-green-50 border-2 border-emerald-200"
+				className="bg-gradient-to-r from-blue-50 to-cyan-50 border-2 border-blue-200"
 			>
-				<div className="flex items-center justify-between mb-6">
-					<h2 className="text-2xl font-bold text-emerald-800">
-						Essential Daily Patterns
-					</h2>
-					<Badge variant="success" size="lg">
-						Priority #1 - 80% Daily Use
-					</Badge>
+				<div className="mb-4">
+					<h2 className="text-2xl font-bold text-blue-800">Conversations</h2>
+					<p className="text-blue-700 mt-2">
+						Real situations with family and friends
+					</p>
 				</div>
-				<InfoBox variant="success" title="Learning Strategy" className="mb-6">
-					Master these high-frequency patterns first! They appear in 80% of
-					daily conversations. Focus on{" "}
-					<strong>recognition over memorization</strong> - see the pattern,
-					understand the context.
+				<InfoBox variant="info" title="Learning Strategy">
+					Focus on understanding first, then responding. Listen for these
+					phrases in real conversations and recognize what's being said to you
+					before worrying about perfect replies.
 				</InfoBox>
 			</Card>
 
-			{/* Essential Daily Patterns (80% - Most Used) */}
-			<Card
-				variant="elevated"
-				padding="lg"
-				className="bg-gradient-to-r from-orange-50 to-red-50 border-2 border-orange-200"
-			>
-				<div className="flex items-center justify-between mb-6">
-					<h2 className="text-2xl font-bold text-orange-800">
-						Daily Essentials
-					</h2>
-					<Badge variant="warning" size="lg">
-						Learn These First!
-					</Badge>
-				</div>
+			{/* Situation Cards Grid */}
+			<div className="grid lg:grid-cols-2 gap-8">
+				{/* Situation 1: Arriving & Leaving */}
+				<SituationCard
+					title="Arriving & Leaving"
+					icon={<DoorOpen size={20} />}
+					youllHear={ARRIVING_PHRASES}
+					responses={arrivingResponses}
+					colorClass="border-green-200"
+					bgClass="bg-green-50/30"
+					textClass="text-green-700"
+				/>
 
-				<div className="grid lg:grid-cols-2 gap-8">
-					{/* Coffee & Food */}
-					<PatternCard
-						title="Coffee & Food"
-						icon="☕"
-						items={coffeeFood}
-						colorClass="border-orange-200"
-						bgClass="bg-orange-50/30"
-						textClass="text-orange-700"
-					/>
+				{/* Situation 2: Food & Hospitality */}
+				<SituationCard
+					title="Food & Hospitality"
+					icon={<Utensils size={20} />}
+					youllHear={FOOD_PHRASES}
+					responses={foodResponses}
+					colorClass="border-orange-200"
+					bgClass="bg-orange-50/30"
+					textClass="text-orange-700"
+				/>
 
-					{/* House & Location */}
-					<PatternCard
-						title="House & Location"
-						icon="🏠"
-						items={houseLocation}
-						colorClass="border-blue-200"
-						bgClass="bg-blue-50/30"
-						textClass="text-blue-700"
-					/>
+				{/* Situation 3: Small Talk */}
+				<SituationCard
+					title="Small Talk"
+					icon={<MessageCircle size={20} />}
+					youllHear={SMALLTALK_PHRASES}
+					responses={smalltalkResponses}
+					colorClass="border-blue-200"
+					bgClass="bg-blue-50/30"
+					textClass="text-blue-700"
+				/>
 
-					{/* Time & Daily Schedule */}
-					<PatternCard
-						title="Time & Daily Schedule"
-						icon="🕐"
-						items={timeSchedule}
-						colorClass="border-yellow-200"
-						bgClass="bg-yellow-50/30"
-						textClass="text-yellow-700"
-					/>
-
-					{/* Family & Relationships */}
-					<PatternCard
-						title="Family & Relationships"
-						icon="👨‍👩‍👧‍👦"
-						items={family}
-						colorClass="border-amber-200"
-						bgClass="bg-amber-50/30"
-						textClass="text-amber-700"
-					/>
-				</div>
-			</Card>
+				{/* Situation 4: Discourse Markers */}
+				<MarkersCard />
+			</div>
 
 			{/* Practice Tips */}
 			<Card
@@ -198,69 +191,60 @@ const DailyPatterns: React.FC<{
 				className="bg-gradient-to-r from-purple-50 to-violet-50 border-2 border-purple-200"
 			>
 				<h2 className="text-xl font-bold text-center mb-4 text-purple-800 flex items-center justify-center gap-2">
-					<Target size={20} /> Practice Strategy
+					<Users size={20} /> Practice Strategy
 				</h2>
 				<div className="grid md:grid-cols-2 gap-6">
 					<div>
 						<h3 className="text-lg font-bold text-purple-700 mb-3">
-							Daily Practice
+							Comprehension First
 						</h3>
 						<ul className="space-y-2 text-sm text-gray-700">
 							<li>
-								• Start with <strong>one theme per day</strong> (Coffee & Food
-								Monday, etc.)
+								• <strong>Listen actively</strong> - recognize these phrases when
+								you hear them
 							</li>
 							<li>
-								• <strong>Say examples out loud</strong> - hearing helps memory
+								• <strong>One situation at a time</strong> - master arrivals
+								before moving on
 							</li>
 							<li>
-								• <strong>Focus on context</strong> - when would you say this?
+								• <strong>Context matters</strong> - notice when people use these
+								phrases
 							</li>
 							<li>
-								• <strong>Notice the "why"</strong> hints - they build pattern
-								recognition
+								• <strong>Be patient</strong> - understanding comes before
+								speaking
 							</li>
 						</ul>
 					</div>
 					<div>
 						<h3 className="text-lg font-bold text-purple-700 mb-3">
-							Next Steps
+							Simple Responses
 						</h3>
 						<ul className="space-y-2 text-sm text-gray-700">
 							<li>
-								• When confused, check <strong>"Core Rules"</strong> tab for
-								grammar
+								• <strong>Start with basics</strong> - "Ναι/Όχι ευχαριστώ" goes
+								a long way
 							</li>
 							<li>
-								• Use <strong>"Case Practice"</strong> to test yourself
+								• <strong>Practice out loud</strong> - say responses to yourself
 							</li>
 							<li>
-								• Try <strong>"Search Words"</strong> to find specific examples
+								• <strong>Don't worry about perfection</strong> - communication
+								beats grammar
 							</li>
 							<li>
-								• Remember: <strong>patterns over memorization!</strong>
+								• <strong>Build confidence slowly</strong> - master a few
+								responses first
 							</li>
 						</ul>
 					</div>
 				</div>
 			</Card>
-
-			{/* Cross-Reference Note */}
-			<InfoBox
-				variant="info"
-				title="Need the Grammar Rules?"
-				icon={<Lightbulb size={18} />}
-			>
-				Confused about why we use τον vs την vs το? Head to the{" "}
-				<strong>"Core Rules"</strong> tab for the complete grammar reference,
-				then come back here to practice!
-			</InfoBox>
 		</div>
 	);
 };
 
-export default function DailyPatternsRoute({
-	loaderData,
-}: Route.ComponentProps) {
-	return <DailyPatterns loaderData={loaderData} />;
+export default function ConversationsRoute(_props: Route.ComponentProps) {
+	return <Conversations />;
 }

@@ -8,13 +8,10 @@ import {
 } from "react-router";
 import {
   BookOpen,
-  Clock,
   FileText,
-  Layers,
   Lightbulb,
   Search,
   Target,
-  Users,
 } from "lucide-react";
 import { TABS } from "./constants/config";
 import "./index.css";
@@ -22,10 +19,7 @@ import "./index.css";
 const iconMap = {
   Search: <Search size={16} />,
   BookOpen: <BookOpen size={16} />,
-  Users: <Users size={16} />,
-  Clock: <Clock size={16} />,
   FileText: <FileText size={16} />,
-  Layers: <Layers size={16} />,
   Target: <Target size={16} />,
   Lightbulb: <Lightbulb size={16} />,
 };
@@ -35,12 +29,9 @@ const getIcon = (iconName: string) => {
 };
 
 const tabToPath: Record<string, string> = {
-  "core-rules": "/core-rules",
-  "daily-patterns": "/",
-  "advanced-cases": "/advanced-cases",
-  "case-practice": "/case-practice",
-  "present": "/present",
-  "other-tenses": "/other-tenses",
+  "conversations": "/",
+  "quick-reference": "/quick-reference",
+  "practice": "/practice",
   "vocabulary": "/vocabulary",
   "search": "/search",
 };
@@ -54,7 +45,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="text-gray-900">
         {children}
         <ScrollRestoration />
         <Scripts />

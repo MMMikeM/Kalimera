@@ -1,4 +1,4 @@
-import { Search } from "lucide-react";
+import { Search, X } from "lucide-react";
 import type { ReactNode } from "react";
 import { tv } from "tailwind-variants";
 
@@ -17,12 +17,12 @@ export const searchInputVariants = tv({
 });
 
 export const searchInputFieldVariants = tv({
-	base: "w-full border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors",
+	base: "w-full bg-white text-gray-900 placeholder:text-gray-400 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 focus:border-transparent transition-colors",
 	variants: {
 		size: {
-			sm: "pl-8 pr-3 py-1.5 text-sm",
-			md: "pl-10 pr-4 py-2 text-base",
-			lg: "pl-12 pr-5 py-3 text-lg",
+			sm: "pl-8 pr-8 py-1.5 text-sm",
+			md: "pl-10 pr-10 py-2 text-base",
+			lg: "pl-12 pr-12 py-3 text-lg",
 		},
 	},
 	defaultVariants: {
@@ -31,12 +31,26 @@ export const searchInputFieldVariants = tv({
 });
 
 export const searchInputIconVariants = tv({
-	base: "absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none",
+	base: "absolute inset-y-0 flex items-center pointer-events-none text-gray-400",
 	variants: {
 		size: {
-			sm: "h-3 w-3",
-			md: "h-4 w-4",
-			lg: "h-5 w-5",
+			sm: "left-2.5 [&>svg]:h-3.5 [&>svg]:w-3.5",
+			md: "left-3 [&>svg]:h-4 [&>svg]:w-4",
+			lg: "left-4 [&>svg]:h-5 [&>svg]:w-5",
+		},
+	},
+	defaultVariants: {
+		size: "md",
+	},
+});
+
+export const clearButtonVariants = tv({
+	base: "absolute inset-y-0 flex items-center text-gray-400 hover:text-gray-600 focus:outline-none focus:text-gray-600 transition-colors",
+	variants: {
+		size: {
+			sm: "right-2.5 [&>svg]:h-3.5 [&>svg]:w-3.5",
+			md: "right-3 [&>svg]:h-4 [&>svg]:w-4",
+			lg: "right-4 [&>svg]:h-5 [&>svg]:w-5",
 		},
 	},
 	defaultVariants: {
@@ -49,6 +63,7 @@ export interface SearchInputProps
 	size?: "sm" | "md" | "lg";
 	icon?: ReactNode;
 	containerClassName?: string;
+	onClear?: () => void;
 }
 
 export const SearchInput: React.FC<SearchInputProps> = ({
@@ -56,8 +71,12 @@ export const SearchInput: React.FC<SearchInputProps> = ({
 	icon = <Search />,
 	containerClassName,
 	className,
+	onClear,
+	value,
 	...props
 }) => {
+	const hasValue = value !== undefined && value !== "";
+
 	return (
 		<div
 			className={searchInputVariants({ size, className: containerClassName })}
@@ -65,9 +84,20 @@ export const SearchInput: React.FC<SearchInputProps> = ({
 			<div className={searchInputIconVariants({ size })}>{icon}</div>
 			<input
 				type="text"
+				value={value}
 				className={searchInputFieldVariants({ size, className })}
 				{...props}
 			/>
+			{hasValue && onClear && (
+				<button
+					type="button"
+					onClick={onClear}
+					className={clearButtonVariants({ size })}
+					aria-label="Clear search"
+				>
+					<X />
+				</button>
+			)}
 		</div>
 	);
 };
