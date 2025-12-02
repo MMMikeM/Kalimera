@@ -1,5 +1,11 @@
 .PHONY: dev build deploy preview help
 
+# Load .env file if it exists
+ifneq (,$(wildcard ./.env))
+	include .env
+	export
+endif
+
 # Development
 dev:
 	pnpm dev
