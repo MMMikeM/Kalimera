@@ -1,16 +1,9 @@
 services:
-  postgres:
-    image: postgres:16-alpine
-    container_name: greek_postgres
-    environment:
-      POSTGRES_DB: greek_learning
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
+  libsql:
+    image: ghcr.io/tursodatabase/libsql-server:latest
+    container_name: greek_libsql
     ports:
-      - '5432:5432'
+      - "8080:8080"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-    restart: unless-stopped
-
-volumes:
-  postgres_data: 
+      - ./data/libsql:/var/lib/sqld
+    restart: unless-stopped 

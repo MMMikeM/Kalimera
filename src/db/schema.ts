@@ -1,237 +1,335 @@
-import type {
-	ColumnType,
-	Generated,
-	Insertable,
-	Selectable,
-	Updateable,
-} from "kysely";
+import { relations } from "drizzle-orm";
+import { index, integer, primaryKey, real, sqliteTable, uniqueIndex } from "drizzle-orm/sqlite-core";
+import {
+	bool,
+	cascadeFk,
+	createdAt,
+	json,
+	nullableBool,
+	nullableFk,
+	nullableInt,
+	nullableOneOf,
+	nullableString,
+	nullableTimestamp,
+	oneOf,
+	pk,
+	string,
+} from "./columns";
+import {
+	areaTypes,
+	caseTypes,
+	genders,
+	sessionTypes,
+	skillTypes,
+	statuses,
+	wordTypes,
+} from "./enums";
 
-export interface Database {
-	vocabulary: VocabularyTable;
-	tags: TagsTable;
-	vocabulary_tags: VocabularyTagsTable;
-	noun_details: NounDetailsTable;
-	verb_details: VerbDetailsTable;
-	practice_sessions: PracticeSessionsTable;
-	practice_attempts: PracticeAttemptsTable;
-	weak_areas: WeakAreasTable;
-	vocabulary_skills: VocabularySkillsTable;
-	grammar_patterns: GrammarPatternsTable;
-	example_sentences: ExampleSentencesTable;
-}
+// Domain-specific: SRS (Spaced Repetition System)
+const easeFactor = real("ease_factor").default(2.5);
+const intervalDays = integer("interval_days").default(1);
+const reviewCount = integer("review_count").default(0);
+const mistakeCount = integer("mistake_count").default(0);
+const difficultyLevel = integer("difficulty_level").notNull().default(0);
 
-// Vocabulary Table
-export interface VocabularyTable {
-	id: Generated<number>;
-	greek_text: string;
-	english_translation: string;
-	pronunciation: string | null;
-	word_type:
-		| "noun"
-		| "verb"
-		| "adjective"
-		| "adverb"
-		| "phrase"
-		| "preposition"
-		| null;
-	category: string | null;
-	example_greek: string | null;
-	example_english: string | null;
-	status: "unprocessed" | "processed";
-	difficulty_level: ColumnType<number, number | undefined, number>;
-	is_problem_word: ColumnType<boolean, boolean | undefined, boolean>;
-	mistake_count: ColumnType<number, number | undefined, number>;
-	review_count: ColumnType<number, number | undefined, number>;
-	last_reviewed: ColumnType<Date, string | undefined, string> | null;
-	created_at: ColumnType<Date, string | undefined, never>;
-	gender: "masculine" | "feminine" | "neuter" | null;
-	metadata: ColumnType<
-		Record<string, unknown> | null,
-		Record<string, unknown> | undefined,
-		Record<string, unknown>
-	>;
-	// SRS fields
-	next_review_at: ColumnType<Date, string | undefined, string> | null;
-	interval_days: ColumnType<number, number | undefined, number>;
-	ease_factor: ColumnType<number, number | undefined, number>;
-}
+// Re-export enums for convenience
+export * from "./enums";
 
-export type Vocabulary = Selectable<VocabularyTable>;
-export type NewVocabulary = Insertable<VocabularyTable>;
-export type VocabularyUpdate = Updateable<VocabularyTable>;
+// ============================================
+// VOCABULARY TABLE
+// ============================================
+export const vocabulary = sqliteTable(
+	"vocabulary",
+	{
+		id: pk(),
+		greekText: string("greek_text"),
+		englishTranslation: string("english_translation"),
+		pronunciation: nullableString("pronunciation"),
+		wordType: nullableOneOf("word_type", wordTypes),
+		category: nullableString("category"),
+		exampleGreek: nullableString("example_greek"),
+		exampleEnglish: nullableString("example_english"),
+		status: oneOf("status", statuses).default("unprocessed"),
+		difficultyLevel: difficultyLevel,
+		isProblemWord: bool("is_problem_word").default(false),
+		mistakeCount: mistakeCount,
+		reviewCount: reviewCount,
+		lastReviewed: nullableTimestamp("last_reviewed"),
+		createdAt: createdAt(),
+		gender: nullableOneOf("gender", genders),
+		metadata: json<Record<string, unknown>>("metadata"),
+		nextReviewAt: nullableTimestamp("next_review_at"),
+		intervalDays: intervalDays,
+		easeFactor: easeFactor,
+	},
+	(table) => [
+		index("idx_vocabulary_category").on(table.category),
+		index("idx_vocabulary_word_type").on(table.wordType),
+		index("idx_vocabulary_difficulty").on(table.difficultyLevel),
+		index("idx_vocabulary_review").on(table.nextReviewAt),
+		uniqueIndex("idx_vocabulary_greek_text").on(table.greekText),
+	],
+);
 
-// Tags Table
-export interface TagsTable {
-	id: Generated<number>;
-	slug: string;
-	name: string;
-	description: string | null;
-	is_system: ColumnType<boolean, boolean | undefined, boolean>;
-	created_at: ColumnType<Date, string | undefined, never>;
-}
+// ============================================
+// TAGS TABLE
+// ============================================
+export const tags = sqliteTable(
+	"tags",
+	{
+		id: pk(),
+		slug: string("slug").unique(),
+		name: string("name"),
+		description: nullableString("description"),
+		isSystem: bool("is_system").default(true),
+		createdAt: createdAt(),
+	},
+	(table) => [index("idx_tags_is_system").on(table.isSystem)],
+);
 
-export type Tag = Selectable<TagsTable>;
-export type NewTag = Insertable<TagsTable>;
-export type TagUpdate = Updateable<TagsTable>;
+// ============================================
+// VOCABULARY_TAGS (Join Table)
+// ============================================
+export const vocabularyTags = sqliteTable(
+	"vocabulary_tags",
+	{
+		vocabularyId: cascadeFk("vocabulary_id", () => vocabulary.id),
+		tagId: cascadeFk("tag_id", () => tags.id),
+	},
+	(table) => [primaryKey({ columns: [table.vocabularyId, table.tagId] })],
+);
 
-// Vocabulary Tags Join Table (many-to-many)
-export interface VocabularyTagsTable {
-	vocabulary_id: number;
-	tag_id: number;
-}
+// ============================================
+// NOUN_DETAILS TABLE
+// ============================================
+export const nounDetails = sqliteTable("noun_details", {
+	vocabId: cascadeFk("vocab_id", () => vocabulary.id).primaryKey(),
+	gender: oneOf("gender", genders),
+	nominativeSingular: string("nominative_singular"),
+	accusativeSingular: nullableString("accusative_singular"),
+	genitiveSingular: nullableString("genitive_singular"),
+	nominativePlural: nullableString("nominative_plural"),
+	accusativePlural: nullableString("accusative_plural"),
+	genitivePlural: nullableString("genitive_plural"),
+	notes: nullableString("notes"),
+});
 
-export type VocabularyTag = Selectable<VocabularyTagsTable>;
-export type NewVocabularyTag = Insertable<VocabularyTagsTable>;
-export type VocabularyTagUpdate = Updateable<VocabularyTagsTable>;
+// ============================================
+// VERB_DETAILS TABLE
+// ============================================
+export const verbDetails = sqliteTable("verb_details", {
+	vocabId: cascadeFk("vocab_id", () => vocabulary.id).primaryKey(),
+	infinitive: string("infinitive"),
+	conjugationFamily: string("conjugation_family"),
+	notes: nullableString("notes"),
+	presentEgo: nullableString("present_ego"),
+	presentEsy: nullableString("present_esy"),
+	presentAftos: nullableString("present_aftos"),
+	presentEmeis: nullableString("present_emeis"),
+	presentEseis: nullableString("present_eseis"),
+	presentAftoi: nullableString("present_aftoi"),
+	pastEgo: nullableString("past_ego"),
+	pastEsy: nullableString("past_esy"),
+	pastAftos: nullableString("past_aftos"),
+	pastEmeis: nullableString("past_emeis"),
+	pastEseis: nullableString("past_eseis"),
+	pastAftoi: nullableString("past_aftoi"),
+	futureEgo: nullableString("future_ego"),
+	futureEsy: nullableString("future_esy"),
+	futureAftos: nullableString("future_aftos"),
+	futureEmeis: nullableString("future_emeis"),
+	futureEseis: nullableString("future_eseis"),
+	futureAftoi: nullableString("future_aftoi"),
+});
 
-// Noun Details Table
-export interface NounDetailsTable {
-	vocab_id: number;
-	gender: "masculine" | "feminine" | "neuter";
-	nominative_singular: string;
-	accusative_singular: string | null;
-	genitive_singular: string | null;
-	nominative_plural: string | null;
-	accusative_plural: string | null;
-	genitive_plural: string | null;
-	notes: string | null;
-}
+// ============================================
+// PRACTICE_SESSIONS TABLE
+// ============================================
+export const practiceSessions = sqliteTable("practice_sessions", {
+	id: pk(),
+	sessionType: nullableOneOf("session_type", sessionTypes),
+	category: nullableString("category"),
+	wordTypeFilter: nullableString("word_type_filter"),
+	totalQuestions: nullableInt("total_questions"),
+	correctAnswers: nullableInt("correct_answers"),
+	focusArea: nullableString("focus_area"),
+	startedAt: createdAt("started_at"),
+	completedAt: nullableTimestamp("completed_at"),
+});
 
-export type NounDetails = Selectable<NounDetailsTable>;
-export type NewNounDetails = Insertable<NounDetailsTable>;
-export type NounDetailsUpdate = Updateable<NounDetailsTable>;
+// ============================================
+// PRACTICE_ATTEMPTS TABLE
+// ============================================
+export const practiceAttempts = sqliteTable("practice_attempts", {
+	id: pk(),
+	sessionId: nullableFk("session_id", () => practiceSessions.id),
+	vocabularyId: nullableFk("vocabulary_id", () => vocabulary.id),
+	questionText: string("question_text"),
+	correctAnswer: string("correct_answer"),
+	userAnswer: nullableString("user_answer"),
+	isCorrect: nullableBool("is_correct"),
+	timeTaken: nullableInt("time_taken"),
+	attemptedAt: createdAt("attempted_at"),
+});
 
-// Verb Details Table
-export interface VerbDetailsTable {
-	vocab_id: number;
-	infinitive: string;
-	conjugation_family: string;
-	notes: string | null;
-	present_ego: string | null;
-	present_esy: string | null;
-	present_aftos: string | null;
-	present_emeis: string | null;
-	present_eseis: string | null;
-	present_aftoi: string | null;
-	past_ego: string | null;
-	past_esy: string | null;
-	past_aftos: string | null;
-	past_emeis: string | null;
-	past_eseis: string | null;
-	past_aftoi: string | null;
-	future_ego: string | null;
-	future_esy: string | null;
-	future_aftos: string | null;
-	future_emeis: string | null;
-	future_eseis: string | null;
-	future_aftoi: string | null;
-}
+// ============================================
+// WEAK_AREAS TABLE
+// ============================================
+export const weakAreas = sqliteTable("weak_areas", {
+	id: pk(),
+	areaType: oneOf("area_type", areaTypes),
+	areaIdentifier: string("area_identifier"),
+	mistakeCount: integer("mistake_count").notNull().default(1),
+	lastMistakeAt: createdAt("last_mistake_at"),
+	needsFocus: bool("needs_focus").default(true),
+});
 
-export type VerbDetails = Selectable<VerbDetailsTable>;
-export type NewVerbDetails = Insertable<VerbDetailsTable>;
-export type VerbDetailsUpdate = Updateable<VerbDetailsTable>;
+// ============================================
+// VOCABULARY_SKILLS TABLE
+// ============================================
+export const vocabularySkills = sqliteTable(
+	"vocabulary_skills",
+	{
+		vocabularyId: cascadeFk("vocabulary_id", () => vocabulary.id),
+		skillType: oneOf("skill_type", skillTypes),
+		nextReviewAt: nullableTimestamp("next_review_at"),
+		intervalDays: intervalDays,
+		easeFactor: easeFactor,
+		reviewCount: reviewCount,
+		lastReviewedAt: nullableTimestamp("last_reviewed_at"),
+	},
+	(table) => [
+		primaryKey({ columns: [table.vocabularyId, table.skillType] }),
+		index("idx_vocabulary_skills_review").on(table.nextReviewAt),
+	],
+);
 
-// Practice Sessions Table
-export interface PracticeSessionsTable {
-	id: Generated<number>;
-	session_type:
-		| "vocab_quiz"
-		| "case_drill"
-		| "conjugation_drill"
-		| "weak_area_focus"
-		| null;
-	category: string | null;
-	word_type_filter: string | null;
-	total_questions: number | null;
-	correct_answers: number | null;
-	focus_area: string | null;
-	started_at: ColumnType<Date, string | undefined, never>;
-	completed_at: ColumnType<Date, string | undefined, string> | null;
-}
+// ============================================
+// GRAMMAR_PATTERNS TABLE
+// ============================================
+export const grammarPatterns = sqliteTable(
+	"grammar_patterns",
+	{
+		id: pk(),
+		caseType: oneOf("case_type", caseTypes),
+		context: string("context"),
+		greek: string("greek"),
+		english: string("english"),
+		explanation: nullableString("explanation"),
+		whyThisCase: nullableString("why_this_case"),
+		nextReviewAt: nullableTimestamp("next_review_at"),
+		intervalDays: intervalDays,
+		easeFactor: easeFactor,
+		reviewCount: reviewCount,
+		createdAt: createdAt(),
+	},
+	(table) => [
+		index("idx_grammar_patterns_case").on(table.caseType),
+		index("idx_grammar_patterns_review").on(table.nextReviewAt),
+	],
+);
 
-export type PracticeSession = Selectable<PracticeSessionsTable>;
-export type NewPracticeSession = Insertable<PracticeSessionsTable>;
-export type PracticeSessionUpdate = Updateable<PracticeSessionsTable>;
+// ============================================
+// EXAMPLE_SENTENCES TABLE
+// ============================================
+export const exampleSentences = sqliteTable(
+	"example_sentences",
+	{
+		id: pk(),
+		vocabularyId: cascadeFk("vocabulary_id", () => vocabulary.id),
+		greekText: string("greek_text"),
+		englishText: string("english_text"),
+		audioUrl: nullableString("audio_url"),
+		source: nullableString("source"),
+		grammarPatternId: nullableFk("grammar_pattern_id", () => grammarPatterns.id),
+		createdAt: createdAt(),
+	},
+	(table) => [index("idx_example_sentences_vocab").on(table.vocabularyId)],
+);
 
-// Practice Attempts Table
-export interface PracticeAttemptsTable {
-	id: Generated<number>;
-	session_id: number;
-	vocabulary_id: number;
-	question_text: string;
-	correct_answer: string;
-	user_answer: string | null;
-	is_correct: boolean | null;
-	time_taken: number | null;
-	attempted_at: ColumnType<Date, string | undefined, never>;
-}
+// ============================================
+// RELATIONS
+// ============================================
+export const vocabularyRelations = relations(vocabulary, ({ one, many }) => ({
+	nounDetails: one(nounDetails, {
+		fields: [vocabulary.id],
+		references: [nounDetails.vocabId],
+	}),
+	verbDetails: one(verbDetails, {
+		fields: [vocabulary.id],
+		references: [verbDetails.vocabId],
+	}),
+	vocabularyTags: many(vocabularyTags),
+	vocabularySkills: many(vocabularySkills),
+	exampleSentences: many(exampleSentences),
+	practiceAttempts: many(practiceAttempts),
+}));
 
-export type PracticeAttempt = Selectable<PracticeAttemptsTable>;
-export type NewPracticeAttempt = Insertable<PracticeAttemptsTable>;
-export type PracticeAttemptUpdate = Updateable<PracticeAttemptsTable>;
+export const tagsRelations = relations(tags, ({ many }) => ({
+	vocabularyTags: many(vocabularyTags),
+}));
 
-// Weak Areas Table
-export interface WeakAreasTable {
-	id: Generated<number>;
-	area_type: "case" | "gender" | "verb_family";
-	area_identifier: string;
-	mistake_count: ColumnType<number, number | undefined, number>;
-	last_mistake_at: ColumnType<Date, string | undefined, string>;
-	needs_focus: ColumnType<boolean, boolean | undefined, boolean>;
-}
+export const vocabularyTagsRelations = relations(vocabularyTags, ({ one }) => ({
+	vocabulary: one(vocabulary, {
+		fields: [vocabularyTags.vocabularyId],
+		references: [vocabulary.id],
+	}),
+	tag: one(tags, {
+		fields: [vocabularyTags.tagId],
+		references: [tags.id],
+	}),
+}));
 
-export type WeakArea = Selectable<WeakAreasTable>;
-export type NewWeakArea = Insertable<WeakAreasTable>;
-export type WeakAreaUpdate = Updateable<WeakAreasTable>;
+export const nounDetailsRelations = relations(nounDetails, ({ one }) => ({
+	vocabulary: one(vocabulary, {
+		fields: [nounDetails.vocabId],
+		references: [vocabulary.id],
+	}),
+}));
 
-// Vocabulary Skills Table (recognition vs production tracking)
-export interface VocabularySkillsTable {
-	vocabulary_id: number;
-	skill_type: "recognition" | "production";
-	next_review_at: ColumnType<Date, string | undefined, string> | null;
-	interval_days: ColumnType<number, number | undefined, number>;
-	ease_factor: ColumnType<number, number | undefined, number>;
-	review_count: ColumnType<number, number | undefined, number>;
-	last_reviewed_at: ColumnType<Date, string | undefined, string> | null;
-}
+export const verbDetailsRelations = relations(verbDetails, ({ one }) => ({
+	vocabulary: one(vocabulary, {
+		fields: [verbDetails.vocabId],
+		references: [vocabulary.id],
+	}),
+}));
 
-export type VocabularySkill = Selectable<VocabularySkillsTable>;
-export type NewVocabularySkill = Insertable<VocabularySkillsTable>;
-export type VocabularySkillUpdate = Updateable<VocabularySkillsTable>;
+export const practiceSessionsRelations = relations(practiceSessions, ({ many }) => ({
+	attempts: many(practiceAttempts),
+}));
 
-// Grammar Patterns Table (case usage examples with SRS)
-export interface GrammarPatternsTable {
-	id: Generated<number>;
-	case_type: "accusative" | "genitive" | "nominative" | "vocative";
-	context: string;
-	greek: string;
-	english: string;
-	explanation: string | null;
-	why_this_case: string | null;
-	// SRS fields
-	next_review_at: ColumnType<Date, string | undefined, string> | null;
-	interval_days: ColumnType<number, number | undefined, number>;
-	ease_factor: ColumnType<number, number | undefined, number>;
-	review_count: ColumnType<number, number | undefined, number>;
-	created_at: ColumnType<Date, string | undefined, never>;
-}
+export const practiceAttemptsRelations = relations(practiceAttempts, ({ one }) => ({
+	session: one(practiceSessions, {
+		fields: [practiceAttempts.sessionId],
+		references: [practiceSessions.id],
+	}),
+	vocabulary: one(vocabulary, {
+		fields: [practiceAttempts.vocabularyId],
+		references: [vocabulary.id],
+	}),
+}));
 
-export type GrammarPattern = Selectable<GrammarPatternsTable>;
-export type NewGrammarPattern = Insertable<GrammarPatternsTable>;
-export type GrammarPatternUpdate = Updateable<GrammarPatternsTable>;
+export const vocabularySkillsRelations = relations(vocabularySkills, ({ one }) => ({
+	vocabulary: one(vocabulary, {
+		fields: [vocabularySkills.vocabularyId],
+		references: [vocabulary.id],
+	}),
+}));
 
-// Example Sentences Table (multiple examples per vocabulary item)
-export interface ExampleSentencesTable {
-	id: Generated<number>;
-	vocabulary_id: number;
-	greek_text: string;
-	english_text: string;
-	audio_url: string | null;
-	source: string | null;
-	grammar_pattern_id: number | null;
-	created_at: ColumnType<Date, string | undefined, never>;
-}
+export const grammarPatternsRelations = relations(grammarPatterns, ({ many }) => ({
+	exampleSentences: many(exampleSentences),
+}));
 
-export type ExampleSentence = Selectable<ExampleSentencesTable>;
-export type NewExampleSentence = Insertable<ExampleSentencesTable>;
-export type ExampleSentenceUpdate = Updateable<ExampleSentencesTable>;
+export const exampleSentencesRelations = relations(exampleSentences, ({ one }) => ({
+	vocabulary: one(vocabulary, {
+		fields: [exampleSentences.vocabularyId],
+		references: [vocabulary.id],
+	}),
+	grammarPattern: one(grammarPatterns, {
+		fields: [exampleSentences.grammarPatternId],
+		references: [grammarPatterns.id],
+	}),
+}));
+
+// Types are exported from ./types.ts
+export * from "./types";
