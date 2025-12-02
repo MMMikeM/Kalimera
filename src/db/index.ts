@@ -1,17 +1,10 @@
-import { Kysely, PostgresDialect } from "kysely";
-import { Pool } from "pg";
-import type { Database } from "./schema";
+import { drizzle } from "drizzle-orm/libsql";
+import { createClient } from "@libsql/client";
+import * as schema from "./schema";
 
-const dialect = new PostgresDialect({
-	pool: new Pool({
-		host: process.env.POSTGRES_HOST || "localhost",
-		database: process.env.POSTGRES_DB || "greek_learning",
-		user: process.env.POSTGRES_USER || "postgres",
-		password: process.env.POSTGRES_PASSWORD || "password",
-		port: parseInt(process.env.POSTGRES_PORT || "5432", 10),
-	}),
+const client = createClient({
+	url: process.env.TURSO_DATABASE_URL || "http://127.0.0.1:8080",
+	authToken: process.env.TURSO_AUTH_TOKEN,
 });
 
-export const db = new Kysely<Database>({
-	dialect,
-});
+export const db = drizzle(client, { schema });
