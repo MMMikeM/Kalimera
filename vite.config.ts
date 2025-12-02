@@ -8,5 +8,13 @@ export default defineConfig(({ isSsrBuild }) => ({
 			? { input: "./src/entry.worker.ts" }
 			: undefined,
 	},
-	plugins: [tailwindcss(), reactRouter()],
+	plugins: [
+		tailwindcss(),
+		reactRouter({
+			async getLoadContext() {
+				const { db } = await import("./src/db");
+				return { db };
+			},
+		}),
+	],
 }));
