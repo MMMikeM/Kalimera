@@ -5,12 +5,7 @@ export default {
   ssr: true,
   prerender: [
     "/",
-    "/core-rules",
-    "/advanced-cases",
-    "/case-practice",
-    "/present",
-    "/other-tenses",
-    "/vocabulary",
-    "/search",
+    "/quick-reference",
+    "/practice",
   ],
 } satisfies Config;
