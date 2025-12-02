@@ -5,6 +5,14 @@ compatibility_flags = ["nodejs_compat"]
 
 assets = { directory = "./build/client" }
 
+[observability]
+enabled = true
+
+[observability.logs]
+enabled = true
+head_sampling_rate = 1
+invocation_logs = true
+
 # Secrets configured via: wrangler secret put TURSO_DATABASE_URL
 # TURSO_DATABASE_URL - libsql://your-db.turso.io
 # TURSO_AUTH_TOKEN - your auth token
