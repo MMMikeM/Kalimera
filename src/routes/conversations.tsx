@@ -2,12 +2,12 @@ import { MessageCircle, DoorOpen, Utensils, Users, Link } from "lucide-react";
 import type React from "react";
 import type { Route } from "./+types/conversations";
 import { Card, InfoBox, MonoText } from "../components/ui";
+import type { Phrase } from "../types/phrase";
 import {
 	ARRIVING_PHRASES,
+	DISCOURSE_MARKERS,
 	FOOD_PHRASES,
 	SMALLTALK_PHRASES,
-	DISCOURSE_MARKERS,
-	type Phrase,
 } from "../scripts/seed-data/vocabulary";
 
 export function meta() {

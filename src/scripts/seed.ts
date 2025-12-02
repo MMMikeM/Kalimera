@@ -1,67 +1,76 @@
 import { db } from "../db";
-import { formatNounWithArticle } from "../lib/greek-grammar";
 import type { NewVocabulary, NewVocabularyTag } from "../db/schema";
+import { formatNounWithArticle } from "../lib/greek-grammar";
 import {
-	SYSTEM_TAGS,
-	NOUNS,
-	VERBS,
-	TRANSPORT_VERBS,
-	FREQUENCY_ADVERBS,
-	POSITION_ADVERBS,
-	USEFUL_EXPRESSIONS,
-	COMMANDS,
-	LIKES_CONSTRUCTION,
-	TIME_PHRASES,
-	COLORS,
 	ADJECTIVES,
-	NUMBERS,
+	COLORS,
+	COMMANDS,
 	DAILY_PATTERNS,
+	FREQUENCY_ADVERBS,
+	LIKES_CONSTRUCTION,
+	NOUNS,
+	NUMBERS,
+	POSITION_ADVERBS,
+	SYSTEM_TAGS,
+	TIME_PHRASES,
+	TRANSPORT_VERBS,
+	USEFUL_EXPRESSIONS,
+	VERBS,
 } from "./seed-data";
 
 async function seed() {
-	console.log("Seeding database with vocabulary and tags...");
+	console.log("Seeding database (additive mode)...");
 
 	await db.transaction().execute(async (trx) => {
-		// Clear existing data in correct order (respecting FK constraints)
-		console.log("Clearing existing data...");
-		await trx.deleteFrom("vocabulary_tags").execute();
-		await trx.deleteFrom("tags").execute();
-		await trx.deleteFrom("verb_details").execute();
-		await trx.deleteFrom("vocabulary").execute();
-		console.log("Cleared existing data.");
-
-		// Create system tags
-		console.log("Creating system tags...");
+		// Upsert system tags (update name if slug exists, insert if new)
+		console.log("Upserting system tags...");
 		const tagValues = Object.values(SYSTEM_TAGS).map((tag) => ({
 			slug: tag.slug,
 			name: tag.name,
 			is_system: true,
 		}));
+
 		const insertedTags = await trx
 			.insertInto("tags")
 			.values(tagValues)
+			.onConflict((oc) =>
+				oc.column("slug").doUpdateSet({
+					name: (eb) => eb.ref("excluded.name"),
+				}),
+			)
 			.returningAll()
 			.execute();
-		console.log(`Created ${insertedTags.length} system tags.`);
+		console.log(`Upserted ${insertedTags.length} system tags.`);
 
 		const tagMap = new Map(insertedTags.map((t) => [t.slug, t.id]));
 
-		// Track inserted vocabulary to avoid duplicates
-		const vocabMap = new Map<string, number>();
+		// Track vocabulary IDs for tag linking
 		const vocabTagLinks: NewVocabularyTag[] = [];
+		let insertedCount = 0;
+		let skippedCount = 0;
 
+		// Insert vocabulary with conflict handling (skip if exists)
 		const insertVocab = async (vocab: NewVocabulary): Promise<number> => {
-			const existing = vocabMap.get(vocab.greek_text);
-			if (existing) return existing;
-
-			const [inserted] = await trx
+			const [result] = await trx
 				.insertInto("vocabulary")
 				.values(vocab)
-				.returningAll()
+				.onConflict((oc) => oc.column("greek_text").doNothing())
+				.returning(["id"])
 				.execute();
 
-			vocabMap.set(vocab.greek_text, inserted.id);
-			return inserted.id;
+			if (result) {
+				insertedCount++;
+				return result.id;
+			}
+
+			// Already existed - fetch existing ID
+			skippedCount++;
+			const existing = await trx
+				.selectFrom("vocabulary")
+				.select("id")
+				.where("greek_text", "=", vocab.greek_text)
+				.executeTakeFirst();
+			return existing!.id;
 		};
 
 		const linkTag = (vocabId: number, tagSlug: string) => {
@@ -297,7 +306,7 @@ async function seed() {
 			}
 		}
 
-		// Insert all vocabulary-tag links
+		// Insert vocabulary-tag links (with conflict handling)
 		console.log("Creating vocabulary-tag associations...");
 		if (vocabTagLinks.length > 0) {
 			const uniqueLinks = new Map<string, NewVocabularyTag>();
@@ -309,11 +318,21 @@ async function seed() {
 			}
 
 			const linksArray = Array.from(uniqueLinks.values());
-			await trx.insertInto("vocabulary_tags").values(linksArray).execute();
-			console.log(`Created ${linksArray.length} vocabulary-tag associations.`);
+
+			// Use onConflict to skip existing links
+			await trx
+				.insertInto("vocabulary_tags")
+				.values(linksArray)
+				.onConflict((oc) =>
+					oc.columns(["vocabulary_id", "tag_id"]).doNothing(),
+				)
+				.execute();
+			console.log(`Processed ${linksArray.length} vocabulary-tag associations.`);
 		}
 
-		console.log(`Total vocabulary items: ${vocabMap.size}`);
+		console.log(
+			`Vocabulary: ${insertedCount} inserted, ${skippedCount} skipped (already exist)`,
+		);
 	});
 
 	console.log("Seeding complete.");
