@@ -1,11 +1,5 @@
 .PHONY: dev build deploy preview help
 
-# Load .env file if it exists
-ifneq (,$(wildcard ./.env))
-	include .env
-	export
-endif
-
 # Development
 dev:
 	pnpm dev
@@ -28,17 +22,17 @@ db-setup: db-push db-seed
 db-studio:
 	TURSO_DATABASE_URL=http://127.0.0.1:8080 pnpm db:studio
 
-# Production database (Turso Cloud - uses .env)
+# Production database (Turso Cloud - loads from .env)
 prod-db-push:
-	pnpm db:push
+	set -a && . ./.env && set +a && pnpm db:push
 
 prod-db-seed:
-	pnpm db:seed
+	set -a && . ./.env && set +a && pnpm db:seed
 
 prod-db-setup: prod-db-push prod-db-seed
 
 prod-db-studio:
-	pnpm db:studio
+	set -a && . ./.env && set +a && pnpm db:studio
 
 # Deployment
 deploy: build

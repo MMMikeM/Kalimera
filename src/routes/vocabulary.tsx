@@ -78,7 +78,6 @@ const groupVerbsByPattern = (
 };
 
 export async function loader({ context }: Route.LoaderArgs) {
-	// Use context.db in production, fallback to direct import for dev
 	const db = context?.db ?? (await import("../db")).db;
 
 	const [allVocab, verbs] = await Promise.all([
