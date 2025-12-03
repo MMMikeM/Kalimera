@@ -1,63 +1,150 @@
-export interface PronounForm {
-	greek: string;
-	english: string;
-	example: string;
-	exampleEnglish: string;
+// Paradigm table structure - shows singular/plural relationship
+export interface PronounParadigm {
+	person: string;
+	singular: { greek: string; english: string };
+	plural: { greek: string; english: string };
 }
-
-// Subject pronouns - often omitted because verb endings show person
-export const SUBJECT_PRONOUNS: PronounForm[] = [
-	{ greek: "εγώ", english: "I", example: "(εγώ) μιλάω", exampleEnglish: "I speak" },
-	{ greek: "εσύ", english: "you", example: "(εσύ) μιλάς", exampleEnglish: "you speak" },
-	{ greek: "αυτός", english: "he", example: "αυτός μιλάει", exampleEnglish: "he speaks" },
-	{ greek: "αυτή", english: "she", example: "αυτή μιλάει", exampleEnglish: "she speaks" },
-	{ greek: "αυτό", english: "it", example: "αυτό είναι", exampleEnglish: "it is" },
-	{ greek: "εμείς", english: "we", example: "(εμείς) μιλάμε", exampleEnglish: "we speak" },
-	{ greek: "εσείς", english: "you (pl/formal)", example: "(εσείς) μιλάτε", exampleEnglish: "you (pl) speak" },
-	{ greek: "αυτοί", english: "they (m)", example: "αυτοί μιλάνε", exampleEnglish: "they speak" },
-	{ greek: "αυτές", english: "they (f)", example: "αυτές μιλάνε", exampleEnglish: "they speak" },
-	{ greek: "αυτά", english: "they (n)", example: "αυτά είναι", exampleEnglish: "they are" },
-];
 
 // Object pronouns (weak/clitic forms) - CRITICAL for daily speech
 // These go BEFORE the verb!
-export const OBJECT_PRONOUNS: PronounForm[] = [
-	{ greek: "με", english: "me", example: "με βλέπεις;", exampleEnglish: "do you see me?" },
-	{ greek: "σε", english: "you", example: "σε αγαπώ", exampleEnglish: "I love you" },
-	{ greek: "τον", english: "him/it (m)", example: "τον ξέρω", exampleEnglish: "I know him" },
-	{ greek: "την", english: "her/it (f)", example: "την βλέπω", exampleEnglish: "I see her" },
-	{ greek: "το", english: "it (n)", example: "το θέλω", exampleEnglish: "I want it" },
-	{ greek: "μας", english: "us", example: "μας περιμένουν", exampleEnglish: "they're waiting for us" },
-	{ greek: "σας", english: "you (pl/formal)", example: "σας ευχαριστώ", exampleEnglish: "thank you" },
-	{ greek: "τους", english: "them (m)", example: "τους βλέπω", exampleEnglish: "I see them" },
-	{ greek: "τις", english: "them (f)", example: "τις ξέρω", exampleEnglish: "I know them" },
-	{ greek: "τα", english: "them (n)", example: "τα θέλω", exampleEnglish: "I want them" },
+export const OBJECT_PRONOUNS: PronounParadigm[] = [
+	{
+		person: "1st",
+		singular: { greek: "με", english: "me" },
+		plural: { greek: "μας", english: "us" },
+	},
+	{
+		person: "2nd",
+		singular: { greek: "σε", english: "you" },
+		plural: { greek: "σας", english: "you (pl/formal)" },
+	},
+	{
+		person: "3rd m",
+		singular: { greek: "τον", english: "him/it" },
+		plural: { greek: "τους", english: "them" },
+	},
+	{
+		person: "3rd f",
+		singular: { greek: "την", english: "her/it" },
+		plural: { greek: "τις", english: "them" },
+	},
+	{
+		person: "3rd n",
+		singular: { greek: "το", english: "it" },
+		plural: { greek: "τα", english: "them" },
+	},
+];
+
+export const OBJECT_PRONOUN_EXAMPLES = [
+	{ greek: "με βλέπεις;", english: "do you see me?" },
+	{ greek: "σε αγαπώ", english: "I love you" },
+	{ greek: "τον ξέρω", english: "I know him" },
+	{ greek: "μας περιμένουν", english: "they're waiting for us" },
+	{ greek: "σας ευχαριστώ", english: "thank you (formal)" },
 ];
 
 // Possessive pronouns - go AFTER the noun!
-// Pattern: article + noun + possessive
-export const POSSESSIVE_PRONOUNS: PronounForm[] = [
-	{ greek: "μου", english: "my", example: "το σπίτι μου", exampleEnglish: "my house" },
-	{ greek: "σου", english: "your", example: "η μητέρα σου", exampleEnglish: "your mother" },
-	{ greek: "του", english: "his/its (m)", example: "ο φίλος του", exampleEnglish: "his friend" },
-	{ greek: "της", english: "her/its (f)", example: "η αδερφή της", exampleEnglish: "her sister" },
-	{ greek: "μας", english: "our", example: "το σπίτι μας", exampleEnglish: "our house" },
-	{ greek: "σας", english: "your (pl/formal)", example: "η οικογένειά σας", exampleEnglish: "your family" },
-	{ greek: "τους", english: "their", example: "τα παιδιά τους", exampleEnglish: "their children" },
+export const POSSESSIVE_PRONOUNS: PronounParadigm[] = [
+	{
+		person: "1st",
+		singular: { greek: "μου", english: "my" },
+		plural: { greek: "μας", english: "our" },
+	},
+	{
+		person: "2nd",
+		singular: { greek: "σου", english: "your" },
+		plural: { greek: "σας", english: "your (pl/formal)" },
+	},
+	{
+		person: "3rd m",
+		singular: { greek: "του", english: "his" },
+		plural: { greek: "τους", english: "their" },
+	},
+	{
+		person: "3rd f",
+		singular: { greek: "της", english: "her" },
+		plural: { greek: "τους", english: "their" },
+	},
+];
+
+export const POSSESSIVE_PRONOUN_EXAMPLES = [
+	{ greek: "το σπίτι μου", english: "my house" },
+	{ greek: "η μητέρα σου", english: "your mother" },
+	{ greek: "ο φίλος του", english: "his friend" },
+	{ greek: "το σπίτι μας", english: "our house" },
+	{ greek: "τα παιδιά τους", english: "their children" },
+];
+
+// Subject pronouns - often omitted because verb endings show person
+export const SUBJECT_PRONOUNS: PronounParadigm[] = [
+	{
+		person: "1st",
+		singular: { greek: "εγώ", english: "I" },
+		plural: { greek: "εμείς", english: "we" },
+	},
+	{
+		person: "2nd",
+		singular: { greek: "εσύ", english: "you" },
+		plural: { greek: "εσείς", english: "you (pl/formal)" },
+	},
+	{
+		person: "3rd m",
+		singular: { greek: "αυτός", english: "he" },
+		plural: { greek: "αυτοί", english: "they" },
+	},
+	{
+		person: "3rd f",
+		singular: { greek: "αυτή", english: "she" },
+		plural: { greek: "αυτές", english: "they" },
+	},
+	{
+		person: "3rd n",
+		singular: { greek: "αυτό", english: "it" },
+		plural: { greek: "αυτά", english: "they" },
+	},
+];
+
+export const SUBJECT_PRONOUN_EXAMPLES = [
+	{ greek: "(εγώ) μιλάω", english: "I speak", note: "pronoun optional" },
+	{ greek: "αυτός μιλάει", english: "he speaks", note: "for emphasis/clarity" },
+	{ greek: "(εμείς) μιλάμε", english: "we speak", note: "pronoun optional" },
 ];
 
 // Emphatic/Strong pronouns - used after prepositions
-export const EMPHATIC_PRONOUNS: PronounForm[] = [
-	{ greek: "εμένα / μένα", english: "me", example: "για μένα", exampleEnglish: "for me" },
-	{ greek: "εσένα / σένα", english: "you", example: "με σένα", exampleEnglish: "with you" },
-	{ greek: "αυτόν", english: "him", example: "για αυτόν", exampleEnglish: "for him" },
-	{ greek: "αυτήν / αυτή", english: "her", example: "με αυτήν", exampleEnglish: "with her" },
-	{ greek: "αυτό", english: "it", example: "για αυτό", exampleEnglish: "for it / that's why" },
-	{ greek: "εμάς / μας", english: "us", example: "για μας", exampleEnglish: "for us" },
-	{ greek: "εσάς / σας", english: "you (pl/formal)", example: "με σας", exampleEnglish: "with you" },
-	{ greek: "αυτούς", english: "them (m)", example: "για αυτούς", exampleEnglish: "for them" },
-	{ greek: "αυτές", english: "them (f)", example: "με αυτές", exampleEnglish: "with them" },
-	{ greek: "αυτά", english: "them (n)", example: "για αυτά", exampleEnglish: "for them" },
+export const EMPHATIC_PRONOUNS: PronounParadigm[] = [
+	{
+		person: "1st",
+		singular: { greek: "εμένα/μένα", english: "me" },
+		plural: { greek: "εμάς/μας", english: "us" },
+	},
+	{
+		person: "2nd",
+		singular: { greek: "εσένα/σένα", english: "you" },
+		plural: { greek: "εσάς/σας", english: "you (pl/formal)" },
+	},
+	{
+		person: "3rd m",
+		singular: { greek: "αυτόν", english: "him" },
+		plural: { greek: "αυτούς", english: "them" },
+	},
+	{
+		person: "3rd f",
+		singular: { greek: "αυτήν/αυτή", english: "her" },
+		plural: { greek: "αυτές", english: "them" },
+	},
+	{
+		person: "3rd n",
+		singular: { greek: "αυτό", english: "it" },
+		plural: { greek: "αυτά", english: "them" },
+	},
+];
+
+export const EMPHATIC_PRONOUN_EXAMPLES = [
+	{ greek: "για μένα", english: "for me" },
+	{ greek: "με σένα", english: "with you" },
+	{ greek: "για αυτόν", english: "for him" },
+	{ greek: "για μας", english: "for us" },
+	{ greek: "για αυτό", english: "that's why / for this reason" },
 ];
 
 // Key patterns to understand

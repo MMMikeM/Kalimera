@@ -2,7 +2,9 @@ import type { Route } from "./+types/search";
 import { useState } from "react";
 import { sql, eq } from "drizzle-orm";
 import { vocabulary, verbDetails } from "../db/schema";
-import { Badge, InfoBox, MonoText, SearchInput } from "../components/ui";
+import { MonoText, SearchInput } from "../components";
+import { Badge } from "@/components/ui/badge";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 interface VocabularyWithTags {
 	id: number;
@@ -85,9 +87,12 @@ export default function SearchRoute({ loaderData }: Route.ComponentProps) {
 
 	return (
 		<div className="space-y-6">
-			<InfoBox variant="purple" title="Quick Lookup">
-				Search Greek or English words from your materials.
-			</InfoBox>
+			<Alert variant="purple">
+				<AlertTitle>Quick Lookup</AlertTitle>
+				<AlertDescription>
+					Search Greek or English words from your materials.
+				</AlertDescription>
+			</Alert>
 
 			<SearchInput
 				placeholder="Search Greek, English, or tags..."
