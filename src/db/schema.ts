@@ -36,6 +36,20 @@ const difficultyLevel = integer("difficulty_level").notNull().default(0);
 export * from "./enums";
 
 // ============================================
+// USERS TABLE
+// ============================================
+export const users = sqliteTable(
+	"users",
+	{
+		id: pk(),
+		code: string("code").unique(),
+		displayName: string("display_name"),
+		createdAt: createdAt(),
+	},
+	(table) => [uniqueIndex("idx_users_code").on(table.code)],
+);
+
+// ============================================
 // VOCABULARY TABLE
 // ============================================
 export const vocabulary = sqliteTable(
@@ -145,44 +159,62 @@ export const verbDetails = sqliteTable("verb_details", {
 // ============================================
 // PRACTICE_SESSIONS TABLE
 // ============================================
-export const practiceSessions = sqliteTable("practice_sessions", {
-	id: pk(),
-	sessionType: nullableOneOf("session_type", sessionTypes),
-	category: nullableString("category"),
-	wordTypeFilter: nullableString("word_type_filter"),
-	totalQuestions: nullableInt("total_questions"),
-	correctAnswers: nullableInt("correct_answers"),
-	focusArea: nullableString("focus_area"),
-	startedAt: createdAt("started_at"),
-	completedAt: nullableTimestamp("completed_at"),
-});
+export const practiceSessions = sqliteTable(
+	"practice_sessions",
+	{
+		id: pk(),
+		userId: cascadeFk("user_id", () => users.id),
+		sessionType: nullableOneOf("session_type", sessionTypes),
+		category: nullableString("category"),
+		wordTypeFilter: nullableString("word_type_filter"),
+		totalQuestions: nullableInt("total_questions"),
+		correctAnswers: nullableInt("correct_answers"),
+		focusArea: nullableString("focus_area"),
+		startedAt: createdAt("started_at"),
+		completedAt: nullableTimestamp("completed_at"),
+	},
+	(table) => [index("idx_practice_sessions_user").on(table.userId)],
+);
 
 // ============================================
 // PRACTICE_ATTEMPTS TABLE
 // ============================================
-export const practiceAttempts = sqliteTable("practice_attempts", {
-	id: pk(),
-	sessionId: nullableFk("session_id", () => practiceSessions.id),
-	vocabularyId: nullableFk("vocabulary_id", () => vocabulary.id),
-	questionText: string("question_text"),
-	correctAnswer: string("correct_answer"),
-	userAnswer: nullableString("user_answer"),
-	isCorrect: nullableBool("is_correct"),
-	timeTaken: nullableInt("time_taken"),
-	attemptedAt: createdAt("attempted_at"),
-});
+export const practiceAttempts = sqliteTable(
+	"practice_attempts",
+	{
+		id: pk(),
+		userId: cascadeFk("user_id", () => users.id),
+		sessionId: nullableFk("session_id", () => practiceSessions.id),
+		vocabularyId: nullableFk("vocabulary_id", () => vocabulary.id),
+		questionText: string("question_text"),
+		correctAnswer: string("correct_answer"),
+		userAnswer: nullableString("user_answer"),
+		isCorrect: nullableBool("is_correct"),
+		timeTaken: nullableInt("time_taken"),
+		attemptedAt: createdAt("attempted_at"),
+	},
+	(table) => [index("idx_practice_attempts_user").on(table.userId)],
+);
 
 // ============================================
 // WEAK_AREAS TABLE
 // ============================================
-export const weakAreas = sqliteTable("weak_areas", {
-	id: pk(),
-	areaType: oneOf("area_type", areaTypes),
-	areaIdentifier: string("area_identifier"),
-	mistakeCount: integer("mistake_count").notNull().default(1),
-	lastMistakeAt: createdAt("last_mistake_at"),
-	needsFocus: bool("needs_focus").default(true),
-});
+export const weakAreas = sqliteTable(
+	"weak_areas",
+	{
+		id: pk(),
+		userId: cascadeFk("user_id", () => users.id),
+		areaType: oneOf("area_type", areaTypes),
+		areaIdentifier: string("area_identifier"),
+		mistakeCount: integer("mistake_count").notNull().default(1),
+		lastMistakeAt: createdAt("last_mistake_at"),
+		needsFocus: bool("needs_focus").default(true),
+	},
+	(table) => [
+		index("idx_weak_areas_user").on(table.userId),
+		uniqueIndex("idx_weak_areas_user_area").on(table.userId, table.areaType, table.areaIdentifier),
+	],
+);
 
 // ============================================
 // VOCABULARY_SKILLS TABLE
@@ -190,17 +222,19 @@ export const weakAreas = sqliteTable("weak_areas", {
 export const vocabularySkills = sqliteTable(
 	"vocabulary_skills",
 	{
+		userId: cascadeFk("user_id", () => users.id),
 		vocabularyId: cascadeFk("vocabulary_id", () => vocabulary.id),
 		skillType: oneOf("skill_type", skillTypes),
 		nextReviewAt: nullableTimestamp("next_review_at"),
 		intervalDays: intervalDays,
-		easeFactor: easeFactor,
+		easeFactor: real("ease_factor").default(2.3), // Start at 2.3 for new learners
 		reviewCount: reviewCount,
 		lastReviewedAt: nullableTimestamp("last_reviewed_at"),
 	},
 	(table) => [
-		primaryKey({ columns: [table.vocabularyId, table.skillType] }),
+		primaryKey({ columns: [table.userId, table.vocabularyId, table.skillType] }),
 		index("idx_vocabulary_skills_review").on(table.nextReviewAt),
+		index("idx_vocabulary_skills_user").on(table.userId),
 	],
 );
 
@@ -250,6 +284,13 @@ export const exampleSentences = sqliteTable(
 // ============================================
 // RELATIONS
 // ============================================
+export const usersRelations = relations(users, ({ many }) => ({
+	practiceSessions: many(practiceSessions),
+	practiceAttempts: many(practiceAttempts),
+	weakAreas: many(weakAreas),
+	vocabularySkills: many(vocabularySkills),
+}));
+
 export const vocabularyRelations = relations(vocabulary, ({ one, many }) => ({
 	nounDetails: one(nounDetails, {
 		fields: [vocabulary.id],
@@ -294,11 +335,19 @@ export const verbDetailsRelations = relations(verbDetails, ({ one }) => ({
 	}),
 }));
 
-export const practiceSessionsRelations = relations(practiceSessions, ({ many }) => ({
+export const practiceSessionsRelations = relations(practiceSessions, ({ one, many }) => ({
+	user: one(users, {
+		fields: [practiceSessions.userId],
+		references: [users.id],
+	}),
 	attempts: many(practiceAttempts),
 }));
 
 export const practiceAttemptsRelations = relations(practiceAttempts, ({ one }) => ({
+	user: one(users, {
+		fields: [practiceAttempts.userId],
+		references: [users.id],
+	}),
 	session: one(practiceSessions, {
 		fields: [practiceAttempts.sessionId],
 		references: [practiceSessions.id],
@@ -310,6 +359,10 @@ export const practiceAttemptsRelations = relations(practiceAttempts, ({ one }) =
 }));
 
 export const vocabularySkillsRelations = relations(vocabularySkills, ({ one }) => ({
+	user: one(users, {
+		fields: [vocabularySkills.userId],
+		references: [users.id],
+	}),
 	vocabulary: one(vocabulary, {
 		fields: [vocabularySkills.vocabularyId],
 		references: [vocabulary.id],

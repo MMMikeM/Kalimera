@@ -2,7 +2,7 @@ import type React from "react";
 import type { Route } from "./+types/vocabulary";
 import { and, eq, inArray } from "drizzle-orm";
 import { vocabulary, vocabularyTags, tags, verbDetails } from "../db/schema";
-import { InfoBox } from "../components/ui";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 const VOCABULARY_TAGS = [
 	"people",
@@ -161,9 +161,12 @@ const EssentialWords: React.FC<{ loaderData: Route.ComponentProps["loaderData"] 
 }) => {
 	return (
 		<div className="space-y-6">
-			<InfoBox variant="success" title="Situationally Organized Vocabulary">
-				Essential Greek words organized by how often you'll use them in daily life.
-			</InfoBox>
+			<Alert variant="success">
+				<AlertTitle>Situationally Organized Vocabulary</AlertTitle>
+				<AlertDescription>
+					Essential Greek words organized by how often you'll use them in daily life.
+				</AlertDescription>
+			</Alert>
 
 			<div className="border rounded-lg p-4">
 				<h3 className="text-lg font-bold mb-3">Family & Relationships</h3>

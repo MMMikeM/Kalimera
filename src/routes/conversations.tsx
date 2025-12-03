@@ -9,7 +9,7 @@ import {
 import type React from "react";
 import { useSearchParams } from "react-router";
 import type { Route } from "./+types/conversations";
-import { Card, MonoText } from "../components/ui";
+import { Card, MonoText } from "../components";
 import {
 	Tabs,
 	TabsContent,

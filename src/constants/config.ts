@@ -8,7 +8,7 @@ export interface TabInfo {
 export const TABS: TabInfo[] = [
 	{ id: "conversations", label: "Conversations", icon: "Target" },
 	{ id: "quick-reference", label: "Quick Reference", icon: "FileText" },
-	{ id: "practice", label: "Case Tips", icon: "Lightbulb" },
+	{ id: "practice", label: "Practice", icon: "Lightbulb" },
 	{ id: "vocabulary", label: "Vocabulary", icon: "BookOpen" },
 	{ id: "search", label: "Search", icon: "Search" },
 ];
