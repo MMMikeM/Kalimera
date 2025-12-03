@@ -4,8 +4,8 @@ import { Badge, Card, InfoBox, MonoText } from "../components/ui";
 
 export function meta() {
   return [
-    { title: "Case Practice - Greek Conjugation Reference" },
-    { name: "description", content: "Practice exercises for Greek grammatical cases" },
+    { title: "Case Recognition Tips - Greek Conjugation Reference" },
+    { name: "description", content: "Pattern recognition tips for Greek grammatical cases" },
   ];
 }
 

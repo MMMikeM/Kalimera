@@ -18,6 +18,12 @@
     /* React Router type generation */
     "rootDirs": [".", "./.react-router/types"],
 
+    /* Path aliases for shadcn */
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,

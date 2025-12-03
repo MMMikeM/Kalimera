@@ -71,6 +71,30 @@ export const VERB_CONJUGATIONS: Record<string, VerbConjugation[]> = {
 		{ person: "εσείς", form: "είστε", english: "you (pl) are" },
 		{ person: "αυτοί/ές/ά", form: "είναι", english: "they are" },
 	],
+	echo: [
+		{ person: "εγώ", form: "έχω", english: "I have" },
+		{ person: "εσύ", form: "έχεις", english: "you have" },
+		{ person: "αυτός/ή/ό", form: "έχει", english: "he/she/it has" },
+		{ person: "εμείς", form: "έχουμε", english: "we have" },
+		{ person: "εσείς", form: "έχετε", english: "you (pl) have" },
+		{ person: "αυτοί/ές/ά", form: "έχουν", english: "they have" },
+	],
+	thelo: [
+		{ person: "εγώ", form: "θέλω", english: "I want" },
+		{ person: "εσύ", form: "θέλεις", english: "you want" },
+		{ person: "αυτός/ή/ό", form: "θέλει", english: "he/she/it wants" },
+		{ person: "εμείς", form: "θέλουμε", english: "we want" },
+		{ person: "εσείς", form: "θέλετε", english: "you (pl) want" },
+		{ person: "αυτοί/ές/ά", form: "θέλουν", english: "they want" },
+	],
+	boro: [
+		{ person: "εγώ", form: "μπορώ", english: "I can" },
+		{ person: "εσύ", form: "μπορείς", english: "you can" },
+		{ person: "αυτός/ή/ό", form: "μπορεί", english: "he/she/it can" },
+		{ person: "εμείς", form: "μπορούμε", english: "we can" },
+		{ person: "εσείς", form: "μπορείτε", english: "you (pl) can" },
+		{ person: "αυτοί/ές/ά", form: "μπορούν", english: "they can" },
+	],
 };
 
 // Past and Future Tense Examples for Other Tenses page

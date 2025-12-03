@@ -1,7 +1,26 @@
-import { MessageCircle, DoorOpen, Utensils, Users, Link } from "lucide-react";
+import {
+	MessageCircle,
+	DoorOpen,
+	Utensils,
+	Link,
+	ChevronDown,
+	Lightbulb,
+} from "lucide-react";
 import type React from "react";
+import { useSearchParams } from "react-router";
 import type { Route } from "./+types/conversations";
-import { Card, InfoBox, MonoText } from "../components/ui";
+import { Card, MonoText } from "../components/ui";
+import {
+	Tabs,
+	TabsContent,
+	TabsList,
+	TabsTrigger,
+} from "@/components/ui/tabs";
+import {
+	Collapsible,
+	CollapsibleContent,
+	CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 import type { Phrase } from "../types/phrase";
 import {
 	ARRIVING_PHRASES,
@@ -20,7 +39,8 @@ export function meta() {
 	];
 }
 
-const SituationCard: React.FC<{
+type SituationConfig = {
+	id: string;
 	title: string;
 	icon: React.ReactNode;
 	youllHear: Phrase[];
@@ -28,219 +48,211 @@ const SituationCard: React.FC<{
 	colorClass: string;
 	bgClass: string;
 	textClass: string;
-}> = ({ title, icon, youllHear, responses, colorClass, bgClass, textClass }) => (
-	<Card variant="bordered" padding="lg" className={`${colorClass} ${bgClass}`}>
+};
+
+const PhraseList: React.FC<{
+	phrases: Phrase[];
+	bgClass: string;
+}> = ({ phrases, bgClass }) => (
+	<div className="space-y-2">
+		{phrases.map((phrase, idx) => (
+			<div key={idx} className={`p-3 ${bgClass} rounded-lg`}>
+				<MonoText variant="highlighted" size="lg" className="block mb-1">
+					{phrase.text}
+				</MonoText>
+				<div className="text-gray-700 text-sm">{phrase.english}</div>
+			</div>
+		))}
+	</div>
+);
+
+const SituationContent: React.FC<{
+	situation: SituationConfig;
+}> = ({ situation }) => (
+	<Card
+		variant="bordered"
+		padding="lg"
+		className={`${situation.colorClass} ${situation.bgClass}`}
+	>
 		<h3
-			className={`text-lg font-bold mb-4 ${textClass} flex items-center gap-2`}
+			className={`text-lg font-bold mb-4 ${situation.textClass} flex items-center gap-2`}
 		>
-			{icon} {title}
+			{situation.icon} {situation.title}
 		</h3>
 
-		{/* What you'll hear section */}
 		<div className="mb-6">
-			<h4 className={`font-semibold ${textClass} mb-3 text-sm`}>
+			<h4 className={`font-semibold ${situation.textClass} mb-3 text-sm`}>
 				What you'll hear:
 			</h4>
-			<div className="space-y-2">
-				{youllHear.map((phrase, idx) => (
-					<div
-						key={idx}
-						className={`p-3 ${bgClass.replace("/30", "-100")} rounded-lg`}
-					>
-						<MonoText variant="highlighted" size="lg" className="block mb-1">
-							{phrase.text}
-						</MonoText>
-						<div className="text-gray-700 text-sm">{phrase.english}</div>
-					</div>
-				))}
-			</div>
+			<PhraseList
+				phrases={situation.youllHear}
+				bgClass={situation.bgClass.replace("/30", "-100")}
+			/>
 		</div>
 
-		{/* Simple responses section */}
 		<div>
-			<h4 className={`font-semibold ${textClass} mb-3 text-sm`}>
+			<h4 className={`font-semibold ${situation.textClass} mb-3 text-sm`}>
 				Simple responses:
 			</h4>
-			<div className="space-y-2">
-				{responses.map((phrase, idx) => (
-					<div
-						key={idx}
-						className={`p-3 ${bgClass.replace("/30", "-50")} rounded-lg`}
-					>
-						<MonoText variant="highlighted" size="lg" className="block mb-1">
-							{phrase.text}
-						</MonoText>
-						<div className="text-gray-700 text-sm">{phrase.english}</div>
-					</div>
-				))}
-			</div>
+			<PhraseList
+				phrases={situation.responses}
+				bgClass={situation.bgClass.replace("/30", "-50")}
+			/>
 		</div>
 	</Card>
 );
 
-const MarkersCard: React.FC = () => (
-	<Card
-		variant="bordered"
-		padding="lg"
-		className="border-purple-200 bg-purple-50/30"
-	>
+const DiscourseMarkersContent: React.FC = () => (
+	<Card variant="bordered" padding="lg" className="border-purple-200 bg-purple-50/30">
 		<h3 className="text-lg font-bold mb-2 text-purple-700 flex items-center gap-2">
 			<Link size={20} /> Words You'll Hear Constantly
 		</h3>
 		<p className="text-sm text-purple-600 mb-4">
 			These don't translate directly but appear in every conversation
 		</p>
-
-		<div className="space-y-2">
-			{DISCOURSE_MARKERS.map((marker, idx) => (
-				<div key={idx} className="p-3 bg-purple-100 rounded-lg">
-					<MonoText variant="highlighted" size="lg" className="block mb-1">
-						{marker.text}
-					</MonoText>
-					<div className="text-gray-700 text-sm">{marker.english}</div>
-				</div>
-			))}
-		</div>
+		<PhraseList phrases={DISCOURSE_MARKERS} bgClass="bg-purple-100" />
 	</Card>
 );
 
+const LearningTips: React.FC = () => (
+	<Collapsible>
+		<CollapsibleTrigger className="flex items-center gap-2 w-full p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors text-left group">
+			<Lightbulb size={18} className="text-amber-600" />
+			<span className="font-medium text-gray-700">Learning Tips</span>
+			<ChevronDown
+				size={16}
+				className="ml-auto text-gray-500 transition-transform group-data-[state=open]:rotate-180"
+			/>
+		</CollapsibleTrigger>
+		<CollapsibleContent>
+			<div className="mt-4 p-4 rounded-lg bg-amber-50/50 border border-amber-200">
+				<div className="grid md:grid-cols-2 gap-6 text-sm">
+					<div>
+						<h4 className="font-semibold text-amber-800 mb-2">
+							Comprehension First
+						</h4>
+						<ul className="space-y-1.5 text-gray-700">
+							<li>• Listen actively - recognize these phrases when you hear them</li>
+							<li>• One situation at a time - master this before moving on</li>
+							<li>• Context matters - notice when people use these phrases</li>
+						</ul>
+					</div>
+					<div>
+						<h4 className="font-semibold text-amber-800 mb-2">Simple Responses</h4>
+						<ul className="space-y-1.5 text-gray-700">
+							<li>• Start with "Ναι/Όχι ευχαριστώ" - it goes a long way</li>
+							<li>• Practice out loud - say responses to yourself</li>
+							<li>• Communication beats grammar - don't worry about perfection</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</CollapsibleContent>
+	</Collapsible>
+);
+
+const SITUATIONS: SituationConfig[] = [
+	{
+		id: "arriving",
+		title: "Arriving & Leaving",
+		icon: <DoorOpen size={20} />,
+		youllHear: ARRIVING_PHRASES,
+		responses: [
+			{ text: "Γεια σας", english: "Hello (formal)" },
+			{ text: "Ευχαριστώ πολύ", english: "Thank you very much" },
+			{ text: "Τα λέμε", english: "See you" },
+		],
+		colorClass: "border-green-200",
+		bgClass: "bg-green-50/30",
+		textClass: "text-green-700",
+	},
+	{
+		id: "food",
+		title: "Food & Hospitality",
+		icon: <Utensils size={20} />,
+		youllHear: FOOD_PHRASES,
+		responses: [
+			{ text: "Ναι, ευχαριστώ", english: "Yes, thank you" },
+			{ text: "Όχι, ευχαριστώ", english: "No, thank you" },
+			{ text: "Είναι πολύ νόστιμο", english: "It's very delicious" },
+			{ text: "Χόρτασα", english: "I'm full" },
+		],
+		colorClass: "border-orange-200",
+		bgClass: "bg-orange-50/30",
+		textClass: "text-orange-700",
+	},
+	{
+		id: "smalltalk",
+		title: "Small Talk",
+		icon: <MessageCircle size={20} />,
+		youllHear: SMALLTALK_PHRASES,
+		responses: [
+			{ text: "Καλά ευχαριστώ", english: "Good, thank you" },
+			{ text: "Δεν ξέρω ακόμα", english: "I don't know yet" },
+			{ text: "Πολύ καλά", english: "Very good" },
+		],
+		colorClass: "border-blue-200",
+		bgClass: "bg-blue-50/30",
+		textClass: "text-blue-700",
+	},
+];
+
 const Conversations: React.FC = () => {
-	const arrivingResponses: Phrase[] = [
-		{ text: "Γεια σας", english: "Hello (formal)" },
-		{ text: "Ευχαριστώ πολύ", english: "Thank you very much" },
-		{ text: "Τα λέμε", english: "See you" },
-	];
+	const [searchParams, setSearchParams] = useSearchParams();
+	const activeTab = searchParams.get("tab") || "arriving";
 
-	const foodResponses: Phrase[] = [
-		{ text: "Ναι, ευχαριστώ", english: "Yes, thank you" },
-		{ text: "Όχι, ευχαριστώ", english: "No, thank you" },
-		{ text: "Είναι πολύ νόστιμο", english: "It's very delicious" },
-		{ text: "Χόρτασα", english: "I'm full" },
-	];
-
-	const smalltalkResponses: Phrase[] = [
-		{ text: "Καλά ευχαριστώ", english: "Good, thank you" },
-		{ text: "Δεν ξέρω ακόμα", english: "I don't know yet" },
-		{ text: "Πολύ καλά", english: "Very good" },
-	];
+	const handleTabChange = (value: string) => {
+		setSearchParams({ tab: value });
+	};
 
 	return (
-		<div className="space-y-10">
-			{/* Page Header */}
-			<Card
-				variant="elevated"
-				padding="lg"
-				className="bg-gradient-to-r from-blue-50 to-cyan-50 border-2 border-blue-200"
-			>
-				<div className="mb-4">
-					<h2 className="text-2xl font-bold text-blue-800">Conversations</h2>
-					<p className="text-blue-700 mt-2">
-						Real situations with family and friends
-					</p>
-				</div>
-				<InfoBox variant="info" title="Learning Strategy">
-					Focus on understanding first, then responding. Listen for these
-					phrases in real conversations and recognize what's being said to you
-					before worrying about perfect replies.
-				</InfoBox>
-			</Card>
-
-			{/* Situation Cards Grid */}
-			<div className="grid lg:grid-cols-2 gap-8">
-				{/* Situation 1: Arriving & Leaving */}
-				<SituationCard
-					title="Arriving & Leaving"
-					icon={<DoorOpen size={20} />}
-					youllHear={ARRIVING_PHRASES}
-					responses={arrivingResponses}
-					colorClass="border-green-200"
-					bgClass="bg-green-50/30"
-					textClass="text-green-700"
-				/>
-
-				{/* Situation 2: Food & Hospitality */}
-				<SituationCard
-					title="Food & Hospitality"
-					icon={<Utensils size={20} />}
-					youllHear={FOOD_PHRASES}
-					responses={foodResponses}
-					colorClass="border-orange-200"
-					bgClass="bg-orange-50/30"
-					textClass="text-orange-700"
-				/>
-
-				{/* Situation 3: Small Talk */}
-				<SituationCard
-					title="Small Talk"
-					icon={<MessageCircle size={20} />}
-					youllHear={SMALLTALK_PHRASES}
-					responses={smalltalkResponses}
-					colorClass="border-blue-200"
-					bgClass="bg-blue-50/30"
-					textClass="text-blue-700"
-				/>
-
-				{/* Situation 4: Discourse Markers */}
-				<MarkersCard />
+		<div className="space-y-6">
+			{/* Minimal Header */}
+			<div className="mb-2">
+				<h2 className="text-2xl font-bold text-gray-800">Conversations</h2>
+				<p className="text-gray-600 mt-1">
+					Real situations with family and friends
+				</p>
 			</div>
 
-			{/* Practice Tips */}
-			<Card
-				variant="elevated"
-				padding="lg"
-				className="bg-gradient-to-r from-purple-50 to-violet-50 border-2 border-purple-200"
-			>
-				<h2 className="text-xl font-bold text-center mb-4 text-purple-800 flex items-center justify-center gap-2">
-					<Users size={20} /> Practice Strategy
-				</h2>
-				<div className="grid md:grid-cols-2 gap-6">
-					<div>
-						<h3 className="text-lg font-bold text-purple-700 mb-3">
-							Comprehension First
-						</h3>
-						<ul className="space-y-2 text-sm text-gray-700">
-							<li>
-								• <strong>Listen actively</strong> - recognize these phrases when
-								you hear them
-							</li>
-							<li>
-								• <strong>One situation at a time</strong> - master arrivals
-								before moving on
-							</li>
-							<li>
-								• <strong>Context matters</strong> - notice when people use these
-								phrases
-							</li>
-							<li>
-								• <strong>Be patient</strong> - understanding comes before
-								speaking
-							</li>
-						</ul>
+			{/* Tabs */}
+			<Tabs value={activeTab} onValueChange={handleTabChange}>
+				<TabsList className="flex-wrap h-auto gap-1">
+					{SITUATIONS.map((situation) => (
+						<TabsTrigger
+							key={situation.id}
+							value={situation.id}
+							className="gap-1.5"
+						>
+							{situation.icon}
+							<span className="hidden sm:inline">{situation.title}</span>
+							<span className="sm:hidden">{situation.title.split(" ")[0]}</span>
+						</TabsTrigger>
+					))}
+					<TabsTrigger value="discourse" className="gap-1.5">
+						<Link size={16} />
+						<span className="hidden sm:inline">Discourse Markers</span>
+						<span className="sm:hidden">Markers</span>
+					</TabsTrigger>
+				</TabsList>
+
+				{/* Tab Content */}
+				{SITUATIONS.map((situation) => (
+					<TabsContent key={situation.id} value={situation.id}>
+						<div className="space-y-4">
+							<SituationContent situation={situation} />
+							<LearningTips />
+						</div>
+					</TabsContent>
+				))}
+
+				<TabsContent value="discourse">
+					<div className="space-y-4">
+						<DiscourseMarkersContent />
+						<LearningTips />
 					</div>
-					<div>
-						<h3 className="text-lg font-bold text-purple-700 mb-3">
-							Simple Responses
-						</h3>
-						<ul className="space-y-2 text-sm text-gray-700">
-							<li>
-								• <strong>Start with basics</strong> - "Ναι/Όχι ευχαριστώ" goes
-								a long way
-							</li>
-							<li>
-								• <strong>Practice out loud</strong> - say responses to yourself
-							</li>
-							<li>
-								• <strong>Don't worry about perfection</strong> - communication
-								beats grammar
-							</li>
-							<li>
-								• <strong>Build confidence slowly</strong> - master a few
-								responses first
-							</li>
-						</ul>
-					</div>
-				</div>
-			</Card>
+				</TabsContent>
+			</Tabs>
 		</div>
 	);
 };
