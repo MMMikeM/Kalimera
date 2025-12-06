@@ -155,42 +155,124 @@ export const CASE_EXAMPLES = {
 	],
 };
 
-// Preposition patterns with cases
-export const PREPOSITION_PATTERNS = [
+// Simple prepositions - compact format for table display
+export const SIMPLE_PREPOSITIONS = {
+	location: {
+		label: "Location",
+		items: [
+			{ greek: "σε", english: "to/at/in", note: "contracts → στο" },
+			{ greek: "από", english: "from" },
+			{ greek: "προς", english: "toward" },
+			{ greek: "μέχρι", english: "up to" },
+		],
+	},
+	time: {
+		label: "Time",
+		items: [
+			{ greek: "πριν", english: "before" },
+			{ greek: "μετά", english: "after" },
+			{ greek: "μέχρι", english: "until" },
+		],
+	},
+	relationship: {
+		label: "Relationship",
+		items: [
+			{ greek: "με", english: "with" },
+			{ greek: "για", english: "for" },
+			{ greek: "χωρίς", english: "without" },
+		],
+	},
+};
+
+// Compound prepositions organized by semantic contrast pairs
+export const COMPOUND_PREPOSITION_PAIRS = [
 	{
-		preposition: "με",
-		case: "Accusative",
-		example: "με τον φίλο μου",
-		english: "with my friend",
+		category: "Position",
+		pairs: [
+			{
+				left: { greek: "πάνω σε", english: "on", example: "πάνω στο τραπέζι" },
+				right: {
+					greek: "κάτω από",
+					english: "under",
+					example: "κάτω από το κρεβάτι",
+				},
+			},
+			{
+				left: {
+					greek: "μπροστά από",
+					english: "in front",
+					example: "μπροστά από το σπίτι",
+				},
+				right: {
+					greek: "πίσω από",
+					english: "behind",
+					example: "πίσω από την εκκλησία",
+				},
+			},
+		],
 	},
 	{
-		preposition: "από",
-		case: "Accusative",
-		example: "από το σπίτι",
-		english: "from the house",
+		category: "Proximity",
+		pairs: [
+			{
+				left: {
+					greek: "δίπλα σε",
+					english: "next to",
+					example: "δίπλα στο παράθυρο",
+				},
+				right: {
+					greek: "απέναντι από",
+					english: "across",
+					example: "απέναντι από το πάρκο",
+				},
+			},
+			{
+				left: {
+					greek: "κοντά σε",
+					english: "near",
+					example: "κοντά στο σχολείο",
+				},
+				right: {
+					greek: "μακριά από",
+					english: "far",
+					example: "μακριά από την πόλη",
+				},
+			},
+		],
 	},
 	{
-		preposition: "για",
-		case: "Accusative",
-		example: "για τον καφέ",
-		english: "for the coffee",
-	},
-	{
-		preposition: "στο/στη/στον",
-		case: "Accusative",
-		example: "στο κέντρο",
-		english: "to/in the center",
-	},
-	{
-		preposition: "χωρίς",
-		case: "Accusative",
-		example: "χωρίς τη ζάχαρη",
-		english: "without the sugar",
-	},
-	{
-		preposition: "μετά",
-		case: "Accusative",
-		example: "μετά τη δουλειά",
-		english: "after work",
+		category: "Enclosure",
+		pairs: [
+			{
+				left: {
+					greek: "ανάμεσα σε",
+					english: "between",
+					example: "ανάμεσα στα δέντρα",
+				},
+				right: {
+					greek: "γύρω από",
+					english: "around",
+					example: "γύρω από το τραπέζι",
+				},
+			},
+		],
 	},
 ];
+
+// Preposition + pronoun examples
+export const PREPOSITION_PRONOUN_EXAMPLES = [
+	{ greek: "για μένα", english: "for me" },
+	{ greek: "με σένα", english: "with you" },
+	{ greek: "από αυτόν", english: "from him" },
+	{ greek: "χωρίς εμάς", english: "without us" },
+	{ greek: "μαζί σου", english: "with you (together)" },
+];
+
+// Time expressions with prepositions
+export const TIME_PREPOSITION_EXAMPLES = [
+	{ greek: "στις πέντε", english: "at five o'clock" },
+	{ greek: "μέχρι τις πέντε", english: "until five" },
+	{ greek: "μετά τις πέντε", english: "after five" },
+	{ greek: "πριν τις πέντε", english: "before five" },
+];
+

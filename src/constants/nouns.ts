@@ -20,12 +20,13 @@ export const NOUN_PATTERNS: NounPattern[] = [
 		pattern: "-ος",
 		gender: "masculine",
 		description: "Most common masculine ending",
-		example: "ο άνθρωπος",
-		exampleEnglish: "the person/human",
+		example: "ο φίλος",
+		exampleEnglish: "the friend",
 		declension: [
-			{ case: "Nom", singular: "ο άνθρωπος", plural: "οι άνθρωποι" },
-			{ case: "Acc", singular: "τον άνθρωπο", plural: "τους ανθρώπους" },
-			{ case: "Gen", singular: "του ανθρώπου", plural: "των ανθρώπων" },
+			{ case: "Nom", singular: "ο φίλος", plural: "οι φίλοι" },
+			{ case: "Acc", singular: "τον φίλο", plural: "τους φίλους" },
+			{ case: "Gen", singular: "του φίλου", plural: "των φίλων" },
+			{ case: "Voc", singular: "φίλε!", plural: "φίλοι!" },
 		],
 	},
 	{
@@ -33,11 +34,12 @@ export const NOUN_PATTERNS: NounPattern[] = [
 		gender: "masculine",
 		description: "Common for male roles/occupations",
 		example: "ο άντρας",
-		exampleEnglish: "the man",
+		exampleEnglish: "the man/husband",
 		declension: [
 			{ case: "Nom", singular: "ο άντρας", plural: "οι άντρες" },
 			{ case: "Acc", singular: "τον άντρα", plural: "τους άντρες" },
 			{ case: "Gen", singular: "του άντρα", plural: "των αντρών" },
+			{ case: "Voc", singular: "άντρα!", plural: "άντρες!" },
 		],
 	},
 	{
@@ -50,6 +52,7 @@ export const NOUN_PATTERNS: NounPattern[] = [
 			{ case: "Nom", singular: "ο μαθητής", plural: "οι μαθητές" },
 			{ case: "Acc", singular: "τον μαθητή", plural: "τους μαθητές" },
 			{ case: "Gen", singular: "του μαθητή", plural: "των μαθητών" },
+			{ case: "Voc", singular: "μαθητή!", plural: "μαθητές!" },
 		],
 	},
 	{
@@ -62,6 +65,7 @@ export const NOUN_PATTERNS: NounPattern[] = [
 			{ case: "Nom", singular: "ο καφές", plural: "οι καφέδες" },
 			{ case: "Acc", singular: "τον καφέ", plural: "τους καφέδες" },
 			{ case: "Gen", singular: "του καφέ", plural: "των καφέδων" },
+			{ case: "Voc", singular: "καφέ!", plural: "καφέδες!" },
 		],
 	},
 
@@ -70,12 +74,13 @@ export const NOUN_PATTERNS: NounPattern[] = [
 		pattern: "-α",
 		gender: "feminine",
 		description: "Very common feminine ending",
-		example: "η μητέρα",
-		exampleEnglish: "the mother",
+		example: "η γυναίκα",
+		exampleEnglish: "the woman/wife",
 		declension: [
-			{ case: "Nom", singular: "η μητέρα", plural: "οι μητέρες" },
-			{ case: "Acc", singular: "τη μητέρα", plural: "τις μητέρες" },
-			{ case: "Gen", singular: "της μητέρας", plural: "των μητέρων" },
+			{ case: "Nom", singular: "η γυναίκα", plural: "οι γυναίκες" },
+			{ case: "Acc", singular: "τη γυναίκα", plural: "τις γυναίκες" },
+			{ case: "Gen", singular: "της γυναίκας", plural: "των γυναικών" },
+			{ case: "Voc", singular: "γυναίκα!", plural: "γυναίκες!" },
 		],
 	},
 	{
@@ -88,6 +93,7 @@ export const NOUN_PATTERNS: NounPattern[] = [
 			{ case: "Nom", singular: "η αδερφή", plural: "οι αδερφές" },
 			{ case: "Acc", singular: "την αδερφή", plural: "τις αδερφές" },
 			{ case: "Gen", singular: "της αδερφής", plural: "των αδερφών" },
+			{ case: "Voc", singular: "αδερφή!", plural: "αδερφές!" },
 		],
 	},
 	{
@@ -100,6 +106,7 @@ export const NOUN_PATTERNS: NounPattern[] = [
 			{ case: "Nom", singular: "η ερώτηση", plural: "οι ερωτήσεις" },
 			{ case: "Acc", singular: "την ερώτηση", plural: "τις ερωτήσεις" },
 			{ case: "Gen", singular: "της ερώτησης", plural: "των ερωτήσεων" },
+			{ case: "Voc", singular: "ερώτηση!", plural: "ερωτήσεις!" },
 		],
 	},
 
@@ -114,18 +121,20 @@ export const NOUN_PATTERNS: NounPattern[] = [
 			{ case: "Nom", singular: "το βιβλίο", plural: "τα βιβλία" },
 			{ case: "Acc", singular: "το βιβλίο", plural: "τα βιβλία" },
 			{ case: "Gen", singular: "του βιβλίου", plural: "των βιβλίων" },
+			{ case: "Voc", singular: "βιβλίο!", plural: "βιβλία!" },
 		],
 	},
 	{
 		pattern: "-ι",
 		gender: "neuter",
 		description: "Common neuter, often diminutives",
-		example: "το σπίτι",
-		exampleEnglish: "the house",
+		example: "το παιδί",
+		exampleEnglish: "the child",
 		declension: [
-			{ case: "Nom", singular: "το σπίτι", plural: "τα σπίτια" },
-			{ case: "Acc", singular: "το σπίτι", plural: "τα σπίτια" },
-			{ case: "Gen", singular: "του σπιτιού", plural: "των σπιτιών" },
+			{ case: "Nom", singular: "το παιδί", plural: "τα παιδιά" },
+			{ case: "Acc", singular: "το παιδί", plural: "τα παιδιά" },
+			{ case: "Gen", singular: "του παιδιού", plural: "των παιδιών" },
+			{ case: "Voc", singular: "παιδί!", plural: "παιδιά!" },
 		],
 	},
 	{
@@ -138,6 +147,7 @@ export const NOUN_PATTERNS: NounPattern[] = [
 			{ case: "Nom", singular: "το όνομα", plural: "τα ονόματα" },
 			{ case: "Acc", singular: "το όνομα", plural: "τα ονόματα" },
 			{ case: "Gen", singular: "του ονόματος", plural: "των ονομάτων" },
+			{ case: "Voc", singular: "όνομα!", plural: "ονόματα!" },
 		],
 	},
 ];
@@ -146,17 +156,17 @@ export const NOUN_PATTERNS: NounPattern[] = [
 export const GENDER_HINTS = {
 	masculine: {
 		endings: ["-ος", "-ας", "-ης", "-ές"],
-		examples: ["ο άνθρωπος", "ο άντρας", "ο μαθητής", "ο καφές"],
+		examples: ["ο φίλος", "ο άντρας", "ο μαθητής", "ο καφές"],
 		tip: "Most words for male people and -ος endings",
 	},
 	feminine: {
 		endings: ["-α", "-η", "-ος (some)", "-ση/-ξη"],
-		examples: ["η μητέρα", "η αδερφή", "η οδός", "η ερώτηση"],
+		examples: ["η γυναίκα", "η αδερφή", "η οδός", "η ερώτηση"],
 		tip: "Most words for female people, abstract nouns ending in -η",
 	},
 	neuter: {
 		endings: ["-ο", "-ι", "-μα", "-ος (some)"],
-		examples: ["το βιβλίο", "το σπίτι", "το όνομα", "το μέρος"],
+		examples: ["το βιβλίο", "το παιδί", "το όνομα", "το μέρος"],
 		tip: "Diminutives (-ι, -άκι), result nouns (-μα)",
 	},
 };
@@ -166,84 +176,9 @@ export const NEUTER_SIMPLIFICATION = {
 	title: "Neuter nouns: Nominative = Accusative",
 	explanation: "Neuter nouns don't change between subject and object position",
 	examples: [
-		{ greek: "Το σπίτι είναι μεγάλο", english: "The house is big (subject)" },
-		{ greek: "Βλέπω το σπίτι", english: "I see the house (object)" },
+		{ greek: "Το παιδί είναι εδώ", english: "The child is here (subject)" },
+		{ greek: "Βλέπω το παιδί", english: "I see the child (object)" },
 	],
 	tip: "One less form to memorize!",
 };
 
-// Common family nouns with full declension (high priority for learner)
-export const FAMILY_NOUNS = [
-	{
-		nominative: "ο πατέρας",
-		accusative: "τον πατέρα",
-		genitive: "του πατέρα",
-		english: "father",
-	},
-	{
-		nominative: "η μητέρα",
-		accusative: "τη μητέρα",
-		genitive: "της μητέρας",
-		english: "mother",
-	},
-	{
-		nominative: "ο αδερφός",
-		accusative: "τον αδερφό",
-		genitive: "του αδερφού",
-		english: "brother",
-	},
-	{
-		nominative: "η αδερφή",
-		accusative: "την αδερφή",
-		genitive: "της αδερφής",
-		english: "sister",
-	},
-	{
-		nominative: "ο γιος",
-		accusative: "τον γιο",
-		genitive: "του γιου",
-		english: "son",
-	},
-	{
-		nominative: "η κόρη",
-		accusative: "την κόρη",
-		genitive: "της κόρης",
-		english: "daughter",
-	},
-	{
-		nominative: "ο παππούς",
-		accusative: "τον παππού",
-		genitive: "του παππού",
-		english: "grandfather",
-	},
-	{
-		nominative: "η γιαγιά",
-		accusative: "τη γιαγιά",
-		genitive: "της γιαγιάς",
-		english: "grandmother",
-	},
-	{
-		nominative: "ο άντρας",
-		accusative: "τον άντρα",
-		genitive: "του άντρα",
-		english: "husband/man",
-	},
-	{
-		nominative: "η γυναίκα",
-		accusative: "τη γυναίκα",
-		genitive: "της γυναίκας",
-		english: "wife/woman",
-	},
-	{
-		nominative: "το παιδί",
-		accusative: "το παιδί",
-		genitive: "του παιδιού",
-		english: "child",
-	},
-	{
-		nominative: "τα παιδιά",
-		accusative: "τα παιδιά",
-		genitive: "των παιδιών",
-		english: "children",
-	},
-];
