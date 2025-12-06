@@ -1,6 +1,8 @@
 import type { NumberSeed } from "../../../types/seed";
 
 export const NUMBERS: NumberSeed[] = [
+	// Zero
+	{ lemma: "μηδέν", value: 0 },
 	// Units (1-9)
 	{ lemma: "ένα", value: 1 },
 	{ lemma: "δύο", value: 2 },
