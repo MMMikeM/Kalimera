@@ -73,7 +73,7 @@ const DrillCard: React.FC<DrillCardProps> = ({
 					<h3 className="text-2xl font-bold mb-2">
 						{state.score.correct} / {state.score.total} correct
 					</h3>
-					<p className="text-gray-600 mb-6">
+					<p className="text-stone-600 mb-6">
 						{percentage >= 80
 							? "Excellent work!"
 							: percentage >= 60
@@ -98,12 +98,12 @@ const DrillCard: React.FC<DrillCardProps> = ({
 			<div className="mb-4">
 				<div className="flex items-center justify-between mb-2">
 					<h3 className="text-lg font-bold">{title}</h3>
-					<span className="text-sm text-gray-500">
+					<span className="text-sm text-stone-600">
 						{state.currentIndex + 1} / {state.questions.length}
 					</span>
 				</div>
 				<Progress value={progressPercent} className="h-2" />
-				<p className="text-sm text-gray-600 mt-2">{description}</p>
+				<p className="text-sm text-stone-600 mt-2">{description}</p>
 			</div>
 
 			{/* Question */}
@@ -113,7 +113,7 @@ const DrillCard: React.FC<DrillCardProps> = ({
 						{currentQuestion.prompt}
 					</MonoText>
 					{currentQuestion.promptSubtext && (
-						<p className="text-gray-500 text-sm">{currentQuestion.promptSubtext}</p>
+						<p className="text-stone-600 text-sm">{currentQuestion.promptSubtext}</p>
 					)}
 				</div>
 
@@ -130,15 +130,15 @@ const DrillCard: React.FC<DrillCardProps> = ({
 						const isSelected = state.selectedAnswer === index;
 						const isCorrectOption = index === currentQuestion.correctIndex;
 
-						let optionClass = "border-gray-200 bg-gray-50";
+						let optionClass = "border-stone-200 bg-stone-50";
 						if (state.showFeedback) {
 							if (isCorrectOption) {
-								optionClass = "border-green-500 bg-green-50";
+								optionClass = "border-correct bg-correct/10";
 							} else if (isSelected && !isCorrectOption) {
-								optionClass = "border-red-500 bg-red-50";
+								optionClass = "border-incorrect bg-incorrect/10";
 							}
 						} else if (isSelected) {
-							optionClass = "border-blue-500 bg-blue-50";
+							optionClass = "border-terracotta bg-terracotta/10";
 						}
 
 						return (
@@ -151,10 +151,10 @@ const DrillCard: React.FC<DrillCardProps> = ({
 									{option}
 								</MonoText>
 								{state.showFeedback && isCorrectOption && (
-									<CheckCircle className="text-green-500" size={20} />
+									<CheckCircle className="text-correct" size={20} />
 								)}
 								{state.showFeedback && isSelected && !isCorrectOption && (
-									<XCircle className="text-red-500" size={20} />
+									<XCircle className="text-incorrect" size={20} />
 								)}
 							</label>
 						);
@@ -166,20 +166,20 @@ const DrillCard: React.FC<DrillCardProps> = ({
 			{state.showFeedback && (
 				<div
 					className={`p-4 rounded-lg mb-4 ${
-						isCorrect ? "bg-green-100 border border-green-300" : "bg-red-100 border border-red-300"
+						isCorrect ? "bg-correct/10 border border-correct/30" : "bg-incorrect/10 border border-incorrect/30"
 					}`}
 				>
 					<div className="flex items-center gap-2 mb-1">
 						{isCorrect ? (
-							<CheckCircle className="text-green-600" size={18} />
+							<CheckCircle className="text-correct" size={18} />
 						) : (
-							<XCircle className="text-red-600" size={18} />
+							<XCircle className="text-incorrect" size={18} />
 						)}
-						<span className={`font-semibold ${isCorrect ? "text-green-700" : "text-red-700"}`}>
+						<span className={`font-semibold ${isCorrect ? "text-correct" : "text-incorrect"}`}>
 							{isCorrect ? "Correct!" : "Not quite"}
 						</span>
 					</div>
-					<p className="text-sm text-gray-700">{currentQuestion.explanation}</p>
+					<p className="text-sm text-stone-700">{currentQuestion.explanation}</p>
 				</div>
 			)}
 

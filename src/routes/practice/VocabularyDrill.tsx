@@ -85,21 +85,21 @@ const VocabularyDrill: React.FC<VocabularyDrillProps> = ({ items }) => {
 
 	if (items.length === 0) {
 		return (
-			<div className="text-center py-12 bg-green-50 rounded-xl border border-green-200">
+			<div className="text-center py-12 bg-olive/10 rounded-xl border border-olive/30">
 				<div className="text-5xl mb-4">🎉</div>
-				<h3 className="text-xl font-semibold text-green-800 mb-2">All words learned!</h3>
-				<p className="text-green-700">You've practiced all available vocabulary.</p>
-				<p className="text-sm text-green-600 mt-2">Check the Review tab for items due for review.</p>
+				<h3 className="text-xl font-semibold text-olive-text mb-2">All words learned!</h3>
+				<p className="text-olive-text">You've practiced all available vocabulary.</p>
+				<p className="text-sm text-stone-600 mt-2">Check the Review tab for items due for review.</p>
 			</div>
 		);
 	}
 
 	if (items.length < 4) {
 		return (
-			<div className="text-center py-12 bg-yellow-50 rounded-xl border border-yellow-200">
+			<div className="text-center py-12 bg-honey/10 rounded-xl border border-honey/30">
 				<div className="text-5xl mb-4">📚</div>
-				<h3 className="text-xl font-semibold text-yellow-800 mb-2">Almost there!</h3>
-				<p className="text-yellow-700">
+				<h3 className="text-xl font-semibold text-honey-text mb-2">Almost there!</h3>
+				<p className="text-honey-text">
 					Only {items.length} new words available. Need at least 4 for multiple choice.
 				</p>
 			</div>
@@ -111,8 +111,8 @@ const VocabularyDrill: React.FC<VocabularyDrillProps> = ({ items }) => {
 			title="Learn New Words"
 			description={`${items.length} new words to learn`}
 			questions={questions}
-			colorClass="border-orange-200"
-			bgClass="bg-orange-50/50"
+			colorClass="border-terracotta/30"
+			bgClass="bg-terracotta/5"
 			onAttempt={handleAttempt}
 		/>
 	);

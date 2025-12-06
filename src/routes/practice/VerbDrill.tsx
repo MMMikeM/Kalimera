@@ -131,8 +131,8 @@ const VerbDrill: React.FC = () => {
 			title="Verb Conjugation"
 			description="Practice essential verb forms"
 			questions={questions}
-			colorClass="border-purple-200"
-			bgClass="bg-purple-50/50"
+			colorClass="border-honey/30"
+			bgClass="bg-honey/5"
 		/>
 	);
 };

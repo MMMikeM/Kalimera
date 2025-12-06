@@ -90,24 +90,24 @@ const ReviewDrill: React.FC<ReviewDrillProps> = ({ items }) => {
 
 	if (items.length === 0) {
 		return (
-			<div className="text-center py-12 bg-green-50 rounded-xl border border-green-200">
+			<div className="text-center py-12 bg-olive/10 rounded-xl border border-olive/30">
 				<div className="text-5xl mb-4">🎉</div>
-				<h3 className="text-xl font-semibold text-green-800 mb-2">All caught up!</h3>
-				<p className="text-green-700">No items due for review right now. Great work!</p>
-				<p className="text-sm text-green-600 mt-2">Check back later for new reviews.</p>
+				<h3 className="text-xl font-semibold text-olive-text mb-2">All caught up!</h3>
+				<p className="text-olive-text">No items due for review right now. Great work!</p>
+				<p className="text-sm text-stone-600 mt-2">Check back later for new reviews.</p>
 			</div>
 		);
 	}
 
 	if (items.length < 4) {
 		return (
-			<div className="text-center py-12 bg-yellow-50 rounded-xl border border-yellow-200">
+			<div className="text-center py-12 bg-honey/10 rounded-xl border border-honey/30">
 				<div className="text-5xl mb-4">📚</div>
-				<h3 className="text-xl font-semibold text-yellow-800 mb-2">Not enough items yet</h3>
-				<p className="text-yellow-700">
+				<h3 className="text-xl font-semibold text-honey-text mb-2">Not enough items yet</h3>
+				<p className="text-honey-text">
 					You need at least 4 vocabulary items to start reviewing.
 				</p>
-				<p className="text-sm text-yellow-600 mt-2">
+				<p className="text-sm text-stone-600 mt-2">
 					Practice more vocabulary to build your review queue!
 				</p>
 			</div>
@@ -119,8 +119,8 @@ const ReviewDrill: React.FC<ReviewDrillProps> = ({ items }) => {
 			title="Spaced Review"
 			description={`${items.length} items due for review`}
 			questions={questions}
-			colorClass="border-purple-200"
-			bgClass="bg-purple-50/50"
+			colorClass="border-terracotta/30"
+			bgClass="bg-terracotta/5"
 			onAttempt={handleAttempt}
 		/>
 	);

@@ -110,14 +110,14 @@ export default function SearchRoute({ loaderData }: Route.ComponentProps) {
 					{searchResults.map((result) => (
 						<div
 							key={result.id}
-							className="p-3 bg-gray-50 rounded-lg"
+							className="p-3 bg-stone-50 rounded-lg"
 						>
 							<div className="flex justify-between items-start">
 								<div>
 									<MonoText variant="primary" size="lg">
 										{result.greek}
 									</MonoText>
-									<span className="text-gray-700 ml-3">{result.english}</span>
+									<span className="text-stone-700 ml-3">{result.english}</span>
 								</div>
 								<div className="flex gap-2 flex-wrap justify-end">
 									{result.type && (
@@ -143,14 +143,14 @@ export default function SearchRoute({ loaderData }: Route.ComponentProps) {
 			)}
 
 			{searchTerm && searchResults.length === 0 && (
-				<div className="text-center py-8 text-gray-500">
+				<div className="text-center py-8 text-stone-600">
 					No results found for "{searchTerm}"
 				</div>
 			)}
 
-			<div className="bg-gray-50 p-4 rounded-lg">
+			<div className="bg-stone-50 p-4 rounded-lg">
 				<h4 className="font-bold mb-2">Search Tips</h4>
-				<ul className="text-sm text-gray-700 space-y-1">
+				<ul className="text-sm text-stone-700 space-y-1">
 					<li>• Type in Greek or English to find matches</li>
 					<li>
 						• Search will find partial matches (e.g., "καλ" finds "καλημέρα")
