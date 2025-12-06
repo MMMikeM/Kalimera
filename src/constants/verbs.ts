@@ -87,7 +87,7 @@ export const VERB_PATTERNS: Record<string, VerbPattern> = {
 		samePattern: [
 			{ infinitive: "θέλω", meaning: "want" },
 			{ infinitive: "έχω", meaning: "have" },
-			{ infinitive: "μπορώ", meaning: "can" },
+			{ infinitive: "βλέπω", meaning: "see" },
 		],
 		usage: [
 			{ greek: "Τι κάνεις;", english: "How are you? (lit: What do you do?)" },

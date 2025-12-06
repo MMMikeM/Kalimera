@@ -60,6 +60,11 @@ export const CASE_RECOGNITION = {
 			answer: "Genitive",
 			example: "το σπίτι του άντρα",
 		},
+		{
+			question: "Am I calling someone?",
+			answer: "Vocative",
+			example: "Νίκο! Έλα εδώ!",
+		},
 	],
 };
 

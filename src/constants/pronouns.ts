@@ -65,7 +65,14 @@ export const POSSESSIVE_PRONOUNS: PronounParadigm[] = [
 		singular: { greek: "της", english: "her" },
 		plural: { greek: "τους", english: "their" },
 	},
+	{
+		person: "3rd n",
+		singular: { greek: "του", english: "its" },
+		plural: { greek: "τους", english: "their" },
+	},
 ];
+
+// Note: Neuter singular uses the same form as masculine (του)
 
 export const POSSESSIVE_PRONOUN_EXAMPLES = [
 	{ greek: "το σπίτι μου", english: "my house" },

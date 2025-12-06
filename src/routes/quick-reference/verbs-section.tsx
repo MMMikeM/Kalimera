@@ -1,7 +1,9 @@
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, Zap, Sparkles, RefreshCw, Star, Lightbulb, ArrowRight } from "lucide-react";
 import type React from "react";
 
-import { Card, MonoText, ParadigmTable } from "../../components";
+import { Card, MonoText, ParadigmTable, SectionHeading, KeyInsight } from "../../components";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
 import { IRREGULAR_VERBS, VERB_PATTERNS } from "../../constants/verbs";
 
 interface UsageExample {
@@ -42,18 +44,20 @@ const highlightVerb = (sentence: string, verb: string, colorClass: string): Reac
 
 const UsageExamples: React.FC<{
 	examples: UsageExample[];
-	highlightClass?: string;
-}> = ({ examples, highlightClass = "text-blue-600" }) => (
-	<div className="mt-4">
-		<div className="text-sm font-medium text-gray-600 mb-2">In context:</div>
-		<div className="space-y-1.5">
+	config: PatternConfig;
+}> = ({ examples, config }) => (
+	<div className="mt-5">
+		<div className={`text-sm font-semibold ${config.textClass} mb-2 flex items-center gap-1.5`}>
+			<ArrowRight size={14} /> In context:
+		</div>
+		<div className="space-y-2 bg-stone-50 rounded-lg p-3 border border-stone-200">
 			{examples.map((ex) => (
 				<div key={ex.greek} className="text-sm flex items-baseline gap-2 flex-wrap">
-					<MonoText weight="medium">
-						{highlightVerb(ex.greek, ex.verb, highlightClass)}
+					<MonoText weight="medium" size="md">
+						{highlightVerb(ex.greek, ex.verb, `${config.textClass} font-semibold`)}
 					</MonoText>
-					<span className="text-gray-500">{ex.english}</span>
-					<span className="text-xs text-gray-400">({ex.formNote})</span>
+					<span className="text-stone-600">{ex.english}</span>
+					<span className={`text-sm px-1.5 py-0.5 rounded ${config.badgeBg} ${config.textClass}`}>{ex.formNote}</span>
 				</div>
 			))}
 		</div>
@@ -62,92 +66,217 @@ const UsageExamples: React.FC<{
 
 const SamePatternList: React.FC<{
 	verbs: Array<{ infinitive: string; meaning: string }>;
-}> = ({ verbs }) => (
-	<div className="mt-4">
-		<div className="text-sm font-medium text-gray-600 mb-2">Same pattern:</div>
+	config: PatternConfig;
+}> = ({ verbs, config }) => (
+	<div className="mt-5">
+		<div className={`text-sm font-semibold ${config.textClass} mb-2`}>Same pattern:</div>
 		<div className="flex flex-wrap gap-2">
 			{verbs.map((v) => (
 				<span
 					key={v.infinitive}
-					className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-gray-100 rounded-md text-sm"
+					className={`inline-flex items-center gap-1.5 px-3 py-1.5 bg-white border ${config.borderClass} rounded-full text-sm shadow-sm`}
 				>
-					<MonoText weight="semibold">{v.infinitive}</MonoText>
-					<span className="text-gray-500">({v.meaning})</span>
+					<MonoText weight="semibold" className={config.textClass}>{v.infinitive}</MonoText>
+					<span className="text-stone-600">({v.meaning})</span>
 				</span>
 			))}
 		</div>
 	</div>
 );
 
+type PatternConfig = {
+	key: "active" | "contracted" | "deponent";
+	icon: React.ReactNode;
+	ending: string;
+	bgClass: string;
+	borderClass: string;
+	textClass: string;
+	badgeBg: string;
+	isFirst?: boolean;
+};
+
+const PATTERN_CONFIGS: Record<string, PatternConfig> = {
+	active: {
+		key: "active",
+		icon: <Zap size={20} />,
+		ending: "-ω",
+		bgClass: "bg-aegean/5",
+		borderClass: "border-aegean/30",
+		textClass: "text-aegean-text",
+		badgeBg: "bg-aegean/20",
+		isFirst: true,
+	},
+	contracted: {
+		key: "contracted",
+		icon: <Sparkles size={20} />,
+		ending: "-άω/-ώ",
+		bgClass: "bg-terracotta/5",
+		borderClass: "border-terracotta/30",
+		textClass: "text-terracotta-text",
+		badgeBg: "bg-terracotta/20",
+	},
+	deponent: {
+		key: "deponent",
+		icon: <RefreshCw size={20} />,
+		ending: "-μαι",
+		bgClass: "bg-olive/5",
+		borderClass: "border-olive/30",
+		textClass: "text-olive-text",
+		badgeBg: "bg-olive/20",
+	},
+};
+
 const PatternSection: React.FC<{
 	patternKey: "active" | "contracted" | "deponent";
 	pattern: (typeof VERB_PATTERNS)[keyof typeof VERB_PATTERNS];
-	colorClass?: string;
-	endingColorClass?: string;
-	highlightClass?: string;
-}> = ({
-	patternKey,
-	pattern,
-	colorClass = "border-blue-200",
-	endingColorClass = "text-blue-700 font-bold",
-	highlightClass = "text-blue-600",
-}) => (
-	<Card variant="bordered" padding="lg" className={`border-2 ${colorClass}`}>
-		<h3 className="text-lg font-bold mb-2 text-gray-800">{pattern.name}</h3>
-		<p className="text-gray-600 text-sm mb-4">{pattern.description}</p>
+}> = ({ patternKey, pattern }) => {
+	const config = PATTERN_CONFIGS[patternKey];
 
-		<ParadigmTable
-			stem={pattern.canonical.stem}
-			meaning={pattern.canonical.meaning}
-			infinitive={pattern.canonical.infinitive}
-			forms={pattern.canonical.forms}
-			endingClassName={endingColorClass}
-			showHeaders={true}
-			fadeStem={true}
-		/>
+	return (
+		<Card variant="bordered" padding="lg" className={`${config.bgClass} border-2 ${config.borderClass}`}>
+			{/* Header with icon and badge */}
+			<div className="flex items-start justify-between mb-4">
+				<div className="flex items-center gap-3">
+					<div className={`p-2.5 rounded-xl ${config.badgeBg}`}>
+						<span className={config.textClass}>{config.icon}</span>
+					</div>
+					<div>
+						<div className="flex items-center gap-2">
+							<h3 className={`text-lg font-bold ${config.textClass}`}>{pattern.name}</h3>
+							{config.isFirst && (
+								<Badge variant="default" size="sm" className="bg-aegean-light text-aegean-text border border-aegean/30">
+									<Star size={12} className="mr-1" /> Learn First
+								</Badge>
+							)}
+						</div>
+						<p className="text-stone-600 text-sm">{pattern.description}</p>
+					</div>
+				</div>
+				<div className={`px-3 py-1.5 rounded-full ${config.badgeBg} ${config.textClass} font-mono font-bold text-lg`}>
+					{config.ending}
+				</div>
+			</div>
 
-		<SamePatternList verbs={pattern.samePattern} />
-		<UsageExamples examples={USAGE_EXAMPLES[patternKey]} highlightClass={highlightClass} />
-	</Card>
-);
+			{/* Paradigm Table */}
+			<div className="bg-white rounded-lg p-4 border border-stone-200 shadow-sm">
+				<ParadigmTable
+					stem={pattern.canonical.stem}
+					meaning={pattern.canonical.meaning}
+					infinitive={pattern.canonical.infinitive}
+					forms={pattern.canonical.forms}
+					endingClassName={`${config.textClass} font-bold`}
+					showHeaders={true}
+					fadeStem={true}
+				/>
+			</div>
+
+			<SamePatternList verbs={pattern.samePattern} config={config} />
+			<UsageExamples examples={USAGE_EXAMPLES[patternKey]} config={config} />
+		</Card>
+	);
+};
 
 const PatternIdentifier: React.FC = () => (
-	<Card variant="bordered" padding="lg" className="bg-slate-50 border-2 border-slate-200">
-		<h3 className="text-lg font-bold mb-3 text-slate-800">Which Pattern?</h3>
-		<p className="text-sm text-gray-600 mb-4">
-			Look at the verb's dictionary form (1st person singular) to identify its pattern:
-		</p>
-		<div className="space-y-2">
-			<div className="flex items-center gap-3 p-2 rounded bg-blue-50 border border-blue-100">
-				<MonoText className="text-blue-700 font-bold w-16">-ω</MonoText>
-				<span className="text-gray-600">→</span>
-				<span className="text-gray-700 font-medium">Active</span>
-				<span className="text-gray-400 text-sm ml-auto">κάνω, θέλω, έχω</span>
+	<Card variant="bordered" padding="lg" className="bg-gradient-to-br from-stone-50 to-stone-100 border-2 border-stone-300 shadow-sm">
+		<div className="flex items-center gap-3 mb-4">
+			<div className="p-2.5 rounded-xl bg-stone-200">
+				<Lightbulb size={20} className="text-stone-700" />
 			</div>
-			<div className="flex items-center gap-3 p-2 rounded bg-purple-50 border border-purple-100">
-				<MonoText className="text-purple-700 font-bold w-16">-άω/-ώ</MonoText>
-				<span className="text-gray-600">→</span>
-				<span className="text-gray-700 font-medium">Contracted</span>
-				<span className="text-gray-400 text-sm ml-auto">μιλάω, αγαπάω</span>
+			<div>
+				<h3 className="text-lg font-bold text-stone-800">Which Pattern?</h3>
+				<p className="text-sm text-stone-600">
+					Look at the verb's dictionary form (1st person singular)
+				</p>
 			</div>
-			<div className="flex items-center gap-3 p-2 rounded bg-green-50 border border-green-100">
-				<MonoText className="text-green-700 font-bold w-16">-μαι</MonoText>
-				<span className="text-gray-600">→</span>
-				<span className="text-gray-700 font-medium">Deponent</span>
-				<span className="text-gray-400 text-sm ml-auto">έρχομαι, θυμάμαι</span>
+		</div>
+		<div className="space-y-3">
+			<div className="flex items-center gap-4 p-3 rounded-xl bg-aegean/10 border-2 border-aegean/30 hover:border-aegean/50 transition-colors">
+				<div className="p-2 rounded-lg bg-aegean/20">
+					<Zap size={18} className="text-aegean-text" />
+				</div>
+				<MonoText className="text-aegean-text font-bold text-xl w-20">-ω</MonoText>
+				<ArrowRight size={16} className="text-stone-400" />
+				<span className="text-stone-800 font-semibold">Active</span>
+				<div className="ml-auto flex gap-2">
+					<span className="px-2 py-1 bg-white rounded-md text-sm font-mono text-aegean-text border border-aegean/20">κάνω</span>
+					<span className="px-2 py-1 bg-white rounded-md text-sm font-mono text-aegean-text border border-aegean/20">θέλω</span>
+				</div>
+			</div>
+			<div className="flex items-center gap-4 p-3 rounded-xl bg-terracotta/10 border-2 border-terracotta/30 hover:border-terracotta/50 transition-colors">
+				<div className="p-2 rounded-lg bg-terracotta/20">
+					<Sparkles size={18} className="text-terracotta-text" />
+				</div>
+				<MonoText className="text-terracotta-text font-bold text-xl w-20">-άω/-ώ</MonoText>
+				<ArrowRight size={16} className="text-stone-400" />
+				<span className="text-stone-800 font-semibold">Contracted</span>
+				<div className="ml-auto flex gap-2">
+					<span className="px-2 py-1 bg-white rounded-md text-sm font-mono text-terracotta-text border border-terracotta/20">μιλάω</span>
+					<span className="px-2 py-1 bg-white rounded-md text-sm font-mono text-terracotta-text border border-terracotta/20">αγαπάω</span>
+				</div>
+			</div>
+			<div className="flex items-center gap-4 p-3 rounded-xl bg-olive/10 border-2 border-olive/30 hover:border-olive/50 transition-colors">
+				<div className="p-2 rounded-lg bg-olive/20">
+					<RefreshCw size={18} className="text-olive-text" />
+				</div>
+				<MonoText className="text-olive-text font-bold text-xl w-20">-μαι</MonoText>
+				<ArrowRight size={16} className="text-stone-400" />
+				<span className="text-stone-800 font-semibold">Deponent</span>
+				<div className="ml-auto flex gap-2">
+					<span className="px-2 py-1 bg-white rounded-md text-sm font-mono text-olive-text border border-olive/20">έρχομαι</span>
+					<span className="px-2 py-1 bg-white rounded-md text-sm font-mono text-olive-text border border-olive/20">θυμάμαι</span>
+				</div>
 			</div>
 		</div>
 	</Card>
 );
 
+// Find είμαι (to be) from irregular verbs for promotion
+const eimai = IRREGULAR_VERBS.find((v) => v.infinitive === "είμαι");
+const otherIrregulars = IRREGULAR_VERBS.filter((v) => v.infinitive !== "είμαι");
+
 export const VerbsSection: React.FC = () => (
 	<section id="verbs" className="space-y-6">
-		<div>
-			<h2 className="text-2xl font-bold text-gray-800">Verb Conjugation</h2>
-			<p className="text-gray-600 mt-1">
-				Greek verbs change their endings to show who is doing the action.
-				<strong className="text-gray-800"> Learn the endings</strong>, and you can conjugate
-				thousands of verbs.
+		<SectionHeading
+			title="Verb Conjugation"
+			subtitle="Greek verbs change their endings to show who is doing the action"
+		/>
+
+		{/* Essential First: είμαι (to be) - promoted from irregulars */}
+		{eimai && (
+			<KeyInsight title="Start Here: είμαι (to be)" icon={<Star size={18} />}>
+				<p className="mb-3">
+					The most common Greek verb. Memorize it first — you'll use it in every conversation.
+				</p>
+				<div className="bg-white rounded-lg p-4 border border-santorini/20">
+					<ParadigmTable
+						infinitive={eimai.infinitive}
+						meaning={eimai.meaning}
+						forms={eimai.forms}
+						formClassName="text-santorini-text font-semibold"
+					/>
+					{eimai.note && (
+						<p className="mt-3 text-sm text-stone-600 italic border-t border-stone-100 pt-2">
+							{eimai.note}
+						</p>
+					)}
+				</div>
+			</KeyInsight>
+		)}
+
+		<Alert variant="info">
+			<Lightbulb size={16} />
+			<AlertTitle>The Power of Patterns</AlertTitle>
+			<AlertDescription>
+				Learn just <strong>3 ending patterns</strong> and you can conjugate thousands of verbs. The endings tell you WHO is doing the action.
+			</AlertDescription>
+		</Alert>
+
+		{/* Negation note */}
+		<div className="p-3 bg-stone-50 rounded-lg border border-stone-200">
+			<p className="text-sm text-slate-text">
+				<strong className="text-navy-text">Negation:</strong> Add{" "}
+				<MonoText variant="greek" size="sm">δεν</MonoText> before the verb:{" "}
+				<MonoText variant="greek" size="sm">Δεν μιλάω</MonoText> (I don't speak)
 			</p>
 		</div>
 
@@ -156,55 +285,46 @@ export const VerbsSection: React.FC = () => (
 
 		{/* Pattern Families */}
 		<div className="space-y-6">
-			<PatternSection
-				patternKey="active"
-				pattern={VERB_PATTERNS.active}
-				colorClass="border-blue-200"
-				endingColorClass="text-blue-700 font-bold"
-				highlightClass="text-blue-600 font-semibold"
-			/>
-
-			<PatternSection
-				patternKey="contracted"
-				pattern={VERB_PATTERNS.contracted}
-				colorClass="border-purple-200"
-				endingColorClass="text-purple-700 font-bold"
-				highlightClass="text-purple-600 font-semibold"
-			/>
-
-			<PatternSection
-				patternKey="deponent"
-				pattern={VERB_PATTERNS.deponent}
-				colorClass="border-green-200"
-				endingColorClass="text-green-700 font-bold"
-				highlightClass="text-green-600 font-semibold"
-			/>
+			<PatternSection patternKey="active" pattern={VERB_PATTERNS.active} />
+			<PatternSection patternKey="contracted" pattern={VERB_PATTERNS.contracted} />
+			<PatternSection patternKey="deponent" pattern={VERB_PATTERNS.deponent} />
 		</div>
 
-		{/* Irregular Verbs */}
-		<Card variant="bordered" padding="lg" className="border-2 border-amber-200">
-			<div className="flex items-center gap-2 mb-3">
-				<AlertCircle size={18} className="text-amber-600" />
-				<h3 className="text-lg font-bold text-gray-800">Irregular Verbs</h3>
-			</div>
-			<p className="text-gray-600 text-sm mb-4">
-				These 4 ultra-common verbs don't follow the patterns above. You'll memorize them naturally through exposure.
-			</p>
-			<div className="grid sm:grid-cols-2 gap-6">
-				{IRREGULAR_VERBS.map((verb) => (
-					<div key={verb.infinitive}>
-						<ParadigmTable
-							infinitive={verb.infinitive}
-							meaning={verb.meaning}
-							forms={verb.forms}
-							formClassName="text-amber-700 font-semibold"
-						/>
-						{verb.note && (
-							<p className="mt-2 text-sm text-gray-500 italic px-1">{verb.note}</p>
-						)}
+		{/* Other Irregular Verbs (excluding είμαι which is promoted above) */}
+		{otherIrregulars.length > 0 && (
+			<Card variant="bordered" padding="lg" className="bg-honey/5 border-2 border-honey/30">
+				<div className="flex items-start gap-3 mb-4">
+					<div className="p-2.5 rounded-xl bg-honey/20">
+						<AlertCircle size={20} className="text-honey-text" />
 					</div>
-				))}
-			</div>
-		</Card>
+					<div>
+						<h3 className="text-lg font-bold text-honey-text">Other Irregular Verbs</h3>
+						<p className="text-stone-600 text-sm">
+							These common verbs don't follow patterns — you'll learn them naturally through frequent exposure
+						</p>
+					</div>
+				</div>
+				<div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+					{otherIrregulars.map((verb) => (
+						<div key={verb.infinitive} className="bg-white rounded-lg p-4 border border-honey/20 shadow-sm">
+							<ParadigmTable
+								infinitive={verb.infinitive}
+								meaning={verb.meaning}
+								forms={verb.forms}
+								formClassName="text-honey-text font-semibold"
+							/>
+							{verb.note && (
+								<p className="mt-3 text-sm text-stone-600 italic px-1 border-t border-stone-100 pt-2">{verb.note}</p>
+							)}
+						</div>
+					))}
+				</div>
+			</Card>
+		)}
+
+		{/* Tense scope note */}
+		<p className="text-sm text-stone-500 text-center italic">
+			This section covers present tense only. Past and future tenses coming soon.
+		</p>
 	</section>
 );
