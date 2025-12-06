@@ -16,6 +16,7 @@ import {
 	POSITION_ADVERBS,
 	SYSTEM_TAGS,
 	TIME_PHRASES,
+	TIME_TELLING,
 	TRANSPORT_VERBS,
 	USEFUL_EXPRESSIONS,
 	VERBS,
@@ -238,6 +239,20 @@ async function seed() {
 			status: "processed",
 		});
 		linkTag(vocabId, "time-expression");
+	}
+
+	// Seed time-telling phrases
+	console.log("Seeding time-telling phrases...");
+	for (const phrase of TIME_TELLING) {
+		const vocabId = await insertVocab({
+			greekText: phrase.text,
+			englishTranslation: phrase.english,
+			wordType: "phrase",
+			status: "processed",
+			metadata: phrase.metadata,
+		});
+		linkTag(vocabId, "time-telling");
+		linkTag(vocabId, "phrase");
 	}
 
 	// Seed colors

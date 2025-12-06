@@ -5,6 +5,7 @@ import {
 	Link,
 	ChevronDown,
 	Lightbulb,
+	Hand,
 } from "lucide-react";
 import type React from "react";
 import { useSearchParams } from "react-router";
@@ -194,6 +195,30 @@ const SITUATIONS: SituationConfig[] = [
 		colorClass: "border-blue-200",
 		bgClass: "bg-blue-50/30",
 		textClass: "text-blue-700",
+	},
+	{
+		id: "requests",
+		title: "Quick Requests",
+		icon: <Hand size={20} />,
+		youllHear: [
+			{ text: "Τι σου φαίνεται;", english: "What do you think?" },
+			{ text: "Πώς σε λένε;", english: "What's your name?" },
+			{ text: "Μ' ακούς;", english: "Do you hear me?" },
+		],
+		responses: [
+			{ text: "Πες μου", english: "Tell me" },
+			{ text: "Δώσε μου", english: "Give me" },
+			{ text: "Περίμενέ με", english: "Wait for me" },
+			{ text: "Βοήθησέ με", english: "Help me" },
+			{ text: "Άκουσέ με", english: "Listen to me" },
+			{ text: "Με λένε...", english: "My name is..." },
+			{ text: "Μ' αρέσει", english: "I like it" },
+			{ text: "Δε μ' αρέσει", english: "I don't like it" },
+			{ text: "Μου φαίνεται...", english: "It seems to me..." },
+		],
+		colorClass: "border-indigo-200",
+		bgClass: "bg-indigo-50/30",
+		textClass: "text-indigo-700",
 	},
 ];
 
