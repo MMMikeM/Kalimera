@@ -9,6 +9,7 @@ export {
 	LIKES_CONSTRUCTION,
 	NAME_CONSTRUCTION,
 	TIME_PHRASES,
+	TIME_TELLING,
 	EXAMPLE_SENTENCES,
 } from "./phrases";
 export {

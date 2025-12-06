@@ -13,6 +13,7 @@ export const SYSTEM_TAGS = {
 	position: { slug: "position", name: "Position & Direction" },
 	timeOfDay: { slug: "time-of-day", name: "Times of Day" },
 	timeExpression: { slug: "time-expression", name: "Time Expressions" },
+	timeTelling: { slug: "time-telling", name: "Telling Time" },
 	likesSingular: { slug: "likes-singular", name: "Likes (Singular)" },
 	likesPlural: { slug: "likes-plural", name: "Likes (Plural)" },
 	transportVehicle: { slug: "transport-vehicle", name: "Transport - Vehicles" },

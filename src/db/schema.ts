@@ -26,10 +26,8 @@ import {
 } from "./enums";
 
 // Domain-specific: SRS (Spaced Repetition System)
-const easeFactor = real("ease_factor").default(2.5);
 const intervalDays = integer("interval_days").default(1);
 const reviewCount = integer("review_count").default(0);
-const mistakeCount = integer("mistake_count").default(0);
 const difficultyLevel = integer("difficulty_level").notNull().default(0);
 
 // Re-export enums for convenience
@@ -65,22 +63,14 @@ export const vocabulary = sqliteTable(
 		exampleEnglish: nullableString("example_english"),
 		status: oneOf("status", statuses).default("unprocessed"),
 		difficultyLevel: difficultyLevel,
-		isProblemWord: bool("is_problem_word").default(false),
-		mistakeCount: mistakeCount,
-		reviewCount: reviewCount,
-		lastReviewed: nullableTimestamp("last_reviewed"),
 		createdAt: createdAt(),
 		gender: nullableOneOf("gender", genders),
 		metadata: json<Record<string, unknown>>("metadata"),
-		nextReviewAt: nullableTimestamp("next_review_at"),
-		intervalDays: intervalDays,
-		easeFactor: easeFactor,
 	},
 	(table) => [
 		index("idx_vocabulary_category").on(table.category),
 		index("idx_vocabulary_word_type").on(table.wordType),
 		index("idx_vocabulary_difficulty").on(table.difficultyLevel),
-		index("idx_vocabulary_review").on(table.nextReviewAt),
 		uniqueIndex("idx_vocabulary_greek_text").on(table.greekText),
 	],
 );
@@ -251,16 +241,9 @@ export const grammarPatterns = sqliteTable(
 		english: string("english"),
 		explanation: nullableString("explanation"),
 		whyThisCase: nullableString("why_this_case"),
-		nextReviewAt: nullableTimestamp("next_review_at"),
-		intervalDays: intervalDays,
-		easeFactor: easeFactor,
-		reviewCount: reviewCount,
 		createdAt: createdAt(),
 	},
-	(table) => [
-		index("idx_grammar_patterns_case").on(table.caseType),
-		index("idx_grammar_patterns_review").on(table.nextReviewAt),
-	],
+	(table) => [index("idx_grammar_patterns_case").on(table.caseType)],
 );
 
 // ============================================

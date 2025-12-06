@@ -87,3 +87,87 @@ export const EXAMPLE_SENTENCES: Phrase[] = [
 		metadata: { grammar: "genitive plural" },
 	},
 ];
+
+// Time-telling phrases - organized by category for UI grouping
+export const TIME_TELLING: Phrase[] = [
+	// Basic structure
+	{
+		text: "τι ώρα είναι;",
+		english: "what time is it?",
+		metadata: { category: "basic" },
+	},
+	{
+		text: "είναι μία",
+		english: "it's one o'clock",
+		metadata: { category: "basic", pattern: "είναι + hour" },
+	},
+	{
+		text: "είναι δύο",
+		english: "it's two o'clock",
+		metadata: { category: "basic" },
+	},
+	{
+		text: "είναι μία ακριβώς",
+		english: "it's exactly one",
+		metadata: { category: "basic", note: "ακριβώς = exactly" },
+	},
+
+	// Fractions (και/παρά)
+	{
+		text: "και τέταρτο",
+		english: "quarter past",
+		metadata: { category: "fractions", note: "και = past" },
+	},
+	{
+		text: "και μισή",
+		english: "half past",
+		metadata: { category: "fractions" },
+	},
+	{
+		text: "παρά τέταρτο",
+		english: "quarter to",
+		metadata: { category: "fractions", note: "παρά = to" },
+	},
+	{
+		text: "παρά πέντε",
+		english: "five to",
+		metadata: { category: "fractions" },
+	},
+	{
+		text: "και είκοσι πέντε",
+		english: "twenty-five past",
+		metadata: { category: "fractions" },
+	},
+
+	// "At" times (στις)
+	{
+		text: "στη μία",
+		english: "at one",
+		metadata: { category: "at-times", note: "singular exception" },
+	},
+	{
+		text: "στις τρεις",
+		english: "at three",
+		metadata: { category: "at-times", pattern: "στις + hour (plural)" },
+	},
+	{
+		text: "στις τέσσερις",
+		english: "at four",
+		metadata: { category: "at-times" },
+	},
+	{
+		text: "στις τρεις και τέταρτο",
+		english: "at quarter past three",
+		metadata: { category: "at-times" },
+	},
+	{
+		text: "στις τρεις και μισή",
+		english: "at half past three",
+		metadata: { category: "at-times" },
+	},
+	{
+		text: "στις τέσσερις παρά τέταρτο",
+		english: "at quarter to four",
+		metadata: { category: "at-times" },
+	},
+];
