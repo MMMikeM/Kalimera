@@ -65,8 +65,8 @@ const QuickReference: React.FC = () => {
 	return (
 		<div className="space-y-6">
 			<div className="mb-2">
-				<h1 className="text-2xl font-bold text-gray-800">Quick Reference</h1>
-				<p className="text-gray-600 mt-1">Grammar lookup - find what you need fast</p>
+				<h1 className="text-2xl font-bold text-stone-800">Quick Reference</h1>
+				<p className="text-stone-600 mt-1">Grammar lookup - find what you need fast</p>
 			</div>
 
 			<Tabs value={activeTab} onValueChange={(value) => setSearchParams({ tab: value })}>
