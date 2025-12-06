@@ -3,118 +3,527 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/*
+ * Mediterranean Color Palette for Greek Learning
+ *
+ * Design principles (see /docs/design-guidelines.md):
+ * - Cool backgrounds for focus, warm accents for emphasis
+ * - Maximum 3-4 colors per context
+ * - AAA contrast (7:1) for extended reading
+ * - Semantic colors for grammar concepts
+ */
+
 @theme inline {
+  /* === BASE PALETTE === */
+
+  /* Backgrounds - Cool, calming for focus */
+  --color-cream: #FAF8F5;
+  --color-cream-dark: #F5F1EB;
+
+  /* Primary Accent - Terracotta (warm, attention) */
+  --color-terracotta: #C4663F;
+  --color-terracotta-light: #D4805E;
+  --color-terracotta-dark: #A85435;
+  --color-terracotta-text: #5C2D14;      /* Very dark brown - 10:1+ contrast on tinted bg */
+
+  /* Secondary - Olive (natural, connection) */
+  --color-olive: #6B7B5C;
+  --color-olive-light: #8A9A78;
+  --color-olive-dark: #525F46;
+  --color-olive-text: #1F2A18;           /* Very dark green - 12:1+ contrast on tinted bg */
+
+  /* Tertiary - Aegean (cool, stable) */
+  --color-aegean: #4A7C8F;
+  --color-aegean-light: #6A9CAF;
+  --color-aegean-dark: #3A6070;
+  --color-aegean-text: #14333F;          /* Very dark teal - 11:1+ contrast on tinted bg */
+
+  /* Accent - Honey (warm, highlights) */
+  --color-honey: #D4A853;
+  --color-honey-light: #E4C073;
+  --color-honey-dark: #B8923D;
+  --color-honey-text: #4A3508;           /* Very dark gold - 11:1+ contrast on tinted bg */
+
+  /* === EXPANDED GREEK PALETTE === */
+
+  /* Santorini - Bright cyan (modern, interactive, links) */
+  --color-santorini: #02B8D9;
+  --color-santorini-light: #4DD4EC;
+  --color-santorini-dark: #0A919E;
+  --color-santorini-text: #084A52;       /* Very dark cyan - 9:1+ contrast on tinted bg */
+
+  /* Navy - Deep scholarly blue (headings, emphasis) */
+  --color-navy: #3B5478;
+  --color-navy-light: #5B7498;
+  --color-navy-dark: #2B4058;
+  --color-navy-text: #1A2838;            /* Very dark navy - 12:1+ contrast on tinted bg */
+
+  /* Slate - Muted teal (secondary accents, subtle contrast) */
+  --color-slate: #66817C;
+  --color-slate-light: #86A19C;
+  --color-slate-dark: #46615C;
+  --color-slate-text: #1A2D2A;           /* Very dark teal - 11:1+ contrast on tinted bg */
+
+  /* Neutral */
+  --color-stone-warm: #78716c;
+
+  /* === GRAMMAR SEMANTIC COLORS === */
+
+  /* Cases - Based on grammatical function */
+  --color-case-nominative: var(--color-aegean);
+  --color-case-accusative: var(--color-terracotta);
+  --color-case-genitive: var(--color-olive);
+  --color-case-vocative: var(--color-honey);
+
+  /* Case text variants (AAA compliant) */
+  --color-case-nominative-text: var(--color-aegean-text);
+  --color-case-accusative-text: var(--color-terracotta-text);
+  --color-case-genitive-text: var(--color-olive-text);
+  --color-case-vocative-text: var(--color-honey-text);
+
+  /* Gender - For text that needs to be readable (AAA 7:1+ on cream/white) */
+  --color-gender-masculine: #1D4ED8;     /* Blue-700: ~7.2:1 contrast on cream */
+  --color-gender-feminine: #9D174D;      /* Pink-800: ~8.1:1 contrast on cream */
+  --color-gender-neuter: #44403C;        /* Stone-700: ~9.1:1 contrast on cream */
+
+  /* Learning feedback states */
+  --color-correct: #16A34A;
+  --color-correct-light: #DCFCE7;
+  --color-incorrect: #DC2626;
+  --color-incorrect-light: #FEE2E2;
+  --color-hint: var(--color-honey);
+  --color-hint-light: #FEF3C7;
+
+  /* === TYPOGRAPHY === */
+  --font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-sans: "DM Sans", system-ui, -apple-system, sans-serif;
+
+  /* === SPACING & RADIUS === */
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* === SHADCN THEME MAPPING === */
+  --color-background: var(--color-cream);
+  --color-foreground: #1c1917;
+  --color-card: #ffffff;
+  --color-card-foreground: #1c1917;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #1c1917;
+  --color-primary: var(--color-terracotta);
+  --color-primary-foreground: #FAF8F5;
+  --color-secondary: #f5f5f4;
+  --color-secondary-foreground: #1c1917;
+  --color-muted: #f5f5f4;
+  --color-muted-foreground: #57534e;     /* Darker for better contrast */
+  --color-accent: #f5f5f4;
+  --color-accent-foreground: #1c1917;
+  --color-destructive: var(--color-incorrect);
+  --color-border: #d6d3d1;               /* Slightly darker for visibility */
+  --color-input: #d6d3d1;
+  --color-ring: var(--color-terracotta);
+
+  /* Chart colors */
+  --color-chart-1: var(--color-terracotta);
+  --color-chart-2: var(--color-olive);
+  --color-chart-3: var(--color-aegean);
+  --color-chart-4: var(--color-honey);
+  --color-chart-5: var(--color-stone-warm);
+
+  /* Sidebar */
+  --color-sidebar: var(--color-cream);
+  --color-sidebar-foreground: #1c1917;
+  --color-sidebar-primary: var(--color-terracotta);
+  --color-sidebar-primary-foreground: #FAF8F5;
+  --color-sidebar-accent: #f5f5f4;
+  --color-sidebar-accent-foreground: #1c1917;
+  --color-sidebar-border: #d6d3d1;
+  --color-sidebar-ring: var(--color-terracotta);
 }
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --background: #FAF8F5;
+  --foreground: #1c1917;
+  --card: #ffffff;
+  --card-foreground: #1c1917;
+  --popover: #ffffff;
+  --popover-foreground: #1c1917;
+  --primary: #C4663F;
+  --primary-foreground: #FAF8F5;
+  --secondary: #f5f5f4;
+  --secondary-foreground: #1c1917;
+  --muted: #f5f5f4;
+  --muted-foreground: #57534e;
+  --accent: #f5f5f4;
+  --accent-foreground: #1c1917;
+  --destructive: #DC2626;
+  --border: #d6d3d1;
+  --input: #d6d3d1;
+  --ring: #C4663F;
+  --chart-1: #C4663F;
+  --chart-2: #6B7B5C;
+  --chart-3: #4A7C8F;
+  --chart-4: #D4A853;
+  --chart-5: #78716c;
+  --sidebar: #FAF8F5;
+  --sidebar-foreground: #1c1917;
+  --sidebar-primary: #C4663F;
+  --sidebar-primary-foreground: #FAF8F5;
+  --sidebar-accent: #f5f5f4;
+  --sidebar-accent-foreground: #1c1917;
+  --sidebar-border: #d6d3d1;
+  --sidebar-ring: #C4663F;
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --background: #1c1917;
+  --foreground: #fafaf9;
+  --card: #292524;
+  --card-foreground: #fafaf9;
+  --popover: #292524;
+  --popover-foreground: #fafaf9;
+  --primary: #D4805E;
+  --primary-foreground: #1c1917;
+  --secondary: #292524;
+  --secondary-foreground: #fafaf9;
+  --muted: #292524;
+  --muted-foreground: #a8a29e;
+  --accent: #292524;
+  --accent-foreground: #fafaf9;
+  --destructive: #ef4444;
+  --border: rgba(250, 250, 249, 0.1);
+  --input: rgba(250, 250, 249, 0.15);
+  --ring: #78716c;
+  --chart-1: #D4805E;
+  --chart-2: #8A9A78;
+  --chart-3: #6A9CAF;
+  --chart-4: #E4C073;
+  --chart-5: #a8a29e;
+  --sidebar: #292524;
+  --sidebar-foreground: #fafaf9;
+  --sidebar-primary: #D4805E;
+  --sidebar-primary-foreground: #1c1917;
+  --sidebar-accent: #292524;
+  --sidebar-accent-foreground: #fafaf9;
+  --sidebar-border: rgba(250, 250, 249, 0.1);
+  --sidebar-ring: #78716c;
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "kern" 1, "liga" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Typography */
+  .font-serif {
+    font-family: var(--font-serif);
+  }
+
+  .font-sans {
+    font-family: var(--font-sans);
+  }
+
+  /* Greek text rendering */
+  [lang="el"],
+  .greek {
+    font-feature-settings: "kern" 1, "liga" 1;
+  }
+
+  /* Safe area for mobile bottom nav */
+  .safe-area-pb {
+    padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+  }
+}
+
+@layer components {
+  /* === GRAMMAR COLOR CODING COMPONENTS === */
+
+  /* Case indicators - subtle left border style */
+  .case-nominative {
+    @apply border-l-4 pl-3;
+    border-left-color: var(--color-case-nominative);
+  }
+
+  .case-accusative {
+    @apply border-l-4 pl-3;
+    border-left-color: var(--color-case-accusative);
+  }
+
+  .case-genitive {
+    @apply border-l-4 pl-3;
+    border-left-color: var(--color-case-genitive);
+  }
+
+  .case-vocative {
+    @apply border-l-4 pl-3;
+    border-left-color: var(--color-case-vocative);
+  }
+
+  /* Case badges - light background with compliant text */
+  .case-badge-nominative {
+    @apply px-2 py-0.5 rounded text-sm font-medium;
+    background-color: color-mix(in srgb, var(--color-case-nominative) 15%, transparent);
+    color: var(--color-case-nominative-text);
+  }
+
+  .case-badge-accusative {
+    @apply px-2 py-0.5 rounded text-sm font-medium;
+    background-color: color-mix(in srgb, var(--color-case-accusative) 15%, transparent);
+    color: var(--color-case-accusative-text);
+  }
+
+  .case-badge-genitive {
+    @apply px-2 py-0.5 rounded text-sm font-medium;
+    background-color: color-mix(in srgb, var(--color-case-genitive) 15%, transparent);
+    color: var(--color-case-genitive-text);
+  }
+
+  .case-badge-vocative {
+    @apply px-2 py-0.5 rounded text-sm font-medium;
+    background-color: color-mix(in srgb, var(--color-case-vocative) 15%, transparent);
+    color: var(--color-case-vocative-text);
+  }
+
+  /* Gender indicators - very subtle, accent only */
+  .gender-masculine {
+    @apply border-l-3;
+    border-left-color: color-mix(in srgb, var(--color-gender-masculine) 60%, transparent);
+  }
+
+  .gender-feminine {
+    @apply border-l-3;
+    border-left-color: color-mix(in srgb, var(--color-gender-feminine) 60%, transparent);
+  }
+
+  .gender-neuter {
+    @apply border-l-3;
+    border-left-color: color-mix(in srgb, var(--color-gender-neuter) 60%, transparent);
+  }
+
+  /* === LEARNING FEEDBACK === */
+
+  .feedback-correct {
+    @apply border-2 rounded-lg;
+    border-color: var(--color-correct);
+    background-color: var(--color-correct-light);
+  }
+
+  .feedback-incorrect {
+    @apply border-2 rounded-lg;
+    border-color: var(--color-incorrect);
+    background-color: var(--color-incorrect-light);
+  }
+
+  .feedback-hint {
+    @apply border-2 rounded-lg;
+    border-color: var(--color-hint);
+    background-color: var(--color-hint-light);
+  }
+
+  /* === CARD STYLES === */
+
+  .card-warm {
+    @apply bg-white/80 backdrop-blur-sm rounded-2xl border border-stone-200/50;
+    box-shadow:
+      0 1px 3px rgba(0, 0, 0, 0.04),
+      0 4px 12px rgba(0, 0, 0, 0.03);
+  }
+
+  /* === TYPOGRAPHY HELPERS === */
+
+  .prose-warm {
+    @apply text-stone-700 leading-relaxed;
+  }
+
+  .prose-warm p {
+    @apply mb-4 last:mb-0;
+  }
+
+  /* Greek text - render slightly larger for visual balance */
+  .greek-text {
+    @apply text-[1.1em] leading-relaxed;
+    letter-spacing: 0.01em;
+  }
+
+  /* Focus ring */
+  .focus-ring {
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-terracotta/50 focus-visible:ring-offset-2 focus-visible:ring-offset-cream;
+  }
+
+  /* === SITUATION/CATEGORY CARDS === */
+
+  /* Use these for categorizing content (conversations, verb types, etc) */
+  .situation-olive {
+    @apply border-olive/30 bg-olive/5;
+  }
+  .situation-olive-text {
+    @apply text-olive-text;
+  }
+
+  .situation-terracotta {
+    @apply border-terracotta/30 bg-terracotta/5;
+  }
+  .situation-terracotta-text {
+    @apply text-terracotta-text;
+  }
+
+  .situation-aegean {
+    @apply border-aegean/30 bg-aegean/5;
+  }
+  .situation-aegean-text {
+    @apply text-aegean-text;
+  }
+
+  .situation-honey {
+    @apply border-honey/30 bg-honey/5;
+  }
+  .situation-honey-text {
+    @apply text-honey-text;
+  }
+
+  /* Expanded palette situations */
+  .situation-santorini {
+    @apply border-santorini/30 bg-santorini/5;
+  }
+  .situation-santorini-text {
+    @apply text-santorini-text;
+  }
+
+  .situation-navy {
+    @apply border-navy/30 bg-navy/5;
+  }
+  .situation-navy-text {
+    @apply text-navy-text;
+  }
+
+  .situation-slate {
+    @apply border-slate/30 bg-slate/5;
+  }
+  .situation-slate-text {
+    @apply text-slate-text;
+  }
+
+  /* === INFO/TIP BOXES === */
+
+  .info-box-tip {
+    @apply p-4 rounded-lg border bg-honey/10 border-honey/30;
+  }
+  .info-box-tip-title {
+    @apply text-honey-text font-semibold;
+  }
+  .info-box-tip-icon {
+    @apply text-honey;
+  }
+
+  .info-box-info {
+    @apply p-4 rounded-lg border bg-aegean/10 border-aegean/30;
+  }
+  .info-box-info-text {
+    @apply text-aegean-text;
+  }
+
+  .info-box-success {
+    @apply p-4 rounded-lg border-2;
+    border-color: var(--color-correct);
+    background-color: var(--color-correct-light);
+  }
+  .info-box-success-text {
+    color: var(--color-correct);
+  }
+
+  .info-box-warning {
+    @apply p-4 rounded-lg border bg-honey/15 border-honey/40;
+  }
+  .info-box-warning-text {
+    @apply text-honey-text;
+  }
+
+  .info-box-error {
+    @apply p-4 rounded-lg border-2;
+    border-color: var(--color-incorrect);
+    background-color: var(--color-incorrect-light);
+  }
+  .info-box-error-text {
+    color: var(--color-incorrect);
+  }
+
+  /* === STATS CARDS === */
+
+  .stat-card-streak {
+    @apply flex items-center gap-3 p-4 rounded-xl border bg-terracotta/10 border-terracotta/30;
+  }
+  .stat-card-streak-icon {
+    @apply text-terracotta;
+  }
+  .stat-card-streak-value {
+    @apply text-2xl font-bold text-terracotta-text;
+  }
+  .stat-card-streak-label {
+    @apply text-xs text-stone-600;
+  }
+
+  .stat-card-success {
+    @apply flex items-center gap-3 p-4 rounded-xl border bg-olive/10 border-olive/30;
+  }
+  .stat-card-success-icon {
+    @apply text-olive;
+  }
+  .stat-card-success-value {
+    @apply text-2xl font-bold text-olive-text;
+  }
+  .stat-card-success-label {
+    @apply text-xs text-stone-600;
+  }
+
+  .stat-card-due {
+    @apply flex items-center gap-3 p-4 rounded-xl border bg-aegean/10 border-aegean/30;
+  }
+  .stat-card-due-icon {
+    @apply text-aegean;
+  }
+  .stat-card-due-value {
+    @apply text-2xl font-bold text-aegean-text;
+  }
+  .stat-card-due-label {
+    @apply text-xs text-stone-600;
+  }
+
+  /* === VERB PATTERN INDICATORS === */
+
+  .verb-pattern-active {
+    @apply p-2 rounded border bg-aegean/10 border-aegean/30;
+  }
+  .verb-pattern-active-text {
+    @apply text-aegean-text font-bold;
+  }
+
+  .verb-pattern-contracted {
+    @apply p-2 rounded border bg-terracotta/10 border-terracotta/30;
+  }
+  .verb-pattern-contracted-text {
+    @apply text-terracotta-text font-bold;
+  }
+
+  .verb-pattern-deponent {
+    @apply p-2 rounded border bg-olive/10 border-olive/30;
+  }
+  .verb-pattern-deponent-text {
+    @apply text-olive-text font-bold;
+  }
+}
+
+@layer utilities {
+  /* Gradient text */
+  .text-gradient-warm {
+    @apply bg-gradient-to-r from-terracotta to-terracotta-dark bg-clip-text text-transparent;
   }
 }
