@@ -5,20 +5,32 @@ import type { NewVocabulary, NewVocabularyTag } from "../db/types";
 import { formatNounWithArticle } from "../lib/greek-grammar";
 import {
 	ADJECTIVES,
+	ARRIVING_PHRASES,
 	COLORS,
 	COMMANDS,
+	COMMON_RESPONSES,
 	DAILY_PATTERNS,
+	DAYS_OF_WEEK,
+	DISCOURSE_FILLERS,
+	DISCOURSE_MARKERS,
+	ESSENTIAL_PHRASES,
+	FOOD_PHRASES,
 	FREQUENCY_ADVERBS,
 	LESSONS,
 	LIKES_CONSTRUCTION,
+	MONTHS,
+	NAME_CONSTRUCTION,
 	NOUNS,
 	NUMBERS,
+	OPINION_PHRASES,
 	POSITION_ADVERBS,
+	QUESTION_WORDS,
+	SMALLTALK_PHRASES,
+	SOCIAL_PHRASES,
 	SYSTEM_TAGS,
 	TIME_PHRASES,
 	TIME_TELLING,
 	TRANSPORT_VERBS,
-	USEFUL_EXPRESSIONS,
 	VERBS,
 } from "./seed-data";
 
@@ -112,6 +124,45 @@ async function seed() {
 		}
 	}
 
+	// Seed essential phrases (greetings, thank you, etc.)
+	console.log("Seeding essential phrases...");
+	for (const phrase of ESSENTIAL_PHRASES) {
+		const vocabId = await insertVocab({
+			greekText: phrase.text,
+			englishTranslation: phrase.english,
+			wordType: "phrase",
+			status: "processed",
+		});
+		linkTag(vocabId, "essential");
+		linkTag(vocabId, "phrase");
+	}
+
+	// Seed days of the week
+	console.log("Seeding days of the week...");
+	for (const day of DAYS_OF_WEEK) {
+		const vocabId = await insertVocab({
+			greekText: day.text,
+			englishTranslation: day.english,
+			wordType: "noun",
+			status: "processed",
+		});
+		linkTag(vocabId, "days-of-week");
+		linkTag(vocabId, "noun");
+	}
+
+	// Seed months
+	console.log("Seeding months...");
+	for (const month of MONTHS) {
+		const vocabId = await insertVocab({
+			greekText: month.text,
+			englishTranslation: month.english,
+			wordType: "noun",
+			status: "processed",
+		});
+		linkTag(vocabId, "months");
+		linkTag(vocabId, "noun");
+	}
+
 	// Seed verbs
 	console.log("Seeding verbs...");
 	for (const verb of VERBS) {
@@ -198,21 +249,44 @@ async function seed() {
 		linkTag(vocabId, "phrase");
 	}
 
-	// Seed useful expressions
-	console.log("Seeding useful expressions...");
-	for (const expr of USEFUL_EXPRESSIONS) {
+	// Seed discourse fillers (semantic group)
+	console.log("Seeding discourse fillers...");
+	for (const expr of DISCOURSE_FILLERS) {
 		const vocabId = await insertVocab({
 			greekText: expr.text,
 			englishTranslation: expr.english,
 			wordType: "phrase",
 			status: "processed",
 		});
-		// Tag question words separately
-		if (expr.english.includes("?")) {
-			linkTag(vocabId, "question");
-		} else {
-			linkTag(vocabId, "expression");
-		}
+		linkTag(vocabId, "discourse-filler");
+		linkTag(vocabId, "expression");
+		linkTag(vocabId, "phrase");
+	}
+
+	// Seed social phrases (semantic group)
+	console.log("Seeding social phrases...");
+	for (const expr of SOCIAL_PHRASES) {
+		const vocabId = await insertVocab({
+			greekText: expr.text,
+			englishTranslation: expr.english,
+			wordType: "phrase",
+			status: "processed",
+		});
+		linkTag(vocabId, "social-phrase");
+		linkTag(vocabId, "expression");
+		linkTag(vocabId, "phrase");
+	}
+
+	// Seed question words (separate from expressions)
+	console.log("Seeding question words...");
+	for (const q of QUESTION_WORDS) {
+		const vocabId = await insertVocab({
+			greekText: q.text,
+			englishTranslation: q.english,
+			wordType: "phrase",
+			status: "processed",
+		});
+		linkTag(vocabId, "question");
 		linkTag(vocabId, "phrase");
 	}
 
@@ -252,6 +326,92 @@ async function seed() {
 			metadata: phrase.metadata,
 		});
 		linkTag(vocabId, "time-telling");
+		linkTag(vocabId, "phrase");
+	}
+
+	// Seed name construction (με λένε = my name is)
+	console.log("Seeding name construction...");
+	for (const name of NAME_CONSTRUCTION) {
+		const vocabId = await insertVocab({
+			greekText: name.text,
+			englishTranslation: name.english,
+			wordType: "phrase",
+			status: "processed",
+		});
+		linkTag(vocabId, "name-construction");
+		linkTag(vocabId, "phrase");
+	}
+
+	// Seed conversational phrases (from conversations.ts)
+	console.log("Seeding discourse markers...");
+	for (const phrase of DISCOURSE_MARKERS) {
+		const vocabId = await insertVocab({
+			greekText: phrase.text,
+			englishTranslation: phrase.english,
+			wordType: "phrase",
+			status: "processed",
+		});
+		linkTag(vocabId, "discourse-markers");
+		linkTag(vocabId, "phrase");
+	}
+
+	console.log("Seeding common responses...");
+	for (const phrase of COMMON_RESPONSES) {
+		const vocabId = await insertVocab({
+			greekText: phrase.text,
+			englishTranslation: phrase.english,
+			wordType: "phrase",
+			status: "processed",
+		});
+		linkTag(vocabId, "responses");
+		linkTag(vocabId, "phrase");
+	}
+
+	console.log("Seeding opinion phrases...");
+	for (const phrase of OPINION_PHRASES) {
+		const vocabId = await insertVocab({
+			greekText: phrase.text,
+			englishTranslation: phrase.english,
+			wordType: "phrase",
+			status: "processed",
+		});
+		linkTag(vocabId, "opinions");
+		linkTag(vocabId, "phrase");
+	}
+
+	console.log("Seeding arriving & leaving phrases...");
+	for (const phrase of ARRIVING_PHRASES) {
+		const vocabId = await insertVocab({
+			greekText: phrase.text,
+			englishTranslation: phrase.english,
+			wordType: "phrase",
+			status: "processed",
+		});
+		linkTag(vocabId, "conversation-arriving");
+		linkTag(vocabId, "phrase");
+	}
+
+	console.log("Seeding food & hospitality phrases...");
+	for (const phrase of FOOD_PHRASES) {
+		const vocabId = await insertVocab({
+			greekText: phrase.text,
+			englishTranslation: phrase.english,
+			wordType: "phrase",
+			status: "processed",
+		});
+		linkTag(vocabId, "conversation-food");
+		linkTag(vocabId, "phrase");
+	}
+
+	console.log("Seeding small talk phrases...");
+	for (const phrase of SMALLTALK_PHRASES) {
+		const vocabId = await insertVocab({
+			greekText: phrase.text,
+			englishTranslation: phrase.english,
+			wordType: "phrase",
+			status: "processed",
+		});
+		linkTag(vocabId, "conversation-smalltalk");
 		linkTag(vocabId, "phrase");
 	}
 

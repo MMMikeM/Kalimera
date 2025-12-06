@@ -1,18 +1,69 @@
 import type { Phrase } from "../../../types/phrase";
 
-export const USEFUL_EXPRESSIONS: Phrase[] = [
+// Essential phrases - THE most important phrases for a beginner
+// These should be learned first
+export const ESSENTIAL_PHRASES: Phrase[] = [
+	{ text: "Ευχαριστώ", english: "thank you" },
+	{ text: "Παρακαλώ", english: "please / you're welcome" },
+	{ text: "Συγγνώμη", english: "sorry / excuse me" },
+	{ text: "Ναι", english: "yes" },
+	{ text: "Όχι", english: "no" },
+	{ text: "Γεια σας", english: "hello / goodbye (formal)" },
+	{ text: "Γεια σου", english: "hi / bye (informal)" },
+	{ text: "Καλημέρα", english: "good morning" },
+	{ text: "Καλησπέρα", english: "good evening" },
+	{ text: "Καληνύχτα", english: "good night" },
+];
+
+// Days of the week - all feminine except Saturday (neuter)
+export const DAYS_OF_WEEK: Phrase[] = [
+	{ text: "η Δευτέρα", english: "Monday" },
+	{ text: "η Τρίτη", english: "Tuesday" },
+	{ text: "η Τετάρτη", english: "Wednesday" },
+	{ text: "η Πέμπτη", english: "Thursday" },
+	{ text: "η Παρασκευή", english: "Friday" },
+	{ text: "το Σάββατο", english: "Saturday" },
+	{ text: "η Κυριακή", english: "Sunday" },
+];
+
+// Months of the year - all masculine
+export const MONTHS: Phrase[] = [
+	{ text: "ο Ιανουάριος", english: "January" },
+	{ text: "ο Φεβρουάριος", english: "February" },
+	{ text: "ο Μάρτιος", english: "March" },
+	{ text: "ο Απρίλιος", english: "April" },
+	{ text: "ο Μάιος", english: "May" },
+	{ text: "ο Ιούνιος", english: "June" },
+	{ text: "ο Ιούλιος", english: "July" },
+	{ text: "ο Αύγουστος", english: "August" },
+	{ text: "ο Σεπτέμβριος", english: "September" },
+	{ text: "ο Οκτώβριος", english: "October" },
+	{ text: "ο Νοέμβριος", english: "November" },
+	{ text: "ο Δεκέμβριος", english: "December" },
+];
+
+// Discourse fillers & connectors - words that connect natural speech
+export const DISCOURSE_FILLERS: Phrase[] = [
 	{ text: "φυσικά", english: "of course" },
 	{ text: "επίσης", english: "also" },
-	{ text: "κάτι", english: "something" },
-	{ text: "τα πάντα", english: "everything" },
-	{ text: "τι γίνεται;", english: "what's happening?" },
-	{ text: "τα λέμε", english: "see ya" },
-	{ text: "καλή όρεξη", english: "bon appetit/enjoy your meal" },
-	{ text: "σιγά σιγά", english: "slowly/little by little" },
-	{ text: "μαζί", english: "together" },
 	{ text: "γι' αυτό", english: "that's why/therefore" },
 	{ text: "αν", english: "if" },
 	{ text: "όταν", english: "when" },
+	{ text: "σιγά σιγά", english: "slowly/little by little" },
+	{ text: "μαζί", english: "together" },
+];
+
+// Social phrases - common things to say
+export const SOCIAL_PHRASES: Phrase[] = [
+	{ text: "τι γίνεται;", english: "what's happening?" },
+	{ text: "τα λέμε", english: "see ya" },
+	{ text: "καλή όρεξη", english: "bon appetit/enjoy your meal" },
+	{ text: "κάτι", english: "something" },
+	{ text: "τα πάντα", english: "everything" },
+];
+
+// Question words - separate from expressions to avoid duplication
+export const QUESTION_WORDS: Phrase[] = [
 	{ text: "πού;", english: "where?" },
 	{ text: "πώς;", english: "how?" },
 	{ text: "γιατί;", english: "why?" },
@@ -20,6 +71,9 @@ export const USEFUL_EXPRESSIONS: Phrase[] = [
 	{ text: "τι;", english: "what?" },
 	{ text: "πόσο;", english: "how much?" },
 ];
+
+// Legacy export for backwards compatibility
+export const USEFUL_EXPRESSIONS: Phrase[] = [...DISCOURSE_FILLERS, ...SOCIAL_PHRASES];
 
 export const COMMANDS: Phrase[] = [
 	{ text: "κάτσε κάτω", english: "sit down" },
@@ -30,22 +84,25 @@ export const COMMANDS: Phrase[] = [
 ];
 
 // "Likes" construction - grammatically interesting (dative-like construction)
+// Using real examples to show usage, not abstract definitions
 export const LIKES_CONSTRUCTION = {
 	singular: [
-		{ text: "μου αρέσει", english: "I like" },
-		{ text: "σου αρέσει", english: "you like" },
-		{ text: "του/της αρέσει", english: "he/she likes" },
-		{ text: "μας αρέσει", english: "we like" },
-		{ text: "σας αρέσει", english: "you like" },
-		{ text: "τους αρέσει", english: "they like" },
+		{ text: "μου αρέσει ο καφές", english: "I like coffee" },
+		{ text: "σου αρέσει η μουσική;", english: "do you like the music?" },
+		{ text: "του αρέσει το φαγητό", english: "he likes the food" },
+		{ text: "της αρέσει η θάλασσα", english: "she likes the sea" },
+		{ text: "μας αρέσει η Ελλάδα", english: "we like Greece" },
+		{ text: "σας αρέσει το σπίτι;", english: "do you like the house?" },
+		{ text: "τους αρέσει το κρασί", english: "they like the wine" },
 	],
 	plural: [
-		{ text: "μου αρέσουν", english: "I like (them)" },
-		{ text: "σου αρέσουν", english: "you like (them)" },
-		{ text: "του/της αρέσουν", english: "he/she likes (them)" },
-		{ text: "μας αρέσουν", english: "we like (them)" },
-		{ text: "σας αρέσουν", english: "you like (them)" },
-		{ text: "τους αρέσουν", english: "they like (them)" },
+		{ text: "μου αρέσουν οι ελιές", english: "I like olives" },
+		{ text: "σου αρέσουν τα φρούτα;", english: "do you like fruits?" },
+		{ text: "του αρέσουν τα βιβλία", english: "he likes books" },
+		{ text: "της αρέσουν οι ταινίες", english: "she likes movies" },
+		{ text: "μας αρέσουν τα παιδιά", english: "we like the kids" },
+		{ text: "σας αρέσουν οι γάτες;", english: "do you like cats?" },
+		{ text: "τους αρέσουν τα γλυκά", english: "they like sweets" },
 	],
 } as const satisfies Record<string, Phrase[]>;
 

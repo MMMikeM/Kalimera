@@ -7,6 +7,11 @@ export interface TagDefinition {
 }
 
 export const SYSTEM_TAGS = {
+	// Essential vocabulary
+	essential: { slug: "essential", name: "Essential Phrases" },
+	daysOfWeek: { slug: "days-of-week", name: "Days of the Week" },
+	months: { slug: "months", name: "Months of the Year" },
+
 	// Thematic tags
 	summer: { slug: "summer", name: "Summer & Beach" },
 	frequency: { slug: "frequency", name: "Frequency Adverbs" },
@@ -42,6 +47,13 @@ export const SYSTEM_TAGS = {
 	conversationArriving: { slug: "conversation-arriving", name: "Arriving & Leaving" },
 	conversationFood: { slug: "conversation-food", name: "Food & Hospitality" },
 	conversationSmalltalk: { slug: "conversation-smalltalk", name: "Small Talk" },
+
+	// Name construction tags
+	nameConstruction: { slug: "name-construction", name: "Name Construction" },
+
+	// Semantic expression groups
+	discourseFiller: { slug: "discourse-filler", name: "Discourse Fillers & Connectors" },
+	socialPhrase: { slug: "social-phrase", name: "Social Phrases" },
 
 	// Word type tags
 	verb: { slug: "verb", name: "Verbs" },
