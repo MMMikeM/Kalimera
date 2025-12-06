@@ -17,3 +17,9 @@ export {
 	tableRowVariants,
 	tableVariants,
 } from "./Table";
+export type { ParadigmTableProps, ParadigmForms, VerbForm } from "./ParadigmTable";
+export {
+	ParadigmTable,
+	paradigmTableVariants,
+	paradigmCellVariants,
+} from "./ParadigmTable";

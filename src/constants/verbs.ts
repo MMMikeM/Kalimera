@@ -5,6 +5,221 @@ export interface VerbConjugation {
 	english: string;
 }
 
+export interface VerbForm {
+	stem: string;
+	ending: string;
+}
+
+export interface UsageExample {
+	greek: string;
+	english: string;
+}
+
+export interface VerbPattern {
+	name: string;
+	description: string;
+	endings: {
+		sg1: string;
+		sg2: string;
+		sg3: string;
+		pl1: string;
+		pl2: string;
+		pl3: string;
+	};
+	canonical: {
+		stem: string;
+		infinitive: string;
+		meaning: string;
+		forms: {
+			sg1: VerbForm;
+			sg2: VerbForm;
+			sg3: VerbForm;
+			pl1: VerbForm;
+			pl2: VerbForm;
+			pl3: VerbForm;
+		};
+	};
+	samePattern: Array<{ infinitive: string; meaning: string }>;
+	usage: UsageExample[];
+}
+
+export interface IrregularVerbForms {
+	sg1: string;
+	sg2: string;
+	sg3: string;
+	pl1: string;
+	pl2: string;
+	pl3: string;
+}
+
+export interface IrregularVerb {
+	infinitive: string;
+	meaning: string;
+	forms: IrregularVerbForms;
+	note?: string;
+}
+
+export const VERB_PATTERNS: Record<string, VerbPattern> = {
+	active: {
+		name: "Standard Active (-ω)",
+		description: "Most Greek verbs follow this pattern. Learn the endings once, apply them to thousands of verbs.",
+		endings: {
+			sg1: "-ω",
+			sg2: "-εις",
+			sg3: "-ει",
+			pl1: "-ουμε",
+			pl2: "-ετε",
+			pl3: "-ουν",
+		},
+		canonical: {
+			stem: "κάν",
+			infinitive: "κάνω",
+			meaning: "do, make",
+			forms: {
+				sg1: { stem: "κάν", ending: "ω" },
+				sg2: { stem: "κάν", ending: "εις" },
+				sg3: { stem: "κάν", ending: "ει" },
+				pl1: { stem: "κάν", ending: "ουμε" },
+				pl2: { stem: "κάν", ending: "ετε" },
+				pl3: { stem: "κάν", ending: "ουν" },
+			},
+		},
+		samePattern: [
+			{ infinitive: "θέλω", meaning: "want" },
+			{ infinitive: "έχω", meaning: "have" },
+			{ infinitive: "μπορώ", meaning: "can" },
+		],
+		usage: [
+			{ greek: "Τι κάνεις;", english: "How are you? (lit: What do you do?)" },
+			{ greek: "Κάνει κρύο.", english: "It's cold. (lit: It makes cold)" },
+			{ greek: "Κάνουμε διάλειμμα.", english: "We're taking a break." },
+		],
+	},
+	contracted: {
+		name: "Contracted (-άω/-ώ)",
+		description: "The α contracts with endings. Two forms exist - both are correct.",
+		endings: {
+			sg1: "-άω/-ώ",
+			sg2: "-άς",
+			sg3: "-άει/-ά",
+			pl1: "-άμε",
+			pl2: "-άτε",
+			pl3: "-άνε/-ούν",
+		},
+		canonical: {
+			stem: "μιλ",
+			infinitive: "μιλάω",
+			meaning: "speak",
+			forms: {
+				sg1: { stem: "μιλ", ending: "άω" },
+				sg2: { stem: "μιλ", ending: "άς" },
+				sg3: { stem: "μιλ", ending: "άει" },
+				pl1: { stem: "μιλ", ending: "άμε" },
+				pl2: { stem: "μιλ", ending: "άτε" },
+				pl3: { stem: "μιλ", ending: "άνε" },
+			},
+		},
+		samePattern: [
+			{ infinitive: "αγαπάω", meaning: "love" },
+			{ infinitive: "ρωτάω", meaning: "ask" },
+			{ infinitive: "περνάω", meaning: "pass" },
+		],
+		usage: [
+			{ greek: "Μιλάς ελληνικά;", english: "Do you speak Greek?" },
+			{ greek: "Δεν μιλάμε πολύ.", english: "We don't speak much." },
+		],
+	},
+	deponent: {
+		name: "Deponent (-μαι)",
+		description: "Look passive but have active meaning. Common for motion and mental verbs.",
+		endings: {
+			sg1: "-ομαι",
+			sg2: "-εσαι",
+			sg3: "-εται",
+			pl1: "-όμαστε",
+			pl2: "-εστε",
+			pl3: "-ονται",
+		},
+		canonical: {
+			stem: "έρχ",
+			infinitive: "έρχομαι",
+			meaning: "come",
+			forms: {
+				sg1: { stem: "έρχ", ending: "ομαι" },
+				sg2: { stem: "έρχ", ending: "εσαι" },
+				sg3: { stem: "έρχ", ending: "εται" },
+				pl1: { stem: "ερχ", ending: "όμαστε" },
+				pl2: { stem: "έρχ", ending: "εστε" },
+				pl3: { stem: "έρχ", ending: "ονται" },
+			},
+		},
+		samePattern: [
+			{ infinitive: "θυμάμαι", meaning: "remember" },
+			{ infinitive: "κοιμάμαι", meaning: "sleep" },
+			{ infinitive: "φοβάμαι", meaning: "fear" },
+		],
+		usage: [
+			{ greek: "Έρχομαι αύριο.", english: "I'm coming tomorrow." },
+			{ greek: "Πότε έρχεσαι;", english: "When are you coming?" },
+			{ greek: "Δεν θυμάμαι.", english: "I don't remember." },
+		],
+	},
+};
+
+export const IRREGULAR_VERBS: IrregularVerb[] = [
+	{
+		infinitive: "είμαι",
+		meaning: "am, is, are",
+		forms: {
+			sg1: "είμαι",
+			sg2: "είσαι",
+			sg3: "είναι",
+			pl1: "είμαστε",
+			pl2: "είστε",
+			pl3: "είναι",
+		},
+		note: "3rd person is the same for singular and plural",
+	},
+	{
+		infinitive: "λέω",
+		meaning: "say, tell",
+		forms: {
+			sg1: "λέω",
+			sg2: "λές",
+			sg3: "λέει",
+			pl1: "λέμε",
+			pl2: "λέτε",
+			pl3: "λένε",
+		},
+		note: "\"τα λέμε\" = see you later",
+	},
+	{
+		infinitive: "τρώω",
+		meaning: "eat",
+		forms: {
+			sg1: "τρώω",
+			sg2: "τρώς",
+			sg3: "τρώει",
+			pl1: "τρώμε",
+			pl2: "τρώτε",
+			pl3: "τρώνε",
+		},
+	},
+	{
+		infinitive: "πάω",
+		meaning: "go",
+		forms: {
+			sg1: "πάω",
+			sg2: "πάς",
+			sg3: "πάει",
+			pl1: "πάμε",
+			pl2: "πάτε",
+			pl3: "πάνε",
+		},
+		note: "Alternative regular form: πηγαίνω",
+	},
+];
+
 // VERB_CONJUGATIONS - Data structure expected by components
 export const VERB_CONJUGATIONS: Record<string, VerbConjugation[]> = {
 	kano: [
