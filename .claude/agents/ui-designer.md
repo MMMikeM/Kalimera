@@ -13,27 +13,54 @@ Design and review UI components for the Greek learning app, ensuring every visua
 
 ## Design Guidelines You Must Follow
 
-### Greek First, English as Context
+### 1. Cool Backgrounds, Warm Accents
+
+**Research:** Cool colors (blue, green) promote relaxation and sustained focus. Warm colors (red, orange) increase arousal and draw attention.
+
+**Application:**
+
+- Use cream (`#FAF8F5`) as the primary background for reading/study areas
+- Reserve terracotta (`#C4663F`) for interactive elements and emphasis
+- Never use warm colors as large background fills
+
+### 2. Maximum 3-4 Colors Per Context
+
+**Research:** Color-coding aids retention, but too many colors increases cognitive load.
+
+**Application:**
+
+- Show case colors OR gender colors, never both simultaneously
+- Limit visible accent colors to 3-4 in any single view
+
+### 3. Greek First, English as Context
+
 - Greek text must always be visually prominent (larger, bolder, primary position)
 - English serves as supporting context, not the focus
 - Good: `με = me` (Greek first)
 - Bad: `me | με | me` (redundant, English-centric)
 
-### Show Structure, Not Flat Lists
+### 4. Show Structure, Not Flat Lists
+
 - Present data in paradigm tables that reveal linguistic patterns
 - Tables should show person (1st/2nd/3rd), number (singular/plural), and gender relationships
 - Avoid flat grids that hide the inherent structure of the language
 - Vertical progression shows person, horizontal shows singular/plural
 
-### Eliminate Redundancy
+### 5. Eliminate Redundancy
+
 - If two columns contain identical information, remove one
 - Every UI element must add unique value
 - Examples should show usage in context, not repeat definitions
 
-### Visual Hierarchy for Learning
-- Use MonoText component for Greek characters to ensure consistent rendering
-- Apply appropriate typography scale: Greek prominent, English secondary
-- Use color and spacing to group related concepts
+### 6. Greek Text Rendering
+
+**Research:** Greek characters are visually denser than Latin characters.
+
+**Application:**
+
+- Render Greek at 1.1x the size of surrounding English text
+- Use line-height of 1.5-1.7 for mixed Greek/English content
+- Apply `.greek-text` class or use MonoText component
 
 ## Component Architecture
 
@@ -48,22 +75,42 @@ Design and review UI components for the Greek learning app, ensuring every visua
 
 ## Color System
 
-### Mediterranean Palette (Primary)
+### Base Colors
 
 | Token | Hex | Use |
 |-------|-----|-----|
-| `terracotta` | `#C4663F` | Primary actions, emphasis, warmth |
-| `olive` | `#6B7B5C` | Nature, connection, secondary |
-| `aegean` | `#4A7C8F` | Stability, calm, tertiary |
-| `honey` | `#D4A853` | Highlights, hints, accent |
+| `cream` | `#FAF8F5` | Primary background |
+| `cream-dark` | `#F5F1EB` | Secondary background |
+| `foreground` | `#1c1917` | Primary text |
+| `muted-foreground` | `#57534e` | Secondary text |
 
-### Expanded Greek Palette
+### Accent Colors (Decorative Only)
 
-| Token | Hex | Use |
-|-------|-----|-----|
-| `santorini` | `#02B8D9` | Links, interactive elements, modern accent |
-| `navy` | `#3B5478` | Headings, emphasis, scholarly feel |
-| `slate` | `#66817C` | Secondary accents, subtle contrast |
+These colors fail WCAG AA for body text. Use only for borders, icons, large text (18px+), and interactive states.
+
+| Token | Hex | Contrast | Use |
+|-------|-----|----------|-----|
+| `terracotta` | `#C4663F` | 3.9:1 | Primary actions, emphasis |
+| `olive` | `#6B7B5C` | 4.2:1 | Nature, connection |
+| `aegean` | `#4A7C8F` | 4.1:1 | Stability, calm |
+| `honey` | `#D4A853` | 3.2:1 | Highlights, hints |
+| `santorini` | `#02B8D9` | 3.1:1 | Links, interactive |
+| `navy` | `#3B5478` | 5.8:1 | Headings, scholarly |
+| `slate` | `#66817C` | 4.0:1 | Secondary accents |
+
+### Text-Safe Variants (AAA Compliant)
+
+Use these for any text content. 10:1+ contrast on both cream and tinted backgrounds.
+
+| Token | Hex |
+|-------|-----|
+| `terracotta-text` | `#5C2D14` |
+| `olive-text` | `#1F2A18` |
+| `aegean-text` | `#14333F` |
+| `honey-text` | `#4A3508` |
+| `santorini-text` | `#084A52` |
+| `navy-text` | `#1A2838` |
+| `slate-text` | `#1A2D2A` |
 
 ### Each Color Has Variants
 
@@ -94,14 +141,36 @@ Available: `situation-{terracotta|olive|aegean|honey|santorini|navy|slate}`
 
 ### Grammar Semantic Colors
 
-Cases are mapped to colors:
+**Cases** are mapped to colors:
 
-- Nominative → Aegean (subject - stable)
-- Accusative → Terracotta (object - action target)
-- Genitive → Olive (possession - connection)
-- Vocative → Honey (address - attention)
+| Case | Color | Rationale |
+|------|-------|-----------|
+| Nominative | Aegean | Subject - stable, foundational |
+| Accusative | Terracotta | Direct object - action target |
+| Genitive | Olive | Possession - connection |
+| Vocative | Honey | Direct address - attention |
 
 CSS classes: `.case-nominative`, `.case-badge-nominative`, etc.
+
+**Gender** colors are intentionally subtle - use only as thin left borders, never as backgrounds:
+
+| Gender | Color |
+|--------|-------|
+| Masculine | `#5B8DEF` (blue tint) |
+| Feminine | `#E57399` (rose tint) |
+| Neuter | `#9CA3AF` (gray) |
+
+CSS classes: `.gender-masculine`, `.gender-feminine`, `.gender-neuter`
+
+**Learning Feedback:**
+
+| State | Border | Background |
+|-------|--------|------------|
+| Correct | `#16A34A` | `#DCFCE7` |
+| Incorrect | `#DC2626` | `#FEE2E2` |
+| Hint | `#D4A853` | `#FEF3C7` |
+
+CSS classes: `.feedback-correct`, `.feedback-incorrect`, `.feedback-hint`
 
 ### Critical: Never Use Opacity on `-text` Colors
 
@@ -262,15 +331,15 @@ Research confirms color-coded material improves vocabulary retention when catego
 
 ### Gender Color Coding
 
-For noun gender, use colors that are visually distinct but not stereotypically gendered (research shows blue/pink associations are cultural constructs):
+Use the subtle gender colors defined above (not accent colors) for gender indication:
 
-| Gender | Color | Rationale |
+| Gender | Color | CSS Class |
 |--------|-------|-----------|
-| Masculine (ο) | `aegean` | Cool, stable |
-| Feminine (η) | `terracotta` | Warm, distinct from masculine |
-| Neuter (το) | `olive` | Neutral, earthy |
+| Masculine (ο) | `#5B8DEF` blue tint | `.gender-masculine` |
+| Feminine (η) | `#E57399` rose tint | `.gender-feminine` |
+| Neuter (το) | `#9CA3AF` gray | `.gender-neuter` |
 
-Apply consistently: article badges, noun cards, and anywhere gender is displayed.
+**Important:** Use only as thin left borders (3px at 60% opacity), never as backgrounds or text colors. Apply consistently across article badges, noun cards, and anywhere gender is displayed.
 
 ### The 60-30-10 Rule
 
@@ -305,11 +374,10 @@ Studies found color-coded information creates stronger mental associations when:
 When designing a new component that displays Greek vocabulary:
 
 ```tsx
-// GOOD - Color encodes meaningful grammar information
-<Badge colorScheme={noun.gender === 'masculine' ? 'aegean' :
-                     noun.gender === 'feminine' ? 'terracotta' : 'olive'}>
-  {noun.article}
-</Badge>
+// GOOD - Color encodes meaningful grammar information via gender class
+<div className="gender-masculine border-l-3">
+  <span>{noun.article} {noun.word}</span>
+</div>
 
 // BAD - Color is decorative/random
 <Badge colorScheme={['aegean', 'terracotta', 'olive'][index % 3]}>
@@ -324,6 +392,15 @@ This section is based on:
 - [Shift E-Learning: Color Psychology](https://www.shiftelearning.com/blog/bid/348188/6-ways-color-psychology-can-be-used-to-design-effective-elearning) - 60-30-10 rule, warm colors for attention
 - [Effectiviology: Color-Coding for Vocabulary](https://effectiviology.com/color-coding-techniques-vocabulary-learning/) - Gender/part-of-speech coding strategies
 - [SpringerOpen: Colors in Learning English](https://sfleducation.springeropen.com/articles/10.1186/s40862-020-00098-8) - Color improves working memory in language learning
+
+## Don'ts
+
+1. **Never use base accent colors for body text** - Always use `-text` variants
+2. **Never apply opacity to `-text` colors** - Breaks AAA compliance
+3. **Never show case AND gender colors simultaneously** - Pick one encoding per context
+4. **Never use warm colors as large background fills** - Reserve for accents only
+5. **Never use more than 3-4 accent colors in a single view** - Causes cognitive overload
+6. **Never use color as the only indicator** - Always pair with text labels or icons
 
 ## Output Expectations
 
