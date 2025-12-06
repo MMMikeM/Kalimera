@@ -47,7 +47,7 @@ export const getItemsDueForReview = async (
 			reviewCount: vocabularySkills.reviewCount,
 		})
 		.from(vocabulary)
-		.leftJoin(
+		.innerJoin(
 			vocabularySkills,
 			and(
 				eq(vocabularySkills.vocabularyId, vocabulary.id),
@@ -55,16 +55,8 @@ export const getItemsDueForReview = async (
 				eq(vocabularySkills.skillType, skillType)
 			)
 		)
-		.where(
-			// Get items where: no skill record yet OR nextReviewAt <= now
-			sql`${vocabularySkills.nextReviewAt} IS NULL OR ${vocabularySkills.nextReviewAt} <= ${now}`
-		)
-		.orderBy(
-			// Prioritize items that have been reviewed before (not new items)
-			sql`CASE WHEN ${vocabularySkills.reviewCount} IS NULL THEN 1 ELSE 0 END`,
-			// Then by how overdue they are
-			vocabularySkills.nextReviewAt
-		)
+		.where(sql`${vocabularySkills.nextReviewAt} <= ${now}`)
+		.orderBy(vocabularySkills.nextReviewAt)
 		.limit(limit);
 
 	return results.map((r: {
@@ -93,6 +85,50 @@ export const getItemsDueForReview = async (
 					reviewCount: r.reviewCount,
 				}
 			: null,
+	}));
+};
+
+export const getNewVocabularyItems = async (
+	db: DB,
+	userId: number,
+	limit = 20
+): Promise<VocabItemWithSkill[]> => {
+	const results = await db
+		.select({
+			id: vocabulary.id,
+			greekText: vocabulary.greekText,
+			englishTranslation: vocabulary.englishTranslation,
+			pronunciation: vocabulary.pronunciation,
+			wordType: vocabulary.wordType,
+			category: vocabulary.category,
+		})
+		.from(vocabulary)
+		.leftJoin(
+			vocabularySkills,
+			and(
+				eq(vocabularySkills.vocabularyId, vocabulary.id),
+				eq(vocabularySkills.userId, userId)
+			)
+		)
+		.where(sql`${vocabularySkills.userId} IS NULL`)
+		.orderBy(vocabulary.difficultyLevel)
+		.limit(limit);
+
+	return results.map((r: {
+		id: number;
+		greekText: string;
+		englishTranslation: string;
+		pronunciation: string | null;
+		wordType: string | null;
+		category: string | null;
+	}) => ({
+		id: r.id,
+		greekText: r.greekText,
+		englishTranslation: r.englishTranslation,
+		pronunciation: r.pronunciation,
+		wordType: r.wordType,
+		category: r.category,
+		skill: null,
 	}));
 };
 
@@ -133,7 +169,8 @@ export interface PracticeStats {
 	streak: number; // Consecutive days practiced
 	itemsMastered: number; // Items with interval > 21 days
 	dueCount: number; // Items due for review
-	totalReviewed: number; // Total items ever reviewed
+	totalLearned: number; // Total items with skill records
+	newAvailable: number; // Items without skill records (not learned yet)
 }
 
 export const getPracticeStats = async (
@@ -156,38 +193,41 @@ export const getPracticeStats = async (
 			)
 		);
 
-	// Get items due for review
+	// Get items due for review (only items user has seen before that are now due)
 	const [dueResult] = await db
 		.select({ count: count() })
-		.from(vocabulary)
-		.leftJoin(
-			vocabularySkills,
-			and(
-				eq(vocabularySkills.vocabularyId, vocabulary.id),
-				eq(vocabularySkills.userId, userId),
-				eq(vocabularySkills.skillType, skillType)
-			)
-		)
+		.from(vocabularySkills)
 		.where(
-			sql`${vocabularySkills.nextReviewAt} IS NULL OR ${vocabularySkills.nextReviewAt} <= ${now}`
+			and(
+				eq(vocabularySkills.userId, userId),
+				eq(vocabularySkills.skillType, skillType),
+				sql`${vocabularySkills.nextReviewAt} <= ${now}`
+			)
 		);
 
-	// Get total reviewed
-	const [totalResult] = await db
+	// Get total learned (items with skill records)
+	const [learnedResult] = await db
 		.select({ count: count() })
 		.from(vocabularySkills)
 		.where(
 			and(eq(vocabularySkills.userId, userId), eq(vocabularySkills.skillType, skillType))
 		);
 
+	// Get total vocabulary count
+	const [totalVocabResult] = await db.select({ count: count() }).from(vocabulary);
+
 	// Calculate streak (consecutive days with at least one completed session)
 	const streak = await calculateStreak(db, userId);
+
+	const totalLearned = learnedResult?.count || 0;
+	const totalVocab = totalVocabResult?.count || 0;
 
 	return {
 		streak,
 		itemsMastered: masteredResult?.count || 0,
 		dueCount: dueResult?.count || 0,
-		totalReviewed: totalResult?.count || 0,
+		totalLearned,
+		newAvailable: totalVocab - totalLearned,
 	};
 };
 

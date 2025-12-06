@@ -4,102 +4,57 @@ import { useFetcher } from "react-router";
 import DrillCard, { type AttemptResult } from "./DrillCard";
 import type { Question } from "./types";
 import { useCurrentUserId } from "./hooks";
+import type { VocabItemWithSkill } from "./queries.server";
 
-interface VocabularyWord {
-	greek: string;
-	english: string;
+interface VocabularyDrillProps {
+	items: VocabItemWithSkill[];
 }
 
-const VOCABULARY: VocabularyWord[] = [
-	// Family
-	{ greek: "η μητέρα", english: "mother" },
-	{ greek: "ο πατέρας", english: "father" },
-	{ greek: "η αδερφή", english: "sister" },
-	{ greek: "ο αδερφός", english: "brother" },
-	{ greek: "τα παιδιά", english: "children" },
-	{ greek: "η γιαγιά", english: "grandmother" },
-	{ greek: "ο παππούς", english: "grandfather" },
-
-	// Food
-	{ greek: "ο καφές", english: "coffee" },
-	{ greek: "το νερό", english: "water" },
-	{ greek: "το φαγητό", english: "food" },
-	{ greek: "το ψωμί", english: "bread" },
-
-	// Common words
-	{ greek: "το σπίτι", english: "house" },
-	{ greek: "καλημέρα", english: "good morning" },
-	{ greek: "ευχαριστώ", english: "thank you" },
-	{ greek: "παρακαλώ", english: "please / you're welcome" },
-	{ greek: "ναι", english: "yes" },
-	{ greek: "όχι", english: "no" },
-
-	// Time
-	{ greek: "σήμερα", english: "today" },
-	{ greek: "αύριο", english: "tomorrow" },
-	{ greek: "χθες", english: "yesterday" },
-
-	// Adjectives
-	{ greek: "καλός/ή/ό", english: "good" },
-	{ greek: "μεγάλος/η/ο", english: "big" },
-	{ greek: "μικρός/ή/ό", english: "small" },
-];
-
-const getRandomWrongAnswers = (
-	correctAnswer: string,
-	count: number,
-	pool: string[],
-): string[] => {
-	const filtered = pool.filter((word) => word !== correctAnswer);
-	const shuffled = filtered.sort(() => Math.random() - 0.5);
-	return shuffled.slice(0, count);
-};
-
-const generateQuestions = (): Question[] => {
+const generateQuestionsFromItems = (items: VocabItemWithSkill[]): Question[] => {
 	const questions: Question[] = [];
-	const englishWords = VOCABULARY.map((w) => w.english);
-	const greekWords = VOCABULARY.map((w) => w.greek);
 
-	for (let i = 0; i < VOCABULARY.length; i++) {
-		const word = VOCABULARY[i];
+	for (let i = 0; i < items.length; i++) {
+		const item = items[i];
 
-		// Greek → English question
-		const englishWrongAnswers = getRandomWrongAnswers(word.english, 3, englishWords);
-		const englishOptions = [word.english, ...englishWrongAnswers].sort(
-			() => Math.random() - 0.5,
-		);
-		const englishCorrectIndex = englishOptions.indexOf(word.english);
+		const otherItems = items.filter((_, idx) => idx !== i);
+		const shuffledOthers = otherItems.sort(() => Math.random() - 0.5).slice(0, 3);
+
+		const englishOptions = [
+			item.englishTranslation,
+			...shuffledOthers.map((o) => o.englishTranslation),
+		].sort(() => Math.random() - 0.5);
+		const englishCorrectIndex = englishOptions.indexOf(item.englishTranslation);
 
 		questions.push({
-			id: `vocab-gr-${i}`,
-			prompt: word.greek,
-			promptSubtext: "What does this word mean?",
+			id: `vocab-gr-${item.id}`,
+			prompt: item.greekText,
+			promptSubtext: item.pronunciation ? `(${item.pronunciation})` : "What does this word mean?",
 			options: englishOptions,
 			correctIndex: englishCorrectIndex,
-			explanation: `${word.greek} means "${word.english}"`,
+			explanation: `${item.greekText} means "${item.englishTranslation}"`,
 		});
 
-		// English → Greek question
-		const greekWrongAnswers = getRandomWrongAnswers(word.greek, 3, greekWords);
-		const greekOptions = [word.greek, ...greekWrongAnswers].sort(
-			() => Math.random() - 0.5,
-		);
-		const greekCorrectIndex = greekOptions.indexOf(word.greek);
+		if (otherItems.length >= 3) {
+			const greekOptions = [item.greekText, ...shuffledOthers.map((o) => o.greekText)].sort(
+				() => Math.random() - 0.5
+			);
+			const greekCorrectIndex = greekOptions.indexOf(item.greekText);
 
-		questions.push({
-			id: `vocab-en-${i}`,
-			prompt: `How do you say "${word.english}" in Greek?`,
-			options: greekOptions,
-			correctIndex: greekCorrectIndex,
-			explanation: `"${word.english}" is "${word.greek}" in Greek`,
-		});
+			questions.push({
+				id: `vocab-en-${item.id}`,
+				prompt: `How do you say "${item.englishTranslation}" in Greek?`,
+				options: greekOptions,
+				correctIndex: greekCorrectIndex,
+				explanation: `"${item.englishTranslation}" is "${item.greekText}" in Greek`,
+			});
+		}
 	}
 
-	return questions;
+	return questions.sort(() => Math.random() - 0.5);
 };
 
-const VocabularyDrill: React.FC = () => {
-	const questions = useMemo(() => generateQuestions(), []);
+const VocabularyDrill: React.FC<VocabularyDrillProps> = ({ items }) => {
+	const questions = useMemo(() => generateQuestionsFromItems(items), [items]);
 	const userId = useCurrentUserId();
 	const fetcher = useFetcher();
 
@@ -107,10 +62,14 @@ const VocabularyDrill: React.FC = () => {
 		(result: AttemptResult) => {
 			if (!userId) return;
 
+			const match = result.questionId.match(/vocab-(?:gr|en)-(\d+)/);
+			const vocabularyId = match ? parseInt(match[1], 10) : undefined;
+
 			fetcher.submit(
 				{
 					intent: "recordAttempt",
 					userId: userId.toString(),
+					vocabularyId: vocabularyId?.toString() || "",
 					questionText: result.questionText,
 					correctAnswer: result.correctAnswer,
 					userAnswer: result.userAnswer,
@@ -124,22 +83,37 @@ const VocabularyDrill: React.FC = () => {
 		[userId, fetcher]
 	);
 
-	const handleComplete = useCallback(
-		(score: { correct: number; total: number }) => {
-			console.log(`Drill complete: ${score.correct}/${score.total}`);
-		},
-		[]
-	);
+	if (items.length === 0) {
+		return (
+			<div className="text-center py-12 bg-green-50 rounded-xl border border-green-200">
+				<div className="text-5xl mb-4">🎉</div>
+				<h3 className="text-xl font-semibold text-green-800 mb-2">All words learned!</h3>
+				<p className="text-green-700">You've practiced all available vocabulary.</p>
+				<p className="text-sm text-green-600 mt-2">Check the Review tab for items due for review.</p>
+			</div>
+		);
+	}
+
+	if (items.length < 4) {
+		return (
+			<div className="text-center py-12 bg-yellow-50 rounded-xl border border-yellow-200">
+				<div className="text-5xl mb-4">📚</div>
+				<h3 className="text-xl font-semibold text-yellow-800 mb-2">Almost there!</h3>
+				<p className="text-yellow-700">
+					Only {items.length} new words available. Need at least 4 for multiple choice.
+				</p>
+			</div>
+		);
+	}
 
 	return (
 		<DrillCard
-			title="Vocabulary Practice"
-			description="Essential words for daily conversation"
+			title="Learn New Words"
+			description={`${items.length} new words to learn`}
 			questions={questions}
 			colorClass="border-orange-200"
 			bgClass="bg-orange-50/50"
 			onAttempt={handleAttempt}
-			onComplete={handleComplete}
 		/>
 	);
 };

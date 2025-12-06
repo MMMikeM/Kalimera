@@ -38,7 +38,7 @@ export function meta() {
 export const loader = async ({ context, request }: Route.LoaderArgs) => {
 	const db = context?.db ?? (await import("../db")).db;
 	const { users } = await import("../db/schema");
-	const { getItemsDueForReview, getPracticeStats } = await import("./practice/queries.server");
+	const { getItemsDueForReview, getNewVocabularyItems, getPracticeStats } = await import("./practice/queries.server");
 
 	const url = new URL(request.url);
 	const userIdParam = url.searchParams.get("userId");
@@ -46,16 +46,20 @@ export const loader = async ({ context, request }: Route.LoaderArgs) => {
 
 	const allUsers = await db.select().from(users).orderBy(users.displayName);
 
-	// If a user is selected, get their review items and stats
+	// If a user is selected, get their review items, new vocab items, and stats
 	let reviewItems: VocabItemWithSkill[] = [];
+	let newVocabItems: VocabItemWithSkill[] = [];
 	let stats: PracticeStats | null = null;
 
 	if (userId) {
-		reviewItems = await getItemsDueForReview(db, userId);
-		stats = await getPracticeStats(db, userId);
+		[reviewItems, newVocabItems, stats] = await Promise.all([
+			getItemsDueForReview(db, userId),
+			getNewVocabularyItems(db, userId, 20),
+			getPracticeStats(db, userId),
+		]);
 	}
 
-	return { users: allUsers, reviewItems, stats };
+	return { users: allUsers, reviewItems, newVocabItems, stats };
 };
 
 export const action = async ({ request, context }: Route.ActionArgs) => {
@@ -341,8 +345,8 @@ const StatsBanner = ({ stats }: { stats: PracticeStats }) => (
 		<div className="flex items-center gap-3 p-4 bg-green-50 rounded-xl border border-green-200">
 			<Trophy className="text-green-500" size={24} />
 			<div>
-				<p className="text-2xl font-bold text-green-700">{stats.itemsMastered}</p>
-				<p className="text-xs text-green-600">Mastered</p>
+				<p className="text-2xl font-bold text-green-700">{stats.totalLearned}</p>
+				<p className="text-xs text-green-600">Learned</p>
 			</div>
 		</div>
 		<div className="flex items-center gap-3 p-4 bg-purple-50 rounded-xl border border-purple-200">
@@ -356,7 +360,7 @@ const StatsBanner = ({ stats }: { stats: PracticeStats }) => (
 );
 
 export default function PracticeRoute({ loaderData }: Route.ComponentProps) {
-	const { users, reviewItems, stats } = loaderData;
+	const { users, reviewItems, newVocabItems, stats } = loaderData;
 	const [searchParams, setSearchParams] = useSearchParams();
 	const revalidator = useRevalidator();
 	const activeTab = searchParams.get("tab") || "pronouns";
@@ -444,7 +448,15 @@ export default function PracticeRoute({ loaderData }: Route.ComponentProps) {
 
 				<TabsContent value="vocabulary">
 					<div className="space-y-4">
-						<VocabularyDrill />
+						{searchParams.get("userId") ? (
+							<VocabularyDrill items={newVocabItems} />
+						) : (
+							<div className="text-center py-12 bg-gray-50 rounded-xl border border-gray-200">
+								<div className="text-5xl mb-4">👤</div>
+								<h3 className="text-xl font-semibold text-gray-700 mb-2">Select a user</h3>
+								<p className="text-gray-600">Choose a user from the dropdown above to learn new vocabulary.</p>
+							</div>
+						)}
 						<PracticeStrategy />
 					</div>
 				</TabsContent>
