@@ -164,13 +164,18 @@ export const PRONOUN_PATTERNS = {
 		explanation: "Always: article + noun + possessive",
 	},
 	doubleObject: {
-		title: "Double object pattern",
+		title: '"Give me it" word order',
+		explanation: "Greek puts the person before the thing",
+		contrast: {
+			english: "give it to me",
+			greek: "δώσε μου το",
+			literal: "give to-me it",
+		},
 		examples: [
-			{ greek: "δώσε μου το", english: "give it to me", literal: "give me it" },
-			{ greek: "πες μου το", english: "tell it to me", literal: "tell me it" },
-			{ greek: "φέρε μου το", english: "bring it to me", literal: "bring me it" },
+			{ greek: "δώσε μου το", english: "give it to me", literal: "give to-me it" },
+			{ greek: "πες μου το", english: "tell it to me", literal: "tell to-me it" },
+			{ greek: "φέρε της το", english: "bring it to her", literal: "bring to-her it" },
 		],
-		explanation: "Indirect object (μου) comes before direct object (το)",
 	},
 	formalYou: {
 		title: "Formal 'you' = plural forms",
