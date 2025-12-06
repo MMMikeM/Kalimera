@@ -181,8 +181,8 @@ const ArticleDrill: React.FC = () => {
 			title="Article Practice"
 			description="Master the definite articles by case and gender"
 			questions={questions}
-			colorClass="border-green-200"
-			bgClass="bg-green-50/50"
+			colorClass="border-olive/30"
+			bgClass="bg-olive/5"
 		/>
 	);
 };

@@ -223,8 +223,8 @@ const PronounDrill: React.FC = () => {
 			title="Pronoun Practice"
 			description="Learn object and possessive pronouns in context"
 			questions={questions}
-			colorClass="border-blue-200"
-			bgClass="bg-blue-50/50"
+			colorClass="border-aegean/30"
+			bgClass="bg-aegean/5"
 		/>
 	);
 };

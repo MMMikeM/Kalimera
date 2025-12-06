@@ -46,7 +46,6 @@ export const loader = async ({ context, request }: Route.LoaderArgs) => {
 
 	const allUsers = await db.select().from(users).orderBy(users.displayName);
 
-	// If a user is selected, get their review items, new vocab items, and stats
 	let reviewItems: VocabItemWithSkill[] = [];
 	let newVocabItems: VocabItemWithSkill[] = [];
 	let stats: PracticeStats | null = null;
@@ -164,7 +163,6 @@ interface UserSelectorProps {
 const UserSelector = ({ users, onUserChange }: UserSelectorProps) => {
 	const [searchParams] = useSearchParams();
 	const [selectedUserId, setSelectedUserId] = useState<string>(() => {
-		// Check URL first, then localStorage
 		const urlUserId = searchParams.get("userId");
 		if (urlUserId) return urlUserId;
 		if (typeof window !== "undefined") {
@@ -200,7 +198,6 @@ const UserSelector = ({ users, onUserChange }: UserSelectorProps) => {
 		);
 	};
 
-	// Auto-select newly created user
 	useEffect(() => {
 		if (fetcher.data?.success && fetcher.data?.user) {
 			const newUserId = fetcher.data.user.id.toString();
@@ -219,7 +216,7 @@ const UserSelector = ({ users, onUserChange }: UserSelectorProps) => {
 
 	return (
 		<div className="flex items-center gap-3">
-			<span className="text-sm text-gray-500">Practicing as:</span>
+			<span className="text-sm text-muted-foreground">Practicing as:</span>
 			<Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
 				<Select value={selectedUserId} onValueChange={handleUserChange}>
 					<SelectTrigger className="w-[180px]">
@@ -234,7 +231,7 @@ const UserSelector = ({ users, onUserChange }: UserSelectorProps) => {
 						<DialogTrigger asChild>
 							<button
 								type="button"
-								className="relative flex w-full cursor-pointer select-none items-center gap-2 rounded-sm py-1.5 px-2 text-sm outline-none hover:bg-accent hover:text-accent-foreground text-blue-600"
+								className="relative flex w-full cursor-pointer select-none items-center gap-2 rounded-sm py-1.5 px-2 text-sm outline-none hover:bg-accent hover:text-accent-foreground text-primary"
 								onClick={() => setIsDialogOpen(true)}
 							>
 								<UserPlus size={14} />
@@ -269,12 +266,12 @@ const UserSelector = ({ users, onUserChange }: UserSelectorProps) => {
 								value={newCode}
 								onChange={(e) => setNewCode(e.target.value.toLowerCase().replace(/\s/g, ""))}
 							/>
-							<p className="text-xs text-gray-500">
+							<p className="text-xs text-muted-foreground">
 								A short code to identify you (no spaces, lowercase)
 							</p>
 						</div>
 						{fetcher.data?.error && (
-							<p className="text-sm text-red-600">{fetcher.data.error}</p>
+							<p className="text-sm text-destructive">{fetcher.data.error}</p>
 						)}
 						<Button
 							onClick={handleCreateUser}
@@ -287,7 +284,7 @@ const UserSelector = ({ users, onUserChange }: UserSelectorProps) => {
 				</DialogContent>
 			</Dialog>
 			{selectedUser && (
-				<span className="text-sm font-medium text-gray-700">{selectedUser.displayName}</span>
+				<span className="text-sm font-medium text-foreground">{selectedUser.displayName}</span>
 			)}
 		</div>
 	);
@@ -295,33 +292,33 @@ const UserSelector = ({ users, onUserChange }: UserSelectorProps) => {
 
 const PracticeStrategy = () => (
 	<Collapsible>
-		<CollapsibleTrigger className="flex items-center gap-2 w-full p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors text-left group border border-gray-200">
-			<Lightbulb size={18} className="text-amber-600" />
-			<span className="font-medium text-gray-700">How to Practice Effectively</span>
-			<ChevronDown size={16} className="ml-auto text-gray-500 transition-transform group-data-[state=open]:rotate-180" />
+		<CollapsibleTrigger className="flex items-center gap-2 w-full p-3 rounded-lg bg-muted hover:bg-muted/80 transition-colors text-left group border border-border">
+			<Lightbulb size={18} className="text-honey" />
+			<span className="font-medium text-foreground">How to Practice Effectively</span>
+			<ChevronDown size={16} className="ml-auto text-muted-foreground transition-transform group-data-[state=open]:rotate-180" />
 		</CollapsibleTrigger>
 		<CollapsibleContent>
-			<div className="mt-4 p-4 rounded-lg bg-amber-50/50 border border-amber-200">
+			<div className="mt-4 info-box-tip">
 				<div className="grid md:grid-cols-3 gap-6 text-sm">
 					<div>
-						<h4 className="font-semibold text-amber-800 mb-2">Step 1: Foundation</h4>
-						<ul className="space-y-1.5 text-gray-700">
+						<h4 className="info-box-tip-title mb-2">Step 1: Foundation</h4>
+						<ul className="space-y-1.5 text-foreground/80">
 							<li>Start with Pronouns (most frequent words)</li>
 							<li>Master object pronouns first (με, σε, τον...)</li>
 							<li>Practice until 80%+ accuracy</li>
 						</ul>
 					</div>
 					<div>
-						<h4 className="font-semibold text-amber-800 mb-2">Step 2: Build Up</h4>
-						<ul className="space-y-1.5 text-gray-700">
+						<h4 className="info-box-tip-title mb-2">Step 2: Build Up</h4>
+						<ul className="space-y-1.5 text-foreground/80">
 							<li>Add Articles (τον/την/το patterns)</li>
 							<li>Learn essential Verbs (έχω, θέλω, μπορώ)</li>
 							<li>Connect grammar to real phrases</li>
 						</ul>
 					</div>
 					<div>
-						<h4 className="font-semibold text-amber-800 mb-2">Step 3: Apply</h4>
-						<ul className="space-y-1.5 text-gray-700">
+						<h4 className="info-box-tip-title mb-2">Step 3: Apply</h4>
+						<ul className="space-y-1.5 text-foreground/80">
 							<li>Practice Vocabulary in context</li>
 							<li>Return to weaker areas regularly</li>
 							<li>Short daily sessions beat long cramming</li>
@@ -335,25 +332,25 @@ const PracticeStrategy = () => (
 
 const StatsBanner = ({ stats }: { stats: PracticeStats }) => (
 	<div className="grid grid-cols-3 gap-4">
-		<div className="flex items-center gap-3 p-4 bg-orange-50 rounded-xl border border-orange-200">
-			<Flame className="text-orange-500" size={24} />
+		<div className="stat-card-streak">
+			<Flame className="stat-card-streak-icon" size={24} />
 			<div>
-				<p className="text-2xl font-bold text-orange-700">{stats.streak}</p>
-				<p className="text-xs text-orange-600">Day Streak</p>
+				<p className="stat-card-streak-value">{stats.streak}</p>
+				<p className="stat-card-streak-label">Day Streak</p>
 			</div>
 		</div>
-		<div className="flex items-center gap-3 p-4 bg-green-50 rounded-xl border border-green-200">
-			<Trophy className="text-green-500" size={24} />
+		<div className="stat-card-success">
+			<Trophy className="stat-card-success-icon" size={24} />
 			<div>
-				<p className="text-2xl font-bold text-green-700">{stats.totalLearned}</p>
-				<p className="text-xs text-green-600">Learned</p>
+				<p className="stat-card-success-value">{stats.totalLearned}</p>
+				<p className="stat-card-success-label">Learned</p>
 			</div>
 		</div>
-		<div className="flex items-center gap-3 p-4 bg-purple-50 rounded-xl border border-purple-200">
-			<Clock className="text-purple-500" size={24} />
+		<div className="stat-card-due">
+			<Clock className="stat-card-due-icon" size={24} />
 			<div>
-				<p className="text-2xl font-bold text-purple-700">{stats.dueCount}</p>
-				<p className="text-xs text-purple-600">Due Today</p>
+				<p className="stat-card-due-value">{stats.dueCount}</p>
+				<p className="stat-card-due-label">Due Today</p>
 			</div>
 		</div>
 	</div>
@@ -375,7 +372,6 @@ export default function PracticeRoute({ loaderData }: Route.ComponentProps) {
 	const handleUserChange = (userId: string) => {
 		const tab = searchParams.get("tab") || "pronouns";
 		setSearchParams({ tab, userId });
-		// Revalidate to get user-specific data
 		revalidator.revalidate();
 	};
 
@@ -383,8 +379,8 @@ export default function PracticeRoute({ loaderData }: Route.ComponentProps) {
 		<div className="space-y-6">
 			<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-2">
 				<div>
-					<h2 className="text-2xl font-bold text-gray-800">Practice</h2>
-					<p className="text-gray-600 mt-1">Interactive drills to build fluency</p>
+					<h2 className="text-2xl font-bold text-foreground">Practice</h2>
+					<p className="text-muted-foreground mt-1">Interactive drills to build fluency</p>
 				</div>
 				<UserSelector users={users} onUserChange={handleUserChange} />
 			</div>
@@ -418,7 +414,7 @@ export default function PracticeRoute({ loaderData }: Route.ComponentProps) {
 						<span className="hidden sm:inline">Review</span>
 						<span className="sm:hidden">Rev</span>
 						{stats && stats.dueCount > 0 && (
-							<span className="absolute -top-1 -right-1 bg-purple-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+							<span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full w-5 h-5 flex items-center justify-center">
 								{stats.dueCount > 99 ? "99+" : stats.dueCount}
 							</span>
 						)}
@@ -451,10 +447,10 @@ export default function PracticeRoute({ loaderData }: Route.ComponentProps) {
 						{searchParams.get("userId") ? (
 							<VocabularyDrill items={newVocabItems} />
 						) : (
-							<div className="text-center py-12 bg-gray-50 rounded-xl border border-gray-200">
+							<div className="text-center py-12 bg-muted rounded-xl border border-border">
 								<div className="text-5xl mb-4">👤</div>
-								<h3 className="text-xl font-semibold text-gray-700 mb-2">Select a user</h3>
-								<p className="text-gray-600">Choose a user from the dropdown above to learn new vocabulary.</p>
+								<h3 className="text-xl font-semibold text-foreground mb-2">Select a user</h3>
+								<p className="text-muted-foreground">Choose a user from the dropdown above to learn new vocabulary.</p>
 							</div>
 						)}
 						<PracticeStrategy />
@@ -466,10 +462,10 @@ export default function PracticeRoute({ loaderData }: Route.ComponentProps) {
 						{searchParams.get("userId") ? (
 							<ReviewDrill items={reviewItems} />
 						) : (
-							<div className="text-center py-12 bg-gray-50 rounded-xl border border-gray-200">
+							<div className="text-center py-12 bg-muted rounded-xl border border-border">
 								<div className="text-5xl mb-4">👤</div>
-								<h3 className="text-xl font-semibold text-gray-700 mb-2">Select a user</h3>
-								<p className="text-gray-600">Choose a user from the dropdown above to see your review items.</p>
+								<h3 className="text-xl font-semibold text-foreground mb-2">Select a user</h3>
+								<p className="text-muted-foreground">Choose a user from the dropdown above to see your review items.</p>
 							</div>
 						)}
 					</div>
