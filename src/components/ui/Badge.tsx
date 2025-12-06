@@ -10,21 +10,21 @@ const badgeVariants = cva(
     variants: {
       variant: {
         default:
-          "border-transparent bg-gray-200 text-gray-800",
+          "border-transparent bg-stone-200 text-stone-800",
         primary:
-          "border-transparent bg-blue-200 text-blue-800",
+          "border-transparent bg-aegean/20 text-aegean-text",
         secondary:
-          "border-transparent bg-purple-200 text-purple-800",
+          "border-transparent bg-terracotta/20 text-terracotta-text",
         success:
-          "border-transparent bg-green-200 text-green-800",
+          "border-transparent bg-olive/20 text-olive-text",
         warning:
-          "border-transparent bg-yellow-200 text-yellow-800",
+          "border-transparent bg-honey/20 text-honey-text",
         error:
-          "border-transparent bg-red-200 text-red-800",
+          "border-transparent bg-incorrect/20 text-incorrect",
         destructive:
           "border-transparent bg-destructive text-white [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
         outline:
-          "border-gray-300 bg-white text-gray-700 [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
+          "border-stone-300 bg-white text-stone-700 [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
       },
       size: {
         xs: "px-1.5 py-0.5 text-xs",

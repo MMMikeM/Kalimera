@@ -17,7 +17,7 @@ export const searchInputVariants = tv({
 });
 
 export const searchInputFieldVariants = tv({
-	base: "w-full bg-white text-gray-900 placeholder:text-gray-400 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 focus:border-transparent transition-colors",
+	base: "w-full bg-white text-stone-900 placeholder:text-stone-600 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-terracotta/50 focus:ring-offset-0 focus:border-terracotta transition-colors",
 	variants: {
 		size: {
 			sm: "pl-8 pr-8 py-1.5 text-sm",
@@ -31,7 +31,7 @@ export const searchInputFieldVariants = tv({
 });
 
 export const searchInputIconVariants = tv({
-	base: "absolute inset-y-0 flex items-center pointer-events-none text-gray-400",
+	base: "absolute inset-y-0 flex items-center pointer-events-none text-stone-600",
 	variants: {
 		size: {
 			sm: "left-2.5 [&>svg]:h-3.5 [&>svg]:w-3.5",
@@ -45,7 +45,7 @@ export const searchInputIconVariants = tv({
 });
 
 export const clearButtonVariants = tv({
-	base: "absolute inset-y-0 flex items-center text-gray-400 hover:text-gray-600 focus:outline-none focus:text-gray-600 transition-colors",
+	base: "absolute inset-y-0 flex items-center text-stone-600 hover:text-stone-600 focus:outline-none focus:text-stone-600 transition-colors",
 	variants: {
 		size: {
 			sm: "right-2.5 [&>svg]:h-3.5 [&>svg]:w-3.5",

@@ -1,13 +1,22 @@
 import type React from "react";
 import { tv } from "tailwind-variants";
 
+/**
+ * ParadigmTable - Displays verb conjugation patterns
+ *
+ * Design principles:
+ * - Structure reveals patterns (rows = person, columns = number)
+ * - Endings highlighted with terracotta (primary accent)
+ * - Stems faded to emphasize the changing parts
+ * - Generous spacing for reduced cognitive load
+ */
 export const paradigmTableVariants = tv({
 	base: "w-full border-collapse rounded-lg overflow-hidden bg-white",
 	variants: {
 		variant: {
-			default: "border border-gray-200",
-			bordered: "border-2 border-gray-300",
-			accent: "border-2 border-blue-200",
+			default: "border border-stone-200",
+			bordered: "border-2 border-stone-300",
+			accent: "border-2 border-terracotta/30",
 		},
 	},
 	defaultVariants: {
@@ -16,7 +25,7 @@ export const paradigmTableVariants = tv({
 });
 
 export const paradigmCellVariants = tv({
-	base: "p-2 sm:p-3 text-center font-mono text-sm sm:text-base border-gray-100",
+	base: "p-2 sm:p-3 text-center font-mono text-sm sm:text-base border-stone-100",
 	variants: {
 		position: {
 			topLeft: "border-r border-b",
@@ -69,13 +78,19 @@ const FormCell: React.FC<{
 	formClassName?: string;
 	endingClassName?: string;
 	fadeStem?: boolean;
-}> = ({ form, position, formClassName = "text-gray-900 font-semibold", endingClassName = "text-gray-900 font-bold", fadeStem = true }) => (
+}> = ({
+	form,
+	position,
+	formClassName = "text-stone-800 font-semibold",
+	endingClassName = "text-terracotta font-bold",
+	fadeStem = true,
+}) => (
 	<td className={paradigmCellVariants({ position })}>
 		{typeof form === "string" ? (
 			<span className={formClassName}>{form}</span>
 		) : (
 			<>
-				<span className={fadeStem ? "text-gray-400" : "text-gray-700"}>{form.stem}</span>
+				<span className={fadeStem ? "text-stone-600" : "text-stone-700"}>{form.stem}</span>
 				<span className={endingClassName}>{form.ending}</span>
 			</>
 		)}
@@ -103,20 +118,20 @@ export const ParadigmTable: React.FC<ParadigmTableProps> = ({
 	return (
 		<div className={className}>
 			<div className="mb-2 px-1">
-				<span className="font-mono text-lg sm:text-xl font-semibold text-gray-800">
+				<span className="font-mono text-lg sm:text-xl font-semibold text-stone-800">
 					{infinitive || (stem ? `${stem}-` : "")}
 				</span>
-				<span className="text-gray-500 ml-2 text-sm sm:text-base">({meaning})</span>
+				<span className="text-stone-600 ml-2 text-sm sm:text-base">({meaning})</span>
 			</div>
 			<table className={paradigmTableVariants({ variant })}>
 				{showHeaders && (
 					<thead>
 						<tr>
 							<th className="w-12 sm:w-14" />
-							<th className="text-xs text-gray-400 font-normal pb-1 border-b border-gray-100">
+							<th className="text-xs text-stone-600 font-normal pb-1 border-b border-stone-100">
 								Singular
 							</th>
-							<th className="text-xs text-gray-400 font-normal pb-1 border-b border-gray-100">
+							<th className="text-xs text-stone-600 font-normal pb-1 border-b border-stone-100">
 								Plural
 							</th>
 						</tr>
@@ -126,9 +141,9 @@ export const ParadigmTable: React.FC<ParadigmTableProps> = ({
 					{formRows.map((row, idx) => (
 						<tr key={PERSON_LABELS[idx]}>
 							{showHeaders && (
-								<td className="text-xs text-gray-400 pr-2 text-right align-middle border-r border-gray-100">
+								<td className="text-xs text-stone-600 pr-2 text-right align-middle border-r border-stone-100">
 									<div>{PERSON_LABELS[idx]}</div>
-									<div className="text-[10px] text-gray-300">
+									<div className="text-[10px] text-stone-500">
 										{PERSON_HINTS[idx][0]}/{PERSON_HINTS[idx][1]}
 									</div>
 								</td>

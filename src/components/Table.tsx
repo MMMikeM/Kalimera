@@ -2,16 +2,22 @@ import type { ReactNode } from "react";
 import React from "react";
 import { tv } from "tailwind-variants";
 
+/**
+ * Table - General purpose data table
+ *
+ * Design principles:
+ * - Clean, minimal styling (no gradients or excessive effects)
+ * - Uses stone palette for neutrality
+ * - Subtle hover states that don't distract from content
+ */
 export const tableVariants = tv({
 	base: "w-full border-collapse overflow-hidden",
 	variants: {
 		variant: {
-			default: "bg-white rounded-xl shadow-sm border border-gray-100",
-			bordered: "border-2 border-gray-200 rounded-xl",
-			minimal: "border-gray-100",
+			default: "bg-white rounded-xl shadow-sm border border-stone-200",
+			bordered: "border-2 border-stone-300 rounded-xl",
+			minimal: "border-stone-100",
 			none: "",
-			modern:
-				"bg-gradient-to-br from-white to-gray-50 rounded-xl shadow-lg border border-gray-100",
 		},
 		size: {
 			sm: "text-sm",
@@ -20,7 +26,7 @@ export const tableVariants = tv({
 		},
 	},
 	defaultVariants: {
-		variant: "modern",
+		variant: "default",
 		size: "md",
 	},
 });
@@ -29,12 +35,10 @@ export const tableHeaderVariants = tv({
 	base: "font-semibold text-center p-4 first:rounded-tl-xl last:rounded-tr-xl",
 	variants: {
 		variant: {
-			default:
-				"bg-gradient-to-r from-gray-50 to-gray-100 text-gray-700 border-b border-gray-200",
-			dark: "bg-gradient-to-r from-gray-800 to-gray-900 text-white",
-			light:
-				"bg-gradient-to-r from-blue-50 to-indigo-50 text-gray-700 border-b border-blue-100",
-			colorful: "bg-gradient-to-r from-blue-500 to-purple-600 text-white",
+			default: "bg-stone-50 text-stone-700 border-b border-stone-200",
+			dark: "bg-stone-800 text-white",
+			light: "bg-stone-50 text-stone-700 border-b border-stone-200",
+			accent: "bg-terracotta/10 text-terracotta-text border-b border-terracotta/20",
 		},
 	},
 	defaultVariants: {
@@ -43,10 +47,10 @@ export const tableHeaderVariants = tv({
 });
 
 export const tableCellVariants = tv({
-	base: "p-4 text-center border-b border-gray-100 last:border-b-0 transition-colors duration-200",
+	base: "p-4 text-center border-b border-stone-100 last:border-b-0 transition-colors duration-200",
 	variants: {
 		hover: {
-			true: "hover:bg-blue-50",
+			true: "hover:bg-stone-50",
 			false: "",
 		},
 	},
@@ -59,11 +63,11 @@ export const tableRowVariants = tv({
 	base: "transition-all duration-200",
 	variants: {
 		hover: {
-			true: "hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 hover:shadow-sm",
+			true: "hover:bg-stone-50",
 			false: "",
 		},
 		striped: {
-			true: "even:bg-gray-25",
+			true: "even:bg-stone-50/50",
 			false: "",
 		},
 	},
@@ -74,10 +78,11 @@ export const tableRowVariants = tv({
 });
 
 export interface TableProps extends React.HTMLAttributes<HTMLDivElement> {
-	variant?: "default" | "bordered" | "minimal" | "none" | "modern";
+	variant?: "default" | "bordered" | "minimal" | "none";
 	size?: "sm" | "md" | "lg";
 	headers?: string[];
 	headerColors?: string[];
+	headerVariant?: "default" | "dark" | "light" | "accent";
 	rows: (string | ReactNode)[][];
 	hover?: boolean;
 	striped?: boolean;
@@ -90,6 +95,7 @@ export const Table: React.FC<TableProps> = ({
 	size,
 	headers,
 	headerColors = [],
+	headerVariant = "light",
 	rows,
 	hover,
 	striped,
@@ -98,12 +104,10 @@ export const Table: React.FC<TableProps> = ({
 	title,
 	...props
 }) => {
-	// Helper function to create stable keys from content
 	const createStableKey = (content: string | ReactNode): string => {
 		if (typeof content === "string") {
 			return content.replace(/[^a-zA-Z0-9]/g, "-").toLowerCase();
 		}
-		// For React elements, use a combination of type and props
 		if (React.isValidElement(content)) {
 			const props = content.props || {};
 			const propsString = Object.entries(props)
@@ -119,7 +123,7 @@ export const Table: React.FC<TableProps> = ({
 	return (
 		<div className={`overflow-hidden ${containerClassName}`} {...props}>
 			{title && (
-				<h4 className="text-lg font-semibold text-gray-800 mb-3 px-1">
+				<h4 className="text-lg font-semibold text-stone-800 mb-3 px-1">
 					{title}
 				</h4>
 			)}
@@ -131,7 +135,7 @@ export const Table: React.FC<TableProps> = ({
 								{headers.map((header, idx) => (
 									<th
 										key={header}
-										className={`${tableHeaderVariants({ variant: "light" })} ${headerColors[idx] || ""}`}
+										className={`${tableHeaderVariants({ variant: headerVariant })} ${headerColors[idx] || ""}`}
 										style={{ width: `${100 / headers.length}%` }}
 									>
 										<span className="font-medium tracking-wide">{header}</span>

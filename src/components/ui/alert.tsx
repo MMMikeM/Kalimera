@@ -10,16 +10,16 @@ const alertVariants = cva(
       variant: {
         default: "bg-card text-card-foreground",
         destructive:
-          "text-destructive bg-card [&>svg]:text-current *:data-[slot=alert-description]:text-destructive/90",
-        info: "bg-blue-50 border-blue-200 text-blue-800 [&>svg]:text-blue-600 *:data-[slot=alert-description]:text-blue-700",
+          "text-destructive bg-card [&>svg]:text-current *:data-[slot=alert-description]:text-destructive",
+        info: "bg-aegean/15 border-aegean/40 text-aegean-text [&>svg]:text-aegean *:data-[slot=alert-title]:text-aegean-text *:data-[slot=alert-description]:text-aegean-text",
         warning:
-          "bg-yellow-50 border-yellow-200 text-yellow-800 [&>svg]:text-yellow-600 *:data-[slot=alert-description]:text-yellow-700",
+          "bg-honey/15 border-honey/40 text-honey-text [&>svg]:text-honey *:data-[slot=alert-title]:text-honey-text *:data-[slot=alert-description]:text-honey-text",
         success:
-          "bg-green-50 border-green-200 text-green-800 [&>svg]:text-green-600 *:data-[slot=alert-description]:text-green-700",
+          "bg-olive/15 border-olive/40 text-olive-text [&>svg]:text-olive *:data-[slot=alert-title]:text-olive-text *:data-[slot=alert-description]:text-olive-text",
         error:
-          "bg-red-50 border-red-200 text-red-800 [&>svg]:text-red-600 *:data-[slot=alert-description]:text-red-700",
+          "bg-incorrect/15 border-incorrect/40 text-incorrect [&>svg]:text-incorrect *:data-[slot=alert-title]:text-incorrect *:data-[slot=alert-description]:text-incorrect",
         purple:
-          "bg-purple-50 border-purple-200 text-purple-800 [&>svg]:text-purple-600 *:data-[slot=alert-description]:text-purple-700",
+          "bg-terracotta/15 border-terracotta/40 text-terracotta-text [&>svg]:text-terracotta *:data-[slot=alert-title]:text-terracotta-text *:data-[slot=alert-description]:text-terracotta-text",
       },
     },
     defaultVariants: {
@@ -64,7 +64,7 @@ function AlertDescription({
     <div
       data-slot="alert-description"
       className={cn(
-        "text-muted-foreground col-start-2 grid justify-items-start gap-1 text-sm [&_p]:leading-relaxed",
+        "col-start-2 grid justify-items-start gap-1 text-sm [&_p]:leading-relaxed",
         className
       )}
       {...props}
