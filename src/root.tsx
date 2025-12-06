@@ -1,109 +1,152 @@
 import {
-  Links,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-  NavLink,
+	Links,
+	Meta,
+	Outlet,
+	Scripts,
+	ScrollRestoration,
+	NavLink,
+	Link,
 } from "react-router";
 import {
-  BookOpen,
-  FileText,
-  Lightbulb,
-  Search,
-  Target,
+	BookOpen,
+	FileText,
+	Lightbulb,
+	Search,
+	MessageCircle,
+	Home,
 } from "lucide-react";
-import { TABS } from "./constants/config";
 import "./index.css";
 
-const iconMap = {
-  Search: <Search size={16} />,
-  BookOpen: <BookOpen size={16} />,
-  FileText: <FileText size={16} />,
-  Target: <Target size={16} />,
-  Lightbulb: <Lightbulb size={16} />,
-};
+const NAV_ITEMS = [
+	{ id: "home", label: "Home", path: "/", icon: Home },
 
-const getIcon = (iconName: string) => {
-  return iconMap[iconName as keyof typeof iconMap] || null;
-};
-
-const tabToPath: Record<string, string> = {
-  "conversations": "/",
-  "quick-reference": "/quick-reference",
-  "practice": "/practice",
-  "vocabulary": "/vocabulary",
-  "search": "/search",
-};
+	{
+		id: "quick-reference",
+		label: "Reference",
+		path: "/quick-reference",
+		icon: FileText,
+	},
+	{
+		id: "vocabulary",
+		label: "Vocabulary",
+		path: "/vocabulary",
+		icon: BookOpen,
+	},
+	{
+		id: "conversations",
+		label: "Conversations",
+		path: "/conversations",
+		icon: MessageCircle,
+	},
+	{ id: "practice", label: "Practice", path: "/practice", icon: Lightbulb },
+	{ id: "search", label: "Search", path: "/search", icon: Search },
+];
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="en">
-      <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <Meta />
-        <Links />
-      </head>
-      <body className="text-gray-900">
-        {children}
-        <ScrollRestoration />
-        <Scripts />
-      </body>
-    </html>
-  );
+	return (
+		<html lang="en">
+			<head>
+				<meta charSet="utf-8" />
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				<link rel="preconnect" href="https://fonts.googleapis.com" />
+				<link
+					rel="preconnect"
+					href="https://fonts.gstatic.com"
+					crossOrigin=""
+				/>
+				<link
+					href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
+					rel="stylesheet"
+				/>
+				<Meta />
+				<Links />
+			</head>
+			<body className="font-sans text-stone-800 antialiased">
+				{children}
+				<ScrollRestoration />
+				<Scripts />
+			</body>
+		</html>
+	);
 }
 
 export default function Root() {
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
-      <div className="max-w-7xl mx-auto p-6">
-        <header className="text-center mb-12 pt-8">
-          <div className="relative">
-            <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent mb-4 leading-tight">
-              Greek Conjugation Reference
-            </h1>
-            <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 rounded-lg opacity-5 blur-xl" />
-          </div>
-          <p className="text-xl text-gray-600 font-medium mt-4 max-w-2xl mx-auto leading-relaxed">
-            Your comprehensive pattern-based guide to Greek grammar
-          </p>
-        </header>
+	return (
+		<div className="min-h-screen bg-cream">
+			<div className="relative max-w-6xl mx-auto px-6 md:px-8">
+				{/* Header */}
+				<header className="pt-8 pb-6">
+					<div className="flex items-center justify-between">
+						<Link to="/" className="group flex items-baseline gap-3">
+							<span className="text-2xl font-serif text-terracotta">
+								καλημέρα
+							</span>
+							<span className="text-sm text-stone-600 hidden sm:inline group-hover:text-stone-700 transition-colors">
+								Greek Learning
+							</span>
+						</Link>
 
-        <nav className="mb-10">
-          <div className="flex flex-wrap gap-3 justify-center p-2 bg-white/60 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20">
-            {TABS.map((tab) => (
-              <NavLink
-                key={tab.id}
-                to={tabToPath[tab.id]}
-                className={({ isActive }) =>
-                  `inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all shadow-sm ${
-                    isActive
-                      ? "bg-blue-600 text-white"
-                      : "bg-white text-gray-700 hover:bg-gray-100"
-                  }`
-                }
-              >
-                {getIcon(tab.icon)}
-                {tab.label}
-              </NavLink>
-            ))}
-          </div>
-        </nav>
+						{/* Desktop Navigation */}
+						<nav className="hidden md:flex items-center gap-1">
+							{NAV_ITEMS.slice(1).map((item) => (
+								<NavLink
+									key={item.id}
+									to={item.path}
+									className={({ isActive }) =>
+										`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+											isActive
+												? "bg-stone-800 text-cream"
+												: "text-stone-600 hover:text-stone-800 hover:bg-stone-100"
+										}`
+									}
+								>
+									{item.label}
+								</NavLink>
+							))}
+						</nav>
+					</div>
+				</header>
 
-        <main className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/30 p-8 mb-8">
-          <Outlet />
-        </main>
+				{/* Mobile Navigation - fixed bottom */}
+				<nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-cream/95 backdrop-blur-sm border-t border-stone-200 px-2 py-2 safe-area-pb">
+					<div className="flex justify-around items-center">
+						{NAV_ITEMS.map((item) => {
+							const Icon = item.icon;
+							return (
+								<NavLink
+									key={item.id}
+									to={item.path}
+									end={item.path === "/"}
+									className={({ isActive }) =>
+										`flex flex-col items-center gap-1 px-3 py-2 rounded-lg transition-all ${
+											isActive ? "text-terracotta" : "text-stone-600"
+										}`
+									}
+								>
+									<Icon size={20} strokeWidth={1.5} />
+									<span className="text-[10px] font-medium">{item.label}</span>
+								</NavLink>
+							);
+						})}
+					</div>
+				</nav>
 
-        <footer className="text-center mt-8 mb-8">
-          <div className="bg-gradient-to-r from-blue-100 to-purple-100 rounded-2xl p-6 shadow-lg border border-white/30">
-            <p className="text-lg text-gray-700 font-medium">
-              Remember: Patterns over memorization! Once you know the family,
-              you know the conjugation.
-            </p>
-          </div>
-        </footer>
-      </div>
-    </div>
-  );
+				{/* Main Content */}
+				<main className="pb-24 md:pb-12">
+					<Outlet />
+				</main>
+
+				{/* Footer - desktop only */}
+				<footer className="hidden md:block py-12 border-t border-stone-200 mt-12">
+					<div className="flex items-center justify-between text-sm text-stone-600">
+						<p>
+							Patterns over memorization. Once you see the structure, the
+							language clicks.
+						</p>
+						<p className="font-serif text-terracotta-text">Ελληνικά</p>
+					</div>
+				</footer>
+			</div>
+		</div>
+	);
 }
