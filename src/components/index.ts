@@ -23,3 +23,17 @@ export {
 	paradigmTableVariants,
 	paradigmCellVariants,
 } from "./ParadigmTable";
+
+// New shared components for Quick Reference
+export type { SectionHeadingProps } from "./SectionHeading";
+export { SectionHeading } from "./SectionHeading";
+export type { KeyInsightProps } from "./KeyInsight";
+export { KeyInsight } from "./KeyInsight";
+export type { CollapsibleSectionProps, CollapsibleColorScheme } from "./CollapsibleSection";
+export { CollapsibleSection } from "./CollapsibleSection";
+export type { QuickTestProps, QuickTestOption } from "./QuickTest";
+export { QuickTest } from "./QuickTest";
+export type { MistakeComparisonProps, Mistake } from "./MistakeComparison";
+export { MistakeComparison } from "./MistakeComparison";
+export type { CategoryCardProps, CardPriority, CategoryColorScheme } from "./CategoryCard";
+export { CategoryCard } from "./CategoryCard";
