@@ -1,5 +1,6 @@
-import { AlertCircle, Zap, Sparkles, RefreshCw, Star, Lightbulb, ArrowRight } from "lucide-react";
+import { AlertCircle, Zap, Sparkles, RefreshCw, Star, Lightbulb, ArrowRight, BookOpen } from "lucide-react";
 import type React from "react";
+import { Link } from "react-router";
 
 import { Card, MonoText, ParadigmTable, SectionHeading, KeyInsight } from "../../components";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
@@ -100,29 +101,29 @@ const PATTERN_CONFIGS: Record<string, PatternConfig> = {
 		key: "active",
 		icon: <Zap size={20} />,
 		ending: "-ω",
-		bgClass: "bg-aegean/5",
-		borderClass: "border-aegean/30",
+		bgClass: "bg-aegean/15",
+		borderClass: "border-aegean/50",
 		textClass: "text-aegean-text",
-		badgeBg: "bg-aegean/20",
+		badgeBg: "bg-aegean/25",
 		isFirst: true,
 	},
 	contracted: {
 		key: "contracted",
 		icon: <Sparkles size={20} />,
 		ending: "-άω/-ώ",
-		bgClass: "bg-terracotta/5",
-		borderClass: "border-terracotta/30",
+		bgClass: "bg-terracotta/15",
+		borderClass: "border-terracotta/50",
 		textClass: "text-terracotta-text",
-		badgeBg: "bg-terracotta/20",
+		badgeBg: "bg-terracotta/25",
 	},
 	deponent: {
 		key: "deponent",
 		icon: <RefreshCw size={20} />,
 		ending: "-μαι",
-		bgClass: "bg-olive/5",
-		borderClass: "border-olive/30",
+		bgClass: "bg-olive/15",
+		borderClass: "border-olive/50",
 		textClass: "text-olive-text",
-		badgeBg: "bg-olive/20",
+		badgeBg: "bg-olive/25",
 	},
 };
 
@@ -144,7 +145,7 @@ const PatternSection: React.FC<{
 						<div className="flex items-center gap-2">
 							<h3 className={`text-lg font-bold ${config.textClass}`}>{pattern.name}</h3>
 							{config.isFirst && (
-								<Badge variant="default" size="sm" className="bg-aegean-light text-aegean-text border border-aegean/30">
+								<Badge variant="default" size="sm" className="bg-aegean-light text-aegean-text border border-aegean/40">
 									<Star size={12} className="mr-1" /> Learn First
 								</Badge>
 							)}
@@ -177,10 +178,10 @@ const PatternSection: React.FC<{
 };
 
 const PatternIdentifier: React.FC = () => (
-	<Card variant="bordered" padding="lg" className="bg-gradient-to-br from-stone-50 to-stone-100 border-2 border-stone-300 shadow-sm">
+	<Card variant="bordered" padding="lg" className="bg-gradient-to-br from-cream to-cream-dark border-2 border-stone-300 shadow-sm">
 		<div className="flex items-center gap-3 mb-4">
-			<div className="p-2.5 rounded-xl bg-stone-200">
-				<Lightbulb size={20} className="text-stone-700" />
+			<div className="p-2.5 rounded-xl bg-honey/25">
+				<Lightbulb size={20} className="text-honey-text" />
 			</div>
 			<div>
 				<h3 className="text-lg font-bold text-stone-800">Which Pattern?</h3>
@@ -190,40 +191,40 @@ const PatternIdentifier: React.FC = () => (
 			</div>
 		</div>
 		<div className="space-y-3">
-			<div className="flex items-center gap-4 p-3 rounded-xl bg-aegean/10 border-2 border-aegean/30 hover:border-aegean/50 transition-colors">
-				<div className="p-2 rounded-lg bg-aegean/20">
+			<div className="flex items-center gap-4 p-3 rounded-xl bg-aegean/20 border-2 border-aegean/50 hover:border-aegean/70 transition-colors">
+				<div className="p-2 rounded-lg bg-aegean/30">
 					<Zap size={18} className="text-aegean-text" />
 				</div>
 				<MonoText className="text-aegean-text font-bold text-xl w-20">-ω</MonoText>
 				<ArrowRight size={16} className="text-stone-400" />
 				<span className="text-stone-800 font-semibold">Active</span>
 				<div className="ml-auto flex gap-2">
-					<span className="px-2 py-1 bg-white rounded-md text-sm font-mono text-aegean-text border border-aegean/20">κάνω</span>
-					<span className="px-2 py-1 bg-white rounded-md text-sm font-mono text-aegean-text border border-aegean/20">θέλω</span>
+					<span className="px-2 py-1 bg-white rounded-md text-sm font-mono text-aegean-text border border-aegean/40">κάνω</span>
+					<span className="px-2 py-1 bg-white rounded-md text-sm font-mono text-aegean-text border border-aegean/40">θέλω</span>
 				</div>
 			</div>
-			<div className="flex items-center gap-4 p-3 rounded-xl bg-terracotta/10 border-2 border-terracotta/30 hover:border-terracotta/50 transition-colors">
-				<div className="p-2 rounded-lg bg-terracotta/20">
+			<div className="flex items-center gap-4 p-3 rounded-xl bg-terracotta/20 border-2 border-terracotta/50 hover:border-terracotta/70 transition-colors">
+				<div className="p-2 rounded-lg bg-terracotta/30">
 					<Sparkles size={18} className="text-terracotta-text" />
 				</div>
 				<MonoText className="text-terracotta-text font-bold text-xl w-20">-άω/-ώ</MonoText>
 				<ArrowRight size={16} className="text-stone-400" />
 				<span className="text-stone-800 font-semibold">Contracted</span>
 				<div className="ml-auto flex gap-2">
-					<span className="px-2 py-1 bg-white rounded-md text-sm font-mono text-terracotta-text border border-terracotta/20">μιλάω</span>
-					<span className="px-2 py-1 bg-white rounded-md text-sm font-mono text-terracotta-text border border-terracotta/20">αγαπάω</span>
+					<span className="px-2 py-1 bg-white rounded-md text-sm font-mono text-terracotta-text border border-terracotta/40">μιλάω</span>
+					<span className="px-2 py-1 bg-white rounded-md text-sm font-mono text-terracotta-text border border-terracotta/40">αγαπάω</span>
 				</div>
 			</div>
-			<div className="flex items-center gap-4 p-3 rounded-xl bg-olive/10 border-2 border-olive/30 hover:border-olive/50 transition-colors">
-				<div className="p-2 rounded-lg bg-olive/20">
+			<div className="flex items-center gap-4 p-3 rounded-xl bg-olive/20 border-2 border-olive/50 hover:border-olive/70 transition-colors">
+				<div className="p-2 rounded-lg bg-olive/30">
 					<RefreshCw size={18} className="text-olive-text" />
 				</div>
 				<MonoText className="text-olive-text font-bold text-xl w-20">-μαι</MonoText>
 				<ArrowRight size={16} className="text-stone-400" />
 				<span className="text-stone-800 font-semibold">Deponent</span>
 				<div className="ml-auto flex gap-2">
-					<span className="px-2 py-1 bg-white rounded-md text-sm font-mono text-olive-text border border-olive/20">έρχομαι</span>
-					<span className="px-2 py-1 bg-white rounded-md text-sm font-mono text-olive-text border border-olive/20">θυμάμαι</span>
+					<span className="px-2 py-1 bg-white rounded-md text-sm font-mono text-olive-text border border-olive/40">έρχομαι</span>
+					<span className="px-2 py-1 bg-white rounded-md text-sm font-mono text-olive-text border border-olive/40">θυμάμαι</span>
 				</div>
 			</div>
 		</div>
@@ -321,6 +322,22 @@ export const VerbsSection: React.FC = () => (
 				</div>
 			</Card>
 		)}
+
+		{/* Cross-link to vocabulary */}
+		<div className="p-3 bg-olive/10 rounded-lg border border-olive/30 flex items-center justify-between">
+			<div className="flex items-center gap-2">
+				<BookOpen size={16} className="text-olive-text" />
+				<span className="text-sm text-stone-700">
+					Browse all verbs organized by conjugation family
+				</span>
+			</div>
+			<Link
+				to="/vocabulary/verbs"
+				className="inline-flex items-center gap-1.5 text-sm font-medium text-olive-text hover:underline"
+			>
+				View vocabulary <ArrowRight size={14} />
+			</Link>
+		</div>
 
 		{/* Tense scope note */}
 		<p className="text-sm text-stone-500 text-center italic">

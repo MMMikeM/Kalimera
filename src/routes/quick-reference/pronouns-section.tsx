@@ -1,4 +1,3 @@
-import type React from "react";
 import {
 	EMPHATIC_PRONOUNS,
 	EMPHATIC_PRONOUN_EXAMPLES,
@@ -10,115 +9,11 @@ import {
 	PRONOUN_PHRASES,
 	SUBJECT_PRONOUNS,
 	SUBJECT_PRONOUN_EXAMPLES,
-	type PronounParadigm,
 } from "../../constants/pronouns";
 import { Card, MonoText, CategoryCard, CollapsibleSection } from "../../components";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
-
-// Reusable paradigm table component
-const PronounParadigmTable: React.FC<{
-	data: PronounParadigm[];
-	colorClass: string;
-	note?: string;
-}> = ({ data, colorClass, note }) => (
-	<div className="overflow-x-auto">
-		<table className="w-full text-sm">
-			<thead>
-				<tr className={`border-b-2 ${colorClass}`}>
-					<th className="text-left py-2 px-3 text-stone-600 font-medium w-16"></th>
-					<th className="text-left py-2 px-3 font-semibold">Singular</th>
-					<th className="text-left py-2 px-3 font-semibold">Plural</th>
-				</tr>
-			</thead>
-			<tbody>
-				{data.map((row, i) => (
-					<tr key={i} className="border-b border-stone-100">
-						<td className="py-2 px-3 text-stone-500 text-xs">{row.person}</td>
-						<td className="py-2 px-3">
-							<MonoText variant="highlighted" size="lg">{row.singular.greek}</MonoText>
-							<span className="text-stone-600 ml-2 text-sm">{row.singular.english}</span>
-						</td>
-						<td className="py-2 px-3">
-							<MonoText variant="highlighted" size="lg">{row.plural.greek}</MonoText>
-							<span className="text-stone-600 ml-2 text-sm">{row.plural.english}</span>
-						</td>
-					</tr>
-				))}
-			</tbody>
-		</table>
-		{note && (
-			<p className="text-xs text-stone-500 italic mt-2 px-3">{note}</p>
-		)}
-	</div>
-);
-
-// Quick decision guide - answers "which pronoun do I use?"
-const PronounDecisionGuide: React.FC = () => (
-	<Card variant="bordered" padding="lg" className="bg-honey/5 border-honey/30">
-		<h3 className="text-lg font-bold text-honey-text mb-3">Which "me/you" do I use?</h3>
-		<p className="text-sm text-stone-600 mb-4">
-			English "me" is one word. Greek splits it by <strong>function</strong>:
-		</p>
-
-		<div className="space-y-3">
-			{/* Direct object */}
-			<div className="p-3 bg-white rounded-lg border border-honey/30">
-				<div className="flex items-start gap-3">
-					<div className="text-honey-text font-bold text-sm w-20 shrink-0">με / σε</div>
-					<div className="flex-1">
-						<div className="text-sm font-medium text-stone-800 mb-1">
-							Someone does something <strong>to</strong> you (direct object)
-						</div>
-						<div className="text-sm text-stone-600 space-y-0.5">
-							<div><MonoText size="sm" variant="highlighted">σε βλέπω</MonoText> <span className="text-stone-600">— I see you</span></div>
-							<div><MonoText size="sm" variant="highlighted">με ακούς;</MonoText> <span className="text-stone-600">— do you hear me?</span></div>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			{/* Possession / indirect */}
-			<div className="p-3 bg-white rounded-lg border border-honey/30">
-				<div className="flex items-start gap-3">
-					<div className="text-honey-text font-bold text-sm w-20 shrink-0">μου / σου</div>
-					<div className="flex-1">
-						<div className="text-sm font-medium text-stone-800 mb-1">
-							<strong>My/your</strong> (possession) OR <strong>to me/you</strong> (indirect object)
-						</div>
-						<div className="text-sm text-stone-600 space-y-0.5">
-							<div><MonoText size="sm" variant="highlighted">το σπίτι μου</MonoText> <span className="text-stone-600">— my house</span></div>
-							<div><MonoText size="sm" variant="highlighted">μου λέει</MonoText> <span className="text-stone-600">— tells (to) me</span></div>
-							<div><MonoText size="sm" variant="highlighted">σου δίνω</MonoText> <span className="text-stone-600">— I give (to) you</span></div>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			{/* Emphatic / after prepositions */}
-			<div className="p-3 bg-white rounded-lg border border-honey/30">
-				<div className="flex items-start gap-3">
-					<div className="text-honey-text font-bold text-sm w-20 shrink-0">εμένα / εσένα</div>
-					<div className="flex-1">
-						<div className="text-sm font-medium text-stone-800 mb-1">
-							After prepositions (για, με, από, σε) OR for <strong>emphasis</strong>
-						</div>
-						<div className="text-sm text-stone-600 space-y-0.5">
-							<div><MonoText size="sm" variant="highlighted">για μένα</MonoText> <span className="text-stone-600">— for me</span></div>
-							<div><MonoText size="sm" variant="highlighted">με σένα</MonoText> <span className="text-stone-600">— with you</span></div>
-							<div><MonoText size="sm" variant="highlighted">εμένα μου αρέσει!</MonoText> <span className="text-stone-600">— I like it! (emphatic)</span></div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div className="mt-4 pt-3 border-t border-honey/30 text-sm text-honey-text">
-			<strong>Quick test:</strong> Can you insert "to" before it? → Use <MonoText size="sm">μου/σου</MonoText>.
-			Is there a preposition before it? → Use <MonoText size="sm">εμένα/εσένα</MonoText>.
-			Otherwise → Use <MonoText size="sm">με/σε</MonoText>.
-		</div>
-	</Card>
-);
+import { PronounDecisionGuide } from "./pronoun-decision-guide";
+import { PronounParadigmTable } from "./pronoun-paradigm-table";
 
 // Group phrases by category
 const groupPhrasesByCategory = () => {
