@@ -1,0 +1,168 @@
+import type React from "react";
+import { Card, MonoText } from "@/components";
+
+export interface VocabItem {
+	id: number;
+	greek: string;
+	english: string;
+	wordType: string | null;
+	metadata: unknown;
+	tagSlug: string;
+}
+
+export interface VocabularyLoaderData {
+	nouns: {
+		people: VocabItem[];
+		shopping: VocabItem[];
+		household: VocabItem[];
+		vehicles: VocabItem[];
+		summer: VocabItem[];
+	};
+	verbs: {
+		categories: Array<{
+			id: string;
+			title: string;
+			verbs: Array<{
+				id: number;
+				greek: string;
+				english: string;
+				pattern: string | null;
+			}>;
+		}>;
+		transportActions: VocabItem[];
+	};
+	phrases: {
+		essential: VocabItem[];
+		daysOfWeek: VocabItem[];
+		months: VocabItem[];
+		discourseFillers: VocabItem[];
+		socialPhrases: VocabItem[];
+		commands: VocabItem[];
+		questionWords: VocabItem[];
+		likesConstruction: {
+			singular: VocabItem[];
+			plural: VocabItem[];
+		};
+		nameConstruction: VocabItem[];
+		timeTelling: VocabItem[];
+		discourseMarkers: VocabItem[];
+		responses: VocabItem[];
+		opinions: VocabItem[];
+		arriving: VocabItem[];
+		food: VocabItem[];
+		smalltalk: VocabItem[];
+	};
+	reference: {
+		timesOfDay: Array<VocabItem & { timeRange?: string }>;
+		numbers: Array<VocabItem & { numericValue?: number }>;
+		colors: VocabItem[];
+		frequencyAdverbs: VocabItem[];
+		positionAdverbs: VocabItem[];
+	};
+}
+
+export const VocabItemDisplay: React.FC<{
+	greek: string;
+	english: string;
+	variant?: "default" | "highlighted";
+}> = ({ greek, english, variant = "default" }) => (
+	<div className="flex items-baseline gap-2">
+		<MonoText variant={variant} size="md">
+			{greek}
+		</MonoText>
+		<span className="text-stone-600 text-sm">{english}</span>
+	</div>
+);
+
+type Gender = "masculine" | "feminine" | "neuter" | "unknown";
+
+const detectGender = (greek: string): Gender => {
+	const trimmed = greek.trim().toLowerCase();
+	if (trimmed.startsWith("ο ") || trimmed.startsWith("οι ")) return "masculine";
+	if (trimmed.startsWith("η ") || trimmed.startsWith("οι ")) return "feminine";
+	if (trimmed.startsWith("το ") || trimmed.startsWith("τα ")) return "neuter";
+	return "unknown";
+};
+
+const genderStyles: Record<Gender, { border: string; label: string; abbr: string }> = {
+	masculine: { border: "border-l-4 border-aegean/60", label: "masculine", abbr: "m" },
+	feminine: { border: "border-l-4 border-rose-400/60", label: "feminine", abbr: "f" },
+	neuter: { border: "border-l-4 border-stone-400/60", label: "neuter", abbr: "n" },
+	unknown: { border: "", label: "", abbr: "" },
+};
+
+export const NounDisplay: React.FC<{
+	greek: string;
+	english: string;
+	showGenderBadge?: boolean;
+}> = ({ greek, english, showGenderBadge = false }) => {
+	const gender = detectGender(greek);
+	const style = genderStyles[gender];
+
+	return (
+		<div
+			className={`p-3 bg-white/50 rounded-lg ${style.border} flex items-center justify-between`}
+		>
+			<div className="flex items-baseline gap-2">
+				<MonoText variant="greek" size="lg">
+					{greek}
+				</MonoText>
+				<span className="text-stone-600 text-sm">{english}</span>
+			</div>
+			{showGenderBadge && gender !== "unknown" && (
+				<span className="text-xs text-stone-500 font-medium uppercase">
+					{style.abbr}
+				</span>
+			)}
+		</div>
+	);
+};
+
+export const VocabSection: React.FC<{
+	title: string;
+	icon: React.ReactNode;
+	colorScheme: "aegean" | "terracotta" | "olive" | "honey";
+	children: React.ReactNode;
+	columns?: 2 | 3;
+}> = ({ title, icon, colorScheme, children, columns = 3 }) => {
+	const colors = {
+		aegean: {
+			bg: "bg-aegean/5",
+			border: "border-aegean/30",
+			text: "text-aegean-text",
+			iconBg: "bg-aegean/20",
+		},
+		terracotta: {
+			bg: "bg-terracotta/5",
+			border: "border-terracotta/30",
+			text: "text-terracotta-text",
+			iconBg: "bg-terracotta/20",
+		},
+		olive: {
+			bg: "bg-olive/5",
+			border: "border-olive/30",
+			text: "text-olive-text",
+			iconBg: "bg-olive/20",
+		},
+		honey: {
+			bg: "bg-honey/5",
+			border: "border-honey/30",
+			text: "text-honey-text",
+			iconBg: "bg-honey/20",
+		},
+	};
+	const c = colors[colorScheme];
+	const gridCols = columns === 2 ? "md:grid-cols-2" : "md:grid-cols-3";
+
+	return (
+		<Card variant="bordered" padding="lg" className={`${c.bg} ${c.border}`}>
+			<div className="flex items-center gap-3 mb-4">
+				<div className={`p-2 rounded-lg ${c.iconBg}`}>
+					<span className={c.text}>{icon}</span>
+				</div>
+				<h3 className={`text-lg font-bold ${c.text}`}>{title}</h3>
+			</div>
+			<div className={`grid ${gridCols} gap-3`}>{children}</div>
+		</Card>
+	);
+};
