@@ -52,10 +52,10 @@ export default function ReferenceRoute() {
 			<Card
 				variant="bordered"
 				padding="lg"
-				className="bg-honey/5 border-honey/30"
+				className="bg-honey-50 border-honey-300"
 			>
 				<div className="flex items-center gap-3 mb-4">
-					<div className="p-2 rounded-lg bg-honey/20">
+					<div className="p-2 rounded-lg bg-honey-200">
 						<Sun size={20} className="text-honey-text" />
 					</div>
 					<h3 className="text-lg font-bold text-honey-text">Times of Day</h3>
@@ -64,7 +64,7 @@ export default function ReferenceRoute() {
 					{sortedTimes.map((time) => (
 						<div
 							key={time.id}
-							className="text-center p-3 bg-white rounded-lg border border-honey/20 shadow-sm"
+							className="text-center p-3 bg-white rounded-lg border border-honey-200 shadow-sm"
 						>
 							<MonoText variant="greek" size="lg" className="block mb-1">
 								{time.greek}
@@ -83,14 +83,14 @@ export default function ReferenceRoute() {
 			<Card
 				variant="bordered"
 				padding="lg"
-				className="bg-aegean/5 border-aegean/30"
+				className="bg-ocean-50 border-ocean-300"
 			>
 				<div className="flex items-center gap-3 mb-4">
-					<div className="p-2 rounded-lg bg-aegean/20">
-						<Hash size={20} className="text-aegean-text" />
+					<div className="p-2 rounded-lg bg-ocean-200">
+						<Hash size={20} className="text-ocean-text" />
 					</div>
 					<div>
-						<h3 className="text-lg font-bold text-aegean-text">Numbers</h3>
+						<h3 className="text-lg font-bold text-ocean-text">Numbers</h3>
 						<p className="text-sm text-stone-600">Αριθμοί</p>
 					</div>
 				</div>
@@ -102,7 +102,7 @@ export default function ReferenceRoute() {
 				</Alert>
 				<div className="grid md:grid-cols-3 gap-6">
 					<div>
-						<h5 className="font-semibold text-aegean-text mb-3">Units (0-9)</h5>
+						<h5 className="font-semibold text-ocean-text mb-3">Units (0-9)</h5>
 						<div className="space-y-2">
 							{data.reference.numbers
 								.filter(
@@ -122,7 +122,7 @@ export default function ReferenceRoute() {
 						</div>
 					</div>
 					<div>
-						<h5 className="font-semibold text-aegean-text mb-3">
+						<h5 className="font-semibold text-ocean-text mb-3">
 							Teens (10-19)
 						</h5>
 						<div className="space-y-2">
@@ -141,7 +141,7 @@ export default function ReferenceRoute() {
 						</div>
 					</div>
 					<div>
-						<h5 className="font-semibold text-aegean-text mb-3">
+						<h5 className="font-semibold text-ocean-text mb-3">
 							Tens (20-100)
 						</h5>
 						<div className="space-y-2">
@@ -177,10 +177,10 @@ export default function ReferenceRoute() {
 			<Card
 				variant="bordered"
 				padding="lg"
-				className="bg-olive/5 border-olive/30"
+				className="bg-olive-50 border-olive-300"
 			>
 				<div className="flex items-center gap-3 mb-4">
-					<div className="p-2 rounded-lg bg-olive/20">
+					<div className="p-2 rounded-lg bg-olive-200">
 						<TrendingUp size={20} className="text-olive-text" />
 					</div>
 					<h3 className="text-lg font-bold text-olive-text">
@@ -208,13 +208,13 @@ export default function ReferenceRoute() {
 			<Card
 				variant="bordered"
 				padding="lg"
-				className="bg-aegean/5 border-aegean/30"
+				className="bg-ocean-50 border-ocean-300"
 			>
 				<div className="flex items-center gap-3 mb-4">
-					<div className="p-2 rounded-lg bg-aegean/20">
-						<MapPin size={20} className="text-aegean-text" />
+					<div className="p-2 rounded-lg bg-ocean-200">
+						<MapPin size={20} className="text-ocean-text" />
 					</div>
-					<h3 className="text-lg font-bold text-aegean-text">
+					<h3 className="text-lg font-bold text-ocean-text">
 						Position & Direction
 					</h3>
 				</div>
@@ -228,7 +228,7 @@ export default function ReferenceRoute() {
 					{pairedAdverbs.map((pair, idx) => (
 						<div
 							key={idx}
-							className="grid grid-cols-2 gap-4 p-3 bg-white rounded-lg border border-aegean/20"
+							className="grid grid-cols-2 gap-4 p-3 bg-white rounded-lg border border-ocean-200"
 						>
 							{pair.left ? (
 								<div className="flex items-baseline gap-2">
@@ -258,7 +258,7 @@ export default function ReferenceRoute() {
 						</div>
 					))}
 					{unpaired.length > 0 && (
-						<div className="grid md:grid-cols-3 gap-3 mt-4 pt-4 border-t border-aegean/20">
+						<div className="grid md:grid-cols-3 gap-3 mt-4 pt-4 border-t border-ocean-200">
 							{unpaired.map((adverb) => (
 								<VocabItemDisplay
 									key={adverb.id}

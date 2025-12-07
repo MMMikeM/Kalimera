@@ -42,13 +42,13 @@ export default function VerbsRoute() {
 				(I, you, he/she) and number (singular, plural).
 			</KeyInsight>
 
-			<div className="p-3 bg-aegean/10 rounded-lg border border-aegean/30 flex items-center justify-between">
+			<div className="p-3 bg-ocean-100 rounded-lg border border-ocean-300 flex items-center justify-between">
 				<span className="text-sm text-stone-700">
 					For detailed conjugation patterns and usage examples
 				</span>
 				<Link
 					to="/quick-reference/verbs"
-					className="inline-flex items-center gap-1.5 text-sm font-medium text-aegean-text hover:underline"
+					className="inline-flex items-center gap-1.5 text-sm font-medium text-ocean-text hover:underline"
 				>
 					See full patterns <ArrowRight size={14} />
 				</Link>
@@ -76,7 +76,7 @@ export default function VerbsRoute() {
 
 							<div className="grid md:grid-cols-2 gap-4 mb-4">
 								{/* Type 1: -ομαι */}
-								<div className="p-4 bg-olive/5 rounded-lg border border-olive/20">
+								<div className="p-4 bg-olive-50 rounded-lg border border-olive-200">
 									<h4 className="font-semibold text-olive-text mb-3">
 										Type 1: -ομαι
 									</h4>
@@ -95,7 +95,7 @@ export default function VerbsRoute() {
 								</div>
 
 								{/* Type 2: -άμαι */}
-								<div className="p-4 bg-olive/5 rounded-lg border border-olive/20">
+								<div className="p-4 bg-olive-50 rounded-lg border border-olive-200">
 									<h4 className="font-semibold text-olive-text mb-3">
 										Type 2: -άμαι
 									</h4>
@@ -144,7 +144,7 @@ export default function VerbsRoute() {
 								{IRREGULAR_VERBS.map((verb) => (
 									<div
 										key={verb.infinitive}
-										className="p-4 bg-honey/5 rounded-lg border border-honey/20"
+										className="p-4 bg-honey-50 rounded-lg border border-honey-200"
 									>
 										<ParadigmTable
 											infinitive={verb.infinitive}

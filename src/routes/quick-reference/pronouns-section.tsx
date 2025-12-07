@@ -48,7 +48,7 @@ export const PronounsSection: React.FC = () => {
 				<CategoryCard
 					title="Object Pronouns"
 					priority="primary"
-					colorScheme="aegean"
+					colorScheme="ocean"
 					badge="Essential"
 				>
 					<p className="text-sm text-stone-600 mb-3">Use these constantly! (με, σε, τον...)</p>
@@ -56,13 +56,13 @@ export const PronounsSection: React.FC = () => {
 						<AlertTitle>Word order</AlertTitle>
 						<AlertDescription>Object pronouns go BEFORE the verb: σε βλέπω (you I-see) = I see you</AlertDescription>
 					</Alert>
-					<PronounParadigmTable data={OBJECT_PRONOUNS} colorClass="border-aegean/40" />
-					<div className="mt-4 pt-4 border-t border-aegean/30">
+					<PronounParadigmTable data={OBJECT_PRONOUNS} colorClass="border-ocean-300" />
+					<div className="mt-4 pt-4 border-t border-ocean-300">
 						<div className="text-sm text-stone-600 mb-2 font-medium">Examples:</div>
 						<div className="flex flex-wrap gap-2">
 							{OBJECT_PRONOUN_EXAMPLES.map((ex, i) => (
-								<div key={i} className="px-3 py-1.5 bg-white rounded-full border border-aegean/30 text-sm">
-									<MonoText size="sm" className="text-aegean-text">{ex.greek}</MonoText>
+								<div key={i} className="px-3 py-1.5 bg-white rounded-full border border-ocean-300 text-sm">
+									<MonoText size="sm" className="text-ocean-text">{ex.greek}</MonoText>
 									<span className="text-stone-600 ml-1">({ex.english})</span>
 								</div>
 							))}
@@ -83,14 +83,14 @@ export const PronounsSection: React.FC = () => {
 					</Alert>
 					<PronounParadigmTable
 						data={POSSESSIVE_PRONOUNS}
-						colorClass="border-terracotta/40"
+						colorClass="border-terracotta-400"
 						note="Neuter uses same form as masculine (του)"
 					/>
-					<div className="mt-4 pt-4 border-t border-terracotta/30">
+					<div className="mt-4 pt-4 border-t border-terracotta-300">
 						<div className="text-sm text-stone-600 mb-2 font-medium">Examples:</div>
 						<div className="flex flex-wrap gap-2">
 							{POSSESSIVE_PRONOUN_EXAMPLES.map((ex, i) => (
-								<div key={i} className="px-3 py-1.5 bg-white rounded-full border border-terracotta/30 text-sm">
+								<div key={i} className="px-3 py-1.5 bg-white rounded-full border border-terracotta-300 text-sm">
 									<MonoText size="sm" className="text-terracotta-text">{ex.greek}</MonoText>
 									<span className="text-stone-600 ml-1">({ex.english})</span>
 								</div>
@@ -112,12 +112,12 @@ export const PronounsSection: React.FC = () => {
 						<AlertTitle>Good news</AlertTitle>
 						<AlertDescription>Verb endings already show person, so subject pronouns are usually optional. Use them for emphasis.</AlertDescription>
 					</Alert>
-					<PronounParadigmTable data={SUBJECT_PRONOUNS} colorClass="border-olive/40" />
-					<div className="mt-4 pt-4 border-t border-olive/30">
+					<PronounParadigmTable data={SUBJECT_PRONOUNS} colorClass="border-olive-400" />
+					<div className="mt-4 pt-4 border-t border-olive-300">
 						<div className="text-sm text-stone-600 mb-2 font-medium">Examples:</div>
 						<div className="flex flex-wrap gap-2">
 							{SUBJECT_PRONOUN_EXAMPLES.map((ex, i) => (
-								<div key={i} className="px-3 py-1.5 bg-white rounded-full border border-olive/30 text-sm">
+								<div key={i} className="px-3 py-1.5 bg-white rounded-full border border-olive-300 text-sm">
 									<MonoText size="sm" className="text-olive-text">{ex.greek}</MonoText>
 									<span className="text-stone-600 ml-1">({ex.english})</span>
 								</div>
@@ -136,12 +136,12 @@ export const PronounsSection: React.FC = () => {
 						<AlertTitle>When to use</AlertTitle>
 						<AlertDescription>Use these after prepositions (για, με, από, σε): για μένα = for me</AlertDescription>
 					</Alert>
-					<PronounParadigmTable data={EMPHATIC_PRONOUNS} colorClass="border-honey/40" />
-					<div className="mt-4 pt-4 border-t border-honey/30">
+					<PronounParadigmTable data={EMPHATIC_PRONOUNS} colorClass="border-honey-400" />
+					<div className="mt-4 pt-4 border-t border-honey-300">
 						<div className="text-sm text-stone-600 mb-2 font-medium">Examples:</div>
 						<div className="flex flex-wrap gap-2">
 							{EMPHATIC_PRONOUN_EXAMPLES.map((ex, i) => (
-								<div key={i} className="px-3 py-1.5 bg-white rounded-full border border-honey/30 text-sm">
+								<div key={i} className="px-3 py-1.5 bg-white rounded-full border border-honey-300 text-sm">
 									<MonoText size="sm" className="text-honey-text">{ex.greek}</MonoText>
 									<span className="text-stone-600 ml-1">({ex.english})</span>
 								</div>
@@ -152,12 +152,12 @@ export const PronounsSection: React.FC = () => {
 			</div>
 
 			{/* Double object pattern - with visual contrast */}
-			<Card variant="bordered" padding="md" className="bg-aegean/5 border-aegean/30">
-				<h4 className="font-bold text-aegean-text mb-1">{PRONOUN_PATTERNS.doubleObject.title}</h4>
+			<Card variant="bordered" padding="md" className="bg-ocean-50 border-ocean-300">
+				<h4 className="font-bold text-ocean-text mb-1">{PRONOUN_PATTERNS.doubleObject.title}</h4>
 				<p className="text-sm text-stone-600 mb-4">{PRONOUN_PATTERNS.doubleObject.explanation}</p>
 
 				{/* Visual contrast */}
-				<div className="mb-4 p-3 bg-white rounded-lg border border-aegean/30 space-y-1 text-sm">
+				<div className="mb-4 p-3 bg-white rounded-lg border border-ocean-300 space-y-1 text-sm">
 					<div className="flex items-center gap-2">
 						<span className="text-stone-600 w-16">English:</span>
 						<span className="text-stone-700">{PRONOUN_PATTERNS.doubleObject.contrast.english}</span>
@@ -172,7 +172,7 @@ export const PronounsSection: React.FC = () => {
 				{/* Examples with literal translations */}
 				<div className="flex flex-wrap gap-2">
 					{PRONOUN_PATTERNS.doubleObject.examples.map((ex, i) => (
-						<div key={i} className="px-3 py-2 bg-white rounded-lg border border-aegean/30">
+						<div key={i} className="px-3 py-2 bg-white rounded-lg border border-ocean-300">
 							<MonoText variant="highlighted">{ex.greek}</MonoText>
 							<span className="text-stone-600 ml-2 text-sm">({ex.literal})</span>
 						</div>

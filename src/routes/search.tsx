@@ -112,10 +112,10 @@ export default function SearchRoute({ loaderData }: Route.ComponentProps) {
 						// Word-type visual differentiation with colored left borders
 						const borderClass = cn(
 							"border-l-4",
-							result.type === "verb" && "border-aegean/60",
-							result.type === "noun" && "border-olive/60",
-							result.type === "phrase" && "border-terracotta/60",
-							result.type === "adverb" && "border-honey/60",
+							result.type === "verb" && "border-ocean-500",
+							result.type === "noun" && "border-olive-500",
+							result.type === "phrase" && "border-terracotta-500",
+							result.type === "adverb" && "border-honey-500",
 							!result.type && "border-stone-300"
 						);
 

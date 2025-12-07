@@ -38,33 +38,33 @@ export type SituationConfig = {
 	icon: React.ReactNode;
 	youllHear: Phrase[];
 	responses: Phrase[];
-	variant: "olive" | "terracotta" | "aegean" | "honey";
+	variant: "olive" | "terracotta" | "ocean" | "honey";
 };
 
 export const variantStyles = {
 	olive: {
 		card: "situation-olive",
 		text: "situation-olive-text",
-		phraseBg: "bg-olive/10",
-		responseBg: "bg-olive/5",
+		phraseBg: "bg-olive-100",
+		responseBg: "bg-olive-50",
 	},
 	terracotta: {
 		card: "situation-terracotta",
 		text: "situation-terracotta-text",
-		phraseBg: "bg-terracotta/10",
-		responseBg: "bg-terracotta/5",
+		phraseBg: "bg-terracotta-100",
+		responseBg: "bg-terracotta-50",
 	},
-	aegean: {
-		card: "situation-aegean",
-		text: "situation-aegean-text",
-		phraseBg: "bg-aegean/10",
-		responseBg: "bg-aegean/5",
+	ocean: {
+		card: "situation-ocean",
+		text: "situation-ocean-text",
+		phraseBg: "bg-ocean-100",
+		responseBg: "bg-ocean-50",
 	},
 	honey: {
 		card: "situation-honey",
 		text: "situation-honey-text",
-		phraseBg: "bg-honey/10",
-		responseBg: "bg-honey/5",
+		phraseBg: "bg-honey-100",
+		responseBg: "bg-honey-50",
 	},
 };
 
@@ -187,7 +187,7 @@ export const SITUATIONS: SituationConfig[] = [
 			{ text: "Δεν ξέρω ακόμα", english: "I don't know yet" },
 			{ text: "Πολύ καλά", english: "Very good" },
 		],
-		variant: "aegean",
+		variant: "ocean",
 	},
 	{
 		id: "requests",

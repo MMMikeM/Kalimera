@@ -85,7 +85,7 @@ const VocabularyDrill: React.FC<VocabularyDrillProps> = ({ items }) => {
 
 	if (items.length === 0) {
 		return (
-			<div className="text-center py-12 bg-olive/10 rounded-xl border border-olive/30">
+			<div className="text-center py-12 bg-olive-100 rounded-xl border border-olive-300">
 				<div className="text-5xl mb-4">🎉</div>
 				<h3 className="text-xl font-semibold text-olive-text mb-2">All words learned!</h3>
 				<p className="text-olive-text">You've practiced all available vocabulary.</p>
@@ -96,7 +96,7 @@ const VocabularyDrill: React.FC<VocabularyDrillProps> = ({ items }) => {
 
 	if (items.length < 4) {
 		return (
-			<div className="text-center py-12 bg-honey/10 rounded-xl border border-honey/30">
+			<div className="text-center py-12 bg-honey-100 rounded-xl border border-honey-300">
 				<div className="text-5xl mb-4">📚</div>
 				<h3 className="text-xl font-semibold text-honey-text mb-2">Almost there!</h3>
 				<p className="text-honey-text">

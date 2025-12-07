@@ -46,7 +46,7 @@ const renderDescription = (text: string) => {
 };
 
 export const PronounDecisionGuide = () => (
-	<Card variant="bordered" padding="lg" className="bg-honey/5 border-honey/30">
+	<Card variant="bordered" padding="lg" className="bg-honey-50 border-honey-300">
 		<h3 className="text-lg font-bold text-honey-text mb-3">Which "me/you" do I use?</h3>
 		<p className="text-sm text-stone-600 mb-4">
 			English "me" is one word. Greek splits it by <strong>function</strong>:
@@ -54,7 +54,7 @@ export const PronounDecisionGuide = () => (
 
 		<div className="space-y-3">
 			{PRONOUN_OPTIONS.map((option) => (
-				<div key={option.label} className="p-3 bg-white rounded-lg border border-honey/30">
+				<div key={option.label} className="p-3 bg-white rounded-lg border border-honey-300">
 					<div className="flex items-start gap-3">
 						<div className="text-honey-text font-bold text-sm w-20 shrink-0">{option.label}</div>
 						<div className="flex-1">
@@ -76,12 +76,12 @@ export const PronounDecisionGuide = () => (
 		</div>
 
 		{/* Cross-type comparison table */}
-		<div className="mt-4 pt-3 border-t border-honey/30">
+		<div className="mt-4 pt-3 border-t border-honey-300">
 			<p className="text-xs text-stone-500 mb-2">One English word → multiple Greek forms:</p>
 			<div className="overflow-x-auto">
 				<table className="w-full text-sm border-collapse">
 					<thead>
-						<tr className="border-b border-honey/30">
+						<tr className="border-b border-honey-300">
 							<th className="text-left py-1.5 px-2 text-stone-500 font-medium text-xs">English</th>
 							<th className="text-left py-1.5 px-2 text-stone-500 font-medium text-xs">Object</th>
 							<th className="text-left py-1.5 px-2 text-stone-500 font-medium text-xs">Possessive</th>
@@ -118,7 +118,7 @@ export const PronounDecisionGuide = () => (
 			</div>
 		</div>
 
-		<div className="mt-4 pt-3 border-t border-honey/30 text-sm text-honey-text">
+		<div className="mt-4 pt-3 border-t border-honey-300 text-sm text-honey-text">
 			<strong>Quick test:</strong> Can you insert "to" before it? → Use <MonoText size="sm">μου/σου</MonoText>.
 			Is there a preposition before it? → Use <MonoText size="sm">εμένα/εσένα</MonoText>.
 			Otherwise → Use <MonoText size="sm">με/σε</MonoText>.

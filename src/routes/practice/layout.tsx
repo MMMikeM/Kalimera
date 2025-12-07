@@ -418,8 +418,8 @@ export interface PracticeLoaderData {
 
 const TAB_COLORS = {
 	pronouns: {
-		active: "border-b-2 border-b-aegean text-aegean",
-		icon: "text-aegean",
+		active: "border-b-2 border-b-ocean text-ocean",
+		icon: "text-ocean",
 	},
 	articles: {
 		active: "border-b-2 border-b-olive text-olive",
