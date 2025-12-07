@@ -1,34 +1,26 @@
+import type React from "react";
 import {
 	MessageCircle,
 	DoorOpen,
 	Utensils,
-	Link,
 	ChevronDown,
 	Lightbulb,
 	Hand,
 } from "lucide-react";
-import type React from "react";
-import { useSearchParams } from "react-router";
-import type { Route } from "./+types/conversations";
-import { Card, MonoText } from "../components";
-import {
-	Tabs,
-	TabsContent,
-	TabsList,
-	TabsTrigger,
-} from "@/components/ui/tabs";
+import { Outlet, useLocation, Link as RouterLink } from "react-router";
+import { Card, MonoText } from "@/components";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
 	Collapsible,
 	CollapsibleContent,
 	CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import type { Phrase } from "../types/phrase";
+import type { Phrase } from "@/types/phrase";
 import {
 	ARRIVING_PHRASES,
-	DISCOURSE_MARKERS,
 	FOOD_PHRASES,
 	SMALLTALK_PHRASES,
-} from "../scripts/seed-data/vocabulary";
+} from "@/scripts/seed-data/vocabulary";
 
 export function meta() {
 	return [
@@ -40,7 +32,7 @@ export function meta() {
 	];
 }
 
-type SituationConfig = {
+export type SituationConfig = {
 	id: string;
 	title: string;
 	icon: React.ReactNode;
@@ -49,7 +41,7 @@ type SituationConfig = {
 	variant: "olive" | "terracotta" | "aegean" | "honey";
 };
 
-const variantStyles = {
+export const variantStyles = {
 	olive: {
 		card: "situation-olive",
 		text: "situation-olive-text",
@@ -76,7 +68,7 @@ const variantStyles = {
 	},
 };
 
-const PhraseList: React.FC<{
+export const PhraseList: React.FC<{
 	phrases: Phrase[];
 	bgClass: string;
 }> = ({ phrases, bgClass }) => (
@@ -92,18 +84,16 @@ const PhraseList: React.FC<{
 	</div>
 );
 
-const SituationContent: React.FC<{
+export const SituationContent: React.FC<{
 	situation: SituationConfig;
 }> = ({ situation }) => {
 	const styles = variantStyles[situation.variant];
 
 	return (
-		<Card
-			variant="bordered"
-			padding="lg"
-			className={styles.card}
-		>
-			<h3 className={`text-lg font-bold mb-4 ${styles.text} flex items-center gap-2`}>
+		<Card variant="bordered" padding="lg" className={styles.card}>
+			<h3
+				className={`text-lg font-bold mb-4 ${styles.text} flex items-center gap-2`}
+			>
 				{situation.icon} {situation.title}
 			</h3>
 
@@ -124,19 +114,7 @@ const SituationContent: React.FC<{
 	);
 };
 
-const DiscourseMarkersContent: React.FC = () => (
-	<Card variant="bordered" padding="lg" className="situation-aegean">
-		<h3 className="text-lg font-bold mb-2 situation-aegean-text flex items-center gap-2">
-			<Link size={20} /> Words You'll Hear Constantly
-		</h3>
-		<p className="text-sm text-aegean-text mb-4">
-			These don't translate directly but appear in every conversation
-		</p>
-		<PhraseList phrases={DISCOURSE_MARKERS} bgClass="bg-aegean/10" />
-	</Card>
-);
-
-const LearningTips: React.FC = () => (
+export const LearningTips: React.FC = () => (
 	<Collapsible>
 		<CollapsibleTrigger className="flex items-center gap-2 w-full p-3 rounded-lg bg-stone-50 hover:bg-stone-100 transition-colors text-left group">
 			<Lightbulb size={18} className="info-box-tip-icon" />
@@ -150,11 +128,11 @@ const LearningTips: React.FC = () => (
 			<div className="mt-4 info-box-tip">
 				<div className="grid md:grid-cols-2 gap-6 text-sm">
 					<div>
-						<h4 className="info-box-tip-title mb-2">
-							Comprehension First
-						</h4>
+						<h4 className="info-box-tip-title mb-2">Comprehension First</h4>
 						<ul className="space-y-1.5 text-stone-700">
-							<li>Listen actively - recognize these phrases when you hear them</li>
+							<li>
+								Listen actively - recognize these phrases when you hear them
+							</li>
 							<li>One situation at a time - master this before moving on</li>
 							<li>Context matters - notice when people use these phrases</li>
 						</ul>
@@ -173,7 +151,7 @@ const LearningTips: React.FC = () => (
 	</Collapsible>
 );
 
-const SITUATIONS: SituationConfig[] = [
+export const SITUATIONS: SituationConfig[] = [
 	{
 		id: "arriving",
 		title: "Arriving & Leaving",
@@ -235,13 +213,12 @@ const SITUATIONS: SituationConfig[] = [
 	},
 ];
 
-const Conversations: React.FC = () => {
-	const [searchParams, setSearchParams] = useSearchParams();
-	const activeTab = searchParams.get("tab") || "arriving";
+const TABS = SITUATIONS.map((s) => ({ id: s.id, title: s.title, icon: s.icon }));
 
-	const handleTabChange = (value: string) => {
-		setSearchParams({ tab: value });
-	};
+export default function ConversationsLayout() {
+	const location = useLocation();
+	const pathSegments = location.pathname.split("/").filter(Boolean);
+	const activeTab = pathSegments[1] || "arriving";
 
 	return (
 		<div className="space-y-6">
@@ -252,46 +229,26 @@ const Conversations: React.FC = () => {
 				</p>
 			</div>
 
-			<Tabs value={activeTab} onValueChange={handleTabChange}>
+			<Tabs value={activeTab}>
 				<TabsList className="flex-wrap h-auto gap-1">
-					{SITUATIONS.map((situation) => (
+					{TABS.map((tab) => (
 						<TabsTrigger
-							key={situation.id}
-							value={situation.id}
+							key={tab.id}
+							value={tab.id}
+							asChild
 							className="gap-1.5"
 						>
-							{situation.icon}
-							<span className="hidden sm:inline">{situation.title}</span>
-							<span className="sm:hidden">{situation.title.split(" ")[0]}</span>
+							<RouterLink to={`/conversations/${tab.id}`}>
+								{tab.icon}
+								<span className="hidden sm:inline">{tab.title}</span>
+								<span className="sm:hidden">{tab.title.split(" ")[0]}</span>
+							</RouterLink>
 						</TabsTrigger>
 					))}
-					<TabsTrigger value="discourse" className="gap-1.5">
-						<Link size={16} />
-						<span className="hidden sm:inline">Discourse Markers</span>
-						<span className="sm:hidden">Markers</span>
-					</TabsTrigger>
 				</TabsList>
-
-				{SITUATIONS.map((situation) => (
-					<TabsContent key={situation.id} value={situation.id}>
-						<div className="space-y-4">
-							<SituationContent situation={situation} />
-							<LearningTips />
-						</div>
-					</TabsContent>
-				))}
-
-				<TabsContent value="discourse">
-					<div className="space-y-4">
-						<DiscourseMarkersContent />
-						<LearningTips />
-					</div>
-				</TabsContent>
 			</Tabs>
+
+			<Outlet />
 		</div>
 	);
-};
-
-export default function ConversationsRoute(_props: Route.ComponentProps) {
-	return <Conversations />;
 }
