@@ -5,6 +5,7 @@ import { vocabulary, verbDetails } from "../db/schema";
 import { MonoText, SearchInput } from "../components";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { cn } from "@/lib/utils";
 
 interface VocabularyWithTags {
 	id: number;
@@ -104,41 +105,54 @@ export default function SearchRoute({ loaderData }: Route.ComponentProps) {
 
 			{searchResults.length > 0 && (
 				<div className="space-y-2">
-					<h4 className="font-bold">
+					<h4 className="font-bold" aria-live="polite">
 						Search Results ({searchResults.length}):
 					</h4>
-					{searchResults.map((result) => (
-						<div
-							key={result.id}
-							className="p-3 bg-stone-50 rounded-lg"
-						>
-							<div className="flex justify-between items-start">
-								<div>
-									<MonoText variant="primary" size="lg">
-										{result.greek}
-									</MonoText>
-									<span className="text-stone-700 ml-3">{result.english}</span>
+					{searchResults.map((result) => {
+						// Word-type visual differentiation with colored left borders
+						const borderClass = cn(
+							"border-l-4",
+							result.type === "verb" && "border-aegean/60",
+							result.type === "noun" && "border-olive/60",
+							result.type === "phrase" && "border-terracotta/60",
+							result.type === "adverb" && "border-honey/60",
+							!result.type && "border-stone-300"
+						);
+
+						return (
+							<div
+								key={result.id}
+								className={cn("p-4 bg-stone-50 rounded-lg", borderClass)}
+							>
+								<div className="flex justify-between items-start gap-4">
+									<div className="flex-1 min-w-0">
+										{/* Greek text prominently displayed */}
+										<MonoText variant="greek" size="lg" className="text-2xl font-medium block mb-1">
+											{result.greek}
+										</MonoText>
+										<p className="text-stone-600">{result.english}</p>
+									</div>
+									<div className="flex gap-2 flex-wrap justify-end flex-shrink-0">
+										{result.type && (
+											<Badge variant="default">{result.type}</Badge>
+										)}
+										{result.family && (
+											<Badge variant="primary">{result.family}</Badge>
+										)}
+									</div>
 								</div>
-								<div className="flex gap-2 flex-wrap justify-end">
-									{result.type && (
-										<Badge variant="default">{result.type}</Badge>
-									)}
-									{result.family && (
-										<Badge variant="primary">{result.family}</Badge>
-									)}
-								</div>
+								{result.tags.length > 0 && (
+									<div className="mt-3 flex gap-1 flex-wrap">
+										{result.tags.map((tag) => (
+											<Badge key={tag} variant="secondary" size="sm">
+												{tag}
+											</Badge>
+										))}
+									</div>
+								)}
 							</div>
-							{result.tags.length > 0 && (
-								<div className="mt-2 flex gap-1 flex-wrap">
-									{result.tags.map((tag) => (
-										<Badge key={tag} variant="secondary" size="sm">
-											{tag}
-										</Badge>
-									))}
-								</div>
-							)}
-						</div>
-					))}
+						);
+					})}
 				</div>
 			)}
 
