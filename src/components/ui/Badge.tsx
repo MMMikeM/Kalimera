@@ -12,15 +12,15 @@ const badgeVariants = cva(
         default:
           "border-transparent bg-stone-200 text-stone-800",
         primary:
-          "border-transparent bg-aegean/20 text-aegean-text",
+          "border-transparent bg-ocean-200 text-ocean-text",
         secondary:
-          "border-transparent bg-terracotta/20 text-terracotta-text",
+          "border-transparent bg-terracotta-200 text-terracotta-text",
         success:
-          "border-transparent bg-olive/20 text-olive-text",
+          "border-transparent bg-olive-200 text-olive-text",
         warning:
-          "border-transparent bg-honey/20 text-honey-text",
+          "border-transparent bg-honey-200 text-honey-text",
         error:
-          "border-transparent bg-incorrect/20 text-incorrect",
+          "border-transparent bg-incorrect-200 text-incorrect",
         destructive:
           "border-transparent bg-destructive text-white [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
         outline:

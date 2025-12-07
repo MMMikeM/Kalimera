@@ -92,7 +92,7 @@ These colors fail WCAG AA for body text. Use only for borders, icons, large text
 |-------|-----|----------|-----|
 | `terracotta` | `#C4663F` | 3.9:1 | Primary actions, emphasis |
 | `olive` | `#6B7B5C` | 4.2:1 | Nature, connection |
-| `aegean` | `#4A7C8F` | 4.1:1 | Stability, calm |
+| `ocean` | `#4A7C8F` | 4.1:1 | Stability, calm |
 | `honey` | `#D4A853` | 3.2:1 | Highlights, hints |
 | `santorini` | `#02B8D9` | 3.1:1 | Links, interactive |
 | `navy` | `#3B5478` | 5.8:1 | Headings, scholarly |
@@ -106,7 +106,7 @@ Use these for any text content. 10:1+ contrast on both cream and tinted backgrou
 |-------|-----|
 | `terracotta-text` | `#5C2D14` |
 | `olive-text` | `#1F2A18` |
-| `aegean-text` | `#14333F` |
+| `ocean-text` | `#14333F` |
 | `honey-text` | `#4A3508` |
 | `santorini-text` | `#084A52` |
 | `navy-text` | `#1A2838` |
@@ -137,20 +137,11 @@ Use these for categorizing content (cards, sections, conversation types):
 </div>
 ```
 
-Available: `situation-{terracotta|olive|aegean|honey|santorini|navy|slate}`
+Available: `situation-{terracotta|olive|ocean|honey|santorini|navy|slate}`
 
 ### Grammar Semantic Colors
 
-**Cases** are mapped to colors:
-
-| Case | Color | Rationale |
-|------|-------|-----------|
-| Nominative | Aegean | Subject - stable, foundational |
-| Accusative | Terracotta | Direct object - action target |
-| Genitive | Olive | Possession - connection |
-| Vocative | Honey | Direct address - attention |
-
-CSS classes: `.case-nominative`, `.case-badge-nominative`, etc.
+**Cases** are mapped to colors already listed above.
 
 **Gender** colors are intentionally subtle - use only as thin left borders, never as backgrounds:
 
@@ -249,7 +240,7 @@ When working on Quick Reference pages, prefer these shared components:
 </CollapsibleSection>
 ```
 
-- Color schemes: honey, aegean, olive, terracotta, santorini, navy, default
+- Color schemes: honey, ocean, olive, terracotta, santorini, navy, default
 - Includes focus states for accessibility
 
 ### `QuickTest`
@@ -286,7 +277,7 @@ When working on Quick Reference pages, prefer these shared components:
 <CategoryCard
   title="Object Pronouns"
   priority="primary"
-  colorScheme="aegean"
+  colorScheme="ocean"
   badge="Essential"
 >
   Content
@@ -303,8 +294,8 @@ When working on Quick Reference pages, prefer these shared components:
 | Section h2/h3 headings | `text-navy-text` |
 | Subtitles/descriptions | `text-slate-text` |
 | Interactive (collapsibles, links) | `text-santorini-text` |
-| Key insight callouts | `bg-santorini/5`, `border-santorini/30` |
-| Tips and self-tests | `bg-honey/5`, `border-honey/30` |
+| Key insight callouts | `bg-santorini-50`, `border-santorini-300` |
+| Tips and self-tests | `bg-honey-50`, `border-honey-300` |
 | Decorative icons | Base color (e.g., `text-honey`) |
 | Icon labels/text | `-text` variant (e.g., `text-honey-text`) |
 
@@ -325,7 +316,7 @@ Research confirms color-coded material improves vocabulary retention when catego
 | Category | Recommended Approach |
 |----------|---------------------|
 | **Grammatical Gender** | Consistent colors for masculine/feminine/neuter |
-| **Grammatical Case** | Cases already mapped (nom→aegean, acc→terracotta, gen→olive, voc→honey) |
+| **Grammatical Case** | Cases already mapped (nom→ocean, acc→terracotta, gen→olive, voc→honey) |
 | **Part of Speech** | Group related types (verbs/adverbs vs nouns/adjectives) |
 | **Verb Pattern** | Different patterns (-ω, -άω, -ομαι) can use distinct colors |
 
@@ -380,7 +371,7 @@ When designing a new component that displays Greek vocabulary:
 </div>
 
 // BAD - Color is decorative/random
-<Badge colorScheme={['aegean', 'terracotta', 'olive'][index % 3]}>
+<Badge colorScheme={['ocean', 'terracotta', 'olive'][index % 3]}>
   {noun.article}
 </Badge>
 ```
@@ -401,6 +392,7 @@ This section is based on:
 4. **Never use warm colors as large background fills** - Reserve for accents only
 5. **Never use more than 3-4 accent colors in a single view** - Causes cognitive overload
 6. **Never use color as the only indicator** - Always pair with text labels or icons
+7. **Never use colored shadows** - Use neutral shadows only (`shadow-sm`, `shadow-md`), never `shadow-{color}-*`
 
 ## Output Expectations
 

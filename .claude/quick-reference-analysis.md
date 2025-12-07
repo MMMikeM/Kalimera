@@ -89,7 +89,7 @@ Collected feedback from curriculum-analyst and ui-designer agents.
 | **σε Contraction lacks WHY** | Curriculum | Shows formula but not why it matters. Add: "These contractions are mandatory in speech" |
 | **Color legend buried** | Both | Olive=σε/blue=από explanation appears AFTER content. Move before compound pairs |
 | **Greek text not using `greek-text` class** | UI | MonoText used but without `variant="greek"` - Greek renders same size as English |
-| **New palette colors unused** | UI | Only olive/aegean used. Apply navy to section headings, santorini for interactive elements |
+| **New palette colors unused** | UI | Only olive/ocean used. Apply navy to section headings, santorini for interactive elements |
 
 ### MEDIUM Priority
 
@@ -126,7 +126,7 @@ Collected feedback from curriculum-analyst and ui-designer agents.
 | **No mention of negation** | Curriculum | Examples show "Δεν μιλάμε" but negation never explained. Add: "Negation: Add δεν before the verb" |
 | **Missing tenses** | Curriculum | Only present tense shown. Data for past/future exists unused. Add note or collapsed section |
 | **Greek text not using MonoText consistently** | UI | "Which Pattern?" flow diagram uses raw `<span className="font-mono">` instead of MonoText component |
-| **"Learn First" badge contrast** | UI | `bg-aegean text-white` may not achieve AAA contrast. Use `bg-aegean-light text-aegean-text` |
+| **"Learn First" badge contrast** | UI | `bg-ocean text-white` may not achieve AAA contrast. Use `bg-ocean-light text-ocean-text` |
 | **New palette colors unused** | UI | navy, santorini, slate not utilized anywhere |
 
 ### MEDIUM Priority

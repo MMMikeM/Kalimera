@@ -16,7 +16,7 @@ The practice section suffers from **visual monotony** that undermines learning e
 
 **Current styling:**
 ```
-bg-aegean/5, border-aegean/30
+bg-ocean-50, border-ocean-300
 ```
 
 **What I observed:**
@@ -28,7 +28,7 @@ bg-aegean/5, border-aegean/30
 - "How to Practice Effectively" collapsible at bottom
 
 **Issues:**
-- The aegean tint at 5% opacity is barely visible - the card reads as white/cream
+- The ocean tint at 5% opacity is barely visible - the card reads as white/cream
 - No visual distinction that this is specifically about pronouns vs articles
 - All option cards styled identically regardless of pronoun type (object vs possessive)
 - The terracotta accent bar is the same across all drill types
@@ -38,7 +38,7 @@ bg-aegean/5, border-aegean/30
 
 **Current styling:**
 ```
-bg-olive/5, border-olive/30
+bg-olive-50, border-olive-300
 ```
 
 **What I observed:**
@@ -58,7 +58,7 @@ bg-olive/5, border-olive/30
 
 **Current styling:**
 ```
-bg-honey/5, border-honey/30
+bg-honey-50, border-honey-300
 ```
 
 **What I observed:**
@@ -228,38 +228,38 @@ The tab bar (`Pronouns | Articles | Verbs | Vocabulary | Review`) uses identical
 
 Each practice type should be immediately recognizable.
 
-#### Pronouns - "Aegean Identity"
+#### Pronouns - "Ocean Identity"
 
 ```tsx
 // Before
-<Card className="bg-aegean/5 border-aegean/30">
+<Card className="bg-ocean-50 border-ocean-300">
 
 // After
-<Card className="border-l-4 border-l-aegean bg-gradient-to-r from-aegean/15 to-cream">
+<Card className="border-l-4 border-l-ocean bg-gradient-to-r from-ocean-100 to-cream">
   <div className="flex items-center gap-3 mb-4">
-    <div className="w-10 h-10 rounded-full bg-aegean/20 flex items-center justify-center">
-      <Users className="w-5 h-5 text-aegean-text" />
+    <div className="w-10 h-10 rounded-full bg-ocean-100 flex items-center justify-center">
+      <Users className="w-5 h-5 text-ocean-text" />
     </div>
     <div>
-      <h3 className="text-lg font-bold text-aegean-text">Pronoun Practice</h3>
+      <h3 className="text-lg font-bold text-ocean-text">Pronoun Practice</h3>
       <p className="text-sm text-stone-600">Object & possessive pronouns in context</p>
     </div>
   </div>
 ```
 
 **Visual differentiators:**
-- 4px left border in aegean (bold, visible)
-- Gradient background from aegean/15 to transparent
+- 4px left border in ocean (bold, visible)
+- Gradient background from ocean-100 to transparent
 - Icon badge in header (Users icon for pronouns)
-- Title in aegean-text color
-- Aegean-colored progress bar
+- Title in ocean-text color
+- Ocean-colored progress bar
 
 #### Articles - "Olive Identity"
 
 ```tsx
-<Card className="border-l-4 border-l-olive bg-gradient-to-r from-olive/15 to-cream">
+<Card className="border-l-4 border-l-olive bg-gradient-to-r from-olive-100 to-cream">
   <div className="flex items-center gap-3 mb-4">
-    <div className="w-10 h-10 rounded-full bg-olive/20 flex items-center justify-center">
+    <div className="w-10 h-10 rounded-full bg-olive-100 flex items-center justify-center">
       <FileText className="w-5 h-5 text-olive-text" />
     </div>
     <div>
@@ -281,9 +281,9 @@ Each practice type should be immediately recognizable.
 #### Verbs - "Honey Identity"
 
 ```tsx
-<Card className="border-l-4 border-l-honey bg-gradient-to-r from-honey/15 to-cream">
+<Card className="border-l-4 border-l-honey bg-gradient-to-r from-honey-100 to-cream">
   <div className="flex items-center gap-3 mb-4">
-    <div className="w-10 h-10 rounded-full bg-honey/20 flex items-center justify-center">
+    <div className="w-10 h-10 rounded-full bg-honey-100 flex items-center justify-center">
       <Zap className="w-5 h-5 text-honey-text" />
     </div>
     <div>
@@ -315,9 +315,9 @@ const options = [
 #### Vocabulary - "Santorini Identity"
 
 ```tsx
-<Card className="border-l-4 border-l-santorini bg-gradient-to-r from-santorini/15 to-cream">
+<Card className="border-l-4 border-l-santorini bg-gradient-to-r from-santorini-100 to-cream">
   <div className="flex items-center gap-3 mb-4">
-    <div className="w-10 h-10 rounded-full bg-santorini/20 flex items-center justify-center">
+    <div className="w-10 h-10 rounded-full bg-santorini-100 flex items-center justify-center">
       <BookOpen className="w-5 h-5 text-santorini-text" />
     </div>
     <div>
@@ -330,7 +330,7 @@ const options = [
 **Empty state improvement:**
 ```tsx
 <div className="text-center py-12">
-  <BookOpen className="w-16 h-16 text-santorini/40 mx-auto mb-4" />
+  <BookOpen className="w-16 h-16 text-santorini opacity-40 mx-auto mb-4" />
   <h3 className="text-lg font-semibold text-santorini-text mb-2">
     Start Learning Vocabulary
   </h3>
@@ -358,9 +358,9 @@ const options = [
 #### Review - "Terracotta Identity"
 
 ```tsx
-<Card className="border-l-4 border-l-terracotta bg-gradient-to-r from-terracotta/15 to-cream">
+<Card className="border-l-4 border-l-terracotta bg-gradient-to-r from-terracotta-100 to-cream">
   <div className="flex items-center gap-3 mb-4">
-    <div className="w-10 h-10 rounded-full bg-terracotta/20 flex items-center justify-center">
+    <div className="w-10 h-10 rounded-full bg-terracotta-100 flex items-center justify-center">
       <Clock className="w-5 h-5 text-terracotta-text" />
     </div>
     <div>
@@ -379,7 +379,7 @@ const options = [
 ```tsx
 {dueCount === 0 ? (
   <div className="text-center py-12">
-    <CheckCircle className="w-16 h-16 text-correct/40 mx-auto mb-4" />
+    <CheckCircle className="w-16 h-16 text-correct opacity-40 mx-auto mb-4" />
     <h3 className="text-lg font-semibold text-stone-700 mb-2">
       All caught up!
     </h3>
@@ -389,7 +389,7 @@ const options = [
   </div>
 ) : (
   <div className="text-center py-12">
-    <Clock className="w-16 h-16 text-terracotta/40 mx-auto mb-4" />
+    <Clock className="w-16 h-16 text-terracotta opacity-40 mx-auto mb-4" />
     <h3 className="text-lg font-semibold text-terracotta-text mb-2">
       {dueCount} items need review
     </h3>
@@ -464,7 +464,7 @@ Add visual differentiation to tabs:
 
 ```tsx
 const tabConfig = {
-  pronouns: { icon: Users, color: 'aegean' },
+  pronouns: { icon: Users, color: 'ocean' },
   articles: { icon: FileText, color: 'olive' },
   verbs: { icon: Zap, color: 'honey' },
   vocabulary: { icon: BookOpen, color: 'santorini' },
@@ -473,7 +473,7 @@ const tabConfig = {
 
 <TabsTrigger
   value="pronouns"
-  className="data-[state=active]:border-b-2 data-[state=active]:border-aegean"
+  className="data-[state=active]:border-b-2 data-[state=active]:border-ocean"
 >
   <Users className="w-4 h-4 mr-1" />
   Pronouns
@@ -497,7 +497,7 @@ const tabConfig = {
 
 ```tsx
 <div className="flex items-center gap-2 mb-4">
-  <span className="px-2 py-0.5 rounded bg-aegean/10 text-aegean-text text-xs font-medium">
+  <span className="px-2 py-0.5 rounded bg-ocean-100 text-ocean-text text-xs font-medium">
     Object Pronoun
   </span>
   <span className="text-xs text-stone-500">
@@ -536,7 +536,7 @@ Add a collapsible paradigm table:
           <td>μπορεις</td>
           <td>μπορειτε</td>
         </tr>
-        <tr className="bg-honey/10">  {/* Highlight current */}
+        <tr className="bg-honey-100">  {/* Highlight current */}
           <td>3rd</td>
           <td>μπορει</td>
           <td>μπορουν</td>
@@ -601,14 +601,14 @@ interface DrillCardProps {
 
 const variantConfig = {
   pronouns: {
-    borderColor: 'border-l-aegean',
-    gradient: 'from-aegean/15',
+    borderColor: 'border-l-ocean',
+    gradient: 'from-ocean-100',
     icon: Users,
-    textColor: 'text-aegean-text',
+    textColor: 'text-ocean-text',
   },
   articles: {
     borderColor: 'border-l-olive',
-    gradient: 'from-olive/15',
+    gradient: 'from-olive-100',
     icon: FileText,
     textColor: 'text-olive-text',
   },
@@ -646,7 +646,7 @@ Add grammatical context:
 
 | Practice Type | Primary Color | Icon | Rationale |
 |---------------|---------------|------|-----------|
-| Pronouns | Aegean | Users | Foundational, stable (pronouns are essential) |
+| Pronouns | Ocean | Users | Foundational, stable (pronouns are essential) |
 | Articles | Olive | FileText | Connecting (articles connect to nouns) |
 | Verbs | Honey | Zap | Warm, active (verbs express action) |
 | Vocabulary | Santorini | BookOpen | Fresh, modern (personalized learning) |

@@ -33,7 +33,7 @@ export interface VerbFamilyConfig {
 	displayName: string;
 	shortName: string;
 	description: string;
-	colorScheme: "aegean" | "terracotta" | "olive" | "honey";
+	colorScheme: "ocean" | "terracotta" | "olive" | "honey";
 	patternKey: "active" | "contracted" | "deponent" | null;
 	conjugationKey: VerbConjugationKey | null;
 }
@@ -44,7 +44,7 @@ export const VERB_FAMILIES: Record<string, VerbFamilyConfig> = {
 		displayName: "Standard Active (-ω)",
 		shortName: "-ω verbs",
 		description: "Most common pattern",
-		colorScheme: "aegean",
+		colorScheme: "ocean",
 		patternKey: "active",
 		conjugationKey: "kano",
 	},
