@@ -1,8 +1,15 @@
+// Form structure with optional shortened/variant form
+export interface PronounForm {
+	greek: string;
+	alt?: string; // optional shortened/colloquial variant
+	english: string;
+}
+
 // Paradigm table structure - shows singular/plural relationship
 export interface PronounParadigm {
 	person: string;
-	singular: { greek: string; english: string };
-	plural: { greek: string; english: string };
+	singular: PronounForm;
+	plural: PronounForm;
 }
 
 // Object pronouns (weak/clitic forms) - CRITICAL for daily speech
@@ -16,7 +23,7 @@ export const OBJECT_PRONOUNS: PronounParadigm[] = [
 	{
 		person: "2nd",
 		singular: { greek: "σε", english: "you" },
-		plural: { greek: "σας", english: "you (pl/formal)" },
+		plural: { greek: "σας", english: "you (pl.)" },
 	},
 	{
 		person: "3rd m",
@@ -53,7 +60,7 @@ export const POSSESSIVE_PRONOUNS: PronounParadigm[] = [
 	{
 		person: "2nd",
 		singular: { greek: "σου", english: "your" },
-		plural: { greek: "σας", english: "your (pl/formal)" },
+		plural: { greek: "σας", english: "your (pl.)" },
 	},
 	{
 		person: "3rd m",
@@ -92,7 +99,7 @@ export const SUBJECT_PRONOUNS: PronounParadigm[] = [
 	{
 		person: "2nd",
 		singular: { greek: "εσύ", english: "you" },
-		plural: { greek: "εσείς", english: "you (pl/formal)" },
+		plural: { greek: "εσείς", english: "you (pl.)" },
 	},
 	{
 		person: "3rd m",
@@ -121,13 +128,13 @@ export const SUBJECT_PRONOUN_EXAMPLES = [
 export const EMPHATIC_PRONOUNS: PronounParadigm[] = [
 	{
 		person: "1st",
-		singular: { greek: "εμένα/μένα", english: "me" },
-		plural: { greek: "εμάς/μας", english: "us" },
+		singular: { greek: "εμένα", alt: "μένα", english: "me" },
+		plural: { greek: "εμάς", alt: "μας", english: "us" },
 	},
 	{
 		person: "2nd",
-		singular: { greek: "εσένα/σένα", english: "you" },
-		plural: { greek: "εσάς/σας", english: "you (pl/formal)" },
+		singular: { greek: "εσένα", alt: "σένα", english: "you" },
+		plural: { greek: "εσάς", alt: "σας", english: "you (pl.)" },
 	},
 	{
 		person: "3rd m",
@@ -136,7 +143,7 @@ export const EMPHATIC_PRONOUNS: PronounParadigm[] = [
 	},
 	{
 		person: "3rd f",
-		singular: { greek: "αυτήν/αυτή", english: "her" },
+		singular: { greek: "αυτήν", alt: "αυτή", english: "her" },
 		plural: { greek: "αυτές", english: "them" },
 	},
 	{

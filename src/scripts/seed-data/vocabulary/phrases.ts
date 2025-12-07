@@ -15,6 +15,30 @@ export const ESSENTIAL_PHRASES: Phrase[] = [
 	{ text: "Καληνύχτα", english: "good night" },
 ];
 
+// Survival phrases - critical for getting by when you don't understand
+export const SURVIVAL_PHRASES: Phrase[] = [
+	{ text: "Δεν καταλαβαίνω", english: "I don't understand" },
+	{ text: "Μιλάτε αγγλικά;", english: "do you speak English?" },
+	{ text: "Μιλάτε πιο αργά;", english: "can you speak more slowly?" },
+	{ text: "Πού είναι η τουαλέτα;", english: "where is the bathroom?" },
+	{ text: "Βοήθεια!", english: "help!" },
+	{ text: "Πόσο κάνει;", english: "how much does it cost?" },
+	{ text: "Τι σημαίνει αυτό;", english: "what does this mean?" },
+	{ text: "Πώς λέγεται αυτό;", english: "what is this called?" },
+	{ text: "Εντάξει", english: "okay" },
+];
+
+// Polite request phrases - asking for things nicely
+export const REQUEST_PHRASES: Phrase[] = [
+	{ text: "Θα ήθελα...", english: "I would like..." },
+	{ text: "Μπορώ να έχω...;", english: "can I have...?" },
+	{ text: "Μπορείτε να με βοηθήσετε;", english: "can you help me? (formal)" },
+	{ text: "Μπορείς να μου πεις;", english: "can you tell me? (informal)" },
+	{ text: "Μου δίνετε...;", english: "can you give me...? (polite)" },
+	{ text: "Θέλω...", english: "I want..." },
+	{ text: "Χρειάζομαι...", english: "I need..." },
+];
+
 // Days of the week - all feminine except Saturday (neuter)
 export const DAYS_OF_WEEK: Phrase[] = [
 	{ text: "η Δευτέρα", english: "Monday" },
