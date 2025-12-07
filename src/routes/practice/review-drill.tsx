@@ -1,7 +1,7 @@
 import type React from "react";
 import { useMemo, useCallback } from "react";
 import { useFetcher } from "react-router";
-import DrillCard, { type AttemptResult } from "./DrillCard";
+import DrillCard, { type AttemptResult } from "./drill-card";
 import type { Question } from "./types";
 import { useCurrentUserId } from "./hooks";
 import type { VocabItemWithSkill } from "./queries.server";
@@ -119,8 +119,7 @@ const ReviewDrill: React.FC<ReviewDrillProps> = ({ items }) => {
 			title="Spaced Review"
 			description={`${items.length} items due for review`}
 			questions={questions}
-			colorClass="border-terracotta/30"
-			bgClass="bg-terracotta/5"
+			variant="review"
 			onAttempt={handleAttempt}
 		/>
 	);

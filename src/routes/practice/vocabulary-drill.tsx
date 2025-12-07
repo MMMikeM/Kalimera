@@ -1,7 +1,7 @@
 import type React from "react";
 import { useMemo, useCallback } from "react";
 import { useFetcher } from "react-router";
-import DrillCard, { type AttemptResult } from "./DrillCard";
+import DrillCard, { type AttemptResult } from "./drill-card";
 import type { Question } from "./types";
 import { useCurrentUserId } from "./hooks";
 import type { VocabItemWithSkill } from "./queries.server";
@@ -111,8 +111,7 @@ const VocabularyDrill: React.FC<VocabularyDrillProps> = ({ items }) => {
 			title="Learn New Words"
 			description={`${items.length} new words to learn`}
 			questions={questions}
-			colorClass="border-terracotta/30"
-			bgClass="bg-terracotta/5"
+			variant="vocabulary"
 			onAttempt={handleAttempt}
 		/>
 	);
