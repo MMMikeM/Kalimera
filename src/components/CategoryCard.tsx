@@ -3,7 +3,7 @@ import { Card } from "./Card";
 import { cn } from "@/lib/utils";
 
 export type CardPriority = "primary" | "secondary" | "tertiary";
-export type CategoryColorScheme = "aegean" | "terracotta" | "olive" | "honey";
+export type CategoryColorScheme = "ocean" | "terracotta" | "olive" | "honey";
 
 export interface CategoryCardProps {
 	title: string;
@@ -38,36 +38,31 @@ const colorStyles: Record<
 		bgPrimary: string;
 		border: string;
 		text: string;
-		shadowColor: string;
 	}
 > = {
-	aegean: {
-		bg: "bg-aegean/10",
-		bgPrimary: "bg-aegean/20",
-		border: "border-aegean/40",
-		text: "text-aegean-text",
-		shadowColor: "shadow-aegean/15",
+	ocean: {
+		bg: "bg-ocean-100",
+		bgPrimary: "bg-ocean-200",
+		border: "border-ocean-400",
+		text: "text-ocean-text",
 	},
 	terracotta: {
-		bg: "bg-terracotta/10",
-		bgPrimary: "bg-terracotta/20",
-		border: "border-terracotta/40",
+		bg: "bg-terracotta-100",
+		bgPrimary: "bg-terracotta-200",
+		border: "border-terracotta-400",
 		text: "text-terracotta-text",
-		shadowColor: "shadow-terracotta/15",
 	},
 	olive: {
-		bg: "bg-olive/10",
-		bgPrimary: "bg-olive/20",
-		border: "border-olive/40",
+		bg: "bg-olive-100",
+		bgPrimary: "bg-olive-200",
+		border: "border-olive-400",
 		text: "text-olive-text",
-		shadowColor: "shadow-olive/15",
 	},
 	honey: {
-		bg: "bg-honey/10",
-		bgPrimary: "bg-honey/20",
-		border: "border-honey/40",
+		bg: "bg-honey-100",
+		bgPrimary: "bg-honey-200",
+		border: "border-honey-400",
 		text: "text-honey-text",
-		shadowColor: "shadow-honey/15",
 	},
 };
 
@@ -93,7 +88,6 @@ export const CategoryCard = ({
 				colors.border,
 				priorityStyle.border,
 				priorityStyle.shadow,
-				colors.shadowColor,
 				className,
 			)}
 		>

@@ -9,10 +9,10 @@ interface SpeakerBadgeProps {
 }
 
 const SPEAKER_CONFIG: Record<SpeakerRole, { label: string; bgClass: string; textClass: string }> = {
-	host: { label: "Host", bgClass: "bg-terracotta/20", textClass: "text-terracotta-text" },
-	you: { label: "You", bgClass: "bg-aegean/20", textClass: "text-aegean-text" },
-	friend: { label: "Friend", bgClass: "bg-olive/20", textClass: "text-olive-text" },
-	waiter: { label: "Waiter", bgClass: "bg-honey/20", textClass: "text-honey-text" },
+	host: { label: "Host", bgClass: "bg-terracotta-200", textClass: "text-terracotta-text" },
+	you: { label: "You", bgClass: "bg-ocean-200", textClass: "text-ocean-text" },
+	friend: { label: "Friend", bgClass: "bg-olive-200", textClass: "text-olive-text" },
+	waiter: { label: "Waiter", bgClass: "bg-honey-200", textClass: "text-honey-text" },
 	shopkeeper: { label: "Shop", bgClass: "bg-stone-200", textClass: "text-stone-700" },
 	stranger: { label: "Person", bgClass: "bg-stone-200", textClass: "text-stone-700" },
 };

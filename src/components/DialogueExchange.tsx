@@ -10,24 +10,24 @@ export interface DialogueLine {
 	note?: string; // Optional context note
 }
 
-export type ColorScheme = "olive" | "terracotta" | "aegean" | "honey";
+export type ColorScheme = "olive" | "terracotta" | "ocean" | "honey";
 
 const colorSchemeStyles: Record<ColorScheme, { you: string; other: string }> = {
 	olive: {
-		you: "bg-olive/8 border-l-4 border-olive/30",
-		other: "bg-cream-dark border-l-4 border-olive/20",
+		you: "bg-olive-50 border-l-4 border-olive-300",
+		other: "bg-cream-dark border-l-4 border-olive-200",
 	},
 	terracotta: {
-		you: "bg-terracotta/8 border-l-4 border-terracotta/30",
-		other: "bg-cream-dark border-l-4 border-terracotta/20",
+		you: "bg-terracotta-50 border-l-4 border-terracotta-300",
+		other: "bg-cream-dark border-l-4 border-terracotta-200",
 	},
-	aegean: {
-		you: "bg-aegean/8 border-l-4 border-aegean/30",
-		other: "bg-cream-dark border-l-4 border-aegean/20",
+	ocean: {
+		you: "bg-ocean-50 border-l-4 border-ocean-300",
+		other: "bg-cream-dark border-l-4 border-ocean-200",
 	},
 	honey: {
-		you: "bg-honey/8 border-l-4 border-honey/30",
-		other: "bg-cream-dark border-l-4 border-honey/20",
+		you: "bg-honey-50 border-l-4 border-honey-300",
+		other: "bg-cream-dark border-l-4 border-honey-200",
 	},
 };
 
@@ -39,7 +39,7 @@ interface DialogueExchangeProps {
 
 export const DialogueExchange: React.FC<DialogueExchangeProps> = ({
 	lines,
-	colorScheme = "aegean",
+	colorScheme = "ocean",
 	className,
 }) => {
 	const styles = colorSchemeStyles[colorScheme];

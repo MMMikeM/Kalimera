@@ -11,15 +11,15 @@ const alertVariants = cva(
         default: "bg-card text-card-foreground",
         destructive:
           "text-destructive bg-card [&>svg]:text-current *:data-[slot=alert-description]:text-destructive",
-        info: "bg-aegean/15 border-aegean/40 text-aegean-text [&>svg]:text-aegean *:data-[slot=alert-title]:text-aegean-text *:data-[slot=alert-description]:text-aegean-text",
+        info: "bg-ocean-100 border-ocean-400 text-ocean-text [&>svg]:text-ocean *:data-[slot=alert-title]:text-ocean-text *:data-[slot=alert-description]:text-ocean-text",
         warning:
-          "bg-honey/15 border-honey/40 text-honey-text [&>svg]:text-honey *:data-[slot=alert-title]:text-honey-text *:data-[slot=alert-description]:text-honey-text",
+          "bg-honey-100 border-honey-400 text-honey-text [&>svg]:text-honey *:data-[slot=alert-title]:text-honey-text *:data-[slot=alert-description]:text-honey-text",
         success:
-          "bg-olive/15 border-olive/40 text-olive-text [&>svg]:text-olive *:data-[slot=alert-title]:text-olive-text *:data-[slot=alert-description]:text-olive-text",
+          "bg-olive-100 border-olive-400 text-olive-text [&>svg]:text-olive *:data-[slot=alert-title]:text-olive-text *:data-[slot=alert-description]:text-olive-text",
         error:
-          "bg-incorrect/15 border-incorrect/40 text-incorrect [&>svg]:text-incorrect *:data-[slot=alert-title]:text-incorrect *:data-[slot=alert-description]:text-incorrect",
+          "bg-incorrect-100 border-incorrect-400 text-incorrect [&>svg]:text-incorrect *:data-[slot=alert-title]:text-incorrect *:data-[slot=alert-description]:text-incorrect",
         purple:
-          "bg-terracotta/15 border-terracotta/40 text-terracotta-text [&>svg]:text-terracotta *:data-[slot=alert-title]:text-terracotta-text *:data-[slot=alert-description]:text-terracotta-text",
+          "bg-terracotta-100 border-terracotta-400 text-terracotta-text [&>svg]:text-terracotta *:data-[slot=alert-title]:text-terracotta-text *:data-[slot=alert-description]:text-terracotta-text",
       },
     },
     defaultVariants: {

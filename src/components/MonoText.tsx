@@ -19,7 +19,7 @@ export const monoTextVariants = tv({
 
 			// Semantic variants (AAA compliant text colors)
 			primary: "text-terracotta-text font-semibold",
-			secondary: "text-aegean-text font-medium",
+			secondary: "text-ocean-text font-medium",
 			success: "text-[var(--color-correct)] font-medium",
 			warning: "text-honey-text font-medium",
 			error: "text-[var(--color-incorrect)] font-medium",
@@ -30,7 +30,7 @@ export const monoTextVariants = tv({
 			neuter: "text-[var(--color-gender-neuter)] font-semibold",
 
 			// Case variants - using AAA compliant text colors
-			nominative: "text-aegean-text font-semibold",
+			nominative: "text-ocean-text font-semibold",
 			accusative: "text-terracotta-text font-semibold",
 			genitive: "text-olive-text font-semibold",
 			vocative: "text-honey-text font-semibold",

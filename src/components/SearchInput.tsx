@@ -17,7 +17,7 @@ export const searchInputVariants = tv({
 });
 
 export const searchInputFieldVariants = tv({
-	base: "w-full bg-white text-stone-900 placeholder:text-stone-600 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-terracotta/50 focus:ring-offset-0 focus:border-terracotta transition-colors",
+	base: "w-full bg-white text-stone-900 placeholder:text-stone-600 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-terracotta-300 focus:ring-offset-0 focus:border-terracotta transition-colors",
 	variants: {
 		size: {
 			sm: "pl-8 pr-8 py-1.5 text-sm",

@@ -21,18 +21,18 @@ export const KeyInsight = ({
 	<Card
 		variant="elevated"
 		padding="lg"
-		className="bg-santorini/10 border-2 border-santorini/40"
+		className="bg-ocean-100 border-2 border-ocean-400"
 	>
 		<div className="flex items-start gap-3">
-			<div className="p-2.5 rounded-xl bg-santorini/25 shrink-0 shadow-sm">
-				<span className="text-santorini-text">{icon}</span>
+			<div className="p-2.5 rounded-xl bg-ocean-300 shrink-0 shadow-sm">
+				<span className="text-ocean-text">{icon}</span>
 			</div>
 			<div className="flex-1">
-				<h3 className="font-bold text-santorini-text mb-1">{title}</h3>
+				<h3 className="font-bold text-ocean-text mb-1">{title}</h3>
 				<div className="text-slate-text">{children}</div>
 				{expandedExample && (
-					<div className="mt-3 p-3 bg-white rounded-lg border border-santorini/20">
-						<div className="text-sm font-medium text-santorini-text mb-1">
+					<div className="mt-3 p-3 bg-white rounded-lg border border-ocean-200">
+						<div className="text-sm font-medium text-ocean-text mb-1">
 							{expandedExample.label}
 						</div>
 						{expandedExample.content}

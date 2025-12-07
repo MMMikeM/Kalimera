@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 export type CollapsibleColorScheme =
 	| "honey"
-	| "aegean"
+	| "ocean"
 	| "olive"
 	| "terracotta"
 	| "santorini"
@@ -28,44 +28,44 @@ const colorMap: Record<
 	{ bg: string; hover: string; border: string; text: string; icon: string }
 > = {
 	honey: {
-		bg: "bg-honey/10",
-		hover: "hover:bg-honey/20",
-		border: "border-honey/40",
+		bg: "bg-honey-100",
+		hover: "hover:bg-honey-200",
+		border: "border-honey-400",
 		text: "text-honey-text",
 		icon: "text-honey",
 	},
-	aegean: {
-		bg: "bg-aegean/10",
-		hover: "hover:bg-aegean/20",
-		border: "border-aegean/40",
-		text: "text-aegean-text",
-		icon: "text-aegean",
+	ocean: {
+		bg: "bg-ocean-100",
+		hover: "hover:bg-ocean-200",
+		border: "border-ocean-400",
+		text: "text-ocean-text",
+		icon: "text-ocean",
 	},
 	olive: {
-		bg: "bg-olive/10",
-		hover: "hover:bg-olive/20",
-		border: "border-olive/40",
+		bg: "bg-olive-100",
+		hover: "hover:bg-olive-200",
+		border: "border-olive-400",
 		text: "text-olive-text",
 		icon: "text-olive",
 	},
 	terracotta: {
-		bg: "bg-terracotta/10",
-		hover: "hover:bg-terracotta/20",
-		border: "border-terracotta/40",
+		bg: "bg-terracotta-100",
+		hover: "hover:bg-terracotta-200",
+		border: "border-terracotta-400",
 		text: "text-terracotta-text",
 		icon: "text-terracotta",
 	},
 	santorini: {
-		bg: "bg-santorini/10",
-		hover: "hover:bg-santorini/20",
-		border: "border-santorini/40",
+		bg: "bg-santorini-100",
+		hover: "hover:bg-santorini-200",
+		border: "border-santorini-400",
 		text: "text-santorini-text",
 		icon: "text-santorini",
 	},
 	navy: {
-		bg: "bg-navy/10",
-		hover: "hover:bg-navy/20",
-		border: "border-navy/40",
+		bg: "bg-navy-100",
+		hover: "hover:bg-navy-200",
+		border: "border-navy-400",
 		text: "text-navy-text",
 		icon: "text-navy",
 	},

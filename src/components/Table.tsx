@@ -38,7 +38,7 @@ export const tableHeaderVariants = tv({
 			default: "bg-stone-50 text-stone-700 border-b border-stone-200",
 			dark: "bg-stone-800 text-white",
 			light: "bg-stone-50 text-stone-700 border-b border-stone-200",
-			accent: "bg-terracotta/10 text-terracotta-text border-b border-terracotta/20",
+			accent: "bg-terracotta-100 text-terracotta-text border-b border-terracotta-200",
 		},
 	},
 	defaultVariants: {

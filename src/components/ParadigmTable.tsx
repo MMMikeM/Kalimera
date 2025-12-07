@@ -16,7 +16,7 @@ export const paradigmTableVariants = tv({
 		variant: {
 			default: "border border-stone-200",
 			bordered: "border-2 border-stone-300",
-			accent: "border-2 border-terracotta/30",
+			accent: "border-2 border-terracotta-300",
 		},
 	},
 	defaultVariants: {
