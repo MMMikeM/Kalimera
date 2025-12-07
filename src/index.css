@@ -293,6 +293,19 @@
     color: var(--color-case-vocative-text);
   }
 
+  /* Pronoun type badges - for distinguishing object vs possessive */
+  .case-badge-object {
+    @apply px-2 py-0.5 rounded text-sm font-medium;
+    background-color: color-mix(in srgb, var(--color-aegean) 15%, transparent);
+    color: var(--color-aegean-text);
+  }
+
+  .case-badge-possessive {
+    @apply px-2 py-0.5 rounded text-sm font-medium;
+    background-color: color-mix(in srgb, var(--color-olive) 15%, transparent);
+    color: var(--color-olive-text);
+  }
+
   /* Gender indicators - very subtle, accent only */
   .gender-masculine {
     @apply border-l-3;

@@ -14,6 +14,7 @@ import {
 	Search,
 	MessageCircle,
 	Home,
+	Quote,
 } from "lucide-react";
 import "./index.css";
 
@@ -31,6 +32,12 @@ const NAV_ITEMS = [
 		label: "Vocabulary",
 		path: "/vocabulary",
 		icon: BookOpen,
+	},
+	{
+		id: "phrases",
+		label: "Phrases",
+		path: "/phrases",
+		icon: Quote,
 	},
 	{
 		id: "conversations",
