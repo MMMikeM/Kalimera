@@ -15,6 +15,88 @@ export interface UsageExample {
 	english: string;
 }
 
+export type VerbConjugationKey =
+	| "kano"
+	| "milao"
+	| "erhomai"
+	| "thymamai"
+	| "pao"
+	| "leo"
+	| "troo"
+	| "eimai"
+	| "echo"
+	| "thelo"
+	| "boro";
+
+export interface VerbFamilyConfig {
+	id: string;
+	displayName: string;
+	shortName: string;
+	description: string;
+	colorScheme: "aegean" | "terracotta" | "olive" | "honey";
+	patternKey: "active" | "contracted" | "deponent" | null;
+	conjugationKey: VerbConjugationKey | null;
+}
+
+export const VERB_FAMILIES: Record<string, VerbFamilyConfig> = {
+	"-ω": {
+		id: "-ω",
+		displayName: "Standard Active (-ω)",
+		shortName: "-ω verbs",
+		description: "Most common pattern",
+		colorScheme: "aegean",
+		patternKey: "active",
+		conjugationKey: "kano",
+	},
+	"-άω/-ώ": {
+		id: "-άω/-ώ",
+		displayName: "Contracted (-άω/-ώ)",
+		shortName: "-άω/-ώ verbs",
+		description: "Contracted endings",
+		colorScheme: "terracotta",
+		patternKey: "contracted",
+		conjugationKey: "milao",
+	},
+	"-ομαι": {
+		id: "-ομαι",
+		displayName: "Deponent (-ομαι)",
+		shortName: "-ομαι verbs",
+		description: "Passive form, active meaning",
+		colorScheme: "olive",
+		patternKey: "deponent",
+		conjugationKey: "erhomai",
+	},
+	"-άμαι": {
+		id: "-άμαι",
+		displayName: "Deponent (-άμαι)",
+		shortName: "-άμαι verbs",
+		description: "Contracted deponent",
+		colorScheme: "olive",
+		patternKey: "deponent",
+		conjugationKey: "thymamai",
+	},
+	deponent: {
+		id: "deponent",
+		displayName: "Deponent (-μαι)",
+		shortName: "Deponent verbs",
+		description: "Passive form, active meaning",
+		colorScheme: "olive",
+		patternKey: "deponent",
+		conjugationKey: "erhomai",
+	},
+	irregular: {
+		id: "irregular",
+		displayName: "Irregular",
+		shortName: "Irregular verbs",
+		description: "Unique conjugations",
+		colorScheme: "honey",
+		patternKey: null,
+		conjugationKey: null,
+	},
+} as const;
+
+export type VerbFamilyId = keyof typeof VERB_FAMILIES;
+
 export interface VerbPattern {
 	name: string;
 	description: string;
@@ -131,7 +213,7 @@ export const VERB_PATTERNS: Record<string, VerbPattern> = {
 	},
 	deponent: {
 		name: "Deponent (-μαι)",
-		description: "Look passive but have active meaning. Common for motion and mental verbs.",
+		description: "Look passive but have active meaning. Two sub-patterns exist: -ομαι and -άμαι (same vowel contraction as -ω/-άω).",
 		endings: {
 			sg1: "-ομαι",
 			sg2: "-εσαι",
@@ -154,9 +236,8 @@ export const VERB_PATTERNS: Record<string, VerbPattern> = {
 			},
 		},
 		samePattern: [
-			{ infinitive: "θυμάμαι", meaning: "remember" },
-			{ infinitive: "κοιμάμαι", meaning: "sleep" },
-			{ infinitive: "φοβάμαι", meaning: "fear" },
+			{ infinitive: "γίνομαι", meaning: "become" },
+			{ infinitive: "κάθομαι", meaning: "sit" },
 		],
 		usage: [
 			{ greek: "Έρχομαι αύριο.", english: "I'm coming tomorrow." },

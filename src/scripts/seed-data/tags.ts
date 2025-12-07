@@ -9,6 +9,8 @@ export interface TagDefinition {
 export const SYSTEM_TAGS = {
 	// Essential vocabulary
 	essential: { slug: "essential", name: "Essential Phrases" },
+	survival: { slug: "survival", name: "Survival Phrases" },
+	request: { slug: "request", name: "Polite Requests" },
 	daysOfWeek: { slug: "days-of-week", name: "Days of the Week" },
 	months: { slug: "months", name: "Months of the Year" },
 

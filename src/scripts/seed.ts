@@ -25,8 +25,10 @@ import {
 	OPINION_PHRASES,
 	POSITION_ADVERBS,
 	QUESTION_WORDS,
+	REQUEST_PHRASES,
 	SMALLTALK_PHRASES,
 	SOCIAL_PHRASES,
+	SURVIVAL_PHRASES,
 	SYSTEM_TAGS,
 	TIME_PHRASES,
 	TIME_TELLING,
@@ -134,6 +136,32 @@ async function seed() {
 			status: "processed",
 		});
 		linkTag(vocabId, "essential");
+		linkTag(vocabId, "phrase");
+	}
+
+	// Seed survival phrases (critical for getting by)
+	console.log("Seeding survival phrases...");
+	for (const phrase of SURVIVAL_PHRASES) {
+		const vocabId = await insertVocab({
+			greekText: phrase.text,
+			englishTranslation: phrase.english,
+			wordType: "phrase",
+			status: "processed",
+		});
+		linkTag(vocabId, "survival");
+		linkTag(vocabId, "phrase");
+	}
+
+	// Seed polite request phrases
+	console.log("Seeding request phrases...");
+	for (const phrase of REQUEST_PHRASES) {
+		const vocabId = await insertVocab({
+			greekText: phrase.text,
+			englishTranslation: phrase.english,
+			wordType: "phrase",
+			status: "processed",
+		});
+		linkTag(vocabId, "request");
 		linkTag(vocabId, "phrase");
 	}
 
