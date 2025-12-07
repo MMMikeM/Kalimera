@@ -14,55 +14,139 @@
  */
 
 @theme inline {
-  /* === BASE PALETTE === */
+  /* === CREAM - Background === */
+  --color-cream-50: #faf8f5;
+  --color-cream-100: #f1ece3;
+  --color-cream-200: #e2d6c6;
+  --color-cream-300: #cfbba2;
+  --color-cream-400: #bb9b7c;
+  --color-cream-500: #ad8462;
+  --color-cream-600: #a07256;
+  --color-cream-700: #855d49;
+  --color-cream-800: #6d4d3f;
+  --color-cream-900: #594035;
+  --color-cream-950: #2f201b;
+  --color-cream: var(--color-cream-50);
+  --color-cream-dark: var(--color-cream-100);
 
-  /* Backgrounds - Cool, calming for focus */
-  --color-cream: #FAF8F5;
-  --color-cream-dark: #F5F1EB;
+  /* === TERRACOTTA - Primary Accent === */
+  --color-terracotta-50: #fbf6f1;
+  --color-terracotta-100: #f6e9de;
+  --color-terracotta-200: #ebd1bd;
+  --color-terracotta-300: #dfb092;
+  --color-terracotta-400: #d18a66;
+  --color-terracotta-500: #c4663f;
+  --color-terracotta-600: #b9593d;
+  --color-terracotta-700: #9a4634;
+  --color-terracotta-800: #7c3a30;
+  --color-terracotta-900: #653129;
+  --color-terracotta-950: #361814;
+  --color-terracotta: var(--color-terracotta-500);
+  --color-terracotta-light: var(--color-terracotta-400);
+  --color-terracotta-dark: var(--color-terracotta-700);
+  --color-terracotta-text: #5C2D14;
 
-  /* Primary Accent - Terracotta (warm, attention) */
-  --color-terracotta: #C4663F;
-  --color-terracotta-light: #D4805E;
-  --color-terracotta-dark: #A85435;
-  --color-terracotta-text: #5C2D14;      /* Very dark brown - 10:1+ contrast on tinted bg */
+  /* === OLIVE - Secondary === */
+  --color-olive-50: #f7f8f5;
+  --color-olive-100: #ecefe9;
+  --color-olive-200: #d9dfd3;
+  --color-olive-300: #bac5b0;
+  --color-olive-400: #94a385;
+  --color-olive-500: #6b7b5c;
+  --color-olive-600: #5c6b4e;
+  --color-olive-700: #4a5540;
+  --color-olive-800: #3c4635;
+  --color-olive-900: #333a2d;
+  --color-olive-950: #191e15;
+  --color-olive: var(--color-olive-500);
+  --color-olive-light: var(--color-olive-400);
+  --color-olive-dark: var(--color-olive-700);
+  --color-olive-text: #1F2A18;
 
-  /* Secondary - Olive (natural, connection) */
-  --color-olive: #6B7B5C;
-  --color-olive-light: #8A9A78;
-  --color-olive-dark: #525F46;
-  --color-olive-text: #1F2A18;           /* Very dark green - 12:1+ contrast on tinted bg */
+  /* === OCEAN - Tertiary (formerly Aegean) === */
+  --color-ocean-50: #f2f7f9;
+  --color-ocean-100: #dfebee;
+  --color-ocean-200: #c2d8df;
+  --color-ocean-300: #97bdc9;
+  --color-ocean-400: #6698aa;
+  --color-ocean-500: #4a7c8f;
+  --color-ocean-600: #40667a;
+  --color-ocean-700: #395565;
+  --color-ocean-800: #354955;
+  --color-ocean-900: #303f49;
+  --color-ocean-950: #1c2730;
+  --color-ocean: var(--color-ocean-500);
+  --color-ocean-light: var(--color-ocean-400);
+  --color-ocean-dark: var(--color-ocean-700);
+  --color-ocean-text: #14333F;
 
-  /* Tertiary - Aegean (cool, stable) */
-  --color-aegean: #4A7C8F;
-  --color-aegean-light: #6A9CAF;
-  --color-aegean-dark: #3A6070;
-  --color-aegean-text: #14333F;          /* Very dark teal - 11:1+ contrast on tinted bg */
+  /* === HONEY - Accent === */
+  --color-honey-50: #faf7ec;
+  --color-honey-100: #f3ebce;
+  --color-honey-200: #e8d6a0;
+  --color-honey-300: #dbb969;
+  --color-honey-400: #d4a853;
+  --color-honey-500: #c08932;
+  --color-honey-600: #a56c29;
+  --color-honey-700: #845024;
+  --color-honey-800: #6f4124;
+  --color-honey-900: #5f3824;
+  --color-honey-950: #371c11;
+  --color-honey: var(--color-honey-400);
+  --color-honey-light: var(--color-honey-300);
+  --color-honey-dark: var(--color-honey-500);
+  --color-honey-text: #4A3508;
 
-  /* Accent - Honey (warm, highlights) */
-  --color-honey: #D4A853;
-  --color-honey-light: #E4C073;
-  --color-honey-dark: #B8923D;
-  --color-honey-text: #4A3508;           /* Very dark gold - 11:1+ contrast on tinted bg */
+  /* === SANTORINI - Interactive/Links === */
+  --color-santorini-50: #ecfeff;
+  --color-santorini-100: #cefbff;
+  --color-santorini-200: #a3f3fe;
+  --color-santorini-300: #64e9fc;
+  --color-santorini-400: #1ed4f2;
+  --color-santorini-500: #02b8d9;
+  --color-santorini-600: #0592b5;
+  --color-santorini-700: #0b7493;
+  --color-santorini-800: #135e77;
+  --color-santorini-900: #154e64;
+  --color-santorini-950: #073445;
+  --color-santorini: var(--color-santorini-500);
+  --color-santorini-light: var(--color-santorini-400);
+  --color-santorini-dark: var(--color-santorini-700);
+  --color-santorini-text: #084A52;
 
-  /* === EXPANDED GREEK PALETTE === */
+  /* === NAVY - Scholarly/Headings === */
+  --color-navy-50: #f5f7fa;
+  --color-navy-100: #eaeef4;
+  --color-navy-200: #d0dae7;
+  --color-navy-300: #a6b9d3;
+  --color-navy-400: #7695ba;
+  --color-navy-500: #5578a2;
+  --color-navy-600: #426087;
+  --color-navy-700: #3b5478;
+  --color-navy-800: #30435c;
+  --color-navy-900: #2c3a4e;
+  --color-navy-950: #1d2634;
+  --color-navy: var(--color-navy-700);
+  --color-navy-light: var(--color-navy-500);
+  --color-navy-dark: var(--color-navy-800);
+  --color-navy-text: #1A2838;
 
-  /* Santorini - Bright cyan (modern, interactive, links) */
-  --color-santorini: #02B8D9;
-  --color-santorini-light: #4DD4EC;
-  --color-santorini-dark: #0A919E;
-  --color-santorini-text: #084A52;       /* Very dark cyan - 9:1+ contrast on tinted bg */
-
-  /* Navy - Deep scholarly blue (headings, emphasis) */
-  --color-navy: #3B5478;
-  --color-navy-light: #5B7498;
-  --color-navy-dark: #2B4058;
-  --color-navy-text: #1A2838;            /* Very dark navy - 12:1+ contrast on tinted bg */
-
-  /* Slate - Muted teal (secondary accents, subtle contrast) */
-  --color-slate: #66817C;
-  --color-slate-light: #86A19C;
-  --color-slate-dark: #46615C;
-  --color-slate-text: #1A2D2A;           /* Very dark teal - 11:1+ contrast on tinted bg */
+  /* === SLATE - Secondary Accents === */
+  --color-slate-50: #f5f8f7;
+  --color-slate-100: #dfe8e5;
+  --color-slate-200: #bfd0cc;
+  --color-slate-300: #98b0ab;
+  --color-slate-400: #66817c;
+  --color-slate-500: #57756f;
+  --color-slate-600: #455c59;
+  --color-slate-700: #394c49;
+  --color-slate-800: #313e3c;
+  --color-slate-900: #2b3634;
+  --color-slate-950: #161d1d;
+  --color-slate: var(--color-slate-400);
+  --color-slate-light: var(--color-slate-300);
+  --color-slate-dark: var(--color-slate-600);
+  --color-slate-text: #1A2D2A;
 
   /* Neutral */
   --color-stone-warm: #78716c;
@@ -70,13 +154,13 @@
   /* === GRAMMAR SEMANTIC COLORS === */
 
   /* Cases - Based on grammatical function */
-  --color-case-nominative: var(--color-aegean);
+  --color-case-nominative: var(--color-ocean);
   --color-case-accusative: var(--color-terracotta);
   --color-case-genitive: var(--color-olive);
   --color-case-vocative: var(--color-honey);
 
   /* Case text variants (AAA compliant) */
-  --color-case-nominative-text: var(--color-aegean-text);
+  --color-case-nominative-text: var(--color-ocean-text);
   --color-case-accusative-text: var(--color-terracotta-text);
   --color-case-genitive-text: var(--color-olive-text);
   --color-case-vocative-text: var(--color-honey-text);
@@ -127,7 +211,7 @@
   /* Chart colors */
   --color-chart-1: var(--color-terracotta);
   --color-chart-2: var(--color-olive);
-  --color-chart-3: var(--color-aegean);
+  --color-chart-3: var(--color-ocean);
   --color-chart-4: var(--color-honey);
   --color-chart-5: var(--color-stone-warm);
 
@@ -296,8 +380,8 @@
   /* Pronoun type badges - for distinguishing object vs possessive */
   .case-badge-object {
     @apply px-2 py-0.5 rounded text-sm font-medium;
-    background-color: color-mix(in srgb, var(--color-aegean) 15%, transparent);
-    color: var(--color-aegean-text);
+    background-color: color-mix(in srgb, var(--color-ocean) 15%, transparent);
+    color: var(--color-ocean-text);
   }
 
   .case-badge-possessive {
@@ -376,28 +460,28 @@
 
   /* Use these for categorizing content (conversations, verb types, etc) */
   .situation-olive {
-    @apply border-olive/30 bg-olive/5;
+    @apply border-olive-300 bg-olive-50;
   }
   .situation-olive-text {
     @apply text-olive-text;
   }
 
   .situation-terracotta {
-    @apply border-terracotta/30 bg-terracotta/5;
+    @apply border-terracotta-300 bg-terracotta-50;
   }
   .situation-terracotta-text {
     @apply text-terracotta-text;
   }
 
-  .situation-aegean {
-    @apply border-aegean/30 bg-aegean/5;
+  .situation-ocean {
+    @apply border-ocean-300 bg-ocean-50;
   }
-  .situation-aegean-text {
-    @apply text-aegean-text;
+  .situation-ocean-text {
+    @apply text-ocean-text;
   }
 
   .situation-honey {
-    @apply border-honey/30 bg-honey/5;
+    @apply border-honey-300 bg-honey-50;
   }
   .situation-honey-text {
     @apply text-honey-text;
@@ -405,21 +489,21 @@
 
   /* Expanded palette situations */
   .situation-santorini {
-    @apply border-santorini/30 bg-santorini/5;
+    @apply border-santorini-300 bg-santorini-50;
   }
   .situation-santorini-text {
     @apply text-santorini-text;
   }
 
   .situation-navy {
-    @apply border-navy/30 bg-navy/5;
+    @apply border-navy-300 bg-navy-50;
   }
   .situation-navy-text {
     @apply text-navy-text;
   }
 
   .situation-slate {
-    @apply border-slate/30 bg-slate/5;
+    @apply border-slate-300 bg-slate-50;
   }
   .situation-slate-text {
     @apply text-slate-text;
@@ -428,7 +512,7 @@
   /* === INFO/TIP BOXES === */
 
   .info-box-tip {
-    @apply p-4 rounded-lg border bg-honey/10 border-honey/30;
+    @apply p-4 rounded-lg border bg-honey-100 border-honey-300;
   }
   .info-box-tip-title {
     @apply text-honey-text font-semibold;
@@ -438,10 +522,10 @@
   }
 
   .info-box-info {
-    @apply p-4 rounded-lg border bg-aegean/10 border-aegean/30;
+    @apply p-4 rounded-lg border bg-ocean-100 border-ocean-300;
   }
   .info-box-info-text {
-    @apply text-aegean-text;
+    @apply text-ocean-text;
   }
 
   .info-box-success {
@@ -454,7 +538,7 @@
   }
 
   .info-box-warning {
-    @apply p-4 rounded-lg border bg-honey/15 border-honey/40;
+    @apply p-4 rounded-lg border bg-honey-200 border-honey-400;
   }
   .info-box-warning-text {
     @apply text-honey-text;
@@ -472,7 +556,7 @@
   /* === STATS CARDS === */
 
   .stat-card-streak {
-    @apply flex items-center gap-3 p-4 rounded-xl border bg-terracotta/10 border-terracotta/30;
+    @apply flex items-center gap-3 p-4 rounded-xl border bg-terracotta-100 border-terracotta-300;
   }
   .stat-card-streak-icon {
     @apply text-terracotta;
@@ -485,7 +569,7 @@
   }
 
   .stat-card-success {
-    @apply flex items-center gap-3 p-4 rounded-xl border bg-olive/10 border-olive/30;
+    @apply flex items-center gap-3 p-4 rounded-xl border bg-olive-100 border-olive-300;
   }
   .stat-card-success-icon {
     @apply text-olive;
@@ -498,13 +582,13 @@
   }
 
   .stat-card-due {
-    @apply flex items-center gap-3 p-4 rounded-xl border bg-aegean/10 border-aegean/30;
+    @apply flex items-center gap-3 p-4 rounded-xl border bg-ocean-100 border-ocean-300;
   }
   .stat-card-due-icon {
-    @apply text-aegean;
+    @apply text-ocean;
   }
   .stat-card-due-value {
-    @apply text-2xl font-bold text-aegean-text;
+    @apply text-2xl font-bold text-ocean-text;
   }
   .stat-card-due-label {
     @apply text-xs text-stone-600;
@@ -513,21 +597,21 @@
   /* === VERB PATTERN INDICATORS === */
 
   .verb-pattern-active {
-    @apply p-2 rounded border bg-aegean/10 border-aegean/30;
+    @apply p-2 rounded border bg-ocean-100 border-ocean-300;
   }
   .verb-pattern-active-text {
-    @apply text-aegean-text font-bold;
+    @apply text-ocean-text font-bold;
   }
 
   .verb-pattern-contracted {
-    @apply p-2 rounded border bg-terracotta/10 border-terracotta/30;
+    @apply p-2 rounded border bg-terracotta-100 border-terracotta-300;
   }
   .verb-pattern-contracted-text {
     @apply text-terracotta-text font-bold;
   }
 
   .verb-pattern-deponent {
-    @apply p-2 rounded border bg-olive/10 border-olive/30;
+    @apply p-2 rounded border bg-olive-100 border-olive-300;
   }
   .verb-pattern-deponent-text {
     @apply text-olive-text font-bold;
