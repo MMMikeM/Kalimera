@@ -19,11 +19,11 @@ export const CasesSection: React.FC = () => (
 					<div className="space-y-2 text-sm">
 						<p>Cases aren't just theory — they're the same system pronouns use:</p>
 						<div className="grid grid-cols-2 gap-3 mt-2">
-							<div className="p-2 bg-white rounded border border-santorini/20">
+							<div className="p-2 bg-white rounded border border-santorini-200">
 								<div className="font-medium text-stone-700">Object pronouns</div>
 								<div className="text-stone-600">με, σε, τον → <strong>Accusative</strong></div>
 							</div>
-							<div className="p-2 bg-white rounded border border-santorini/20">
+							<div className="p-2 bg-white rounded border border-santorini-200">
 								<div className="font-medium text-stone-700">Possessive pronouns</div>
 								<div className="text-stone-600">μου, σου, του → <strong>Genitive</strong></div>
 							</div>
@@ -46,13 +46,13 @@ export const CasesSection: React.FC = () => (
 		<Card
 			variant="elevated"
 			padding="lg"
-			className="bg-aegean/5 border-2 border-aegean/30"
+			className="bg-ocean-50 border-2 border-ocean-300"
 		>
 			<div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
 				{CASE_RECOGNITION.quickRules.map((rule, index) => (
 					<div key={index} className="text-center p-4 bg-white rounded-xl shadow-sm">
 						<div className="text-lg font-bold text-stone-800 mb-2">{rule.question}</div>
-						<div className="text-aegean-text font-semibold mb-2">{rule.answer}</div>
+						<div className="text-ocean-text font-semibold mb-2">{rule.answer}</div>
 						<MonoText variant="highlighted" size="sm">{rule.example}</MonoText>
 					</div>
 				))}
@@ -66,7 +66,7 @@ export const CasesSection: React.FC = () => (
 		>
 			<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
 				{CASE_RECOGNITION.quickSpotCheck?.map((check, index) => (
-					<div key={index} className="p-4 bg-white rounded-xl shadow-sm border border-honey/30">
+					<div key={index} className="p-4 bg-white rounded-xl shadow-sm border border-honey-300">
 						<div className="text-lg font-bold text-honey-text mb-2">{check.pattern}</div>
 						<div className="text-honey-text font-medium mb-3 text-sm">→ {check.meaning}</div>
 						<div className="space-y-1">

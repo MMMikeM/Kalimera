@@ -3,40 +3,50 @@ import { useOutletContext } from "react-router";
 import { Users, ShoppingCart, Home, Car, Sun } from "lucide-react";
 import { Card } from "@/components";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { type VocabularyLoaderData, NounDisplay, type VocabItem } from "./shared";
+import {
+	type VocabularyLoaderData,
+	NounDisplay,
+	type VocabItem,
+} from "./shared";
 
 const NounSection: React.FC<{
 	title: string;
 	subtitle?: string;
 	icon: React.ReactNode;
-	colorScheme: "aegean" | "terracotta" | "olive" | "honey";
+	colorScheme: "ocean" | "terracotta" | "olive" | "honey" | "stone";
 	nouns: VocabItem[];
 	columns?: 2 | 3;
 }> = ({ title, subtitle, icon, colorScheme, nouns, columns = 3 }) => {
 	const colors = {
-		aegean: {
-			bg: "bg-aegean/5",
-			border: "border-aegean/30",
-			text: "text-aegean-text",
-			iconBg: "bg-aegean/20",
+		ocean: {
+			bg: "bg-ocean-50",
+			border: "border-ocean-300",
+			text: "text-ocean-text",
+			iconBg: "bg-ocean-200",
 		},
 		terracotta: {
-			bg: "bg-terracotta/5",
-			border: "border-terracotta/30",
+			bg: "bg-terracotta-50",
+			border: "border-terracotta-300",
 			text: "text-terracotta-text",
-			iconBg: "bg-terracotta/20",
+			iconBg: "bg-terracotta-200",
 		},
 		olive: {
-			bg: "bg-olive/5",
-			border: "border-olive/30",
+			bg: "bg-olive-50",
+			border: "border-olive-300",
 			text: "text-olive-text",
-			iconBg: "bg-olive/20",
+			iconBg: "bg-olive-200",
 		},
 		honey: {
-			bg: "bg-honey/5",
-			border: "border-honey/30",
+			bg: "bg-honey-50",
+			border: "border-honey-300",
 			text: "text-honey-text",
-			iconBg: "bg-honey/20",
+			iconBg: "bg-honey-200",
+		},
+		stone: {
+			bg: "bg-stone",
+			border: "border-stone-200",
+			text: "text-stone-700",
+			iconBg: "bg-stone-100",
 		},
 	};
 	const c = colors[colorScheme];
@@ -53,9 +63,7 @@ const NounSection: React.FC<{
 				</div>
 				<div>
 					<h3 className={`text-lg font-bold ${c.text}`}>{title}</h3>
-					{subtitle && (
-						<p className="text-sm text-stone-600">{subtitle}</p>
-					)}
+					{subtitle && <p className="text-sm text-stone-600">{subtitle}</p>}
 				</div>
 			</div>
 			<div className={`grid ${gridCols} gap-2`}>
@@ -81,7 +89,7 @@ export default function NounsRoute() {
 				<AlertDescription className="text-stone-700">
 					<strong>Gender color key:</strong>{" "}
 					<span className="inline-flex items-center gap-1">
-						<span className="w-3 h-3 bg-aegean/60 rounded-sm" /> masculine (ο)
+						<span className="w-3 h-3 bg-ocean-600 rounded-sm" /> masculine (ο)
 					</span>{" "}
 					<span className="inline-flex items-center gap-1">
 						<span className="w-3 h-3 bg-rose-400/60 rounded-sm" /> feminine (η)
@@ -100,31 +108,27 @@ export default function NounsRoute() {
 				nouns={data.nouns.people}
 			/>
 
-			<div className="grid md:grid-cols-2 gap-4">
-				<NounSection
-					title="Shopping & Groceries"
-					subtitle={`${data.nouns.shopping.length} nouns`}
-					icon={<ShoppingCart size={20} />}
-					colorScheme="olive"
-					nouns={data.nouns.shopping}
-					columns={2}
-				/>
+			<NounSection
+				title="Shopping & Groceries"
+				subtitle={`${data.nouns.shopping.length} nouns`}
+				icon={<ShoppingCart size={20} />}
+				colorScheme="olive"
+				nouns={data.nouns.shopping}
+			/>
 
-				<NounSection
-					title="Household & Home"
-					subtitle={`${data.nouns.household.length} nouns`}
-					icon={<Home size={20} />}
-					colorScheme="aegean"
-					nouns={data.nouns.household}
-					columns={2}
-				/>
-			</div>
+			<NounSection
+				title="Household & Home"
+				subtitle={`${data.nouns.household.length} nouns`}
+				icon={<Home size={20} />}
+				colorScheme="ocean"
+				nouns={data.nouns.household}
+			/>
 
 			<NounSection
 				title="Transportation"
 				subtitle={`${data.nouns.vehicles.length} nouns`}
 				icon={<Car size={20} />}
-				colorScheme="aegean"
+				colorScheme="ocean"
 				nouns={data.nouns.vehicles}
 			/>
 

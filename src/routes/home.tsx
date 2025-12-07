@@ -33,7 +33,7 @@ export const loader = async ({ context }: Route.LoaderArgs) => {
 
 const GreekLetter = ({ letter, className = "" }: { letter: string; className?: string }) => (
 	<span
-		className={`inline-block font-serif text-terracotta/10 select-none pointer-events-none ${className}`}
+		className={`inline-block font-serif text-terracotta-100 select-none pointer-events-none ${className}`}
 		aria-hidden="true"
 	>
 		{letter}
@@ -52,20 +52,20 @@ const PathCard = ({
 	title: string;
 	description: string;
 	href: string;
-	accent: "terracotta" | "olive" | "aegean" | "honey";
+	accent: "terracotta" | "olive" | "ocean" | "honey";
 	badge?: string;
 }) => {
 	const accentStyles = {
-		terracotta: "border-terracotta/20 hover:border-terracotta/40 hover:bg-terracotta/5",
-		olive: "border-olive/20 hover:border-olive/40 hover:bg-olive/5",
-		aegean: "border-aegean/20 hover:border-aegean/40 hover:bg-aegean/5",
-		honey: "border-honey/20 hover:border-honey/40 hover:bg-honey/5",
+		terracotta: "border-terracotta-200 hover:border-terracotta-400 hover:bg-terracotta-50",
+		olive: "border-olive-200 hover:border-olive-400 hover:bg-olive-50",
+		ocean: "border-ocean-200 hover:border-ocean-400 hover:bg-ocean-50",
+		honey: "border-honey-200 hover:border-honey-400 hover:bg-honey-50",
 	};
 
 	const iconStyles = {
 		terracotta: "text-terracotta",
 		olive: "text-olive",
-		aegean: "text-aegean",
+		ocean: "text-ocean",
 		honey: "text-honey-dark",
 	};
 
@@ -133,7 +133,7 @@ const DailyPhrase = () => {
 
 	return (
 		<div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-stone-50 to-cream p-8 border border-stone-200/50">
-			<div className="absolute -top-8 -right-8 text-[120px] font-serif text-terracotta/5 leading-none select-none">
+			<div className="absolute -top-8 -right-8 text-[120px] font-serif text-terracotta-50 leading-none select-none">
 				Ω
 			</div>
 			<p className="text-xs uppercase tracking-widest text-slate mb-3">Phrase of the day</p>
@@ -143,15 +143,15 @@ const DailyPhrase = () => {
 
 			<button
 				onClick={() => setShowGrammar(!showGrammar)}
-				className="mt-4 flex items-center gap-1 text-sm text-aegean hover:text-aegean-dark transition-colors"
+				className="mt-4 flex items-center gap-1 text-sm text-ocean hover:text-ocean-dark transition-colors"
 			>
 				Why this works
 				{showGrammar ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
 			</button>
 
 			{showGrammar && (
-				<div className="mt-3 p-3 bg-aegean/5 rounded-lg border border-aegean/20">
-					<p className="text-sm text-aegean-text">{phrase.grammar}</p>
+				<div className="mt-3 p-3 bg-ocean-50 rounded-lg border border-ocean-200">
+					<p className="text-sm text-ocean-text">{phrase.grammar}</p>
 				</div>
 			)}
 		</div>
@@ -181,7 +181,7 @@ const QuickStartSection = () => (
 				title="Phrases"
 				description="Discourse markers, responses, and expressions that make your Greek sound natural."
 				href="/phrases"
-				accent="aegean"
+				accent="ocean"
 			/>
 			<PathCard
 				icon={<BookOpen size={28} strokeWidth={1.5} />}
@@ -224,8 +224,8 @@ const PhilosophySection = () => (
 						<p className="text-sm text-slate mb-2">Definite articles</p>
 						<div className="flex justify-center gap-3">
 							<div className="flex flex-col items-center">
-								<MonoText variant="greek" className="text-aegean">τ<span className="text-aegean font-bold">ον</span></MonoText>
-								<span className="text-xs text-aegean/70 mt-1">m</span>
+								<MonoText variant="greek" className="text-ocean">τ<span className="text-ocean font-bold">ον</span></MonoText>
+								<span className="text-xs text-ocean-600 mt-1">m</span>
 							</div>
 							<div className="flex flex-col items-center">
 								<MonoText variant="greek" className="text-rose-500">τ<span className="text-rose-500 font-bold">ην</span></MonoText>
@@ -241,8 +241,8 @@ const PhilosophySection = () => (
 						<p className="text-sm text-slate mb-2">Demonstratives</p>
 						<div className="flex justify-center gap-3">
 							<div className="flex flex-col items-center">
-								<MonoText variant="greek" className="text-aegean">αυτ<span className="text-aegean font-bold">όν</span></MonoText>
-								<span className="text-xs text-aegean/70 mt-1">m</span>
+								<MonoText variant="greek" className="text-ocean">αυτ<span className="text-ocean font-bold">όν</span></MonoText>
+								<span className="text-xs text-ocean-600 mt-1">m</span>
 							</div>
 							<div className="flex flex-col items-center">
 								<MonoText variant="greek" className="text-rose-500">αυτ<span className="text-rose-500 font-bold">ήν</span></MonoText>
@@ -257,7 +257,7 @@ const PhilosophySection = () => (
 				</div>
 				<p className="text-xs text-center text-stone-500 mt-3">
 					Both follow the same endings:{" "}
-					<span className="text-aegean font-medium">-ον</span> /{" "}
+					<span className="text-ocean font-medium">-ον</span> /{" "}
 					<span className="text-rose-500 font-medium">-ην</span> /{" "}
 					<span className="text-stone-600 font-medium">-ο</span>
 				</p>
@@ -296,13 +296,13 @@ export default function HomeRoute({ loaderData }: Route.ComponentProps) {
 
 					{/* Learning outcomes */}
 					<div className="mt-6 flex flex-wrap gap-3">
-						<span className="inline-flex items-center gap-1.5 text-sm text-olive-text bg-olive/10 px-3 py-1.5 rounded-full">
+						<span className="inline-flex items-center gap-1.5 text-sm text-olive-text bg-olive-100 px-3 py-1.5 rounded-full">
 							<CheckCircle size={14} /> Understand cases
 						</span>
-						<span className="inline-flex items-center gap-1.5 text-sm text-aegean-text bg-aegean/10 px-3 py-1.5 rounded-full">
+						<span className="inline-flex items-center gap-1.5 text-sm text-ocean-text bg-ocean-100 px-3 py-1.5 rounded-full">
 							<CheckCircle size={14} /> Recognize patterns
 						</span>
-						<span className="inline-flex items-center gap-1.5 text-sm text-terracotta-text bg-terracotta/10 px-3 py-1.5 rounded-full">
+						<span className="inline-flex items-center gap-1.5 text-sm text-terracotta-text bg-terracotta-100 px-3 py-1.5 rounded-full">
 							<CheckCircle size={14} /> Build sentences
 						</span>
 					</div>

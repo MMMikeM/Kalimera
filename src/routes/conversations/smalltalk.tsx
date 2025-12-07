@@ -34,7 +34,7 @@ const FAMILY_CHAT: DialogueLine[] = [
 ];
 
 export default function SmalltalkRoute() {
-	const styles = variantStyles.aegean;
+	const styles = variantStyles.ocean;
 
 	return (
 		<div className="space-y-4">
@@ -43,7 +43,7 @@ export default function SmalltalkRoute() {
 				title="Small Talk"
 				greekPhrase="Τι κάνεις;"
 				description="Casual conversation with friends and acquaintances. Weather, work, family - the universal topics that connect us."
-				colorScheme="aegean"
+				colorScheme="ocean"
 			/>
 
 			<Card variant="bordered" padding="lg" className={styles.card}>
@@ -53,7 +53,7 @@ export default function SmalltalkRoute() {
 						title="Talking about the weather"
 						description="A universal conversation starter"
 						dialogue={WEATHER_CHAT}
-						colorScheme="aegean"
+						colorScheme="ocean"
 					/>
 
 					<div className="border-t border-stone-200 pt-6">
@@ -61,7 +61,7 @@ export default function SmalltalkRoute() {
 							title="Asking about work"
 							description="Common friendly question"
 							dialogue={WORK_CHAT}
-							colorScheme="aegean"
+							colorScheme="ocean"
 						/>
 					</div>
 
@@ -70,7 +70,7 @@ export default function SmalltalkRoute() {
 							title="Weekend plans"
 							description="Making plans with friends"
 							dialogue={WEEKEND_PLANS}
-							colorScheme="aegean"
+							colorScheme="ocean"
 						/>
 					</div>
 
@@ -79,7 +79,7 @@ export default function SmalltalkRoute() {
 							title="Asking about family"
 							description="Greeks love to ask about family"
 							dialogue={FAMILY_CHAT}
-							colorScheme="aegean"
+							colorScheme="ocean"
 						/>
 					</div>
 				</div>

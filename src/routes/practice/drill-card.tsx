@@ -44,45 +44,45 @@ interface VariantConfig {
 const VARIANT_CONFIG: Record<DrillVariant, VariantConfig> = {
 	pronouns: {
 		icon: Users,
-		borderColor: "border-l-4 border-l-aegean border-aegean/30",
-		bgGradient: "bg-gradient-to-br from-aegean/15 to-cream",
-		iconBg: "bg-aegean/20",
-		iconColor: "text-aegean",
-		accentColor: "aegean",
-		progressColor: "bg-aegean",
+		borderColor: "border-l-4 border-l-ocean border-ocean-300",
+		bgGradient: "bg-gradient-to-br from-ocean-100 to-cream",
+		iconBg: "bg-ocean-200",
+		iconColor: "text-ocean",
+		accentColor: "ocean",
+		progressColor: "bg-ocean",
 	},
 	articles: {
 		icon: FileText,
-		borderColor: "border-l-4 border-l-olive border-olive/30",
-		bgGradient: "bg-gradient-to-br from-olive/15 to-cream",
-		iconBg: "bg-olive/20",
+		borderColor: "border-l-4 border-l-olive border-olive-300",
+		bgGradient: "bg-gradient-to-br from-olive-100 to-cream",
+		iconBg: "bg-olive-200",
 		iconColor: "text-olive",
 		accentColor: "olive",
 		progressColor: "bg-olive",
 	},
 	verbs: {
 		icon: Zap,
-		borderColor: "border-l-4 border-l-honey border-honey/30",
-		bgGradient: "bg-gradient-to-br from-honey/15 to-cream",
-		iconBg: "bg-honey/20",
+		borderColor: "border-l-4 border-l-honey border-honey-300",
+		bgGradient: "bg-gradient-to-br from-honey-100 to-cream",
+		iconBg: "bg-honey-200",
 		iconColor: "text-honey",
 		accentColor: "honey",
 		progressColor: "bg-honey",
 	},
 	vocabulary: {
 		icon: BookOpen,
-		borderColor: "border-l-4 border-l-santorini border-santorini/30",
-		bgGradient: "bg-gradient-to-br from-santorini/15 to-cream",
-		iconBg: "bg-santorini/20",
+		borderColor: "border-l-4 border-l-santorini border-santorini-300",
+		bgGradient: "bg-gradient-to-br from-santorini-100 to-cream",
+		iconBg: "bg-santorini-200",
 		iconColor: "text-santorini",
 		accentColor: "santorini",
 		progressColor: "bg-santorini",
 	},
 	review: {
 		icon: Clock,
-		borderColor: "border-l-4 border-l-terracotta border-terracotta/30",
-		bgGradient: "bg-gradient-to-br from-terracotta/15 to-cream",
-		iconBg: "bg-terracotta/20",
+		borderColor: "border-l-4 border-l-terracotta border-terracotta-300",
+		bgGradient: "bg-gradient-to-br from-terracotta-100 to-cream",
+		iconBg: "bg-terracotta-200",
 		iconColor: "text-terracotta",
 		accentColor: "terracotta",
 		progressColor: "bg-terracotta",
@@ -312,12 +312,12 @@ const DrillCard: React.FC<DrillCardProps> = ({
 						let optionClass = "border-stone-200 bg-stone-50";
 						if (state.showFeedback) {
 							if (isCorrectOption) {
-								optionClass = "border-correct bg-correct/10";
+								optionClass = "border-correct bg-correct-100";
 							} else if (isSelected && !isCorrectOption) {
-								optionClass = "border-incorrect bg-incorrect/10";
+								optionClass = "border-incorrect bg-incorrect-100";
 							}
 						} else if (isSelected) {
-							optionClass = "border-terracotta bg-terracotta/10";
+							optionClass = "border-terracotta bg-terracotta-100";
 						}
 
 						return (
@@ -345,7 +345,7 @@ const DrillCard: React.FC<DrillCardProps> = ({
 			{state.showFeedback && (
 				<div
 					className={`p-4 rounded-lg mb-4 ${
-						isCorrect ? "bg-correct/10 border border-correct/30" : "bg-incorrect/10 border border-incorrect/30"
+						isCorrect ? "bg-correct-100 border border-correct-300" : "bg-incorrect-100 border border-incorrect-300"
 					}`}
 				>
 					<div className="flex items-center gap-2 mb-1">

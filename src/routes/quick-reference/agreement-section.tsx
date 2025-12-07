@@ -21,9 +21,9 @@ const AgreementParadigmTable: React.FC<{
 }> = ({ paradigm, showPlural = true }) => {
 	// Use semantic gender colors from the design system
 	const genderStyles = {
-		masculine: { border: "border-gender-masculine/30", bg: "bg-gender-masculine/5", headerBg: "bg-gender-masculine/10", text: "text-gender-masculine" },
-		feminine: { border: "border-gender-feminine/30", bg: "bg-gender-feminine/5", headerBg: "bg-gender-feminine/10", text: "text-gender-feminine" },
-		neuter: { border: "border-gender-neuter/30", bg: "bg-gender-neuter/5", headerBg: "bg-gender-neuter/10", text: "text-gender-neuter" },
+		masculine: { border: "border-gender-masculine-300", bg: "bg-gender-masculine-50", headerBg: "bg-gender-masculine-100", text: "text-gender-masculine" },
+		feminine: { border: "border-gender-feminine-300", bg: "bg-gender-feminine-50", headerBg: "bg-gender-feminine-100", text: "text-gender-feminine" },
+		neuter: { border: "border-gender-neuter-300", bg: "bg-gender-neuter-50", headerBg: "bg-gender-neuter-100", text: "text-gender-neuter" },
 	};
 	const style = genderStyles[paradigm.gender];
 
@@ -41,9 +41,9 @@ const AgreementParadigmTable: React.FC<{
 				<span
 					className={`text-xs px-2 py-0.5 rounded ${
 						paradigm.frequency === "very common"
-							? "bg-olive/20 text-olive-text"
+							? "bg-olive-200 text-olive-text"
 							: paradigm.frequency === "common"
-								? "bg-honey/20 text-honey-text"
+								? "bg-honey-200 text-honey-text"
 								: "bg-stone-100 text-stone-600"
 					}`}
 				>
@@ -141,7 +141,7 @@ const GenderHintsCard: React.FC = () => (
 const ArticleQuickLookup: React.FC = () => (
 	<CollapsibleSection
 		title="Article Quick Lookup (ο, η, το, τον, την...)"
-		colorScheme="aegean"
+		colorScheme="ocean"
 		defaultOpen={true}
 	>
 		<div className="grid md:grid-cols-2 gap-4">
@@ -293,7 +293,7 @@ export const AgreementSection: React.FC = () => {
 								<MonoText variant="greek" size="sm">στον/στην</MonoText>, you can always
 								include the -ν. Native speakers sometimes drop it, but keeping it is never wrong.
 							</p>
-							<div className="mt-2 p-2 bg-white rounded border border-santorini/20">
+							<div className="mt-2 p-2 bg-white rounded border border-santorini-200">
 								<div className="text-stone-600">
 									<MonoText variant="greek" size="sm">τον φίλο</MonoText> or{" "}
 									<MonoText variant="greek" size="sm">τη φίλη</MonoText> — both correct!
@@ -398,7 +398,7 @@ export const MovableNuSection: React.FC = () => (
 						{MOVABLE_NU_RULE.examples.keep.map((example, index) => (
 							<div
 								key={index}
-								className="p-3 bg-correct/10 rounded-lg border border-correct/30"
+								className="p-3 bg-correct-100 rounded-lg border border-correct-300"
 							>
 								<MonoText variant="success" size="lg" className="block mb-1">
 									{example.text}
@@ -416,7 +416,7 @@ export const MovableNuSection: React.FC = () => (
 						{MOVABLE_NU_RULE.examples.drop.map((example, index) => (
 							<div
 								key={index}
-								className="p-3 bg-incorrect/10 rounded-lg border border-incorrect/30"
+								className="p-3 bg-incorrect-100 rounded-lg border border-incorrect-300"
 							>
 								<MonoText variant="error" size="lg" className="block mb-1">
 									{example.text}

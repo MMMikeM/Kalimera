@@ -85,7 +85,7 @@ const detectGender = (greek: string): Gender => {
 };
 
 const genderStyles: Record<Gender, { border: string; label: string; abbr: string }> = {
-	masculine: { border: "border-l-4 border-aegean/60", label: "masculine", abbr: "m" },
+	masculine: { border: "border-l-4 border-ocean-600", label: "masculine", abbr: "m" },
 	feminine: { border: "border-l-4 border-rose-400/60", label: "feminine", abbr: "f" },
 	neuter: { border: "border-l-4 border-stone-400/60", label: "neuter", abbr: "n" },
 	unknown: { border: "", label: "", abbr: "" },
@@ -121,34 +121,34 @@ export const NounDisplay: React.FC<{
 export const VocabSection: React.FC<{
 	title: string;
 	icon: React.ReactNode;
-	colorScheme: "aegean" | "terracotta" | "olive" | "honey";
+	colorScheme: "ocean" | "terracotta" | "olive" | "honey";
 	children: React.ReactNode;
 	columns?: 2 | 3;
 }> = ({ title, icon, colorScheme, children, columns = 3 }) => {
 	const colors = {
-		aegean: {
-			bg: "bg-aegean/5",
-			border: "border-aegean/30",
-			text: "text-aegean-text",
-			iconBg: "bg-aegean/20",
+		ocean: {
+			bg: "bg-ocean-50",
+			border: "border-ocean-300",
+			text: "text-ocean-text",
+			iconBg: "bg-ocean-200",
 		},
 		terracotta: {
-			bg: "bg-terracotta/5",
-			border: "border-terracotta/30",
+			bg: "bg-terracotta-50",
+			border: "border-terracotta-300",
 			text: "text-terracotta-text",
-			iconBg: "bg-terracotta/20",
+			iconBg: "bg-terracotta-200",
 		},
 		olive: {
-			bg: "bg-olive/5",
-			border: "border-olive/30",
+			bg: "bg-olive-50",
+			border: "border-olive-300",
 			text: "text-olive-text",
-			iconBg: "bg-olive/20",
+			iconBg: "bg-olive-200",
 		},
 		honey: {
-			bg: "bg-honey/5",
-			border: "border-honey/30",
+			bg: "bg-honey-50",
+			border: "border-honey-300",
 			text: "text-honey-text",
-			iconBg: "bg-honey/20",
+			iconBg: "bg-honey-200",
 		},
 	};
 	const c = colors[colorScheme];
