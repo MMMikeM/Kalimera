@@ -17,6 +17,11 @@ import {
 	Quote,
 } from "lucide-react";
 import "./index.css";
+import type { LinksFunction } from "react-router";
+
+export const links: LinksFunction = () => [
+	{ rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
+];
 
 const NAV_ITEMS = [
 	{ id: "home", label: "Home", path: "/", icon: Home },
