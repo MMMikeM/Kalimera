@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import { ArrowRight, BookOpen, CheckCircle, ChevronDown, ChevronUp, MessageCircle, Sparkles, Target } from "lucide-react";
+import { ArrowRight, BookOpen, CheckCircle, ChevronDown, ChevronUp, Link2, MessageCircle, Sparkles, Target } from "lucide-react";
 import { MonoText } from "@/components";
 import { Badge } from "@/components/ui/badge";
 import type { Route } from "./+types/home";
@@ -75,7 +75,7 @@ const PathCard = ({
 			className={`group relative block p-6 rounded-2xl border-2 bg-white/50 backdrop-blur-sm transition-all duration-300 ${accentStyles[accent]}`}
 		>
 			{badge && (
-				<Badge variant="secondary" className="absolute top-4 right-4 bg-olive/10 text-olive-text border-olive/20">
+				<Badge variant="default" className="absolute top-4 right-4 bg-terracotta text-white border-terracotta font-semibold">
 					{badge}
 				</Badge>
 			)}
@@ -137,7 +137,7 @@ const DailyPhrase = () => {
 				Ω
 			</div>
 			<p className="text-xs uppercase tracking-widest text-slate mb-3">Phrase of the day</p>
-			<p className="text-4xl font-serif text-terracotta mb-2 greek-text">{phrase.greek}</p>
+			<p className="text-5xl font-serif text-terracotta mb-2 greek-text">{phrase.greek}</p>
 			<p className="text-lg text-stone-700 mb-1">{phrase.english}</p>
 			<p className="text-sm text-slate italic">lit. "{phrase.literal}"</p>
 
@@ -167,35 +167,42 @@ const QuickStartSection = () => (
 			</div>
 		</div>
 
-		<div className="grid md:grid-cols-2 gap-6">
+		<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
 			<PathCard
 				icon={<MessageCircle size={28} strokeWidth={1.5} />}
-				title="Real Conversations"
-				description="Common phrases for family visits: greetings, food, hospitality, and small talk with clear responses."
+				title="Conversations"
+				description="Navigate common situations: greetings, food, hospitality, and small talk with Greeks."
 				href="/conversations"
 				accent="olive"
 				badge="Start here"
 			/>
 			<PathCard
+				icon={<Link2 size={28} strokeWidth={1.5} />}
+				title="Phrases"
+				description="Discourse markers, responses, and expressions that make your Greek sound natural."
+				href="/phrases"
+				accent="aegean"
+			/>
+			<PathCard
 				icon={<BookOpen size={28} strokeWidth={1.5} />}
 				title="Quick Reference"
-				description="Cases, pronouns, articles, and verb patterns organized to reveal the underlying structure of Greek."
+				description="Cases, pronouns, articles, and verb patterns organized to reveal Greek's structure."
 				href="/quick-reference"
-				accent="aegean"
+				accent="terracotta"
 			/>
 			<PathCard
 				icon={<Target size={28} strokeWidth={1.5} />}
 				title="Practice Drills"
-				description="Interactive exercises that adapt to your progress. Build fluency through focused, bite-sized practice sessions."
+				description="Interactive exercises that adapt to your progress. Build fluency through focused practice."
 				href="/practice"
-				accent="terracotta"
+				accent="honey"
 			/>
 			<PathCard
 				icon={<Sparkles size={28} strokeWidth={1.5} />}
 				title="Vocabulary"
-				description="Build your word bank with vocabulary organized by everyday situations. See words in context with example sentences."
+				description="Build your word bank organized by everyday situations. See words in context."
 				href="/vocabulary"
-				accent="honey"
+				accent="olive"
 			/>
 		</div>
 	</section>
@@ -215,23 +222,44 @@ const PhilosophySection = () => (
 				<div className="grid grid-cols-2 gap-4">
 					<div className="text-center">
 						<p className="text-sm text-slate mb-2">Definite articles</p>
-						<div className="flex justify-center gap-2">
-							<MonoText variant="greek" className="text-terracotta">τον</MonoText>
-							<MonoText variant="greek" className="text-terracotta">την</MonoText>
-							<MonoText variant="greek" className="text-terracotta">το</MonoText>
+						<div className="flex justify-center gap-3">
+							<div className="flex flex-col items-center">
+								<MonoText variant="greek" className="text-aegean">τ<span className="text-aegean font-bold">ον</span></MonoText>
+								<span className="text-xs text-aegean/70 mt-1">m</span>
+							</div>
+							<div className="flex flex-col items-center">
+								<MonoText variant="greek" className="text-rose-500">τ<span className="text-rose-500 font-bold">ην</span></MonoText>
+								<span className="text-xs text-rose-400 mt-1">f</span>
+							</div>
+							<div className="flex flex-col items-center">
+								<MonoText variant="greek" className="text-stone-500">τ<span className="text-stone-600 font-bold">ο</span></MonoText>
+								<span className="text-xs text-stone-400 mt-1">n</span>
+							</div>
 						</div>
 					</div>
 					<div className="text-center">
 						<p className="text-sm text-slate mb-2">Demonstratives</p>
-						<div className="flex justify-center gap-2">
-							<MonoText variant="greek" className="text-terracotta">αυτόν</MonoText>
-							<MonoText variant="greek" className="text-terracotta">αυτήν</MonoText>
-							<MonoText variant="greek" className="text-terracotta">αυτό</MonoText>
+						<div className="flex justify-center gap-3">
+							<div className="flex flex-col items-center">
+								<MonoText variant="greek" className="text-aegean">αυτ<span className="text-aegean font-bold">όν</span></MonoText>
+								<span className="text-xs text-aegean/70 mt-1">m</span>
+							</div>
+							<div className="flex flex-col items-center">
+								<MonoText variant="greek" className="text-rose-500">αυτ<span className="text-rose-500 font-bold">ήν</span></MonoText>
+								<span className="text-xs text-rose-400 mt-1">f</span>
+							</div>
+							<div className="flex flex-col items-center">
+								<MonoText variant="greek" className="text-stone-500">αυτ<span className="text-stone-600 font-bold">ό</span></MonoText>
+								<span className="text-xs text-stone-400 mt-1">n</span>
+							</div>
 						</div>
 					</div>
 				</div>
 				<p className="text-xs text-center text-stone-500 mt-3">
-					Both follow masculine/feminine/neuter endings: -ον/-ην/-ο
+					Both follow the same endings:{" "}
+					<span className="text-aegean font-medium">-ον</span> /{" "}
+					<span className="text-rose-500 font-medium">-ην</span> /{" "}
+					<span className="text-stone-600 font-medium">-ο</span>
 				</p>
 			</div>
 
