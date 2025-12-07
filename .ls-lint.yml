@@ -1,0 +1,54 @@
+ls:
+  # Source code
+  src:
+    .ts: kebab-case
+    .tsx: kebab-case | PascalCase
+
+  # Components - PascalCase for custom, kebab-case for ShadCN UI
+  src/components:
+    .tsx: PascalCase
+    .ts: kebab-case
+
+  src/components/ui:
+    .tsx: kebab-case
+
+  # Routes - kebab-case
+  src/routes:
+    .tsx: kebab-case
+    .ts: kebab-case
+
+  # Scripts - kebab-case
+  src/scripts:
+    .ts: kebab-case
+
+  # Constants, lib, types, db - kebab-case
+  src/constants:
+    .ts: kebab-case
+
+  src/lib:
+    .ts: kebab-case
+
+  src/types:
+    .ts: kebab-case
+
+  src/db:
+    .ts: kebab-case
+
+  # Config files at root
+  .:
+    .ts: kebab-case
+    .js: kebab-case
+    .mjs: kebab-case
+
+  # Workers
+  workers:
+    .ts: kebab-case
+
+ignore:
+  - node_modules
+  - .git
+  - .react-router
+  - .wrangler
+  - dist
+  - build
+  - drizzle
