@@ -129,7 +129,7 @@ For each verb pattern, show a sample conjugation paradigm:
     />
   </KeyInsight>
 
-  <CollapsibleSection title="All -ω verbs" colorScheme="aegean" defaultOpen={false}>
+  <CollapsibleSection title="All -ω verbs" colorScheme="ocean" defaultOpen={false}>
     {/* Grid of verbs */}
   </CollapsibleSection>
 </Card>
@@ -140,7 +140,7 @@ For each verb pattern, show a sample conjugation paradigm:
 **Location:** `getPatternColor` function (lines 280-286)
 
 The color mapping seems arbitrary rather than semantic:
-- Type A/regular: aegean
+- Type A/regular: ocean
 - Type B/contract: terracotta
 - Irregular: honey
 
@@ -183,18 +183,18 @@ The time-telling section is comprehensive but feels dense. The category labels (
 **Recommendation:** Use `CollapsibleSection` components for sub-categories:
 
 ```tsx
-<Card variant="bordered" padding="lg" className="bg-aegean/5 border-aegean/30">
+<Card variant="bordered" padding="lg" className="bg-ocean-50 border-ocean-300">
   <SectionHeading title="Telling Time" subtitle="Τι ώρα είναι;" level="h3" />
 
   <KeyInsight title="Pattern: Είναι + time / Η ώρα είναι + time">
     When telling time, Greek uses "it is" (είναι) with the time expression.
   </KeyInsight>
 
-  <CollapsibleSection title="Basic Structure" colorScheme="aegean" defaultOpen>
+  <CollapsibleSection title="Basic Structure" colorScheme="ocean" defaultOpen>
     {/* Basic time items */}
   </CollapsibleSection>
 
-  <CollapsibleSection title="Minutes & Fractions" colorScheme="aegean">
+  <CollapsibleSection title="Minutes & Fractions" colorScheme="ocean">
     {/* Minutes items */}
   </CollapsibleSection>
 </Card>
@@ -211,7 +211,7 @@ The Likes construction is well-documented with the pattern note, but the two-col
 ```tsx
 <QuickTest
   title="αρέσει or αρέσουν?"
-  colorScheme="aegean"
+  colorScheme="ocean"
   options={[
     {
       answer: "αρέσει",
@@ -268,7 +268,7 @@ And consider a timeline-style visual:
     <div key={time.id} className="flex flex-col items-center">
       <TimeCard time={time} />
       {i < orderedTimes.length - 1 && (
-        <div className="w-8 h-0.5 bg-honey/30 mt-2" />
+        <div className="w-8 h-0.5 bg-honey-300 mt-2" />
       )}
     </div>
   ))}
@@ -407,7 +407,7 @@ The page uses multiple patterns for displaying Greek text:
 ### Passing
 
 1. **Color not sole indicator** - All sections use icons and text labels alongside colors
-2. **AAA-compliant text colors** - Uses `-text` variants correctly (e.g., `text-aegean-text`)
+2. **AAA-compliant text colors** - Uses `-text` variants correctly (e.g., `text-ocean-text`)
 3. **Keyboard navigation** - Tabs are accessible via TabsList component
 4. **Focus states** - Inherited from ShadCN components
 

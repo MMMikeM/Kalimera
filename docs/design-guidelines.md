@@ -28,8 +28,10 @@ Research-backed design principles for effective language learning interfaces.
 
 **Application:**
 - Body text must use high-contrast variants (`*-text` tokens)
-- Accent colors (terracotta, olive, aegean, honey) are for decorative use only
+- Accent colors (terracotta, olive, ocean, honey) are for decorative use only
 - Always pair accent backgrounds with their `-text` variant for any text content
+
+### 3. AAA Contrast for Extended Reading
 
 ### 4. Greek Text Rendering
 
@@ -65,18 +67,18 @@ These colors fail WCAG AA for body text. Use only for:
 |-------|-----|----------|-----|
 | `terracotta` | `#C4663F` | 3.9:1 | Primary actions, emphasis |
 | `olive` | `#6B7B5C` | 4.2:1 | Nature, connection |
-| `aegean` | `#4A7C8F` | 4.1:1 | Stability, calm |
+| `ocean` | `#4A7C8F` | 4.1:1 | Stability, calm |
 | `honey` | `#D4A853` | 3.2:1 | Highlights, hints |
 
 ### Text-Safe Variants (AAA Compliant)
 
-Use these for any text content. Contrast ratios calculated against both cream backgrounds AND tinted backgrounds (e.g., `bg-honey/10`).
+Use these for any text content. Contrast ratios calculated against both cream backgrounds AND tinted backgrounds (e.g., `bg-honey-100`).
 
 | Token | Hex | On Cream | On Tinted BG |
 |-------|-----|----------|--------------|
 | `terracotta-text` | `#5C2D14` | 10:1+ | 10:1+ |
 | `olive-text` | `#1F2A18` | 12:1+ | 12:1+ |
-| `aegean-text` | `#14333F` | 11:1+ | 11:1+ |
+| `ocean-text` | `#14333F` | 11:1+ | 11:1+ |
 | `honey-text` | `#4A3508` | 11:1+ | 11:1+ |
 
 **Critical:** These colors are intentionally very dark to maintain AAA compliance on tinted backgrounds.
@@ -109,7 +111,7 @@ Each Greek case has an assigned color based on its grammatical function:
 
 | Case | Color | Rationale |
 |------|-------|-----------|
-| Nominative | Aegean (blue) | Subject - stable, foundational |
+| Nominative | Ocean (blue) | Subject - stable, foundational |
 | Accusative | Terracotta (orange) | Direct object - action target |
 | Genitive | Olive (green) | Possession - connection, relation |
 | Vocative | Honey (gold) | Direct address - attention-getting |
@@ -261,6 +263,7 @@ Level 5: Usage notes                          → Smallest, italic
 4. **Don't render Greek at the same size as English** - Scale up by 1.1x
 5. **Don't use SVG noise/grain textures** - They create JPEG-like artifacts
 6. **Don't use opacity modifiers on text colors** - See below
+7. **Don't use colored shadows** - Use neutral shadows only (`shadow-sm`, `shadow-md`, etc.), never `shadow-{color}-*`
 
 ---
 
@@ -295,12 +298,12 @@ The `-text` color variants are carefully calibrated to achieve 10:1+ contrast ra
 ```tsx
 // NEVER do this:
 text-honey-text/80
-text-aegean-text/70
+text-ocean-text/70
 text-olive-text/90
 
 // Always use full opacity:
 text-honey-text
-text-aegean-text
+text-ocean-text
 text-olive-text
 ```
 
@@ -320,7 +323,7 @@ Opacity modifiers are fine for backgrounds since they don't affect text contrast
 
 ```tsx
 // GOOD - background opacity doesn't affect text readability
-<div className="bg-honey/10">
+<div className="bg-honey-100">
   <p className="text-honey-text">Still readable</p>
 </div>
 ```
@@ -370,7 +373,7 @@ Use `KeyInsight` component for prominent callouts:
 </KeyInsight>
 ```
 
-- Santorini color scheme (`bg-santorini/5`, `border-santorini/30`)
+- Santorini color scheme (`bg-santorini-50`, `border-santorini-300`)
 - Optional expandable example for concrete demonstrations
 - Use for "most important thing to know" content
 
@@ -388,7 +391,7 @@ Use `CollapsibleSection` component with color schemes:
 </CollapsibleSection>
 ```
 
-Available color schemes: `honey | aegean | olive | terracotta | santorini | navy | default`
+Available color schemes: `honey | ocean | olive | terracotta | santorini | navy | default`
 
 Always includes `focus-visible:ring-2` for accessibility.
 
@@ -434,7 +437,7 @@ Use `CategoryCard` component for content differentiation by importance:
 <CategoryCard
   title="Object Pronouns"
   priority="primary"
-  colorScheme="aegean"
+  colorScheme="ocean"
   badge="Essential"
 >
   Content here
@@ -457,8 +460,8 @@ Priority levels:
 | Section h2/h3 headings | `text-navy-text` | Scholarly, hierarchical |
 | Subtitles/descriptions | `text-slate-text` | Subtle, supporting |
 | Interactive (collapsibles, links) | `text-santorini-text` | Interactive affordance |
-| Key insight callouts | `bg-santorini/5`, `border-santorini/30` | Attention, important |
-| Tips and self-tests | `bg-honey/5`, `border-honey/30` | Hints, warmth |
+| Key insight callouts | `bg-santorini-50`, `border-santorini-300` | Attention, important |
+| Tips and self-tests | `bg-honey-50`, `border-honey-300` | Hints, warmth |
 | Decorative icons | Base color (e.g., `text-honey`) | Visual accent only |
 | Icon labels/text | `-text` variant (e.g., `text-honey-text`) | AAA compliance |
 
@@ -466,15 +469,15 @@ Priority levels:
 
 | Concept | Color | Rationale |
 |---------|-------|-----------|
-| Cases - Nominative | Aegean | Subject - stable, foundational |
+| Cases - Nominative | Ocean | Subject - stable, foundational |
 | Cases - Accusative | Terracotta | Object - action target |
 | Cases - Genitive | Olive | Possession - connection |
 | Cases - Vocative | Honey | Address - attention |
-| Verbs - Active (-ω) | Aegean | Standard, calm |
+| Verbs - Active (-ω) | Ocean | Standard, calm |
 | Verbs - Contracted (-άω) | Terracotta | Emphasis, variation |
 | Verbs - Deponent (-μαι) | Olive | Passive-looking |
 | Prepositions - σε | Olive | Location (contracts) |
-| Prepositions - από | Aegean | Origin (no contraction) |
+| Prepositions - από | Ocean | Origin (no contraction) |
 
 ---
 
