@@ -1,10 +1,25 @@
 import { useState, useEffect } from "react";
-import { Users, BookOpen, Languages, MessageCircle, ChevronDown, Lightbulb, UserPlus, Clock, Flame, Trophy } from "lucide-react";
-import { useSearchParams, useFetcher, useRevalidator } from "react-router";
-import type { Route } from "./+types/practice";
+import {
+	Users,
+	BookOpen,
+	ChevronDown,
+	Lightbulb,
+	UserPlus,
+	Clock,
+	Flame,
+	Trophy,
+	FileText,
+	Zap,
+} from "lucide-react";
+import { Outlet, useSearchParams, useFetcher, useRevalidator, useLocation, Link } from "react-router";
+import type { Route } from "./+types/layout";
 import { eq } from "drizzle-orm";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+	Collapsible,
+	CollapsibleContent,
+	CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 import {
 	Select,
 	SelectContent,
@@ -21,24 +36,23 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import PronounDrill from "./practice/PronounDrill";
-import VerbDrill from "./practice/VerbDrill";
-import ArticleDrill from "./practice/ArticleDrill";
-import VocabularyDrill from "./practice/VocabularyDrill";
-import ReviewDrill from "./practice/ReviewDrill";
-import type { VocabItemWithSkill, PracticeStats } from "./practice/queries.server";
+import type { VocabItemWithSkill, PracticeStats } from "./queries.server";
 
 export function meta() {
 	return [
 		{ title: "Practice - Greek Learning" },
-		{ name: "description", content: "Interactive drills for Greek grammar and vocabulary" },
+		{
+			name: "description",
+			content: "Interactive drills for Greek grammar and vocabulary",
+		},
 	];
 }
 
 export const loader = async ({ context, request }: Route.LoaderArgs) => {
-	const db = context?.db ?? (await import("../db")).db;
-	const { users } = await import("../db/schema");
-	const { getItemsDueForReview, getNewVocabularyItems, getPracticeStats } = await import("./practice/queries.server");
+	const db = context?.db ?? (await import("../../db")).db;
+	const { users } = await import("../../db/schema");
+	const { getItemsDueForReview, getNewVocabularyItems, getPracticeStats } =
+		await import("./queries.server");
 
 	const url = new URL(request.url);
 	const userIdParam = url.searchParams.get("userId");
@@ -58,13 +72,15 @@ export const loader = async ({ context, request }: Route.LoaderArgs) => {
 		]);
 	}
 
-	return { users: allUsers, reviewItems, newVocabItems, stats };
+	return { users: allUsers, reviewItems, newVocabItems, stats, userId };
 };
 
 export const action = async ({ request, context }: Route.ActionArgs) => {
-	const db = context?.db ?? (await import("../db")).db;
-	const { users } = await import("../db/schema");
-	const { startSession, recordAttempt, completeSession } = await import("./practice/actions.server");
+	const db = context?.db ?? (await import("../../db")).db;
+	const { users } = await import("../../db/schema");
+	const { startSession, recordAttempt, completeSession } = await import(
+		"./actions.server"
+	);
 
 	const formData = await request.formData();
 	const intent = formData.get("intent");
@@ -77,7 +93,10 @@ export const action = async ({ request, context }: Route.ActionArgs) => {
 			return { error: "Name and code are required" };
 		}
 
-		const existingUser = await db.select().from(users).where(eq(users.code, code.toLowerCase()));
+		const existingUser = await db
+			.select()
+			.from(users)
+			.where(eq(users.code, code.toLowerCase()));
 		if (existingUser.length > 0) {
 			return { error: "A user with this code already exists" };
 		}
@@ -99,9 +118,13 @@ export const action = async ({ request, context }: Route.ActionArgs) => {
 
 		const session = await startSession(db, {
 			userId,
-			sessionType: sessionType as "vocab_quiz" | "case_drill" | "conjugation_drill" | "weak_area_focus",
-			category: formData.get("category") as string || undefined,
-			focusArea: formData.get("focusArea") as string || undefined,
+			sessionType: sessionType as
+				| "vocab_quiz"
+				| "case_drill"
+				| "conjugation_drill"
+				| "weak_area_focus",
+			category: (formData.get("category") as string) || undefined,
+			focusArea: (formData.get("focusArea") as string) || undefined,
 		});
 
 		return { success: true, session };
@@ -109,8 +132,12 @@ export const action = async ({ request, context }: Route.ActionArgs) => {
 
 	if (intent === "recordAttempt") {
 		const userId = parseInt(formData.get("userId") as string, 10);
-		const sessionId = formData.get("sessionId") ? parseInt(formData.get("sessionId") as string, 10) : undefined;
-		const vocabularyId = formData.get("vocabularyId") ? parseInt(formData.get("vocabularyId") as string, 10) : undefined;
+		const sessionId = formData.get("sessionId")
+			? parseInt(formData.get("sessionId") as string, 10)
+			: undefined;
+		const vocabularyId = formData.get("vocabularyId")
+			? parseInt(formData.get("vocabularyId") as string, 10)
+			: undefined;
 
 		const attempt = await recordAttempt(db, {
 			userId,
@@ -121,9 +148,15 @@ export const action = async ({ request, context }: Route.ActionArgs) => {
 			userAnswer: formData.get("userAnswer") as string,
 			isCorrect: formData.get("isCorrect") === "true",
 			timeTaken: parseInt(formData.get("timeTaken") as string, 10),
-			skillType: (formData.get("skillType") as "recognition" | "production") || "recognition",
-			weakAreaType: formData.get("weakAreaType") as "case" | "gender" | "verb_family" | undefined,
-			weakAreaIdentifier: formData.get("weakAreaIdentifier") as string || undefined,
+			skillType:
+				(formData.get("skillType") as "recognition" | "production") ||
+				"recognition",
+			weakAreaType: formData.get("weakAreaType") as
+				| "case"
+				| "gender"
+				| "verb_family"
+				| undefined,
+			weakAreaIdentifier: (formData.get("weakAreaIdentifier") as string) || undefined,
 		});
 
 		return { success: true, attempt };
@@ -131,8 +164,14 @@ export const action = async ({ request, context }: Route.ActionArgs) => {
 
 	if (intent === "completeSession") {
 		const sessionId = parseInt(formData.get("sessionId") as string, 10);
-		const totalQuestions = parseInt(formData.get("totalQuestions") as string, 10);
-		const correctAnswers = parseInt(formData.get("correctAnswers") as string, 10);
+		const totalQuestions = parseInt(
+			formData.get("totalQuestions") as string,
+			10
+		);
+		const correctAnswers = parseInt(
+			formData.get("correctAnswers") as string,
+			10
+		);
 
 		const session = await completeSession(db, {
 			sessionId,
@@ -264,7 +303,9 @@ const UserSelector = ({ users, onUserChange }: UserSelectorProps) => {
 								id="code"
 								placeholder="e.g., mike"
 								value={newCode}
-								onChange={(e) => setNewCode(e.target.value.toLowerCase().replace(/\s/g, ""))}
+								onChange={(e) =>
+									setNewCode(e.target.value.toLowerCase().replace(/\s/g, ""))
+								}
 							/>
 							<p className="text-xs text-muted-foreground">
 								A short code to identify you (no spaces, lowercase)
@@ -275,7 +316,11 @@ const UserSelector = ({ users, onUserChange }: UserSelectorProps) => {
 						)}
 						<Button
 							onClick={handleCreateUser}
-							disabled={!newName.trim() || !newCode.trim() || fetcher.state === "submitting"}
+							disabled={
+								!newName.trim() ||
+								!newCode.trim() ||
+								fetcher.state === "submitting"
+							}
 							className="w-full"
 						>
 							{fetcher.state === "submitting" ? "Creating..." : "Create User"}
@@ -284,18 +329,25 @@ const UserSelector = ({ users, onUserChange }: UserSelectorProps) => {
 				</DialogContent>
 			</Dialog>
 			{selectedUser && (
-				<span className="text-sm font-medium text-foreground">{selectedUser.displayName}</span>
+				<span className="text-sm font-medium text-foreground">
+					{selectedUser.displayName}
+				</span>
 			)}
 		</div>
 	);
 };
 
-const PracticeStrategy = () => (
+export const PracticeStrategy = () => (
 	<Collapsible>
 		<CollapsibleTrigger className="flex items-center gap-2 w-full p-3 rounded-lg bg-muted hover:bg-muted/80 transition-colors text-left group border border-border">
 			<Lightbulb size={18} className="text-honey" />
-			<span className="font-medium text-foreground">How to Practice Effectively</span>
-			<ChevronDown size={16} className="ml-auto text-muted-foreground transition-transform group-data-[state=open]:rotate-180" />
+			<span className="font-medium text-foreground">
+				How to Practice Effectively
+			</span>
+			<ChevronDown
+				size={16}
+				className="ml-auto text-muted-foreground transition-transform group-data-[state=open]:rotate-180"
+			/>
 		</CollapsibleTrigger>
 		<CollapsibleContent>
 			<div className="mt-4 info-box-tip">
@@ -356,23 +408,63 @@ const StatsBanner = ({ stats }: { stats: PracticeStats }) => (
 	</div>
 );
 
-export default function PracticeRoute({ loaderData }: Route.ComponentProps) {
-	const { users, reviewItems, newVocabItems, stats } = loaderData;
+export interface PracticeLoaderData {
+	users: User[];
+	reviewItems: VocabItemWithSkill[];
+	newVocabItems: VocabItemWithSkill[];
+	stats: PracticeStats | null;
+	userId: number | null;
+}
+
+const TAB_COLORS = {
+	pronouns: {
+		active: "border-b-2 border-b-aegean text-aegean",
+		icon: "text-aegean",
+	},
+	articles: {
+		active: "border-b-2 border-b-olive text-olive",
+		icon: "text-olive",
+	},
+	verbs: {
+		active: "border-b-2 border-b-honey text-honey",
+		icon: "text-honey",
+	},
+	vocabulary: {
+		active: "border-b-2 border-b-santorini text-santorini",
+		icon: "text-santorini",
+	},
+	review: {
+		active: "border-b-2 border-b-terracotta text-terracotta",
+		icon: "text-terracotta",
+	},
+} as const;
+
+const TABS = [
+	{ id: "pronouns", label: "Pronouns", shortLabel: "Pro", icon: Users },
+	{ id: "articles", label: "Articles", shortLabel: "Art", icon: FileText },
+	{ id: "verbs", label: "Verbs", shortLabel: "Vrb", icon: Zap },
+	{ id: "vocabulary", label: "Vocabulary", shortLabel: "Vocab", icon: BookOpen },
+	{ id: "review", label: "Review", shortLabel: "Rev", icon: Clock },
+] as const;
+
+export default function PracticeLayout({ loaderData }: Route.ComponentProps) {
+	const { users, stats } = loaderData;
 	const [searchParams, setSearchParams] = useSearchParams();
 	const revalidator = useRevalidator();
-	const activeTab = searchParams.get("tab") || "pronouns";
+	const location = useLocation();
 
-	const handleTabChange = (value: string) => {
-		const userId = searchParams.get("userId");
-		const newParams: Record<string, string> = { tab: value };
-		if (userId) newParams.userId = userId;
-		setSearchParams(newParams);
-	};
+	const pathSegments = location.pathname.split("/").filter(Boolean);
+	const activeTab = pathSegments[1] || "pronouns";
 
 	const handleUserChange = (userId: string) => {
-		const tab = searchParams.get("tab") || "pronouns";
-		setSearchParams({ tab, userId });
+		setSearchParams({ userId });
 		revalidator.revalidate();
+	};
+
+	const buildTabUrl = (tabId: string) => {
+		const userId = searchParams.get("userId");
+		const base = `/practice/${tabId}`;
+		return userId ? `${base}?userId=${userId}` : base;
 	};
 
 	return (
@@ -380,97 +472,44 @@ export default function PracticeRoute({ loaderData }: Route.ComponentProps) {
 			<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-2">
 				<div>
 					<h2 className="text-2xl font-bold text-foreground">Practice</h2>
-					<p className="text-muted-foreground mt-1">Interactive drills to build fluency</p>
+					<p className="text-muted-foreground mt-1">
+						Interactive drills to build fluency
+					</p>
 				</div>
 				<UserSelector users={users} onUserChange={handleUserChange} />
 			</div>
 
 			{stats && <StatsBanner stats={stats} />}
 
-			<Tabs value={activeTab} onValueChange={handleTabChange}>
+			<Tabs value={activeTab}>
 				<TabsList className="flex-wrap h-auto gap-1">
-					<TabsTrigger value="pronouns" className="gap-1.5">
-						<Users size={16} />
-						<span className="hidden sm:inline">Pronouns</span>
-						<span className="sm:hidden">Pro</span>
-					</TabsTrigger>
-					<TabsTrigger value="articles" className="gap-1.5">
-						<BookOpen size={16} />
-						<span className="hidden sm:inline">Articles</span>
-						<span className="sm:hidden">Art</span>
-					</TabsTrigger>
-					<TabsTrigger value="verbs" className="gap-1.5">
-						<Languages size={16} />
-						<span className="hidden sm:inline">Verbs</span>
-						<span className="sm:hidden">Vrb</span>
-					</TabsTrigger>
-					<TabsTrigger value="vocabulary" className="gap-1.5">
-						<MessageCircle size={16} />
-						<span className="hidden sm:inline">Vocabulary</span>
-						<span className="sm:hidden">Vocab</span>
-					</TabsTrigger>
-					<TabsTrigger value="review" className="gap-1.5 relative">
-						<Clock size={16} />
-						<span className="hidden sm:inline">Review</span>
-						<span className="sm:hidden">Rev</span>
-						{stats && stats.dueCount > 0 && (
-							<span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full w-5 h-5 flex items-center justify-center">
-								{stats.dueCount > 99 ? "99+" : stats.dueCount}
-							</span>
-						)}
-					</TabsTrigger>
+					{TABS.map((tab) => {
+						const isActive = activeTab === tab.id;
+						const colors = TAB_COLORS[tab.id];
+						return (
+							<TabsTrigger
+								key={tab.id}
+								value={tab.id}
+								asChild
+								className={`gap-1.5 relative ${isActive ? colors.active : ""}`}
+							>
+								<Link to={buildTabUrl(tab.id)}>
+									<tab.icon size={16} className={isActive ? colors.icon : ""} />
+									<span className="hidden sm:inline">{tab.label}</span>
+									<span className="sm:hidden">{tab.shortLabel}</span>
+									{tab.id === "review" && stats && stats.dueCount > 0 && (
+										<span className="absolute -top-1 -right-1 bg-terracotta text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+											{stats.dueCount > 99 ? "99+" : stats.dueCount}
+										</span>
+									)}
+								</Link>
+							</TabsTrigger>
+						);
+					})}
 				</TabsList>
-
-				<TabsContent value="pronouns">
-					<div className="space-y-4">
-						<PronounDrill />
-						<PracticeStrategy />
-					</div>
-				</TabsContent>
-
-				<TabsContent value="articles">
-					<div className="space-y-4">
-						<ArticleDrill />
-						<PracticeStrategy />
-					</div>
-				</TabsContent>
-
-				<TabsContent value="verbs">
-					<div className="space-y-4">
-						<VerbDrill />
-						<PracticeStrategy />
-					</div>
-				</TabsContent>
-
-				<TabsContent value="vocabulary">
-					<div className="space-y-4">
-						{searchParams.get("userId") ? (
-							<VocabularyDrill items={newVocabItems} />
-						) : (
-							<div className="text-center py-12 bg-muted rounded-xl border border-border">
-								<div className="text-5xl mb-4">👤</div>
-								<h3 className="text-xl font-semibold text-foreground mb-2">Select a user</h3>
-								<p className="text-muted-foreground">Choose a user from the dropdown above to learn new vocabulary.</p>
-							</div>
-						)}
-						<PracticeStrategy />
-					</div>
-				</TabsContent>
-
-				<TabsContent value="review">
-					<div className="space-y-4">
-						{searchParams.get("userId") ? (
-							<ReviewDrill items={reviewItems} />
-						) : (
-							<div className="text-center py-12 bg-muted rounded-xl border border-border">
-								<div className="text-5xl mb-4">👤</div>
-								<h3 className="text-xl font-semibold text-foreground mb-2">Select a user</h3>
-								<p className="text-muted-foreground">Choose a user from the dropdown above to see your review items.</p>
-							</div>
-						)}
-					</div>
-				</TabsContent>
 			</Tabs>
+
+			<Outlet context={loaderData} />
 		</div>
 	);
 }

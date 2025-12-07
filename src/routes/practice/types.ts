@@ -1,3 +1,8 @@
+export interface QuestionBadge {
+	label: string;
+	variant: "nominative" | "accusative" | "genitive" | "vocative" | "object" | "possessive";
+}
+
 export interface Question {
 	id: string;
 	prompt: string;
@@ -5,6 +10,8 @@ export interface Question {
 	options: string[];
 	correctIndex: number;
 	explanation: string;
+	badge?: QuestionBadge;
+	hint?: string; // Pattern hint shown on incorrect answers (e.g., "Remember: object pronouns come before the verb")
 }
 
 export interface DrillState {
