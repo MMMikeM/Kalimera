@@ -91,7 +91,7 @@ const PronounTable: React.FC<{ highlight?: PronounHighlight }> = ({ highlight })
 							<td
 								className={`p-1 text-center ${
 									isHighlighted(row.person, "singular")
-										? "bg-terracotta/20 rounded font-bold text-terracotta-text"
+										? "bg-terracotta-200 rounded font-bold text-terracotta-text"
 										: ""
 								}`}
 							>
@@ -100,7 +100,7 @@ const PronounTable: React.FC<{ highlight?: PronounHighlight }> = ({ highlight })
 							<td
 								className={`p-1 text-center ${
 									isHighlighted(row.person, "plural")
-										? "bg-terracotta/20 rounded font-bold text-terracotta-text"
+										? "bg-terracotta-200 rounded font-bold text-terracotta-text"
 										: ""
 								}`}
 							>
@@ -168,7 +168,7 @@ const ArticleTable: React.FC<{ highlight?: ArticleHighlight }> = ({ highlight })
 										key={`${gender}-sg`}
 										className={`p-1 text-center ${
 											isHighlighted(caseType, gender, "singular")
-												? "bg-terracotta/20 rounded font-bold text-terracotta-text"
+												? "bg-terracotta-200 rounded font-bold text-terracotta-text"
 												: ""
 										}`}
 									>
@@ -178,7 +178,7 @@ const ArticleTable: React.FC<{ highlight?: ArticleHighlight }> = ({ highlight })
 										key={`${gender}-pl`}
 										className={`p-1 text-center ${
 											isHighlighted(caseType, gender, "plural")
-												? "bg-terracotta/20 rounded font-bold text-terracotta-text"
+												? "bg-terracotta-200 rounded font-bold text-terracotta-text"
 												: ""
 										}`}
 									>

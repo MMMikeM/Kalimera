@@ -2,11 +2,11 @@ import type { ReactNode } from "react";
 import { tv } from "tailwind-variants";
 
 export const buttonVariants = tv({
-	base: "inline-flex items-center justify-center gap-2 rounded-xl font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-terracotta/50 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm hover:shadow-md transform hover:-translate-y-0.5",
+	base: "inline-flex items-center justify-center gap-2 rounded-xl font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-terracotta-400 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm hover:shadow-md transform hover:-translate-y-0.5",
 	variants: {
 		variant: {
 			primary:
-				"bg-terracotta text-white hover:bg-terracotta/90 shadow-terracotta/20",
+				"bg-terracotta text-white hover:bg-terracotta-600 shadow-terracotta-200",
 			secondary:
 				"bg-white/80 backdrop-blur-sm text-stone-700 hover:bg-white border border-stone-200 hover:border-stone-300 shadow-stone-100",
 			outline:
@@ -28,12 +28,12 @@ export const buttonVariants = tv({
 			variant: "secondary",
 			active: true,
 			class:
-				"bg-terracotta text-white border-terracotta shadow-lg shadow-terracotta/30 hover:bg-terracotta/90",
+				"bg-terracotta text-white border-terracotta shadow-lg shadow-terracotta-300 hover:bg-terracotta-600",
 		},
 		{
 			variant: "primary",
 			active: true,
-			class: "shadow-lg shadow-terracotta/30",
+			class: "shadow-lg shadow-terracotta-300",
 		},
 	],
 	defaultVariants: {

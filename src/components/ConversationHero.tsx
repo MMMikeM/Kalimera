@@ -14,23 +14,23 @@ export interface ConversationHeroProps {
 
 const heroStyles: Record<ColorScheme, { bg: string; border: string; text: string }> = {
 	olive: {
-		bg: "bg-olive/5",
-		border: "border-olive/20",
+		bg: "bg-olive-50",
+		border: "border-olive-200",
 		text: "text-olive-dark",
 	},
 	terracotta: {
-		bg: "bg-terracotta/5",
-		border: "border-terracotta/20",
+		bg: "bg-terracotta-50",
+		border: "border-terracotta-200",
 		text: "text-terracotta-dark",
 	},
-	aegean: {
-		bg: "bg-aegean/5",
-		border: "border-aegean/20",
-		text: "text-aegean-dark",
+	ocean: {
+		bg: "bg-ocean-50",
+		border: "border-ocean-200",
+		text: "text-ocean-dark",
 	},
 	honey: {
-		bg: "bg-honey/5",
-		border: "border-honey/20",
+		bg: "bg-honey-50",
+		border: "border-honey-200",
 		text: "text-honey-dark",
 	},
 };

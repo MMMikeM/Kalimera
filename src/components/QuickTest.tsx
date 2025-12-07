@@ -13,33 +13,33 @@ export interface QuickTestProps {
 	intro?: string;
 	options: QuickTestOption[];
 	summary?: ReactNode;
-	colorScheme?: "honey" | "aegean" | "olive" | "terracotta";
+	colorScheme?: "honey" | "ocean" | "olive" | "terracotta";
 }
 
 const colorStyles = {
 	honey: {
-		bg: "bg-honey/10",
-		border: "border-honey/40",
+		bg: "bg-honey-100",
+		border: "border-honey-400",
 		text: "text-honey-text",
-		shadow: "shadow-md shadow-honey/10",
+		shadow: "shadow-md shadow-honey-100",
 	},
-	aegean: {
-		bg: "bg-aegean/10",
-		border: "border-aegean/40",
-		text: "text-aegean-text",
-		shadow: "shadow-md shadow-aegean/10",
+	ocean: {
+		bg: "bg-ocean-100",
+		border: "border-ocean-400",
+		text: "text-ocean-text",
+		shadow: "shadow-md shadow-ocean-100",
 	},
 	olive: {
-		bg: "bg-olive/10",
-		border: "border-olive/40",
+		bg: "bg-olive-100",
+		border: "border-olive-400",
 		text: "text-olive-text",
-		shadow: "shadow-md shadow-olive/10",
+		shadow: "shadow-md shadow-olive-100",
 	},
 	terracotta: {
-		bg: "bg-terracotta/10",
-		border: "border-terracotta/40",
+		bg: "bg-terracotta-100",
+		border: "border-terracotta-400",
 		text: "text-terracotta-text",
-		shadow: "shadow-md shadow-terracotta/10",
+		shadow: "shadow-md shadow-terracotta-100",
 	},
 };
 
