@@ -273,7 +273,7 @@ const PatternIdentifier: React.FC = () => (
 	<Card
 		variant="bordered"
 		padding="lg"
-		className="bg-gradient-to-br from-cream to-cream-dark border-2 border-stone-300 shadow-sm"
+		className="bg-red-500 border-2 border-stone-300 shadow-sm"
 	>
 		<div className="flex items-center gap-3 mb-4">
 			<div className="p-2.5 rounded-xl bg-honey-200">
