@@ -38,7 +38,7 @@ export const monoTextVariants = tv({
 			// Highlighted Greek text - warm tint instead of blue/indigo
 			// Includes greek-text class for proper 1.1x scaling
 			highlighted:
-				"bg-gradient-to-r from-stone-100 to-stone-50 text-stone-800 px-2 py-1 rounded font-semibold border border-stone-200 greek-text",
+				"bg-white text-stone-800 px-2 py-1 rounded font-semibold border border-stone-200 greek-text",
 
 			// Greek text with terracotta accent
 			greek: "text-terracotta-text font-semibold greek-text",
