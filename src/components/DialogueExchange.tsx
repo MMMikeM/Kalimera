@@ -18,20 +18,20 @@ export type ColorScheme = "olive" | "terracotta" | "ocean" | "honey";
 
 const colorSchemeStyles: Record<ColorScheme, { you: string; other: string }> = {
 	olive: {
-		you: "bg-olive-50 border-l-4 border-olive-300",
-		other: "bg-cream-dark border-l-4 border-olive-200",
+		you: "bg-olive-100 border-l-4 border-olive-400",
+		other: "bg-stone-100 border-l-4 border-stone-300",
 	},
 	terracotta: {
-		you: "bg-terracotta-50 border-l-4 border-terracotta-300",
-		other: "bg-cream-dark border-l-4 border-terracotta-200",
+		you: "bg-terracotta-100 border-l-4 border-terracotta-400",
+		other: "bg-stone-100 border-l-4 border-stone-300",
 	},
 	ocean: {
-		you: "bg-ocean-50 border-l-4 border-ocean-300",
-		other: "bg-cream-dark border-l-4 border-ocean-200",
+		you: "bg-ocean-100 border-l-4 border-ocean-400",
+		other: "bg-stone-100 border-l-4 border-stone-300",
 	},
 	honey: {
-		you: "bg-honey-50 border-l-4 border-honey-300",
-		other: "bg-cream-dark border-l-4 border-honey-200",
+		you: "bg-honey-100 border-l-4 border-honey-400",
+		other: "bg-stone-100 border-l-4 border-stone-300",
 	},
 };
 
