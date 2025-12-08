@@ -56,7 +56,12 @@ export const NOUNS = {
 	],
 
 	timeExpressions: [
+		{ lemma: "λεπτό", gender: "neuter", english: "minute" },
+		{ lemma: "ώρα", gender: "feminine", english: "hour" },
 		{ lemma: "μέρα", gender: "feminine", english: "day" },
+		{ lemma: "εβδομάδα", gender: "feminine", english: "week" },
+		{ lemma: "μήνας", gender: "masculine", english: "month" },
+		{ lemma: "χρόνος", gender: "masculine", english: "year" },
 		{ lemma: "μεσημέρι", gender: "neuter", english: "midday" },
 		{ lemma: "απόγευμα", gender: "neuter", english: "afternoon" },
 		{ lemma: "βράδυ", gender: "neuter", english: "evening" },
