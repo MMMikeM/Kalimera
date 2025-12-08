@@ -1,65 +1,14 @@
 import type React from "react";
 import { Card, MonoText } from "@/components";
 
-export interface VocabItem {
-	id: number;
-	greek: string;
-	english: string;
-	wordType: string | null;
-	metadata: unknown;
-	tagSlug: string;
-}
-
-export interface VocabularyLoaderData {
-	nouns: {
-		people: VocabItem[];
-		shopping: VocabItem[];
-		household: VocabItem[];
-		vehicles: VocabItem[];
-		summer: VocabItem[];
-	};
-	verbs: {
-		categories: Array<{
-			id: string;
-			title: string;
-			verbs: Array<{
-				id: number;
-				greek: string;
-				english: string;
-				pattern: string | null;
-			}>;
-		}>;
-		transportActions: VocabItem[];
-	};
-	phrases: {
-		essential: VocabItem[];
-		daysOfWeek: VocabItem[];
-		months: VocabItem[];
-		discourseFillers: VocabItem[];
-		socialPhrases: VocabItem[];
-		commands: VocabItem[];
-		questionWords: VocabItem[];
-		likesConstruction: {
-			singular: VocabItem[];
-			plural: VocabItem[];
-		};
-		nameConstruction: VocabItem[];
-		timeTelling: VocabItem[];
-		discourseMarkers: VocabItem[];
-		responses: VocabItem[];
-		opinions: VocabItem[];
-		arriving: VocabItem[];
-		food: VocabItem[];
-		smalltalk: VocabItem[];
-	};
-	reference: {
-		timesOfDay: Array<VocabItem & { timeRange?: string }>;
-		numbers: Array<VocabItem & { numericValue?: number }>;
-		colors: VocabItem[];
-		frequencyAdverbs: VocabItem[];
-		positionAdverbs: VocabItem[];
-	};
-}
+// Re-export types from data.server - single source of truth
+export type {
+	VocabItem,
+	VocabularyLoaderData,
+	VerbWithPattern,
+	VerbCategory,
+	VerbSubCategory,
+} from "./data.server";
 
 export const VocabItemDisplay: React.FC<{
 	greek: string;
@@ -84,10 +33,25 @@ const detectGender = (greek: string): Gender => {
 	return "unknown";
 };
 
-const genderStyles: Record<Gender, { border: string; label: string; abbr: string }> = {
-	masculine: { border: "border-l-4 border-ocean-600", label: "masculine", abbr: "m" },
-	feminine: { border: "border-l-4 border-rose-400/60", label: "feminine", abbr: "f" },
-	neuter: { border: "border-l-4 border-stone-400/60", label: "neuter", abbr: "n" },
+const genderStyles: Record<
+	Gender,
+	{ border: string; label: string; abbr: string }
+> = {
+	masculine: {
+		border: "border-l-4 border-ocean-600",
+		label: "masculine",
+		abbr: "m",
+	},
+	feminine: {
+		border: "border-l-4 border-rose-400/60",
+		label: "feminine",
+		abbr: "f",
+	},
+	neuter: {
+		border: "border-l-4 border-stone-400/60",
+		label: "neuter",
+		abbr: "n",
+	},
 	unknown: { border: "", label: "", abbr: "" },
 };
 

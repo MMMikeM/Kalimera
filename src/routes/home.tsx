@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { MonoText } from "@/components";
 import { Badge } from "@/components/ui/badge";
+import { getAppStats } from "@/db/queries/stats";
 import type { Route } from "./+types/home";
 
 export function meta() {
@@ -25,21 +26,9 @@ export function meta() {
 	];
 }
 
-export const loader = async ({ context }: Route.LoaderArgs) => {
-	const db = context?.db ?? (await import("../db")).db;
-	const { users, vocabulary } = await import("../db/schema");
-	const { count } = await import("drizzle-orm");
-
-	const [userCount] = await db.select({ count: count() }).from(users);
-	const [vocabCount] = await db.select({ count: count() }).from(vocabulary);
-
-	return {
-		stats: {
-			users: userCount?.count ?? 0,
-			vocabulary: vocabCount?.count ?? 0,
-		},
-	};
-};
+export async function loader() {
+	return { stats: await getAppStats() };
+}
 
 const GreekLetter = ({
 	letter,
@@ -161,7 +150,7 @@ const DailyPhrase = () => {
 	const phrase = phrases[dayIndex] ?? phrases[0];
 
 	return (
-		<div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-stone-50 to-cream p-8 border border-stone-200/50">
+		<div className="relative overflow-hidden rounded-3xl bg-red-500 p-8 border border-stone-200/50">
 			<div className="absolute -top-8 -right-8 text-[120px] font-serif text-terracotta-50 leading-none select-none">
 				Ω
 			</div>

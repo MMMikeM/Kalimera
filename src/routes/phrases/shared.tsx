@@ -1,49 +1,8 @@
 import type React from "react";
 import { Card, MonoText } from "@/components";
 
-export interface PhraseItem {
-	id: number;
-	greek: string;
-	english: string;
-	wordType: string | null;
-	metadata: unknown;
-	tagSlug: string;
-}
-
-export interface PhrasesLoaderData {
-	survival: {
-		essential: PhraseItem[];
-		survival: PhraseItem[];
-	};
-	responses: {
-		responses: PhraseItem[];
-		socialPhrases: PhraseItem[];
-	};
-	requests: {
-		requests: PhraseItem[];
-		commands: PhraseItem[];
-	};
-	opinions: {
-		opinions: PhraseItem[];
-	};
-	connectors: {
-		discourseMarkers: PhraseItem[];
-		discourseFillers: PhraseItem[];
-	};
-	time: {
-		daysOfWeek: PhraseItem[];
-		months: PhraseItem[];
-		timeTelling: PhraseItem[];
-	};
-	constructions: {
-		likesConstruction: {
-			singular: PhraseItem[];
-			plural: PhraseItem[];
-		};
-		nameConstruction: PhraseItem[];
-		questionWords: PhraseItem[];
-	};
-}
+// Re-export types from data.server - single source of truth
+export type { PhraseItem, PhrasesLoaderData } from "./data.server";
 
 export const PhraseItemDisplay: React.FC<{
 	greek: string;
