@@ -7,8 +7,8 @@ import {
 	type SkillType,
 } from "../../db/schema";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type DB = any; // Supports both libsql (local) and D1 (production)
+// biome-ignore lint/suspicious/noExplicitAny: DB type varies between libsql (local) and D1 (production)
+type DB = any;
 
 export interface VocabItemWithSkill {
 	id: number;
@@ -79,11 +79,11 @@ export const getItemsDueForReview = async (
 		category: r.category,
 		skill: r.nextReviewAt
 			? {
-					nextReviewAt: r.nextReviewAt,
-					intervalDays: r.intervalDays,
-					easeFactor: r.easeFactor,
-					reviewCount: r.reviewCount,
-				}
+				nextReviewAt: r.nextReviewAt,
+				intervalDays: r.intervalDays,
+				easeFactor: r.easeFactor,
+				reviewCount: r.reviewCount,
+			}
 			: null,
 	}));
 };
@@ -253,7 +253,7 @@ const calculateStreak = async (db: DB, userId: number): Promise<number> => {
 	const uniqueDates = new Set<string>();
 	for (const session of sessions) {
 		if (session.completedAt) {
-			const dateStr = new Date(session.completedAt).toISOString().split("T")[0];
+			const dateStr = new Date(session.completedAt).toISOString().split("T")[0] ?? "";
 			uniqueDates.add(dateStr);
 		}
 	}
@@ -262,18 +262,23 @@ const calculateStreak = async (db: DB, userId: number): Promise<number> => {
 	if (sortedDates.length === 0) return 0;
 
 	// Check if practiced today or yesterday (to count ongoing streak)
-	const today = new Date().toISOString().split("T")[0];
-	const yesterday = new Date(Date.now() - 86400000).toISOString().split("T")[0];
+	const today = new Date().toISOString().split("T")[0] ?? "";
+	const yesterday = new Date(Date.now() - 86400000).toISOString().split("T")[0] ?? "";
+	const firstDate = sortedDates[0];
 
-	if (sortedDates[0] !== today && sortedDates[0] !== yesterday) {
+	if (!firstDate || (firstDate !== today && firstDate !== yesterday)) {
 		return 0; // Streak broken
 	}
 
 	// Count consecutive days
 	let streak = 1;
 	for (let i = 1; i < sortedDates.length; i++) {
-		const prevDate = new Date(sortedDates[i - 1]);
-		const currDate = new Date(sortedDates[i]);
+		const prevDateStr = sortedDates[i - 1];
+		const currDateStr = sortedDates[i];
+		if (!prevDateStr || !currDateStr) break;
+
+		const prevDate = new Date(prevDateStr);
+		const currDate = new Date(currDateStr);
 		const diffDays = Math.round((prevDate.getTime() - currDate.getTime()) / 86400000);
 
 		if (diffDays === 1) {

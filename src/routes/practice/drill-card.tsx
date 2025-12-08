@@ -29,7 +29,12 @@ import {
 	shuffleArray,
 } from "./types";
 
-export type DrillVariant = "pronouns" | "articles" | "verbs" | "vocabulary" | "review";
+export type DrillVariant =
+	| "pronouns"
+	| "articles"
+	| "verbs"
+	| "vocabulary"
+	| "review";
 
 interface VariantConfig {
 	icon: LucideIcon;
@@ -125,48 +130,82 @@ const DrillCard: React.FC<DrillCardProps> = ({
 
 	// Session management
 	const [currentSession, setCurrentSession] = useState(0);
-	const totalSessions = Math.ceil(shuffledQuestions.length / maxQuestionsPerSession);
+	const totalSessions = Math.ceil(
+		shuffledQuestions.length / maxQuestionsPerSession,
+	);
 	const sessionStart = currentSession * maxQuestionsPerSession;
-	const sessionEnd = Math.min(sessionStart + maxQuestionsPerSession, shuffledQuestions.length);
+	const sessionEnd = Math.min(
+		sessionStart + maxQuestionsPerSession,
+		shuffledQuestions.length,
+	);
 	const sessionQuestions = useMemo(
 		() => shuffledQuestions.slice(sessionStart, sessionEnd),
-		[shuffledQuestions, sessionStart, sessionEnd]
+		[shuffledQuestions, sessionStart, sessionEnd],
 	);
-	const [state, dispatch] = useReducer(drillReducer, sessionQuestions, initialDrillState);
+	const [state, dispatch] = useReducer(
+		drillReducer,
+		sessionQuestions,
+		initialDrillState,
+	);
 	const [showParadigm, setShowParadigm] = useState(false);
 	const questionStartTimeRef = useRef<number>(Date.now());
-
-	const currentQuestion = state.questions[state.currentIndex];
-	const progressPercent = (state.currentIndex / state.questions.length) * 100;
-	const isCorrect = state.selectedAnswer === currentQuestion?.correctIndex;
 
 	// Track if we need to reset state when session changes
 	useEffect(() => {
 		dispatch({ type: "RESTART" });
-	}, [currentSession]);
+	}, []);
 
 	// Reset timer when question changes
 	useEffect(() => {
 		if (!state.showFeedback) {
 			questionStartTimeRef.current = Date.now();
 		}
-	}, [state.currentIndex, state.showFeedback]);
+	}, [state.showFeedback]);
 
 	// Call onComplete when all sessions are done
 	useEffect(() => {
-		if (state.isComplete && onComplete && currentSession === totalSessions - 1) {
+		if (
+			state.isComplete &&
+			onComplete &&
+			currentSession === totalSessions - 1
+		) {
 			onComplete(state.score);
 		}
-	}, [state.isComplete, state.score, onComplete, currentSession, totalSessions]);
+	}, [
+		state.isComplete,
+		state.score,
+		onComplete,
+		currentSession,
+		totalSessions,
+	]);
 
+	const currentQuestion = state.questions[state.currentIndex];
+
+	// Guard: if no questions, show empty state
+	if (!currentQuestion) {
+		return (
+			<Card variant="bordered" padding="lg" className={config.bgGradient}>
+				<p className="text-center text-stone-600">No questions available</p>
+			</Card>
+		);
+	}
+
+	const progressPercent = (state.currentIndex / state.questions.length) * 100;
+	const isCorrect = state.selectedAnswer === currentQuestion.correctIndex;
 	const hasMoreSessions = currentSession < totalSessions - 1;
 
 	// Session complete screen (with continue/stop options)
 	if (state.isComplete) {
-		const percentage = Math.round((state.score.correct / state.score.total) * 100);
+		const percentage = Math.round(
+			(state.score.correct / state.score.total) * 100,
+		);
 
 		return (
-			<Card variant="bordered" padding="lg" className={`${config.bgGradient} ${config.borderColor}`}>
+			<Card
+				variant="bordered"
+				padding="lg"
+				className={`${config.bgGradient} ${config.borderColor}`}
+			>
 				<div className="text-center py-8">
 					<div className="text-6xl mb-4">
 						{percentage >= 80 ? "🎉" : percentage >= 60 ? "👍" : "💪"}
@@ -237,7 +276,11 @@ const DrillCard: React.FC<DrillCardProps> = ({
 	}
 
 	return (
-		<Card variant="bordered" padding="lg" className={`${config.bgGradient} ${config.borderColor}`}>
+		<Card
+			variant="bordered"
+			padding="lg"
+			className={`${config.bgGradient} ${config.borderColor}`}
+		>
 			{/* Header */}
 			<div className="mb-4">
 				<div className="flex items-center justify-between mb-2">
@@ -258,13 +301,23 @@ const DrillCard: React.FC<DrillCardProps> = ({
 						{state.currentIndex + 1} / {state.questions.length}
 					</span>
 				</div>
-				<Progress value={progressPercent} className="h-2" indicatorClassName={config.progressColor} />
+				<Progress
+					value={progressPercent}
+					className="h-2"
+					indicatorClassName={config.progressColor}
+				/>
 				<p className="text-sm text-stone-600 mt-2">{description}</p>
 			</div>
 
 			{/* Paradigm Reference (for grammar drills only) */}
-			{(variant === "pronouns" || variant === "articles" || variant === "verbs") && (
-				<Collapsible open={showParadigm} onOpenChange={setShowParadigm} className="mb-4">
+			{(variant === "pronouns" ||
+				variant === "articles" ||
+				variant === "verbs") && (
+				<Collapsible
+					open={showParadigm}
+					onOpenChange={setShowParadigm}
+					className="mb-4"
+				>
 					<CollapsibleTrigger className="flex items-center gap-2 text-sm text-stone-500 hover:text-stone-700 transition-colors">
 						<ChevronDown
 							size={14}
@@ -284,15 +337,23 @@ const DrillCard: React.FC<DrillCardProps> = ({
 			<div className="bg-white rounded-lg p-6 mb-4 border">
 				<div className="text-center mb-6">
 					{currentQuestion.badge && (
-						<span className={`case-badge-${currentQuestion.badge.variant} inline-block mb-3`}>
+						<span
+							className={`case-badge-${currentQuestion.badge.variant} inline-block mb-3`}
+						>
 							{currentQuestion.badge.label}
 						</span>
 					)}
-					<MonoText variant="highlighted" size="lg" className="text-2xl block mb-2">
+					<MonoText
+						variant="highlighted"
+						size="lg"
+						className="text-2xl block mb-2"
+					>
 						{currentQuestion.prompt}
 					</MonoText>
 					{currentQuestion.promptSubtext && (
-						<p className="text-stone-600 text-sm">{currentQuestion.promptSubtext}</p>
+						<p className="text-stone-600 text-sm">
+							{currentQuestion.promptSubtext}
+						</p>
 					)}
 				</div>
 
@@ -308,6 +369,7 @@ const DrillCard: React.FC<DrillCardProps> = ({
 					{currentQuestion.options.map((option, index) => {
 						const isSelected = state.selectedAnswer === index;
 						const isCorrectOption = index === currentQuestion.correctIndex;
+						const optionId = `option-${currentQuestion.id}-${index}`;
 
 						let optionClass = "border-stone-200 bg-stone-50";
 						if (state.showFeedback) {
@@ -322,10 +384,11 @@ const DrillCard: React.FC<DrillCardProps> = ({
 
 						return (
 							<label
-								key={index}
+								key={optionId}
+								htmlFor={optionId}
 								className={`flex items-center gap-3 p-4 rounded-lg border-2 cursor-pointer transition-colors ${optionClass}`}
 							>
-								<RadioGroupItem value={index.toString()} id={`option-${index}`} />
+								<RadioGroupItem value={index.toString()} id={optionId} />
 								<MonoText size="lg" className="flex-1">
 									{option}
 								</MonoText>
@@ -345,7 +408,9 @@ const DrillCard: React.FC<DrillCardProps> = ({
 			{state.showFeedback && (
 				<div
 					className={`p-4 rounded-lg mb-4 ${
-						isCorrect ? "bg-correct-100 border border-correct-300" : "bg-incorrect-100 border border-incorrect-300"
+						isCorrect
+							? "bg-correct-100 border border-correct-300"
+							: "bg-incorrect-100 border border-incorrect-300"
 					}`}
 				>
 					<div className="flex items-center gap-2 mb-1">
@@ -354,14 +419,19 @@ const DrillCard: React.FC<DrillCardProps> = ({
 						) : (
 							<XCircle className="text-incorrect" size={18} />
 						)}
-						<span className={`font-semibold ${isCorrect ? "text-correct" : "text-incorrect"}`}>
+						<span
+							className={`font-semibold ${isCorrect ? "text-correct" : "text-incorrect"}`}
+						>
 							{isCorrect ? "Correct!" : "Not quite"}
 						</span>
 					</div>
-					<p className="text-sm text-stone-700">{currentQuestion.explanation}</p>
+					<p className="text-sm text-stone-700">
+						{currentQuestion.explanation}
+					</p>
 					{!isCorrect && currentQuestion.hint && (
 						<p className="text-sm text-stone-500 mt-2 italic">
-							<span className="font-medium not-italic">Remember:</span> {currentQuestion.hint}
+							<span className="font-medium not-italic">Remember:</span>{" "}
+							{currentQuestion.hint}
 						</p>
 					)}
 				</div>
@@ -377,14 +447,17 @@ const DrillCard: React.FC<DrillCardProps> = ({
 
 							// Report attempt if callback provided
 							if (onAttempt && state.selectedAnswer !== null) {
-								const selectedOption = currentQuestion.options[state.selectedAnswer];
-								const correctOption = currentQuestion.options[currentQuestion.correctIndex];
+								const selectedOption =
+									currentQuestion.options[state.selectedAnswer] ?? "";
+								const correctOption =
+									currentQuestion.options[currentQuestion.correctIndex] ?? "";
 								onAttempt({
 									questionId: currentQuestion.id,
 									questionText: currentQuestion.prompt,
 									correctAnswer: correctOption,
 									userAnswer: selectedOption,
-									isCorrect: state.selectedAnswer === currentQuestion.correctIndex,
+									isCorrect:
+										state.selectedAnswer === currentQuestion.correctIndex,
 									timeTaken,
 								});
 							}
@@ -394,7 +467,10 @@ const DrillCard: React.FC<DrillCardProps> = ({
 						Check Answer
 					</Button>
 				) : (
-					<Button onClick={() => dispatch({ type: "NEXT_QUESTION" })} className="gap-2">
+					<Button
+						onClick={() => dispatch({ type: "NEXT_QUESTION" })}
+						className="gap-2"
+					>
 						{state.currentIndex < state.questions.length - 1 ? (
 							<>
 								Next <ChevronRight size={16} />

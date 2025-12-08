@@ -10,8 +10,8 @@ import {
 } from "../../db/schema";
 import { calculateSRS, qualityFromAttempt, getInitialSRSValues } from "./srs";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type DB = any; // Supports both libsql (local) and D1 (production)
+// biome-ignore lint/suspicious/noExplicitAny: DB type varies between libsql (local) and D1 (production)
+type DB = any;
 
 export interface StartSessionInput {
 	userId: number;

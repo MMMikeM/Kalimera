@@ -46,7 +46,9 @@ export const drillReducer = (state: DrillState, action: DrillAction): DrillState
 
 		case "CHECK_ANSWER": {
 			if (state.selectedAnswer === null) return state;
-			const isCorrect = state.selectedAnswer === state.questions[state.currentIndex].correctIndex;
+			const currentQuestion = state.questions[state.currentIndex];
+			if (!currentQuestion) return state;
+			const isCorrect = state.selectedAnswer === currentQuestion.correctIndex;
 			return {
 				...state,
 				showFeedback: true,
@@ -78,12 +80,15 @@ export const drillReducer = (state: DrillState, action: DrillAction): DrillState
 	}
 };
 
-// Shuffle array utility
+// Shuffle array utility (Fisher-Yates)
 export const shuffleArray = <T,>(array: T[]): T[] => {
 	const shuffled = [...array];
 	for (let i = shuffled.length - 1; i > 0; i--) {
 		const j = Math.floor(Math.random() * (i + 1));
-		[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+		// Safe: i and j are guaranteed to be valid indices
+		const temp = shuffled[i];
+		shuffled[i] = shuffled[j] as T;
+		shuffled[j] = temp as T;
 	}
 	return shuffled;
 };

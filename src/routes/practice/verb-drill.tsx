@@ -22,6 +22,7 @@ const generateQuestions = (): Question[] => {
 	// "What does 'έχουμε' mean?"
 	for (const verb of PRIORITY_VERBS) {
 		const conjugations = VERB_CONJUGATIONS[verb.key];
+		if (!conjugations) continue;
 
 		for (const conj of conjugations) {
 			// Get wrong options from same verb (different persons)
@@ -30,14 +31,18 @@ const generateQuestions = (): Question[] => {
 				.map((c) => c.english);
 
 			// Get wrong options from other verbs (same person)
-			const wrongFromOtherVerbs = PRIORITY_VERBS
-				.filter((v) => v.key !== verb.key)
-				.flatMap((v) => {
-					const otherConj = VERB_CONJUGATIONS[v.key].find((c) => c.person === conj.person);
-					return otherConj ? [otherConj.english] : [];
-				});
+			const wrongFromOtherVerbs = PRIORITY_VERBS.filter(
+				(v) => v.key !== verb.key,
+			).flatMap((v) => {
+				const otherConj = VERB_CONJUGATIONS[v.key]?.find(
+					(c) => c.person === conj.person,
+				);
+				return otherConj ? [otherConj.english] : [];
+			});
 
-			const allWrong = [...new Set([...wrongFromSameVerb, ...wrongFromOtherVerbs])];
+			const allWrong = [
+				...new Set([...wrongFromSameVerb, ...wrongFromOtherVerbs]),
+			];
 			const wrongOptions = shuffleArray(allWrong).slice(0, 3);
 			const options = shuffleArray([conj.english, ...wrongOptions]);
 			const correctIndex = options.indexOf(conj.english);
@@ -57,20 +62,25 @@ const generateQuestions = (): Question[] => {
 	// Type 2: Greek verb form → identify the person (who is doing the action)
 	// Greek-first: show Greek pronoun first, English in parentheses
 	const personLabels: Record<string, string> = {
-		"εγώ": "εγώ (I)",
-		"εσύ": "εσύ (you)",
+		εγώ: "εγώ (I)",
+		εσύ: "εσύ (you)",
 		"αυτός/ή/ό": "αυτός/ή/ό (he/she/it)",
-		"εμείς": "εμείς (we)",
-		"εσείς": "εσείς (you pl/formal)",
+		εμείς: "εμείς (we)",
+		εσείς: "εσείς (you pl/formal)",
 		"αυτοί/ές/ά": "αυτοί/ές/ά (they)",
 	};
 
 	for (const verb of PRIORITY_VERBS) {
 		const conjugations = VERB_CONJUGATIONS[verb.key];
+		if (!conjugations) continue;
 
 		for (const conj of conjugations) {
 			const correctPerson = personLabels[conj.person];
-			const wrongPersons = Object.values(personLabels).filter((p) => p !== correctPerson);
+			if (!correctPerson) continue;
+
+			const wrongPersons = Object.values(personLabels).filter(
+				(p) => p !== correctPerson,
+			);
 			const wrongOptions = shuffleArray(wrongPersons).slice(0, 3);
 			const options = shuffleArray([correctPerson, ...wrongOptions]);
 			const correctIndex = options.indexOf(correctPerson);
@@ -100,6 +110,7 @@ const generateQuestions = (): Question[] => {
 
 	for (const verb of PRIORITY_VERBS) {
 		const conjugations = VERB_CONJUGATIONS[verb.key];
+		if (!conjugations) continue;
 
 		for (const template of sentenceTemplates) {
 			const targetConj = conjugations.find((c) => c.person === template.person);

@@ -276,8 +276,11 @@ export const PrepositionsSection: React.FC = () => (
 
 				{/* Contrast Pairs */}
 				<div className="space-y-3">
-					{COMPOUND_CONTRAST_PAIRS.map((pair, index) => (
-						<div key={index} className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+					{COMPOUND_CONTRAST_PAIRS.map((pair) => (
+						<div
+							key={pair.left.greek}
+							className="grid grid-cols-1 sm:grid-cols-2 gap-3"
+						>
 							<div
 								className={`p-3 rounded-lg border ${
 									pair.left.usesσε

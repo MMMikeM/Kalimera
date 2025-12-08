@@ -1,6 +1,16 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import { ArrowRight, BookOpen, CheckCircle, ChevronDown, ChevronUp, Link2, MessageCircle, Sparkles, Target } from "lucide-react";
+import {
+	ArrowRight,
+	BookOpen,
+	CheckCircle,
+	ChevronDown,
+	ChevronUp,
+	Link2,
+	MessageCircle,
+	Sparkles,
+	Target,
+} from "lucide-react";
 import { MonoText } from "@/components";
 import { Badge } from "@/components/ui/badge";
 import type { Route } from "./+types/home";
@@ -31,7 +41,13 @@ export const loader = async ({ context }: Route.LoaderArgs) => {
 	};
 };
 
-const GreekLetter = ({ letter, className = "" }: { letter: string; className?: string }) => (
+const GreekLetter = ({
+	letter,
+	className = "",
+}: {
+	letter: string;
+	className?: string;
+}) => (
 	<span
 		className={`inline-block font-serif text-terracotta-100 select-none pointer-events-none ${className}`}
 		aria-hidden="true"
@@ -56,7 +72,8 @@ const PathCard = ({
 	badge?: string;
 }) => {
 	const accentStyles = {
-		terracotta: "border-terracotta-200 hover:border-terracotta-400 hover:bg-terracotta-50",
+		terracotta:
+			"border-terracotta-200 hover:border-terracotta-400 hover:bg-terracotta-50",
 		olive: "border-olive-200 hover:border-olive-400 hover:bg-olive-50",
 		ocean: "border-ocean-200 hover:border-ocean-400 hover:bg-ocean-50",
 		honey: "border-honey-200 hover:border-honey-400 hover:bg-honey-50",
@@ -75,7 +92,10 @@ const PathCard = ({
 			className={`group relative block p-6 rounded-2xl border-2 bg-white/50 backdrop-blur-sm transition-all duration-300 ${accentStyles[accent]}`}
 		>
 			{badge && (
-				<Badge variant="default" className="absolute top-4 right-4 bg-terracotta text-white border-terracotta font-semibold">
+				<Badge
+					variant="default"
+					className="absolute top-4 right-4 bg-terracotta text-white border-terracotta font-semibold"
+				>
 					{badge}
 				</Badge>
 			)}
@@ -85,7 +105,11 @@ const PathCard = ({
 			</h3>
 			<p className="text-slate text-sm leading-relaxed mb-4">{description}</p>
 			<div className="inline-flex items-center gap-1 text-sm font-medium text-santorini opacity-0 group-hover:opacity-100 transition-opacity">
-				Explore <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+				Explore{" "}
+				<ArrowRight
+					size={14}
+					className="group-hover:translate-x-1 transition-transform"
+				/>
 			</div>
 		</Link>
 	);
@@ -99,49 +123,59 @@ const DailyPhrase = () => {
 			greek: "Καλημέρα",
 			english: "Good morning",
 			literal: "Beautiful day",
-			grammar: "Καλή (beautiful) + ημέρα (day). Greek combines adjective + noun into one word for common greetings.",
+			grammar:
+				"Καλή (beautiful) + ημέρα (day). Greek combines adjective + noun into one word for common greetings.",
 		},
 		{
 			greek: "Τι κάνεις;",
 			english: "How are you?",
 			literal: "What do you do?",
-			grammar: "Τι (what) + κάνεις (you do, 2nd person singular). The -εις ending marks informal 'you'.",
+			grammar:
+				"Τι (what) + κάνεις (you do, 2nd person singular). The -εις ending marks informal 'you'.",
 		},
 		{
 			greek: "Ευχαριστώ πολύ",
 			english: "Thank you very much",
 			literal: "I thank much",
-			grammar: "Ευχαριστώ (I thank, 1st person) + πολύ (much/very). The -ώ ending marks 1st person singular.",
+			grammar:
+				"Ευχαριστώ (I thank, 1st person) + πολύ (much/very). The -ώ ending marks 1st person singular.",
 		},
 		{
 			greek: "Με λένε...",
 			english: "My name is...",
 			literal: "They call me...",
-			grammar: "Με (me, accusative) + λένε (they call, 3rd person plural). Greek uses 'they call me' instead of 'my name is'.",
+			grammar:
+				"Με (me, accusative) + λένε (they call, 3rd person plural). Greek uses 'they call me' instead of 'my name is'.",
 		},
 		{
 			greek: "Χαίρω πολύ",
 			english: "Nice to meet you",
 			literal: "I rejoice much",
-			grammar: "Χαίρω (I rejoice, 1st person) + πολύ (much). A formal greeting expressing pleasure at meeting someone.",
+			grammar:
+				"Χαίρω (I rejoice, 1st person) + πολύ (much). A formal greeting expressing pleasure at meeting someone.",
 		},
 	];
 
 	const today = new Date();
 	const dayIndex = today.getDate() % phrases.length;
-	const phrase = phrases[dayIndex];
+	const phrase = phrases[dayIndex] ?? phrases[0];
 
 	return (
 		<div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-stone-50 to-cream p-8 border border-stone-200/50">
 			<div className="absolute -top-8 -right-8 text-[120px] font-serif text-terracotta-50 leading-none select-none">
 				Ω
 			</div>
-			<p className="text-xs uppercase tracking-widest text-slate mb-3">Phrase of the day</p>
-			<p className="text-5xl font-serif text-terracotta mb-2 greek-text">{phrase.greek}</p>
-			<p className="text-lg text-stone-700 mb-1">{phrase.english}</p>
-			<p className="text-sm text-slate italic">lit. "{phrase.literal}"</p>
+			<p className="text-xs uppercase tracking-widest text-slate mb-3">
+				Phrase of the day
+			</p>
+			<p className="text-5xl font-serif text-terracotta mb-2 greek-text">
+				{phrase?.greek}
+			</p>
+			<p className="text-lg text-stone-700 mb-1">{phrase?.english}</p>
+			<p className="text-sm text-slate italic">lit. "{phrase?.literal}"</p>
 
 			<button
+				type="button"
 				onClick={() => setShowGrammar(!showGrammar)}
 				className="mt-4 flex items-center gap-1 text-sm text-ocean hover:text-ocean-dark transition-colors"
 			>
@@ -151,7 +185,7 @@ const DailyPhrase = () => {
 
 			{showGrammar && (
 				<div className="mt-3 p-3 bg-ocean-50 rounded-lg border border-ocean-200">
-					<p className="text-sm text-ocean-text">{phrase.grammar}</p>
+					<p className="text-sm text-ocean-text">{phrase?.grammar}</p>
 				</div>
 			)}
 		</div>
@@ -162,8 +196,12 @@ const QuickStartSection = () => (
 	<section className="mt-16">
 		<div className="flex items-end justify-between mb-8">
 			<div>
-				<h2 className="text-2xl font-serif text-navy">Where would you like to start?</h2>
-				<p className="text-slate mt-1">Choose your path based on what you need</p>
+				<h2 className="text-2xl font-serif text-navy">
+					Where would you like to start?
+				</h2>
+				<p className="text-slate mt-1">
+					Choose your path based on what you need
+				</p>
 			</div>
 		</div>
 
@@ -213,26 +251,34 @@ const PhilosophySection = () => (
 		<div className="max-w-2xl">
 			<h2 className="text-xl font-serif text-navy mb-4">Our approach</h2>
 			<p className="text-slate leading-relaxed">
-				Greek grammar isn't a list of exceptions to memorize—it's a system of patterns.
-				Once you see the structure, the language clicks.
+				Greek grammar isn't a list of exceptions to memorize—it's a system of
+				patterns. Once you see the structure, the language clicks.
 			</p>
 
 			<div className="mt-6 p-4 bg-white/80 rounded-xl border border-stone-200/50">
-				<p className="text-xs uppercase tracking-widest text-stone-500 mb-3">Same pattern, different words</p>
+				<p className="text-xs uppercase tracking-widest text-stone-500 mb-3">
+					Same pattern, different words
+				</p>
 				<div className="grid grid-cols-2 gap-4">
 					<div className="text-center">
 						<p className="text-sm text-slate mb-2">Definite articles</p>
 						<div className="flex justify-center gap-3">
 							<div className="flex flex-col items-center">
-								<MonoText variant="greek" className="text-ocean">τ<span className="text-ocean font-bold">ον</span></MonoText>
+								<MonoText variant="greek" className="text-ocean">
+									τ<span className="text-ocean font-bold">ον</span>
+								</MonoText>
 								<span className="text-xs text-ocean-600 mt-1">m</span>
 							</div>
 							<div className="flex flex-col items-center">
-								<MonoText variant="greek" className="text-rose-500">τ<span className="text-rose-500 font-bold">ην</span></MonoText>
+								<MonoText variant="greek" className="text-rose-500">
+									τ<span className="text-rose-500 font-bold">ην</span>
+								</MonoText>
 								<span className="text-xs text-rose-400 mt-1">f</span>
 							</div>
 							<div className="flex flex-col items-center">
-								<MonoText variant="greek" className="text-stone-500">τ<span className="text-stone-600 font-bold">ο</span></MonoText>
+								<MonoText variant="greek" className="text-stone-500">
+									τ<span className="text-stone-600 font-bold">ο</span>
+								</MonoText>
 								<span className="text-xs text-stone-400 mt-1">n</span>
 							</div>
 						</div>
@@ -241,15 +287,21 @@ const PhilosophySection = () => (
 						<p className="text-sm text-slate mb-2">Demonstratives</p>
 						<div className="flex justify-center gap-3">
 							<div className="flex flex-col items-center">
-								<MonoText variant="greek" className="text-ocean">αυτ<span className="text-ocean font-bold">όν</span></MonoText>
+								<MonoText variant="greek" className="text-ocean">
+									αυτ<span className="text-ocean font-bold">όν</span>
+								</MonoText>
 								<span className="text-xs text-ocean-600 mt-1">m</span>
 							</div>
 							<div className="flex flex-col items-center">
-								<MonoText variant="greek" className="text-rose-500">αυτ<span className="text-rose-500 font-bold">ήν</span></MonoText>
+								<MonoText variant="greek" className="text-rose-500">
+									αυτ<span className="text-rose-500 font-bold">ήν</span>
+								</MonoText>
 								<span className="text-xs text-rose-400 mt-1">f</span>
 							</div>
 							<div className="flex flex-col items-center">
-								<MonoText variant="greek" className="text-stone-500">αυτ<span className="text-stone-600 font-bold">ό</span></MonoText>
+								<MonoText variant="greek" className="text-stone-500">
+									αυτ<span className="text-stone-600 font-bold">ό</span>
+								</MonoText>
 								<span className="text-xs text-stone-400 mt-1">n</span>
 							</div>
 						</div>
@@ -279,19 +331,27 @@ export default function HomeRoute({ loaderData }: Route.ComponentProps) {
 			{/* Hero Section */}
 			<section className="relative pt-8 pb-12">
 				{/* Decorative Greek letters */}
-				<GreekLetter letter="Α" className="absolute top-0 left-0 text-[200px] -translate-x-1/3 -translate-y-1/4" />
-				<GreekLetter letter="Ω" className="absolute bottom-0 right-0 text-[180px] translate-x-1/4 translate-y-1/4" />
+				<GreekLetter
+					letter="Α"
+					className="absolute top-0 left-0 text-[200px] -translate-x-1/3 -translate-y-1/4"
+				/>
+				<GreekLetter
+					letter="Ω"
+					className="absolute bottom-0 right-0 text-[180px] translate-x-1/4 translate-y-1/4"
+				/>
 
 				<div className="relative z-10 max-w-3xl">
-					<p className="text-terracotta font-medium tracking-wide mb-4 greek-text">Καλημέρα</p>
+					<p className="text-terracotta font-medium tracking-wide mb-4 greek-text">
+						Καλημέρα
+					</p>
 					<h1 className="text-5xl md:text-6xl font-serif text-navy leading-tight mb-6">
 						Learn Greek
 						<br />
 						<span className="text-terracotta">through patterns</span>
 					</h1>
 					<p className="text-xl text-slate leading-relaxed max-w-xl">
-						A pattern-based reference for English speakers learning Modern Greek. See the structure,
-						not just the words.
+						A pattern-based reference for English speakers learning Modern
+						Greek. See the structure, not just the words.
 					</p>
 
 					{/* Learning outcomes */}

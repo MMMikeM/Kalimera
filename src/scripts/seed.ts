@@ -83,6 +83,9 @@ async function seed() {
 			.select({ id: vocabulary.id })
 			.from(vocabulary)
 			.where(eq(vocabulary.greekText, vocab.greekText));
+		if (!existing) {
+			throw new Error(`Failed to find existing vocab: ${vocab.greekText}`);
+		}
 		return existing.id;
 	};
 
@@ -104,7 +107,7 @@ async function seed() {
 				wordType: "noun",
 				gender: noun.gender,
 				status: "processed",
-				metadata: noun.metadata,
+				metadata: "metadata" in noun ? noun.metadata : undefined,
 			});
 
 			// Link to theme tag
@@ -491,6 +494,7 @@ async function seed() {
 	};
 
 	for (const [category, patterns] of Object.entries(DAILY_PATTERNS)) {
+		if (!patterns) continue;
 		for (const pattern of patterns) {
 			const vocabId = await insertVocab({
 				greekText: pattern.greek,
@@ -502,7 +506,8 @@ async function seed() {
 					whyThisCase: pattern.whyThisCase,
 				},
 			});
-			linkTag(vocabId, patternTagMap[category]);
+			const tagSlug = patternTagMap[category];
+			if (tagSlug) linkTag(vocabId, tagSlug);
 		}
 	}
 

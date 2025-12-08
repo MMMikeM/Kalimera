@@ -39,8 +39,16 @@ export type { CategoryCardProps, CardPriority, CategoryColorScheme } from "./Cat
 export { CategoryCard } from "./CategoryCard";
 export type { SpeakerRole } from "./SpeakerBadge";
 export { SpeakerBadge } from "./SpeakerBadge";
-export type { DialogueLine, DialogueScenarioProps, ColorScheme } from "./DialogueExchange";
+export type {
+	DialogueLine,
+	DialogueScenarioProps,
+	ColorScheme,
+	ConversationMode,
+	Formality,
+} from "./DialogueExchange";
 export { DialogueExchange, DialogueScenario } from "./DialogueExchange";
+export type { ConversationModeToggleProps } from "./ConversationModeToggle";
+export { ConversationModeToggle } from "./ConversationModeToggle";
 export type { ConversationHeroProps } from "./ConversationHero";
 export { ConversationHero } from "./ConversationHero";
 export { ParadigmHint } from "./ParadigmHint";

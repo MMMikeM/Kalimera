@@ -10,7 +10,12 @@ import {
 	SUBJECT_PRONOUNS,
 	SUBJECT_PRONOUN_EXAMPLES,
 } from "../../constants/pronouns";
-import { Card, MonoText, CategoryCard, CollapsibleSection } from "../../components";
+import {
+	Card,
+	MonoText,
+	CategoryCard,
+	CollapsibleSection,
+} from "../../components";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { PronounDecisionGuide } from "./pronoun-decision-guide";
 import { PronounParadigmTable } from "./pronoun-paradigm-table";
@@ -19,10 +24,11 @@ import { PronounParadigmTable } from "./pronoun-paradigm-table";
 const groupPhrasesByCategory = () => {
 	const groups: Record<string, typeof PRONOUN_PHRASES> = {};
 	for (const phrase of PRONOUN_PHRASES) {
-		if (!groups[phrase.category]) {
-			groups[phrase.category] = [];
+		const category = phrase.category;
+		if (!groups[category]) {
+			groups[category] = [];
 		}
-		groups[phrase.category].push(phrase);
+		groups[category]?.push(phrase);
 	}
 	return groups;
 };
@@ -51,18 +57,33 @@ export const PronounsSection: React.FC = () => {
 					colorScheme="ocean"
 					badge="Essential"
 				>
-					<p className="text-sm text-stone-600 mb-3">Use these constantly! (με, σε, τον...)</p>
+					<p className="text-sm text-stone-600 mb-3">
+						Use these constantly! (με, σε, τον...)
+					</p>
 					<Alert variant="info" className="mb-4">
 						<AlertTitle>Word order</AlertTitle>
-						<AlertDescription>Object pronouns go BEFORE the verb: σε βλέπω (you I-see) = I see you</AlertDescription>
+						<AlertDescription>
+							Object pronouns go BEFORE the verb: σε βλέπω (you I-see) = I see
+							you
+						</AlertDescription>
 					</Alert>
-					<PronounParadigmTable data={OBJECT_PRONOUNS} colorClass="border-ocean-300" />
+					<PronounParadigmTable
+						data={OBJECT_PRONOUNS}
+						colorClass="border-ocean-300"
+					/>
 					<div className="mt-4 pt-4 border-t border-ocean-300">
-						<div className="text-sm text-stone-600 mb-2 font-medium">Examples:</div>
+						<div className="text-sm text-stone-600 mb-2 font-medium">
+							Examples:
+						</div>
 						<div className="flex flex-wrap gap-2">
-							{OBJECT_PRONOUN_EXAMPLES.map((ex, i) => (
-								<div key={i} className="px-3 py-1.5 bg-white rounded-full border border-ocean-300 text-sm">
-									<MonoText size="sm" className="text-ocean-text">{ex.greek}</MonoText>
+							{OBJECT_PRONOUN_EXAMPLES.map((ex) => (
+								<div
+									key={ex.greek}
+									className="px-3 py-1.5 bg-white rounded-full border border-ocean-300 text-sm"
+								>
+									<MonoText size="sm" className="text-ocean-text">
+										{ex.greek}
+									</MonoText>
 									<span className="text-stone-600 ml-1">({ex.english})</span>
 								</div>
 							))}
@@ -76,10 +97,15 @@ export const PronounsSection: React.FC = () => {
 					colorScheme="terracotta"
 					badge="Essential"
 				>
-					<p className="text-sm text-stone-600 mb-3">For "my/your/their" (μου, σου...)</p>
+					<p className="text-sm text-stone-600 mb-3">
+						For "my/your/their" (μου, σου...)
+					</p>
 					<Alert variant="purple" className="mb-4">
 						<AlertTitle>Word order</AlertTitle>
-						<AlertDescription>Possessives go AFTER the noun: το σπίτι μου (the house my) = my house</AlertDescription>
+						<AlertDescription>
+							Possessives go AFTER the noun: το σπίτι μου (the house my) = my
+							house
+						</AlertDescription>
 					</Alert>
 					<PronounParadigmTable
 						data={POSSESSIVE_PRONOUNS}
@@ -87,11 +113,18 @@ export const PronounsSection: React.FC = () => {
 						note="Neuter uses same form as masculine (του)"
 					/>
 					<div className="mt-4 pt-4 border-t border-terracotta-300">
-						<div className="text-sm text-stone-600 mb-2 font-medium">Examples:</div>
+						<div className="text-sm text-stone-600 mb-2 font-medium">
+							Examples:
+						</div>
 						<div className="flex flex-wrap gap-2">
-							{POSSESSIVE_PRONOUN_EXAMPLES.map((ex, i) => (
-								<div key={i} className="px-3 py-1.5 bg-white rounded-full border border-terracotta-300 text-sm">
-									<MonoText size="sm" className="text-terracotta-text">{ex.greek}</MonoText>
+							{POSSESSIVE_PRONOUN_EXAMPLES.map((ex) => (
+								<div
+									key={ex.greek}
+									className="px-3 py-1.5 bg-white rounded-full border border-terracotta-300 text-sm"
+								>
+									<MonoText size="sm" className="text-terracotta-text">
+										{ex.greek}
+									</MonoText>
 									<span className="text-stone-600 ml-1">({ex.english})</span>
 								</div>
 							))}
@@ -107,18 +140,33 @@ export const PronounsSection: React.FC = () => {
 					priority="tertiary"
 					colorScheme="olive"
 				>
-					<p className="text-sm text-stone-600 mb-3">Often dropped! (εγώ, εσύ...)</p>
+					<p className="text-sm text-stone-600 mb-3">
+						Often dropped! (εγώ, εσύ...)
+					</p>
 					<Alert variant="success" className="mb-4">
 						<AlertTitle>Good news</AlertTitle>
-						<AlertDescription>Verb endings already show person, so subject pronouns are usually optional. Use them for emphasis.</AlertDescription>
+						<AlertDescription>
+							Verb endings already show person, so subject pronouns are usually
+							optional. Use them for emphasis.
+						</AlertDescription>
 					</Alert>
-					<PronounParadigmTable data={SUBJECT_PRONOUNS} colorClass="border-olive-400" />
+					<PronounParadigmTable
+						data={SUBJECT_PRONOUNS}
+						colorClass="border-olive-400"
+					/>
 					<div className="mt-4 pt-4 border-t border-olive-300">
-						<div className="text-sm text-stone-600 mb-2 font-medium">Examples:</div>
+						<div className="text-sm text-stone-600 mb-2 font-medium">
+							Examples:
+						</div>
 						<div className="flex flex-wrap gap-2">
-							{SUBJECT_PRONOUN_EXAMPLES.map((ex, i) => (
-								<div key={i} className="px-3 py-1.5 bg-white rounded-full border border-olive-300 text-sm">
-									<MonoText size="sm" className="text-olive-text">{ex.greek}</MonoText>
+							{SUBJECT_PRONOUN_EXAMPLES.map((ex) => (
+								<div
+									key={ex.greek}
+									className="px-3 py-1.5 bg-white rounded-full border border-olive-300 text-sm"
+								>
+									<MonoText size="sm" className="text-olive-text">
+										{ex.greek}
+									</MonoText>
 									<span className="text-stone-600 ml-1">({ex.english})</span>
 								</div>
 							))}
@@ -131,18 +179,32 @@ export const PronounsSection: React.FC = () => {
 					priority="tertiary"
 					colorScheme="honey"
 				>
-					<p className="text-sm text-stone-600 mb-3">After prepositions (εμένα, εσένα...)</p>
+					<p className="text-sm text-stone-600 mb-3">
+						After prepositions (εμένα, εσένα...)
+					</p>
 					<Alert variant="warning" className="mb-4">
 						<AlertTitle>When to use</AlertTitle>
-						<AlertDescription>Use these after prepositions (για, με, από, σε): για μένα = for me</AlertDescription>
+						<AlertDescription>
+							Use these after prepositions (για, με, από, σε): για μένα = for me
+						</AlertDescription>
 					</Alert>
-					<PronounParadigmTable data={EMPHATIC_PRONOUNS} colorClass="border-honey-400" />
+					<PronounParadigmTable
+						data={EMPHATIC_PRONOUNS}
+						colorClass="border-honey-400"
+					/>
 					<div className="mt-4 pt-4 border-t border-honey-300">
-						<div className="text-sm text-stone-600 mb-2 font-medium">Examples:</div>
+						<div className="text-sm text-stone-600 mb-2 font-medium">
+							Examples:
+						</div>
 						<div className="flex flex-wrap gap-2">
-							{EMPHATIC_PRONOUN_EXAMPLES.map((ex, i) => (
-								<div key={i} className="px-3 py-1.5 bg-white rounded-full border border-honey-300 text-sm">
-									<MonoText size="sm" className="text-honey-text">{ex.greek}</MonoText>
+							{EMPHATIC_PRONOUN_EXAMPLES.map((ex) => (
+								<div
+									key={ex.greek}
+									className="px-3 py-1.5 bg-white rounded-full border border-honey-300 text-sm"
+								>
+									<MonoText size="sm" className="text-honey-text">
+										{ex.greek}
+									</MonoText>
 									<span className="text-stone-600 ml-1">({ex.english})</span>
 								</div>
 							))}
@@ -152,29 +214,48 @@ export const PronounsSection: React.FC = () => {
 			</div>
 
 			{/* Double object pattern - with visual contrast */}
-			<Card variant="bordered" padding="md" className="bg-ocean-50 border-ocean-300">
-				<h4 className="font-bold text-ocean-text mb-1">{PRONOUN_PATTERNS.doubleObject.title}</h4>
-				<p className="text-sm text-stone-600 mb-4">{PRONOUN_PATTERNS.doubleObject.explanation}</p>
+			<Card
+				variant="bordered"
+				padding="md"
+				className="bg-ocean-50 border-ocean-300"
+			>
+				<h4 className="font-bold text-ocean-text mb-1">
+					{PRONOUN_PATTERNS.doubleObject.title}
+				</h4>
+				<p className="text-sm text-stone-600 mb-4">
+					{PRONOUN_PATTERNS.doubleObject.explanation}
+				</p>
 
 				{/* Visual contrast */}
 				<div className="mb-4 p-3 bg-white rounded-lg border border-ocean-300 space-y-1 text-sm">
 					<div className="flex items-center gap-2">
 						<span className="text-stone-600 w-16">English:</span>
-						<span className="text-stone-700">{PRONOUN_PATTERNS.doubleObject.contrast.english}</span>
+						<span className="text-stone-700">
+							{PRONOUN_PATTERNS.doubleObject.contrast.english}
+						</span>
 					</div>
 					<div className="flex items-center gap-2">
 						<span className="text-stone-600 w-16">Greek:</span>
-						<MonoText variant="highlighted">{PRONOUN_PATTERNS.doubleObject.contrast.greek}</MonoText>
-						<span className="text-stone-600">({PRONOUN_PATTERNS.doubleObject.contrast.literal})</span>
+						<MonoText variant="highlighted">
+							{PRONOUN_PATTERNS.doubleObject.contrast.greek}
+						</MonoText>
+						<span className="text-stone-600">
+							({PRONOUN_PATTERNS.doubleObject.contrast.literal})
+						</span>
 					</div>
 				</div>
 
 				{/* Examples with literal translations */}
 				<div className="flex flex-wrap gap-2">
-					{PRONOUN_PATTERNS.doubleObject.examples.map((ex, i) => (
-						<div key={i} className="px-3 py-2 bg-white rounded-lg border border-ocean-300">
+					{PRONOUN_PATTERNS.doubleObject.examples.map((ex) => (
+						<div
+							key={ex.greek}
+							className="px-3 py-2 bg-white rounded-lg border border-ocean-300"
+						>
 							<MonoText variant="highlighted">{ex.greek}</MonoText>
-							<span className="text-stone-600 ml-2 text-sm">({ex.literal})</span>
+							<span className="text-stone-600 ml-2 text-sm">
+								({ex.literal})
+							</span>
 						</div>
 					))}
 				</div>
@@ -193,9 +274,16 @@ export const PronounsSection: React.FC = () => {
 								{CATEGORY_LABELS[category] || category}
 							</h4>
 							<div className="space-y-1">
-								{phrases.map((phrase, i) => (
-									<div key={i} className="flex items-baseline gap-2 text-sm">
-										<MonoText variant="greek" size="sm" className="text-santorini-text font-medium">
+								{phrases.map((phrase) => (
+									<div
+										key={phrase.greek}
+										className="flex items-baseline gap-2 text-sm"
+									>
+										<MonoText
+											variant="greek"
+											size="sm"
+											className="text-santorini-text font-medium"
+										>
 											{phrase.greek}
 										</MonoText>
 										<span className="text-stone-600">{phrase.english}</span>

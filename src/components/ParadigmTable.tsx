@@ -74,7 +74,13 @@ const PERSON_HINTS = [
 
 const FormCell: React.FC<{
 	form: VerbForm | string;
-	position: "topLeft" | "topRight" | "middleLeft" | "middleRight" | "bottomLeft" | "bottomRight";
+	position:
+		| "topLeft"
+		| "topRight"
+		| "middleLeft"
+		| "middleRight"
+		| "bottomLeft"
+		| "bottomRight";
 	formClassName?: string;
 	endingClassName?: string;
 	fadeStem?: boolean;
@@ -90,7 +96,9 @@ const FormCell: React.FC<{
 			<span className={formClassName}>{form}</span>
 		) : (
 			<>
-				<span className={fadeStem ? "text-stone-600" : "text-stone-700"}>{form.stem}</span>
+				<span className={fadeStem ? "text-stone-600" : "text-stone-700"}>
+					{form.stem}
+				</span>
 				<span className={endingClassName}>{form.ending}</span>
 			</>
 		)}
@@ -110,9 +118,21 @@ export const ParadigmTable: React.FC<ParadigmTableProps> = ({
 	fadeStem = true,
 }) => {
 	const formRows = [
-		{ sg: forms.sg1, pl: forms.pl1, positions: ["topLeft", "topRight"] as const },
-		{ sg: forms.sg2, pl: forms.pl2, positions: ["middleLeft", "middleRight"] as const },
-		{ sg: forms.sg3, pl: forms.pl3, positions: ["bottomLeft", "bottomRight"] as const },
+		{
+			sg: forms.sg1,
+			pl: forms.pl1,
+			positions: ["topLeft", "topRight"] as const,
+		},
+		{
+			sg: forms.sg2,
+			pl: forms.pl2,
+			positions: ["middleLeft", "middleRight"] as const,
+		},
+		{
+			sg: forms.sg3,
+			pl: forms.pl3,
+			positions: ["bottomLeft", "bottomRight"] as const,
+		},
 	];
 
 	return (
@@ -121,7 +141,9 @@ export const ParadigmTable: React.FC<ParadigmTableProps> = ({
 				<span className="font-mono text-lg sm:text-xl font-semibold text-stone-800">
 					{infinitive || (stem ? `${stem}-` : "")}
 				</span>
-				<span className="text-stone-600 ml-2 text-sm sm:text-base">({meaning})</span>
+				<span className="text-stone-600 ml-2 text-sm sm:text-base">
+					({meaning})
+				</span>
 			</div>
 			<table className={paradigmTableVariants({ variant })}>
 				{showHeaders && (
@@ -144,7 +166,7 @@ export const ParadigmTable: React.FC<ParadigmTableProps> = ({
 								<td className="text-xs text-stone-600 pr-2 text-right align-middle border-r border-stone-100">
 									<div>{PERSON_LABELS[idx]}</div>
 									<div className="text-[10px] text-stone-500">
-										{PERSON_HINTS[idx][0]}/{PERSON_HINTS[idx][1]}
+										{PERSON_HINTS[idx]?.[0]}/{PERSON_HINTS[idx]?.[1]}
 									</div>
 								</td>
 							)}

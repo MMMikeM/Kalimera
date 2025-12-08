@@ -8,7 +8,12 @@ import {
 	ParadigmTable,
 } from "@/components";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { VERB_PATTERNS, VERB_CONJUGATIONS, VERB_FAMILIES, IRREGULAR_VERBS } from "@/constants/verbs";
+import {
+	VERB_PATTERNS,
+	VERB_CONJUGATIONS,
+	VERB_FAMILIES,
+	IRREGULAR_VERBS,
+} from "@/constants/verbs";
 import type { VocabularyLoaderData } from "./layout";
 
 const VerbList: React.FC<{
@@ -70,7 +75,9 @@ export default function VerbsRoute() {
 						>
 							<Alert variant="info" className="mb-4">
 								<AlertDescription>
-									<strong>Pattern insight:</strong> Just like active verbs have -ω and -άω patterns, deponent verbs have -ομαι and -άμαι. Same vowel contraction!
+									<strong>Pattern insight:</strong> Just like active verbs have
+									-ω and -άω patterns, deponent verbs have -ομαι and -άμαι. Same
+									vowel contraction!
 								</AlertDescription>
 							</Alert>
 
@@ -84,12 +91,12 @@ export default function VerbsRoute() {
 										infinitive="έρχομαι"
 										meaning="come"
 										forms={{
-											sg1: VERB_CONJUGATIONS.erhomai[0].form,
-											sg2: VERB_CONJUGATIONS.erhomai[1].form,
-											sg3: VERB_CONJUGATIONS.erhomai[2].form,
-											pl1: VERB_CONJUGATIONS.erhomai[3].form,
-											pl2: VERB_CONJUGATIONS.erhomai[4].form,
-											pl3: VERB_CONJUGATIONS.erhomai[5].form,
+											sg1: VERB_CONJUGATIONS.erhomai?.[0]?.form ?? "",
+											sg2: VERB_CONJUGATIONS.erhomai?.[1]?.form ?? "",
+											sg3: VERB_CONJUGATIONS.erhomai?.[2]?.form ?? "",
+											pl1: VERB_CONJUGATIONS.erhomai?.[3]?.form ?? "",
+											pl2: VERB_CONJUGATIONS.erhomai?.[4]?.form ?? "",
+											pl3: VERB_CONJUGATIONS.erhomai?.[5]?.form ?? "",
 										}}
 									/>
 								</div>
@@ -103,12 +110,12 @@ export default function VerbsRoute() {
 										infinitive="θυμάμαι"
 										meaning="remember"
 										forms={{
-											sg1: VERB_CONJUGATIONS.thymamai[0].form,
-											sg2: VERB_CONJUGATIONS.thymamai[1].form,
-											sg3: VERB_CONJUGATIONS.thymamai[2].form,
-											pl1: VERB_CONJUGATIONS.thymamai[3].form,
-											pl2: VERB_CONJUGATIONS.thymamai[4].form,
-											pl3: VERB_CONJUGATIONS.thymamai[5].form,
+											sg1: VERB_CONJUGATIONS.thymamai?.[0]?.form ?? "",
+											sg2: VERB_CONJUGATIONS.thymamai?.[1]?.form ?? "",
+											sg3: VERB_CONJUGATIONS.thymamai?.[2]?.form ?? "",
+											pl1: VERB_CONJUGATIONS.thymamai?.[3]?.form ?? "",
+											pl2: VERB_CONJUGATIONS.thymamai?.[4]?.form ?? "",
+											pl3: VERB_CONJUGATIONS.thymamai?.[5]?.form ?? "",
 										}}
 									/>
 								</div>
@@ -185,12 +192,12 @@ export default function VerbsRoute() {
 									infinitive={pattern.canonical.infinitive}
 									meaning={pattern.canonical.meaning}
 									forms={{
-										sg1: conjugation[0].form,
-										sg2: conjugation[1].form,
-										sg3: conjugation[2].form,
-										pl1: conjugation[3].form,
-										pl2: conjugation[4].form,
-										pl3: conjugation[5].form,
+										sg1: conjugation[0]?.form ?? "",
+										sg2: conjugation[1]?.form ?? "",
+										sg3: conjugation[2]?.form ?? "",
+										pl1: conjugation[3]?.form ?? "",
+										pl2: conjugation[4]?.form ?? "",
+										pl3: conjugation[5]?.form ?? "",
 									}}
 								/>
 							</div>
