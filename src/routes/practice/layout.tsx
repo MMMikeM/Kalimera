@@ -11,9 +11,26 @@ import {
 	FileText,
 	Zap,
 } from "lucide-react";
-import { Outlet, useSearchParams, useFetcher, useRevalidator, useLocation, Link } from "react-router";
+import {
+	Outlet,
+	useSearchParams,
+	useFetcher,
+	useRevalidator,
+	useLocation,
+	Link,
+} from "react-router";
 import type { Route } from "./+types/layout";
-import { eq } from "drizzle-orm";
+import { db } from "../../db";
+import { users } from "../../db/schema";
+import {
+	getItemsDueForReview,
+	getNewVocabularyItems,
+	getPracticeStats,
+	actionHandlers,
+	type ActionIntent,
+	type VocabItemWithSkill,
+	type PracticeStats,
+} from "./data.server";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
 	Collapsible,
@@ -36,7 +53,6 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import type { VocabItemWithSkill, PracticeStats } from "./queries.server";
 
 export function meta() {
 	return [
@@ -48,12 +64,7 @@ export function meta() {
 	];
 }
 
-export const loader = async ({ context, request }: Route.LoaderArgs) => {
-	const db = context?.db ?? (await import("../../db")).db;
-	const { users } = await import("../../db/schema");
-	const { getItemsDueForReview, getNewVocabularyItems, getPracticeStats } =
-		await import("./queries.server");
-
+export const loader = async ({ request }: Route.LoaderArgs) => {
 	const url = new URL(request.url);
 	const userIdParam = url.searchParams.get("userId");
 	const userId = userIdParam ? parseInt(userIdParam, 10) : null;
@@ -66,123 +77,24 @@ export const loader = async ({ context, request }: Route.LoaderArgs) => {
 
 	if (userId) {
 		[reviewItems, newVocabItems, stats] = await Promise.all([
-			getItemsDueForReview(db, userId),
-			getNewVocabularyItems(db, userId, 20),
-			getPracticeStats(db, userId),
+			getItemsDueForReview(userId),
+			getNewVocabularyItems(userId, 20),
+			getPracticeStats(userId),
 		]);
 	}
 
 	return { users: allUsers, reviewItems, newVocabItems, stats, userId };
 };
 
-export const action = async ({ request, context }: Route.ActionArgs) => {
-	const db = context?.db ?? (await import("../../db")).db;
-	const { users } = await import("../../db/schema");
-	const { startSession, recordAttempt, completeSession } = await import(
-		"./actions.server"
-	);
-
+export const action = async ({ request }: Route.ActionArgs) => {
 	const formData = await request.formData();
-	const intent = formData.get("intent");
+	const intent = formData.get("intent") as string | null;
 
-	if (intent === "createUser") {
-		const displayName = formData.get("displayName") as string;
-		const code = formData.get("code") as string;
-
-		if (!displayName || !code) {
-			return { error: "Name and code are required" };
-		}
-
-		const existingUser = await db
-			.select()
-			.from(users)
-			.where(eq(users.code, code.toLowerCase()));
-		if (existingUser.length > 0) {
-			return { error: "A user with this code already exists" };
-		}
-
-		const [newUser] = await db
-			.insert(users)
-			.values({
-				displayName,
-				code: code.toLowerCase(),
-			})
-			.returning();
-
-		return { success: true, user: newUser };
+	if (!intent || !(intent in actionHandlers)) {
+		return { success: false, error: "Unknown action" };
 	}
 
-	if (intent === "startSession") {
-		const userId = parseInt(formData.get("userId") as string, 10);
-		const sessionType = formData.get("sessionType") as string;
-
-		const session = await startSession(db, {
-			userId,
-			sessionType: sessionType as
-				| "vocab_quiz"
-				| "case_drill"
-				| "conjugation_drill"
-				| "weak_area_focus",
-			category: (formData.get("category") as string) || undefined,
-			focusArea: (formData.get("focusArea") as string) || undefined,
-		});
-
-		return { success: true, session };
-	}
-
-	if (intent === "recordAttempt") {
-		const userId = parseInt(formData.get("userId") as string, 10);
-		const sessionId = formData.get("sessionId")
-			? parseInt(formData.get("sessionId") as string, 10)
-			: undefined;
-		const vocabularyId = formData.get("vocabularyId")
-			? parseInt(formData.get("vocabularyId") as string, 10)
-			: undefined;
-
-		const attempt = await recordAttempt(db, {
-			userId,
-			sessionId,
-			vocabularyId,
-			questionText: formData.get("questionText") as string,
-			correctAnswer: formData.get("correctAnswer") as string,
-			userAnswer: formData.get("userAnswer") as string,
-			isCorrect: formData.get("isCorrect") === "true",
-			timeTaken: parseInt(formData.get("timeTaken") as string, 10),
-			skillType:
-				(formData.get("skillType") as "recognition" | "production") ||
-				"recognition",
-			weakAreaType: formData.get("weakAreaType") as
-				| "case"
-				| "gender"
-				| "verb_family"
-				| undefined,
-			weakAreaIdentifier: (formData.get("weakAreaIdentifier") as string) || undefined,
-		});
-
-		return { success: true, attempt };
-	}
-
-	if (intent === "completeSession") {
-		const sessionId = parseInt(formData.get("sessionId") as string, 10);
-		const totalQuestions = parseInt(
-			formData.get("totalQuestions") as string,
-			10
-		);
-		const correctAnswers = parseInt(
-			formData.get("correctAnswers") as string,
-			10
-		);
-
-		const session = await completeSession(db, {
-			sessionId,
-			totalQuestions,
-			correctAnswers,
-		});
-
-		return { success: true, session };
-	}
-
-	return { error: "Unknown action" };
+	return actionHandlers[intent as ActionIntent](formData);
 };
 
 interface User {
@@ -233,7 +145,7 @@ const UserSelector = ({ users, onUserChange }: UserSelectorProps) => {
 				displayName: newName.trim(),
 				code: newCode.trim().toLowerCase(),
 			},
-			{ method: "post" }
+			{ method: "post" },
 		);
 	};
 
@@ -408,13 +320,7 @@ const StatsBanner = ({ stats }: { stats: PracticeStats }) => (
 	</div>
 );
 
-export interface PracticeLoaderData {
-	users: User[];
-	reviewItems: VocabItemWithSkill[];
-	newVocabItems: VocabItemWithSkill[];
-	stats: PracticeStats | null;
-	userId: number | null;
-}
+export type PracticeLoaderData = Awaited<ReturnType<typeof loader>>;
 
 const TAB_COLORS = {
 	pronouns: {
@@ -443,7 +349,12 @@ const TABS = [
 	{ id: "pronouns", label: "Pronouns", shortLabel: "Pro", icon: Users },
 	{ id: "articles", label: "Articles", shortLabel: "Art", icon: FileText },
 	{ id: "verbs", label: "Verbs", shortLabel: "Vrb", icon: Zap },
-	{ id: "vocabulary", label: "Vocabulary", shortLabel: "Vocab", icon: BookOpen },
+	{
+		id: "vocabulary",
+		label: "Vocabulary",
+		shortLabel: "Vocab",
+		icon: BookOpen,
+	},
 	{ id: "review", label: "Review", shortLabel: "Rev", icon: Clock },
 ] as const;
 
