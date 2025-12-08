@@ -3,10 +3,14 @@ import { useFetcher } from "react-router";
 
 const USER_STORAGE_KEY = "greek-practice-user";
 
-export const useCurrentUserId = (): number | null => {
+const getCurrentUserId = (): number | null => {
 	if (typeof window === "undefined") return null;
 	const stored = localStorage.getItem(USER_STORAGE_KEY);
 	return stored ? parseInt(stored, 10) : null;
+};
+
+export const useCurrentUserId = (): number | null => {
+	return getCurrentUserId();
 };
 
 interface UsePracticeSessionOptions {
@@ -49,7 +53,7 @@ export const usePracticeSession = (
 	}, [fetcher.data]);
 
 	const startSession = useCallback(() => {
-		const userId = useCurrentUserId();
+		const userId = getCurrentUserId();
 		if (!userId) return;
 
 		fetcher.submit(
@@ -66,7 +70,7 @@ export const usePracticeSession = (
 
 	const recordAttempt = useCallback(
 		(data: AttemptData) => {
-			const userId = useCurrentUserId();
+			const userId = getCurrentUserId();
 			if (!userId) return;
 
 			fetcher.submit(

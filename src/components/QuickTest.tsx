@@ -62,9 +62,9 @@ export const QuickTest = ({
 			{intro && <p className="text-sm text-stone-600 mb-4">{intro}</p>}
 
 			<div className="space-y-3">
-				{options.map((option, idx) => (
+				{options.map((option) => (
 					<div
-						key={idx}
+						key={option.condition}
 						className={`p-3 bg-white rounded-lg border ${colors.border}`}
 					>
 						<div className="flex items-start gap-3">
@@ -77,8 +77,8 @@ export const QuickTest = ({
 								</div>
 								{option.examples && (
 									<div className="text-sm text-stone-600 space-y-0.5">
-										{option.examples.map((ex, i) => (
-											<div key={i}>
+										{option.examples.map((ex) => (
+											<div key={ex.greek}>
 												<MonoText size="sm" variant="greek">
 													{ex.greek}
 												</MonoText>

@@ -10,15 +10,20 @@ interface ReviewDrillProps {
 	items: VocabItemWithSkill[];
 }
 
-const generateQuestionsFromItems = (items: VocabItemWithSkill[]): Question[] => {
+const generateQuestionsFromItems = (
+	items: VocabItemWithSkill[],
+): Question[] => {
 	const questions: Question[] = [];
 
 	for (let i = 0; i < items.length; i++) {
 		const item = items[i];
+		if (!item) continue;
 
 		// Generate wrong answers from other items
 		const otherItems = items.filter((_, idx) => idx !== i);
-		const shuffledOthers = otherItems.sort(() => Math.random() - 0.5).slice(0, 3);
+		const shuffledOthers = otherItems
+			.sort(() => Math.random() - 0.5)
+			.slice(0, 3);
 
 		// Greek → English question
 		const englishOptions = [
@@ -30,7 +35,9 @@ const generateQuestionsFromItems = (items: VocabItemWithSkill[]): Question[] => 
 		questions.push({
 			id: `review-gr-${item.id}`,
 			prompt: item.greekText,
-			promptSubtext: item.pronunciation ? `(${item.pronunciation})` : "What does this word mean?",
+			promptSubtext: item.pronunciation
+				? `(${item.pronunciation})`
+				: "What does this word mean?",
 			options: englishOptions,
 			correctIndex: englishCorrectIndex,
 			explanation: `${item.greekText} means "${item.englishTranslation}"`,
@@ -38,9 +45,10 @@ const generateQuestionsFromItems = (items: VocabItemWithSkill[]): Question[] => 
 
 		// English → Greek question (if we have enough items)
 		if (otherItems.length >= 3) {
-			const greekOptions = [item.greekText, ...shuffledOthers.map((o) => o.greekText)].sort(
-				() => Math.random() - 0.5
-			);
+			const greekOptions = [
+				item.greekText,
+				...shuffledOthers.map((o) => o.greekText),
+			].sort(() => Math.random() - 0.5);
 			const greekCorrectIndex = greekOptions.indexOf(item.greekText);
 
 			questions.push({
@@ -68,7 +76,7 @@ const ReviewDrill: React.FC<ReviewDrillProps> = ({ items }) => {
 
 			// Extract vocabularyId from the question id
 			const match = result.questionId.match(/review-(?:gr|en)-(\d+)/);
-			const vocabularyId = match ? parseInt(match[1], 10) : undefined;
+			const vocabularyId = match?.[1] ? parseInt(match[1], 10) : undefined;
 
 			fetcher.submit(
 				{
@@ -82,19 +90,25 @@ const ReviewDrill: React.FC<ReviewDrillProps> = ({ items }) => {
 					timeTaken: result.timeTaken.toString(),
 					skillType: "recognition",
 				},
-				{ method: "post" }
+				{ method: "post" },
 			);
 		},
-		[userId, fetcher]
+		[userId, fetcher],
 	);
 
 	if (items.length === 0) {
 		return (
 			<div className="text-center py-12 bg-olive-100 rounded-xl border border-olive-300">
 				<div className="text-5xl mb-4">🎉</div>
-				<h3 className="text-xl font-semibold text-olive-text mb-2">All caught up!</h3>
-				<p className="text-olive-text">No items due for review right now. Great work!</p>
-				<p className="text-sm text-stone-600 mt-2">Check back later for new reviews.</p>
+				<h3 className="text-xl font-semibold text-olive-text mb-2">
+					All caught up!
+				</h3>
+				<p className="text-olive-text">
+					No items due for review right now. Great work!
+				</p>
+				<p className="text-sm text-stone-600 mt-2">
+					Check back later for new reviews.
+				</p>
 			</div>
 		);
 	}
@@ -103,7 +117,9 @@ const ReviewDrill: React.FC<ReviewDrillProps> = ({ items }) => {
 		return (
 			<div className="text-center py-12 bg-honey-100 rounded-xl border border-honey-300">
 				<div className="text-5xl mb-4">📚</div>
-				<h3 className="text-xl font-semibold text-honey-text mb-2">Not enough items yet</h3>
+				<h3 className="text-xl font-semibold text-honey-text mb-2">
+					Not enough items yet
+				</h3>
 				<p className="text-honey-text">
 					You need at least 4 vocabulary items to start reviewing.
 				</p>

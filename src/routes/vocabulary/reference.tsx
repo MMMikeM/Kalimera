@@ -1,8 +1,19 @@
 import { useOutletContext } from "react-router";
-import { Sun, Hash, Palette, TrendingUp, MapPin, Lightbulb } from "lucide-react";
+import {
+	Sun,
+	Hash,
+	Palette,
+	TrendingUp,
+	MapPin,
+	Lightbulb,
+} from "lucide-react";
 import { Card, MonoText } from "@/components";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { type VocabularyLoaderData, VocabItemDisplay, VocabSection } from "./shared";
+import {
+	type VocabularyLoaderData,
+	VocabItemDisplay,
+	VocabSection,
+} from "./shared";
 
 const TIME_ORDER = ["morning", "midday", "afternoon", "evening", "night"];
 
@@ -44,7 +55,7 @@ export default function ReferenceRoute() {
 	}
 
 	const unpaired = data.reference.positionAdverbs.filter(
-		(a) => !usedIds.has(a.id)
+		(a) => !usedIds.has(a.id),
 	);
 
 	return (
@@ -109,7 +120,7 @@ export default function ReferenceRoute() {
 									(n) =>
 										n.numericValue !== undefined &&
 										n.numericValue >= 0 &&
-										n.numericValue <= 9
+										n.numericValue <= 9,
 								)
 								.map((number) => (
 									<div key={number.id} className="flex items-baseline gap-2">
@@ -128,7 +139,10 @@ export default function ReferenceRoute() {
 						<div className="space-y-2">
 							{data.reference.numbers
 								.filter(
-									(n) => n.numericValue && n.numericValue >= 10 && n.numericValue <= 19
+									(n) =>
+										n.numericValue &&
+										n.numericValue >= 10 &&
+										n.numericValue <= 19,
 								)
 								.map((number) => (
 									<div key={number.id} className="flex items-baseline gap-2">
@@ -225,9 +239,9 @@ export default function ReferenceRoute() {
 					</AlertDescription>
 				</Alert>
 				<div className="space-y-2">
-					{pairedAdverbs.map((pair, idx) => (
+					{pairedAdverbs.map((pair) => (
 						<div
-							key={idx}
+							key={`${pair.left?.id ?? "empty"}-${pair.right?.id ?? "empty"}`}
 							className="grid grid-cols-2 gap-4 p-3 bg-white rounded-lg border border-ocean-200"
 						>
 							{pair.left ? (

@@ -1,4 +1,5 @@
 import type React from "react";
+import { useState, useEffect } from "react";
 import {
 	MessageCircle,
 	DoorOpen,
@@ -7,8 +8,18 @@ import {
 	Lightbulb,
 	Hand,
 } from "lucide-react";
-import { Outlet, useLocation, Link as RouterLink } from "react-router";
-import { Card, MonoText } from "@/components";
+import {
+	Outlet,
+	useLocation,
+	Link as RouterLink,
+	useOutletContext,
+} from "react-router";
+import {
+	Card,
+	MonoText,
+	ConversationModeToggle,
+	type ConversationMode,
+} from "@/components";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
 	Collapsible,
@@ -21,6 +32,15 @@ import {
 	FOOD_PHRASES,
 	SMALLTALK_PHRASES,
 } from "@/scripts/seed-data/vocabulary";
+
+type ConversationContext = {
+	mode: ConversationMode;
+};
+
+export const useConversationContext = () =>
+	useOutletContext<ConversationContext>();
+
+const STORAGE_KEY = "conversation-mode";
 
 export function meta() {
 	return [
@@ -73,8 +93,8 @@ export const PhraseList: React.FC<{
 	bgClass: string;
 }> = ({ phrases, bgClass }) => (
 	<div className="space-y-2">
-		{phrases.map((phrase, idx) => (
-			<div key={idx} className={`p-3 ${bgClass} rounded-lg`}>
+		{phrases.map((phrase) => (
+			<div key={phrase.text} className={`p-3 ${bgClass} rounded-lg`}>
 				<MonoText variant="highlighted" size="lg" className="block mb-1">
 					{phrase.text}
 				</MonoText>
@@ -114,8 +134,27 @@ export const SituationContent: React.FC<{
 	);
 };
 
-export const LearningTips: React.FC = () => (
-	<Collapsible>
+export interface LearningTip {
+	title: string;
+	items: string[];
+}
+
+export interface LearningTipsProps {
+	patterns?: LearningTip;
+	tips?: LearningTip;
+	commonMistake?: {
+		wrong: string;
+		right: string;
+		explanation: string;
+	};
+}
+
+export const LearningTips: React.FC<LearningTipsProps> = ({
+	patterns,
+	tips,
+	commonMistake,
+}) => (
+	<Collapsible defaultOpen>
 		<CollapsibleTrigger className="flex items-center gap-2 w-full p-3 rounded-lg bg-stone-50 hover:bg-stone-100 transition-colors text-left group">
 			<Lightbulb size={18} className="info-box-tip-icon" />
 			<span className="font-medium text-stone-700">Learning Tips</span>
@@ -127,25 +166,49 @@ export const LearningTips: React.FC = () => (
 		<CollapsibleContent>
 			<div className="mt-4 info-box-tip">
 				<div className="grid md:grid-cols-2 gap-6 text-sm">
-					<div>
-						<h4 className="info-box-tip-title mb-2">Comprehension First</h4>
-						<ul className="space-y-1.5 text-stone-700">
-							<li>
-								Listen actively - recognize these phrases when you hear them
-							</li>
-							<li>One situation at a time - master this before moving on</li>
-							<li>Context matters - notice when people use these phrases</li>
-						</ul>
-					</div>
-					<div>
-						<h4 className="info-box-tip-title mb-2">Simple Responses</h4>
-						<ul className="space-y-1.5 text-stone-700">
-							<li>Start with "Ναι/Όχι ευχαριστώ" - it goes a long way</li>
-							<li>Practice out loud - say responses to yourself</li>
-							<li>Communication beats grammar - don't worry about perfection</li>
-						</ul>
-					</div>
+					{patterns && (
+						<div>
+							<h4 className="info-box-tip-title mb-2">{patterns.title}</h4>
+							<ul className="space-y-1.5 text-stone-700">
+								{patterns.items.map((item) => (
+									<li key={item}>{item}</li>
+								))}
+							</ul>
+						</div>
+					)}
+					{tips && (
+						<div>
+							<h4 className="info-box-tip-title mb-2">{tips.title}</h4>
+							<ul className="space-y-1.5 text-stone-700">
+								{tips.items.map((item) => (
+									<li key={item}>{item}</li>
+								))}
+							</ul>
+						</div>
+					)}
 				</div>
+				{commonMistake && (
+					<div className="mt-4 pt-4 border-t border-amber-200">
+						<h4 className="info-box-tip-title mb-2">Common Mistake</h4>
+						<div className="flex items-start gap-4 text-sm">
+							<div className="flex-1">
+								<span className="text-red-600 font-medium">✗</span>{" "}
+								<MonoText variant="greek" size="md">
+									{commonMistake.wrong}
+								</MonoText>
+							</div>
+							<div className="flex-1">
+								<span className="text-green-600 font-medium">✓</span>{" "}
+								<MonoText variant="greek" size="md">
+									{commonMistake.right}
+								</MonoText>
+							</div>
+						</div>
+						<p className="text-stone-600 mt-2 text-xs">
+							{commonMistake.explanation}
+						</p>
+					</div>
+				)}
 			</div>
 		</CollapsibleContent>
 	</Collapsible>
@@ -213,20 +276,37 @@ export const SITUATIONS: SituationConfig[] = [
 	},
 ];
 
-const TABS = SITUATIONS.map((s) => ({ id: s.id, title: s.title, icon: s.icon }));
+const TABS = SITUATIONS.map((s) => ({
+	id: s.id,
+	title: s.title,
+	icon: s.icon,
+}));
 
 export default function ConversationsLayout() {
 	const location = useLocation();
 	const pathSegments = location.pathname.split("/").filter(Boolean);
 	const activeTab = pathSegments[1] || "arriving";
 
+	const [mode, setMode] = useState<ConversationMode>(() => {
+		if (typeof window === "undefined") return "read";
+		const stored = localStorage.getItem(STORAGE_KEY);
+		return (stored as ConversationMode) || "read";
+	});
+
+	useEffect(() => {
+		localStorage.setItem(STORAGE_KEY, mode);
+	}, [mode]);
+
 	return (
 		<div className="space-y-6">
-			<div className="mb-2">
-				<h2 className="text-2xl font-bold text-stone-800">Conversations</h2>
-				<p className="text-stone-600 mt-1">
-					Real situations with family and friends
-				</p>
+			<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-2">
+				<div>
+					<h2 className="text-2xl font-bold text-stone-800">Conversations</h2>
+					<p className="text-stone-600 mt-1">
+						Real situations with family and friends
+					</p>
+				</div>
+				<ConversationModeToggle mode={mode} onModeChange={setMode} />
 			</div>
 
 			<Tabs value={activeTab}>
@@ -248,7 +328,7 @@ export default function ConversationsLayout() {
 				</TabsList>
 			</Tabs>
 
-			<Outlet />
+			<Outlet context={{ mode }} />
 		</div>
 	);
 }

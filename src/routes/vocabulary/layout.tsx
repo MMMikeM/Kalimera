@@ -97,7 +97,7 @@ const groupVerbsByPattern = (verbs: VerbWithPattern[]): VerbCategory[] => {
 		const pattern = verb.pattern || "unknown";
 
 		if (DEPONENT_PATTERNS.includes(pattern)) {
-			deponentVerbs[pattern].push(verb);
+			deponentVerbs[pattern]?.push(verb);
 		} else {
 			if (!groups[pattern]) {
 				groups[pattern] = {
@@ -106,28 +106,30 @@ const groupVerbsByPattern = (verbs: VerbWithPattern[]): VerbCategory[] => {
 					verbs: [],
 				};
 			}
-			groups[pattern].verbs.push(verb);
+			groups[pattern]?.verbs.push(verb);
 		}
 	}
 
 	const result = Object.values(groups);
 
-	const totalDeponents = deponentVerbs["-ομαι"].length + deponentVerbs["-άμαι"].length;
+	const omaiVerbs = deponentVerbs["-ομαι"] ?? [];
+	const amaiVerbs = deponentVerbs["-άμαι"] ?? [];
+	const totalDeponents = omaiVerbs.length + amaiVerbs.length;
 	if (totalDeponents > 0) {
 		result.push({
 			id: "verb-deponent",
 			title: "deponent",
-			verbs: [...deponentVerbs["-ομαι"], ...deponentVerbs["-άμαι"]],
+			verbs: [...omaiVerbs, ...amaiVerbs],
 			subCategories: [
 				{
 					title: "Type 1: -ομαι",
 					pattern: "-ομαι",
-					verbs: deponentVerbs["-ομαι"],
+					verbs: omaiVerbs,
 				},
 				{
 					title: "Type 2: -άμαι",
 					pattern: "-άμαι",
-					verbs: deponentVerbs["-άμαι"],
+					verbs: amaiVerbs,
 				},
 			],
 		});
@@ -155,8 +157,8 @@ export async function loader({ context }: Route.LoaderArgs) {
 			.where(
 				and(
 					eq(vocabulary.status, "processed"),
-					inArray(tags.slug, [...VOCABULARY_TAGS])
-				)
+					inArray(tags.slug, [...VOCABULARY_TAGS]),
+				),
 			)
 			.orderBy(vocabulary.greekText),
 
@@ -169,7 +171,12 @@ export async function loader({ context }: Route.LoaderArgs) {
 			})
 			.from(vocabulary)
 			.leftJoin(verbDetails, eq(verbDetails.vocabId, vocabulary.id))
-			.where(and(eq(vocabulary.wordType, "verb"), eq(vocabulary.status, "processed"))),
+			.where(
+				and(
+					eq(vocabulary.wordType, "verb"),
+					eq(vocabulary.status, "processed"),
+				),
+			),
 	]);
 
 	const byTag = groupByTag(allVocab);
@@ -217,7 +224,8 @@ export async function loader({ context }: Route.LoaderArgs) {
 			numbers: byTag.number
 				.map((n) => ({
 					...n,
-					numericValue: (n.metadata as Record<string, unknown> | null)?.numericValue as number | undefined,
+					numericValue: (n.metadata as Record<string, unknown> | null)
+						?.numericValue as number | undefined,
 				}))
 				.sort((a, b) => (a.numericValue ?? 0) - (b.numericValue ?? 0)),
 			colors: byTag.color,
@@ -261,7 +269,12 @@ export default function VocabularyLayout({ loaderData }: Route.ComponentProps) {
 			<Tabs value={activeTab}>
 				<TabsList className="flex-wrap h-auto gap-1">
 					{TABS.map((tab) => (
-						<TabsTrigger key={tab.id} value={tab.id} asChild className="gap-1.5">
+						<TabsTrigger
+							key={tab.id}
+							value={tab.id}
+							asChild
+							className="gap-1.5"
+						>
 							<Link to={`/vocabulary/${tab.id}`}>
 								<tab.icon size={16} />
 								<span>{tab.label}</span>
