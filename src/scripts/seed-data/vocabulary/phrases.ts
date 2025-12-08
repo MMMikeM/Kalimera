@@ -88,12 +88,29 @@ export const SOCIAL_PHRASES: Phrase[] = [
 
 // Question words - separate from expressions to avoid duplication
 export const QUESTION_WORDS: Phrase[] = [
+	// Basic interrogatives
+	{ text: "τι;", english: "what?" },
 	{ text: "πού;", english: "where?" },
+	{ text: "πότε;", english: "when?" },
 	{ text: "πώς;", english: "how?" },
 	{ text: "γιατί;", english: "why?" },
-	{ text: "ποιος;", english: "who?" },
-	{ text: "τι;", english: "what?" },
+
+	// "Who/which" - declines by gender
+	{ text: "ποιος;", english: "who/which? (m)" },
+	{ text: "ποια;", english: "who/which? (f)" },
+	{ text: "ποιο;", english: "which? (n)" },
+
+	// "Whose" - genitive of ποιος
+	{ text: "ποιανού;", english: "whose?" },
+
+	// "How much/many"
 	{ text: "πόσο;", english: "how much?" },
+	{ text: "πόσοι;", english: "how many? (m)" },
+	{ text: "πόσες;", english: "how many? (f)" },
+	{ text: "πόσα;", english: "how many? (n)" },
+
+	// Compound
+	{ text: "τι είδους;", english: "what kind of?" },
 ];
 
 // Legacy export for backwards compatibility
