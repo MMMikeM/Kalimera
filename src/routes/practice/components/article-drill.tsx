@@ -1,8 +1,8 @@
 import type React from "react";
 import { useMemo } from "react";
 import DrillCard from "./drill-card";
-import type { Question } from "./types";
-import { shuffleArray } from "./types";
+import type { Question } from "../types";
+import { shuffleArray } from "../types";
 
 // Greek-first article drill: Show Greek sentences with blanks, ask for correct article
 // This teaches articles in context rather than abstract grammar rules
@@ -331,7 +331,10 @@ const CASE_HINTS: Record<string, string> = {
 
 const generateQuestions = (): Question[] => {
 	return SENTENCE_TEMPLATES.map((template) => {
-		const options = shuffleArray([template.correctArticle, ...template.wrongArticles]);
+		const options = shuffleArray([
+			template.correctArticle,
+			...template.wrongArticles,
+		]);
 		const correctIndex = options.indexOf(template.correctArticle);
 		const caseDesc = CASE_DESCRIPTIONS[template.case];
 		const badgeLabel = CASE_BADGE_LABELS[template.case];
