@@ -2,11 +2,11 @@ import type React from "react";
 import { useMemo, useCallback } from "react";
 import { useFetcher } from "react-router";
 import DrillCard, { type AttemptResult } from "./drill-card";
-import type { Question } from "./types";
-import { useCurrentUserId } from "./hooks";
-import type { VocabItemWithSkill } from "./queries.server";
+import type { Question } from "../types";
+import { useCurrentUserId } from "../hooks";
+import type { VocabItemWithSkill } from "../data.server";
 
-interface ReviewDrillProps {
+interface VocabularyDrillProps {
 	items: VocabItemWithSkill[];
 }
 
@@ -19,13 +19,11 @@ const generateQuestionsFromItems = (
 		const item = items[i];
 		if (!item) continue;
 
-		// Generate wrong answers from other items
 		const otherItems = items.filter((_, idx) => idx !== i);
 		const shuffledOthers = otherItems
 			.sort(() => Math.random() - 0.5)
 			.slice(0, 3);
 
-		// Greek → English question
 		const englishOptions = [
 			item.englishTranslation,
 			...shuffledOthers.map((o) => o.englishTranslation),
@@ -33,7 +31,7 @@ const generateQuestionsFromItems = (
 		const englishCorrectIndex = englishOptions.indexOf(item.englishTranslation);
 
 		questions.push({
-			id: `review-gr-${item.id}`,
+			id: `vocab-gr-${item.id}`,
 			prompt: item.greekText,
 			promptSubtext: item.pronunciation
 				? `(${item.pronunciation})`
@@ -43,7 +41,6 @@ const generateQuestionsFromItems = (
 			explanation: `${item.greekText} means "${item.englishTranslation}"`,
 		});
 
-		// English → Greek question (if we have enough items)
 		if (otherItems.length >= 3) {
 			const greekOptions = [
 				item.greekText,
@@ -52,7 +49,7 @@ const generateQuestionsFromItems = (
 			const greekCorrectIndex = greekOptions.indexOf(item.greekText);
 
 			questions.push({
-				id: `review-en-${item.id}`,
+				id: `vocab-en-${item.id}`,
 				prompt: `How do you say "${item.englishTranslation}" in Greek?`,
 				options: greekOptions,
 				correctIndex: greekCorrectIndex,
@@ -61,11 +58,10 @@ const generateQuestionsFromItems = (
 		}
 	}
 
-	// Shuffle all questions
 	return questions.sort(() => Math.random() - 0.5);
 };
 
-const ReviewDrill: React.FC<ReviewDrillProps> = ({ items }) => {
+const VocabularyDrill: React.FC<VocabularyDrillProps> = ({ items }) => {
 	const questions = useMemo(() => generateQuestionsFromItems(items), [items]);
 	const userId = useCurrentUserId();
 	const fetcher = useFetcher();
@@ -74,8 +70,7 @@ const ReviewDrill: React.FC<ReviewDrillProps> = ({ items }) => {
 		(result: AttemptResult) => {
 			if (!userId) return;
 
-			// Extract vocabularyId from the question id
-			const match = result.questionId.match(/review-(?:gr|en)-(\d+)/);
+			const match = result.questionId.match(/vocab-(?:gr|en)-(\d+)/);
 			const vocabularyId = match?.[1] ? parseInt(match[1], 10) : undefined;
 
 			fetcher.submit(
@@ -101,13 +96,13 @@ const ReviewDrill: React.FC<ReviewDrillProps> = ({ items }) => {
 			<div className="text-center py-12 bg-olive-100 rounded-xl border border-olive-300">
 				<div className="text-5xl mb-4">🎉</div>
 				<h3 className="text-xl font-semibold text-olive-text mb-2">
-					All caught up!
+					All words learned!
 				</h3>
 				<p className="text-olive-text">
-					No items due for review right now. Great work!
+					You've practiced all available vocabulary.
 				</p>
 				<p className="text-sm text-stone-600 mt-2">
-					Check back later for new reviews.
+					Check the Review tab for items due for review.
 				</p>
 			</div>
 		);
@@ -118,13 +113,11 @@ const ReviewDrill: React.FC<ReviewDrillProps> = ({ items }) => {
 			<div className="text-center py-12 bg-honey-100 rounded-xl border border-honey-300">
 				<div className="text-5xl mb-4">📚</div>
 				<h3 className="text-xl font-semibold text-honey-text mb-2">
-					Not enough items yet
+					Almost there!
 				</h3>
 				<p className="text-honey-text">
-					You need at least 4 vocabulary items to start reviewing.
-				</p>
-				<p className="text-sm text-stone-600 mt-2">
-					Practice more vocabulary to build your review queue!
+					Only {items.length} new words available. Need at least 4 for multiple
+					choice.
 				</p>
 			</div>
 		);
@@ -132,13 +125,13 @@ const ReviewDrill: React.FC<ReviewDrillProps> = ({ items }) => {
 
 	return (
 		<DrillCard
-			title="Spaced Review"
-			description={`${items.length} items due for review`}
+			title="Learn New Words"
+			description={`${items.length} new words to learn`}
 			questions={questions}
-			variant="review"
+			variant="vocabulary"
 			onAttempt={handleAttempt}
 		/>
 	);
 };
 
-export default ReviewDrill;
+export default VocabularyDrill;
