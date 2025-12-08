@@ -1,56 +1,21 @@
 import type { Route } from "./+types/search";
 import { useState } from "react";
-import { sql, eq } from "drizzle-orm";
-import { vocabulary, verbDetails } from "../db/schema";
 import { MonoText, SearchInput } from "../components";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { cn } from "@/lib/utils";
+import {
+	searchVocabulary,
+	type SearchVocabItem,
+} from "@/db/queries/vocabulary";
 
-interface VocabularyWithTags {
-	id: number;
-	greek: string;
-	english: string;
-	type: string | null;
-	family: string | null;
-	tags: string[];
-}
-
-export async function loader({ context }: Route.LoaderArgs) {
-	// Use context.db in production, fallback to direct import for dev
-	const db = context?.db ?? (await import("../db")).db;
+export async function loader() {
 	try {
-		const vocabularyData = await db
-			.select({
-				id: vocabulary.id,
-				greek: vocabulary.greekText,
-				english: vocabulary.englishTranslation,
-				type: vocabulary.wordType,
-				family: verbDetails.conjugationFamily,
-				tagNames: sql<string>`(
-					SELECT group_concat(t.name, ', ')
-					FROM vocabulary_tags vt
-					JOIN tags t ON t.id = vt.tag_id
-					WHERE vt.vocabulary_id = ${vocabulary.id}
-				)`,
-			})
-			.from(vocabulary)
-			.leftJoin(verbDetails, eq(verbDetails.vocabId, vocabulary.id))
-			.where(eq(vocabulary.status, "processed"));
-
-		const vocabularyWithTags: VocabularyWithTags[] = vocabularyData.map((v) => ({
-			id: v.id,
-			greek: v.greek,
-			english: v.english,
-			type: v.type,
-			family: v.family,
-			tags: v.tagNames ? v.tagNames.split(", ") : [],
-		}));
-
-		return { vocabulary: vocabularyWithTags };
+		const vocabulary = await searchVocabulary();
+		return { vocabulary };
 	} catch (error) {
 		console.error("Database error:", error);
-		return { vocabulary: [] as VocabularyWithTags[] };
+		return { vocabulary: [] as SearchVocabItem[] };
 	}
 }
 
@@ -78,7 +43,7 @@ export default function SearchRoute({ loaderData }: Route.ComponentProps) {
 				(word) =>
 					word.greek.toLowerCase().includes(lowerTerm) ||
 					word.english.toLowerCase().includes(lowerTerm) ||
-					word.tags.some((tag) => tag.toLowerCase().includes(lowerTerm))
+					word.tags.some((tag) => tag.toLowerCase().includes(lowerTerm)),
 			);
 			setSearchResults(results);
 		} else {
@@ -116,7 +81,7 @@ export default function SearchRoute({ loaderData }: Route.ComponentProps) {
 							result.type === "noun" && "border-olive-500",
 							result.type === "phrase" && "border-terracotta-500",
 							result.type === "adverb" && "border-honey-500",
-							!result.type && "border-stone-300"
+							!result.type && "border-stone-300",
 						);
 
 						return (
@@ -127,7 +92,11 @@ export default function SearchRoute({ loaderData }: Route.ComponentProps) {
 								<div className="flex justify-between items-start gap-4">
 									<div className="flex-1 min-w-0">
 										{/* Greek text prominently displayed */}
-										<MonoText variant="greek" size="lg" className="text-2xl font-medium block mb-1">
+										<MonoText
+											variant="greek"
+											size="lg"
+											className="text-2xl font-medium block mb-1"
+										>
 											{result.greek}
 										</MonoText>
 										<p className="text-stone-600">{result.english}</p>
