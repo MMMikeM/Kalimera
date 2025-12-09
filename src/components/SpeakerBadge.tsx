@@ -18,27 +18,27 @@ const SPEAKER_CONFIG: Record<
 	SpeakerRole,
 	{ label: string; bgClass: string; textClass: string }
 > = {
-	host: { label: "Host", bgClass: "bg-stone-200", textClass: "text-stone-700" },
-	you: { label: "You", bgClass: "bg-stone-700", textClass: "text-stone-100" },
+	you: { label: "You", bgClass: "bg-navy-600", textClass: "text-white" },
+	host: { label: "Host", bgClass: "bg-olive-100", textClass: "text-olive-700" },
 	friend: {
 		label: "Friend",
-		bgClass: "bg-stone-200",
-		textClass: "text-stone-700",
+		bgClass: "bg-ocean-100",
+		textClass: "text-ocean-700",
 	},
 	waiter: {
 		label: "Waiter",
-		bgClass: "bg-stone-200",
-		textClass: "text-stone-700",
+		bgClass: "bg-terracotta-100",
+		textClass: "text-terracotta-700",
 	},
 	shopkeeper: {
 		label: "Shop",
-		bgClass: "bg-stone-200",
-		textClass: "text-stone-700",
+		bgClass: "bg-terracotta-100",
+		textClass: "text-terracotta-700",
 	},
 	stranger: {
 		label: "Person",
 		bgClass: "bg-stone-200",
-		textClass: "text-stone-700",
+		textClass: "text-stone-600",
 	},
 };
 

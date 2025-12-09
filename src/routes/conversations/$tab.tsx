@@ -6,8 +6,10 @@ import {
 	DialogueScenario,
 	ConversationHero,
 	type DialogueLine,
+	type Formality,
+	type ConversationMode,
 } from "@/components";
-import { LearningTips, variantStyles, useConversationContext } from "./layout";
+import { LearningTips, useConversationContext } from "./layout";
 
 const VALID_TABS = ["arriving", "food", "smalltalk", "requests"] as const;
 type TabId = (typeof VALID_TABS)[number];
@@ -22,9 +24,41 @@ export function loader({ params }: Route.LoaderArgs) {
 	return { tab: tab as TabId };
 }
 
+// Wrapper for individual scenario cards
+const ScenarioCard: React.FC<{
+	title: string;
+	description: string;
+	formality: Formality;
+	dialogue: DialogueLine[];
+	mode: ConversationMode;
+}> = ({ title, description, formality, dialogue, mode }) => (
+	<Card variant="bordered" padding="lg" className="border-stone-200">
+		<DialogueScenario
+			title={title}
+			description={description}
+			formality={formality}
+			dialogue={dialogue}
+			mode={mode}
+		/>
+	</Card>
+);
+
 // ═══════════════════════════════════════════════════════════════════════════════
 // ARRIVING TAB
 // ═══════════════════════════════════════════════════════════════════════════════
+const CASUAL_GREETING: DialogueLine[] = [
+	{ speaker: "friend", greek: "Γεια σου!", english: "Hi!" },
+	{ speaker: "you", greek: "Γεια!", english: "Hi!" },
+	{ speaker: "friend", greek: "Τι κάνεις;", english: "How are you?" },
+	{ speaker: "you", greek: "Καλά, εσύ;", english: "Good, you?" },
+	{
+		speaker: "friend",
+		greek: "Μια χαρά",
+		english: "Great",
+		note: "Literally 'a joy'",
+	},
+];
+
 const ARRIVAL_DIALOGUE: DialogueLine[] = [
 	{ speaker: "host", greek: "Καλώς ήρθατε!", english: "Welcome!" },
 	{
@@ -56,21 +90,7 @@ const LEAVING_DIALOGUE: DialogueLine[] = [
 	},
 ];
 
-const CASUAL_GREETING: DialogueLine[] = [
-	{ speaker: "friend", greek: "Γεια σου!", english: "Hi!" },
-	{ speaker: "you", greek: "Γεια!", english: "Hi!" },
-	{ speaker: "friend", greek: "Τι κάνεις;", english: "How are you?" },
-	{ speaker: "you", greek: "Καλά, εσύ;", english: "Good, you?" },
-	{
-		speaker: "friend",
-		greek: "Μια χαρά",
-		english: "Great",
-		note: "Literally 'a joy'",
-	},
-];
-
 const ArrivingTab: React.FC = () => {
-	const styles = variantStyles.olive;
 	const { mode } = useConversationContext();
 
 	return (
@@ -83,39 +103,53 @@ const ArrivingTab: React.FC = () => {
 				colorScheme="olive"
 			/>
 
-			<Card variant="bordered" padding="lg" className={styles.card}>
-				<div className="space-y-8">
-					<DialogueScenario
-						title="Arriving at a Greek home"
-						description="The host will enthusiastically welcome you"
-						dialogue={ARRIVAL_DIALOGUE}
-						colorScheme="olive"
-						mode={mode}
-					/>
+			<ScenarioCard
+				title="Casual greeting (friends)"
+				description="Informal greeting between friends"
+				formality="informal"
+				dialogue={CASUAL_GREETING}
+				mode={mode}
+			/>
 
-					<div className="border-t border-stone-200 pt-6">
-						<DialogueScenario
-							title="Saying goodbye"
-							description="Greeks often insist you stay longer!"
-							dialogue={LEAVING_DIALOGUE}
-							colorScheme="olive"
-							mode={mode}
-						/>
-					</div>
+			<ScenarioCard
+				title="Arriving at a Greek home"
+				description="The host will enthusiastically welcome you"
+				formality="formal"
+				dialogue={ARRIVAL_DIALOGUE}
+				mode={mode}
+			/>
 
-					<div className="border-t border-stone-200 pt-6">
-						<DialogueScenario
-							title="Casual greeting (friends)"
-							description="Informal greeting between friends"
-							dialogue={CASUAL_GREETING}
-							colorScheme="olive"
-							mode={mode}
-						/>
-					</div>
-				</div>
-			</Card>
+			<ScenarioCard
+				title="Saying goodbye"
+				description="Greeks often insist you stay longer!"
+				formality="formal"
+				dialogue={LEAVING_DIALOGUE}
+				mode={mode}
+			/>
 
-			<LearningTips />
+			<LearningTips
+				patterns={{
+					title: "Patterns to Notice",
+					items: [
+						"Informal imperatives doubled for emphasis: κάτσε, κάτσε / πέρνα, πέρνα",
+						"Plural 'we' for politeness: ευχαριστούμε instead of ευχαριστώ",
+						"Να + verb for wishes: Να προσέχεις (Take care)",
+					],
+				}}
+				tips={{
+					title: "Cultural Tips",
+					items: [
+						"Greeks repeat imperatives for warmth, not impatience",
+						"Expect reluctance to let you leave - decline 2-3 times before insisting",
+					],
+				}}
+				commonMistake={{
+					wrong: "Αντίο",
+					right: "Γεια σου / Τα λέμε",
+					explanation:
+						"Αντίο sounds final - save for permanent goodbyes",
+				}}
+			/>
 		</div>
 	);
 };
@@ -178,8 +212,21 @@ const COMPLIMENTING_FOOD: DialogueLine[] = [
 	},
 ];
 
+const CAFE_ORDER: DialogueLine[] = [
+	{ speaker: "waiter", greek: "Τι θα πάρετε;", english: "What will you have?" },
+	{
+		speaker: "you",
+		greek: "Έναν καφέ φραπέ, παρακαλώ",
+		english: "A frappe, please",
+	},
+	{ speaker: "waiter", greek: "Με γάλα;", english: "With milk?" },
+	{ speaker: "you", greek: "Ναι, με γάλα", english: "Yes, with milk" },
+	{ speaker: "waiter", greek: "Τίποτα άλλο;", english: "Anything else?" },
+	{ speaker: "you", greek: "Όχι, ευχαριστώ", english: "No, thank you" },
+	{ speaker: "waiter", greek: "Αμέσως", english: "Right away" },
+];
+
 const FoodTab: React.FC = () => {
-	const styles = variantStyles.terracotta;
 	const { mode } = useConversationContext();
 
 	return (
@@ -192,39 +239,61 @@ const FoodTab: React.FC = () => {
 				colorScheme="terracotta"
 			/>
 
-			<Card variant="bordered" padding="lg" className={styles.card}>
-				<div className="space-y-8">
-					<DialogueScenario
-						title="Being offered refreshments"
-						description="Greeks will always offer you something to drink"
-						dialogue={OFFERING_FOOD}
-						colorScheme="terracotta"
-						mode={mode}
-					/>
+			<ScenarioCard
+				title="Being offered refreshments"
+				description="Greeks will always offer you something to drink"
+				formality="mixed"
+				dialogue={OFFERING_FOOD}
+				mode={mode}
+			/>
 
-					<div className="border-t border-stone-200 pt-6">
-						<DialogueScenario
-							title="During a meal"
-							description="Expect to be encouraged to eat more!"
-							dialogue={DURING_MEAL}
-							colorScheme="terracotta"
-							mode={mode}
-						/>
-					</div>
+			<ScenarioCard
+				title="During a meal"
+				description="Expect to be encouraged to eat more!"
+				formality="informal"
+				dialogue={DURING_MEAL}
+				mode={mode}
+			/>
 
-					<div className="border-t border-stone-200 pt-6">
-						<DialogueScenario
-							title="Complimenting the food"
-							description="Show appreciation for home cooking"
-							dialogue={COMPLIMENTING_FOOD}
-							colorScheme="terracotta"
-							mode={mode}
-						/>
-					</div>
-				</div>
-			</Card>
+			<ScenarioCard
+				title="Complimenting the food"
+				description="Show appreciation for home cooking"
+				formality="informal"
+				dialogue={COMPLIMENTING_FOOD}
+				mode={mode}
+			/>
 
-			<LearningTips />
+			<ScenarioCard
+				title="At a cafe"
+				description="Ordering at a Greek kafeneio"
+				formality="formal"
+				dialogue={CAFE_ORDER}
+				mode={mode}
+			/>
+
+			<LearningTips
+				patterns={{
+					title: "Patterns to Notice",
+					items: [
+						"Coffee options: γλυκό (sweet), μέτριο (medium), σκέτο (plain)",
+						"Imperative repetition: Φάε, φάε! Πάρε, πάρε!",
+						"Χόρτασα literally means 'I'm satisfied' - stronger than 'full'",
+					],
+				}}
+				tips={{
+					title: "Cultural Tips",
+					items: [
+						"Always accept at least a small amount - refusing is impolite",
+						"Complimenting food is expected and appreciated",
+					],
+				}}
+				commonMistake={{
+					wrong: "Είμαι γεμάτος",
+					right: "Χόρτασα",
+					explanation:
+						"Είμαι γεμάτος sounds odd in Greek - use χόρτασα for 'I'm full'",
+				}}
+			/>
 		</div>
 	);
 };
@@ -232,6 +301,28 @@ const FoodTab: React.FC = () => {
 // ═══════════════════════════════════════════════════════════════════════════════
 // SMALLTALK TAB
 // ═══════════════════════════════════════════════════════════════════════════════
+const ORIGIN_CHAT: DialogueLine[] = [
+	{ speaker: "friend", greek: "Από πού είσαι;", english: "Where are you from?" },
+	{
+		speaker: "you",
+		greek: "Είμαι από...",
+		english: "I'm from...",
+		note: "Add your country",
+	},
+	{
+		speaker: "friend",
+		greek: "Α, ωραία! Πόσο καιρό είσαι εδώ;",
+		english: "Oh, nice! How long have you been here?",
+	},
+	{ speaker: "you", greek: "Δύο εβδομάδες", english: "Two weeks" },
+	{
+		speaker: "friend",
+		greek: "Σου αρέσει η Ελλάδα;",
+		english: "Do you like Greece?",
+	},
+	{ speaker: "you", greek: "Πάρα πολύ!", english: "Very much!" },
+];
+
 const WEATHER_CHAT: DialogueLine[] = [
 	{
 		speaker: "friend",
@@ -245,21 +336,6 @@ const WEATHER_CHAT: DialogueLine[] = [
 	},
 	{ speaker: "friend", greek: "Θέλεις νερό;", english: "Do you want water?" },
 	{ speaker: "you", greek: "Ναι, ευχαριστώ", english: "Yes, thank you" },
-];
-
-const WORK_CHAT: DialogueLine[] = [
-	{
-		speaker: "friend",
-		greek: "Τι κάνεις στη δουλειά;",
-		english: "How's work?",
-	},
-	{
-		speaker: "you",
-		greek: "Καλά, πολύ δουλειά όμως",
-		english: "Good, but a lot of work",
-	},
-	{ speaker: "friend", greek: "Κουράστηκες;", english: "Are you tired?" },
-	{ speaker: "you", greek: "Λίγο", english: "A little" },
 ];
 
 const WEEKEND_PLANS: DialogueLine[] = [
@@ -277,6 +353,21 @@ const WEEKEND_PLANS: DialogueLine[] = [
 	{ speaker: "you", greek: "Ναι, καλή ιδέα!", english: "Yes, good idea!" },
 	{ speaker: "friend", greek: "Το Σάββατο;", english: "Saturday?" },
 	{ speaker: "you", greek: "Εντάξει", english: "Okay" },
+];
+
+const WORK_CHAT: DialogueLine[] = [
+	{
+		speaker: "friend",
+		greek: "Τι κάνεις στη δουλειά;",
+		english: "How's work?",
+	},
+	{
+		speaker: "you",
+		greek: "Καλά, πολύ δουλειά όμως",
+		english: "Good, but a lot of work",
+	},
+	{ speaker: "friend", greek: "Κουράστηκες;", english: "Are you tired?" },
+	{ speaker: "you", greek: "Λίγο", english: "A little" },
 ];
 
 const FAMILY_CHAT: DialogueLine[] = [
@@ -303,7 +394,6 @@ const FAMILY_CHAT: DialogueLine[] = [
 ];
 
 const SmalltalkTab: React.FC = () => {
-	const styles = variantStyles.ocean;
 	const { mode } = useConversationContext();
 
 	return (
@@ -316,49 +406,63 @@ const SmalltalkTab: React.FC = () => {
 				colorScheme="ocean"
 			/>
 
-			<Card variant="bordered" padding="lg" className={styles.card}>
-				<div className="space-y-8">
-					<DialogueScenario
-						title="Talking about the weather"
-						description="A universal conversation starter"
-						dialogue={WEATHER_CHAT}
-						colorScheme="ocean"
-						mode={mode}
-					/>
+			<ScenarioCard
+				title="Where are you from?"
+				description="The most common question tourists face"
+				formality="informal"
+				dialogue={ORIGIN_CHAT}
+				mode={mode}
+			/>
 
-					<div className="border-t border-stone-200 pt-6">
-						<DialogueScenario
-							title="Asking about work"
-							description="Common friendly question"
-							dialogue={WORK_CHAT}
-							colorScheme="ocean"
-							mode={mode}
-						/>
-					</div>
+			<ScenarioCard
+				title="Talking about the weather"
+				description="A universal conversation starter"
+				formality="informal"
+				dialogue={WEATHER_CHAT}
+				mode={mode}
+			/>
 
-					<div className="border-t border-stone-200 pt-6">
-						<DialogueScenario
-							title="Weekend plans"
-							description="Making plans with friends"
-							dialogue={WEEKEND_PLANS}
-							colorScheme="ocean"
-							mode={mode}
-						/>
-					</div>
+			<ScenarioCard
+				title="Weekend plans"
+				description="Making plans with friends"
+				formality="informal"
+				dialogue={WEEKEND_PLANS}
+				mode={mode}
+			/>
 
-					<div className="border-t border-stone-200 pt-6">
-						<DialogueScenario
-							title="Asking about family"
-							description="Greeks love to ask about family"
-							dialogue={FAMILY_CHAT}
-							colorScheme="ocean"
-							mode={mode}
-						/>
-					</div>
-				</div>
-			</Card>
+			<ScenarioCard
+				title="Asking about work"
+				description="Common friendly question"
+				formality="informal"
+				dialogue={WORK_CHAT}
+				mode={mode}
+			/>
 
-			<LearningTips />
+			<ScenarioCard
+				title="Asking about family"
+				description="Greeks love to ask about family"
+				formality="informal"
+				dialogue={FAMILY_CHAT}
+				mode={mode}
+			/>
+
+			<LearningTips
+				patterns={{
+					title: "Patterns to Notice",
+					items: [
+						"Δεν αντέχω - versatile phrase for 'I can't stand/handle'",
+						"Μια χαρά - literally 'a joy', means 'great/fine'",
+						"Εντάξει - multipurpose 'okay/agreed/fine'",
+					],
+				}}
+				tips={{
+					title: "Cultural Tips",
+					items: [
+						"Weather complaints are bonding moments in summer heat",
+						"Family questions are expected and not intrusive in Greek culture",
+					],
+				}}
+			/>
 		</div>
 	);
 };
@@ -366,6 +470,18 @@ const SmalltalkTab: React.FC = () => {
 // ═══════════════════════════════════════════════════════════════════════════════
 // REQUESTS TAB
 // ═══════════════════════════════════════════════════════════════════════════════
+const INTRODUCTIONS: DialogueLine[] = [
+	{ speaker: "stranger", greek: "Πώς σε λένε;", english: "What's your name?" },
+	{
+		speaker: "you",
+		greek: "Με λένε...",
+		english: "My name is...",
+		note: "Add your name",
+	},
+	{ speaker: "stranger", greek: "Χαίρω πολύ", english: "Nice to meet you" },
+	{ speaker: "you", greek: "Κι εγώ", english: "Me too" },
+];
+
 const ASKING_FOR_HELP: DialogueLine[] = [
 	{
 		speaker: "you",
@@ -382,16 +498,34 @@ const ASKING_FOR_HELP: DialogueLine[] = [
 	{ speaker: "you", greek: "Ευχαριστώ πολύ", english: "Thank you very much" },
 ];
 
-const INTRODUCTIONS: DialogueLine[] = [
-	{ speaker: "stranger", greek: "Πώς σε λένε;", english: "What's your name?" },
+const COMPREHENSION_HELP: DialogueLine[] = [
+	{
+		speaker: "stranger",
+		greek: "Θέλετε να σας δείξω τον δρόμο;",
+		english: "Do you want me to show you the way?",
+	},
+	{ speaker: "you", greek: "Πιο αργά, παρακαλώ", english: "Slower, please" },
+	{
+		speaker: "stranger",
+		greek: "Θέλετε... να σας... δείξω...",
+		english: "Do you want... me to show you...",
+	},
 	{
 		speaker: "you",
-		greek: "Με λένε...",
-		english: "My name is...",
-		note: "Add your name",
+		greek: "Συγγνώμη, δεν κατάλαβα",
+		english: "Sorry, I didn't understand",
 	},
-	{ speaker: "stranger", greek: "Χαίρω πολύ", english: "Nice to meet you" },
-	{ speaker: "you", greek: "Κι εγώ", english: "Me too" },
+	{
+		speaker: "stranger",
+		greek: "Να έρθω μαζί σας;",
+		english: "Should I come with you?",
+		note: "Simplified offer",
+	},
+	{
+		speaker: "you",
+		greek: "Ναι, ευχαριστώ πολύ!",
+		english: "Yes, thank you very much!",
+	},
 ];
 
 const ASKING_OPINION: DialogueLine[] = [
@@ -424,7 +558,6 @@ const MAKING_REQUESTS: DialogueLine[] = [
 ];
 
 const RequestsTab: React.FC = () => {
-	const styles = variantStyles.honey;
 	const { mode } = useConversationContext();
 
 	return (
@@ -437,49 +570,69 @@ const RequestsTab: React.FC = () => {
 				colorScheme="honey"
 			/>
 
-			<Card variant="bordered" padding="lg" className={styles.card}>
-				<div className="space-y-8">
-					<DialogueScenario
-						title="Asking for help"
-						description="Getting directions or assistance"
-						dialogue={ASKING_FOR_HELP}
-						colorScheme="honey"
-						mode={mode}
-					/>
+			<ScenarioCard
+				title="Introducing yourself"
+				description="When meeting someone new"
+				formality="formal"
+				dialogue={INTRODUCTIONS}
+				mode={mode}
+			/>
 
-					<div className="border-t border-stone-200 pt-6">
-						<DialogueScenario
-							title="Introducing yourself"
-							description="When meeting someone new"
-							dialogue={INTRODUCTIONS}
-							colorScheme="honey"
-							mode={mode}
-						/>
-					</div>
+			<ScenarioCard
+				title="Asking for help"
+				description="Getting directions or assistance"
+				formality="formal"
+				dialogue={ASKING_FOR_HELP}
+				mode={mode}
+			/>
 
-					<div className="border-t border-stone-200 pt-6">
-						<DialogueScenario
-							title="Asking for opinions"
-							description="Getting someone's thoughts"
-							dialogue={ASKING_OPINION}
-							colorScheme="honey"
-							mode={mode}
-						/>
-					</div>
+			<ScenarioCard
+				title="When you need help understanding"
+				description="Essential survival phrases for beginners"
+				formality="formal"
+				dialogue={COMPREHENSION_HELP}
+				mode={mode}
+			/>
 
-					<div className="border-t border-stone-200 pt-6">
-						<DialogueScenario
-							title="Making simple requests"
-							description="Common imperative phrases"
-							dialogue={MAKING_REQUESTS}
-							colorScheme="honey"
-							mode={mode}
-						/>
-					</div>
-				</div>
-			</Card>
+			<ScenarioCard
+				title="Asking for opinions"
+				description="Getting someone's thoughts"
+				formality="informal"
+				dialogue={ASKING_OPINION}
+				mode={mode}
+			/>
 
-			<LearningTips />
+			<ScenarioCard
+				title="Making simple requests"
+				description="Common imperative phrases"
+				formality="informal"
+				dialogue={MAKING_REQUESTS}
+				mode={mode}
+			/>
+
+			<LearningTips
+				patterns={{
+					title: "Patterns to Notice",
+					items: [
+						"Με λένε + name: 'They call me...' (standard intro)",
+						"Imperatives with με: Βοήθησέ με, Άκουσέ με, Περίμενέ με",
+						"Μου φαίνεται + adjective: 'It seems to me...'",
+					],
+				}}
+				tips={{
+					title: "Cultural Tips",
+					items: [
+						"Συγγνώμη works for both 'excuse me' and 'sorry'",
+						"Ορίστε is the standard 'here you go' when handing something",
+					],
+				}}
+				commonMistake={{
+					wrong: "Πώς είσαι;",
+					right: "Πώς σε λένε;",
+					explanation:
+						"Πώς είσαι means 'How are you?' - different question!",
+				}}
+			/>
 		</div>
 	);
 };
