@@ -206,20 +206,20 @@ export const PrepositionsSection: React.FC = () => (
 		<CollapsibleSection
 			title="More Prepositions"
 			subtitle="Less common but still useful"
-			colorScheme="santorini"
+			colorScheme="ocean"
 			defaultOpen={false}
 		>
 			<div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
 				{OTHER_PREPOSITIONS.map((prep) => (
 					<div
 						key={prep.greek}
-						className="p-3 bg-white rounded-lg border border-santorini-200"
+						className="p-3 bg-white rounded-lg border border-ocean-200"
 					>
 						<div className="flex items-baseline gap-2 mb-1">
 							<MonoText
 								variant="greek"
 								size="md"
-								className="text-santorini-text font-semibold"
+								className="text-ocean-text font-semibold"
 							>
 								{prep.greek}
 							</MonoText>

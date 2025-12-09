@@ -76,12 +76,12 @@ const VARIANT_CONFIG: Record<DrillVariant, VariantConfig> = {
 	},
 	vocabulary: {
 		icon: BookOpen,
-		borderColor: "border-l-4 border-l-santorini border-santorini-300",
-		bgGradient: "bg-santorini-50",
-		iconBg: "bg-santorini-200",
-		iconColor: "text-santorini",
-		accentColor: "santorini",
-		progressColor: "bg-santorini",
+		borderColor: "border-l-4 border-l-ocean border-ocean-300",
+		bgGradient: "bg-ocean-50",
+		iconBg: "bg-ocean-200",
+		iconColor: "text-ocean",
+		accentColor: "ocean",
+		progressColor: "bg-ocean",
 	},
 	review: {
 		icon: Clock,

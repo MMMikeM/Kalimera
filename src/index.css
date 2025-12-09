@@ -46,22 +46,22 @@
   --color-terracotta-dark: var(--color-terracotta-700);
   --color-terracotta-text: #5C2D14;
 
-  /* === OLIVE - Secondary === */
-  --color-olive-50: #f7f8f5;
-  --color-olive-100: #ecefe9;
-  --color-olive-200: #d9dfd3;
-  --color-olive-300: #bac5b0;
-  --color-olive-400: #94a385;
-  --color-olive-500: #6b7b5c;
-  --color-olive-600: #5c6b4e;
-  --color-olive-700: #4a5540;
-  --color-olive-800: #3c4635;
-  --color-olive-900: #333a2d;
-  --color-olive-950: #191e15;
-  --color-olive: var(--color-olive-500);
-  --color-olive-light: var(--color-olive-400);
-  --color-olive-dark: var(--color-olive-700);
-  --color-olive-text: #1F2A18;
+  /* === OLIVE - Secondary (silvery olive leaf) === */
+  --color-olive-50: #f8f9f6;
+  --color-olive-100: #eef1ea;
+  --color-olive-200: #dce3d4;
+  --color-olive-300: #c2ccb5;
+  --color-olive-400: #8a9a78;
+  --color-olive-500: #748863;
+  --color-olive-600: #5c6d4e;
+  --color-olive-700: #495640;
+  --color-olive-800: #3c4636;
+  --color-olive-900: #333a2e;
+  --color-olive-950: #1a1f17;
+  --color-olive: var(--color-olive-400);
+  --color-olive-light: var(--color-olive-300);
+  --color-olive-dark: var(--color-olive-600);
+  --color-olive-text: #2A3622;
 
   /* === OCEAN - Tertiary (formerly Aegean) === */
   --color-ocean-50: #f2f7f9;
@@ -96,23 +96,6 @@
   --color-honey-light: var(--color-honey-300);
   --color-honey-dark: var(--color-honey-500);
   --color-honey-text: #4A3508;
-
-  /* === SANTORINI - Interactive/Links === */
-  --color-santorini-50: #ecfeff;
-  --color-santorini-100: #cefbff;
-  --color-santorini-200: #a3f3fe;
-  --color-santorini-300: #64e9fc;
-  --color-santorini-400: #1ed4f2;
-  --color-santorini-500: #02b8d9;
-  --color-santorini-600: #0592b5;
-  --color-santorini-700: #0b7493;
-  --color-santorini-800: #135e77;
-  --color-santorini-900: #154e64;
-  --color-santorini-950: #073445;
-  --color-santorini: var(--color-santorini-500);
-  --color-santorini-light: var(--color-santorini-400);
-  --color-santorini-dark: var(--color-santorini-700);
-  --color-santorini-text: #084A52;
 
   /* === NAVY - Scholarly/Headings === */
   --color-navy-50: #f5f7fa;
@@ -485,14 +468,6 @@
   }
   .situation-honey-text {
     @apply text-honey-text;
-  }
-
-  /* Expanded palette situations */
-  .situation-santorini {
-    @apply border-santorini-300 bg-santorini-50;
-  }
-  .situation-santorini-text {
-    @apply text-santorini-text;
   }
 
   .situation-navy {
