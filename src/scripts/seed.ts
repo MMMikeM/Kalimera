@@ -1,4 +1,4 @@
-import { eq, sql } from "drizzle-orm";
+import { inArray, sql } from "drizzle-orm";
 import { db } from "../db";
 import { tags, verbDetails, vocabulary, vocabularyTags } from "../db/schema";
 import type { NewVocabulary, NewVocabularyTag } from "../db/types";
@@ -36,10 +36,136 @@ import {
 	VERBS,
 } from "./seed-data";
 
-async function seed() {
-	console.log("Seeding database (additive mode)...");
+const BATCH_SIZE = 100;
 
-	// Upsert system tags (update name if slug exists, insert if new)
+type VerbDetailRecord = {
+	vocabId: number;
+	infinitive: string;
+	conjugationFamily: string;
+};
+
+type VocabWithTags = {
+	vocab: NewVocabulary;
+	tags: string[];
+	verbDetail?: { infinitive: string; conjugationFamily: string };
+};
+
+/**
+ * Batch insert vocabulary items and return a map of greekText -> id
+ * Handles conflicts by fetching existing IDs in batch
+ */
+async function batchInsertVocab(
+	items: NewVocabulary[],
+): Promise<Map<string, number>> {
+	const resultMap = new Map<string, number>();
+	if (items.length === 0) return resultMap;
+
+	let insertedCount = 0;
+
+	// Insert in chunks to avoid SQLite variable limits
+	for (let i = 0; i < items.length; i += BATCH_SIZE) {
+		const batch = items.slice(i, i + BATCH_SIZE);
+
+		const inserted = await db
+			.insert(vocabulary)
+			.values(batch)
+			.onConflictDoNothing({ target: vocabulary.greekText })
+			.returning({ id: vocabulary.id, greekText: vocabulary.greekText });
+
+		for (const row of inserted) {
+			resultMap.set(row.greekText, row.id);
+		}
+		insertedCount += inserted.length;
+	}
+
+	// Batch-fetch IDs for items that already existed
+	const missingTexts = items
+		.map((item) => item.greekText)
+		.filter((text) => !resultMap.has(text));
+
+	if (missingTexts.length > 0) {
+		for (let i = 0; i < missingTexts.length; i += BATCH_SIZE) {
+			const batch = missingTexts.slice(i, i + BATCH_SIZE);
+			const existing = await db
+				.select({ id: vocabulary.id, greekText: vocabulary.greekText })
+				.from(vocabulary)
+				.where(inArray(vocabulary.greekText, batch));
+
+			for (const row of existing) {
+				resultMap.set(row.greekText, row.id);
+			}
+		}
+	}
+
+	const skippedCount = items.length - insertedCount;
+	console.log(`  → ${insertedCount} inserted, ${skippedCount} skipped`);
+
+	return resultMap;
+}
+
+/**
+ * Batch insert verb details
+ */
+async function batchInsertVerbDetails(details: VerbDetailRecord[]) {
+	if (details.length === 0) return;
+
+	for (let i = 0; i < details.length; i += BATCH_SIZE) {
+		const batch = details.slice(i, i + BATCH_SIZE);
+		await db
+			.insert(verbDetails)
+			.values(batch)
+			.onConflictDoNothing({ target: verbDetails.vocabId });
+	}
+}
+
+/**
+ * Process a category: collect items, batch insert, link tags
+ */
+async function processCategory(
+	categoryName: string,
+	items: VocabWithTags[],
+	tagMap: Map<string, number>,
+	vocabTagLinks: NewVocabularyTag[],
+): Promise<VerbDetailRecord[]> {
+	console.log(`Seeding ${categoryName}...`);
+
+	const vocabItems = items.map((item) => item.vocab);
+	const idMap = await batchInsertVocab(vocabItems);
+
+	const verbDetailsToInsert: VerbDetailRecord[] = [];
+
+	for (const item of items) {
+		const vocabId = idMap.get(item.vocab.greekText);
+		if (!vocabId) {
+			console.warn(`  Warning: Could not find ID for ${item.vocab.greekText}`);
+			continue;
+		}
+
+		// Link tags
+		for (const tagSlug of item.tags) {
+			const tagId = tagMap.get(tagSlug);
+			if (tagId) {
+				vocabTagLinks.push({ vocabularyId: vocabId, tagId });
+			}
+		}
+
+		// Collect verb details for batch insert
+		if (item.verbDetail) {
+			verbDetailsToInsert.push({
+				vocabId,
+				infinitive: item.verbDetail.infinitive,
+				conjugationFamily: item.verbDetail.conjugationFamily,
+			});
+		}
+	}
+
+	return verbDetailsToInsert;
+}
+
+async function seed() {
+	console.log("Seeding database (additive mode with batching)...\n");
+
+	// Upsert system tags
 	console.log("Upserting system tags...");
 	const tagValues = Object.values(SYSTEM_TAGS).map((tag) => ({
 		slug: tag.slug,
@@ -55,437 +181,261 @@ async function seed() {
 			set: { name: sql`excluded.name` },
 		})
 		.returning();
-	console.log(`Upserted ${insertedTags.length} system tags.`);
+	console.log(`Upserted ${insertedTags.length} system tags.\n`);
 
 	const tagMap = new Map(insertedTags.map((t) => [t.slug, t.id]));
-
-	// Track vocabulary IDs for tag linking
 	const vocabTagLinks: NewVocabularyTag[] = [];
-	let insertedCount = 0;
-	let skippedCount = 0;
+	const allVerbDetails: VerbDetailRecord[] = [];
 
-	// Insert vocabulary with conflict handling (skip if exists)
-	const insertVocab = async (vocab: NewVocabulary): Promise<number> => {
-		const [result] = await db
-			.insert(vocabulary)
-			.values(vocab)
-			.onConflictDoNothing({ target: vocabulary.greekText })
-			.returning({ id: vocabulary.id });
-
-		if (result) {
-			insertedCount++;
-			return result.id;
-		}
-
-		// Already existed - fetch existing ID
-		skippedCount++;
-		const [existing] = await db
-			.select({ id: vocabulary.id })
-			.from(vocabulary)
-			.where(eq(vocabulary.greekText, vocab.greekText));
-		if (!existing) {
-			throw new Error(`Failed to find existing vocab: ${vocab.greekText}`);
-		}
-		return existing.id;
+	// ============================================
+	// NOUNS
+	// ============================================
+	const themeTagMap: Record<string, string> = {
+		summer: "summer",
+		transport: "transport-vehicle",
+		timeOfDay: "time-of-day",
+		timeExpressions: "time-expression",
+		shopping: "shopping",
+		clothing: "clothing",
+		household: "household",
+		people: "people",
+		nature: "nature",
 	};
 
-	const linkTag = (vocabId: number, tagSlug: string) => {
-		const tagId = tagMap.get(tagSlug);
-		if (tagId) {
-			vocabTagLinks.push({ vocabularyId: vocabId, tagId: tagId });
-		}
-	};
-
-	// Seed nouns (with article derived from gender)
-	console.log("Seeding nouns...");
+	const nounItems: VocabWithTags[] = [];
 	for (const [theme, nouns] of Object.entries(NOUNS)) {
 		for (const noun of nouns) {
 			const displayText = formatNounWithArticle(noun.lemma, noun.gender);
-			const vocabId = await insertVocab({
-				greekText: displayText,
-				englishTranslation: noun.english,
-				wordType: "noun",
-				gender: noun.gender,
-				status: "processed",
-				metadata: "metadata" in noun ? noun.metadata : undefined,
-			});
+			const itemTags = ["noun"];
+			if (themeTagMap[theme]) itemTags.push(themeTagMap[theme]);
 
-			// Link to theme tag
-			const themeTagMap: Record<string, string> = {
-				summer: "summer",
-				transport: "transport-vehicle",
-				timeOfDay: "time-of-day",
-				timeExpressions: "time-expression",
-				shopping: "shopping",
-				clothing: "clothing",
-				household: "household",
-				people: "people",
-				nature: "nature",
-			};
-			if (themeTagMap[theme]) {
-				linkTag(vocabId, themeTagMap[theme]);
-			}
-			linkTag(vocabId, "noun");
+			nounItems.push({
+				vocab: {
+					greekText: displayText,
+					englishTranslation: noun.english,
+					wordType: "noun",
+					gender: noun.gender,
+					status: "processed",
+					metadata: "metadata" in noun ? noun.metadata : undefined,
+				},
+				tags: itemTags,
+			});
 		}
 	}
+	allVerbDetails.push(
+		...(await processCategory("nouns", nounItems, tagMap, vocabTagLinks)),
+	);
 
-	// Seed essential phrases (greetings, thank you, etc.)
-	console.log("Seeding essential phrases...");
-	for (const phrase of ESSENTIAL_PHRASES) {
-		const vocabId = await insertVocab({
-			greekText: phrase.text,
-			englishTranslation: phrase.english,
-			wordType: "phrase",
-			status: "processed",
-		});
-		linkTag(vocabId, "essential");
-		linkTag(vocabId, "phrase");
-	}
-
-	// Seed survival phrases (critical for getting by)
-	console.log("Seeding survival phrases...");
-	for (const phrase of SURVIVAL_PHRASES) {
-		const vocabId = await insertVocab({
-			greekText: phrase.text,
-			englishTranslation: phrase.english,
-			wordType: "phrase",
-			status: "processed",
-		});
-		linkTag(vocabId, "survival");
-		linkTag(vocabId, "phrase");
-	}
-
-	// Seed polite request phrases
-	console.log("Seeding request phrases...");
-	for (const phrase of REQUEST_PHRASES) {
-		const vocabId = await insertVocab({
-			greekText: phrase.text,
-			englishTranslation: phrase.english,
-			wordType: "phrase",
-			status: "processed",
-		});
-		linkTag(vocabId, "request");
-		linkTag(vocabId, "phrase");
-	}
-
-	// Seed days of the week
-	console.log("Seeding days of the week...");
-	for (const day of DAYS_OF_WEEK) {
-		const vocabId = await insertVocab({
-			greekText: day.text,
-			englishTranslation: day.english,
-			wordType: "noun",
-			status: "processed",
-		});
-		linkTag(vocabId, "days-of-week");
-		linkTag(vocabId, "noun");
-	}
-
-	// Seed months
-	console.log("Seeding months...");
-	for (const month of MONTHS) {
-		const vocabId = await insertVocab({
-			greekText: month.text,
-			englishTranslation: month.english,
-			wordType: "noun",
-			status: "processed",
-		});
-		linkTag(vocabId, "months");
-		linkTag(vocabId, "noun");
-	}
-
-	// Seed verbs
-	console.log("Seeding verbs...");
-	for (const verb of VERBS) {
-		const vocabId = await insertVocab({
+	// ============================================
+	// VERBS
+	// ============================================
+	const verbItems: VocabWithTags[] = VERBS.map((verb) => ({
+		vocab: {
 			greekText: verb.lemma,
 			englishTranslation: verb.english,
-			wordType: "verb",
-			status: "processed",
-		});
-		linkTag(vocabId, "verb");
+			wordType: "verb" as const,
+			status: "processed" as const,
+		},
+		tags: ["verb"],
+		verbDetail: {
+			infinitive: verb.lemma,
+			conjugationFamily: verb.conjugationFamily,
+		},
+	}));
+	allVerbDetails.push(
+		...(await processCategory("verbs", verbItems, tagMap, vocabTagLinks)),
+	);
 
-		await db
-			.insert(verbDetails)
-			.values({
-				vocabId: vocabId,
-				infinitive: verb.lemma,
-				conjugationFamily: verb.conjugationFamily,
-			})
-			.onConflictDoNothing({ target: verbDetails.vocabId });
+	// ============================================
+	// PHRASES (collected in bulk)
+	// ============================================
+	const phraseCategories: Array<{
+		name: string;
+		items: Array<{ text: string; english: string; metadata?: unknown }>;
+		tags: string[];
+	}> = [
+		{ name: "essential phrases", items: ESSENTIAL_PHRASES, tags: ["essential", "phrase"] },
+		{ name: "survival phrases", items: SURVIVAL_PHRASES, tags: ["survival", "phrase"] },
+		{ name: "request phrases", items: REQUEST_PHRASES, tags: ["request", "phrase"] },
+		{ name: "discourse fillers", items: DISCOURSE_FILLERS, tags: ["discourse-filler", "expression", "phrase"] },
+		{ name: "social phrases", items: SOCIAL_PHRASES, tags: ["social-phrase", "expression", "phrase"] },
+		{ name: "question words", items: QUESTION_WORDS, tags: ["question", "phrase"] },
+		{ name: "commands", items: COMMANDS, tags: ["command", "phrase"] },
+		{ name: "time phrases", items: TIME_PHRASES, tags: ["time-expression"] },
+		{ name: "name construction", items: NAME_CONSTRUCTION, tags: ["name-construction", "phrase"] },
+		{ name: "discourse markers", items: DISCOURSE_MARKERS, tags: ["discourse-markers", "phrase"] },
+		{ name: "common responses", items: COMMON_RESPONSES, tags: ["responses", "phrase"] },
+		{ name: "opinion phrases", items: OPINION_PHRASES, tags: ["opinions", "phrase"] },
+		{ name: "arriving phrases", items: ARRIVING_PHRASES, tags: ["conversation-arriving", "phrase"] },
+		{ name: "food phrases", items: FOOD_PHRASES, tags: ["conversation-food", "phrase"] },
+		{ name: "small talk phrases", items: SMALLTALK_PHRASES, tags: ["conversation-smalltalk", "phrase"] },
+	];
+
+	for (const category of phraseCategories) {
+		const items: VocabWithTags[] = category.items.map((phrase) => ({
+			vocab: {
+				greekText: phrase.text,
+				englishTranslation: phrase.english,
+				wordType: "phrase" as const,
+				status: "processed" as const,
+			},
+			tags: category.tags,
+		}));
+		await processCategory(category.name, items, tagMap, vocabTagLinks);
 	}
 
-	// Seed transport verbs/actions
-	console.log("Seeding transport actions...");
-	for (const action of TRANSPORT_VERBS) {
-		const wordType = action.english.startsWith("I ") ? "verb" : "phrase";
-		const vocabId = await insertVocab({
-			greekText: action.text,
-			englishTranslation: action.english,
-			wordType: wordType,
-			status: "processed",
-		});
-		linkTag(vocabId, "transport-action");
-		if (wordType === "verb") {
-			linkTag(vocabId, "verb");
-		}
-	}
-
-	// Seed frequency adverbs
-	console.log("Seeding frequency adverbs...");
-	for (const adverb of FREQUENCY_ADVERBS) {
-		const vocabId = await insertVocab({
-			greekText: adverb.lemma,
-			englishTranslation: adverb.english,
-			wordType: "adverb",
-			status: "processed",
-		});
-		linkTag(vocabId, "frequency");
-		linkTag(vocabId, "adverb");
-	}
-
-	// Seed position adverbs
-	console.log("Seeding position adverbs...");
-	for (const adverb of POSITION_ADVERBS) {
-		const vocabId = await insertVocab({
-			greekText: adverb.lemma,
-			englishTranslation: adverb.english,
-			wordType: "adverb",
-			status: "processed",
-		});
-		linkTag(vocabId, "position");
-		linkTag(vocabId, "adverb");
-	}
-
-	// Seed likes construction
-	console.log("Seeding likes construction...");
-	for (const like of LIKES_CONSTRUCTION.singular) {
-		const vocabId = await insertVocab({
-			greekText: like.text,
-			englishTranslation: like.english,
-			wordType: "phrase",
-			status: "processed",
-		});
-		linkTag(vocabId, "likes-singular");
-		linkTag(vocabId, "phrase");
-	}
-	for (const like of LIKES_CONSTRUCTION.plural) {
-		const vocabId = await insertVocab({
-			greekText: like.text,
-			englishTranslation: like.english,
-			wordType: "phrase",
-			status: "processed",
-		});
-		linkTag(vocabId, "likes-plural");
-		linkTag(vocabId, "phrase");
-	}
-
-	// Seed discourse fillers (semantic group)
-	console.log("Seeding discourse fillers...");
-	for (const expr of DISCOURSE_FILLERS) {
-		const vocabId = await insertVocab({
-			greekText: expr.text,
-			englishTranslation: expr.english,
-			wordType: "phrase",
-			status: "processed",
-		});
-		linkTag(vocabId, "discourse-filler");
-		linkTag(vocabId, "expression");
-		linkTag(vocabId, "phrase");
-	}
-
-	// Seed social phrases (semantic group)
-	console.log("Seeding social phrases...");
-	for (const expr of SOCIAL_PHRASES) {
-		const vocabId = await insertVocab({
-			greekText: expr.text,
-			englishTranslation: expr.english,
-			wordType: "phrase",
-			status: "processed",
-		});
-		linkTag(vocabId, "social-phrase");
-		linkTag(vocabId, "expression");
-		linkTag(vocabId, "phrase");
-	}
-
-	// Seed question words (separate from expressions)
-	console.log("Seeding question words...");
-	for (const q of QUESTION_WORDS) {
-		const vocabId = await insertVocab({
-			greekText: q.text,
-			englishTranslation: q.english,
-			wordType: "phrase",
-			status: "processed",
-		});
-		linkTag(vocabId, "question");
-		linkTag(vocabId, "phrase");
-	}
-
-	// Seed commands
-	console.log("Seeding commands...");
-	for (const cmd of COMMANDS) {
-		const vocabId = await insertVocab({
-			greekText: cmd.text,
-			englishTranslation: cmd.english,
-			wordType: "phrase",
-			status: "processed",
-		});
-		linkTag(vocabId, "command");
-		linkTag(vocabId, "phrase");
-	}
-
-	// Seed time phrases
-	console.log("Seeding time phrases...");
-	for (const phrase of TIME_PHRASES) {
-		const vocabId = await insertVocab({
+	// ============================================
+	// TIME-TELLING (with metadata)
+	// ============================================
+	const timeTellingItems: VocabWithTags[] = TIME_TELLING.map((phrase) => ({
+		vocab: {
 			greekText: phrase.text,
 			englishTranslation: phrase.english,
-			wordType: "phrase",
-			status: "processed",
-		});
-		linkTag(vocabId, "time-expression");
-	}
-
-	// Seed time-telling phrases
-	console.log("Seeding time-telling phrases...");
-	for (const phrase of TIME_TELLING) {
-		const vocabId = await insertVocab({
-			greekText: phrase.text,
-			englishTranslation: phrase.english,
-			wordType: "phrase",
-			status: "processed",
+			wordType: "phrase" as const,
+			status: "processed" as const,
 			metadata: phrase.metadata,
-		});
-		linkTag(vocabId, "time-telling");
-		linkTag(vocabId, "phrase");
-	}
+		},
+		tags: ["time-telling", "phrase"],
+	}));
+	await processCategory("time-telling phrases", timeTellingItems, tagMap, vocabTagLinks);
 
-	// Seed name construction (με λένε = my name is)
-	console.log("Seeding name construction...");
-	for (const name of NAME_CONSTRUCTION) {
-		const vocabId = await insertVocab({
-			greekText: name.text,
-			englishTranslation: name.english,
-			wordType: "phrase",
-			status: "processed",
-		});
-		linkTag(vocabId, "name-construction");
-		linkTag(vocabId, "phrase");
-	}
+	// ============================================
+	// DAYS & MONTHS
+	// ============================================
+	const dayItems: VocabWithTags[] = DAYS_OF_WEEK.map((day) => ({
+		vocab: {
+			greekText: day.text,
+			englishTranslation: day.english,
+			wordType: "noun" as const,
+			status: "processed" as const,
+		},
+		tags: ["days-of-week", "noun"],
+	}));
+	await processCategory("days of week", dayItems, tagMap, vocabTagLinks);
 
-	// Seed conversational phrases (from conversations.ts)
-	console.log("Seeding discourse markers...");
-	for (const phrase of DISCOURSE_MARKERS) {
-		const vocabId = await insertVocab({
-			greekText: phrase.text,
-			englishTranslation: phrase.english,
-			wordType: "phrase",
-			status: "processed",
-		});
-		linkTag(vocabId, "discourse-markers");
-		linkTag(vocabId, "phrase");
-	}
+	const monthItems: VocabWithTags[] = MONTHS.map((month) => ({
+		vocab: {
+			greekText: month.text,
+			englishTranslation: month.english,
+			wordType: "noun" as const,
+			status: "processed" as const,
+		},
+		tags: ["months", "noun"],
+	}));
+	await processCategory("months", monthItems, tagMap, vocabTagLinks);
 
-	console.log("Seeding common responses...");
-	for (const phrase of COMMON_RESPONSES) {
-		const vocabId = await insertVocab({
-			greekText: phrase.text,
-			englishTranslation: phrase.english,
-			wordType: "phrase",
-			status: "processed",
-		});
-		linkTag(vocabId, "responses");
-		linkTag(vocabId, "phrase");
-	}
+	// ============================================
+	// TRANSPORT VERBS/ACTIONS
+	// ============================================
+	const transportItems: VocabWithTags[] = TRANSPORT_VERBS.map((action) => {
+		const wordType = action.english.startsWith("I ") ? "verb" : "phrase";
+		const itemTags = ["transport-action"];
+		if (wordType === "verb") itemTags.push("verb");
+		return {
+			vocab: {
+				greekText: action.text,
+				englishTranslation: action.english,
+				wordType: wordType as "verb" | "phrase",
+				status: "processed" as const,
+			},
+			tags: itemTags,
+		};
+	});
+	await processCategory("transport actions", transportItems, tagMap, vocabTagLinks);
 
-	console.log("Seeding opinion phrases...");
-	for (const phrase of OPINION_PHRASES) {
-		const vocabId = await insertVocab({
-			greekText: phrase.text,
-			englishTranslation: phrase.english,
-			wordType: "phrase",
-			status: "processed",
-		});
-		linkTag(vocabId, "opinions");
-		linkTag(vocabId, "phrase");
-	}
+	// ============================================
+	// ADVERBS
+	// ============================================
+	const frequencyItems: VocabWithTags[] = FREQUENCY_ADVERBS.map((adverb) => ({
+		vocab: {
+			greekText: adverb.lemma,
+			englishTranslation: adverb.english,
+			wordType: "adverb" as const,
+			status: "processed" as const,
+		},
+		tags: ["frequency", "adverb"],
+	}));
+	await processCategory("frequency adverbs", frequencyItems, tagMap, vocabTagLinks);
 
-	console.log("Seeding arriving & leaving phrases...");
-	for (const phrase of ARRIVING_PHRASES) {
-		const vocabId = await insertVocab({
-			greekText: phrase.text,
-			englishTranslation: phrase.english,
-			wordType: "phrase",
-			status: "processed",
-		});
-		linkTag(vocabId, "conversation-arriving");
-		linkTag(vocabId, "phrase");
-	}
+	const positionItems: VocabWithTags[] = POSITION_ADVERBS.map((adverb) => ({
+		vocab: {
+			greekText: adverb.lemma,
+			englishTranslation: adverb.english,
+			wordType: "adverb" as const,
+			status: "processed" as const,
+		},
+		tags: ["position", "adverb"],
+	}));
+	await processCategory("position adverbs", positionItems, tagMap, vocabTagLinks);
 
-	console.log("Seeding food & hospitality phrases...");
-	for (const phrase of FOOD_PHRASES) {
-		const vocabId = await insertVocab({
-			greekText: phrase.text,
-			englishTranslation: phrase.english,
-			wordType: "phrase",
-			status: "processed",
-		});
-		linkTag(vocabId, "conversation-food");
-		linkTag(vocabId, "phrase");
-	}
+	// ============================================
+	// LIKES CONSTRUCTION
+	// ============================================
+	const likesSingularItems: VocabWithTags[] = LIKES_CONSTRUCTION.singular.map((like) => ({
+		vocab: {
+			greekText: like.text,
+			englishTranslation: like.english,
+			wordType: "phrase" as const,
+			status: "processed" as const,
+		},
+		tags: ["likes-singular", "phrase"],
+	}));
+	await processCategory("likes construction (singular)", likesSingularItems, tagMap, vocabTagLinks);
 
-	console.log("Seeding small talk phrases...");
-	for (const phrase of SMALLTALK_PHRASES) {
-		const vocabId = await insertVocab({
-			greekText: phrase.text,
-			englishTranslation: phrase.english,
-			wordType: "phrase",
-			status: "processed",
-		});
-		linkTag(vocabId, "conversation-smalltalk");
-		linkTag(vocabId, "phrase");
-	}
+	const likesPluralItems: VocabWithTags[] = LIKES_CONSTRUCTION.plural.map((like) => ({
+		vocab: {
+			greekText: like.text,
+			englishTranslation: like.english,
+			wordType: "phrase" as const,
+			status: "processed" as const,
+		},
+		tags: ["likes-plural", "phrase"],
+	}));
+	await processCategory("likes construction (plural)", likesPluralItems, tagMap, vocabTagLinks);
 
-	// Seed colors
-	console.log("Seeding colors...");
-	for (const color of COLORS) {
-		const vocabId = await insertVocab({
+	// ============================================
+	// COLORS & ADJECTIVES
+	// ============================================
+	const colorItems: VocabWithTags[] = COLORS.map((color) => ({
+		vocab: {
 			greekText: color.lemma,
 			englishTranslation: color.english,
-			wordType: "adjective",
-			status: "processed",
-		});
-		linkTag(vocabId, "color");
-		linkTag(vocabId, "adjective");
-	}
+			wordType: "adjective" as const,
+			status: "processed" as const,
+		},
+		tags: ["color", "adjective"],
+	}));
+	await processCategory("colors", colorItems, tagMap, vocabTagLinks);
 
-	// Seed adjectives
-	console.log("Seeding adjectives...");
-	for (const adj of ADJECTIVES) {
-		const vocabId = await insertVocab({
+	const adjectiveItems: VocabWithTags[] = ADJECTIVES.map((adj) => ({
+		vocab: {
 			greekText: adj.lemma,
 			englishTranslation: adj.english,
-			wordType: "adjective",
-			status: "processed",
-		});
-		linkTag(vocabId, "adjective");
-	}
+			wordType: "adjective" as const,
+			status: "processed" as const,
+		},
+		tags: ["adjective"],
+	}));
+	await processCategory("adjectives", adjectiveItems, tagMap, vocabTagLinks);
 
-	// Seed numbers
-	console.log("Seeding numbers...");
-	for (const num of NUMBERS) {
-		const vocabId = await insertVocab({
+	// ============================================
+	// NUMBERS
+	// ============================================
+	const numberItems: VocabWithTags[] = NUMBERS.map((num) => ({
+		vocab: {
 			greekText: num.lemma,
 			englishTranslation: String(num.value),
-			wordType: "noun",
-			status: "processed",
+			wordType: "noun" as const,
+			status: "processed" as const,
 			metadata: { numericValue: num.value },
-		});
-		linkTag(vocabId, "number");
-	}
+		},
+		tags: ["number"],
+	}));
+	await processCategory("numbers", numberItems, tagMap, vocabTagLinks);
 
-	// Seed daily patterns (grammar examples)
-	console.log("Seeding daily patterns...");
+	// ============================================
+	// DAILY PATTERNS
+	// ============================================
 	const patternTagMap: Record<string, string> = {
 		coffee: "daily-coffee",
 		house: "daily-house",
@@ -493,110 +443,137 @@ async function seed() {
 		family: "daily-family",
 	};
 
+	const patternItems: VocabWithTags[] = [];
 	for (const [category, patterns] of Object.entries(DAILY_PATTERNS)) {
 		if (!patterns) continue;
 		for (const pattern of patterns) {
-			const vocabId = await insertVocab({
-				greekText: pattern.greek,
-				englishTranslation: pattern.english,
-				wordType: "phrase",
-				status: "processed",
-				metadata: {
-					explanation: pattern.explanation,
-					whyThisCase: pattern.whyThisCase,
-				},
-			});
+			const itemTags: string[] = [];
 			const tagSlug = patternTagMap[category];
-			if (tagSlug) linkTag(vocabId, tagSlug);
+			if (tagSlug) itemTags.push(tagSlug);
+
+			patternItems.push({
+				vocab: {
+					greekText: pattern.greek,
+					englishTranslation: pattern.english,
+					wordType: "phrase",
+					status: "processed",
+					metadata: {
+						explanation: pattern.explanation,
+						whyThisCase: pattern.whyThisCase,
+					},
+				},
+				tags: itemTags,
+			});
 		}
 	}
+	await processCategory("daily patterns", patternItems, tagMap, vocabTagLinks);
 
-	// Seed lessons
-	console.log("Seeding lessons...");
+	// ============================================
+	// LESSONS
+	// ============================================
+	console.log("\nSeeding lessons...");
 	for (const [date, lesson] of Object.entries(LESSONS)) {
 		const lessonTag = `lesson-${date}`;
 		console.log(`  Lesson ${date}: ${lesson.meta.topic}`);
 
-		// Seed lesson verbs
+		const lessonItems: VocabWithTags[] = [];
+
+		// Lesson verbs
 		for (const verb of lesson.verbs) {
-			const vocabId = await insertVocab({
-				greekText: verb.lemma,
-				englishTranslation: verb.english,
-				wordType: "verb",
-				status: "processed",
-				metadata: { lessonDate: date },
-			});
-			linkTag(vocabId, "verb");
-			linkTag(vocabId, lessonTag);
-
-			await db
-				.insert(verbDetails)
-				.values({
-					vocabId: vocabId,
-					infinitive: verb.lemma,
-					conjugationFamily: verb.conjugationFamily,
-				})
-				.onConflictDoNothing({ target: verbDetails.vocabId });
-		}
-
-		// Seed lesson nouns
-		for (const noun of lesson.nouns) {
-			const displayText = formatNounWithArticle(noun.lemma, noun.gender);
-			const vocabId = await insertVocab({
-				greekText: displayText,
-				englishTranslation: noun.english,
-				wordType: "noun",
-				gender: noun.gender,
-				status: "processed",
-				metadata: { lessonDate: date },
-			});
-			linkTag(vocabId, "noun");
-			linkTag(vocabId, lessonTag);
-		}
-
-		// Seed lesson adverbs
-		for (const adverb of lesson.adverbs) {
-			const vocabId = await insertVocab({
-				greekText: adverb.lemma,
-				englishTranslation: adverb.english,
-				wordType: "adverb",
-				status: "processed",
-				metadata: { lessonDate: date },
-			});
-			linkTag(vocabId, "adverb");
-			linkTag(vocabId, lessonTag);
-		}
-
-		// Seed lesson adjectives
-		if ("adjectives" in lesson) {
-			for (const adj of lesson.adjectives) {
-				const vocabId = await insertVocab({
-					greekText: adj.lemma,
-					englishTranslation: adj.english,
-					wordType: "adjective",
+			lessonItems.push({
+				vocab: {
+					greekText: verb.lemma,
+					englishTranslation: verb.english,
+					wordType: "verb",
 					status: "processed",
 					metadata: { lessonDate: date },
+				},
+				tags: ["verb", lessonTag],
+				verbDetail: {
+					infinitive: verb.lemma,
+					conjugationFamily: verb.conjugationFamily,
+				},
+			});
+		}
+
+		// Lesson nouns
+		for (const noun of lesson.nouns) {
+			const displayText = formatNounWithArticle(noun.lemma, noun.gender);
+			lessonItems.push({
+				vocab: {
+					greekText: displayText,
+					englishTranslation: noun.english,
+					wordType: "noun",
+					gender: noun.gender,
+					status: "processed",
+					metadata: { lessonDate: date },
+				},
+				tags: ["noun", lessonTag],
+			});
+		}
+
+		// Lesson adverbs
+		for (const adverb of lesson.adverbs) {
+			lessonItems.push({
+				vocab: {
+					greekText: adverb.lemma,
+					englishTranslation: adverb.english,
+					wordType: "adverb",
+					status: "processed",
+					metadata: { lessonDate: date },
+				},
+				tags: ["adverb", lessonTag],
+			});
+		}
+
+		// Lesson adjectives
+		if ("adjectives" in lesson) {
+			for (const adj of lesson.adjectives) {
+				lessonItems.push({
+					vocab: {
+						greekText: adj.lemma,
+						englishTranslation: adj.english,
+						wordType: "adjective",
+						status: "processed",
+						metadata: { lessonDate: date },
+					},
+					tags: ["adjective", lessonTag],
 				});
-				linkTag(vocabId, "adjective");
-				linkTag(vocabId, lessonTag);
 			}
 		}
 
-		// Seed lesson phrases
+		// Lesson phrases
 		for (const phrase of lesson.phrases) {
-			const vocabId = await insertVocab({
-				greekText: phrase.text,
-				englishTranslation: phrase.english,
-				wordType: "phrase",
-				status: "processed",
-				metadata: { ...phrase.metadata, lessonDate: date },
+			lessonItems.push({
+				vocab: {
+					greekText: phrase.text,
+					englishTranslation: phrase.english,
+					wordType: "phrase",
+					status: "processed",
+					metadata: { ...phrase.metadata, lessonDate: date },
+				},
+				tags: ["phrase", lessonTag],
 			});
-			linkTag(vocabId, "phrase");
-			linkTag(vocabId, lessonTag);
 		}
+
+		const lessonVerbDetails = await processCategory(
+			`lesson ${date}`,
+			lessonItems,
+			tagMap,
+			vocabTagLinks,
+		);
+		allVerbDetails.push(...lessonVerbDetails);
 	}
 
-	// Insert vocabulary-tag links (with conflict handling)
+	// ============================================
+	// BATCH INSERT VERB DETAILS
+	// ============================================
+	console.log(`\nInserting ${allVerbDetails.length} verb details...`);
+	await batchInsertVerbDetails(allVerbDetails);
+
+	// ============================================
+	// BATCH INSERT TAG LINKS
+	// ============================================
 	console.log("Creating vocabulary-tag associations...");
 	if (vocabTagLinks.length > 0) {
 		const uniqueLinks = new Map<string, NewVocabularyTag>();
@@ -609,19 +586,14 @@ async function seed() {
 
 		const linksArray = Array.from(uniqueLinks.values());
 
-		// Use onConflictDoNothing to skip existing links
-		await db
-			.insert(vocabularyTags)
-			.values(linksArray)
-			.onConflictDoNothing();
+		for (let i = 0; i < linksArray.length; i += BATCH_SIZE) {
+			const batch = linksArray.slice(i, i + BATCH_SIZE);
+			await db.insert(vocabularyTags).values(batch).onConflictDoNothing();
+		}
 		console.log(`Processed ${linksArray.length} vocabulary-tag associations.`);
 	}
 
-	console.log(
-		`Vocabulary: ${insertedCount} inserted, ${skippedCount} skipped (already exist)`,
-	);
-
-	console.log("Seeding complete.");
+	console.log("\nSeeding complete.");
 	process.exit(0);
 }
 
