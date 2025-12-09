@@ -13,14 +13,18 @@ import {
 	TrendingUp,
 	MapPin,
 	Lightbulb,
+	Package,
+	Languages,
+	BookOpen,
 } from "lucide-react";
 import {
 	Card,
 	MonoText,
-	KeyInsight,
 	CollapsibleSection,
 	CategoryCard,
 	ParadigmTable,
+	TabHero,
+	KeyInsight,
 } from "@/components";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
@@ -124,6 +128,21 @@ const NounSection: React.FC<{
 
 const NounsTab: React.FC<{ data: VocabularyLoaderData }> = ({ data }) => (
 	<div className="space-y-6">
+		<TabHero
+			title="Nouns organized by everyday life"
+			greekPhrase="ο / η / το"
+			colorScheme="ocean"
+			icon={<Package size={18} />}
+		>
+			Browse vocabulary by category. Each noun shows its article, which tells you
+			the gender you need to match.
+		</TabHero>
+
+		<KeyInsight title="Endings hint at gender">
+			Most nouns ending in -ος are masculine, -η/-α are feminine, and -ο/-ι/-μα
+			are neuter. The article confirms it: ο (m), η (f), το (n).
+		</KeyInsight>
+
 		<Alert variant="info" className="bg-stone-50">
 			<AlertDescription className="text-stone-700">
 				<strong>Gender color key:</strong>{" "}
@@ -204,10 +223,20 @@ const VerbList: React.FC<{
 
 const VerbsTab: React.FC<{ data: VocabularyLoaderData }> = ({ data }) => (
 	<div className="space-y-6">
-		<KeyInsight title="Verb conjugation patterns">
-			Greek verbs follow predictable patterns. Learn one pattern and you can
-			conjugate all verbs in that group. The endings change based on person (I,
-			you, he/she) and number (singular, plural).
+		<TabHero
+			title="Browse verbs by conjugation family"
+			greekPhrase="κάνω, μιλάω, έρχομαι"
+			colorScheme="olive"
+			icon={<Languages size={18} />}
+		>
+			Verbs grouped by how they conjugate. If you know one verb in a family, you
+			know them all.
+		</TabHero>
+
+		<KeyInsight title="Three patterns cover almost everything">
+			Greek verbs follow predictable patterns based on their ending: -ω (active),
+			-άω/-ώ (contracted), and -μαι (deponent). Learn one example from each group
+			and you can conjugate thousands of verbs.
 		</KeyInsight>
 
 		<div className="p-3 bg-ocean-100 rounded-lg border border-ocean-300 flex items-center justify-between">
@@ -420,6 +449,16 @@ const ReferenceTab: React.FC<{ data: VocabularyLoaderData }> = ({ data }) => {
 
 	return (
 		<div className="space-y-6">
+			<TabHero
+				title="Quick reference essentials"
+				greekPhrase="ένα, δύο, τρία..."
+				colorScheme="honey"
+				icon={<BookOpen size={18} />}
+			>
+				Numbers, colors, times, and position words — the building blocks you'll
+				need constantly in everyday Greek.
+			</TabHero>
+
 			<Card
 				variant="bordered"
 				padding="lg"
