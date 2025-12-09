@@ -15,6 +15,7 @@ import {
 	Clock,
 	UserCircle,
 	HelpCircle,
+	Blocks,
 } from "lucide-react";
 import {
 	Card,
@@ -22,6 +23,7 @@ import {
 	CollapsibleSection,
 	CategoryCard,
 	QuickTest,
+	TabHero,
 } from "@/components";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import type { PhrasesLoaderData, PhraseItem } from "./shared";
@@ -63,6 +65,17 @@ const SurvivalTab: React.FC<{ data: PhrasesLoaderData }> = ({ data }) => {
 
 	return (
 		<div className="space-y-6">
+			<TabHero
+				title="Start with the basics"
+				greekPhrase="Γεια σας!"
+				colorScheme="honey"
+				icon={<Sparkles size={18} />}
+			>
+				These phrases will get you through most situations. Practice them until
+				they're automatic — when someone says "Γεια σας", your response should
+				be instant.
+			</TabHero>
+
 			<CategoryCard
 				title="Essential Greetings"
 				subtitle="The phrases you'll use every single day"
@@ -92,18 +105,6 @@ const SurvivalTab: React.FC<{ data: PhrasesLoaderData }> = ({ data }) => {
 					))}
 				</PhraseSection>
 			)}
-
-			<div className="p-4 bg-ocean-50 rounded-lg border border-ocean-200">
-				<h4 className="font-semibold text-ocean-text mb-2 flex items-center gap-2">
-					<Sparkles size={16} />
-					Learning Tip
-				</h4>
-				<p className="text-sm text-stone-600">
-					These phrases will get you through most situations. Practice them
-					until they're automatic - when someone says "Γεια σας", your response
-					should be instant. Listen for these phrases everywhere you go.
-				</p>
-			</div>
 		</div>
 	);
 };
@@ -114,6 +115,16 @@ const ResponsesTab: React.FC<{ data: PhrasesLoaderData }> = ({ data }) => {
 
 	return (
 		<div className="space-y-6">
+			<TabHero
+				title="Keep the conversation flowing"
+				greekPhrase="Ναι, βέβαια!"
+				colorScheme="terracotta"
+				icon={<MessageCircle size={18} />}
+			>
+				Quick responses that show you're following along. These short phrases
+				buy you time while you process and keep the conversation natural.
+			</TabHero>
+
 			<PhraseSection
 				title="Common Responses"
 				icon={<MessageCircle size={20} />}
@@ -153,12 +164,15 @@ const RequestsTab: React.FC<{ data: PhrasesLoaderData }> = ({ data }) => {
 
 	return (
 		<div className="space-y-6">
-			<Alert variant="info">
-				<AlertDescription>
-					<strong>Tip:</strong> Adding "παρακαλώ" (please) to any request makes
-					it more polite. Greeks appreciate the effort!
-				</AlertDescription>
-			</Alert>
+			<TabHero
+				title="Ask politely, get results"
+				greekPhrase="Παρακαλώ..."
+				colorScheme="olive"
+				icon={<Hand size={18} />}
+			>
+				Adding "παρακαλώ" (please) to any request makes it more polite. Greeks
+				appreciate the effort — politeness goes a long way!
+			</TabHero>
 
 			{requests.length > 0 && (
 				<PhraseSection
@@ -201,6 +215,16 @@ const OpinionsTab: React.FC<{ data: PhrasesLoaderData }> = ({ data }) => {
 
 	return (
 		<div className="space-y-6">
+			<TabHero
+				title="Express yourself"
+				greekPhrase="Νομίζω ότι..."
+				colorScheme="terracotta"
+				icon={<Heart size={18} />}
+			>
+				Share your thoughts and feelings in Greek. These phrases help you
+				participate in conversations beyond basic exchanges.
+			</TabHero>
+
 			<PhraseSection
 				title="Opinions & Feelings"
 				icon={<Heart size={20} />}
@@ -224,13 +248,15 @@ const ConnectorsTab: React.FC<{ data: PhrasesLoaderData }> = ({ data }) => {
 
 	return (
 		<div className="space-y-6">
-			<Alert variant="info">
-				<AlertDescription>
-					<strong>Why these matter:</strong> Connectors are the glue of natural
-					speech. Greeks use these constantly - mastering them will make your
-					Greek sound much more fluent.
-				</AlertDescription>
-			</Alert>
+			<TabHero
+				title="The glue of natural speech"
+				greekPhrase="Λοιπόν..."
+				colorScheme="ocean"
+				icon={<Link2 size={18} />}
+			>
+				Greeks use connectors constantly — mastering them will make your Greek
+				sound much more fluent. These small words hold conversations together.
+			</TabHero>
 
 			{discourseMarkers.length > 0 && (
 				<PhraseSection
@@ -349,6 +375,16 @@ const TimeTab: React.FC<{ data: PhrasesLoaderData }> = ({ data }) => {
 
 	return (
 		<div className="space-y-6">
+			<TabHero
+				title="Master time expressions"
+				greekPhrase="Τι ώρα είναι;"
+				colorScheme="ocean"
+				icon={<Clock size={18} />}
+			>
+				Days, months, and telling time — essential for making plans, scheduling,
+				and understanding when things happen.
+			</TabHero>
+
 			<div className="grid md:grid-cols-2 gap-4">
 				{daysOfWeek.length > 0 && (
 					<PhraseSection
@@ -464,6 +500,17 @@ const ConstructionsTab: React.FC<{ data: PhrasesLoaderData }> = ({ data }) => {
 
 	return (
 		<div className="space-y-6">
+			<TabHero
+				title="Understand Greek sentence patterns"
+				greekPhrase="Μου αρέσει..."
+				colorScheme="honey"
+				icon={<Blocks size={18} />}
+			>
+				Some Greek constructions work differently than English. Learn these
+				patterns and you'll understand why "I like coffee" becomes "Coffee
+				pleases me."
+			</TabHero>
+
 			<ParadigmCard
 				title="Likes Construction"
 				subtitle="μου αρέσει / αρέσουν"

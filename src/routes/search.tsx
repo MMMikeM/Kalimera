@@ -1,8 +1,8 @@
 import type { Route } from "./+types/search";
 import { useState } from "react";
-import { MonoText, SearchInput } from "../components";
+import { Search } from "lucide-react";
+import { MonoText, SearchInput, TabHero } from "../components";
 import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { cn } from "@/lib/utils";
 import {
 	searchVocabulary,
@@ -53,12 +53,15 @@ export default function SearchRoute({ loaderData }: Route.ComponentProps) {
 
 	return (
 		<div className="space-y-6">
-			<Alert variant="purple">
-				<AlertTitle>Quick Lookup</AlertTitle>
-				<AlertDescription>
-					Search Greek or English words from your materials.
-				</AlertDescription>
-			</Alert>
+			<TabHero
+				title="Quick Lookup"
+				greekPhrase="Ψάξε!"
+				colorScheme="ocean"
+				icon={<Search size={18} />}
+			>
+				Search Greek or English words from your vocabulary. Find what you need
+				fast — type in either language to find matches.
+			</TabHero>
 
 			<SearchInput
 				placeholder="Search Greek, English, or tags..."
