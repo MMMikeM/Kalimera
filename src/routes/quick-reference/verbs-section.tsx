@@ -363,12 +363,12 @@ export const VerbsSection: React.FC = () => (
 					The most common Greek verb. Memorize it first — you'll use it in every
 					conversation.
 				</p>
-				<div className="bg-white rounded-lg p-4 border border-santorini-200">
+				<div className="bg-white rounded-lg p-4 border border-ocean-200">
 					<ParadigmTable
 						infinitive={eimai.infinitive}
 						meaning={eimai.meaning}
 						forms={eimai.forms}
-						formClassName="text-santorini-text font-semibold"
+						formClassName="text-ocean-text font-semibold"
 					/>
 					{eimai.note && (
 						<p className="mt-3 text-sm text-stone-600 italic border-t border-stone-100 pt-2">

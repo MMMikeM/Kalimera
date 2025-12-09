@@ -336,8 +336,8 @@ const TAB_COLORS = {
 		icon: "text-honey",
 	},
 	vocabulary: {
-		active: "border-b-2 border-b-santorini text-santorini",
-		icon: "text-santorini",
+		active: "border-b-2 border-b-ocean text-ocean",
+		icon: "text-ocean",
 	},
 	review: {
 		active: "border-b-2 border-b-terracotta text-terracotta",

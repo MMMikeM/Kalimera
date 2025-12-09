@@ -459,7 +459,7 @@ export const AgreementSection: React.FC = () => {
 								, you can always include the -ν. Native speakers sometimes drop
 								it, but keeping it is never wrong.
 							</p>
-							<div className="mt-2 p-2 bg-white rounded border border-santorini-200">
+							<div className="mt-2 p-2 bg-white rounded border border-ocean-200">
 								<div className="text-stone-600">
 									<MonoText variant="greek" size="sm">
 										τον φίλο

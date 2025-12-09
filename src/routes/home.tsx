@@ -93,7 +93,7 @@ const PathCard = ({
 				{title}
 			</h3>
 			<p className="text-slate text-sm leading-relaxed mb-4">{description}</p>
-			<div className="inline-flex items-center gap-1 text-sm font-medium text-santorini opacity-0 group-hover:opacity-100 transition-opacity">
+			<div className="inline-flex items-center gap-1 text-sm font-medium text-terracotta opacity-0 group-hover:opacity-100 transition-opacity">
 				Explore{" "}
 				<ArrowRight
 					size={14}

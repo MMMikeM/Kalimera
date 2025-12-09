@@ -9,7 +9,6 @@ export type CollapsibleColorScheme =
 	| "ocean"
 	| "olive"
 	| "terracotta"
-	| "santorini"
 	| "navy"
 	| "default";
 
@@ -54,13 +53,6 @@ const colorMap: Record<
 		border: "border-terracotta-400",
 		text: "text-terracotta-text",
 		icon: "text-terracotta",
-	},
-	santorini: {
-		bg: "bg-santorini-100",
-		hover: "hover:bg-santorini-200",
-		border: "border-santorini-400",
-		text: "text-santorini-text",
-		icon: "text-santorini",
 	},
 	navy: {
 		bg: "bg-navy-100",

@@ -90,11 +90,10 @@ These colors fail WCAG AA for body text. Use only for borders, icons, large text
 
 | Token | Hex | Contrast | Use |
 |-------|-----|----------|-----|
-| `terracotta` | `#C4663F` | 3.9:1 | Primary actions, emphasis |
+| `terracotta` | `#C4663F` | 3.9:1 | Primary actions, emphasis, interactive |
 | `olive` | `#6B7B5C` | 4.2:1 | Nature, connection |
-| `ocean` | `#4A7C8F` | 4.1:1 | Stability, calm |
+| `ocean` | `#4A7C8F` | 4.1:1 | Stability, calm, informational |
 | `honey` | `#D4A853` | 3.2:1 | Highlights, hints |
-| `santorini` | `#02B8D9` | 3.1:1 | Links, interactive |
 | `navy` | `#3B5478` | 5.8:1 | Headings, scholarly |
 | `slate` | `#66817C` | 4.0:1 | Secondary accents |
 
@@ -108,7 +107,6 @@ Use these for any text content. 10:1+ contrast on both cream and tinted backgrou
 | `olive-text` | `#1F2A18` |
 | `ocean-text` | `#14333F` |
 | `honey-text` | `#4A3508` |
-| `santorini-text` | `#084A52` |
 | `navy-text` | `#1A2838` |
 | `slate-text` | `#1A2D2A` |
 
@@ -128,8 +126,8 @@ Use these for categorizing content (cards, sections, conversation types):
   <h3 className="situation-terracotta-text">Warm Section</h3>
 </div>
 
-<div className="situation-santorini rounded-lg p-4 border">
-  <h3 className="situation-santorini-text">Interactive Section</h3>
+<div className="situation-ocean rounded-lg p-4 border">
+  <h3 className="situation-ocean-text">Informational Section</h3>
 </div>
 
 <div className="situation-navy rounded-lg p-4 border">
@@ -137,7 +135,7 @@ Use these for categorizing content (cards, sections, conversation types):
 </div>
 ```
 
-Available: `situation-{terracotta|olive|ocean|honey|santorini|navy|slate}`
+Available: `situation-{terracotta|olive|ocean|honey|navy|slate}`
 
 ### Grammar Semantic Colors
 
@@ -229,7 +227,7 @@ When working on Quick Reference pages, prefer these shared components:
 </KeyInsight>
 ```
 
-- Santorini-colored prominent callout
+- Ocean-colored prominent callout
 - Use for "most important thing to know"
 
 ### `CollapsibleSection`
@@ -240,7 +238,7 @@ When working on Quick Reference pages, prefer these shared components:
 </CollapsibleSection>
 ```
 
-- Color schemes: honey, ocean, olive, terracotta, santorini, navy, default
+- Color schemes: honey, ocean, olive, terracotta, navy, default
 - Includes focus states for accessibility
 
 ### `QuickTest`
@@ -293,8 +291,8 @@ When working on Quick Reference pages, prefer these shared components:
 |---------|-------------|
 | Section h2/h3 headings | `text-navy-text` |
 | Subtitles/descriptions | `text-slate-text` |
-| Interactive (collapsibles, links) | `text-santorini-text` |
-| Key insight callouts | `bg-santorini-50`, `border-santorini-300` |
+| Interactive (collapsibles, links) | `text-terracotta` |
+| Key insight callouts | `bg-ocean-100`, `border-ocean-400` |
 | Tips and self-tests | `bg-honey-50`, `border-honey-300` |
 | Decorative icons | Base color (e.g., `text-honey`) |
 | Icon labels/text | `-text` variant (e.g., `text-honey-text`) |
