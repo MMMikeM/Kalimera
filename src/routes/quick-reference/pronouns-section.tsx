@@ -15,6 +15,7 @@ import {
 	MonoText,
 	CategoryCard,
 	CollapsibleSection,
+	KeyInsight,
 } from "../../components";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { PronounDecisionGuide } from "./pronoun-decision-guide";
@@ -213,13 +214,28 @@ export const PronounsSection: React.FC = () => {
 				</CategoryCard>
 			</div>
 
-			{/* Double object pattern - with visual contrast */}
+			{/* Connection to cases - NOW it makes sense after seeing the pronouns */}
+			<KeyInsight title="Pronouns Show Case in Action!">
+				Object pronouns (
+				<MonoText variant="greek" size="sm">
+					με, σε, τον
+				</MonoText>
+				) are <strong>accusative</strong> — the case for "WHOM/WHAT do I [verb]?"
+				Possessive pronouns (
+				<MonoText variant="greek" size="sm">
+					μου, σου, του
+				</MonoText>
+				) are <strong>genitive</strong> — the case for "WHOSE?" You're already
+				using cases every time you use a pronoun!
+			</KeyInsight>
+
+			{/* Double object pattern - neutral styling */}
 			<Card
 				variant="bordered"
 				padding="md"
-				className="bg-ocean-50 border-ocean-300"
+				className="bg-white border-stone-200"
 			>
-				<h4 className="font-bold text-ocean-text mb-1">
+				<h4 className="font-bold text-navy-text mb-1">
 					{PRONOUN_PATTERNS.doubleObject.title}
 				</h4>
 				<p className="text-sm text-stone-600 mb-4">
@@ -227,7 +243,7 @@ export const PronounsSection: React.FC = () => {
 				</p>
 
 				{/* Visual contrast */}
-				<div className="mb-4 p-3 bg-white rounded-lg border border-ocean-300 space-y-1 text-sm">
+				<div className="mb-4 p-3 bg-stone-50 rounded-lg border border-stone-200 space-y-1 text-sm">
 					<div className="flex items-center gap-2">
 						<span className="text-stone-600 w-16">English:</span>
 						<span className="text-stone-700">
@@ -250,7 +266,7 @@ export const PronounsSection: React.FC = () => {
 					{PRONOUN_PATTERNS.doubleObject.examples.map((ex) => (
 						<div
 							key={ex.greek}
-							className="px-3 py-2 bg-white rounded-lg border border-ocean-300"
+							className="px-3 py-2 bg-stone-50 rounded-lg border border-stone-200"
 						>
 							<MonoText variant="highlighted">{ex.greek}</MonoText>
 							<span className="text-stone-600 ml-2 text-sm">
@@ -264,13 +280,13 @@ export const PronounsSection: React.FC = () => {
 			{/* Common Phrases - Collapsible */}
 			<CollapsibleSection
 				title="Common Phrases with Pronouns"
-				colorScheme="santorini"
+				colorScheme="default"
 				defaultOpen={false}
 			>
 				<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
 					{Object.entries(phraseGroups).map(([category, phrases]) => (
 						<div key={category}>
-							<h4 className="text-sm font-semibold text-stone-600 uppercase tracking-wide mb-2">
+							<h4 className="text-sm font-medium text-slate-text mb-2">
 								{CATEGORY_LABELS[category] || category}
 							</h4>
 							<div className="space-y-1">
@@ -282,7 +298,7 @@ export const PronounsSection: React.FC = () => {
 										<MonoText
 											variant="greek"
 											size="sm"
-											className="text-santorini-text font-medium"
+											className="text-stone-700 font-medium"
 										>
 											{phrase.greek}
 										</MonoText>
