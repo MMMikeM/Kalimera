@@ -16,23 +16,13 @@ export interface DialogueLine {
 
 export type ColorScheme = "olive" | "terracotta" | "ocean" | "honey";
 
-const colorSchemeStyles: Record<ColorScheme, { you: string; other: string }> = {
-	olive: {
-		you: "bg-olive-100 border-l-4 border-olive-400",
-		other: "bg-stone-100 border-l-4 border-stone-300",
-	},
-	terracotta: {
-		you: "bg-terracotta-100 border-l-4 border-terracotta-400",
-		other: "bg-stone-100 border-l-4 border-stone-300",
-	},
-	ocean: {
-		you: "bg-ocean-100 border-l-4 border-ocean-400",
-		other: "bg-stone-100 border-l-4 border-stone-300",
-	},
-	honey: {
-		you: "bg-honey-100 border-l-4 border-honey-400",
-		other: "bg-stone-100 border-l-4 border-stone-300",
-	},
+const speakerBubbleStyles: Record<SpeakerRole, string> = {
+	you: "bg-navy-100 border-r-4 border-navy-500",
+	host: "bg-stone-50 border-l-4 border-stone-300",
+	friend: "bg-stone-50 border-l-4 border-stone-300",
+	waiter: "bg-stone-50 border-l-4 border-stone-300",
+	shopkeeper: "bg-stone-50 border-l-4 border-stone-300",
+	stranger: "bg-stone-50 border-l-4 border-stone-300",
 };
 
 interface DialogueExchangeProps {
@@ -76,11 +66,10 @@ const RevealableText: React.FC<RevealableTextProps> = ({
 
 export const DialogueExchange: React.FC<DialogueExchangeProps> = ({
 	lines,
-	colorScheme = "ocean",
+	colorScheme: _colorScheme,
 	mode = "read",
 	className,
 }) => {
-	const styles = colorSchemeStyles[colorScheme];
 	const [revealedLines, setRevealedLines] = useState<Set<number>>(new Set());
 
 	const revealLine = (idx: number) => {
@@ -116,9 +105,8 @@ export const DialogueExchange: React.FC<DialogueExchangeProps> = ({
 					<div
 						className={cn(
 							"max-w-[85%] p-3 rounded-lg",
-							line.speaker === "you"
-								? `${styles.you} rounded-br-none`
-								: `${styles.other} rounded-bl-none`,
+							speakerBubbleStyles[line.speaker],
+							line.speaker === "you" ? "rounded-br-none" : "rounded-bl-none",
 						)}
 					>
 						<SpeakerBadge role={line.speaker} className="mb-2" />
