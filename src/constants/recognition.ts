@@ -48,24 +48,34 @@ export const CASE_RECOGNITION = {
 		{
 			question: "WHO does it?",
 			answer: "Nominative",
-			example: "ο άντρας τρέχει",
+			example: "ο Γιάννης τρέχει",
+			translation: "Giannis runs",
+			highlight: "ο Γιάννης",
 		},
 		{
-			question: "WHAT/WHERE to?",
+			question: "WHOM/WHAT do I [verb]?",
 			answer: "Accusative",
-			example: "βλέπω τον άντρα",
+			example: "βλέπω τον Γιάννη",
+			translation: "I see Giannis",
+			highlight: "τον Γιάννη",
 		},
 		{
 			question: "WHOSE is it?",
 			answer: "Genitive",
-			example: "το σπίτι του άντρα",
-		},
-		{
-			question: "Am I calling someone?",
-			answer: "Vocative",
-			example: "Νίκο! Έλα εδώ!",
+			example: "το σπίτι του Γιάννη",
+			translation: "Giannis's house",
+			highlight: "του Γιάννη",
 		},
 	],
+	// Vocative is less common - kept separate for progressive disclosure
+	vocativeRule: {
+		question: "Calling someone?",
+		answer: "Vocative",
+		example: "Γιάννη! Έλα!",
+		translation: "Giannis! Come!",
+		highlight: "Γιάννη",
+		note: "Names/nouns change when calling someone directly",
+	},
 };
 
 // Common mistakes and corrections

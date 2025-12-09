@@ -1,4 +1,6 @@
 import type { Route } from "./+types/$tab";
+import { Users, BookOpen, MapPin, Zap } from "lucide-react";
+import { TabHero } from "@/components";
 import { AgreementSection, MovableNuSection } from "./agreement-section";
 import { CasesSection } from "./cases-section";
 import { PronounsSection } from "./pronouns-section";
@@ -24,6 +26,15 @@ export function loader({ params }: Route.LoaderArgs) {
 function CasesPronounsTab() {
 	return (
 		<div className="space-y-8">
+			<TabHero
+				title="The foundation of Greek grammar"
+				greekPhrase="Ποιος; Τι; Ποιου; — Who? What? Whose?"
+				colorScheme="stone"
+				icon={<Users size={18} />}
+			>
+				Cases show a word's role in a sentence. Pronouns are where you'll use
+				them most — master these and cases click into place.
+			</TabHero>
 			<CasesSection />
 			<PronounsSection />
 		</div>
@@ -33,8 +44,52 @@ function CasesPronounsTab() {
 function NounsArticlesTab() {
 	return (
 		<div className="space-y-12">
+			<TabHero
+				title="Articles and nouns work together"
+				greekPhrase="ο, η, το → τον, την, το"
+				colorScheme="olive"
+				icon={<BookOpen size={18} />}
+			>
+				Greek articles change to match their noun's gender, case, and number.
+				Once you see the pattern, it becomes predictable.
+			</TabHero>
 			<AgreementSection />
 			<MovableNuSection />
+		</div>
+	);
+}
+
+function PrepositionsTab() {
+	return (
+		<div className="space-y-8">
+			<TabHero
+				title="Connect words and ideas"
+				greekPhrase="σε, από, για, με"
+				colorScheme="terracotta"
+				icon={<MapPin size={18} />}
+			>
+				Prepositions show relationships — location, direction, purpose. The big
+				four (σε, από, για, με) cover most situations.
+			</TabHero>
+			<PrepositionsSection />
+		</div>
+	);
+}
+
+function VerbsTab() {
+	return (
+		<div className="space-y-8">
+			<TabHero
+				title="Action words that tell the whole story"
+				greekPhrase="κάνω, κάνεις, κάνει..."
+				colorScheme="honey"
+				icon={<Zap size={18} />}
+			>
+				Greek verb endings show who's doing the action — you often don't need
+				separate pronouns. Learn three patterns and conjugate thousands of
+				verbs.
+			</TabHero>
+			<VerbsSection />
 		</div>
 	);
 }
@@ -48,9 +103,9 @@ export default function TabRoute({ loaderData }: Route.ComponentProps) {
 		case "nouns-articles":
 			return <NounsArticlesTab />;
 		case "prepositions":
-			return <PrepositionsSection />;
+			return <PrepositionsTab />;
 		case "verbs":
-			return <VerbsSection />;
+			return <VerbsTab />;
 		default:
 			return null;
 	}
