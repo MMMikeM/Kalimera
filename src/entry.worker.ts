@@ -1,6 +1,11 @@
 /// <reference types="@cloudflare/workers-types" />
 import { createRequestHandler } from "react-router";
-import { createDb, type CloudflareEnv } from "./db/client.cloudflare";
+import { createDb, runWithDb } from "./db";
+
+type CloudflareEnv = {
+	TURSO_DATABASE_URL: string;
+	TURSO_AUTH_TOKEN?: string;
+};
 
 declare module "react-router" {
 	interface AppLoadContext {
@@ -24,9 +29,11 @@ export default {
 		ctx: ExecutionContext
 	): Promise<Response> {
 		const db = createDb(env);
-		return requestHandler(request, {
-			db,
-			cloudflare: { env, ctx },
-		});
+		return runWithDb(db, () =>
+			requestHandler(request, {
+				db,
+				cloudflare: { env, ctx },
+			})
+		);
 	},
 };
