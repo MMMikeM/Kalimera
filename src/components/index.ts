@@ -52,3 +52,5 @@ export { ConversationModeToggle } from "./ConversationModeToggle";
 export type { ConversationHeroProps } from "./ConversationHero";
 export { ConversationHero } from "./ConversationHero";
 export { ParadigmHint } from "./ParadigmHint";
+export type { TabHeroProps, TabHeroColorScheme } from "./TabHero";
+export { TabHero } from "./TabHero";
