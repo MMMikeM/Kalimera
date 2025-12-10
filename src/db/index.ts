@@ -1,9 +1,13 @@
-import { drizzle } from "drizzle-orm/libsql";
-import { createClient } from "@libsql/client/web";
+import { drizzle } from "drizzle-orm/libsql/web";
+import { createClient, type Client } from "@libsql/client/web";
 import { AsyncLocalStorage } from "node:async_hooks";
-import * as schema from "./schema";
+import { relations } from "./relations";
 
-type DbClient = ReturnType<typeof drizzle<typeof schema>>;
+// Helper to create a typed db instance
+const createTypedDb = (client: Client) =>
+	drizzle({ client, relations });
+
+type DbClient = ReturnType<typeof createTypedDb>;
 
 // AsyncLocalStorage to hold the db instance per request
 const dbStorage = new AsyncLocalStorage<DbClient>();
@@ -22,7 +26,7 @@ export const createDb = (env: {
 		url: env.TURSO_DATABASE_URL,
 		authToken: env.TURSO_AUTH_TOKEN,
 	});
-	return drizzle(client, { schema });
+	return createTypedDb(client);
 };
 
 // Get db from async context, falling back to process.env for local dev/scripts
@@ -36,12 +40,15 @@ const getDb = (): DbClient => {
 		url,
 		authToken: process.env.TURSO_AUTH_TOKEN,
 	});
-	return drizzle(client, { schema });
+	return createTypedDb(client);
 };
 
 // Proxy that lazily resolves to the correct db instance
-export const db = new Proxy({} as DbClient, {
-	get(_, prop) {
-		return getDb()[prop as keyof DbClient];
+// The explicit handler typing ensures db.query is properly typed
+const dbHandler: ProxyHandler<DbClient> = {
+	get(_, prop: keyof DbClient) {
+		return getDb()[prop];
 	},
-});
+};
+
+export const db: DbClient = new Proxy({} as DbClient, dbHandler);
