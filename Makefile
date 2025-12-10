@@ -10,21 +10,25 @@ build:
 preview:
 	pnpm preview
 
-# Local database (Docker libsql-server)
+# Local database (Docker libsql-server on port 8080)
+# Uses fallback in drizzle.config.ts when TURSO_DATABASE_URL is not set
+# Note: Uses generate + migrate to avoid transaction bug with db:push and PRAGMA foreign_keys
 db-push:
-	TURSO_DATABASE_URL=http://127.0.0.1:8080 pnpm db:push
+	pnpm drizzle-kit generate && pnpm drizzle-kit migrate
 
 db-seed:
-	TURSO_DATABASE_URL=http://127.0.0.1:8080 pnpm db:seed
+	pnpm db:seed
 
 db-setup: db-push db-seed
 
 db-studio:
-	TURSO_DATABASE_URL=http://127.0.0.1:8080 pnpm db:studio
+	pnpm db:studio
 
 # Production database (Turso Cloud - loads from .env)
+# Note: Uses generate + migrate to avoid transaction bug with db:push and PRAGMA foreign_keys
 prod-db-push:
-	set -a && . ./.env && set +a && pnpm db:push
+	set -a && . ./.env && set +a && pnpm drizzle-kit generate && \
+	set -a && . ./.env && set +a && pnpm drizzle-kit migrate
 
 prod-db-seed:
 	set -a && . ./.env && set +a && pnpm db:seed
