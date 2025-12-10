@@ -1,6 +1,6 @@
 import { inArray, sql } from "drizzle-orm";
 import { db } from "../db";
-import { tags, verbDetails, vocabulary, vocabularyTags } from "../db/schema";
+import { tags, tagSections, verbDetails, vocabulary, vocabularyTags } from "../db/schema";
 import type { NewVocabulary, NewVocabularyTag } from "../db/types";
 import { formatNounWithArticle } from "../lib/greek-grammar";
 import {
@@ -9,6 +9,7 @@ import {
 	COLORS,
 	COMMANDS,
 	COMMON_RESPONSES,
+	CONTENT_TAGS,
 	DAILY_PATTERNS,
 	DAYS_OF_WEEK,
 	DISCOURSE_FILLERS,
@@ -17,6 +18,7 @@ import {
 	FOOD_PHRASES,
 	FREQUENCY_ADVERBS,
 	LESSONS,
+	LESSON_TAGS,
 	LIKES_CONSTRUCTION,
 	MONTHS,
 	NAME_CONSTRUCTION,
@@ -29,7 +31,6 @@ import {
 	SMALLTALK_PHRASES,
 	SOCIAL_PHRASES,
 	SURVIVAL_PHRASES,
-	SYSTEM_TAGS,
 	TIME_PHRASES,
 	TIME_TELLING,
 	TRANSPORT_VERBS,
@@ -40,14 +41,13 @@ const BATCH_SIZE = 100;
 
 type VerbDetailRecord = {
 	vocabId: number;
-	infinitive: string;
 	conjugationFamily: string;
 };
 
 type VocabWithTags = {
 	vocab: NewVocabulary;
 	tags: string[];
-	verbDetail?: { infinitive: string; conjugationFamily: string };
+	verbDetail?: { conjugationFamily: string };
 };
 
 /**
@@ -153,7 +153,6 @@ async function processCategory(
 		if (item.verbDetail) {
 			verbDetailsToInsert.push({
 				vocabId,
-				infinitive: item.verbDetail.infinitive,
 				conjugationFamily: item.verbDetail.conjugationFamily,
 			});
 		}
@@ -165,12 +164,12 @@ async function processCategory(
 async function seed() {
 	console.log("Seeding database (additive mode with batching)...\n");
 
-	// Upsert system tags
-	console.log("Upserting system tags...");
-	const tagValues = Object.values(SYSTEM_TAGS).map((tag) => ({
+	// Upsert all tags (content tags + lesson tags)
+	console.log("Upserting tags...");
+	const allTags = [...Object.values(CONTENT_TAGS), ...Object.values(LESSON_TAGS)];
+	const tagValues = allTags.map((tag) => ({
 		slug: tag.slug,
 		name: tag.name,
-		isSystem: true,
 	}));
 
 	const insertedTags = await db
@@ -181,14 +180,39 @@ async function seed() {
 			set: { name: sql`excluded.name` },
 		})
 		.returning();
-	console.log(`Upserted ${insertedTags.length} system tags.\n`);
+	console.log(`Upserted ${insertedTags.length} tags.`);
 
 	const tagMap = new Map(insertedTags.map((t) => [t.slug, t.id]));
+
+	// Insert tag sections ONLY for content tags (not lesson tags)
+	console.log("Upserting tag sections...");
+	const sectionValues = Object.values(CONTENT_TAGS).map((tag) => {
+		const tagId = tagMap.get(tag.slug);
+		if (!tagId) throw new Error(`Tag not found: ${tag.slug}`);
+		return {
+			tagId,
+			section: tag.section,
+			displayOrder: tag.displayOrder,
+		};
+	});
+
+	await db
+		.insert(tagSections)
+		.values(sectionValues)
+		.onConflictDoUpdate({
+			target: tagSections.tagId,
+			set: {
+				section: sql`excluded.section`,
+				displayOrder: sql`excluded.display_order`,
+			},
+		});
+	console.log(`Upserted ${sectionValues.length} tag sections.\n`);
+
 	const vocabTagLinks: NewVocabularyTag[] = [];
 	const allVerbDetails: VerbDetailRecord[] = [];
 
 	// ============================================
-	// NOUNS
+	// NOUNS (no word-type tag - vocabulary.wordType is authoritative)
 	// ============================================
 	const themeTagMap: Record<string, string> = {
 		summer: "summer",
@@ -206,7 +230,7 @@ async function seed() {
 	for (const [theme, nouns] of Object.entries(NOUNS)) {
 		for (const noun of nouns) {
 			const displayText = formatNounWithArticle(noun.lemma, noun.gender);
-			const itemTags = ["noun"];
+			const itemTags: string[] = [];
 			if (themeTagMap[theme]) itemTags.push(themeTagMap[theme]);
 
 			nounItems.push({
@@ -215,7 +239,6 @@ async function seed() {
 					englishTranslation: noun.english,
 					wordType: "noun",
 					gender: noun.gender,
-					status: "processed",
 					metadata: "metadata" in noun ? noun.metadata : undefined,
 				},
 				tags: itemTags,
@@ -227,18 +250,16 @@ async function seed() {
 	);
 
 	// ============================================
-	// VERBS
+	// VERBS (no word-type tag)
 	// ============================================
 	const verbItems: VocabWithTags[] = VERBS.map((verb) => ({
 		vocab: {
 			greekText: verb.lemma,
 			englishTranslation: verb.english,
 			wordType: "verb" as const,
-			status: "processed" as const,
 		},
-		tags: ["verb"],
+		tags: [], // No content tags for standalone verbs
 		verbDetail: {
-			infinitive: verb.lemma,
 			conjugationFamily: verb.conjugationFamily,
 		},
 	}));
@@ -247,28 +268,28 @@ async function seed() {
 	);
 
 	// ============================================
-	// PHRASES (collected in bulk)
+	// PHRASES (no word-type tags)
 	// ============================================
 	const phraseCategories: Array<{
 		name: string;
 		items: Array<{ text: string; english: string; metadata?: unknown }>;
 		tags: string[];
 	}> = [
-		{ name: "essential phrases", items: ESSENTIAL_PHRASES, tags: ["essential", "phrase"] },
-		{ name: "survival phrases", items: SURVIVAL_PHRASES, tags: ["survival", "phrase"] },
-		{ name: "request phrases", items: REQUEST_PHRASES, tags: ["request", "phrase"] },
-		{ name: "discourse fillers", items: DISCOURSE_FILLERS, tags: ["discourse-filler", "expression", "phrase"] },
-		{ name: "social phrases", items: SOCIAL_PHRASES, tags: ["social-phrase", "expression", "phrase"] },
-		{ name: "question words", items: QUESTION_WORDS, tags: ["question", "phrase"] },
-		{ name: "commands", items: COMMANDS, tags: ["command", "phrase"] },
+		{ name: "essential phrases", items: ESSENTIAL_PHRASES, tags: ["essential"] },
+		{ name: "survival phrases", items: SURVIVAL_PHRASES, tags: ["survival"] },
+		{ name: "request phrases", items: REQUEST_PHRASES, tags: ["request"] },
+		{ name: "discourse fillers", items: DISCOURSE_FILLERS, tags: ["discourse-filler", "expression"] },
+		{ name: "social phrases", items: SOCIAL_PHRASES, tags: ["social-phrase", "expression"] },
+		{ name: "question words", items: QUESTION_WORDS, tags: ["question"] },
+		{ name: "commands", items: COMMANDS, tags: ["command"] },
 		{ name: "time phrases", items: TIME_PHRASES, tags: ["time-expression"] },
-		{ name: "name construction", items: NAME_CONSTRUCTION, tags: ["name-construction", "phrase"] },
-		{ name: "discourse markers", items: DISCOURSE_MARKERS, tags: ["discourse-markers", "phrase"] },
-		{ name: "common responses", items: COMMON_RESPONSES, tags: ["responses", "phrase"] },
-		{ name: "opinion phrases", items: OPINION_PHRASES, tags: ["opinions", "phrase"] },
-		{ name: "arriving phrases", items: ARRIVING_PHRASES, tags: ["conversation-arriving", "phrase"] },
-		{ name: "food phrases", items: FOOD_PHRASES, tags: ["conversation-food", "phrase"] },
-		{ name: "small talk phrases", items: SMALLTALK_PHRASES, tags: ["conversation-smalltalk", "phrase"] },
+		{ name: "name construction", items: NAME_CONSTRUCTION, tags: ["name-construction"] },
+		{ name: "discourse markers", items: DISCOURSE_MARKERS, tags: ["discourse-markers"] },
+		{ name: "common responses", items: COMMON_RESPONSES, tags: ["responses"] },
+		{ name: "opinion phrases", items: OPINION_PHRASES, tags: ["opinions"] },
+		{ name: "arriving phrases", items: ARRIVING_PHRASES, tags: ["conversation-arriving"] },
+		{ name: "food phrases", items: FOOD_PHRASES, tags: ["conversation-food"] },
+		{ name: "small talk phrases", items: SMALLTALK_PHRASES, tags: ["conversation-smalltalk"] },
 	];
 
 	for (const category of phraseCategories) {
@@ -277,7 +298,6 @@ async function seed() {
 				greekText: phrase.text,
 				englishTranslation: phrase.english,
 				wordType: "phrase" as const,
-				status: "processed" as const,
 			},
 			tags: category.tags,
 		}));
@@ -292,10 +312,9 @@ async function seed() {
 			greekText: phrase.text,
 			englishTranslation: phrase.english,
 			wordType: "phrase" as const,
-			status: "processed" as const,
 			metadata: phrase.metadata,
 		},
-		tags: ["time-telling", "phrase"],
+		tags: ["time-telling"],
 	}));
 	await processCategory("time-telling phrases", timeTellingItems, tagMap, vocabTagLinks);
 
@@ -307,9 +326,8 @@ async function seed() {
 			greekText: day.text,
 			englishTranslation: day.english,
 			wordType: "noun" as const,
-			status: "processed" as const,
 		},
-		tags: ["days-of-week", "noun"],
+		tags: ["days-of-week"],
 	}));
 	await processCategory("days of week", dayItems, tagMap, vocabTagLinks);
 
@@ -318,9 +336,8 @@ async function seed() {
 			greekText: month.text,
 			englishTranslation: month.english,
 			wordType: "noun" as const,
-			status: "processed" as const,
 		},
-		tags: ["months", "noun"],
+		tags: ["months"],
 	}));
 	await processCategory("months", monthItems, tagMap, vocabTagLinks);
 
@@ -329,16 +346,13 @@ async function seed() {
 	// ============================================
 	const transportItems: VocabWithTags[] = TRANSPORT_VERBS.map((action) => {
 		const wordType = action.english.startsWith("I ") ? "verb" : "phrase";
-		const itemTags = ["transport-action"];
-		if (wordType === "verb") itemTags.push("verb");
 		return {
 			vocab: {
 				greekText: action.text,
 				englishTranslation: action.english,
 				wordType: wordType as "verb" | "phrase",
-				status: "processed" as const,
 			},
-			tags: itemTags,
+			tags: ["transport-action"],
 		};
 	});
 	await processCategory("transport actions", transportItems, tagMap, vocabTagLinks);
@@ -351,9 +365,8 @@ async function seed() {
 			greekText: adverb.lemma,
 			englishTranslation: adverb.english,
 			wordType: "adverb" as const,
-			status: "processed" as const,
 		},
-		tags: ["frequency", "adverb"],
+		tags: ["frequency"],
 	}));
 	await processCategory("frequency adverbs", frequencyItems, tagMap, vocabTagLinks);
 
@@ -362,9 +375,8 @@ async function seed() {
 			greekText: adverb.lemma,
 			englishTranslation: adverb.english,
 			wordType: "adverb" as const,
-			status: "processed" as const,
 		},
-		tags: ["position", "adverb"],
+		tags: ["position"],
 	}));
 	await processCategory("position adverbs", positionItems, tagMap, vocabTagLinks);
 
@@ -376,9 +388,8 @@ async function seed() {
 			greekText: like.text,
 			englishTranslation: like.english,
 			wordType: "phrase" as const,
-			status: "processed" as const,
 		},
-		tags: ["likes-singular", "phrase"],
+		tags: ["likes-singular"],
 	}));
 	await processCategory("likes construction (singular)", likesSingularItems, tagMap, vocabTagLinks);
 
@@ -387,9 +398,8 @@ async function seed() {
 			greekText: like.text,
 			englishTranslation: like.english,
 			wordType: "phrase" as const,
-			status: "processed" as const,
 		},
-		tags: ["likes-plural", "phrase"],
+		tags: ["likes-plural"],
 	}));
 	await processCategory("likes construction (plural)", likesPluralItems, tagMap, vocabTagLinks);
 
@@ -401,9 +411,8 @@ async function seed() {
 			greekText: color.lemma,
 			englishTranslation: color.english,
 			wordType: "adjective" as const,
-			status: "processed" as const,
 		},
-		tags: ["color", "adjective"],
+		tags: ["color"],
 	}));
 	await processCategory("colors", colorItems, tagMap, vocabTagLinks);
 
@@ -412,9 +421,8 @@ async function seed() {
 			greekText: adj.lemma,
 			englishTranslation: adj.english,
 			wordType: "adjective" as const,
-			status: "processed" as const,
 		},
-		tags: ["adjective"],
+		tags: [], // No content tags for standalone adjectives
 	}));
 	await processCategory("adjectives", adjectiveItems, tagMap, vocabTagLinks);
 
@@ -426,7 +434,6 @@ async function seed() {
 			greekText: num.lemma,
 			englishTranslation: String(num.value),
 			wordType: "noun" as const,
-			status: "processed" as const,
 			metadata: { numericValue: num.value },
 		},
 		tags: ["number"],
@@ -456,7 +463,6 @@ async function seed() {
 					greekText: pattern.greek,
 					englishTranslation: pattern.english,
 					wordType: "phrase",
-					status: "processed",
 					metadata: {
 						explanation: pattern.explanation,
 						whyThisCase: pattern.whyThisCase,
@@ -469,7 +475,7 @@ async function seed() {
 	await processCategory("daily patterns", patternItems, tagMap, vocabTagLinks);
 
 	// ============================================
-	// LESSONS
+	// LESSONS (no word-type tags)
 	// ============================================
 	console.log("\nSeeding lessons...");
 	for (const [date, lesson] of Object.entries(LESSONS)) {
@@ -485,12 +491,10 @@ async function seed() {
 					greekText: verb.lemma,
 					englishTranslation: verb.english,
 					wordType: "verb",
-					status: "processed",
 					metadata: { lessonDate: date },
 				},
-				tags: ["verb", lessonTag],
+				tags: [lessonTag],
 				verbDetail: {
-					infinitive: verb.lemma,
 					conjugationFamily: verb.conjugationFamily,
 				},
 			});
@@ -505,10 +509,9 @@ async function seed() {
 					englishTranslation: noun.english,
 					wordType: "noun",
 					gender: noun.gender,
-					status: "processed",
 					metadata: { lessonDate: date },
 				},
-				tags: ["noun", lessonTag],
+				tags: [lessonTag],
 			});
 		}
 
@@ -519,10 +522,9 @@ async function seed() {
 					greekText: adverb.lemma,
 					englishTranslation: adverb.english,
 					wordType: "adverb",
-					status: "processed",
 					metadata: { lessonDate: date },
 				},
-				tags: ["adverb", lessonTag],
+				tags: [lessonTag],
 			});
 		}
 
@@ -534,10 +536,9 @@ async function seed() {
 						greekText: adj.lemma,
 						englishTranslation: adj.english,
 						wordType: "adjective",
-						status: "processed",
 						metadata: { lessonDate: date },
 					},
-					tags: ["adjective", lessonTag],
+					tags: [lessonTag],
 				});
 			}
 		}
@@ -549,10 +550,9 @@ async function seed() {
 					greekText: phrase.text,
 					englishTranslation: phrase.english,
 					wordType: "phrase",
-					status: "processed",
 					metadata: { ...phrase.metadata, lessonDate: date },
 				},
-				tags: ["phrase", lessonTag],
+				tags: [lessonTag],
 			});
 		}
 
