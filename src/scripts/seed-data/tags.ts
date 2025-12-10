@@ -1,70 +1,70 @@
-// System tag definitions for organizing vocabulary
+import type { DisplaySection } from "@/db/enums";
 
-export interface TagDefinition {
+// Tag with section assignment (for UI display)
+export interface ContentTag {
 	slug: string;
 	name: string;
-	description?: string;
+	section: DisplaySection;
+	displayOrder: number;
 }
 
-export const SYSTEM_TAGS = {
-	// Essential vocabulary
-	essential: { slug: "essential", name: "Essential Phrases" },
-	survival: { slug: "survival", name: "Survival Phrases" },
-	request: { slug: "request", name: "Polite Requests" },
-	daysOfWeek: { slug: "days-of-week", name: "Days of the Week" },
-	months: { slug: "months", name: "Months of the Year" },
+// Tag without section (lessons, etc.)
+export interface LessonTag {
+	slug: string;
+	name: string;
+}
 
-	// Thematic tags
-	summer: { slug: "summer", name: "Summer & Beach" },
-	frequency: { slug: "frequency", name: "Frequency Adverbs" },
-	position: { slug: "position", name: "Position & Direction" },
-	timeOfDay: { slug: "time-of-day", name: "Times of Day" },
-	timeExpression: { slug: "time-expression", name: "Time Expressions" },
-	timeTelling: { slug: "time-telling", name: "Telling Time" },
-	likesSingular: { slug: "likes-singular", name: "Likes (Singular)" },
-	likesPlural: { slug: "likes-plural", name: "Likes (Plural)" },
-	transportVehicle: { slug: "transport-vehicle", name: "Transport - Vehicles" },
-	transportAction: { slug: "transport-action", name: "Transport - Actions" },
-	expression: { slug: "expression", name: "Useful Expressions" },
-	command: { slug: "command", name: "Commands" },
-	question: { slug: "question", name: "Question Words" },
-	number: { slug: "number", name: "Numbers" },
-	color: { slug: "color", name: "Colors" },
-	shopping: { slug: "shopping", name: "Shopping & Groceries" },
-	clothing: { slug: "clothing", name: "Clothing & Wardrobe" },
-	household: { slug: "household", name: "Household & Home" },
-	people: { slug: "people", name: "People & Family" },
-	nature: { slug: "nature", name: "Nature" },
+// Content tags organized by section (these appear in UI)
+export const CONTENT_TAGS = {
+	// NOUNS SECTION
+	people: { slug: "people", name: "People & Family", section: "nouns", displayOrder: 1 },
+	nature: { slug: "nature", name: "Nature", section: "nouns", displayOrder: 2 },
+	summer: { slug: "summer", name: "Summer & Beach", section: "nouns", displayOrder: 3 },
+	shopping: { slug: "shopping", name: "Shopping & Groceries", section: "nouns", displayOrder: 4 },
+	clothing: { slug: "clothing", name: "Clothing & Wardrobe", section: "nouns", displayOrder: 5 },
+	household: { slug: "household", name: "Household & Home", section: "nouns", displayOrder: 6 },
+	transportVehicle: { slug: "transport-vehicle", name: "Transport - Vehicles", section: "nouns", displayOrder: 7 },
 
-	// Grammar pattern tags (for case drilling)
-	dailyCoffee: { slug: "daily-coffee", name: "Daily - Coffee & Food" },
-	dailyHouse: { slug: "daily-house", name: "Daily - House & Location" },
-	dailyTime: { slug: "daily-time", name: "Daily - Time & Schedule" },
-	dailyFamily: { slug: "daily-family", name: "Daily - Family & Relationships" },
+	// VERBS SECTION
+	transportAction: { slug: "transport-action", name: "Transport - Actions", section: "verbs", displayOrder: 1 },
+	dailyCoffee: { slug: "daily-coffee", name: "Daily - Coffee & Food", section: "verbs", displayOrder: 2 },
+	dailyHouse: { slug: "daily-house", name: "Daily - House & Location", section: "verbs", displayOrder: 3 },
+	dailyTime: { slug: "daily-time", name: "Daily - Time & Schedule", section: "verbs", displayOrder: 4 },
+	dailyFamily: { slug: "daily-family", name: "Daily - Family & Relationships", section: "verbs", displayOrder: 5 },
+	likesSingular: { slug: "likes-singular", name: "Likes (Singular)", section: "verbs", displayOrder: 6 },
+	likesPlural: { slug: "likes-plural", name: "Likes (Plural)", section: "verbs", displayOrder: 7 },
 
-	// Conversation context tags
-	discourseMarkers: { slug: "discourse-markers", name: "Discourse Markers" },
-	responses: { slug: "responses", name: "Common Responses" },
-	opinions: { slug: "opinions", name: "Opinion & Feeling" },
-	conversationArriving: { slug: "conversation-arriving", name: "Arriving & Leaving" },
-	conversationFood: { slug: "conversation-food", name: "Food & Hospitality" },
-	conversationSmalltalk: { slug: "conversation-smalltalk", name: "Small Talk" },
+	// PHRASES SECTION
+	essential: { slug: "essential", name: "Essential Phrases", section: "phrases", displayOrder: 1 },
+	survival: { slug: "survival", name: "Survival Phrases", section: "phrases", displayOrder: 2 },
+	request: { slug: "request", name: "Polite Requests", section: "phrases", displayOrder: 3 },
+	expression: { slug: "expression", name: "Useful Expressions", section: "phrases", displayOrder: 4 },
+	command: { slug: "command", name: "Commands", section: "phrases", displayOrder: 5 },
+	question: { slug: "question", name: "Question Words", section: "phrases", displayOrder: 6 },
+	discourseMarkers: { slug: "discourse-markers", name: "Discourse Markers", section: "phrases", displayOrder: 7 },
+	discourseFiller: { slug: "discourse-filler", name: "Discourse Fillers & Connectors", section: "phrases", displayOrder: 8 },
+	responses: { slug: "responses", name: "Common Responses", section: "phrases", displayOrder: 9 },
+	opinions: { slug: "opinions", name: "Opinion & Feeling", section: "phrases", displayOrder: 10 },
+	socialPhrase: { slug: "social-phrase", name: "Social Phrases", section: "phrases", displayOrder: 11 },
+	conversationArriving: { slug: "conversation-arriving", name: "Arriving & Leaving", section: "phrases", displayOrder: 12 },
+	conversationFood: { slug: "conversation-food", name: "Food & Hospitality", section: "phrases", displayOrder: 13 },
+	conversationSmalltalk: { slug: "conversation-smalltalk", name: "Small Talk", section: "phrases", displayOrder: 14 },
+	timeTelling: { slug: "time-telling", name: "Telling Time", section: "phrases", displayOrder: 15 },
+	nameConstruction: { slug: "name-construction", name: "Name Construction", section: "phrases", displayOrder: 16 },
 
-	// Name construction tags
-	nameConstruction: { slug: "name-construction", name: "Name Construction" },
+	// REFERENCE SECTION
+	daysOfWeek: { slug: "days-of-week", name: "Days of the Week", section: "reference", displayOrder: 1 },
+	months: { slug: "months", name: "Months of the Year", section: "reference", displayOrder: 2 },
+	number: { slug: "number", name: "Numbers", section: "reference", displayOrder: 3 },
+	color: { slug: "color", name: "Colors", section: "reference", displayOrder: 4 },
+	timeOfDay: { slug: "time-of-day", name: "Times of Day", section: "reference", displayOrder: 5 },
+	timeExpression: { slug: "time-expression", name: "Time Expressions", section: "reference", displayOrder: 6 },
+	frequency: { slug: "frequency", name: "Frequency Adverbs", section: "reference", displayOrder: 7 },
+	position: { slug: "position", name: "Position & Direction", section: "reference", displayOrder: 8 },
+} as const satisfies Record<string, ContentTag>;
 
-	// Semantic expression groups
-	discourseFiller: { slug: "discourse-filler", name: "Discourse Fillers & Connectors" },
-	socialPhrase: { slug: "social-phrase", name: "Social Phrases" },
-
-	// Word type tags
-	verb: { slug: "verb", name: "Verbs" },
-	noun: { slug: "noun", name: "Nouns" },
-	adverb: { slug: "adverb", name: "Adverbs" },
-	adjective: { slug: "adjective", name: "Adjectives" },
-	phrase: { slug: "phrase", name: "Phrases" },
-
-	// Lesson tags (auto-generated per lesson date)
+// Lesson tags (no section - not displayed in vocabulary pages UI)
+export const LESSON_TAGS = {
 	// 2023
 	lesson20231030: { slug: "lesson-2023-10-30", name: "Lesson: Basic Nouns" },
 	lesson20231108: { slug: "lesson-2023-11-08", name: "Lesson: Articles & Places" },
@@ -92,6 +92,8 @@ export const SYSTEM_TAGS = {
 	lesson20241111: { slug: "lesson-2024-11-11", name: "Lesson: Time & Schedules" },
 	lesson20241128: { slug: "lesson-2024-11-28", name: "Lesson: Masculine -ος" },
 	lesson20241202: { slug: "lesson-2024-12-02", name: "Lesson: Family Routines" },
-} as const satisfies Record<string, TagDefinition>;
+} as const satisfies Record<string, LessonTag>;
 
+// Combined for backward compatibility
+export const SYSTEM_TAGS = { ...CONTENT_TAGS, ...LESSON_TAGS };
 export type TagKey = keyof typeof SYSTEM_TAGS;
