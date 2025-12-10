@@ -33,9 +33,7 @@ const generateQuestionsFromItems = (
 		questions.push({
 			id: `vocab-gr-${item.id}`,
 			prompt: item.greekText,
-			promptSubtext: item.pronunciation
-				? `(${item.pronunciation})`
-				: "What does this word mean?",
+			promptSubtext: "What does this word mean?",
 			options: englishOptions,
 			correctIndex: englishCorrectIndex,
 			explanation: `${item.greekText} means "${item.englishTranslation}"`,
