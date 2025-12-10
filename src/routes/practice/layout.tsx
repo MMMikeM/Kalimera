@@ -20,9 +20,8 @@ import {
 	Link,
 } from "react-router";
 import type { Route } from "./+types/layout";
-import { db } from "../../db";
-import { users } from "../../db/schema";
 import {
+	getAllUsers,
 	getItemsDueForReview,
 	getNewVocabularyItems,
 	getPracticeStats,
@@ -69,7 +68,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 	const userIdParam = url.searchParams.get("userId");
 	const userId = userIdParam ? parseInt(userIdParam, 10) : null;
 
-	const allUsers = await db.select().from(users).orderBy(users.displayName);
+	const allUsers = await getAllUsers();
 
 	let reviewItems: VocabItemWithSkill[] = [];
 	let newVocabItems: VocabItemWithSkill[] = [];

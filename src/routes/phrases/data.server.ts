@@ -1,47 +1,20 @@
-import { getVocabByTags, type VocabItem } from "@/db/queries/vocabulary";
+import {
+	getVocabBySection,
+	type VocabItemWithSection,
+} from "@/db/queries/vocabulary";
 
-// Re-export VocabItem as PhraseItem for semantic clarity
-export type PhraseItem = VocabItem;
-
-// ═══════════════════════════════════════════════════════════════════════════════
-// CONSTANTS
-// ═══════════════════════════════════════════════════════════════════════════════
-
-const PHRASE_TAGS = [
-	"essential",
-	"survival",
-	"responses",
-	"social-phrase",
-	"request",
-	"command",
-	"opinions",
-	"discourse-markers",
-	"discourse-filler",
-	"days-of-week",
-	"months",
-	"time-telling",
-	"likes-singular",
-	"likes-plural",
-	"name-construction",
-	"question",
-] as const;
-
-type TagSlug = (typeof PHRASE_TAGS)[number];
+// Re-export VocabItemWithSection as PhraseItem for semantic clarity
+export type PhraseItem = VocabItemWithSection;
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // TRANSFORMS
 // ═══════════════════════════════════════════════════════════════════════════════
 
-function groupByTag(items: PhraseItem[]): Record<TagSlug, PhraseItem[]> {
-	const result = {} as Record<TagSlug, PhraseItem[]>;
-	for (const tag of PHRASE_TAGS) {
-		result[tag] = [];
-	}
+function groupByTag<T extends { tagSlug: string }>(items: T[]): Record<string, T[]> {
+	const result: Record<string, T[]> = {};
 	for (const item of items) {
-		const tag = item.tagSlug as TagSlug;
-		if (result[tag]) {
-			result[tag].push(item);
-		}
+		const group = (result[item.tagSlug] ??= []);
+		group.push(item);
 	}
 	return result;
 }
@@ -51,41 +24,50 @@ function groupByTag(items: PhraseItem[]): Record<TagSlug, PhraseItem[]> {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export async function getPhrasesData() {
-	const allPhrases = await getVocabByTags(PHRASE_TAGS);
-	const byTag = groupByTag(allPhrases);
+	// Query sections that contain phrase-related tags
+	const [phrasesData, referenceData, verbsData] = await Promise.all([
+		getVocabBySection("phrases"),
+		getVocabBySection("reference"),
+		getVocabBySection("verbs"),
+	]);
+
+	// Group each section's data by tag
+	const phrases = groupByTag(phrasesData);
+	const reference = groupByTag(referenceData);
+	const verbs = groupByTag(verbsData);
 
 	return {
 		survival: {
-			essential: byTag.essential,
-			survival: byTag.survival,
+			essential: phrases["essential"] ?? [],
+			survival: phrases["survival"] ?? [],
 		},
 		responses: {
-			responses: byTag.responses,
-			socialPhrases: byTag["social-phrase"],
+			responses: phrases["responses"] ?? [],
+			socialPhrases: phrases["social-phrase"] ?? [],
 		},
 		requests: {
-			requests: byTag.request,
-			commands: byTag.command,
+			requests: phrases["request"] ?? [],
+			commands: phrases["command"] ?? [],
 		},
 		opinions: {
-			opinions: byTag.opinions,
+			opinions: phrases["opinions"] ?? [],
 		},
 		connectors: {
-			discourseMarkers: byTag["discourse-markers"],
-			discourseFillers: byTag["discourse-filler"],
+			discourseMarkers: phrases["discourse-markers"] ?? [],
+			discourseFillers: phrases["discourse-filler"] ?? [],
 		},
 		time: {
-			daysOfWeek: byTag["days-of-week"],
-			months: byTag.months,
-			timeTelling: byTag["time-telling"],
+			daysOfWeek: reference["days-of-week"] ?? [],
+			months: reference["months"] ?? [],
+			timeTelling: phrases["time-telling"] ?? [],
 		},
 		constructions: {
 			likesConstruction: {
-				singular: byTag["likes-singular"],
-				plural: byTag["likes-plural"],
+				singular: verbs["likes-singular"] ?? [],
+				plural: verbs["likes-plural"] ?? [],
 			},
-			nameConstruction: byTag["name-construction"],
-			questionWords: byTag.question,
+			nameConstruction: phrases["name-construction"] ?? [],
+			questionWords: phrases["question"] ?? [],
 		},
 	};
 }

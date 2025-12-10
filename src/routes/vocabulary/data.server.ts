@@ -1,66 +1,23 @@
+import { hasNumericValue, hasTimeRange } from "@/db/metadata";
 import {
-	getVocabByTags,
+	getVocabBySection,
 	getVerbsWithPatterns,
-	type VocabItem,
+	type VocabItemWithSection,
 	type VerbWithPattern,
 } from "@/db/queries/vocabulary";
 
 // Re-export types for consumers
-export type { VocabItem, VerbWithPattern };
-
-// ═══════════════════════════════════════════════════════════════════════════════
-// CONSTANTS
-// ═══════════════════════════════════════════════════════════════════════════════
-
-const VOCABULARY_TAGS = [
-	"people",
-	"time-of-day",
-	"time-expression",
-	"time-telling",
-	"position",
-	"expression",
-	"discourse-filler",
-	"social-phrase",
-	"command",
-	"question",
-	"likes-singular",
-	"likes-plural",
-	"name-construction",
-	"discourse-markers",
-	"responses",
-	"opinions",
-	"conversation-arriving",
-	"conversation-food",
-	"conversation-smalltalk",
-	"shopping",
-	"household",
-	"color",
-	"number",
-	"transport-vehicle",
-	"transport-action",
-	"frequency",
-	"summer",
-	"essential",
-	"days-of-week",
-	"months",
-] as const;
-
-type TagSlug = (typeof VOCABULARY_TAGS)[number];
+export type { VocabItemWithSection as VocabItem, VerbWithPattern };
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // TRANSFORMS
 // ═══════════════════════════════════════════════════════════════════════════════
 
-function groupByTag(items: VocabItem[]): Record<TagSlug, VocabItem[]> {
-	const result = {} as Record<TagSlug, VocabItem[]>;
-	for (const tag of VOCABULARY_TAGS) {
-		result[tag] = [];
-	}
+function groupByTag<T extends { tagSlug: string }>(items: T[]): Record<string, T[]> {
+	const result: Record<string, T[]> = {};
 	for (const item of items) {
-		const tag = item.tagSlug as TagSlug;
-		if (result[tag]) {
-			result[tag].push(item);
-		}
+		const group = (result[item.tagSlug] ??= []);
+		group.push(item);
 	}
 	return result;
 }
@@ -137,63 +94,68 @@ function groupVerbsByPattern(verbs: VerbWithPattern[]): VerbCategory[] {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export async function getVocabularyData() {
-	const [allVocab, verbs] = await Promise.all([
-		getVocabByTags(VOCABULARY_TAGS),
+	// Query all sections in parallel
+	const [nounsData, verbsData, phrasesData, referenceData, verbPatterns] = await Promise.all([
+		getVocabBySection("nouns"),
+		getVocabBySection("verbs"),
+		getVocabBySection("phrases"),
+		getVocabBySection("reference"),
 		getVerbsWithPatterns(),
 	]);
 
-	const byTag = groupByTag(allVocab);
+	// Group each section's data by tag
+	const nouns = groupByTag(nounsData);
+	const verbs = groupByTag(verbsData);
+	const phrases = groupByTag(phrasesData);
+	const reference = groupByTag(referenceData);
 
 	return {
 		nouns: {
-			people: byTag.people,
-			shopping: byTag.shopping,
-			household: byTag.household,
-			vehicles: byTag["transport-vehicle"],
-			summer: byTag.summer,
+			people: nouns["people"] ?? [],
+			shopping: nouns["shopping"] ?? [],
+			household: nouns["household"] ?? [],
+			vehicles: nouns["transport-vehicle"] ?? [],
+			summer: nouns["summer"] ?? [],
 		},
 		verbs: {
-			categories: groupVerbsByPattern(verbs),
-			transportActions: byTag["transport-action"],
+			categories: groupVerbsByPattern(verbPatterns),
+			transportActions: verbs["transport-action"] ?? [],
 		},
 		phrases: {
-			essential: byTag.essential,
-			daysOfWeek: byTag["days-of-week"],
-			months: byTag.months,
-			discourseFillers: byTag["discourse-filler"],
-			socialPhrases: byTag["social-phrase"],
-			commands: byTag.command,
-			questionWords: byTag.question,
+			essential: phrases["essential"] ?? [],
+			daysOfWeek: reference["days-of-week"] ?? [],
+			months: reference["months"] ?? [],
+			discourseFillers: phrases["discourse-filler"] ?? [],
+			socialPhrases: phrases["social-phrase"] ?? [],
+			commands: phrases["command"] ?? [],
+			questionWords: phrases["question"] ?? [],
 			likesConstruction: {
-				singular: byTag["likes-singular"],
-				plural: byTag["likes-plural"],
+				singular: verbs["likes-singular"] ?? [],
+				plural: verbs["likes-plural"] ?? [],
 			},
-			nameConstruction: byTag["name-construction"],
-			timeTelling: byTag["time-telling"],
-			discourseMarkers: byTag["discourse-markers"],
-			responses: byTag.responses,
-			opinions: byTag.opinions,
-			arriving: byTag["conversation-arriving"],
-			food: byTag["conversation-food"],
-			smalltalk: byTag["conversation-smalltalk"],
+			nameConstruction: phrases["name-construction"] ?? [],
+			timeTelling: phrases["time-telling"] ?? [],
+			discourseMarkers: phrases["discourse-markers"] ?? [],
+			responses: phrases["responses"] ?? [],
+			opinions: phrases["opinions"] ?? [],
+			arriving: phrases["conversation-arriving"] ?? [],
+			food: phrases["conversation-food"] ?? [],
+			smalltalk: phrases["conversation-smalltalk"] ?? [],
 		},
 		reference: {
-			timesOfDay: byTag["time-of-day"].map((t) => ({
+			timesOfDay: (reference["time-of-day"] ?? []).map((t) => ({
 				...t,
-				timeRange: (t.metadata as Record<string, unknown> | null)?.timeRange as
-					| string
-					| undefined,
+				timeRange: hasTimeRange(t.metadata) ? t.metadata.timeRange : undefined,
 			})),
-			numbers: byTag.number
+			numbers: (reference["number"] ?? [])
 				.map((n) => ({
 					...n,
-					numericValue: (n.metadata as Record<string, unknown> | null)
-						?.numericValue as number | undefined,
+					numericValue: hasNumericValue(n.metadata) ? n.metadata.numericValue : undefined,
 				}))
 				.sort((a, b) => (a.numericValue ?? 0) - (b.numericValue ?? 0)),
-			colors: byTag.color,
-			frequencyAdverbs: byTag.frequency,
-			positionAdverbs: byTag.position,
+			colors: reference["color"] ?? [],
+			frequencyAdverbs: reference["frequency"] ?? [],
+			positionAdverbs: reference["position"] ?? [],
 		},
 	};
 }
