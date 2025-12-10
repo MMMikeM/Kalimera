@@ -34,6 +34,6 @@ export type SkillType = (typeof skillTypes)[number];
 export const areaTypes = ["case", "gender", "verb_family"] as const;
 export type AreaType = (typeof areaTypes)[number];
 
-// Status enum values
-export const statuses = ["unprocessed", "processed"] as const;
-export type Status = (typeof statuses)[number];
+// Display sections for UI organization (tag_sections lookup table)
+export const displaySections = ["nouns", "verbs", "phrases", "reference"] as const;
+export type DisplaySection = (typeof displaySections)[number];
