@@ -1,12 +1,8 @@
-// Vocabulary queries
-export {
-	getVocabByTags,
-	getVerbsWithPatterns,
-	searchVocabulary,
-	type VocabItem,
-	type VerbWithPattern,
-	type SearchVocabItem,
-} from "./vocabulary";
+// Practice queries and mutations
+export * from "./practice";
 
 // Stats queries
-export { getAppStats, type AppStats } from "./stats";
+export * from "./stats";
+
+// Vocabulary queries
+export * from "./vocabulary";

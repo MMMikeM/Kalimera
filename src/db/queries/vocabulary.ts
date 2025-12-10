@@ -1,6 +1,7 @@
-import { and, eq, inArray, sql } from "drizzle-orm";
+import { eq, inArray } from "drizzle-orm";
 import { db } from "../index";
-import { vocabulary, vocabularyTags, tags, verbDetails } from "../schema";
+import type { DisplaySection } from "../enums";
+import { vocabulary, vocabularyTags, tags, tagSections } from "../schema";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // VOCABULARY BY TAGS
@@ -23,12 +24,7 @@ export async function getVocabByTags(tagSlugs: readonly string[]) {
 		.from(vocabulary)
 		.innerJoin(vocabularyTags, eq(vocabularyTags.vocabularyId, vocabulary.id))
 		.innerJoin(tags, eq(tags.id, vocabularyTags.tagId))
-		.where(
-			and(
-				eq(vocabulary.status, "processed"),
-				inArray(tags.slug, [...tagSlugs]),
-			),
-		)
+		.where(inArray(tags.slug, [...tagSlugs]))
 		.orderBy(vocabulary.greekText);
 }
 
@@ -36,25 +32,55 @@ export async function getVocabByTags(tagSlugs: readonly string[]) {
 export type VocabItem = Awaited<ReturnType<typeof getVocabByTags>>[number];
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// VERBS WITH PATTERNS
+// VOCABULARY BY SECTION (using tag_sections lookup table)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 /**
- * Fetch all verbs with their conjugation patterns.
+ * Fetch vocabulary items for a specific UI section (nouns, verbs, phrases, reference).
+ * Uses the tag_sections lookup table to determine which tags belong to which section.
  */
-export async function getVerbsWithPatterns() {
+export async function getVocabBySection(section: DisplaySection) {
 	return db
 		.select({
 			id: vocabulary.id,
 			greek: vocabulary.greekText,
 			english: vocabulary.englishTranslation,
-			pattern: verbDetails.conjugationFamily,
+			wordType: vocabulary.wordType,
+			metadata: vocabulary.metadata,
+			tagSlug: tags.slug,
+			tagName: tags.name,
+			displayOrder: tagSections.displayOrder,
 		})
 		.from(vocabulary)
-		.leftJoin(verbDetails, eq(verbDetails.vocabId, vocabulary.id))
-		.where(
-			and(eq(vocabulary.wordType, "verb"), eq(vocabulary.status, "processed")),
-		);
+		.innerJoin(vocabularyTags, eq(vocabularyTags.vocabularyId, vocabulary.id))
+		.innerJoin(tags, eq(tags.id, vocabularyTags.tagId))
+		.innerJoin(tagSections, eq(tagSections.tagId, tags.id))
+		.where(eq(tagSections.section, section))
+		.orderBy(tagSections.displayOrder, vocabulary.greekText);
+}
+
+/** Type for a vocabulary item with section info */
+export type VocabItemWithSection = Awaited<ReturnType<typeof getVocabBySection>>[number];
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// VERBS WITH PATTERNS
+// ═══════════════════════════════════════════════════════════════════════════════
+
+/**
+ * Fetch all verbs with their conjugation patterns using RQB v2.
+ */
+export async function getVerbsWithPatterns() {
+	const results = await db.query.vocabulary.findMany({
+		where: { wordType: "verb" },
+		with: { verbDetails: true },
+	});
+
+	return results.map((v) => ({
+		id: v.id,
+		greek: v.greekText,
+		english: v.englishTranslation,
+		pattern: v.verbDetails?.conjugationFamily ?? null,
+	}));
 }
 
 /** Type for a verb with its conjugation pattern */
@@ -67,34 +93,25 @@ export type VerbWithPattern = Awaited<
 // ═══════════════════════════════════════════════════════════════════════════════
 
 /**
- * Fetch all processed vocabulary with tags for search functionality.
+ * Fetch all processed vocabulary with tags for search functionality using RQB v2.
  */
 export async function searchVocabulary() {
-	const results = await db
-		.select({
-			id: vocabulary.id,
-			greek: vocabulary.greekText,
-			english: vocabulary.englishTranslation,
-			type: vocabulary.wordType,
-			family: verbDetails.conjugationFamily,
-			tagNames: sql<string>`(
-				SELECT group_concat(t.name, ', ')
-				FROM vocabulary_tags vt
-				JOIN tags t ON t.id = vt.tag_id
-				WHERE vt.vocabulary_id = ${vocabulary.id}
-			)`,
-		})
-		.from(vocabulary)
-		.leftJoin(verbDetails, eq(verbDetails.vocabId, vocabulary.id))
-		.where(eq(vocabulary.status, "processed"));
+	const results = await db.query.vocabulary.findMany({
+		with: {
+			verbDetails: true,
+			vocabularyTags: {
+				with: { tag: true },
+			},
+		},
+	});
 
 	return results.map((v) => ({
 		id: v.id,
-		greek: v.greek,
-		english: v.english,
-		type: v.type,
-		family: v.family,
-		tags: v.tagNames ? v.tagNames.split(", ") : [],
+		greek: v.greekText,
+		english: v.englishTranslation,
+		type: v.wordType,
+		family: v.verbDetails?.conjugationFamily ?? null,
+		tags: v.vocabularyTags.map((vt) => vt.tag?.name).filter(Boolean) as string[],
 	}));
 }
 
