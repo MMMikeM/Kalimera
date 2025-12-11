@@ -155,7 +155,7 @@ All require production. All should be timed.
 
 ## Analysis Output Format
 
-```
+```markdown
 ## Practice Effectiveness: [Feature/Section Name]
 
 ### Does This Build Retrieval Speed?
