@@ -1,15 +1,17 @@
 import type { Route } from "./+types/$tab";
-import { Users, BookOpen, MapPin, Zap } from "lucide-react";
+import { Users, BookOpen, MapPin, Zap, Sparkles } from "lucide-react";
 import { TabHero } from "@/components";
 import { AgreementSection, MovableNuSection } from "./agreement-section";
 import { CasesSection } from "./cases-section";
 import { PronounsSection } from "./pronouns-section";
+import { AdjectivesSection } from "./adjectives-section";
 import { PrepositionsSection } from "./prepositions-section";
 import { VerbsSection } from "./verbs-section";
 
 const VALID_TABS = [
 	"cases-pronouns",
 	"nouns-articles",
+	"adjectives",
 	"prepositions",
 	"verbs",
 ] as const;
@@ -29,7 +31,7 @@ function CasesPronounsTab() {
 			<TabHero
 				title="The foundation of Greek grammar"
 				greekPhrase="Ποιος; Τι; Ποιου; — Who? What? Whose?"
-				colorScheme="stone"
+				colorScheme="ocean"
 				icon={<Users size={18} />}
 			>
 				Cases show a word's role in a sentence. Pronouns are where you'll use
@@ -59,6 +61,23 @@ function NounsArticlesTab() {
 	);
 }
 
+function AdjectivesTab() {
+	return (
+		<div className="space-y-8">
+			<TabHero
+				title="Words that describe"
+				greekPhrase="ο καλός, η καλή, το καλό"
+				colorScheme="honey"
+				icon={<Sparkles size={18} />}
+			>
+				Adjectives agree with their noun in gender, case, and number. Once you
+				know noun patterns, adjectives follow the same rules.
+			</TabHero>
+			<AdjectivesSection />
+		</div>
+	);
+}
+
 function PrepositionsTab() {
 	return (
 		<div className="space-y-8">
@@ -82,7 +101,7 @@ function VerbsTab() {
 			<TabHero
 				title="Action words that tell the whole story"
 				greekPhrase="κάνω, κάνεις, κάνει..."
-				colorScheme="honey"
+				colorScheme="ocean"
 				icon={<Zap size={18} />}
 			>
 				Greek verb endings show who's doing the action — you often don't need
@@ -102,6 +121,8 @@ export default function TabRoute({ loaderData }: Route.ComponentProps) {
 			return <CasesPronounsTab />;
 		case "nouns-articles":
 			return <NounsArticlesTab />;
+		case "adjectives":
+			return <AdjectivesTab />;
 		case "prepositions":
 			return <PrepositionsTab />;
 		case "verbs":

@@ -1,6 +1,6 @@
-import { BookOpen, GitBranch, MessageSquare, Users } from "lucide-react";
-import { Outlet, useLocation, Link } from "react-router";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { BookOpen, GitBranch, MessageSquare, Sparkles, Users } from "lucide-react";
+import { Outlet, useLocation } from "react-router";
+import { NavTabs, type NavTab } from "@/components";
 
 export function meta() {
 	return [
@@ -9,32 +9,13 @@ export function meta() {
 	];
 }
 
-const TABS = [
-	{
-		id: "cases-pronouns",
-		label: "Cases & Pronouns",
-		shortLabel: "Pronouns",
-		icon: <Users size={16} />,
-	},
-	{
-		id: "nouns-articles",
-		label: "Nouns & Articles",
-		shortLabel: "Nouns",
-		icon: <BookOpen size={16} />,
-	},
-	{
-		id: "prepositions",
-		label: "Prepositions",
-		shortLabel: "Preps",
-		icon: <GitBranch size={16} />,
-	},
-	{
-		id: "verbs",
-		label: "Verbs",
-		shortLabel: "Verbs",
-		icon: <MessageSquare size={16} />,
-	},
-] as const;
+const REFERENCE_TABS: NavTab[] = [
+	{ id: "cases-pronouns", label: "Cases & Pronouns", shortLabel: "Pronouns", icon: <Users size={16} />, color: "ocean" },
+	{ id: "nouns-articles", label: "Nouns & Articles", shortLabel: "Nouns", icon: <BookOpen size={16} />, color: "olive" },
+	{ id: "adjectives", label: "Adjectives", shortLabel: "Adj", icon: <Sparkles size={16} />, color: "honey" },
+	{ id: "prepositions", label: "Prepositions", shortLabel: "Preps", icon: <GitBranch size={16} />, color: "terracotta" },
+	{ id: "verbs", label: "Verbs", shortLabel: "Verbs", icon: <MessageSquare size={16} />, color: "ocean" },
+];
 
 export default function QuickReferenceLayout() {
 	const location = useLocation();
@@ -50,19 +31,11 @@ export default function QuickReferenceLayout() {
 				</p>
 			</div>
 
-			<Tabs value={activeTab}>
-				<TabsList className="flex-wrap h-auto gap-1">
-					{TABS.map((tab) => (
-						<TabsTrigger key={tab.id} value={tab.id} asChild className="gap-1.5">
-							<Link to={`/quick-reference/${tab.id}`}>
-								{tab.icon}
-								<span className="hidden sm:inline">{tab.label}</span>
-								<span className="sm:hidden">{tab.shortLabel}</span>
-							</Link>
-						</TabsTrigger>
-					))}
-				</TabsList>
-			</Tabs>
+			<NavTabs
+				tabs={REFERENCE_TABS}
+				activeTab={activeTab}
+				buildUrl={(tabId) => `/quick-reference/${tabId}`}
+			/>
 
 			<Outlet />
 		</div>
