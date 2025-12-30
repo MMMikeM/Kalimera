@@ -19,7 +19,6 @@
 		"rootDirs": [".", "./.react-router/types"],
 
 		/* Path aliases for shadcn */
-		"baseUrl": ".",
 		"paths": {
 			"@/*": ["./src/*"]
 		},
