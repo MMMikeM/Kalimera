@@ -184,7 +184,7 @@ const ProductionDrillCard: React.FC<ProductionDrillCardProps> = ({
 			questionStartTimeRef.current = Date.now();
 			inputRef.current?.focus();
 		}
-	}, [state.phase, state.currentIndex]);
+	}, [state.phase]);
 
 	// Call onComplete when all sessions are done
 	useEffect(() => {

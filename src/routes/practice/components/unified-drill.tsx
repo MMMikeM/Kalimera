@@ -228,7 +228,7 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 		} else if (state.phase === "active" && state.mode === "mc") {
 			questionStartTimeRef.current = Date.now();
 		}
-	}, [state.phase, state.currentIndex, state.mode]);
+	}, [state.phase, state.mode]);
 
 	// Auto-advance on correct answer
 	useEffect(() => {
@@ -457,9 +457,9 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 								Items to Review ({sortedMissed.length})
 							</h4>
 							<div className="space-y-2 max-h-48 overflow-y-auto">
-								{sortedMissed.slice(0, 5).map((item, i) => (
+								{sortedMissed.slice(0, 5).map((item) => (
 									<div
-										key={i}
+										key={item.correctGreek}
 										className="flex items-center justify-between bg-white p-3 rounded-lg border text-sm"
 									>
 										<div className="flex-1 min-w-0">

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Bell, BellOff, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -22,28 +22,25 @@ export const PushNotificationToggle = ({ userId, className }: PushNotificationTo
 	const [state, setState] = useState<SubscriptionState>("loading");
 	const [isToggling, setIsToggling] = useState(false);
 
-	useEffect(() => {
-		checkSubscriptionState();
-	}, []);
-
-	const checkSubscriptionState = async () => {
-		// Check if push is supported
+	const checkSubscriptionState = useCallback(async () => {
 		if (!isPushSupported()) {
 			setState("unsupported");
 			return;
 		}
 
-		// Check permission
 		const permission = getNotificationPermission();
 		if (permission === "denied") {
 			setState("denied");
 			return;
 		}
 
-		// Check if already subscribed
 		const subscription = await getCurrentSubscription();
 		setState(subscription ? "subscribed" : "unsubscribed");
-	};
+	}, []);
+
+	useEffect(() => {
+		checkSubscriptionState();
+	}, [checkSubscriptionState]);
 
 	const handleToggle = async () => {
 		setIsToggling(true);

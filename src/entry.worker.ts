@@ -44,7 +44,7 @@ export default {
 	async scheduled(
 		event: ScheduledEvent,
 		env: CloudflareEnv,
-		ctx: ExecutionContext
+		_ctx: ExecutionContext
 	): Promise<void> {
 		const { sendPracticeReminders, sendReviewDueNotifications, getVapidConfig } =
 			await import("./lib/push-notifications");
