@@ -53,7 +53,14 @@ export default function ExploreLayout() {
 			<NavTabs
 				tabs={EXPLORE_TABS}
 				activeTab={activeTab}
-				buildUrl={(tabId) => `/explore/${tabId}`}
+				buildUrl={(tabId) => {
+					const defaults: Record<string, string> = {
+						conversations: "arriving",
+						phrases: "survival",
+						words: "nouns",
+					};
+					return `/explore/${tabId}/${defaults[tabId] || ""}`;
+				}}
 			/>
 
 			<Outlet />

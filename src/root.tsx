@@ -4,8 +4,8 @@ import {
 	Outlet,
 	Scripts,
 	ScrollRestoration,
-	NavLink,
 	Link,
+	useLocation,
 } from "react-router";
 import { Compass, FileText, Zap, Search } from "lucide-react";
 import "./index.css";
@@ -18,9 +18,9 @@ export const links: LinksFunction = () => [
 ];
 
 const NAV_ITEMS = [
-	{ id: "practice", label: "Practice", path: "/practice", icon: Zap },
-	{ id: "explore", label: "Explore", path: "/explore", icon: Compass },
-	{ id: "reference", label: "Reference", path: "/reference", icon: FileText },
+	{ id: "practice", label: "Practice", path: "/practice/speed", icon: Zap },
+	{ id: "explore", label: "Explore", path: "/explore/conversations/arriving", icon: Compass },
+	{ id: "reference", label: "Reference", path: "/reference/cases-pronouns", icon: FileText },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -57,6 +57,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function Root() {
+	const location = useLocation();
+	const currentSection = location.pathname.split("/")[1] || "";
+
 	return (
 		<div className="app-shell bg-cream">
 			{/* Scrollable main area */}
@@ -87,21 +90,22 @@ export default function Root() {
 
 								{/* Desktop Navigation */}
 								<nav className="hidden md:flex items-center gap-1">
-									{NAV_ITEMS.map((item) => (
-										<NavLink
+									{NAV_ITEMS.map((item) => {
+									const isActive = currentSection === item.id;
+									return (
+										<Link
 											key={item.id}
 											to={item.path}
-											className={({ isActive }) =>
-												`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-													isActive
-														? "bg-stone-800 text-cream"
-														: "text-stone-600 hover:text-stone-800 hover:bg-stone-100"
-												}`
-											}
+											className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+												isActive
+													? "bg-stone-800 text-cream"
+													: "text-stone-600 hover:text-stone-800 hover:bg-stone-100"
+											}`}
 										>
 											{item.label}
-										</NavLink>
-									))}
+										</Link>
+									);
+								})}
 									<Link
 										to="/search"
 										className="p-2 text-stone-500 hover:text-stone-700 transition-colors ml-2"
@@ -137,21 +141,20 @@ export default function Root() {
 				<div className="flex justify-around items-center max-w-md mx-auto">
 					{NAV_ITEMS.map((item) => {
 						const Icon = item.icon;
+						const isActive = currentSection === item.id;
 						return (
-							<NavLink
+							<Link
 								key={item.id}
 								to={item.path}
-								className={({ isActive }) =>
-									`flex flex-col items-center gap-1 px-4 py-2 rounded-xl transition-all ${
-										isActive
-											? "text-terracotta bg-terracotta/10"
-											: "text-stone-500"
-									}`
-								}
+								className={`flex flex-col items-center gap-1 px-4 py-2 rounded-xl transition-all ${
+									isActive
+										? "text-terracotta bg-terracotta/10"
+										: "text-stone-500"
+								}`}
 							>
 								<Icon size={22} strokeWidth={1.5} />
 								<span className="text-xs font-medium">{item.label}</span>
-							</NavLink>
+							</Link>
 						);
 					})}
 				</div>

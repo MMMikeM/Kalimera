@@ -6,31 +6,25 @@ export default [
 
   // Practice - core loop
   route("practice", "routes/practice/layout.tsx", [
-    index("routes/practice/index.tsx"),
     route("speed", "routes/practice/speed-drill.tsx"),
     route(":tab", "routes/practice/$tab.tsx"),
   ]),
 
   // Explore - merged content (conversations, phrases, words)
   route("explore", "routes/explore/layout.tsx", [
-    index("routes/explore/index.tsx"),
     route("conversations", "routes/explore/conversations/layout.tsx", [
-      index("routes/explore/conversations/index.tsx"),
       route(":tab", "routes/explore/conversations/$tab.tsx"),
     ]),
     route("phrases", "routes/explore/phrases/layout.tsx", [
-      index("routes/explore/phrases/index.tsx"),
       route(":tab", "routes/explore/phrases/$tab.tsx"),
     ]),
     route("words", "routes/explore/words/layout.tsx", [
-      index("routes/explore/words/index.tsx"),
       route(":tab", "routes/explore/words/$tab.tsx"),
     ]),
   ]),
 
   // Reference - grammar lookup
   route("reference", "routes/reference/layout.tsx", [
-    index("routes/reference/redirect.tsx"),
     route(":tab", "routes/reference/$tab.tsx"),
   ]),
 

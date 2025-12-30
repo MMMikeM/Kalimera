@@ -34,7 +34,7 @@ export default function QuickReferenceLayout() {
 			<NavTabs
 				tabs={REFERENCE_TABS}
 				activeTab={activeTab}
-				buildUrl={(tabId) => `/quick-reference/${tabId}`}
+				buildUrl={(tabId) => `/reference/${tabId}`}
 			/>
 
 			<Outlet />
