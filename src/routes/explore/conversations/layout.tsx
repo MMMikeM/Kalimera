@@ -114,7 +114,7 @@ const CONVERSATION_TABS: NavTab[] = [
 export default function ConversationsLayout() {
 	const location = useLocation();
 	const pathSegments = location.pathname.split("/").filter(Boolean);
-	const activeTab = pathSegments[1] || "arriving";
+	const activeTab = pathSegments[2] || "arriving";
 
 	const [mode, setMode] = useState<ConversationMode>(() => {
 		if (typeof window === "undefined") return "read";
@@ -141,7 +141,7 @@ export default function ConversationsLayout() {
 			<NavTabs
 				tabs={CONVERSATION_TABS}
 				activeTab={activeTab}
-				buildUrl={(tabId) => `/conversations/${tabId}`}
+				buildUrl={(tabId) => `/explore/conversations/${tabId}`}
 			/>
 
 			<Outlet context={{ mode }} />

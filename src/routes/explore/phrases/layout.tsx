@@ -39,7 +39,7 @@ const PHRASES_TABS: NavTab[] = [
 export default function PhrasesLayout({ loaderData }: Route.ComponentProps) {
 	const location = useLocation();
 	const pathSegments = location.pathname.split("/").filter(Boolean);
-	const activeTab = pathSegments[1] || "survival";
+	const activeTab = pathSegments[2] || "survival";
 
 	return (
 		<div className="space-y-6">
@@ -52,7 +52,7 @@ export default function PhrasesLayout({ loaderData }: Route.ComponentProps) {
 			<NavTabs
 				tabs={PHRASES_TABS}
 				activeTab={activeTab}
-				buildUrl={(tabId) => `/phrases/${tabId}`}
+				buildUrl={(tabId) => `/explore/phrases/${tabId}`}
 			/>
 
 			<Outlet context={loaderData} />

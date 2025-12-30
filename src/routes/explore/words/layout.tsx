@@ -27,7 +27,7 @@ const VOCABULARY_TABS: NavTab[] = [
 export default function VocabularyLayout({ loaderData }: Route.ComponentProps) {
 	const location = useLocation();
 	const pathSegments = location.pathname.split("/").filter(Boolean);
-	const activeTab = pathSegments[1] || "nouns";
+	const activeTab = pathSegments[2] || "nouns";
 
 	return (
 		<div className="space-y-6">
@@ -40,7 +40,7 @@ export default function VocabularyLayout({ loaderData }: Route.ComponentProps) {
 			<NavTabs
 				tabs={VOCABULARY_TABS}
 				activeTab={activeTab}
-				buildUrl={(tabId) => `/vocabulary/${tabId}`}
+				buildUrl={(tabId) => `/explore/words/${tabId}`}
 			/>
 
 			<Outlet context={loaderData} />
