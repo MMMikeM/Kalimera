@@ -436,6 +436,7 @@ New UI patterns for displaying performance metrics. The key metric is response t
 **Purpose:** Identify which topics need work.
 
 **Design:**
+
 - Horizontal bar chart
 - Bars coloured by speed category (fast/medium/slow)
 - Sorted by speed (slowest at top = needs attention)
@@ -503,16 +504,116 @@ New UI patterns for displaying performance metrics. The key metric is response t
 
 ## Component Architecture
 
+### CRITICAL: Check Existing Components First
+
+Before creating ANY new component, search for existing ones:
+
+```bash
+# Find all custom components
+rg "^export" src/components/index.ts
+
+# Search for a specific pattern
+rg "countdown|timer" src/components/
+
+# Find ShadCN components
+ls src/components/ui/
+```
+
+**Rule:** If an existing component can do 80% of what you need, extend or compose it rather than creating a new one.
+
+### Directory Structure
+
+```text
+src/components/
+├── index.ts              # Re-exports all custom components
+├── card.tsx              # Custom Card with variants
+├── mono-text.tsx         # Greek text rendering
+├── paradigm-table.tsx    # Grammar paradigm tables
+├── countdown-timer.tsx   # Drill timer
+├── ...                   # Other custom components
+└── ui/                   # ShadCN primitives
+    ├── button.tsx
+    ├── input.tsx
+    └── ...
+```
+
+### Import Decision Tree
+
+```text
+Need a UI element?
+│
+├─ Is it a primitive (button, input, dialog)?
+│  └─ YES → Check src/components/ui/ (ShadCN)
+│           Import: import { Button } from "@/components/ui/button"
+│
+├─ Is it domain-specific (Greek text, paradigm, drill)?
+│  └─ YES → Check src/components/index.ts (custom)
+│           Import: import { MonoText, ParadigmTable } from "@/components"
+│
+└─ Neither exists?
+   └─ Create in src/components/ using tailwind-variants
+      Export from index.ts
+```
+
+### Existing Component Catalog
+
+| Component                | Purpose                                | Use When                    |
+|--------------------------|----------------------------------------|-----------------------------|
+| `Card`                   | Content container with variants        | Grouping related content    |
+| `MonoText`               | Greek text with proper sizing/spacing  | Displaying Greek vocabulary |
+| `SearchInput`            | Search field with debounce             | Filtering lists             |
+| `Table`                  | Data table with sorting                | Tabular data display        |
+| `ParadigmTable`          | Grammar paradigm with highlighting     | Conjugations, declensions   |
+| `SectionHeading`         | Styled h2/h3 with subtitle             | Page section headers        |
+| `KeyInsight`             | Prominent callout box                  | Important concepts          |
+| `CollapsibleSection`     | Expandable content with colour schemes | Progressive disclosure      |
+| `QuickTest`              | Decision tree / fill-in-blank          | Self-assessment patterns    |
+| `MistakeComparison`      | Wrong vs correct with explanations     | Common error pairs          |
+| `CategoryCard`           | Priority-based content card            | Categorising by importance  |
+| `DialogueExchange`       | Conversation bubbles                   | Example dialogues           |
+| `TabHero`                | Hero section for tab pages             | Section introductions       |
+| `CountdownTimer`         | Drill timer with urgency states        | Timed practice              |
+| `NavTabs`                | Navigation tabs                        | Section navigation          |
+| `PushNotificationToggle` | Push notification opt-in               | Notification settings       |
+
 ### Custom Components (src/components/*.tsx)
 
 - Use tailwind-variants for styling
-- Import pattern: `import { Card, Badge, MonoText, SearchInput, Table } from "@/components"`
+- Import pattern: `import { Card, MonoText, ParadigmTable } from "@/components"`
 
 ### ShadCN Components (src/components/ui/*.tsx)
 
 - Use class-variance-authority
 - Add via: `pnpm dlx shadcn@latest add <component>`
 - Import pattern: `import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"`
+
+### Creating Wrappers
+
+When ShadCN components need app-specific defaults, create a wrapper in `src/components/`:
+
+```tsx
+// src/components/greek-input.tsx
+import { Input } from "@/components/ui/input";
+import { tv } from "tailwind-variants";
+
+const greekInput = tv({
+  base: "text-xl h-14 font-mono",
+  variants: {
+    size: {
+      sm: "text-lg h-12",
+      md: "text-xl h-14",
+      lg: "text-2xl h-16",
+    },
+  },
+  defaultVariants: { size: "md" },
+});
+
+export function GreekInput({ size, className, ...props }) {
+  return <Input className={greekInput({ size, className })} {...props} />;
+}
+```
+
+**Never modify files in `src/components/ui/`** — they're meant to stay close to ShadCN defaults for easy updates.
 
 ---
 
@@ -688,6 +789,7 @@ Each has a `-text` variant for labels.
 ## When Reviewing Designs
 
 **For Reference UI:**
+
 - Check that Greek text uses MonoText component
 - Verify paradigm tables show relationships clearly
 - Ensure examples show context, not definitions
@@ -695,6 +797,7 @@ Each has a `-text` variant for labels.
 - Look for redundant columns or repeated information
 
 **For Production Drill UI:**
+
 - Check timer is prominent and uses urgency colour states
 - Verify input field is comfortable for Greek/transliteration
 - Ensure feedback distinguishes speed categories and timeout vs incorrect
@@ -703,11 +806,14 @@ Each has a `-text` variant for labels.
 
 ## When Creating New Components
 
-- Follow existing component patterns in src/components
-- Use tailwind-variants for variant management
-- Export from the components index file
-- Consider how the component serves the educational mission
-- For drill components, consider timer integration and speed tracking
+1. **Search first** — Run `rg "keyword" src/components/` to check if something similar exists
+2. **Compose before creating** — Can you achieve this by combining existing components?
+3. **Extend before duplicating** — Can you add a variant to an existing component?
+4. Only then create new — Follow these patterns:
+   - Use tailwind-variants for variant management
+   - Export from the components index file (`src/components/index.ts`)
+   - Consider how the component serves the educational mission
+   - For drill components, consider timer integration and speed tracking
 
 ---
 
