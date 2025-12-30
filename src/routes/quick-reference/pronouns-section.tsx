@@ -53,13 +53,13 @@ export const PronounsSection: React.FC = () => {
 			{/* Primary pronouns - most used */}
 			<div className="grid lg:grid-cols-2 gap-6">
 				<CategoryCard
-					title="Object Pronouns"
+					title="Accusative Pronouns"
 					priority="primary"
 					colorScheme="ocean"
 					badge="Essential"
 				>
 					<p className="text-sm text-stone-600 mb-3">
-						Use these constantly! (με, σε, τον...)
+						Object pronouns — use these constantly! (με, σε, τον...)
 					</p>
 					<Alert variant="info" className="mb-4">
 						<AlertTitle>Word order</AlertTitle>
@@ -93,13 +93,13 @@ export const PronounsSection: React.FC = () => {
 				</CategoryCard>
 
 				<CategoryCard
-					title="Possessive Pronouns"
+					title="Genitive Pronouns"
 					priority="primary"
 					colorScheme="terracotta"
 					badge="Essential"
 				>
 					<p className="text-sm text-stone-600 mb-3">
-						For "my/your/their" (μου, σου...)
+						Possessive pronouns — for "my/your/their" (μου, σου...)
 					</p>
 					<Alert variant="purple" className="mb-4">
 						<AlertTitle>Word order</AlertTitle>
@@ -137,12 +137,12 @@ export const PronounsSection: React.FC = () => {
 			{/* Secondary pronouns - less frequent */}
 			<div className="grid lg:grid-cols-2 gap-6">
 				<CategoryCard
-					title="Subject Pronouns"
+					title="Nominative Pronouns"
 					priority="tertiary"
 					colorScheme="olive"
 				>
 					<p className="text-sm text-stone-600 mb-3">
-						Often dropped! (εγώ, εσύ...)
+						Subject pronouns — often dropped! (εγώ, εσύ...)
 					</p>
 					<Alert variant="success" className="mb-4">
 						<AlertTitle>Good news</AlertTitle>
@@ -176,12 +176,12 @@ export const PronounsSection: React.FC = () => {
 				</CategoryCard>
 
 				<CategoryCard
-					title="Emphatic Pronouns"
+					title="Emphatic Accusative"
 					priority="tertiary"
 					colorScheme="honey"
 				>
 					<p className="text-sm text-stone-600 mb-3">
-						After prepositions (εμένα, εσένα...)
+						Strong forms — after prepositions (εμένα, εσένα...)
 					</p>
 					<Alert variant="warning" className="mb-4">
 						<AlertTitle>When to use</AlertTitle>
@@ -215,18 +215,17 @@ export const PronounsSection: React.FC = () => {
 			</div>
 
 			{/* Connection to cases - NOW it makes sense after seeing the pronouns */}
-			<KeyInsight title="Pronouns Show Case in Action!">
-				Object pronouns (
+			<KeyInsight title="Pronouns = Cases in Action!">
+				<strong>Accusative</strong> (
 				<MonoText variant="greek" size="sm">
 					με, σε, τον
 				</MonoText>
-				) are <strong>accusative</strong> — the case for "WHOM/WHAT do I [verb]?"
-				Possessive pronouns (
+				) answers "WHOM/WHAT do I [verb]?" <strong>Genitive</strong> (
 				<MonoText variant="greek" size="sm">
 					μου, σου, του
 				</MonoText>
-				) are <strong>genitive</strong> — the case for "WHOSE?" You're already
-				using cases every time you use a pronoun!
+				) answers "WHOSE?" You're already using cases every time you use a
+				pronoun!
 			</KeyInsight>
 
 			{/* Double object pattern - neutral styling */}
