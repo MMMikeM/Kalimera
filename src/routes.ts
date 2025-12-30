@@ -16,6 +16,7 @@ export default [
   ]),
   route("practice", "routes/practice/layout.tsx", [
     index("routes/practice/index.tsx"),
+    route("speed", "routes/practice/speed-drill.tsx"),
     route(":tab", "routes/practice/$tab.tsx"),
   ]),
   route("vocabulary", "routes/vocabulary/layout.tsx", [
