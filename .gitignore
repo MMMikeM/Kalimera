@@ -45,3 +45,5 @@ screenshots/practice/
 
 # pnpm build approvals
 .pnpm-approvals
+playwright-report/
+test-results/
