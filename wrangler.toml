@@ -16,3 +16,13 @@ invocation_logs = true
 # Secrets configured via: wrangler secret put TURSO_DATABASE_URL
 # TURSO_DATABASE_URL - libsql://your-db.turso.io
 # TURSO_AUTH_TOKEN - your auth token
+# VAPID_PUBLIC_KEY - for push notifications
+# VAPID_PRIVATE_KEY - for push notifications
+# VAPID_SUBJECT - mailto:your-email@example.com
+
+# Cron triggers for push notifications
+[triggers]
+crons = [
+  "0 9 * * *",   # Daily practice reminder at 9am UTC
+  "0 */6 * * *", # Check for due reviews every 6 hours
+]
