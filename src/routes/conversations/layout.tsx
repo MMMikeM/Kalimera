@@ -1,9 +1,8 @@
 import type React from "react";
 import { useState, useEffect } from "react";
 import { MessageCircle, DoorOpen, Utensils, ChevronDown, Lightbulb, Hand } from "lucide-react";
-import { Outlet, useLocation, Link as RouterLink, useOutletContext } from "react-router";
-import { MonoText, ConversationModeToggle, type ConversationMode } from "@/components";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Outlet, useLocation, useOutletContext } from "react-router";
+import { MonoText, ConversationModeToggle, NavTabs, type ConversationMode, type NavTab } from "@/components";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
 type ConversationContext = {
@@ -105,11 +104,11 @@ export const LearningTips: React.FC<LearningTipsProps> = ({
 	</Collapsible>
 );
 
-const TABS = [
-	{ id: "arriving", title: "Arriving & Leaving", icon: <DoorOpen size={20} /> },
-	{ id: "food", title: "Food & Hospitality", icon: <Utensils size={20} /> },
-	{ id: "smalltalk", title: "Small Talk", icon: <MessageCircle size={20} /> },
-	{ id: "requests", title: "Quick Requests", icon: <Hand size={20} /> },
+const CONVERSATION_TABS: NavTab[] = [
+	{ id: "arriving", label: "Arriving & Leaving", shortLabel: "Arriving", icon: <DoorOpen size={16} />, color: "ocean" },
+	{ id: "food", label: "Food & Hospitality", shortLabel: "Food", icon: <Utensils size={16} />, color: "olive" },
+	{ id: "smalltalk", label: "Small Talk", shortLabel: "Small Talk", icon: <MessageCircle size={16} />, color: "honey" },
+	{ id: "requests", label: "Quick Requests", shortLabel: "Requests", icon: <Hand size={16} />, color: "terracotta" },
 ];
 
 export default function ConversationsLayout() {
@@ -139,24 +138,11 @@ export default function ConversationsLayout() {
 				<ConversationModeToggle mode={mode} onModeChange={setMode} />
 			</div>
 
-			<Tabs value={activeTab}>
-				<TabsList className="flex-wrap h-auto gap-1">
-					{TABS.map((tab) => (
-						<TabsTrigger
-							key={tab.id}
-							value={tab.id}
-							asChild
-							className="gap-1.5"
-						>
-							<RouterLink to={`/conversations/${tab.id}`}>
-								{tab.icon}
-								<span className="hidden sm:inline">{tab.title}</span>
-								<span className="sm:hidden">{tab.title.split(" ")[0]}</span>
-							</RouterLink>
-						</TabsTrigger>
-					))}
-				</TabsList>
-			</Tabs>
+			<NavTabs
+				tabs={CONVERSATION_TABS}
+				activeTab={activeTab}
+				buildUrl={(tabId) => `/conversations/${tabId}`}
+			/>
 
 			<Outlet context={{ mode }} />
 		</div>

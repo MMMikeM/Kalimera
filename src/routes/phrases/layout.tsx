@@ -1,6 +1,5 @@
-import { Outlet, useLocation, Link } from "react-router";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { SectionHeading } from "@/components";
+import { Outlet, useLocation } from "react-router";
+import { SectionHeading, NavTabs, type NavTab } from "@/components";
 import {
 	Sparkles,
 	MessageCircle,
@@ -27,25 +26,15 @@ export function meta() {
 	];
 }
 
-const TABS = [
-	{ id: "survival", label: "Survival", shortLabel: "Survival", icon: Sparkles },
-	{
-		id: "responses",
-		label: "Responses",
-		shortLabel: "Respond",
-		icon: MessageCircle,
-	},
-	{ id: "requests", label: "Requests", shortLabel: "Ask", icon: Hand },
-	{ id: "opinions", label: "Opinions", shortLabel: "Express", icon: Heart },
-	{ id: "connectors", label: "Connectors", shortLabel: "Connect", icon: Link2 },
-	{ id: "time", label: "Time", shortLabel: "Time", icon: Clock },
-	{
-		id: "constructions",
-		label: "Patterns",
-		shortLabel: "Patterns",
-		icon: Blocks,
-	},
-] as const;
+const PHRASES_TABS: NavTab[] = [
+	{ id: "survival", label: "Survival", shortLabel: "Survival", icon: <Sparkles size={16} />, color: "terracotta" },
+	{ id: "responses", label: "Responses", shortLabel: "Respond", icon: <MessageCircle size={16} />, color: "ocean" },
+	{ id: "requests", label: "Requests", shortLabel: "Ask", icon: <Hand size={16} />, color: "olive" },
+	{ id: "opinions", label: "Opinions", shortLabel: "Express", icon: <Heart size={16} />, color: "terracotta" },
+	{ id: "connectors", label: "Connectors", shortLabel: "Connect", icon: <Link2 size={16} />, color: "honey" },
+	{ id: "time", label: "Time", shortLabel: "Time", icon: <Clock size={16} />, color: "ocean" },
+	{ id: "constructions", label: "Patterns", shortLabel: "Patterns", icon: <Blocks size={16} />, color: "olive" },
+];
 
 export default function PhrasesLayout({ loaderData }: Route.ComponentProps) {
 	const location = useLocation();
@@ -60,24 +49,11 @@ export default function PhrasesLayout({ loaderData }: Route.ComponentProps) {
 				level="h2"
 			/>
 
-			<Tabs value={activeTab}>
-				<TabsList className="flex-wrap h-auto gap-1">
-					{TABS.map((tab) => (
-						<TabsTrigger
-							key={tab.id}
-							value={tab.id}
-							asChild
-							className="gap-1.5"
-						>
-							<Link to={`/phrases/${tab.id}`}>
-								<tab.icon size={16} />
-								<span className="hidden sm:inline">{tab.label}</span>
-								<span className="sm:hidden">{tab.shortLabel}</span>
-							</Link>
-						</TabsTrigger>
-					))}
-				</TabsList>
-			</Tabs>
+			<NavTabs
+				tabs={PHRASES_TABS}
+				activeTab={activeTab}
+				buildUrl={(tabId) => `/phrases/${tabId}`}
+			/>
 
 			<Outlet context={loaderData} />
 		</div>
