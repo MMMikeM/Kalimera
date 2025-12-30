@@ -25,7 +25,13 @@ export const links: LinksFunction = () => [
 
 const NAV_ITEMS = [
 	{ id: "home", label: "Home", path: "/", icon: Home },
-
+	{ id: "practice", label: "Practice", path: "/practice", icon: Lightbulb },
+	{
+		id: "conversations",
+		label: "Conversations",
+		path: "/conversations",
+		icon: MessageCircle,
+	},
 	{
 		id: "quick-reference",
 		label: "Reference",
@@ -44,13 +50,6 @@ const NAV_ITEMS = [
 		path: "/phrases",
 		icon: Quote,
 	},
-	{
-		id: "conversations",
-		label: "Conversations",
-		path: "/conversations",
-		icon: MessageCircle,
-	},
-	{ id: "practice", label: "Practice", path: "/practice", icon: Lightbulb },
 	{ id: "search", label: "Search", path: "/search", icon: Search },
 ];
 
