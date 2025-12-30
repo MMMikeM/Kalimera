@@ -53,36 +53,35 @@ export const PronounsSection: React.FC = () => {
 			{/* Primary pronouns - most used */}
 			<div className="grid lg:grid-cols-2 gap-6">
 				<CategoryCard
-					title="Accusative Pronouns"
-					priority="primary"
-					colorScheme="ocean"
-					badge="Essential"
+					title="Nominative Pronouns"
+					priority="tertiary"
+					colorScheme="olive"
 				>
 					<p className="text-sm text-stone-600 mb-3">
-						Object pronouns — use these constantly! (με, σε, τον...)
+						Subject pronouns — often dropped! (εγώ, εσύ...)
 					</p>
-					<Alert variant="info" className="mb-4">
-						<AlertTitle>Word order</AlertTitle>
+					<Alert variant="success" className="mb-4">
+						<AlertTitle>Good news</AlertTitle>
 						<AlertDescription>
-							Object pronouns go BEFORE the verb: σε βλέπω (you I-see) = I see
-							you
+							Verb endings already show person, so subject pronouns are usually
+							optional. Use them for emphasis.
 						</AlertDescription>
 					</Alert>
 					<PronounParadigmTable
-						data={OBJECT_PRONOUNS}
-						colorClass="border-ocean-300"
+						data={SUBJECT_PRONOUNS}
+						colorClass="border-olive-400"
 					/>
-					<div className="mt-4 pt-4 border-t border-ocean-300">
+					<div className="mt-4 pt-4 border-t border-olive-300">
 						<div className="text-sm text-stone-600 mb-2 font-medium">
 							Examples:
 						</div>
 						<div className="flex flex-wrap gap-2">
-							{OBJECT_PRONOUN_EXAMPLES.map((ex) => (
+							{SUBJECT_PRONOUN_EXAMPLES.map((ex) => (
 								<div
 									key={ex.greek}
-									className="px-3 py-1.5 bg-white rounded-full border border-ocean-300 text-sm"
+									className="px-3 py-1.5 bg-white rounded-full border border-olive-300 text-sm"
 								>
-									<MonoText size="sm" className="text-ocean-text">
+									<MonoText size="sm" className="text-olive-text">
 										{ex.greek}
 									</MonoText>
 									<span className="text-stone-600 ml-1">({ex.english})</span>
@@ -137,35 +136,36 @@ export const PronounsSection: React.FC = () => {
 			{/* Secondary pronouns - less frequent */}
 			<div className="grid lg:grid-cols-2 gap-6">
 				<CategoryCard
-					title="Nominative Pronouns"
-					priority="tertiary"
-					colorScheme="olive"
+					title="Accusative Pronouns"
+					priority="primary"
+					colorScheme="ocean"
+					badge="Essential"
 				>
 					<p className="text-sm text-stone-600 mb-3">
-						Subject pronouns — often dropped! (εγώ, εσύ...)
+						Object pronouns — use these constantly! (με, σε, τον...)
 					</p>
-					<Alert variant="success" className="mb-4">
-						<AlertTitle>Good news</AlertTitle>
+					<Alert variant="info" className="mb-4">
+						<AlertTitle>Word order</AlertTitle>
 						<AlertDescription>
-							Verb endings already show person, so subject pronouns are usually
-							optional. Use them for emphasis.
+							Object pronouns go BEFORE the verb: σε βλέπω (you I-see) = I see
+							you
 						</AlertDescription>
 					</Alert>
 					<PronounParadigmTable
-						data={SUBJECT_PRONOUNS}
-						colorClass="border-olive-400"
+						data={OBJECT_PRONOUNS}
+						colorClass="border-ocean-300"
 					/>
-					<div className="mt-4 pt-4 border-t border-olive-300">
+					<div className="mt-4 pt-4 border-t border-ocean-300">
 						<div className="text-sm text-stone-600 mb-2 font-medium">
 							Examples:
 						</div>
 						<div className="flex flex-wrap gap-2">
-							{SUBJECT_PRONOUN_EXAMPLES.map((ex) => (
+							{OBJECT_PRONOUN_EXAMPLES.map((ex) => (
 								<div
 									key={ex.greek}
-									className="px-3 py-1.5 bg-white rounded-full border border-olive-300 text-sm"
+									className="px-3 py-1.5 bg-white rounded-full border border-ocean-300 text-sm"
 								>
-									<MonoText size="sm" className="text-olive-text">
+									<MonoText size="sm" className="text-ocean-text">
 										{ex.greek}
 									</MonoText>
 									<span className="text-stone-600 ml-1">({ex.english})</span>
