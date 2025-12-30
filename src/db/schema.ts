@@ -38,7 +38,7 @@ export const users = sqliteTable(
 	"users",
 	{
 		id: pk(),
-		code: string("code").unique(),
+		code: string("code"),
 		displayName: string("display_name"),
 		createdAt: createdAt(),
 	},
@@ -70,13 +70,17 @@ export const vocabulary = sqliteTable(
 // ============================================
 // TAGS TABLE
 // ============================================
-export const tags = sqliteTable("tags", {
-	id: pk(),
-	slug: string("slug").unique(),
-	name: string("name"),
-	description: nullableString("description"),
-	createdAt: createdAt(),
-});
+export const tags = sqliteTable(
+	"tags",
+	{
+		id: pk(),
+		slug: string("slug"),
+		name: string("name"),
+		description: nullableString("description"),
+		createdAt: createdAt(),
+	},
+	(table) => [uniqueIndex("idx_tags_slug").on(table.slug)],
+);
 
 // ============================================
 // TAG_SECTIONS TABLE (Lookup table for UI display organization)
@@ -96,7 +100,10 @@ export const vocabularyTags = sqliteTable(
 		vocabularyId: cascadeFk("vocabulary_id", () => vocabulary.id),
 		tagId: cascadeFk("tag_id", () => tags.id),
 	},
-	(table) => [primaryKey({ columns: [table.vocabularyId, table.tagId] })],
+	(table) => [
+		primaryKey({ columns: [table.vocabularyId, table.tagId] }),
+		index("idx_vocabulary_tags_tag").on(table.tagId),
+	],
 );
 
 // ============================================
@@ -125,7 +132,10 @@ export const practiceSessions = sqliteTable(
 		startedAt: createdAt("started_at"),
 		completedAt: nullableTimestamp("completed_at"),
 	},
-	(table) => [index("idx_practice_sessions_user").on(table.userId)],
+	(table) => [
+		index("idx_practice_sessions_user").on(table.userId),
+		index("idx_practice_sessions_user_completed").on(table.userId, table.completedAt),
+	],
 );
 
 // ============================================
@@ -145,7 +155,11 @@ export const practiceAttempts = sqliteTable(
 		timeTaken: nullableInt("time_taken"),
 		attemptedAt: createdAt("attempted_at"),
 	},
-	(table) => [index("idx_practice_attempts_user").on(table.userId)],
+	(table) => [
+		index("idx_practice_attempts_user").on(table.userId),
+		index("idx_practice_attempts_session").on(table.sessionId),
+		index("idx_practice_attempts_vocab").on(table.vocabularyId),
+	],
 );
 
 // ============================================
@@ -198,7 +212,7 @@ export const pushSubscriptions = sqliteTable(
 	{
 		id: pk(),
 		userId: cascadeFk("user_id", () => users.id),
-		endpoint: string("endpoint").unique(),
+		endpoint: string("endpoint"),
 		p256dh: string("p256dh"), // Client's ECDH public key
 		auth: string("auth"), // Client's auth secret
 		createdAt: createdAt(),
