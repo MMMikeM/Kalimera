@@ -1,11 +1,14 @@
 import { useOutletContext } from "react-router";
-import { Users, FileText, Zap, BookOpen, Clock } from "lucide-react";
 import type { Route } from "./+types/$tab";
-import { TabHero } from "@/components";
-import { PracticeStrategy, type PracticeLoaderData } from "./layout";
-import PronounDrill from "./components/pronoun-drill";
-import ArticleDrill from "./components/article-drill";
-import VerbDrill from "./components/verb-drill";
+import { type PracticeLoaderData } from "./layout";
+
+// Re-export action from layout so forms in child routes work
+export { action } from "./layout";
+
+// Production drills (typed input, English → Greek)
+import PronounProductionDrill from "./components/pronoun-production-drill";
+import ArticleProductionDrill from "./components/article-production-drill";
+import VerbProductionDrill from "./components/verb-production-drill";
 import VocabularyDrill from "./components/vocabulary-drill";
 import ReviewDrill from "./components/review-drill";
 
@@ -45,98 +48,33 @@ export default function TabRoute({ loaderData }: Route.ComponentProps) {
 	const context = useOutletContext<PracticeLoaderData>();
 	const { reviewItems, newVocabItems, userId } = context;
 
-	// Grammar drills (no user required)
+	// Grammar drills (no user required) - Production mode (typed input)
 	if (tab === "pronouns") {
-		return (
-			<div className="space-y-4">
-				<TabHero
-					title="Master the pronouns"
-					greekPhrase="με, σε, τον, την..."
-					colorScheme="ocean"
-					icon={<Users size={18} />}
-				>
-					Pronouns are the most frequent words in any language. Get these right
-					and you're halfway to fluency!
-				</TabHero>
-				<PronounDrill />
-				<PracticeStrategy />
-			</div>
-		);
+		return <PronounProductionDrill />;
 	}
 
 	if (tab === "articles") {
-		return (
-			<div className="space-y-4">
-				<TabHero
-					title="Match articles to nouns"
-					greekPhrase="ο, η, το → τον, την, το"
-					colorScheme="olive"
-					icon={<FileText size={18} />}
-				>
-					Greek articles change based on gender, case, and number. Practice
-					recognizing the patterns!
-				</TabHero>
-				<ArticleDrill />
-				<PracticeStrategy />
-			</div>
-		);
+		return <ArticleProductionDrill />;
 	}
 
 	if (tab === "verbs") {
-		return (
-			<div className="space-y-4">
-				<TabHero
-					title="Conjugate with confidence"
-					greekPhrase="κάνω, κάνεις, κάνει..."
-					colorScheme="honey"
-					icon={<Zap size={18} />}
-				>
-					Verb endings tell you who's doing the action. Learn the patterns and
-					you can conjugate thousands of verbs!
-				</TabHero>
-				<VerbDrill />
-				<PracticeStrategy />
-			</div>
-		);
+		return <VerbProductionDrill />;
 	}
 
 	// User-required drills
 	if (tab === "vocabulary") {
-		return (
-			<div className="space-y-4">
-				<TabHero
-					title="Build your word bank"
-					greekPhrase="Τι σημαίνει...;"
-					colorScheme="terracotta"
-					icon={<BookOpen size={18} />}
-				>
-					Learn new vocabulary with spaced repetition. Words you struggle with
-					appear more often until they stick.
-				</TabHero>
-				{userId ? (
-					<VocabularyDrill items={newVocabItems} />
-				) : (
-					<UserRequiredMessage />
-				)}
-				<PracticeStrategy />
-			</div>
+		return userId ? (
+			<VocabularyDrill items={newVocabItems} />
+		) : (
+			<UserRequiredMessage />
 		);
 	}
 
 	if (tab === "review") {
-		return (
-			<div className="space-y-4">
-				<TabHero
-					title="Review what you've learned"
-					greekPhrase="Πάλι από την αρχή!"
-					colorScheme="terracotta"
-					icon={<Clock size={18} />}
-				>
-					Words scheduled for review based on your progress. Keeping up with
-					reviews is the key to long-term retention!
-				</TabHero>
-				{userId ? <ReviewDrill items={reviewItems} /> : <UserRequiredMessage />}
-			</div>
+		return userId ? (
+			<ReviewDrill items={reviewItems} />
+		) : (
+			<UserRequiredMessage />
 		);
 	}
 

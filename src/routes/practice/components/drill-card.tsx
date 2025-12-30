@@ -39,7 +39,7 @@ export type DrillVariant =
 interface VariantConfig {
 	icon: LucideIcon;
 	borderColor: string;
-	bgGradient: string;
+	bgColor: string;
 	iconBg: string;
 	iconColor: string;
 	accentColor: string;
@@ -50,7 +50,7 @@ const VARIANT_CONFIG: Record<DrillVariant, VariantConfig> = {
 	pronouns: {
 		icon: Users,
 		borderColor: "border-l-4 border-l-ocean border-ocean-300",
-		bgGradient: "bg-ocean-50",
+		bgColor: "bg-ocean-50",
 		iconBg: "bg-ocean-200",
 		iconColor: "text-ocean",
 		accentColor: "ocean",
@@ -59,7 +59,7 @@ const VARIANT_CONFIG: Record<DrillVariant, VariantConfig> = {
 	articles: {
 		icon: FileText,
 		borderColor: "border-l-4 border-l-olive border-olive-300",
-		bgGradient: "bg-olive-50",
+		bgColor: "bg-olive-50",
 		iconBg: "bg-olive-200",
 		iconColor: "text-olive",
 		accentColor: "olive",
@@ -68,7 +68,7 @@ const VARIANT_CONFIG: Record<DrillVariant, VariantConfig> = {
 	verbs: {
 		icon: Zap,
 		borderColor: "border-l-4 border-l-honey border-honey-300",
-		bgGradient: "bg-honey-50",
+		bgColor: "bg-honey-50",
 		iconBg: "bg-honey-200",
 		iconColor: "text-honey",
 		accentColor: "honey",
@@ -77,7 +77,7 @@ const VARIANT_CONFIG: Record<DrillVariant, VariantConfig> = {
 	vocabulary: {
 		icon: BookOpen,
 		borderColor: "border-l-4 border-l-ocean border-ocean-300",
-		bgGradient: "bg-ocean-50",
+		bgColor: "bg-ocean-50",
 		iconBg: "bg-ocean-200",
 		iconColor: "text-ocean",
 		accentColor: "ocean",
@@ -86,7 +86,7 @@ const VARIANT_CONFIG: Record<DrillVariant, VariantConfig> = {
 	review: {
 		icon: Clock,
 		borderColor: "border-l-4 border-l-terracotta border-terracotta-300",
-		bgGradient: "bg-red-500",
+		bgColor: "bg-terracotta-50",
 		iconBg: "bg-terracotta-200",
 		iconColor: "text-terracotta",
 		accentColor: "terracotta",
@@ -184,7 +184,7 @@ const DrillCard: React.FC<DrillCardProps> = ({
 	// Guard: if no questions, show empty state
 	if (!currentQuestion) {
 		return (
-			<Card variant="bordered" padding="lg" className={config.bgGradient}>
+			<Card variant="bordered" padding="lg" className={config.bgColor}>
 				<p className="text-center text-stone-600">No questions available</p>
 			</Card>
 		);
@@ -204,7 +204,7 @@ const DrillCard: React.FC<DrillCardProps> = ({
 			<Card
 				variant="bordered"
 				padding="lg"
-				className={`${config.bgGradient} ${config.borderColor}`}
+				className={`${config.bgColor} ${config.borderColor}`}
 			>
 				<div className="text-center py-8">
 					<div className="text-6xl mb-4">
@@ -279,7 +279,7 @@ const DrillCard: React.FC<DrillCardProps> = ({
 		<Card
 			variant="bordered"
 			padding="lg"
-			className={`${config.bgGradient} ${config.borderColor}`}
+			className={`${config.bgColor} ${config.borderColor}`}
 		>
 			{/* Header */}
 			<div className="mb-4">

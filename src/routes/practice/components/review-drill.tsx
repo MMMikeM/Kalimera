@@ -1,8 +1,10 @@
 import type React from "react";
 import { useMemo, useCallback } from "react";
 import { useFetcher } from "react-router";
-import DrillCard, { type AttemptResult } from "./drill-card";
-import type { Question } from "../types";
+import UnifiedDrill, {
+	type UnifiedQuestion,
+	type UnifiedAttemptResult,
+} from "./unified-drill";
 import { useCurrentUserId } from "../hooks";
 import type { VocabItemWithSkill } from "../data.server";
 
@@ -10,70 +12,24 @@ interface ReviewDrillProps {
 	items: VocabItemWithSkill[];
 }
 
-const generateQuestionsFromItems = (
-	items: VocabItemWithSkill[],
-): Question[] => {
-	const questions: Question[] = [];
-
-	for (let i = 0; i < items.length; i++) {
-		const item = items[i];
-		if (!item) continue;
-
-		// Generate wrong answers from other items
-		const otherItems = items.filter((_, idx) => idx !== i);
-		const shuffledOthers = otherItems
-			.sort(() => Math.random() - 0.5)
-			.slice(0, 3);
-
-		// Greek → English question
-		const englishOptions = [
-			item.englishTranslation,
-			...shuffledOthers.map((o) => o.englishTranslation),
-		].sort(() => Math.random() - 0.5);
-		const englishCorrectIndex = englishOptions.indexOf(item.englishTranslation);
-
-		questions.push({
-			id: `review-gr-${item.id}`,
-			prompt: item.greekText,
-			promptSubtext: "What does this word mean?",
-			options: englishOptions,
-			correctIndex: englishCorrectIndex,
-			explanation: `${item.greekText} means "${item.englishTranslation}"`,
-		});
-
-		// English → Greek question (if we have enough items)
-		if (otherItems.length >= 3) {
-			const greekOptions = [
-				item.greekText,
-				...shuffledOthers.map((o) => o.greekText),
-			].sort(() => Math.random() - 0.5);
-			const greekCorrectIndex = greekOptions.indexOf(item.greekText);
-
-			questions.push({
-				id: `review-en-${item.id}`,
-				prompt: `How do you say "${item.englishTranslation}" in Greek?`,
-				options: greekOptions,
-				correctIndex: greekCorrectIndex,
-				explanation: `"${item.englishTranslation}" is "${item.greekText}" in Greek`,
-			});
-		}
-	}
-
-	// Shuffle all questions
-	return questions.sort(() => Math.random() - 0.5);
-};
+const generateQuestions = (items: VocabItemWithSkill[]): UnifiedQuestion[] =>
+	items.map((item) => ({
+		id: `review-${item.id}`,
+		prompt: item.englishTranslation,
+		correctGreek: item.greekText,
+		timeLimit: 6000,
+	}));
 
 const ReviewDrill: React.FC<ReviewDrillProps> = ({ items }) => {
-	const questions = useMemo(() => generateQuestionsFromItems(items), [items]);
+	const questions = useMemo(() => generateQuestions(items), [items]);
 	const userId = useCurrentUserId();
 	const fetcher = useFetcher();
 
 	const handleAttempt = useCallback(
-		(result: AttemptResult) => {
+		(result: UnifiedAttemptResult) => {
 			if (!userId) return;
 
-			// Extract vocabularyId from the question id
-			const match = result.questionId.match(/review-(?:gr|en)-(\d+)/);
+			const match = result.questionId.match(/review-(\d+)/);
 			const vocabularyId = match?.[1] ? parseInt(match[1], 10) : undefined;
 
 			fetcher.submit(
@@ -81,14 +37,14 @@ const ReviewDrill: React.FC<ReviewDrillProps> = ({ items }) => {
 					intent: "recordAttempt",
 					userId: userId.toString(),
 					vocabularyId: vocabularyId?.toString() || "",
-					questionText: result.questionText,
-					correctAnswer: result.correctAnswer,
+					questionText: result.prompt,
+					correctAnswer: result.correctGreek,
 					userAnswer: result.userAnswer,
-					isCorrect: result.isCorrect.toString(),
+					isCorrect: result.isCorrect ? "on" : "",
 					timeTaken: result.timeTaken.toString(),
-					skillType: "recognition",
+					skillType: "production",
 				},
-				{ method: "post" },
+				{ method: "post", action: "/practice" },
 			);
 		},
 		[userId, fetcher],
@@ -111,31 +67,14 @@ const ReviewDrill: React.FC<ReviewDrillProps> = ({ items }) => {
 		);
 	}
 
-	if (items.length < 4) {
-		return (
-			<div className="text-center py-12 bg-honey-100 rounded-xl border border-honey-300">
-				<div className="text-5xl mb-4">📚</div>
-				<h3 className="text-xl font-semibold text-honey-text mb-2">
-					Not enough items yet
-				</h3>
-				<p className="text-honey-text">
-					You need at least 4 vocabulary items to start reviewing.
-				</p>
-				<p className="text-sm text-stone-600 mt-2">
-					Practice more vocabulary to build your review queue!
-				</p>
-			</div>
-		);
-	}
-
 	return (
-		<DrillCard
-			title="Spaced Review"
-			description={`${items.length} items due for review`}
-			questions={questions}
-			variant="review"
-			onAttempt={handleAttempt}
-		/>
+		<div className="max-w-xl mx-auto">
+			<UnifiedDrill
+				title={`Review (${items.length} due)`}
+				questions={questions}
+				onAttempt={handleAttempt}
+			/>
+		</div>
 	);
 };
 
