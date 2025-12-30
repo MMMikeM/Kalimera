@@ -54,3 +54,6 @@ export { ConversationHero } from "./ConversationHero";
 export { ParadigmHint } from "./ParadigmHint";
 export type { TabHeroProps, TabHeroColorScheme } from "./TabHero";
 export { TabHero } from "./TabHero";
+export { default as CountdownTimer } from "./CountdownTimer";
+export type { NavTabsProps, NavTab, TabColor } from "./NavTabs";
+export { NavTabs, navTabsVariants, triggerStateVariants, badgeColorVariants } from "./NavTabs";
