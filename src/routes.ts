@@ -24,4 +24,8 @@ export default [
     route(":tab", "routes/vocabulary/$tab.tsx"),
   ]),
   route("search", "routes/search.tsx"),
+  // API routes
+  route("api/push/subscribe", "routes/api/push.subscribe.ts"),
+  route("api/push/unsubscribe", "routes/api/push.unsubscribe.ts"),
+  route("api/push/vapid-key", "routes/api/push.vapid-key.ts"),
 ] satisfies RouteConfig;

@@ -25,7 +25,7 @@ import {
 	type VocabItemWithSkill,
 	type PracticeStats,
 } from "./data.server";
-import { NavTabs, type NavTab } from "@/components";
+import { NavTabs, type NavTab, PushNotificationToggle } from "@/components";
 import {
 	Select,
 	SelectContent,
@@ -290,7 +290,12 @@ export default function PracticeLayout({ loaderData }: Route.ComponentProps) {
 					activeTab={activeTab}
 					buildUrl={buildTabUrl}
 				/>
-				<UserSelector users={users} onUserChange={handleUserChange} />
+				<div className="flex items-center gap-2">
+					{loaderData.userId && (
+						<PushNotificationToggle userId={loaderData.userId} />
+					)}
+					<UserSelector users={users} onUserChange={handleUserChange} />
+				</div>
 			</div>
 
 			{/* Drill content - takes full available space */}

@@ -57,3 +57,4 @@ export { TabHero } from "./TabHero";
 export { default as CountdownTimer } from "./CountdownTimer";
 export type { NavTabsProps, NavTab, TabColor } from "./NavTabs";
 export { NavTabs, navTabsVariants, triggerStateVariants, badgeColorVariants } from "./NavTabs";
+export { PushNotificationToggle } from "./PushNotificationToggle";
