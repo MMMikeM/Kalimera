@@ -190,5 +190,24 @@ export const vocabularySkills = sqliteTable(
 	],
 );
 
+// ============================================
+// PUSH_SUBSCRIPTIONS TABLE
+// ============================================
+export const pushSubscriptions = sqliteTable(
+	"push_subscriptions",
+	{
+		id: pk(),
+		userId: cascadeFk("user_id", () => users.id),
+		endpoint: string("endpoint").unique(),
+		p256dh: string("p256dh"), // Client's ECDH public key
+		auth: string("auth"), // Client's auth secret
+		createdAt: createdAt(),
+	},
+	(table) => [
+		index("idx_push_subscriptions_user").on(table.userId),
+		uniqueIndex("idx_push_subscriptions_endpoint").on(table.endpoint),
+	],
+);
+
 // Types are exported from ./types.ts
 export * from "./types";
