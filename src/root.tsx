@@ -7,15 +7,7 @@ import {
 	NavLink,
 	Link,
 } from "react-router";
-import {
-	BookOpen,
-	FileText,
-	Lightbulb,
-	Search,
-	MessageCircle,
-	Home,
-	Quote,
-} from "lucide-react";
+import { Compass, FileText, Zap, Search } from "lucide-react";
 import "./index.css";
 import type { LinksFunction } from "react-router";
 
@@ -26,33 +18,9 @@ export const links: LinksFunction = () => [
 ];
 
 const NAV_ITEMS = [
-	{ id: "home", label: "Home", path: "/", icon: Home },
-	{ id: "practice", label: "Practice", path: "/practice", icon: Lightbulb },
-	{
-		id: "conversations",
-		label: "Conversations",
-		path: "/conversations",
-		icon: MessageCircle,
-	},
-	{
-		id: "quick-reference",
-		label: "Reference",
-		path: "/quick-reference",
-		icon: FileText,
-	},
-	{
-		id: "vocabulary",
-		label: "Vocabulary",
-		path: "/vocabulary",
-		icon: BookOpen,
-	},
-	{
-		id: "phrases",
-		label: "Phrases",
-		path: "/phrases",
-		icon: Quote,
-	},
-	{ id: "search", label: "Search", path: "/search", icon: Search },
+	{ id: "practice", label: "Practice", path: "/practice", icon: Zap },
+	{ id: "explore", label: "Explore", path: "/explore", icon: Compass },
+	{ id: "reference", label: "Reference", path: "/reference", icon: FileText },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -106,24 +74,43 @@ export default function Root() {
 								</span>
 							</Link>
 
-							{/* Desktop Navigation */}
-							<nav className="hidden md:flex items-center gap-1">
-								{NAV_ITEMS.slice(1).map((item) => (
-									<NavLink
-										key={item.id}
-										to={item.path}
-										className={({ isActive }) =>
-											`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-												isActive
-													? "bg-stone-800 text-cream"
-													: "text-stone-600 hover:text-stone-800 hover:bg-stone-100"
-											}`
-										}
+							{/* Header utilities */}
+							<div className="flex items-center gap-3">
+								{/* Search icon (mobile) */}
+								<Link
+									to="/search"
+									className="md:hidden p-2 text-stone-500 hover:text-stone-700 transition-colors"
+									aria-label="Search"
+								>
+									<Search size={20} strokeWidth={1.5} />
+								</Link>
+
+								{/* Desktop Navigation */}
+								<nav className="hidden md:flex items-center gap-1">
+									{NAV_ITEMS.map((item) => (
+										<NavLink
+											key={item.id}
+											to={item.path}
+											className={({ isActive }) =>
+												`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+													isActive
+														? "bg-stone-800 text-cream"
+														: "text-stone-600 hover:text-stone-800 hover:bg-stone-100"
+												}`
+											}
+										>
+											{item.label}
+										</NavLink>
+									))}
+									<Link
+										to="/search"
+										className="p-2 text-stone-500 hover:text-stone-700 transition-colors ml-2"
+										aria-label="Search"
 									>
-										{item.label}
-									</NavLink>
-								))}
-							</nav>
+										<Search size={18} strokeWidth={1.5} />
+									</Link>
+								</nav>
+							</div>
 						</div>
 					</header>
 
@@ -146,23 +133,24 @@ export default function Root() {
 			</main>
 
 			{/* Mobile Navigation - fixed bottom */}
-			<nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-cream/95 backdrop-blur-sm border-t border-stone-200 px-2 py-2 safe-area-pb">
-				<div className="flex justify-around items-center">
+			<nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-cream/95 backdrop-blur-sm border-t border-stone-200 px-4 py-2 safe-area-pb">
+				<div className="flex justify-around items-center max-w-md mx-auto">
 					{NAV_ITEMS.map((item) => {
 						const Icon = item.icon;
 						return (
 							<NavLink
 								key={item.id}
 								to={item.path}
-								end={item.path === "/"}
 								className={({ isActive }) =>
-									`flex flex-col items-center gap-1 px-3 py-2 rounded-lg transition-all ${
-										isActive ? "text-terracotta" : "text-stone-600"
+									`flex flex-col items-center gap-1 px-4 py-2 rounded-xl transition-all ${
+										isActive
+											? "text-terracotta bg-terracotta/10"
+											: "text-stone-500"
 									}`
 								}
 							>
-								<Icon size={20} strokeWidth={1.5} />
-								<span className="text-[10px] font-medium">{item.label}</span>
+								<Icon size={22} strokeWidth={1.5} />
+								<span className="text-xs font-medium">{item.label}</span>
 							</NavLink>
 						);
 					})}
