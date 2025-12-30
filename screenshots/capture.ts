@@ -12,31 +12,6 @@ const VIEWPORT = isMobile ? { width: 375, height: 812 } : { width: 1280, height:
 const PAGES = [
   { route: "/", name: "homepage" },
 
-  // Conversations
-  { route: "/conversations", name: "conversations/index" },
-  { route: "/conversations/arriving", name: "conversations/arriving" },
-  { route: "/conversations/food", name: "conversations/food" },
-  { route: "/conversations/smalltalk", name: "conversations/smalltalk" },
-  { route: "/conversations/requests", name: "conversations/requests" },
-  { route: "/conversations/discourse", name: "conversations/discourse" },
-
-  // Phrases
-  { route: "/phrases", name: "phrases/index" },
-  { route: "/phrases/survival", name: "phrases/survival" },
-  { route: "/phrases/responses", name: "phrases/responses" },
-  { route: "/phrases/requests", name: "phrases/requests" },
-  { route: "/phrases/opinions", name: "phrases/opinions" },
-  { route: "/phrases/connectors", name: "phrases/connectors" },
-  { route: "/phrases/time", name: "phrases/time" },
-  { route: "/phrases/constructions", name: "phrases/constructions" },
-
-  // Quick Reference
-  { route: "/quick-reference/cases-pronouns", name: "quick-reference/cases-pronouns" },
-  { route: "/quick-reference/nouns-articles", name: "quick-reference/nouns-articles" },
-  { route: "/quick-reference/adjectives", name: "quick-reference/adjectives" },
-  { route: "/quick-reference/prepositions", name: "quick-reference/prepositions" },
-  { route: "/quick-reference/verbs", name: "quick-reference/verbs" },
-
   // Practice
   { route: "/practice/speed", name: "practice/speed" },
   { route: "/practice/pronouns", name: "practice/pronouns" },
@@ -45,12 +20,35 @@ const PAGES = [
   { route: "/practice/vocabulary", name: "practice/vocabulary" },
   { route: "/practice/review", name: "practice/review" },
 
-  // Vocabulary
-  { route: "/vocabulary", name: "vocabulary/index" },
-  { route: "/vocabulary/nouns", name: "vocabulary/nouns" },
-  { route: "/vocabulary/verbs", name: "vocabulary/verbs" },
-  { route: "/vocabulary/phrases", name: "vocabulary/phrases" },
-  { route: "/vocabulary/reference", name: "vocabulary/reference" },
+  // Explore - Conversations
+  { route: "/explore/conversations", name: "explore/conversations/index" },
+  { route: "/explore/conversations/arriving", name: "explore/conversations/arriving" },
+  { route: "/explore/conversations/food", name: "explore/conversations/food" },
+  { route: "/explore/conversations/smalltalk", name: "explore/conversations/smalltalk" },
+  { route: "/explore/conversations/requests", name: "explore/conversations/requests" },
+
+  // Explore - Phrases
+  { route: "/explore/phrases", name: "explore/phrases/index" },
+  { route: "/explore/phrases/survival", name: "explore/phrases/survival" },
+  { route: "/explore/phrases/responses", name: "explore/phrases/responses" },
+  { route: "/explore/phrases/requests", name: "explore/phrases/requests" },
+  { route: "/explore/phrases/opinions", name: "explore/phrases/opinions" },
+  { route: "/explore/phrases/connectors", name: "explore/phrases/connectors" },
+  { route: "/explore/phrases/time", name: "explore/phrases/time" },
+  { route: "/explore/phrases/constructions", name: "explore/phrases/constructions" },
+
+  // Explore - Words (vocabulary)
+  { route: "/explore/words", name: "explore/words/index" },
+  { route: "/explore/words/nouns", name: "explore/words/nouns" },
+  { route: "/explore/words/verbs", name: "explore/words/verbs" },
+  { route: "/explore/words/reference", name: "explore/words/reference" },
+
+  // Reference
+  { route: "/reference/cases-pronouns", name: "reference/cases-pronouns" },
+  { route: "/reference/nouns-articles", name: "reference/nouns-articles" },
+  { route: "/reference/adjectives", name: "reference/adjectives" },
+  { route: "/reference/prepositions", name: "reference/prepositions" },
+  { route: "/reference/verbs", name: "reference/verbs" },
 
   // Search
   { route: "/search", name: "search" },

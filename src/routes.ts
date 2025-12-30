@@ -37,12 +37,6 @@ export default [
   // Search (will become modal later, keep route for now)
   route("search", "routes/search.tsx"),
 
-  // Redirects for old URLs
-  route("conversations/*", "routes/redirects/conversations.tsx"),
-  route("phrases/*", "routes/redirects/phrases.tsx"),
-  route("vocabulary/*", "routes/redirects/vocabulary.tsx"),
-  route("quick-reference/*", "routes/redirects/quick-reference.tsx"),
-
   // API routes
   route("api/push/subscribe", "routes/api/push.subscribe.ts"),
   route("api/push/unsubscribe", "routes/api/push.unsubscribe.ts"),

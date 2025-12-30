@@ -244,7 +244,7 @@ const VerbsTab: React.FC<{ data: VocabularyLoaderData }> = ({ data }) => (
 				For detailed conjugation patterns and usage examples
 			</span>
 			<Link
-				to="/quick-reference/verbs"
+				to="/reference/verbs"
 				className="inline-flex items-center gap-1.5 text-sm font-medium text-ocean-text hover:underline"
 			>
 				See full patterns <ArrowRight size={14} />
@@ -698,7 +698,7 @@ export default function TabRoute({ loaderData }: Route.ComponentProps) {
 		case "verbs":
 			return <VerbsTab data={data} />;
 		case "phrases":
-			return <Navigate to="/phrases" replace />;
+			return <Navigate to="/explore/phrases" replace />;
 		case "reference":
 			return <ReferenceTab data={data} />;
 		default:
