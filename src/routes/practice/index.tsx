@@ -1,3 +1,4 @@
 import { redirect } from "react-router";
 
-export const loader = () => redirect("/practice/pronouns");
+// Default to Speed Drill - the primary training experience
+export const loader = () => redirect("/practice/speed");

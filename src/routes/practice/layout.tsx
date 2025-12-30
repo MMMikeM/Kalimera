@@ -2,12 +2,8 @@ import { useState, useEffect } from "react";
 import {
 	Users,
 	BookOpen,
-	ChevronDown,
-	Lightbulb,
 	UserPlus,
 	Clock,
-	Flame,
-	Trophy,
 	FileText,
 	Zap,
 } from "lucide-react";
@@ -17,7 +13,6 @@ import {
 	useFetcher,
 	useRevalidator,
 	useLocation,
-	Link,
 } from "react-router";
 import type { Route } from "./+types/layout";
 import {
@@ -30,12 +25,7 @@ import {
 	type VocabItemWithSkill,
 	type PracticeStats,
 } from "./data.server";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-	Collapsible,
-	CollapsibleContent,
-	CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+import { NavTabs, type NavTab } from "@/components";
 import {
 	Select,
 	SelectContent,
@@ -124,6 +114,14 @@ const UserSelector = ({ users, onUserChange }: UserSelectorProps) => {
 	const [newName, setNewName] = useState("");
 	const [newCode, setNewCode] = useState("");
 	const fetcher = useFetcher();
+
+	// Sync localStorage userId to URL on mount if URL doesn't have it
+	useEffect(() => {
+		const urlUserId = searchParams.get("userId");
+		if (!urlUserId && selectedUserId) {
+			onUserChange?.(selectedUserId);
+		}
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	const handleUserChange = (value: string) => {
 		if (value === "new") {
@@ -248,114 +246,16 @@ const UserSelector = ({ users, onUserChange }: UserSelectorProps) => {
 	);
 };
 
-export const PracticeStrategy = () => (
-	<Collapsible>
-		<CollapsibleTrigger className="flex items-center gap-2 w-full p-3 rounded-lg bg-muted hover:bg-muted/80 transition-colors text-left group border border-border">
-			<Lightbulb size={18} className="text-honey" />
-			<span className="font-medium text-foreground">
-				How to Practice Effectively
-			</span>
-			<ChevronDown
-				size={16}
-				className="ml-auto text-muted-foreground transition-transform group-data-[state=open]:rotate-180"
-			/>
-		</CollapsibleTrigger>
-		<CollapsibleContent>
-			<div className="mt-4 info-box-tip">
-				<div className="grid md:grid-cols-3 gap-6 text-sm">
-					<div>
-						<h4 className="info-box-tip-title mb-2">Step 1: Foundation</h4>
-						<ul className="space-y-1.5 text-foreground/80">
-							<li>Start with Pronouns (most frequent words)</li>
-							<li>Master object pronouns first (με, σε, τον...)</li>
-							<li>Practice until 80%+ accuracy</li>
-						</ul>
-					</div>
-					<div>
-						<h4 className="info-box-tip-title mb-2">Step 2: Build Up</h4>
-						<ul className="space-y-1.5 text-foreground/80">
-							<li>Add Articles (τον/την/το patterns)</li>
-							<li>Learn essential Verbs (έχω, θέλω, μπορώ)</li>
-							<li>Connect grammar to real phrases</li>
-						</ul>
-					</div>
-					<div>
-						<h4 className="info-box-tip-title mb-2">Step 3: Apply</h4>
-						<ul className="space-y-1.5 text-foreground/80">
-							<li>Practice Vocabulary in context</li>
-							<li>Return to weaker areas regularly</li>
-							<li>Short daily sessions beat long cramming</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</CollapsibleContent>
-	</Collapsible>
-);
-
-const StatsBanner = ({ stats }: { stats: PracticeStats }) => (
-	<div className="grid grid-cols-3 gap-4">
-		<div className="stat-card-streak">
-			<Flame className="stat-card-streak-icon" size={24} />
-			<div>
-				<p className="stat-card-streak-value">{stats.streak}</p>
-				<p className="stat-card-streak-label">Day Streak</p>
-			</div>
-		</div>
-		<div className="stat-card-success">
-			<Trophy className="stat-card-success-icon" size={24} />
-			<div>
-				<p className="stat-card-success-value">{stats.totalLearned}</p>
-				<p className="stat-card-success-label">Learned</p>
-			</div>
-		</div>
-		<div className="stat-card-due">
-			<Clock className="stat-card-due-icon" size={24} />
-			<div>
-				<p className="stat-card-due-value">{stats.dueCount}</p>
-				<p className="stat-card-due-label">Due Today</p>
-			</div>
-		</div>
-	</div>
-);
-
 export type PracticeLoaderData = Awaited<ReturnType<typeof loader>>;
 
-const TAB_COLORS = {
-	pronouns: {
-		active: "border-b-2 border-b-ocean text-ocean",
-		icon: "text-ocean",
-	},
-	articles: {
-		active: "border-b-2 border-b-olive text-olive",
-		icon: "text-olive",
-	},
-	verbs: {
-		active: "border-b-2 border-b-honey text-honey",
-		icon: "text-honey",
-	},
-	vocabulary: {
-		active: "border-b-2 border-b-ocean text-ocean",
-		icon: "text-ocean",
-	},
-	review: {
-		active: "border-b-2 border-b-terracotta text-terracotta",
-		icon: "text-terracotta",
-	},
-} as const;
-
-const TABS = [
-	{ id: "pronouns", label: "Pronouns", shortLabel: "Pro", icon: Users },
-	{ id: "articles", label: "Articles", shortLabel: "Art", icon: FileText },
-	{ id: "verbs", label: "Verbs", shortLabel: "Vrb", icon: Zap },
-	{
-		id: "vocabulary",
-		label: "Vocabulary",
-		shortLabel: "Vocab",
-		icon: BookOpen,
-	},
-	{ id: "review", label: "Review", shortLabel: "Rev", icon: Clock },
-] as const;
+const PRACTICE_TABS: NavTab[] = [
+	{ id: "speed", label: "Speed Drill", shortLabel: "Speed", icon: <Zap size={16} />, color: "terracotta" },
+	{ id: "pronouns", label: "Pronouns", shortLabel: "Pro", icon: <Users size={16} />, color: "ocean" },
+	{ id: "articles", label: "Articles", shortLabel: "Art", icon: <FileText size={16} />, color: "olive" },
+	{ id: "verbs", label: "Verbs", shortLabel: "Vrb", icon: <Zap size={16} />, color: "honey" },
+	{ id: "vocabulary", label: "Vocabulary", shortLabel: "Vocab", icon: <BookOpen size={16} />, color: "ocean" },
+	{ id: "review", label: "Review", shortLabel: "Rev", icon: <Clock size={16} />, color: "terracotta" },
+];
 
 export default function PracticeLayout({ loaderData }: Route.ComponentProps) {
 	const { users, stats } = loaderData;
@@ -378,47 +278,22 @@ export default function PracticeLayout({ loaderData }: Route.ComponentProps) {
 	};
 
 	return (
-		<div className="space-y-6">
-			<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-2">
-				<div>
-					<h2 className="text-2xl font-bold text-foreground">Practice</h2>
-					<p className="text-muted-foreground mt-1">
-						Interactive drills to build fluency
-					</p>
-				</div>
+		<div className="space-y-4">
+			{/* Compact header - just tabs and user selector */}
+			<div className="flex items-center justify-between gap-4">
+				<NavTabs
+					tabs={PRACTICE_TABS.map((tab) =>
+						tab.id === "review" && stats?.dueCount
+							? { ...tab, badge: stats.dueCount }
+							: tab
+					)}
+					activeTab={activeTab}
+					buildUrl={buildTabUrl}
+				/>
 				<UserSelector users={users} onUserChange={handleUserChange} />
 			</div>
 
-			{stats && <StatsBanner stats={stats} />}
-
-			<Tabs value={activeTab}>
-				<TabsList className="flex-wrap h-auto gap-1">
-					{TABS.map((tab) => {
-						const isActive = activeTab === tab.id;
-						const colors = TAB_COLORS[tab.id];
-						return (
-							<TabsTrigger
-								key={tab.id}
-								value={tab.id}
-								asChild
-								className={`gap-1.5 relative ${isActive ? colors.active : ""}`}
-							>
-								<Link to={buildTabUrl(tab.id)}>
-									<tab.icon size={16} className={isActive ? colors.icon : ""} />
-									<span className="hidden sm:inline">{tab.label}</span>
-									<span className="sm:hidden">{tab.shortLabel}</span>
-									{tab.id === "review" && stats && stats.dueCount > 0 && (
-										<span className="absolute -top-1 -right-1 bg-terracotta text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-											{stats.dueCount > 99 ? "99+" : stats.dueCount}
-										</span>
-									)}
-								</Link>
-							</TabsTrigger>
-						);
-					})}
-				</TabsList>
-			</Tabs>
-
+			{/* Drill content - takes full available space */}
 			<Outlet context={loaderData} />
 		</div>
 	);
