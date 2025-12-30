@@ -33,7 +33,7 @@ const PatternDemo = () => (
 		<p className="text-xs uppercase tracking-widest text-stone-400 mb-4">
 			One pattern, many words
 		</p>
-		<div className="grid grid-cols-2 gap-6">
+		<div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
 			<div>
 				<p className="text-sm text-stone-500 mb-2">Articles (accusative)</p>
 				<div className="flex gap-4">
