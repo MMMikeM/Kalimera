@@ -31,6 +31,7 @@ import { LESSON_2024_11_28 } from "./2024-11-28-masculine-os";
 import { LESSON_2024_12_02 } from "./2024-12-02-family-routines";
 import { LESSON_2024_12_09 } from "./2024-12-09-countries-languages";
 import { LESSON_2024_12_16 } from "./2024-12-16-comparatives-housing";
+import { LESSON_2024_12_30 } from "./2024-12-30-entertainment-events";
 
 export {
 	// 2023
@@ -62,6 +63,7 @@ export {
 	LESSON_2024_12_02,
 	LESSON_2024_12_09,
 	LESSON_2024_12_16,
+	LESSON_2024_12_30,
 };
 
 export const LESSONS = {
@@ -94,4 +96,5 @@ export const LESSONS = {
 	"2024-12-02": LESSON_2024_12_02,
 	"2024-12-09": LESSON_2024_12_09,
 	"2024-12-16": LESSON_2024_12_16,
+	"2024-12-30": LESSON_2024_12_30,
 } as const;
