@@ -21,6 +21,8 @@ import type { LinksFunction } from "react-router";
 
 export const links: LinksFunction = () => [
 	{ rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
+	{ rel: "manifest", href: "/manifest.json" },
+	{ rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
 ];
 
 const NAV_ITEMS = [
@@ -59,6 +61,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
 			<head>
 				<meta charSet="utf-8" />
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				<meta name="theme-color" content="#4A7C8F" />
+				<meta name="mobile-web-app-capable" content="yes" />
+				<meta name="apple-mobile-web-app-capable" content="yes" />
+				<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+				<meta name="apple-mobile-web-app-title" content="καλημέρα" />
 				<link rel="preconnect" href="https://fonts.googleapis.com" />
 				<link
 					rel="preconnect"

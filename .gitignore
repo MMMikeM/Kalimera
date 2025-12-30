@@ -43,3 +43,6 @@ screenshots/practice/
 
 # Claude Code config
 .claude/
+
+# pnpm build approvals
+.pnpm-approvals
