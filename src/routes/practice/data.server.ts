@@ -160,6 +160,3 @@ export const actionHandlers = {
 } as const;
 
 export type ActionIntent = keyof typeof actionHandlers;
-export type ActionHandlerResult = Awaited<
-	ReturnType<(typeof actionHandlers)[ActionIntent]>
->;

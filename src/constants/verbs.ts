@@ -95,8 +95,6 @@ export const VERB_FAMILIES: Record<string, VerbFamilyConfig> = {
 	},
 } as const;
 
-export type VerbFamilyId = keyof typeof VERB_FAMILIES;
-
 export interface VerbPattern {
 	name: string;
 	description: string;

@@ -28,9 +28,6 @@ export async function getVocabByTags(tagSlugs: readonly string[]) {
 		.orderBy(vocabulary.greekText);
 }
 
-/** Type for a single vocabulary item with tag */
-export type VocabItem = Awaited<ReturnType<typeof getVocabByTags>>[number];
-
 // ═══════════════════════════════════════════════════════════════════════════════
 // VOCABULARY BY SECTION (using tag_sections lookup table)
 // ═══════════════════════════════════════════════════════════════════════════════

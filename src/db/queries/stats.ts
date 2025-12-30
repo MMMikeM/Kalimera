@@ -14,6 +14,3 @@ export async function getAppStats() {
 		vocabulary: vocabCount?.count ?? 0,
 	};
 }
-
-/** Type for app statistics */
-export type AppStats = Awaited<ReturnType<typeof getAppStats>>;
