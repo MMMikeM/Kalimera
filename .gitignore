@@ -36,3 +36,10 @@ build/
 *.njsproj
 *.sln
 *.sw?
+
+# Playwright MCP screenshots
+.playwright-mcp/
+screenshots/practice/
+
+# Claude Code config
+.claude/
