@@ -39,7 +39,8 @@ build/
 
 # Playwright MCP screenshots
 .playwright-mcp/
-screenshots/practice/
+screenshots/mobile/
+screenshots/desktop/
 
 # pnpm build approvals
 .pnpm-approvals
