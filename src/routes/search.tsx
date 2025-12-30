@@ -1,6 +1,7 @@
 import type { Route } from "./+types/search";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Search } from "lucide-react";
+import { createFuzzySearch } from "@mmmike/mikrofuzz";
 import { MonoText, SearchInput, TabHero } from "../components";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
@@ -33,23 +34,24 @@ export default function SearchRoute({ loaderData }: Route.ComponentProps) {
 	const allWords = loaderData?.vocabulary ?? [];
 
 	const [searchTerm, setSearchTerm] = useState("");
-	const [searchResults, setSearchResults] = useState<typeof allWords>([]);
 
-	const handleSearch = (term: string) => {
-		setSearchTerm(term);
-		if (term.length > 0) {
-			const lowerTerm = term.toLowerCase();
-			const results = allWords.filter(
-				(word) =>
-					word.greek.toLowerCase().includes(lowerTerm) ||
-					word.english.toLowerCase().includes(lowerTerm) ||
-					word.tags.some((tag) => tag.toLowerCase().includes(lowerTerm)),
-			);
-			setSearchResults(results);
-		} else {
-			setSearchResults([]);
-		}
-	};
+	// Create fuzzy search function - memoized to avoid recreating on every render
+	const fuzzySearch = useMemo(
+		() =>
+			createFuzzySearch<SearchVocabItem>(allWords, {
+				getText: (item) => {
+					const word = item as SearchVocabItem;
+					return [word.greek, word.english, ...word.tags];
+				},
+			}),
+		[allWords],
+	);
+
+	// Perform fuzzy search and extract items (already sorted by score)
+	const searchResults = useMemo(() => {
+		if (searchTerm.length === 0) return [];
+		return fuzzySearch(searchTerm).map((result) => result.item);
+	}, [fuzzySearch, searchTerm]);
 
 	return (
 		<div className="space-y-6">
@@ -66,8 +68,8 @@ export default function SearchRoute({ loaderData }: Route.ComponentProps) {
 			<SearchInput
 				placeholder="Search Greek, English, or tags..."
 				value={searchTerm}
-				onChange={(e) => handleSearch(e.target.value)}
-				onClear={() => handleSearch("")}
+				onChange={(e) => setSearchTerm(e.target.value)}
+				onClear={() => setSearchTerm("")}
 				autoFocus
 			/>
 
@@ -138,11 +140,9 @@ export default function SearchRoute({ loaderData }: Route.ComponentProps) {
 				<h4 className="font-bold mb-2">Search Tips</h4>
 				<ul className="text-sm text-stone-700 space-y-1">
 					<li>• Type in Greek or English to find matches</li>
-					<li>
-						• Search will find partial matches (e.g., "καλ" finds "καλημέρα")
-					</li>
+					<li>• Fuzzy matching finds close matches even with typos</li>
+					<li>• Results are ranked by relevance (best matches first)</li>
 					<li>• Search by tag name (e.g., "Summer" or "Frequency")</li>
-					<li>• Look for the verb family tags to know conjugation patterns</li>
 				</ul>
 			</div>
 		</div>
