@@ -148,5 +148,3 @@ export const PushNotificationToggle = ({ userId, className }: PushNotificationTo
 		</Button>
 	);
 };
-
-export default PushNotificationToggle;
