@@ -1,0 +1,1182 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "id": "16bb441a-cd8b-4c36-8e3b-80704c221774",
+  "prevIds": [
+    "4916ba1e-b795-463a-b46d-7d77bb79ce60"
+  ],
+  "ddl": [
+    {
+      "name": "practice_attempts",
+      "entityType": "tables"
+    },
+    {
+      "name": "practice_sessions",
+      "entityType": "tables"
+    },
+    {
+      "name": "push_subscriptions",
+      "entityType": "tables"
+    },
+    {
+      "name": "tag_sections",
+      "entityType": "tables"
+    },
+    {
+      "name": "tags",
+      "entityType": "tables"
+    },
+    {
+      "name": "users",
+      "entityType": "tables"
+    },
+    {
+      "name": "verb_details",
+      "entityType": "tables"
+    },
+    {
+      "name": "vocabulary",
+      "entityType": "tables"
+    },
+    {
+      "name": "vocabulary_skills",
+      "entityType": "tables"
+    },
+    {
+      "name": "vocabulary_tags",
+      "entityType": "tables"
+    },
+    {
+      "name": "weak_areas",
+      "entityType": "tables"
+    },
+    {
+      "type": "integer",
+      "notNull": false,
+      "autoincrement": true,
+      "default": null,
+      "generated": null,
+      "name": "id",
+      "entityType": "columns",
+      "table": "practice_attempts"
+    },
+    {
+      "type": "integer",
+      "notNull": true,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "user_id",
+      "entityType": "columns",
+      "table": "practice_attempts"
+    },
+    {
+      "type": "integer",
+      "notNull": false,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "session_id",
+      "entityType": "columns",
+      "table": "practice_attempts"
+    },
+    {
+      "type": "integer",
+      "notNull": false,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "vocabulary_id",
+      "entityType": "columns",
+      "table": "practice_attempts"
+    },
+    {
+      "type": "text",
+      "notNull": true,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "question_text",
+      "entityType": "columns",
+      "table": "practice_attempts"
+    },
+    {
+      "type": "text",
+      "notNull": true,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "correct_answer",
+      "entityType": "columns",
+      "table": "practice_attempts"
+    },
+    {
+      "type": "text",
+      "notNull": false,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "user_answer",
+      "entityType": "columns",
+      "table": "practice_attempts"
+    },
+    {
+      "type": "integer",
+      "notNull": false,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "is_correct",
+      "entityType": "columns",
+      "table": "practice_attempts"
+    },
+    {
+      "type": "integer",
+      "notNull": false,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "time_taken",
+      "entityType": "columns",
+      "table": "practice_attempts"
+    },
+    {
+      "type": "integer",
+      "notNull": true,
+      "autoincrement": false,
+      "default": "(unixepoch())",
+      "generated": null,
+      "name": "attempted_at",
+      "entityType": "columns",
+      "table": "practice_attempts"
+    },
+    {
+      "type": "integer",
+      "notNull": false,
+      "autoincrement": true,
+      "default": null,
+      "generated": null,
+      "name": "id",
+      "entityType": "columns",
+      "table": "practice_sessions"
+    },
+    {
+      "type": "integer",
+      "notNull": true,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "user_id",
+      "entityType": "columns",
+      "table": "practice_sessions"
+    },
+    {
+      "type": "text",
+      "notNull": false,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "session_type",
+      "entityType": "columns",
+      "table": "practice_sessions"
+    },
+    {
+      "type": "text",
+      "notNull": false,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "category",
+      "entityType": "columns",
+      "table": "practice_sessions"
+    },
+    {
+      "type": "text",
+      "notNull": false,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "word_type_filter",
+      "entityType": "columns",
+      "table": "practice_sessions"
+    },
+    {
+      "type": "integer",
+      "notNull": false,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "total_questions",
+      "entityType": "columns",
+      "table": "practice_sessions"
+    },
+    {
+      "type": "integer",
+      "notNull": false,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "correct_answers",
+      "entityType": "columns",
+      "table": "practice_sessions"
+    },
+    {
+      "type": "text",
+      "notNull": false,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "focus_area",
+      "entityType": "columns",
+      "table": "practice_sessions"
+    },
+    {
+      "type": "integer",
+      "notNull": true,
+      "autoincrement": false,
+      "default": "(unixepoch())",
+      "generated": null,
+      "name": "started_at",
+      "entityType": "columns",
+      "table": "practice_sessions"
+    },
+    {
+      "type": "integer",
+      "notNull": false,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "completed_at",
+      "entityType": "columns",
+      "table": "practice_sessions"
+    },
+    {
+      "type": "integer",
+      "notNull": false,
+      "autoincrement": true,
+      "default": null,
+      "generated": null,
+      "name": "id",
+      "entityType": "columns",
+      "table": "push_subscriptions"
+    },
+    {
+      "type": "integer",
+      "notNull": true,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "user_id",
+      "entityType": "columns",
+      "table": "push_subscriptions"
+    },
+    {
+      "type": "text",
+      "notNull": true,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "endpoint",
+      "entityType": "columns",
+      "table": "push_subscriptions"
+    },
+    {
+      "type": "text",
+      "notNull": true,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "p256dh",
+      "entityType": "columns",
+      "table": "push_subscriptions"
+    },
+    {
+      "type": "text",
+      "notNull": true,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "auth",
+      "entityType": "columns",
+      "table": "push_subscriptions"
+    },
+    {
+      "type": "integer",
+      "notNull": true,
+      "autoincrement": false,
+      "default": "(unixepoch())",
+      "generated": null,
+      "name": "created_at",
+      "entityType": "columns",
+      "table": "push_subscriptions"
+    },
+    {
+      "type": "integer",
+      "notNull": false,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "tag_id",
+      "entityType": "columns",
+      "table": "tag_sections"
+    },
+    {
+      "type": "text",
+      "notNull": true,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "section",
+      "entityType": "columns",
+      "table": "tag_sections"
+    },
+    {
+      "type": "integer",
+      "notNull": false,
+      "autoincrement": false,
+      "default": "0",
+      "generated": null,
+      "name": "display_order",
+      "entityType": "columns",
+      "table": "tag_sections"
+    },
+    {
+      "type": "integer",
+      "notNull": false,
+      "autoincrement": true,
+      "default": null,
+      "generated": null,
+      "name": "id",
+      "entityType": "columns",
+      "table": "tags"
+    },
+    {
+      "type": "text",
+      "notNull": true,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "slug",
+      "entityType": "columns",
+      "table": "tags"
+    },
+    {
+      "type": "text",
+      "notNull": true,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "name",
+      "entityType": "columns",
+      "table": "tags"
+    },
+    {
+      "type": "text",
+      "notNull": false,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "description",
+      "entityType": "columns",
+      "table": "tags"
+    },
+    {
+      "type": "integer",
+      "notNull": true,
+      "autoincrement": false,
+      "default": "(unixepoch())",
+      "generated": null,
+      "name": "created_at",
+      "entityType": "columns",
+      "table": "tags"
+    },
+    {
+      "type": "integer",
+      "notNull": false,
+      "autoincrement": true,
+      "default": null,
+      "generated": null,
+      "name": "id",
+      "entityType": "columns",
+      "table": "users"
+    },
+    {
+      "type": "text",
+      "notNull": true,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "code",
+      "entityType": "columns",
+      "table": "users"
+    },
+    {
+      "type": "text",
+      "notNull": true,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "display_name",
+      "entityType": "columns",
+      "table": "users"
+    },
+    {
+      "type": "integer",
+      "notNull": true,
+      "autoincrement": false,
+      "default": "(unixepoch())",
+      "generated": null,
+      "name": "created_at",
+      "entityType": "columns",
+      "table": "users"
+    },
+    {
+      "type": "integer",
+      "notNull": false,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "vocab_id",
+      "entityType": "columns",
+      "table": "verb_details"
+    },
+    {
+      "type": "text",
+      "notNull": true,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "conjugation_family",
+      "entityType": "columns",
+      "table": "verb_details"
+    },
+    {
+      "type": "text",
+      "notNull": false,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "notes",
+      "entityType": "columns",
+      "table": "verb_details"
+    },
+    {
+      "type": "integer",
+      "notNull": false,
+      "autoincrement": true,
+      "default": null,
+      "generated": null,
+      "name": "id",
+      "entityType": "columns",
+      "table": "vocabulary"
+    },
+    {
+      "type": "text",
+      "notNull": true,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "greek_text",
+      "entityType": "columns",
+      "table": "vocabulary"
+    },
+    {
+      "type": "text",
+      "notNull": true,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "english_translation",
+      "entityType": "columns",
+      "table": "vocabulary"
+    },
+    {
+      "type": "text",
+      "notNull": true,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "word_type",
+      "entityType": "columns",
+      "table": "vocabulary"
+    },
+    {
+      "type": "integer",
+      "notNull": true,
+      "autoincrement": false,
+      "default": "0",
+      "generated": null,
+      "name": "difficulty_level",
+      "entityType": "columns",
+      "table": "vocabulary"
+    },
+    {
+      "type": "integer",
+      "notNull": true,
+      "autoincrement": false,
+      "default": "(unixepoch())",
+      "generated": null,
+      "name": "created_at",
+      "entityType": "columns",
+      "table": "vocabulary"
+    },
+    {
+      "type": "text",
+      "notNull": false,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "gender",
+      "entityType": "columns",
+      "table": "vocabulary"
+    },
+    {
+      "type": "text",
+      "notNull": false,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "metadata",
+      "entityType": "columns",
+      "table": "vocabulary"
+    },
+    {
+      "type": "integer",
+      "notNull": true,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "user_id",
+      "entityType": "columns",
+      "table": "vocabulary_skills"
+    },
+    {
+      "type": "integer",
+      "notNull": true,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "vocabulary_id",
+      "entityType": "columns",
+      "table": "vocabulary_skills"
+    },
+    {
+      "type": "text",
+      "notNull": true,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "skill_type",
+      "entityType": "columns",
+      "table": "vocabulary_skills"
+    },
+    {
+      "type": "integer",
+      "notNull": false,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "next_review_at",
+      "entityType": "columns",
+      "table": "vocabulary_skills"
+    },
+    {
+      "type": "integer",
+      "notNull": false,
+      "autoincrement": false,
+      "default": "1",
+      "generated": null,
+      "name": "interval_days",
+      "entityType": "columns",
+      "table": "vocabulary_skills"
+    },
+    {
+      "type": "real",
+      "notNull": false,
+      "autoincrement": false,
+      "default": "2.3",
+      "generated": null,
+      "name": "ease_factor",
+      "entityType": "columns",
+      "table": "vocabulary_skills"
+    },
+    {
+      "type": "integer",
+      "notNull": false,
+      "autoincrement": false,
+      "default": "0",
+      "generated": null,
+      "name": "review_count",
+      "entityType": "columns",
+      "table": "vocabulary_skills"
+    },
+    {
+      "type": "integer",
+      "notNull": false,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "last_reviewed_at",
+      "entityType": "columns",
+      "table": "vocabulary_skills"
+    },
+    {
+      "type": "integer",
+      "notNull": true,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "vocabulary_id",
+      "entityType": "columns",
+      "table": "vocabulary_tags"
+    },
+    {
+      "type": "integer",
+      "notNull": true,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "tag_id",
+      "entityType": "columns",
+      "table": "vocabulary_tags"
+    },
+    {
+      "type": "integer",
+      "notNull": false,
+      "autoincrement": true,
+      "default": null,
+      "generated": null,
+      "name": "id",
+      "entityType": "columns",
+      "table": "weak_areas"
+    },
+    {
+      "type": "integer",
+      "notNull": true,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "user_id",
+      "entityType": "columns",
+      "table": "weak_areas"
+    },
+    {
+      "type": "text",
+      "notNull": true,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "area_type",
+      "entityType": "columns",
+      "table": "weak_areas"
+    },
+    {
+      "type": "text",
+      "notNull": true,
+      "autoincrement": false,
+      "default": null,
+      "generated": null,
+      "name": "area_identifier",
+      "entityType": "columns",
+      "table": "weak_areas"
+    },
+    {
+      "type": "integer",
+      "notNull": true,
+      "autoincrement": false,
+      "default": "1",
+      "generated": null,
+      "name": "mistake_count",
+      "entityType": "columns",
+      "table": "weak_areas"
+    },
+    {
+      "type": "integer",
+      "notNull": true,
+      "autoincrement": false,
+      "default": "(unixepoch())",
+      "generated": null,
+      "name": "last_mistake_at",
+      "entityType": "columns",
+      "table": "weak_areas"
+    },
+    {
+      "type": "integer",
+      "notNull": true,
+      "autoincrement": false,
+      "default": "1",
+      "generated": null,
+      "name": "needs_focus",
+      "entityType": "columns",
+      "table": "weak_areas"
+    },
+    {
+      "columns": [
+        "user_id"
+      ],
+      "tableTo": "users",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "cascade",
+      "nameExplicit": false,
+      "name": "fk_practice_attempts_user_id_users_id_fk",
+      "entityType": "fks",
+      "table": "practice_attempts"
+    },
+    {
+      "columns": [
+        "session_id"
+      ],
+      "tableTo": "practice_sessions",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "set null",
+      "nameExplicit": false,
+      "name": "fk_practice_attempts_session_id_practice_sessions_id_fk",
+      "entityType": "fks",
+      "table": "practice_attempts"
+    },
+    {
+      "columns": [
+        "vocabulary_id"
+      ],
+      "tableTo": "vocabulary",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "set null",
+      "nameExplicit": false,
+      "name": "fk_practice_attempts_vocabulary_id_vocabulary_id_fk",
+      "entityType": "fks",
+      "table": "practice_attempts"
+    },
+    {
+      "columns": [
+        "user_id"
+      ],
+      "tableTo": "users",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "cascade",
+      "nameExplicit": false,
+      "name": "fk_practice_sessions_user_id_users_id_fk",
+      "entityType": "fks",
+      "table": "practice_sessions"
+    },
+    {
+      "columns": [
+        "user_id"
+      ],
+      "tableTo": "users",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "cascade",
+      "nameExplicit": false,
+      "name": "fk_push_subscriptions_user_id_users_id_fk",
+      "entityType": "fks",
+      "table": "push_subscriptions"
+    },
+    {
+      "columns": [
+        "tag_id"
+      ],
+      "tableTo": "tags",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "cascade",
+      "nameExplicit": false,
+      "name": "fk_tag_sections_tag_id_tags_id_fk",
+      "entityType": "fks",
+      "table": "tag_sections"
+    },
+    {
+      "columns": [
+        "vocab_id"
+      ],
+      "tableTo": "vocabulary",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "cascade",
+      "nameExplicit": false,
+      "name": "fk_verb_details_vocab_id_vocabulary_id_fk",
+      "entityType": "fks",
+      "table": "verb_details"
+    },
+    {
+      "columns": [
+        "user_id"
+      ],
+      "tableTo": "users",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "cascade",
+      "nameExplicit": false,
+      "name": "fk_vocabulary_skills_user_id_users_id_fk",
+      "entityType": "fks",
+      "table": "vocabulary_skills"
+    },
+    {
+      "columns": [
+        "vocabulary_id"
+      ],
+      "tableTo": "vocabulary",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "cascade",
+      "nameExplicit": false,
+      "name": "fk_vocabulary_skills_vocabulary_id_vocabulary_id_fk",
+      "entityType": "fks",
+      "table": "vocabulary_skills"
+    },
+    {
+      "columns": [
+        "vocabulary_id"
+      ],
+      "tableTo": "vocabulary",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "cascade",
+      "nameExplicit": false,
+      "name": "fk_vocabulary_tags_vocabulary_id_vocabulary_id_fk",
+      "entityType": "fks",
+      "table": "vocabulary_tags"
+    },
+    {
+      "columns": [
+        "tag_id"
+      ],
+      "tableTo": "tags",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "cascade",
+      "nameExplicit": false,
+      "name": "fk_vocabulary_tags_tag_id_tags_id_fk",
+      "entityType": "fks",
+      "table": "vocabulary_tags"
+    },
+    {
+      "columns": [
+        "user_id"
+      ],
+      "tableTo": "users",
+      "columnsTo": [
+        "id"
+      ],
+      "onUpdate": "NO ACTION",
+      "onDelete": "cascade",
+      "nameExplicit": false,
+      "name": "fk_weak_areas_user_id_users_id_fk",
+      "entityType": "fks",
+      "table": "weak_areas"
+    },
+    {
+      "columns": [
+        "user_id",
+        "vocabulary_id",
+        "skill_type"
+      ],
+      "nameExplicit": false,
+      "name": "vocabulary_skills_pk",
+      "entityType": "pks",
+      "table": "vocabulary_skills"
+    },
+    {
+      "columns": [
+        "vocabulary_id",
+        "tag_id"
+      ],
+      "nameExplicit": false,
+      "name": "vocabulary_tags_pk",
+      "entityType": "pks",
+      "table": "vocabulary_tags"
+    },
+    {
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "name": "practice_attempts_pk",
+      "table": "practice_attempts",
+      "entityType": "pks"
+    },
+    {
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "name": "practice_sessions_pk",
+      "table": "practice_sessions",
+      "entityType": "pks"
+    },
+    {
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "name": "push_subscriptions_pk",
+      "table": "push_subscriptions",
+      "entityType": "pks"
+    },
+    {
+      "columns": [
+        "tag_id"
+      ],
+      "nameExplicit": false,
+      "name": "tag_sections_pk",
+      "table": "tag_sections",
+      "entityType": "pks"
+    },
+    {
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "name": "tags_pk",
+      "table": "tags",
+      "entityType": "pks"
+    },
+    {
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "name": "users_pk",
+      "table": "users",
+      "entityType": "pks"
+    },
+    {
+      "columns": [
+        "vocab_id"
+      ],
+      "nameExplicit": false,
+      "name": "verb_details_pk",
+      "table": "verb_details",
+      "entityType": "pks"
+    },
+    {
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "name": "vocabulary_pk",
+      "table": "vocabulary",
+      "entityType": "pks"
+    },
+    {
+      "columns": [
+        "id"
+      ],
+      "nameExplicit": false,
+      "name": "weak_areas_pk",
+      "table": "weak_areas",
+      "entityType": "pks"
+    },
+    {
+      "columns": [
+        {
+          "value": "user_id",
+          "isExpression": false
+        }
+      ],
+      "isUnique": false,
+      "where": null,
+      "origin": "manual",
+      "name": "idx_practice_attempts_user",
+      "entityType": "indexes",
+      "table": "practice_attempts"
+    },
+    {
+      "columns": [
+        {
+          "value": "user_id",
+          "isExpression": false
+        }
+      ],
+      "isUnique": false,
+      "where": null,
+      "origin": "manual",
+      "name": "idx_practice_sessions_user",
+      "entityType": "indexes",
+      "table": "practice_sessions"
+    },
+    {
+      "columns": [
+        {
+          "value": "user_id",
+          "isExpression": false
+        }
+      ],
+      "isUnique": false,
+      "where": null,
+      "origin": "manual",
+      "name": "idx_push_subscriptions_user",
+      "entityType": "indexes",
+      "table": "push_subscriptions"
+    },
+    {
+      "columns": [
+        {
+          "value": "endpoint",
+          "isExpression": false
+        }
+      ],
+      "isUnique": true,
+      "where": null,
+      "origin": "manual",
+      "name": "idx_push_subscriptions_endpoint",
+      "entityType": "indexes",
+      "table": "push_subscriptions"
+    },
+    {
+      "columns": [
+        {
+          "value": "code",
+          "isExpression": false
+        }
+      ],
+      "isUnique": true,
+      "where": null,
+      "origin": "manual",
+      "name": "idx_users_code",
+      "entityType": "indexes",
+      "table": "users"
+    },
+    {
+      "columns": [
+        {
+          "value": "word_type",
+          "isExpression": false
+        }
+      ],
+      "isUnique": false,
+      "where": null,
+      "origin": "manual",
+      "name": "idx_vocabulary_word_type",
+      "entityType": "indexes",
+      "table": "vocabulary"
+    },
+    {
+      "columns": [
+        {
+          "value": "difficulty_level",
+          "isExpression": false
+        }
+      ],
+      "isUnique": false,
+      "where": null,
+      "origin": "manual",
+      "name": "idx_vocabulary_difficulty",
+      "entityType": "indexes",
+      "table": "vocabulary"
+    },
+    {
+      "columns": [
+        {
+          "value": "greek_text",
+          "isExpression": false
+        }
+      ],
+      "isUnique": true,
+      "where": null,
+      "origin": "manual",
+      "name": "idx_vocabulary_greek_text",
+      "entityType": "indexes",
+      "table": "vocabulary"
+    },
+    {
+      "columns": [
+        {
+          "value": "next_review_at",
+          "isExpression": false
+        }
+      ],
+      "isUnique": false,
+      "where": null,
+      "origin": "manual",
+      "name": "idx_vocabulary_skills_review",
+      "entityType": "indexes",
+      "table": "vocabulary_skills"
+    },
+    {
+      "columns": [
+        {
+          "value": "user_id",
+          "isExpression": false
+        }
+      ],
+      "isUnique": false,
+      "where": null,
+      "origin": "manual",
+      "name": "idx_vocabulary_skills_user",
+      "entityType": "indexes",
+      "table": "vocabulary_skills"
+    },
+    {
+      "columns": [
+        {
+          "value": "user_id",
+          "isExpression": false
+        }
+      ],
+      "isUnique": false,
+      "where": null,
+      "origin": "manual",
+      "name": "idx_weak_areas_user",
+      "entityType": "indexes",
+      "table": "weak_areas"
+    },
+    {
+      "columns": [
+        {
+          "value": "user_id",
+          "isExpression": false
+        },
+        {
+          "value": "area_type",
+          "isExpression": false
+        },
+        {
+          "value": "area_identifier",
+          "isExpression": false
+        }
+      ],
+      "isUnique": true,
+      "where": null,
+      "origin": "manual",
+      "name": "idx_weak_areas_user_area",
+      "entityType": "indexes",
+      "table": "weak_areas"
+    },
+    {
+      "columns": [
+        "slug"
+      ],
+      "nameExplicit": false,
+      "name": "tags_slug_unique",
+      "entityType": "uniques",
+      "table": "tags"
+    }
+  ],
+  "renames": []
+}
