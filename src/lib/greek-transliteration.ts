@@ -202,7 +202,8 @@ export const phoneticSimilarity = (a: string, b: string): number => {
 			const deletion = (matrix[i - 1]?.[j] ?? 0) + 1;
 			const insertion = (matrix[i]?.[j - 1] ?? 0) + 1;
 			const substitution = (matrix[i - 1]?.[j - 1] ?? 0) + cost;
-			matrix[i]![j] = Math.min(deletion, insertion, substitution);
+			const row = matrix[i];
+			if (row) row[j] = Math.min(deletion, insertion, substitution);
 		}
 	}
 

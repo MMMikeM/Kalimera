@@ -4,7 +4,7 @@
 import { sendPushNotification, type PushSubscriptionData, type VapidConfig } from "@mmmike/web-push/send";
 import type { LibSQLDatabase } from "drizzle-orm/libsql";
 import { eq, and, lt, isNotNull } from "drizzle-orm";
-import { pushSubscriptions, vocabularySkills, users, practiceSessions } from "@/db/schema";
+import { pushSubscriptions, vocabularySkills } from "@/db/schema";
 
 interface NotificationResult {
 	sent: number;
@@ -79,27 +79,10 @@ export const sendPracticeReminders = async (
 		return result;
 	}
 
-	// Get today's start timestamp (UTC)
-	const todayStart = new Date();
-	todayStart.setUTCHours(0, 0, 0, 0);
-
 	for (const sub of subscriptions) {
 		if (!sub.userId) continue;
 
-		// Check if user has practiced today
-		const recentSession = await db
-			.select({ id: practiceSessions.id })
-			.from(practiceSessions)
-			.where(
-				and(
-					eq(practiceSessions.userId, sub.userId),
-					// startedAt is stored as unix timestamp
-				),
-			)
-			.limit(1)
-			.get();
-
-		// For now, send to all subscribed users (can add "practiced today" check later)
+		// TODO: Add "practiced today" check to skip users who already practiced
 		const subscription: PushSubscriptionData = {
 			endpoint: sub.endpoint,
 			keys: { p256dh: sub.p256dh, auth: sub.auth },

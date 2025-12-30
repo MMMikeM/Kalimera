@@ -179,7 +179,7 @@ const SpeedDrill: React.FC = () => {
 
 	const questions = useMemo(
 		() => generateSpeedDrillQuestions(drillSize),
-		[sessionCount, drillSize],
+		[drillSize],
 	);
 
 	// Start a new session in the database
@@ -286,9 +286,9 @@ const SpeedDrill: React.FC = () => {
 						</p>
 
 						<div className="mb-6">
-							<label className="text-sm text-stone-500 block mb-2">
+							<span className="text-sm text-stone-500 block mb-2">
 								Questions per session
-							</label>
+							</span>
 							<div className="flex justify-center gap-2">
 								{[10, 15, 20, 30].map((size) => (
 									<Button

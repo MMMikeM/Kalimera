@@ -1,6 +1,6 @@
 import { useOutletContext } from "react-router";
 import type { Route } from "./+types/$tab";
-import { type PracticeLoaderData } from "./layout";
+import type { PracticeLoaderData } from "./layout";
 
 // Re-export action from layout so forms in child routes work
 export { action } from "./layout";

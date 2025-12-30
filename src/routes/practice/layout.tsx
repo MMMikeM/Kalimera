@@ -121,7 +121,7 @@ const UserSelector = ({ users, onUserChange }: UserSelectorProps) => {
 		if (!urlUserId && selectedUserId) {
 			onUserChange?.(selectedUserId);
 		}
-	}, []); // eslint-disable-line react-hooks/exhaustive-deps
+	}, [onUserChange, searchParams.get, selectedUserId]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	const handleUserChange = (value: string) => {
 		if (value === "new") {

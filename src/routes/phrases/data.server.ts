@@ -13,8 +13,9 @@ export type PhraseItem = VocabItemWithSection;
 function groupByTag<T extends { tagSlug: string }>(items: T[]): Record<string, T[]> {
 	const result: Record<string, T[]> = {};
 	for (const item of items) {
-		const group = (result[item.tagSlug] ??= []);
-		group.push(item);
+		const key = item.tagSlug;
+		if (!(key in result)) result[key] = [];
+		result[key]?.push(item);
 	}
 	return result;
 }
@@ -38,19 +39,19 @@ export async function getPhrasesData() {
 
 	return {
 		survival: {
-			essential: phrases["essential"] ?? [],
-			survival: phrases["survival"] ?? [],
+			essential: phrases.essential ?? [],
+			survival: phrases.survival ?? [],
 		},
 		responses: {
-			responses: phrases["responses"] ?? [],
+			responses: phrases.responses ?? [],
 			socialPhrases: phrases["social-phrase"] ?? [],
 		},
 		requests: {
-			requests: phrases["request"] ?? [],
-			commands: phrases["command"] ?? [],
+			requests: phrases.request ?? [],
+			commands: phrases.command ?? [],
 		},
 		opinions: {
-			opinions: phrases["opinions"] ?? [],
+			opinions: phrases.opinions ?? [],
 		},
 		connectors: {
 			discourseMarkers: phrases["discourse-markers"] ?? [],
@@ -58,7 +59,7 @@ export async function getPhrasesData() {
 		},
 		time: {
 			daysOfWeek: reference["days-of-week"] ?? [],
-			months: reference["months"] ?? [],
+			months: reference.months ?? [],
 			timeTelling: phrases["time-telling"] ?? [],
 		},
 		constructions: {
@@ -67,7 +68,7 @@ export async function getPhrasesData() {
 				plural: verbs["likes-plural"] ?? [],
 			},
 			nameConstruction: phrases["name-construction"] ?? [],
-			questionWords: phrases["question"] ?? [],
+			questionWords: phrases.question ?? [],
 		},
 	};
 }

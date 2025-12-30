@@ -3,8 +3,8 @@
  * Run with: npx tsx scripts/generate-icons.ts
  */
 import sharp from "sharp";
-import { readFileSync, mkdirSync } from "fs";
-import { join } from "path";
+import { readFileSync, mkdirSync } from "node:fs";
+import { join } from "node:path";
 
 const FAVICON_PATH = join(process.cwd(), "public/favicon.svg");
 const OUTPUT_DIR = join(process.cwd(), "public/icons");

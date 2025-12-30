@@ -10,6 +10,7 @@
 		"lint": "biome lint .",
 		"lint:fix": "biome lint --unsafe --write .",
 		"lint:ls": "ls-lint",
+		"lint:unused": "knip",
 		"preview": "wrangler dev",
 		"db:generate": "drizzle-kit generate",
 		"db:migrate": "drizzle-kit migrate",
@@ -18,8 +19,7 @@
 		"db:seed": "tsx src/scripts/seed.ts",
 		"db:generate-data": "tsx src/scripts/generate-seed-data.ts",
 		"screenshots": "tsx screenshots/capture.ts",
-		"test": "vitest",
-		"knip": "knip"
+		"test": "vitest"
 	},
 	"dependencies": {
 		"@libsql/client": "^0.14.0",

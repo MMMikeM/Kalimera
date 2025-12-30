@@ -16,8 +16,9 @@ export type { VocabItemWithSection as VocabItem, VerbWithPattern };
 function groupByTag<T extends { tagSlug: string }>(items: T[]): Record<string, T[]> {
 	const result: Record<string, T[]> = {};
 	for (const item of items) {
-		const group = (result[item.tagSlug] ??= []);
-		group.push(item);
+		const key = item.tagSlug;
+		if (!(key in result)) result[key] = [];
+		result[key]?.push(item);
 	}
 	return result;
 }
@@ -111,24 +112,24 @@ export async function getVocabularyData() {
 
 	return {
 		nouns: {
-			people: nouns["people"] ?? [],
-			shopping: nouns["shopping"] ?? [],
-			household: nouns["household"] ?? [],
+			people: nouns.people ?? [],
+			shopping: nouns.shopping ?? [],
+			household: nouns.household ?? [],
 			vehicles: nouns["transport-vehicle"] ?? [],
-			summer: nouns["summer"] ?? [],
+			summer: nouns.summer ?? [],
 		},
 		verbs: {
 			categories: groupVerbsByPattern(verbPatterns),
 			transportActions: verbs["transport-action"] ?? [],
 		},
 		phrases: {
-			essential: phrases["essential"] ?? [],
+			essential: phrases.essential ?? [],
 			daysOfWeek: reference["days-of-week"] ?? [],
-			months: reference["months"] ?? [],
+			months: reference.months ?? [],
 			discourseFillers: phrases["discourse-filler"] ?? [],
 			socialPhrases: phrases["social-phrase"] ?? [],
-			commands: phrases["command"] ?? [],
-			questionWords: phrases["question"] ?? [],
+			commands: phrases.command ?? [],
+			questionWords: phrases.question ?? [],
 			likesConstruction: {
 				singular: verbs["likes-singular"] ?? [],
 				plural: verbs["likes-plural"] ?? [],
@@ -136,8 +137,8 @@ export async function getVocabularyData() {
 			nameConstruction: phrases["name-construction"] ?? [],
 			timeTelling: phrases["time-telling"] ?? [],
 			discourseMarkers: phrases["discourse-markers"] ?? [],
-			responses: phrases["responses"] ?? [],
-			opinions: phrases["opinions"] ?? [],
+			responses: phrases.responses ?? [],
+			opinions: phrases.opinions ?? [],
 			arriving: phrases["conversation-arriving"] ?? [],
 			food: phrases["conversation-food"] ?? [],
 			smalltalk: phrases["conversation-smalltalk"] ?? [],
@@ -147,15 +148,15 @@ export async function getVocabularyData() {
 				...t,
 				timeRange: hasTimeRange(t.metadata) ? t.metadata.timeRange : undefined,
 			})),
-			numbers: (reference["number"] ?? [])
+			numbers: (reference.number ?? [])
 				.map((n) => ({
 					...n,
 					numericValue: hasNumericValue(n.metadata) ? n.metadata.numericValue : undefined,
 				}))
 				.sort((a, b) => (a.numericValue ?? 0) - (b.numericValue ?? 0)),
-			colors: reference["color"] ?? [],
-			frequencyAdverbs: reference["frequency"] ?? [],
-			positionAdverbs: reference["position"] ?? [],
+			colors: reference.color ?? [],
+			frequencyAdverbs: reference.frequency ?? [],
+			positionAdverbs: reference.position ?? [],
 		},
 	};
 }
