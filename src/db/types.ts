@@ -5,7 +5,9 @@ import type {
 	tags,
 	tagSections,
 	users,
+	verbConjugations,
 	verbDetails,
+	verbImperatives,
 	vocabulary,
 	vocabularySkills,
 	vocabularyTags,
@@ -19,6 +21,8 @@ export type Tag = typeof tags.$inferSelect;
 export type TagSection = typeof tagSections.$inferSelect;
 export type VocabularyTag = typeof vocabularyTags.$inferSelect;
 export type VerbDetails = typeof verbDetails.$inferSelect;
+export type VerbConjugation = typeof verbConjugations.$inferSelect;
+export type VerbImperative = typeof verbImperatives.$inferSelect;
 export type PracticeSession = typeof practiceSessions.$inferSelect;
 export type PracticeAttempt = typeof practiceAttempts.$inferSelect;
 export type WeakArea = typeof weakAreas.$inferSelect;
@@ -32,6 +36,8 @@ export type NewTag = typeof tags.$inferInsert;
 export type NewTagSection = typeof tagSections.$inferInsert;
 export type NewVocabularyTag = typeof vocabularyTags.$inferInsert;
 export type NewVerbDetails = typeof verbDetails.$inferInsert;
+export type NewVerbConjugation = typeof verbConjugations.$inferInsert;
+export type NewVerbImperative = typeof verbImperatives.$inferInsert;
 export type NewPracticeSession = typeof practiceSessions.$inferInsert;
 export type NewPracticeAttempt = typeof practiceAttempts.$inferInsert;
 export type NewWeakArea = typeof weakAreas.$inferInsert;

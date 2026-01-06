@@ -13,6 +13,8 @@ export const relations = defineRelations(schema, (r) => ({
 			from: r.vocabulary.id,
 			to: r.verbDetails.vocabId,
 		}),
+		verbConjugations: r.many.verbConjugations(),
+		verbImperatives: r.many.verbImperatives(),
 		vocabularyTags: r.many.vocabularyTags(),
 		vocabularySkills: r.many.vocabularySkills(),
 		practiceAttempts: r.many.practiceAttempts(),
@@ -43,6 +45,18 @@ export const relations = defineRelations(schema, (r) => ({
 	verbDetails: {
 		vocabulary: r.one.vocabulary({
 			from: r.verbDetails.vocabId,
+			to: r.vocabulary.id,
+		}),
+	},
+	verbConjugations: {
+		vocabulary: r.one.vocabulary({
+			from: r.verbConjugations.vocabId,
+			to: r.vocabulary.id,
+		}),
+	},
+	verbImperatives: {
+		vocabulary: r.one.vocabulary({
+			from: r.verbImperatives.vocabId,
 			to: r.vocabulary.id,
 		}),
 	},
