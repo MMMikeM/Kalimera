@@ -1,14 +1,7 @@
 import type React from "react";
 import { useReducer, useEffect, useRef, useCallback, useState } from "react";
-import {
-	CheckCircle,
-	XCircle,
-	RotateCcw,
-	ChevronRight,
-	Keyboard,
-} from "lucide-react";
+import { CheckCircle, XCircle, ChevronRight, Keyboard } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Card, MonoText } from "@/components";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,13 +10,12 @@ import {
 	matchPhonetic,
 	greekToPhonetic,
 } from "@/lib/greek-transliteration";
+import DrillSummary from "./drill-summary";
 
-// Unified question type supporting both production and MC modes
 export interface UnifiedQuestion {
 	id: string;
 	prompt: string; // English text: "I want coffee"
 	correctGreek: string; // Greek answer: "Θέλω καφέ"
-	options?: string[]; // MC options (Greek) - only used in MC fallback mode
 	timeLimit?: number; // ms (default 5000)
 	hint?: string; // Shown after incorrect answer
 }
@@ -32,24 +24,19 @@ export interface UnifiedAttemptResult {
 	questionId: string;
 	prompt: string;
 	correctGreek: string;
-	userAnswer: string; // phonetic for production, Greek for MC
+	userAnswer: string; // phonetic
 	isCorrect: boolean;
 	timeTaken: number;
 	timedOut: boolean;
-	mode: "production" | "mc";
 }
 
 type QuestionPhase = "ready" | "active" | "feedback";
-type DrillMode = "production" | "mc";
 
 interface UnifiedDrillState {
 	questions: UnifiedQuestion[];
 	currentIndex: number;
 	userInput: string;
-	selectedMcIndex: number | null;
 	phase: QuestionPhase;
-	mode: DrillMode;
-	consecutiveFailures: number; // Track failures for MC fallback
 	lastResult: {
 		isCorrect: boolean;
 		userAnswer: string;
@@ -65,7 +52,6 @@ interface UnifiedDrillState {
 
 type UnifiedDrillAction =
 	| { type: "SET_INPUT"; value: string }
-	| { type: "SELECT_MC"; index: number }
 	| { type: "START_QUESTION" }
 	| {
 			type: "SUBMIT_ANSWER";
@@ -73,27 +59,16 @@ type UnifiedDrillAction =
 			correctPhonetic: string;
 	  }
 	| { type: "NEXT_QUESTION" }
-	| { type: "RESTART" }
-	| { type: "SWITCH_TO_MC" };
-
-const MC_FAILURE_THRESHOLD = 3; // Switch to MC after 3 consecutive failures
+	| { type: "RESTART" };
 
 const initialUnifiedState = (
 	questions: UnifiedQuestion[],
-	startInMcMode = false,
 ): UnifiedDrillState => {
-	// Only start in MC mode if first question has options
-	const firstQuestion = questions[0];
-	const canUseMc = firstQuestion?.options && firstQuestion.options.length > 0;
-
 	return {
 		questions,
 		currentIndex: 0,
 		userInput: "",
-		selectedMcIndex: null,
 		phase: "ready",
-		mode: startInMcMode && canUseMc ? "mc" : "production",
-		consecutiveFailures: 0,
 		lastResult: null,
 		score: { correct: 0, total: 0 },
 		totalResponseTime: 0,
@@ -111,18 +86,11 @@ const unifiedReducer = (
 			if (state.phase !== "active") return state;
 			return { ...state, userInput: action.value };
 
-		case "SELECT_MC":
-			if (state.phase !== "active" || state.mode !== "mc") return state;
-			return { ...state, selectedMcIndex: action.index };
-
 		case "START_QUESTION":
 			return { ...state, phase: "active" };
 
 		case "SUBMIT_ANSWER": {
 			const { attempt, correctPhonetic } = action;
-			const newConsecutiveFailures = attempt.isCorrect
-				? 0
-				: state.consecutiveFailures + 1;
 
 			return {
 				...state,
@@ -139,7 +107,6 @@ const unifiedReducer = (
 					total: state.score.total + 1,
 				},
 				totalResponseTime: state.totalResponseTime + attempt.timeTaken,
-				consecutiveFailures: newConsecutiveFailures,
 				attempts: [...state.attempts, attempt],
 			};
 		}
@@ -150,28 +117,14 @@ const unifiedReducer = (
 				return { ...state, isComplete: true };
 			}
 
-			// Check if we should switch to MC mode due to consecutive failures
-			// Only switch if the next question actually has MC options
-			const nextQuestion = state.questions[nextIndex];
-			const shouldSwitchToMc =
-				state.mode === "production" &&
-				state.consecutiveFailures >= MC_FAILURE_THRESHOLD &&
-				nextQuestion?.options &&
-				nextQuestion.options.length > 0;
-
 			return {
 				...state,
 				currentIndex: nextIndex,
 				userInput: "",
-				selectedMcIndex: null,
 				phase: "ready",
 				lastResult: null,
-				mode: shouldSwitchToMc ? "mc" : "production", // Reset to production if no MC options
 			};
 		}
-
-		case "SWITCH_TO_MC":
-			return { ...state, mode: "mc", consecutiveFailures: 0 };
 
 		case "RESTART":
 			return initialUnifiedState(state.questions);
@@ -194,7 +147,6 @@ export interface SessionStats {
 interface UnifiedDrillProps {
 	title: string;
 	questions: UnifiedQuestion[];
-	startInMcMode?: boolean;
 	onAttempt?: (result: UnifiedAttemptResult) => void;
 	onComplete?: (stats: SessionStats) => void;
 }
@@ -202,15 +154,13 @@ interface UnifiedDrillProps {
 const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 	title,
 	questions,
-	startInMcMode = false,
 	onAttempt,
 	onComplete,
 }) => {
 	const [state, dispatch] = useReducer(
 		unifiedReducer,
-		{ questions, startInMcMode },
-		({ questions, startInMcMode }) =>
-			initialUnifiedState(questions, startInMcMode),
+		questions,
+		(questions) => initialUnifiedState(questions),
 	);
 
 	const questionStartTimeRef = useRef<number>(Date.now());
@@ -220,15 +170,13 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 	);
 	const [isAutoAdvancing, setIsAutoAdvancing] = useState(false);
 
-	// Focus input when question becomes active in production mode
+	// Focus input when question becomes active
 	useEffect(() => {
-		if (state.phase === "active" && state.mode === "production") {
+		if (state.phase === "active") {
 			questionStartTimeRef.current = Date.now();
 			inputRef.current?.focus();
-		} else if (state.phase === "active" && state.mode === "mc") {
-			questionStartTimeRef.current = Date.now();
 		}
-	}, [state.phase, state.mode]);
+	}, [state.phase]);
 
 	// Auto-advance on correct answer
 	useEffect(() => {
@@ -310,7 +258,6 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 				isCorrect: result.isCorrect && !timedOut,
 				timeTaken,
 				timedOut,
-				mode: "production",
 			};
 
 			dispatch({
@@ -324,52 +271,14 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 		[currentQuestion, state.phase, state.userInput, onAttempt],
 	);
 
-	const handleMcSubmit = useCallback(() => {
-		if (
-			!currentQuestion ||
-			state.phase !== "active" ||
-			state.selectedMcIndex === null
-		)
-			return;
-
-		const timeTaken = Date.now() - questionStartTimeRef.current;
-		const selectedOption = currentQuestion.options?.[state.selectedMcIndex];
-		const isCorrect = selectedOption === currentQuestion.correctGreek;
-
-		const attempt: UnifiedAttemptResult = {
-			questionId: currentQuestion.id,
-			prompt: currentQuestion.prompt,
-			correctGreek: currentQuestion.correctGreek,
-			userAnswer: selectedOption ?? "",
-			isCorrect,
-			timeTaken,
-			timedOut: false,
-			mode: "mc",
-		};
-
-		dispatch({
-			type: "SUBMIT_ANSWER",
-			attempt,
-			correctPhonetic: greekToPhonetic(currentQuestion.correctGreek),
-		});
-
-		onAttempt?.(attempt);
-	}, [currentQuestion, state.phase, state.selectedMcIndex, onAttempt]);
-
 	const handleTimeout = useCallback(() => {
-		if (state.mode === "production") {
-			handleProductionSubmit(true);
-		}
-	}, [state.mode, handleProductionSubmit]);
+		handleProductionSubmit(true);
+	}, [handleProductionSubmit]);
 
 	const handleKeyDown = (e: React.KeyboardEvent) => {
 		if (e.key === "Enter" && state.phase === "active") {
 			e.preventDefault();
-			if (state.mode === "production") {
-				handleProductionSubmit(false);
-			} else if (state.selectedMcIndex !== null) {
-				handleMcSubmit();
-			}
+			handleProductionSubmit(false);
 		}
 	};
 
@@ -392,126 +301,22 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 			? (state.totalResponseTime / state.score.total / 1000).toFixed(1)
 			: "0.0";
 
-	// Session complete screen with enhanced summary
 	if (state.isComplete) {
-		const percentage = Math.round(
-			(state.score.correct / state.score.total) * 100,
-		);
-		const finalAvgTime = (
-			state.totalResponseTime /
-			state.score.total /
-			1000
-		).toFixed(1);
-
-		// Get missed items (incorrect attempts)
-		const missedAttempts = state.attempts.filter((a) => !a.isCorrect);
-
-		// Group by question to find items missed multiple times
-		const missedByQuestion = missedAttempts.reduce(
-			(acc, attempt) => {
-				const key = attempt.questionId;
-				if (!acc[key]) {
-					acc[key] = {
-						prompt: attempt.prompt,
-						correctGreek: attempt.correctGreek,
-						count: 0,
-					};
-				}
-				acc[key].count++;
-				return acc;
-			},
-			{} as Record<
-				string,
-				{ prompt: string; correctGreek: string; count: number }
-			>,
-		);
-
-		const sortedMissed = Object.values(missedByQuestion).sort(
-			(a, b) => b.count - a.count,
-		);
+		const avgResponseTime =
+			state.score.total > 0
+				? Math.round(state.totalResponseTime / state.score.total)
+				: 0;
 
 		return (
-			<Card variant="bordered" padding="lg" className="bg-stone-50">
-				<div className="py-6">
-					{/* Score Header */}
-					<div className="text-center mb-6">
-						<h3 className="text-2xl font-bold mb-2">
-							{state.score.correct} / {state.score.total} correct
-						</h3>
-
-						<div className="flex justify-center gap-6 text-sm text-stone-600">
-							<div>
-								<span className="font-semibold">{percentage}%</span> accuracy
-							</div>
-							<div>
-								<span className="font-semibold">{finalAvgTime}s</span> avg
-							</div>
-						</div>
-					</div>
-
-					{/* Missed Items Section */}
-					{sortedMissed.length > 0 && (
-						<div className="mb-6">
-							<h4 className="text-sm font-semibold text-stone-700 mb-3 flex items-center gap-2">
-								<XCircle size={16} className="text-incorrect" />
-								Items to Review ({sortedMissed.length})
-							</h4>
-							<div className="space-y-2 max-h-48 overflow-y-auto">
-								{sortedMissed.slice(0, 5).map((item) => (
-									<div
-										key={item.correctGreek}
-										className="flex items-center justify-between bg-white p-3 rounded-lg border text-sm"
-									>
-										<div className="flex-1 min-w-0">
-											<p className="text-stone-600 truncate">{item.prompt}</p>
-											<div className="flex items-center gap-2">
-												<MonoText className="text-stone-900 font-medium">
-													{item.correctGreek}
-												</MonoText>
-												<span className="text-xs text-stone-400 font-mono">
-													/{greekToPhonetic(item.correctGreek)}/
-												</span>
-											</div>
-										</div>
-										{item.count > 1 && (
-											<span className="text-xs bg-incorrect-100 text-incorrect px-2 py-0.5 rounded-full ml-2">
-												{item.count}x
-											</span>
-										)}
-									</div>
-								))}
-								{sortedMissed.length > 5 && (
-									<p className="text-xs text-stone-400 text-center py-1">
-										+{sortedMissed.length - 5} more items
-									</p>
-								)}
-							</div>
-							<p className="text-xs text-stone-500 mt-3 text-center italic">
-								These items will appear more often in future sessions
-							</p>
-						</div>
-					)}
-
-					{/* All Correct Message */}
-					{sortedMissed.length === 0 && (
-						<div className="text-center mb-6 py-4 bg-correct-100 rounded-lg">
-							<CheckCircle size={32} className="text-correct mx-auto mb-2" />
-							<p className="text-correct font-medium">Perfect session!</p>
-						</div>
-					)}
-
-					{/* Restart Button */}
-					<div className="text-center">
-						<Button
-							onClick={() => dispatch({ type: "RESTART" })}
-							className="gap-2"
-						>
-							<RotateCcw size={16} />
-							Practice Again
-						</Button>
-					</div>
-				</div>
-			</Card>
+			<DrillSummary
+				stats={{
+					correct: state.score.correct,
+					total: state.score.total,
+					avgResponseTime,
+					attempts: state.attempts,
+				}}
+				onRestart={() => dispatch({ type: "RESTART" })}
+			/>
 		);
 	}
 
@@ -534,8 +339,8 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 				<Progress value={progressPercent} className="h-1.5" />
 			</div>
 
-			{/* Timer - only show when active in production mode */}
-			{state.phase === "active" && state.mode === "production" && (
+			{/* Timer */}
+			{state.phase === "active" && (
 				<div className="mb-4">
 					<CountdownTimer
 						durationMs={timeLimit}
@@ -570,8 +375,8 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 					</div>
 				)}
 
-				{/* Active state - Production Input */}
-				{state.phase === "active" && state.mode === "production" && (
+				{/* Active state - Text Input */}
+				{state.phase === "active" && (
 					<div className="space-y-3">
 						<Input
 							ref={inputRef}
@@ -594,45 +399,6 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 					</div>
 				)}
 
-				{/* Active state - Multiple Choice */}
-				{state.phase === "active" &&
-					state.mode === "mc" &&
-					currentQuestion.options && (
-						<div className="space-y-3">
-							<RadioGroup
-								value={state.selectedMcIndex?.toString() ?? ""}
-								onValueChange={(value) =>
-									dispatch({ type: "SELECT_MC", index: parseInt(value, 10) })
-								}
-								className="space-y-3"
-							>
-								{currentQuestion.options.map((option, index) => {
-									const optionId = `option-${currentQuestion.id}-${index}`;
-									const isSelected = state.selectedMcIndex === index;
-
-									return (
-										<label
-											key={optionId}
-											htmlFor={optionId}
-											className={`flex items-center gap-3 p-4 rounded-lg border-2 cursor-pointer transition-colors ${
-												isSelected
-													? "border-terracotta bg-terracotta-100"
-													: "border-stone-200 bg-stone-50 hover:bg-stone-100"
-											}`}
-										>
-											<RadioGroupItem value={index.toString()} id={optionId} />
-											<MonoText size="lg" className="flex-1">
-												{option}
-											</MonoText>
-										</label>
-									);
-								})}
-							</RadioGroup>
-							<p className="text-xs text-stone-400 text-center">
-								Select an option • Press Enter to submit
-							</p>
-						</div>
-					)}
 
 				{/* Feedback state - Result */}
 				{state.phase === "feedback" && (
@@ -674,12 +440,12 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 							</p>
 						</div>
 
-						{/* Show what user typed/selected if incorrect */}
+						{/* Show what user typed if incorrect */}
 						{state.lastResult &&
 							!state.lastResult.isCorrect &&
 							state.lastResult.userAnswer && (
 								<p className="text-sm text-stone-500 text-center">
-									You {state.mode === "production" ? "typed" : "selected"}:{" "}
+									You typed:{" "}
 									<span className="font-mono">
 										{state.lastResult.userAnswer || "(nothing)"}
 									</span>
@@ -708,28 +474,11 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 
 			{/* Actions */}
 			<div className="flex justify-between items-center">
-				{/* MC mode indicator */}
-				{state.mode === "mc" && state.phase !== "feedback" && (
-					<p className="text-xs text-stone-400">
-						Multiple choice mode (struggling items)
-					</p>
-				)}
-				{state.mode === "production" && state.phase !== "feedback" && (
-					<div />
-				)}
-
 				{state.phase === "active" && (
 					<Button
 						onClick={() => {
-							if (state.mode === "production") {
-								handleProductionSubmit(false);
-							} else {
-								handleMcSubmit();
-							}
+							handleProductionSubmit(false);
 						}}
-						disabled={
-							state.mode === "mc" && state.selectedMcIndex === null
-						}
 					>
 						Check Answer
 					</Button>
