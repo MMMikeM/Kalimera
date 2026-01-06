@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useFetcher, Link } from "react-router";
+import { useFetcher, Link } from "react-router";
 import { LogIn, KeyRound, Loader2 } from "lucide-react";
 import { startAuthentication } from "@simplewebauthn/browser";
 import type { PublicKeyCredentialRequestOptionsJSON } from "@simplewebauthn/browser";
@@ -108,7 +108,6 @@ export const action = async ({ request }: Route.ActionArgs) => {
 };
 
 export default function LoginRoute(_props: Route.ComponentProps) {
-	const navigate = useNavigate();
 	const fetcher = useFetcher<{
 		success: boolean;
 		userId?: number;
@@ -136,9 +135,10 @@ export default function LoginRoute(_props: Route.ComponentProps) {
 				AUTH_STORAGE_KEY,
 				JSON.stringify({ userId: fetcher.data.userId, username: fetcher.data.username }),
 			);
-			navigate("/");
+			// Full page reload to ensure Root remounts and reads fresh auth state
+			window.location.href = "/";
 		}
-	}, [fetcher.data, navigate]);
+	}, [fetcher.data]);
 
 	const handlePasskeyLogin = async () => {
 		setPasskeyError(null);
@@ -185,7 +185,8 @@ export default function LoginRoute(_props: Route.ComponentProps) {
 					AUTH_STORAGE_KEY,
 					JSON.stringify({ userId: result.userId, username: result.username || "user" }),
 				);
-				navigate("/");
+				// Full page reload to ensure Root remounts and reads fresh auth state
+				window.location.href = "/";
 			}
 		} catch (err) {
 			const message = err instanceof Error ? err.message : "Passkey authentication failed";

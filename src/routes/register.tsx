@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate, useFetcher } from "react-router";
+import { Link, useFetcher } from "react-router";
 import { UserPlus, KeyRound, ArrowRight, Check, AlertCircle } from "lucide-react";
 import { startRegistration } from "@simplewebauthn/browser";
 import type { PublicKeyCredentialCreationOptionsJSON } from "@simplewebauthn/browser";
@@ -91,7 +91,6 @@ export const action = async ({ request }: Route.ActionArgs): Promise<ActionData>
 type PasskeySetupState = "idle" | "loading" | "success" | "error";
 
 export default function RegisterRoute(_props: Route.ComponentProps) {
-	const navigate = useNavigate();
 	const fetcher = useFetcher<ActionData>();
 
 	const [username, setUsername] = useState("");
@@ -165,7 +164,8 @@ export default function RegisterRoute(_props: Route.ComponentProps) {
 				AUTH_STORAGE_KEY,
 				JSON.stringify({ userId: registeredUser.userId, username: registeredUser.username }),
 			);
-			navigate("/");
+			// Full page reload to ensure Root remounts and reads fresh auth state
+			window.location.href = "/";
 		}
 	};
 
