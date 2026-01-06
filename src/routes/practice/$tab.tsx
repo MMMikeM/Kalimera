@@ -9,6 +9,7 @@ export { action } from "./layout";
 import PronounProductionDrill from "./components/pronoun-production-drill";
 import ArticleProductionDrill from "./components/article-production-drill";
 import VerbProductionDrill from "./components/verb-production-drill";
+import NounDeclensionDrill from "./components/noun-declension-drill";
 import VocabularyDrill from "./components/vocabulary-drill";
 import ReviewDrill from "./components/review-drill";
 
@@ -16,6 +17,7 @@ const VALID_TABS = [
 	"pronouns",
 	"articles",
 	"verbs",
+	"nouns",
 	"vocabulary",
 	"review",
 ] as const;
@@ -59,6 +61,10 @@ export default function TabRoute({ loaderData }: Route.ComponentProps) {
 
 	if (tab === "verbs") {
 		return <VerbProductionDrill />;
+	}
+
+	if (tab === "nouns") {
+		return <NounDeclensionDrill />;
 	}
 
 	// User-required drills

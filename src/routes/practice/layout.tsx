@@ -253,7 +253,8 @@ const PRACTICE_TABS: NavTab[] = [
 	{ id: "pronouns", label: "Pronouns", shortLabel: "Pro", icon: <Users size={16} />, color: "ocean" },
 	{ id: "articles", label: "Articles", shortLabel: "Art", icon: <FileText size={16} />, color: "olive" },
 	{ id: "verbs", label: "Verbs", shortLabel: "Vrb", icon: <Zap size={16} />, color: "honey" },
-	{ id: "vocabulary", label: "Vocabulary", shortLabel: "Vocab", icon: <BookOpen size={16} />, color: "ocean" },
+	{ id: "nouns", label: "Nouns", shortLabel: "Noun", icon: <BookOpen size={16} />, color: "ocean" },
+	{ id: "vocabulary", label: "Vocabulary", shortLabel: "Vocab", icon: <BookOpen size={16} />, color: "olive" },
 	{ id: "review", label: "Review", shortLabel: "Rev", icon: <Clock size={16} />, color: "terracotta" },
 ];
 
