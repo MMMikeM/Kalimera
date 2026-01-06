@@ -50,7 +50,7 @@ export const LearningTips: React.FC<LearningTipsProps> = ({
 }) => (
 	<Collapsible defaultOpen>
 		<CollapsibleTrigger className="flex items-center gap-2 w-full p-3 rounded-lg bg-stone-50 hover:bg-stone-100 transition-colors text-left group">
-			<Lightbulb size={18} className="info-box-tip-icon" />
+			<Lightbulb size={18} className="text-honey" />
 			<span className="font-medium text-stone-700">Learning Tips</span>
 			<ChevronDown
 				size={16}
@@ -58,11 +58,11 @@ export const LearningTips: React.FC<LearningTipsProps> = ({
 			/>
 		</CollapsibleTrigger>
 		<CollapsibleContent>
-			<div className="mt-4 info-box-tip">
+			<div className="mt-4 p-4 rounded-lg border bg-honey-100 border-honey-300">
 				<div className="grid md:grid-cols-2 gap-6 text-sm">
 					{patterns && (
 						<div>
-							<h4 className="info-box-tip-title mb-2">{patterns.title}</h4>
+							<h4 className="text-honey-text font-semibold mb-2">{patterns.title}</h4>
 							<ul className="space-y-1.5 text-stone-700">
 								{patterns.items.map((item) => (
 									<li key={item}>{item}</li>
@@ -72,7 +72,7 @@ export const LearningTips: React.FC<LearningTipsProps> = ({
 					)}
 					{tips && (
 						<div>
-							<h4 className="info-box-tip-title mb-2">{tips.title}</h4>
+							<h4 className="text-honey-text font-semibold mb-2">{tips.title}</h4>
 							<ul className="space-y-1.5 text-stone-700">
 								{tips.items.map((item) => (
 									<li key={item}>{item}</li>
@@ -83,7 +83,7 @@ export const LearningTips: React.FC<LearningTipsProps> = ({
 				</div>
 				{commonMistake && (
 					<div className="mt-4 pt-4 border-t border-amber-200">
-						<h4 className="info-box-tip-title mb-2">Common Mistake</h4>
+						<h4 className="text-honey-text font-semibold mb-2">Common Mistake</h4>
 						<div className="flex items-start gap-4 text-sm">
 							<div className="flex-1">
 								<span className="text-red-600 font-medium">✗</span>{" "}
