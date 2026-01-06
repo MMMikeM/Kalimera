@@ -85,6 +85,12 @@ You have deep knowledge of:
 - Revalidation and cache control
 - `shouldRevalidate` function
 
+### Middleware
+
+- Route middleware with `middleware` export
+- Context API for passing data through middleware chain
+- Auth middleware patterns
+
 ### Document Head
 
 - Meta function for SEO and social tags
@@ -274,6 +280,14 @@ intent: zfd.text(z.literal("create"))
 
 // Boolean from string
 isActive: zfd.text(z.enum(["true", "false"])).transform((v) => v === "true")
+
+// JSON array from string
+tags: zfd.text(z.string().optional()).transform((v) =>
+  v ? (JSON.parse(v) as string[]) : undefined
+)
+
+// Trim whitespace
+content: zfd.text(z.string().min(1)).transform((v) => v.trim())
 ```
 
 ---
@@ -293,7 +307,31 @@ import type { Route } from "./+types/$tab";    // for $tab.tsx
 
 **Why it matters:** Wrong import gives you the parent's loaderData type, causing silent type mismatches.
 
-### 2. Defining Components in Route Files
+### 2. Server Imports in Route Files
+
+```typescript
+// WRONG - server code in route file
+import { computeScore } from "@/db/queries";
+
+export default function Page({ loaderData }: Route.ComponentProps) {
+  const score = computeScore(loaderData.attempts); // Bad!
+}
+
+// CORRECT - compute in loader, pass to component
+// data.server.ts
+export async function getDataWithScore(userId: string) {
+  const attempts = await getAttempts(userId);
+  const score = computeScore(attempts);
+  return { attempts, score }; // Pre-computed
+}
+
+// layout.tsx
+export default function Page({ loaderData }: Route.ComponentProps) {
+  const { score } = loaderData; // Already computed
+}
+```
+
+### 3. Defining Components in Route Files
 
 ```typescript
 // WRONG - component defined in route file
@@ -319,7 +357,31 @@ export function DrillCard({ items }: { items: Item[] }) {
 }
 ```
 
-### 3. Missing Meta Function
+### 4. Missing ErrorBoundary on User-Facing Routes
+
+```typescript
+// WRONG - no error handling
+export default function Page({ loaderData }) {
+  return <div>...</div>;
+}
+
+// CORRECT - add ErrorBoundary
+import { useRouteError, isRouteErrorResponse } from "react-router";
+
+export default function Page({ loaderData }) {
+  return <div>...</div>;
+}
+
+export function ErrorBoundary() {
+  const error = useRouteError();
+  if (isRouteErrorResponse(error)) {
+    return <div>{error.status}: {error.data?.error}</div>;
+  }
+  return <div>Something went wrong</div>;
+}
+```
+
+### 5. Missing Meta Function
 
 ```typescript
 // WRONG - no SEO metadata
@@ -343,6 +405,47 @@ export default function Page() {
 ---
 
 ## Navigation Hooks Reference
+
+### useNavigate - Programmatic Navigation
+
+```typescript
+const navigate = useNavigate();
+
+// Basic navigation
+navigate("/vocabulary");
+
+// Replace history (no back button)
+navigate("/practice", { replace: true });
+
+// Navigate with state
+navigate("/practice/speed", { state: { from: "home" } });
+```
+
+**When to use:** After async operations, modal confirmations, programmatic redirects.
+
+### useNavigation - Pending UI States
+
+```typescript
+const navigation = useNavigation();
+
+// Check navigation state
+const isNavigating = navigation.state === "loading";
+const isSubmitting = navigation.state === "submitting";
+
+// Track which form is submitting (multi-intent pattern)
+const submittingIntent = navigation.formData?.get("intent");
+
+// Example: Fade content during navigation
+<main className={isNavigating ? "opacity-60 pointer-events-none" : ""}>
+  <Outlet />
+</main>
+```
+
+**States:**
+
+- `"idle"` - No navigation in progress
+- `"loading"` - Navigating to a new route (loader running)
+- `"submitting"` - Form submission in progress (action running)
 
 ### useSearchParams - URL-Driven State
 
@@ -419,6 +522,23 @@ const isLoading = fetcher.state !== "idle";
 </Button>
 ```
 
+### FormData for Complex Payloads
+
+```typescript
+const fetcher = useFetcher();
+
+const submitComplex = (data: ComplexData) => {
+  const formData = new FormData();
+  formData.set("intent", "create");
+  formData.set("data", JSON.stringify(data));
+  // Arrays need special handling
+  if (data.tags?.length) {
+    formData.set("tags", JSON.stringify(data.tags));
+  }
+  fetcher.submit(formData, { method: "post" });
+};
+```
+
 ### Fetcher vs Form Decision Tree
 
 | Scenario                      | Use                                    |
@@ -428,6 +548,131 @@ const isLoading = fetcher.state !== "idle";
 | Search/filter (GET)           | `<Form method="get">`                  |
 | Load data on hover/click      | `fetcher.load()`                       |
 | Background submission         | `useFetcher`                           |
+| File upload                   | `<Form encType="multipart/form-data">` |
+
+---
+
+## Revalidation Patterns
+
+### Default Behavior
+
+React Router 7 automatically revalidates all loaders after:
+
+- Navigation to a new route
+- Form submissions (actions)
+
+### Pattern 1: Skip POST Mutations
+
+Use when fetcher POST submissions shouldn't trigger full page revalidation:
+
+```typescript
+import type { ShouldRevalidateFunctionArgs } from "react-router";
+
+export const shouldRevalidate = ({ formMethod }: ShouldRevalidateFunctionArgs) =>
+  formMethod !== undefined && formMethod !== "GET";
+```
+
+### Pattern 2: Revalidate on Search Param Changes
+
+Use when GET form submissions (search) should refresh but POST mutations should not:
+
+```typescript
+export const shouldRevalidate = ({
+  formMethod,
+  currentUrl,
+  nextUrl,
+}: ShouldRevalidateFunctionArgs) => {
+  // Always revalidate when search params change
+  if (currentUrl.search !== nextUrl.search) return true;
+  // Skip revalidation for POST mutations
+  return formMethod?.toUpperCase() !== "POST";
+};
+```
+
+### ShouldRevalidateFunctionArgs Reference
+
+```typescript
+interface ShouldRevalidateFunctionArgs {
+  currentUrl: URL;
+  currentParams: Params;
+  nextUrl: URL;
+  nextParams: Params;
+  formMethod?: string;
+  formAction?: string;
+  formEncType?: string;
+  formData?: FormData;
+  actionResult?: any;
+  actionStatus?: number;
+  defaultShouldRevalidate: boolean;
+}
+```
+
+---
+
+## Advanced Features
+
+### clientLoader / clientAction
+
+For client-only data or BFF patterns:
+
+```typescript
+// Client-only loading (e.g., localStorage, IndexedDB)
+export async function clientLoader({ request }: Route.ClientLoaderArgs) {
+  const clientData = await getFromLocalStorage();
+  return clientData;
+}
+clientLoader.hydrate = true;
+
+export function HydrateFallback() {
+  return <div>Loading...</div>;
+}
+```
+
+### Optimistic UI
+
+Using `fetcher.formData` for instant feedback:
+
+```typescript
+function PracticeItem({ item }) {
+  const fetcher = useFetcher();
+
+  // Optimistic update from pending form data
+  let isComplete = item.status === "complete";
+  if (fetcher.formData) {
+    isComplete = fetcher.formData.get("status") === "complete";
+  }
+
+  return (
+    <fetcher.Form method="post">
+      <button name="status" value={isComplete ? "incomplete" : "complete"}>
+        {isComplete ? "Mark Incomplete" : "Mark Complete"}
+      </button>
+    </fetcher.Form>
+  );
+}
+```
+
+### headers Export
+
+Control HTTP caching:
+
+```typescript
+export function headers({ loaderHeaders }: Route.HeadersArgs) {
+  return {
+    "Cache-Control": loaderHeaders.get("Cache-Control") || "max-age=300",
+  };
+}
+```
+
+### handle Export
+
+Pass data to parent layouts:
+
+```typescript
+export const handle = {
+  breadcrumb: () => <Link to="/vocabulary">Vocabulary</Link>,
+};
+```
 
 ---
 
@@ -519,11 +764,14 @@ Use this checklist when reviewing or creating route modules:
 
 ### Error Handling
 
+- [ ] User-facing routes have `ErrorBoundary` export
 - [ ] Actions return `{ success: false, error: "..." }` pattern
 - [ ] Loaders handle database errors gracefully
+- [ ] Error messages are user-friendly
 
 ### Performance
 
+- [ ] Has `shouldRevalidate` if route has mutations that don't need refresh
 - [ ] Loader uses `Promise.all()` for independent data fetches
 - [ ] No sequential awaits for unrelated queries
 
@@ -566,5 +814,7 @@ Before completing any route work:
 - [ ] Types are correctly imported from `./+types/...`
 - [ ] Data access uses `@/db/queries/`
 - [ ] Form actions use proper HTTP methods
-- [ ] Parallel fetching is used where applicable and cannot be replaced with by a better query
+- [ ] Error boundaries are in place for user-facing routes
+- [ ] shouldRevalidate is considered for mutation-heavy routes
+- [ ] Parallel fetching is used where applicable
 - [ ] Meta function provides SEO metadata

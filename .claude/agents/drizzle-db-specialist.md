@@ -90,12 +90,16 @@ const verbDetails = await db.query.verbDetails.findFirst({ where: { vocabId: id 
 const tags = await db.query.vocabularyTags.findMany({ where: { vocabularyId: id } });
 ```
 
-### 3. Query API v2 First, Select Builder for Aggregations
+### 3. Choose the Right API
 
 | Use Case                         | API                               |
 |----------------------------------|-----------------------------------|
 | Fetching entities with relations | Query API v2 (`db.query.table.*`) |
 | Simple queries                   | Query API v2                      |
+| Simple filtered count            | `db.$count(table, filter)`        |
+| Multiple counts in one query     | Raw SQL with scalar subqueries    |
+| DISTINCT with JOINs              | `db.selectDistinct()`             |
+| JOINs returning flat columns     | `db.select().innerJoin()`         |
 | COUNT, SUM, AVG, GROUP BY        | Select Builder                    |
 | Complex JOINs not in relations   | Select Builder                    |
 | Window functions                 | Select Builder                    |
@@ -293,6 +297,111 @@ const vocabWithTags = await db
 
 ---
 
+## Counting & Distinct Queries
+
+### Simple Counts: Use `db.$count()`
+
+Returns a number directly - the cleanest option for simple filtered counts:
+
+```typescript
+// Simple count with filter
+const count = await db.$count(practiceAttempts, eq(practiceAttempts.userId, userId));
+
+// Works as subquery in extras
+const users = await db.query.users.findMany({
+  extras: {
+    attemptCount: db.$count(practiceAttempts, eq(practiceAttempts.userId, users.id)),
+  },
+});
+```
+
+### Aggregate Stats: Use Raw SQL
+
+When returning **multiple counts in one query**, raw SQL with scalar subqueries is more efficient (single round-trip):
+
+```typescript
+// CORRECT - 1 HTTP request returns all stats
+const result = await db.all<Stats>(sql`
+  SELECT
+    (SELECT COUNT(*) FROM practice_sessions) as total,
+    (SELECT COUNT(*) FROM practice_sessions WHERE completed_at IS NOT NULL) as completed,
+    (SELECT COUNT(*) FROM practice_sessions WHERE completed_at IS NULL) as inProgress
+`);
+
+// WRONG - 3 HTTP requests
+const total = await db.$count(practiceSessions);
+const completed = await db.$count(practiceSessions, isNotNull(practiceSessions.completedAt));
+const inProgress = await db.$count(practiceSessions, isNull(practiceSessions.completedAt));
+```
+
+### Distinct with Joins: Use `selectDistinct()`
+
+Type-safe alternative to raw SQL for distinct queries:
+
+```typescript
+// Find all vocabulary IDs that have a specific tag
+const rows = await db
+  .selectDistinct({ id: vocabulary.id })
+  .from(vocabulary)
+  .innerJoin(vocabularyTags, eq(vocabulary.id, vocabularyTags.vocabularyId))
+  .where(and(inArray(vocabularyTags.tagId, tagIds), eq(vocabulary.wordType, "verb")));
+```
+
+### Joins with Flat Results: Use `select().innerJoin()`
+
+When you need flat rows (not nested objects), use select builder instead of Query API `with`:
+
+```typescript
+// Returns flat { id: string }[] - efficient for ID extraction
+const rows = await db
+  .select({ id: vocabulary.id })
+  .from(practiceAttempts)
+  .innerJoin(vocabulary, eq(practiceAttempts.vocabularyId, vocabulary.id))
+  .where(eq(practiceAttempts.userId, userId));
+
+// Query API with `with` returns nested { attempt: {...}, vocabulary: {...} }
+// Use when you need the full objects, not just specific columns
+```
+
+---
+
+## Composite Key Relations
+
+Drizzle v2 supports **composite foreign keys** via array syntax in `from` and `to`. Use this instead of raw SQL when joining on multiple columns:
+
+```typescript
+// In relations.ts - define composite key relation
+export const relations = defineRelations(schema, (r) => ({
+  vocabularySkills: {
+    // Join on BOTH vocabulary_id AND user_id
+    vocabulary: r.one.vocabulary({
+      from: r.vocabularySkills.vocabularyId,
+      to: r.vocabulary.id,
+    }),
+    user: r.one.users({
+      from: r.vocabularySkills.userId,
+      to: r.users.id,
+    }),
+  },
+}));
+
+// Now query with clean API instead of raw SQL
+const skills = await db.query.vocabularySkills.findMany({
+  with: { vocabulary: true, user: true },
+  where: { userId },
+  orderBy: { nextReviewAt: "asc" },
+  limit: 10,
+});
+```
+
+**Key points:**
+
+- Arrays in `from`/`to` must have matching positions (first→first, second→second)
+- Use `alias` to disambiguate multiple relations to the same table
+- This replaces ugly raw SQL with manual type annotations
+
+---
+
 ## Common Patterns
 
 ### Upsert
@@ -386,6 +495,43 @@ const meta = vocab.metadata; // Already an object, not a string
 
 **Exception**: Raw SQL bypasses `customType` - parse manually there.
 
+### Return Values from Mutations
+
+**Always use `.returning()` for inserts and updates** unless truly fire-and-forget:
+
+```typescript
+// CORRECT - Returns the created/updated row
+const createSession = async (data: NewSession) => {
+  const [row] = await db.insert(practiceSessions).values(data).returning();
+  return row;
+};
+
+const updateProgress = async (id: string, progress: number) => {
+  const [updated] = await db.update(vocabularySkills)
+    .set({ progress })
+    .where(eq(vocabularySkills.id, id))
+    .returning();
+  return updated;
+};
+
+// WRONG - Ignores result, caller can't verify success or get updated values
+const updateProgress = async (id: string, progress: number) => {
+  await db.update(vocabularySkills).set({ progress }).where(eq(vocabularySkills.id, id));
+};
+```
+
+**When `.returning()` matters:**
+
+- **Creates**: Always - caller needs generated ID, timestamps, defaults
+- **Updates**: Usually - caller may need updated values or confirmation
+- **Deletes**: Sometimes - if caller needs to know what was deleted
+
+**When void is acceptable:**
+
+- Internal cleanup operations where failure throws anyway
+- Batch operations where you verify success separately
+- Status toggles where you immediately re-fetch the entity
+
 ---
 
 ## Migrations
@@ -398,6 +544,109 @@ const meta = vocab.metadata; // Already an object, not a string
 | Seed Production    | `make prod-db-seed` | Populate production     |
 
 **Workflow**: Modify `src/db/schema.ts` → `make db-push` (local) → Test → `make prod-db-push` (prod)
+
+---
+
+## Loader vs Client-Side: Query Speed Classification
+
+When building pages, decide what goes in the **loader** (blocking, user waits) vs **client-side fetch** (non-blocking, page renders first).
+
+### Fast Queries → Keep in Loader
+
+These queries should stay server-side - they're fast enough that users won't notice:
+
+| Query Type                | Example                                                          | Why It's Fast                           |
+|---------------------------|------------------------------------------------------------------|-----------------------------------------|
+| **Indexed counts**        | `db.$count(practiceAttempts, eq(practiceAttempts.userId, user))` | Single indexed lookup, no data transfer |
+| **Primary key lookup**    | `findFirst({ where: { id } })`                                   | Direct B-tree access                    |
+| **Existence checks**      | `findFirst({ columns: { id: true } })`                           | Early termination, minimal data         |
+| **Small indexed queries** | `findMany({ where: { userId: x }, limit: 5 })`                   | Index + limit caps work                 |
+
+```typescript
+// Good loader - fast counts render page with "3 items to review"
+export const loader = async ({ context }: Route.LoaderArgs) => {
+  const user = context.get(userContext);
+
+  const [dueCount, weakAreaCount] = await Promise.all([
+    db.$count(vocabularySkills, and(eq(vocabularySkills.userId, user), lte(vocabularySkills.nextReviewAt, new Date()))),
+    db.$count(weakAreas, eq(weakAreas.userId, user)),
+  ]);
+
+  return { dueCount, weakAreaCount };
+};
+```
+
+### Slow Queries → Move to Client-Side
+
+These should fetch after page render via `useFetcher`:
+
+| Query Type                    | Example                                                                     | Why It's Slow                 |
+|-------------------------------|-----------------------------------------------------------------------------|-------------------------------|
+| **Complex joins**             | `with: { verbDetails: true, vocabularyTags: true, vocabularySkills: true }` | Multiple table traversals     |
+| **Large result sets**         | `findMany()` returning 50+ rows with relations                              | Data transfer + serialization |
+| **NOT IN with growing lists** | Exclusion lists that grow with user activity                                | Scan overhead scales          |
+| **Full-text search**          | `LIKE '%pattern%'`                                                          | No index usage, full scan     |
+| **Aggregations with joins**   | GROUP BY across multiple tables                                             | Temp tables, sorting          |
+
+```typescript
+// Client-side fetch via action intent
+if (intent === "get_vocabulary") {
+  const [vocab, skills, weakAreas] = await Promise.all([
+    db.query.vocabulary.findMany({ with: { verbDetails: true, vocabularyTags: true } }),
+    db.query.vocabularySkills.findMany({ where: { userId: user } }),
+    db.query.weakAreas.findMany({ where: { userId: user } }),
+  ]);
+  return data({ vocab, skills, weakAreas });
+}
+```
+
+### Streaming Pattern: Best of Both (React Router 7 + Suspense)
+
+**Return promises without awaiting** - React Suspense handles parallel streaming:
+
+```typescript
+// loader.server.ts - return promises, NOT awaited
+export const loader = async ({ context }: Route.LoaderArgs) => {
+  const user = context.get(userContext);
+
+  // Each promise resolves independently - page streams in sections
+  return {
+    dueVocab: loadDueVocabulary(user),        // Promise<Vocab[]>
+    recentSessions: loadRecentSessions(user), // Promise<Session[]>
+    weakAreas: loadWeakAreas(user),           // Promise<WeakArea[]>
+  };
+};
+
+// route.tsx - each section renders when its data arrives
+function VocabSectionAsync({ promise }: { promise: Promise<Vocab[]> }) {
+  const vocab = use(promise);  // React 19 use() hook
+  if (vocab.length === 0) return null;
+  return <VocabSection vocab={vocab} />;
+}
+
+export default function Page({ loaderData }: Route.ComponentProps) {
+  return (
+    <div>
+      <Header /> {/* Renders immediately */}
+
+      <Suspense fallback={<Skeleton />}>
+        <VocabSectionAsync promise={loaderData.dueVocab} />
+      </Suspense>
+
+      <Suspense fallback={<Skeleton />}>
+        <SessionsSectionAsync promise={loaderData.recentSessions} />
+      </Suspense>
+    </div>
+  );
+}
+```
+
+**Key benefits:**
+
+- Page header renders instantly (no loader blocking)
+- Each section streams in as its data arrives (parallel)
+- Slower sections don't block faster ones
+- Native React Suspense - no manual fetcher state management
 
 ---
 
