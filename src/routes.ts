@@ -50,6 +50,9 @@ export default [
 	// Search (will become modal later, keep route for now)
 	route("search", "routes/search.tsx"),
 
+	// Support/About page
+	route("support", "routes/support.tsx"),
+
 	// API routes
 	...prefix("api", [
 		// Push notifications
