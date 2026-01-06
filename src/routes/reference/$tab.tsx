@@ -1,6 +1,7 @@
 import type { Route } from "./+types/$tab";
 import { Users, BookOpen, MapPin, Zap, Sparkles } from "lucide-react";
 import { TabHero } from "@/components/TabHero";
+import { PracticeCTA } from "@/components/PracticeCTA";
 import { AgreementSection, MovableNuSection } from "./agreement-section";
 import { CasesSection } from "./cases-section";
 import { PronounsSection } from "./pronouns-section";
@@ -39,6 +40,11 @@ function CasesPronounsTab() {
 			</TabHero>
 			<CasesSection />
 			<PronounsSection />
+			<PracticeCTA
+				title="Practice pronouns"
+				description="Build fluency with timed retrieval drills on Greek pronouns."
+				topic="pronouns"
+			/>
 		</div>
 	);
 }
@@ -57,6 +63,11 @@ function NounsArticlesTab() {
 			</TabHero>
 			<AgreementSection />
 			<MovableNuSection />
+			<PracticeCTA
+				title="Practice articles"
+				description="Build fluency with timed retrieval drills on Greek articles."
+				topic="articles"
+			/>
 		</div>
 	);
 }
@@ -74,6 +85,11 @@ function AdjectivesTab() {
 				know noun patterns, adjectives follow the same rules.
 			</TabHero>
 			<AdjectivesSection />
+			<PracticeCTA
+				title="Practice adjectives"
+				description="Build fluency with timed retrieval drills on Greek adjectives."
+				topic="adjectives"
+			/>
 		</div>
 	);
 }
@@ -91,6 +107,11 @@ function PrepositionsTab() {
 				four (σε, από, για, με) cover most situations.
 			</TabHero>
 			<PrepositionsSection />
+			<PracticeCTA
+				title="Practice prepositions"
+				description="Build fluency with timed retrieval drills on Greek prepositions."
+				topic="prepositions"
+			/>
 		</div>
 	);
 }
@@ -109,6 +130,11 @@ function VerbsTab() {
 				verbs.
 			</TabHero>
 			<VerbsSection />
+			<PracticeCTA
+				title="Practice verbs"
+				description="Build fluency with timed retrieval drills on Greek verb conjugation."
+				topic="verbs"
+			/>
 		</div>
 	);
 }
