@@ -68,3 +68,19 @@ export const declensionPatterns = [
 	"neut-ma", // το όνομα -> το όνομα -> του ονόματος
 ] as const;
 export type DeclensionPattern = (typeof declensionPatterns)[number];
+
+// Auth challenge types for WebAuthn flow
+export const challengeTypes = ["registration", "authentication"] as const;
+export type ChallengeType = (typeof challengeTypes)[number];
+
+// WebAuthn authenticator transports
+export const authenticatorTransports = [
+	"ble",
+	"cable",
+	"hybrid",
+	"internal",
+	"nfc",
+	"smart-card",
+	"usb",
+] as const;
+export type AuthenticatorTransport = (typeof authenticatorTransports)[number];
