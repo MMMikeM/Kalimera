@@ -65,18 +65,29 @@ export default function Root() {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const currentSection = location.pathname.split("/")[1] || "home";
-	const isLoginPage = location.pathname === "/login";
+	const isAuthPage = location.pathname === "/login" || location.pathname === "/register";
 
 	const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
 	useEffect(() => {
-		const userId = localStorage.getItem(AUTH_STORAGE_KEY);
-		setIsAuthenticated(!!userId);
+		const stored = localStorage.getItem(AUTH_STORAGE_KEY);
+		let isValid = false;
 
-		if (!userId && !isLoginPage) {
+		if (stored) {
+			try {
+				const parsed = JSON.parse(stored) as { userId?: number; username?: string };
+				isValid = typeof parsed.userId === "number" && !!parsed.username;
+			} catch {
+				localStorage.removeItem(AUTH_STORAGE_KEY);
+			}
+		}
+
+		setIsAuthenticated(isValid);
+
+		if (!isValid && !isAuthPage) {
 			navigate("/login");
 		}
-	}, [isLoginPage, navigate]);
+	}, [isAuthPage, navigate]);
 
 	const handleLogout = () => {
 		localStorage.removeItem(AUTH_STORAGE_KEY);
@@ -84,8 +95,8 @@ export default function Root() {
 		navigate("/login");
 	};
 
-	// Don't render full layout for login page
-	if (isLoginPage) {
+	// Don't render full layout for auth pages
+	if (isAuthPage) {
 		return (
 			<div className="app-shell bg-cream">
 				<main className="app-main">
