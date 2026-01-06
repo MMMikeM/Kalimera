@@ -1,6 +1,6 @@
 {
   "name": "Greek Learning - καλημέρα",
-  "short_name": "καλημέρα",
+  "short_name": "🇬🇷 Καλημέρα",
   "description": "Learn Greek with vocabulary drills and conversation practice",
   "start_url": "/",
   "scope": "/",
@@ -28,7 +28,10 @@
       "purpose": "maskable"
     }
   ],
-  "categories": ["education", "productivity"],
+  "categories": [
+    "education",
+    "productivity"
+  ],
   "lang": "en",
   "dir": "ltr"
 }
