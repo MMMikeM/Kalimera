@@ -9,7 +9,9 @@ import {
 	useLocation,
 	useNavigate,
 } from "react-router";
-import { BookOpen, FileText, Home, LogOut, Search, Zap } from "lucide-react";
+import { BookOpen, FileText, Home, LogIn, Zap } from "lucide-react";
+import { Header } from "@/components/Header";
+import { LandingPage } from "@/components/LandingPage";
 import "./index.css";
 import type { LinksFunction } from "react-router";
 
@@ -27,6 +29,8 @@ const NAV_ITEMS = [
 	{ id: "learn", label: "Learn", path: "/learn/conversations/arriving", icon: BookOpen },
 	{ id: "reference", label: "Reference", path: "/reference/cases-pronouns", icon: FileText },
 ];
+
+const PUBLIC_ROUTES = ["/reference", "/learn", "/search", "/support"];
 
 export function Layout({ children }: { children: React.ReactNode }) {
 	return (
@@ -66,6 +70,7 @@ export default function Root() {
 	const navigate = useNavigate();
 	const currentSection = location.pathname.split("/")[1] || "home";
 	const isAuthPage = location.pathname === "/login" || location.pathname === "/register";
+	const isPublicRoute = PUBLIC_ROUTES.some((route) => location.pathname.startsWith(route));
 
 	const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
@@ -83,11 +88,7 @@ export default function Root() {
 		}
 
 		setIsAuthenticated(isValid);
-
-		if (!isValid && !isAuthPage) {
-			navigate("/login");
-		}
-	}, [isAuthPage, navigate]);
+	}, []);
 
 	const handleLogout = () => {
 		localStorage.removeItem(AUTH_STORAGE_KEY);
@@ -126,81 +127,21 @@ export default function Root() {
 		);
 	}
 
+	// Show landing page for unauthenticated users on non-public routes
+	if (!isAuthenticated && !isPublicRoute) {
+		return <LandingPage />;
+	}
+
 	return (
 		<div className="app-shell bg-cream">
 			{/* Scrollable main area */}
 			<main className="app-main">
 				<div className="max-w-6xl mx-auto px-6 md:px-8">
-					{/* Header */}
-					<header className="pt-8 pb-6">
-						<div className="flex items-center justify-between">
-							<Link to="/" className="group flex items-baseline gap-3">
-								<span className="text-2xl font-serif text-terracotta">
-									καλημέρα
-								</span>
-								<span className="text-sm text-stone-600 hidden sm:inline group-hover:text-stone-700 transition-colors">
-									Greek Learning
-								</span>
-							</Link>
-
-							{/* Header utilities */}
-							<div className="flex items-center gap-3">
-								{/* Search icon (mobile) */}
-								<Link
-									to="/search"
-									className="md:hidden p-2 text-stone-500 hover:text-stone-700 transition-colors"
-									aria-label="Search"
-								>
-									<Search size={20} strokeWidth={1.5} />
-								</Link>
-
-								{/* Logout button (mobile) */}
-								<button
-									type="button"
-									onClick={handleLogout}
-									className="md:hidden p-2 text-stone-500 hover:text-stone-700 transition-colors"
-									aria-label="Logout"
-								>
-									<LogOut size={20} strokeWidth={1.5} />
-								</button>
-
-								{/* Desktop Navigation */}
-								<nav className="hidden md:flex items-center gap-1">
-									{NAV_ITEMS.map((item) => {
-									const isActive = currentSection === item.id;
-									return (
-										<Link
-											key={item.id}
-											to={item.path}
-											className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-												isActive
-													? "bg-stone-800 text-cream"
-													: "text-stone-600 hover:text-stone-800 hover:bg-stone-100"
-											}`}
-										>
-											{item.label}
-										</Link>
-									);
-								})}
-									<Link
-										to="/search"
-										className="p-2 text-stone-500 hover:text-stone-700 transition-colors ml-2"
-										aria-label="Search"
-									>
-										<Search size={18} strokeWidth={1.5} />
-									</Link>
-									<button
-										type="button"
-										onClick={handleLogout}
-										className="p-2 text-stone-500 hover:text-stone-700 transition-colors"
-										aria-label="Logout"
-									>
-										<LogOut size={18} strokeWidth={1.5} />
-									</button>
-								</nav>
-							</div>
-						</div>
-					</header>
+					<Header
+						isAuthenticated={isAuthenticated}
+						currentSection={currentSection}
+						onLogout={handleLogout}
+					/>
 
 					{/* Page Content */}
 					<div className="pb-24 md:pb-12">
@@ -223,7 +164,7 @@ export default function Root() {
 			{/* Mobile Navigation - fixed bottom */}
 			<nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-cream/95 backdrop-blur-sm border-t border-stone-200 px-4 py-2 safe-area-pb">
 				<div className="flex justify-around items-center max-w-md mx-auto">
-					{NAV_ITEMS.map((item) => {
+					{NAV_ITEMS.filter((item) => isAuthenticated || item.id !== "home").map((item) => {
 						const Icon = item.icon;
 						const isActive = currentSection === item.id;
 						return (
@@ -241,6 +182,15 @@ export default function Root() {
 							</Link>
 						);
 					})}
+					{!isAuthenticated && (
+						<Link
+							to="/register"
+							className="flex flex-col items-center gap-1 px-4 py-2 rounded-xl transition-all text-terracotta bg-terracotta/10"
+						>
+							<LogIn size={22} strokeWidth={1.5} />
+							<span className="text-xs font-medium">Sign Up</span>
+						</Link>
+					)}
 				</div>
 			</nav>
 		</div>
