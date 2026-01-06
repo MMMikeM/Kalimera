@@ -20,6 +20,7 @@ export default [
     ]),
     route("words", "routes/explore/words/layout.tsx", [
       route(":tab", "routes/explore/words/$tab.tsx"),
+      route("verbs/:verbId", "routes/explore/words/verbs/$verbId/route.tsx"),
     ]),
   ]),
 
