@@ -7,7 +7,7 @@ import UnifiedDrill, {
 	type SessionStats,
 } from "./components/unified-drill";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components";
+import { Card } from "@/components/Card";
 import {
 	generateQuestions,
 	CATEGORY_CONFIG,

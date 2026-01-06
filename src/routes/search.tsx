@@ -2,7 +2,9 @@ import type { Route } from "./+types/search";
 import { useState, useMemo } from "react";
 import { Search } from "lucide-react";
 import { createFuzzySearch } from "@mmmike/mikrofuzz";
-import { MonoText, SearchInput, TabHero } from "../components";
+import { MonoText } from "@/components/MonoText";
+import { SearchInput } from "@/components/SearchInput";
+import { TabHero } from "@/components/TabHero";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import {

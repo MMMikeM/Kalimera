@@ -1,7 +1,9 @@
 import { Link } from "react-router";
 import { ArrowLeft } from "lucide-react";
 import type { Route } from "./+types/route";
-import { Card, MonoText, SectionHeading } from "@/components";
+import { Card } from "@/components/Card";
+import { MonoText } from "@/components/MonoText";
+import { SectionHeading } from "@/components/SectionHeading";
 import { TenseNavigator } from "@/components/TenseNavigator";
 import { ImperativeTable } from "@/components/ImperativeTable";
 import { StemInsight } from "@/components/StemInsight";

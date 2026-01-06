@@ -17,15 +17,13 @@ import {
 	Languages,
 	BookOpen,
 } from "lucide-react";
-import {
-	Card,
-	MonoText,
-	CollapsibleSection,
-	CategoryCard,
-	ParadigmTable,
-	TabHero,
-	KeyInsight,
-} from "@/components";
+import { Card } from "@/components/Card";
+import { MonoText } from "@/components/MonoText";
+import { CollapsibleSection } from "@/components/CollapsibleSection";
+import { CategoryCard } from "@/components/CategoryCard";
+import { ParadigmTable } from "@/components/ParadigmTable";
+import { TabHero } from "@/components/TabHero";
+import { KeyInsight } from "@/components/KeyInsight";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
 	VERB_PATTERNS,

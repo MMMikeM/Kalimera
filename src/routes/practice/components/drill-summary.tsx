@@ -1,6 +1,7 @@
 import type React from "react";
 import { CheckCircle, XCircle, RotateCcw } from "lucide-react";
-import { Card, MonoText } from "@/components";
+import { Card } from "@/components/Card";
+import { MonoText } from "@/components/MonoText";
 import { Button } from "@/components/ui/button";
 import { greekToPhonetic } from "@/lib/greek-transliteration";
 import type { SessionStats } from "./unified-drill";

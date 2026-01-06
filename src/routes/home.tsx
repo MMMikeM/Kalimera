@@ -15,7 +15,8 @@ import {
 	calculateDaysUntilNextFreeze,
 	type FreezeStatus,
 } from "@/db/queries/streak";
-import { FreezeIndicator, MilestoneCelebration } from "@/components";
+import { FreezeIndicator } from "@/components/FreezeIndicator";
+import { MilestoneCelebration } from "@/components/MilestoneCelebration";
 
 type Stats = {
 	streak: number;

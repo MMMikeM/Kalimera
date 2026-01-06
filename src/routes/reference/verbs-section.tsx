@@ -11,13 +11,11 @@ import {
 import type React from "react";
 import { Link } from "react-router";
 
-import {
-	Card,
-	MonoText,
-	ParadigmTable,
-	SectionHeading,
-	KeyInsight,
-} from "../../components";
+import { Card } from "@/components/Card";
+import { MonoText } from "@/components/MonoText";
+import { ParadigmTable } from "@/components/ParadigmTable";
+import { SectionHeading } from "@/components/SectionHeading";
+import { KeyInsight } from "@/components/KeyInsight";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { IRREGULAR_VERBS, VERB_PATTERNS } from "../../constants/verbs";

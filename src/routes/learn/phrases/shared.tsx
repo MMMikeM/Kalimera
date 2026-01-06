@@ -1,5 +1,6 @@
 import type React from "react";
-import { Card, MonoText } from "@/components";
+import { Card } from "@/components/Card";
+import { MonoText } from "@/components/MonoText";
 
 // Re-export types from data.server - single source of truth
 export type { PhraseItem, PhrasesLoaderData } from "./data.server";

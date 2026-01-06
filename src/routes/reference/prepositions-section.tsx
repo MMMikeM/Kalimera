@@ -9,14 +9,12 @@ import {
 	SE_CONTRACTIONS,
 	TIME_EXPRESSIONS,
 } from "../../constants/prepositions";
-import {
-	Card,
-	CategoryCard,
-	CollapsibleSection,
-	KeyInsight,
-	MonoText,
-	SectionHeading,
-} from "../../components";
+import { Card } from "@/components/Card";
+import { CategoryCard } from "@/components/CategoryCard";
+import { CollapsibleSection } from "@/components/CollapsibleSection";
+import { KeyInsight } from "@/components/KeyInsight";
+import { MonoText } from "@/components/MonoText";
+import { SectionHeading } from "@/components/SectionHeading";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { PrepositionNavigator } from "./preposition-navigator";
 

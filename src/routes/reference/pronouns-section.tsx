@@ -10,13 +10,11 @@ import {
 	SUBJECT_PRONOUNS,
 	SUBJECT_PRONOUN_EXAMPLES,
 } from "../../constants/pronouns";
-import {
-	Card,
-	MonoText,
-	CategoryCard,
-	CollapsibleSection,
-	KeyInsight,
-} from "../../components";
+import { Card } from "@/components/Card";
+import { MonoText } from "@/components/MonoText";
+import { CategoryCard } from "@/components/CategoryCard";
+import { CollapsibleSection } from "@/components/CollapsibleSection";
+import { KeyInsight } from "@/components/KeyInsight";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { PronounDecisionGuide } from "./pronoun-decision-guide";
 import { PronounParadigmTable } from "./pronoun-paradigm-table";

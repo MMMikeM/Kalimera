@@ -1,4 +1,4 @@
-import { MonoText } from "../../components";
+import { MonoText } from "@/components/MonoText";
 import type { PronounForm, PronounParadigm } from "../../constants/pronouns";
 
 interface PronounParadigmTableProps {

@@ -2,12 +2,10 @@ import { ChevronDown } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
 import { CASE_RECOGNITION } from "../../constants/recognition";
-import {
-	Card,
-	MonoText,
-	SectionHeading,
-	CollapsibleSection,
-} from "../../components";
+import { Card } from "@/components/Card";
+import { MonoText } from "@/components/MonoText";
+import { SectionHeading } from "@/components/SectionHeading";
+import { CollapsibleSection } from "@/components/CollapsibleSection";
 
 export const CasesSection: React.FC = () => {
 	const [showVocative, setShowVocative] = useState(false);

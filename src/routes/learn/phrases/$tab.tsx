@@ -17,14 +17,12 @@ import {
 	HelpCircle,
 	Blocks,
 } from "lucide-react";
-import {
-	Card,
-	MonoText,
-	CollapsibleSection,
-	CategoryCard,
-	QuickTest,
-	TabHero,
-} from "@/components";
+import { Card } from "@/components/Card";
+import { MonoText } from "@/components/MonoText";
+import { CollapsibleSection } from "@/components/CollapsibleSection";
+import { CategoryCard } from "@/components/CategoryCard";
+import { QuickTest } from "@/components/QuickTest";
+import { TabHero } from "@/components/TabHero";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import type { PhrasesLoaderData, PhraseItem } from "./shared";
 import { PhraseSection, PhraseItemDisplay } from "./shared";

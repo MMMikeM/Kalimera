@@ -17,7 +17,9 @@ import {
 	type VocabItemWithSkill,
 	type PracticeStats,
 } from "./data.server";
-import { NavTabs, type NavTab, PushNotificationToggle } from "@/components";
+import { NavTabs } from "@/components/NavTabs";
+import type { NavTab } from "@/components/NavTabs";
+import { PushNotificationToggle } from "@/components/PushNotificationToggle";
 
 const AUTH_STORAGE_KEY = "greek-authenticated-user";
 
