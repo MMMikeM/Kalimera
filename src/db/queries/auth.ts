@@ -158,3 +158,19 @@ export const userHasPassword = async (userId: number) => {
 		.where(eq(users.id, userId));
 	return !!user?.passwordHash;
 };
+
+export const findUserByCode = async (code: string) => {
+	const [user] = await db
+		.select()
+		.from(users)
+		.where(eq(users.code, code.toLowerCase()));
+	return user;
+};
+
+export const setUserPassword = async (userId: number, passwordHash: string, username?: string) => {
+	const updateData: { passwordHash: string; username?: string } = { passwordHash };
+	if (username) {
+		updateData.username = username.toLowerCase();
+	}
+	await db.update(users).set(updateData).where(eq(users.id, userId));
+};
