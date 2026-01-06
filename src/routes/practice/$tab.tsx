@@ -1,32 +1,19 @@
 import { redirect, useOutletContext } from "react-router";
 import type { Route } from "./+types/$tab";
 import type { PracticeLoaderData } from "./layout";
-import type { FocusType } from "./speed-drill";
 import SrsDrill from "./components/srs-drill";
 
 export { action } from "./layout";
 
-const FOCUS_REDIRECTS = {
-	pronouns: "pronouns",
-	articles: "articles",
-	verbs: "verbs",
-	nouns: "nouns",
-} as const satisfies Record<string, FocusType>;
-
+const LEGACY_TABS = ["pronouns", "articles", "verbs", "nouns"] as const;
 const VALID_TABS = ["vocabulary", "review"] as const;
 type TabId = (typeof VALID_TABS)[number];
 
-export function loader({ params, request }: Route.LoaderArgs) {
+export function loader({ params }: Route.LoaderArgs) {
 	const tab = params.tab as string;
-	const url = new URL(request.url);
-	const userId = url.searchParams.get("userId");
 
-	if (tab in FOCUS_REDIRECTS) {
-		const focusType = FOCUS_REDIRECTS[tab as keyof typeof FOCUS_REDIRECTS];
-		const redirectParams = new URLSearchParams();
-		redirectParams.set("focus", focusType);
-		if (userId) redirectParams.set("userId", userId);
-		throw redirect(`/practice/speed?${redirectParams.toString()}`);
+	if (LEGACY_TABS.includes(tab as (typeof LEGACY_TABS)[number])) {
+		throw redirect("/practice/speed");
 	}
 
 	if (!VALID_TABS.includes(tab as TabId)) {

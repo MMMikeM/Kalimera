@@ -2,13 +2,20 @@ import { useState } from "react";
 import { Link } from "react-router";
 import {
 	ArrowRight,
+	Calendar,
 	Check,
 	ChevronDown,
 	ChevronUp,
 	Play,
 	Sparkles,
 } from "lucide-react";
-import { getPracticeStats } from "@/db/queries/practice";
+import { getItemsDueTomorrow, getPracticeStats, getUserById } from "@/db/queries/practice";
+import {
+	getFreezeStatus,
+	calculateDaysUntilNextFreeze,
+	type FreezeStatus,
+} from "@/db/queries/streak";
+import { FreezeIndicator, MilestoneCelebration } from "@/components";
 
 type Stats = {
 	streak: number;
@@ -22,6 +29,9 @@ type LoaderData = {
 	stats: Stats;
 	weekData: { practiced: boolean }[];
 	todayPracticed: boolean;
+	freezeStatus: FreezeStatus;
+	daysUntilNextFreeze: number | null;
+	itemsDueTomorrow: number;
 };
 
 export function meta() {
@@ -37,7 +47,11 @@ export function meta() {
 export async function loader(): Promise<LoaderData> {
 	// TODO: Get actual user ID from session
 	const userId = 1;
-	const rawStats = await getPracticeStats(userId);
+	const [rawStats, user, itemsDueTomorrow] = await Promise.all([
+		getPracticeStats(userId),
+		getUserById(userId),
+		getItemsDueTomorrow(userId),
+	]);
 
 	// Cast to fix Drizzle count() type inference issue
 	const stats: Stats = {
@@ -61,7 +75,15 @@ export async function loader(): Promise<LoaderData> {
 
 	const todayPracticed = stats.streak > 0 && mondayOffset <= stats.streak;
 
-	return { stats, weekData, todayPracticed };
+	// Get freeze status
+	const freezeStatus = user
+		? getFreezeStatus(user)
+		: { status: "none" as const, freezeCount: 0 };
+	const daysUntilNextFreeze = user
+		? calculateDaysUntilNextFreeze(stats.streak, user)
+		: 7;
+
+	return { stats, weekData, todayPracticed, freezeStatus, daysUntilNextFreeze, itemsDueTomorrow };
 }
 
 // Practice CTA - Primary action when items are due
@@ -90,7 +112,13 @@ const PracticeCTA = ({ dueCount }: { dueCount: number }) => {
 };
 
 // All caught up state
-const AllCaughtUpCTA = ({ newAvailable }: { newAvailable: number }) => (
+const AllCaughtUpCTA = ({
+	newAvailable,
+	itemsDueTomorrow,
+}: {
+	newAvailable: number;
+	itemsDueTomorrow: number;
+}) => (
 	<div className="text-center py-8 rounded-2xl bg-olive-50 border border-olive-200">
 		<div className="mx-auto w-16 h-16 rounded-full bg-olive-100 flex items-center justify-center mb-4">
 			<Check className="w-8 h-8 text-olive" />
@@ -100,6 +128,15 @@ const AllCaughtUpCTA = ({ newAvailable }: { newAvailable: number }) => (
 		<p className="text-sm text-stone-500 mt-2">
 			You've reviewed all due items. Check back later or learn something new.
 		</p>
+		{itemsDueTomorrow > 0 && (
+			<div className="flex items-center justify-center gap-2 mt-4 text-sm text-stone-600">
+				<Calendar className="w-4 h-4 text-ocean" />
+				<span>
+					{itemsDueTomorrow} {itemsDueTomorrow === 1 ? "item" : "items"} due
+					tomorrow
+				</span>
+			</div>
+		)}
 		{newAvailable > 0 && (
 			<Link
 				to="/practice/vocabulary"
@@ -304,16 +341,19 @@ const StatsSummary = ({
 );
 
 export default function DashboardRoute({ loaderData }: { loaderData: LoaderData }) {
-	const { stats, weekData, todayPracticed } = loaderData;
+	const { stats, weekData, todayPracticed, freezeStatus, daysUntilNextFreeze, itemsDueTomorrow } =
+		loaderData;
 
 	return (
 		<div className="pb-8 space-y-6">
+			<MilestoneCelebration streak={stats.streak} />
+
 			{/* Primary CTA Section */}
 			<section>
 				{stats.totalLearned === 0 ? (
 					<FirstTimeUserCTA />
 				) : stats.dueCount === 0 ? (
-					<AllCaughtUpCTA newAvailable={stats.newAvailable} />
+					<AllCaughtUpCTA newAvailable={stats.newAvailable} itemsDueTomorrow={itemsDueTomorrow} />
 				) : (
 					<PracticeCTA dueCount={stats.dueCount} />
 				)}
@@ -324,9 +364,16 @@ export default function DashboardRoute({ loaderData }: { loaderData: LoaderData 
 				<DailyPhrase />
 			</section>
 
-			{/* Week View */}
-			<section>
+			{/* Week View + Freeze Status */}
+			<section className="space-y-3">
 				<WeekStreak weekData={weekData} todayPracticed={todayPracticed} />
+				<FreezeIndicator
+					freezeCount={freezeStatus.freezeCount}
+					status={freezeStatus.status}
+					hoursUntilRecovery={freezeStatus.hoursUntilRecovery}
+					daysUntilNextEarn={daysUntilNextFreeze ?? undefined}
+					protectedDate={freezeStatus.protectedDate}
+				/>
 			</section>
 
 			{/* Stats Summary */}

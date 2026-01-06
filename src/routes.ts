@@ -10,19 +10,22 @@ export default [
     route(":tab", "routes/practice/$tab.tsx"),
   ]),
 
-  // Explore - merged content (conversations, phrases, words)
-  route("explore", "routes/explore/layout.tsx", [
-    route("conversations", "routes/explore/conversations/layout.tsx", [
-      route(":tab", "routes/explore/conversations/$tab.tsx"),
+  // Learn - content exploration (conversations, phrases, vocabulary)
+  route("learn", "routes/learn/layout.tsx", [
+    route("conversations", "routes/learn/conversations/layout.tsx", [
+      route(":tab", "routes/learn/conversations/$tab.tsx"),
     ]),
-    route("phrases", "routes/explore/phrases/layout.tsx", [
-      route(":tab", "routes/explore/phrases/$tab.tsx"),
+    route("phrases", "routes/learn/phrases/layout.tsx", [
+      route(":tab", "routes/learn/phrases/$tab.tsx"),
     ]),
-    route("words", "routes/explore/words/layout.tsx", [
-      route(":tab", "routes/explore/words/$tab.tsx"),
-      route("verbs/:verbId", "routes/explore/words/verbs/$verbId/route.tsx"),
+    route("vocabulary", "routes/learn/vocabulary/layout.tsx", [
+      route(":tab", "routes/learn/vocabulary/$tab.tsx"),
+      route("verbs/:verbId", "routes/learn/vocabulary/verbs/$verbId/route.tsx"),
     ]),
   ]),
+
+  // Legacy /explore redirects (backwards compatibility)
+  route("explore/*", "routes/redirects/explore.tsx"),
 
   // Reference - grammar lookup
   route("reference", "routes/reference/layout.tsx", [

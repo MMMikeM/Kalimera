@@ -4,7 +4,7 @@ import { NavTabs, type NavTab } from "@/components";
 
 export function meta() {
 	return [
-		{ title: "Explore - Greek Learning" },
+		{ title: "Learn - Greek Learning" },
 		{
 			name: "description",
 			content: "Browse conversations, phrases, and vocabulary",
@@ -12,7 +12,7 @@ export function meta() {
 	];
 }
 
-const EXPLORE_TABS: NavTab[] = [
+const LEARN_TABS: NavTab[] = [
 	{
 		id: "conversations",
 		label: "Conversations",
@@ -28,7 +28,7 @@ const EXPLORE_TABS: NavTab[] = [
 		color: "ocean",
 	},
 	{
-		id: "words",
+		id: "vocabulary",
 		label: "Vocabulary",
 		shortLabel: "Words",
 		icon: <BookOpen size={16} />,
@@ -36,7 +36,7 @@ const EXPLORE_TABS: NavTab[] = [
 	},
 ];
 
-export default function ExploreLayout() {
+export default function LearnLayout() {
 	const location = useLocation();
 	const pathSegments = location.pathname.split("/").filter(Boolean);
 	const activeTab = pathSegments[1] || "conversations";
@@ -44,22 +44,22 @@ export default function ExploreLayout() {
 	return (
 		<div className="space-y-6">
 			<div>
-				<h2 className="text-2xl font-bold text-stone-800">Explore</h2>
+				<h2 className="text-2xl font-bold text-stone-800">Learn</h2>
 				<p className="text-stone-600 mt-1">
 					Browse Greek content by topic
 				</p>
 			</div>
 
 			<NavTabs
-				tabs={EXPLORE_TABS}
+				tabs={LEARN_TABS}
 				activeTab={activeTab}
 				buildUrl={(tabId) => {
 					const defaults: Record<string, string> = {
 						conversations: "arriving",
 						phrases: "survival",
-						words: "nouns",
+						vocabulary: "nouns",
 					};
-					return `/explore/${tabId}/${defaults[tabId] || ""}`;
+					return `/learn/${tabId}/${defaults[tabId] || ""}`;
 				}}
 			/>
 

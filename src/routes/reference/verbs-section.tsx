@@ -478,7 +478,7 @@ export const VerbsSection: React.FC = () => (
 				</span>
 			</div>
 			<Link
-				to="/explore/words/verbs"
+				to="/learn/vocabulary/verbs"
 				className="inline-flex items-center gap-1.5 text-sm font-medium text-olive-text hover:underline"
 			>
 				View vocabulary <ArrowRight size={14} />

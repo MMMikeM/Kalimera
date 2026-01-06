@@ -48,7 +48,7 @@ export default function VerbDetailPage({ loaderData }: Route.ComponentProps) {
 	return (
 		<div className="space-y-6">
 			<Link
-				to="/explore/words/verbs"
+				to="/learn/vocabulary/verbs"
 				className="inline-flex items-center gap-1.5 text-sm text-ocean-text hover:underline"
 			>
 				<ArrowLeft size={14} />

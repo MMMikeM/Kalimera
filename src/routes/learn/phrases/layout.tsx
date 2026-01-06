@@ -52,7 +52,7 @@ export default function PhrasesLayout({ loaderData }: Route.ComponentProps) {
 			<NavTabs
 				tabs={PHRASES_TABS}
 				activeTab={activeTab}
-				buildUrl={(tabId) => `/explore/phrases/${tabId}`}
+				buildUrl={(tabId) => `/learn/phrases/${tabId}`}
 			/>
 
 			<Outlet context={loaderData} />

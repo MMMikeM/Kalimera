@@ -40,7 +40,7 @@ export default function VocabularyLayout({ loaderData }: Route.ComponentProps) {
 			<NavTabs
 				tabs={VOCABULARY_TABS}
 				activeTab={activeTab}
-				buildUrl={(tabId) => `/explore/words/${tabId}`}
+				buildUrl={(tabId) => `/learn/vocabulary/${tabId}`}
 			/>
 
 			<Outlet context={loaderData} />

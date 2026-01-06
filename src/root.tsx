@@ -7,7 +7,7 @@ import {
 	Link,
 	useLocation,
 } from "react-router";
-import { Compass, FileText, Zap, Search } from "lucide-react";
+import { BookOpen, FileText, Home, Search, Zap } from "lucide-react";
 import "./index.css";
 import type { LinksFunction } from "react-router";
 
@@ -18,8 +18,9 @@ export const links: LinksFunction = () => [
 ];
 
 const NAV_ITEMS = [
+	{ id: "home", label: "Home", path: "/", icon: Home },
 	{ id: "practice", label: "Practice", path: "/practice/speed", icon: Zap },
-	{ id: "explore", label: "Explore", path: "/explore/conversations/arriving", icon: Compass },
+	{ id: "learn", label: "Learn", path: "/learn/conversations/arriving", icon: BookOpen },
 	{ id: "reference", label: "Reference", path: "/reference/cases-pronouns", icon: FileText },
 ];
 
@@ -58,7 +59,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function Root() {
 	const location = useLocation();
-	const currentSection = location.pathname.split("/")[1] || "";
+	const currentSection = location.pathname.split("/")[1] || "home";
 
 	return (
 		<div className="app-shell bg-cream">

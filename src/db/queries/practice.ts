@@ -181,6 +181,33 @@ export const getPracticeStats = async (
 	};
 };
 
+export const getItemsDueTomorrow = async (
+	userId: number,
+	skillType: SkillType = "recognition",
+) => {
+	const now = new Date();
+	const startOfTomorrow = new Date(now);
+	startOfTomorrow.setDate(startOfTomorrow.getDate() + 1);
+	startOfTomorrow.setHours(0, 0, 0, 0);
+
+	const endOfTomorrow = new Date(startOfTomorrow);
+	endOfTomorrow.setHours(23, 59, 59, 999);
+
+	const [result] = await db
+		.select({ count: count() })
+		.from(vocabularySkills)
+		.where(
+			and(
+				eq(vocabularySkills.userId, userId),
+				eq(vocabularySkills.skillType, skillType),
+				sql`${vocabularySkills.nextReviewAt} > ${now}`,
+				sql`${vocabularySkills.nextReviewAt} <= ${endOfTomorrow}`,
+			),
+		);
+
+	return result?.count || 0;
+};
+
 const calculateStreak = async (userId: number): Promise<number> => {
 	const sessions = await db
 		.select({
@@ -493,6 +520,11 @@ export const findUserByCode = async (code: string) => {
 		.select()
 		.from(users)
 		.where(eq(users.code, code.toLowerCase()));
+	return user;
+};
+
+export const getUserById = async (userId: number) => {
+	const [user] = await db.select().from(users).where(eq(users.id, userId));
 	return user;
 };
 
