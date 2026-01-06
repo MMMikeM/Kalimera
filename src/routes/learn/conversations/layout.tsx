@@ -141,7 +141,7 @@ export default function ConversationsLayout() {
 			<NavTabs
 				tabs={CONVERSATION_TABS}
 				activeTab={activeTab}
-				buildUrl={(tabId) => `/explore/conversations/${tabId}`}
+				buildUrl={(tabId) => `/learn/conversations/${tabId}`}
 			/>
 
 			<Outlet context={{ mode }} />

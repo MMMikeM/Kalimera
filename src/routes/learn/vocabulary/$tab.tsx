@@ -698,7 +698,7 @@ export default function TabRoute({ loaderData }: Route.ComponentProps) {
 		case "verbs":
 			return <VerbsTab data={data} />;
 		case "phrases":
-			return <Navigate to="/explore/phrases" replace />;
+			return <Navigate to="/learn/phrases" replace />;
 		case "reference":
 			return <ReferenceTab data={data} />;
 		default:

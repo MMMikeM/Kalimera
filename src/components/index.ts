@@ -58,3 +58,7 @@ export { default as CountdownTimer } from "./CountdownTimer";
 export type { NavTabsProps, NavTab, TabColor } from "./NavTabs";
 export { NavTabs, navTabsVariants, triggerStateVariants, badgeColorVariants } from "./NavTabs";
 export { PushNotificationToggle } from "./PushNotificationToggle";
+export type { FreezeIndicatorProps, FreezeStatus } from "./FreezeIndicator";
+export { FreezeIndicator } from "./FreezeIndicator";
+export type { MilestoneCelebrationProps } from "./MilestoneCelebration";
+export { MilestoneCelebration } from "./MilestoneCelebration";

@@ -1,12 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-	Users,
-	BookOpen,
-	UserPlus,
-	Clock,
-	FileText,
-	Zap,
-} from "lucide-react";
+import { UserPlus, Clock, Zap } from "lucide-react";
 import {
 	Outlet,
 	useSearchParams,
@@ -250,12 +243,7 @@ export type PracticeLoaderData = Awaited<ReturnType<typeof loader>>;
 
 const PRACTICE_TABS: NavTab[] = [
 	{ id: "speed", label: "Speed Drill", shortLabel: "Speed", icon: <Zap size={16} />, color: "terracotta" },
-	{ id: "pronouns", label: "Pronouns", shortLabel: "Pro", icon: <Users size={16} />, color: "ocean" },
-	{ id: "articles", label: "Articles", shortLabel: "Art", icon: <FileText size={16} />, color: "olive" },
-	{ id: "verbs", label: "Verbs", shortLabel: "Vrb", icon: <Zap size={16} />, color: "honey" },
-	{ id: "nouns", label: "Nouns", shortLabel: "Noun", icon: <BookOpen size={16} />, color: "ocean" },
-	{ id: "vocabulary", label: "Vocabulary", shortLabel: "Vocab", icon: <BookOpen size={16} />, color: "olive" },
-	{ id: "review", label: "Review", shortLabel: "Rev", icon: <Clock size={16} />, color: "terracotta" },
+	{ id: "review", label: "Review", shortLabel: "Review", icon: <Clock size={16} />, color: "ocean" },
 ];
 
 export default function PracticeLayout({ loaderData }: Route.ComponentProps) {

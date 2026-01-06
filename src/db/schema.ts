@@ -46,6 +46,11 @@ export const users = sqliteTable(
 		code: string("code"),
 		displayName: string("display_name"),
 		createdAt: createdAt(),
+		// Streak freeze feature
+		freezeCount: integer("freeze_count").notNull().default(0),
+		lastFreezeUsedAt: nullableTimestamp("last_freeze_used_at"),
+		freezeUsedForDate: nullableString("freeze_used_for_date"), // ISO date string like "2026-01-05"
+		consecutiveDaysAtEarn: integer("consecutive_days_at_earn").notNull().default(0),
 	},
 	(table) => [uniqueIndex("idx_users_code").on(table.code)],
 );

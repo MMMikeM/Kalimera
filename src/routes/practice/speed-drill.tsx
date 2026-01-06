@@ -1,13 +1,12 @@
 import type React from "react";
 import { useMemo, useState, useRef, useCallback } from "react";
-import { Zap, RotateCcw, Filter, X } from "lucide-react";
-import { Link, useOutletContext, useFetcher, useSearchParams } from "react-router";
+import { Zap, RotateCcw } from "lucide-react";
+import { useOutletContext, useFetcher } from "react-router";
 import UnifiedDrill, {
 	type UnifiedAttemptResult,
 	type SessionStats,
 } from "./components/unified-drill";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components";
 import {
 	generateQuestions,
@@ -16,26 +15,29 @@ import {
 } from "@/lib/drill/generate-questions";
 import type { PracticeLoaderData } from "./layout";
 
-export type FocusType = QuestionCategory;
+export type FocusType = QuestionCategory | "all";
 
-const isValidFocus = (value: string | null): value is FocusType =>
-	value !== null && value in CATEGORY_CONFIG;
+const FOCUS_OPTIONS: { value: FocusType; label: string }[] = [
+	{ value: "all", label: "All" },
+	{ value: "pronouns", label: "Pronouns" },
+	{ value: "articles", label: "Articles" },
+	{ value: "verbs", label: "Verbs" },
+	{ value: "nouns", label: "Nouns" },
+];
 
 const SpeedDrill: React.FC = () => {
 	const { userId } = useOutletContext<PracticeLoaderData>();
-	const [searchParams] = useSearchParams();
 	const fetcher = useFetcher();
 	const sessionIdRef = useRef<number | null>(null);
 
-	const focusParam = searchParams.get("focus");
-	const focus = isValidFocus(focusParam) ? focusParam : null;
+	const [focus, setFocus] = useState<FocusType>("all");
 
 	const [sessionCount, setSessionCount] = useState(0);
 	const [lastStats, setLastStats] = useState<SessionStats | null>(null);
 	const [drillSize, setDrillSize] = useState(15);
 
 	const questions = useMemo(
-		() => generateQuestions(focus ? [focus] : "all", drillSize),
+		() => generateQuestions(focus === "all" ? "all" : [focus], drillSize),
 		[drillSize, focus]
 	);
 
@@ -129,20 +131,8 @@ const SpeedDrill: React.FC = () => {
 		sessionIdRef.current = fetcher.data.session.id;
 	}
 
-	const buildUrl = (path: string, newFocus?: FocusType | null) => {
-		const userIdParam = searchParams.get("userId");
-		const params = new URLSearchParams();
-		if (userIdParam) params.set("userId", userIdParam);
-		if (newFocus) params.set("focus", newFocus);
-		const query = params.toString();
-		return query ? `${path}?${query}` : path;
-	};
-
-	const focusConfig = focus ? CATEGORY_CONFIG[focus] : null;
-	const drillTitle = focus ? `${focusConfig?.label} Drill` : "Speed Drill";
-	const drillDescription = focus
-		? focusConfig?.description
-		: "Rapid-fire production practice. Mix of pronouns, verbs, articles, and nouns.";
+	const focusConfig = focus !== "all" ? CATEGORY_CONFIG[focus] : null;
+	const drillTitle = focus !== "all" ? `${focusConfig?.label} Drill` : "Speed Drill";
 
 	if (sessionCount === 0 && !lastStats) {
 		return (
@@ -153,25 +143,29 @@ const SpeedDrill: React.FC = () => {
 							<Zap size={32} className="text-terracotta" />
 						</div>
 						<h2 className="text-2xl font-bold mb-2">{drillTitle}</h2>
-						{focus && (
-							<Link
-								to={buildUrl("/practice/speed")}
-								className="inline-flex items-center gap-1 mb-3"
-							>
-								<Badge color="ocean" className="gap-1">
-									<Filter size={12} />
-									{focusConfig?.label}
-									<X size={12} />
-								</Badge>
-							</Link>
-						)}
 						<p className="text-stone-600 mb-6">
-							{drillDescription} Type fast, build automaticity.
+							Rapid-fire production practice. Type fast, build automaticity.
 						</p>
 
 						<div className="mb-6">
+							<span className="text-sm text-stone-500 block mb-2">Focus</span>
+							<div className="flex flex-wrap justify-center gap-2">
+								{FOCUS_OPTIONS.map((option) => (
+									<Button
+										key={option.value}
+										variant={focus === option.value ? "primary" : "outline"}
+										size="sm"
+										onClick={() => setFocus(option.value)}
+									>
+										{option.label}
+									</Button>
+								))}
+							</div>
+						</div>
+
+						<div className="mb-6">
 							<span className="text-sm text-stone-500 block mb-2">
-								Questions per session
+								Questions
 							</span>
 							<div className="flex justify-center gap-2">
 								{[10, 15, 20, 30].map((size) => (
@@ -216,23 +210,6 @@ const SpeedDrill: React.FC = () => {
 						</div>
 					</div>
 				</Card>
-
-				{!focus && (
-					<div className="mt-4 text-center">
-						<span className="text-sm text-stone-500">Focus on: </span>
-						{(Object.keys(CATEGORY_CONFIG) as FocusType[]).map((f, i) => (
-							<span key={f}>
-								{i > 0 && <span className="text-stone-400"> | </span>}
-								<Link
-									to={buildUrl("/practice/speed", f)}
-									className="text-sm text-ocean hover:text-ocean-700"
-								>
-									{CATEGORY_CONFIG[f].label}
-								</Link>
-							</span>
-						))}
-					</div>
-				)}
 			</div>
 		);
 	}
@@ -241,7 +218,7 @@ const SpeedDrill: React.FC = () => {
 		<div className="max-w-xl mx-auto">
 			<UnifiedDrill
 				title={
-					focus
+					focus !== "all"
 						? `${focusConfig?.label} #${sessionCount}`
 						: `Speed Drill #${sessionCount}`
 				}
@@ -251,37 +228,11 @@ const SpeedDrill: React.FC = () => {
 			/>
 
 			{lastStats && (
-				<div className="mt-4 flex flex-col items-center gap-3">
-					<div className="flex gap-3">
-						<Button onClick={handleNewSession} className="gap-2">
-							<RotateCcw size={16} />
-							New Session
-						</Button>
-						{focus && (
-							<Link to={buildUrl("/practice/speed")}>
-								<Button variant="outline" className="gap-2">
-									<X size={16} />
-									Clear Focus
-								</Button>
-							</Link>
-						)}
-					</div>
-					{!focus && (
-						<div className="text-sm text-stone-500">
-							Focus on:{" "}
-							{(Object.keys(CATEGORY_CONFIG) as FocusType[]).map((f, i) => (
-								<span key={f}>
-									{i > 0 && " | "}
-									<Link
-										to={buildUrl("/practice/speed", f)}
-										className="text-ocean hover:text-ocean-700"
-									>
-										{CATEGORY_CONFIG[f].label}
-									</Link>
-								</span>
-							))}
-						</div>
-					)}
+				<div className="mt-4 flex justify-center">
+					<Button onClick={handleNewSession} className="gap-2">
+						<RotateCcw size={16} />
+						New Session
+					</Button>
 				</div>
 			)}
 		</div>

@@ -6,9 +6,10 @@ Greek learning app for two users. SRS-based vocabulary practice with timed produ
 
 ```
 /                    Dashboard (home)
-/practice/*          Core practice loop
-/explore/*           Browse content
-/reference/*         Grammar lookup
+/practice/speed      Timed mixed drills (with ?focus= filters)
+/practice/review     SRS review queue
+/learn/*             Browse content (was /explore)
+/reference/*         Grammar reference
 /search              Vocabulary search
 ```
 
@@ -21,6 +22,7 @@ Greek learning app for two users. SRS-based vocabulary practice with timed produ
 <displays>
 - Due item count with time estimate (~0.25 min per item)
 - Weekly streak visualisation (7-day grid, Mon-Sun)
+- Freeze indicator (shows available freezes, recovery status)
 - Today's phrase (rotates by day of month from 5 phrases)
 - Mastered/learning counts
 - Quick practice CTA (contextual: first-time user, all caught up, or due items)
@@ -36,14 +38,22 @@ Greek learning app for two users. SRS-based vocabulary practice with timed produ
 <route path="/practice/speed">
 <purpose>Timed mixed production drills - core retrieval practice</purpose>
 <file>src/routes/practice/speed-drill.tsx</file>
-<data-source>Static: hardcoded question sets</data-source>
+<data-source>Static question sets + runtime-generated case transformations</data-source>
 <displays>
 - Countdown timer (3.5-5s per question type)
-- English prompt
+- English prompt (or Greek→case transformation prompt)
 - Greek input field
 - Session progress (X/Y)
 - Configurable session size (10/15/20/30 questions)
 </displays>
+<filter-ui>
+In-page filter buttons before starting drill:
+- All (default) - Mixed questions from all categories
+- Pronouns - Object and possessive pronouns only
+- Articles - Article + noun agreement only
+- Verbs - Verb conjugations only
+- Nouns - Case transformation questions (ο φίλος → accusative)
+</filter-ui>
 <user-actions>
 - Type Greek answer
 - Submit (Enter or timeout)
@@ -56,6 +66,7 @@ Greek learning app for two users. SRS-based vocabulary practice with timed produ
 - Possessive pronouns (μου, σου...)
 - Verb conjugations (έχω, θέλω, μπορώ, είμαι)
 - Article + noun phrases
+- Case transformations (nominative → accusative/genitive)
 - Common sentences
 </question-types>
 <engagement>Time pressure creates flow state, variable content prevents boredom</engagement>
@@ -88,23 +99,26 @@ Greek learning app for two users. SRS-based vocabulary practice with timed produ
 <engagement>Due count urgency, completion satisfaction</engagement>
 </route>
 
-<route path="/practice/:tab" tabs="pronouns,articles,verbs,vocabulary,review">
-<purpose>Category-specific production drills</purpose>
+<route path="/practice/:tab" tabs="vocabulary,review">
+<purpose>Tab container for SRS-based drills</purpose>
 <file>src/routes/practice/$tab.tsx</file>
-<data-source>Static questions (pronouns/articles/verbs) or DB (vocabulary/review)</data-source>
+<data-source>DB: vocabulary, vocabularySkills</data-source>
 <tabs>
-- pronouns: Object and possessive pronoun production (static)
-- articles: Definite article + noun agreement (static)
-- verbs: Verb conjugation by person (static)
 - vocabulary: New vocabulary learning (DB, requires user)
 - review: SRS review queue (DB, requires user)
 </tabs>
+<legacy-redirects>
+- /practice/pronouns → /practice/speed
+- /practice/articles → /practice/speed
+- /practice/verbs → /practice/speed
+- /practice/nouns → /practice/speed
+</legacy-redirects>
 <engagement>Focused practice on weak areas</engagement>
 </route>
 
-<route path="/explore/conversations/:tab">
+<route path="/learn/conversations/:tab">
 <purpose>Themed dialogues for contextual learning</purpose>
-<file>src/routes/explore/conversations/$tab.tsx</file>
+<file>src/routes/learn/conversations/$tab.tsx</file>
 <data-source>Static: hardcoded dialogue content</data-source>
 <tabs>
 - arriving: Arriving and leaving scenarios
@@ -118,12 +132,13 @@ Greek learning app for two users. SRS-based vocabulary practice with timed produ
 - Read mode / Practice mode toggle (shared across conversations)
 - Optional notes for phrases (literal meanings, context)
 </displays>
+<legacy-redirect>/explore/conversations/* → /learn/conversations/*</legacy-redirect>
 <engagement>Real-world context, practical application</engagement>
 </route>
 
-<route path="/explore/phrases/:tab">
+<route path="/learn/phrases/:tab">
 <purpose>Common expressions organised by function</purpose>
-<file>src/routes/explore/phrases/$tab.tsx</file>
+<file>src/routes/learn/phrases/$tab.tsx</file>
 <data-source>Static: hardcoded phrase content</data-source>
 <tabs>
 - survival: Essential survival phrases
@@ -139,17 +154,18 @@ Greek learning app for two users. SRS-based vocabulary practice with timed produ
 - Usage notes
 - Related phrases
 </displays>
+<legacy-redirect>/explore/phrases/* → /learn/phrases/*</legacy-redirect>
 <engagement>Quick reference, practical utility</engagement>
 </route>
 
-<route path="/explore/words/:tab" tabs="nouns,verbs,phrases,reference">
+<route path="/learn/vocabulary/:tab" tabs="nouns,verbs,phrases,reference">
 <purpose>Vocabulary browsing by category</purpose>
-<file>src/routes/explore/words/$tab.tsx</file>
+<file>src/routes/learn/vocabulary/$tab.tsx</file>
 <data-source>DB: vocabulary (grouped by tags) + static verb patterns</data-source>
 <tabs>
 - nouns: Nouns by semantic category (people, shopping, household, vehicles, summer)
 - verbs: Verbs by conjugation family (-ω, -άω, -μαι, irregular) with paradigm tables
-- phrases: Redirects to /explore/phrases
+- phrases: Redirects to /learn/phrases
 - reference: Numbers, colours, times of day, frequency/position adverbs
 </tabs>
 <displays>
@@ -162,12 +178,13 @@ Greek learning app for two users. SRS-based vocabulary practice with timed produ
 - Browse categories
 - Expand/collapse verb family lists
 </user-actions>
+<legacy-redirect>/explore/words/* → /learn/vocabulary/*</legacy-redirect>
 <engagement>Discovery mode, fill knowledge gaps</engagement>
 </route>
 
-<route path="/explore/words/verbs/:verbId">
+<route path="/learn/vocabulary/verbs/:verbId">
 <purpose>Full verb conjugation detail page</purpose>
-<file>src/routes/explore/words/verbs/$verbId/route.tsx</file>
+<file>src/routes/learn/vocabulary/verbs/$verbId/route.tsx</file>
 <data-source>DB: vocabulary, verbDetails, verbConjugations, verbImperatives</data-source>
 <displays>
 - Verb header (lemma, English, conjugation family badge)
@@ -252,13 +269,14 @@ Remind users to practice, preserve streaks
 ## Current Gaps
 
 <gaps>
-<gap name="streak-reset">
-<current>Hard reset on miss</current>
-<recommendation>Streak freeze (1 free per week)</recommendation>
-</gap>
-<gap name="streak-recovery">
-<current>None</current>
-<recommendation>24h grace period to restore</recommendation>
+<gap name="streak-reset" status="implemented">
+<current>Streak freeze system with auto-activation</current>
+<details>
+- Earn 1 freeze per 7 consecutive days (max 3)
+- Auto-activates on missed day
+- 24h cooldown between freeze uses
+- Dashboard shows freeze count and status
+</details>
 </gap>
 <gap name="streak-warning">
 <current>None</current>
@@ -277,8 +295,8 @@ Remind users to practice, preserve streaks
 ## Data Tables
 
 <tables>
-<table name="users">User accounts (id, code, displayName)</table>
-<table name="vocabulary">All Greek words/phrases (greekText, englishTranslation, wordType, gender, metadata)</table>
+<table name="users">User accounts (id, code, displayName, freezeCount, lastFreezeUsedAt, freezeUsedForDate, consecutiveDaysAtEarn)</table>
+<table name="vocabulary">All Greek words/phrases (greekText, englishTranslation, wordType, gender, metadata, declensionPattern)</table>
 <table name="tags">Vocabulary categorisation (slug, name, description)</table>
 <table name="tagSections">UI display organisation (tagId, section, displayOrder)</table>
 <table name="vocabularyTags">Many-to-many vocab↔tag join table</table>
