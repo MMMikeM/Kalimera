@@ -283,6 +283,11 @@
     @apply border-border outline-ring/50;
   }
 
+  ::selection {
+    background-color: var(--color-terracotta-200);
+    color: var(--color-terracotta-950);
+  }
+
   html, body {
     height: 100%;
     overflow-x: hidden;
@@ -337,6 +342,118 @@
   .greek-text {
     @apply text-[1.1em] leading-relaxed;
     letter-spacing: 0.01em;
+  }
+
+  /* Drill Demo Animation */
+  .drill-demo-timer-ring {
+    animation: drill-demo-countdown 3.5s linear infinite;
+    animation-delay: 1s;
+  }
+
+  .drill-demo-timer-text {
+    animation: drill-demo-timer-color 6s ease-in-out infinite;
+  }
+
+  .drill-demo-cursor {
+    animation: drill-demo-blink 0.8s step-end infinite;
+  }
+
+  .drill-demo-answer {
+    opacity: 0;
+    animation: drill-demo-typing 6s ease-out infinite;
+  }
+
+  .drill-demo-success {
+    opacity: 0;
+    animation: drill-demo-success-reveal 6s ease-out infinite;
+  }
+
+  .drill-demo-input {
+    animation: drill-demo-input-state 6s ease-out infinite;
+  }
+}
+
+@keyframes drill-demo-countdown {
+  0% {
+    stroke-dashoffset: 0;
+    stroke: var(--color-ocean);
+  }
+  50% {
+    stroke: var(--color-honey);
+  }
+  85% {
+    stroke: var(--color-terracotta);
+  }
+  100% {
+    stroke-dashoffset: 62.83;
+    stroke: var(--color-terracotta);
+  }
+}
+
+@keyframes drill-demo-timer-color {
+  0%, 16% {
+    color: var(--color-ocean);
+  }
+  16.1%, 33% {
+    color: var(--color-ocean);
+  }
+  50% {
+    color: var(--color-honey);
+  }
+  66% {
+    color: var(--color-terracotta);
+  }
+  75%, 100% {
+    color: var(--color-olive);
+  }
+}
+
+@keyframes drill-demo-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes drill-demo-typing {
+  0%, 16% {
+    opacity: 0;
+    width: 0;
+  }
+  20% {
+    opacity: 1;
+    width: 0;
+  }
+  50% {
+    opacity: 1;
+    width: auto;
+  }
+  75%, 100% {
+    opacity: 1;
+  }
+}
+
+@keyframes drill-demo-success-reveal {
+  0%, 58% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  66%, 92% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes drill-demo-input-state {
+  0%, 58% {
+    border-color: var(--color-stone-300);
+  }
+  66%, 92% {
+    border-color: var(--color-olive);
+  }
+  100% {
+    border-color: var(--color-stone-300);
   }
 }
 
