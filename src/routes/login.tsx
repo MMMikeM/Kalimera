@@ -1,11 +1,15 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useFetcher } from "react-router";
-import { LogIn, User } from "lucide-react";
+import { useNavigate, useFetcher, Link } from "react-router";
+import { LogIn, KeyRound, Loader2 } from "lucide-react";
+import { startAuthentication } from "@simplewebauthn/browser";
+import type { PublicKeyCredentialRequestOptionsJSON } from "@simplewebauthn/browser";
 import type { Route } from "./+types/login";
-import { getAllUsers, validateUserPin, userHasPin } from "@/db/queries";
-import { Card } from "@/components";
+import { findUserByUsername, getUserPasswordHash } from "@/db/queries/auth";
+import { verifyPassword } from "@/lib/password";
+import { Card } from "@/components/Card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 
 const AUTH_STORAGE_KEY = "greek-authenticated-user";
 
@@ -17,189 +21,228 @@ export function meta() {
 }
 
 export const loader = async () => {
-	const users = await getAllUsers();
-	const usersWithPinStatus = await Promise.all(
-		users.map(async (user) => ({
-			...user,
-			hasPin: await userHasPin(user.id),
-		}))
-	);
-	return { users: usersWithPinStatus };
+	return {};
 };
 
 export const action = async ({ request }: Route.ActionArgs) => {
 	const formData = await request.formData();
-	const userId = formData.get("userId") as string;
-	const pin = formData.get("pin") as string;
+	const username = formData.get("username") as string;
+	const password = formData.get("password") as string;
 
-	if (!userId) {
-		return { success: false, error: "Please select a user" };
+	if (!username || !password) {
+		return { success: false, error: "Please enter username and password" };
 	}
 
-	const userIdNum = parseInt(userId, 10);
-	const hasPin = await userHasPin(userIdNum);
-
-	if (hasPin) {
-		if (!pin) {
-			return { success: false, error: "Please enter your PIN", needsPin: true };
-		}
-		const result = await validateUserPin(userIdNum, pin);
-		if (!result.valid) {
-			return { success: false, error: result.error || "Invalid PIN", needsPin: true };
-		}
+	const user = await findUserByUsername(username);
+	if (!user) {
+		return { success: false, error: "Invalid username or password" };
 	}
 
-	return { success: true, userId: userIdNum };
+	const passwordHash = await getUserPasswordHash(user.id);
+	if (!passwordHash) {
+		return { success: false, error: "Invalid username or password" };
+	}
+
+	const isValid = await verifyPassword(passwordHash, password);
+	if (!isValid) {
+		return { success: false, error: "Invalid username or password" };
+	}
+
+	return { success: true, userId: user.id, username: user.username };
 };
 
-export default function LoginRoute({ loaderData }: Route.ComponentProps) {
-	const { users } = loaderData;
+export default function LoginRoute(_props: Route.ComponentProps) {
 	const navigate = useNavigate();
 	const fetcher = useFetcher<{
 		success: boolean;
 		userId?: number;
+		username?: string;
 		error?: string;
-		needsPin?: boolean;
 	}>();
 
-	const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
-	const [pin, setPin] = useState("");
-	const [showPinInput, setShowPinInput] = useState(false);
+	const [username, setUsername] = useState("");
+	const [password, setPassword] = useState("");
+	const [passkeyError, setPasskeyError] = useState<string | null>(null);
+	const [isPasskeyLoading, setIsPasskeyLoading] = useState(false);
 
-	const selectedUser = users.find((u) => u.id === selectedUserId);
+	const isSubmitting = fetcher.state === "submitting";
+	const error = fetcher.data?.error || passkeyError;
 
 	useEffect(() => {
-		if (fetcher.data?.success && fetcher.data?.userId) {
-			localStorage.setItem(AUTH_STORAGE_KEY, fetcher.data.userId.toString());
+		if (fetcher.data?.success && fetcher.data?.userId && fetcher.data?.username) {
+			localStorage.setItem(
+				AUTH_STORAGE_KEY,
+				JSON.stringify({ userId: fetcher.data.userId, username: fetcher.data.username }),
+			);
 			navigate("/");
-		}
-		if (fetcher.data?.needsPin) {
-			setShowPinInput(true);
 		}
 	}, [fetcher.data, navigate]);
 
-	const handleUserSelect = (userId: number) => {
-		const user = users.find((u) => u.id === userId);
-		setSelectedUserId(userId);
-		setPin("");
+	const handlePasskeyLogin = async () => {
+		setPasskeyError(null);
+		setIsPasskeyLoading(true);
 
-		if (user?.hasPin) {
-			setShowPinInput(true);
-		} else {
-			fetcher.submit({ userId: userId.toString() }, { method: "post" });
+		try {
+			const optionsResponse = await fetch("/api/webauthn/auth-options", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ username: username || undefined }),
+			});
+
+			if (!optionsResponse.ok) {
+				const errorData = (await optionsResponse.json()) as { error?: string };
+				throw new Error(errorData.error || "Failed to get authentication options");
+			}
+
+			const options: PublicKeyCredentialRequestOptionsJSON = await optionsResponse.json();
+
+			const authResponse = await startAuthentication({ optionsJSON: options });
+
+			const verifyResponse = await fetch("/api/webauthn/auth-verify", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+					response: authResponse,
+					challenge: options.challenge,
+				}),
+			});
+
+			if (!verifyResponse.ok) {
+				const errorData = (await verifyResponse.json()) as { error?: string };
+				throw new Error(errorData.error || "Authentication failed");
+			}
+
+			const result = (await verifyResponse.json()) as {
+				verified: boolean;
+				userId: number;
+				username?: string;
+			};
+
+			if (result.verified && result.userId) {
+				localStorage.setItem(
+					AUTH_STORAGE_KEY,
+					JSON.stringify({ userId: result.userId, username: result.username || "user" }),
+				);
+				navigate("/");
+			}
+		} catch (err) {
+			const message = err instanceof Error ? err.message : "Passkey authentication failed";
+			if (message.includes("not allowed") || message.includes("AbortError")) {
+				setPasskeyError("Authentication was cancelled");
+			} else {
+				setPasskeyError(message);
+			}
+		} finally {
+			setIsPasskeyLoading(false);
 		}
 	};
 
-	const handlePinSubmit = () => {
-		if (!selectedUserId) return;
-		fetcher.submit(
-			{ userId: selectedUserId.toString(), pin },
-			{ method: "post" }
-		);
-	};
-
-	const handleBack = () => {
-		setSelectedUserId(null);
-		setShowPinInput(false);
-		setPin("");
-	};
-
-	const isSubmitting = fetcher.state === "submitting";
-
 	return (
-		<div className="min-h-[60vh] flex flex-col items-center justify-center space-y-8">
+		<div className="min-h-[60vh] flex flex-col items-center justify-center space-y-8 px-4">
 			<div className="text-center space-y-2">
 				<h1 className="text-3xl font-serif text-terracotta">Welcome Back</h1>
-				<p className="text-stone-600">Select your profile to continue learning</p>
+				<p className="text-stone-600">Sign in to continue learning Greek</p>
 			</div>
 
-			{!showPinInput && (
-				<div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-md">
-					{users.map((user) => (
-						<button
-							key={user.id}
-							type="button"
-							onClick={() => handleUserSelect(user.id)}
-							disabled={isSubmitting}
-							className="group"
-						>
-							<Card
-								hover
-								className="p-6 text-center transition-all group-hover:border-terracotta-300"
-							>
-								<div className="flex flex-col items-center gap-3">
-									<div className="w-16 h-16 rounded-full bg-stone-100 flex items-center justify-center group-hover:bg-terracotta-50 transition-colors">
-										<User
-											size={32}
-											className="text-stone-400 group-hover:text-terracotta-500 transition-colors"
-										/>
-									</div>
-									<span className="font-medium text-lg">{user.displayName}</span>
-								</div>
-							</Card>
-						</button>
-					))}
-				</div>
-			)}
-
-			{showPinInput && selectedUser && (
-				<Card className="w-full max-w-sm p-6">
-					<div className="space-y-6">
-						<div className="text-center">
-							<div className="w-16 h-16 rounded-full bg-terracotta-50 flex items-center justify-center mx-auto mb-3">
-								<User size={32} className="text-terracotta-500" />
-							</div>
-							<h2 className="text-xl font-medium">{selectedUser.displayName}</h2>
-							<p className="text-sm text-stone-500 mt-1">Enter your PIN to continue</p>
+			<Card className="w-full max-w-sm p-6">
+				<fetcher.Form method="post" className="space-y-6">
+					<div className="space-y-4">
+						<div className="space-y-2">
+							<Label htmlFor="username">Username</Label>
+							<Input
+								id="username"
+								name="username"
+								type="text"
+								autoComplete="username"
+								autoCapitalize="none"
+								autoCorrect="off"
+								value={username}
+								onChange={(e) => setUsername(e.target.value)}
+								disabled={isSubmitting || isPasskeyLoading}
+								placeholder="Enter your username"
+							/>
 						</div>
 
-						<div className="space-y-4">
+						<div className="space-y-2">
+							<Label htmlFor="password">Password</Label>
 							<Input
+								id="password"
+								name="password"
 								type="password"
-								inputMode="numeric"
-								pattern="[0-9]*"
-								maxLength={4}
-								placeholder="Enter 4-digit PIN"
-								value={pin}
-								onChange={(e) => setPin(e.target.value.replace(/\D/g, ""))}
-								onKeyDown={(e) => {
-									if (e.key === "Enter" && pin.length === 4) {
-										handlePinSubmit();
-									}
-								}}
-								autoFocus
-								className="text-center text-2xl tracking-[0.5em] font-mono"
+								autoComplete="current-password"
+								value={password}
+								onChange={(e) => setPassword(e.target.value)}
+								disabled={isSubmitting || isPasskeyLoading}
+								placeholder="Enter your password"
 							/>
-
-							{fetcher.data?.error && (
-								<p className="text-sm text-red-600 text-center">
-									{fetcher.data.error}
-								</p>
-							)}
-
-							<div className="flex gap-3">
-								<Button
-									variant="outline"
-									className="flex-1"
-									onClick={handleBack}
-									disabled={isSubmitting}
-								>
-									Back
-								</Button>
-								<Button
-									variant="primary"
-									className="flex-1"
-									onClick={handlePinSubmit}
-									disabled={pin.length < 4 || isSubmitting}
-								>
-									{isSubmitting ? "..." : "Continue"}
-									{!isSubmitting && <LogIn size={16} />}
-								</Button>
-							</div>
 						</div>
 					</div>
-				</Card>
-			)}
+
+					{error && (
+						<p className="text-sm text-red-600 text-center">{error}</p>
+					)}
+
+					<div className="space-y-3">
+						<Button
+							type="submit"
+							variant="primary"
+							className="w-full"
+							disabled={!username || !password || isSubmitting || isPasskeyLoading}
+						>
+							{isSubmitting ? (
+								<>
+									<Loader2 size={16} className="animate-spin" />
+									Signing in...
+								</>
+							) : (
+								<>
+									Sign in
+									<LogIn size={16} />
+								</>
+							)}
+						</Button>
+
+						<div className="relative">
+							<div className="absolute inset-0 flex items-center">
+								<span className="w-full border-t border-stone-200" />
+							</div>
+							<div className="relative flex justify-center text-xs uppercase">
+								<span className="bg-white px-2 text-stone-500">or</span>
+							</div>
+						</div>
+
+						<Button
+							type="button"
+							variant="outline"
+							className="w-full"
+							onClick={handlePasskeyLogin}
+							disabled={isSubmitting || isPasskeyLoading}
+						>
+							{isPasskeyLoading ? (
+								<>
+									<Loader2 size={16} className="animate-spin" />
+									Authenticating...
+								</>
+							) : (
+								<>
+									<KeyRound size={16} />
+									Sign in with passkey
+								</>
+							)}
+						</Button>
+					</div>
+				</fetcher.Form>
+
+				<div className="mt-6 text-center text-sm text-stone-600">
+					Don't have an account?{" "}
+					<Link
+						to="/register"
+						className="text-terracotta hover:text-terracotta-dark font-medium"
+					>
+						Create one
+					</Link>
+				</div>
+			</Card>
 		</div>
 	);
 }
