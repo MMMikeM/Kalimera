@@ -1,11 +1,13 @@
 # User Flows
 
-Greek learning app for two users. SRS-based vocabulary practice with timed production drills.
+Greek learning app with SRS-based vocabulary practice and timed production drills.
 
 ## Quick Reference
 
 ```
 /                    Dashboard (home)
+/login               Sign in (password or passkey)
+/register            Create account
 /practice/speed      Timed mixed drills (with ?focus= filters)
 /practice/review     SRS review queue
 /learn/*             Browse content (was /explore)
@@ -33,6 +35,40 @@ Greek learning app for two users. SRS-based vocabulary practice with timed produ
 - Navigate via bottom nav
 </user-actions>
 <engagement>Primary habit trigger - due count creates urgency, streak creates loss aversion</engagement>
+</route>
+
+<route path="/login">
+<purpose>User authentication - password or passkey</purpose>
+<file>src/routes/login.tsx</file>
+<displays>
+- Username input field
+- Password input field
+- "Sign in" button (password auth)
+- "Sign in with passkey" button (WebAuthn)
+- Link to /register
+- Info box for existing users to set up password
+</displays>
+<user-actions>
+- Enter username + password → submit → logged in
+- Enter username/code without password → prompted to set password (existing users)
+- Click passkey button → browser WebAuthn prompt → logged in
+</user-actions>
+</route>
+
+<route path="/register">
+<purpose>New user account creation</purpose>
+<file>src/routes/register.tsx</file>
+<displays>
+- Username input
+- Display name input
+- Password + confirmation inputs
+- Optional passkey setup after registration
+</displays>
+<user-actions>
+- Fill registration form → submit → account created
+- Optionally set up passkey for future logins
+- Redirected to home
+</user-actions>
 </route>
 
 <route path="/practice/speed">
@@ -295,7 +331,9 @@ Remind users to practice, preserve streaks
 ## Data Tables
 
 <tables>
-<table name="users">User accounts (id, code, displayName, freezeCount, lastFreezeUsedAt, freezeUsedForDate, consecutiveDaysAtEarn)</table>
+<table name="users">User accounts (id, code, username, displayName, passwordHash, freezeCount, lastFreezeUsedAt, freezeUsedForDate, consecutiveDaysAtEarn)</table>
+<table name="passkeys">WebAuthn credentials (userId, credentialId, publicKey, counter, transports, deviceType, backedUp, lastUsedAt)</table>
+<table name="authChallenges">WebAuthn challenge storage (challenge, type, userId, expiresAt) - 5min TTL</table>
 <table name="vocabulary">All Greek words/phrases (greekText, englishTranslation, wordType, gender, metadata, declensionPattern)</table>
 <table name="tags">Vocabulary categorisation (slug, name, description)</table>
 <table name="tagSections">UI display organisation (tagId, section, displayOrder)</table>
@@ -312,6 +350,7 @@ Remind users to practice, preserve streaks
 
 ## User State
 
-- User ID in localStorage (`greek-practice-user`)
-- No auth - user selection via dropdown
-- Two users configured in system
+- Session in localStorage (`greek-authenticated-user`) as JSON: `{userId, username}`
+- Authentication via username/password or WebAuthn passkey
+- Existing users without passwords prompted to set one on first login
+- Registration creates new account with password, optional passkey setup
