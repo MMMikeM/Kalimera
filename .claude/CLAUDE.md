@@ -1,5 +1,7 @@
 Code should be self-documenting as _MUCH_ as possible. Comments should _only_ be used to explain complex or non-obvious logic. Comments narrating code are punished harshly.
 
+NO BARREL FILES, THEY'RE A POOR, OUTDATED PRACTICE. ONLY USE index.ts EXPORTS CLEANLY EXPORTING MODULES.
+
 In route files, derive types from loader data via `Route.ComponentProps["loaderData"]` rather than manually defining them. This keeps types in sync with what the loader actually returns.
 
 ALWAYS check the makefile before running ANY command.
