@@ -78,6 +78,20 @@ Order content by conceptual dependency, not alphabetically:
 7. **Verbs** - Separate system (conjugation)
 8. **Fine-tuning** - The -ν rule, etc.
 
+## Code Style
+
+Code should be self-documenting. Comments should only explain complex or non-obvious logic - never narrate what code does.
+
+In route files, derive types from loader data via `Route.ComponentProps["loaderData"]` rather than manually defining them. This keeps types in sync with what the loader actually returns.
+
+Do not hardcode names in the codebase.
+
+Always communicate using the Queen's English (colour, favourite, etc.).
+
+## Makefile
+
+**ALWAYS check the Makefile before running ANY command.** Most operations have Make targets.
+
 ## Database Commands
 
 **CRITICAL:** Always use the Makefile for database operations. Direct `pnpm` commands do NOT load `.env` variables.
@@ -118,6 +132,8 @@ prod-db-seed:
   set -a && . ./.env && set +a && pnpm db:seed
 ```
 
+**ALWAYS do migrations via Drizzle using the Makefile commands.**
+
 ## Deployment
 
 ```bash
@@ -149,7 +165,13 @@ import { Card, Badge, MonoText, SearchInput, Table } from "@/components";
 
 ### ShadCN Components
 
-Add via `pnpm dlx shadcn@latest add <component>`. Import from `@/components/ui/<component>`:
+**Always use the CLI** - never hand-write ShadCN components:
+
+```bash
+pnpm dlx shadcn@latest add button card dialog
+```
+
+Import from `@/components/ui/<component>`:
 
 ```typescript
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
@@ -159,3 +181,73 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 ### Path Alias
 
 The `@/` alias maps to `./src/`. Configured in `tsconfig.json` and `vite.config.ts`.
+
+## PWA Viewport Pattern
+
+The app uses a fixed-position shell where scrolling happens inside `.app-main`. The root layout (`src/root.tsx`) wraps content in:
+
+```tsx
+<div className="app-shell bg-cream">
+  <main className="app-main">
+    {/* content */}
+  </main>
+  <nav className="fixed bottom-0 ...">
+    {/* mobile nav */}
+  </nav>
+</div>
+```
+
+CSS classes in `src/index.css`:
+- `.app-shell` - fixed, inset-0, overflow hidden
+- `.app-main` - flex-1, overflow-y auto (the scroll container)
+- `.safe-area-pb` - padding for mobile safe area
+
+## Delegation Pattern
+
+When delegating to subagents, **do research first** then provide specific context:
+
+**Good delegation:**
+
+```
+Implement the verb conjugation explorer.
+
+FILES: Create src/routes/explore/words/verbs.$verbId/route.tsx, modify src/routes.ts
+PATTERN: Follow src/routes/explore/words/nouns/route.tsx (detail view layout)
+DATA: db.query.vocabulary, db.query.verbConjugations
+TYPES: Vocabulary, VerbConjugation from @/db/types
+```
+
+**Bad:** "Create a verb detail page. Look at existing code."
+
+The bad version wastes tokens having agents explore what you already know.
+
+## Route Types
+
+**Default to page routes** (loader + action + component). Use `<Form>` and `useFetcher`.
+
+**Resource routes** (no component) only for:
+
+- Dynamic client fetches (polling, infinite scroll)
+- Webhooks, health checks
+- Background job triggers
+
+## Gotchas
+
+**Route types are generated** - If you see type errors after changing loaders/actions, regenerate with `pnpm react-router typegen`. Types live in `.react-router/types/`.
+
+## Git Operations
+
+- **Prefer `git mv`** over recreating files - preserves history and saves tokens
+- **Run `rm`/`git rm`** only after all other tasks are completed and verified
+- **Never commit** without explicit user approval
+
+## Linting
+
+After completing a task, run:
+
+```bash
+pnpm lint:fix
+pnpm lint:unused
+pnpm lint:types
+pnpm lint:dupes
+```

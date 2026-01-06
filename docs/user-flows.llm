@@ -1,0 +1,299 @@
+# User Flows
+
+Greek learning app for two users. SRS-based vocabulary practice with timed production drills.
+
+## Quick Reference
+
+```
+/                    Dashboard (home)
+/practice/*          Core practice loop
+/explore/*           Browse content
+/reference/*         Grammar lookup
+/search              Vocabulary search
+```
+
+## Routes
+
+<route path="/">
+<purpose>Dashboard - primary entry point and engagement hub</purpose>
+<file>src/routes/home.tsx</file>
+<data-source>DB: vocabularySkills (via getPracticeStats query)</data-source>
+<displays>
+- Due item count with time estimate (~0.25 min per item)
+- Weekly streak visualisation (7-day grid, Mon-Sun)
+- Today's phrase (rotates by day of month from 5 phrases)
+- Mastered/learning counts
+- Quick practice CTA (contextual: first-time user, all caught up, or due items)
+</displays>
+<user-actions>
+- Tap "Start Practice" → /practice (general practice)
+- Tap "Learn new items" → /practice/vocabulary (when caught up)
+- Navigate via bottom nav
+</user-actions>
+<engagement>Primary habit trigger - due count creates urgency, streak creates loss aversion</engagement>
+</route>
+
+<route path="/practice/speed">
+<purpose>Timed mixed production drills - core retrieval practice</purpose>
+<file>src/routes/practice/speed-drill.tsx</file>
+<data-source>Static: hardcoded question sets</data-source>
+<displays>
+- Countdown timer (3.5-5s per question type)
+- English prompt
+- Greek input field
+- Session progress (X/Y)
+- Configurable session size (10/15/20/30 questions)
+</displays>
+<user-actions>
+- Type Greek answer
+- Submit (Enter or timeout)
+- View feedback (correct/incorrect)
+- Auto-advance to next question
+- Complete session → view stats
+</user-actions>
+<question-types>
+- Object pronouns (με, σε, τον...)
+- Possessive pronouns (μου, σου...)
+- Verb conjugations (έχω, θέλω, μπορώ, είμαι)
+- Article + noun phrases
+- Common sentences
+</question-types>
+<engagement>Time pressure creates flow state, variable content prevents boredom</engagement>
+</route>
+
+<route path="/practice/review">
+<purpose>SRS review queue - spaced repetition for long-term retention</purpose>
+<file>src/routes/practice/$tab.tsx (tab=review)</file>
+<data-source>DB: vocabulary, vocabularySkills (filtered by nextReviewAt)</data-source>
+<displays>
+- Due item count
+- Current vocabulary item
+- Greek input field
+- Feedback with correct answer
+- Queue progress
+</displays>
+<user-actions>
+- Type Greek translation
+- Submit answer
+- View feedback
+- Continue to next item
+- Complete queue → "All caught up!"
+</user-actions>
+<srs-algorithm>
+- Quality 5: Correct in <2s → increase interval (easy)
+- Quality 4: Correct in >=2s → increase interval (good)
+- Quality 2: Incorrect → decrease interval (hard)
+- Mastery threshold: 21+ day interval
+</srs-algorithm>
+<engagement>Due count urgency, completion satisfaction</engagement>
+</route>
+
+<route path="/practice/:tab" tabs="pronouns,articles,verbs,vocabulary,review">
+<purpose>Category-specific production drills</purpose>
+<file>src/routes/practice/$tab.tsx</file>
+<data-source>Static questions (pronouns/articles/verbs) or DB (vocabulary/review)</data-source>
+<tabs>
+- pronouns: Object and possessive pronoun production (static)
+- articles: Definite article + noun agreement (static)
+- verbs: Verb conjugation by person (static)
+- vocabulary: New vocabulary learning (DB, requires user)
+- review: SRS review queue (DB, requires user)
+</tabs>
+<engagement>Focused practice on weak areas</engagement>
+</route>
+
+<route path="/explore/conversations/:tab">
+<purpose>Themed dialogues for contextual learning</purpose>
+<file>src/routes/explore/conversations/$tab.tsx</file>
+<data-source>Static: hardcoded dialogue content</data-source>
+<tabs>
+- arriving: Arriving and leaving scenarios
+- food: Food and hospitality
+- smalltalk: Small talk and greetings
+- requests: Quick requests
+</tabs>
+<displays>
+- Dialogue exchanges (speaker roles: you, friend, host, waiter, etc.)
+- Greek text with English translation
+- Read mode / Practice mode toggle (shared across conversations)
+- Optional notes for phrases (literal meanings, context)
+</displays>
+<engagement>Real-world context, practical application</engagement>
+</route>
+
+<route path="/explore/phrases/:tab">
+<purpose>Common expressions organised by function</purpose>
+<file>src/routes/explore/phrases/$tab.tsx</file>
+<data-source>Static: hardcoded phrase content</data-source>
+<tabs>
+- survival: Essential survival phrases
+- responses: Response patterns
+- requests: Request phrases
+- opinions: Expressing opinions
+- connectors: Discourse connectors
+- time: Time expressions
+- constructions: Grammar patterns
+</tabs>
+<displays>
+- Phrase cards with Greek/English
+- Usage notes
+- Related phrases
+</displays>
+<engagement>Quick reference, practical utility</engagement>
+</route>
+
+<route path="/explore/words/:tab" tabs="nouns,verbs,phrases,reference">
+<purpose>Vocabulary browsing by category</purpose>
+<file>src/routes/explore/words/$tab.tsx</file>
+<data-source>DB: vocabulary (grouped by tags) + static verb patterns</data-source>
+<tabs>
+- nouns: Nouns by semantic category (people, shopping, household, vehicles, summer)
+- verbs: Verbs by conjugation family (-ω, -άω, -μαι, irregular) with paradigm tables
+- phrases: Redirects to /explore/phrases
+- reference: Numbers, colours, times of day, frequency/position adverbs
+</tabs>
+<displays>
+- Vocabulary cards grouped by subcategory
+- Greek text, English translation
+- Gender badges (for nouns), conjugation family (for verbs)
+- Collapsible sections for verb lists
+</displays>
+<user-actions>
+- Browse categories
+- Expand/collapse verb family lists
+</user-actions>
+<engagement>Discovery mode, fill knowledge gaps</engagement>
+</route>
+
+<route path="/explore/words/verbs/:verbId">
+<purpose>Full verb conjugation detail page</purpose>
+<file>src/routes/explore/words/verbs/$verbId/route.tsx</file>
+<data-source>DB: vocabulary, verbDetails, verbConjugations, verbImperatives</data-source>
+<displays>
+- Verb header (lemma, English, conjugation family badge)
+- Suppletive indicator (if different stems across tenses)
+- Stem insight (present/aorist/future stem changes)
+- Tense navigator (tabs: present, aorist, future, past continuous)
+- Paradigm tables (6 forms: sg1-3, pl1-3)
+- Imperative table (imperfective/perfective × singular/plural)
+</displays>
+<user-actions>
+- Switch between tenses
+- Study stem changes
+- Back to verb list
+</user-actions>
+<engagement>Deep study mode, understand verb patterns</engagement>
+</route>
+
+<route path="/reference/:tab">
+<purpose>Grammar reference lookup</purpose>
+<file>src/routes/reference/$tab.tsx</file>
+<data-source>Static: hardcoded grammar content</data-source>
+<tabs>
+- cases-pronouns: Case overview, pronoun paradigms, decision guide
+- nouns-articles: Article paradigms, gender agreement, movable nu
+- adjectives: Adjective agreement patterns
+- prepositions: Preposition + case combinations
+- verbs: Conjugation patterns, tense overview
+</tabs>
+<displays>
+- Paradigm tables
+- Decision guides (flowcharts)
+- Usage examples
+- Pattern explanations
+</displays>
+<engagement>Just-in-time reference when stuck</engagement>
+</route>
+
+<route path="/search">
+<purpose>Fuzzy vocabulary search</purpose>
+<file>src/routes/search.tsx</file>
+<data-source>DB: vocabulary (via @mmmike/mikrofuzz)</data-source>
+<displays>
+- Search input (autofocus)
+- Results list with Greek, English, word type, tags
+- Fuzzy matching (tolerates typos, ranked by relevance)
+- Color-coded left borders by word type (verb=ocean, noun=olive, phrase=terracotta, adverb=honey)
+</displays>
+<user-actions>
+- Type query (Greek, English, or tag name)
+- View matching results inline
+- Clear search to reset
+</user-actions>
+<engagement>Quick lookup utility</engagement>
+</route>
+
+## Core Engagement Loop
+
+```
+Open app → Dashboard ("X due") → Practice (2-3 min) → Streak updated → Close
+```
+
+## Engagement Hooks
+
+<hooks>
+<hook name="due-count" location="dashboard" mechanism="urgency">
+Shows number of items due for review, creates FOMO
+</hook>
+<hook name="streak-display" location="dashboard" mechanism="loss-aversion">
+Weekly grid showing practice days, users don't want to break chain
+</hook>
+<hook name="short-sessions" location="practice" mechanism="low-friction">
+2-3 minute sessions, easy to fit into spare moments
+</hook>
+<hook name="auto-advance" location="speed-drill" mechanism="flow-state">
+Correct answers auto-advance, maintains momentum
+</hook>
+<hook name="push-notifications" location="system" mechanism="external-prompt">
+Remind users to practice, preserve streaks
+</hook>
+</hooks>
+
+## Current Gaps
+
+<gaps>
+<gap name="streak-reset">
+<current>Hard reset on miss</current>
+<recommendation>Streak freeze (1 free per week)</recommendation>
+</gap>
+<gap name="streak-recovery">
+<current>None</current>
+<recommendation>24h grace period to restore</recommendation>
+</gap>
+<gap name="streak-warning">
+<current>None</current>
+<recommendation>"2 hours left!" notification before midnight</recommendation>
+</gap>
+<gap name="milestones">
+<current>None</current>
+<recommendation>Celebration at 7, 30, 100 days</recommendation>
+</gap>
+<gap name="tomorrow-hook">
+<current>None</current>
+<recommendation>"3 items due tomorrow" preview</recommendation>
+</gap>
+</gaps>
+
+## Data Tables
+
+<tables>
+<table name="users">User accounts (id, code, displayName)</table>
+<table name="vocabulary">All Greek words/phrases (greekText, englishTranslation, wordType, gender, metadata)</table>
+<table name="tags">Vocabulary categorisation (slug, name, description)</table>
+<table name="tagSections">UI display organisation (tagId, section, displayOrder)</table>
+<table name="vocabularyTags">Many-to-many vocab↔tag join table</table>
+<table name="verbDetails">Verb metadata (conjugationFamily, stems, isSuppletive, notes)</table>
+<table name="verbConjugations">Full verb paradigms by tense (vocabId, tense, person, form)</table>
+<table name="verbImperatives">Imperative forms (vocabId, aspect, number, form)</table>
+<table name="practiceSessions">Session metadata (userId, sessionType, category, timestamps)</table>
+<table name="practiceAttempts">Practice history (sessionId, vocabId, isCorrect, timeTaken)</table>
+<table name="weakAreas">Pattern-based weak spots (userId, areaType, identifier, errorCount)</table>
+<table name="vocabularySkills">SRS state per user per word (easeFactor, intervalDays, reviewCount, nextReviewAt)</table>
+<table name="pushSubscriptions">Push notification endpoints (userId, endpoint, keys)</table>
+</tables>
+
+## User State
+
+- User ID in localStorage (`greek-practice-user`)
+- No auth - user selection via dropdown
+- Two users configured in system
