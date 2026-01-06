@@ -1,4 +1,4 @@
-// Practice queries and mutations
+// Practice queries and mutations (includes user queries)
 export * from "./practice";
 
 // Stats queries
