@@ -1,0 +1,1 @@
+ALTER TABLE `vocabulary` ADD `declension_pattern` text;

@@ -16,10 +16,15 @@ import {
 } from "./columns";
 import {
 	areaTypes,
+	declensionPatterns,
 	displaySections,
 	genders,
+	grammaticalNumbers,
+	imperativeAspects,
+	personNumbers,
 	sessionTypes,
 	skillTypes,
+	verbTenses,
 	wordTypes,
 } from "./enums";
 import type { VocabMetadata } from "./metadata";
@@ -58,6 +63,7 @@ export const vocabulary = sqliteTable(
 		difficultyLevel: integer("difficulty_level").notNull().default(0),
 		createdAt: createdAt(),
 		gender: nullableOneOf("gender", genders), // Only for nouns
+		declensionPattern: nullableOneOf("declension_pattern", declensionPatterns), // Only for nouns
 		metadata: json<VocabMetadata>("metadata"), // Sparse, tag-specific data (timeRange, numericValue, etc.)
 	},
 	(table) => [
@@ -113,7 +119,50 @@ export const verbDetails = sqliteTable("verb_details", {
 	vocabId: cascadeFk("vocab_id", () => vocabulary.id).primaryKey(),
 	conjugationFamily: string("conjugation_family"),
 	notes: nullableString("notes"),
+	presentStem: nullableString("present_stem"),
+	aoristStem: nullableString("aorist_stem"),
+	futureStem: nullableString("future_stem"),
+	isSuppletive: nullableBool("is_suppletive"),
 });
+
+// ============================================
+// VERB_CONJUGATIONS TABLE (Full paradigm forms for each tense)
+// ============================================
+export const verbConjugations = sqliteTable(
+	"verb_conjugations",
+	{
+		id: pk(),
+		vocabId: cascadeFk("vocab_id", () => vocabulary.id),
+		tense: oneOf("tense", verbTenses),
+		person: oneOf("person", personNumbers),
+		form: string("form"),
+		stem: nullableString("stem"),
+		ending: nullableString("ending"),
+	},
+	(table) => [
+		index("idx_verb_conjugations_vocab").on(table.vocabId),
+		index("idx_verb_conjugations_vocab_tense").on(table.vocabId, table.tense),
+		uniqueIndex("idx_verb_conjugations_unique").on(table.vocabId, table.tense, table.person),
+	],
+);
+
+// ============================================
+// VERB_IMPERATIVES TABLE (Imperative mood forms)
+// ============================================
+export const verbImperatives = sqliteTable(
+	"verb_imperatives",
+	{
+		id: pk(),
+		vocabId: cascadeFk("vocab_id", () => vocabulary.id),
+		aspect: oneOf("aspect", imperativeAspects),
+		number: oneOf("number", grammaticalNumbers),
+		form: string("form"),
+	},
+	(table) => [
+		index("idx_verb_imperatives_vocab").on(table.vocabId),
+		uniqueIndex("idx_verb_imperatives_unique").on(table.vocabId, table.aspect, table.number),
+	],
+);
 
 // ============================================
 // PRACTICE_SESSIONS TABLE
