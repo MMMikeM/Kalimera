@@ -232,27 +232,164 @@ export const action = async ({ request }: Route.ActionArgs) => {
 
 ## Route Configuration (routes.ts)
 
-This codebase uses programmatic route configuration:
+This codebase uses programmatic route configuration with four core functions:
+
+### Core Configuration Functions
 
 ```typescript
-// src/routes.ts
-import { index, route, type RouteConfig } from "@react-router/dev/routes";
+import {
+  type RouteConfig,
+  route,
+  index,
+  layout,
+  prefix,
+} from "@react-router/dev/routes";
+```
+
+#### 1. `route(path, file, children?)` - Standard Routes
+
+Creates a route that **adds a URL segment** and renders a component:
+
+```typescript
+route("about", "routes/about.tsx")
+// Creates route at /about
+
+route("practice", "routes/practice/layout.tsx", [
+  route("speed", "routes/practice/speed-drill.tsx"),
+])
+// Creates /practice and /practice/speed
+```
+
+#### 2. `index(file)` - Index Routes
+
+Renders at the **parent's URL** as the default child. Cannot have children:
+
+```typescript
+route("practice", "routes/practice/layout.tsx", [
+  index("routes/practice/index.tsx"),  // Renders at /practice
+  route("speed", "routes/practice/speed-drill.tsx"),  // Renders at /practice/speed
+])
+```
+
+**CRITICAL:** Without an index route, navigating to `/practice` shows only the layout's `<Outlet/>` with nothing inside it.
+
+#### 3. `layout(file, children)` - Layout Routes (NO URL segment)
+
+Creates UI nesting **WITHOUT** adding a URL segment. Use when you want shared UI without changing the URL:
+
+```typescript
+layout("routes/auth/layout.tsx", [
+  route("login", "routes/auth/login.tsx"),     // /login (NOT /auth/login)
+  route("register", "routes/auth/register.tsx"), // /register
+])
+```
+
+**When to use `layout()` vs `route()` with children:**
+
+| Pattern | URL Result | Use Case |
+|---------|-----------|----------|
+| `route("auth", "layout.tsx", [...])` | `/auth/login` | Auth section has its own URL prefix |
+| `layout("layout.tsx", [...])` | `/login` | Shared UI wrapper without URL change |
+
+#### 4. `prefix(path, children)` - Path Prefix (NO route created)
+
+Adds a **path prefix** to children without creating a route. Must use spread operator:
+
+```typescript
+...prefix("api", [
+  route("push/subscribe", "routes/api/push.subscribe.ts"),
+  route("push/unsubscribe", "routes/api/push.unsubscribe.ts"),
+])
+// Creates /api/push/subscribe, /api/push/unsubscribe
+// NO /api route exists
+```
+
+**When to use `prefix()` vs `route()` with children:**
+
+| Pattern | Creates `/api` route? | Use Case |
+|---------|----------------------|----------|
+| `route("api", "layout.tsx", [...])` | Yes | API routes share a layout |
+| `...prefix("api", [...])` | No | Just grouping by URL prefix |
+
+### Complete Example
+
+```typescript
+import {
+  type RouteConfig,
+  route,
+  index,
+  layout,
+  prefix,
+} from "@react-router/dev/routes";
 
 export default [
+  // Home page
   index("routes/home.tsx"),
-  route("vocabulary", "routes/vocabulary/layout.tsx", [
-    index("routes/vocabulary/index.tsx"),
-    route(":tab", "routes/vocabulary/$tab.tsx"),
+
+  // Auth routes - shared layout, no /auth URL
+  layout("routes/auth/layout.tsx", [
+    route("login", "routes/auth/login.tsx"),
+    route("register", "routes/auth/register.tsx"),
   ]),
+
+  // Practice section - has /practice URL with layout
   route("practice", "routes/practice/layout.tsx", [
-    index("routes/practice/index.tsx"),
+    index("routes/practice/index.tsx"),  // /practice default content
     route("speed", "routes/practice/speed-drill.tsx"),
     route(":tab", "routes/practice/$tab.tsx"),
   ]),
-  route("search", "routes/search.tsx"),
-  // API routes
-  route("api/push/subscribe", "routes/api/push.subscribe.ts"),
+
+  // API routes - grouped by prefix, no shared layout
+  ...prefix("api", [
+    route("push/subscribe", "routes/api/push.subscribe.ts"),
+    route("push/unsubscribe", "routes/api/push.unsubscribe.ts"),
+  ]),
 ] satisfies RouteConfig;
+```
+
+### Common Mistakes
+
+#### Missing Index Routes
+
+```typescript
+// WRONG - /practice shows empty Outlet
+route("practice", "routes/practice/layout.tsx", [
+  route("speed", "routes/practice/speed-drill.tsx"),
+])
+
+// CORRECT - /practice has default content
+route("practice", "routes/practice/layout.tsx", [
+  index("routes/practice/index.tsx"),  // or redirect
+  route("speed", "routes/practice/speed-drill.tsx"),
+])
+```
+
+#### Using `route()` When `layout()` Is Appropriate
+
+```typescript
+// WRONG - creates unnecessary /auth URL
+route("auth", "routes/auth/layout.tsx", [
+  route("login", "routes/auth/login.tsx"),  // /auth/login
+])
+
+// CORRECT - no /auth URL, just shared layout
+layout("routes/auth/layout.tsx", [
+  route("login", "routes/auth/login.tsx"),  // /login
+])
+```
+
+#### Forgetting Spread on `prefix()`
+
+```typescript
+// WRONG - prefix returns array, not spread into parent
+[
+  prefix("api", [...])  // Creates nested array
+]
+
+// CORRECT - spread the prefix result
+[
+  ...prefix("api", [...])  // Flattens into parent array
+]
 ```
 
 ---
