@@ -3,6 +3,7 @@ import { index, route, type RouteConfig } from "@react-router/dev/routes";
 export default [
   // Auth
   route("login", "routes/login.tsx"),
+  route("register", "routes/register.tsx"),
 
   // Dashboard (replaces landing page)
   index("routes/home.tsx"),
@@ -38,8 +39,14 @@ export default [
   // Search (will become modal later, keep route for now)
   route("search", "routes/search.tsx"),
 
-  // API routes
+  // API routes - Push notifications
   route("api/push/subscribe", "routes/api/push.subscribe.ts"),
   route("api/push/unsubscribe", "routes/api/push.unsubscribe.ts"),
   route("api/push/vapid-key", "routes/api/push.vapid-key.ts"),
+
+  // API routes - WebAuthn
+  route("api/webauthn/register-options", "routes/api/webauthn/register-options.ts"),
+  route("api/webauthn/register-verify", "routes/api/webauthn/register-verify.ts"),
+  route("api/webauthn/auth-options", "routes/api/webauthn/auth-options.ts"),
+  route("api/webauthn/auth-verify", "routes/api/webauthn/auth-verify.ts"),
 ] satisfies RouteConfig;
