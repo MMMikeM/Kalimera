@@ -1,6 +1,6 @@
 import { BookOpen, GitBranch, MessageSquare, Sparkles, Users } from "lucide-react";
 import { Outlet, useLocation } from "react-router";
-import { NavTabs, type NavTab } from "@/components";
+import { NavTabs, type NavTab } from "@/components/NavTabs";
 
 export function meta() {
 	return [

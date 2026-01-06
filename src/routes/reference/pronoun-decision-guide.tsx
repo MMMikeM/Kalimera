@@ -1,4 +1,5 @@
-import { Card, MonoText } from "../../components";
+import { Card } from "@/components/Card";
+import { MonoText } from "@/components/MonoText";
 
 interface PronounOption {
 	label: string;

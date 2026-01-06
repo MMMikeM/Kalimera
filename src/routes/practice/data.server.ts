@@ -17,7 +17,7 @@ import {
 	type VocabItemWithSkill,
 	type VocabularyProgress,
 	type WeakAreaInfo,
-} from "@/db/queries";
+} from "@/db/queries/practice";
 import type { AreaType, SkillType } from "@/db/schema";
 import { z } from "zod";
 import { zfd } from "zod-form-data";

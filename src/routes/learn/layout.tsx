@@ -1,6 +1,7 @@
 import { Outlet, useLocation } from "react-router";
 import { MessageCircle, Quote, BookOpen } from "lucide-react";
-import { NavTabs, type NavTab } from "@/components";
+import { NavTabs } from "@/components/NavTabs";
+import type { NavTab } from "@/components/NavTabs";
 
 export function meta() {
 	return [

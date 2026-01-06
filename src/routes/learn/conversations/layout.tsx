@@ -2,7 +2,11 @@ import type React from "react";
 import { useState, useEffect } from "react";
 import { MessageCircle, DoorOpen, Utensils, ChevronDown, Lightbulb, Hand } from "lucide-react";
 import { Outlet, useLocation, useOutletContext } from "react-router";
-import { MonoText, ConversationModeToggle, NavTabs, type ConversationMode, type NavTab } from "@/components";
+import { MonoText } from "@/components/MonoText";
+import { ConversationModeToggle } from "@/components/ConversationModeToggle";
+import { NavTabs } from "@/components/NavTabs";
+import type { ConversationMode } from "@/components/DialogueExchange";
+import type { NavTab } from "@/components/NavTabs";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
 type ConversationContext = {

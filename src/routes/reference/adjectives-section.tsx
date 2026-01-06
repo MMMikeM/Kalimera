@@ -8,14 +8,12 @@ import {
 	COMMON_ADJECTIVES,
 	type AdjectiveParadigm,
 } from "../../constants/adjectives";
-import {
-	Card,
-	MonoText,
-	SectionHeading,
-	KeyInsight,
-	CollapsibleSection,
-	MistakeComparison,
-} from "../../components";
+import { Card } from "@/components/Card";
+import { MonoText } from "@/components/MonoText";
+import { SectionHeading } from "@/components/SectionHeading";
+import { KeyInsight } from "@/components/KeyInsight";
+import { CollapsibleSection } from "@/components/CollapsibleSection";
+import { MistakeComparison } from "@/components/MistakeComparison";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 // Adjective endings quick lookup table

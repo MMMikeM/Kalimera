@@ -1,5 +1,7 @@
 import { Outlet, useLocation } from "react-router";
-import { SectionHeading, NavTabs, type NavTab } from "@/components";
+import { SectionHeading } from "@/components/SectionHeading";
+import { NavTabs } from "@/components/NavTabs";
+import type { NavTab } from "@/components/NavTabs";
 import { Package, Languages, BookOpen } from "lucide-react";
 import type { Route } from "./+types/layout";
 import { getVocabularyData } from "./data.server";

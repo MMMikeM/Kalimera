@@ -1,6 +1,6 @@
 import type { Route } from "./+types/$tab";
 import { Users, BookOpen, MapPin, Zap, Sparkles } from "lucide-react";
-import { TabHero } from "@/components";
+import { TabHero } from "@/components/TabHero";
 import { AgreementSection, MovableNuSection } from "./agreement-section";
 import { CasesSection } from "./cases-section";
 import { PronounsSection } from "./pronouns-section";

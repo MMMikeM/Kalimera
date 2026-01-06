@@ -1,14 +1,10 @@
 import type React from "react";
 import type { Route } from "./+types/$tab";
 import { DoorOpen, Utensils, MessageCircle, Hand } from "lucide-react";
-import {
-	Card,
-	DialogueScenario,
-	ConversationHero,
-	type DialogueLine,
-	type Formality,
-	type ConversationMode,
-} from "@/components";
+import { Card } from "@/components/Card";
+import { DialogueScenario } from "@/components/DialogueExchange";
+import { ConversationHero } from "@/components/ConversationHero";
+import type { DialogueLine, Formality, ConversationMode } from "@/components/DialogueExchange";
 import { LearningTips, useConversationContext } from "./layout";
 
 const VALID_TABS = ["arriving", "food", "smalltalk", "requests"] as const;
