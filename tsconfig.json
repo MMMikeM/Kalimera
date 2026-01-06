@@ -20,7 +20,10 @@
 
 		/* Path aliases for shadcn */
 		"paths": {
-			"@/*": ["./src/*"]
+			"@/*": ["./src/*"],
+			"~/*": ["./src/*"],
+			"~/db/*": ["./src/db/*"],
+			"~/components/*": ["./src/components/*"]
 		},
 
 		/* Linting */
@@ -34,9 +37,9 @@
 		"forceConsistentCasingInFileNames": true
 	},
 	"include": [
-		"src",
 		".react-router/types/**/*",
-		"vite.config.ts",
-		"react-router.config.ts"
+		"react-router.config.ts",
+		"src",
+		"vite.config.ts"
 	]
 }
