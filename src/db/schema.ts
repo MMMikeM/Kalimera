@@ -46,6 +46,7 @@ export const users = sqliteTable(
 		code: string("code"),
 		displayName: string("display_name"),
 		createdAt: createdAt(),
+		pin: nullableString("pin"), // 4-digit PIN for auth, null = no PIN set
 		// Streak freeze feature
 		freezeCount: integer("freeze_count").notNull().default(0),
 		lastFreezeUsedAt: nullableTimestamp("last_freeze_used_at"),

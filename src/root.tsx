@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import {
 	Links,
 	Meta,
@@ -6,10 +7,13 @@ import {
 	ScrollRestoration,
 	Link,
 	useLocation,
+	useNavigate,
 } from "react-router";
-import { BookOpen, FileText, Home, Search, Zap } from "lucide-react";
+import { BookOpen, FileText, Home, LogOut, Search, Zap } from "lucide-react";
 import "./index.css";
 import type { LinksFunction } from "react-router";
+
+const AUTH_STORAGE_KEY = "greek-authenticated-user";
 
 export const links: LinksFunction = () => [
 	{ rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
@@ -59,7 +63,57 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function Root() {
 	const location = useLocation();
+	const navigate = useNavigate();
 	const currentSection = location.pathname.split("/")[1] || "home";
+	const isLoginPage = location.pathname === "/login";
+
+	const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+
+	useEffect(() => {
+		const userId = localStorage.getItem(AUTH_STORAGE_KEY);
+		setIsAuthenticated(!!userId);
+
+		if (!userId && !isLoginPage) {
+			navigate("/login");
+		}
+	}, [isLoginPage, navigate]);
+
+	const handleLogout = () => {
+		localStorage.removeItem(AUTH_STORAGE_KEY);
+		setIsAuthenticated(false);
+		navigate("/login");
+	};
+
+	// Don't render full layout for login page
+	if (isLoginPage) {
+		return (
+			<div className="app-shell bg-cream">
+				<main className="app-main">
+					<div className="max-w-6xl mx-auto px-6 md:px-8">
+						<header className="pt-8 pb-6">
+							<div className="flex items-center justify-center">
+								<span className="text-2xl font-serif text-terracotta">
+									καλημέρα
+								</span>
+							</div>
+						</header>
+						<Outlet />
+					</div>
+				</main>
+			</div>
+		);
+	}
+
+	// Show nothing while checking auth (prevents flash)
+	if (isAuthenticated === null) {
+		return (
+			<div className="app-shell bg-cream">
+				<main className="app-main flex items-center justify-center">
+					<span className="text-2xl font-serif text-terracotta">καλημέρα</span>
+				</main>
+			</div>
+		);
+	}
 
 	return (
 		<div className="app-shell bg-cream">
@@ -89,6 +143,16 @@ export default function Root() {
 									<Search size={20} strokeWidth={1.5} />
 								</Link>
 
+								{/* Logout button (mobile) */}
+								<button
+									type="button"
+									onClick={handleLogout}
+									className="md:hidden p-2 text-stone-500 hover:text-stone-700 transition-colors"
+									aria-label="Logout"
+								>
+									<LogOut size={20} strokeWidth={1.5} />
+								</button>
+
 								{/* Desktop Navigation */}
 								<nav className="hidden md:flex items-center gap-1">
 									{NAV_ITEMS.map((item) => {
@@ -114,6 +178,14 @@ export default function Root() {
 									>
 										<Search size={18} strokeWidth={1.5} />
 									</Link>
+									<button
+										type="button"
+										onClick={handleLogout}
+										className="p-2 text-stone-500 hover:text-stone-700 transition-colors"
+										aria-label="Logout"
+									>
+										<LogOut size={18} strokeWidth={1.5} />
+									</button>
 								</nav>
 							</div>
 						</div>

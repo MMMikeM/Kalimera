@@ -1,40 +1,25 @@
 import { useState, useEffect } from "react";
-import { UserPlus, Clock, Zap } from "lucide-react";
+import { Clock, Zap } from "lucide-react";
 import {
 	Outlet,
 	useSearchParams,
-	useFetcher,
 	useRevalidator,
 	useLocation,
 } from "react-router";
 import type { Route } from "./+types/layout";
 import {
-	getAllUsers,
 	getItemsDueForReview,
 	getNewVocabularyItems,
 	getPracticeStats,
+	getUserById,
 	actionHandlers,
 	type ActionIntent,
 	type VocabItemWithSkill,
 	type PracticeStats,
 } from "./data.server";
 import { NavTabs, type NavTab, PushNotificationToggle } from "@/components";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
-import {
-	Dialog,
-	DialogContent,
-	DialogHeader,
-	DialogTitle,
-	DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+
+const AUTH_STORAGE_KEY = "greek-authenticated-user";
 
 export function meta() {
 	return [
@@ -51,21 +36,25 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 	const userIdParam = url.searchParams.get("userId");
 	const userId = userIdParam ? parseInt(userIdParam, 10) : null;
 
-	const allUsers = await getAllUsers();
-
 	let reviewItems: VocabItemWithSkill[] = [];
 	let newVocabItems: VocabItemWithSkill[] = [];
 	let stats: PracticeStats | null = null;
+	let userName: string | null = null;
 
 	if (userId) {
-		[reviewItems, newVocabItems, stats] = await Promise.all([
+		const [user, reviews, newItems, practiceStats] = await Promise.all([
+			getUserById(userId),
 			getItemsDueForReview(userId),
 			getNewVocabularyItems(userId, 20),
 			getPracticeStats(userId),
 		]);
+		userName = user?.displayName ?? null;
+		reviewItems = reviews;
+		newVocabItems = newItems;
+		stats = practiceStats;
 	}
 
-	return { users: allUsers, reviewItems, newVocabItems, stats, userId };
+	return { reviewItems, newVocabItems, stats, userId, userName };
 };
 
 export const action = async ({ request }: Route.ActionArgs) => {
@@ -79,166 +68,6 @@ export const action = async ({ request }: Route.ActionArgs) => {
 	return actionHandlers[intent as ActionIntent](formData);
 };
 
-interface User {
-	id: number;
-	code: string;
-	displayName: string;
-	createdAt: Date;
-}
-
-const USER_STORAGE_KEY = "greek-practice-user";
-
-interface UserSelectorProps {
-	users: User[];
-	onUserChange?: (userId: string) => void;
-}
-
-const UserSelector = ({ users, onUserChange }: UserSelectorProps) => {
-	const [searchParams] = useSearchParams();
-	const [selectedUserId, setSelectedUserId] = useState<string>(() => {
-		const urlUserId = searchParams.get("userId");
-		if (urlUserId) return urlUserId;
-		if (typeof window !== "undefined") {
-			return localStorage.getItem(USER_STORAGE_KEY) || "";
-		}
-		return "";
-	});
-	const [isDialogOpen, setIsDialogOpen] = useState(false);
-	const [newName, setNewName] = useState("");
-	const [newCode, setNewCode] = useState("");
-	const fetcher = useFetcher();
-
-	// Sync localStorage userId to URL on mount if URL doesn't have it
-	useEffect(() => {
-		const urlUserId = searchParams.get("userId");
-		if (!urlUserId && selectedUserId) {
-			onUserChange?.(selectedUserId);
-		}
-	}, [onUserChange, searchParams.get, selectedUserId]); // eslint-disable-line react-hooks/exhaustive-deps
-
-	const handleUserChange = (value: string) => {
-		if (value === "new") {
-			setIsDialogOpen(true);
-			return;
-		}
-		setSelectedUserId(value);
-		localStorage.setItem(USER_STORAGE_KEY, value);
-		onUserChange?.(value);
-	};
-
-	const handleCreateUser = () => {
-		if (!newName.trim() || !newCode.trim()) return;
-
-		fetcher.submit(
-			{
-				intent: "createUser",
-				displayName: newName.trim(),
-				code: newCode.trim().toLowerCase(),
-			},
-			{ method: "post" },
-		);
-	};
-
-	useEffect(() => {
-		if (fetcher.data?.success && fetcher.data?.user) {
-			const newUserId = fetcher.data.user.id.toString();
-			if (selectedUserId !== newUserId) {
-				setSelectedUserId(newUserId);
-				localStorage.setItem(USER_STORAGE_KEY, newUserId);
-				onUserChange?.(newUserId);
-				setIsDialogOpen(false);
-				setNewName("");
-				setNewCode("");
-			}
-		}
-	}, [fetcher.data, selectedUserId, onUserChange]);
-
-	const selectedUser = users.find((u) => u.id.toString() === selectedUserId);
-
-	return (
-		<div className="flex items-center gap-3">
-			<span className="text-sm text-muted-foreground">Practicing as:</span>
-			<Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-				<Select value={selectedUserId} onValueChange={handleUserChange}>
-					<SelectTrigger className="w-[180px]">
-						<SelectValue placeholder="Select user" />
-					</SelectTrigger>
-					<SelectContent>
-						{users.map((user) => (
-							<SelectItem key={user.id} value={user.id.toString()}>
-								{user.displayName}
-							</SelectItem>
-						))}
-						<DialogTrigger asChild>
-							<button
-								type="button"
-								className="relative flex w-full cursor-pointer select-none items-center gap-2 rounded-sm py-1.5 px-2 text-sm outline-none hover:bg-accent hover:text-accent-foreground text-primary"
-								onClick={() => setIsDialogOpen(true)}
-							>
-								<UserPlus size={14} />
-								Add new user
-							</button>
-						</DialogTrigger>
-					</SelectContent>
-				</Select>
-				<DialogContent>
-					<DialogHeader>
-						<DialogTitle>Add New User</DialogTitle>
-					</DialogHeader>
-					<div className="space-y-4 py-4">
-						<div className="space-y-2">
-							<label htmlFor="displayName" className="text-sm font-medium">
-								Display Name
-							</label>
-							<Input
-								id="displayName"
-								placeholder="e.g., Mike"
-								value={newName}
-								onChange={(e) => setNewName(e.target.value)}
-							/>
-						</div>
-						<div className="space-y-2">
-							<label htmlFor="code" className="text-sm font-medium">
-								Code (unique identifier)
-							</label>
-							<Input
-								id="code"
-								placeholder="e.g., mike"
-								value={newCode}
-								onChange={(e) =>
-									setNewCode(e.target.value.toLowerCase().replace(/\s/g, ""))
-								}
-							/>
-							<p className="text-xs text-muted-foreground">
-								A short code to identify you (no spaces, lowercase)
-							</p>
-						</div>
-						{fetcher.data?.error && (
-							<p className="text-sm text-destructive">{fetcher.data.error}</p>
-						)}
-						<Button
-							onClick={handleCreateUser}
-							disabled={
-								!newName.trim() ||
-								!newCode.trim() ||
-								fetcher.state === "submitting"
-							}
-							className="w-full"
-						>
-							{fetcher.state === "submitting" ? "Creating..." : "Create User"}
-						</Button>
-					</div>
-				</DialogContent>
-			</Dialog>
-			{selectedUser && (
-				<span className="text-sm font-medium text-foreground">
-					{selectedUser.displayName}
-				</span>
-			)}
-		</div>
-	);
-};
-
 export type PracticeLoaderData = Awaited<ReturnType<typeof loader>>;
 
 const PRACTICE_TABS: NavTab[] = [
@@ -247,18 +76,26 @@ const PRACTICE_TABS: NavTab[] = [
 ];
 
 export default function PracticeLayout({ loaderData }: Route.ComponentProps) {
-	const { users, stats } = loaderData;
+	const { stats, userName } = loaderData;
 	const [searchParams, setSearchParams] = useSearchParams();
 	const revalidator = useRevalidator();
 	const location = useLocation();
+	const [isInitialized, setIsInitialized] = useState(false);
 
 	const pathSegments = location.pathname.split("/").filter(Boolean);
-	const activeTab = pathSegments[1] || "pronouns";
+	const activeTab = pathSegments[1] || "speed";
 
-	const handleUserChange = (userId: string) => {
-		setSearchParams({ userId });
-		revalidator.revalidate();
-	};
+	// On mount, sync authenticated user to URL params
+	useEffect(() => {
+		const authenticatedUserId = localStorage.getItem(AUTH_STORAGE_KEY);
+		const urlUserId = searchParams.get("userId");
+
+		if (authenticatedUserId && authenticatedUserId !== urlUserId) {
+			setSearchParams({ userId: authenticatedUserId });
+			revalidator.revalidate();
+		}
+		setIsInitialized(true);
+	}, [revalidator.revalidate, searchParams.get, setSearchParams]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	const buildTabUrl = (tabId: string) => {
 		const userId = searchParams.get("userId");
@@ -266,9 +103,25 @@ export default function PracticeLayout({ loaderData }: Route.ComponentProps) {
 		return userId ? `${base}?userId=${userId}` : base;
 	};
 
+	// Show loading state while syncing user
+	if (!isInitialized) {
+		return (
+			<div className="space-y-4">
+				<div className="flex items-center justify-between gap-4">
+					<NavTabs
+						tabs={PRACTICE_TABS}
+						activeTab={activeTab}
+						buildUrl={buildTabUrl}
+					/>
+				</div>
+				<div className="text-center py-8 text-stone-500">Loading...</div>
+			</div>
+		);
+	}
+
 	return (
 		<div className="space-y-4">
-			{/* Compact header - just tabs and user selector */}
+			{/* Compact header - tabs and user info */}
 			<div className="flex items-center justify-between gap-4">
 				<NavTabs
 					tabs={PRACTICE_TABS.map((tab) =>
@@ -279,15 +132,19 @@ export default function PracticeLayout({ loaderData }: Route.ComponentProps) {
 					activeTab={activeTab}
 					buildUrl={buildTabUrl}
 				/>
-				<div className="flex items-center gap-2">
+				<div className="flex items-center gap-3">
 					{loaderData.userId && (
 						<PushNotificationToggle userId={loaderData.userId} />
 					)}
-					<UserSelector users={users} onUserChange={handleUserChange} />
+					{userName && (
+						<span className="text-sm text-stone-600">
+							Practicing as <span className="font-medium text-stone-800">{userName}</span>
+						</span>
+					)}
 				</div>
 			</div>
 
-			{/* Drill content - takes full available space */}
+			{/* Drill content */}
 			<Outlet context={loaderData} />
 		</div>
 	);

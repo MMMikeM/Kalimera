@@ -547,3 +547,29 @@ export const createUser = async (displayName: string, code: string) => {
 export const getAllUsers = async () => {
 	return db.select().from(users).orderBy(users.displayName);
 };
+
+export const validateUserPin = async (userId: number, pin: string) => {
+	const [user] = await db
+		.select({ id: users.id, pin: users.pin })
+		.from(users)
+		.where(eq(users.id, userId));
+
+	if (!user) return { valid: false, error: "User not found" } as const;
+
+	// If user has no PIN set, allow access
+	if (!user.pin) return { valid: true } as const;
+
+	// Compare PINs
+	if (user.pin === pin) return { valid: true } as const;
+
+	return { valid: false, error: "Invalid PIN" } as const;
+};
+
+export const userHasPin = async (userId: number) => {
+	const [user] = await db
+		.select({ pin: users.pin })
+		.from(users)
+		.where(eq(users.id, userId));
+
+	return user?.pin !== null && user?.pin !== undefined;
+};

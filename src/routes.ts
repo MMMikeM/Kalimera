@@ -1,6 +1,9 @@
 import { index, route, type RouteConfig } from "@react-router/dev/routes";
 
 export default [
+  // Auth
+  route("login", "routes/login.tsx"),
+
   // Dashboard (replaces landing page)
   index("routes/home.tsx"),
 
