@@ -358,7 +358,7 @@ export const VerbsSection: React.FC = () => (
 		{eimai && (
 			<KeyInsight title="Start Here: είμαι (to be)" icon={<Star size={18} />}>
 				<p className="mb-3">
-					The most common Greek verb. Memorize it first — you'll use it in every
+					The most common Greek verb. Memorize it first. You'll use it in every
 					conversation.
 				</p>
 				<div className="bg-white rounded-lg p-4 border border-ocean-200">
@@ -439,8 +439,8 @@ export const VerbsSection: React.FC = () => (
 							Other Irregular Verbs
 						</h3>
 						<p className="text-stone-600 text-sm">
-							These common verbs don't follow patterns — you'll learn them
-							naturally through frequent exposure
+							These common verbs don't follow patterns. You'll learn them
+							naturally through frequent exposure.
 						</p>
 					</div>
 				</div>

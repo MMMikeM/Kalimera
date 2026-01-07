@@ -72,7 +72,7 @@ export const CasesSection: React.FC = () => {
 
 				{/* Focus guidance - inside the card where it belongs */}
 				<p className="text-sm text-stone-600 bg-white/50 rounded-lg p-3 mb-4">
-					<strong>Focus on Nominative and Accusative first</strong> — they cover
+					<strong>Focus on Nominative and Accusative first.</strong> They cover
 					most of what you'll encounter. Genitive comes up with possession and
 					some prepositions.
 				</p>
