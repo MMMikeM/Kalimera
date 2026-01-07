@@ -58,7 +58,8 @@ export const action = async ({ request }: Route.ActionArgs) => {
 	// Handle password setup for existing users
 	if (intent === "setup-password") {
 		const result = await parseFormData(formData, passwordSetupSchema);
-		if (result.error) return validationError(result.error, result.submittedData);
+		if (result.error)
+			return validationError(result.error, result.submittedData);
 
 		const { newPassword, userId, username } = result.data;
 		const hash = await hashPassword(newPassword);
@@ -102,7 +103,10 @@ export const action = async ({ request }: Route.ActionArgs) => {
 
 	// Normal login flow
 	if (!password) {
-		return { success: false, error: "Please enter your password" } satisfies ActionError;
+		return {
+			success: false,
+			error: "Please enter your password",
+		} satisfies ActionError;
 	}
 
 	const isValid = await verifyPassword(passwordHash, password);
@@ -139,16 +143,22 @@ export default function LoginRoute({ actionData }: Route.ComponentProps) {
 	});
 
 	// Skip validation error responses - RVF handles those automatically
-	const businessData = actionData && !isValidationErrorResponse(actionData) ? actionData : null;
+	const businessData =
+		actionData && !isValidationErrorResponse(actionData) ? actionData : null;
 
 	const error =
 		(businessData && "error" in businessData ? businessData.error : null) ||
 		passkey.error;
 
-	const needsPasswordSetup = businessData && "needsPasswordSetup" in businessData;
+	const needsPasswordSetup =
+		businessData && "needsPasswordSetup" in businessData;
 
 	useEffect(() => {
-		if (businessData?.success && "userId" in businessData && "username" in businessData) {
+		if (
+			businessData?.success &&
+			"userId" in businessData &&
+			"username" in businessData
+		) {
 			loginAndRedirect({
 				userId: businessData.userId,
 				username: businessData.username,
