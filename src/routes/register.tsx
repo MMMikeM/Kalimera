@@ -54,7 +54,9 @@ export const action = async ({ request }: Route.ActionArgs) => {
 	const existingUser = await findUserByUsername(username);
 	if (existingUser) {
 		// Use validationError for field-specific errors
-		return validationError({ fieldErrors: { username: "Username already taken" } });
+		return validationError({
+			fieldErrors: { username: "Username already taken" },
+		});
 	}
 
 	try {
@@ -66,7 +68,10 @@ export const action = async ({ request }: Route.ActionArgs) => {
 		);
 
 		if (!newUser) {
-			return { success: false, error: "Failed to create account" } satisfies ActionError;
+			return {
+				success: false,
+				error: "Failed to create account",
+			} satisfies ActionError;
 		}
 
 		return {
@@ -102,10 +107,15 @@ export default function RegisterRoute({ actionData }: Route.ComponentProps) {
 	const isSubmitting = form.formState.isSubmitting;
 
 	// Skip validation error responses - RVF handles those automatically
-	const businessData = actionData && !isValidationErrorResponse(actionData) ? actionData : null;
+	const businessData =
+		actionData && !isValidationErrorResponse(actionData) ? actionData : null;
 
 	useEffect(() => {
-		if (businessData?.success && "userId" in businessData && "username" in businessData) {
+		if (
+			businessData?.success &&
+			"userId" in businessData &&
+			"username" in businessData
+		) {
 			setRegisteredUser({
 				userId: businessData.userId,
 				username: businessData.username,
