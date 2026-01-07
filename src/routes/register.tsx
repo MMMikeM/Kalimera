@@ -1,10 +1,19 @@
 import { useState, useEffect } from "react";
 import { Link, useFetcher } from "react-router";
-import { UserPlus, KeyRound, ArrowRight, Check, AlertCircle } from "lucide-react";
+import {
+	UserPlus,
+	KeyRound,
+	ArrowRight,
+	Check,
+	AlertCircle,
+} from "lucide-react";
 import { startRegistration } from "@simplewebauthn/browser";
 import type { PublicKeyCredentialCreationOptionsJSON } from "@simplewebauthn/browser";
 import type { Route } from "./+types/register";
-import { createUserWithPassword, findUserByUsername } from "@/db/queries/auth";
+import {
+	createUserWithPassword,
+	findUserByUsername,
+} from "@/db.server/queries/auth";
 import { hashPassword } from "@/lib/password";
 import { Card } from "@/components/Card";
 import { Input } from "@/components/ui/input";
@@ -15,7 +24,10 @@ const AUTH_STORAGE_KEY = "greek-authenticated-user";
 export function meta() {
 	return [
 		{ title: "Register - Greek Learning" },
-		{ name: "description", content: "Create an account to track your Greek learning progress" },
+		{
+			name: "description",
+			content: "Create an account to track your Greek learning progress",
+		},
 	];
 }
 
@@ -36,7 +48,9 @@ type ActionData = {
 	};
 };
 
-export const action = async ({ request }: Route.ActionArgs): Promise<ActionData> => {
+export const action = async ({
+	request,
+}: Route.ActionArgs): Promise<ActionData> => {
 	const formData = await request.formData();
 	const username = (formData.get("username") as string)?.trim();
 	const displayName = (formData.get("displayName") as string)?.trim();
@@ -48,7 +62,8 @@ export const action = async ({ request }: Route.ActionArgs): Promise<ActionData>
 	if (!username || username.length < 3) {
 		fieldErrors.username = "Username must be at least 3 characters";
 	} else if (!/^[a-zA-Z0-9_-]+$/.test(username)) {
-		fieldErrors.username = "Username can only contain letters, numbers, underscores, and hyphens";
+		fieldErrors.username =
+			"Username can only contain letters, numbers, underscores, and hyphens";
 	}
 
 	if (!displayName || displayName.length < 1) {
@@ -69,21 +84,33 @@ export const action = async ({ request }: Route.ActionArgs): Promise<ActionData>
 
 	const existingUser = await findUserByUsername(username);
 	if (existingUser) {
-		return { success: false, fieldErrors: { username: "Username already taken" } };
+		return {
+			success: false,
+			fieldErrors: { username: "Username already taken" },
+		};
 	}
 
 	try {
 		const passwordHash = await hashPassword(password);
-		const newUser = await createUserWithPassword(username, displayName, passwordHash);
+		const newUser = await createUserWithPassword(
+			username,
+			displayName,
+			passwordHash,
+		);
 
 		if (!newUser) {
 			return { success: false, error: "Failed to create account" };
 		}
 
-		return { success: true, userId: newUser.id, username: newUser.username ?? username };
+		return {
+			success: true,
+			userId: newUser.id,
+			username: newUser.username ?? username,
+		};
 	} catch (error) {
 		console.error("Registration error:", error);
-		const message = error instanceof Error ? error.message : "Failed to create account";
+		const message =
+			error instanceof Error ? error.message : "Failed to create account";
 		return { success: false, error: message };
 	}
 };
@@ -98,15 +125,25 @@ export default function RegisterRoute(_props: Route.ComponentProps) {
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
 
-	const [registeredUser, setRegisteredUser] = useState<{ userId: number; username: string } | null>(null);
+	const [registeredUser, setRegisteredUser] = useState<{
+		userId: number;
+		username: string;
+	} | null>(null);
 	const [passkeyState, setPasskeyState] = useState<PasskeySetupState>("idle");
 	const [passkeyError, setPasskeyError] = useState<string | null>(null);
 
 	const isSubmitting = fetcher.state === "submitting";
 
 	useEffect(() => {
-		if (fetcher.data?.success && fetcher.data?.userId && fetcher.data?.username) {
-			setRegisteredUser({ userId: fetcher.data.userId, username: fetcher.data.username });
+		if (
+			fetcher.data?.success &&
+			fetcher.data?.userId &&
+			fetcher.data?.username
+		) {
+			setRegisteredUser({
+				userId: fetcher.data.userId,
+				username: fetcher.data.username,
+			});
 		}
 	}, [fetcher.data]);
 
@@ -127,11 +164,14 @@ export default function RegisterRoute(_props: Route.ComponentProps) {
 			});
 
 			if (!optionsResponse.ok) {
-				const errorData = await optionsResponse.json() as { error?: string };
-				throw new Error(errorData.error || "Failed to get registration options");
+				const errorData = (await optionsResponse.json()) as { error?: string };
+				throw new Error(
+					errorData.error || "Failed to get registration options",
+				);
 			}
 
-			const options: PublicKeyCredentialCreationOptionsJSON = await optionsResponse.json();
+			const options: PublicKeyCredentialCreationOptionsJSON =
+				await optionsResponse.json();
 
 			const attestation = await startRegistration({ optionsJSON: options });
 
@@ -146,7 +186,7 @@ export default function RegisterRoute(_props: Route.ComponentProps) {
 			});
 
 			if (!verifyResponse.ok) {
-				const errorData = await verifyResponse.json() as { error?: string };
+				const errorData = (await verifyResponse.json()) as { error?: string };
 				throw new Error(errorData.error || "Failed to verify passkey");
 			}
 
@@ -154,7 +194,9 @@ export default function RegisterRoute(_props: Route.ComponentProps) {
 		} catch (error) {
 			console.error("Passkey setup error:", error);
 			setPasskeyState("error");
-			setPasskeyError(error instanceof Error ? error.message : "Failed to set up passkey");
+			setPasskeyError(
+				error instanceof Error ? error.message : "Failed to set up passkey",
+			);
 		}
 	};
 
@@ -162,7 +204,10 @@ export default function RegisterRoute(_props: Route.ComponentProps) {
 		if (registeredUser) {
 			localStorage.setItem(
 				AUTH_STORAGE_KEY,
-				JSON.stringify({ userId: registeredUser.userId, username: registeredUser.username }),
+				JSON.stringify({
+					userId: registeredUser.userId,
+					username: registeredUser.username,
+				}),
 			);
 			// Full page reload to ensure Root remounts and reads fresh auth state
 			window.location.href = "/";
@@ -176,7 +221,9 @@ export default function RegisterRoute(_props: Route.ComponentProps) {
 					<div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
 						<Check size={32} className="text-green-600" />
 					</div>
-					<h1 className="text-3xl font-serif text-terracotta">Account Created</h1>
+					<h1 className="text-3xl font-serif text-terracotta">
+						Account Created
+					</h1>
 					<p className="text-stone-600">Welcome to Greek Learning!</p>
 				</div>
 
@@ -186,7 +233,8 @@ export default function RegisterRoute(_props: Route.ComponentProps) {
 							<KeyRound size={48} className="text-terracotta mx-auto mb-3" />
 							<h2 className="text-xl font-medium">Set Up Passkey</h2>
 							<p className="text-sm text-stone-500 mt-1">
-								Use Face ID, Touch ID, or your device PIN for faster sign-in next time.
+								Use Face ID, Touch ID, or your device PIN for faster sign-in
+								next time.
 							</p>
 						</div>
 
@@ -228,7 +276,9 @@ export default function RegisterRoute(_props: Route.ComponentProps) {
 									onClick={handlePasskeySetup}
 									disabled={passkeyState === "loading"}
 								>
-									{passkeyState === "loading" ? "Setting up..." : "Set Up Passkey"}
+									{passkeyState === "loading"
+										? "Setting up..."
+										: "Set Up Passkey"}
 									{passkeyState !== "loading" && <KeyRound size={16} />}
 								</Button>
 							</div>
@@ -249,7 +299,10 @@ export default function RegisterRoute(_props: Route.ComponentProps) {
 			<Card className="w-full max-w-md p-6">
 				<fetcher.Form method="post" className="space-y-4">
 					<div className="space-y-2">
-						<label htmlFor="username" className="text-sm font-medium text-stone-700">
+						<label
+							htmlFor="username"
+							className="text-sm font-medium text-stone-700"
+						>
 							Username
 						</label>
 						<Input
@@ -263,12 +316,17 @@ export default function RegisterRoute(_props: Route.ComponentProps) {
 							aria-invalid={!!fetcher.data?.fieldErrors?.username}
 						/>
 						{fetcher.data?.fieldErrors?.username && (
-							<p className="text-sm text-red-600">{fetcher.data.fieldErrors.username}</p>
+							<p className="text-sm text-red-600">
+								{fetcher.data.fieldErrors.username}
+							</p>
 						)}
 					</div>
 
 					<div className="space-y-2">
-						<label htmlFor="displayName" className="text-sm font-medium text-stone-700">
+						<label
+							htmlFor="displayName"
+							className="text-sm font-medium text-stone-700"
+						>
 							Display Name
 						</label>
 						<Input
@@ -282,12 +340,17 @@ export default function RegisterRoute(_props: Route.ComponentProps) {
 							aria-invalid={!!fetcher.data?.fieldErrors?.displayName}
 						/>
 						{fetcher.data?.fieldErrors?.displayName && (
-							<p className="text-sm text-red-600">{fetcher.data.fieldErrors.displayName}</p>
+							<p className="text-sm text-red-600">
+								{fetcher.data.fieldErrors.displayName}
+							</p>
 						)}
 					</div>
 
 					<div className="space-y-2">
-						<label htmlFor="password" className="text-sm font-medium text-stone-700">
+						<label
+							htmlFor="password"
+							className="text-sm font-medium text-stone-700"
+						>
 							Password
 						</label>
 						<Input
@@ -301,12 +364,17 @@ export default function RegisterRoute(_props: Route.ComponentProps) {
 							aria-invalid={!!fetcher.data?.fieldErrors?.password}
 						/>
 						{fetcher.data?.fieldErrors?.password && (
-							<p className="text-sm text-red-600">{fetcher.data.fieldErrors.password}</p>
+							<p className="text-sm text-red-600">
+								{fetcher.data.fieldErrors.password}
+							</p>
 						)}
 					</div>
 
 					<div className="space-y-2">
-						<label htmlFor="confirmPassword" className="text-sm font-medium text-stone-700">
+						<label
+							htmlFor="confirmPassword"
+							className="text-sm font-medium text-stone-700"
+						>
 							Confirm Password
 						</label>
 						<Input
@@ -320,7 +388,9 @@ export default function RegisterRoute(_props: Route.ComponentProps) {
 							aria-invalid={!!fetcher.data?.fieldErrors?.confirmPassword}
 						/>
 						{fetcher.data?.fieldErrors?.confirmPassword && (
-							<p className="text-sm text-red-600">{fetcher.data.fieldErrors.confirmPassword}</p>
+							<p className="text-sm text-red-600">
+								{fetcher.data.fieldErrors.confirmPassword}
+							</p>
 						)}
 					</div>
 
@@ -345,7 +415,10 @@ export default function RegisterRoute(_props: Route.ComponentProps) {
 
 			<p className="text-sm text-stone-500">
 				Already have an account?{" "}
-				<Link to="/login" className="text-terracotta hover:underline font-medium">
+				<Link
+					to="/login"
+					className="text-terracotta hover:underline font-medium"
+				>
 					Sign in
 				</Link>
 			</p>

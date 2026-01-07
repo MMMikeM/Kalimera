@@ -1,5 +1,5 @@
-import { db } from "../db";
-import { tags, vocabularyTags, vocabulary } from "../db/schema";
+import { db } from "../db.server";
+import { tags, vocabularyTags, vocabulary } from "../db.server/schema";
 import { sql } from "drizzle-orm";
 
 async function main() {

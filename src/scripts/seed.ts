@@ -1,7 +1,7 @@
 import { inArray, sql } from "drizzle-orm";
-import { db } from "../db";
-import { tags, tagSections, verbDetails, vocabulary, vocabularyTags } from "../db/schema";
-import type { NewVocabulary, NewVocabularyTag } from "../db/types";
+import { db } from "../db.server";
+import { tags, tagSections, verbDetails, vocabulary, vocabularyTags } from "../db.server/schema";
+import type { NewVocabulary, NewVocabularyTag } from "../db.server/types";
 import { formatNounWithArticle } from "../lib/greek-grammar";
 import {
 	ADJECTIVES,
@@ -275,22 +275,22 @@ async function seed() {
 		items: Array<{ text: string; english: string; metadata?: unknown }>;
 		tags: string[];
 	}> = [
-		{ name: "essential phrases", items: ESSENTIAL_PHRASES, tags: ["essential"] },
-		{ name: "survival phrases", items: SURVIVAL_PHRASES, tags: ["survival"] },
-		{ name: "request phrases", items: REQUEST_PHRASES, tags: ["request"] },
-		{ name: "discourse fillers", items: DISCOURSE_FILLERS, tags: ["discourse-filler", "expression"] },
-		{ name: "social phrases", items: SOCIAL_PHRASES, tags: ["social-phrase", "expression"] },
-		{ name: "question words", items: QUESTION_WORDS, tags: ["question"] },
-		{ name: "commands", items: COMMANDS, tags: ["command"] },
-		{ name: "time phrases", items: TIME_PHRASES, tags: ["time-expression"] },
-		{ name: "name construction", items: NAME_CONSTRUCTION, tags: ["name-construction"] },
-		{ name: "discourse markers", items: DISCOURSE_MARKERS, tags: ["discourse-markers"] },
-		{ name: "common responses", items: COMMON_RESPONSES, tags: ["responses"] },
-		{ name: "opinion phrases", items: OPINION_PHRASES, tags: ["opinions"] },
-		{ name: "arriving phrases", items: ARRIVING_PHRASES, tags: ["conversation-arriving"] },
-		{ name: "food phrases", items: FOOD_PHRASES, tags: ["conversation-food"] },
-		{ name: "small talk phrases", items: SMALLTALK_PHRASES, tags: ["conversation-smalltalk"] },
-	];
+			{ name: "essential phrases", items: ESSENTIAL_PHRASES, tags: ["essential"] },
+			{ name: "survival phrases", items: SURVIVAL_PHRASES, tags: ["survival"] },
+			{ name: "request phrases", items: REQUEST_PHRASES, tags: ["request"] },
+			{ name: "discourse fillers", items: DISCOURSE_FILLERS, tags: ["discourse-filler", "expression"] },
+			{ name: "social phrases", items: SOCIAL_PHRASES, tags: ["social-phrase", "expression"] },
+			{ name: "question words", items: QUESTION_WORDS, tags: ["question"] },
+			{ name: "commands", items: COMMANDS, tags: ["command"] },
+			{ name: "time phrases", items: TIME_PHRASES, tags: ["time-expression"] },
+			{ name: "name construction", items: NAME_CONSTRUCTION, tags: ["name-construction"] },
+			{ name: "discourse markers", items: DISCOURSE_MARKERS, tags: ["discourse-markers"] },
+			{ name: "common responses", items: COMMON_RESPONSES, tags: ["responses"] },
+			{ name: "opinion phrases", items: OPINION_PHRASES, tags: ["opinions"] },
+			{ name: "arriving phrases", items: ARRIVING_PHRASES, tags: ["conversation-arriving"] },
+			{ name: "food phrases", items: FOOD_PHRASES, tags: ["conversation-food"] },
+			{ name: "small talk phrases", items: SMALLTALK_PHRASES, tags: ["conversation-smalltalk"] },
+		];
 
 	for (const category of phraseCategories) {
 		const items: VocabWithTags[] = category.items.map((phrase) => ({

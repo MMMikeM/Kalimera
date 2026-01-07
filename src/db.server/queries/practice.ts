@@ -1,4 +1,11 @@
 import { and, count, desc, eq, gte, sql } from "drizzle-orm";
+import {
+	format,
+	parseISO,
+	endOfTomorrow,
+	subDays,
+	differenceInDays,
+} from "date-fns";
 import { calculateSRS, getInitialSRSValues, qualityFromAttempt } from "../../routes/practice/srs";
 import { db } from "../index";
 import {
@@ -186,12 +193,7 @@ export const getItemsDueTomorrow = async (
 	skillType: SkillType = "recognition",
 ) => {
 	const now = new Date();
-	const startOfTomorrow = new Date(now);
-	startOfTomorrow.setDate(startOfTomorrow.getDate() + 1);
-	startOfTomorrow.setHours(0, 0, 0, 0);
-
-	const endOfTomorrow = new Date(startOfTomorrow);
-	endOfTomorrow.setHours(23, 59, 59, 999);
+	const tomorrowEnd = endOfTomorrow();
 
 	const [result] = await db
 		.select({ count: count() })
@@ -201,7 +203,7 @@ export const getItemsDueTomorrow = async (
 				eq(vocabularySkills.userId, userId),
 				eq(vocabularySkills.skillType, skillType),
 				sql`${vocabularySkills.nextReviewAt} > ${now}`,
-				sql`${vocabularySkills.nextReviewAt} <= ${endOfTomorrow}`,
+				sql`${vocabularySkills.nextReviewAt} <= ${tomorrowEnd}`,
 			),
 		);
 
@@ -244,8 +246,7 @@ const calculateStreak = async (userId: number): Promise<number> => {
 	const uniqueDates = new Set<string>();
 	for (const session of sessions) {
 		if (session.completedAt) {
-			const dateStr =
-				new Date(session.completedAt).toISOString().split("T")[0] ?? "";
+			const dateStr = format(new Date(session.completedAt), "yyyy-MM-dd");
 			uniqueDates.add(dateStr);
 		}
 	}
@@ -253,9 +254,8 @@ const calculateStreak = async (userId: number): Promise<number> => {
 	const sortedDates = Array.from(uniqueDates).sort().reverse();
 	if (sortedDates.length === 0) return 0;
 
-	const today = new Date().toISOString().split("T")[0] ?? "";
-	const yesterday =
-		new Date(Date.now() - 86400000).toISOString().split("T")[0] ?? "";
+	const today = format(new Date(), "yyyy-MM-dd");
+	const yesterday = format(subDays(new Date(), 1), "yyyy-MM-dd");
 	const firstDate = sortedDates[0];
 
 	if (!firstDate || (firstDate !== today && firstDate !== yesterday)) {
@@ -268,11 +268,9 @@ const calculateStreak = async (userId: number): Promise<number> => {
 		const currDateStr = sortedDates[i];
 		if (!prevDateStr || !currDateStr) break;
 
-		const prevDate = new Date(prevDateStr);
-		const currDate = new Date(currDateStr);
-		const diffDays = Math.round(
-			(prevDate.getTime() - currDate.getTime()) / 86400000,
-		);
+		const prevDate = parseISO(prevDateStr);
+		const currDate = parseISO(currDateStr);
+		const diffDays = differenceInDays(prevDate, currDate);
 
 		if (diffDays === 1) {
 			streak++;

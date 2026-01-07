@@ -1,4 +1,5 @@
 import { eq, sql } from "drizzle-orm";
+import { differenceInHours } from "date-fns";
 import { db } from "../index";
 import { users } from "../schema";
 import type { User } from "../types";
@@ -152,8 +153,4 @@ export const checkAndAwardFreeze = async (
 // HELPERS
 // ═══════════════════════════════════════════════════════════════════════════════
 
-const getHoursSince = (date: Date): number => {
-	const now = new Date();
-	const diffMs = now.getTime() - date.getTime();
-	return diffMs / (1000 * 60 * 60);
-};
+const getHoursSince = (date: Date): number => differenceInHours(new Date(), date);

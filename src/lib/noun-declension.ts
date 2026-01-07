@@ -1,5 +1,5 @@
 import { AGREEMENT_PARADIGMS } from "@/constants/agreement";
-import type { DeclensionPattern } from "@/db/enums";
+import type { DeclensionPattern } from "@/db.server/enums";
 
 export type Case = "nominative" | "accusative" | "genitive";
 export type Number = "singular" | "plural";

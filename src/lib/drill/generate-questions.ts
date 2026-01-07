@@ -4,7 +4,7 @@ import {
 } from "@/constants/pronouns";
 import { VERB_CONJUGATIONS } from "@/constants/verbs";
 import { declineNoun } from "@/lib/noun-declension";
-import type { DeclensionPattern } from "@/db/enums";
+import type { DeclensionPattern } from "@/db.server/enums";
 
 export interface DrillQuestion {
 	id: string;
@@ -154,15 +154,15 @@ const generateNounQuestions = (): DrillQuestion[] => {
 		pattern: DeclensionPattern;
 		english: string;
 	}> = [
-		{ lemma: "φίλος", pattern: "masc-os", english: "friend" },
-		{ lemma: "καφές", pattern: "masc-es", english: "coffee" },
-		{ lemma: "γυναίκα", pattern: "fem-a", english: "woman" },
-		{ lemma: "παιδί", pattern: "neut-i", english: "child" },
-		{ lemma: "βιβλίο", pattern: "neut-o", english: "book" },
-		{ lemma: "σπίτι", pattern: "neut-i", english: "house" },
-		{ lemma: "πατέρας", pattern: "masc-as", english: "father" },
-		{ lemma: "μητέρα", pattern: "fem-a", english: "mother" },
-	];
+			{ lemma: "φίλος", pattern: "masc-os", english: "friend" },
+			{ lemma: "καφές", pattern: "masc-es", english: "coffee" },
+			{ lemma: "γυναίκα", pattern: "fem-a", english: "woman" },
+			{ lemma: "παιδί", pattern: "neut-i", english: "child" },
+			{ lemma: "βιβλίο", pattern: "neut-o", english: "book" },
+			{ lemma: "σπίτι", pattern: "neut-i", english: "house" },
+			{ lemma: "πατέρας", pattern: "masc-as", english: "father" },
+			{ lemma: "μητέρα", pattern: "fem-a", english: "mother" },
+		];
 
 	for (const noun of nouns) {
 		const forms = declineNoun(noun.lemma, noun.pattern);

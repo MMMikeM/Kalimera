@@ -7,6 +7,7 @@ export const relations = defineRelations(schema, (r) => ({
 		practiceAttempts: r.many.practiceAttempts(),
 		weakAreas: r.many.weakAreas(),
 		vocabularySkills: r.many.vocabularySkills(),
+		milestonesAchieved: r.many.milestonesAchieved(),
 	},
 	vocabulary: {
 		verbDetails: r.one.verbDetails({
@@ -95,6 +96,12 @@ export const relations = defineRelations(schema, (r) => ({
 		vocabulary: r.one.vocabulary({
 			from: r.vocabularySkills.vocabularyId,
 			to: r.vocabulary.id,
+		}),
+	},
+	milestonesAchieved: {
+		user: r.one.users({
+			from: r.milestonesAchieved.userId,
+			to: r.users.id,
 		}),
 	},
 }));

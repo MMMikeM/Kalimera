@@ -6,7 +6,7 @@ import { beforeAll, describe, expect, it } from "vitest";
 import type {
 	NewVerbDetails,
 	NewVocabulary,
-} from "../db/schema";
+} from "../db.server/schema";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

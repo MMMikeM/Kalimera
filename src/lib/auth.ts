@@ -18,8 +18,8 @@ import {
 	findPasskeyByCredentialId,
 	findPasskeysByUserId,
 	updatePasskeyCounter,
-} from "@/db/queries/auth";
-import type { AuthenticatorTransport } from "@/db/schema";
+} from "@/db.server/queries/auth";
+import type { AuthenticatorTransport } from "@/db.server/schema";
 
 type WebAuthnConfig = {
 	rpName: string;

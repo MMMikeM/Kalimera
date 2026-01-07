@@ -1,4 +1,5 @@
 import type {
+	milestonesAchieved,
 	practiceAttempts,
 	practiceSessions,
 	pushSubscriptions,
@@ -28,6 +29,7 @@ export type PracticeAttempt = typeof practiceAttempts.$inferSelect;
 export type WeakArea = typeof weakAreas.$inferSelect;
 export type VocabularySkill = typeof vocabularySkills.$inferSelect;
 export type PushSubscription = typeof pushSubscriptions.$inferSelect;
+export type MilestoneAchieved = typeof milestonesAchieved.$inferSelect;
 
 // Inferred insert types (what you provide when inserting)
 export type NewUser = typeof users.$inferInsert;
@@ -43,3 +45,4 @@ export type NewPracticeAttempt = typeof practiceAttempts.$inferInsert;
 export type NewWeakArea = typeof weakAreas.$inferInsert;
 export type NewVocabularySkill = typeof vocabularySkills.$inferInsert;
 export type NewPushSubscription = typeof pushSubscriptions.$inferInsert;
+export type NewMilestoneAchieved = typeof milestonesAchieved.$inferInsert;

@@ -1,5 +1,5 @@
-import { db } from "../db";
-import { tags } from "../db/schema";
+import { db } from "../db.server";
+import { tags } from "../db.server/schema";
 import { sql } from "drizzle-orm";
 
 async function main() {
@@ -11,12 +11,12 @@ async function main() {
     })
     .from(tags)
     .orderBy(tags.slug);
-    
+
   console.log("Tag counts:");
   for (const t of tagCounts) {
     console.log(`  ${t.slug}: ${t.count} (${t.name})`);
   }
-  
+
   process.exit(0);
 }
 
