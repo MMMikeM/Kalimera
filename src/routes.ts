@@ -56,6 +56,9 @@ export default [
 	// Support/About page
 	route("support", "routes/support.tsx"),
 
+	// Progress/Analytics
+	route("progress", "routes/progress.tsx"),
+
 	// API routes
 	...prefix("api", [
 		// Push notifications
