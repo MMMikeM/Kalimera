@@ -29,40 +29,21 @@ export default defineConfig(({ isSsrBuild, command }) => ({
 		// Only include PWA plugin for client builds
 		!isSsrBuild &&
 			VitePWA({
+				strategies: "injectManifest",
+				srcDir: "service-worker",
+				filename: "sw.ts",
 				registerType: "prompt",
 				includeAssets: [
 					"favicon.svg",
 					"apple-touch-icon.png",
 					"icons/*.png",
 				],
-				manifest: false, // Using our own manifest.json in public/
-				workbox: {
+				manifest: false,
+				injectManifest: {
 					globPatterns: ["**/*.{js,css,html,ico,png,svg,woff2}"],
-					navigateFallback: "/offline.html",
-					navigateFallbackDenylist: [/^\/api\//],
-					runtimeCaching: [
-						{
-							urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
-							handler: "CacheFirst",
-							options: {
-								cacheName: "google-fonts-cache",
-								expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 365 },
-								cacheableResponse: { statuses: [0, 200] },
-							},
-						},
-						{
-							urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
-							handler: "CacheFirst",
-							options: {
-								cacheName: "gstatic-fonts-cache",
-								expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 365 },
-								cacheableResponse: { statuses: [0, 200] },
-							},
-						},
-					],
 				},
 				devOptions: {
-					enabled: false, // Disable in dev to avoid conflicts
+					enabled: false,
 				},
 			}),
 	].filter(Boolean),
