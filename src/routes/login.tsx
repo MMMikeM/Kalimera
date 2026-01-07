@@ -1,8 +1,12 @@
-import { useState, useEffect } from "react";
-import { useFetcher, Link } from "react-router";
+import { useEffect } from "react";
+import { Link } from "react-router";
+import {
+	useForm,
+	parseFormData,
+	validationError,
+	isValidationErrorResponse,
+} from "@rvf/react-router";
 import { LogIn, KeyRound, Loader2 } from "lucide-react";
-import { startAuthentication } from "@simplewebauthn/browser";
-import type { PublicKeyCredentialRequestOptionsJSON } from "@simplewebauthn/browser";
 import type { Route } from "./+types/login";
 import {
 	findUserByCode,
@@ -11,12 +15,17 @@ import {
 	setUserPassword,
 } from "@/db.server/queries/auth";
 import { hashPassword, verifyPassword } from "@/lib/password";
+import {
+	loginSchema,
+	loginValidator,
+	passwordSetupSchema,
+	passwordSetupValidator,
+} from "@/lib/validators/auth";
+import { usePasskeyAuth } from "@/lib/hooks/use-passkey-auth";
+import { loginAndRedirect } from "@/lib/auth-storage";
 import { Card } from "@/components/Card";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-
-const AUTH_STORAGE_KEY = "greek-authenticated-user";
+import { FormField } from "@/components/ui/form-field";
 
 export function meta() {
 	return [
@@ -32,51 +41,41 @@ export const loader = async () => {
 	return {};
 };
 
+type ActionSuccess = { success: true; userId: number; username: string };
+type ActionError = { success: false; error: string };
+type ActionNeedsPasswordSetup = {
+	success: false;
+	needsPasswordSetup: true;
+	userId: number;
+	userCode: string;
+	displayName: string | null;
+};
+
 export const action = async ({ request }: Route.ActionArgs) => {
 	const formData = await request.formData();
 	const intent = formData.get("intent") as string;
-	const identifier = formData.get("username") as string;
-	const password = formData.get("password") as string;
-
-	if (!identifier) {
-		return { success: false, error: "Please enter username" };
-	}
 
 	// Handle password setup for existing users
 	if (intent === "setup-password") {
-		const newPassword = formData.get("newPassword") as string;
-		const confirmPassword = formData.get("confirmPassword") as string;
-		const userId = formData.get("userId") as string;
+		const result = await parseFormData(formData, passwordSetupSchema);
+		if (result.error) return validationError(result.error, result.submittedData);
 
-		if (!newPassword || newPassword.length < 4) {
-			return {
-				success: false,
-				error: "Password must be at least 4 characters",
-				needsPasswordSetup: true,
-				userId: Number(userId),
-				userCode: identifier,
-			};
-		}
-
-		if (newPassword !== confirmPassword) {
-			return {
-				success: false,
-				error: "Passwords do not match",
-				needsPasswordSetup: true,
-				userId: Number(userId),
-				userCode: identifier,
-			};
-		}
-
+		const { newPassword, userId, username } = result.data;
 		const hash = await hashPassword(newPassword);
-		await setUserPassword(Number(userId), hash, identifier);
+		await setUserPassword(Number(userId), hash, username);
 
 		return {
 			success: true,
 			userId: Number(userId),
-			username: identifier.toLowerCase(),
-		};
+			username: username.toLowerCase(),
+		} satisfies ActionSuccess;
 	}
+
+	// Login flow
+	const result = await parseFormData(formData, loginSchema);
+	if (result.error) return validationError(result.error, result.submittedData);
+
+	const { username: identifier, password } = result.data;
 
 	// Try to find user by username first, then by code (for legacy users)
 	let user = await findUserByUsername(identifier);
@@ -85,7 +84,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
 	}
 
 	if (!user) {
-		return { success: false, error: "User not found" };
+		return { success: false, error: "User not found" } satisfies ActionError;
 	}
 
 	const passwordHash = await getUserPasswordHash(user.id);
@@ -98,135 +97,79 @@ export const action = async ({ request }: Route.ActionArgs) => {
 			userId: user.id,
 			userCode: user.code,
 			displayName: user.displayName,
-		};
+		} satisfies ActionNeedsPasswordSetup;
 	}
 
 	// Normal login flow
 	if (!password) {
-		return { success: false, error: "Please enter your password" };
+		return { success: false, error: "Please enter your password" } satisfies ActionError;
 	}
 
 	const isValid = await verifyPassword(passwordHash, password);
 	if (!isValid) {
-		return { success: false, error: "Invalid password" };
+		return { success: false, error: "Invalid password" } satisfies ActionError;
 	}
 
 	return {
 		success: true,
 		userId: user.id,
 		username: user.username || user.code,
-	};
+	} satisfies ActionSuccess;
 };
 
-export default function LoginRoute(_props: Route.ComponentProps) {
-	const fetcher = useFetcher<{
-		success: boolean;
-		userId?: number;
-		username?: string;
-		error?: string;
-		needsPasswordSetup?: boolean;
-		userCode?: string;
-		displayName?: string;
-	}>();
+export default function LoginRoute({ actionData }: Route.ComponentProps) {
+	const loginForm = useForm({
+		validator: loginValidator,
+		method: "post",
+	});
 
-	const [username, setUsername] = useState("");
-	const [password, setPassword] = useState("");
-	const [newPassword, setNewPassword] = useState("");
-	const [confirmPassword, setConfirmPassword] = useState("");
-	const [passkeyError, setPasskeyError] = useState<string | null>(null);
-	const [isPasskeyLoading, setIsPasskeyLoading] = useState(false);
+	const passwordSetupForm = useForm({
+		validator: passwordSetupValidator,
+		method: "post",
+		defaultValues: {
+			userId: "",
+			username: "",
+			newPassword: "",
+			confirmPassword: "",
+		},
+	});
 
-	const isSubmitting = fetcher.state === "submitting";
-	const error = fetcher.data?.error || passkeyError;
-	const needsPasswordSetup = fetcher.data?.needsPasswordSetup;
+	const passkey = usePasskeyAuth({
+		getUsername: () => loginForm.value("username") || undefined,
+	});
+
+	// Skip validation error responses - RVF handles those automatically
+	const businessData = actionData && !isValidationErrorResponse(actionData) ? actionData : null;
+
+	const error =
+		(businessData && "error" in businessData ? businessData.error : null) ||
+		passkey.error;
+
+	const needsPasswordSetup = businessData && "needsPasswordSetup" in businessData;
 
 	useEffect(() => {
-		if (
-			fetcher.data?.success &&
-			fetcher.data?.userId &&
-			fetcher.data?.username
-		) {
-			localStorage.setItem(
-				AUTH_STORAGE_KEY,
-				JSON.stringify({
-					userId: fetcher.data.userId,
-					username: fetcher.data.username,
-				}),
-			);
-			// Full page reload to ensure Root remounts and reads fresh auth state
-			window.location.href = "/";
-		}
-	}, [fetcher.data]);
-
-	const handlePasskeyLogin = async () => {
-		setPasskeyError(null);
-		setIsPasskeyLoading(true);
-
-		try {
-			const optionsResponse = await fetch("/api/webauthn/auth-options", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ username: username || undefined }),
+		if (businessData?.success && "userId" in businessData && "username" in businessData) {
+			loginAndRedirect({
+				userId: businessData.userId,
+				username: businessData.username,
 			});
-
-			if (!optionsResponse.ok) {
-				const errorData = (await optionsResponse.json()) as { error?: string };
-				throw new Error(
-					errorData.error || "Failed to get authentication options",
-				);
-			}
-
-			const options: PublicKeyCredentialRequestOptionsJSON =
-				await optionsResponse.json();
-
-			const authResponse = await startAuthentication({ optionsJSON: options });
-
-			const verifyResponse = await fetch("/api/webauthn/auth-verify", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({
-					response: authResponse,
-					challenge: options.challenge,
-				}),
-			});
-
-			if (!verifyResponse.ok) {
-				const errorData = (await verifyResponse.json()) as { error?: string };
-				throw new Error(errorData.error || "Authentication failed");
-			}
-
-			const result = (await verifyResponse.json()) as {
-				verified: boolean;
-				userId: number;
-				username?: string;
-			};
-
-			if (result.verified && result.userId) {
-				localStorage.setItem(
-					AUTH_STORAGE_KEY,
-					JSON.stringify({
-						userId: result.userId,
-						username: result.username || "user",
-					}),
-				);
-				// Full page reload to ensure Root remounts and reads fresh auth state
-				window.location.href = "/";
-			}
-		} catch (err) {
-			const message =
-				err instanceof Error ? err.message : "Passkey authentication failed";
-			if (message.includes("not allowed") || message.includes("AbortError")) {
-				setPasskeyError("Authentication was cancelled");
-			} else {
-				setPasskeyError(message);
-			}
-		} finally {
-			setIsPasskeyLoading(false);
 		}
-	};
+	}, [businessData]);
+
+	// Update password setup form defaults when we get needsPasswordSetup response
+	useEffect(() => {
+		if (needsPasswordSetup && businessData && "userId" in businessData) {
+			passwordSetupForm.setValue("userId", String(businessData.userId));
+			if ("userCode" in businessData && businessData.userCode) {
+				passwordSetupForm.setValue("username", businessData.userCode);
+			}
+		}
+	}, [needsPasswordSetup, businessData, passwordSetupForm]);
 
 	// Password setup form for existing users
-	if (needsPasswordSetup) {
+	if (needsPasswordSetup && businessData && "userId" in businessData) {
+		const isSubmitting = passwordSetupForm.formState.isSubmitting;
+
 		return (
 			<div className="min-h-[60vh] flex flex-col items-center justify-center space-y-8 px-4">
 				<div className="text-center space-y-2">
@@ -235,49 +178,40 @@ export default function LoginRoute(_props: Route.ComponentProps) {
 					</h1>
 					<p className="text-stone-600">
 						Welcome back
-						{fetcher.data?.displayName ? `, ${fetcher.data.displayName}` : ""}!
-						Please create a password for your account.
+						{"displayName" in businessData && businessData.displayName
+							? `, ${businessData.displayName}`
+							: ""}
+						! Please create a password for your account.
 					</p>
 				</div>
 
 				<Card className="w-full max-w-sm p-6">
-					<fetcher.Form method="post" className="space-y-6">
+					<form {...passwordSetupForm.getFormProps()} className="space-y-6">
 						<input type="hidden" name="intent" value="setup-password" />
-						<input type="hidden" name="userId" value={fetcher.data?.userId} />
+						<input type="hidden" name="userId" value={businessData.userId} />
 						<input
 							type="hidden"
 							name="username"
-							value={fetcher.data?.userCode || username}
+							value={"userCode" in businessData ? businessData.userCode : ""}
 						/>
 
 						<div className="space-y-4">
-							<div className="space-y-2">
-								<Label htmlFor="newPassword">New Password</Label>
-								<Input
-									id="newPassword"
-									name="newPassword"
-									type="password"
-									autoComplete="new-password"
-									value={newPassword}
-									onChange={(e) => setNewPassword(e.target.value)}
-									disabled={isSubmitting}
-									placeholder="Choose a password"
-								/>
-							</div>
-
-							<div className="space-y-2">
-								<Label htmlFor="confirmPassword">Confirm Password</Label>
-								<Input
-									id="confirmPassword"
-									name="confirmPassword"
-									type="password"
-									autoComplete="new-password"
-									value={confirmPassword}
-									onChange={(e) => setConfirmPassword(e.target.value)}
-									disabled={isSubmitting}
-									placeholder="Confirm your password"
-								/>
-							</div>
+							<FormField
+								scope={passwordSetupForm.scope("newPassword")}
+								label="New Password"
+								type="password"
+								autoComplete="new-password"
+								placeholder="Choose a password"
+								disabled={isSubmitting}
+							/>
+							<FormField
+								scope={passwordSetupForm.scope("confirmPassword")}
+								label="Confirm Password"
+								type="password"
+								autoComplete="new-password"
+								placeholder="Confirm your password"
+								disabled={isSubmitting}
+							/>
 						</div>
 
 						{error && (
@@ -288,7 +222,7 @@ export default function LoginRoute(_props: Route.ComponentProps) {
 							type="submit"
 							variant="primary"
 							className="w-full"
-							disabled={!newPassword || !confirmPassword || isSubmitting}
+							disabled={isSubmitting}
 						>
 							{isSubmitting ? (
 								<>
@@ -302,11 +236,13 @@ export default function LoginRoute(_props: Route.ComponentProps) {
 								</>
 							)}
 						</Button>
-					</fetcher.Form>
+					</form>
 				</Card>
 			</div>
 		);
 	}
+
+	const isSubmitting = loginForm.formState.isSubmitting;
 
 	return (
 		<div className="min-h-[60vh] flex flex-col items-center justify-center space-y-8 px-4">
@@ -316,35 +252,26 @@ export default function LoginRoute(_props: Route.ComponentProps) {
 			</div>
 
 			<Card className="w-full max-w-sm p-6">
-				<fetcher.Form method="post" className="space-y-6">
+				<form {...loginForm.getFormProps()} className="space-y-6">
 					<div className="space-y-4">
-						<div className="space-y-2">
-							<Label htmlFor="username">Username</Label>
-							<Input
-								id="username"
-								name="username"
-								type="text"
-								autoComplete="username"
-								autoCapitalize="none"
-								autoCorrect="off"
-								value={username}
-								onChange={(e) => setUsername(e.target.value)}
-								disabled={isSubmitting || isPasskeyLoading}
-								placeholder="Enter your username"
-							/>
-						</div>
+						<FormField
+							scope={loginForm.scope("username")}
+							label="Username"
+							autoComplete="username"
+							autoCapitalize="none"
+							autoCorrect="off"
+							placeholder="Enter your username"
+							disabled={isSubmitting || passkey.isLoading}
+						/>
 
 						<div className="space-y-2">
-							<Label htmlFor="password">Password</Label>
-							<Input
-								id="password"
-								name="password"
+							<FormField
+								scope={loginForm.scope("password")}
+								label="Password"
 								type="password"
 								autoComplete="current-password"
-								value={password}
-								onChange={(e) => setPassword(e.target.value)}
-								disabled={isSubmitting || isPasskeyLoading}
 								placeholder="Enter your password"
+								disabled={isSubmitting || passkey.isLoading}
 							/>
 							<div className="mt-3 p-3 bg-ocean-100 border border-ocean-300 rounded-lg">
 								<p className="text-sm text-ocean-800 font-medium">
@@ -362,7 +289,7 @@ export default function LoginRoute(_props: Route.ComponentProps) {
 							type="submit"
 							variant="primary"
 							className="w-full"
-							disabled={!username || isSubmitting || isPasskeyLoading}
+							disabled={isSubmitting || passkey.isLoading}
 						>
 							{isSubmitting ? (
 								<>
@@ -390,10 +317,10 @@ export default function LoginRoute(_props: Route.ComponentProps) {
 							type="button"
 							variant="outline"
 							className="w-full"
-							onClick={handlePasskeyLogin}
-							disabled={isSubmitting || isPasskeyLoading}
+							onClick={passkey.authenticate}
+							disabled={isSubmitting || passkey.isLoading}
 						>
-							{isPasskeyLoading ? (
+							{passkey.isLoading ? (
 								<>
 									<Loader2 size={16} className="animate-spin" />
 									Authenticating...
@@ -406,7 +333,7 @@ export default function LoginRoute(_props: Route.ComponentProps) {
 							)}
 						</Button>
 					</div>
-				</fetcher.Form>
+				</form>
 
 				<div className="mt-6 text-center text-sm text-stone-600">
 					Don't have an account?{" "}
