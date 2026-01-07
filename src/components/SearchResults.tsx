@@ -30,6 +30,34 @@ export const SearchResults = ({
 		);
 	}
 
+	if (compact) {
+		return (
+			<div className="divide-y divide-stone-100">
+				{results.map((result) => (
+					<div
+						key={result.id}
+						className="py-2 px-1 flex items-center gap-2 hover:bg-stone-50 rounded transition-colors"
+					>
+						<MonoText
+							variant="greek"
+							size="sm"
+							className="font-medium truncate max-w-[180px]"
+						>
+							{result.greek}
+						</MonoText>
+						<span className="text-stone-300">—</span>
+						<span className="text-sm text-stone-600 flex-1 truncate">
+							{result.english}
+						</span>
+						<span className="text-xs text-stone-400 shrink-0">
+							{result.type}
+						</span>
+					</div>
+				))}
+			</div>
+		);
+	}
+
 	return (
 		<div className="space-y-2">
 			{results.map((result) => {
@@ -45,42 +73,33 @@ export const SearchResults = ({
 				return (
 					<div
 						key={result.id}
-						className={cn(
-							"bg-stone-50 rounded-lg",
-							borderClass,
-							compact ? "p-3" : "p-4",
-						)}
+						className={cn("bg-stone-50 rounded-lg p-4", borderClass)}
 					>
 						<div className="flex justify-between items-start gap-3">
 							<div className="flex-1 min-w-0">
 								<MonoText
 									variant="greek"
-									size={compact ? "md" : "lg"}
-									className={cn(
-										"font-medium block",
-										compact ? "text-lg mb-0.5" : "text-2xl mb-1",
-									)}
+									size="lg"
+									className="font-medium block text-2xl mb-1"
 								>
 									{result.greek}
 								</MonoText>
-								<p className={cn("text-stone-600", compact && "text-sm")}>
-									{result.english}
-								</p>
+								<p className="text-stone-600">{result.english}</p>
 							</div>
 							<div className="flex gap-1.5 flex-wrap justify-end flex-shrink-0">
 								{result.type && (
-									<Badge variant="default" size={compact ? "sm" : "md"}>
+									<Badge variant="default" size="md">
 										{result.type}
 									</Badge>
 								)}
 								{result.family && (
-									<Badge variant="primary" size={compact ? "sm" : "md"}>
+									<Badge variant="primary" size="md">
 										{result.family}
 									</Badge>
 								)}
 							</div>
 						</div>
-						{!compact && result.tags.length > 0 && (
+						{result.tags.length > 0 && (
 							<div className="mt-2 flex gap-1 flex-wrap">
 								{result.tags.map((tag) => (
 									<Badge key={tag} variant="secondary" size="sm">

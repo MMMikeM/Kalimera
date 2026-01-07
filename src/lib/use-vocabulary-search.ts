@@ -36,7 +36,9 @@ export const useVocabularySearch = (
 
 	const results = useMemo(() => {
 		if (searchTerm.length === 0) return [];
-		return fuzzySearch(searchTerm).map((result) => result.item);
+		return fuzzySearch(searchTerm)
+			.sort((a, b) => a.score - b.score)
+			.map((result) => result.item);
 	}, [fuzzySearch, searchTerm]);
 
 	return {

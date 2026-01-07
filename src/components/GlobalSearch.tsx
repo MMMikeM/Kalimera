@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, type ReactNode } from "react";
+import { useState, useEffect, useRef, useCallback, type ReactNode } from "react";
 import { Search } from "lucide-react";
 import {
 	Drawer,
@@ -58,12 +58,46 @@ interface SearchVariantProps {
 }
 
 const MobileSearch = ({ isOpen, setIsOpen, children }: SearchVariantProps) => {
+	const handleOpen = useCallback(() => {
+		window.history.pushState({ searchOpen: true }, "");
+		setIsOpen(true);
+	}, [setIsOpen]);
+
+	const handleClose = useCallback(() => {
+		setIsOpen(false);
+	}, [setIsOpen]);
+
+	const handleOpenChange = useCallback(
+		(open: boolean) => {
+			if (open) {
+				handleOpen();
+			} else {
+				if (window.history.state?.searchOpen) {
+					window.history.back();
+				}
+				handleClose();
+			}
+		},
+		[handleOpen, handleClose],
+	);
+
+	useEffect(() => {
+		const handlePopState = (event: PopStateEvent) => {
+			if (isOpen && !event.state?.searchOpen) {
+				handleClose();
+			}
+		};
+
+		window.addEventListener("popstate", handlePopState);
+		return () => window.removeEventListener("popstate", handlePopState);
+	}, [isOpen, handleClose]);
+
 	return (
 		<>
-			<button type="button" onClick={() => setIsOpen(true)}>
+			<button type="button" onClick={handleOpen}>
 				{children({ isActive: isOpen })}
 			</button>
-			<Drawer open={isOpen} onOpenChange={setIsOpen}>
+			<Drawer open={isOpen} onOpenChange={handleOpenChange}>
 				<DrawerContent className="max-h-[85vh]">
 					<DrawerHeader className="sr-only">
 						<DrawerTitle>Search vocabulary</DrawerTitle>

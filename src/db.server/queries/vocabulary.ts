@@ -94,6 +94,7 @@ export type VerbWithPattern = Awaited<
  */
 export async function searchVocabulary() {
 	const results = await db.query.vocabulary.findMany({
+		where: { wordType: { ne: "phrase" } },
 		with: {
 			verbDetails: true,
 			vocabularyTags: {
