@@ -3,8 +3,9 @@
  */
 import { sendPushNotification, type PushSubscriptionData, type VapidConfig } from "@mmmike/web-push/send";
 import type { LibSQLDatabase } from "drizzle-orm/libsql";
-import { eq, and, lt, isNotNull } from "drizzle-orm";
-import { pushSubscriptions, vocabularySkills } from "@/db/schema";
+import { and, eq, gte, isNotNull, lt, sql } from "drizzle-orm";
+import { format, subDays, startOfDay, endOfDay, parseISO, differenceInDays } from "date-fns";
+import { practiceSessions, pushSubscriptions, vocabularySkills } from "@/db.server/schema";
 
 interface NotificationResult {
 	sent: number;
@@ -191,6 +192,139 @@ export const sendReviewDueNotifications = async (
 			vapid,
 			"/practice/review",
 		);
+
+		if (success) {
+			result.sent++;
+		} else {
+			result.failed++;
+			result.invalidSubscriptions.push(sub.endpoint);
+		}
+	}
+
+	// Clean up invalid subscriptions
+	for (const endpoint of result.invalidSubscriptions) {
+		await db
+			.delete(pushSubscriptions)
+			.where(eq(pushSubscriptions.endpoint, endpoint));
+	}
+
+	return result;
+};
+
+/**
+ * Send streak warning notifications to users who haven't practiced today
+ * but have an active streak from yesterday
+ */
+export const sendStreakWarningNotifications = async (
+	db: LibSQLDatabase<Record<string, unknown>>,
+	vapid: VapidConfig,
+): Promise<NotificationResult> => {
+	const result: NotificationResult = { sent: 0, failed: 0, invalidSubscriptions: [] };
+
+	const now = new Date();
+	const yesterday = format(subDays(now, 1), "yyyy-MM-dd");
+
+	// Get users with push subscriptions
+	const subscriptions = await db
+		.select({
+			endpoint: pushSubscriptions.endpoint,
+			p256dh: pushSubscriptions.p256dh,
+			auth: pushSubscriptions.auth,
+			userId: pushSubscriptions.userId,
+		})
+		.from(pushSubscriptions)
+		.all();
+
+	if (subscriptions.length === 0) {
+		console.log("No push subscriptions for streak warnings");
+		return result;
+	}
+
+	for (const sub of subscriptions) {
+		if (!sub.userId) continue;
+
+		// Check if user practiced today
+		const todayStart = startOfDay(now);
+		const todayEnd = endOfDay(now);
+
+		const [practicedToday] = await db
+			.select({ count: sql<number>`count(*)` })
+			.from(practiceSessions)
+			.where(
+				and(
+					eq(practiceSessions.userId, sub.userId),
+					gte(practiceSessions.startedAt, todayStart),
+					lt(practiceSessions.startedAt, todayEnd),
+				),
+			);
+
+		if ((practicedToday?.count ?? 0) > 0) {
+			continue; // Already practiced today
+		}
+
+		// Calculate current streak (days ending yesterday or today)
+		const practiceDates = await db
+			.selectDistinct({
+				date: sql<string>`date(${practiceSessions.startedAt})`,
+			})
+			.from(practiceSessions)
+			.where(eq(practiceSessions.userId, sub.userId))
+			.orderBy(sql`date(${practiceSessions.startedAt}) DESC`)
+			.limit(30);
+
+		const dates = practiceDates.map((d) => d.date);
+		if (dates.length === 0) continue;
+
+		// Calculate streak from yesterday backward
+		const firstDate = dates[0];
+		if (!firstDate || firstDate !== yesterday) continue; // No recent practice
+
+		let streak = 1;
+		for (let i = 1; i < dates.length; i++) {
+			const prevDateStr = dates[i - 1];
+			const currDateStr = dates[i];
+			if (!prevDateStr || !currDateStr) break;
+
+			const prevDate = parseISO(prevDateStr);
+			const currDate = parseISO(currDateStr);
+			const diffDays = differenceInDays(prevDate, currDate);
+
+			if (diffDays === 1) {
+				streak++;
+			} else {
+				break;
+			}
+		}
+
+		if (streak === 0) continue;
+
+		// Get due count for more compelling message
+		const [dueResult] = await db
+			.select({ count: sql<number>`count(*)` })
+			.from(vocabularySkills)
+			.where(
+				and(
+					eq(vocabularySkills.userId, sub.userId),
+					isNotNull(vocabularySkills.nextReviewAt),
+					lt(vocabularySkills.nextReviewAt, new Date()),
+				),
+			);
+
+		const dueCount = dueResult?.count ?? 0;
+		const timeEstimate = Math.max(2, Math.ceil(dueCount * 0.25));
+
+		const subscription: PushSubscriptionData = {
+			endpoint: sub.endpoint,
+			keys: { p256dh: sub.p256dh, auth: sub.auth },
+		};
+
+		const title = `Don't lose your ${streak}-day streak!`;
+		const body =
+			dueCount > 0
+				? `${dueCount} words waiting — takes ${timeEstimate} minutes`
+				: "A quick session keeps your streak alive";
+
+		const success = await sendNotification(subscription, title, body, vapid, "/");
 
 		if (success) {
 			result.sent++;

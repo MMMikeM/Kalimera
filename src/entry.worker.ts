@@ -1,6 +1,6 @@
 /// <reference types="@cloudflare/workers-types" />
 import { createRequestHandler } from "react-router";
-import { createDb, runWithDb } from "./db";
+import { createDb, runWithDb } from "./db.server";
 
 type CloudflareEnv = {
 	TURSO_DATABASE_URL: string;
@@ -46,8 +46,12 @@ export default {
 		env: CloudflareEnv,
 		_ctx: ExecutionContext
 	): Promise<void> {
-		const { sendPracticeReminders, sendReviewDueNotifications, getVapidConfig } =
-			await import("./lib/push-notifications");
+		const {
+			sendPracticeReminders,
+			sendReviewDueNotifications,
+			sendStreakWarningNotifications,
+			getVapidConfig,
+		} = await import("./lib/push-notifications");
 
 		const db = createDb(env);
 		const vapid = getVapidConfig(env);
@@ -60,6 +64,7 @@ export default {
 		// Determine which cron triggered based on the schedule
 		// "0 9 * * *" = Daily at 9am UTC (practice reminder)
 		// "0 */6 * * *" = Every 6 hours (review due)
+		// "0 20 * * *" = Daily at 8pm UTC (streak warning)
 		const hour = new Date(event.scheduledTime).getUTCHours();
 		const isNineAm = hour === 9;
 
@@ -73,6 +78,12 @@ export default {
 			console.log("Checking for due reviews...");
 			const result = await sendReviewDueNotifications(db, vapid);
 			console.log(`Review notifications: sent=${result.sent}, failed=${result.failed}`);
+		}
+
+		if (event.cron === "0 20 * * *") {
+			console.log("Running streak warning notifications...");
+			const result = await sendStreakWarningNotifications(db, vapid);
+			console.log(`Streak warnings: sent=${result.sent}, failed=${result.failed}`);
 		}
 	},
 };
