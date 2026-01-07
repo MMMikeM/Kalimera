@@ -2,7 +2,7 @@ import type React from "react";
 import { useMemo } from "react";
 import UnifiedDrill, { type UnifiedQuestion } from "./unified-drill";
 import { getNounForm, type Case } from "@/lib/noun-declension";
-import type { DeclensionPattern } from "@/db/enums";
+import type { DeclensionPattern } from "@/db.server/enums";
 
 interface PracticeNoun {
 	lemma: string;
@@ -36,11 +36,21 @@ const generateQuestions = (count: number): UnifiedQuestion[] => {
 		const noun = PRACTICE_NOUNS[nounIndex];
 		if (!noun) continue;
 
-		const nominativeForm = getNounForm(noun.lemma, noun.pattern, "nominative", "singular");
+		const nominativeForm = getNounForm(
+			noun.lemma,
+			noun.pattern,
+			"nominative",
+			"singular",
+		);
 		if (!nominativeForm) continue;
 
 		const targetCase: Case = "accusative";
-		const targetForm = getNounForm(noun.lemma, noun.pattern, targetCase, "singular");
+		const targetForm = getNounForm(
+			noun.lemma,
+			noun.pattern,
+			targetCase,
+			"singular",
+		);
 		if (!targetForm) continue;
 
 		const combinationKey = `${noun.lemma}-${targetCase}`;
@@ -68,7 +78,7 @@ const NounDeclensionDrill: React.FC<NounDeclensionDrillProps> = ({
 }) => {
 	const questions = useMemo(
 		() => generateQuestions(Math.min(questionCount, PRACTICE_NOUNS.length)),
-		[questionCount]
+		[questionCount],
 	);
 
 	if (questions.length === 0) {

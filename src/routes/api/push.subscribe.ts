@@ -1,6 +1,6 @@
 import type { Route } from "./+types/push.subscribe";
-import { db } from "@/db";
-import { pushSubscriptions } from "@/db/schema";
+import { db } from "@/db.server";
+import { pushSubscriptions } from "@/db.server/schema";
 import { eq } from "drizzle-orm";
 
 interface SubscribeBody {

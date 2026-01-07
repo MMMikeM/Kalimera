@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 import {
 	searchVocabulary,
 	type SearchVocabItem,
-} from "@/db/queries/vocabulary";
+} from "@/db.server/queries/vocabulary";
 
 export async function loader() {
 	try {

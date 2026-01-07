@@ -2,7 +2,7 @@
 // These define the shape of seed data before transformation to DB format
 
 import type { Gender, ConjugationFamily } from "../lib/greek-grammar";
-import type { VerbTense } from "../db/enums";
+import type { VerbTense } from "../db.server/enums";
 import type { Phrase } from "./phrase";
 
 export interface VerbConjugationFormsSeed {

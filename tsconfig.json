@@ -22,7 +22,7 @@
 		"paths": {
 			"@/*": ["./src/*"],
 			"~/*": ["./src/*"],
-			"~/db/*": ["./src/db/*"],
+			"~/db/*": ["src/db.server/*"],
 			"~/components/*": ["./src/components/*"]
 		},
 

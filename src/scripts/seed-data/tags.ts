@@ -1,4 +1,4 @@
-import type { DisplaySection } from "@/db/enums";
+import type { DisplaySection } from "@/db.server/enums";
 
 // Tag with section assignment (for UI display)
 export interface ContentTag {

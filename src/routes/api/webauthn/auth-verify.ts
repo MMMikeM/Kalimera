@@ -1,7 +1,7 @@
 import type { AuthenticationResponseJSON } from "@simplewebauthn/server";
 import type { Route } from "./+types/auth-verify";
 import { createWebAuthn } from "@/lib/auth";
-import { getUserById } from "@/db/queries/practice";
+import { getUserById } from "@/db.server/queries/practice";
 
 interface AuthVerifyBody {
 	response: AuthenticationResponseJSON;

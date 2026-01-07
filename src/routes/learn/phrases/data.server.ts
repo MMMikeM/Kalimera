@@ -1,7 +1,7 @@
 import {
 	getVocabBySection,
 	type VocabItemWithSection,
-} from "@/db/queries/vocabulary";
+} from "@/db.server/queries/vocabulary";
 
 // Re-export VocabItemWithSection as PhraseItem for semantic clarity
 export type PhraseItem = VocabItemWithSection;

@@ -328,5 +328,20 @@ export const authChallenges = sqliteTable(
 	],
 );
 
+// ============================================
+// MILESTONES_ACHIEVED TABLE
+// ============================================
+export const milestonesAchieved = sqliteTable(
+	"milestones_achieved",
+	{
+		id: pk(),
+		userId: cascadeFk("user_id", () => users.id),
+		milestone: integer("milestone").notNull(), // 7, 30, 100
+		achievedAt: createdAt("achieved_at"),
+		streakAtAchievement: integer("streak_at_achievement").notNull(),
+	},
+	(table) => [uniqueIndex("idx_milestones_user_milestone").on(table.userId, table.milestone)],
+);
+
 // Types are exported from ./types.ts
 export * from "./types";

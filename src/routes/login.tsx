@@ -9,7 +9,7 @@ import {
 	findUserByUsername,
 	getUserPasswordHash,
 	setUserPassword,
-} from "@/db/queries/auth";
+} from "@/db.server/queries/auth";
 import { hashPassword, verifyPassword } from "@/lib/password";
 import { Card } from "@/components/Card";
 import { Input } from "@/components/ui/input";
@@ -21,7 +21,10 @@ const AUTH_STORAGE_KEY = "greek-authenticated-user";
 export function meta() {
 	return [
 		{ title: "Login - Greek Learning" },
-		{ name: "description", content: "Sign in to track your Greek learning progress" },
+		{
+			name: "description",
+			content: "Sign in to track your Greek learning progress",
+		},
 	];
 }
 
@@ -68,7 +71,11 @@ export const action = async ({ request }: Route.ActionArgs) => {
 		const hash = await hashPassword(newPassword);
 		await setUserPassword(Number(userId), hash, identifier);
 
-		return { success: true, userId: Number(userId), username: identifier.toLowerCase() };
+		return {
+			success: true,
+			userId: Number(userId),
+			username: identifier.toLowerCase(),
+		};
 	}
 
 	// Try to find user by username first, then by code (for legacy users)
@@ -104,7 +111,11 @@ export const action = async ({ request }: Route.ActionArgs) => {
 		return { success: false, error: "Invalid password" };
 	}
 
-	return { success: true, userId: user.id, username: user.username || user.code };
+	return {
+		success: true,
+		userId: user.id,
+		username: user.username || user.code,
+	};
 };
 
 export default function LoginRoute(_props: Route.ComponentProps) {
@@ -130,10 +141,17 @@ export default function LoginRoute(_props: Route.ComponentProps) {
 	const needsPasswordSetup = fetcher.data?.needsPasswordSetup;
 
 	useEffect(() => {
-		if (fetcher.data?.success && fetcher.data?.userId && fetcher.data?.username) {
+		if (
+			fetcher.data?.success &&
+			fetcher.data?.userId &&
+			fetcher.data?.username
+		) {
 			localStorage.setItem(
 				AUTH_STORAGE_KEY,
-				JSON.stringify({ userId: fetcher.data.userId, username: fetcher.data.username }),
+				JSON.stringify({
+					userId: fetcher.data.userId,
+					username: fetcher.data.username,
+				}),
 			);
 			// Full page reload to ensure Root remounts and reads fresh auth state
 			window.location.href = "/";
@@ -153,10 +171,13 @@ export default function LoginRoute(_props: Route.ComponentProps) {
 
 			if (!optionsResponse.ok) {
 				const errorData = (await optionsResponse.json()) as { error?: string };
-				throw new Error(errorData.error || "Failed to get authentication options");
+				throw new Error(
+					errorData.error || "Failed to get authentication options",
+				);
 			}
 
-			const options: PublicKeyCredentialRequestOptionsJSON = await optionsResponse.json();
+			const options: PublicKeyCredentialRequestOptionsJSON =
+				await optionsResponse.json();
 
 			const authResponse = await startAuthentication({ optionsJSON: options });
 
@@ -183,13 +204,17 @@ export default function LoginRoute(_props: Route.ComponentProps) {
 			if (result.verified && result.userId) {
 				localStorage.setItem(
 					AUTH_STORAGE_KEY,
-					JSON.stringify({ userId: result.userId, username: result.username || "user" }),
+					JSON.stringify({
+						userId: result.userId,
+						username: result.username || "user",
+					}),
 				);
 				// Full page reload to ensure Root remounts and reads fresh auth state
 				window.location.href = "/";
 			}
 		} catch (err) {
-			const message = err instanceof Error ? err.message : "Passkey authentication failed";
+			const message =
+				err instanceof Error ? err.message : "Passkey authentication failed";
 			if (message.includes("not allowed") || message.includes("AbortError")) {
 				setPasskeyError("Authentication was cancelled");
 			} else {
@@ -205,9 +230,13 @@ export default function LoginRoute(_props: Route.ComponentProps) {
 		return (
 			<div className="min-h-[60vh] flex flex-col items-center justify-center space-y-8 px-4">
 				<div className="text-center space-y-2">
-					<h1 className="text-3xl font-serif text-terracotta">Set Up Your Password</h1>
+					<h1 className="text-3xl font-serif text-terracotta">
+						Set Up Your Password
+					</h1>
 					<p className="text-stone-600">
-						Welcome back{fetcher.data?.displayName ? `, ${fetcher.data.displayName}` : ""}! Please create a password for your account.
+						Welcome back
+						{fetcher.data?.displayName ? `, ${fetcher.data.displayName}` : ""}!
+						Please create a password for your account.
 					</p>
 				</div>
 
@@ -215,7 +244,11 @@ export default function LoginRoute(_props: Route.ComponentProps) {
 					<fetcher.Form method="post" className="space-y-6">
 						<input type="hidden" name="intent" value="setup-password" />
 						<input type="hidden" name="userId" value={fetcher.data?.userId} />
-						<input type="hidden" name="username" value={fetcher.data?.userCode || username} />
+						<input
+							type="hidden"
+							name="username"
+							value={fetcher.data?.userCode || username}
+						/>
 
 						<div className="space-y-4">
 							<div className="space-y-2">
@@ -247,7 +280,9 @@ export default function LoginRoute(_props: Route.ComponentProps) {
 							</div>
 						</div>
 
-						{error && <p className="text-sm text-red-600 text-center">{error}</p>}
+						{error && (
+							<p className="text-sm text-red-600 text-center">{error}</p>
+						)}
 
 						<Button
 							type="submit"
@@ -313,7 +348,8 @@ export default function LoginRoute(_props: Route.ComponentProps) {
 							/>
 							<div className="mt-3 p-3 bg-ocean-100 border border-ocean-300 rounded-lg">
 								<p className="text-sm text-ocean-800 font-medium">
-									Existing user? Enter your code without a password to set one up.
+									Existing user? Enter your code without a password to set one
+									up.
 								</p>
 							</div>
 						</div>

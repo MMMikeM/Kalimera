@@ -1,10 +1,10 @@
-import { hasNumericValue, hasTimeRange } from "@/db/metadata";
+import { hasNumericValue, hasTimeRange } from "@/db.server/metadata";
 import {
 	getVocabBySection,
 	getVerbsWithPatterns,
 	type VocabItemWithSection,
 	type VerbWithPattern,
-} from "@/db/queries/vocabulary";
+} from "@/db.server/queries/vocabulary";
 
 // Re-export types for consumers
 export type { VocabItemWithSection as VocabItem, VerbWithPattern };
