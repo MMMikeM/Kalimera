@@ -58,7 +58,7 @@ export const LandingPage = () => (
 
 					{/* Primary CTA */}
 					<div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-						<Link to="/register">
+						<Link to="/try">
 							<Button variant="primary" size="lg">
 								Try a Drill
 							</Button>
@@ -143,7 +143,7 @@ export const LandingPage = () => (
 					<h2 className="text-2xl font-serif text-terracotta mb-4">
 						Ready to start?
 					</h2>
-					<Link to="/register">
+					<Link to="/try">
 						<Button variant="primary" size="lg">
 							Try a Drill
 						</Button>

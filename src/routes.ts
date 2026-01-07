@@ -10,6 +10,9 @@ export default [
 	route("login", "routes/login.tsx"),
 	route("register", "routes/register.tsx"),
 
+	// Try before signup (public)
+	route("try", "routes/try.tsx"),
+
 	// Dashboard (replaces landing page)
 	index("routes/home.tsx"),
 
