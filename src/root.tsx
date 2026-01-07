@@ -30,7 +30,7 @@ const NAV_ITEMS = [
 	{ id: "reference", label: "Reference", path: "/reference/cases-pronouns", icon: FileText },
 ];
 
-const PUBLIC_ROUTES = ["/reference", "/learn", "/search", "/support"];
+const PUBLIC_ROUTES = ["/reference", "/learn", "/search", "/support", "/try"];
 
 export function Layout({ children }: { children: React.ReactNode }) {
 	return (
