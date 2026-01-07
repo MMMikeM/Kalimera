@@ -88,7 +88,7 @@ export const PREPOSITION_NAVIGATOR_OPTIONS = [
 
 // σε contraction formulas
 export const SE_CONTRACTIONS = {
-	intro: "σε + article ALWAYS contracts — you'll never hear 'σε το' in speech",
+	intro: "σε + article ALWAYS contracts. You'll never hear 'σε το' in speech.",
 	formulas: [
 		{
 			formula: "σε + το = στο",

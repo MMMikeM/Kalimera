@@ -56,7 +56,7 @@ export const PrepositionNavigator = () => (
 		</div>
 
 		<div className="mt-4 pt-3 border-t border-honey-300 text-sm text-honey-text">
-			<strong>Remember:</strong> σε is the most common — it contracts with articles (σε + το = στο).
+			<strong>Remember:</strong> σε is the most common and contracts with articles (σε + το = στο).
 			The others stay unchanged.
 		</div>
 	</Card>

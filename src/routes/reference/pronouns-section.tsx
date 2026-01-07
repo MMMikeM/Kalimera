@@ -56,7 +56,7 @@ export const PronounsSection: React.FC = () => {
 					colorScheme="olive"
 				>
 					<p className="text-sm text-stone-600 mb-3">
-						Subject pronouns — often dropped! (εγώ, εσύ...)
+						Subject pronouns: often dropped! (εγώ, εσύ...)
 					</p>
 					<Alert variant="success" className="mb-4">
 						<AlertTitle>Good news</AlertTitle>
@@ -96,7 +96,7 @@ export const PronounsSection: React.FC = () => {
 					badge="Essential"
 				>
 					<p className="text-sm text-stone-600 mb-3">
-						Possessive pronouns — for "my/your/their" (μου, σου...)
+						Possessive pronouns: for "my/your/their" (μου, σου...)
 					</p>
 					<Alert variant="purple" className="mb-4">
 						<AlertTitle>Word order</AlertTitle>
@@ -140,7 +140,7 @@ export const PronounsSection: React.FC = () => {
 					badge="Essential"
 				>
 					<p className="text-sm text-stone-600 mb-3">
-						Object pronouns — use these constantly! (με, σε, τον...)
+						Object pronouns: use these constantly! (με, σε, τον...)
 					</p>
 					<Alert variant="info" className="mb-4">
 						<AlertTitle>Word order</AlertTitle>
@@ -179,7 +179,7 @@ export const PronounsSection: React.FC = () => {
 					colorScheme="honey"
 				>
 					<p className="text-sm text-stone-600 mb-3">
-						Strong forms — after prepositions (εμένα, εσένα...)
+						Strong forms: after prepositions (εμένα, εσένα...)
 					</p>
 					<Alert variant="warning" className="mb-4">
 						<AlertTitle>When to use</AlertTitle>
