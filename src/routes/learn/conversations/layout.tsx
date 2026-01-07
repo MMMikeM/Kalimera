@@ -1,13 +1,13 @@
 import type React from "react";
-import { useState, useEffect } from "react";
-import { MessageCircle, DoorOpen, Utensils, ChevronDown, Lightbulb, Hand } from "lucide-react";
-import { Outlet, useLocation, useOutletContext } from "react-router";
+import { MessageCircle, DoorOpen, Utensils, ChevronDown, ChevronLeft, Lightbulb, Hand } from "lucide-react";
+import { Link, Outlet, useLocation, useOutletContext } from "react-router";
 import { MonoText } from "@/components/MonoText";
 import { ConversationModeToggle } from "@/components/ConversationModeToggle";
 import { NavTabs } from "@/components/NavTabs";
 import type { ConversationMode } from "@/components/DialogueExchange";
 import type { NavTab } from "@/components/NavTabs";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { usePersistedState } from "@/lib/hooks/use-persisted-state";
 
 type ConversationContext = {
 	mode: ConversationMode;
@@ -15,8 +15,6 @@ type ConversationContext = {
 
 export const useConversationContext = () =>
 	useOutletContext<ConversationContext>();
-
-const STORAGE_KEY = "conversation-mode";
 
 export function meta() {
 	return [
@@ -109,10 +107,10 @@ export const LearningTips: React.FC<LearningTipsProps> = ({
 );
 
 const CONVERSATION_TABS: NavTab[] = [
-	{ id: "arriving", label: "Arriving & Leaving", shortLabel: "Arriving", icon: <DoorOpen size={16} />, color: "ocean" },
-	{ id: "food", label: "Food & Hospitality", shortLabel: "Food", icon: <Utensils size={16} />, color: "olive" },
-	{ id: "smalltalk", label: "Small Talk", shortLabel: "Small Talk", icon: <MessageCircle size={16} />, color: "honey" },
-	{ id: "requests", label: "Quick Requests", shortLabel: "Requests", icon: <Hand size={16} />, color: "terracotta" },
+	{ id: "arriving", label: "Arriving", shortLabel: "Arrive", icon: <DoorOpen size={16} />, color: "ocean" },
+	{ id: "food", label: "Food", shortLabel: "Food", icon: <Utensils size={16} />, color: "olive" },
+	{ id: "smalltalk", label: "Talk", shortLabel: "Talk", icon: <MessageCircle size={16} />, color: "honey" },
+	{ id: "requests", label: "Requests", shortLabel: "Ask", icon: <Hand size={16} />, color: "terracotta" },
 ];
 
 export default function ConversationsLayout() {
@@ -120,25 +118,18 @@ export default function ConversationsLayout() {
 	const pathSegments = location.pathname.split("/").filter(Boolean);
 	const activeTab = pathSegments[2] || "arriving";
 
-	const [mode, setMode] = useState<ConversationMode>(() => {
-		if (typeof window === "undefined") return "read";
-		const stored = localStorage.getItem(STORAGE_KEY);
-		return (stored as ConversationMode) || "read";
-	});
-
-	useEffect(() => {
-		localStorage.setItem(STORAGE_KEY, mode);
-	}, [mode]);
+	const [mode, setMode] = usePersistedState<ConversationMode>("conversation-mode", "read");
 
 	return (
-		<div className="space-y-6">
-			<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-2">
-				<div>
-					<h2 className="text-2xl font-bold text-stone-800">Conversations</h2>
-					<p className="text-stone-600 mt-1">
-						Real situations with family and friends
-					</p>
-				</div>
+		<div className="space-y-4">
+			<div className="flex items-center justify-between">
+				<Link
+					to="/learn"
+					className="flex items-center gap-1 text-stone-600 hover:text-stone-800 transition-colors"
+				>
+					<ChevronLeft size={20} />
+					<span className="font-medium">Convos</span>
+				</Link>
 				<ConversationModeToggle mode={mode} onModeChange={setMode} />
 			</div>
 

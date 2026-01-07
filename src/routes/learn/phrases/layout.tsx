@@ -1,5 +1,4 @@
-import { Outlet, useLocation } from "react-router";
-import { SectionHeading } from "@/components/SectionHeading";
+import { Link, Outlet, useLocation } from "react-router";
 import { NavTabs } from "@/components/NavTabs";
 import type { NavTab } from "@/components/NavTabs";
 import {
@@ -10,6 +9,7 @@ import {
 	Link2,
 	Clock,
 	Blocks,
+	ChevronLeft,
 } from "lucide-react";
 import type { Route } from "./+types/layout";
 import { getPhrasesData } from "./data.server";
@@ -29,13 +29,13 @@ export function meta() {
 }
 
 const PHRASES_TABS: NavTab[] = [
-	{ id: "survival", label: "Survival", shortLabel: "Survival", icon: <Sparkles size={16} />, color: "terracotta" },
-	{ id: "responses", label: "Responses", shortLabel: "Respond", icon: <MessageCircle size={16} />, color: "ocean" },
+	{ id: "survival", label: "Survival", shortLabel: "Must", icon: <Sparkles size={16} />, color: "terracotta" },
+	{ id: "responses", label: "Responses", shortLabel: "Reply", icon: <MessageCircle size={16} />, color: "ocean" },
 	{ id: "requests", label: "Requests", shortLabel: "Ask", icon: <Hand size={16} />, color: "olive" },
-	{ id: "opinions", label: "Opinions", shortLabel: "Express", icon: <Heart size={16} />, color: "terracotta" },
-	{ id: "connectors", label: "Connectors", shortLabel: "Connect", icon: <Link2 size={16} />, color: "honey" },
+	{ id: "opinions", label: "Opinions", shortLabel: "Feel", icon: <Heart size={16} />, color: "terracotta" },
+	{ id: "connectors", label: "Connectors", shortLabel: "Link", icon: <Link2 size={16} />, color: "honey" },
 	{ id: "time", label: "Time", shortLabel: "Time", icon: <Clock size={16} />, color: "ocean" },
-	{ id: "constructions", label: "Patterns", shortLabel: "Patterns", icon: <Blocks size={16} />, color: "olive" },
+	{ id: "constructions", label: "Patterns", shortLabel: "Form", icon: <Blocks size={16} />, color: "olive" },
 ];
 
 export default function PhrasesLayout({ loaderData }: Route.ComponentProps) {
@@ -44,12 +44,16 @@ export default function PhrasesLayout({ loaderData }: Route.ComponentProps) {
 	const activeTab = pathSegments[2] || "survival";
 
 	return (
-		<div className="space-y-6">
-			<SectionHeading
-				title="Phrases"
-				subtitle="Essential expressions for natural Greek conversation"
-				level="h2"
-			/>
+		<div className="space-y-4">
+			<div className="flex items-center">
+				<Link
+					to="/learn"
+					className="flex items-center gap-1 text-stone-600 hover:text-stone-800 transition-colors"
+				>
+					<ChevronLeft size={20} />
+					<span className="font-medium">Phrases</span>
+				</Link>
+			</div>
 
 			<NavTabs
 				tabs={PHRASES_TABS}
