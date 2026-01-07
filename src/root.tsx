@@ -9,7 +9,7 @@ import {
 	useLocation,
 	useNavigate,
 } from "react-router";
-import { BookOpen, FileText, Home, LogIn, Zap } from "lucide-react";
+import { BookOpen, FileText, Search, Zap } from "lucide-react";
 import { Header } from "@/components/Header";
 import { LandingPage } from "@/components/LandingPage";
 import "./index.css";
@@ -23,9 +23,15 @@ export const links: LinksFunction = () => [
 	{ rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
 ];
 
-const NAV_ITEMS = [
-	{ id: "home", label: "Home", path: "/", icon: Home },
+const NAV_ITEMS_AUTH = [
+	{ id: "search", label: "Search", path: "/search", icon: Search },
 	{ id: "practice", label: "Practice", path: "/practice/speed", icon: Zap },
+	{ id: "learn", label: "Learn", path: "/learn/conversations/arriving", icon: BookOpen },
+	{ id: "reference", label: "Reference", path: "/reference/cases-pronouns", icon: FileText },
+];
+
+const NAV_ITEMS_UNAUTH = [
+	{ id: "search", label: "Search", path: "/search", icon: Search },
 	{ id: "learn", label: "Learn", path: "/learn/conversations/arriving", icon: BookOpen },
 	{ id: "reference", label: "Reference", path: "/reference/cases-pronouns", icon: FileText },
 ];
@@ -164,7 +170,7 @@ export default function Root() {
 			{/* Mobile Navigation - fixed bottom */}
 			<nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-cream/95 backdrop-blur-sm border-t border-stone-200 px-4 py-2 safe-area-pb">
 				<div className="flex justify-around items-center max-w-md mx-auto">
-					{NAV_ITEMS.filter((item) => isAuthenticated || item.id !== "home").map((item) => {
+					{(isAuthenticated ? NAV_ITEMS_AUTH : NAV_ITEMS_UNAUTH).map((item) => {
 						const Icon = item.icon;
 						const isActive = currentSection === item.id;
 						return (
@@ -184,11 +190,11 @@ export default function Root() {
 					})}
 					{!isAuthenticated && (
 						<Link
-							to="/register"
+							to="/try"
 							className="flex flex-col items-center gap-1 px-4 py-2 rounded-xl transition-all text-terracotta bg-terracotta/10"
 						>
-							<LogIn size={22} strokeWidth={1.5} />
-							<span className="text-xs font-medium">Sign Up</span>
+							<Zap size={22} strokeWidth={1.5} />
+							<span className="text-xs font-medium">Try It</span>
 						</Link>
 					)}
 				</div>
