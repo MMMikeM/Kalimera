@@ -1,5 +1,11 @@
 import { useState, useEffect } from "react";
-import { Link, useFetcher } from "react-router";
+import { Link } from "react-router";
+import {
+	useForm,
+	parseFormData,
+	validationError,
+	isValidationErrorResponse,
+} from "@rvf/react-router";
 import {
 	UserPlus,
 	KeyRound,
@@ -7,19 +13,18 @@ import {
 	Check,
 	AlertCircle,
 } from "lucide-react";
-import { startRegistration } from "@simplewebauthn/browser";
-import type { PublicKeyCredentialCreationOptionsJSON } from "@simplewebauthn/browser";
 import type { Route } from "./+types/register";
 import {
 	createUserWithPassword,
 	findUserByUsername,
 } from "@/db.server/queries/auth";
 import { hashPassword } from "@/lib/password";
+import { registerSchema, registerValidator } from "@/lib/validators/auth";
+import { usePasskeyRegistration } from "@/lib/hooks/use-passkey-registration";
+import { loginAndRedirect } from "@/lib/auth-storage";
 import { Card } from "@/components/Card";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-
-const AUTH_STORAGE_KEY = "greek-authenticated-user";
+import { FormField } from "@/components/ui/form-field";
 
 export function meta() {
 	return [
@@ -35,59 +40,21 @@ export const loader = async () => {
 	return {};
 };
 
-type ActionData = {
-	success: boolean;
-	userId?: number;
-	username?: string;
-	error?: string;
-	fieldErrors?: {
-		username?: string;
-		displayName?: string;
-		password?: string;
-		confirmPassword?: string;
-	};
-};
+type ActionSuccess = { success: true; userId: number; username: string };
+type ActionError = { success: false; error: string };
 
-export const action = async ({
-	request,
-}: Route.ActionArgs): Promise<ActionData> => {
+export const action = async ({ request }: Route.ActionArgs) => {
 	const formData = await request.formData();
-	const username = (formData.get("username") as string)?.trim();
-	const displayName = (formData.get("displayName") as string)?.trim();
-	const password = formData.get("password") as string;
-	const confirmPassword = formData.get("confirmPassword") as string;
 
-	const fieldErrors: ActionData["fieldErrors"] = {};
+	const result = await parseFormData(formData, registerSchema);
+	if (result.error) return validationError(result.error, result.submittedData);
 
-	if (!username || username.length < 3) {
-		fieldErrors.username = "Username must be at least 3 characters";
-	} else if (!/^[a-zA-Z0-9_-]+$/.test(username)) {
-		fieldErrors.username =
-			"Username can only contain letters, numbers, underscores, and hyphens";
-	}
-
-	if (!displayName || displayName.length < 1) {
-		fieldErrors.displayName = "Display name is required";
-	}
-
-	if (!password || password.length < 6) {
-		fieldErrors.password = "Password must be at least 6 characters";
-	}
-
-	if (password !== confirmPassword) {
-		fieldErrors.confirmPassword = "Passwords do not match";
-	}
-
-	if (Object.keys(fieldErrors).length > 0) {
-		return { success: false, fieldErrors };
-	}
+	const { username, displayName, password } = result.data;
 
 	const existingUser = await findUserByUsername(username);
 	if (existingUser) {
-		return {
-			success: false,
-			fieldErrors: { username: "Username already taken" },
-		};
+		// Use validationError for field-specific errors
+		return validationError({ fieldErrors: { username: "Username already taken" } });
 	}
 
 	try {
@@ -99,121 +66,60 @@ export const action = async ({
 		);
 
 		if (!newUser) {
-			return { success: false, error: "Failed to create account" };
+			return { success: false, error: "Failed to create account" } satisfies ActionError;
 		}
 
 		return {
 			success: true,
 			userId: newUser.id,
 			username: newUser.username ?? username,
-		};
+		} satisfies ActionSuccess;
 	} catch (error) {
 		console.error("Registration error:", error);
 		const message =
 			error instanceof Error ? error.message : "Failed to create account";
-		return { success: false, error: message };
+		return { success: false, error: message } satisfies ActionError;
 	}
 };
 
-type PasskeySetupState = "idle" | "loading" | "success" | "error";
-
-export default function RegisterRoute(_props: Route.ComponentProps) {
-	const fetcher = useFetcher<ActionData>();
-
-	const [username, setUsername] = useState("");
-	const [displayName, setDisplayName] = useState("");
-	const [password, setPassword] = useState("");
-	const [confirmPassword, setConfirmPassword] = useState("");
-
+export default function RegisterRoute({ actionData }: Route.ComponentProps) {
+	// Post-registration state (user created, now offering passkey setup)
 	const [registeredUser, setRegisteredUser] = useState<{
 		userId: number;
 		username: string;
 	} | null>(null);
-	const [passkeyState, setPasskeyState] = useState<PasskeySetupState>("idle");
-	const [passkeyError, setPasskeyError] = useState<string | null>(null);
 
-	const isSubmitting = fetcher.state === "submitting";
+	const form = useForm({
+		validator: registerValidator,
+		method: "post",
+	});
+
+	const passkey = usePasskeyRegistration({
+		userId: registeredUser?.userId ?? 0,
+		username: registeredUser?.username ?? "",
+	});
+
+	const isSubmitting = form.formState.isSubmitting;
+
+	// Skip validation error responses - RVF handles those automatically
+	const businessData = actionData && !isValidationErrorResponse(actionData) ? actionData : null;
 
 	useEffect(() => {
-		if (
-			fetcher.data?.success &&
-			fetcher.data?.userId &&
-			fetcher.data?.username
-		) {
+		if (businessData?.success && "userId" in businessData && "username" in businessData) {
 			setRegisteredUser({
-				userId: fetcher.data.userId,
-				username: fetcher.data.username,
+				userId: businessData.userId,
+				username: businessData.username,
 			});
 		}
-	}, [fetcher.data]);
-
-	const handlePasskeySetup = async () => {
-		if (!registeredUser) return;
-
-		setPasskeyState("loading");
-		setPasskeyError(null);
-
-		try {
-			const optionsResponse = await fetch("/api/webauthn/register-options", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({
-					userId: registeredUser.userId,
-					username: registeredUser.username,
-				}),
-			});
-
-			if (!optionsResponse.ok) {
-				const errorData = (await optionsResponse.json()) as { error?: string };
-				throw new Error(
-					errorData.error || "Failed to get registration options",
-				);
-			}
-
-			const options: PublicKeyCredentialCreationOptionsJSON =
-				await optionsResponse.json();
-
-			const attestation = await startRegistration({ optionsJSON: options });
-
-			const verifyResponse = await fetch("/api/webauthn/register-verify", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({
-					userId: registeredUser.userId,
-					response: attestation,
-					challenge: options.challenge,
-				}),
-			});
-
-			if (!verifyResponse.ok) {
-				const errorData = (await verifyResponse.json()) as { error?: string };
-				throw new Error(errorData.error || "Failed to verify passkey");
-			}
-
-			setPasskeyState("success");
-		} catch (error) {
-			console.error("Passkey setup error:", error);
-			setPasskeyState("error");
-			setPasskeyError(
-				error instanceof Error ? error.message : "Failed to set up passkey",
-			);
-		}
-	};
+	}, [businessData]);
 
 	const handleComplete = () => {
 		if (registeredUser) {
-			localStorage.setItem(
-				AUTH_STORAGE_KEY,
-				JSON.stringify({
-					userId: registeredUser.userId,
-					username: registeredUser.username,
-				}),
-			);
-			// Full page reload to ensure Root remounts and reads fresh auth state
-			window.location.href = "/";
+			loginAndRedirect(registeredUser);
 		}
 	};
 
+	// Post-registration: passkey setup screen
 	if (registeredUser) {
 		return (
 			<div className="min-h-[60vh] flex flex-col items-center justify-center space-y-8">
@@ -238,14 +144,14 @@ export default function RegisterRoute(_props: Route.ComponentProps) {
 							</p>
 						</div>
 
-						{passkeyState === "error" && (
+						{passkey.state === "error" && (
 							<div className="flex items-center gap-2 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
 								<AlertCircle size={16} />
-								{passkeyError || "Failed to set up passkey"}
+								{passkey.error || "Failed to set up passkey"}
 							</div>
 						)}
 
-						{passkeyState === "success" ? (
+						{passkey.state === "success" ? (
 							<div className="space-y-4">
 								<div className="flex items-center gap-2 p-3 bg-green-50 border border-green-200 rounded-lg text-green-700 text-sm">
 									<Check size={16} />
@@ -266,20 +172,20 @@ export default function RegisterRoute(_props: Route.ComponentProps) {
 									variant="outline"
 									className="flex-1"
 									onClick={handleComplete}
-									disabled={passkeyState === "loading"}
+									disabled={passkey.state === "loading"}
 								>
 									Skip for Now
 								</Button>
 								<Button
 									variant="primary"
 									className="flex-1"
-									onClick={handlePasskeySetup}
-									disabled={passkeyState === "loading"}
+									onClick={passkey.register}
+									disabled={passkey.state === "loading"}
 								>
-									{passkeyState === "loading"
+									{passkey.state === "loading"
 										? "Setting up..."
 										: "Set Up Passkey"}
-									{passkeyState !== "loading" && <KeyRound size={16} />}
+									{passkey.state !== "loading" && <KeyRound size={16} />}
 								</Button>
 							</div>
 						)}
@@ -297,107 +203,41 @@ export default function RegisterRoute(_props: Route.ComponentProps) {
 			</div>
 
 			<Card className="w-full max-w-md p-6">
-				<fetcher.Form method="post" className="space-y-4">
-					<div className="space-y-2">
-						<label
-							htmlFor="username"
-							className="text-sm font-medium text-stone-700"
-						>
-							Username
-						</label>
-						<Input
-							id="username"
-							name="username"
-							type="text"
-							placeholder="Choose a username"
-							value={username}
-							onChange={(e) => setUsername(e.target.value)}
-							autoComplete="username"
-							aria-invalid={!!fetcher.data?.fieldErrors?.username}
-						/>
-						{fetcher.data?.fieldErrors?.username && (
-							<p className="text-sm text-red-600">
-								{fetcher.data.fieldErrors.username}
-							</p>
-						)}
-					</div>
+				<form {...form.getFormProps()} className="space-y-4">
+					<FormField
+						scope={form.scope("username")}
+						label="Username"
+						placeholder="Choose a username"
+						autoComplete="username"
+					/>
 
-					<div className="space-y-2">
-						<label
-							htmlFor="displayName"
-							className="text-sm font-medium text-stone-700"
-						>
-							Display Name
-						</label>
-						<Input
-							id="displayName"
-							name="displayName"
-							type="text"
-							placeholder="How should we call you?"
-							value={displayName}
-							onChange={(e) => setDisplayName(e.target.value)}
-							autoComplete="name"
-							aria-invalid={!!fetcher.data?.fieldErrors?.displayName}
-						/>
-						{fetcher.data?.fieldErrors?.displayName && (
-							<p className="text-sm text-red-600">
-								{fetcher.data.fieldErrors.displayName}
-							</p>
-						)}
-					</div>
+					<FormField
+						scope={form.scope("displayName")}
+						label="Display Name"
+						placeholder="How should we call you?"
+						autoComplete="name"
+					/>
 
-					<div className="space-y-2">
-						<label
-							htmlFor="password"
-							className="text-sm font-medium text-stone-700"
-						>
-							Password
-						</label>
-						<Input
-							id="password"
-							name="password"
-							type="password"
-							placeholder="At least 6 characters"
-							value={password}
-							onChange={(e) => setPassword(e.target.value)}
-							autoComplete="new-password"
-							aria-invalid={!!fetcher.data?.fieldErrors?.password}
-						/>
-						{fetcher.data?.fieldErrors?.password && (
-							<p className="text-sm text-red-600">
-								{fetcher.data.fieldErrors.password}
-							</p>
-						)}
-					</div>
+					<FormField
+						scope={form.scope("password")}
+						label="Password"
+						type="password"
+						placeholder="At least 6 characters"
+						autoComplete="new-password"
+					/>
 
-					<div className="space-y-2">
-						<label
-							htmlFor="confirmPassword"
-							className="text-sm font-medium text-stone-700"
-						>
-							Confirm Password
-						</label>
-						<Input
-							id="confirmPassword"
-							name="confirmPassword"
-							type="password"
-							placeholder="Re-enter your password"
-							value={confirmPassword}
-							onChange={(e) => setConfirmPassword(e.target.value)}
-							autoComplete="new-password"
-							aria-invalid={!!fetcher.data?.fieldErrors?.confirmPassword}
-						/>
-						{fetcher.data?.fieldErrors?.confirmPassword && (
-							<p className="text-sm text-red-600">
-								{fetcher.data.fieldErrors.confirmPassword}
-							</p>
-						)}
-					</div>
+					<FormField
+						scope={form.scope("confirmPassword")}
+						label="Confirm Password"
+						type="password"
+						placeholder="Re-enter your password"
+						autoComplete="new-password"
+					/>
 
-					{fetcher.data?.error && (
+					{businessData && "error" in businessData && (
 						<div className="flex items-center gap-2 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
 							<AlertCircle size={16} />
-							{fetcher.data.error}
+							{businessData.error}
 						</div>
 					)}
 
@@ -410,7 +250,7 @@ export default function RegisterRoute(_props: Route.ComponentProps) {
 						{isSubmitting ? "Creating Account..." : "Create Account"}
 						{!isSubmitting && <UserPlus size={16} />}
 					</Button>
-				</fetcher.Form>
+				</form>
 			</Card>
 
 			<p className="text-sm text-stone-500">
