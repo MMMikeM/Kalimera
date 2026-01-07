@@ -1,5 +1,17 @@
 # Landing Page Architecture Analysis
 
+## Executive Summary
+
+This document analyses the Greek learning app's engagement architecture, landing page effectiveness, and practice methodology. Key findings:
+
+- **Landing page copy is strong** - authentic builder story, clear value proposition, low-friction CTA
+- **Core engagement loops are solid** - streak system, due counts, short sessions all working
+- **Highest-impact gap**: streak warning notifications (infrastructure exists, needs implementation)
+- **Practice methodology is correct** - production-based, timed, no recognition traps
+- **One area to monitor**: ensure SRS review queue maintains time pressure
+
+---
+
 ## Current State Summary
 
 | Route                           | Unauthenticated                    | Authenticated        |
@@ -22,6 +34,116 @@ The following recommendations have been implemented:
 4. **Tomorrow preview** - Dashboard shows "Tomorrow: X items" with calendar icon
 5. **Post-session celebration** - Drill summary shows encouragement messages with icons based on accuracy
 6. **/support discoverability** - Header now shows About link (Info icon mobile, text desktop) for authenticated users
+
+---
+
+## Conversion & Messaging Review
+
+### Landing Page Assessment
+
+The current landing page (`src/components/LandingPage.tsx`) executes the indie product playbook well:
+
+**What's Working**
+
+| Element | Assessment | Why It Works |
+|---------|------------|--------------|
+| Headline | Excellent | "You know Greek. You just can't say it." names the exact pain. Passes the headline-only test. |
+| Subheadline | Strong | "Recognition isn't fluency. Retrieval is." differentiates methodology in one line. |
+| Builder story | Excellent | Personal stakes (wife, son, Cyprus) create genuine connection. Not manufactured. |
+| DrillDemo | Very good | Shows product in action before asking for anything. Reduces uncertainty. |
+| Primary CTA | Perfect | "Try a Drill" - low commitment, action-focused, no account required. |
+| Beta badge | Smart | "Free to use. Support if it helps." - honest positioning, no fake scarcity. |
+| Time commitment | Good | "2-3 minutes a day" manages expectations and reduces friction. |
+
+**Conversion Formula Check**: Desire (strong - relatable problem, clear solution) - Labour (low - try without signup) - Confusion (minimal - clear what this does) = High conversion potential.
+
+**Minor Opportunities**
+
+1. **Feature descriptions could ladder up to benefits**:
+   - Current: "Spaced repetition. Science-backed review scheduling."
+   - Better: "Spaced repetition. Remember words permanently, not just for the test."
+   - The "what" is there; add the "so what?"
+
+2. **Footer CTA could add fresh angle**:
+   - Current: "Ready to start?" (repeats hero)
+   - Alternative: "See if your Greek transfers to speech" (reframes the promise)
+
+3. **Consider adding one specificity signal**:
+   - "Train 500+ vocabulary items" or "Drills covering pronouns, articles, verbs"
+   - Concrete numbers build credibility
+
+**Do NOT Change**
+
+- The builder story is perfect. Do not polish it further - authenticity is the asset.
+- The "Free to use. Support if it helps." badge. Honest framing beats aggressive conversion.
+- The DrillDemo. Shows value before asking for anything.
+
+### Push Notification Copy Recommendations
+
+The `pushSubscriptions` infrastructure exists. When implementing notifications, copy matters enormously - bad notification copy gets apps deleted.
+
+**Principles**
+
+1. **Specific beats generic** - "5 Greek words ready" not "Time to practice"
+2. **Time estimates reduce friction** - "2 minutes" not "daily practice"
+3. **Loss framing for streaks, gain framing for regular** - psychology matches context
+4. **Never guilt** - "Miss your Greek?" not "You're falling behind"
+
+**Recommended Copy**
+
+| Trigger | Timing | Title | Body |
+|---------|--------|-------|------|
+| Streak warning | 2-4h before midnight | "Don't lose your X-day streak" | "5 words waiting - takes 2 minutes" |
+| Morning prompt | 7-9am (configurable) | "Good morning" | "5 Greek words ready for review" |
+| Lapsed (3 days) | After 3 inactive days | "Miss your Greek practice?" | "Just 3 minutes to catch up" |
+| Milestone earned | On achievement | "X-day streak!" | "You're building a real habit" |
+
+**Copy Anti-Patterns to Avoid**
+
+- "You haven't practised today!" (guilt)
+- "Your streak is at risk!" (anxiety without solution)
+- "Come back!" (desperate)
+- "Limited time offer" (irrelevant for this app)
+
+### Backlog Messaging Notes
+
+When building these features, keep messaging aligned with the indie ethos:
+
+**Progress/Stats Page**
+
+Lead with investment visualisation, not gamification:
+- "You've spent 4 hours with Greek this month" (investment)
+- "Your average response time dropped from 3.2s to 1.8s" (the metric that matters)
+- Avoid: badges, levels, XP systems - these feel like manufactured engagement
+
+**Milestone Celebrations**
+
+Keep them understated:
+- 7 days: "One week. The habit is forming."
+- 30 days: "A month of Greek. You're in it now."
+- 100 days: "100 days. That's not dabbling - that's dedication."
+- Avoid: confetti explosions, cartoon characters, achievement unlocked gaming tropes
+
+**Method/How-It-Works Page**
+
+For analytical visitors who need the "why" before committing:
+- Lead with the problem ("Why other apps don't work for speaking")
+- Explain production vs recognition in plain language
+- Reference research without being academic
+- This page helps conversion but won't move engagement metrics
+
+### Authenticity Check
+
+**Passed**:
+- No fake urgency or countdown timers
+- No "3 spots left" manufactured scarcity
+- Builder story is genuine, not polished
+- CTA language is exploratory ("Try a Drill") not pushy ("Start Your Free Trial")
+- Support framing is humble ("if it helps")
+- Time estimates are honest and conservative
+
+**One Watch Point**:
+The "Why I Built This" section mentions building for "our son" - this is personal and powerful, but ensure the app doesn't drift toward "family learning app" positioning if that's not the actual product direction. The current positioning (intermediate learners, retrieval practice) is correct.
 
 ---
 
@@ -81,8 +203,9 @@ The current framing focuses on "analytics for engaged users." Reframe:
 
 - **Words mastered count** - the growing number creates investment
 - **Streak calendar view** - visual chain you don't want to break
-- **"You've practiced X minutes this month"** - sunk cost awareness
+- **"You've practised X minutes this month"** - sunk cost awareness
 - **Accuracy trend** - shows improvement (or identifies frustration risk)
+- **Response time trend** - THE metric for this app's core promise
 
 **Priority bump:** This should be MEDIUM, not LOW. Progress visualisation is a proven retention lever. Users who see their investment growing are less likely to abandon.
 
@@ -104,11 +227,7 @@ The `pushSubscriptions` table exists but user-flows.llm only mentions push notif
 2. **Morning prompt** ("5 items due - 2 minute session")
 3. **Lapsed user re-engagement** (after 3 days: "Miss your Greek practice?")
 
-**Copy principles:**
-
-- Specific item counts ("5 words ready" not "Time to practice")
-- Time estimates ("2 minutes" not "daily practice")
-- Loss framing for streak warnings, gain framing for regular prompts
+See "Push Notification Copy Recommendations" section above for specific copy.
 
 #### Difficulty Adaptation
 
@@ -146,7 +265,7 @@ Current implementation avoids major backfire patterns:
 
 ### HIGH: Streak Warning Notifications
 
-Push notification 2-4h before midnight for users with active streaks who haven't practiced.
+Push notification 2-4h before midnight for users with active streaks who haven't practised.
 
 **Why:** Highest-converting notification type. The push infrastructure exists.
 
@@ -167,6 +286,7 @@ Currently, progress is shown minimally on the Dashboard (mastered/learning count
 - Total words learned over time (graph)
 - Streak calendar (full history, not just 7 days)
 - Accuracy trends
+- Response time trends (the core metric)
 - Time invested
 - "Next milestone: X days"
 
@@ -224,6 +344,7 @@ Track accuracy rates. If patterns emerge (users consistently below 70% or above 
 | What's missing for retention?                | Milestone celebrations, progress visualisation       |
 | What's missing for engagement?               | Streak warning notifications (highest-impact gap)    |
 | What's the backfire risk?                    | Low - current patterns are safe                      |
+| Is landing page copy effective?              | Yes - authentic, clear, low-friction                 |
 
 ---
 
