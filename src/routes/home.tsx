@@ -9,12 +9,18 @@ import {
 	Play,
 	Sparkles,
 } from "lucide-react";
-import { getItemsDueTomorrow, getLastPracticeDate, getPracticeStats, getUserById } from "@/db/queries/practice";
+import { differenceInDays, getDay, getDate } from "date-fns";
+import {
+	getItemsDueTomorrow,
+	getLastPracticeDate,
+	getPracticeStats,
+	getUserById,
+} from "@/db.server/queries/practice";
 import {
 	getFreezeStatus,
 	calculateDaysUntilNextFreeze,
 	type FreezeStatus,
-} from "@/db/queries/streak";
+} from "@/db.server/queries/streak";
 import { FreezeIndicator } from "@/components/FreezeIndicator";
 import { MilestoneCelebration } from "@/components/MilestoneCelebration";
 
@@ -27,6 +33,7 @@ type Stats = {
 };
 
 type LoaderData = {
+	userId: number;
 	stats: Stats;
 	weekData: { practiced: boolean }[];
 	todayPracticed: boolean;
@@ -49,15 +56,16 @@ export function meta() {
 export async function loader(): Promise<LoaderData> {
 	// TODO: Get actual user ID from session
 	const userId = 1;
-	const [rawStats, user, itemsDueTomorrow, lastPracticeDate] = await Promise.all([
-		getPracticeStats(userId),
-		getUserById(userId),
-		getItemsDueTomorrow(userId),
-		getLastPracticeDate(userId),
-	]);
+	const [rawStats, user, itemsDueTomorrow, lastPracticeDate] =
+		await Promise.all([
+			getPracticeStats(userId),
+			getUserById(userId),
+			getItemsDueTomorrow(userId),
+			getLastPracticeDate(userId),
+		]);
 
 	const daysSinceLastPractice = lastPracticeDate
-		? Math.floor((Date.now() - lastPracticeDate.getTime()) / (1000 * 60 * 60 * 24))
+		? differenceInDays(new Date(), lastPracticeDate)
 		: null;
 
 	// Cast to fix Drizzle count() type inference issue
@@ -71,7 +79,7 @@ export async function loader(): Promise<LoaderData> {
 
 	// Get week practice data
 	const today = new Date();
-	const dayOfWeek = today.getDay();
+	const dayOfWeek = getDay(today);
 	const mondayOffset = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
 
 	// TODO: Query actual practice history for the week
@@ -90,14 +98,29 @@ export async function loader(): Promise<LoaderData> {
 		? calculateDaysUntilNextFreeze(stats.streak, user)
 		: 7;
 
-	return { stats, weekData, todayPracticed, freezeStatus, daysUntilNextFreeze, itemsDueTomorrow, daysSinceLastPractice };
+	return {
+		userId,
+		stats,
+		weekData,
+		todayPracticed,
+		freezeStatus,
+		daysUntilNextFreeze,
+		itemsDueTomorrow,
+		daysSinceLastPractice,
+	};
 }
 
 // Practice CTA - Primary action when items are due
 const QUICK_REVIEW_THRESHOLD = 15;
 const QUICK_REVIEW_COUNT = 5;
 
-const PracticeCTA = ({ dueCount, itemsDueTomorrow }: { dueCount: number; itemsDueTomorrow: number }) => {
+const PracticeCTA = ({
+	dueCount,
+	itemsDueTomorrow,
+}: {
+	dueCount: number;
+	itemsDueTomorrow: number;
+}) => {
 	const estimatedMinutes = Math.max(1, Math.ceil(dueCount * 0.25));
 	const showQuickOption = dueCount > QUICK_REVIEW_THRESHOLD;
 
@@ -109,7 +132,9 @@ const PracticeCTA = ({ dueCount, itemsDueTomorrow }: { dueCount: number; itemsDu
 			>
 				<div className="flex items-center justify-between">
 					<div>
-						<p className="text-3xl font-bold text-honey-text">{dueCount} items due</p>
+						<p className="text-3xl font-bold text-honey-text">
+							{dueCount} items due
+						</p>
 						<p className="text-stone-600 mt-1">~{estimatedMinutes} min</p>
 					</div>
 					<div className="flex items-center justify-center w-14 h-14 rounded-full bg-honey-400 text-white shadow-sm">
@@ -122,7 +147,10 @@ const PracticeCTA = ({ dueCount, itemsDueTomorrow }: { dueCount: number; itemsDu
 				{itemsDueTomorrow > 0 && (
 					<div className="flex items-center justify-center gap-2 mt-3 text-sm text-stone-500">
 						<Calendar className="w-4 h-4" />
-						<span>Tomorrow: {itemsDueTomorrow} {itemsDueTomorrow === 1 ? "item" : "items"}</span>
+						<span>
+							Tomorrow: {itemsDueTomorrow}{" "}
+							{itemsDueTomorrow === 1 ? "item" : "items"}
+						</span>
 					</div>
 				)}
 			</Link>
@@ -133,7 +161,9 @@ const PracticeCTA = ({ dueCount, itemsDueTomorrow }: { dueCount: number; itemsDu
 					className="block rounded-xl p-4 bg-stone-50 border border-stone-200 hover:bg-stone-100 transition-colors text-center"
 				>
 					<span className="text-stone-600">Short on time? </span>
-					<span className="font-medium text-stone-800">Just {QUICK_REVIEW_COUNT} items</span>
+					<span className="font-medium text-stone-800">
+						Just {QUICK_REVIEW_COUNT} items
+					</span>
 					<span className="text-stone-500"> (~1 min)</span>
 				</Link>
 			)}
@@ -152,7 +182,12 @@ type LapsedUserCTAProps = {
 	wasProtectedByFreeze: boolean;
 };
 
-const LapsedUserCTA = ({ dueCount, daysSinceLastPractice, streak, wasProtectedByFreeze }: LapsedUserCTAProps) => {
+const LapsedUserCTA = ({
+	dueCount,
+	daysSinceLastPractice,
+	streak,
+	wasProtectedByFreeze,
+}: LapsedUserCTAProps) => {
 	const getMessage = () => {
 		if (wasProtectedByFreeze && streak > 0) {
 			return {
@@ -238,8 +273,12 @@ const AllCaughtUpCTA = ({
 // First time user state
 const FirstTimeUserCTA = () => (
 	<div className="text-center py-8 rounded-2xl bg-cream border border-stone-200">
-		<p className="text-3xl font-serif text-navy greek-text mb-2">Καλώς ήρθες!</p>
-		<p className="text-lg text-stone-600 mb-6">Let's learn your first Greek words.</p>
+		<p className="text-3xl font-serif text-navy greek-text mb-2">
+			Καλώς ήρθες!
+		</p>
+		<p className="text-lg text-stone-600 mb-6">
+			Let's learn your first Greek words.
+		</p>
 		<Link
 			to="/practice/vocabulary"
 			className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-terracotta text-white font-semibold shadow-md hover:bg-terracotta-dark transition-colors"
@@ -294,8 +333,7 @@ const DailyPhrase = () => {
 	const [revealed, setRevealed] = useState(false);
 	const [showGrammar, setShowGrammar] = useState(false);
 
-	const today = new Date();
-	const dayIndex = today.getDate() % DAILY_PHRASES.length;
+	const dayIndex = getDate(new Date()) % DAILY_PHRASES.length;
 	const phrase = DAILY_PHRASES[dayIndex] ?? DAILY_PHRASES[0];
 
 	return (
@@ -360,8 +398,8 @@ const WeekStreak = ({
 	weekData: { practiced: boolean }[];
 	todayPracticed: boolean;
 }) => {
-	const today = new Date().getDay();
-	const mondayOffset = today === 0 ? 6 : today - 1;
+	const todayDayOfWeek = getDay(new Date());
+	const mondayOffset = todayDayOfWeek === 0 ? 6 : todayDayOfWeek - 1;
 
 	return (
 		<div className="rounded-2xl border border-stone-200 bg-white p-5">
@@ -382,7 +420,8 @@ const WeekStreak = ({
 					} else if (isToday && todayPracticed) {
 						className += "bg-terracotta text-white";
 					} else if (isToday && !todayPracticed) {
-						className += "border-2 border-terracotta text-terracotta animate-pulse";
+						className +=
+							"border-2 border-terracotta text-terracotta animate-pulse";
 					} else {
 						className += "border border-stone-200 text-stone-300";
 					}
@@ -426,9 +465,21 @@ const StatsSummary = ({
 	</div>
 );
 
-export default function DashboardRoute({ loaderData }: { loaderData: LoaderData }) {
-	const { stats, weekData, todayPracticed, freezeStatus, daysUntilNextFreeze, itemsDueTomorrow, daysSinceLastPractice } =
-		loaderData;
+export default function DashboardRoute({
+	loaderData,
+}: {
+	loaderData: LoaderData;
+}) {
+	const {
+		userId,
+		stats,
+		weekData,
+		todayPracticed,
+		freezeStatus,
+		daysUntilNextFreeze,
+		itemsDueTomorrow,
+		daysSinceLastPractice,
+	} = loaderData;
 
 	const isLapsedUser =
 		daysSinceLastPractice !== null &&
@@ -442,7 +493,12 @@ export default function DashboardRoute({ loaderData }: { loaderData: LoaderData 
 			return <FirstTimeUserCTA />;
 		}
 		if (stats.dueCount === 0) {
-			return <AllCaughtUpCTA newAvailable={stats.newAvailable} itemsDueTomorrow={itemsDueTomorrow} />;
+			return (
+				<AllCaughtUpCTA
+					newAvailable={stats.newAvailable}
+					itemsDueTomorrow={itemsDueTomorrow}
+				/>
+			);
 		}
 		if (isLapsedUser) {
 			return (
@@ -454,12 +510,17 @@ export default function DashboardRoute({ loaderData }: { loaderData: LoaderData 
 				/>
 			);
 		}
-		return <PracticeCTA dueCount={stats.dueCount} itemsDueTomorrow={itemsDueTomorrow} />;
+		return (
+			<PracticeCTA
+				dueCount={stats.dueCount}
+				itemsDueTomorrow={itemsDueTomorrow}
+			/>
+		);
 	};
 
 	return (
 		<div className="pb-8 space-y-6">
-			<MilestoneCelebration streak={stats.streak} />
+			<MilestoneCelebration streak={stats.streak} userId={userId} />
 
 			{/* Primary CTA Section */}
 			<section>{renderCTA()}</section>

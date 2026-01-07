@@ -52,7 +52,7 @@ const getSeenMilestones = (): Set<number> => {
 	}
 };
 
-const markMilestoneSeen = (milestone: number): void => {
+const markMilestoneSeenLocally = (milestone: number): void => {
 	if (typeof window === "undefined") return;
 	try {
 		const seen = getSeenMilestones();
@@ -63,11 +63,33 @@ const markMilestoneSeen = (milestone: number): void => {
 	}
 };
 
-const getMilestoneToShow = (streak: number): Milestone | null => {
-	if (!MILESTONES.includes(streak as Milestone)) return null;
-	const seen = getSeenMilestones();
-	if (seen.has(streak)) return null;
-	return streak as Milestone;
+const fetchServerMilestones = async (userId: number): Promise<Set<number>> => {
+	try {
+		const response = await fetch(`/api/milestones?userId=${userId}`);
+		if (!response.ok) return new Set();
+		const data = (await response.json()) as {
+			milestones: Array<{ milestone: number }>;
+		};
+		return new Set(data.milestones.map((m) => m.milestone));
+	} catch {
+		return new Set();
+	}
+};
+
+const recordMilestoneOnServer = async (userId: number, milestone: number, streak: number): Promise<void> => {
+	try {
+		await fetch("/api/milestones", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ userId, milestone, streak }),
+		});
+	} catch {
+		// Server record failed, but localStorage is still updated
+	}
+};
+
+const mergeMilestones = (local: Set<number>, server: Set<number>): Set<number> => {
+	return new Set([...local, ...server]);
 };
 
 const PARTICLE_COLORS = [
@@ -163,24 +185,48 @@ const Sparkle = ({ delay, x, y }: { delay: number; x: number; y: number }) => (
 
 export interface MilestoneCelebrationProps {
 	streak: number;
+	userId?: number;
 }
 
-export const MilestoneCelebration = ({ streak }: MilestoneCelebrationProps) => {
+export const MilestoneCelebration = ({ streak, userId }: MilestoneCelebrationProps) => {
 	const [showMilestone, setShowMilestone] = useState<Milestone | null>(null);
 	const [isOpen, setIsOpen] = useState(false);
 	const [particles] = useState(() => generateParticles(16));
 
 	useEffect(() => {
-		const milestone = getMilestoneToShow(streak);
-		if (milestone) {
-			setShowMilestone(milestone);
-			setIsOpen(true);
-		}
-	}, [streak]);
+		const initMilestones = async () => {
+			const localSeen = getSeenMilestones();
+			let serverSeen = new Set<number>();
+
+			if (userId) {
+				serverSeen = await fetchServerMilestones(userId);
+				// Merge server milestones into localStorage for offline support
+				const merged = mergeMilestones(localSeen, serverSeen);
+				if (merged.size > localSeen.size) {
+					localStorage.setItem(STORAGE_KEY, JSON.stringify([...merged]));
+				}
+			}
+
+			// Check if current streak is a milestone that hasn't been seen
+			const allSeen = userId ? mergeMilestones(localSeen, serverSeen) : localSeen;
+			if (MILESTONES.includes(streak as Milestone) && !allSeen.has(streak)) {
+				setShowMilestone(streak as Milestone);
+				setIsOpen(true);
+			}
+		};
+
+		initMilestones();
+	}, [streak, userId]);
 
 	const handleDismiss = () => {
 		if (showMilestone) {
-			markMilestoneSeen(showMilestone);
+			// Record locally first (immediate feedback)
+			markMilestoneSeenLocally(showMilestone);
+
+			// Then record on server (async, fire-and-forget)
+			if (userId) {
+				recordMilestoneOnServer(userId, showMilestone, streak);
+			}
 		}
 		setIsOpen(false);
 	};
