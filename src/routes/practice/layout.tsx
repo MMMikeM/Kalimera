@@ -37,6 +37,8 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 	const url = new URL(request.url);
 	const userIdParam = url.searchParams.get("userId");
 	const userId = userIdParam ? parseInt(userIdParam, 10) : null;
+	const limitParam = url.searchParams.get("limit");
+	const limit = limitParam ? Math.min(Math.max(parseInt(limitParam, 10), 1), 100) : 20;
 
 	let reviewItems: VocabItemWithSkill[] = [];
 	let newVocabItems: VocabItemWithSkill[] = [];
@@ -46,7 +48,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 	if (userId) {
 		const [user, reviews, newItems, practiceStats] = await Promise.all([
 			getUserById(userId),
-			getItemsDueForReview(userId),
+			getItemsDueForReview(userId, "recognition", limit),
 			getNewVocabularyItems(userId, 20),
 			getPracticeStats(userId),
 		]);
