@@ -63,6 +63,9 @@ export default [
 		route("push/unsubscribe", "routes/api/push.unsubscribe.ts"),
 		route("push/vapid-key", "routes/api/push.vapid-key.ts"),
 
+		// Milestones
+		route("milestones", "routes/api/milestones.ts"),
+
 		// WebAuthn
 		route("webauthn/register-options", "routes/api/webauthn/register-options.ts"),
 		route("webauthn/register-verify", "routes/api/webauthn/register-verify.ts"),
