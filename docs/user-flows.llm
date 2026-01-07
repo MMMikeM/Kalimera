@@ -8,8 +8,9 @@ Greek learning app with SRS-based vocabulary practice and timed production drill
 /                    Dashboard (home)
 /login               Sign in (password or passkey)
 /register            Create account
+/try                 Anonymous drill (conversion flow)
 /practice/speed      Timed mixed drills (with ?focus= filters)
-/practice/review     SRS review queue
+/practice/review     SRS review queue (?limit=N supported)
 /learn/*             Browse content (was /explore)
 /reference/*         Grammar reference
 /search              Vocabulary search
@@ -27,7 +28,9 @@ Greek learning app with SRS-based vocabulary practice and timed production drill
 - Freeze indicator (shows available freezes, recovery status)
 - Today's phrase (rotates by day of month from 5 phrases)
 - Mastered/learning counts
-- Quick practice CTA (contextual: first-time user, all caught up, or due items)
+- Quick practice CTA (contextual: first-time user, all caught up, lapsed user, or due items)
+- "Just 5 items" option when queue > 15 items
+- Tomorrow preview ("X items due tomorrow")
 </displays>
 <user-actions>
 - Tap "Start Practice" → /practice (general practice)
@@ -69,6 +72,25 @@ Greek learning app with SRS-based vocabulary practice and timed production drill
 - Optionally set up passkey for future logins
 - Redirected to home
 </user-actions>
+</route>
+
+<route path="/try">
+<purpose>Anonymous drill for try-before-signup conversion</purpose>
+<file>src/routes/try.tsx</file>
+<data-source>Static: 8 hardcoded pronoun questions</data-source>
+<displays>
+- Intro screen explaining the drill format
+- Timed drill (8 questions, 4s each)
+- Completion screen with stats and signup prompt
+</displays>
+<user-actions>
+- Click "Start" to begin drill
+- Type Greek answers under time pressure
+- View results at completion
+- Click "Create Account" → /register (to save progress)
+- Click "Try Again" to repeat drill
+</user-actions>
+<engagement>Foot-in-the-door - experience value before commitment</engagement>
 </route>
 
 <route path="/practice/speed">
@@ -300,6 +322,12 @@ Correct answers auto-advance, maintains momentum
 <hook name="push-notifications" location="system" mechanism="external-prompt">
 Remind users to practice, preserve streaks
 </hook>
+<hook name="lapsed-user-recovery" location="dashboard" mechanism="reduced-friction">
+Users returning after 7+ days with 15+ due items see contextual "Welcome back" messaging with "Just 5 items" option
+</hook>
+<hook name="post-session-celebration" location="drill-summary" mechanism="positive-reinforcement">
+Variable encouragement messages with icons based on accuracy (Trophy/Flame/Sparkles)
+</hook>
 </hooks>
 
 ## Current Gaps
@@ -322,9 +350,8 @@ Remind users to practice, preserve streaks
 <current>None</current>
 <recommendation>Celebration at 7, 30, 100 days</recommendation>
 </gap>
-<gap name="tomorrow-hook">
-<current>None</current>
-<recommendation>"3 items due tomorrow" preview</recommendation>
+<gap name="tomorrow-hook" status="implemented">
+<current>Dashboard shows "Tomorrow: X items" with calendar icon</current>
 </gap>
 </gaps>
 
