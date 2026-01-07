@@ -47,3 +47,6 @@ screenshots/practice/
 .pnpm-approvals
 playwright-report/
 test-results/
+
+# Mobile audit output
+scripts/mobile-audit-output/
