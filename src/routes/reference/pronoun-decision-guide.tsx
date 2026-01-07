@@ -66,7 +66,7 @@ export const PronounDecisionGuide = () => (
 								{option.examples.map((ex) => (
 									<div key={ex.greek}>
 										<MonoText size="sm" variant="highlighted">{ex.greek}</MonoText>
-										<span className="text-stone-600"> — {ex.english}</span>
+										<span className="text-stone-600"> = {ex.english}</span>
 									</div>
 								))}
 							</div>
