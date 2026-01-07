@@ -224,3 +224,154 @@ Track accuracy rates. If patterns emerge (users consistently below 70% or above 
 | What's missing for retention?                | Milestone celebrations, progress visualisation       |
 | What's missing for engagement?               | Streak warning notifications (highest-impact gap)    |
 | What's the backfire risk?                    | Low - current patterns are safe                      |
+
+---
+
+## Curriculum Analysis: Practice Effectiveness Review
+
+This section evaluates features against the core goal from `/docs/app-objectives.md`: **building retrieval speed through timed production**.
+
+### Core Question: Does This Build Retrieval Speed?
+
+| Feature | Verdict | Reasoning |
+|---------|---------|-----------|
+| /practice/speed | YES | Timed production with 3.5-5s limits. No hints, no options. |
+| /practice/review | PARTIAL | Production-based but timer presence unclear from docs |
+| /try | YES | Timed drill (4s), production-only, English to Greek |
+| /learn/* routes | NO (but acceptable) | Reference material, not practice. Correctly positioned as lookup. |
+| /reference/* | NO (but acceptable) | Grammar reference. Hidden behind navigation, not surfaced during drills. |
+
+### Question Types Assessment
+
+From `user-flows.llm`, the documented question types are:
+
+| Type | Direction | Production? | Time Pressure? | Status |
+|------|-----------|-------------|----------------|--------|
+| Object pronouns (me, se, ton...) | English to Greek | YES | YES | GREEN |
+| Possessive pronouns (mou, sou...) | English to Greek | YES | YES | GREEN |
+| Verb conjugations | Prompt to form | YES | YES | GREEN |
+| Article + noun phrases | English to Greek | YES | YES | GREEN |
+| Case transformations | Greek to Greek case | YES | YES | GREEN |
+| Common sentences | English to Greek | YES | YES | GREEN |
+
+**All documented drill types require production, not recognition.** No multiple choice. No matching exercises. This is correct.
+
+### Red Flags: Recognition-Only Exercises
+
+**None identified.** The current implementation avoids the recognition trap:
+
+- No multiple choice questions
+- No Greek-to-English direction (which would test recognition, not production)
+- No matching exercises
+- No "select the correct answer" patterns
+
+### Yellow Flags: Potential Concerns
+
+#### 1. /practice/review Timer Ambiguity
+
+The SRS review documentation mentions quality ratings based on response time:
+
+- Quality 5: Correct in <2s
+- Quality 4: Correct in >=2s
+- Quality 2: Incorrect
+
+**Concern:** This measures response time but does not mention a countdown timer visible to the user. If the review queue allows unlimited thinking time, it becomes "careful practice" rather than "pressured retrieval."
+
+**Recommendation:** Verify the review route has a visible countdown. If not, add one. The SRS quality calculation already depends on speed, so the timer should be surfaced to create pressure.
+
+#### 2. /learn/* Routes: Browsing vs Drilling
+
+The `/learn/vocabulary`, `/learn/phrases`, and `/learn/conversations` routes are browse-only. Users can read content but cannot be drilled on it directly from these views.
+
+**Assessment:** This is correctly positioned as reference material, not practice. The `PracticeCTA` component in reference tabs (mentioned in commit history) appropriately nudges users toward drills.
+
+**Not a problem** as long as users don't spend time "studying" these pages instead of drilling. The current design keeps them as lookup tools.
+
+#### 3. Conversations "Read Mode" vs "Practice Mode"
+
+The `/learn/conversations` route mentions a "Read mode / Practice mode toggle."
+
+**Concern:** If Practice mode within conversations is untimed or recognition-based, it undermines the core principle.
+
+**Recommendation:** Verify Practice mode on conversations uses timed production. If it shows Greek and asks for comprehension, that is recognition practice.
+
+### Curriculum Creep Assessment
+
+| Pattern | Status | Evidence |
+|---------|--------|----------|
+| Elaborate curriculum organisation | AVOIDED | Routes are functional (practice, learn, reference), not skill-tree based |
+| Grammar explanations surfaced proactively | AVOIDED | Reference is separate from practice, requires navigation |
+| Topic progression gates | AVOIDED | No "unlock level 2" patterns visible |
+| Multiple drill types per topic | AVOIDED | Single, consistent drill format |
+
+**The app correctly prioritises volume over curriculum structure.** There is no evidence of skill trees, level unlocks, or progressive disclosure that would gate practice.
+
+### SRS Implementation Review
+
+The documented algorithm:
+
+- Quality 5: Correct <2s - interval increases (easy)
+- Quality 4: Correct >=2s - interval increases (good)
+- Quality 2: Incorrect - interval decreases (hard)
+- Mastery threshold: 21+ day interval
+
+**Assessment:**
+
+| Aspect | Status | Notes |
+|--------|--------|-------|
+| Speed incorporated in quality | GREEN | Response time affects SRS scheduling |
+| Production direction | GREEN | English to Greek, not recognition |
+| Mastery definition | GREEN | 21-day interval is reasonable threshold |
+
+**Gap identified:** No Quality 1 (complete failure) or Quality 3 (hard but correct) documented. A binary correct/incorrect with speed modifier is simpler and may be sufficient, but consider whether "barely remembered after 5+ seconds" should be treated differently from "wrong."
+
+### Vocabulary Progression Assessment
+
+| Aspect | Status | Notes |
+|--------|--------|-------|
+| Initial vocabulary available | PRESENT | DB-seeded vocabulary with tags |
+| New vocabulary addition | PRESENT | Post-lesson entry mentioned in objectives |
+| Weak area tracking | PRESENT | `weakAreas` table tracks error patterns |
+| Difficulty adaptation | GAP | No automatic difficulty adjustment based on accuracy |
+
+**Gap:** The `weakAreas` table exists but is not clearly surfaced in practice flows. If users are consistently failing certain patterns, those should be prioritised in drills.
+
+### What Is Working
+
+1. **Production-only drills** - No multiple choice, no recognition exercises
+2. **Time pressure** - 3.5-5s timers create the "slightly uncomfortable" feeling required
+3. **English to Greek direction** - Correct for speaking transfer
+4. **Response time tracking** - The metric that matters is being captured
+5. **No curriculum gates** - Users can drill immediately, no "complete lesson 1 first"
+6. **Reference material segregated** - Grammar lookup exists but does not interrupt practice
+
+### Recommendations for Practice Effectiveness
+
+#### HIGH PRIORITY
+
+1. **Verify /practice/review has visible timer** - If users can think indefinitely, add countdown. The SRS quality calculation implies speed matters, so users should feel time pressure.
+
+2. **Surface weak area data** - The `weakAreas` table is captured but not mentioned in dashboard or drill selection. "You're struggling with accusative pronouns" should trigger targeted drills.
+
+#### MEDIUM PRIORITY
+
+1. **Add response time to progress visualisation** - The proposed `/progress` page focuses on streaks and word counts. Response time trending down is THE metric for this user's problem. Make it prominent.
+
+2. **Verify conversations Practice mode** - Confirm it requires timed production, not recognition or comprehension checks.
+
+#### LOW PRIORITY
+
+1. **Consider Quality 1/3 ratings** - Current binary (correct/incorrect with speed modifier) may be sufficient, but "barely recalled after 6+ seconds" could warrant separate treatment from "wrong."
+
+### Summary: Practice Effectiveness
+
+| Assessment Area | Status |
+|-----------------|--------|
+| Recognition-only exercises | NONE FOUND |
+| Untimed practice creeping in | POSSIBLE (review queue, conversations) |
+| Curriculum creep | AVOIDED |
+| Question types | ALL PRODUCTION-BASED |
+| SRS implementation | SOLID (minor gap in quality granularity) |
+| Vocabulary progression | FUNCTIONAL (weak area surfacing gap) |
+
+**Overall:** The core drill engine correctly implements timed production practice. The primary risk is that secondary features (SRS review, conversations) may not maintain the same time pressure as the speed drills. Verify and align.
