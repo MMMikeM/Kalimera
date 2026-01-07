@@ -14,6 +14,8 @@ Greek learning app with SRS-based vocabulary practice and timed production drill
 /learn/*             Browse content (was /explore)
 /reference/*         Grammar reference
 /search              Vocabulary search
+/progress            Analytics (streak calendar, accuracy trends)
+/support             About page
 ```
 
 ## Routes
@@ -296,6 +298,47 @@ In-page filter buttons before starting drill:
 - Clear search to reset
 </user-actions>
 <engagement>Quick lookup utility</engagement>
+<target-ux>
+**Mobile:** Bottom drawer that slides up from nav tap
+- Search input at top of drawer
+- Results below, scrollable
+- Swipe down or tap outside to dismiss
+
+**Desktop:** Autocomplete dropdown from nav
+- Click "Search" in nav → popover appears below
+- Type to filter results inline
+- Click result or press Escape to dismiss
+
+**Future enhancement:** Selecting a word shows forms (conjugations, declensions)
+</target-ux>
+</route>
+
+<route path="/progress">
+<purpose>Analytics and progress tracking</purpose>
+<file>src/routes/progress.tsx</file>
+<data-source>DB: practiceSessions, practiceAttempts, vocabularySkills</data-source>
+<displays>
+- Streak calendar (3-month view, practice days highlighted)
+- Accuracy trend chart (30-day rolling)
+- Time invested (total minutes, session count)
+- Mastered vocabulary count
+</displays>
+<user-actions>
+- View historical practice data
+- Navigate back to dashboard
+</user-actions>
+<engagement>Investment visibility, progress reinforcement</engagement>
+</route>
+
+<route path="/support">
+<purpose>About page - project story and support options</purpose>
+<file>src/routes/support.tsx</file>
+<displays>
+- Project backstory (why this app exists)
+- Creator context (learning Greek for family)
+- Support options (Buy Me a Coffee link)
+</displays>
+<engagement>Trust building, personal connection</engagement>
 </route>
 
 ## Core Engagement Loop
@@ -328,6 +371,12 @@ Users returning after 7+ days with 15+ due items see contextual "Welcome back" m
 <hook name="post-session-celebration" location="drill-summary" mechanism="positive-reinforcement">
 Variable encouragement messages with icons based on accuracy (Trophy/Flame/Sparkles)
 </hook>
+<hook name="milestone-celebration" location="dashboard" mechanism="achievement">
+Confetti + modal at 7, 30, 100, 365 day streaks - persisted so only shown once
+</hook>
+<hook name="streak-warning-notification" location="system" mechanism="loss-aversion">
+Push notification at 8pm UTC for users at risk of losing streak
+</hook>
 </hooks>
 
 ## Current Gaps
@@ -342,13 +391,21 @@ Variable encouragement messages with icons based on accuracy (Trophy/Flame/Spark
 - Dashboard shows freeze count and status
 </details>
 </gap>
-<gap name="streak-warning">
-<current>None</current>
-<recommendation>"2 hours left!" notification before midnight</recommendation>
+<gap name="streak-warning" status="implemented">
+<current>Push notification at 8pm UTC for users who haven't practiced</current>
+<details>
+- Cron trigger in wrangler.toml (0 20 * * *)
+- Checks users with active streaks who haven't practiced today
+- Sends "Don't lose your X-day streak!" notification
+</details>
 </gap>
-<gap name="milestones">
-<current>None</current>
-<recommendation>Celebration at 7, 30, 100 days</recommendation>
+<gap name="milestones" status="implemented">
+<current>Celebration modal at 7, 30, 100, 365 days</current>
+<details>
+- MilestoneCelebration component shows confetti + message
+- Persisted to milestonesAchieved table via /api/milestones
+- Only shows once per milestone per user
+</details>
 </gap>
 <gap name="tomorrow-hook" status="implemented">
 <current>Dashboard shows "Tomorrow: X items" with calendar icon</current>
@@ -373,6 +430,7 @@ Variable encouragement messages with icons based on accuracy (Trophy/Flame/Spark
 <table name="weakAreas">Pattern-based weak spots (userId, areaType, identifier, errorCount)</table>
 <table name="vocabularySkills">SRS state per user per word (easeFactor, intervalDays, reviewCount, nextReviewAt)</table>
 <table name="pushSubscriptions">Push notification endpoints (userId, endpoint, keys)</table>
+<table name="milestonesAchieved">Milestone celebrations shown (userId, milestoneType, achievedAt)</table>
 </tables>
 
 ## User State
@@ -381,3 +439,153 @@ Variable encouragement messages with icons based on accuracy (Trophy/Flame/Spark
 - Authentication via username/password or WebAuthn passkey
 - Existing users without passwords prompted to set one on first login
 - Registration creates new account with password, optional passkey setup
+
+## Navigation Architecture
+
+### Current State
+
+**Mobile (bottom nav):**
+```
+┌─────────────────────────────────────────┐
+│                                         │
+│            [Page Content]               │
+│                                         │
+├─────────────────────────────────────────┤
+│  [Home] [Practice] [Learn] [Reference]  │  ← 4 items, authenticated
+│         [Practice] [Learn] [Ref] [Sign] │  ← 4 items, unauthenticated
+└─────────────────────────────────────────┘
+```
+
+**Desktop (header):**
+```
+[Ellinika Greek Learning]     [Home] [Practice] [Learn] [Reference] [🔍] [About] [Logout]
+```
+
+### Problem: Search is Hidden on Mobile
+
+Search only exists in the header. On mobile:
+1. User scrolls down to practice/browse
+2. Header scrolls out of view
+3. User wants to look up a word
+4. Must scroll ALL the way back up
+5. Find tiny search icon in header
+6. Tap
+
+**This is high friction for a frequently-used feature.**
+
+### Navigation Options (Mobile-First)
+
+#### Option A: Add Search to Bottom Nav
+```
+┌─────────────────────────────────────────┐
+│  [Home] [Practice] [🔍] [Learn] [Ref]   │  ← 5 items
+└─────────────────────────────────────────┘
+```
+- **Pro:** Always accessible, one tap
+- **Pro:** Follows mobile convention (Instagram, Spotify)
+- **Con:** 5 items is crowded but acceptable
+- **Con:** Search competes with Practice for attention
+
+#### Option B: Floating Action Button (FAB)
+```
+┌─────────────────────────────────────────┐
+│                                    [🔍] │  ← Floating button
+│            [Page Content]               │
+│                                         │
+├─────────────────────────────────────────┤
+│  [Home] [Practice] [Learn] [Reference]  │
+└─────────────────────────────────────────┘
+```
+- **Pro:** Always visible, doesn't take nav space
+- **Pro:** Can animate/hide during drills
+- **Con:** Covers content, can feel intrusive
+- **Con:** Non-standard for search
+
+#### Option C: Search in Header (Sticky)
+```
+┌─────────────────────────────────────────┐
+│  [Ellinika]                       [🔍]  │  ← Sticky mini-header
+├─────────────────────────────────────────┤
+│            [Page Content]               │
+│                                         │
+├─────────────────────────────────────────┤
+│  [Home] [Practice] [Learn] [Reference]  │
+└─────────────────────────────────────────┘
+```
+- **Pro:** Search always visible
+- **Pro:** Preserves bottom nav simplicity
+- **Con:** Takes vertical space (precious on mobile)
+- **Con:** Two navigation areas to manage
+
+#### Option D: Replace "Home" with Search
+```
+┌─────────────────────────────────────────┐
+│  [🔍] [Practice] [Learn] [Reference]    │  ← Search replaces Home
+└─────────────────────────────────────────┘
+```
+- **Pro:** No new nav item, cleaner
+- **Pro:** Practice IS home for learners (analyst feedback)
+- **Pro:** Logo tap → home (standard pattern)
+- **Con:** Losing explicit "Home" might confuse some users
+
+#### Option E: Long-press/Swipe Gesture
+```
+Long-press Practice → Search overlay
+Swipe down anywhere → Search overlay
+```
+- **Pro:** No UI changes needed
+- **Con:** Completely hidden, zero discoverability
+- **Con:** Gesture conflicts possible
+
+### Recommendation: Option D (Replace Home with Search)
+
+**Rationale:**
+1. **Mobile-first:** Keeps 4-item bottom nav (optimal thumb reach)
+2. **Practice-centric:** Practice IS the primary destination (curriculum analyst feedback)
+3. **Standard pattern:** Logo → Home is universal (users expect it)
+4. **Search accessible:** One tap from anywhere
+5. **Clean:** No floating buttons or extra nav bars
+
+**Proposed mobile nav:**
+```
+Authenticated:    [🔍 Search] [⚡ Practice] [📖 Learn] [📋 Reference]
+Unauthenticated:  [🔍 Search] [📖 Learn] [📋 Reference] [→ Try It]
+```
+
+**Logo behavior:** Tap logo → / (dashboard/home)
+
+**During active drills:** Consider hiding search to prevent "cheating" (separate feature)
+
+### Desktop Navigation
+
+Desktop has more space. Proposed structure:
+
+**Authenticated:**
+```
+[Ellinika]                    [Practice ←CTA] [Learn] [Reference] [Search] [User ▾]
+                                                                            └── Progress
+                                                                                Settings
+                                                                                About
+                                                                                ────────
+                                                                                Sign Out
+```
+
+**Unauthenticated:**
+```
+[Ellinika]                    [Learn] [Reference] [Search] [Sign In] [Try a Drill ←CTA]
+```
+
+### Routes by Nav Location
+
+| Route | Mobile Bottom Nav | Desktop Header | Notes |
+|-------|-------------------|----------------|-------|
+| `/` | Logo tap | Logo tap | Dashboard/home |
+| `/practice/speed` | Practice | Practice (CTA) | Primary action |
+| `/learn/*` | Learn | Learn | Content browsing |
+| `/reference/*` | Reference | Reference | Grammar lookup |
+| `/search` | Search | Search | Vocabulary search |
+| `/progress` | — | User menu | Analytics (authenticated) |
+| `/support` | — | User menu | About page |
+| `/try` | Try It (unauth) | Try a Drill (unauth) | Conversion CTA |
+| `/login` | — | Sign In (unauth) | Auth |
+| `/register` | — | Via /try flow | Account creation |
