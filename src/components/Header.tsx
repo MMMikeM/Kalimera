@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { BarChart3, ChevronDown, Info, LogOut, } from "lucide-react";
+import { BarChart3, ChevronDown, Info, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,
@@ -8,6 +8,7 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { GlobalSearch } from "@/components/GlobalSearch";
 
 const NAV_ITEMS_AUTH = [
 	{ id: "practice", label: "Practice", path: "/practice/speed", primary: true },
@@ -43,6 +44,26 @@ export const Header = ({ isAuthenticated, currentSection = "", onLogout }: Heade
 					{navItems.map((item) => {
 						const isActive = currentSection === item.id;
 						const isPrimary = "primary" in item && item.primary;
+
+						// Search gets special treatment - opens popover instead of navigating
+						if (item.id === "search") {
+							return (
+								<GlobalSearch key={item.id}>
+									{({ isActive: isSearchActive }) => (
+										<span
+											className={`px-4 py-2 rounded-lg text-sm font-medium transition-all cursor-pointer ${
+												isSearchActive
+													? "bg-stone-800 text-cream"
+													: "text-stone-600 hover:text-stone-800 hover:bg-stone-100"
+											}`}
+										>
+											{item.label}
+										</span>
+									)}
+								</GlobalSearch>
+							);
+						}
+
 						return (
 							<Link
 								key={item.id}

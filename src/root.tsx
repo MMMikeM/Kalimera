@@ -12,6 +12,7 @@ import {
 import { BookOpen, FileText, Search, Zap } from "lucide-react";
 import { Header } from "@/components/Header";
 import { LandingPage } from "@/components/LandingPage";
+import { GlobalSearch } from "@/components/GlobalSearch";
 import "./index.css";
 import type { LinksFunction } from "react-router";
 
@@ -173,6 +174,27 @@ export default function Root() {
 					{(isAuthenticated ? NAV_ITEMS_AUTH : NAV_ITEMS_UNAUTH).map((item) => {
 						const Icon = item.icon;
 						const isActive = currentSection === item.id;
+
+						// Search gets special treatment - opens drawer instead of navigating
+						if (item.id === "search") {
+							return (
+								<GlobalSearch key={item.id}>
+									{({ isActive: isSearchActive }) => (
+										<span
+											className={`flex flex-col items-center gap-1 px-4 py-2 rounded-xl transition-all ${
+												isSearchActive
+													? "text-terracotta bg-terracotta/10"
+													: "text-stone-500"
+											}`}
+										>
+											<Icon size={22} strokeWidth={1.5} />
+											<span className="text-xs font-medium">{item.label}</span>
+										</span>
+									)}
+								</GlobalSearch>
+							);
+						}
+
 						return (
 							<Link
 								key={item.id}

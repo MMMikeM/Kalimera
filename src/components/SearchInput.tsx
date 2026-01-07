@@ -1,5 +1,5 @@
+import { forwardRef, type ReactNode } from "react";
 import { Search, X } from "lucide-react";
-import type { ReactNode } from "react";
 import { tv } from "tailwind-variants";
 
 export const searchInputVariants = tv({
@@ -66,15 +66,19 @@ export interface SearchInputProps
 	onClear?: () => void;
 }
 
-export const SearchInput: React.FC<SearchInputProps> = ({
-	size,
-	icon = <Search />,
-	containerClassName,
-	className,
-	onClear,
-	value,
-	...props
-}) => {
+export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
+	(
+		{
+			size,
+			icon = <Search />,
+			containerClassName,
+			className,
+			onClear,
+			value,
+			...props
+		},
+		ref,
+	) => {
 	const hasValue = value !== undefined && value !== "";
 
 	return (
@@ -83,6 +87,7 @@ export const SearchInput: React.FC<SearchInputProps> = ({
 		>
 			<div className={searchInputIconVariants({ size })}>{icon}</div>
 			<input
+				ref={ref}
 				type="text"
 				value={value}
 				className={searchInputFieldVariants({ size, className })}
@@ -100,4 +105,6 @@ export const SearchInput: React.FC<SearchInputProps> = ({
 			)}
 		</div>
 	);
-};
+});
+
+SearchInput.displayName = "SearchInput";
