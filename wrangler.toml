@@ -25,4 +25,5 @@ invocation_logs = true
 crons = [
   "0 9 * * *",   # Daily practice reminder at 9am UTC
   "0 */6 * * *", # Check for due reviews every 6 hours
+  "0 20 * * *",  # Streak warning at 8pm UTC
 ]
