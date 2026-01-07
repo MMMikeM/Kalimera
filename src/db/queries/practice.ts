@@ -208,6 +208,22 @@ export const getItemsDueTomorrow = async (
 	return result?.count || 0;
 };
 
+export const getLastPracticeDate = async (userId: number): Promise<Date | null> => {
+	const [result] = await db
+		.select({ completedAt: practiceSessions.completedAt })
+		.from(practiceSessions)
+		.where(
+			and(
+				eq(practiceSessions.userId, userId),
+				sql`${practiceSessions.completedAt} IS NOT NULL`,
+			),
+		)
+		.orderBy(desc(practiceSessions.completedAt))
+		.limit(1);
+
+	return result?.completedAt ? new Date(result.completedAt) : null;
+};
+
 const calculateStreak = async (userId: number): Promise<number> => {
 	const sessions = await db
 		.select({
