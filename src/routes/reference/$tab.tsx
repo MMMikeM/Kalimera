@@ -31,12 +31,12 @@ function CasesPronounsTab() {
 		<div className="space-y-8">
 			<TabHero
 				title="The foundation of Greek grammar"
-				greekPhrase="Ποιος; Τι; Ποιου; — Who? What? Whose?"
+				greekPhrase="Ποιος; Τι; Ποιου;"
 				colorScheme="ocean"
 				icon={<Users size={18} />}
 			>
 				Cases show a word's role in a sentence. Pronouns are where you'll use
-				them most — master these and cases click into place.
+				them most. Master these and cases click into place.
 			</TabHero>
 			<CasesSection />
 			<PronounsSection />
@@ -103,7 +103,7 @@ function PrepositionsTab() {
 				colorScheme="terracotta"
 				icon={<MapPin size={18} />}
 			>
-				Prepositions show relationships — location, direction, purpose. The big
+				Prepositions show relationships: location, direction, purpose. The big
 				four (σε, από, για, με) cover most situations.
 			</TabHero>
 			<PrepositionsSection />
@@ -125,7 +125,7 @@ function VerbsTab() {
 				colorScheme="ocean"
 				icon={<Zap size={18} />}
 			>
-				Greek verb endings show who's doing the action — you often don't need
+				Greek verb endings show who's doing the action, so you often don't need
 				separate pronouns. Learn three patterns and conjugate thousands of
 				verbs.
 			</TabHero>

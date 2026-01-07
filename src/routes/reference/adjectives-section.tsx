@@ -406,7 +406,7 @@ export const AdjectivesSection: React.FC = () => {
 		<section id="adjectives" className="space-y-6">
 			<SectionHeading
 				title="Adjectives"
-				subtitle="Words that describe nouns — they must agree in gender, case, and number"
+				subtitle="Words that describe nouns. They must agree in gender, case, and number."
 			/>
 
 			<KeyInsight
@@ -424,13 +424,13 @@ export const AdjectivesSection: React.FC = () => {
 									<div>
 										<MonoText variant="masculine">ο καλός φίλος</MonoText>
 										<span className="text-stone-600 ml-2">
-											— all masculine nominative
+											(all masculine nominative)
 										</span>
 									</div>
 									<div>
 										<MonoText variant="masculine">τον καλό φίλο</MonoText>
 										<span className="text-stone-600 ml-2">
-											— all masculine accusative (drop the -ς)
+											(all masculine accusative, drop the -ς)
 										</span>
 									</div>
 								</div>
