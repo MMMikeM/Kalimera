@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { BookOpen, FileText, Home, LogIn, LogOut, Search, Zap } from "lucide-react";
+import { BookOpen, FileText, Home, Info, LogIn, LogOut, Search, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const NAV_ITEMS = [
@@ -53,14 +53,23 @@ export const Header = ({ isAuthenticated, currentSection = "", onLogout }: Heade
 						<Search size={20} strokeWidth={1.5} />
 					</Link>
 					{isAuthenticated ? (
-						<button
-							type="button"
-							onClick={onLogout}
-							className="p-2 text-stone-500 hover:text-stone-700 transition-colors"
-							aria-label="Logout"
-						>
-							<LogOut size={20} strokeWidth={1.5} />
-						</button>
+						<>
+							<Link
+								to="/support"
+								className="p-2 text-stone-500 hover:text-stone-700 transition-colors"
+								aria-label="About"
+							>
+								<Info size={20} strokeWidth={1.5} />
+							</Link>
+							<button
+								type="button"
+								onClick={onLogout}
+								className="p-2 text-stone-500 hover:text-stone-700 transition-colors"
+								aria-label="Logout"
+							>
+								<LogOut size={20} strokeWidth={1.5} />
+							</button>
+						</>
 					) : (
 						<Link
 							to="/login"
@@ -98,14 +107,22 @@ export const Header = ({ isAuthenticated, currentSection = "", onLogout }: Heade
 						<Search size={18} strokeWidth={1.5} />
 					</Link>
 					{isAuthenticated ? (
-						<button
-							type="button"
-							onClick={onLogout}
-							className="p-2 text-stone-500 hover:text-stone-700 transition-colors"
-							aria-label="Logout"
-						>
-							<LogOut size={18} strokeWidth={1.5} />
-						</button>
+						<>
+							<Link
+								to="/support"
+								className="px-3 py-2 text-sm text-stone-500 hover:text-stone-700 transition-colors"
+							>
+								About
+							</Link>
+							<button
+								type="button"
+								onClick={onLogout}
+								className="p-2 text-stone-500 hover:text-stone-700 transition-colors"
+								aria-label="Logout"
+							>
+								<LogOut size={18} strokeWidth={1.5} />
+							</button>
+						</>
 					) : (
 						<>
 							<Link
