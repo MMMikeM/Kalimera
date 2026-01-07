@@ -85,12 +85,12 @@ export const LandingPage = () => (
 						<div className="space-y-4 text-stone-700 leading-relaxed">
 							<p>
 								My wife is Cypriot. We've moved to Cyprus and we're starting a
-								family. I want our son to grow up speaking Greek—as close to
+								family. I want our son to grow up speaking Greek. As close to
 								native as possible.
 							</p>
 							<p>
-								Problem is, I'm learning from square one. And everything I
-								tried—apps, textbooks, courses—trained me to{" "}
+								Problem is, I'm learning from square one. Apps, textbooks,
+								courses. Everything trained me to{" "}
 								<em>recognise</em> Greek, not <em>produce</em> it. I could tap
 								the right answer in a multiple choice quiz, but when my{" "}
 								<span className="font-serif text-terracotta">παππούς</span>{" "}

@@ -20,12 +20,12 @@ export default function SupportPage() {
 			<div className="prose prose-stone max-w-none mb-12">
 				<p className="text-lg text-stone-600 leading-relaxed">
 					My wife is Cypriot. We've moved to Cyprus and we're starting a family.
-					I want our son to grow up speaking Greek—as close to native as
+					I want our son to grow up speaking Greek. As close to native as
 					possible.
 				</p>
 				<p className="text-stone-600 leading-relaxed">
-					Problem is, I'm learning from square one. And everything I tried—apps,
-					textbooks, courses—trained me to recognise Greek, not produce it. I
+					Problem is, I'm learning from square one. Apps, textbooks, courses.
+					Everything trained me to recognise Greek, not produce it. I
 					could tap the right answer in a multiple choice quiz, but when someone
 					asked me something, my mind went blank.
 				</p>
