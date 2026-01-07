@@ -89,12 +89,20 @@ export default function PracticeLayout({ loaderData }: Route.ComponentProps) {
 
 	// On mount, sync authenticated user to URL params
 	useEffect(() => {
-		const authenticatedUserId = localStorage.getItem(AUTH_STORAGE_KEY);
+		const stored = localStorage.getItem(AUTH_STORAGE_KEY);
 		const urlUserId = searchParams.get("userId");
 
-		if (authenticatedUserId && authenticatedUserId !== urlUserId) {
-			setSearchParams({ userId: authenticatedUserId });
-			revalidator.revalidate();
+		if (stored) {
+			try {
+				const parsed = JSON.parse(stored) as { userId?: number };
+				const userId = parsed.userId?.toString();
+				if (userId && userId !== urlUserId) {
+					setSearchParams({ userId });
+					revalidator.revalidate();
+				}
+			} catch {
+				// Invalid JSON, ignore
+			}
 		}
 		setIsInitialized(true);
 	}, [revalidator.revalidate, searchParams.get, setSearchParams]); // eslint-disable-line react-hooks/exhaustive-deps
