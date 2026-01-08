@@ -444,22 +444,40 @@ Push notification at 8pm UTC for users at risk of losing streak
 
 ### Current State
 
-**Mobile (bottom nav):**
+**Mobile:**
 ```
 ┌─────────────────────────────────────────┐
+│  [Ellinika]                   [🔍] [👤] │  ← Header: logo, search, profile
+├─────────────────────────────────────────┤
 │                                         │
 │            [Page Content]               │
 │                                         │
 ├─────────────────────────────────────────┤
-│  [Home] [Practice] [Learn] [Reference]  │  ← 4 items, authenticated
-│         [Practice] [Learn] [Ref] [Sign] │  ← 4 items, unauthenticated
+│  [Home] [Practice] [Learn] [Reference]  │  ← Bottom nav: 4 items
 └─────────────────────────────────────────┘
 ```
 
 **Desktop (header):**
 ```
-[Ellinika Greek Learning]     [Home] [Practice] [Learn] [Reference] [🔍] [About] [Logout]
+[Ellinika]     [Practice] [Learn] [Reference] [🔍 Search] [Account ▾]
 ```
+
+### Mobile Navigation (Implemented)
+
+**Mobile header (top bar):**
+```
+[Ellinika]                    [🔍] [👤]
+```
+- Logo → Home
+- Search icon → opens search drawer
+- Profile icon → opens account drawer (Progress, About, Sign Out)
+
+**Mobile bottom nav (4 items):**
+```
+[🏠 Home] [⚡ Practice] [📖 Learn] [📋 Reference]
+```
+
+This follows the Instagram/Duolingo pattern of minimal top bar + bottom nav.
 
 ### Problem: Search is Hidden on Mobile
 
@@ -546,13 +564,15 @@ Swipe down anywhere → Search overlay
 4. **Search accessible:** One tap from anywhere
 5. **Clean:** No floating buttons or extra nav bars
 
-**Proposed mobile nav:**
+**Current mobile nav (implemented):**
 ```
-Authenticated:    [🔍 Search] [⚡ Practice] [📖 Learn] [📋 Reference]
-Unauthenticated:  [🔍 Search] [📖 Learn] [📋 Reference] [→ Try It]
+Top bar:    [Ellinika]              [🔍] [👤]
+Bottom nav: [🏠 Home] [⚡ Practice] [📖 Learn] [📋 Reference]
 ```
 
-**Logo behavior:** Tap logo → / (dashboard/home)
+- Search icon in header opens search drawer
+- Profile icon in header opens account drawer (authenticated only)
+- Unauthenticated users see "Sign In" link instead of profile icon
 
 **During active drills:** Consider hiding search to prevent "cheating" (separate feature)
 
@@ -577,15 +597,15 @@ Desktop has more space. Proposed structure:
 
 ### Routes by Nav Location
 
-| Route | Mobile Bottom Nav | Desktop Header | Notes |
-|-------|-------------------|----------------|-------|
-| `/` | Logo tap | Logo tap | Dashboard/home |
-| `/practice/speed` | Practice | Practice (CTA) | Primary action |
-| `/learn/*` | Learn | Learn | Content browsing |
-| `/reference/*` | Reference | Reference | Grammar lookup |
-| `/search` | Search | Search | Vocabulary search |
-| `/progress` | — | User menu | Analytics (authenticated) |
-| `/support` | — | User menu | About page |
-| `/try` | Try It (unauth) | Try a Drill (unauth) | Conversion CTA |
-| `/login` | — | Sign In (unauth) | Auth |
+| Route | Mobile | Desktop | Notes |
+|-------|--------|---------|-------|
+| `/` | Home (bottom nav) | Logo tap | Dashboard/home |
+| `/practice/speed` | Practice (bottom nav) | Practice (CTA) | Primary action |
+| `/learn/*` | Learn (bottom nav) | Learn | Content browsing |
+| `/reference/*` | Reference (bottom nav) | Reference | Grammar lookup |
+| `/search` | Search icon (header) | Search | Vocabulary search |
+| `/progress` | Profile drawer | User menu | Analytics (authenticated) |
+| `/support` | Profile drawer | User menu | About page |
+| `/try` | — | Try a Drill (unauth) | Conversion CTA |
+| `/login` | Sign In (header) | Sign In (unauth) | Auth |
 | `/register` | — | Via /try flow | Account creation |
