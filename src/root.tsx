@@ -9,10 +9,15 @@ import {
 	useLocation,
 	useNavigate,
 } from "react-router";
-import { BookOpen, FileText, Search, Zap } from "lucide-react";
+import { BookOpen, FileText, Search, Zap, User, BarChart3, Info, LogOut, Home } from "lucide-react";
 import { Header } from "@/components/Header";
 import { LandingPage } from "@/components/LandingPage";
 import { GlobalSearch } from "@/components/GlobalSearch";
+import {
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from "@/components/ui/popover";
 import "./index.css";
 import type { LinksFunction } from "react-router";
 
@@ -24,20 +29,117 @@ export const links: LinksFunction = () => [
 	{ rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
 ];
 
-const NAV_ITEMS_AUTH = [
-	{ id: "search", label: "Search", path: "/search", icon: Search },
+const MOBILE_NAV_ITEMS = [
+	{ id: "home", label: "Home", path: "/", icon: Home },
 	{ id: "practice", label: "Practice", path: "/practice/speed", icon: Zap },
 	{ id: "learn", label: "Learn", path: "/learn/conversations/arriving", icon: BookOpen },
 	{ id: "reference", label: "Reference", path: "/reference/cases-pronouns", icon: FileText },
 ];
 
-const NAV_ITEMS_UNAUTH = [
-	{ id: "search", label: "Search", path: "/search", icon: Search },
-	{ id: "learn", label: "Learn", path: "/learn/conversations/arriving", icon: BookOpen },
-	{ id: "reference", label: "Reference", path: "/reference/cases-pronouns", icon: FileText },
-];
-
 const PUBLIC_ROUTES = ["/reference", "/learn", "/search", "/support", "/try"];
+
+interface MobileAccountPopoverProps {
+	onLogout: () => void;
+}
+
+const MobileAccountPopover = ({ onLogout }: MobileAccountPopoverProps) => {
+	const [isOpen, setIsOpen] = useState(false);
+	const navigate = useNavigate();
+
+	const handleNavigate = (path: string) => {
+		setIsOpen(false);
+		navigate(path);
+	};
+
+	const handleLogoutClick = () => {
+		setIsOpen(false);
+		onLogout();
+	};
+
+	return (
+		<Popover open={isOpen} onOpenChange={setIsOpen}>
+			<PopoverTrigger asChild>
+				<button
+					type="button"
+					className={`p-2 rounded-lg transition-colors outline-none outline-transparent ring-0 shadow-none ${
+						isOpen ? "text-terracotta bg-terracotta/10" : "text-stone-500 hover:text-stone-700"
+					}`}
+				>
+					<User size={20} strokeWidth={1.5} />
+				</button>
+			</PopoverTrigger>
+			<PopoverContent align="end" sideOffset={8} className="w-48 p-1">
+				<button
+					type="button"
+					onClick={() => handleNavigate("/progress")}
+					className="flex items-center gap-2 w-full px-3 py-2 text-left text-sm rounded-md hover:bg-stone-100 transition-colors"
+				>
+					<BarChart3 size={16} strokeWidth={1.5} className="text-stone-500" />
+					<span className="text-stone-800">Progress</span>
+				</button>
+				<button
+					type="button"
+					onClick={() => handleNavigate("/support")}
+					className="flex items-center gap-2 w-full px-3 py-2 text-left text-sm rounded-md hover:bg-stone-100 transition-colors"
+				>
+					<Info size={16} strokeWidth={1.5} className="text-stone-500" />
+					<span className="text-stone-800">About</span>
+				</button>
+				<div className="border-t border-stone-200 my-1" />
+				<button
+					type="button"
+					onClick={handleLogoutClick}
+					className="flex items-center gap-2 w-full px-3 py-2 text-left text-sm rounded-md hover:bg-stone-100 transition-colors"
+				>
+					<LogOut size={16} strokeWidth={1.5} className="text-stone-500" />
+					<span className="text-stone-800">Sign Out</span>
+				</button>
+			</PopoverContent>
+		</Popover>
+	);
+};
+
+interface MobileHeaderProps {
+	isAuthenticated: boolean;
+	onLogout: () => void;
+}
+
+const MobileHeader = ({ isAuthenticated, onLogout }: MobileHeaderProps) => {
+	return (
+		<header className="md:hidden flex items-center justify-between py-3 px-1">
+			<Link to="/" className="flex items-baseline">
+				<span className="text-xl font-serif text-terracotta">Kalimera</span>
+			</Link>
+
+			<div className="flex items-center gap-1">
+				<GlobalSearch>
+					{({ isActive }) => (
+						<span
+							className={`flex items-center justify-center p-2 rounded-lg transition-colors ${
+								isActive ? "text-terracotta bg-terracotta/10" : "text-stone-500 hover:text-stone-700"
+							}`}
+						>
+							<Search size={20} strokeWidth={1.5} />
+						</span>
+					)}
+				</GlobalSearch>
+
+				{isAuthenticated && (
+					<MobileAccountPopover onLogout={onLogout} />
+				)}
+
+				{!isAuthenticated && (
+					<Link
+						to="/login"
+						className="text-sm font-medium text-stone-600 hover:text-stone-800 px-3 py-1.5"
+					>
+						Sign In
+					</Link>
+				)}
+			</div>
+		</header>
+	);
+};
 
 export function Layout({ children }: { children: React.ReactNode }) {
 	return (
@@ -144,11 +246,20 @@ export default function Root() {
 			{/* Scrollable main area */}
 			<main className="app-main">
 				<div className="max-w-6xl mx-auto px-6 md:px-8">
-					<Header
+					{/* Mobile header */}
+					<MobileHeader
 						isAuthenticated={isAuthenticated}
-						currentSection={currentSection}
 						onLogout={handleLogout}
 					/>
+
+					{/* Desktop header */}
+					<div className="hidden md:block">
+						<Header
+							isAuthenticated={isAuthenticated}
+							currentSection={currentSection}
+							onLogout={handleLogout}
+						/>
+					</div>
 
 					{/* Page Content */}
 					<div className="pb-24 md:pb-12">
@@ -171,29 +282,9 @@ export default function Root() {
 			{/* Mobile Navigation - fixed bottom */}
 			<nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-cream/95 backdrop-blur-sm border-t border-stone-200 px-4 py-2 safe-area-pb">
 				<div className="flex justify-around items-center max-w-md mx-auto">
-					{(isAuthenticated ? NAV_ITEMS_AUTH : NAV_ITEMS_UNAUTH).map((item) => {
+					{MOBILE_NAV_ITEMS.map((item) => {
 						const Icon = item.icon;
 						const isActive = currentSection === item.id;
-
-						// Search gets special treatment - opens drawer instead of navigating
-						if (item.id === "search") {
-							return (
-								<GlobalSearch key={item.id}>
-									{({ isActive: isSearchActive }) => (
-										<span
-											className={`flex flex-col items-center gap-1 px-4 py-2 rounded-xl transition-all ${
-												isSearchActive
-													? "text-terracotta bg-terracotta/10"
-													: "text-stone-500"
-											}`}
-										>
-											<Icon size={22} strokeWidth={1.5} />
-											<span className="text-xs font-medium">{item.label}</span>
-										</span>
-									)}
-								</GlobalSearch>
-							);
-						}
 
 						return (
 							<Link
@@ -210,15 +301,6 @@ export default function Root() {
 							</Link>
 						);
 					})}
-					{!isAuthenticated && (
-						<Link
-							to="/try"
-							className="flex flex-col items-center gap-1 px-4 py-2 rounded-xl transition-all text-terracotta bg-terracotta/10"
-						>
-							<Zap size={22} strokeWidth={1.5} />
-							<span className="text-xs font-medium">Try It</span>
-						</Link>
-					)}
 				</div>
 			</nav>
 		</div>

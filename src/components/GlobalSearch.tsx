@@ -1,11 +1,5 @@
-import { useState, useEffect, useRef, useCallback, type ReactNode } from "react";
-import { Search } from "lucide-react";
-import {
-	Drawer,
-	DrawerContent,
-	DrawerHeader,
-	DrawerTitle,
-} from "@/components/ui/drawer";
+import { useState, useEffect, useRef, type ReactNode } from "react";
+import { Search, Sparkles } from "lucide-react";
 import {
 	Popover,
 	PopoverContent,
@@ -15,110 +9,35 @@ import { SearchInput } from "@/components/SearchInput";
 import { SearchResults } from "@/components/SearchResults";
 import { useVocabularySearch } from "@/lib/use-vocabulary-search";
 
+const QUICK_SEARCHES = [
+	{ greek: "θελω", english: "I want" },
+	{ greek: "ειμαι", english: "I am" },
+	{ greek: "εχω", english: "I have" },
+	{ greek: "μου", english: "my/me" },
+] as const;
+
 interface GlobalSearchProps {
 	/** Render prop for custom trigger - receives isActive state */
 	children: (props: { isActive: boolean }) => ReactNode;
 }
 
-/**
- * Global search component that adapts to viewport:
- * - Mobile: Bottom drawer
- * - Desktop: Popover anchored to trigger
- */
 export const GlobalSearch = ({ children }: GlobalSearchProps) => {
 	const [isOpen, setIsOpen] = useState(false);
-	const [isMobile, setIsMobile] = useState(false);
 
-	useEffect(() => {
-		const checkMobile = () => setIsMobile(window.innerWidth < 768);
-		checkMobile();
-		window.addEventListener("resize", checkMobile);
-		return () => window.removeEventListener("resize", checkMobile);
-	}, []);
-
-	if (isMobile) {
-		return (
-			<MobileSearch isOpen={isOpen} setIsOpen={setIsOpen}>
-				{children}
-			</MobileSearch>
-		);
-	}
-
-	return (
-		<DesktopSearch isOpen={isOpen} setIsOpen={setIsOpen}>
-			{children}
-		</DesktopSearch>
-	);
-};
-
-interface SearchVariantProps {
-	isOpen: boolean;
-	setIsOpen: (open: boolean) => void;
-	children: (props: { isActive: boolean }) => ReactNode;
-}
-
-const MobileSearch = ({ isOpen, setIsOpen, children }: SearchVariantProps) => {
-	const handleOpen = useCallback(() => {
-		window.history.pushState({ searchOpen: true }, "");
-		setIsOpen(true);
-	}, [setIsOpen]);
-
-	const handleClose = useCallback(() => {
-		setIsOpen(false);
-	}, [setIsOpen]);
-
-	const handleOpenChange = useCallback(
-		(open: boolean) => {
-			if (open) {
-				handleOpen();
-			} else {
-				if (window.history.state?.searchOpen) {
-					window.history.back();
-				}
-				handleClose();
-			}
-		},
-		[handleOpen, handleClose],
-	);
-
-	useEffect(() => {
-		const handlePopState = (event: PopStateEvent) => {
-			if (isOpen && !event.state?.searchOpen) {
-				handleClose();
-			}
-		};
-
-		window.addEventListener("popstate", handlePopState);
-		return () => window.removeEventListener("popstate", handlePopState);
-	}, [isOpen, handleClose]);
-
-	return (
-		<>
-			<button type="button" onClick={handleOpen}>
-				{children({ isActive: isOpen })}
-			</button>
-			<Drawer open={isOpen} onOpenChange={handleOpenChange}>
-				<DrawerContent className="max-h-[85vh]">
-					<DrawerHeader className="sr-only">
-						<DrawerTitle>Search vocabulary</DrawerTitle>
-					</DrawerHeader>
-					<SearchContent compact />
-				</DrawerContent>
-			</Drawer>
-		</>
-	);
-};
-
-const DesktopSearch = ({ isOpen, setIsOpen, children }: SearchVariantProps) => {
 	return (
 		<Popover open={isOpen} onOpenChange={setIsOpen}>
 			<PopoverTrigger asChild>
-				<button type="button">{children({ isActive: isOpen })}</button>
+				<button
+					type="button"
+					className="outline-none outline-transparent ring-0 border-none shadow-none focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0"
+				>
+					{children({ isActive: isOpen })}
+				</button>
 			</PopoverTrigger>
 			<PopoverContent
 				align="end"
 				sideOffset={8}
-				className="w-[420px] p-0 max-h-[70vh] flex flex-col overflow-hidden"
+				className="w-[min(420px,calc(100vw-1rem))] p-0 max-h-[70vh] flex flex-col overflow-hidden rounded-xl bg-cream shadow-lg border-stone-200"
 			>
 				<SearchContent />
 			</PopoverContent>
@@ -126,25 +45,27 @@ const DesktopSearch = ({ isOpen, setIsOpen, children }: SearchVariantProps) => {
 	);
 };
 
-interface SearchContentProps {
-	compact?: boolean;
-}
-
-const SearchContent = ({ compact = false }: SearchContentProps) => {
+const SearchContent = () => {
 	const { searchTerm, setSearchTerm, results, isLoading } = useVocabularySearch(
 		{ enabled: true },
 	);
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
-		// Focus input when content mounts
 		const timer = setTimeout(() => inputRef.current?.focus(), 50);
 		return () => clearTimeout(timer);
 	}, []);
 
+	const handleQuickSearch = (term: string) => {
+		setSearchTerm(term);
+		inputRef.current?.focus();
+	};
+
+	const showEmptyState = !searchTerm && results.length === 0;
+
 	return (
 		<div className="flex flex-col h-full">
-			<div className="p-3 border-b border-stone-200">
+			<div className="p-3 bg-cream-100/50">
 				<SearchInput
 					ref={inputRef}
 					placeholder="Search Greek, English, or tags..."
@@ -155,19 +76,52 @@ const SearchContent = ({ compact = false }: SearchContentProps) => {
 					icon={<Search size={16} />}
 				/>
 			</div>
-			<div className="flex-1 overflow-y-auto p-3 min-h-0 max-h-[50vh]">
+			<div className="flex-1 overflow-y-auto p-3 min-h-0 max-h-[50vh] bg-white">
 				{isLoading ? (
 					<div className="text-center py-8 text-stone-400 text-sm">
 						Loading...
 					</div>
+				) : showEmptyState ? (
+					<SearchEmptyState onQuickSearch={handleQuickSearch} />
 				) : (
 					<SearchResults
 						results={results}
 						searchTerm={searchTerm}
-						compact={compact}
+						compact
 					/>
 				)}
 			</div>
 		</div>
 	);
 };
+
+interface SearchEmptyStateProps {
+	onQuickSearch: (term: string) => void;
+}
+
+const SearchEmptyState = ({ onQuickSearch }: SearchEmptyStateProps) => (
+	<div className="py-4">
+		<div className="flex items-center justify-center gap-2 text-stone-400 mb-4">
+			<Sparkles size={16} className="text-honey-400" />
+			<span className="text-sm">Try searching for</span>
+		</div>
+		<div className="grid grid-cols-2 gap-2">
+			{QUICK_SEARCHES.map((item) => (
+				<button
+					key={item.greek}
+					type="button"
+					onClick={() => onQuickSearch(item.greek)}
+					className="flex flex-col items-start p-3 rounded-lg bg-cream-50 hover:bg-cream-100 border border-stone-200 hover:border-terracotta-300 transition-colors text-left min-h-[52px]"
+				>
+					<span className="text-base font-medium text-stone-900 greek-text">
+						{item.greek}
+					</span>
+					<span className="text-xs text-stone-500">{item.english}</span>
+				</button>
+			))}
+		</div>
+		<p className="text-center text-xs text-stone-400 mt-4">
+			Search by Greek, English, or tags like "food" or "travel"
+		</p>
+	</div>
+);
