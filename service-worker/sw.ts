@@ -52,7 +52,7 @@ self.addEventListener("push", (event) => {
 	} catch {
 		// Fallback for plain text payloads
 		data = {
-			title: "Ellinika",
+			title: "Kalimera",
 			body: event.data.text(),
 		};
 	}
