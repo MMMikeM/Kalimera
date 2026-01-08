@@ -90,7 +90,9 @@ const run = async () => {
 	console.log(`Screenshots saved to: ${OUTPUT_DIR}/`);
 	if (summary.length > 0) {
 		console.log("\nIssues found:");
-		summary.forEach((s) => console.log(`  - ${s}`));
+		for (const s of summary) {
+			console.log(`  - ${s}`);
+		}
 	}
 };
 
