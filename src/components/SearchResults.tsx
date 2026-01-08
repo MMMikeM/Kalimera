@@ -1,3 +1,4 @@
+import { SearchX } from "lucide-react";
 import { MonoText } from "@/components/MonoText";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
@@ -16,18 +17,18 @@ export const SearchResults = ({
 }: SearchResultsProps) => {
 	if (searchTerm && results.length === 0) {
 		return (
-			<div className="text-center py-8 text-stone-500">
-				No results for "{searchTerm}"
+			<div className="flex flex-col items-center py-8 text-stone-500">
+				<SearchX size={24} className="text-stone-300 mb-2" />
+				<p className="text-sm">No results for "{searchTerm}"</p>
+				<p className="text-xs text-stone-400 mt-1">
+					Try a different spelling or search term
+				</p>
 			</div>
 		);
 	}
 
 	if (results.length === 0) {
-		return (
-			<div className="text-center py-8 text-stone-400">
-				Start typing to search...
-			</div>
-		);
+		return null;
 	}
 
 	if (compact) {

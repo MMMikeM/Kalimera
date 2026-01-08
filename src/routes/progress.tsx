@@ -80,19 +80,19 @@ export default function ProgressPage({
 			: 0;
 
 	return (
-		<div className="max-w-2xl mx-auto py-8">
+		<div className="max-w-2xl mx-auto">
 			<Link
 				to="/"
-				className="inline-flex items-center gap-2 text-stone-500 hover:text-stone-700 mb-8"
+				className="inline-flex items-center gap-2 text-stone-500 hover:text-stone-700 text-sm mb-4"
 			>
-				<ArrowLeft size={16} />
+				<ArrowLeft size={14} />
 				<span>Back</span>
 			</Link>
 
-			<h1 className="text-3xl font-serif text-terracotta mb-2">
+			<h1 className="text-2xl font-serif text-terracotta mb-1">
 				Your Progress
 			</h1>
-			<p className="text-stone-600 mb-8">Track your Greek learning journey</p>
+			<p className="text-stone-600 text-sm mb-6">Track your Greek learning journey</p>
 
 			{/* Summary Stats */}
 			<div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">

@@ -38,18 +38,18 @@ const UserRequiredMessage = () => (
 export default function TabRoute({ loaderData }: Route.ComponentProps) {
 	const { tab } = loaderData;
 	const context = useOutletContext<PracticeLoaderData>();
-	const { reviewItems, newVocabItems, userId } = context;
+	const { reviewItems, newVocabItems, userId, stats } = context;
 
 	if (!userId) {
 		return <UserRequiredMessage />;
 	}
 
 	if (tab === "vocabulary") {
-		return <SrsDrill variant="vocabulary" items={newVocabItems} />;
+		return <SrsDrill variant="vocabulary" items={newVocabItems} streakDays={stats?.streak} />;
 	}
 
 	if (tab === "review") {
-		return <SrsDrill variant="review" items={reviewItems} />;
+		return <SrsDrill variant="review" items={reviewItems} streakDays={stats?.streak} />;
 	}
 
 	return null;

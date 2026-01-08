@@ -540,6 +540,11 @@ export default function DashboardRoute({
 					daysUntilNextEarn={daysUntilNextFreeze ?? undefined}
 					protectedDate={freezeStatus.protectedDate}
 				/>
+				{stats.streak === 1 && freezeStatus.freezeCount === 0 && (
+					<p className="text-xs text-stone-500 text-center">
+						Day 1! Practice for 7 days to earn a streak freeze.
+					</p>
+				)}
 			</section>
 
 			{/* Stats Summary */}

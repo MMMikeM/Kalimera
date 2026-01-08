@@ -76,7 +76,7 @@ export const FreezeIndicator = ({
 						<Snowflake className={iconVariants({ status })} />
 						<span className={textVariants({ status })}>
 							{freezeCount} {formatPlural(freezeCount, "freeze", "freezes")}{" "}
-							ready
+							ready — miss a day, keep your streak
 						</span>
 					</>
 				);
@@ -96,8 +96,8 @@ export const FreezeIndicator = ({
 					<>
 						<Snowflake className={cn(iconVariants({ status }), "opacity-50")} />
 						<span className={textVariants({ status })}>
-							Earn freeze in {daysUntilNextEarn}{" "}
-							{formatPlural(daysUntilNextEarn ?? 0, "day", "days")}
+							{daysUntilNextEarn} {formatPlural(daysUntilNextEarn ?? 0, "day", "days")}{" "}
+							to earn a streak freeze
 						</span>
 					</>
 				);
@@ -106,14 +106,21 @@ export const FreezeIndicator = ({
 				return (
 					<>
 						<ShieldCheck className={iconVariants({ status })} />
-						<span className={textVariants({ status })}>Streak protected!</span>
+						<span className={textVariants({ status })}>Streak protected! Freeze saved your streak.</span>
 					</>
 				);
 		}
 	};
 
 	return (
-		<div className={freezeIndicatorVariants({ status, className })}>
+		<div
+			className={freezeIndicatorVariants({ status, className })}
+			title={
+				status === "none"
+					? "Practice 7 days in a row to earn a streak freeze. If you miss a day, it activates automatically."
+					: undefined
+			}
+		>
 			{renderContent()}
 		</div>
 	);

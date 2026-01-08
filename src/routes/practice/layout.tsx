@@ -19,7 +19,6 @@ import {
 } from "./data.server";
 import { NavTabs } from "@/components/NavTabs";
 import type { NavTab } from "@/components/NavTabs";
-import { PushNotificationToggle } from "@/components/PushNotificationToggle";
 
 const AUTH_STORAGE_KEY = "greek-authenticated-user";
 
@@ -80,7 +79,7 @@ const PRACTICE_TABS: NavTab[] = [
 ];
 
 export default function PracticeLayout({ loaderData }: Route.ComponentProps) {
-	const { stats, userName } = loaderData;
+	const { stats } = loaderData;
 	const [searchParams, setSearchParams] = useSearchParams();
 	const revalidator = useRevalidator();
 	const location = useLocation();
@@ -133,28 +132,15 @@ export default function PracticeLayout({ loaderData }: Route.ComponentProps) {
 
 	return (
 		<div className="space-y-4">
-			{/* Compact header - tabs and user info */}
-			<div className="flex items-center justify-between gap-4">
-				<NavTabs
-					tabs={PRACTICE_TABS.map((tab) =>
-						tab.id === "review" && stats?.dueCount
-							? { ...tab, badge: stats.dueCount }
-							: tab
-					)}
-					activeTab={activeTab}
-					buildUrl={buildTabUrl}
-				/>
-				<div className="flex items-center gap-3">
-					{loaderData.userId && (
-						<PushNotificationToggle userId={loaderData.userId} />
-					)}
-					{userName && (
-						<span className="text-sm text-stone-600">
-							Practicing as <span className="font-medium text-stone-800">{userName}</span>
-						</span>
-					)}
-				</div>
-			</div>
+			<NavTabs
+				tabs={PRACTICE_TABS.map((tab) =>
+					tab.id === "review" && stats?.dueCount
+						? { ...tab, badge: stats.dueCount }
+						: tab
+				)}
+				activeTab={activeTab}
+				buildUrl={buildTabUrl}
+			/>
 
 			{/* Drill content */}
 			<Outlet context={loaderData} />
