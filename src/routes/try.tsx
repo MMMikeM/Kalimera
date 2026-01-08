@@ -10,7 +10,7 @@ import { Header } from "@/components/Header";
 
 export function meta() {
 	return [
-		{ title: "Try Greek Drills - Ellinika" },
+		{ title: "Try Greek Drills - Kalimera" },
 		{
 			name: "description",
 			content: "Experience timed Greek production drills - no signup required",
@@ -44,7 +44,7 @@ const TryDrillIntro = ({ onStart }: { onStart: () => void }) => (
 						</div>
 						<h1 className="text-2xl font-bold mb-2">Try a Speed Drill</h1>
 						<p className="text-stone-600 mb-6">
-							8 questions. Type the Greek. No hints. Let's see what you've got.
+							8 questions. Type Greek with your normal keyboard. We understand phonetic spelling. Let's see what you've got.
 						</p>
 
 						<Button size="lg" onClick={onStart} className="gap-2">
@@ -103,7 +103,7 @@ const TryDrillComplete = ({ stats }: { stats: SessionStats }) => {
 									This was just a taste.
 								</p>
 								<p className="text-stone-600 text-sm">
-									Create an account to track your progress, build streaks, and access
+									Create an account to track your progress, build streaks with automatic freeze protection, and access
 									the full drill library. It's free.
 								</p>
 							</div>
@@ -131,7 +131,7 @@ const TryDrillComplete = ({ stats }: { stats: SessionStats }) => {
 							to="/"
 							className="inline-flex items-center gap-1 text-sm text-stone-500 hover:text-terracotta transition-colors"
 						>
-							Learn more about Ellinika
+							Learn more about Kalimera
 							<ArrowRight size={14} />
 						</Link>
 					</div>

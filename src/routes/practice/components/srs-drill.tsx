@@ -13,6 +13,7 @@ export type SrsDrillVariant = "vocabulary" | "review";
 interface SrsDrillProps {
 	variant: SrsDrillVariant;
 	items: VocabItemWithSkill[];
+	streakDays?: number;
 }
 
 const VARIANT_CONFIG: Record<
@@ -41,7 +42,7 @@ const VARIANT_CONFIG: Record<
 	},
 };
 
-const SrsDrill: React.FC<SrsDrillProps> = ({ variant, items }) => {
+const SrsDrill: React.FC<SrsDrillProps> = ({ variant, items, streakDays }) => {
 	const config = VARIANT_CONFIG[variant];
 	const userId = useCurrentUserId();
 	const fetcher = useFetcher();
@@ -103,6 +104,8 @@ const SrsDrill: React.FC<SrsDrillProps> = ({ variant, items }) => {
 				title={config.title(items.length)}
 				questions={questions}
 				onAttempt={handleAttempt}
+				userId={userId}
+				streakDays={streakDays}
 			/>
 		</div>
 	);

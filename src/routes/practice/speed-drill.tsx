@@ -26,7 +26,7 @@ const FOCUS_OPTIONS: { value: FocusType; label: string }[] = [
 ];
 
 const SpeedDrill: React.FC = () => {
-	const { userId } = useOutletContext<PracticeLoaderData>();
+	const { userId, stats } = useOutletContext<PracticeLoaderData>();
 	const fetcher = useFetcher();
 	const sessionIdRef = useRef<number | null>(null);
 
@@ -225,6 +225,9 @@ const SpeedDrill: React.FC = () => {
 				questions={questions}
 				onAttempt={handleAttempt}
 				onComplete={handleComplete}
+				userId={userId}
+				sessionCount={sessionCount}
+				streakDays={stats?.streak}
 			/>
 
 			{lastStats && (

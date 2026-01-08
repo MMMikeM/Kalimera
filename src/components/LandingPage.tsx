@@ -9,7 +9,7 @@ const FEATURES = [
 	{
 		icon: Clock,
 		title: "Timed Drills",
-		description: "3.5 seconds. No hints. Pure retrieval.",
+		description: "3.5 seconds. Your normal keyboard. Pure retrieval.",
 	},
 	{
 		icon: Brain,
@@ -152,7 +152,7 @@ export const LandingPage = () => (
 
 				{/* Footer */}
 				<footer className="py-8 text-center text-sm text-stone-500 space-y-2">
-					<p className="font-serif text-terracotta-text">Ellinika</p>
+					<p className="font-serif text-terracotta-text">Kalimera</p>
 					<p>
 						<Link
 							to="/support"

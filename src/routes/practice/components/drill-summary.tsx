@@ -3,6 +3,7 @@ import { CheckCircle, XCircle, RotateCcw, Flame, Trophy, Sparkles } from "lucide
 import { Card } from "@/components/Card";
 import { MonoText } from "@/components/MonoText";
 import { Button } from "@/components/ui/button";
+import { NotificationAsk } from "@/components/NotificationAsk";
 import { greekToPhonetic } from "@/lib/greek-transliteration";
 import type { SessionStats } from "./unified-drill";
 
@@ -25,9 +26,18 @@ const getEncouragementMessage = (percentage: number): { message: string; icon: R
 interface DrillSummaryProps {
 	stats: SessionStats;
 	onRestart: () => void;
+	userId?: number | null;
+	sessionCount?: number;
+	streakDays?: number;
 }
 
-const DrillSummary: React.FC<DrillSummaryProps> = ({ stats, onRestart }) => {
+const DrillSummary: React.FC<DrillSummaryProps> = ({
+	stats,
+	onRestart,
+	userId,
+	sessionCount,
+	streakDays,
+}) => {
 	const percentage = Math.round((stats.correct / stats.total) * 100);
 	const avgTime = (stats.avgResponseTime / 1000).toFixed(1);
 	const { message: encouragement, icon: encouragementIcon } = getEncouragementMessage(percentage);
@@ -124,6 +134,16 @@ const DrillSummary: React.FC<DrillSummaryProps> = ({ stats, onRestart }) => {
 					<div className="text-center mb-6 py-4 bg-correct-100 rounded-lg">
 						<CheckCircle size={32} className="text-correct mx-auto mb-2" />
 						<p className="text-correct font-medium">Perfect session!</p>
+					</div>
+				)}
+
+				{userId && (
+					<div className="mb-6">
+						<NotificationAsk
+							userId={userId}
+							sessionCount={sessionCount}
+							streakDays={streakDays}
+						/>
 					</div>
 				)}
 

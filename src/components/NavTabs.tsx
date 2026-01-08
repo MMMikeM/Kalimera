@@ -1,20 +1,20 @@
 import type { ReactNode } from "react";
 import { Link } from "react-router";
-import { tv, type VariantProps } from "tailwind-variants";
+import { tv, } from "tailwind-variants";
 
 const navTabsVariants = tv({
 	slots: {
-		root: "flex flex-col gap-2",
-		list: "bg-muted text-muted-foreground inline-flex h-auto w-fit items-center justify-center rounded-lg p-[3px] flex-wrap gap-1",
+		root: "flex flex-col gap-2 w-full",
+		list: "bg-muted text-muted-foreground flex h-auto w-full items-center rounded-lg p-[3px] gap-1",
 		trigger:
-			"relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-2 py-1 text-sm font-medium whitespace-nowrap transition-[color,box-shadow] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+			"relative flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-2 py-1.5 text-sm font-medium whitespace-nowrap transition-[color,box-shadow] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
 		badge:
 			"absolute -top-1 -right-1 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center",
 	},
 });
 
 const triggerStateVariants = tv({
-	base: "inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-2 py-1 text-sm font-medium whitespace-nowrap transition-[color,box-shadow] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 relative",
+	base: "",
 	variants: {
 		active: {
 			true: "bg-white dark:bg-input/30 shadow-sm dark:border-input text-foreground",
@@ -67,15 +67,20 @@ interface NavTab {
 	badge?: number | string;
 }
 
-interface NavTabsProps extends VariantProps<typeof navTabsVariants> {
+interface NavTabsProps {
 	tabs: NavTab[];
 	activeTab: string;
 	buildUrl: (tabId: string) => string;
 	className?: string;
 }
 
-const NavTabs = ({ tabs, activeTab, buildUrl, className }: NavTabsProps) => {
-	const { root, list } = navTabsVariants();
+const NavTabs = ({
+	tabs,
+	activeTab,
+	buildUrl,
+	className,
+}: NavTabsProps) => {
+	const { root, list, trigger } = navTabsVariants();
 
 	return (
 		<div className={root({ className })}>
@@ -88,7 +93,7 @@ const NavTabs = ({ tabs, activeTab, buildUrl, className }: NavTabsProps) => {
 						<Link
 							key={tab.id}
 							to={buildUrl(tab.id)}
-							className={triggerStateVariants({ active: isActive, color })}
+							className={`${trigger()} ${triggerStateVariants({ active: isActive, color })}`}
 						>
 							{tab.icon}
 							{tab.shortLabel ? (
@@ -101,7 +106,9 @@ const NavTabs = ({ tabs, activeTab, buildUrl, className }: NavTabsProps) => {
 							)}
 							{tab.badge !== undefined && tab.badge !== 0 && (
 								<span className={badgeColorVariants({ color })}>
-									{typeof tab.badge === "number" && tab.badge > 99 ? "99+" : tab.badge}
+									{typeof tab.badge === "number" && tab.badge > 99
+										? "99+"
+										: tab.badge}
 								</span>
 							)}
 						</Link>

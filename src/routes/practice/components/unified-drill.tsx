@@ -150,6 +150,9 @@ interface UnifiedDrillProps {
 	questions: UnifiedQuestion[];
 	onAttempt?: (result: UnifiedAttemptResult) => void;
 	onComplete?: (stats: SessionStats) => void;
+	userId?: number | null;
+	sessionCount?: number;
+	streakDays?: number;
 }
 
 const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
@@ -157,6 +160,9 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 	questions,
 	onAttempt,
 	onComplete,
+	userId,
+	sessionCount,
+	streakDays,
 }) => {
 	const [state, dispatch] = useReducer(
 		unifiedReducer,
@@ -317,6 +323,9 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 					attempts: state.attempts,
 				}}
 				onRestart={() => dispatch({ type: "RESTART" })}
+				userId={userId}
+				sessionCount={sessionCount}
+				streakDays={streakDays}
 			/>
 		);
 	}
@@ -397,9 +406,13 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 						<p className="text-xs text-stone-400 text-center">
 							Type using Latin letters • Press Enter to submit
 						</p>
+						{state.currentIndex === 0 && !state.userInput && (
+							<p className="text-xs text-ocean text-center mt-2">
+								Tip: Type "thelo" or "θέλω" — both work
+							</p>
+						)}
 					</div>
 				)}
-
 
 				{/* Feedback state - Result */}
 				{state.phase === "feedback" && (
