@@ -60,7 +60,7 @@ export const Header = ({ isAuthenticated, currentSection = "", onLogout }: Heade
 		<header className="pt-8 pb-6">
 			<div className="flex items-center justify-between gap-4">
 				<Link to="/" className="flex items-baseline shrink-0">
-					<span className="text-2xl font-serif text-terracotta">Ellinika</span>
+					<span className="text-2xl font-serif text-terracotta">Kalimera</span>
 				</Link>
 
 				{/* Desktop search - Gmail style centered */}
