@@ -1,13 +1,48 @@
 import { useId, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-export type ContentColorScheme = "ocean" | "terracotta" | "olive" | "honey";
+export type ContentColorScheme =
+	| "ocean"
+	| "terracotta"
+	| "olive"
+	| "honey"
+	| "navy"
+	| "slate";
 
-const colorStyles: Record<ContentColorScheme, { border: string; bg: string }> = {
-	ocean: { border: "border-ocean-400", bg: "bg-ocean-400" },
-	terracotta: { border: "border-terracotta-400", bg: "bg-terracotta-400" },
-	olive: { border: "border-olive-400", bg: "bg-olive-400" },
-	honey: { border: "border-honey-400", bg: "bg-honey-400" },
+const colorStyles: Record<
+	ContentColorScheme,
+	{ border: string; header: string; bg: string }
+> = {
+	ocean: {
+		border: "border-ocean-400",
+		header: "bg-ocean-400",
+		bg: "bg-ocean-50",
+	},
+	terracotta: {
+		border: "border-terracotta-400",
+		header: "bg-terracotta-400",
+		bg: "bg-terracotta-50",
+	},
+	olive: {
+		border: "border-olive-400",
+		header: "bg-olive-400",
+		bg: "bg-olive-50",
+	},
+	honey: {
+		border: "border-honey-400",
+		header: "bg-honey-400",
+		bg: "bg-honey-50",
+	},
+	navy: {
+		border: "border-navy-400",
+		header: "bg-navy-400",
+		bg: "bg-navy-50",
+	},
+	slate: {
+		border: "border-slate-400",
+		header: "bg-slate-400",
+		bg: "bg-slate-50",
+	},
 };
 
 // ─── Section Header ─────────────────────────────────────────────────────────
@@ -36,12 +71,13 @@ export const ContentSection = ({
 		<section
 			aria-labelledby={headingId}
 			className={cn(
-				"border-2 rounded-lg pb-3 overflow-hidden bg-white",
+				"border-2 rounded-lg pb-3 overflow-hidden",
 				styles.border,
+				styles.bg,
 				className,
 			)}
 		>
-			<header className={cn("px-3 py-2.5", styles.bg)}>
+			<header className={cn("px-3 py-2.5", styles.header)}>
 				<div className="flex items-center gap-2">
 					<h3
 						id={headingId}
@@ -55,9 +91,7 @@ export const ContentSection = ({
 						</span>
 					)}
 				</div>
-				{subtitle && (
-					<p className="text-white/80 text-xs mt-0.5">{subtitle}</p>
-				)}
+				{subtitle && <p className="text-white/80 text-xs mt-0.5">{subtitle}</p>}
 			</header>
 			{children}
 		</section>
