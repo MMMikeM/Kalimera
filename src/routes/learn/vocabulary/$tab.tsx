@@ -8,10 +8,6 @@ import {
 	Car,
 	Sun,
 	ArrowRight,
-	Hash,
-	Palette,
-	TrendingUp,
-	MapPin,
 	Lightbulb,
 	Package,
 	Languages,
@@ -20,10 +16,9 @@ import {
 import { Card } from "@/components/Card";
 import { MonoText } from "@/components/MonoText";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
-import { CategoryCard } from "@/components/CategoryCard";
+import { ContentSection, TwoColumnList } from "@/components/ContentSection";
 import { ParadigmTable } from "@/components/ParadigmTable";
 import { TabHero } from "@/components/TabHero";
-import { KeyInsight } from "@/components/KeyInsight";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
 	VERB_PATTERNS,
@@ -34,8 +29,6 @@ import {
 import {
 	type VocabularyLoaderData,
 	NounDisplay,
-	VocabItemDisplay,
-	VocabSection,
 	type VocabItem,
 } from "./shared";
 
@@ -127,19 +120,22 @@ const NounSection: React.FC<{
 const NounsTab: React.FC<{ data: VocabularyLoaderData }> = ({ data }) => (
 	<div className="space-y-6">
 		<TabHero
-			title="Nouns organized by everyday life"
+			title="Everyday nouns"
 			greekPhrase="ο / η / το"
 			colorScheme="ocean"
-			icon={<Package size={18} />}
+			icon={<Package size={24} />}
+			expandedExample={{
+				label: "Endings hint at gender",
+				content: (
+					<p className="text-sm text-stone-600">
+						Most nouns ending in <strong>-ος</strong> are masculine, <strong>-η/-α</strong> are feminine, and <strong>-ο/-ι/-μα</strong> are neuter. The article confirms it: ο (m), η (f), το (n).
+					</p>
+				),
+			}}
 		>
-			Browse vocabulary by category. Each noun shows its article, which tells you
-			the gender you need to match.
+			The words you'll use most, organised by situation. Every noun includes its
+			article so you learn the gender from the start.
 		</TabHero>
-
-		<KeyInsight title="Endings hint at gender">
-			Most nouns ending in -ος are masculine, -η/-α are feminine, and -ο/-ι/-μα
-			are neuter. The article confirms it: ο (m), η (f), το (n).
-		</KeyInsight>
 
 		<Alert variant="info" className="bg-stone-50">
 			<AlertDescription className="text-stone-700">
@@ -222,20 +218,14 @@ const VerbList: React.FC<{
 const VerbsTab: React.FC<{ data: VocabularyLoaderData }> = ({ data }) => (
 	<div className="space-y-6">
 		<TabHero
-			title="Browse verbs by conjugation family"
+			title="Verbs by family"
 			greekPhrase="κάνω, μιλάω, έρχομαι"
 			colorScheme="olive"
 			icon={<Languages size={18} />}
 		>
-			Verbs grouped by how they conjugate. If you know one verb in a family, you
-			know them all.
+			Learn one verb from each family and you can conjugate thousands. That's
+			not an exaggeration.
 		</TabHero>
-
-		<KeyInsight title="Three patterns cover almost everything">
-			Greek verbs follow predictable patterns based on their ending: -ω (active),
-			-άω/-ώ (contracted), and -μαι (deponent). Learn one example from each group
-			and you can conjugate thousands of verbs.
-		</KeyInsight>
 
 		<div className="p-3 bg-ocean-100 rounded-lg border border-ocean-300 flex items-center justify-between">
 			<span className="text-sm text-stone-700">
@@ -257,103 +247,107 @@ const VerbsTab: React.FC<{ data: VocabularyLoaderData }> = ({ data }) => (
 			// Special handling for merged deponent category
 			if (category.title === "deponent" && category.subCategories) {
 				return (
-					<CategoryCard
+					<ContentSection
 						key={category.id}
 						title={displayTitle}
 						subtitle={`${category.verbs.length} verbs`}
 						colorScheme={colorScheme}
 					>
-						<Alert variant="info" className="mb-4">
-							<AlertDescription>
-								<strong>Pattern insight:</strong> Just like active verbs have -ω
-								and -άω patterns, deponent verbs have -ομαι and -άμαι. Same
-								vowel contraction!
-							</AlertDescription>
-						</Alert>
+						<div className="p-3 space-y-4">
+							<Alert variant="info">
+								<AlertDescription>
+									<strong>Pattern insight:</strong> Just like active verbs have -ω
+									and -άω patterns, deponent verbs have -ομαι and -άμαι. Same
+									vowel contraction!
+								</AlertDescription>
+							</Alert>
 
-						<div className="grid md:grid-cols-2 gap-4 mb-4">
-							<div className="p-4 bg-olive-50 rounded-lg border border-olive-200">
-								<h4 className="font-semibold text-olive-text mb-3">
-									Type 1: -ομαι
-								</h4>
-								<ParadigmTable
-									infinitive="έρχομαι"
-									meaning="come"
-									forms={{
-										sg1: VERB_CONJUGATIONS.erhomai?.[0]?.form ?? "",
-										sg2: VERB_CONJUGATIONS.erhomai?.[1]?.form ?? "",
-										sg3: VERB_CONJUGATIONS.erhomai?.[2]?.form ?? "",
-										pl1: VERB_CONJUGATIONS.erhomai?.[3]?.form ?? "",
-										pl2: VERB_CONJUGATIONS.erhomai?.[4]?.form ?? "",
-										pl3: VERB_CONJUGATIONS.erhomai?.[5]?.form ?? "",
-									}}
-								/>
+							<div className="grid md:grid-cols-2 gap-4">
+								<div className="p-4 bg-olive-50 rounded-lg border border-olive-200">
+									<h4 className="font-semibold text-olive-text mb-3">
+										Type 1: -ομαι
+									</h4>
+									<ParadigmTable
+										infinitive="έρχομαι"
+										meaning="come"
+										forms={{
+											sg1: VERB_CONJUGATIONS.erhomai?.[0]?.form ?? "",
+											sg2: VERB_CONJUGATIONS.erhomai?.[1]?.form ?? "",
+											sg3: VERB_CONJUGATIONS.erhomai?.[2]?.form ?? "",
+											pl1: VERB_CONJUGATIONS.erhomai?.[3]?.form ?? "",
+											pl2: VERB_CONJUGATIONS.erhomai?.[4]?.form ?? "",
+											pl3: VERB_CONJUGATIONS.erhomai?.[5]?.form ?? "",
+										}}
+									/>
+								</div>
+
+								<div className="p-4 bg-olive-50 rounded-lg border border-olive-200">
+									<h4 className="font-semibold text-olive-text mb-3">
+										Type 2: -άμαι
+									</h4>
+									<ParadigmTable
+										infinitive="θυμάμαι"
+										meaning="remember"
+										forms={{
+											sg1: VERB_CONJUGATIONS.thymamai?.[0]?.form ?? "",
+											sg2: VERB_CONJUGATIONS.thymamai?.[1]?.form ?? "",
+											sg3: VERB_CONJUGATIONS.thymamai?.[2]?.form ?? "",
+											pl1: VERB_CONJUGATIONS.thymamai?.[3]?.form ?? "",
+											pl2: VERB_CONJUGATIONS.thymamai?.[4]?.form ?? "",
+											pl3: VERB_CONJUGATIONS.thymamai?.[5]?.form ?? "",
+										}}
+									/>
+								</div>
 							</div>
 
-							<div className="p-4 bg-olive-50 rounded-lg border border-olive-200">
-								<h4 className="font-semibold text-olive-text mb-3">
-									Type 2: -άμαι
-								</h4>
-								<ParadigmTable
-									infinitive="θυμάμαι"
-									meaning="remember"
-									forms={{
-										sg1: VERB_CONJUGATIONS.thymamai?.[0]?.form ?? "",
-										sg2: VERB_CONJUGATIONS.thymamai?.[1]?.form ?? "",
-										sg3: VERB_CONJUGATIONS.thymamai?.[2]?.form ?? "",
-										pl1: VERB_CONJUGATIONS.thymamai?.[3]?.form ?? "",
-										pl2: VERB_CONJUGATIONS.thymamai?.[4]?.form ?? "",
-										pl3: VERB_CONJUGATIONS.thymamai?.[5]?.form ?? "",
-									}}
-								/>
+							<div className="space-y-3">
+								{category.subCategories.map((sub) => (
+									<CollapsibleSection
+										key={sub.pattern}
+										title={`${sub.title} (${sub.verbs.length} verbs)`}
+										colorScheme="olive"
+										defaultOpen={false}
+									>
+										<VerbList verbs={sub.verbs} />
+									</CollapsibleSection>
+								))}
 							</div>
 						</div>
-
-						<div className="space-y-3">
-							{category.subCategories.map((sub) => (
-								<CollapsibleSection
-									key={sub.pattern}
-									title={`${sub.title} (${sub.verbs.length} verbs)`}
-									colorScheme="olive"
-									defaultOpen={false}
-								>
-									<VerbList verbs={sub.verbs} />
-								</CollapsibleSection>
-							))}
-						</div>
-					</CategoryCard>
+					</ContentSection>
 				);
 			}
 
 			// Special handling for irregular verbs
 			if (category.title === "irregular") {
 				return (
-					<CategoryCard
+					<ContentSection
 						key={category.id}
 						title={displayTitle}
 						subtitle={`${category.verbs.length} verbs`}
 						colorScheme={colorScheme}
 					>
-						<div className="grid sm:grid-cols-2 gap-4">
-							{IRREGULAR_VERBS.map((verb) => (
-								<div
-									key={verb.infinitive}
-									className="p-4 bg-honey-50 rounded-lg border border-honey-200"
-								>
-									<ParadigmTable
-										infinitive={verb.infinitive}
-										meaning={verb.meaning}
-										forms={verb.forms}
-									/>
-									{verb.note && (
-										<p className="mt-2 text-sm text-stone-600 italic">
-											{verb.note}
-										</p>
-									)}
-								</div>
-							))}
+						<div className="p-3">
+							<div className="grid sm:grid-cols-2 gap-4">
+								{IRREGULAR_VERBS.map((verb) => (
+									<div
+										key={verb.infinitive}
+										className="p-4 bg-honey-50 rounded-lg border border-honey-200"
+									>
+										<ParadigmTable
+											infinitive={verb.infinitive}
+											meaning={verb.meaning}
+											forms={verb.forms}
+										/>
+										{verb.note && (
+											<p className="mt-2 text-sm text-stone-600 italic">
+												{verb.note}
+											</p>
+										)}
+									</div>
+								))}
+							</div>
 						</div>
-					</CategoryCard>
+					</ContentSection>
 				);
 			}
 
@@ -366,15 +360,14 @@ const VerbsTab: React.FC<{ data: VocabularyLoaderData }> = ({ data }) => (
 				: null;
 
 			return (
-				<CategoryCard
+				<ContentSection
 					key={category.id}
 					title={displayTitle}
 					subtitle={`${category.verbs.length} verbs`}
 					colorScheme={colorScheme}
-					priority={category.verbs.length > 20 ? "primary" : "secondary"}
 				>
-					{pattern && conjugation && (
-						<div className="mb-4">
+					<div className="p-3 space-y-4">
+						{pattern && conjugation && (
 							<ParadigmTable
 								infinitive={pattern.canonical.infinitive}
 								meaning={pattern.canonical.meaning}
@@ -387,17 +380,17 @@ const VerbsTab: React.FC<{ data: VocabularyLoaderData }> = ({ data }) => (
 									pl3: conjugation[5]?.form ?? "",
 								}}
 							/>
-						</div>
-					)}
+						)}
 
-					<CollapsibleSection
-						title={`All ${familyConfig?.shortName ?? category.title}`}
-						colorScheme={colorScheme}
-						defaultOpen={false}
-					>
-						<VerbList verbs={category.verbs} />
-					</CollapsibleSection>
-				</CategoryCard>
+						<CollapsibleSection
+							title={`All ${familyConfig?.shortName ?? category.title}`}
+							colorScheme={colorScheme}
+							defaultOpen={false}
+						>
+							<VerbList verbs={category.verbs} />
+						</CollapsibleSection>
+					</div>
+				</ContentSection>
 			);
 		})}
 	</div>
@@ -457,196 +450,173 @@ const ReferenceTab: React.FC<{ data: VocabularyLoaderData }> = ({ data }) => {
 				need constantly in everyday Greek.
 			</TabHero>
 
-			<Card
-				variant="bordered"
-				padding="lg"
-				className="bg-honey-50 border-honey-300"
-			>
-				<div className="flex items-center gap-3 mb-4">
-					<div className="p-2 rounded-lg bg-honey-200">
-						<Sun size={20} className="text-honey-text" />
-					</div>
-					<h3 className="text-lg font-bold text-honey-text">Times of Day</h3>
-				</div>
-				<div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-					{sortedTimes.map((time) => (
-						<div
-							key={time.id}
-							className="text-center p-3 bg-white rounded-lg border border-honey-200 shadow-sm"
-						>
-							<MonoText variant="greek" size="lg" className="block mb-1">
-								{time.greek}
-							</MonoText>
-							<div className="text-stone-600 text-sm">{time.english}</div>
-							{time.timeRange && (
-								<div className="text-xs text-stone-600 mt-1">
-									{time.timeRange}
-								</div>
-							)}
-						</div>
-					))}
-				</div>
-			</Card>
+			<Alert variant="info">
+				<AlertDescription>
+					For days of the week and months, see{" "}
+					<Link
+						to="/learn/phrases/time"
+						className="underline font-medium text-ocean-text hover:text-ocean-700"
+					>
+						Time Expressions
+					</Link>{" "}
+					in Phrases.
+				</AlertDescription>
+			</Alert>
 
-			<Card
-				variant="bordered"
-				padding="lg"
-				className="bg-ocean-50 border-ocean-300"
-			>
-				<div className="flex items-center gap-3 mb-4">
-					<div className="p-2 rounded-lg bg-ocean-200">
-						<Hash size={20} className="text-ocean-text" />
-					</div>
-					<div>
-						<h3 className="text-lg font-bold text-ocean-text">Numbers</h3>
-						<p className="text-sm text-stone-600">Αριθμοί</p>
-					</div>
+			<ContentSection title="Times of Day" colorScheme="honey">
+				<TwoColumnList
+					items={sortedTimes.map((t) => ({
+						id: t.id,
+						primary: t.greek,
+						secondary: t.english,
+						timeRange: t.timeRange,
+					}))}
+					renderPrimary={(item) => (
+						<MonoText variant="greek" size="md" className="text-honey-800">
+							{item.primary}
+						</MonoText>
+					)}
+					renderSecondary={(item) => (
+						<span>
+							{item.secondary}
+							{(item as { timeRange?: string }).timeRange && (
+								<span className="text-stone-400 ml-2">
+									({(item as { timeRange?: string }).timeRange})
+								</span>
+							)}
+						</span>
+					)}
+				/>
+			</ContentSection>
+
+			<ContentSection title="Numbers" subtitle="Αριθμοί" colorScheme="ocean">
+				<div className="px-3 pt-3">
+					<Alert variant="info">
+						<AlertDescription>
+							<strong>Pattern:</strong> For 21-99, combine tens + units: τριάντα
+							+ δύο = τριάντα δύο (32)
+						</AlertDescription>
+					</Alert>
 				</div>
-				<Alert variant="info" className="mb-4">
-					<AlertDescription>
-						<strong>Pattern:</strong> For 21-99, combine tens + units: τριάντα +
-						δύο = τριάντα δύο (32)
-					</AlertDescription>
-				</Alert>
-				<div className="grid md:grid-cols-3 gap-6">
-					<div>
-						<h5 className="font-semibold text-ocean-text mb-3">Units (0-9)</h5>
-						<div className="space-y-2">
-							{data.reference.numbers
+				<div className="grid md:grid-cols-3">
+					<div className="border-r border-stone-200/60 last:border-r-0">
+						<div className="px-3 py-2 text-xs font-semibold text-ocean-text uppercase tracking-wide">
+							Units (0-9)
+						</div>
+						<TwoColumnList
+							items={data.reference.numbers
 								.filter(
 									(n) =>
 										n.numericValue !== undefined &&
 										n.numericValue >= 0 &&
 										n.numericValue <= 9,
 								)
-								.map((number) => (
-									<div key={number.id} className="flex items-baseline gap-2">
-										<MonoText>{number.greek}</MonoText>
-										<span className="text-stone-600 text-sm">
-											{number.english}
-										</span>
-									</div>
-								))}
-						</div>
+								.map((n) => ({ id: n.id, primary: n.greek, secondary: n.english }))}
+							renderPrimary={(item) => (
+								<MonoText variant="greek" size="md" className="text-ocean-800">
+									{item.primary}
+								</MonoText>
+							)}
+						/>
 					</div>
-					<div>
-						<h5 className="font-semibold text-ocean-text mb-3">
+					<div className="border-r border-stone-200/60 last:border-r-0">
+						<div className="px-3 py-2 text-xs font-semibold text-ocean-text uppercase tracking-wide">
 							Teens (10-19)
-						</h5>
-						<div className="space-y-2">
-							{data.reference.numbers
+						</div>
+						<TwoColumnList
+							items={data.reference.numbers
 								.filter(
 									(n) =>
 										n.numericValue &&
 										n.numericValue >= 10 &&
 										n.numericValue <= 19,
 								)
-								.map((number) => (
-									<div key={number.id} className="flex items-baseline gap-2">
-										<MonoText>{number.greek}</MonoText>
-										<span className="text-stone-600 text-sm">
-											{number.english}
-										</span>
-									</div>
-								))}
-						</div>
-					</div>
-					<div>
-						<h5 className="font-semibold text-ocean-text mb-3">
-							Tens (20-100)
-						</h5>
-						<div className="space-y-2">
-							{data.reference.numbers
-								.filter((n) => n.numericValue && n.numericValue >= 20)
-								.map((number) => (
-									<div key={number.id} className="flex items-baseline gap-2">
-										<MonoText>{number.greek}</MonoText>
-										<span className="text-stone-600 text-sm">
-											{number.english}
-										</span>
-									</div>
-								))}
-						</div>
-					</div>
-				</div>
-			</Card>
-
-			<VocabSection
-				title="Colors"
-				icon={<Palette size={20} />}
-				colorScheme="terracotta"
-			>
-				{data.reference.colors.map((color) => (
-					<VocabItemDisplay
-						key={color.id}
-						greek={color.greek}
-						english={color.english}
-					/>
-				))}
-			</VocabSection>
-
-			<Card
-				variant="bordered"
-				padding="lg"
-				className="bg-olive-50 border-olive-300"
-			>
-				<div className="flex items-center gap-3 mb-4">
-					<div className="p-2 rounded-lg bg-olive-200">
-						<TrendingUp size={20} className="text-olive-text" />
-					</div>
-					<h3 className="text-lg font-bold text-olive-text">
-						Adverbs of Frequency
-					</h3>
-				</div>
-				<Alert variant="warning" className="mb-4">
-					<Lightbulb size={16} />
-					<AlertDescription>
-						<strong>Remember:</strong> ποτέ = never, πότε = when (question) —
-						accent changes meaning!
-					</AlertDescription>
-				</Alert>
-				<div className="grid md:grid-cols-3 gap-3">
-					{data.reference.frequencyAdverbs.map((adverb) => (
-						<VocabItemDisplay
-							key={adverb.id}
-							greek={adverb.greek}
-							english={adverb.english}
+								.map((n) => ({ id: n.id, primary: n.greek, secondary: n.english }))}
+							renderPrimary={(item) => (
+								<MonoText variant="greek" size="md" className="text-ocean-800">
+									{item.primary}
+								</MonoText>
+							)}
 						/>
-					))}
-				</div>
-			</Card>
-
-			<Card
-				variant="bordered"
-				padding="lg"
-				className="bg-ocean-50 border-ocean-300"
-			>
-				<div className="flex items-center gap-3 mb-4">
-					<div className="p-2 rounded-lg bg-ocean-200">
-						<MapPin size={20} className="text-ocean-text" />
 					</div>
-					<h3 className="text-lg font-bold text-ocean-text">
-						Position & Direction
-					</h3>
+					<div className="border-r border-stone-200/60 last:border-r-0">
+						<div className="px-3 py-2 text-xs font-semibold text-ocean-text uppercase tracking-wide">
+							Tens (20-100)
+						</div>
+						<TwoColumnList
+							items={data.reference.numbers
+								.filter((n) => n.numericValue && n.numericValue >= 20)
+								.map((n) => ({ id: n.id, primary: n.greek, secondary: n.english }))}
+							renderPrimary={(item) => (
+								<MonoText variant="greek" size="md" className="text-ocean-800">
+									{item.primary}
+								</MonoText>
+							)}
+						/>
+					</div>
 				</div>
-				<Alert variant="info" className="mb-4">
-					<AlertDescription>
-						Essential for giving and understanding directions. Opposites are
-						grouped together.
-					</AlertDescription>
-				</Alert>
-				<div className="space-y-2">
+			</ContentSection>
+
+			<ContentSection title="Colours" colorScheme="terracotta">
+				<TwoColumnList
+					items={data.reference.colors.map((c) => ({
+						id: c.id,
+						primary: c.greek,
+						secondary: c.english,
+					}))}
+					renderPrimary={(item) => (
+						<MonoText variant="greek" size="md" className="text-terracotta-800">
+							{item.primary}
+						</MonoText>
+					)}
+				/>
+			</ContentSection>
+
+			<ContentSection title="Adverbs of Frequency" colorScheme="olive">
+				<div className="px-3 pt-3">
+					<Alert variant="warning">
+						<Lightbulb size={16} />
+						<AlertDescription>
+							<strong>Remember:</strong> ποτέ = never, πότε = when (question) —
+							accent changes meaning!
+						</AlertDescription>
+					</Alert>
+				</div>
+				<TwoColumnList
+					items={data.reference.frequencyAdverbs.map((a) => ({
+						id: a.id,
+						primary: a.greek,
+						secondary: a.english,
+					}))}
+					renderPrimary={(item) => (
+						<MonoText variant="greek" size="md" className="text-olive-800">
+							{item.primary}
+						</MonoText>
+					)}
+				/>
+			</ContentSection>
+
+			<ContentSection title="Position & Direction" colorScheme="ocean">
+				<div className="px-3 pt-3">
+					<Alert variant="info">
+						<AlertDescription>
+							Essential for giving and understanding directions. Opposites are
+							grouped together.
+						</AlertDescription>
+					</Alert>
+				</div>
+				<div className="divide-y divide-stone-200/60">
 					{pairedAdverbs.map((pair) => (
 						<div
 							key={`${pair.left?.id ?? "empty"}-${pair.right?.id ?? "empty"}`}
-							className="grid grid-cols-2 gap-4 p-3 bg-white rounded-lg border border-ocean-200"
+							className="grid grid-cols-2 gap-4 py-2.5 px-3"
 						>
 							{pair.left ? (
 								<div className="flex items-baseline gap-2">
-									<MonoText variant="greek" size="md">
+									<MonoText variant="greek" size="md" className="text-ocean-800">
 										{pair.left.greek}
 									</MonoText>
-									<span className="text-stone-600 text-sm">
+									<span className="text-stone-500 text-sm">
 										{pair.left.english}
 									</span>
 								</div>
@@ -656,10 +626,10 @@ const ReferenceTab: React.FC<{ data: VocabularyLoaderData }> = ({ data }) => {
 							{pair.right ? (
 								<div className="flex items-baseline gap-2">
 									<span className="text-stone-400 mr-1">↔</span>
-									<MonoText variant="greek" size="md">
+									<MonoText variant="greek" size="md" className="text-ocean-800">
 										{pair.right.greek}
 									</MonoText>
-									<span className="text-stone-600 text-sm">
+									<span className="text-stone-500 text-sm">
 										{pair.right.english}
 									</span>
 								</div>
@@ -668,19 +638,41 @@ const ReferenceTab: React.FC<{ data: VocabularyLoaderData }> = ({ data }) => {
 							)}
 						</div>
 					))}
-					{unpaired.length > 0 && (
-						<div className="grid md:grid-cols-3 gap-3 mt-4 pt-4 border-t border-ocean-200">
-							{unpaired.map((adverb) => (
-								<VocabItemDisplay
-									key={adverb.id}
-									greek={adverb.greek}
-									english={adverb.english}
-								/>
-							))}
-						</div>
-					)}
 				</div>
-			</Card>
+				{unpaired.length > 0 && (
+					<TwoColumnList
+						items={unpaired.map((a) => ({
+							id: a.id,
+							primary: a.greek,
+							secondary: a.english,
+						}))}
+						renderPrimary={(item) => (
+							<MonoText variant="greek" size="md" className="text-ocean-800">
+								{item.primary}
+							</MonoText>
+						)}
+					/>
+				)}
+			</ContentSection>
+
+			<ContentSection
+				title="Question Words"
+				subtitle="Ερωτηματικές λέξεις"
+				colorScheme="terracotta"
+			>
+				<TwoColumnList
+					items={data.reference.questionWords.map((w) => ({
+						id: w.id,
+						primary: w.greek,
+						secondary: w.english,
+					}))}
+					renderPrimary={(item) => (
+						<MonoText variant="greek" size="md" className="text-terracotta-800">
+							{item.primary}
+						</MonoText>
+					)}
+				/>
+			</ContentSection>
 		</div>
 	);
 };
