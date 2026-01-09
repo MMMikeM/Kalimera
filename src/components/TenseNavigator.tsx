@@ -135,7 +135,6 @@ export const TenseNavigator = ({
 							stem={stem}
 							meaning={meaning}
 							forms={forms}
-							variant="bordered"
 						/>
 					</TabsContent>
 				);
