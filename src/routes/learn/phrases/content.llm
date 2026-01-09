@@ -1,0 +1,199 @@
+# Phrases Content Map
+
+Common expressions organised by communicative function.
+
+## Route Structure
+
+```
+/learn/phrases/:tab
+```
+
+Tabs: survival, responses, requests, opinions, connectors, time, patterns
+
+## Data Source
+
+DB queries via `getPhrasesData()` in `data.server.ts`:
+- `getVocabBySection("phrases")` - Main phrase content
+- `getVocabBySection("reference")` - Days, months
+- `getVocabBySection("verbs")` - Likes construction
+
+Content grouped by tags, then mapped to tab structure.
+
+## Tab: survival
+
+<tab id="survival" route="/learn/phrases/survival">
+<purpose>Essential phrases for getting by - greetings and basic needs</purpose>
+<hero greek="Γεια σας!" title="Start with the basics">
+These phrases will get you through most situations. Practice them until they're automatic.
+</hero>
+
+<section name="Essential Greetings" tag="essential">
+Vocabulary items tagged "essential" - basic greetings and courtesies.
+</section>
+
+<section name="Survival Phrases" tag="survival">
+Vocabulary items tagged "survival" - emergency/basic need phrases.
+</section>
+</tab>
+
+## Tab: responses
+
+<tab id="responses" route="/learn/phrases/responses">
+<purpose>Quick conversational responses that keep dialogue flowing</purpose>
+<hero greek="Ναι, βέβαια!" title="Keep the conversation flowing">
+Short phrases that show you're following along and buy time while you process.
+</hero>
+
+<section name="Common Responses" tag="responses">
+Agreement, disagreement, acknowledgement phrases.
+</section>
+
+<section name="Social Phrases" tag="social-phrase">
+Polite social expressions (apologies, thanks, well-wishes).
+</section>
+</tab>
+
+## Tab: requests
+
+<tab id="requests" route="/learn/phrases/requests">
+<purpose>Polite request patterns and imperative commands</purpose>
+<hero greek="Παρακαλώ..." title="Ask politely, get results">
+Adding παρακαλώ (please) to any request makes it more polite.
+</hero>
+
+<section name="Polite Requests" tag="request">
+Request phrases with παρακαλώ and polite forms.
+</section>
+
+<section name="Commands" tag="command">
+Imperative forms for direct instructions.
+</section>
+</tab>
+
+## Tab: opinions
+
+<tab id="opinions" route="/learn/phrases/opinions">
+<purpose>Expressing thoughts, feelings, and preferences</purpose>
+<hero greek="Νομίζω ότι..." title="Sharing opinions">
+Move past "yes" and "no" into real conversation. These phrases let you agree, disagree, and share what you actually think.
+</hero>
+
+<section name="Opinions & Feelings" tag="opinions">
+Phrases for expressing views, emotions, preferences.
+</section>
+</tab>
+
+## Tab: connectors
+
+<tab id="connectors" route="/learn/phrases/connectors">
+<purpose>Discourse markers that make speech sound natural</purpose>
+<hero greek="Λοιπόν..." title="The glue of natural speech">
+Greeks use connectors constantly — mastering them makes Greek sound fluent.
+</hero>
+
+<section name="Discourse Markers" tag="discourse-markers">
+Logical connectors: therefore, however, because, so.
+</section>
+
+<section name="Fillers & Connectors" tag="discourse-filler">
+Conversational fillers: well, you know, I mean.
+</section>
+</tab>
+
+## Tab: time
+
+<tab id="time" route="/learn/phrases/time">
+<purpose>Days, months, and telling time</purpose>
+<hero greek="Τι ώρα είναι;" title="Master time expressions">
+Essential for making plans, scheduling, and understanding when things happen.
+</hero>
+
+<section name="Days of the Week" tag="days-of-week" source="reference">
+Δευτέρα, Τρίτη, Τετάρτη, Πέμπτη, Παρασκευή, Σάββατο, Κυριακή
+</section>
+
+<section name="Months of the Year" tag="months" source="reference">
+Ιανουάριος through Δεκέμβριος (collapsible by default).
+</section>
+
+<section name="Telling Time" tag="time-telling">
+<categories>
+- basic: Hour structure (Είναι + time, Η ώρα είναι + time)
+- fractions: Minutes and quarter/half expressions
+- at-times: "At" times using στις
+</categories>
+<pattern>Είναι + time / Η ώρα είναι + time</pattern>
+</section>
+</tab>
+
+## Tab: patterns
+
+<tab id="patterns" route="/learn/phrases/patterns">
+<purpose>Greek sentence patterns that differ from English</purpose>
+<hero greek="Μου αρέσει..." title="Understand Greek sentence patterns">
+Some Greek constructions work differently than English. Learn these patterns and you'll understand why "I like coffee" becomes "Coffee pleases me."
+</hero>
+
+<section name="Likes Construction" tags="likes-singular,likes-plural" source="verbs">
+<paradigm>
+Pattern: [Person] αρέσει (singular) / αρέσουν (plural)
+The thing liked is the SUBJECT, not the object.
+
+| Greek | English | Note |
+|-------|---------|------|
+| Μου αρέσει ο καφές | I like coffee | lit: Coffee pleases me |
+| Μου αρέσουν οι γάτες | I like cats | lit: Cats please me |
+</paradigm>
+<quick-test>
+Choose αρέσει (one thing) or αρέσουν (many things) based on what is liked.
+</quick-test>
+</section>
+
+<section name="Name Construction" tag="name-construction">
+<paradigm>
+Pattern: [Pronoun] λένε + name
+Literally "they call me..."
+
+| Greek | English |
+|-------|---------|
+| Με λένε... | My name is... |
+| Σε λένε...; | What's your name? |
+| Τον/Την λένε... | His/Her name is... |
+</paradigm>
+</section>
+</tab>
+
+Note: Question words have moved to /learn/vocabulary/reference.
+
+## Tag to Section Mapping
+
+```
+Tag Slug           → Tab          → Section
+─────────────────────────────────────────────
+essential          → survival     → Essential Greetings
+survival           → survival     → Survival Phrases
+responses          → responses    → Common Responses
+social-phrase      → responses    → Social Phrases
+request            → requests     → Polite Requests
+command            → requests     → Commands
+opinions           → opinions     → Opinions & Feelings
+discourse-markers  → connectors   → Discourse Markers
+discourse-filler   → connectors   → Fillers & Connectors
+days-of-week       → time         → Days of the Week
+months             → time         → Months of the Year
+time-telling       → time         → Telling Time
+likes-singular     → patterns      → Likes Construction
+likes-plural       → patterns      → Likes Construction
+name-construction  → patterns      → Name Construction
+```
+
+## Content Guidelines
+
+When adding phrases:
+
+1. **Tag appropriately** - Use existing tags where possible
+2. **Include English** - All phrases need clear English translations
+3. **Add metadata** for special displays:
+   - `time-telling`: needs `category` (basic/fractions/at-times) and optional `note`
+4. **Keep phrases practical** - Focus on real conversational use
+5. **Order matters** - More common/useful phrases first within sections
