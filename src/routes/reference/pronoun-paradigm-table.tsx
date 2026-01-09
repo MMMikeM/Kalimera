@@ -8,25 +8,20 @@ interface PronounParadigmTableProps {
 }
 
 const PronounCell = ({ form }: { form: PronounForm }) => (
-	<>
-		<MonoText variant="highlighted" size="lg" className="whitespace-nowrap">
+	<div className="flex flex-col">
+		<MonoText variant="highlighted" size="lg">
 			{form.greek}
 		</MonoText>
-		{form.alt && (
-			<span className="text-stone-400 text-xs ml-1">({form.alt})</span>
-		)}
-		<span className="text-stone-600 text-sm ml-2">{form.english}</span>
-	</>
+		<div className="flex items-baseline gap-1 text-xs text-stone-500">
+			{form.alt && <span>({form.alt})</span>}
+			<span>{form.english}</span>
+		</div>
+	</div>
 );
 
 export const PronounParadigmTable = ({ data, colorClass, note }: PronounParadigmTableProps) => (
-	<div className="overflow-x-auto">
-		<table className="w-full text-sm border-collapse table-fixed">
-			<colgroup>
-				<col className="w-[12%]" />
-				<col className="w-[44%]" />
-				<col className="w-[44%]" />
-			</colgroup>
+	<div>
+		<table className="w-full text-sm border-collapse">
 			<thead>
 				<tr className={`border-b-2 ${colorClass}`}>
 					<th className="text-left py-2 px-2 text-stone-600 font-medium" />
