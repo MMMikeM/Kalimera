@@ -129,7 +129,6 @@ export async function getVocabularyData() {
 			discourseFillers: phrases["discourse-filler"] ?? [],
 			socialPhrases: phrases["social-phrase"] ?? [],
 			commands: phrases.command ?? [],
-			questionWords: phrases.question ?? [],
 			likesConstruction: {
 				singular: verbs["likes-singular"] ?? [],
 				plural: verbs["likes-plural"] ?? [],
@@ -157,6 +156,7 @@ export async function getVocabularyData() {
 			colors: reference.color ?? [],
 			frequencyAdverbs: reference.frequency ?? [],
 			positionAdverbs: reference.position ?? [],
+			questionWords: reference.question ?? [],
 		},
 	};
 }
