@@ -86,7 +86,7 @@ const colorStyles: Record<
 export const TabHero = ({
 	title,
 	children,
-	icon = <Lightbulb size={18} />,
+	icon = <Lightbulb size={24} />,
 	greekPhrase,
 	expandedExample,
 	colorScheme = "ocean",
@@ -97,52 +97,56 @@ export const TabHero = ({
 	return (
 		<Card
 			variant="elevated"
-			padding="lg"
-			className={cn(styles.bg, "border-2", styles.border, className)}
+			padding="md"
+			className={cn(styles.bg, "border-2", styles.border, "sm:p-6", className)}
 		>
-			<div className="flex items-start gap-3">
-				<div
-					className={cn(
-						"p-2.5 rounded-xl shrink-0 shadow-sm",
-						styles.iconBg
-					)}
-				>
-					<span className={styles.iconText}>{icon}</span>
-				</div>
-				<div className="flex-1">
-					<h3 className={cn("font-bold mb-1", styles.titleText)}>
-						{title}
-					</h3>
-					{greekPhrase && (
-						<MonoText
-							variant="greek"
-							size="lg"
-							className="block text-stone-700 mb-1"
-						>
-							{greekPhrase}
-						</MonoText>
-					)}
-					<div className="text-slate-text">{children}</div>
-					{expandedExample && (
-						<div
+			<div className="space-y-3 sm:space-y-4">
+				<div className="flex items-stretch gap-3 sm:gap-4 h-12 sm:h-14">
+					<div
+						className={cn(
+							"aspect-square h-full rounded-xl shrink-0 shadow-sm flex items-center justify-center",
+							styles.iconBg,
+						)}
+					>
+						<span className={cn("block", styles.iconText)}>{icon}</span>
+					</div>
+					<div className="min-w-0 flex flex-col justify-center">
+						<h3
 							className={cn(
-								"mt-3 p-3 rounded-lg border",
-								styles.expandedBg,
-								styles.expandedBorder
+								"sm:text-xl font-bold leading-tight",
+								styles.titleText,
 							)}
 						>
-							<div
-								className={cn(
-									"text-sm font-medium mb-1",
-									styles.titleText
-								)}
+							{title}
+						</h3>
+						{greekPhrase && (
+							<MonoText
+								variant="greek"
+								size="sm"
+								className="text-stone-600 mt-0.5"
 							>
-								{expandedExample.label}
-							</div>
-							{expandedExample.content}
-						</div>
-					)}
+								{greekPhrase}
+							</MonoText>
+						)}
+					</div>
 				</div>
+				<div className="text-slate-text text-sm leading-relaxed">
+					{children}
+				</div>
+				{expandedExample && (
+					<div
+						className={cn(
+							"p-3 sm:p-4 rounded-lg border",
+							styles.expandedBg,
+							styles.expandedBorder,
+						)}
+					>
+						<div className={cn("text-sm font-medium mb-1.5", styles.titleText)}>
+							{expandedExample.label}
+						</div>
+						{expandedExample.content}
+					</div>
+				)}
 			</div>
 		</Card>
 	);
