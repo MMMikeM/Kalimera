@@ -67,7 +67,7 @@ export const ConversationHero: React.FC<ConversationHeroProps> = ({
 				</div>
 				<div className="flex-1 min-w-0">
 					<h2 className={cn("text-xl font-bold", styles.text)}>{title}</h2>
-					<MonoText variant="greek" size="lg" className="block mt-1 text-stone-700">
+					<MonoText variant="greek" size="sm" className="block mt-1 text-stone-600">
 						{greekPhrase}
 					</MonoText>
 					<p className="text-stone-600 mt-2 text-sm leading-relaxed">
