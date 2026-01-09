@@ -6,7 +6,6 @@ import {
 	Lightbulb,
 	ArrowRight,
 	BookOpen,
-	Star,
 } from "lucide-react";
 import type React from "react";
 import { Link } from "react-router";
@@ -16,8 +15,8 @@ import { MonoText } from "@/components/MonoText";
 import { ParadigmTable } from "@/components/ParadigmTable";
 import { SectionHeading } from "@/components/SectionHeading";
 import { ContentSection } from "@/components/ContentSection";
+import { CollapsibleSection } from "@/components/CollapsibleSection";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
-import { Badge } from "@/components/ui/badge";
 import { IRREGULAR_VERBS, VERB_PATTERNS } from "../../constants/verbs";
 
 interface UsageExample {
@@ -84,54 +83,25 @@ const USAGE_EXAMPLES: Record<string, UsageExample[]> = {
 	],
 };
 
-const highlightVerb = (
-	sentence: string,
-	verb: string,
-	colorClass: string,
-): React.ReactNode => {
-	const parts = sentence.split(verb);
-	if (parts.length === 1) return sentence;
-	return (
-		<>
-			{parts[0]}
-			<span className={colorClass}>{verb}</span>
-			{parts[1]}
-		</>
-	);
-};
-
 const UsageExamples: React.FC<{
 	examples: UsageExample[];
 	config: PatternConfig;
 }> = ({ examples, config }) => (
-	<div className="mt-5">
-		<div
-			className={`text-sm font-semibold ${config.textClass} mb-2 flex items-center gap-1.5`}
-		>
-			<ArrowRight size={14} /> In context:
-		</div>
-		<div className="space-y-2 bg-stone-50 rounded-lg p-3 border border-stone-200">
-			{examples.map((ex) => (
-				<div
-					key={ex.greek}
-					className="text-sm flex items-baseline gap-2 flex-wrap"
-				>
-					<MonoText weight="medium" size="md">
-						{highlightVerb(
-							ex.greek,
-							ex.verb,
-							`${config.textClass} font-semibold`,
-						)}
+	<div className="space-y-3">
+		{examples.map((ex) => (
+			<div key={ex.greek} className="space-y-1">
+				<div className="flex items-baseline gap-2">
+					<MonoText className={`${config.textClass} font-bold text-base`}>
+						{ex.verb}
 					</MonoText>
-					<span className="text-stone-600">{ex.english}</span>
-					<span
-						className={`text-sm px-1.5 py-0.5 rounded ${config.badgeBg} ${config.textClass}`}
-					>
-						{ex.formNote}
-					</span>
+					<span className="text-stone-500 text-sm">{ex.formNote}</span>
 				</div>
-			))}
-		</div>
+				<div className="pl-2 border-l-2 border-stone-200">
+					<MonoText className="text-stone-700">{ex.greek}</MonoText>
+					<p className="text-stone-500 text-sm">{ex.english}</p>
+				</div>
+			</div>
+		))}
 	</div>
 );
 
@@ -139,23 +109,19 @@ const SamePatternList: React.FC<{
 	verbs: Array<{ infinitive: string; meaning: string }>;
 	config: PatternConfig;
 }> = ({ verbs, config }) => (
-	<div className="mt-5">
-		<div className={`text-sm font-semibold ${config.textClass} mb-2`}>
-			Same pattern:
-		</div>
-		<div className="flex flex-wrap gap-2">
-			{verbs.map((v) => (
-				<span
-					key={v.infinitive}
-					className={`inline-flex items-center gap-1.5 px-3 py-1.5 bg-white border ${config.borderClass} rounded-full text-sm shadow-sm`}
-				>
-					<MonoText weight="semibold" className={config.textClass}>
-						{v.infinitive}
-					</MonoText>
-					<span className="text-stone-600">({v.meaning})</span>
-				</span>
-			))}
-		</div>
+	<div className="divide-y divide-stone-100">
+		{verbs.map((v) => (
+			<div
+				key={v.infinitive}
+				className="flex items-baseline gap-2 py-2 first:pt-0 last:pb-0"
+			>
+				<MonoText className={`${config.textClass} font-semibold`}>
+					{v.infinitive}
+				</MonoText>
+				<span className="text-stone-600 text-sm">({v.meaning})</span>
+				<span className="text-stone-400 text-xs ml-auto">same endings</span>
+			</div>
+		))}
 	</div>
 );
 
@@ -167,7 +133,6 @@ type PatternConfig = {
 	borderClass: string;
 	textClass: string;
 	badgeBg: string;
-	isFirst?: boolean;
 };
 
 const PATTERN_CONFIGS: Record<string, PatternConfig> = {
@@ -179,7 +144,6 @@ const PATTERN_CONFIGS: Record<string, PatternConfig> = {
 		borderClass: "border-ocean-400",
 		textClass: "text-ocean-text",
 		badgeBg: "bg-ocean-300",
-		isFirst: true,
 	},
 	contracted: {
 		key: "contracted",
@@ -201,6 +165,12 @@ const PATTERN_CONFIGS: Record<string, PatternConfig> = {
 	},
 };
 
+const COLOR_SCHEME_MAP: Record<string, "ocean" | "terracotta" | "olive"> = {
+	active: "ocean",
+	contracted: "terracotta",
+	deponent: "olive",
+};
+
 const PatternSection: React.FC<{
 	patternKey: "active" | "contracted" | "deponent";
 	pattern: (typeof VERB_PATTERNS)[keyof typeof VERB_PATTERNS];
@@ -208,45 +178,29 @@ const PatternSection: React.FC<{
 	const config = PATTERN_CONFIGS[patternKey];
 	if (!config) return null;
 
+	const colorScheme = COLOR_SCHEME_MAP[patternKey];
+
 	return (
 		<Card
 			variant="bordered"
 			padding="lg"
 			className={`${config.bgClass} border-2 ${config.borderClass}`}
 		>
-			{/* Header with icon and badge */}
-			<div className="flex items-start justify-between mb-4">
-				<div className="flex items-center gap-3">
-					<div className={`p-2.5 rounded-xl ${config.badgeBg}`}>
-						<span className={config.textClass}>{config.icon}</span>
-					</div>
-					<div>
-						<div className="flex items-center gap-2">
-							<h3 className={`text-lg font-bold ${config.textClass}`}>
-								{pattern.name}
-							</h3>
-							{config.isFirst && (
-								<Badge
-									variant="default"
-									size="sm"
-									className="bg-ocean-100 text-ocean-text border border-ocean-300"
-								>
-									<Star size={12} className="mr-1" /> Learn First
-								</Badge>
-							)}
-						</div>
-						<p className="text-stone-600 text-sm">{pattern.description}</p>
-					</div>
-				</div>
-				<div
-					className={`px-3 py-1.5 rounded-full ${config.badgeBg} ${config.textClass} font-mono font-bold text-lg`}
-				>
+			{/* Simplified header - ending as primary anchor */}
+			<div className="flex items-center gap-3 mb-4">
+				<span className={`font-mono text-3xl font-bold ${config.textClass}`}>
 					{config.ending}
+				</span>
+				<div className="flex-1 min-w-0">
+					<h3 className="font-semibold text-stone-800">
+						{pattern.name.replace(` (${config.ending})`, "")}
+					</h3>
+					<p className="text-stone-600 text-xs">{pattern.description}</p>
 				</div>
 			</div>
 
 			{/* Paradigm Table */}
-			<div className="bg-white rounded-lg p-4 border border-stone-200 shadow-sm">
+			<div className="bg-white rounded-lg p-4 border border-stone-200 shadow-sm mb-3">
 				<ParadigmTable
 					stem={pattern.canonical.stem}
 					meaning={pattern.canonical.meaning}
@@ -258,11 +212,27 @@ const PatternSection: React.FC<{
 				/>
 			</div>
 
-			<SamePatternList verbs={pattern.samePattern} config={config} />
-			<UsageExamples
-				examples={USAGE_EXAMPLES[patternKey] ?? []}
-				config={config}
-			/>
+			{/* Collapsible: Same pattern */}
+			<CollapsibleSection
+				title={`Same pattern (${pattern.samePattern.length})`}
+				colorScheme={colorScheme}
+				defaultOpen={false}
+				className="mb-2"
+			>
+				<SamePatternList verbs={pattern.samePattern} config={config} />
+			</CollapsibleSection>
+
+			{/* Collapsible: In context */}
+			<CollapsibleSection
+				title="See it in action"
+				colorScheme={colorScheme}
+				defaultOpen={false}
+			>
+				<UsageExamples
+					examples={USAGE_EXAMPLES[patternKey] ?? []}
+					config={config}
+				/>
+			</CollapsibleSection>
 		</Card>
 	);
 };
@@ -285,16 +255,13 @@ const PatternIdentifier: React.FC = () => (
 			</div>
 		</div>
 		<div className="space-y-3">
-			<div className="flex items-center gap-4 p-3 rounded-xl bg-ocean-200 border-2 border-ocean-400 hover:border-ocean-600 transition-colors">
-				<div className="p-2 rounded-lg bg-ocean-300">
+			<div className="flex items-center gap-3 sm:gap-4 p-3 rounded-xl bg-ocean-200 border-2 border-ocean-400 hover:border-ocean-600 transition-colors">
+				<div className="p-2 rounded-lg bg-ocean-300 shrink-0">
 					<Zap size={18} className="text-ocean-text" />
 				</div>
-				<MonoText className="text-ocean-text font-bold text-xl w-20">
-					-ω
-				</MonoText>
-				<ArrowRight size={16} className="text-stone-400" />
+				<MonoText className="text-ocean-text font-bold text-xl">-ω</MonoText>
 				<span className="text-stone-800 font-semibold">Active</span>
-				<div className="ml-auto flex gap-2">
+				<div className="ml-auto hidden sm:flex gap-2">
 					<span className="px-2 py-1 bg-white rounded-md text-sm font-mono text-ocean-text border border-ocean-300">
 						κάνω
 					</span>
@@ -303,16 +270,15 @@ const PatternIdentifier: React.FC = () => (
 					</span>
 				</div>
 			</div>
-			<div className="flex items-center gap-4 p-3 rounded-xl bg-terracotta-200 border-2 border-terracotta-400 hover:border-terracotta-600 transition-colors">
-				<div className="p-2 rounded-lg bg-terracotta-300">
+			<div className="flex items-center gap-3 sm:gap-4 p-3 rounded-xl bg-terracotta-200 border-2 border-terracotta-400 hover:border-terracotta-600 transition-colors">
+				<div className="p-2 rounded-lg bg-terracotta-300 shrink-0">
 					<Sparkles size={18} className="text-terracotta-text" />
 				</div>
-				<MonoText className="text-terracotta-text font-bold text-xl w-20">
+				<MonoText className="text-terracotta-text font-bold text-xl">
 					-άω/-ώ
 				</MonoText>
-				<ArrowRight size={16} className="text-stone-400" />
 				<span className="text-stone-800 font-semibold">Contracted</span>
-				<div className="ml-auto flex gap-2">
+				<div className="ml-auto hidden sm:flex gap-2">
 					<span className="px-2 py-1 bg-white rounded-md text-sm font-mono text-terracotta-text border border-terracotta-400">
 						μιλάω
 					</span>
@@ -321,16 +287,13 @@ const PatternIdentifier: React.FC = () => (
 					</span>
 				</div>
 			</div>
-			<div className="flex items-center gap-4 p-3 rounded-xl bg-olive-200 border-2 border-olive-400 hover:border-olive-600 transition-colors">
-				<div className="p-2 rounded-lg bg-olive-300">
+			<div className="flex items-center gap-3 sm:gap-4 p-3 rounded-xl bg-olive-200 border-2 border-olive-400 hover:border-olive-600 transition-colors">
+				<div className="p-2 rounded-lg bg-olive-300 shrink-0">
 					<RefreshCw size={18} className="text-olive-text" />
 				</div>
-				<MonoText className="text-olive-text font-bold text-xl w-20">
-					-μαι
-				</MonoText>
-				<ArrowRight size={16} className="text-stone-400" />
+				<MonoText className="text-olive-text font-bold text-xl">-μαι</MonoText>
 				<span className="text-stone-800 font-semibold">Deponent</span>
-				<div className="ml-auto flex gap-2">
+				<div className="ml-auto hidden sm:flex gap-2">
 					<span className="px-2 py-1 bg-white rounded-md text-sm font-mono text-olive-text border border-olive-400">
 						έρχομαι
 					</span>
@@ -356,7 +319,7 @@ export const VerbsSection: React.FC = () => (
 
 		{/* Essential First: είμαι (to be) - promoted from irregulars */}
 		{eimai && (
-			<ContentSection title="Start Here: είμαι (to be)" colorScheme="olive">
+			<ContentSection title="είμαι (to be)" colorScheme="olive">
 				<div className="p-3 space-y-3">
 					<p className="text-sm text-stone-600">
 						The most common Greek verb. Memorize it first. You'll use it in every
