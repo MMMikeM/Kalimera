@@ -11,6 +11,8 @@ const textColors: Record<ContentColorScheme, string> = {
 	terracotta: "text-terracotta-800",
 	olive: "text-olive-800",
 	honey: "text-honey-800",
+	navy: "text-navy-800",
+	slate: "text-slate-800",
 };
 
 export const PhraseItemDisplay: React.FC<{
