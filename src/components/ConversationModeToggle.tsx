@@ -12,21 +12,21 @@ export interface ConversationModeToggleProps {
 const modes: { value: ConversationMode; label: string; icon: React.ReactNode; description: string }[] = [
 	{
 		value: "read",
-		label: "Read",
+		label: "Study",
 		icon: <BookOpen size={16} />,
-		description: "See all translations",
+		description: "See Greek with English translations",
 	},
 	{
 		value: "practice",
-		label: "Practice",
+		label: "Recall",
 		icon: <Eye size={16} />,
-		description: "Tap to reveal English",
+		description: "English hidden - tap to reveal",
 	},
 	{
 		value: "roleplay",
-		label: "Role Play",
+		label: "Speak",
 		icon: <MessageSquare size={16} />,
-		description: "Respond before revealing",
+		description: "Say your response before revealing",
 	},
 ];
 
@@ -35,14 +35,14 @@ export const ConversationModeToggle: React.FC<ConversationModeToggleProps> = ({
 	onModeChange,
 	className,
 }) => (
-	<div className={cn("flex items-center gap-1 p-1 bg-stone-100 rounded-lg", className)}>
+	<div className={cn("flex items-center gap-1 p-1 bg-stone-100 rounded-lg sm:w-fit", className)}>
 		{modes.map((m) => (
 			<button
 				key={m.value}
 				type="button"
 				onClick={() => onModeChange(m.value)}
 				className={cn(
-					"flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all",
+					"flex flex-1 sm:flex-none items-center justify-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all",
 					mode === m.value
 						? "bg-white text-stone-800 shadow-sm"
 						: "text-stone-600 hover:text-stone-800 hover:bg-stone-50"
@@ -50,7 +50,7 @@ export const ConversationModeToggle: React.FC<ConversationModeToggleProps> = ({
 				title={m.description}
 			>
 				{m.icon}
-				<span className="hidden sm:inline">{m.label}</span>
+				{m.label}
 			</button>
 		))}
 	</div>
