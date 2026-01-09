@@ -10,9 +10,8 @@ import {
 	TIME_EXPRESSIONS,
 } from "../../constants/prepositions";
 import { Card } from "@/components/Card";
-import { CategoryCard } from "@/components/CategoryCard";
+import { ContentSection } from "@/components/ContentSection";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
-import { KeyInsight } from "@/components/KeyInsight";
 import { MonoText } from "@/components/MonoText";
 import { SectionHeading } from "@/components/SectionHeading";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -31,14 +30,13 @@ export const PrepositionsSection: React.FC = () => (
 		{/* 2. The Big 4 */}
 		<div className="grid sm:grid-cols-2 gap-4">
 			{BIG_4_PREPOSITIONS.map((prep) => (
-				<CategoryCard
+				<ContentSection
 					key={prep.greek}
 					title={prep.greek}
 					subtitle={prep.english}
 					colorScheme={prep.colorScheme}
-					priority="primary"
 				>
-					<div className="space-y-1">
+					<div className="space-y-1 px-3 pt-3">
 						{prep.examples.map((ex) => (
 							<div key={ex.greek} className="text-sm">
 								<MonoText size="sm" variant="greek" className="font-medium">
@@ -49,11 +47,11 @@ export const PrepositionsSection: React.FC = () => (
 						))}
 					</div>
 					{prep.contracts && (
-						<div className="mt-2 pt-2 border-t border-stone-200 text-xs text-stone-500">
+						<div className="mx-3 mt-2 pt-2 border-t border-stone-200 text-xs text-stone-500">
 							Contracts with articles → στο, στη, στον
 						</div>
 					)}
-				</CategoryCard>
+				</ContentSection>
 			))}
 		</div>
 
@@ -94,18 +92,21 @@ export const PrepositionsSection: React.FC = () => (
 				))}
 			</div>
 
-			<KeyInsight title={SE_CONTRACTIONS.noArticle.title}>
-				{SE_CONTRACTIONS.noArticle.explanation}:{" "}
-				{SE_CONTRACTIONS.noArticle.examples.map((ex, i) => (
-					<span key={ex.greek}>
-						{i > 0 && ", "}
-						<MonoText size="sm" variant="highlighted">
-							{ex.greek}
-						</MonoText>{" "}
-						<span className="text-stone-600">({ex.english})</span>
-					</span>
-				))}
-			</KeyInsight>
+			<Alert variant="info">
+				<AlertTitle>{SE_CONTRACTIONS.noArticle.title}</AlertTitle>
+				<AlertDescription>
+					{SE_CONTRACTIONS.noArticle.explanation}:{" "}
+					{SE_CONTRACTIONS.noArticle.examples.map((ex, i) => (
+						<span key={ex.greek}>
+							{i > 0 && ", "}
+							<MonoText size="sm" variant="highlighted">
+								{ex.greek}
+							</MonoText>{" "}
+							<span className="text-stone-600">({ex.english})</span>
+						</span>
+					))}
+				</AlertDescription>
+			</Alert>
 		</Card>
 
 		{/* 4. Preposition + Pronouns */}
@@ -239,14 +240,17 @@ export const PrepositionsSection: React.FC = () => (
 			defaultOpen={false}
 		>
 			<div className="space-y-4">
-				<KeyInsight title="The Pattern">
-					Compound prepositions = <strong>position word</strong> +{" "}
-					<MonoText size="sm">σε</MonoText> or{" "}
-					<MonoText size="sm">από</MonoText>. The{" "}
-					<MonoText size="sm">σε</MonoText> ones contract with articles (πάνω{" "}
-					<strong>στο</strong>), the <MonoText size="sm">από</MonoText> ones
-					don't (κάτω <strong>από το</strong>).
-				</KeyInsight>
+				<Alert variant="info">
+					<AlertTitle>The Pattern</AlertTitle>
+					<AlertDescription>
+						Compound prepositions = <strong>position word</strong> +{" "}
+						<MonoText size="sm">σε</MonoText> or{" "}
+						<MonoText size="sm">από</MonoText>. The{" "}
+						<MonoText size="sm">σε</MonoText> ones contract with articles (πάνω{" "}
+						<strong>στο</strong>), the <MonoText size="sm">από</MonoText> ones
+						don't (κάτω <strong>από το</strong>).
+					</AlertDescription>
+				</Alert>
 
 				{/* Color Legend */}
 				<Alert variant="default" className="bg-stone-50 border-stone-200">

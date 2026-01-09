@@ -13,7 +13,7 @@ import { MOVABLE_NU_RULE } from "../../constants/articles";
 import { Card } from "@/components/Card";
 import { MonoText } from "@/components/MonoText";
 import { SectionHeading } from "@/components/SectionHeading";
-import { KeyInsight } from "@/components/KeyInsight";
+import { ContentSection } from "@/components/ContentSection";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
 import { MistakeComparison } from "@/components/MistakeComparison";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -439,42 +439,40 @@ export const AgreementSection: React.FC = () => {
 				subtitle="How articles and nouns must match in gender, case, and number"
 			/>
 
-			<KeyInsight
-				title="When uncertain, use the -ν form"
-				expandedExample={{
-					label: "The simple rule",
-					content: (
-						<div className="space-y-2 text-sm">
-							<p>
-								For{" "}
-								<MonoText variant="greek" size="sm">
-									τον/την
-								</MonoText>{" "}
-								and{" "}
-								<MonoText variant="greek" size="sm">
-									στον/στην
-								</MonoText>
-								, you can always include the -ν. Native speakers sometimes drop
-								it, but keeping it is never wrong.
-							</p>
-							<div className="mt-2 p-2 bg-white rounded border border-ocean-200">
-								<div className="text-stone-600">
-									<MonoText variant="greek" size="sm">
-										τον φίλο
-									</MonoText>{" "}
-									or{" "}
-									<MonoText variant="greek" size="sm">
-										τη φίλη
-									</MonoText>{" "}
-									— both correct!
-								</div>
-							</div>
+			<ContentSection title="When uncertain, use the -ν form" colorScheme="honey">
+				<div className="p-3 space-y-3">
+					<p className="text-sm text-stone-600">
+						You'll never be wrong if you keep the final ν on τον/την/στον/στην.
+					</p>
+					<div className="p-3 bg-stone-50 rounded-lg border border-stone-200">
+						<div className="text-xs font-semibold text-honey-text uppercase tracking-wide mb-2">
+							The simple rule
 						</div>
-					),
-				}}
-			>
-				You'll never be wrong if you keep the final ν on τον/την/στον/στην.
-			</KeyInsight>
+						<p className="text-sm text-stone-600 mb-2">
+							For{" "}
+							<MonoText variant="greek" size="sm">
+								τον/την
+							</MonoText>{" "}
+							and{" "}
+							<MonoText variant="greek" size="sm">
+								στον/στην
+							</MonoText>
+							, you can always include the -ν. Native speakers sometimes drop
+							it, but keeping it is never wrong.
+						</p>
+						<div className="text-stone-600 text-sm">
+							<MonoText variant="greek" size="sm">
+								τον φίλο
+							</MonoText>{" "}
+							or{" "}
+							<MonoText variant="greek" size="sm">
+								τη φίλη
+							</MonoText>{" "}
+							— both correct!
+						</div>
+					</div>
+				</div>
+			</ContentSection>
 
 			{/* Gender hints - how to spot gender by ending */}
 			<GenderHintsCard />
