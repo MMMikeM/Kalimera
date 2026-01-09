@@ -2,7 +2,6 @@ import type React from "react";
 import { MessageCircle, DoorOpen, Utensils, ChevronDown, ChevronLeft, Lightbulb, Hand } from "lucide-react";
 import { Link, Outlet, useLocation, useOutletContext } from "react-router";
 import { MonoText } from "@/components/MonoText";
-import { ConversationModeToggle } from "@/components/ConversationModeToggle";
 import { NavTabs } from "@/components/NavTabs";
 import type { ConversationMode } from "@/components/DialogueExchange";
 import type { NavTab } from "@/components/NavTabs";
@@ -11,6 +10,7 @@ import { usePersistedState } from "@/lib/hooks/use-persisted-state";
 
 type ConversationContext = {
 	mode: ConversationMode;
+	setMode: (mode: ConversationMode) => void;
 };
 
 export const useConversationContext = () =>
@@ -122,16 +122,13 @@ export default function ConversationsLayout() {
 
 	return (
 		<div className="space-y-4">
-			<div className="flex items-center justify-between">
-				<Link
-					to="/learn"
-					className="flex items-center gap-1 text-stone-600 hover:text-stone-800 transition-colors"
-				>
-					<ChevronLeft size={20} />
-					<span className="font-medium">Convos</span>
-				</Link>
-				<ConversationModeToggle mode={mode} onModeChange={setMode} />
-			</div>
+			<Link
+				to="/learn"
+				className="flex items-center gap-1 text-stone-600 hover:text-stone-800 transition-colors"
+			>
+				<ChevronLeft size={20} />
+				<span className="font-medium">Convos</span>
+			</Link>
 
 			<NavTabs
 				tabs={CONVERSATION_TABS}
@@ -139,7 +136,7 @@ export default function ConversationsLayout() {
 				buildUrl={(tabId) => `/learn/conversations/${tabId}`}
 			/>
 
-			<Outlet context={{ mode }} />
+			<Outlet context={{ mode, setMode }} />
 		</div>
 	);
 }

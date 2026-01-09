@@ -4,6 +4,7 @@ import { DoorOpen, Utensils, MessageCircle, Hand } from "lucide-react";
 import { Card } from "@/components/Card";
 import { DialogueScenario } from "@/components/DialogueExchange";
 import { ConversationHero } from "@/components/ConversationHero";
+import { ConversationModeToggle } from "@/components/ConversationModeToggle";
 import type { DialogueLine, Formality, ConversationMode } from "@/components/DialogueExchange";
 import { LearningTips, useConversationContext } from "./layout";
 
@@ -87,7 +88,7 @@ const LEAVING_DIALOGUE: DialogueLine[] = [
 ];
 
 const ArrivingTab: React.FC = () => {
-	const { mode } = useConversationContext();
+	const { mode, setMode } = useConversationContext();
 
 	return (
 		<div className="space-y-4">
@@ -98,6 +99,7 @@ const ArrivingTab: React.FC = () => {
 				description="The warmth of Greek hospitality starts at the door. Expect enthusiastic welcomes and reluctant goodbyes."
 				colorScheme="olive"
 			/>
+			<ConversationModeToggle mode={mode} onModeChange={setMode} />
 
 			<ScenarioCard
 				title="Casual greeting (friends)"
@@ -223,7 +225,7 @@ const CAFE_ORDER: DialogueLine[] = [
 ];
 
 const FoodTab: React.FC = () => {
-	const { mode } = useConversationContext();
+	const { mode, setMode } = useConversationContext();
 
 	return (
 		<div className="space-y-4">
@@ -234,6 +236,7 @@ const FoodTab: React.FC = () => {
 				description="Greek hospitality means constantly offering food and drink. Learn to accept graciously and politely decline when full."
 				colorScheme="terracotta"
 			/>
+			<ConversationModeToggle mode={mode} onModeChange={setMode} />
 
 			<ScenarioCard
 				title="Being offered refreshments"
@@ -390,7 +393,7 @@ const FAMILY_CHAT: DialogueLine[] = [
 ];
 
 const SmalltalkTab: React.FC = () => {
-	const { mode } = useConversationContext();
+	const { mode, setMode } = useConversationContext();
 
 	return (
 		<div className="space-y-4">
@@ -401,6 +404,7 @@ const SmalltalkTab: React.FC = () => {
 				description="Casual conversation with friends and acquaintances. Weather, work, family - the universal topics that connect us."
 				colorScheme="ocean"
 			/>
+			<ConversationModeToggle mode={mode} onModeChange={setMode} />
 
 			<ScenarioCard
 				title="Where are you from?"
@@ -554,7 +558,7 @@ const MAKING_REQUESTS: DialogueLine[] = [
 ];
 
 const RequestsTab: React.FC = () => {
-	const { mode } = useConversationContext();
+	const { mode, setMode } = useConversationContext();
 
 	return (
 		<div className="space-y-4">
@@ -565,6 +569,7 @@ const RequestsTab: React.FC = () => {
 				description="Practical phrases for everyday needs. Asking for help, making introductions, and simple requests."
 				colorScheme="honey"
 			/>
+			<ConversationModeToggle mode={mode} onModeChange={setMode} />
 
 			<ScenarioCard
 				title="Introducing yourself"
