@@ -151,6 +151,7 @@ On mobile, the bottom 1/3 of the screen is the "easy reach" zone:
 - Render Greek at 1.1x the size of surrounding English text
 - Use line-height of 1.5-1.7 for mixed Greek/English content
 - Apply `.greek-text` class or use MonoText component
+- **Never uppercase Greek text** — it's unnatural and harder to read. Use sentence case.
 
 ---
 
