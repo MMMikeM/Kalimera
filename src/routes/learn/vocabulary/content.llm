@@ -1,0 +1,304 @@
+# Vocabulary Content Map
+
+Vocabulary browsing organised by word type and semantic category.
+
+## Route Structure
+
+```
+/learn/vocabulary/:tab
+/learn/vocabulary/verbs/:verbId  (detail page)
+```
+
+Tabs: nouns, verbs, reference
+Note: "phrases" tab redirects to /learn/phrases
+
+## Data Source
+
+DB queries via `getVocabularyData()` in `data.server.ts`:
+- `getVocabBySection("nouns")` - Noun categories
+- `getVocabBySection("verbs")` - Verb-related content
+- `getVocabBySection("reference")` - Numbers, colours, adverbs
+- `getVerbsWithPatterns()` - Verbs with conjugation family info
+
+## Tab: nouns
+
+<tab id="nouns" route="/learn/vocabulary/nouns">
+<purpose>Everyday nouns grouped by semantic category</purpose>
+<hero greek="ο / η / το" title="Everyday nouns">
+The words you'll use most, organised by situation. Every noun includes its article so you learn the gender from the start.
+</hero>
+
+<gender-key>
+| Article | Gender | Colour |
+|---------|--------|--------|
+| ο | masculine | ocean-600 |
+| η | feminine | rose-400 |
+| το | neuter | stone-400 |
+</gender-key>
+
+<insight>
+Endings hint at gender:
+- -ος → usually masculine
+- -η/-α → usually feminine
+- -ο/-ι/-μα → usually neuter
+The article confirms it.
+</insight>
+
+<section name="Family & People" tag="people" icon="Users" colour="terracotta">
+Family members, professions, relationships.
+Examples: ο πατέρας, η μητέρα, το παιδί, ο φίλος, η γιαγιά
+</section>
+
+<section name="Shopping & Groceries" tag="shopping" icon="ShoppingCart" colour="olive">
+Food items, market vocabulary.
+Examples: το ψωμί, το κρέας, τα λαχανικά, το γάλα
+</section>
+
+<section name="Household & Home" tag="household" icon="Home" colour="ocean">
+Furniture, rooms, domestic items.
+Examples: το σπίτι, η κουζίνα, το κρεβάτι, η καρέκλα
+</section>
+
+<section name="Transportation" tag="transport-vehicle" icon="Car" colour="ocean">
+Vehicles and transport modes.
+Examples: το αυτοκίνητο, το λεωφορείο, το τρένο, η μοτοσικλέτα
+</section>
+
+<section name="Summer & Beach" tag="summer" icon="Sun" colour="honey">
+Beach, vacation, summer vocabulary.
+Examples: η θάλασσα, η παραλία, ο ήλιος, η άμμος
+</section>
+</tab>
+
+## Tab: verbs
+
+<tab id="verbs" route="/learn/vocabulary/verbs">
+<purpose>Verbs grouped by conjugation family/pattern</purpose>
+<hero greek="κάνω, μιλάω, έρχομαι" title="Verbs by family">
+Learn one verb from each family and you can conjugate thousands. That's not an exaggeration.
+</hero>
+
+<key-insight>
+Three patterns cover almost everything:
+- -ω (active): κάνω, θέλω, βλέπω
+- -άω/-ώ (contracted): μιλάω, αγαπάω, ρωτάω
+- -μαι (deponent): έρχομαι, θυμάμαι, κοιμάμαι
+</key-insight>
+
+<families>
+<family pattern="-ω" display="Active -ω verbs" colour="ocean">
+<canonical>κάνω (to do/make)</canonical>
+<paradigm>
+| Person | Form |
+|--------|------|
+| εγώ | κάν-ω |
+| εσύ | κάν-εις |
+| αυτός | κάν-ει |
+| εμείς | κάν-ουμε |
+| εσείς | κάν-ετε |
+| αυτοί | κάν-ουν(ε) |
+</paradigm>
+Contains: θέλω, βλέπω, γράφω, διαβάζω, τρώω, πίνω, etc.
+</family>
+
+<family pattern="-άω" display="Contracted -άω verbs" colour="terracotta">
+<canonical>μιλάω (to speak)</canonical>
+<paradigm>
+| Person | Form |
+|--------|------|
+| εγώ | μιλ-άω/ώ |
+| εσύ | μιλ-άς |
+| αυτός | μιλ-άει/ά |
+| εμείς | μιλ-άμε |
+| εσείς | μιλ-άτε |
+| αυτοί | μιλ-άνε/ούν(ε) |
+</paradigm>
+Contains: αγαπάω, ρωτάω, περπατάω, φωνάζω, etc.
+</family>
+
+<family pattern="deponent" display="Deponent verbs (-μαι)" colour="olive">
+<note>
+Deponent verbs have passive form but active meaning.
+Two sub-patterns mirror active: -ομαι (like -ω) and -άμαι (like -άω).
+</note>
+
+<sub-pattern type="-ομαι">
+<canonical>έρχομαι (to come)</canonical>
+<paradigm>
+| Person | Form |
+|--------|------|
+| εγώ | έρχ-ομαι |
+| εσύ | έρχ-εσαι |
+| αυτός | έρχ-εται |
+| εμείς | ερχ-όμαστε |
+| εσείς | έρχ-εστε |
+| αυτοί | έρχ-ονται |
+</paradigm>
+</sub-pattern>
+
+<sub-pattern type="-άμαι">
+<canonical>θυμάμαι (to remember)</canonical>
+<paradigm>
+| Person | Form |
+|--------|------|
+| εγώ | θυμ-άμαι |
+| εσύ | θυμ-άσαι |
+| αυτός | θυμ-άται |
+| εμείς | θυμ-όμαστε |
+| εσείς | θυμ-άστε |
+| αυτοί | θυμ-ούνται |
+</paradigm>
+</sub-pattern>
+Contains: κοιμάμαι, φοβάμαι, χρειάζομαι, etc.
+</family>
+
+<family pattern="irregular" display="Irregular verbs" colour="honey">
+High-frequency verbs with unique conjugations.
+<verbs>
+- είμαι (to be): είμαι, είσαι, είναι, είμαστε, είστε, είναι
+- έχω (to have): έχω, έχεις, έχει, έχουμε, έχετε, έχουν
+- λέω (to say): λέω, λες, λέει, λέμε, λέτε, λένε
+- πάω (to go): πάω, πας, πάει, πάμε, πάτε, πάνε
+</verbs>
+</family>
+</families>
+
+<verb-detail-page route="/learn/vocabulary/verbs/:verbId">
+Full conjugation detail for individual verbs.
+<displays>
+- Verb header (lemma, English, conjugation family)
+- Suppletive indicator (different stems across tenses)
+- Stem insight (present/aorist/future stem changes)
+- Tense tabs: present, aorist, future, past continuous
+- Full paradigm tables (6 forms per tense)
+- Imperative table (imperfective/perfective × singular/plural)
+</displays>
+<data-source>
+DB tables: vocabulary, verbDetails, verbConjugations, verbImperatives
+</data-source>
+</verb-detail-page>
+</tab>
+
+## Tab: reference
+
+<tab id="reference" route="/learn/vocabulary/reference">
+<purpose>Quick reference essentials - numbers, colours, time, position</purpose>
+<hero greek="ένα, δύο, τρία..." title="Quick reference essentials">
+Numbers, colours, times, and position words — building blocks for everyday Greek.
+</hero>
+
+<cross-link>
+For days of the week and months, see Time Expressions in Phrases (/learn/phrases/time).
+</cross-link>
+
+<section name="Times of Day" tag="time-of-day" icon="Sun" colour="honey">
+<items order="morning,midday,afternoon,evening,night">
+| Greek | English | Time Range |
+|-------|---------|------------|
+| πρωί | morning | ~6am-12pm |
+| μεσημέρι | midday | ~12pm-3pm |
+| απόγευμα | afternoon | ~3pm-6pm |
+| βράδυ | evening | ~6pm-10pm |
+| νύχτα | night | ~10pm-6am |
+</items>
+<metadata>Items have `timeRange` in metadata for display.</metadata>
+</section>
+
+<section name="Numbers" tag="number" icon="Hash" colour="ocean">
+<pattern>
+For 21-99: combine tens + units
+τριάντα + δύο = τριάντα δύο (32)
+</pattern>
+<groups>
+- Units (0-9): μηδέν, ένα, δύο, τρία, τέσσερα, πέντε, έξι, εφτά, οχτώ, εννιά
+- Teens (10-19): δέκα, έντεκα, δώδεκα, δεκατρία...
+- Tens (20-100): είκοσι, τριάντα, σαράντα, πενήντα, εξήντα, εβδομήντα, ογδόντα, ενενήντα, εκατό
+</groups>
+<metadata>Items have `numericValue` in metadata for sorting.</metadata>
+</section>
+
+<section name="Colours" tag="color" icon="Palette" colour="terracotta">
+Basic colour vocabulary.
+Examples: κόκκινο, μπλε, πράσινο, κίτρινο, μαύρο, άσπρο
+</section>
+
+<section name="Adverbs of Frequency" tag="frequency" icon="TrendingUp" colour="olive">
+<warning>
+ποτέ = never, πότε = when (question) — accent changes meaning!
+</warning>
+Examples: πάντα, συχνά, μερικές φορές, σπάνια, ποτέ
+</section>
+
+<section name="Position & Direction" tag="position" icon="MapPin" colour="ocean">
+<display>Shown as opposite pairs where applicable.</display>
+<pairs>
+| Left | Right |
+|------|-------|
+| αριστερά (left) | δεξιά (right) |
+| πάνω (up/above) | κάτω (down/below) |
+| μέσα (inside) | έξω (outside) |
+| μπροστά (in front) | πίσω (behind) |
+| εδώ (here) | εκεί (there) |
+| κοντά (near) | μακριά (far) |
+</pairs>
+</section>
+
+<section name="Question Words" tag="question" icon="HelpCircle" colour="terracotta">
+Interrogative words for asking questions.
+<subtitle>Ερωτηματικές λέξεις</subtitle>
+<items>
+| Greek | English |
+|-------|---------|
+| πώς | how |
+| τι | what |
+| πού | where |
+| πότε | when |
+| γιατί | why |
+| ποιος/ποια/ποιο | who/which |
+| πόσο | how much |
+</items>
+</section>
+</tab>
+
+## Tag to Section Mapping
+
+```
+Tag Slug          → Tab       → Section
+───────────────────────────────────────────
+people            → nouns     → Family & People
+shopping          → nouns     → Shopping & Groceries
+household         → nouns     → Household & Home
+transport-vehicle → nouns     → Transportation
+summer            → nouns     → Summer & Beach
+time-of-day       → reference → Times of Day
+number            → reference → Numbers
+color             → reference → Colours
+frequency         → reference → Adverbs of Frequency
+position          → reference → Position & Direction
+question          → reference → Question Words
+```
+
+## Verb Pattern to Family Mapping
+
+Verb patterns are determined by the `verbDetails` table's `conjugationFamily` field:
+
+```
+Pattern    → Family Display    → Colour
+────────────────────────────────────────
+-ω         → Active -ω verbs   → ocean
+-άω        → Contracted -άω    → terracotta
+-ομαι      → Deponent (Type 1) → olive
+-άμαι      → Deponent (Type 2) → olive
+irregular  → Irregular verbs   → honey
+```
+
+## Content Guidelines
+
+When adding vocabulary:
+
+1. **Tag by category** - Use semantic tags (people, shopping, etc.)
+2. **Include article for nouns** - Article determines gender
+3. **For numbers**: Add `numericValue` to metadata
+4. **For times**: Add `timeRange` to metadata
+5. **For verbs**: Ensure `verbDetails` record exists with correct `conjugationFamily`
+6. **Link verbs to patterns**: Use the verb detail page for full conjugations

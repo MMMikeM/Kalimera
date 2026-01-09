@@ -1,0 +1,332 @@
+# Conversations Content Map
+
+Themed dialogues demonstrating Greek in real-world contexts.
+
+## Route Structure
+
+```
+/learn/conversations/:tab
+```
+
+Tabs: arriving, food, smalltalk, requests
+
+## Data Source
+
+**Static content** - Dialogues are hardcoded in `$tab.tsx`, not database-driven.
+This allows precise control over dialogue flow and cultural notes.
+
+## Display Modes
+
+Conversations support two modes (toggled in layout, persists across tabs):
+- **Read mode**: Full dialogue visible with translations
+- **Practice mode**: Greek hidden, user tests recall
+
+## Dialogue Line Structure
+
+```typescript
+interface DialogueLine {
+  speaker: "you" | "friend" | "host" | "waiter" | "stranger";
+  greek: string;
+  english: string;
+  note?: string;  // Cultural/linguistic context
+}
+```
+
+## Tab: arriving
+
+<tab id="arriving" route="/learn/conversations/arriving">
+<purpose>Greetings, arrivals at homes, and goodbyes</purpose>
+<hero greek="Καλώς ήρθατε!" title="Arriving & Leaving" colour="olive">
+The warmth of Greek hospitality starts at the door. Expect enthusiastic welcomes and reluctant goodbyes.
+</hero>
+
+<scenario name="Casual greeting (friends)" formality="informal">
+| Speaker | Greek | English |
+|---------|-------|---------|
+| friend | Γεια σου! | Hi! |
+| you | Γεια! | Hi! |
+| friend | Τι κάνεις; | How are you? |
+| you | Καλά, εσύ; | Good, you? |
+| friend | Μια χαρά | Great (lit: "a joy") |
+</scenario>
+
+<scenario name="Arriving at a Greek home" formality="formal">
+| Speaker | Greek | English |
+|---------|-------|---------|
+| host | Καλώς ήρθατε! | Welcome! |
+| you | Γεια σας, ευχαριστούμε | Hello, thank you |
+| host | Πέρνα μέσα, πέρνα | Come in, come in |
+| you | Ευχαριστώ πολύ | Thank you very much |
+| host | Κάτσε, κάτσε | Sit down, sit down |
+</scenario>
+
+<scenario name="Saying goodbye" formality="formal">
+| Speaker | Greek | English | Note |
+|---------|-------|---------|------|
+| you | Πρέπει να φύγουμε | We have to go | Announcing departure |
+| host | Τόσο νωρίς; | So early? | |
+| you | Δυστυχώς, ναι | Unfortunately, yes | |
+| host | Να προσέχεις | Take care | |
+| you | Τα λέμε | See you | |
+| host | Καλό δρόμο! | Have a good trip! | |
+| you | Ευχαριστούμε για όλα | Thank you for everything | |
+</scenario>
+
+<learning-tips>
+<patterns>
+- Informal imperatives doubled for emphasis: κάτσε, κάτσε / πέρνα, πέρνα
+- Plural "we" for politeness: ευχαριστούμε instead of ευχαριστώ
+- Να + verb for wishes: Να προσέχεις (Take care)
+</patterns>
+<cultural>
+- Greeks repeat imperatives for warmth, not impatience
+- Expect reluctance to let you leave - decline 2-3 times before insisting
+</cultural>
+<common-mistake wrong="Αντίο" right="Γεια σου / Τα λέμε">
+Αντίο sounds final - save for permanent goodbyes
+</common-mistake>
+</learning-tips>
+</tab>
+
+## Tab: food
+
+<tab id="food" route="/learn/conversations/food">
+<purpose>Food offers, meals, and cafe ordering</purpose>
+<hero greek="Φάε, φάε!" title="Food & Hospitality" colour="terracotta">
+Greek hospitality means constantly offering food and drink. Learn to accept graciously and politely decline when full.
+</hero>
+
+<scenario name="Being offered refreshments" formality="mixed">
+| Speaker | Greek | English | Note |
+|---------|-------|---------|------|
+| host | Θέλεις κάτι; | Do you want something? | |
+| you | Τι έχεις; | What do you have? | |
+| host | Καφέ, τσάι, νερό... | Coffee, tea, water... | |
+| you | Ένα καφέ, ευχαριστώ | A coffee, thank you | |
+| host | Γλυκό, μέτριο, σκέτο; | Sweet, medium, no sugar? | Greek coffee options |
+| you | Μέτριο, παρακαλώ | Medium, please | |
+</scenario>
+
+<scenario name="During a meal" formality="informal">
+| Speaker | Greek | English |
+|---------|-------|---------|
+| host | Φάε, φάε! | Eat, eat! |
+| you | Είναι πολύ νόστιμο | It's very delicious |
+| host | Πάρε λίγο ακόμα | Take some more |
+| you | Χόρτασα | I'm full |
+| host | Σίγουρα; | Are you sure? |
+| you | Ναι, ευχαριστώ πολύ | Yes, thank you very much |
+</scenario>
+
+<scenario name="Complimenting the food" formality="informal">
+| Speaker | Greek | English |
+|---------|-------|---------|
+| host | Άρεσε; | Did you like it? |
+| you | Πολύ! Τι είναι αυτό; | A lot! What is this? |
+| host | Μουσακάς | Moussaka |
+| you | Είναι τέλειο | It's perfect |
+| host | Θα σου δώσω τη συνταγή | I'll give you the recipe |
+</scenario>
+
+<scenario name="At a cafe" formality="formal">
+| Speaker | Greek | English |
+|---------|-------|---------|
+| waiter | Τι θα πάρετε; | What will you have? |
+| you | Έναν καφέ φραπέ, παρακαλώ | A frappe, please |
+| waiter | Με γάλα; | With milk? |
+| you | Ναι, με γάλα | Yes, with milk |
+| waiter | Τίποτα άλλο; | Anything else? |
+| you | Όχι, ευχαριστώ | No, thank you |
+| waiter | Αμέσως | Right away |
+</scenario>
+
+<learning-tips>
+<patterns>
+- Coffee options: γλυκό (sweet), μέτριο (medium), σκέτο (plain)
+- Imperative repetition: Φάε, φάε! Πάρε, πάρε!
+- Χόρτασα literally means "I'm satisfied" - stronger than "full"
+</patterns>
+<cultural>
+- Always accept at least a small amount - refusing is impolite
+- Complimenting food is expected and appreciated
+</cultural>
+<common-mistake wrong="Είμαι γεμάτος" right="Χόρτασα">
+Είμαι γεμάτος sounds odd in Greek - use χόρτασα for "I'm full"
+</common-mistake>
+</learning-tips>
+</tab>
+
+## Tab: smalltalk
+
+<tab id="smalltalk" route="/learn/conversations/smalltalk">
+<purpose>Casual conversation topics - origin, weather, plans, work, family</purpose>
+<hero greek="Τι κάνεις;" title="Small Talk" colour="ocean">
+Casual conversation with friends and acquaintances. Weather, work, family - the universal topics that connect us.
+</hero>
+
+<scenario name="Where are you from?" formality="informal">
+| Speaker | Greek | English | Note |
+|---------|-------|---------|------|
+| friend | Από πού είσαι; | Where are you from? | |
+| you | Είμαι από... | I'm from... | Add your country |
+| friend | Α, ωραία! Πόσο καιρό είσαι εδώ; | Oh, nice! How long have you been here? | |
+| you | Δύο εβδομάδες | Two weeks | |
+| friend | Σου αρέσει η Ελλάδα; | Do you like Greece? | |
+| you | Πάρα πολύ! | Very much! | |
+</scenario>
+
+<scenario name="Talking about the weather" formality="informal">
+| Speaker | Greek | English |
+|---------|-------|---------|
+| friend | Κάνει πολύ ζέστη σήμερα! | It's very hot today! |
+| you | Ναι, δεν αντέχω | Yes, I can't stand it |
+| friend | Θέλεις νερό; | Do you want water? |
+| you | Ναι, ευχαριστώ | Yes, thank you |
+</scenario>
+
+<scenario name="Weekend plans" formality="informal">
+| Speaker | Greek | English |
+|---------|-------|---------|
+| friend | Τι θα κάνεις το Σαββατοκύριακο; | What are you doing this weekend? |
+| you | Δεν ξέρω ακόμα | I don't know yet |
+| friend | Θέλεις να πάμε για καφέ; | Do you want to go for coffee? |
+| you | Ναι, καλή ιδέα! | Yes, good idea! |
+| friend | Το Σάββατο; | Saturday? |
+| you | Εντάξει | Okay |
+</scenario>
+
+<scenario name="Asking about work" formality="informal">
+| Speaker | Greek | English |
+|---------|-------|---------|
+| friend | Τι κάνεις στη δουλειά; | How's work? |
+| you | Καλά, πολύ δουλειά όμως | Good, but a lot of work |
+| friend | Κουράστηκες; | Are you tired? |
+| you | Λίγο | A little |
+</scenario>
+
+<scenario name="Asking about family" formality="informal">
+| Speaker | Greek | English |
+|---------|-------|---------|
+| friend | Πώς είναι τα παιδιά; | How are the kids? |
+| you | Πολύ καλά, ευχαριστώ | Very good, thank you |
+| friend | Πάνε σχολείο; | Do they go to school? |
+| you | Ναι, τους αρέσει πολύ | Yes, they like it a lot |
+</scenario>
+
+<learning-tips>
+<patterns>
+- Δεν αντέχω - versatile phrase for "I can't stand/handle"
+- Μια χαρά - literally "a joy", means "great/fine"
+- Εντάξει - multipurpose "okay/agreed/fine"
+</patterns>
+<cultural>
+- Weather complaints are bonding moments in summer heat
+- Family questions are expected and not intrusive in Greek culture
+</cultural>
+</learning-tips>
+</tab>
+
+## Tab: requests
+
+<tab id="requests" route="/learn/conversations/requests">
+<purpose>Practical situations - introductions, asking for help, making requests</purpose>
+<hero greek="Βοήθησέ με!" title="Quick Requests" colour="honey">
+Practical phrases for everyday needs. Asking for help, making introductions, and simple requests.
+</hero>
+
+<scenario name="Introducing yourself" formality="formal">
+| Speaker | Greek | English | Note |
+|---------|-------|---------|------|
+| stranger | Πώς σε λένε; | What's your name? | |
+| you | Με λένε... | My name is... | Add your name |
+| stranger | Χαίρω πολύ | Nice to meet you | |
+| you | Κι εγώ | Me too | |
+</scenario>
+
+<scenario name="Asking for help" formality="formal">
+| Speaker | Greek | English |
+|---------|-------|---------|
+| you | Συγγνώμη, μπορείτε να με βοηθήσετε; | Excuse me, can you help me? |
+| stranger | Βέβαια | Of course |
+| you | Πού είναι η στάση; | Where is the stop? |
+| stranger | Εκεί, δεξιά | There, on the right |
+| you | Ευχαριστώ πολύ | Thank you very much |
+</scenario>
+
+<scenario name="When you need help understanding" formality="formal">
+| Speaker | Greek | English | Note |
+|---------|-------|---------|------|
+| stranger | Θέλετε να σας δείξω τον δρόμο; | Do you want me to show you the way? | |
+| you | Πιο αργά, παρακαλώ | Slower, please | |
+| stranger | Θέλετε... να σας... δείξω... | Do you want... me to show you... | |
+| you | Συγγνώμη, δεν κατάλαβα | Sorry, I didn't understand | |
+| stranger | Να έρθω μαζί σας; | Should I come with you? | Simplified offer |
+| you | Ναι, ευχαριστώ πολύ! | Yes, thank you very much! | |
+</scenario>
+
+<scenario name="Asking for opinions" formality="informal">
+| Speaker | Greek | English |
+|---------|-------|---------|
+| friend | Τι σου φαίνεται; | What do you think? |
+| you | Μου φαίνεται καλό | It seems good to me |
+| friend | Σίγουρα; | Are you sure? |
+| you | Ναι, μ' αρέσει | Yes, I like it |
+</scenario>
+
+<scenario name="Making simple requests" formality="informal">
+| Speaker | Greek | English | Note |
+|---------|-------|---------|------|
+| you | Περίμενέ με λίγο | Wait for me a bit | |
+| friend | Εντάξει | Okay | |
+| you | Άκουσέ με | Listen to me | |
+| friend | Λέγε | Go ahead | Literally "say" |
+| you | Δώσε μου το νερό | Give me the water | |
+| friend | Ορίστε | Here you go | |
+</scenario>
+
+<learning-tips>
+<patterns>
+- Με λένε + name: "They call me..." (standard intro)
+- Imperatives with με: Βοήθησέ με, Άκουσέ με, Περίμενέ με
+- Μου φαίνεται + adjective: "It seems to me..."
+</patterns>
+<cultural>
+- Συγγνώμη works for both "excuse me" and "sorry"
+- Ορίστε is the standard "here you go" when handing something
+</cultural>
+<common-mistake wrong="Πώς είσαι;" right="Πώς σε λένε;">
+Πώς είσαι means "How are you?" - different question!
+</common-mistake>
+</learning-tips>
+</tab>
+
+## Speaker Role Conventions
+
+| Speaker | Context | Typical Formality |
+|---------|---------|-------------------|
+| you | The learner | Varies |
+| friend | Casual acquaintance | Informal |
+| host | Greek home owner | Formal (shows respect) |
+| waiter | Service staff | Formal |
+| stranger | Unknown person | Formal |
+
+## Content Guidelines
+
+When adding conversations:
+
+1. **Keep dialogues short** - 5-8 exchanges max for readability
+2. **Mix formality levels** - Show both formal and informal register
+3. **Add notes sparingly** - Only for non-obvious cultural/linguistic points
+4. **Show real patterns** - Repetition, filler words, natural speech
+5. **Include learning tips** - Patterns, cultural notes, common mistakes
+6. **Use consistent speakers** - Maintain speaker roles within a scenario
+
+## Adding New Tabs
+
+To add a new conversation topic:
+
+1. Add tab ID to `VALID_TABS` array in `$tab.tsx`
+2. Create dialogue constants (follow existing naming: `SCENARIO_NAME: DialogueLine[]`)
+3. Create tab component with `ConversationHero`, `ScenarioCard`s, and `LearningTips`
+4. Add case to switch statement in default export
+5. Update this documentation
