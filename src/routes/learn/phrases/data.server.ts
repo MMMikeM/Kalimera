@@ -62,13 +62,12 @@ export async function getPhrasesData() {
 			months: reference.months ?? [],
 			timeTelling: phrases["time-telling"] ?? [],
 		},
-		constructions: {
+		patterns: {
 			likesConstruction: {
 				singular: verbs["likes-singular"] ?? [],
 				plural: verbs["likes-plural"] ?? [],
 			},
 			nameConstruction: phrases["name-construction"] ?? [],
-			questionWords: phrases.question ?? [],
 		},
 	};
 }
