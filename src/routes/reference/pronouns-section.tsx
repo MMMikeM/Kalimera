@@ -12,9 +12,8 @@ import {
 } from "../../constants/pronouns";
 import { Card } from "@/components/Card";
 import { MonoText } from "@/components/MonoText";
-import { CategoryCard } from "@/components/CategoryCard";
+import { ContentSection } from "@/components/ContentSection";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
-import { KeyInsight } from "@/components/KeyInsight";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { PronounDecisionGuide } from "./pronoun-decision-guide";
 import { PronounParadigmTable } from "./pronoun-paradigm-table";
@@ -50,181 +49,188 @@ export const PronounsSection: React.FC = () => {
 
 			{/* Primary pronouns - most used */}
 			<div className="grid lg:grid-cols-2 gap-6">
-				<CategoryCard
+				<ContentSection
 					title="Nominative Pronouns"
-					priority="tertiary"
 					colorScheme="olive"
 				>
-					<p className="text-sm text-stone-600 mb-3">
-						Subject pronouns: often dropped! (εγώ, εσύ...)
-					</p>
-					<Alert variant="success" className="mb-4">
-						<AlertTitle>Good news</AlertTitle>
-						<AlertDescription>
-							Verb endings already show person, so subject pronouns are usually
-							optional. Use them for emphasis.
-						</AlertDescription>
-					</Alert>
-					<PronounParadigmTable
-						data={SUBJECT_PRONOUNS}
-						colorClass="border-olive-400"
-					/>
-					<div className="mt-4 pt-4 border-t border-olive-300">
-						<div className="text-sm text-stone-600 mb-2 font-medium">
-							Examples:
-						</div>
-						<div className="flex flex-wrap gap-2">
-							{SUBJECT_PRONOUN_EXAMPLES.map((ex) => (
-								<div
-									key={ex.greek}
-									className="px-3 py-1.5 bg-white rounded-full border border-olive-300 text-sm"
-								>
-									<MonoText size="sm" className="text-olive-text">
-										{ex.greek}
-									</MonoText>
-									<span className="text-stone-600 ml-1">({ex.english})</span>
-								</div>
-							))}
+					<div className="p-3 space-y-4">
+						<p className="text-sm text-stone-600">
+							Subject pronouns: often dropped! (εγώ, εσύ...)
+						</p>
+						<Alert variant="success">
+							<AlertTitle>Good news</AlertTitle>
+							<AlertDescription>
+								Verb endings already show person, so subject pronouns are usually
+								optional. Use them for emphasis.
+							</AlertDescription>
+						</Alert>
+						<PronounParadigmTable
+							data={SUBJECT_PRONOUNS}
+							colorClass="border-olive-400"
+						/>
+						<div className="pt-4 border-t border-olive-300">
+							<div className="text-sm text-stone-600 mb-2 font-medium">
+								Examples:
+							</div>
+							<div className="flex flex-wrap gap-2">
+								{SUBJECT_PRONOUN_EXAMPLES.map((ex) => (
+									<div
+										key={ex.greek}
+										className="px-3 py-1.5 bg-white rounded-full border border-olive-300 text-sm"
+									>
+										<MonoText size="sm" className="text-olive-text">
+											{ex.greek}
+										</MonoText>
+										<span className="text-stone-600 ml-1">({ex.english})</span>
+									</div>
+								))}
+							</div>
 						</div>
 					</div>
-				</CategoryCard>
+				</ContentSection>
 
-				<CategoryCard
+				<ContentSection
 					title="Genitive Pronouns"
-					priority="primary"
 					colorScheme="terracotta"
 					badge="Essential"
 				>
-					<p className="text-sm text-stone-600 mb-3">
-						Possessive pronouns: for "my/your/their" (μου, σου...)
-					</p>
-					<Alert variant="purple" className="mb-4">
-						<AlertTitle>Word order</AlertTitle>
-						<AlertDescription>
-							Possessives go AFTER the noun: το σπίτι μου (the house my) = my
-							house
-						</AlertDescription>
-					</Alert>
-					<PronounParadigmTable
-						data={POSSESSIVE_PRONOUNS}
-						colorClass="border-terracotta-400"
-						note="Neuter uses same form as masculine (του)"
-					/>
-					<div className="mt-4 pt-4 border-t border-terracotta-300">
-						<div className="text-sm text-stone-600 mb-2 font-medium">
-							Examples:
-						</div>
-						<div className="flex flex-wrap gap-2">
-							{POSSESSIVE_PRONOUN_EXAMPLES.map((ex) => (
-								<div
-									key={ex.greek}
-									className="px-3 py-1.5 bg-white rounded-full border border-terracotta-300 text-sm"
-								>
-									<MonoText size="sm" className="text-terracotta-text">
-										{ex.greek}
-									</MonoText>
-									<span className="text-stone-600 ml-1">({ex.english})</span>
-								</div>
-							))}
+					<div className="p-3 space-y-4">
+						<p className="text-sm text-stone-600">
+							Possessive pronouns: for "my/your/their" (μου, σου...)
+						</p>
+						<Alert variant="purple">
+							<AlertTitle>Word order</AlertTitle>
+							<AlertDescription>
+								Possessives go AFTER the noun: το σπίτι μου (the house my) = my
+								house
+							</AlertDescription>
+						</Alert>
+						<PronounParadigmTable
+							data={POSSESSIVE_PRONOUNS}
+							colorClass="border-terracotta-400"
+							note="Neuter uses same form as masculine (του)"
+						/>
+						<div className="pt-4 border-t border-terracotta-300">
+							<div className="text-sm text-stone-600 mb-2 font-medium">
+								Examples:
+							</div>
+							<div className="flex flex-wrap gap-2">
+								{POSSESSIVE_PRONOUN_EXAMPLES.map((ex) => (
+									<div
+										key={ex.greek}
+										className="px-3 py-1.5 bg-white rounded-full border border-terracotta-300 text-sm"
+									>
+										<MonoText size="sm" className="text-terracotta-text">
+											{ex.greek}
+										</MonoText>
+										<span className="text-stone-600 ml-1">({ex.english})</span>
+									</div>
+								))}
+							</div>
 						</div>
 					</div>
-				</CategoryCard>
+				</ContentSection>
 			</div>
 
 			{/* Secondary pronouns - less frequent */}
 			<div className="grid lg:grid-cols-2 gap-6">
-				<CategoryCard
+				<ContentSection
 					title="Accusative Pronouns"
-					priority="primary"
 					colorScheme="ocean"
 					badge="Essential"
 				>
-					<p className="text-sm text-stone-600 mb-3">
-						Object pronouns: use these constantly! (με, σε, τον...)
-					</p>
-					<Alert variant="info" className="mb-4">
-						<AlertTitle>Word order</AlertTitle>
-						<AlertDescription>
-							Object pronouns go BEFORE the verb: σε βλέπω (you I-see) = I see
-							you
-						</AlertDescription>
-					</Alert>
-					<PronounParadigmTable
-						data={OBJECT_PRONOUNS}
-						colorClass="border-ocean-300"
-					/>
-					<div className="mt-4 pt-4 border-t border-ocean-300">
-						<div className="text-sm text-stone-600 mb-2 font-medium">
-							Examples:
-						</div>
-						<div className="flex flex-wrap gap-2">
-							{OBJECT_PRONOUN_EXAMPLES.map((ex) => (
-								<div
-									key={ex.greek}
-									className="px-3 py-1.5 bg-white rounded-full border border-ocean-300 text-sm"
-								>
-									<MonoText size="sm" className="text-ocean-text">
-										{ex.greek}
-									</MonoText>
-									<span className="text-stone-600 ml-1">({ex.english})</span>
-								</div>
-							))}
+					<div className="p-3 space-y-4">
+						<p className="text-sm text-stone-600">
+							Object pronouns: use these constantly! (με, σε, τον...)
+						</p>
+						<Alert variant="info">
+							<AlertTitle>Word order</AlertTitle>
+							<AlertDescription>
+								Object pronouns go BEFORE the verb: σε βλέπω (you I-see) = I see
+								you
+							</AlertDescription>
+						</Alert>
+						<PronounParadigmTable
+							data={OBJECT_PRONOUNS}
+							colorClass="border-ocean-300"
+						/>
+						<div className="pt-4 border-t border-ocean-300">
+							<div className="text-sm text-stone-600 mb-2 font-medium">
+								Examples:
+							</div>
+							<div className="flex flex-wrap gap-2">
+								{OBJECT_PRONOUN_EXAMPLES.map((ex) => (
+									<div
+										key={ex.greek}
+										className="px-3 py-1.5 bg-white rounded-full border border-ocean-300 text-sm"
+									>
+										<MonoText size="sm" className="text-ocean-text">
+											{ex.greek}
+										</MonoText>
+										<span className="text-stone-600 ml-1">({ex.english})</span>
+									</div>
+								))}
+							</div>
 						</div>
 					</div>
-				</CategoryCard>
+				</ContentSection>
 
-				<CategoryCard
+				<ContentSection
 					title="Emphatic Accusative"
-					priority="tertiary"
 					colorScheme="honey"
 				>
-					<p className="text-sm text-stone-600 mb-3">
-						Strong forms: after prepositions (εμένα, εσένα...)
-					</p>
-					<Alert variant="warning" className="mb-4">
-						<AlertTitle>When to use</AlertTitle>
-						<AlertDescription>
-							Use these after prepositions (για, με, από, σε): για μένα = for me
-						</AlertDescription>
-					</Alert>
-					<PronounParadigmTable
-						data={EMPHATIC_PRONOUNS}
-						colorClass="border-honey-400"
-					/>
-					<div className="mt-4 pt-4 border-t border-honey-300">
-						<div className="text-sm text-stone-600 mb-2 font-medium">
-							Examples:
-						</div>
-						<div className="flex flex-wrap gap-2">
-							{EMPHATIC_PRONOUN_EXAMPLES.map((ex) => (
-								<div
-									key={ex.greek}
-									className="px-3 py-1.5 bg-white rounded-full border border-honey-300 text-sm"
-								>
-									<MonoText size="sm" className="text-honey-text">
-										{ex.greek}
-									</MonoText>
-									<span className="text-stone-600 ml-1">({ex.english})</span>
-								</div>
-							))}
+					<div className="p-3 space-y-4">
+						<p className="text-sm text-stone-600">
+							Strong forms: after prepositions (εμένα, εσένα...)
+						</p>
+						<Alert variant="warning">
+							<AlertTitle>When to use</AlertTitle>
+							<AlertDescription>
+								Use these after prepositions (για, με, από, σε): για μένα = for me
+							</AlertDescription>
+						</Alert>
+						<PronounParadigmTable
+							data={EMPHATIC_PRONOUNS}
+							colorClass="border-honey-400"
+						/>
+						<div className="pt-4 border-t border-honey-300">
+							<div className="text-sm text-stone-600 mb-2 font-medium">
+								Examples:
+							</div>
+							<div className="flex flex-wrap gap-2">
+								{EMPHATIC_PRONOUN_EXAMPLES.map((ex) => (
+									<div
+										key={ex.greek}
+										className="px-3 py-1.5 bg-white rounded-full border border-honey-300 text-sm"
+									>
+										<MonoText size="sm" className="text-honey-text">
+											{ex.greek}
+										</MonoText>
+										<span className="text-stone-600 ml-1">({ex.english})</span>
+									</div>
+								))}
+							</div>
 						</div>
 					</div>
-				</CategoryCard>
+				</ContentSection>
 			</div>
 
 			{/* Connection to cases - NOW it makes sense after seeing the pronouns */}
-			<KeyInsight title="Pronouns = Cases in Action!">
-				<strong>Accusative</strong> (
-				<MonoText variant="greek" size="sm">
-					με, σε, τον
-				</MonoText>
-				) answers "WHOM/WHAT do I [verb]?" <strong>Genitive</strong> (
-				<MonoText variant="greek" size="sm">
-					μου, σου, του
-				</MonoText>
-				) answers "WHOSE?" You're already using cases every time you use a
-				pronoun!
-			</KeyInsight>
+			<Alert variant="info">
+				<AlertTitle>Pronouns = Cases in Action!</AlertTitle>
+				<AlertDescription>
+					<strong>Accusative</strong> (
+					<MonoText variant="greek" size="sm">
+						με, σε, τον
+					</MonoText>
+					) answers "WHOM/WHAT do I [verb]?" <strong>Genitive</strong> (
+					<MonoText variant="greek" size="sm">
+						μου, σου, του
+					</MonoText>
+					) answers "WHOSE?" You're already using cases every time you use a
+					pronoun!
+				</AlertDescription>
+			</Alert>
 
 			{/* Double object pattern - neutral styling */}
 			<Card

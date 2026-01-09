@@ -11,7 +11,7 @@ import {
 import { Card } from "@/components/Card";
 import { MonoText } from "@/components/MonoText";
 import { SectionHeading } from "@/components/SectionHeading";
-import { KeyInsight } from "@/components/KeyInsight";
+import { ContentSection } from "@/components/ContentSection";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
 import { MistakeComparison } from "@/components/MistakeComparison";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -409,39 +409,37 @@ export const AdjectivesSection: React.FC = () => {
 				subtitle="Words that describe nouns. They must agree in gender, case, and number."
 			/>
 
-			<KeyInsight
-				title="Adjectives copy the noun"
-				expandedExample={{
-					label: "What this means",
-					content: (
-						<div className="space-y-2 text-sm">
-							<p>
-								Look at the article. The adjective uses the same gender, case,
-								and number as the noun it describes.
-							</p>
-							<div className="mt-2 p-2 bg-white rounded border border-ocean-200">
-								<div className="space-y-1">
-									<div>
-										<MonoText variant="masculine">ο καλός φίλος</MonoText>
-										<span className="text-stone-600 ml-2">
-											(all masculine nominative)
-										</span>
-									</div>
-									<div>
-										<MonoText variant="masculine">τον καλό φίλο</MonoText>
-										<span className="text-stone-600 ml-2">
-											(all masculine accusative, drop the -ς)
-										</span>
-									</div>
-								</div>
+			<ContentSection title="Adjectives copy the noun" colorScheme="olive">
+				<div className="p-3 space-y-3">
+					<p className="text-sm text-stone-600">
+						Match the article's gender and case. The adjective ending follows the
+						same pattern as nouns.
+					</p>
+					<div className="p-3 bg-stone-50 rounded-lg border border-stone-200">
+						<div className="text-xs font-semibold text-olive-text uppercase tracking-wide mb-2">
+							What this means
+						</div>
+						<p className="text-sm text-stone-600 mb-2">
+							Look at the article. The adjective uses the same gender, case,
+							and number as the noun it describes.
+						</p>
+						<div className="space-y-1">
+							<div>
+								<MonoText variant="masculine">ο καλός φίλος</MonoText>
+								<span className="text-stone-600 text-sm ml-2">
+									(all masculine nominative)
+								</span>
+							</div>
+							<div>
+								<MonoText variant="masculine">τον καλό φίλο</MonoText>
+								<span className="text-stone-600 text-sm ml-2">
+									(all masculine accusative, drop the -ς)
+								</span>
 							</div>
 						</div>
-					),
-				}}
-			>
-				Match the article's gender and case. The adjective ending follows the
-				same pattern as nouns.
-			</KeyInsight>
+					</div>
+				</div>
+			</ContentSection>
 
 			<Alert variant="info">
 				<Lightbulb size={16} />
