@@ -30,7 +30,7 @@ function CasesPronounsTab() {
 	return (
 		<div className="space-y-8">
 			<TabHero
-				title="The foundation of Greek grammar"
+				title="Foundation of Greek grammar"
 				greekPhrase="Ποιος; Τι; Ποιου;"
 				colorScheme="ocean"
 				icon={<Users size={18} />}
@@ -53,7 +53,7 @@ function NounsArticlesTab() {
 	return (
 		<div className="space-y-12">
 			<TabHero
-				title="Articles and nouns work together"
+				title="How articles work"
 				greekPhrase="ο, η, το → τον, την, το"
 				colorScheme="olive"
 				icon={<BookOpen size={18} />}
@@ -120,7 +120,7 @@ function VerbsTab() {
 	return (
 		<div className="space-y-8">
 			<TabHero
-				title="Action words that tell the whole story"
+				title="Endings tell who acts"
 				greekPhrase="κάνω, κάνεις, κάνει..."
 				colorScheme="ocean"
 				icon={<Zap size={18} />}

@@ -85,7 +85,7 @@ export const PatternsTab = ({ data }: { data: PhrasesLoaderData }) => {
 	return (
 		<div className="space-y-6">
 			<TabHero
-				title="Understand Greek sentence patterns"
+				title="Greek sentence patterns"
 				greekPhrase="Μου αρέσει..."
 				colorScheme="honey"
 				icon={<Blocks size={18} />}
