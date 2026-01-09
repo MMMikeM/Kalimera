@@ -49,10 +49,7 @@ export const PronounsSection: React.FC = () => {
 
 			{/* Primary pronouns - most used */}
 			<div className="grid lg:grid-cols-2 gap-6">
-				<ContentSection
-					title="Nominative Pronouns"
-					colorScheme="olive"
-				>
+				<ContentSection title="Nominative Pronouns" colorScheme="olive">
 					<div className="p-3 space-y-4">
 						<p className="text-sm text-stone-600">
 							Subject pronouns: often dropped! (εγώ, εσύ...)
@@ -60,8 +57,8 @@ export const PronounsSection: React.FC = () => {
 						<Alert variant="success">
 							<AlertTitle>Good news</AlertTitle>
 							<AlertDescription>
-								Verb endings already show person, so subject pronouns are usually
-								optional. Use them for emphasis.
+								Verb endings already show person, so subject pronouns are
+								usually optional. Use them for emphasis.
 							</AlertDescription>
 						</Alert>
 						<PronounParadigmTable
@@ -175,10 +172,7 @@ export const PronounsSection: React.FC = () => {
 					</div>
 				</ContentSection>
 
-				<ContentSection
-					title="Emphatic Accusative"
-					colorScheme="honey"
-				>
+				<ContentSection title="Emphatic Accusative" colorScheme="honey">
 					<div className="p-3 space-y-4">
 						<p className="text-sm text-stone-600">
 							Strong forms: after prepositions (εμένα, εσένα...)
@@ -186,7 +180,8 @@ export const PronounsSection: React.FC = () => {
 						<Alert variant="warning">
 							<AlertTitle>When to use</AlertTitle>
 							<AlertDescription>
-								Use these after prepositions (για, με, από, σε): για μένα = for me
+								Use these after prepositions (για, με, από, σε): για μένα = for
+								me
 							</AlertDescription>
 						</Alert>
 						<PronounParadigmTable
