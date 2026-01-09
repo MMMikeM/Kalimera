@@ -3,10 +3,10 @@ import {
 	Zap,
 	Sparkles,
 	RefreshCw,
-	Star,
 	Lightbulb,
 	ArrowRight,
 	BookOpen,
+	Star,
 } from "lucide-react";
 import type React from "react";
 import { Link } from "react-router";
@@ -15,7 +15,7 @@ import { Card } from "@/components/Card";
 import { MonoText } from "@/components/MonoText";
 import { ParadigmTable } from "@/components/ParadigmTable";
 import { SectionHeading } from "@/components/SectionHeading";
-import { KeyInsight } from "@/components/KeyInsight";
+import { ContentSection } from "@/components/ContentSection";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { IRREGULAR_VERBS, VERB_PATTERNS } from "../../constants/verbs";
@@ -356,25 +356,25 @@ export const VerbsSection: React.FC = () => (
 
 		{/* Essential First: είμαι (to be) - promoted from irregulars */}
 		{eimai && (
-			<KeyInsight title="Start Here: είμαι (to be)" icon={<Star size={18} />}>
-				<p className="mb-3">
-					The most common Greek verb. Memorize it first. You'll use it in every
-					conversation.
-				</p>
-				<div className="bg-white rounded-lg p-4 border border-ocean-200">
+			<ContentSection title="Start Here: είμαι (to be)" colorScheme="olive">
+				<div className="p-3 space-y-3">
+					<p className="text-sm text-stone-600">
+						The most common Greek verb. Memorize it first. You'll use it in every
+						conversation.
+					</p>
 					<ParadigmTable
 						infinitive={eimai.infinitive}
 						meaning={eimai.meaning}
 						forms={eimai.forms}
-						formClassName="text-ocean-text font-semibold"
+						formClassName="text-olive-text font-semibold"
 					/>
 					{eimai.note && (
-						<p className="mt-3 text-sm text-stone-600 italic border-t border-stone-100 pt-2">
+						<p className="text-sm text-stone-600 italic border-t border-stone-200 pt-2">
 							{eimai.note}
 						</p>
 					)}
 				</div>
-			</KeyInsight>
+			</ContentSection>
 		)}
 
 		<Alert variant="info">
