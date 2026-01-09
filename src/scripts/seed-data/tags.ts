@@ -40,7 +40,7 @@ export const CONTENT_TAGS = {
 	request: { slug: "request", name: "Polite Requests", section: "phrases", displayOrder: 3 },
 	expression: { slug: "expression", name: "Useful Expressions", section: "phrases", displayOrder: 4 },
 	command: { slug: "command", name: "Commands", section: "phrases", displayOrder: 5 },
-	question: { slug: "question", name: "Question Words", section: "phrases", displayOrder: 6 },
+	question: { slug: "question", name: "Question Words", section: "reference", displayOrder: 9 },
 	discourseMarkers: { slug: "discourse-markers", name: "Discourse Markers", section: "phrases", displayOrder: 7 },
 	discourseFiller: { slug: "discourse-filler", name: "Discourse Fillers & Connectors", section: "phrases", displayOrder: 8 },
 	responses: { slug: "responses", name: "Common Responses", section: "phrases", displayOrder: 9 },
