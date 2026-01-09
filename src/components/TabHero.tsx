@@ -4,6 +4,25 @@ import { cn } from "@/lib/utils";
 import { Card } from "./Card";
 import { MonoText } from "./MonoText";
 
+/**
+ * Enforces a maximum character length on string literals at compile time.
+ * If the string exceeds maxLength, TypeScript will error.
+ */
+type MaxLength<
+	S extends string,
+	MaxLen extends number,
+	Acc extends unknown[] = [],
+> = Acc["length"] extends MaxLen
+	? S extends ""
+		? S
+		: never
+	: S extends `${infer _}${infer Rest}`
+		? MaxLength<Rest, MaxLen, [...Acc, unknown]>
+		: S;
+
+/** Title must be 30 characters or fewer */
+type ShortTitle<S extends string> = MaxLength<S, 30>;
+
 export type TabHeroColorScheme =
 	| "ocean"
 	| "terracotta"
@@ -11,8 +30,8 @@ export type TabHeroColorScheme =
 	| "honey"
 	| "stone";
 
-export interface TabHeroProps {
-	title: string;
+export interface TabHeroProps<T extends string = string> {
+	title: ShortTitle<T> extends never ? `Title too long (max 30 chars): ${T}` : T;
 	children: ReactNode;
 	icon?: ReactNode;
 	greekPhrase?: string;
@@ -83,7 +102,7 @@ const colorStyles: Record<
 	},
 };
 
-export const TabHero = ({
+export const TabHero = <T extends string>({
 	title,
 	children,
 	icon = <Lightbulb size={24} />,
@@ -91,7 +110,7 @@ export const TabHero = ({
 	expandedExample,
 	colorScheme = "ocean",
 	className,
-}: TabHeroProps) => {
+}: TabHeroProps<T>) => {
 	const styles = colorStyles[colorScheme];
 
 	return (
