@@ -11,28 +11,18 @@ import { tv } from "tailwind-variants";
  * - Generous spacing for reduced cognitive load
  */
 export const paradigmTableVariants = tv({
-	base: "w-full border-collapse rounded-lg overflow-hidden bg-white",
-	variants: {
-		variant: {
-			default: "border border-stone-200",
-			bordered: "border-2 border-stone-300",
-			accent: "border-2 border-terracotta-300",
-		},
-	},
-	defaultVariants: {
-		variant: "default",
-	},
+	base: "w-full border-collapse",
 });
 
 export const paradigmCellVariants = tv({
-	base: "p-2 sm:p-3 text-center font-mono text-sm sm:text-base border-stone-100",
+	base: "p-2 sm:p-3 text-center font-mono text-sm sm:text-base",
 	variants: {
 		position: {
-			topLeft: "border-r border-b",
-			topRight: "border-b",
-			middleLeft: "border-r border-b",
-			middleRight: "border-b",
-			bottomLeft: "border-r",
+			topLeft: "border-b border-stone-200",
+			topRight: "border-b border-stone-200",
+			middleLeft: "border-b border-stone-200",
+			middleRight: "border-b border-stone-200",
+			bottomLeft: "",
 			bottomRight: "",
 		},
 	},
@@ -57,7 +47,6 @@ export interface ParadigmTableProps {
 	meaning: string;
 	infinitive?: string;
 	forms: ParadigmForms;
-	variant?: "default" | "bordered" | "accent";
 	className?: string;
 	formClassName?: string;
 	endingClassName?: string;
@@ -110,7 +99,6 @@ export const ParadigmTable: React.FC<ParadigmTableProps> = ({
 	meaning,
 	infinitive,
 	forms,
-	variant,
 	className,
 	formClassName,
 	endingClassName,
@@ -145,15 +133,15 @@ export const ParadigmTable: React.FC<ParadigmTableProps> = ({
 					({meaning})
 				</span>
 			</div>
-			<table className={paradigmTableVariants({ variant })}>
+			<table className={paradigmTableVariants()}>
 				{showHeaders && (
 					<thead>
 						<tr>
 							<th className="w-12 sm:w-14" />
-							<th className="text-xs text-stone-600 font-normal pb-1 border-b border-stone-100">
+							<th className="text-xs text-stone-500 font-normal pb-2">
 								Singular
 							</th>
-							<th className="text-xs text-stone-600 font-normal pb-1 border-b border-stone-100">
+							<th className="text-xs text-stone-500 font-normal pb-2">
 								Plural
 							</th>
 						</tr>
@@ -163,7 +151,7 @@ export const ParadigmTable: React.FC<ParadigmTableProps> = ({
 					{formRows.map((row, idx) => (
 						<tr key={PERSON_LABELS[idx]}>
 							{showHeaders && (
-								<td className="text-xs text-stone-600 pr-2 text-right align-middle border-r border-stone-100">
+								<td className="text-xs text-stone-600 pr-3 text-right align-middle">
 									<div>{PERSON_LABELS[idx]}</div>
 									<div className="text-[10px] text-stone-500">
 										{PERSON_HINTS[idx]?.[0]}/{PERSON_HINTS[idx]?.[1]}
