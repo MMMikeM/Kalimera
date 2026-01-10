@@ -23,6 +23,8 @@ export async function getEssentialsData() {
 			...t,
 			timeRange: hasTimeRange(t.metadata) ? t.metadata.timeRange : undefined,
 		})),
+		daysOfWeek: reference["days-of-week"] ?? [],
+		months: reference.months ?? [],
 		numbers: (reference.number ?? [])
 			.map((n) => ({
 				...n,

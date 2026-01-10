@@ -1,10 +1,6 @@
 import { Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
-import {
-	ContentSection,
-	ContentListSection,
-	TwoColumnList,
-} from "@/components/ContentSection";
+import { ContentSection, TwoColumnList } from "@/components/ContentSection";
 import { MonoText } from "@/components/MonoText";
 import { TabHero } from "@/components/TabHero";
 import type { PhrasesLoaderData, PhraseItem } from "../components/shared";
@@ -156,55 +152,19 @@ const TimeTellingSection = ({ items }: { items: PhraseItem[] }) => {
 };
 
 export const TimeTab = ({ data }: { data: PhrasesLoaderData }) => {
-	const { daysOfWeek, months, timeTelling } = data.time;
+	const { timeTelling } = data.time;
 
 	return (
 		<div className="space-y-6">
 			<TabHero
-				title="Master time expressions"
+				title="Telling time"
 				greekPhrase="Τι ώρα είναι;"
 				colorScheme="ocean"
 				icon={<Clock size={18} />}
 			>
-				Days, months, and telling time — essential for making plans, scheduling,
+				How to ask and tell time in Greek — essential patterns for scheduling
 				and understanding when things happen.
 			</TabHero>
-
-			{daysOfWeek.length > 0 && (
-				<ContentListSection
-					title="Days of the Week"
-					subtitle="Οι μέρες της εβδομάδας"
-					colorScheme="ocean"
-					items={daysOfWeek.map((d) => ({
-						id: d.id,
-						primary: d.greek,
-						secondary: d.english,
-					}))}
-					renderPrimary={(item) => (
-						<MonoText variant="greek" className="text-lg">
-							{item.primary}
-						</MonoText>
-					)}
-				/>
-			)}
-
-			{months.length > 0 && (
-				<ContentListSection
-					title="Months of the Year"
-					subtitle="Οι μήνες του χρόνου"
-					colorScheme="ocean"
-					items={months.map((m) => ({
-						id: m.id,
-						primary: m.greek,
-						secondary: m.english,
-					}))}
-					renderPrimary={(item) => (
-						<MonoText variant="greek" className="text-lg">
-							{item.primary}
-						</MonoText>
-					)}
-				/>
-			)}
 
 			<TimeTellingSection items={timeTelling} />
 		</div>
