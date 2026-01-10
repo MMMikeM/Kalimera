@@ -1,13 +1,9 @@
 import type { Route } from "./+types/$tab";
-import { Users, BookOpen, MapPin, Zap, Sparkles } from "lucide-react";
-import { TabHero } from "@/components/TabHero";
-import { PracticeCTA } from "@/components/PracticeCTA";
-import { AgreementSection, MovableNuSection } from "./agreement-section";
-import { CasesSection } from "./cases-section";
-import { PronounsSection } from "./pronouns-section";
-import { AdjectivesSection } from "./adjectives-section";
-import { PrepositionsSection } from "./prepositions-section";
-import { VerbsSection } from "./verbs-section";
+import { CasesPronounsTab } from "./tabs/cases-pronouns";
+import { NounsArticlesTab } from "./tabs/nouns-articles";
+import { AdjectivesTab } from "./tabs/adjectives";
+import { PrepositionsTab } from "./tabs/prepositions";
+import { VerbsTab } from "./tabs/verbs";
 
 const VALID_TABS = [
 	"cases-pronouns",
@@ -24,119 +20,6 @@ export function loader({ params }: Route.LoaderArgs) {
 		throw new Response("Not Found", { status: 404 });
 	}
 	return { tab: tab as TabId };
-}
-
-function CasesPronounsTab() {
-	return (
-		<div className="space-y-8">
-			<TabHero
-				title="The foundation of Greek grammar"
-				greekPhrase="Ποιος; Τι; Ποιου;"
-				colorScheme="ocean"
-				icon={<Users size={18} />}
-			>
-				Cases show a word's role in a sentence. Pronouns are where you'll use
-				them most. Master these and cases click into place.
-			</TabHero>
-			<CasesSection />
-			<PronounsSection />
-			<PracticeCTA
-				title="Practice pronouns"
-				description="Build fluency with timed retrieval drills on Greek pronouns."
-				topic="pronouns"
-			/>
-		</div>
-	);
-}
-
-function NounsArticlesTab() {
-	return (
-		<div className="space-y-12">
-			<TabHero
-				title="Articles and nouns work together"
-				greekPhrase="ο, η, το → τον, την, το"
-				colorScheme="olive"
-				icon={<BookOpen size={18} />}
-			>
-				Greek articles change to match their noun's gender, case, and number.
-				Once you see the pattern, it becomes predictable.
-			</TabHero>
-			<AgreementSection />
-			<MovableNuSection />
-			<PracticeCTA
-				title="Practice articles"
-				description="Build fluency with timed retrieval drills on Greek articles."
-				topic="articles"
-			/>
-		</div>
-	);
-}
-
-function AdjectivesTab() {
-	return (
-		<div className="space-y-8">
-			<TabHero
-				title="Words that describe"
-				greekPhrase="ο καλός, η καλή, το καλό"
-				colorScheme="honey"
-				icon={<Sparkles size={18} />}
-			>
-				Adjectives agree with their noun in gender, case, and number. Once you
-				know noun patterns, adjectives follow the same rules.
-			</TabHero>
-			<AdjectivesSection />
-			<PracticeCTA
-				title="Practice adjectives"
-				description="Build fluency with timed retrieval drills on Greek adjectives."
-				topic="adjectives"
-			/>
-		</div>
-	);
-}
-
-function PrepositionsTab() {
-	return (
-		<div className="space-y-8">
-			<TabHero
-				title="Connect words and ideas"
-				greekPhrase="σε, από, για, με"
-				colorScheme="terracotta"
-				icon={<MapPin size={18} />}
-			>
-				Prepositions show relationships: location, direction, purpose. The big
-				four (σε, από, για, με) cover most situations.
-			</TabHero>
-			<PrepositionsSection />
-			<PracticeCTA
-				title="Practice prepositions"
-				description="Build fluency with timed retrieval drills on Greek prepositions."
-				topic="prepositions"
-			/>
-		</div>
-	);
-}
-
-function VerbsTab() {
-	return (
-		<div className="space-y-8">
-			<TabHero
-				title="Action words that tell the whole story"
-				greekPhrase="κάνω, κάνεις, κάνει..."
-				colorScheme="ocean"
-				icon={<Zap size={18} />}
-			>
-				Greek verb endings show who's doing the action, so you often don't need
-				separate pronouns. Learn three patterns and conjugate thousands of
-				verbs.
-			</TabHero>
-			<VerbsSection />
-			<PracticeCTA
-				title="Practice verbs"
-				description="Build fluency with timed retrieval drills on Greek verb conjugation."
-				topic="verbs"
-			/>
-		</div>
-	);
 }
 
 export default function TabRoute({ loaderData }: Route.ComponentProps) {
