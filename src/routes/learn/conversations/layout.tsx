@@ -4,6 +4,7 @@ import { Link, Outlet, useLocation, useOutletContext } from "react-router";
 import { MonoText } from "@/components/MonoText";
 import { Card } from "@/components/Card";
 import { NavTabs } from "@/components/NavTabs";
+import { ConversationModeToggle } from "@/components/ConversationModeToggle";
 import { DialogueScenario, type ConversationMode, type DialogueLine, type Formality } from "@/components/DialogueExchange";
 import type { NavTab } from "@/components/NavTabs";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
@@ -154,6 +155,8 @@ export default function ConversationsLayout() {
 				activeTab={activeTab}
 				buildUrl={(tabId) => `/learn/conversations/${tabId}`}
 			/>
+
+			<ConversationModeToggle mode={mode} onModeChange={setMode} />
 
 			<Outlet context={{ mode, setMode }} />
 		</div>
