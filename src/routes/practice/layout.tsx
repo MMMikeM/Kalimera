@@ -73,6 +73,18 @@ export const action = async ({ request }: Route.ActionArgs) => {
 
 export type PracticeLoaderData = Awaited<ReturnType<typeof loader>>;
 
+export const UserRequiredMessage = () => (
+	<div className="text-center py-12 bg-muted rounded-xl border border-border">
+		<div className="text-5xl mb-4">?</div>
+		<h3 className="text-xl font-semibold text-foreground mb-2">
+			Select a user
+		</h3>
+		<p className="text-muted-foreground">
+			Choose a user from the dropdown above to start practicing.
+		</p>
+	</div>
+);
+
 const PRACTICE_TABS: NavTab[] = [
 	{ id: "speed", label: "Speed Drill", shortLabel: "Speed", icon: <Zap size={16} />, color: "terracotta" },
 	{ id: "review", label: "Review", shortLabel: "Review", icon: <Clock size={16} />, color: "ocean" },

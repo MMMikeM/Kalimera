@@ -39,7 +39,7 @@ interface AttemptData {
 	weakAreaIdentifier?: string;
 }
 
-export const usePracticeSession = (
+const usePracticeSession = (
 	options: UsePracticeSessionOptions
 ): UsePracticeSessionReturn => {
 	const fetcher = useFetcher();
@@ -123,7 +123,7 @@ export const usePracticeSession = (
 };
 
 // Hook for tracking time spent on a question
-export const useQuestionTimer = () => {
+const useQuestionTimer = () => {
 	const startTimeRef = useRef<number | null>(null);
 
 	const startTimer = useCallback(() => {
