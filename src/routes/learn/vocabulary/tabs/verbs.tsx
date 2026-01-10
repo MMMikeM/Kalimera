@@ -1,18 +1,17 @@
-import type React from "react";
-import { useOutletContext, Link } from "react-router";
 import { ArrowRight, Languages } from "lucide-react";
-import { MonoText } from "@/components/MonoText";
-import { CollapsibleSection } from "@/components/CollapsibleSection";
+import type React from "react";
+import { Link, useOutletContext } from "react-router";
 import { CategoryCard } from "@/components/CategoryCard";
+import { CollapsibleSection } from "@/components/CollapsibleSection";
+import { MonoText } from "@/components/MonoText";
 import { ParadigmTable } from "@/components/ParadigmTable";
 import { TabHero } from "@/components/TabHero";
-import { KeyInsight } from "@/components/KeyInsight";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
-	VERB_PATTERNS,
+	IRREGULAR_VERBS,
 	VERB_CONJUGATIONS,
 	VERB_FAMILIES,
-	IRREGULAR_VERBS,
+	VERB_PATTERNS,
 } from "@/constants/verbs";
 import type { VocabularyLoaderData } from "../components/shared";
 
@@ -42,20 +41,14 @@ export function VerbsTab() {
 	return (
 		<div className="space-y-6">
 			<TabHero
-				title="Browse verbs by conjugation family"
+				title="Verbs by family"
 				greekPhrase="κάνω, μιλάω, έρχομαι"
 				colorScheme="olive"
 				icon={<Languages size={18} />}
 			>
-				Verbs grouped by how they conjugate. If you know one verb in a family, you
-				know them all.
+				Learn one verb from each family and you can conjugate thousands. That's
+				not an exaggeration.
 			</TabHero>
-
-			<KeyInsight title="Three patterns cover almost everything">
-				Greek verbs follow predictable patterns based on their ending: -ω (active),
-				-άω/-ώ (contracted), and -μαι (deponent). Learn one example from each group
-				and you can conjugate thousands of verbs.
-			</KeyInsight>
 
 			<div className="p-3 bg-ocean-100 rounded-lg border border-ocean-300 flex items-center justify-between">
 				<span className="text-sm text-stone-700">
@@ -84,8 +77,8 @@ export function VerbsTab() {
 						>
 							<Alert variant="info" className="mb-4">
 								<AlertDescription>
-									<strong>Pattern insight:</strong> Just like active verbs have -ω
-									and -άω patterns, deponent verbs have -ομαι and -άμαι. Same
+									<strong>Pattern insight:</strong> Just like active verbs have
+									-ω and -άω patterns, deponent verbs have -ομαι and -άμαι. Same
 									vowel contraction!
 								</AlertDescription>
 							</Alert>
