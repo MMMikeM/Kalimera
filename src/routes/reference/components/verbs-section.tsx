@@ -18,7 +18,7 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { KeyInsight } from "@/components/KeyInsight";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { IRREGULAR_VERBS, VERB_PATTERNS } from "@/constants/verbs";
-import { Badge } from "@/components/ui/Badge";
+import { Badge } from "@/components/ui/badge";
 
 interface UsageExample {
 	greek: string;
