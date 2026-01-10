@@ -67,6 +67,9 @@ export default [
 		// Milestones
 		route("milestones", "routes/api/milestones.ts"),
 
+		// Error logging
+		route("errors", "routes/api/errors.ts"),
+
 		// WebAuthn
 		route("webauthn/register-options", "routes/api/webauthn/register-options.ts"),
 		route("webauthn/register-verify", "routes/api/webauthn/register-verify.ts"),
