@@ -5,7 +5,7 @@ export interface AuthUser {
 	username: string;
 }
 
-export function getStoredAuth(): AuthUser | null {
+function getStoredAuth(): AuthUser | null {
 	if (typeof window === "undefined") return null;
 
 	try {
@@ -21,7 +21,7 @@ export function setStoredAuth(user: AuthUser): void {
 	localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(user));
 }
 
-export function clearStoredAuth(): void {
+function clearStoredAuth(): void {
 	localStorage.removeItem(AUTH_STORAGE_KEY);
 }
 

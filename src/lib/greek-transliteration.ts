@@ -184,7 +184,7 @@ export const matchPhonetic = (
  * Calculate similarity between two phonetic strings (for partial credit / fuzzy matching).
  * Returns a value between 0 and 1.
  */
-export const phoneticSimilarity = (a: string, b: string): number => {
+const phoneticSimilarity = (a: string, b: string): number => {
 	const s1 = normalizeInput(a);
 	const s2 = normalizeInput(b);
 

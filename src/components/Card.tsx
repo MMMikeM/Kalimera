@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
-import { Card as ShadCard, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { Card as ShadCard, CardContent } from "./ui/Card";
 
 const variantStyles = {
 	default: "",

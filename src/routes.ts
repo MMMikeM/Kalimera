@@ -41,8 +41,6 @@ export default [
 		]),
 	]),
 
-	// Legacy /explore redirects (backwards compatibility)
-	route("explore/*", "routes/redirects/explore.tsx"),
 
 	// Reference - grammar lookup
 	route("reference", "routes/reference/layout.tsx", [

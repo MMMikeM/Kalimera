@@ -172,4 +172,4 @@ export const createWebAuthn = (config: WebAuthnConfig) => {
 	};
 };
 
-export type WebAuthn = ReturnType<typeof createWebAuthn>;
+type WebAuthn = ReturnType<typeof createWebAuthn>;

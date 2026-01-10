@@ -6,7 +6,7 @@ export interface ArticleForm {
 }
 
 // Definite article forms (standard order: Nom → Acc → Gen)
-export const DEFINITE_ARTICLES = {
+const DEFINITE_ARTICLES = {
 	singular: [
 		{ case: "Nom (subject)", masculine: "ο", feminine: "η", neuter: "το" },
 		{
@@ -30,7 +30,7 @@ export const DEFINITE_ARTICLES = {
 };
 
 // Formula explanations for combined forms
-export const ARTICLE_FORMULAS = [
+const ARTICLE_FORMULAS = [
 	{
 		formula: "σε + το = στο",
 		examples: ["στο σπίτι", "στο κέντρο", "στο γραφείο"],
@@ -66,7 +66,7 @@ export const MOVABLE_NU_RULE = {
 };
 
 // Practical case usage examples
-export const CASE_EXAMPLES = {
+const CASE_EXAMPLES = {
 	nominative: [
 		{
 			greek: "ο καφές είναι ζεστός",
@@ -156,7 +156,7 @@ export const CASE_EXAMPLES = {
 };
 
 // Simple prepositions - compact format for table display
-export const SIMPLE_PREPOSITIONS = {
+const SIMPLE_PREPOSITIONS = {
 	location: {
 		label: "Location",
 		items: [
@@ -185,7 +185,7 @@ export const SIMPLE_PREPOSITIONS = {
 };
 
 // Compound prepositions organized by semantic contrast pairs
-export const COMPOUND_PREPOSITION_PAIRS = [
+const COMPOUND_PREPOSITION_PAIRS = [
 	{
 		category: "Position",
 		pairs: [
@@ -260,7 +260,7 @@ export const COMPOUND_PREPOSITION_PAIRS = [
 ];
 
 // Preposition + pronoun examples
-export const PREPOSITION_PRONOUN_EXAMPLES = [
+const PREPOSITION_PRONOUN_EXAMPLES = [
 	{ greek: "για μένα", english: "for me" },
 	{ greek: "με σένα", english: "with you" },
 	{ greek: "από αυτόν", english: "from him" },
@@ -269,7 +269,7 @@ export const PREPOSITION_PRONOUN_EXAMPLES = [
 ];
 
 // Time expressions with prepositions
-export const TIME_PREPOSITION_EXAMPLES = [
+const TIME_PREPOSITION_EXAMPLES = [
 	{ greek: "στις πέντε", english: "at five o'clock" },
 	{ greek: "μέχρι τις πέντε", english: "until five" },
 	{ greek: "μετά τις πέντε", english: "after five" },

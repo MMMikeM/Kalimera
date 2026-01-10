@@ -54,7 +54,7 @@ export const getFreezeStatus = (user: User): FreezeStatus => {
 	return { status: "available", freezeCount };
 };
 
-export const canUseFreeze = (user: User, targetDate: string): boolean => {
+const canUseFreeze = (user: User, targetDate: string): boolean => {
 	const { freezeCount, lastFreezeUsedAt, freezeUsedForDate } = user;
 
 	if (freezeCount <= 0) {
@@ -91,7 +91,7 @@ export const calculateDaysUntilNextFreeze = (
 // MUTATIONS
 // ═══════════════════════════════════════════════════════════════════════════════
 
-export const activateFreeze = async (
+const activateFreeze = async (
 	userId: number,
 	protectedDate: string,
 ): Promise<void> => {
@@ -105,7 +105,7 @@ export const activateFreeze = async (
 		.where(eq(users.id, userId));
 };
 
-export const checkAndAwardFreeze = async (
+const checkAndAwardFreeze = async (
 	userId: number,
 	currentStreak: number,
 ): Promise<{ awarded: boolean; newFreezeCount?: number }> => {

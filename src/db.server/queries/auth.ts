@@ -151,7 +151,7 @@ export const userHasPasskey = async (userId: number) => {
 	return !!passkey;
 };
 
-export const userHasPassword = async (userId: number) => {
+const userHasPassword = async (userId: number) => {
 	const [user] = await db
 		.select({ passwordHash: users.passwordHash })
 		.from(users)
