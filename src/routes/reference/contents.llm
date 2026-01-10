@@ -1,0 +1,144 @@
+# Reference Section Contents
+
+Grammar reference lookup for cases, pronouns, articles, verbs, adjectives, and prepositions.
+
+## Route Structure
+
+```
+/reference                    Redirects to first tab
+/reference/:tab               Grammar reference by topic
+```
+
+## Routes
+
+<route path="/reference/:tab">
+<purpose>Grammar reference lookup organised by topic</purpose>
+<file>src/routes/reference/$tab.tsx</file>
+<data-source>Static: hardcoded grammar content in component files</data-source>
+<tabs>
+- cases-pronouns: Cases overview and pronoun paradigms
+- nouns-articles: Article paradigms and gender agreement
+- adjectives: Adjective agreement patterns
+- prepositions: Preposition + case combinations
+- verbs: Verb conjugation patterns
+</tabs>
+</route>
+
+<tab route="/reference/cases-pronouns">
+<purpose>Foundation of Greek grammar - cases and pronouns</purpose>
+<file>src/routes/reference/tabs/cases-pronouns.tsx</file>
+<components>
+- CasesSection (components/cases-section.tsx)
+- PronounsSection (components/pronouns-section.tsx)
+</components>
+<displays>
+- Hero: "Foundation of Greek grammar" - Ποιος; Τι; Ποιου;
+- Cases overview: nominative (who?), accusative (what?), genitive (whose?)
+- Pronoun paradigm tables showing all forms by person/number
+- Pronoun decision guide (subject vs object vs possessive)
+- Practice CTA linking to /practice/speed?focus=pronouns
+</displays>
+</tab>
+
+<tab route="/reference/nouns-articles">
+<purpose>Article paradigms and noun agreement</purpose>
+<file>src/routes/reference/tabs/nouns-articles.tsx</file>
+<components>
+- AgreementSection (components/agreement-section.tsx)
+- MovableNuSection (components/agreement-section.tsx)
+</components>
+<displays>
+- Hero: "Articles and nouns" - ο, η, το → τον, την, το
+- Definite article paradigm table (masculine/feminine/neuter × nominative/accusative/genitive × singular/plural)
+- Gender agreement rules
+- Movable nu (ν) rule explanation
+- Practice CTA linking to /practice/speed?focus=articles
+</displays>
+</tab>
+
+<tab route="/reference/adjectives">
+<purpose>Adjective agreement patterns</purpose>
+<file>src/routes/reference/tabs/adjectives.tsx</file>
+<components>
+- AdjectivesSection (components/adjectives-section.tsx)
+</components>
+<displays>
+- Hero: "Words that describe" - ο καλός, η καλή, το καλό
+- Adjective agreement paradigm (same pattern as articles)
+- Common adjective examples
+- Practice CTA linking to /practice/speed?focus=adjectives
+</displays>
+</tab>
+
+<tab route="/reference/prepositions">
+<purpose>Preposition usage and case requirements</purpose>
+<file>src/routes/reference/tabs/prepositions.tsx</file>
+<components>
+- PrepositionsSection (components/prepositions-section.tsx)
+- PrepositionNavigator (components/preposition-navigator.tsx)
+</components>
+<displays>
+- Hero: "Connect words and ideas" - σε, από, για, με
+- The big four prepositions (σε, από, για, με)
+- Case requirements for each preposition
+- Usage examples and contractions (σε + τον → στον)
+- Practice CTA linking to /practice/speed?focus=prepositions
+</displays>
+</tab>
+
+<tab route="/reference/verbs">
+<purpose>Verb conjugation patterns and tenses</purpose>
+<file>src/routes/reference/tabs/verbs.tsx</file>
+<components>
+- VerbsSection (components/verbs-section.tsx)
+</components>
+<displays>
+- Hero: "Verb conjugation patterns" - κάνω, κάνεις, κάνει...
+- Verb family overview (-ω, -άω/-ώ, deponent)
+- Present tense paradigm tables
+- Tense overview (present, past, future)
+- Practice CTA linking to /practice/speed?focus=verbs
+</displays>
+</tab>
+
+## Component Library
+
+The reference section uses modular components for grammar content:
+
+<components>
+<component file="components/cases-section.tsx">
+Case system overview with nominative/accusative/genitive explanations
+</component>
+
+<component file="components/pronouns-section.tsx">
+Full pronoun paradigm tables with PronounParadigmTable component
+</component>
+
+<component file="components/pronoun-paradigm-table.tsx">
+Reusable table for displaying pronoun forms by person/number
+</component>
+
+<component file="components/pronoun-decision-guide.tsx">
+Flowchart for choosing correct pronoun form
+</component>
+
+<component file="components/agreement-section.tsx">
+Article paradigm table and gender agreement rules
+</component>
+
+<component file="components/adjectives-section.tsx">
+Adjective agreement patterns mirroring article paradigms
+</component>
+
+<component file="components/prepositions-section.tsx">
+Preposition usage with PrepositionNavigator for browsing
+</component>
+
+<component file="components/preposition-navigator.tsx">
+Interactive navigator for exploring preposition combinations
+</component>
+
+<component file="components/verbs-section.tsx">
+Verb family paradigms and conjugation patterns
+</component>
+</components>

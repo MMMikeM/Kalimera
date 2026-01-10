@@ -1,0 +1,240 @@
+# Verbs Content Map
+
+Verb conjugation patterns showing how endings change by person and number.
+
+## Route
+
+```
+/reference/verbs
+```
+
+## Data Source
+
+Static content from constants:
+- `@/constants/verbs` - VERB_PATTERNS, IRREGULAR_VERBS
+
+## Components
+
+- `VerbsSection` - Main verbs content
+- `PatternSection` - Individual pattern display with paradigm
+- `PatternIdentifier` - "Which pattern?" decision guide
+- `ParadigmTable` - Conjugation table component
+
+---
+
+## Section: Verbs
+
+<section id="verbs">
+<purpose>Verb conjugation patterns - how endings show who is doing the action</purpose>
+
+### Start Here: είμαι (to be)
+
+<insight title="Start Here: είμαι (to be)" icon="Star">
+The most common Greek verb. Memorize it first. You'll use it in every conversation.
+
+| Person | Singular | Plural |
+|--------|----------|--------|
+| 1st | είμαι (I am) | είμαστε (we are) |
+| 2nd | είσαι (you are) | είστε (you are) |
+| 3rd | είναι (he/she/it is) | είναι (they are) |
+
+<note>3rd person singular and plural are identical: είναι</note>
+</insight>
+
+### The Power of Patterns
+
+<alert variant="info">
+Learn just **3 ending patterns** and you can conjugate thousands of verbs. The endings tell you WHO is doing the action.
+</alert>
+
+### Negation
+
+<note>
+**Negation:** Add δεν before the verb: Δεν μιλάω (I don't speak)
+</note>
+
+### Pattern Identifier
+
+<identifier title="Which Pattern?" colour="honey">
+Look at the verb's dictionary form (1st person singular):
+
+| Ending | Pattern | Examples |
+|--------|---------|----------|
+| -ω | Active | κάνω, θέλω |
+| -άω/-ώ | Contracted | μιλάω, αγαπάω |
+| -μαι | Deponent | έρχομαι, θυμάμαι |
+</identifier>
+
+### Pattern 1: Active (-ω)
+
+<pattern id="active" colour="ocean" badge="Learn First">
+<header>
+Active -ω Verbs
+<ending>-ω</ending>
+<description>The most common pattern. Covers thousands of verbs.</description>
+</header>
+
+<paradigm stem="κάν" infinitive="κάνω" meaning="to do/make">
+| Person | Singular | Plural |
+|--------|----------|--------|
+| 1st | κάν**ω** | κάν**ουμε** |
+| 2nd | κάν**εις** | κάν**ετε** |
+| 3rd | κάν**ει** | κάν**ουν(ε)** |
+</paradigm>
+
+<same-pattern>
+- θέλω (to want)
+- βλέπω (to see)
+- γράφω (to write)
+- διαβάζω (to read)
+- τρώω (to eat)
+- πίνω (to drink)
+- ξέρω (to know)
+</same-pattern>
+
+<in-context>
+| Greek | English | Form |
+|-------|---------|------|
+| Τι κάνεις; | How are you? | -εις |
+| Κάνει κρύο. | It's cold. | -ει |
+| Κάνουμε διάλειμμα. | We're taking a break. | -ουμε |
+</in-context>
+</pattern>
+
+### Pattern 2: Contracted (-άω/-ώ)
+
+<pattern id="contracted" colour="terracotta">
+<header>
+Contracted -άω/-ώ Verbs
+<ending>-άω/-ώ</ending>
+<description>Verbs with α before the ending. The α contracts in some forms.</description>
+</header>
+
+<paradigm stem="μιλ" infinitive="μιλάω" meaning="to speak">
+| Person | Singular | Plural |
+|--------|----------|--------|
+| 1st | μιλ**άω/ώ** | μιλ**άμε** |
+| 2nd | μιλ**άς** | μιλ**άτε** |
+| 3rd | μιλ**άει/ά** | μιλ**άνε/ούν(ε)** |
+</paradigm>
+
+<same-pattern>
+- αγαπάω (to love)
+- ρωτάω (to ask)
+- περπατάω (to walk)
+- γελάω (to laugh)
+- κοιτάω (to look at)
+</same-pattern>
+
+<in-context>
+| Greek | English | Form |
+|-------|---------|------|
+| Μιλάς ελληνικά; | Do you speak Greek? | -άς |
+| Δεν μιλάμε πολύ. | We don't speak much. | -άμε |
+</in-context>
+</pattern>
+
+### Pattern 3: Deponent (-μαι)
+
+<pattern id="deponent" colour="olive">
+<header>
+Deponent Verbs (-μαι)
+<ending>-μαι</ending>
+<description>Passive form but active meaning. Two sub-patterns mirror the active ones.</description>
+</header>
+
+<sub-pattern type="-ομαι" canonical="έρχομαι" meaning="to come">
+| Person | Singular | Plural |
+|--------|----------|--------|
+| 1st | έρχ**ομαι** | ερχ**όμαστε** |
+| 2nd | έρχ**εσαι** | έρχ**εστε** |
+| 3rd | έρχ**εται** | έρχ**ονται** |
+</sub-pattern>
+
+<sub-pattern type="-άμαι" canonical="θυμάμαι" meaning="to remember">
+| Person | Singular | Plural |
+|--------|----------|--------|
+| 1st | θυμ**άμαι** | θυμ**όμαστε** |
+| 2nd | θυμ**άσαι** | θυμ**άστε** |
+| 3rd | θυμ**άται** | θυμ**ούνται** |
+</sub-pattern>
+
+<same-pattern>
+- κοιμάμαι (to sleep)
+- φοβάμαι (to be afraid)
+- χρειάζομαι (to need)
+- στέκομαι (to stand)
+</same-pattern>
+
+<in-context>
+| Greek | English | Form |
+|-------|---------|------|
+| Έρχομαι αύριο. | I'm coming tomorrow. | -ομαι |
+| Πότε έρχεσαι; | When are you coming? | -εσαι |
+| Δεν θυμάμαι. | I don't remember. | -άμαι |
+</in-context>
+</pattern>
+
+### Other Irregular Verbs
+
+<irregulars colour="honey">
+These common verbs don't follow patterns. Learn through frequent exposure.
+
+<verb infinitive="έχω" meaning="to have">
+| Person | Singular | Plural |
+|--------|----------|--------|
+| 1st | έχω | έχουμε |
+| 2nd | έχεις | έχετε |
+| 3rd | έχει | έχουν |
+</verb>
+
+<verb infinitive="λέω" meaning="to say">
+| Person | Singular | Plural |
+|--------|----------|--------|
+| 1st | λέω | λέμε |
+| 2nd | λες | λέτε |
+| 3rd | λέει | λένε |
+</verb>
+
+<verb infinitive="πάω" meaning="to go">
+| Person | Singular | Plural |
+|--------|----------|--------|
+| 1st | πάω | πάμε |
+| 2nd | πας | πάτε |
+| 3rd | πάει | πάνε |
+</verb>
+
+<verb infinitive="τρώω" meaning="to eat">
+| Person | Singular | Plural |
+|--------|----------|--------|
+| 1st | τρώω | τρώμε |
+| 2nd | τρως | τρώτε |
+| 3rd | τρώει | τρώνε |
+<note>Follows active pattern but with some irregular forms</note>
+</verb>
+</irregulars>
+
+### Cross-Links
+
+<cross-link to="/learn/vocabulary/verbs">
+Browse all verbs organized by conjugation family
+</cross-link>
+
+<scope-note>
+This section covers present tense only. Past and future tenses coming soon.
+</scope-note>
+</section>
+
+---
+
+## Content Guidelines
+
+1. **είμαι first** - Most important verb, must be memorized
+2. **Pattern identifier** - Quick way to determine which pattern a verb follows
+3. **Three patterns cover everything** - Emphasize the power of patterns
+4. **In-context examples** - Show verbs in real sentences, not isolation
+5. **Same-pattern lists** - Help learners generalize
+6. **Irregulars separate** - Don't mix with regular patterns
+7. **Cross-link to vocabulary** - Connect to browsable verb lists
+8. **Present tense scope** - Be clear about what's covered
+9. **Connect to practice** - CTA links to /practice/speed?focus=verbs

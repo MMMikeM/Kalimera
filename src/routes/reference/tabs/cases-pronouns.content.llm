@@ -1,0 +1,227 @@
+# Cases & Pronouns Content Map
+
+Foundation of Greek grammar: cases show word roles, pronouns demonstrate them.
+
+## Route
+
+```
+/reference/cases-pronouns
+```
+
+## Data Source
+
+Static content from constants:
+- `@/constants/recognition` - CASE_RECOGNITION (quick rules, spot-check patterns, vocative)
+- `@/constants/pronouns` - All pronoun paradigms and examples
+
+## Components
+
+- `CasesSection` - Case system overview
+- `PronounsSection` - Pronoun paradigms and decision guide
+- `PronounDecisionGuide` - "Which me/you do I use?" helper
+- `PronounParadigmTable` - Reusable paradigm table
+
+---
+
+## Section: Cases
+
+<section id="cases">
+<purpose>Explain what cases ARE and when to use each</purpose>
+
+<intro>
+In English, word order shows meaning: "The dog bit the man" vs "The man bit the dog."
+In Greek, word **endings** show meaning, so word order is flexible. These endings are called **cases**.
+</intro>
+
+<hero title="The Four Questions" colour="ocean">
+Ask these questions to know which case to use. Notice how Γιάννης changes form in each:
+
+| Case | Question | Example | Translation |
+|------|----------|---------|-------------|
+| Nominative | Who/what does? | Ο Γιάννης τρέχει | Giannis runs |
+| Accusative | Who/what receives? | Βλέπω τον Γιάννη | I see Giannis |
+| Genitive | Whose? | Το σπίτι του Γιάννη | Giannis's house |
+
+<guidance>
+Focus on Nominative and Accusative first. They cover most of what you'll encounter.
+Genitive comes up with possession and some prepositions.
+</guidance>
+
+<collapsible title="Vocative (for calling someone)">
+| Question | Example | Translation | Note |
+|----------|---------|-------------|------|
+| Hey...! | Γιάννη! | Hey Giannis! | Often same as accusative |
+</collapsible>
+</hero>
+
+<collapsible title="Quick Spot-Check Patterns" colour="honey">
+<patterns>
+| Pattern | Meaning | Examples |
+|---------|---------|----------|
+| -ς ending | Usually nominative masculine | ο φίλος, ο Γιάννης |
+| No -ς | Usually accusative masculine | τον φίλο, τον Γιάννη |
+| -ου ending | Usually genitive | του φίλου, του Γιάννη |
+</patterns>
+</collapsible>
+</section>
+
+---
+
+## Section: Pronouns
+
+<section id="pronouns">
+<purpose>The most frequently used words demonstrating cases</purpose>
+
+### Pronoun Decision Guide
+
+<decision-guide title="Which 'me/you' do I use?" colour="honey">
+English "me" is one word. Greek splits it by **function**:
+
+| Forms | When to use | Examples |
+|-------|-------------|----------|
+| με / σε | Someone does something **to** you (direct object) | σε βλέπω (I see you), με ακούς; (do you hear me?) |
+| μου / σου | **My/your** (possession) OR **to me/you** (indirect) | το σπίτι μου (my house), μου λέει (tells me) |
+| εμένα / εσένα | After prepositions OR for **emphasis** | για μένα (for me), με σένα (with you) |
+
+<cross-comparison title="One English word → multiple Greek forms">
+| English | Object | Possessive | Emphatic |
+|---------|--------|------------|----------|
+| me / my | με | μου | εμένα |
+| you / your | σε | σου | εσένα |
+| him / his | τον | του | αυτόν |
+| her | την | της | αυτήν |
+</cross-comparison>
+
+<quick-test>
+Can you insert "to" before it? → Use μου/σου.
+Is there a preposition before it? → Use εμένα/εσένα.
+Otherwise → Use με/σε.
+</quick-test>
+</decision-guide>
+
+### Pronoun Paradigms
+
+<paradigm-grid>
+
+<paradigm title="Nominative Pronouns" colour="olive" priority="tertiary">
+<note>Subject pronouns: often dropped! Verb endings already show person.</note>
+<alert variant="success">
+Good news: Verb endings already show person, so subject pronouns are usually optional. Use them for emphasis.
+</alert>
+| Person | Singular | Plural |
+|--------|----------|--------|
+| 1st | εγώ (I) | εμείς (we) |
+| 2nd | εσύ (you) | εσείς (you) |
+| 3rd m | αυτός (he) | αυτοί (they m) |
+| 3rd f | αυτή (she) | αυτές (they f) |
+| 3rd n | αυτό (it) | αυτά (they n) |
+<examples>
+- εγώ κάνω (I do - emphatic)
+- αυτός θέλει (he wants)
+</examples>
+</paradigm>
+
+<paradigm title="Genitive Pronouns (Possessive)" colour="terracotta" priority="primary" badge="Essential">
+<note>For "my/your/their" - goes AFTER the noun</note>
+<alert variant="purple">
+Word order: Possessives go AFTER the noun: το σπίτι μου (the house my) = my house
+</alert>
+| Person | Singular | Plural |
+|--------|----------|--------|
+| 1st | μου (my) | μας (our) |
+| 2nd | σου (your) | σας (your) |
+| 3rd m | του (his) | τους (their) |
+| 3rd f | της (her) | τους (their) |
+| 3rd n | του (its) | τους (their) |
+<examples>
+- το σπίτι μου (my house)
+- η μητέρα της (her mother)
+- οι φίλοι μας (our friends)
+</examples>
+</paradigm>
+
+<paradigm title="Accusative Pronouns (Object)" colour="ocean" priority="primary" badge="Essential">
+<note>Direct object: use these constantly!</note>
+<alert variant="info">
+Word order: Object pronouns go BEFORE the verb: σε βλέπω (you I-see) = I see you
+</alert>
+| Person | Singular | Plural |
+|--------|----------|--------|
+| 1st | με (me) | μας (us) |
+| 2nd | σε (you) | σας (you) |
+| 3rd m | τον (him) | τους (them m) |
+| 3rd f | την (her) | τις (them f) |
+| 3rd n | το (it) | τα (them n) |
+<examples>
+- σε βλέπω (I see you)
+- τον ακούω (I hear him)
+- τα θέλω (I want them)
+</examples>
+</paradigm>
+
+<paradigm title="Emphatic Accusative" colour="honey" priority="tertiary">
+<note>Strong forms: after prepositions or for emphasis</note>
+<alert variant="warning">
+Use these after prepositions (για, με, από, σε): για μένα = for me
+</alert>
+| Person | Singular | Plural |
+|--------|----------|--------|
+| 1st | εμένα (me) | εμάς (us) |
+| 2nd | εσένα (you) | εσάς (you) |
+| 3rd m | αυτόν (him) | αυτούς (them) |
+| 3rd f | αυτήν (her) | αυτές (them) |
+| 3rd n | αυτό (it) | αυτά (them) |
+<examples>
+- για μένα (for me)
+- με σένα (with you)
+- από αυτόν (from him)
+</examples>
+</paradigm>
+
+</paradigm-grid>
+
+### Key Insight
+
+<insight title="Pronouns = Cases in Action!">
+**Accusative** (με, σε, τον) answers "WHOM/WHAT do I [verb]?"
+**Genitive** (μου, σου, του) answers "WHOSE?"
+You're already using cases every time you use a pronoun!
+</insight>
+
+### Double Object Pattern
+
+<pattern title="When you have both indirect and direct object">
+Greek puts pronouns BEFORE the verb, indirect first.
+
+| English | Greek | Literal |
+|---------|-------|---------|
+| Give it to me | Δώσε μου το | Give me-to it |
+| Tell me it | Πες μου το | Tell me-to it |
+| Show her it | Δείξε της το | Show her-to it |
+</pattern>
+
+<collapsible title="Common Phrases with Pronouns">
+<phrase-groups>
+| Category | Greek | English |
+|----------|-------|---------|
+| Requests | Πες μου | Tell me |
+| Requests | Δώσε μου | Give me |
+| Opinions | Μου αρέσει | I like it |
+| Opinions | Δεν μου αρέσει | I don't like it |
+| Questions | Πώς σε λένε; | What's your name? |
+| Answers | Με λένε... | My name is... |
+| Family | Η μητέρα μου | My mother |
+| Family | Ο πατέρας του | His father |
+</phrase-groups>
+</collapsible>
+</section>
+
+---
+
+## Content Guidelines
+
+1. **Cases first, then pronouns** - Establish the framework before the most common examples
+2. **Decision guide prominent** - Most learners need "which form do I use?" help
+3. **Mark essential paradigms** - Accusative and genitive are highest frequency
+4. **Show word order** - Greek pronoun placement differs from English
+5. **Connect to practice** - CTA links to /practice/speed?focus=pronouns

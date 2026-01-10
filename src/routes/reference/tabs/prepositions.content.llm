@@ -1,0 +1,188 @@
+# Prepositions Content Map
+
+Preposition usage, case requirements, and contractions.
+
+## Route
+
+```
+/reference/prepositions
+```
+
+## Data Source
+
+Static content from constants:
+- `@/constants/prepositions` - BIG_4_PREPOSITIONS, SE_CONTRACTIONS, PREPOSITION_PRONOUN_INFO, TIME_EXPRESSIONS, PREPOSITION_MISTAKES, OTHER_PREPOSITIONS, COMPOUND_CONTRAST_PAIRS, PREPOSITION_NAVIGATOR_OPTIONS
+
+## Components
+
+- `PrepositionsSection` - Main prepositions content
+- `PrepositionNavigator` - "Which preposition do I need?" decision guide
+
+---
+
+## Section: Prepositions
+
+<section id="prepositions">
+<purpose>Words that connect location, direction, and relationships</purpose>
+
+### Decision Guide
+
+<navigator title="Which preposition do I need?" colour="honey">
+Ask yourself what **relationship** you're describing:
+
+| Question | Answer | Examples |
+|----------|--------|----------|
+| Where is something? (location/destination) | σε | στο σπίτι (at the house), στην Αθήνα (in Athens) |
+| Where from? (origin/source) | από | από την Αθήνα (from Athens), από το σπίτι (from home) |
+| For whom/what purpose? | για | για μένα (for me), για δουλειά (for work) |
+| With what/whom? (accompaniment/instrument) | με | με τον φίλο μου (with my friend), με το αυτοκίνητο (by car) |
+
+**Remember:** σε is the most common and contracts with articles (σε + το = στο). The others stay unchanged.
+</navigator>
+
+### The Big Four
+
+<preposition-grid>
+
+<preposition greek="σε" english="to, at, in" colour="ocean">
+<note>Most common. Contracts with articles!</note>
+| Greek | English |
+|-------|---------|
+| στο σπίτι | at/in the house |
+| στην Ελλάδα | in Greece |
+| στον κήπο | in the garden |
+</preposition>
+
+<preposition greek="από" english="from" colour="terracotta">
+| Greek | English |
+|-------|---------|
+| από την Αθήνα | from Athens |
+| από το πρωί | since morning |
+| από ξύλο | made of wood |
+</preposition>
+
+<preposition greek="για" english="for" colour="olive">
+| Greek | English |
+|-------|---------|
+| για μένα | for me |
+| για δουλειά | for work |
+| για πάντα | forever |
+</preposition>
+
+<preposition greek="με" english="with" colour="honey">
+| Greek | English |
+|-------|---------|
+| με τον φίλο μου | with my friend |
+| με το αυτοκίνητο | by car |
+| με χαρά | with pleasure |
+</preposition>
+
+</preposition-grid>
+
+### The σε Contraction
+
+<hero title="The σε Contraction" colour="ocean">
+σε combines with the article to form one word. This happens so often that the contracted forms are standard.
+
+| Formula | Gender | Examples |
+|---------|--------|----------|
+| σε + τον = στον | masculine | στον κήπο, στον πατέρα |
+| σε + την = στην | feminine | στην πόλη, στην Ελλάδα |
+| σε + το = στο | neuter | στο σπίτι, στο σχολείο |
+
+<insight title="Without an article">
+When there's no article, σε stays separate: σε μένα (to me), σε εσένα (to you)
+</insight>
+</hero>
+
+### Prepositions with Pronouns
+
+<card title="Prepositions with Pronouns" colour="olive">
+<alert variant="purple">
+Rule: After prepositions, use the **emphatic** pronoun forms (εμένα, εσένα, αυτόν...)
+Why: The short forms (με, σε, τον) only work as verb objects, not after prepositions.
+</alert>
+
+| Greek | English |
+|-------|---------|
+| για μένα | for me |
+| με σένα | with you |
+| από αυτόν | from him |
+| σε μας | to us |
+| χωρίς εσένα | without you |
+</card>
+
+### Time Expressions
+
+<card title="Time Expressions" icon="Clock" colour="olive">
+
+| Pattern | Meaning | Examples |
+|---------|---------|----------|
+| σε + time | in (future) | σε μια ώρα (in an hour), σε δύο μέρες (in two days) |
+| πριν (από) + time | ago / before | πριν μια ώρα (an hour ago), πριν από χρόνια (years ago) |
+| μετά (από) + time | after | μετά το φαγητό (after the meal), μετά από λίγο (after a bit) |
+</card>
+
+### Common Mistakes
+
+<mistakes colour="terracotta">
+| Wrong | Right | Rule |
+|-------|-------|------|
+| για εγώ | για μένα | Use emphatic form after preposition |
+| σε το σπίτι | στο σπίτι | σε + article contracts |
+| με εγώ | με μένα | Use emphatic form after preposition |
+| από ο φίλος | από τον φίλο | Need article in accusative |
+</mistakes>
+
+<collapsible title="More Prepositions" colour="ocean">
+Less common but still useful:
+
+| Greek | English | Example |
+|-------|---------|---------|
+| χωρίς | without | χωρίς ζάχαρη (without sugar) |
+| μέχρι | until | μέχρι αύριο (until tomorrow) |
+| κατά | during, towards | κατά τη διάρκεια (during) |
+| μεταξύ | between | μεταξύ μας (between us) |
+| εκτός | except | εκτός από μένα (except me) |
+| πριν | before | πριν το φαγητό (before the meal) |
+| μετά | after | μετά το φαγητό (after the meal) |
+| ως | as, until | ως τώρα (until now) |
+</collapsible>
+
+<collapsible title="Compound Prepositions" colour="ocean">
+Spatial descriptions: on, under, next to, behind...
+
+<insight title="The Pattern">
+Compound prepositions = **position word** + σε or από. The σε ones contract with articles (πάνω **στο**), the από ones don't (κάτω **από το**).
+</insight>
+
+<legend>
+- Olive = uses σε (contracts: δίπλα **στο**)
+- Blue = uses από (no contraction: κάτω **από το**)
+</legend>
+
+| Greek | English | Type | Example |
+|-------|---------|------|---------|
+| πάνω σε | on | σε | πάνω στο τραπέζι (on the table) |
+| κάτω από | under | από | κάτω από το τραπέζι (under the table) |
+| δίπλα σε | next to | σε | δίπλα στο σπίτι (next to the house) |
+| μακριά από | far from | από | μακριά από εδώ (far from here) |
+| μπροστά σε | in front of | σε | μπροστά στο σπίτι (in front of the house) |
+| πίσω από | behind | από | πίσω από το σπίτι (behind the house) |
+| μέσα σε | inside | σε | μέσα στο σπίτι (inside the house) |
+| έξω από | outside | από | έξω από το σπίτι (outside the house) |
+| κοντά σε | near | σε | κοντά στο σπίτι (near the house) |
+</collapsible>
+</section>
+
+---
+
+## Content Guidelines
+
+1. **Decision guide first** - Most common question is "which preposition?"
+2. **Big four prominent** - σε, από, για, με cover most usage
+3. **σε contraction is essential** - Learners see στο/στην constantly
+4. **Emphatic pronouns after prepositions** - Common mistake source
+5. **Time expressions practical** - High-frequency patterns
+6. **Compound prepositions visual** - Colour-code σε vs από patterns
+7. **Connect to practice** - CTA links to /practice/speed?focus=prepositions

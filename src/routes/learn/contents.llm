@@ -1,0 +1,234 @@
+# Learn Section Contents
+
+Browse-oriented content for vocabulary, phrases, and conversations.
+
+## Route Structure
+
+```
+/learn                    Landing page with section overview
+/learn/vocabulary/:tab    Vocabulary browsing by category
+/learn/phrases/:tab       Common phrases organised by function
+/learn/conversations/:tab Themed dialogues for contextual learning
+```
+
+## Routes
+
+<route path="/learn">
+<purpose>Section landing page with overview of all learning areas</purpose>
+<file>src/routes/learn/index.tsx</file>
+<displays>
+- Hero section with section description
+- Three category cards linking to vocabulary, phrases, conversations
+</displays>
+</route>
+
+<route path="/learn/vocabulary/:tab">
+<purpose>Vocabulary browsing by semantic category</purpose>
+<file>src/routes/learn/vocabulary/$tab.tsx</file>
+<data-source>DB: vocabulary (grouped by tags) + static verb patterns from constants</data-source>
+<tabs>
+- nouns: Nouns by semantic category
+- verbs: Verbs by conjugation family with paradigm tables
+- reference: Numbers, colours, times of day, adverbs
+</tabs>
+</route>
+
+<tab route="/learn/vocabulary/nouns">
+<purpose>Everyday nouns organised by situation</purpose>
+<file>src/routes/learn/vocabulary/tabs/nouns.tsx</file>
+<displays>
+- Hero explaining gender endings (-ος, -η/-α, -ο/-ι/-μα)
+- Gender colour key (masculine=ocean, feminine=rose, neuter=stone)
+- Sections: Family & People, Shopping & Groceries, Household & Home, Transportation, Summer & Beach
+- Each noun shows Greek with article and gender badge
+</displays>
+</tab>
+
+<tab route="/learn/vocabulary/verbs">
+<purpose>Verbs organised by conjugation family</purpose>
+<file>src/routes/learn/vocabulary/tabs/verbs.tsx</file>
+<displays>
+- Hero explaining family patterns
+- Link to /reference/verbs for detailed patterns
+- Verb families: -ω verbs, -άω/-ώ verbs, deponent (-ομαι, -άμαι), irregular
+- Paradigm tables for each family showing full conjugation
+- Collapsible lists of verbs in each family
+</displays>
+</tab>
+
+<tab route="/learn/vocabulary/reference">
+<purpose>Quick reference essentials (numbers, colours, adverbs)</purpose>
+<file>src/routes/learn/vocabulary/tabs/reference.tsx</file>
+<displays>
+- Times of Day (πρωί, μεσημέρι, απόγευμα, βράδυ, νύχτα)
+- Numbers: Units (0-9), Teens (10-19), Tens (20-100) with combination pattern
+- Colours palette
+- Adverbs of Frequency with ποτέ/πότε accent distinction
+- Position & Direction adverbs in opposite pairs (αριστερά↔δεξιά, πάνω↔κάτω)
+</displays>
+</tab>
+
+<route path="/learn/vocabulary/verbs/:verbId">
+<purpose>Full verb conjugation detail page</purpose>
+<file>src/routes/learn/vocabulary/verbs/$verbId/route.tsx</file>
+<data-source>DB: vocabulary, verbDetails, verbConjugations, verbImperatives</data-source>
+<displays>
+- Verb header (lemma, English, conjugation family badge)
+- Suppletive indicator (if different stems across tenses)
+- Stem insight (present/aorist/future stem changes)
+- Tense navigator tabs (present, aorist, future, past continuous)
+- Paradigm tables (6 forms: sg1-3, pl1-3)
+- Imperative table (imperfective/perfective × singular/plural)
+</displays>
+</route>
+
+<route path="/learn/phrases/:tab">
+<purpose>Common expressions organised by function</purpose>
+<file>src/routes/learn/phrases/$tab.tsx</file>
+<data-source>DB: vocabulary filtered by phrase-related tags</data-source>
+<tabs>
+- survival: Essential greetings and survival phrases
+- responses: Common responses and social phrases
+- requests: Polite requests and commands
+- opinions: Expressing opinions and feelings
+- connectors: Discourse markers and fillers
+- time: Days, months, and telling time
+- constructions: Grammar patterns (likes construction, name construction, question words)
+</tabs>
+</route>
+
+<tab route="/learn/phrases/survival">
+<purpose>Essential survival phrases for beginners</purpose>
+<file>src/routes/learn/phrases/tabs/survival.tsx</file>
+<displays>
+- Hero: "Start with the basics" - Γεια σας!
+- Essential Greetings section (priority: "Start Here")
+- Survival Phrases section
+</displays>
+</tab>
+
+<tab route="/learn/phrases/responses">
+<purpose>Response patterns for conversation flow</purpose>
+<file>src/routes/learn/phrases/tabs/responses.tsx</file>
+<displays>
+- Hero: "Keep the conversation flowing" - Ναι, βέβαια!
+- Common Responses section
+- Social Phrases section
+</displays>
+</tab>
+
+<tab route="/learn/phrases/requests">
+<purpose>Polite request phrases</purpose>
+<file>src/routes/learn/phrases/tabs/requests.tsx</file>
+<displays>
+- Hero: "Ask politely, get results" - Παρακαλώ...
+- Polite Requests section
+- Commands section
+</displays>
+</tab>
+
+<tab route="/learn/phrases/opinions">
+<purpose>Expressing thoughts and feelings</purpose>
+<file>src/routes/learn/phrases/tabs/opinions.tsx</file>
+<displays>
+- Hero: "Express yourself" - Νομίζω ότι...
+- Opinions & Feelings section
+</displays>
+</tab>
+
+<tab route="/learn/phrases/connectors">
+<purpose>Discourse markers for natural speech</purpose>
+<file>src/routes/learn/phrases/tabs/connectors.tsx</file>
+<displays>
+- Hero: "The glue of natural speech" - Λοιπόν...
+- Discourse Markers section
+- Fillers & Connectors section
+</displays>
+</tab>
+
+<tab route="/learn/phrases/time">
+<purpose>Time expressions (days, months, clock)</purpose>
+<file>src/routes/learn/phrases/tabs/time.tsx</file>
+<displays>
+- Hero: "Master time expressions" - Τι ώρα είναι;
+- Days of the Week grid
+- Months of the Year (collapsible)
+- Telling Time section with pattern note and categories (basic, fractions, at-times)
+</displays>
+</tab>
+
+<tab route="/learn/phrases/constructions">
+<purpose>Grammar patterns that differ from English</purpose>
+<file>src/routes/learn/phrases/tabs/constructions.tsx</file>
+<displays>
+- Hero: "Greek sentence patterns" - Μου αρέσει...
+- Likes Construction paradigm (αρέσει singular / αρέσουν plural)
+- QuickTest: αρέσει or αρέσουν?
+- Name Construction (με λένε pattern)
+- Question Words section
+</displays>
+</tab>
+
+<route path="/learn/conversations/:tab">
+<purpose>Themed dialogues for contextual learning</purpose>
+<file>src/routes/learn/conversations/$tab.tsx</file>
+<data-source>Static: hardcoded dialogue content</data-source>
+<tabs>
+- arriving: Arriving and leaving scenarios
+- food: Food and hospitality
+- smalltalk: Small talk and greetings
+- requests: Quick requests and introductions
+</tabs>
+<features>
+- Read mode / Practice mode toggle (shared across conversations)
+- Dialogue exchanges with speaker roles (you, friend, host, waiter, stranger)
+- Learning tips with patterns, cultural tips, and common mistakes
+</features>
+</route>
+
+<tab route="/learn/conversations/arriving">
+<purpose>Arrival and departure dialogues</purpose>
+<file>src/routes/learn/conversations/tabs/arriving.tsx</file>
+<displays>
+- Hero: "Arriving & Leaving" - Καλώς ήρθατε!
+- Scenarios: Casual greeting (friends), Arriving at a Greek home, Saying goodbye
+- Learning Tips: imperative doubling, plural 'we' for politeness, να + verb wishes
+- Cultural Tips: hospitality expectations
+- Common Mistake: Αντίο vs Γεια σου/Τα λέμε
+</displays>
+</tab>
+
+<tab route="/learn/conversations/food">
+<purpose>Food and hospitality dialogues</purpose>
+<file>src/routes/learn/conversations/tabs/food.tsx</file>
+<displays>
+- Hero: "Food & Hospitality" - Φάε, φάε!
+- Scenarios: Offered refreshments, During a meal, Complimenting food, At a cafe
+- Learning Tips: coffee options (γλυκό/μέτριο/σκέτο), χόρτασα usage
+- Cultural Tips: accepting food, complimenting cooking
+- Common Mistake: Είμαι γεμάτος vs Χόρτασα
+</displays>
+</tab>
+
+<tab route="/learn/conversations/smalltalk">
+<purpose>Casual conversation dialogues</purpose>
+<file>src/routes/learn/conversations/tabs/smalltalk.tsx</file>
+<displays>
+- Hero: "Small Talk" - Τι κάνεις;
+- Scenarios: Where are you from?, Weather, Weekend plans, Work, Family
+- Learning Tips: Δεν αντέχω, Μια χαρά, Εντάξει usage
+- Cultural Tips: weather as bonding, family questions normal
+</displays>
+</tab>
+
+<tab route="/learn/conversations/requests">
+<purpose>Requests and introductions dialogues</purpose>
+<file>src/routes/learn/conversations/tabs/requests.tsx</file>
+<displays>
+- Hero: "Quick Requests" - Βοήθησέ με!
+- Scenarios: Introducing yourself, Asking for help, Comprehension help, Opinions, Simple requests
+- Learning Tips: Με λένε pattern, imperatives with με, μου φαίνεται pattern
+- Cultural Tips: Συγγνώμη dual use, Ορίστε for handing things
+- Common Mistake: Πώς είσαι vs Πώς σε λένε
+</displays>
+</tab>

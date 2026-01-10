@@ -1,0 +1,270 @@
+# Nouns & Articles Content Map
+
+Article paradigms and noun declension patterns showing gender, case, and number agreement.
+
+## Route
+
+```
+/reference/nouns-articles
+```
+
+## Data Source
+
+Static content from constants:
+- `@/constants/agreement` - AGREEMENT_PARADIGMS, ARTICLE_AGREEMENT_QUICK_REF, AGREEMENT_MISTAKES
+- `@/constants/nouns` - GENDER_HINTS
+- `@/constants/articles` - MOVABLE_NU_RULE
+
+## Components
+
+- `AgreementSection` - Main noun/article content
+- `MovableNuSection` - The -ν rule (fine-tuning)
+- `AgreementParadigmTable` - Noun declension table
+- `ParadigmCarousel` - Browse paradigms by gender
+
+---
+
+## Section: Nouns & Articles
+
+<section id="agreement">
+<purpose>How articles and nouns must match in gender, case, and number</purpose>
+
+### Key Insight
+
+<insight title="When uncertain, use the -ν form">
+You'll never be wrong if you keep the final ν on τον/την/στον/στην.
+
+<expanded-example label="The simple rule">
+For τον/την and στον/στην, you can always include the -ν. Native speakers sometimes drop it, but keeping it is never wrong.
+
+Example: τον φίλο or τη φίλη — both correct!
+</expanded-example>
+</insight>
+
+### Gender Hints
+
+<gender-hints>
+Spot gender by ending:
+
+| Gender | Colour | Common Endings |
+|--------|--------|----------------|
+| Masculine | ocean (blue) | -ος, -ας, -ης, -ές |
+| Feminine | rose (pink) | -η, -α, -ου |
+| Neuter | stone (grey) | -ο, -ι, -μα |
+</gender-hints>
+
+### Article Quick Lookup
+
+<paradigm title="Article Quick Lookup (ο, η, το, τον, την...)" colour="ocean" defaultOpen="true">
+
+**Singular:**
+| Case | Masculine | Feminine | Neuter |
+|------|-----------|----------|--------|
+| Nom | ο | η | το |
+| Acc | τον | την | το |
+| Gen | του | της | του |
+
+**Plural:**
+| Case | Masculine | Feminine | Neuter |
+|------|-----------|----------|--------|
+| Nom | οι | οι | τα |
+| Acc | τους | τις | τα |
+| Gen | των | των | των |
+</paradigm>
+
+### Core Pattern
+
+<alert variant="info">
+The Core Pattern: In Greek, the article must **agree** with its noun in three ways:
+- Gender (masculine/feminine/neuter)
+- Case (nominative/accusative/genitive)
+- Number (singular/plural)
+
+This is why "the" has so many forms!
+</alert>
+
+### Noun Paradigms by Gender
+
+<paradigm-tabs>
+
+<tab id="masculine" count="4">
+**Masculine Noun Patterns**
+
+<paradigm pattern="ο -ος" title="Standard masculine" frequency="very common" colour="masculine">
+<tip>Most masculine nouns follow this pattern</tip>
+
+**Singular:**
+| Case | Ending | Example | English |
+|------|--------|---------|---------|
+| Nom | -ος | ο φίλος | the friend (subject) |
+| Acc | -ο | τον φίλο | the friend (object) |
+| Gen | -ου | του φίλου | of the friend |
+
+**Plural:**
+| Case | Ending | Example | English |
+|------|--------|---------|---------|
+| Nom | -οι | οι φίλοι | the friends |
+| Acc | -ους | τους φίλους | the friends |
+| Gen | -ων | των φίλων | of the friends |
+</paradigm>
+
+<paradigm pattern="ο -ας" title="Masculine in -ας" frequency="common" colour="masculine">
+**Singular:**
+| Case | Ending | Example | English |
+|------|--------|---------|---------|
+| Nom | -ας | ο πατέρας | the father |
+| Acc | -α | τον πατέρα | the father |
+| Gen | -α | του πατέρα | of the father |
+</paradigm>
+
+<paradigm pattern="ο -ης" title="Masculine in -ης" frequency="common" colour="masculine">
+**Singular:**
+| Case | Ending | Example | English |
+|------|--------|---------|---------|
+| Nom | -ης | ο μαθητής | the student |
+| Acc | -ή | τον μαθητή | the student |
+| Gen | -ή | του μαθητή | of the student |
+</paradigm>
+
+<paradigm pattern="ο -ές" title="Masculine in -ές" frequency="less common" colour="masculine">
+**Singular:**
+| Case | Ending | Example | English |
+|------|--------|---------|---------|
+| Nom | -ές | ο καφές | the coffee |
+| Acc | -έ | τον καφέ | the coffee |
+| Gen | -έ | του καφέ | of the coffee |
+</paradigm>
+
+**Vocative changes:** -ος → -ε, -ας → -α, -ης → -η, -ές → -έ
+</tab>
+
+<tab id="feminine" count="2">
+**Feminine Noun Patterns**
+
+<paradigm pattern="η -η" title="Standard feminine" frequency="very common" colour="feminine">
+**Singular:**
+| Case | Ending | Example | English |
+|------|--------|---------|---------|
+| Nom | -η | η αδελφή | the sister |
+| Acc | -η | την αδελφή | the sister |
+| Gen | -ης | της αδελφής | of the sister |
+
+**Plural:**
+| Case | Ending | Example | English |
+|------|--------|---------|---------|
+| Nom | -ες | οι αδελφές | the sisters |
+| Acc | -ες | τις αδελφές | the sisters |
+| Gen | -ών | των αδελφών | of the sisters |
+</paradigm>
+
+<paradigm pattern="η -α" title="Feminine in -α" frequency="common" colour="feminine">
+**Singular:**
+| Case | Ending | Example | English |
+|------|--------|---------|---------|
+| Nom | -α | η θάλασσα | the sea |
+| Acc | -α | τη θάλασσα | the sea |
+| Gen | -ας | της θάλασσας | of the sea |
+</paradigm>
+</tab>
+
+<tab id="neuter" count="3">
+**Neuter Noun Patterns**
+
+<paradigm pattern="το -ο" title="Standard neuter" frequency="very common" colour="neuter">
+<tip>Neuter nominative and accusative are always identical</tip>
+
+**Singular:**
+| Case | Ending | Example | English |
+|------|--------|---------|---------|
+| Nom | -ο | το βιβλίο | the book |
+| Acc | -ο | το βιβλίο | the book |
+| Gen | -ου | του βιβλίου | of the book |
+
+**Plural:**
+| Case | Ending | Example | English |
+|------|--------|---------|---------|
+| Nom | -α | τα βιβλία | the books |
+| Acc | -α | τα βιβλία | the books |
+| Gen | -ων | των βιβλίων | of the books |
+</paradigm>
+
+<paradigm pattern="το -ι" title="Neuter in -ι" frequency="common" colour="neuter">
+**Singular:**
+| Case | Ending | Example | English |
+|------|--------|---------|---------|
+| Nom | -ι | το παιδί | the child |
+| Acc | -ι | το παιδί | the child |
+| Gen | -ιού | του παιδιού | of the child |
+</paradigm>
+
+<paradigm pattern="το -μα" title="Neuter in -μα" frequency="common" colour="neuter">
+**Singular:**
+| Case | Ending | Example | English |
+|------|--------|---------|---------|
+| Nom | -μα | το όνομα | the name |
+| Acc | -μα | το όνομα | the name |
+| Gen | -ματος | του ονόματος | of the name |
+</paradigm>
+</tab>
+
+</paradigm-tabs>
+
+<collapsible title="Common Agreement Mistakes" colour="terracotta">
+| Wrong | Correct | Explanation |
+|-------|---------|-------------|
+| ο καλή φίλος | ο καλός φίλος | Article and adjective must match noun gender |
+| τον φίλος | τον φίλο | Accusative drops the -ς |
+| η σπίτι | το σπίτι | σπίτι is neuter, not feminine |
+</collapsible>
+</section>
+
+---
+
+## Section: The -ν Rule
+
+<section id="movable-nu">
+<purpose>Fine-tuning: when to keep or drop final ν on articles</purpose>
+
+<heading>
+The -ν Rule
+<subtitle>Fine-tuning: when to keep or drop final ν on articles</subtitle>
+</heading>
+
+<alert variant="info">
+The Rule: The final -ν on τον/την stays before vowels and certain consonants (κ, π, τ, γκ, μπ, ντ, τσ, τζ, ξ, ψ). Before other consonants, it can be dropped.
+</alert>
+
+<examples-grid>
+<column title="Keep the -ν" colour="correct">
+| Example | Reason |
+|---------|--------|
+| τον άντρα | Before vowel (α) |
+| τον καφέ | Before κ |
+| την πόλη | Before π |
+| στον τοίχο | Before τ |
+</column>
+
+<column title="Drop the -ν" colour="incorrect">
+| Example | Reason |
+|---------|--------|
+| τη μητέρα | Before μ |
+| το σπίτι | Before σ |
+| τη φίλη | Before φ |
+| τη χώρα | Before χ |
+</column>
+</examples-grid>
+
+<note>
+**Practical advice:** When in doubt, keep the -ν. You'll never be wrong, and it's clearer in writing.
+</note>
+</section>
+
+---
+
+## Content Guidelines
+
+1. **Article lookup first** - Most common need is "what's the accusative of ο?"
+2. **Gender hints** - Help learners predict gender from noun endings
+3. **Carousel for paradigms** - Don't overwhelm with all patterns at once
+4. **Movable nu is optional** - Mark as "fine-tuning" for advanced learners
+5. **Connect to practice** - CTA links to /practice/speed?focus=articles
