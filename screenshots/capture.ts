@@ -14,41 +14,42 @@ const PAGES = [
 
   // Practice
   { route: "/practice/speed", name: "practice/speed" },
-  { route: "/practice/pronouns", name: "practice/pronouns" },
-  { route: "/practice/articles", name: "practice/articles" },
-  { route: "/practice/verbs", name: "practice/verbs" },
   { route: "/practice/vocabulary", name: "practice/vocabulary" },
   { route: "/practice/review", name: "practice/review" },
 
-  // Explore - Conversations
-  { route: "/explore/conversations", name: "explore/conversations/index" },
-  { route: "/explore/conversations/arriving", name: "explore/conversations/arriving" },
-  { route: "/explore/conversations/food", name: "explore/conversations/food" },
-  { route: "/explore/conversations/smalltalk", name: "explore/conversations/smalltalk" },
-  { route: "/explore/conversations/requests", name: "explore/conversations/requests" },
+  // Learn - Landing
+  { route: "/learn", name: "learn/index" },
 
-  // Explore - Phrases
-  { route: "/explore/phrases", name: "explore/phrases/index" },
-  { route: "/explore/phrases/survival", name: "explore/phrases/survival" },
-  { route: "/explore/phrases/responses", name: "explore/phrases/responses" },
-  { route: "/explore/phrases/requests", name: "explore/phrases/requests" },
-  { route: "/explore/phrases/opinions", name: "explore/phrases/opinions" },
-  { route: "/explore/phrases/connectors", name: "explore/phrases/connectors" },
-  { route: "/explore/phrases/time", name: "explore/phrases/time" },
-  { route: "/explore/phrases/constructions", name: "explore/phrases/constructions" },
+  // Learn - Conversations
+  { route: "/learn/conversations/arriving", name: "learn/conversations/arriving" },
+  { route: "/learn/conversations/food", name: "learn/conversations/food" },
+  { route: "/learn/conversations/smalltalk", name: "learn/conversations/smalltalk" },
+  { route: "/learn/conversations/requests", name: "learn/conversations/requests" },
 
-  // Explore - Words (vocabulary)
-  { route: "/explore/words", name: "explore/words/index" },
-  { route: "/explore/words/nouns", name: "explore/words/nouns" },
-  { route: "/explore/words/verbs", name: "explore/words/verbs" },
-  { route: "/explore/words/reference", name: "explore/words/reference" },
+  // Learn - Phrases
+  { route: "/learn/phrases/survival", name: "learn/phrases/survival" },
+  { route: "/learn/phrases/responses", name: "learn/phrases/responses" },
+  { route: "/learn/phrases/requests", name: "learn/phrases/requests" },
+  { route: "/learn/phrases/opinions", name: "learn/phrases/opinions" },
+  { route: "/learn/phrases/connectors", name: "learn/phrases/connectors" },
+  { route: "/learn/phrases/time", name: "learn/phrases/time" },
 
-  // Reference
-  { route: "/reference/cases-pronouns", name: "reference/cases-pronouns" },
-  { route: "/reference/nouns-articles", name: "reference/nouns-articles" },
+  // Learn - Vocabulary
+  { route: "/learn/vocabulary/nouns", name: "learn/vocabulary/nouns" },
+  { route: "/learn/vocabulary/verbs", name: "learn/vocabulary/verbs" },
+  { route: "/learn/vocabulary/essentials", name: "learn/vocabulary/essentials" },
+
+  // Reference - Landing
+  { route: "/reference", name: "reference/index" },
+
+  // Reference - Tabs
+  { route: "/reference/cases", name: "reference/cases" },
+  { route: "/reference/pronouns", name: "reference/pronouns" },
+  { route: "/reference/articles", name: "reference/articles" },
   { route: "/reference/adjectives", name: "reference/adjectives" },
   { route: "/reference/prepositions", name: "reference/prepositions" },
   { route: "/reference/verbs", name: "reference/verbs" },
+  { route: "/reference/patterns", name: "reference/patterns" },
 
   // Search
   { route: "/search", name: "search" },
@@ -61,10 +62,10 @@ const takeScreenshots = async () => {
   const context = await browser.newContext({ viewport: VIEWPORT });
   const page = await context.newPage();
 
-  // Set localStorage to use the "mike" user before navigating to any pages
+  // Set localStorage to authenticate before navigating to any pages
   await page.goto(BASE_URL, { waitUntil: "domcontentloaded" });
   await page.evaluate((userId) => {
-    localStorage.setItem("greek-practice-user", userId);
+    localStorage.setItem("greek-authenticated-user", JSON.stringify({ userId: Number(userId), username: "demo" }));
   }, USER_ID);
 
   const mode = isMobile ? "mobile (375x812)" : "desktop (1280x720)";
