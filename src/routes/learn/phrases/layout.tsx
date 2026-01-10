@@ -8,7 +8,6 @@ import {
 	Heart,
 	Link2,
 	Clock,
-	Blocks,
 	ChevronLeft,
 } from "lucide-react";
 import type { Route } from "./+types/layout";
@@ -35,7 +34,6 @@ const PHRASES_TABS: NavTab[] = [
 	{ id: "opinions", label: "Opinions", shortLabel: "Feel", icon: <Heart size={16} />, color: "terracotta" },
 	{ id: "connectors", label: "Connectors", shortLabel: "Link", icon: <Link2 size={16} />, color: "honey" },
 	{ id: "time", label: "Time", shortLabel: "Time", icon: <Clock size={16} />, color: "ocean" },
-	{ id: "patterns", label: "Patterns", shortLabel: "Form", icon: <Blocks size={16} />, color: "olive" },
 ];
 
 export default function PhrasesLayout({ loaderData }: Route.ComponentProps) {
