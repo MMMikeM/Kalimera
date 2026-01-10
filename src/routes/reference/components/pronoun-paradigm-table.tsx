@@ -1,5 +1,5 @@
 import { MonoText } from "@/components/MonoText";
-import type { PronounForm, PronounParadigm } from "../../constants/pronouns";
+import type { PronounForm, PronounParadigm } from "@/constants/pronouns";
 
 interface PronounParadigmTableProps {
 	data: PronounParadigm[];

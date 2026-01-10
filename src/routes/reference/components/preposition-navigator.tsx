@@ -1,7 +1,7 @@
 import { ArrowLeft, Gift, MapPin, Users } from "lucide-react";
 import { Card } from "@/components/Card";
 import { MonoText } from "@/components/MonoText";
-import { PREPOSITION_NAVIGATOR_OPTIONS } from "../../constants/prepositions";
+import { PREPOSITION_NAVIGATOR_OPTIONS } from "@/constants/prepositions";
 
 const ICONS = {
 	MapPin,
