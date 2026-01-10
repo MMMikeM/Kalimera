@@ -11,8 +11,10 @@ Greek learning app with SRS-based vocabulary practice and timed production drill
 /try                 Anonymous drill (conversion flow)
 /practice/speed      Timed mixed drills (with ?focus= filters)
 /practice/review     SRS review queue (?limit=N supported)
-/learn/*             Browse content (was /explore)
-/reference/*         Grammar reference
+/learn               Learn landing page (section cards)
+/learn/*             Browse content by topic
+/reference           Reference landing page (section cards)
+/reference/*         Grammar reference by topic
 /search              Vocabulary search
 /progress            Analytics (streak calendar, accuracy trends)
 /support             About page
@@ -176,6 +178,17 @@ In-page filter buttons before starting drill:
 <engagement>Focused practice on weak areas</engagement>
 </route>
 
+<route path="/learn">
+<purpose>Learn section hub - visual overview of content areas</purpose>
+<file>src/routes/learn/index.tsx</file>
+<displays>
+- Header: "Learn" with subtitle "Browse Greek content by topic"
+- Section cards linking to Conversations, Phrases, Vocabulary
+- Colour-coded borders by section (olive, ocean, honey)
+</displays>
+<engagement>Progressive disclosure - browse overview, then dive into content</engagement>
+</route>
+
 <route path="/learn/conversations/:tab">
 <purpose>Themed dialogues for contextual learning</purpose>
 <file>src/routes/learn/conversations/$tab.tsx</file>
@@ -207,8 +220,8 @@ In-page filter buttons before starting drill:
 - opinions: Expressing opinions
 - connectors: Discourse connectors
 - time: Time expressions
-- constructions: Grammar patterns
 </tabs>
+<note>Grammar patterns (μου αρέσει, με λένε) moved to /reference/patterns</note>
 <displays>
 - Phrase cards with Greek/English
 - Usage notes
@@ -218,7 +231,7 @@ In-page filter buttons before starting drill:
 <engagement>Quick reference, practical utility</engagement>
 </route>
 
-<route path="/learn/vocabulary/:tab" tabs="nouns,verbs,phrases,reference">
+<route path="/learn/vocabulary/:tab" tabs="nouns,verbs,phrases,essentials">
 <purpose>Vocabulary browsing by category</purpose>
 <file>src/routes/learn/vocabulary/$tab.tsx</file>
 <data-source>DB: vocabulary (grouped by tags) + static verb patterns</data-source>
@@ -226,7 +239,7 @@ In-page filter buttons before starting drill:
 - nouns: Nouns by semantic category (people, shopping, household, vehicles, summer)
 - verbs: Verbs by conjugation family (-ω, -άω, -μαι, irregular) with paradigm tables
 - phrases: Redirects to /learn/phrases
-- reference: Numbers, colours, times of day, frequency/position adverbs
+- essentials: Numbers, colours, times of day, frequency/position adverbs
 </tabs>
 <displays>
 - Vocabulary cards grouped by subcategory
@@ -262,18 +275,32 @@ In-page filter buttons before starting drill:
 <engagement>Deep study mode, understand verb patterns</engagement>
 </route>
 
+<route path="/reference">
+<purpose>Reference section hub - visual overview of grammar topics</purpose>
+<file>src/routes/reference/index.tsx</file>
+<displays>
+- Header: "Reference" with subtitle "Grammar patterns and paradigms"
+- Section cards with icons linking to each tab
+- Colour-coded borders by topic (ocean, olive, honey, terracotta)
+</displays>
+<engagement>Progressive disclosure - browse overview, then dive into specifics</engagement>
+</route>
+
 <route path="/reference/:tab">
 <purpose>Grammar reference lookup</purpose>
 <file>src/routes/reference/$tab.tsx</file>
-<data-source>Static: hardcoded grammar content</data-source>
+<data-source>Static: hardcoded grammar content + DB for patterns</data-source>
 <tabs>
-- cases-pronouns: Case overview, pronoun paradigms, decision guide
-- nouns-articles: Article paradigms, gender agreement, movable nu
+- cases: Case system foundation (nominative, accusative, genitive)
+- pronouns: Pronoun paradigms and decision guides
+- articles: Article paradigms, gender agreement, movable nu
 - adjectives: Adjective agreement patterns
 - prepositions: Preposition + case combinations
 - verbs: Conjugation patterns, tense overview
+- patterns: Greek-specific constructions (μου αρέσει, με λένε)
 </tabs>
 <displays>
+- Tab navigation bar
 - Paradigm tables
 - Decision guides (flowcharts)
 - Usage examples
@@ -601,8 +628,8 @@ Desktop has more space. Proposed structure:
 |-------|--------|---------|-------|
 | `/` | Home (bottom nav) | Logo tap | Dashboard/home |
 | `/practice/speed` | Practice (bottom nav) | Practice (CTA) | Primary action |
-| `/learn/*` | Learn (bottom nav) | Learn | Content browsing |
-| `/reference/*` | Reference (bottom nav) | Reference | Grammar lookup |
+| `/learn` | Learn (bottom nav) | Learn | Landing page → subsections |
+| `/reference` | Reference (bottom nav) | Reference | Landing page → tabs |
 | `/search` | Search icon (header) | Search | Vocabulary search |
 | `/progress` | Profile drawer | User menu | Analytics (authenticated) |
 | `/support` | Profile drawer | User menu | About page |
