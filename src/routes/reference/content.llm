@@ -1,0 +1,269 @@
+# Reference Section Content
+
+Grammar reference for understanding how Greek works: cases, pronouns, articles, verbs, adjectives, prepositions, and patterns.
+
+## Route Structure
+
+```
+/reference                    Landing page with section cards
+/reference/:tab               Grammar reference by topic
+```
+
+## Landing Page
+
+<route path="/reference">
+<purpose>Section hub - visual overview of all grammar reference topics</purpose>
+<file>src/routes/reference/index.tsx</file>
+<displays>
+- Header: "Reference" with subtitle "Grammar patterns and paradigms"
+- Section cards (7 items):
+  - Cases: "The framework for understanding Greek grammar"
+  - Pronouns: "Cases in action - the words you'll use most"
+  - Articles: "Article paradigms and gender agreement"
+  - Adjectives: "Agreement patterns that follow the noun"
+  - Prepositions: "Connecting words and their case requirements"
+  - Verbs: "Conjugation patterns and verb families"
+  - Patterns: "Greek-specific constructions like μου αρέσει"
+- Each card links to /reference/{section}
+</displays>
+<note>
+Cards use colour-coded borders matching tab colours (ocean, olive, honey, terracotta).
+</note>
+</route>
+
+## Tabs
+
+```
+cases        → Case system foundation (nominative, accusative, genitive)
+pronouns     → Pronoun paradigms and decision guides
+articles     → Article paradigms and gender agreement
+adjectives   → Adjective agreement patterns
+prepositions → Preposition + case combinations
+verbs        → Verb conjugation patterns
+patterns     → Greek-specific constructions (NEW - moved from phrases)
+```
+
+## Data Source
+
+Static content from constants:
+- `@/constants/recognition` - Case rules and examples
+- `@/constants/pronouns` - Pronoun paradigms
+- `@/constants/agreement` - Article and noun paradigms
+- `@/constants/adjectives` - Adjective paradigms
+- `@/constants/prepositions` - Preposition data
+- `@/constants/verbs` - Verb patterns
+
+---
+
+## Tab: cases
+
+<tab route="/reference/cases">
+<purpose>Case system foundation - the framework for Greek grammar</purpose>
+<file>src/routes/reference/tabs/cases.tsx</file>
+<components>
+- CasesSection (components/cases-section.tsx)
+</components>
+<displays>
+- Hero: "Foundation of Greek grammar" - Ποιος; Τι; Ποιου;
+- The Four Questions (nominative, accusative, genitive)
+- Quick spot-check patterns (collapsible)
+- Vocative (collapsible - for calling someone)
+- Navigation to /reference/pronouns
+</displays>
+<note>
+Split from cases-pronouns. Cases explain the SYSTEM, pronouns show it in ACTION.
+</note>
+</tab>
+
+## Tab: pronouns
+
+<tab route="/reference/pronouns">
+<purpose>Pronouns as cases in action - the words you'll use most</purpose>
+<file>src/routes/reference/tabs/pronouns.tsx</file>
+<components>
+- PronounsSection (components/pronouns-section.tsx)
+- PronounDecisionGuide (components/pronoun-decision-guide.tsx)
+- PronounParadigmTable (components/pronoun-paradigm-table.tsx)
+</components>
+<displays>
+- Hero: "Pronouns in action" - με, σε, μου, σου
+- Decision guide: "Which 'me/you' do I use?"
+- Four paradigm tables:
+  - Nominative (subject) - often dropped!
+  - Genitive (possessive) - μου, σου, του
+  - Accusative (object) - με, σε, τον
+  - Emphatic - after prepositions
+- Double object pattern
+- Common phrases with pronouns (collapsible)
+- Practice CTA linking to /practice/speed?focus=pronouns
+</displays>
+<note>
+Split from cases-pronouns. Progressive disclosure - cases first, then pronouns.
+</note>
+</tab>
+
+## Tab: articles
+
+<tab route="/reference/articles">
+<purpose>Article paradigms and noun agreement</purpose>
+<file>src/routes/reference/tabs/articles.tsx</file>
+<components>
+- AgreementSection (components/agreement-section.tsx)
+- MovableNuSection (components/agreement-section.tsx)
+</components>
+<displays>
+- Hero: "Articles and nouns" - ο, η, το → τον, την, το
+- Key insight: "When uncertain, use the -ν form"
+- Gender hints (endings → gender)
+- Article quick lookup table (singular/plural × gender × case)
+- Noun paradigms by gender (carousel)
+- Movable nu rule (-ν)
+- Common agreement mistakes (collapsible)
+- Practice CTA linking to /practice/speed?focus=articles
+</displays>
+</tab>
+
+## Tab: adjectives
+
+<tab route="/reference/adjectives">
+<purpose>Adjective agreement patterns</purpose>
+<file>src/routes/reference/tabs/adjectives.tsx</file>
+<components>
+- AdjectivesSection (components/adjectives-section.tsx)
+</components>
+<displays>
+- Hero: "Words that describe" - ο καλός, η καλή, το καλό
+- Key insight: "Adjectives copy the noun"
+- Adjective endings quick reference
+- Agreement examples (article + adjective + noun)
+- Main paradigm (-ος/-η/-ο pattern)
+- Common adjectives list
+- Other patterns (collapsible)
+- Common mistakes (collapsible)
+- Practice CTA linking to /practice/speed?focus=adjectives
+</displays>
+</tab>
+
+## Tab: prepositions
+
+<tab route="/reference/prepositions">
+<purpose>Preposition usage and case requirements</purpose>
+<file>src/routes/reference/tabs/prepositions.tsx</file>
+<components>
+- PrepositionsSection (components/prepositions-section.tsx)
+- PrepositionNavigator (components/preposition-navigator.tsx)
+</components>
+<displays>
+- Hero: "Connect words and ideas" - σε, από, για, με
+- Decision guide: "Which preposition do I need?"
+- The Big Four prepositions (σε, από, για, με)
+- The σε contraction story (σε + article → στο/στην/στον)
+- Prepositions with pronouns (emphatic forms)
+- Time expressions
+- Common mistakes
+- Other prepositions (collapsible)
+- Compound prepositions (collapsible)
+- Practice CTA linking to /practice/speed?focus=prepositions
+</displays>
+</tab>
+
+## Tab: verbs
+
+<tab route="/reference/verbs">
+<purpose>Verb conjugation patterns and system</purpose>
+<file>src/routes/reference/tabs/verbs.tsx</file>
+<components>
+- VerbsSection (components/verbs-section.tsx)
+</components>
+<displays>
+- Hero: "Verb conjugation patterns" - κάνω, κάνεις, κάνει...
+- Start here: είμαι (to be) - most important verb
+- Pattern identifier: "Which pattern?" (-ω, -άω, -μαι)
+- Three pattern sections:
+  - Active -ω (κάνω family)
+  - Contracted -άω (μιλάω family)
+  - Deponent -μαι (έρχομαι family)
+- Other irregular verbs
+- Cross-link to /learn/vocabulary/verbs for browsing
+- Practice CTA linking to /practice/speed?focus=verbs
+</displays>
+<note>
+This explains the conjugation SYSTEM. Verb vocabulary browsing is at /learn/vocabulary/verbs.
+</note>
+</tab>
+
+## Tab: patterns
+
+<tab route="/reference/patterns">
+<purpose>Greek-specific sentence constructions</purpose>
+<file>src/routes/reference/tabs/patterns.tsx</file>
+<displays>
+- Hero: "Greek sentence patterns" - Μου αρέσει...
+- Likes construction (μου αρέσει / μου αρέσουν)
+  - Pattern explanation: thing liked is SUBJECT
+  - Paradigm table
+  - Quick test: αρέσει or αρέσουν?
+- Name construction (με λένε)
+  - Pattern explanation: literally "they call me"
+  - Paradigm with all pronoun forms
+- Future: more patterns as identified
+</displays>
+<note>
+Moved from /learn/phrases/patterns. These are grammar patterns, not phrase collections.
+</note>
+</tab>
+
+---
+
+## Component Library
+
+<components>
+<component file="components/cases-section.tsx">
+Case system overview with nominative/accusative/genitive explanations
+</component>
+
+<component file="components/pronouns-section.tsx">
+Full pronoun paradigm tables with PronounParadigmTable component
+</component>
+
+<component file="components/pronoun-paradigm-table.tsx">
+Reusable table for displaying pronoun forms by person/number
+</component>
+
+<component file="components/pronoun-decision-guide.tsx">
+Flowchart for choosing correct pronoun form
+</component>
+
+<component file="components/agreement-section.tsx">
+Article paradigm table and gender agreement rules
+</component>
+
+<component file="components/adjectives-section.tsx">
+Adjective agreement patterns mirroring article paradigms
+</component>
+
+<component file="components/prepositions-section.tsx">
+Preposition usage with PrepositionNavigator for browsing
+</component>
+
+<component file="components/preposition-navigator.tsx">
+Interactive navigator for exploring preposition combinations
+</component>
+
+<component file="components/verbs-section.tsx">
+Verb family paradigms and conjugation patterns
+</component>
+</components>
+
+---
+
+## Navigation Order
+
+Tabs appear in this order (conceptual dependency):
+1. cases - Framework for understanding Greek
+2. pronouns - Cases in action (most frequent words)
+3. articles - Same patterns applied to nouns
+4. adjectives - Agreement following article patterns
+5. prepositions - Combines with articles/pronouns
+6. verbs - Separate system (conjugation)
+7. patterns - Special constructions
