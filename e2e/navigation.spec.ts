@@ -55,12 +55,12 @@ test.describe("Navigation", () => {
 	test("Reference tabs work", async ({ page }) => {
 		await page.goto(`${BASE_URL}/reference/cases-pronouns`);
 
-		// Click Nouns tab (shortLabel is "Nouns")
+		// Click Nouns tab
 		await page.getByRole("link", { name: /Nouns/ }).click();
 		await expect(page).toHaveURL(/\/reference\/nouns-articles/);
 
-		// Click Adjectives tab (shortLabel is "Adj")
-		await page.getByRole("link", { name: /Adj/ }).click();
+		// Click Adjectives tab
+		await page.getByRole("link", { name: /Adjectives/ }).click();
 		await expect(page).toHaveURL(/\/reference\/adjectives/);
 
 		// Click Verbs tab
