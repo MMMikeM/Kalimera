@@ -8,6 +8,8 @@ import {
 	Link,
 	useLocation,
 	useNavigate,
+	isRouteErrorResponse,
+	useRouteError,
 } from "react-router";
 import { BookOpen, FileText, Search, Zap, User, BarChart3, Info, LogOut, Home } from "lucide-react";
 import { Header } from "@/components/Header";
@@ -304,5 +306,71 @@ export default function Root() {
 				</div>
 			</nav>
 		</div>
+	);
+}
+
+export function ErrorBoundary() {
+	const error = useRouteError();
+
+	let title = "Something went wrong";
+	let message = "An unexpected error occurred. Please try again.";
+	let errorMessage = "Unknown error";
+	let errorStack: string | undefined;
+
+	if (isRouteErrorResponse(error)) {
+		title = error.status === 404 ? "Page not found" : `Error ${error.status}`;
+		message = error.statusText || message;
+		errorMessage = `${error.status}: ${error.statusText}`;
+	} else if (error instanceof Error) {
+		errorMessage = error.message;
+		errorStack = error.stack;
+	}
+
+	// Log error to backend (fire and forget, don't block render)
+	useEffect(() => {
+		// Skip 404s - not worth logging
+		if (isRouteErrorResponse(error) && error.status === 404) {
+			return;
+		}
+
+		fetch("/api/errors", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({
+				message: errorMessage,
+				stack: errorStack,
+				url: typeof window !== "undefined" ? window.location.href : undefined,
+				userAgent: typeof navigator !== "undefined" ? navigator.userAgent : undefined,
+				timestamp: new Date().toISOString(),
+			}),
+		}).catch(() => {
+			// Silently fail - don't create more errors while handling an error
+		});
+	}, [error, errorMessage, errorStack]);
+
+	return (
+		<html lang="en">
+			<head>
+				<meta charSet="utf-8" />
+				<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+				<title>{title}</title>
+				<Links />
+			</head>
+			<body className="font-sans text-stone-800 antialiased bg-cream">
+				<div className="min-h-screen flex items-center justify-center p-6">
+					<div className="text-center max-w-md">
+						<h1 className="text-3xl font-serif text-terracotta mb-4">{title}</h1>
+						<p className="text-stone-600 mb-6">{message}</p>
+						<a
+							href="/"
+							className="inline-block px-6 py-3 bg-terracotta text-white rounded-xl font-medium hover:bg-terracotta-dark transition-colors"
+						>
+							Go Home
+						</a>
+					</div>
+				</div>
+				<Scripts />
+			</body>
+		</html>
 	);
 }
