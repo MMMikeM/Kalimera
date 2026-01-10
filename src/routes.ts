@@ -38,6 +38,10 @@ export default [
 			index("routes/learn/vocabulary/index.tsx"),
 			route(":tab", "routes/learn/vocabulary/$tab.tsx"),
 			route("verbs/:verbId", "routes/learn/vocabulary/verbs/$verbId/route.tsx"),
+			route("essentials", "routes/learn/vocabulary/essentials/layout.tsx", [
+				index("routes/learn/vocabulary/essentials/index.tsx"),
+				route(":subtab", "routes/learn/vocabulary/essentials/$subtab.tsx"),
+			]),
 		]),
 	]),
 

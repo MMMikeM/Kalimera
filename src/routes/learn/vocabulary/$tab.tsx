@@ -2,7 +2,6 @@ import { Navigate } from "react-router";
 import type { Route } from "./+types/$tab";
 import { NounsTab } from "./tabs/nouns";
 import { VerbsTab } from "./tabs/verbs";
-import { EssentialsTab } from "./tabs/essentials";
 
 const VALID_TABS = ["nouns", "verbs", "phrases", "essentials"] as const;
 type TabId = (typeof VALID_TABS)[number];
@@ -28,7 +27,7 @@ export default function TabRoute({ loaderData }: Route.ComponentProps) {
 		case "phrases":
 			return <Navigate to="/learn/phrases" replace />;
 		case "essentials":
-			return <EssentialsTab />;
+			return <Navigate to="/learn/vocabulary/essentials" replace />;
 		default:
 			return null;
 	}
