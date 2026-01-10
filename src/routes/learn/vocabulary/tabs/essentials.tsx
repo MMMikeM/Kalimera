@@ -25,7 +25,7 @@ const POSITION_PAIRS = [
 	["κοντά", "μακριά"],
 ];
 
-export function ReferenceTab() {
+export function EssentialsTab() {
 	const data = useOutletContext<VocabularyLoaderData>();
 
 	const sortedTimes = [...data.reference.timesOfDay].sort((a, b) => {
