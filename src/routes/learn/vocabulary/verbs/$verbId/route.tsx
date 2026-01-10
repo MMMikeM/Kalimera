@@ -7,7 +7,7 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { TenseNavigator } from "@/components/TenseNavigator";
 import { ImperativeTable } from "@/components/ImperativeTable";
 import { StemInsight } from "@/components/StemInsight";
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/components/ui/Badge";
 
 export { loader } from "./loader.server";
 
@@ -112,10 +112,10 @@ export default function VerbDetailPage({ loaderData }: Route.ComponentProps) {
 						verbDetails={
 							verb.verbDetails
 								? {
-										presentStem: verb.verbDetails.presentStem,
-										aoristStem: verb.verbDetails.aoristStem,
-										futureStem: verb.verbDetails.futureStem,
-									}
+									presentStem: verb.verbDetails.presentStem,
+									aoristStem: verb.verbDetails.aoristStem,
+									futureStem: verb.verbDetails.futureStem,
+								}
 								: undefined
 						}
 						meaning={verb.englishTranslation}
