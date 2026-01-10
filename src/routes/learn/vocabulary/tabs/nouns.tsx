@@ -1,11 +1,14 @@
+import { Car, Home, Package, ShoppingCart, Sun, Users } from "lucide-react";
 import type React from "react";
 import { useOutletContext } from "react-router";
-import { Users, ShoppingCart, Home, Car, Sun, Package } from "lucide-react";
 import { Card } from "@/components/Card";
 import { TabHero } from "@/components/TabHero";
-import { KeyInsight } from "@/components/KeyInsight";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { type VocabularyLoaderData, type VocabItem, NounDisplay } from "../components/shared";
+import {
+	NounDisplay,
+	type VocabItem,
+	type VocabularyLoaderData,
+} from "../components/shared";
 
 const NounSection: React.FC<{
 	title: string;
@@ -84,19 +87,25 @@ export function NounsTab() {
 	return (
 		<div className="space-y-6">
 			<TabHero
-				title="Nouns organized by everyday life"
+				title="Everyday nouns"
 				greekPhrase="ο / η / το"
 				colorScheme="ocean"
-				icon={<Package size={18} />}
+				icon={<Package size={24} />}
+				expandedExample={{
+					label: "Endings hint at gender",
+					content: (
+						<p className="text-sm text-stone-600">
+							Most nouns ending in <strong>-ος</strong> are masculine,{" "}
+							<strong>-η/-α</strong> are feminine, and{" "}
+							<strong>-ο/-ι/-μα</strong> are neuter. The article confirms it: ο
+							(m), η (f), το (n).
+						</p>
+					),
+				}}
 			>
-				Browse vocabulary by category. Each noun shows its article, which tells you
-				the gender you need to match.
+				The words you'll use most, organised by situation. Every noun includes
+				its article so you learn the gender from the start.
 			</TabHero>
-
-			<KeyInsight title="Endings hint at gender">
-				Most nouns ending in -ος are masculine, -η/-α are feminine, and -ο/-ι/-μα
-				are neuter. The article confirms it: ο (m), η (f), το (n).
-			</KeyInsight>
 
 			<Alert variant="info" className="bg-stone-50">
 				<AlertDescription className="text-stone-700">
