@@ -1,13 +1,13 @@
 import { Zap } from "lucide-react";
-import { TabHero } from "@/components/TabHero";
 import { PracticeCTA } from "@/components/PracticeCTA";
+import { TabHero } from "@/components/TabHero";
 import { VerbsSection } from "../components/verbs-section";
 
 export function VerbsTab() {
 	return (
 		<div className="space-y-8">
 			<TabHero
-				title="Action words that tell the whole story"
+				title="Verb conjugation patterns"
 				greekPhrase="κάνω, κάνεις, κάνει..."
 				colorScheme="ocean"
 				icon={<Zap size={18} />}
