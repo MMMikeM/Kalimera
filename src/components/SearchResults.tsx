@@ -1,8 +1,8 @@
 import { SearchX } from "lucide-react";
 import { MonoText } from "@/components/MonoText";
-import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import type { SearchVocabItem } from "@/db.server/queries/vocabulary";
+import { Badge } from "./ui/badge";
 
 interface SearchResultsProps {
 	results: SearchVocabItem[];

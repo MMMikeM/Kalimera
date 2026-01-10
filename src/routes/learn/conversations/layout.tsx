@@ -2,8 +2,9 @@ import type React from "react";
 import { MessageCircle, DoorOpen, Utensils, ChevronDown, ChevronLeft, Lightbulb, Hand } from "lucide-react";
 import { Link, Outlet, useLocation, useOutletContext } from "react-router";
 import { MonoText } from "@/components/MonoText";
+import { Card } from "@/components/Card";
 import { NavTabs } from "@/components/NavTabs";
-import type { ConversationMode } from "@/components/DialogueExchange";
+import { DialogueScenario, type ConversationMode, type DialogueLine, type Formality } from "@/components/DialogueExchange";
 import type { NavTab } from "@/components/NavTabs";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { usePersistedState } from "@/lib/hooks/use-persisted-state";
@@ -104,6 +105,24 @@ export const LearningTips: React.FC<LearningTipsProps> = ({
 			</div>
 		</CollapsibleContent>
 	</Collapsible>
+);
+
+export const ScenarioCard: React.FC<{
+	title: string;
+	description: string;
+	formality: Formality;
+	dialogue: DialogueLine[];
+	mode: ConversationMode;
+}> = ({ title, description, formality, dialogue, mode }) => (
+	<Card variant="bordered" padding="lg" className="border-stone-200">
+		<DialogueScenario
+			title={title}
+			description={description}
+			formality={formality}
+			dialogue={dialogue}
+			mode={mode}
+		/>
+	</Card>
 );
 
 const CONVERSATION_TABS: NavTab[] = [

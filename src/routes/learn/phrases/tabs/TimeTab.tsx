@@ -7,7 +7,7 @@ import {
 } from "@/components/ContentSection";
 import { MonoText } from "@/components/MonoText";
 import { TabHero } from "@/components/TabHero";
-import type { PhrasesLoaderData, PhraseItem } from "../shared";
+import type { PhrasesLoaderData, PhraseItem } from "../components/shared";
 
 type TimeListItem = {
 	id: string | number;

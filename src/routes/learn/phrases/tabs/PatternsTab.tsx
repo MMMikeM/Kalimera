@@ -3,8 +3,8 @@ import { Card } from "@/components/Card";
 import { QuickTest } from "@/components/QuickTest";
 import { TabHero } from "@/components/TabHero";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import type { PhrasesLoaderData, PhraseItem } from "../shared";
-import { PhraseItemDisplay } from "../shared";
+import type { PhrasesLoaderData, PhraseItem } from "../components/shared";
+import { PhraseItemDisplay } from "../components/shared";
 
 const ParadigmCard = ({
 	title,

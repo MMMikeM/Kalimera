@@ -1,6 +1,6 @@
 import { useOutletContext } from "react-router";
 import type { Route } from "./+types/$tab";
-import type { PhrasesLoaderData } from "./shared";
+import type { PhrasesLoaderData } from "./components/shared";
 import { SurvivalTab } from "./tabs/SurvivalTab";
 import { ResponsesTab } from "./tabs/ResponsesTab";
 import { RequestsTab } from "./tabs/RequestsTab";

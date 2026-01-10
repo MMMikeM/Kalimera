@@ -112,10 +112,10 @@ export default function VerbDetailPage({ loaderData }: Route.ComponentProps) {
 						verbDetails={
 							verb.verbDetails
 								? {
-										presentStem: verb.verbDetails.presentStem,
-										aoristStem: verb.verbDetails.aoristStem,
-										futureStem: verb.verbDetails.futureStem,
-									}
+									presentStem: verb.verbDetails.presentStem,
+									aoristStem: verb.verbDetails.aoristStem,
+									futureStem: verb.verbDetails.futureStem,
+								}
 								: undefined
 						}
 						meaning={verb.englishTranslation}

@@ -17,7 +17,7 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { ContentSection } from "@/components/ContentSection";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
-import { IRREGULAR_VERBS, VERB_PATTERNS } from "../../constants/verbs";
+import { IRREGULAR_VERBS, VERB_PATTERNS } from "@/constants/verbs";
 
 interface UsageExample {
 	greek: string;

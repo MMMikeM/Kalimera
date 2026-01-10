@@ -1,7 +1,7 @@
 import { MessageCircle } from "lucide-react";
 import { TabHero } from "@/components/TabHero";
-import type { PhrasesLoaderData } from "../shared";
-import { PhraseSection, PhraseItemDisplay } from "../shared";
+import type { PhrasesLoaderData } from "../components/shared";
+import { PhraseSection, PhraseItemDisplay } from "../components/shared";
 
 export const ResponsesTab = ({ data }: { data: PhrasesLoaderData }) => {
 	const { responses, socialPhrases } = data.responses;
