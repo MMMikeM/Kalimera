@@ -1,32 +1,7 @@
-import { eq, inArray } from "drizzle-orm";
+import { eq, } from "drizzle-orm";
 import { db } from "../index";
 import type { DisplaySection } from "../enums";
 import { vocabulary, vocabularyTags, tags, tagSections } from "../schema";
-
-// ═══════════════════════════════════════════════════════════════════════════════
-// VOCABULARY BY TAGS
-// ═══════════════════════════════════════════════════════════════════════════════
-
-/**
- * Fetch vocabulary items filtered by tag slugs.
- * Used by vocabulary/, phrases/, and other routes that need tagged vocab.
- */
-async function getVocabByTags(tagSlugs: readonly string[]) {
-	return db
-		.select({
-			id: vocabulary.id,
-			greek: vocabulary.greekText,
-			english: vocabulary.englishTranslation,
-			wordType: vocabulary.wordType,
-			metadata: vocabulary.metadata,
-			tagSlug: tags.slug,
-		})
-		.from(vocabulary)
-		.innerJoin(vocabularyTags, eq(vocabularyTags.vocabularyId, vocabulary.id))
-		.innerJoin(tags, eq(tags.id, vocabularyTags.tagId))
-		.where(inArray(tags.slug, [...tagSlugs]))
-		.orderBy(vocabulary.greekText);
-}
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // VOCABULARY BY SECTION (using tag_sections lookup table)
@@ -242,31 +217,5 @@ type VerbSummary = {
 	isSuppletive: boolean | null;
 	hasConjugations: boolean;
 };
-
-/**
- * Get all verbs that have full conjugation data.
- * Returns a summary list for navigation/selection purposes.
- */
-async function getVerbsWithConjugationData(): Promise<VerbSummary[]> {
-	const results = await db.query.vocabulary.findMany({
-		where: { wordType: "verb" },
-		with: {
-			verbDetails: true,
-			verbConjugations: {
-				limit: 1,
-			},
-		},
-		orderBy: { greekText: "asc" },
-	});
-
-	return results.map((v) => ({
-		id: v.id,
-		greekText: v.greekText,
-		englishTranslation: v.englishTranslation,
-		conjugationFamily: v.verbDetails?.conjugationFamily ?? null,
-		isSuppletive: v.verbDetails?.isSuppletive ?? null,
-		hasConjugations: v.verbConjugations.length > 0,
-	}));
-}
 
 export type { VerbWithConjugations, VerbSummary, ParadigmForms };

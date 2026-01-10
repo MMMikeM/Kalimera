@@ -5,31 +5,19 @@ export interface AuthUser {
 	username: string;
 }
 
-function getStoredAuth(): AuthUser | null {
-	if (typeof window === "undefined") return null;
-
-	try {
-		const stored = localStorage.getItem(AUTH_STORAGE_KEY);
-		if (!stored) return null;
-		return JSON.parse(stored) as AuthUser;
-	} catch {
-		return null;
-	}
-}
-
 export function setStoredAuth(user: AuthUser): void {
 	localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(user));
-}
-
-function clearStoredAuth(): void {
-	localStorage.removeItem(AUTH_STORAGE_KEY);
 }
 
 /**
  * Store auth and redirect to home.
  * Uses full page reload to ensure Root remounts and reads fresh auth state.
+ * Uses setTimeout to let React finish its current render cycle before navigating,
+ * preventing race conditions with form library state updates.
  */
 export function loginAndRedirect(user: AuthUser): void {
 	setStoredAuth(user);
-	window.location.href = "/";
+	setTimeout(() => {
+		window.location.href = "/";
+	}, 0);
 }
