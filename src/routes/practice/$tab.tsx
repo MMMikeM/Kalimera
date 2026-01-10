@@ -1,7 +1,7 @@
-import { redirect, useOutletContext } from "react-router";
+import { redirect } from "react-router";
 import type { Route } from "./+types/$tab";
-import type { PracticeLoaderData } from "./layout";
-import SrsDrill from "./components/srs-drill";
+import { VocabularyTab } from "./tabs/vocabulary";
+import { ReviewTab } from "./tabs/review";
 
 export { action } from "./layout";
 
@@ -23,34 +23,15 @@ export function loader({ params }: Route.LoaderArgs) {
 	return { tab: tab as TabId };
 }
 
-const UserRequiredMessage = () => (
-	<div className="text-center py-12 bg-muted rounded-xl border border-border">
-		<div className="text-5xl mb-4">?</div>
-		<h3 className="text-xl font-semibold text-foreground mb-2">
-			Select a user
-		</h3>
-		<p className="text-muted-foreground">
-			Choose a user from the dropdown above to start practicing.
-		</p>
-	</div>
-);
-
 export default function TabRoute({ loaderData }: Route.ComponentProps) {
 	const { tab } = loaderData;
-	const context = useOutletContext<PracticeLoaderData>();
-	const { reviewItems, newVocabItems, userId, stats } = context;
 
-	if (!userId) {
-		return <UserRequiredMessage />;
+	switch (tab) {
+		case "vocabulary":
+			return <VocabularyTab />;
+		case "review":
+			return <ReviewTab />;
+		default:
+			return null;
 	}
-
-	if (tab === "vocabulary") {
-		return <SrsDrill variant="vocabulary" items={newVocabItems} streakDays={stats?.streak} />;
-	}
-
-	if (tab === "review") {
-		return <SrsDrill variant="review" items={reviewItems} streakDays={stats?.streak} />;
-	}
-
-	return null;
 }

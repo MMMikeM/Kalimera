@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router";
+import { useState, useEffect } from "react";
+import { Link, useSearchParams, useRevalidator } from "react-router";
 import {
 	ArrowRight,
 	Calendar,
@@ -10,6 +10,7 @@ import {
 	Sparkles,
 } from "lucide-react";
 import { differenceInDays, getDay, getDate } from "date-fns";
+import type { Route } from "./+types/home";
 import {
 	getItemsDueTomorrow,
 	getLastPracticeDate,
@@ -24,23 +25,14 @@ import {
 import { FreezeIndicator } from "@/components/FreezeIndicator";
 import { MilestoneCelebration } from "@/components/MilestoneCelebration";
 
+const AUTH_STORAGE_KEY = "greek-authenticated-user";
+
 type Stats = {
 	streak: number;
 	itemsMastered: number;
 	dueCount: number;
 	totalLearned: number;
 	newAvailable: number;
-};
-
-type LoaderData = {
-	userId: number;
-	stats: Stats;
-	weekData: { practiced: boolean }[];
-	todayPracticed: boolean;
-	freezeStatus: FreezeStatus;
-	daysUntilNextFreeze: number | null;
-	itemsDueTomorrow: number;
-	daysSinceLastPractice: number | null;
 };
 
 export function meta() {
@@ -53,9 +45,38 @@ export function meta() {
 	];
 }
 
-export async function loader(): Promise<LoaderData> {
-	// TODO: Get actual user ID from session
-	const userId = 1;
+const DEFAULT_STATS: Stats = {
+	streak: 0,
+	itemsMastered: 0,
+	dueCount: 0,
+	totalLearned: 0,
+	newAvailable: 0,
+};
+
+const DEFAULT_FREEZE_STATUS: FreezeStatus = {
+	status: "none",
+	freezeCount: 0,
+};
+
+export async function loader({ request }: Route.LoaderArgs) {
+	const url = new URL(request.url);
+	const userIdParam = url.searchParams.get("userId");
+	const userId = userIdParam ? parseInt(userIdParam, 10) : null;
+
+	// No userId yet - client will sync from localStorage
+	if (!userId) {
+		return {
+			userId: null,
+			stats: DEFAULT_STATS,
+			weekData: Array.from({ length: 7 }, () => ({ practiced: false })),
+			todayPracticed: false,
+			freezeStatus: DEFAULT_FREEZE_STATUS,
+			daysUntilNextFreeze: null,
+			itemsDueTomorrow: 0,
+			daysSinceLastPractice: null,
+		};
+	}
+
 	const [rawStats, user, itemsDueTomorrow, lastPracticeDate] =
 		await Promise.all([
 			getPracticeStats(userId),
@@ -68,7 +89,6 @@ export async function loader(): Promise<LoaderData> {
 		? differenceInDays(new Date(), lastPracticeDate)
 		: null;
 
-	// Cast to fix Drizzle count() type inference issue
 	const stats: Stats = {
 		streak: rawStats.streak,
 		itemsMastered: Number(rawStats.itemsMastered),
@@ -465,11 +485,11 @@ const StatsSummary = ({
 	</div>
 );
 
-export default function DashboardRoute({
-	loaderData,
-}: {
-	loaderData: LoaderData;
-}) {
+export default function DashboardRoute({ loaderData }: Route.ComponentProps) {
+	const [searchParams, setSearchParams] = useSearchParams();
+	const revalidator = useRevalidator();
+	const [isInitialized, setIsInitialized] = useState(false);
+
 	const {
 		userId,
 		stats,
@@ -480,6 +500,35 @@ export default function DashboardRoute({
 		itemsDueTomorrow,
 		daysSinceLastPractice,
 	} = loaderData;
+
+	// On mount, sync authenticated user to URL params
+	useEffect(() => {
+		const stored = localStorage.getItem(AUTH_STORAGE_KEY);
+		const urlUserId = searchParams.get("userId");
+
+		if (stored) {
+			try {
+				const parsed = JSON.parse(stored) as { userId?: number };
+				const storedUserId = parsed.userId?.toString();
+				if (storedUserId && storedUserId !== urlUserId) {
+					setSearchParams({ userId: storedUserId });
+					revalidator.revalidate();
+				}
+			} catch {
+				// Invalid JSON, ignore
+			}
+		}
+		setIsInitialized(true);
+	}, [searchParams, setSearchParams, revalidator]);
+
+	// Show loading state while syncing user
+	if (!isInitialized || !userId) {
+		return (
+			<div className="flex items-center justify-center min-h-[50vh]">
+				<span className="text-2xl font-serif text-terracotta">καλημέρα</span>
+			</div>
+		);
+	}
 
 	const isLapsedUser =
 		daysSinceLastPractice !== null &&

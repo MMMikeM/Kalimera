@@ -41,8 +41,6 @@ export default [
 		]),
 	]),
 
-	// Legacy /explore redirects (backwards compatibility)
-	route("explore/*", "routes/redirects/explore.tsx"),
 
 	// Reference - grammar lookup
 	route("reference", "routes/reference/layout.tsx", [
@@ -68,6 +66,9 @@ export default [
 
 		// Milestones
 		route("milestones", "routes/api/milestones.ts"),
+
+		// Error logging
+		route("errors", "routes/api/errors.ts"),
 
 		// WebAuthn
 		route("webauthn/register-options", "routes/api/webauthn/register-options.ts"),

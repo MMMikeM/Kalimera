@@ -7,7 +7,7 @@ import {
 	ADJECTIVE_ENDINGS_QUICK_REF,
 	COMMON_ADJECTIVES,
 	type AdjectiveParadigm,
-} from "../../constants/adjectives";
+} from "@/constants/adjectives";
 import { Card } from "@/components/Card";
 import { MonoText } from "@/components/MonoText";
 import { SectionHeading } from "@/components/SectionHeading";
@@ -346,13 +346,12 @@ const AdjectiveParadigmCard: React.FC<{ paradigm: AdjectiveParadigm }> = ({
 				</MonoText>
 				<span className="text-sm text-stone-600">{paradigm.title}</span>
 				<span
-					className={`text-xs px-2 py-0.5 rounded ${
-						paradigm.frequency === "very common"
+					className={`text-xs px-2 py-0.5 rounded ${paradigm.frequency === "very common"
 							? "bg-olive-200 text-olive-text"
 							: paradigm.frequency === "common"
 								? "bg-honey-200 text-honey-text"
 								: "bg-stone-100 text-stone-600"
-					}`}
+						}`}
 				>
 					{paradigm.frequency}
 				</span>
