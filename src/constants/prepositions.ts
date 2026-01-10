@@ -198,7 +198,7 @@ export const OTHER_PREPOSITIONS = [
 // =============================================================================
 
 // Spatial prepositions for the diagram
-export const SPATIAL_PREPOSITIONS = {
+const SPATIAL_PREPOSITIONS = {
 	vertical: [
 		{
 			position: "above",

@@ -67,7 +67,7 @@ export const getPracticeDatesForCalendar = async (
 	}));
 };
 
-export const getResponseTimeTrends = async (
+const getResponseTimeTrends = async (
 	userId: number,
 	days: number,
 ): Promise<ResponseTimeTrend[]> => {
@@ -152,7 +152,7 @@ export const getTimeInvested = async (userId: number): Promise<TimeInvested> => 
 	};
 };
 
-export const getMasteryProgression = async (
+const getMasteryProgression = async (
 	userId: number,
 ): Promise<MasterySnapshot[]> => {
 	const masteredThresholdDays = 21;

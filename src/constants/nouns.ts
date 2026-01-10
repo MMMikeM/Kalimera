@@ -14,7 +14,7 @@ export interface NounPattern {
 }
 
 // Most common noun patterns - organized by frequency of use
-export const NOUN_PATTERNS: NounPattern[] = [
+const NOUN_PATTERNS: NounPattern[] = [
 	// MASCULINE
 	{
 		pattern: "-ος",
@@ -172,7 +172,7 @@ export const GENDER_HINTS = {
 };
 
 // Key insight: Neuter nouns have same form for Nom and Acc
-export const NEUTER_SIMPLIFICATION = {
+const NEUTER_SIMPLIFICATION = {
 	title: "Neuter nouns: Nominative = Accusative",
 	explanation: "Neuter nouns don't change between subject and object position",
 	examples: [
