@@ -1,5 +1,7 @@
-import { Link } from "react-router";
+import { useState, useEffect } from "react";
+import { Link, useSearchParams, useRevalidator } from "react-router";
 import { ArrowLeft, Clock, Target, TrendingUp, Calendar } from "lucide-react";
+import type { Route } from "./+types/progress";
 import { Card } from "@/components/Card";
 import { StreakCalendar } from "@/components/StreakCalendar";
 import { AccuracyTrend } from "@/components/AccuracyTrend";
@@ -10,13 +12,7 @@ import {
 	getTimeInvested,
 } from "@/db.server/queries/progress";
 
-type LoaderData = {
-	currentStreak: number;
-	practiceDates: string[];
-	accuracyData: Array<{ date: string; accuracy: number }>;
-	timeInvested: { totalMinutes: number; sessionCount: number };
-	masteredCount: number;
-};
+const AUTH_STORAGE_KEY = "greek-authenticated-user";
 
 export function meta() {
 	return [
@@ -25,8 +21,22 @@ export function meta() {
 	];
 }
 
-export async function loader(): Promise<LoaderData> {
-	const userId = 1;
+export async function loader({ request }: Route.LoaderArgs) {
+	const url = new URL(request.url);
+	const userIdParam = url.searchParams.get("userId");
+	const userId = userIdParam ? parseInt(userIdParam, 10) : null;
+
+	// No userId yet - client will sync from localStorage
+	if (!userId) {
+		return {
+			userId: null,
+			currentStreak: 0,
+			practiceDates: [] as string[],
+			accuracyData: [] as Array<{ date: string; accuracy: number }>,
+			timeInvested: { totalMinutes: 0, sessionCount: 0 },
+			masteredCount: 0,
+		};
+	}
 
 	const [stats, calendarDates, accuracyTrends, timeInvested] =
 		await Promise.all([
@@ -42,6 +52,7 @@ export async function loader(): Promise<LoaderData> {
 	}));
 
 	return {
+		userId,
 		currentStreak: stats.streak,
 		practiceDates: calendarDates.map((d) => d.date),
 		accuracyData,
@@ -57,18 +68,48 @@ const formatMinutes = (minutes: number): string => {
 	return mins > 0 ? `${hours}h ${mins}m` : `${hours}h`;
 };
 
-export default function ProgressPage({
-	loaderData,
-}: {
-	loaderData: LoaderData;
-}) {
+export default function ProgressPage({ loaderData }: Route.ComponentProps) {
+	const [searchParams, setSearchParams] = useSearchParams();
+	const revalidator = useRevalidator();
+	const [isInitialized, setIsInitialized] = useState(false);
+
 	const {
+		userId,
 		currentStreak,
 		practiceDates,
 		accuracyData,
 		timeInvested,
 		masteredCount,
 	} = loaderData;
+
+	// On mount, sync authenticated user to URL params
+	useEffect(() => {
+		const stored = localStorage.getItem(AUTH_STORAGE_KEY);
+		const urlUserId = searchParams.get("userId");
+
+		if (stored) {
+			try {
+				const parsed = JSON.parse(stored) as { userId?: number };
+				const storedUserId = parsed.userId?.toString();
+				if (storedUserId && storedUserId !== urlUserId) {
+					setSearchParams({ userId: storedUserId });
+					revalidator.revalidate();
+				}
+			} catch {
+				// Invalid JSON, ignore
+			}
+		}
+		setIsInitialized(true);
+	}, [searchParams, setSearchParams, revalidator]);
+
+	// Show loading state while syncing user
+	if (!isInitialized || !userId) {
+		return (
+			<div className="flex items-center justify-center min-h-[50vh]">
+				<span className="text-2xl font-serif text-terracotta">καλημέρα</span>
+			</div>
+		);
+	}
 
 	const avgAccuracy =
 		accuracyData.length > 0
