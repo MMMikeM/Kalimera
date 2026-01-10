@@ -7,7 +7,6 @@ import { RequestsTab } from "./tabs/RequestsTab";
 import { OpinionsTab } from "./tabs/OpinionsTab";
 import { ConnectorsTab } from "./tabs/ConnectorsTab";
 import { TimeTab } from "./tabs/TimeTab";
-import { PatternsTab } from "./tabs/PatternsTab";
 
 const VALID_TABS = [
 	"survival",
@@ -16,7 +15,6 @@ const VALID_TABS = [
 	"opinions",
 	"connectors",
 	"time",
-	"patterns",
 ] as const;
 type TabId = (typeof VALID_TABS)[number];
 
@@ -47,8 +45,6 @@ export default function TabRoute({ loaderData }: Route.ComponentProps) {
 			return <ConnectorsTab data={data} />;
 		case "time":
 			return <TimeTab data={data} />;
-		case "patterns":
-			return <PatternsTab data={data} />;
 		default:
 			return null;
 	}
