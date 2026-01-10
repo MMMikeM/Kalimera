@@ -390,22 +390,3 @@ export const VERB_CONJUGATIONS: Record<string, VerbConjugation[]> = {
 		{ person: "αυτοί/ές/ά", form: "μπορούν", english: "they can" },
 	],
 };
-
-// Past and Future Tense Examples for Other Tenses page
-export const PAST_TENSE_EXAMPLES: VerbConjugation[] = [
-	{ person: "εγώ", form: "έκανα", english: "I did/made" },
-	{ person: "εσύ", form: "έκανες", english: "you did/made" },
-	{ person: "αυτός/ή/ό", form: "έκανε", english: "he/she/it did/made" },
-	{ person: "εμείς", form: "κάναμε", english: "we did/made" },
-	{ person: "εσείς", form: "κάνατε", english: "you (pl) did/made" },
-	{ person: "αυτοί/ές/ά", form: "έκαναν", english: "they did/made" },
-];
-
-export const FUTURE_TENSE_EXAMPLES: VerbConjugation[] = [
-	{ person: "εγώ", form: "θα κάνω", english: "I will do/make" },
-	{ person: "εσύ", form: "θα κάνεις", english: "you will do/make" },
-	{ person: "αυτός/ή/ό", form: "θα κάνει", english: "he/she/it will do/make" },
-	{ person: "εμείς", form: "θα κάνουμε", english: "we will do/make" },
-	{ person: "εσείς", form: "θα κάνετε", english: "you (pl) will do/make" },
-	{ person: "αυτοί/ές/ά", form: "θα κάνουν", english: "they will do/make" },
-];

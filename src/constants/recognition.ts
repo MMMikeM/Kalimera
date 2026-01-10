@@ -77,27 +77,3 @@ export const CASE_RECOGNITION = {
 		note: "Names/nouns change when calling someone directly",
 	},
 };
-
-// Common mistakes and corrections
-export const COMMON_MISTAKES = [
-	{
-		wrong: "Θέλω ο καφές",
-		correct: "Θέλω τον καφέ",
-		explanation: "Object of the verb needs accusative, not nominative",
-	},
-	{
-		wrong: "Πηγαίνω ο σπίτι",
-		correct: "Πηγαίνω στο σπίτι",
-		explanation: "Direction needs στο + accusative",
-	},
-	{
-		wrong: "Το αυτοκίνητο ο Νίκος",
-		correct: "Το αυτοκίνητο του Νίκου",
-		explanation: "Possession needs genitive του, not nominative ο",
-	},
-	{
-		wrong: "Με ο φίλος μου",
-		correct: "Με τον φίλο μου",
-		explanation: "Preposition με takes accusative τον, not nominative ο",
-	},
-];

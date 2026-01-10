@@ -7,9 +7,9 @@ import {
 	AGREEMENT_PARADIGMS,
 	ARTICLE_AGREEMENT_QUICK_REF,
 	type AgreementParadigm,
-} from "../../constants/agreement";
-import { GENDER_HINTS } from "../../constants/nouns";
-import { MOVABLE_NU_RULE } from "../../constants/articles";
+} from "@/constants/agreement";
+import { GENDER_HINTS } from "@/constants/nouns";
+import { MOVABLE_NU_RULE } from "@/constants/articles";
 import { Card } from "@/components/Card";
 import { MonoText } from "@/components/MonoText";
 import { SectionHeading } from "@/components/SectionHeading";
@@ -69,13 +69,12 @@ const AgreementParadigmTable: React.FC<{
 				</MonoText>
 				<span className={`text-sm ${style.text}`}>{paradigm.title}</span>
 				<span
-					className={`text-xs px-2 py-0.5 rounded ${
-						paradigm.frequency === "very common"
+					className={`text-xs px-2 py-0.5 rounded ${paradigm.frequency === "very common"
 							? "bg-olive-200 text-olive-text"
 							: paradigm.frequency === "common"
 								? "bg-honey-200 text-honey-text"
 								: "bg-stone-100 text-stone-600"
-					}`}
+						}`}
 				>
 					{paradigm.frequency}
 				</span>
@@ -401,9 +400,8 @@ const ParadigmCarousel: React.FC<{
 							key={p.id}
 							type="button"
 							onClick={() => setCurrentIndex(idx)}
-							className={`w-2 h-2 rounded-full transition-colors ${
-								idx === currentIndex ? "bg-stone-600" : "bg-stone-300"
-							}`}
+							className={`w-2 h-2 rounded-full transition-colors ${idx === currentIndex ? "bg-stone-600" : "bg-stone-300"
+								}`}
 						/>
 					))}
 				</div>

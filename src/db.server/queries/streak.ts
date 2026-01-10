@@ -1,8 +1,7 @@
-import { eq, sql } from "drizzle-orm";
 import { differenceInHours } from "date-fns";
-import { db } from "../index";
-import { users } from "../schema";
 import type { User } from "../types";
+
+const getHoursSince = (date: Date): number => differenceInHours(new Date(), date);
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // CONFIGURATION
@@ -54,27 +53,6 @@ export const getFreezeStatus = (user: User): FreezeStatus => {
 	return { status: "available", freezeCount };
 };
 
-export const canUseFreeze = (user: User, targetDate: string): boolean => {
-	const { freezeCount, lastFreezeUsedAt, freezeUsedForDate } = user;
-
-	if (freezeCount <= 0) {
-		return false;
-	}
-
-	if (freezeUsedForDate === targetDate) {
-		return false;
-	}
-
-	if (lastFreezeUsedAt) {
-		const hoursSinceLastUse = getHoursSince(lastFreezeUsedAt);
-		if (hoursSinceLastUse < STREAK_CONFIG.RECOVERY_HOURS) {
-			return false;
-		}
-	}
-
-	return true;
-};
-
 export const calculateDaysUntilNextFreeze = (
 	currentStreak: number,
 	user: User,
@@ -86,71 +64,3 @@ export const calculateDaysUntilNextFreeze = (
 	const daysIntoCurrentCycle = currentStreak % STREAK_CONFIG.DAYS_TO_EARN_FREEZE;
 	return STREAK_CONFIG.DAYS_TO_EARN_FREEZE - daysIntoCurrentCycle;
 };
-
-// ═══════════════════════════════════════════════════════════════════════════════
-// MUTATIONS
-// ═══════════════════════════════════════════════════════════════════════════════
-
-export const activateFreeze = async (
-	userId: number,
-	protectedDate: string,
-): Promise<void> => {
-	await db
-		.update(users)
-		.set({
-			freezeCount: sql`freeze_count - 1`,
-			lastFreezeUsedAt: new Date(),
-			freezeUsedForDate: protectedDate,
-		} as never)
-		.where(eq(users.id, userId));
-};
-
-export const checkAndAwardFreeze = async (
-	userId: number,
-	currentStreak: number,
-): Promise<{ awarded: boolean; newFreezeCount?: number }> => {
-	const [user] = await db
-		.select()
-		.from(users)
-		.where(eq(users.id, userId));
-
-	if (!user) {
-		return { awarded: false };
-	}
-
-	if (user.freezeCount >= STREAK_CONFIG.MAX_FREEZES) {
-		return { awarded: false };
-	}
-
-	const freezeEarnThreshold =
-		Math.floor(currentStreak / STREAK_CONFIG.DAYS_TO_EARN_FREEZE) * STREAK_CONFIG.DAYS_TO_EARN_FREEZE;
-
-	if (freezeEarnThreshold === 0) {
-		return { awarded: false };
-	}
-
-	if (user.consecutiveDaysAtEarn >= freezeEarnThreshold) {
-		return { awarded: false };
-	}
-
-	const newFreezeCount = Math.min(
-		user.freezeCount + 1,
-		STREAK_CONFIG.MAX_FREEZES,
-	);
-
-	await db
-		.update(users)
-		.set({
-			freezeCount: newFreezeCount,
-			consecutiveDaysAtEarn: freezeEarnThreshold,
-		})
-		.where(eq(users.id, userId));
-
-	return { awarded: true, newFreezeCount };
-};
-
-// ═══════════════════════════════════════════════════════════════════════════════
-// HELPERS
-// ═══════════════════════════════════════════════════════════════════════════════
-
-const getHoursSince = (date: Date): number => differenceInHours(new Date(), date);

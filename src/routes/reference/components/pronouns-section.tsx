@@ -9,7 +9,7 @@ import {
 	PRONOUN_PHRASES,
 	SUBJECT_PRONOUNS,
 	SUBJECT_PRONOUN_EXAMPLES,
-} from "../../constants/pronouns";
+} from "@/constants/pronouns";
 import { Card } from "@/components/Card";
 import { MonoText } from "@/components/MonoText";
 import { ContentSection } from "@/components/ContentSection";

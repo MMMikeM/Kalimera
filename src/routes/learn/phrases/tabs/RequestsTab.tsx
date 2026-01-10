@@ -1,7 +1,7 @@
 import { Hand } from "lucide-react";
 import { TabHero } from "@/components/TabHero";
-import type { PhrasesLoaderData } from "../shared";
-import { PhraseSection, PhraseItemDisplay } from "../shared";
+import type { PhrasesLoaderData } from "../components/shared";
+import { PhraseSection, PhraseItemDisplay } from "../components/shared";
 
 export const RequestsTab = ({ data }: { data: PhrasesLoaderData }) => {
 	const { requests, commands } = data.requests;

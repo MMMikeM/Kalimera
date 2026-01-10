@@ -1,7 +1,7 @@
 import { Link2 } from "lucide-react";
 import { TabHero } from "@/components/TabHero";
-import type { PhrasesLoaderData } from "../shared";
-import { PhraseSection, PhraseItemDisplay } from "../shared";
+import type { PhrasesLoaderData } from "../components/shared";
+import { PhraseSection, PhraseItemDisplay } from "../components/shared";
 
 export const ConnectorsTab = ({ data }: { data: PhrasesLoaderData }) => {
 	const { discourseMarkers, discourseFillers } = data.connectors;

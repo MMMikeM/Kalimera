@@ -4,7 +4,7 @@ import { ContentSection, type ContentColorScheme } from "@/components/ContentSec
 import { cn } from "@/lib/utils";
 
 // Re-export types from data.server - single source of truth
-export type { PhraseItem, PhrasesLoaderData } from "./data.server";
+export type { PhraseItem, PhrasesLoaderData } from "../data.server";
 
 const textColors: Record<ContentColorScheme, string> = {
 	ocean: "text-ocean-800",
