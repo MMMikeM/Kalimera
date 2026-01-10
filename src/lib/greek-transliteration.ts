@@ -179,36 +179,3 @@ export const matchPhonetic = (
 		correctGreek,
 	};
 };
-
-/**
- * Calculate similarity between two phonetic strings (for partial credit / fuzzy matching).
- * Returns a value between 0 and 1.
- */
-const phoneticSimilarity = (a: string, b: string): number => {
-	const s1 = normalizeInput(a);
-	const s2 = normalizeInput(b);
-
-	if (s1 === s2) return 1;
-	if (s1.length === 0 || s2.length === 0) return 0;
-
-	// Levenshtein distance
-	const matrix: number[][] = Array.from({ length: s1.length + 1 }, (_, i) =>
-		Array.from({ length: s2.length + 1 }, (_, j) => (i === 0 ? j : j === 0 ? i : 0)),
-	);
-
-	for (let i = 1; i <= s1.length; i++) {
-		for (let j = 1; j <= s2.length; j++) {
-			const cost = s1[i - 1] === s2[j - 1] ? 0 : 1;
-			const deletion = (matrix[i - 1]?.[j] ?? 0) + 1;
-			const insertion = (matrix[i]?.[j - 1] ?? 0) + 1;
-			const substitution = (matrix[i - 1]?.[j - 1] ?? 0) + cost;
-			const row = matrix[i];
-			if (row) row[j] = Math.min(deletion, insertion, substitution);
-		}
-	}
-
-	const distance = matrix[s1.length]?.[s2.length] ?? 0;
-	const maxLength = Math.max(s1.length, s2.length);
-
-	return 1 - distance / maxLength;
-};
