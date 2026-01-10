@@ -8,7 +8,9 @@ Common expressions organised by communicative function.
 /learn/phrases/:tab
 ```
 
-Tabs: survival, responses, requests, opinions, connectors, time, patterns
+Tabs: survival, responses, requests, opinions, connectors, time
+
+Note: "patterns" tab (μου αρέσει, με λένε) has moved to /reference/patterns
 
 ## Data Source
 
@@ -126,44 +128,8 @@ Essential for making plans, scheduling, and understanding when things happen.
 </section>
 </tab>
 
-## Tab: patterns
-
-<tab id="patterns" route="/learn/phrases/patterns">
-<purpose>Greek sentence patterns that differ from English</purpose>
-<hero greek="Μου αρέσει..." title="Understand Greek sentence patterns">
-Some Greek constructions work differently than English. Learn these patterns and you'll understand why "I like coffee" becomes "Coffee pleases me."
-</hero>
-
-<section name="Likes Construction" tags="likes-singular,likes-plural" source="verbs">
-<paradigm>
-Pattern: [Person] αρέσει (singular) / αρέσουν (plural)
-The thing liked is the SUBJECT, not the object.
-
-| Greek | English | Note |
-|-------|---------|------|
-| Μου αρέσει ο καφές | I like coffee | lit: Coffee pleases me |
-| Μου αρέσουν οι γάτες | I like cats | lit: Cats please me |
-</paradigm>
-<quick-test>
-Choose αρέσει (one thing) or αρέσουν (many things) based on what is liked.
-</quick-test>
-</section>
-
-<section name="Name Construction" tag="name-construction">
-<paradigm>
-Pattern: [Pronoun] λένε + name
-Literally "they call me..."
-
-| Greek | English |
-|-------|---------|
-| Με λένε... | My name is... |
-| Σε λένε...; | What's your name? |
-| Τον/Την λένε... | His/Her name is... |
-</paradigm>
-</section>
-</tab>
-
-Note: Question words have moved to /learn/vocabulary/reference.
+Note: Question words are in /learn/vocabulary/essentials.
+Note: Patterns (μου αρέσει, με λένε) have moved to /reference/patterns.
 
 ## Tag to Section Mapping
 
@@ -182,10 +148,9 @@ discourse-filler   → connectors   → Fillers & Connectors
 days-of-week       → time         → Days of the Week
 months             → time         → Months of the Year
 time-telling       → time         → Telling Time
-likes-singular     → patterns      → Likes Construction
-likes-plural       → patterns      → Likes Construction
-name-construction  → patterns      → Name Construction
 ```
+
+Note: likes-singular, likes-plural, name-construction tags → now in /reference/patterns
 
 ## Content Guidelines
 

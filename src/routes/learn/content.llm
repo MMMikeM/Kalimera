@@ -1,0 +1,37 @@
+# Learn Section Content
+
+Browse Greek content organised by topic: conversations, phrases, and vocabulary.
+
+## Route Structure
+
+```
+/learn                        Landing page with section cards
+/learn/conversations/:tab     Themed dialogues
+/learn/phrases/:tab           Common expressions
+/learn/vocabulary/:tab        Words by category
+```
+
+## Landing Page
+
+<route path="/learn">
+<purpose>Section hub - visual overview of all learning content areas</purpose>
+<file>src/routes/learn/index.tsx</file>
+<displays>
+- Header: "Learn" with subtitle "Browse Greek content by topic"
+- Section cards (3 items):
+  - Conversations: "Real situations with family and friends"
+  - Phrases: "Common expressions and useful phrases"
+  - Vocabulary: "Words organised by category"
+- Each card links to first tab of that section
+</displays>
+<note>
+Cards use colour-coded borders (olive, ocean, honey) matching section themes.
+</note>
+</route>
+
+## Subsections
+
+See individual content files for detailed documentation:
+- `conversations/content.llm` - Themed dialogues
+- `phrases/content.llm` - Common expressions
+- `vocabulary/content.llm` - Word categories

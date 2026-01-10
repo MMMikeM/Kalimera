@@ -9,7 +9,7 @@ Vocabulary browsing organised by word type and semantic category.
 /learn/vocabulary/verbs/:verbId  (detail page)
 ```
 
-Tabs: nouns, verbs, reference
+Tabs: nouns, verbs, essentials
 Note: "phrases" tab redirects to /learn/phrases
 
 ## Data Source
@@ -17,7 +17,7 @@ Note: "phrases" tab redirects to /learn/phrases
 DB queries via `getVocabularyData()` in `data.server.ts`:
 - `getVocabBySection("nouns")` - Noun categories
 - `getVocabBySection("verbs")` - Verb-related content
-- `getVocabBySection("reference")` - Numbers, colours, adverbs
+- `getVocabBySection("essentials")` - Numbers, colours, adverbs
 - `getVerbsWithPatterns()` - Verbs with conjugation family info
 
 ## Tab: nouns
@@ -179,11 +179,11 @@ DB tables: vocabulary, verbDetails, verbConjugations, verbImperatives
 </verb-detail-page>
 </tab>
 
-## Tab: reference
+## Tab: essentials
 
-<tab id="reference" route="/learn/vocabulary/reference">
-<purpose>Quick reference essentials - numbers, colours, time, position</purpose>
-<hero greek="ένα, δύο, τρία..." title="Quick reference essentials">
+<tab id="essentials" route="/learn/vocabulary/essentials">
+<purpose>Essential building blocks - numbers, colours, time, position</purpose>
+<hero greek="ένα, δύο, τρία..." title="Essential building blocks">
 Numbers, colours, times, and position words — building blocks for everyday Greek.
 </hero>
 
@@ -270,12 +270,12 @@ shopping          → nouns     → Shopping & Groceries
 household         → nouns     → Household & Home
 transport-vehicle → nouns     → Transportation
 summer            → nouns     → Summer & Beach
-time-of-day       → reference → Times of Day
-number            → reference → Numbers
-color             → reference → Colours
-frequency         → reference → Adverbs of Frequency
-position          → reference → Position & Direction
-question          → reference → Question Words
+time-of-day       → essentials → Times of Day
+number            → essentials → Numbers
+color             → essentials → Colours
+frequency         → essentials → Adverbs of Frequency
+position          → essentials → Position & Direction
+question          → essentials → Question Words
 ```
 
 ## Verb Pattern to Family Mapping
