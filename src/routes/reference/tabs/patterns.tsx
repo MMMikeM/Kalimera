@@ -1,10 +1,10 @@
 import { Heart, UserCircle, Blocks } from "lucide-react";
 import { Card } from "@/components/Card";
+import { MonoText } from "@/components/MonoText";
 import { QuickTest } from "@/components/QuickTest";
 import { TabHero } from "@/components/TabHero";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import type { PhrasesLoaderData, PhraseItem } from "../components/shared";
-import { PhraseItemDisplay } from "../components/shared";
+import type { PatternsData, PatternItem } from "../data.server";
 
 const ParadigmCard = ({
 	title,
@@ -18,7 +18,7 @@ const ParadigmCard = ({
 	subtitle: string;
 	icon: React.ReactNode;
 	patternNote: string;
-	columns: { title: string; items: PhraseItem[] }[];
+	columns: { title: string; items: PatternItem[] }[];
 	colorScheme: "ocean" | "terracotta" | "olive";
 }) => {
 	const colors = {
@@ -65,11 +65,15 @@ const ParadigmCard = ({
 						<h5 className={`font-semibold ${c.text} mb-3`}>{col.title}</h5>
 						<div className="space-y-2">
 							{col.items.map((item) => (
-								<PhraseItemDisplay
+								<div
 									key={item.id}
-									greek={item.greek}
-									english={item.english}
-								/>
+									className="flex items-baseline gap-2 p-2 bg-white rounded border border-stone-200"
+								>
+									<MonoText variant="greek" size="md">
+										{item.greek}
+									</MonoText>
+									<span className="text-stone-600 text-sm">{item.english}</span>
+								</div>
 							))}
 						</div>
 					</div>
@@ -79,8 +83,8 @@ const ParadigmCard = ({
 	);
 };
 
-export const PatternsTab = ({ data }: { data: PhrasesLoaderData }) => {
-	const { likesConstruction, nameConstruction } = data.patterns;
+export function PatternsTab({ data }: { data: PatternsData }) {
+	const { likesConstruction, nameConstruction } = data;
 
 	return (
 		<div className="space-y-6">
@@ -173,15 +177,19 @@ export const PatternsTab = ({ data }: { data: PhrasesLoaderData }) => {
 					</Alert>
 					<div className="grid md:grid-cols-2 gap-3">
 						{nameConstruction.map((name) => (
-							<PhraseItemDisplay
+							<div
 								key={name.id}
-								greek={name.greek}
-								english={name.english}
-							/>
+								className="flex items-baseline gap-2 p-2 bg-white rounded border border-stone-200"
+							>
+								<MonoText variant="greek" size="md">
+									{name.greek}
+								</MonoText>
+								<span className="text-stone-600 text-sm">{name.english}</span>
+							</div>
 						))}
 					</div>
 				</Card>
 			)}
 		</div>
 	);
-};
+}
