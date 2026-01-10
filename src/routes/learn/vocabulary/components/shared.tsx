@@ -9,7 +9,7 @@ export type {
 	VerbWithPattern,
 	VerbCategory,
 	VerbSubCategory,
-} from "./data.server";
+} from "../data.server";
 
 export const VocabItemDisplay: React.FC<{
 	greek: string;
