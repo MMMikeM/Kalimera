@@ -392,7 +392,7 @@ export const VERB_CONJUGATIONS: Record<string, VerbConjugation[]> = {
 };
 
 // Past and Future Tense Examples for Other Tenses page
-export const PAST_TENSE_EXAMPLES: VerbConjugation[] = [
+const PAST_TENSE_EXAMPLES: VerbConjugation[] = [
 	{ person: "εγώ", form: "έκανα", english: "I did/made" },
 	{ person: "εσύ", form: "έκανες", english: "you did/made" },
 	{ person: "αυτός/ή/ό", form: "έκανε", english: "he/she/it did/made" },
@@ -401,7 +401,7 @@ export const PAST_TENSE_EXAMPLES: VerbConjugation[] = [
 	{ person: "αυτοί/ές/ά", form: "έκαναν", english: "they did/made" },
 ];
 
-export const FUTURE_TENSE_EXAMPLES: VerbConjugation[] = [
+const FUTURE_TENSE_EXAMPLES: VerbConjugation[] = [
 	{ person: "εγώ", form: "θα κάνω", english: "I will do/make" },
 	{ person: "εσύ", form: "θα κάνεις", english: "you will do/make" },
 	{ person: "αυτός/ή/ό", form: "θα κάνει", english: "he/she/it will do/make" },

@@ -79,7 +79,7 @@ export const CASE_RECOGNITION = {
 };
 
 // Common mistakes and corrections
-export const COMMON_MISTAKES = [
+const COMMON_MISTAKES = [
 	{
 		wrong: "Θέλω ο καφές",
 		correct: "Θέλω τον καφέ",

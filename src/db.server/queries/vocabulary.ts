@@ -11,7 +11,7 @@ import { vocabulary, vocabularyTags, tags, tagSections } from "../schema";
  * Fetch vocabulary items filtered by tag slugs.
  * Used by vocabulary/, phrases/, and other routes that need tagged vocab.
  */
-export async function getVocabByTags(tagSlugs: readonly string[]) {
+async function getVocabByTags(tagSlugs: readonly string[]) {
 	return db
 		.select({
 			id: vocabulary.id,
@@ -247,7 +247,7 @@ type VerbSummary = {
  * Get all verbs that have full conjugation data.
  * Returns a summary list for navigation/selection purposes.
  */
-export async function getVerbsWithConjugationData(): Promise<VerbSummary[]> {
+async function getVerbsWithConjugationData(): Promise<VerbSummary[]> {
 	const results = await db.query.vocabulary.findMany({
 		where: { wordType: "verb" },
 		with: {

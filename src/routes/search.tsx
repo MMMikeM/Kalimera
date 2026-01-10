@@ -5,7 +5,7 @@ import { createFuzzySearch } from "@mmmike/mikrofuzz";
 import { MonoText } from "@/components/MonoText";
 import { SearchInput } from "@/components/SearchInput";
 import { TabHero } from "@/components/TabHero";
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/components/ui/Badge";
 import { cn } from "@/lib/utils";
 import {
 	searchVocabulary,
