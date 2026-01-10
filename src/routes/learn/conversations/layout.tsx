@@ -127,10 +127,10 @@ export const ScenarioCard: React.FC<{
 );
 
 const CONVERSATION_TABS: NavTab[] = [
-	{ id: "arriving", label: "Arriving", shortLabel: "Arrive", icon: <DoorOpen size={16} />, color: "ocean" },
-	{ id: "food", label: "Food", shortLabel: "Food", icon: <Utensils size={16} />, color: "olive" },
-	{ id: "smalltalk", label: "Talk", shortLabel: "Talk", icon: <MessageCircle size={16} />, color: "honey" },
-	{ id: "requests", label: "Requests", shortLabel: "Ask", icon: <Hand size={16} />, color: "terracotta" },
+	{ id: "arriving", label: "Arriving", icon: <DoorOpen size={16} />, color: "ocean" },
+	{ id: "food", label: "Food", icon: <Utensils size={16} />, color: "olive" },
+	{ id: "smalltalk", label: "Talk", icon: <MessageCircle size={16} />, color: "honey" },
+	{ id: "requests", label: "Requests", icon: <Hand size={16} />, color: "terracotta" },
 ];
 
 export default function ConversationsLayout() {

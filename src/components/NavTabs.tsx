@@ -78,7 +78,6 @@ type TabColor = "ocean" | "olive" | "honey" | "terracotta" | "neutral";
 interface NavTab {
 	id: string;
 	label: string;
-	shortLabel?: string;
 	icon?: ReactNode;
 	color?: TabColor;
 	badge?: number | string;
@@ -154,14 +153,7 @@ const NavTabs = ({ tabs, activeTab, buildUrl, className }: NavTabsProps) => {
 								className={`${trigger()} ${triggerStateVariants({ active: isActive, color })}`}
 							>
 								{tab.icon}
-								{tab.shortLabel ? (
-									<>
-										<span className="hidden sm:inline">{tab.label}</span>
-										<span className="sm:hidden">{tab.shortLabel}</span>
-									</>
-								) : (
-									<span>{tab.label}</span>
-								)}
+								<span>{tab.label}</span>
 								{tab.badge !== undefined && tab.badge !== 0 && (
 									<span className={badgeColorVariants({ color })}>
 										{typeof tab.badge === "number" && tab.badge > 99

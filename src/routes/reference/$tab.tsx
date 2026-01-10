@@ -21,13 +21,13 @@ const VALID_TABS = [
 type TabId = (typeof VALID_TABS)[number];
 
 const REFERENCE_TABS: NavTab[] = [
-	{ id: "cases", label: "Cases", shortLabel: "Case", color: "ocean" },
-	{ id: "pronouns", label: "Pronouns", shortLabel: "Pro", color: "ocean" },
-	{ id: "articles", label: "Articles", shortLabel: "Art", color: "olive" },
-	{ id: "adjectives", label: "Adjectives", shortLabel: "Adj", color: "honey" },
-	{ id: "prepositions", label: "Prepositions", shortLabel: "Prep", color: "terracotta" },
-	{ id: "verbs", label: "Verbs", shortLabel: "Verb", color: "ocean" },
-	{ id: "patterns", label: "Patterns", shortLabel: "Pat", color: "honey" },
+	{ id: "cases", label: "Cases", color: "ocean" },
+	{ id: "pronouns", label: "Pronouns", color: "ocean" },
+	{ id: "articles", label: "Articles", color: "olive" },
+	{ id: "adjectives", label: "Adjectives", color: "honey" },
+	{ id: "prepositions", label: "Prepositions", color: "terracotta" },
+	{ id: "verbs", label: "Verbs", color: "ocean" },
+	{ id: "patterns", label: "Patterns", color: "honey" },
 ];
 
 export async function loader({ params }: Route.LoaderArgs) {
