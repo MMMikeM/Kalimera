@@ -7,7 +7,7 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { TenseNavigator } from "@/components/TenseNavigator";
 import { ImperativeTable } from "@/components/ImperativeTable";
 import { StemInsight } from "@/components/StemInsight";
-import { Badge } from "@/components/ui/Badge";
+import { Badge } from "@/components/ui/badge";
 
 export { loader } from "./loader.server";
 
