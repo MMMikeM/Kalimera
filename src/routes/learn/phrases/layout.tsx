@@ -28,12 +28,12 @@ export function meta() {
 }
 
 const PHRASES_TABS: NavTab[] = [
-	{ id: "survival", label: "Survival", shortLabel: "Must", icon: <Sparkles size={16} />, color: "terracotta" },
-	{ id: "responses", label: "Responses", shortLabel: "Reply", icon: <MessageCircle size={16} />, color: "ocean" },
-	{ id: "requests", label: "Requests", shortLabel: "Ask", icon: <Hand size={16} />, color: "olive" },
-	{ id: "opinions", label: "Opinions", shortLabel: "Feel", icon: <Heart size={16} />, color: "terracotta" },
-	{ id: "connectors", label: "Connectors", shortLabel: "Link", icon: <Link2 size={16} />, color: "honey" },
-	{ id: "time", label: "Time", shortLabel: "Time", icon: <Clock size={16} />, color: "ocean" },
+	{ id: "survival", label: "Survival", icon: <Sparkles size={16} />, color: "terracotta" },
+	{ id: "responses", label: "Responses", icon: <MessageCircle size={16} />, color: "ocean" },
+	{ id: "requests", label: "Requests", icon: <Hand size={16} />, color: "olive" },
+	{ id: "opinions", label: "Opinions", icon: <Heart size={16} />, color: "terracotta" },
+	{ id: "connectors", label: "Connectors", icon: <Link2 size={16} />, color: "honey" },
+	{ id: "time", label: "Time", icon: <Clock size={16} />, color: "ocean" },
 ];
 
 export default function PhrasesLayout({ loaderData }: Route.ComponentProps) {

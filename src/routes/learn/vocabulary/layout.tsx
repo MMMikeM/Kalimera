@@ -20,9 +20,9 @@ export function meta() {
 }
 
 const VOCABULARY_TABS: NavTab[] = [
-	{ id: "nouns", label: "Nouns", shortLabel: "Nouns", icon: <Package size={16} />, color: "ocean" },
-	{ id: "verbs", label: "Verbs", shortLabel: "Verbs", icon: <Languages size={16} />, color: "honey" },
-	{ id: "essentials", label: "Essentials", shortLabel: "Ess", icon: <BookOpen size={16} />, color: "olive" },
+	{ id: "nouns", label: "Nouns", icon: <Package size={16} />, color: "ocean" },
+	{ id: "verbs", label: "Verbs", icon: <Languages size={16} />, color: "honey" },
+	{ id: "essentials", label: "Essentials", icon: <BookOpen size={16} />, color: "olive" },
 ];
 
 export default function VocabularyLayout({ loaderData }: Route.ComponentProps) {

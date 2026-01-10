@@ -86,8 +86,8 @@ export const UserRequiredMessage = () => (
 );
 
 const PRACTICE_TABS: NavTab[] = [
-	{ id: "speed", label: "Speed Drill", shortLabel: "Speed", icon: <Zap size={16} />, color: "terracotta" },
-	{ id: "review", label: "Review", shortLabel: "Review", icon: <Clock size={16} />, color: "ocean" },
+	{ id: "speed", label: "Speed Drill", icon: <Zap size={16} />, color: "terracotta" },
+	{ id: "review", label: "Review", icon: <Clock size={16} />, color: "ocean" },
 ];
 
 export default function PracticeLayout({ loaderData }: Route.ComponentProps) {
