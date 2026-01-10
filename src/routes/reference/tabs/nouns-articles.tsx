@@ -1,13 +1,16 @@
 import { BookOpen } from "lucide-react";
-import { TabHero } from "@/components/TabHero";
 import { PracticeCTA } from "@/components/PracticeCTA";
-import { AgreementSection, MovableNuSection } from "../components/agreement-section";
+import { TabHero } from "@/components/TabHero";
+import {
+	AgreementSection,
+	MovableNuSection,
+} from "../components/agreement-section";
 
 export function NounsArticlesTab() {
 	return (
 		<div className="space-y-12">
 			<TabHero
-				title="Articles and nouns work together"
+				title="Articles and nouns"
 				greekPhrase="ο, η, το → τον, την, το"
 				colorScheme="olive"
 				icon={<BookOpen size={18} />}

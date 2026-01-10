@@ -1,12 +1,12 @@
+import { Blocks, Heart, HelpCircle, UserCircle } from "lucide-react";
 import type React from "react";
 import { useOutletContext } from "react-router";
-import { Heart, UserCircle, HelpCircle, Blocks } from "lucide-react";
 import { Card } from "@/components/Card";
-import { TabHero } from "@/components/TabHero";
 import { QuickTest } from "@/components/QuickTest";
+import { TabHero } from "@/components/TabHero";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import type { PhrasesLoaderData, PhraseItem } from "../components/shared";
-import { PhraseSection, PhraseItemDisplay } from "../components/shared";
+import type { PhraseItem, PhrasesLoaderData } from "../components/shared";
+import { PhraseItemDisplay, PhraseSection } from "../components/shared";
 
 const ParadigmCard: React.FC<{
 	title: string;
@@ -82,7 +82,7 @@ export function ConstructionsTab() {
 	return (
 		<div className="space-y-6">
 			<TabHero
-				title="Understand Greek sentence patterns"
+				title="Greek sentence patterns"
 				greekPhrase="Μου αρέσει..."
 				colorScheme="honey"
 				icon={<Blocks size={18} />}
