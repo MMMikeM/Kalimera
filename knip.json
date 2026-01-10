@@ -2,12 +2,13 @@
 	"$schema": "https://unpkg.com/knip@5/schema.json",
 	"entry": [
 		"src/main.tsx",
-		"src/root.tsx",
 		"src/routes/**/*.tsx",
 		"src/scripts/*.ts",
-		"src/entry.worker.ts"
+		"src/entry.worker.ts",
+		"service-worker/sw.ts",
+		"scripts/*.ts"
 	],
-	"project": ["src/**/*.{ts,tsx}"],
+	"project": ["src/**/*.{ts,tsx}", "service-worker/**/*.ts", "scripts/**/*.ts"],
 	"ignore": [
 		"src/routes/**/+types/**",
 		"src/db/migrations/**",
@@ -18,7 +19,8 @@
 	"ignoreDependencies": [
 		"@vitejs/plugin-react",
 		"@react-router/cloudflare",
-		"@react-router/node"
+		"@react-router/node",
+		"tw-animate-css"
 	],
 	"ignoreExportsUsedInFile": true
 }
