@@ -52,6 +52,8 @@ export interface ParadigmTableProps {
 	endingClassName?: string;
 	showHeaders?: boolean;
 	fadeStem?: boolean;
+	/** Compact mode: two-column layout with inline pronouns, no person labels */
+	compact?: boolean;
 }
 
 const PERSON_LABELS = ["1st", "2nd", "3rd"];
@@ -60,6 +62,11 @@ const PERSON_HINTS = [
 	["you", "you"],
 	["s/he", "they"],
 ];
+
+const COMPACT_PRONOUNS = {
+	sg: ["I", "you", "s/he"],
+	pl: ["we", "you (pl)", "they"],
+};
 
 const FormCell: React.FC<{
 	form: VerbForm | string;
@@ -94,6 +101,40 @@ const FormCell: React.FC<{
 	</td>
 );
 
+const CompactFormRow: React.FC<{
+	form: VerbForm | string;
+	pronoun: string;
+	formClassName?: string;
+	endingClassName?: string;
+	fadeStem?: boolean;
+	isLast?: boolean;
+}> = ({
+	form,
+	pronoun,
+	formClassName = "text-stone-800 font-semibold",
+	endingClassName = "text-terracotta font-bold",
+	fadeStem = true,
+	isLast = false,
+}) => (
+	<div
+		className={`flex items-center justify-between py-2 px-1 ${!isLast ? "border-b border-stone-200" : ""}`}
+	>
+		<span className="font-mono text-base">
+			{typeof form === "string" ? (
+				<span className={formClassName}>{form}</span>
+			) : (
+				<>
+					<span className={fadeStem ? "text-stone-600" : "text-stone-700"}>
+						{form.stem}
+					</span>
+					<span className={endingClassName}>{form.ending}</span>
+				</>
+			)}
+		</span>
+		<span className="text-sm text-stone-500">{pronoun}</span>
+	</div>
+);
+
 export const ParadigmTable: React.FC<ParadigmTableProps> = ({
 	stem,
 	meaning,
@@ -104,6 +145,7 @@ export const ParadigmTable: React.FC<ParadigmTableProps> = ({
 	endingClassName,
 	showHeaders = true,
 	fadeStem = true,
+	compact = false,
 }) => {
 	const formRows = [
 		{
@@ -122,6 +164,53 @@ export const ParadigmTable: React.FC<ParadigmTableProps> = ({
 			positions: ["bottomLeft", "bottomRight"] as const,
 		},
 	];
+
+	const singularForms = [forms.sg1, forms.sg2, forms.sg3];
+	const pluralForms = [forms.pl1, forms.pl2, forms.pl3];
+
+	if (compact) {
+		return (
+			<div className={className}>
+				<div className="mb-3">
+					<span className="font-mono text-lg font-semibold text-stone-800">
+						{infinitive || (stem ? `${stem}-` : "")}
+					</span>
+					<span className="text-stone-600 ml-2 text-sm">({meaning})</span>
+				</div>
+
+				<div className="grid grid-cols-2 gap-3">
+					<div>
+						<div className="text-xs text-stone-500 mb-1 px-1">Singular</div>
+						{singularForms.map((form, idx) => (
+							<CompactFormRow
+								key={COMPACT_PRONOUNS.sg[idx]}
+								form={form}
+								pronoun={COMPACT_PRONOUNS.sg[idx] ?? ""}
+								formClassName={formClassName}
+								endingClassName={endingClassName}
+								fadeStem={fadeStem}
+								isLast={idx === 2}
+							/>
+						))}
+					</div>
+					<div>
+						<div className="text-xs text-stone-500 mb-1 px-1">Plural</div>
+						{pluralForms.map((form, idx) => (
+							<CompactFormRow
+								key={COMPACT_PRONOUNS.pl[idx]}
+								form={form}
+								pronoun={COMPACT_PRONOUNS.pl[idx] ?? ""}
+								formClassName={formClassName}
+								endingClassName={endingClassName}
+								fadeStem={fadeStem}
+								isLast={idx === 2}
+							/>
+						))}
+					</div>
+				</div>
+			</div>
+		);
+	}
 
 	return (
 		<div className={className}>
