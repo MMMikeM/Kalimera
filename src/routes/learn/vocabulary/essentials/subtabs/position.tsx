@@ -1,15 +1,14 @@
 import { Link } from "react-router";
-import { MapPin, ChevronLeft } from "lucide-react";
-import { Card } from "@/components/Card";
+import { ChevronLeft } from "lucide-react";
+import { ContentSection } from "@/components/ContentSection";
 import { MonoText } from "@/components/MonoText";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 import type { EssentialsLoaderData } from "../data.server";
 
 interface Props {
 	data: EssentialsLoaderData;
 }
 
-const POSITION_PAIRS = [
+const POSITION_PAIRS: Array<[string, string]> = [
 	["αριστερά", "δεξιά"],
 	["πάνω", "κάτω"],
 	["μέσα", "έξω"],
@@ -18,26 +17,27 @@ const POSITION_PAIRS = [
 	["κοντά", "μακριά"],
 ];
 
+const DIRECTION_EXAMPLES = [
+	{ greek: "στρίψε αριστερά", english: "turn left" },
+	{ greek: "στρίψε δεξιά", english: "turn right" },
+	{ greek: "πήγαινε ευθεία", english: "go straight" },
+	{ greek: "γύρισε πίσω", english: "turn around" },
+	{ greek: "έλα μέσα", english: "come inside" },
+];
+
+const RELATIVE_POSITION_EXAMPLES = [
+	{ greek: "μπροστά από την τράπεζα", english: "in front of the bank" },
+	{ greek: "πίσω από το σούπερ μάρκετ", english: "behind the supermarket" },
+	{ greek: "κοντά στο σταθμό", english: "near the station" },
+	{ greek: "μακριά από εδώ", english: "far from here" },
+	{ greek: "ανάμεσα στα δέντρα", english: "between the trees" },
+	{ greek: "απέναντι από την εκκλησία", english: "across from the church" },
+];
+
 export function PositionSubtab({ data }: Props) {
-	const pairedAdverbs: Array<{
-		left: (typeof data.positionAdverbs)[0] | null;
-		right: (typeof data.positionAdverbs)[0] | null;
-	}> = [];
-	const usedIds = new Set<number>();
-
-	for (const [leftGreek, rightGreek] of POSITION_PAIRS) {
-		const left =
-			data.positionAdverbs.find((a) => a.greek === leftGreek) || null;
-		const right =
-			data.positionAdverbs.find((a) => a.greek === rightGreek) || null;
-		if (left || right) {
-			pairedAdverbs.push({ left, right });
-			if (left) usedIds.add(left.id);
-			if (right) usedIds.add(right.id);
-		}
-	}
-
-	const unpaired = data.positionAdverbs.filter((a) => !usedIds.has(a.id));
+	const adverbByGreek = new Map(
+		data.positionAdverbs.map((a) => [a.greek, a]),
+	);
 
 	return (
 		<div className="space-y-6">
@@ -49,86 +49,159 @@ export function PositionSubtab({ data }: Props) {
 				Essentials
 			</Link>
 
-			<Card
-				variant="bordered"
-				padding="lg"
-				className="bg-ocean-50 border-ocean-300"
+			{/* Opposites Grid */}
+			<ContentSection
+				title="Opposites"
+				subtitle="Position words come in pairs"
+				colorScheme="ocean"
 			>
-				<div className="flex items-center gap-3 mb-4">
-					<div className="p-2 rounded-lg bg-ocean-200">
-						<MapPin size={20} className="text-ocean-text" />
-					</div>
-					<h3 className="text-lg font-bold text-ocean-text">
-						Position & Direction
-					</h3>
+				<div className="divide-y divide-stone-200/60">
+					{POSITION_PAIRS.map(([leftGreek, rightGreek]) => {
+						const left = adverbByGreek.get(leftGreek);
+						const right = adverbByGreek.get(rightGreek);
+
+						if (!left && !right) return null;
+
+						return (
+							<div
+								key={`${leftGreek}-${rightGreek}`}
+								className="grid grid-cols-2 divide-x divide-stone-200/60"
+							>
+								{/* Left column */}
+								<div className="py-2.5 px-3">
+									{left && (
+										<>
+											<MonoText variant="greek">{left.greek}</MonoText>
+											<div className="text-xs text-stone-500">
+												{left.english}
+											</div>
+										</>
+									)}
+								</div>
+
+								{/* Right column */}
+								<div className="py-2.5 px-3">
+									{right && (
+										<>
+											<MonoText variant="greek">{right.greek}</MonoText>
+											<div className="text-xs text-stone-500">
+												{right.english}
+											</div>
+										</>
+									)}
+								</div>
+							</div>
+						);
+					})}
 				</div>
 
-				<Alert variant="info" className="mb-4">
-					<AlertDescription>
-						Essential for giving and understanding directions. Opposites are
-						grouped together.
-					</AlertDescription>
-				</Alert>
+				<div className="mx-3 mt-3 p-2.5 bg-ocean-100 rounded-lg border border-ocean-200">
+					<p className="text-sm text-ocean-text font-medium mb-2">
+						Using opposites with verbs
+					</p>
+					<div className="space-y-1.5 text-sm">
+						<div>
+							<MonoText variant="greek">μπες μέσα</MonoText>
+							<span className="text-stone-500 text-xs ml-2">go inside</span>
+						</div>
+						<div>
+							<MonoText variant="greek">βγες έξω</MonoText>
+							<span className="text-stone-500 text-xs ml-2">go outside</span>
+						</div>
+						<div>
+							<MonoText variant="greek">ανέβα πάνω</MonoText>
+							<span className="text-stone-500 text-xs ml-2">go up</span>
+						</div>
+						<div>
+							<MonoText variant="greek">κατέβα κάτω</MonoText>
+							<span className="text-stone-500 text-xs ml-2">go down</span>
+						</div>
+					</div>
+					<p className="text-xs text-stone-500 mt-2 pt-1.5 border-t border-ocean-200/50">
+						Greek pairs direction verbs with position words for emphasis
+					</p>
+				</div>
+			</ContentSection>
 
-				<div className="space-y-2">
-					{pairedAdverbs.map((pair) => (
-						<div
-							key={`${pair.left?.id ?? "empty"}-${pair.right?.id ?? "empty"}`}
-							className="grid grid-cols-2 gap-4 p-3 bg-white rounded-lg border border-ocean-200"
-						>
-							{pair.left ? (
-								<div className="flex items-baseline gap-2">
-									<MonoText variant="greek" size="md">
-										{pair.left.greek}
-									</MonoText>
-									<span className="text-stone-600 text-sm">
-										{pair.left.english}
-									</span>
-								</div>
-							) : (
-								<div />
-							)}
-							{pair.right ? (
-								<div className="flex items-baseline gap-2">
-									<span className="text-stone-400 mr-1">↔</span>
-									<MonoText variant="greek" size="md">
-										{pair.right.greek}
-									</MonoText>
-									<span className="text-stone-600 text-sm">
-										{pair.right.english}
-									</span>
-								</div>
-							) : (
-								<div />
-							)}
+			{/* Giving Directions */}
+			<ContentSection
+				title="Giving Directions"
+				subtitle="Commands for navigation"
+				colorScheme="terracotta"
+			>
+				<div className="divide-y divide-stone-200/60">
+					{DIRECTION_EXAMPLES.map((example) => (
+						<div key={example.greek} className="py-2.5 px-3">
+							<MonoText variant="greek">{example.greek}</MonoText>
+							<div className="text-xs text-stone-500">{example.english}</div>
 						</div>
 					))}
-					{unpaired.length > 0 && (
-						<div className="grid md:grid-cols-3 gap-3 mt-4 pt-4 border-t border-ocean-200">
-							{unpaired.map((adverb) => (
-								<div key={adverb.id} className="flex items-baseline gap-2">
-									<MonoText variant="greek" size="md">
-										{adverb.greek}
-									</MonoText>
-									<span className="text-stone-600 text-sm">
-										{adverb.english}
-									</span>
-								</div>
-							))}
-						</div>
-					)}
 				</div>
 
-				<div className="mt-6 p-3 bg-ocean-100 rounded-lg border border-ocean-200">
-					<p className="text-sm text-ocean-text font-medium mb-1">
-						Usage example
+				<div className="mx-3 mt-3 p-2.5 bg-terracotta-100 rounded-lg border border-terracotta-200">
+					<p className="text-sm text-terracotta-text font-medium mb-2">
+						Key verbs for directions
 					</p>
-					<p className="text-sm">
-						<MonoText variant="greek">στρίψε αριστερά</MonoText>
-						<span className="text-stone-600 ml-2">(turn left)</span>
+					<div className="space-y-1.5 text-sm">
+						<div>
+							<MonoText variant="greek">στρίψε</MonoText>
+							<span className="text-stone-500 text-xs ml-2">turn (command)</span>
+						</div>
+						<div>
+							<MonoText variant="greek">πήγαινε</MonoText>
+							<span className="text-stone-500 text-xs ml-2">go (command)</span>
+						</div>
+						<div>
+							<MonoText variant="greek">έλα</MonoText>
+							<span className="text-stone-500 text-xs ml-2">come (command)</span>
+						</div>
+					</div>
+				</div>
+			</ContentSection>
+
+			{/* Relative Position */}
+			<ContentSection
+				title="Relative Position"
+				subtitle="Describing where things are"
+				colorScheme="olive"
+			>
+				<div className="divide-y divide-stone-200/60">
+					{RELATIVE_POSITION_EXAMPLES.map((example) => (
+						<div key={example.greek} className="py-2.5 px-3">
+							<MonoText variant="greek">{example.greek}</MonoText>
+							<div className="text-xs text-stone-500">{example.english}</div>
+						</div>
+					))}
+				</div>
+
+				<div className="mx-3 mt-3 p-2.5 bg-olive-100 rounded-lg border border-olive-200">
+					<p className="text-sm text-olive-text font-medium mb-2">
+						Preposition patterns
+					</p>
+					<div className="space-y-1.5 text-sm">
+						<div>
+							<MonoText variant="greek">μπροστά / πίσω / μακριά</MonoText>
+							<span className="text-stone-500 text-xs ml-2">+ από</span>
+						</div>
+						<div>
+							<MonoText variant="greek">κοντά / μέσα</MonoText>
+							<span className="text-stone-500 text-xs ml-2">+ σε</span>
+						</div>
+						<div>
+							<MonoText variant="greek">ανάμεσα</MonoText>
+							<span className="text-stone-500 text-xs ml-2">+ σε</span>
+						</div>
+						<div>
+							<MonoText variant="greek">απέναντι</MonoText>
+							<span className="text-stone-500 text-xs ml-2">+ από</span>
+						</div>
+					</div>
+					<p className="text-xs text-stone-500 mt-2 pt-1.5 border-t border-olive-200/50">
+						<MonoText className="text-stone-700">κοντά στο</MonoText> = κοντά +
+						σε + το (contracted)
 					</p>
 				</div>
-			</Card>
+			</ContentSection>
 		</div>
 	);
 }
