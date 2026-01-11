@@ -1,57 +1,66 @@
 import { Link } from "react-router";
-import { Hash, ChevronLeft } from "lucide-react";
-import { Card } from "@/components/Card";
+import { ChevronLeft } from "lucide-react";
+import { ContentSection } from "@/components/ContentSection";
 import { MonoText } from "@/components/MonoText";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 import type { EssentialsLoaderData } from "../data.server";
 
 interface Props {
 	data: EssentialsLoaderData;
 }
 
-function highlightPattern(greek: string, numericValue: number | undefined) {
-	if (numericValue === undefined) return <MonoText>{greek}</MonoText>;
+const UNIT_TEN_PAIRS: Array<{
+	unit: number;
+	ten: number;
+	connection?: string;
+}> = [
+	{ unit: 1, ten: 10 },
+	{ unit: 2, ten: 20 },
+	{ unit: 3, ten: 30, connection: "τρι-" },
+	{ unit: 4, ten: 40 },
+	{ unit: 5, ten: 50, connection: "πεν-" },
+	{ unit: 6, ten: 60, connection: "εξ-" },
+	{ unit: 7, ten: 70 },
+	{ unit: 8, ten: 80 },
+	{ unit: 9, ten: 90 },
+];
 
-	if (numericValue >= 13 && numericValue <= 19) {
-		const prefix = "δεκα";
-		if (greek.startsWith(prefix)) {
-			return (
-				<MonoText>
-					<span className="text-ocean-600 font-semibold">{prefix}</span>
-					{greek.slice(prefix.length)}
-				</MonoText>
-			);
-		}
+function highlightTeenPattern(greek: string) {
+	// δέκα (10) - the whole word is "ten"
+	if (greek === "δέκα") {
+		return <span className="text-ocean-600 font-semibold">{greek}</span>;
 	}
-
-	if (numericValue >= 30 && numericValue <= 90 && numericValue % 10 === 0) {
-		const suffix = "ντα";
-		if (greek.endsWith(suffix)) {
-			return (
-				<MonoText>
-					{greek.slice(0, -suffix.length)}
-					<span className="text-ocean-600 font-semibold">{suffix}</span>
-				</MonoText>
-			);
-		}
+	// δώδεκα (12) - "two-ten", highlight δεκα at end
+	if (greek === "δώδεκα") {
+		return (
+			<>
+				δώ<span className="text-ocean-600 font-semibold">δεκα</span>
+			</>
+		);
 	}
-
-	return <MonoText>{greek}</MonoText>;
+	// δεκα* (13-19) - highlight prefix
+	const prefix = "δεκα";
+	if (greek.startsWith(prefix)) {
+		return (
+			<>
+				<span className="text-ocean-600 font-semibold">{prefix}</span>
+				{greek.slice(prefix.length)}
+			</>
+		);
+	}
+	return greek;
 }
 
 export function NumbersSubtab({ data }: Props) {
-	const units = data.numbers.filter(
-		(n) =>
-			n.numericValue !== undefined && n.numericValue >= 0 && n.numericValue <= 9,
+	const numberByValue = new Map(
+		data.numbers.map((n) => [n.numericValue, n]),
 	);
+
+	const zero = numberByValue.get(0);
 	const teens = data.numbers.filter(
 		(n) =>
 			n.numericValue !== undefined &&
 			n.numericValue >= 10 &&
 			n.numericValue <= 19,
-	);
-	const tens = data.numbers.filter(
-		(n) => n.numericValue !== undefined && n.numericValue >= 20,
 	);
 
 	return (
@@ -64,90 +73,281 @@ export function NumbersSubtab({ data }: Props) {
 				Essentials
 			</Link>
 
-			<Card
-				variant="bordered"
-				padding="lg"
-				className="bg-ocean-50 border-ocean-300"
+			{/* Units + Tens Paired Layout */}
+			<ContentSection
+				title="Units & Tens"
+				subtitle="Building blocks — see how tens derive from units"
+				colorScheme="ocean"
 			>
-				<div className="flex items-center gap-3 mb-4">
-					<div className="p-2 rounded-lg bg-ocean-200">
-						<Hash size={20} className="text-ocean-text" />
+				<div className="divide-y divide-stone-200/60">
+					{/* Header row */}
+					<div className="grid grid-cols-[1fr_1fr] gap-4 px-3 py-2 bg-ocean-100/50">
+						<span className="text-xs font-medium text-ocean-text uppercase tracking-wide">
+							Units
+						</span>
+						<span className="text-xs font-medium text-ocean-text uppercase tracking-wide">
+							Tens
+						</span>
 					</div>
-					<div>
-						<h3 className="text-lg font-bold text-ocean-text">Numbers</h3>
-						<p className="text-sm text-stone-600">Αριθμοί</p>
-					</div>
+
+					{/* Zero special case */}
+					{zero && (
+						<div className="grid grid-cols-[1fr_1fr] gap-4 px-3 py-2.5">
+							<div>
+								<MonoText variant="greek">{zero.greek}</MonoText>
+								<div className="text-xs text-stone-500">{zero.english}</div>
+							</div>
+							<div className="text-stone-300 text-sm italic">—</div>
+						</div>
+					)}
+
+					{/* Paired rows */}
+					{UNIT_TEN_PAIRS.map(({ unit, ten, connection }) => {
+						const unitNum = numberByValue.get(unit);
+						const tenNum = numberByValue.get(ten);
+
+						return (
+							<div
+								key={unit}
+								className="grid grid-cols-[1fr_1fr] gap-4 px-3 py-2.5"
+							>
+								{/* Unit column */}
+								<div>
+									{unitNum ? (
+										<>
+											<MonoText variant="greek">{unitNum.greek}</MonoText>
+											<div className="text-xs text-stone-500">
+												{unitNum.english}
+											</div>
+										</>
+									) : (
+										<span className="text-stone-300">—</span>
+									)}
+								</div>
+
+								{/* Tens column */}
+								<div className="flex items-start gap-2">
+									<div className="flex-1">
+										{tenNum ? (
+											<>
+												<MonoText variant="greek">{tenNum.greek}</MonoText>
+												<div className="text-xs text-stone-500">
+													{tenNum.english}
+												</div>
+											</>
+										) : (
+											<span className="text-stone-300">—</span>
+										)}
+									</div>
+									{connection && (
+										<span className="text-xs text-ocean-600 bg-ocean-100 px-1.5 py-0.5 rounded font-medium mt-0.5">
+											{connection}
+										</span>
+									)}
+								</div>
+							</div>
+						);
+					})}
 				</div>
+			</ContentSection>
 
-				<Alert variant="info" className="mb-4">
-					<AlertDescription>
-						<strong>Pattern:</strong> For 21-99, combine tens + units: τριάντα +
-						δύο = τριάντα δύο (32)
-					</AlertDescription>
-				</Alert>
-
-				<div className="grid md:grid-cols-3 gap-6">
-					<div>
-						<h5 className="font-semibold text-ocean-text mb-3">Units (0-9)</h5>
-						<div className="space-y-2">
-							{units.map((number) => (
-								<div key={number.id} className="flex items-baseline gap-2">
-									{highlightPattern(number.greek, number.numericValue)}
-									<span className="text-stone-600 text-sm">
-										{number.english}
-									</span>
-								</div>
-							))}
+			{/* Teens Section */}
+			<ContentSection
+				title="Teens"
+				subtitle="The δεκα- (ten) family: 10-19"
+				colorScheme="honey"
+			>
+				<div className="divide-y divide-stone-200/60">
+					{teens.map((number) => (
+						<div
+							key={number.id}
+							className="grid grid-cols-[3fr_2fr] items-center gap-x-3 py-2.5 px-3"
+						>
+							<MonoText variant="greek">
+								{highlightTeenPattern(number.greek)}
+							</MonoText>
+							<span className="text-stone-500 text-sm">{number.english}</span>
 						</div>
-					</div>
-					<div>
-						<h5 className="font-semibold text-ocean-text mb-3">
-							Teens (the <span className="text-ocean-600">δεκα-</span> family)
-						</h5>
-						<div className="space-y-2">
-							{teens.map((number) => (
-								<div key={number.id} className="flex items-baseline gap-2">
-									{highlightPattern(number.greek, number.numericValue)}
-									<span className="text-stone-600 text-sm">
-										{number.english}
-									</span>
-								</div>
-							))}
-						</div>
-					</div>
-					<div>
-						<h5 className="font-semibold text-ocean-text mb-3">
-							Tens (the <span className="text-ocean-600">-ντα</span> pattern)
-						</h5>
-						<div className="space-y-2">
-							{tens.map((number) => (
-								<div key={number.id} className="flex items-baseline gap-2">
-									{highlightPattern(number.greek, number.numericValue)}
-									<span className="text-stone-600 text-sm">
-										{number.english}
-									</span>
-								</div>
-							))}
-						</div>
-					</div>
+					))}
 				</div>
-
-				<div className="mt-6 p-3 bg-ocean-100 rounded-lg border border-ocean-200">
-					<p className="text-sm text-ocean-text font-medium mb-1">
-						Usage examples
+				<div className="mx-3 mt-3 p-2.5 bg-honey-100 rounded-lg border border-honey-200">
+					<p className="text-sm text-honey-text font-medium">
+						Pattern: <MonoText className="text-honey-text">δεκα</MonoText> + unit
 					</p>
-					<div className="space-y-1 text-sm">
-						<p>
-							<MonoText variant="greek">στις τρεις</MonoText>
-							<span className="text-stone-600 ml-2">(at three o'clock)</span>
-						</p>
-						<p>
-							<MonoText variant="greek">πέντε ευρώ</MonoText>
-							<span className="text-stone-600 ml-2">(five euros)</span>
-						</p>
+					<p className="text-xs text-stone-500 mt-1">
+						Exception: 11, 12 are irregular (έντεκα, δώδεκα)
+					</p>
+				</div>
+			</ContentSection>
+
+			{/* Combining Section */}
+			<ContentSection
+				title="Combining"
+				subtitle="Building 21-99"
+				colorScheme="olive"
+			>
+				<div className="px-3 pt-3 pb-1 space-y-3">
+					<p className="text-sm text-stone-600">
+						Combine tens + units as separate words:
+					</p>
+
+					<div className="space-y-2">
+						<div>
+							<MonoText variant="greek">
+								τριάντα + δύο = <span className="font-semibold">τριάντα δύο</span>
+							</MonoText>
+							<div className="text-xs text-stone-500">thirty-two</div>
+						</div>
+						<div>
+							<MonoText variant="greek">
+								πενήντα + πέντε = <span className="font-semibold">πενήντα πέντε</span>
+							</MonoText>
+							<div className="text-xs text-stone-500">fifty-five</div>
+						</div>
+						<div>
+							<MonoText variant="greek">
+								ενενήντα + εννέα = <span className="font-semibold">ενενήντα εννέα</span>
+							</MonoText>
+							<div className="text-xs text-stone-500">ninety-nine</div>
+						</div>
 					</div>
 				</div>
-			</Card>
+			</ContentSection>
+
+			{/* Usage Examples */}
+			<ContentSection
+				title="Usage"
+				subtitle="Numbers in context"
+				colorScheme="terracotta"
+			>
+				<div className="px-3 pt-3 pb-1 space-y-4">
+					{/* Telling Time */}
+					<div>
+						<p className="text-xs font-medium text-terracotta-text uppercase tracking-wide mb-2">
+							Telling Time
+						</p>
+						<div className="space-y-2">
+							<div>
+								<MonoText variant="greek">στις τρεις</MonoText>
+								<div className="text-xs text-stone-500">at three o'clock</div>
+							</div>
+							<div>
+								<MonoText variant="greek">στις δέκα και μισή</MonoText>
+								<div className="text-xs text-stone-500">at half past ten</div>
+							</div>
+						</div>
+						<p className="text-xs text-stone-500 mt-1.5 pt-1.5 border-t border-terracotta-200/50">
+							<MonoText className="text-stone-700">στις</MonoText> = at (uses
+							feminine accusative)
+						</p>
+					</div>
+
+					{/* Money & Quantities */}
+					<div>
+						<p className="text-xs font-medium text-terracotta-text uppercase tracking-wide mb-2">
+							Money & Quantities
+						</p>
+						<div className="space-y-2">
+							<div>
+								<MonoText variant="greek">πέντε ευρώ</MonoText>
+								<div className="text-xs text-stone-500">five euros</div>
+							</div>
+							<div>
+								<MonoText variant="greek">δύο κιλά</MonoText>
+								<div className="text-xs text-stone-500">two kilos</div>
+							</div>
+							<div>
+								<MonoText variant="greek">τρία μπουκάλια νερό</MonoText>
+								<div className="text-xs text-stone-500">three bottles of water</div>
+							</div>
+						</div>
+					</div>
+
+					{/* Talking About Age */}
+					<div>
+						<p className="text-xs font-medium text-terracotta-text uppercase tracking-wide mb-2">
+							Talking About Age
+						</p>
+						<div className="space-y-2">
+							<div>
+								<MonoText variant="greek">είμαι τριάντα δύο χρονών</MonoText>
+								<div className="text-xs text-stone-500">I'm 32 years old</div>
+							</div>
+							<div>
+								<MonoText variant="greek">πόσων χρονών είσαι;</MonoText>
+								<div className="text-xs text-stone-500">How old are you?</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				{/* Gender Agreement Warning */}
+				<div className="mx-3 mt-3 mb-2 p-2.5 bg-terracotta-100 rounded-lg border border-terracotta-200">
+					<p className="text-sm text-terracotta-text font-medium mb-2">
+						Gender Agreement: 1, 3, 4 change form
+					</p>
+
+					{/* Gender grid */}
+					<div className="grid grid-cols-4 gap-1 text-sm mb-3">
+						<div className="text-xs text-stone-500" />
+						<div className="text-xs text-stone-500 text-center">masc.</div>
+						<div className="text-xs text-stone-500 text-center">fem.</div>
+						<div className="text-xs text-stone-500 text-center">neut.</div>
+
+						<div className="text-xs text-stone-600 font-medium">1</div>
+						<div className="text-center">
+							<MonoText size="sm">ένας</MonoText>
+						</div>
+						<div className="text-center">
+							<MonoText size="sm">μία</MonoText>
+						</div>
+						<div className="text-center">
+							<MonoText size="sm">ένα</MonoText>
+						</div>
+
+						<div className="text-xs text-stone-600 font-medium">3</div>
+						<div className="text-center">
+							<MonoText size="sm">τρεις</MonoText>
+						</div>
+						<div className="text-center">
+							<MonoText size="sm">τρεις</MonoText>
+						</div>
+						<div className="text-center">
+							<MonoText size="sm">τρία</MonoText>
+						</div>
+
+						<div className="text-xs text-stone-600 font-medium">4</div>
+						<div className="text-center">
+							<MonoText size="sm">τέσσερις</MonoText>
+						</div>
+						<div className="text-center">
+							<MonoText size="sm">τέσσερις</MonoText>
+						</div>
+						<div className="text-center">
+							<MonoText size="sm">τέσσερα</MonoText>
+						</div>
+					</div>
+
+					<div className="space-y-1.5 text-sm">
+						<div>
+							<MonoText variant="greek">ένας καφές</MonoText>
+							<span className="text-stone-500 text-xs ml-2">(one coffee, masc.)</span>
+						</div>
+						<div>
+							<MonoText variant="greek">μία μπύρα</MonoText>
+							<span className="text-stone-500 text-xs ml-2">(one beer, fem.)</span>
+						</div>
+						<div>
+							<MonoText variant="greek">ένα νερό</MonoText>
+							<span className="text-stone-500 text-xs ml-2">(one water, neut.)</span>
+						</div>
+					</div>
+
+					<p className="text-xs text-stone-500 mt-2 pt-1.5 border-t border-terracotta-200/50">
+						Numbers 2 and 5+ don't change for gender
+					</p>
+				</div>
+			</ContentSection>
 		</div>
 	);
 }
