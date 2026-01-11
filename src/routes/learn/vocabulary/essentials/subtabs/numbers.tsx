@@ -1,5 +1,5 @@
-import { Link } from "react-router";
 import { ChevronLeft } from "lucide-react";
+import { Link } from "react-router";
 import { ContentSection } from "@/components/ContentSection";
 import { MonoText } from "@/components/MonoText";
 import type { EssentialsLoaderData } from "../data.server";
@@ -51,9 +51,7 @@ function highlightTeenPattern(greek: string) {
 }
 
 export function NumbersSubtab({ data }: Props) {
-	const numberByValue = new Map(
-		data.numbers.map((n) => [n.numericValue, n]),
-	);
+	const numberByValue = new Map(data.numbers.map((n) => [n.numericValue, n]));
 
 	const zero = numberByValue.get(0);
 	const teens = data.numbers.filter(
@@ -172,7 +170,8 @@ export function NumbersSubtab({ data }: Props) {
 				</div>
 				<div className="mx-3 mt-3 p-2.5 bg-honey-100 rounded-lg border border-honey-200">
 					<p className="text-sm text-honey-text font-medium">
-						Pattern: <MonoText className="text-honey-text">δεκα</MonoText> + unit
+						Pattern: <MonoText className="text-honey-text">δεκα</MonoText> +
+						unit
 					</p>
 					<p className="text-xs text-stone-500 mt-1">
 						Exception: 11, 12 are irregular (έντεκα, δώδεκα)
@@ -194,19 +193,22 @@ export function NumbersSubtab({ data }: Props) {
 					<div className="space-y-2">
 						<div>
 							<MonoText variant="greek">
-								τριάντα + δύο = <span className="font-semibold">τριάντα δύο</span>
+								τριάντα + δύο ={" "}
+								<span className="font-semibold">τριάντα δύο</span>
 							</MonoText>
 							<div className="text-xs text-stone-500">thirty-two</div>
 						</div>
 						<div>
 							<MonoText variant="greek">
-								πενήντα + πέντε = <span className="font-semibold">πενήντα πέντε</span>
+								πενήντα + πέντε ={" "}
+								<span className="font-semibold">πενήντα πέντε</span>
 							</MonoText>
 							<div className="text-xs text-stone-500">fifty-five</div>
 						</div>
 						<div>
 							<MonoText variant="greek">
-								ενενήντα + εννέα = <span className="font-semibold">ενενήντα εννέα</span>
+								ενενήντα + εννέα ={" "}
+								<span className="font-semibold">ενενήντα εννέα</span>
 							</MonoText>
 							<div className="text-xs text-stone-500">ninety-nine</div>
 						</div>
@@ -258,7 +260,9 @@ export function NumbersSubtab({ data }: Props) {
 							</div>
 							<div>
 								<MonoText variant="greek">τρία μπουκάλια νερό</MonoText>
-								<div className="text-xs text-stone-500">three bottles of water</div>
+								<div className="text-xs text-stone-500">
+									three bottles of water
+								</div>
 							</div>
 						</div>
 					</div>
@@ -331,15 +335,21 @@ export function NumbersSubtab({ data }: Props) {
 					<div className="space-y-1.5 text-sm">
 						<div>
 							<MonoText variant="greek">ένας καφές</MonoText>
-							<span className="text-stone-500 text-xs ml-2">(one coffee, masc.)</span>
+							<span className="text-stone-500 text-xs ml-2">
+								(one coffee, masc.)
+							</span>
 						</div>
 						<div>
 							<MonoText variant="greek">μία μπύρα</MonoText>
-							<span className="text-stone-500 text-xs ml-2">(one beer, fem.)</span>
+							<span className="text-stone-500 text-xs ml-2">
+								(one beer, fem.)
+							</span>
 						</div>
 						<div>
 							<MonoText variant="greek">ένα νερό</MonoText>
-							<span className="text-stone-500 text-xs ml-2">(one water, neut.)</span>
+							<span className="text-stone-500 text-xs ml-2">
+								(one water, neut.)
+							</span>
 						</div>
 					</div>
 

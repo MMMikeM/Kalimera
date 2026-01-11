@@ -1,5 +1,5 @@
-import { MonoText } from "./MonoText";
 import { cn } from "@/lib/utils";
+import { MonoText } from "./MonoText";
 
 export interface ImperativeFormsData {
 	imperfective: { singular: string; plural: string } | null;
@@ -14,7 +14,10 @@ export interface ImperativeTableProps {
 const AspectLabel = ({
 	aspect,
 	description,
-}: { aspect: string; description: string }) => (
+}: {
+	aspect: string;
+	description: string;
+}) => (
 	<div className="flex flex-col">
 		<span className="font-semibold text-stone-800">{aspect}</span>
 		<span className="text-xs text-stone-500">{description}</span>
@@ -68,7 +71,9 @@ export const ImperativeTable = ({
 						</th>
 						<th className="p-2 text-center text-xs text-stone-600 font-normal border-b border-stone-200">
 							Singular
-							<div className="text-[10px] text-stone-400">(you - one person)</div>
+							<div className="text-[10px] text-stone-400">
+								(you - one person)
+							</div>
 						</th>
 						<th className="p-2 text-center text-xs text-stone-600 font-normal border-b border-stone-200">
 							Plural
@@ -80,7 +85,10 @@ export const ImperativeTable = ({
 					{hasImperfective && (
 						<tr className="bg-ocean-50/30">
 							<td className="p-3 border border-stone-200 bg-ocean-50">
-								<AspectLabel aspect="Imperfective" description="Ongoing action" />
+								<AspectLabel
+									aspect="Imperfective"
+									description="Ongoing action"
+								/>
 							</td>
 							<FormCell form={imperatives.imperfective?.singular} />
 							<FormCell form={imperatives.imperfective?.plural} />
@@ -99,9 +107,9 @@ export const ImperativeTable = ({
 			</table>
 
 			<div className="text-xs text-stone-500 bg-stone-50 rounded p-2 border border-stone-200">
-				<strong>Aspect distinction:</strong> Use imperfective for ongoing/repeated
-				actions ("keep doing this"), perfective for single/completed actions ("do
-				this once").
+				<strong>Aspect distinction:</strong> Use imperfective for
+				ongoing/repeated actions ("keep doing this"), perfective for
+				single/completed actions ("do this once").
 			</div>
 		</div>
 	);

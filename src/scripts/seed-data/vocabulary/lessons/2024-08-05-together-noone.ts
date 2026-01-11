@@ -10,9 +10,7 @@ export const LESSON_2024_08_05 = {
 	verbs: [],
 	nouns: [],
 
-	adverbs: [
-		{ lemma: "μαζί", english: "together" },
-	] satisfies AdverbSeed[],
+	adverbs: [{ lemma: "μαζί", english: "together" }] satisfies AdverbSeed[],
 
 	phrases: [
 		{

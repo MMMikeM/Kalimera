@@ -1,4 +1,9 @@
-import type { AdjectiveSeed, NounSeed, Phrase, VerbSeed } from "../../../../types/seed";
+import type {
+	AdjectiveSeed,
+	NounSeed,
+	Phrase,
+	VerbSeed,
+} from "../../../../types/seed";
 
 export const LESSON_2024_09_10 = {
 	meta: {
@@ -34,10 +39,22 @@ export const LESSON_2024_09_10 = {
 
 	phrases: [
 		{ text: "με τα χρόνια", english: "over the years", metadata: {} },
-		{ text: "βγάζεις πιο πολλά λεφτά", english: "you make more money", metadata: {} },
+		{
+			text: "βγάζεις πιο πολλά λεφτά",
+			english: "you make more money",
+			metadata: {},
+		},
 		{ text: "παράδοση στο σπίτι", english: "home delivery", metadata: {} },
-		{ text: "προσέχουν ο ένας τον άλλον", english: "they look after each other", metadata: {} },
-		{ text: "κρίμα", english: "pity/what a shame", metadata: { usage: "common exclamation" } },
+		{
+			text: "προσέχουν ο ένας τον άλλον",
+			english: "they look after each other",
+			metadata: {},
+		},
+		{
+			text: "κρίμα",
+			english: "pity/what a shame",
+			metadata: { usage: "common exclamation" },
+		},
 	] satisfies Phrase[],
 
 	grammarNotes: [],

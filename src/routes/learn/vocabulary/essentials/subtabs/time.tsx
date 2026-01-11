@@ -1,5 +1,5 @@
-import { Link } from "react-router";
 import { ChevronLeft } from "lucide-react";
+import { Link } from "react-router";
 import { ContentSection } from "@/components/ContentSection";
 import { MonoText } from "@/components/MonoText";
 import type { EssentialsLoaderData } from "../data.server";
@@ -97,17 +97,23 @@ export function TimeSubtab({ data }: Props) {
 							<MonoText variant="greek">
 								στις δύο <span className="font-semibold">το μεσημέρι</span>
 							</MonoText>
-							<div className="text-stone-500 text-xs">at two in the afternoon</div>
+							<div className="text-stone-500 text-xs">
+								at two in the afternoon
+							</div>
 						</div>
 						<div>
 							<MonoText variant="greek">
 								στις οκτώ <span className="font-semibold">το βράδυ</span>
 							</MonoText>
-							<div className="text-stone-500 text-xs">at eight in the evening</div>
+							<div className="text-stone-500 text-xs">
+								at eight in the evening
+							</div>
 						</div>
 						<p className="text-stone-500 text-xs pt-1.5 border-t border-honey-200/50">
-							<MonoText variant="greek" className="text-stone-700">το</MonoText> (neuter) — time
-							periods are neuter nouns
+							<MonoText variant="greek" className="text-stone-700">
+								το
+							</MonoText>{" "}
+							(neuter) — time periods are neuter nouns
 						</p>
 					</div>
 				</div>
@@ -140,11 +146,15 @@ export function TimeSubtab({ data }: Props) {
 								<MonoText variant="greek">
 									<span className="font-semibold">την</span> Τρίτη
 								</MonoText>
-								<div className="text-stone-500 text-xs">on Tuesday (specific)</div>
+								<div className="text-stone-500 text-xs">
+									on Tuesday (specific)
+								</div>
 							</div>
 							<div>
 								<MonoText variant="greek">κάθε Τρίτη</MonoText>
-								<div className="text-stone-500 text-xs">every Tuesday (no article)</div>
+								<div className="text-stone-500 text-xs">
+									every Tuesday (no article)
+								</div>
 							</div>
 							<div>
 								<MonoText variant="greek">
@@ -153,8 +163,14 @@ export function TimeSubtab({ data }: Props) {
 								<div className="text-stone-500 text-xs">last Tuesday</div>
 							</div>
 							<p className="text-stone-500 text-xs pt-1.5 border-t border-ocean-200/50">
-								<MonoText variant="greek" className="text-stone-700">την</MonoText> = accusative
-								of <MonoText variant="greek" className="text-stone-700">η</MonoText> (fem.)
+								<MonoText variant="greek" className="text-stone-700">
+									την
+								</MonoText>{" "}
+								= accusative of{" "}
+								<MonoText variant="greek" className="text-stone-700">
+									η
+								</MonoText>{" "}
+								(fem.)
 							</p>
 						</div>
 					</div>
@@ -203,8 +219,14 @@ export function TimeSubtab({ data }: Props) {
 								<div className="text-stone-500 text-xs">next month</div>
 							</div>
 							<p className="text-stone-500 text-xs pt-1.5 border-t border-olive-200/50">
-								<MonoText variant="greek" className="text-stone-700">τον</MonoText> = accusative
-								of <MonoText variant="greek" className="text-stone-700">ο</MonoText> (masc.)
+								<MonoText variant="greek" className="text-stone-700">
+									τον
+								</MonoText>{" "}
+								= accusative of{" "}
+								<MonoText variant="greek" className="text-stone-700">
+									ο
+								</MonoText>{" "}
+								(masc.)
 							</p>
 						</div>
 					</div>

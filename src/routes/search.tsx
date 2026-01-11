@@ -1,16 +1,16 @@
-import type { Route } from "./+types/search";
-import { useState, useMemo } from "react";
-import { Search } from "lucide-react";
 import { createFuzzySearch } from "@mmmike/mikrofuzz";
+import { Search } from "lucide-react";
+import { useMemo, useState } from "react";
 import { MonoText } from "@/components/MonoText";
 import { SearchInput } from "@/components/SearchInput";
 import { TabHero } from "@/components/TabHero";
 import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
 import {
-	searchVocabulary,
 	type SearchVocabItem,
+	searchVocabulary,
 } from "@/db.server/queries/vocabulary";
+import { cn } from "@/lib/utils";
+import type { Route } from "./+types/search";
 
 export async function loader() {
 	try {

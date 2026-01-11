@@ -1,12 +1,12 @@
-import { useState, useEffect, useRef, type ReactNode } from "react";
 import { Search, Sparkles } from "lucide-react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
+import { SearchInput } from "@/components/SearchInput";
+import { SearchResults } from "@/components/SearchResults";
 import {
 	Popover,
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
-import { SearchInput } from "@/components/SearchInput";
-import { SearchResults } from "@/components/SearchResults";
 import { useVocabularySearch } from "@/lib/use-vocabulary-search";
 
 const QUICK_SEARCHES = [
@@ -84,11 +84,7 @@ const SearchContent = () => {
 				) : showEmptyState ? (
 					<SearchEmptyState onQuickSearch={handleQuickSearch} />
 				) : (
-					<SearchResults
-						results={results}
-						searchTerm={searchTerm}
-						compact
-					/>
+					<SearchResults results={results} searchTerm={searchTerm} compact />
 				)}
 			</div>
 		</div>

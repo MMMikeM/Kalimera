@@ -1,6 +1,6 @@
 import { Sparkles } from "lucide-react";
-import { TabHero } from "@/components/TabHero";
 import { PracticeCTA } from "@/components/PracticeCTA";
+import { TabHero } from "@/components/TabHero";
 import { AdjectivesSection } from "../components/adjectives-section";
 
 export function AdjectivesTab() {

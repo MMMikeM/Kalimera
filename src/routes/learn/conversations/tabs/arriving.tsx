@@ -1,7 +1,7 @@
 import { DoorOpen } from "lucide-react";
 import { ConversationHero } from "@/components/ConversationHero";
 import type { DialogueLine } from "@/components/DialogueExchange";
-import { ScenarioCard, LearningTips, useConversationContext } from "../layout";
+import { LearningTips, ScenarioCard, useConversationContext } from "../layout";
 
 const CASUAL_GREETING: DialogueLine[] = [
 	{ speaker: "friend", greek: "Γεια σου!", english: "Hi!" },
@@ -103,8 +103,7 @@ export function ArrivingTab() {
 				commonMistake={{
 					wrong: "Αντίο",
 					right: "Γεια σου / Τα λέμε",
-					explanation:
-						"Αντίο sounds final - save for permanent goodbyes",
+					explanation: "Αντίο sounds final - save for permanent goodbyes",
 				}}
 			/>
 		</div>

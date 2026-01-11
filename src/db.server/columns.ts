@@ -10,11 +10,15 @@ const string = (name: string) => text(name).notNull();
 const nullableString = (name: string) => text(name);
 
 // Enums
-const oneOf = <T extends readonly [string, ...string[]]>(name: string, options: T) =>
-	text(name, { enum: options }).notNull();
+const oneOf = <T extends readonly [string, ...string[]]>(
+	name: string,
+	options: T,
+) => text(name, { enum: options }).notNull();
 
-const nullableOneOf = <T extends readonly [string, ...string[]]>(name: string, options: T) =>
-	text(name, { enum: options });
+const nullableOneOf = <T extends readonly [string, ...string[]]>(
+	name: string,
+	options: T,
+) => text(name, { enum: options });
 
 // Numbers
 const int = (name: string) => integer(name).notNull();
@@ -27,10 +31,14 @@ const bool = (name: string) => integer(name, { mode: "boolean" }).notNull();
 const nullableBool = (name: string) => integer(name, { mode: "boolean" });
 
 // Timestamps
-const timestamp = (name: string) => integer(name, { mode: "timestamp" }).notNull();
-const nullableTimestamp = (name: string) => integer(name, { mode: "timestamp" });
-const createdAt = (name = "created_at") => timestamp(name).default(sql`(unixepoch())`);
-const updatedAt = (name = "updated_at") => nullableTimestamp(name).$onUpdate(() => new Date());
+const timestamp = (name: string) =>
+	integer(name, { mode: "timestamp" }).notNull();
+const nullableTimestamp = (name: string) =>
+	integer(name, { mode: "timestamp" });
+const createdAt = (name = "created_at") =>
+	timestamp(name).default(sql`(unixepoch())`);
+const updatedAt = (name = "updated_at") =>
+	nullableTimestamp(name).$onUpdate(() => new Date());
 
 // JSON
 const json = <T>(name: string) => text(name, { mode: "json" }).$type<T>();
@@ -41,9 +49,7 @@ const cascadeFk = (
 	ref: SQLiteColumn | (() => AnySQLiteColumn),
 ) => {
 	const refThunk = typeof ref === "function" ? ref : () => ref;
-	return integer(name)
-		.notNull()
-		.references(refThunk, { onDelete: "cascade" });
+	return integer(name).notNull().references(refThunk, { onDelete: "cascade" });
 };
 
 const nullableFk = (

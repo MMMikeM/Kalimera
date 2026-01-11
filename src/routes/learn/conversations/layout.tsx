@@ -1,13 +1,30 @@
+import {
+	ChevronDown,
+	ChevronLeft,
+	DoorOpen,
+	Hand,
+	Lightbulb,
+	MessageCircle,
+	Utensils,
+} from "lucide-react";
 import type React from "react";
-import { MessageCircle, DoorOpen, Utensils, ChevronDown, ChevronLeft, Lightbulb, Hand } from "lucide-react";
 import { Link, Outlet, useLocation, useOutletContext } from "react-router";
-import { MonoText } from "@/components/MonoText";
 import { Card } from "@/components/Card";
-import { NavTabs } from "@/components/NavTabs";
 import { ConversationModeToggle } from "@/components/ConversationModeToggle";
-import { DialogueScenario, type ConversationMode, type DialogueLine, type Formality } from "@/components/DialogueExchange";
+import {
+	type ConversationMode,
+	type DialogueLine,
+	DialogueScenario,
+	type Formality,
+} from "@/components/DialogueExchange";
+import { MonoText } from "@/components/MonoText";
 import type { NavTab } from "@/components/NavTabs";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { NavTabs } from "@/components/NavTabs";
+import {
+	Collapsible,
+	CollapsibleContent,
+	CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 import { usePersistedState } from "@/lib/hooks/use-persisted-state";
 
 type ConversationContext = {
@@ -62,7 +79,9 @@ export const LearningTips: React.FC<LearningTipsProps> = ({
 				<div className="grid md:grid-cols-2 gap-6 text-sm">
 					{patterns && (
 						<div>
-							<h4 className="text-honey-text font-semibold mb-2">{patterns.title}</h4>
+							<h4 className="text-honey-text font-semibold mb-2">
+								{patterns.title}
+							</h4>
 							<ul className="space-y-1.5 text-stone-700">
 								{patterns.items.map((item) => (
 									<li key={item}>{item}</li>
@@ -72,7 +91,9 @@ export const LearningTips: React.FC<LearningTipsProps> = ({
 					)}
 					{tips && (
 						<div>
-							<h4 className="text-honey-text font-semibold mb-2">{tips.title}</h4>
+							<h4 className="text-honey-text font-semibold mb-2">
+								{tips.title}
+							</h4>
 							<ul className="space-y-1.5 text-stone-700">
 								{tips.items.map((item) => (
 									<li key={item}>{item}</li>
@@ -83,7 +104,9 @@ export const LearningTips: React.FC<LearningTipsProps> = ({
 				</div>
 				{commonMistake && (
 					<div className="mt-4 pt-4 border-t border-amber-200">
-						<h4 className="text-honey-text font-semibold mb-2">Common Mistake</h4>
+						<h4 className="text-honey-text font-semibold mb-2">
+							Common Mistake
+						</h4>
 						<div className="flex items-start gap-4 text-sm">
 							<div className="flex-1">
 								<span className="text-red-600 font-medium">✗</span>{" "}
@@ -127,10 +150,25 @@ export const ScenarioCard: React.FC<{
 );
 
 const CONVERSATION_TABS: NavTab[] = [
-	{ id: "arriving", label: "Arriving", icon: <DoorOpen size={16} />, color: "ocean" },
+	{
+		id: "arriving",
+		label: "Arriving",
+		icon: <DoorOpen size={16} />,
+		color: "ocean",
+	},
 	{ id: "food", label: "Food", icon: <Utensils size={16} />, color: "olive" },
-	{ id: "smalltalk", label: "Talk", icon: <MessageCircle size={16} />, color: "honey" },
-	{ id: "requests", label: "Requests", icon: <Hand size={16} />, color: "terracotta" },
+	{
+		id: "smalltalk",
+		label: "Talk",
+		icon: <MessageCircle size={16} />,
+		color: "honey",
+	},
+	{
+		id: "requests",
+		label: "Requests",
+		icon: <Hand size={16} />,
+		color: "terracotta",
+	},
 ];
 
 export default function ConversationsLayout() {
@@ -138,7 +176,10 @@ export default function ConversationsLayout() {
 	const pathSegments = location.pathname.split("/").filter(Boolean);
 	const activeTab = pathSegments[2] || "arriving";
 
-	const [mode, setMode] = usePersistedState<ConversationMode>("conversation-mode", "read");
+	const [mode, setMode] = usePersistedState<ConversationMode>(
+		"conversation-mode",
+		"read",
+	);
 
 	return (
 		<div className="space-y-4">

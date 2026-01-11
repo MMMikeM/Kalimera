@@ -1,19 +1,19 @@
-import { useState } from "react";
-import { ChevronLeft, ChevronRight, Snowflake } from "lucide-react";
 import {
-	format,
-	parseISO,
-	isSameDay,
-	startOfDay,
-	subDays,
 	addMonths,
-	startOfMonth,
-	endOfMonth,
 	eachDayOfInterval,
+	endOfMonth,
+	format,
+	getDate,
 	getDay,
 	isAfter,
-	getDate,
+	isSameDay,
+	parseISO,
+	startOfDay,
+	startOfMonth,
+	subDays,
 } from "date-fns";
+import { ChevronLeft, ChevronRight, Snowflake } from "lucide-react";
+import { useState } from "react";
 import { cn } from "@/lib/utils";
 
 export interface StreakCalendarProps {
@@ -48,14 +48,22 @@ const getMonthDays = (year: number, month: number) => {
 	const remainingDays = 42 - days.length;
 	const nextMonthStart = addMonths(firstDay, 1);
 	for (let i = 0; i < remainingDays; i++) {
-		days.push({ date: new Date(nextMonthStart.getFullYear(), nextMonthStart.getMonth(), i + 1), isCurrentMonth: false });
+		days.push({
+			date: new Date(
+				nextMonthStart.getFullYear(),
+				nextMonthStart.getMonth(),
+				i + 1,
+			),
+			isCurrentMonth: false,
+		});
 	}
 
 	return days;
 };
 
 const getStreakDates = (currentStreak: number, practiceDates: string[]) => {
-	if (currentStreak === 0 || practiceDates.length === 0) return new Set<string>();
+	if (currentStreak === 0 || practiceDates.length === 0)
+		return new Set<string>();
 
 	const sortedDates = [...practiceDates].sort().reverse();
 	const streakSet = new Set<string>();
@@ -175,10 +183,18 @@ export const StreakCalendar = ({
 								!isCurrentMonth && "text-stone-300",
 								isCurrentMonth && status === "inactive" && "text-stone-300",
 								isCurrentMonth && status === "missed" && "text-stone-400",
-								isCurrentMonth && status === "practiced" && "bg-olive-100 text-olive-text",
-								isCurrentMonth && status === "streak" && "bg-olive-400 text-white font-medium",
-								isCurrentMonth && status === "freeze" && "bg-ocean-100 text-ocean-text",
-								isToday(date) && isCurrentMonth && "ring-2 ring-terracotta ring-offset-1",
+								isCurrentMonth &&
+									status === "practiced" &&
+									"bg-olive-100 text-olive-text",
+								isCurrentMonth &&
+									status === "streak" &&
+									"bg-olive-400 text-white font-medium",
+								isCurrentMonth &&
+									status === "freeze" &&
+									"bg-ocean-100 text-ocean-text",
+								isToday(date) &&
+									isCurrentMonth &&
+									"ring-2 ring-terracotta ring-offset-1",
 							)}
 						>
 							{status === "freeze" ? (

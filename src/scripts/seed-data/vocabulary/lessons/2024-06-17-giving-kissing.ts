@@ -1,4 +1,10 @@
-import type { AdjectiveSeed, AdverbSeed, NounSeed, Phrase, VerbSeed } from "../../../../types/seed";
+import type {
+	AdjectiveSeed,
+	AdverbSeed,
+	NounSeed,
+	Phrase,
+	VerbSeed,
+} from "../../../../types/seed";
 
 export const LESSON_2024_06_17 = {
 	meta: {
@@ -21,9 +27,7 @@ export const LESSON_2024_06_17 = {
 		{ lemma: "νούμερο", gender: "neuter", english: "number" },
 	] satisfies NounSeed[],
 
-	adjectives: [
-		{ lemma: "πρώτος", english: "first" },
-	] satisfies AdjectiveSeed[],
+	adjectives: [{ lemma: "πρώτος", english: "first" }] satisfies AdjectiveSeed[],
 
 	adverbs: [
 		{ lemma: "χτες", english: "yesterday" },
@@ -86,10 +90,7 @@ export const LESSON_2024_06_17 = {
 	grammarNotes: [
 		{
 			pattern: "φιλάω conjugation (-άω)",
-			examples: [
-				"φιλάω, φιλάς, φιλάει",
-				"φιλάμε, φιλάτε, φιλάνε",
-			],
+			examples: ["φιλάω, φιλάς, φιλάει", "φιλάμε, φιλάτε, φιλάνε"],
 			explanation: "Regular -άω/-ώ family verb",
 		},
 		{

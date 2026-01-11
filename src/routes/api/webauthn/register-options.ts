@@ -1,5 +1,5 @@
-import type { Route } from "./+types/register-options";
 import { createWebAuthn } from "@/lib/auth";
+import type { Route } from "./+types/register-options";
 
 interface RegisterOptionsBody {
 	userId: number;
@@ -29,7 +29,10 @@ export const action = async ({ request }: Route.ActionArgs) => {
 			origin: url.origin,
 		});
 
-		const options = await webauthn.generateRegistrationOptions(userId, username);
+		const options = await webauthn.generateRegistrationOptions(
+			userId,
+			username,
+		);
 
 		return Response.json(options);
 	} catch (error) {

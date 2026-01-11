@@ -1,7 +1,7 @@
 import type React from "react";
 import { cn } from "@/lib/utils";
-import { MonoText } from "./MonoText";
 import type { ColorScheme } from "./DialogueExchange";
+import { MonoText } from "./MonoText";
 
 export interface ConversationHeroProps {
 	icon: React.ReactNode;
@@ -12,7 +12,10 @@ export interface ConversationHeroProps {
 	className?: string;
 }
 
-const heroStyles: Record<ColorScheme, { bg: string; border: string; text: string }> = {
+const heroStyles: Record<
+	ColorScheme,
+	{ bg: string; border: string; text: string }
+> = {
 	olive: {
 		bg: "bg-olive-50",
 		border: "border-olive-200",
@@ -51,7 +54,7 @@ export const ConversationHero: React.FC<ConversationHeroProps> = ({
 				"rounded-xl border-2 p-6",
 				styles.bg,
 				styles.border,
-				className
+				className,
 			)}
 		>
 			<div className="flex items-start gap-4">
@@ -60,14 +63,18 @@ export const ConversationHero: React.FC<ConversationHeroProps> = ({
 						"flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center",
 						styles.bg,
 						"border",
-						styles.border
+						styles.border,
 					)}
 				>
 					<span className={styles.text}>{icon}</span>
 				</div>
 				<div className="flex-1 min-w-0">
 					<h2 className={cn("text-xl font-bold", styles.text)}>{title}</h2>
-					<MonoText variant="greek" size="sm" className="block mt-1 text-stone-600">
+					<MonoText
+						variant="greek"
+						size="sm"
+						className="block mt-1 text-stone-600"
+					>
 						{greekPhrase}
 					</MonoText>
 					<p className="text-stone-600 mt-2 text-sm leading-relaxed">

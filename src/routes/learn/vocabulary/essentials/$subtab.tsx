@@ -1,11 +1,11 @@
 import { useOutletContext } from "react-router";
 import type { Route } from "./+types/$subtab";
 import type { EssentialsLoaderData } from "./data.server";
+import { ColoursSubtab } from "./subtabs/colours";
+import { FrequencySubtab } from "./subtabs/frequency";
 import { NumbersSubtab } from "./subtabs/numbers";
 import { PositionSubtab } from "./subtabs/position";
 import { TimeSubtab } from "./subtabs/time";
-import { FrequencySubtab } from "./subtabs/frequency";
-import { ColoursSubtab } from "./subtabs/colours";
 
 const VALID_SUBTABS = [
 	"numbers",

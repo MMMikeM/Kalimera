@@ -21,7 +21,12 @@ registerRoute(
 	/^https:\/\/fonts\.googleapis\.com\/.*/i,
 	new CacheFirst({
 		cacheName: "google-fonts-cache",
-		plugins: [new ExpirationPlugin({ maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 365 })],
+		plugins: [
+			new ExpirationPlugin({
+				maxEntries: 10,
+				maxAgeSeconds: 60 * 60 * 24 * 365,
+			}),
+		],
 	}),
 );
 
@@ -29,7 +34,12 @@ registerRoute(
 	/^https:\/\/fonts\.gstatic\.com\/.*/i,
 	new CacheFirst({
 		cacheName: "gstatic-fonts-cache",
-		plugins: [new ExpirationPlugin({ maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 365 })],
+		plugins: [
+			new ExpirationPlugin({
+				maxEntries: 10,
+				maxAgeSeconds: 60 * 60 * 24 * 365,
+			}),
+		],
 	}),
 );
 

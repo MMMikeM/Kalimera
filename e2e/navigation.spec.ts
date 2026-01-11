@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 
 const BASE_URL = process.env.BASE_URL || "http://localhost:5173";
 
@@ -17,38 +17,42 @@ test.describe("Navigation", () => {
 
 	test("Practice nav link works", async ({ page }) => {
 		await page.goto(BASE_URL);
-		await page.click('text=Practice');
+		await page.click("text=Practice");
 		await expect(page).toHaveURL(/\/practice\/speed/);
-		await expect(page.getByRole("heading", { name: "Speed Drill" })).toBeVisible();
+		await expect(
+			page.getByRole("heading", { name: "Speed Drill" }),
+		).toBeVisible();
 	});
 
 	test("Explore nav link works", async ({ page }) => {
 		await page.goto(BASE_URL);
-		await page.click('text=Explore');
+		await page.click("text=Explore");
 		await expect(page).toHaveURL(/\/explore\/conversations\/arriving/);
 		await expect(page.getByRole("heading", { name: "Explore" })).toBeVisible();
 	});
 
 	test("Reference nav link works", async ({ page }) => {
 		await page.goto(BASE_URL);
-		await page.click('text=Reference');
+		await page.click("text=Reference");
 		await expect(page).toHaveURL(/\/reference\/cases-pronouns/);
-		await expect(page.getByRole("heading", { name: "Quick Reference" })).toBeVisible();
+		await expect(
+			page.getByRole("heading", { name: "Quick Reference" }),
+		).toBeVisible();
 	});
 
 	test("Explore subsection tabs work", async ({ page }) => {
 		await page.goto(`${BASE_URL}/explore/conversations/arriving`);
 
 		// Click Phrases tab
-		await page.click('text=Phrases');
+		await page.click("text=Phrases");
 		await expect(page).toHaveURL(/\/explore\/phrases\/survival/);
 
 		// Click Words tab
-		await page.click('text=Vocabulary');
+		await page.click("text=Vocabulary");
 		await expect(page).toHaveURL(/\/explore\/words\/nouns/);
 
 		// Click back to Conversations
-		await page.click('text=Conversations');
+		await page.click("text=Conversations");
 		await expect(page).toHaveURL(/\/explore\/conversations\/arriving/);
 	});
 
@@ -71,10 +75,10 @@ test.describe("Navigation", () => {
 	test("Practice tabs work", async ({ page }) => {
 		await page.goto(`${BASE_URL}/practice/speed`);
 
-		await page.click('text=Pronouns');
+		await page.click("text=Pronouns");
 		await expect(page).toHaveURL(/\/practice\/pronouns/);
 
-		await page.click('text=Articles');
+		await page.click("text=Articles");
 		await expect(page).toHaveURL(/\/practice\/articles/);
 	});
 });

@@ -1,7 +1,7 @@
-import { eq, } from "drizzle-orm";
-import { db } from "../index";
+import { eq } from "drizzle-orm";
 import type { DisplaySection } from "../enums";
-import { vocabulary, vocabularyTags, tags, tagSections } from "../schema";
+import { db } from "../index";
+import { tagSections, tags, vocabulary, vocabularyTags } from "../schema";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // VOCABULARY BY SECTION (using tag_sections lookup table)
@@ -32,7 +32,9 @@ export async function getVocabBySection(section: DisplaySection) {
 }
 
 /** Type for a vocabulary item with section info */
-export type VocabItemWithSection = Awaited<ReturnType<typeof getVocabBySection>>[number];
+export type VocabItemWithSection = Awaited<
+	ReturnType<typeof getVocabBySection>
+>[number];
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // VERBS WITH PATTERNS
@@ -84,7 +86,9 @@ export async function searchVocabulary() {
 		english: v.englishTranslation,
 		type: v.wordType,
 		family: v.verbDetails?.conjugationFamily ?? null,
-		tags: v.vocabularyTags.map((vt) => vt.tag?.name).filter(Boolean) as string[],
+		tags: v.vocabularyTags
+			.map((vt) => vt.tag?.name)
+			.filter(Boolean) as string[],
 	}));
 }
 

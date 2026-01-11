@@ -1,9 +1,9 @@
 import { hasNumericValue, hasTimeRange } from "@/db.server/metadata";
 import {
-	getVocabBySection,
 	getVerbsWithPatterns,
-	type VocabItemWithSection,
+	getVocabBySection,
 	type VerbWithPattern,
+	type VocabItemWithSection,
 } from "@/db.server/queries/vocabulary";
 
 // Re-export types for consumers
@@ -13,7 +13,9 @@ export type { VocabItemWithSection as VocabItem, VerbWithPattern };
 // TRANSFORMS
 // ═══════════════════════════════════════════════════════════════════════════════
 
-function groupByTag<T extends { tagSlug: string }>(items: T[]): Record<string, T[]> {
+function groupByTag<T extends { tagSlug: string }>(
+	items: T[],
+): Record<string, T[]> {
 	const result: Record<string, T[]> = {};
 	for (const item of items) {
 		const key = item.tagSlug;
@@ -96,13 +98,14 @@ function groupVerbsByPattern(verbs: VerbWithPattern[]): VerbCategory[] {
 
 export async function getVocabularyData() {
 	// Query all sections in parallel
-	const [nounsData, verbsData, phrasesData, referenceData, verbPatterns] = await Promise.all([
-		getVocabBySection("nouns"),
-		getVocabBySection("verbs"),
-		getVocabBySection("phrases"),
-		getVocabBySection("reference"),
-		getVerbsWithPatterns(),
-	]);
+	const [nounsData, verbsData, phrasesData, referenceData, verbPatterns] =
+		await Promise.all([
+			getVocabBySection("nouns"),
+			getVocabBySection("verbs"),
+			getVocabBySection("phrases"),
+			getVocabBySection("reference"),
+			getVerbsWithPatterns(),
+		]);
 
 	// Group each section's data by tag
 	const nouns = groupByTag(nounsData);
@@ -150,7 +153,9 @@ export async function getVocabularyData() {
 			numbers: (reference.number ?? [])
 				.map((n) => ({
 					...n,
-					numericValue: hasNumericValue(n.metadata) ? n.metadata.numericValue : undefined,
+					numericValue: hasNumericValue(n.metadata)
+						? n.metadata.numericValue
+						: undefined,
 				}))
 				.sort((a, b) => (a.numericValue ?? 0) - (b.numericValue ?? 0)),
 			colors: reference.color ?? [],
@@ -162,4 +167,6 @@ export async function getVocabularyData() {
 }
 
 /** Inferred type for vocabulary loader data */
-export type VocabularyLoaderData = Awaited<ReturnType<typeof getVocabularyData>>;
+export type VocabularyLoaderData = Awaited<
+	ReturnType<typeof getVocabularyData>
+>;

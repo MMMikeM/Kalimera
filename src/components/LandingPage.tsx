@@ -1,9 +1,9 @@
+import { Brain, Clock, Flame } from "lucide-react";
 import { Link } from "react-router";
-import { Clock, Brain, Flame } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/Card";
 import { DrillDemo } from "@/components/DrillDemo";
 import { Header } from "@/components/Header";
+import { Button } from "@/components/ui/button";
 
 const FEATURES = [
 	{
@@ -40,8 +40,8 @@ export const LandingPage = () => (
 					</h1>
 
 					<p className="text-lg md:text-xl text-stone-600 max-w-xl mx-auto mb-8">
-						Recognition isn't fluency. Retrieval is. Train your Greek with
-						timed production drills.
+						Recognition isn't fluency. Retrieval is. Train your Greek with timed
+						production drills.
 					</p>
 
 					{/* Drill Demo */}
@@ -90,9 +90,9 @@ export const LandingPage = () => (
 							</p>
 							<p>
 								Problem is, I'm learning from square one. Apps, textbooks,
-								courses. Everything trained me to{" "}
-								<em>recognise</em> Greek, not <em>produce</em> it. I could tap
-								the right answer in a multiple choice quiz, but when my{" "}
+								courses. Everything trained me to <em>recognise</em> Greek, not{" "}
+								<em>produce</em> it. I could tap the right answer in a multiple
+								choice quiz, but when my{" "}
 								<span className="font-serif text-terracotta">παππούς</span>{" "}
 								asked me something, my mind went blank.
 							</p>

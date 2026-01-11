@@ -1,4 +1,11 @@
-import { index, integer, primaryKey, real, sqliteTable, uniqueIndex } from "drizzle-orm/sqlite-core";
+import {
+	index,
+	integer,
+	primaryKey,
+	real,
+	sqliteTable,
+	uniqueIndex,
+} from "drizzle-orm/sqlite-core";
 import {
 	bool,
 	cascadeFk,
@@ -16,8 +23,8 @@ import {
 	timestamp,
 } from "./columns";
 import {
-	areaTypes,
 	type AuthenticatorTransport,
+	areaTypes,
 	challengeTypes,
 	declensionPatterns,
 	displaySections,
@@ -55,7 +62,9 @@ export const users = sqliteTable(
 		freezeCount: integer("freeze_count").notNull().default(0),
 		lastFreezeUsedAt: nullableTimestamp("last_freeze_used_at"),
 		freezeUsedForDate: nullableString("freeze_used_for_date"), // ISO date string like "2026-01-05"
-		consecutiveDaysAtEarn: integer("consecutive_days_at_earn").notNull().default(0),
+		consecutiveDaysAtEarn: integer("consecutive_days_at_earn")
+			.notNull()
+			.default(0),
 	},
 	(table) => [
 		uniqueIndex("idx_users_code").on(table.code),
@@ -155,7 +164,11 @@ export const verbConjugations = sqliteTable(
 	(table) => [
 		index("idx_verb_conjugations_vocab").on(table.vocabId),
 		index("idx_verb_conjugations_vocab_tense").on(table.vocabId, table.tense),
-		uniqueIndex("idx_verb_conjugations_unique").on(table.vocabId, table.tense, table.person),
+		uniqueIndex("idx_verb_conjugations_unique").on(
+			table.vocabId,
+			table.tense,
+			table.person,
+		),
 	],
 );
 
@@ -173,7 +186,11 @@ export const verbImperatives = sqliteTable(
 	},
 	(table) => [
 		index("idx_verb_imperatives_vocab").on(table.vocabId),
-		uniqueIndex("idx_verb_imperatives_unique").on(table.vocabId, table.aspect, table.number),
+		uniqueIndex("idx_verb_imperatives_unique").on(
+			table.vocabId,
+			table.aspect,
+			table.number,
+		),
 	],
 );
 
@@ -196,7 +213,10 @@ export const practiceSessions = sqliteTable(
 	},
 	(table) => [
 		index("idx_practice_sessions_user").on(table.userId),
-		index("idx_practice_sessions_user_completed").on(table.userId, table.completedAt),
+		index("idx_practice_sessions_user_completed").on(
+			table.userId,
+			table.completedAt,
+		),
 	],
 );
 
@@ -240,7 +260,11 @@ export const weakAreas = sqliteTable(
 	},
 	(table) => [
 		index("idx_weak_areas_user").on(table.userId),
-		uniqueIndex("idx_weak_areas_user_area").on(table.userId, table.areaType, table.areaIdentifier),
+		uniqueIndex("idx_weak_areas_user_area").on(
+			table.userId,
+			table.areaType,
+			table.areaIdentifier,
+		),
 	],
 );
 
@@ -260,7 +284,9 @@ export const vocabularySkills = sqliteTable(
 		lastReviewedAt: nullableTimestamp("last_reviewed_at"),
 	},
 	(table) => [
-		primaryKey({ columns: [table.userId, table.vocabularyId, table.skillType] }),
+		primaryKey({
+			columns: [table.userId, table.vocabularyId, table.skillType],
+		}),
 		index("idx_vocabulary_skills_review").on(table.nextReviewAt),
 		index("idx_vocabulary_skills_user").on(table.userId),
 	],
@@ -340,7 +366,12 @@ export const milestonesAchieved = sqliteTable(
 		achievedAt: createdAt("achieved_at"),
 		streakAtAchievement: integer("streak_at_achievement").notNull(),
 	},
-	(table) => [uniqueIndex("idx_milestones_user_milestone").on(table.userId, table.milestone)],
+	(table) => [
+		uniqueIndex("idx_milestones_user_milestone").on(
+			table.userId,
+			table.milestone,
+		),
+	],
 );
 
 // Types are exported from ./types.ts

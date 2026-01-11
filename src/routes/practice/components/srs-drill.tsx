@@ -1,12 +1,12 @@
 import type React from "react";
-import { useMemo, useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useFetcher } from "react-router";
-import UnifiedDrill, {
-	type UnifiedQuestion,
-	type UnifiedAttemptResult,
-} from "./unified-drill";
-import { useCurrentUserId } from "../hooks";
 import type { VocabItemWithSkill } from "../data.server";
+import { useCurrentUserId } from "../hooks";
+import UnifiedDrill, {
+	type UnifiedAttemptResult,
+	type UnifiedQuestion,
+} from "./unified-drill";
 
 export type SrsDrillVariant = "vocabulary" | "review";
 
@@ -55,7 +55,7 @@ const SrsDrill: React.FC<SrsDrillProps> = ({ variant, items, streakDays }) => {
 				correctGreek: item.greekText,
 				timeLimit: 6000,
 			})),
-		[items, config.idPrefix]
+		[items, config.idPrefix],
 	);
 
 	const handleAttempt = useCallback(
@@ -63,7 +63,7 @@ const SrsDrill: React.FC<SrsDrillProps> = ({ variant, items, streakDays }) => {
 			if (!userId) return;
 
 			const match = result.questionId.match(
-				new RegExp(`${config.idPrefix}-(\\d+)`)
+				new RegExp(`${config.idPrefix}-(\\d+)`),
 			);
 			const vocabularyId = match?.[1] ? parseInt(match[1], 10) : undefined;
 
@@ -79,10 +79,10 @@ const SrsDrill: React.FC<SrsDrillProps> = ({ variant, items, streakDays }) => {
 					timeTaken: result.timeTaken.toString(),
 					skillType: "production",
 				},
-				{ method: "post", action: "/practice" }
+				{ method: "post", action: "/practice" },
 			);
 		},
-		[userId, fetcher, config.idPrefix]
+		[userId, fetcher, config.idPrefix],
 	);
 
 	if (items.length === 0) {

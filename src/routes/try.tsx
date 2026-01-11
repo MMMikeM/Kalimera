@@ -1,12 +1,12 @@
+import { ArrowRight, UserPlus, Zap } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router";
-import { Zap, ArrowRight, UserPlus } from "lucide-react";
+import { Card } from "@/components/Card";
+import { Header } from "@/components/Header";
+import { Button } from "@/components/ui/button";
 import UnifiedDrill, {
 	type SessionStats,
 } from "./practice/components/unified-drill";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/Card";
-import { Header } from "@/components/Header";
 
 export function meta() {
 	return [
@@ -20,11 +20,21 @@ export function meta() {
 
 const TRY_QUESTIONS = [
 	{ id: "try-1", prompt: "me (object)", correctGreek: "με", timeLimit: 4000 },
-	{ id: "try-2", prompt: "you (object, singular)", correctGreek: "σε", timeLimit: 4000 },
+	{
+		id: "try-2",
+		prompt: "you (object, singular)",
+		correctGreek: "σε",
+		timeLimit: 4000,
+	},
 	{ id: "try-3", prompt: "him", correctGreek: "τον", timeLimit: 4000 },
 	{ id: "try-4", prompt: "her", correctGreek: "την", timeLimit: 4000 },
 	{ id: "try-5", prompt: "my", correctGreek: "μου", timeLimit: 4000 },
-	{ id: "try-6", prompt: "your (singular)", correctGreek: "σου", timeLimit: 4000 },
+	{
+		id: "try-6",
+		prompt: "your (singular)",
+		correctGreek: "σου",
+		timeLimit: 4000,
+	},
 	{ id: "try-7", prompt: "I want", correctGreek: "θέλω", timeLimit: 4500 },
 	{ id: "try-8", prompt: "I have", correctGreek: "έχω", timeLimit: 4500 },
 ];
@@ -44,7 +54,8 @@ const TryDrillIntro = ({ onStart }: { onStart: () => void }) => (
 						</div>
 						<h1 className="text-2xl font-bold mb-2">Try a Speed Drill</h1>
 						<p className="text-stone-600 mb-6">
-							8 questions. Type Greek with your normal keyboard. We understand phonetic spelling. Let's see what you've got.
+							8 questions. Type Greek with your normal keyboard. We understand
+							phonetic spelling. Let's see what you've got.
 						</p>
 
 						<Button size="lg" onClick={onStart} className="gap-2">
@@ -76,9 +87,17 @@ const TryDrillIntro = ({ onStart }: { onStart: () => void }) => (
 const TryDrillComplete = ({ stats }: { stats: SessionStats }) => {
 	const percentage = Math.round((stats.correct / stats.total) * 100);
 	const getMessage = () => {
-		if (percentage >= 80) return { emoji: "🎉", text: "Excellent! You've got solid foundations." };
-		if (percentage >= 50) return { emoji: "💪", text: "Good effort! Regular practice will build your speed." };
-		return { emoji: "🌱", text: "Great start! This is how you build real fluency." };
+		if (percentage >= 80)
+			return { emoji: "🎉", text: "Excellent! You've got solid foundations." };
+		if (percentage >= 50)
+			return {
+				emoji: "💪",
+				text: "Good effort! Regular practice will build your speed.",
+			};
+		return {
+			emoji: "🌱",
+			text: "Great start! This is how you build real fluency.",
+		};
 	};
 	const { emoji, text } = getMessage();
 
@@ -103,8 +122,9 @@ const TryDrillComplete = ({ stats }: { stats: SessionStats }) => {
 									This was just a taste.
 								</p>
 								<p className="text-stone-600 text-sm">
-									Create an account to track your progress, build streaks with automatic freeze protection, and access
-									the full drill library. It's free.
+									Create an account to track your progress, build streaks with
+									automatic freeze protection, and access the full drill
+									library. It's free.
 								</p>
 							</div>
 
@@ -143,7 +163,9 @@ const TryDrillComplete = ({ stats }: { stats: SessionStats }) => {
 
 export default function TryDrillRoute() {
 	const [started, setStarted] = useState(false);
-	const [completedStats, setCompletedStats] = useState<SessionStats | null>(null);
+	const [completedStats, setCompletedStats] = useState<SessionStats | null>(
+		null,
+	);
 
 	if (completedStats) {
 		return <TryDrillComplete stats={completedStats} />;

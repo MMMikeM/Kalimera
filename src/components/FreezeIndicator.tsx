@@ -1,4 +1,4 @@
-import { Snowflake, ShieldCheck } from "lucide-react";
+import { ShieldCheck, Snowflake } from "lucide-react";
 import { tv, type VariantProps } from "tailwind-variants";
 import { cn } from "@/lib/utils";
 
@@ -96,8 +96,9 @@ export const FreezeIndicator = ({
 					<>
 						<Snowflake className={cn(iconVariants({ status }), "opacity-50")} />
 						<span className={textVariants({ status })}>
-							{daysUntilNextEarn} {formatPlural(daysUntilNextEarn ?? 0, "day", "days")}{" "}
-							to earn a streak freeze
+							{daysUntilNextEarn}{" "}
+							{formatPlural(daysUntilNextEarn ?? 0, "day", "days")} to earn a
+							streak freeze
 						</span>
 					</>
 				);
@@ -106,7 +107,9 @@ export const FreezeIndicator = ({
 				return (
 					<>
 						<ShieldCheck className={iconVariants({ status })} />
-						<span className={textVariants({ status })}>Streak protected! Freeze saved your streak.</span>
+						<span className={textVariants({ status })}>
+							Streak protected! Freeze saved your streak.
+						</span>
 					</>
 				);
 		}

@@ -1,15 +1,15 @@
-import { Link, Outlet, useLocation } from "react-router";
-import { NavTabs } from "@/components/NavTabs";
-import type { NavTab } from "@/components/NavTabs";
 import {
-	Sparkles,
-	MessageCircle,
+	ChevronLeft,
+	Clock,
 	Hand,
 	Heart,
 	Link2,
-	Clock,
-	ChevronLeft,
+	MessageCircle,
+	Sparkles,
 } from "lucide-react";
+import { Link, Outlet, useLocation } from "react-router";
+import type { NavTab } from "@/components/NavTabs";
+import { NavTabs } from "@/components/NavTabs";
 import type { Route } from "./+types/layout";
 import { getPhrasesData } from "./data.server";
 
@@ -28,11 +28,36 @@ export function meta() {
 }
 
 const PHRASES_TABS: NavTab[] = [
-	{ id: "survival", label: "Survival", icon: <Sparkles size={16} />, color: "terracotta" },
-	{ id: "responses", label: "Responses", icon: <MessageCircle size={16} />, color: "ocean" },
-	{ id: "requests", label: "Requests", icon: <Hand size={16} />, color: "olive" },
-	{ id: "opinions", label: "Opinions", icon: <Heart size={16} />, color: "terracotta" },
-	{ id: "connectors", label: "Connectors", icon: <Link2 size={16} />, color: "honey" },
+	{
+		id: "survival",
+		label: "Survival",
+		icon: <Sparkles size={16} />,
+		color: "terracotta",
+	},
+	{
+		id: "responses",
+		label: "Responses",
+		icon: <MessageCircle size={16} />,
+		color: "ocean",
+	},
+	{
+		id: "requests",
+		label: "Requests",
+		icon: <Hand size={16} />,
+		color: "olive",
+	},
+	{
+		id: "opinions",
+		label: "Opinions",
+		icon: <Heart size={16} />,
+		color: "terracotta",
+	},
+	{
+		id: "connectors",
+		label: "Connectors",
+		icon: <Link2 size={16} />,
+		color: "honey",
+	},
 	{ id: "time", label: "Time", icon: <Clock size={16} />, color: "ocean" },
 ];
 

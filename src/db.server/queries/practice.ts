@@ -1,23 +1,27 @@
-import { and, count, desc, eq, gte, sql } from "drizzle-orm";
 import {
+	differenceInDays,
+	endOfTomorrow,
 	format,
 	parseISO,
-	endOfTomorrow,
 	subDays,
-	differenceInDays,
 } from "date-fns";
-import { calculateSRS, getInitialSRSValues, qualityFromAttempt } from "../../routes/practice/srs";
+import { and, count, desc, eq, gte, sql } from "drizzle-orm";
+import {
+	calculateSRS,
+	getInitialSRSValues,
+	qualityFromAttempt,
+} from "../../routes/practice/srs";
 import { db } from "../index";
 import {
+	type AreaType,
 	practiceAttempts,
 	practiceSessions,
+	type SessionType,
+	type SkillType,
 	users,
 	vocabulary,
 	vocabularySkills,
 	weakAreas,
-	type AreaType,
-	type SessionType,
-	type SkillType,
 } from "../schema";
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -25,7 +29,9 @@ import {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 /** Vocabulary item with SRS skill data */
-export type VocabItemWithSkill = Awaited<ReturnType<typeof getItemsDueForReview>>[number];
+export type VocabItemWithSkill = Awaited<
+	ReturnType<typeof getItemsDueForReview>
+>[number];
 
 /** Weak area information */
 export type WeakAreaInfo = Awaited<ReturnType<typeof getWeakAreas>>[number];
@@ -34,7 +40,9 @@ export type WeakAreaInfo = Awaited<ReturnType<typeof getWeakAreas>>[number];
 export type PracticeStats = Awaited<ReturnType<typeof getPracticeStats>>;
 
 /** Vocabulary progress */
-export type VocabularyProgress = Awaited<ReturnType<typeof getVocabularyProgress>>;
+export type VocabularyProgress = Awaited<
+	ReturnType<typeof getVocabularyProgress>
+>;
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // QUERIES
@@ -172,7 +180,9 @@ export const getPracticeStats = async (
 			),
 		);
 
-	const [totalVocabResult] = await db.select({ count: count() }).from(vocabulary);
+	const [totalVocabResult] = await db
+		.select({ count: count() })
+		.from(vocabulary);
 
 	const streak = await calculateStreak(userId);
 
@@ -210,7 +220,9 @@ export const getItemsDueTomorrow = async (
 	return result?.count || 0;
 };
 
-export const getLastPracticeDate = async (userId: number): Promise<Date | null> => {
+export const getLastPracticeDate = async (
+	userId: number,
+): Promise<Date | null> => {
 	const [result] = await db
 		.select({ completedAt: practiceSessions.completedAt })
 		.from(practiceSessions)

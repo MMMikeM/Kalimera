@@ -3,9 +3,14 @@ import { db } from "../index";
 import { milestonesAchieved } from "../schema";
 import type { MilestoneAchieved } from "../types";
 
-export type UserMilestone = Pick<MilestoneAchieved, "milestone" | "achievedAt" | "streakAtAchievement">;
+export type UserMilestone = Pick<
+	MilestoneAchieved,
+	"milestone" | "achievedAt" | "streakAtAchievement"
+>;
 
-export const getUserMilestones = async (userId: number): Promise<UserMilestone[]> => {
+export const getUserMilestones = async (
+	userId: number,
+): Promise<UserMilestone[]> => {
 	const results = await db
 		.select({
 			milestone: milestonesAchieved.milestone,

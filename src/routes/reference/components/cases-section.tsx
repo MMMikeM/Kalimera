@@ -1,11 +1,11 @@
 import { ChevronDown } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
-import { CASE_RECOGNITION } from "@/constants/recognition";
 import { Card } from "@/components/Card";
+import { CollapsibleSection } from "@/components/CollapsibleSection";
 import { MonoText } from "@/components/MonoText";
 import { SectionHeading } from "@/components/SectionHeading";
-import { CollapsibleSection } from "@/components/CollapsibleSection";
+import { CASE_RECOGNITION } from "@/constants/recognition";
 
 export const CasesSection: React.FC = () => {
 	const [showVocative, setShowVocative] = useState(false);
@@ -16,10 +16,10 @@ export const CasesSection: React.FC = () => {
 
 			{/* Simple prose intro - explains what cases ARE for true beginners */}
 			<p className="text-slate-text leading-relaxed">
-				In English, word order shows meaning:{" "}
-				<em>"The dog bit the man"</em> vs <em>"The man bit the dog."</em>{" "}
-				In Greek, word <strong>endings</strong> show meaning, so word order
-				is flexible. These different endings are called <strong>cases</strong>.
+				In English, word order shows meaning: <em>"The dog bit the man"</em> vs{" "}
+				<em>"The man bit the dog."</em> In Greek, word <strong>endings</strong>{" "}
+				show meaning, so word order is flexible. These different endings are
+				called <strong>cases</strong>.
 			</p>
 
 			{/* The Four Questions - HERO element, foundation first */}

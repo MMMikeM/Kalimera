@@ -1,6 +1,7 @@
-import { useState, useRef, useEffect } from "react";
-import { Link } from "react-router";
 import { BarChart3, ChevronDown, Info, LogOut, Search } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router";
+import { SearchResults } from "@/components/SearchResults";
 import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,
@@ -11,10 +12,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import {
 	Popover,
-	PopoverContent,
 	PopoverAnchor,
+	PopoverContent,
 } from "@/components/ui/popover";
-import { SearchResults } from "@/components/SearchResults";
 import { useVocabularySearch } from "@/lib/use-vocabulary-search";
 
 const NAV_ITEMS_AUTH = [
@@ -34,12 +34,18 @@ interface HeaderProps {
 	onLogout?: () => void;
 }
 
-export const Header = ({ isAuthenticated, currentSection = "", onLogout }: HeaderProps) => {
+export const Header = ({
+	isAuthenticated,
+	currentSection = "",
+	onLogout,
+}: HeaderProps) => {
 	const navItems = isAuthenticated ? NAV_ITEMS_AUTH : NAV_ITEMS_UNAUTH;
 	const [isSearchOpen, setIsSearchOpen] = useState(false);
-	const { searchTerm, setSearchTerm, results, isLoading } = useVocabularySearch({
-		enabled: isSearchOpen,
-	});
+	const { searchTerm, setSearchTerm, results, isLoading } = useVocabularySearch(
+		{
+			enabled: isSearchOpen,
+		},
+	);
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
@@ -96,7 +102,11 @@ export const Header = ({ isAuthenticated, currentSection = "", onLogout }: Heade
 										Loading...
 									</div>
 								) : (
-									<SearchResults results={results} searchTerm={searchTerm} compact />
+									<SearchResults
+										results={results}
+										searchTerm={searchTerm}
+										compact
+									/>
 								)}
 							</div>
 						</PopoverContent>
@@ -133,13 +143,19 @@ export const Header = ({ isAuthenticated, currentSection = "", onLogout }: Heade
 							</DropdownMenuTrigger>
 							<DropdownMenuContent align="end" className="w-48">
 								<DropdownMenuItem asChild>
-									<Link to="/progress" className="flex items-center gap-2 cursor-pointer">
+									<Link
+										to="/progress"
+										className="flex items-center gap-2 cursor-pointer"
+									>
 										<BarChart3 size={16} strokeWidth={1.5} />
 										Progress
 									</Link>
 								</DropdownMenuItem>
 								<DropdownMenuItem asChild>
-									<Link to="/support" className="flex items-center gap-2 cursor-pointer">
+									<Link
+										to="/support"
+										className="flex items-center gap-2 cursor-pointer"
+									>
 										<Info size={16} strokeWidth={1.5} />
 										About
 									</Link>

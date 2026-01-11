@@ -5,8 +5,8 @@ import type { Route } from "./+types/push.vapid-key";
  * Return the VAPID public key for client-side push subscription
  */
 export const loader = async ({ context }: Route.LoaderArgs) => {
-	const vapidPublicKey = context?.cloudflare?.env?.VAPID_PUBLIC_KEY
-		?? process.env.VAPID_PUBLIC_KEY;
+	const vapidPublicKey =
+		context?.cloudflare?.env?.VAPID_PUBLIC_KEY ?? process.env.VAPID_PUBLIC_KEY;
 
 	if (!vapidPublicKey) {
 		return Response.json(

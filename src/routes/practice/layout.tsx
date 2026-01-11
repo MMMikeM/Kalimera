@@ -1,24 +1,24 @@
-import { useState, useEffect } from "react";
 import { Clock, Zap } from "lucide-react";
+import { useEffect, useState } from "react";
 import {
 	Outlet,
-	useSearchParams,
-	useRevalidator,
 	useLocation,
+	useRevalidator,
+	useSearchParams,
 } from "react-router";
+import type { NavTab } from "@/components/NavTabs";
+import { NavTabs } from "@/components/NavTabs";
 import type { Route } from "./+types/layout";
 import {
+	type ActionIntent,
+	actionHandlers,
 	getItemsDueForReview,
 	getNewVocabularyItems,
 	getPracticeStats,
 	getUserById,
-	actionHandlers,
-	type ActionIntent,
-	type VocabItemWithSkill,
 	type PracticeStats,
+	type VocabItemWithSkill,
 } from "./data.server";
-import { NavTabs } from "@/components/NavTabs";
-import type { NavTab } from "@/components/NavTabs";
 
 const AUTH_STORAGE_KEY = "greek-authenticated-user";
 
@@ -37,7 +37,9 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 	const userIdParam = url.searchParams.get("userId");
 	const userId = userIdParam ? parseInt(userIdParam, 10) : null;
 	const limitParam = url.searchParams.get("limit");
-	const limit = limitParam ? Math.min(Math.max(parseInt(limitParam, 10), 1), 100) : 20;
+	const limit = limitParam
+		? Math.min(Math.max(parseInt(limitParam, 10), 1), 100)
+		: 20;
 
 	let reviewItems: VocabItemWithSkill[] = [];
 	let newVocabItems: VocabItemWithSkill[] = [];
@@ -86,7 +88,12 @@ export const UserRequiredMessage = () => (
 );
 
 const PRACTICE_TABS: NavTab[] = [
-	{ id: "speed", label: "Speed Drill", icon: <Zap size={16} />, color: "terracotta" },
+	{
+		id: "speed",
+		label: "Speed Drill",
+		icon: <Zap size={16} />,
+		color: "terracotta",
+	},
 	{ id: "review", label: "Review", icon: <Clock size={16} />, color: "ocean" },
 ];
 
@@ -148,7 +155,7 @@ export default function PracticeLayout({ loaderData }: Route.ComponentProps) {
 				tabs={PRACTICE_TABS.map((tab) =>
 					tab.id === "review" && stats?.dueCount
 						? { ...tab, badge: stats.dueCount }
-						: tab
+						: tab,
 				)}
 				activeTab={activeTab}
 				buildUrl={buildTabUrl}

@@ -23,7 +23,11 @@ export const VERBS: VerbSeed[] = [
 	// -άω/-ώ family
 	{ lemma: "μιλάω", english: "I speak", conjugationFamily: "-άω/-ώ" },
 	{ lemma: "προτιμώ", english: "I prefer", conjugationFamily: "-άω/-ώ" },
-	{ lemma: "φταίω", english: "I'm guilty/at fault", conjugationFamily: "-άω/-ώ" },
+	{
+		lemma: "φταίω",
+		english: "I'm guilty/at fault",
+		conjugationFamily: "-άω/-ώ",
+	},
 	{ lemma: "φοράω", english: "I wear", conjugationFamily: "-άω/-ώ" },
 
 	// -ομαι family (deponent/passive)

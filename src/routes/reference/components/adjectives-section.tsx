@@ -1,20 +1,20 @@
 import { Lightbulb } from "lucide-react";
 import type React from "react";
-import {
-	ADJECTIVE_PARADIGMS,
-	ADJECTIVE_AGREEMENT_EXAMPLES,
-	ADJECTIVE_MISTAKES,
-	ADJECTIVE_ENDINGS_QUICK_REF,
-	COMMON_ADJECTIVES,
-	type AdjectiveParadigm,
-} from "@/constants/adjectives";
 import { Card } from "@/components/Card";
+import { CollapsibleSection } from "@/components/CollapsibleSection";
+import { ContentSection } from "@/components/ContentSection";
+import { MistakeComparison } from "@/components/MistakeComparison";
 import { MonoText } from "@/components/MonoText";
 import { SectionHeading } from "@/components/SectionHeading";
-import { ContentSection } from "@/components/ContentSection";
-import { CollapsibleSection } from "@/components/CollapsibleSection";
-import { MistakeComparison } from "@/components/MistakeComparison";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import {
+	ADJECTIVE_AGREEMENT_EXAMPLES,
+	ADJECTIVE_ENDINGS_QUICK_REF,
+	ADJECTIVE_MISTAKES,
+	ADJECTIVE_PARADIGMS,
+	type AdjectiveParadigm,
+	COMMON_ADJECTIVES,
+} from "@/constants/adjectives";
 
 // Adjective endings quick lookup table
 const AdjectiveEndingsTable: React.FC = () => (
@@ -346,12 +346,13 @@ const AdjectiveParadigmCard: React.FC<{ paradigm: AdjectiveParadigm }> = ({
 				</MonoText>
 				<span className="text-sm text-stone-600">{paradigm.title}</span>
 				<span
-					className={`text-xs px-2 py-0.5 rounded ${paradigm.frequency === "very common"
+					className={`text-xs px-2 py-0.5 rounded ${
+						paradigm.frequency === "very common"
 							? "bg-olive-200 text-olive-text"
 							: paradigm.frequency === "common"
 								? "bg-honey-200 text-honey-text"
 								: "bg-stone-100 text-stone-600"
-						}`}
+					}`}
 				>
 					{paradigm.frequency}
 				</span>
@@ -411,16 +412,16 @@ export const AdjectivesSection: React.FC = () => {
 			<ContentSection title="Adjectives copy the noun" colorScheme="olive">
 				<div className="p-3 space-y-3">
 					<p className="text-sm text-stone-600">
-						Match the article's gender and case. The adjective ending follows the
-						same pattern as nouns.
+						Match the article's gender and case. The adjective ending follows
+						the same pattern as nouns.
 					</p>
 					<div className="p-3 bg-stone-50 rounded-lg border border-stone-200">
 						<div className="text-xs font-semibold text-olive-text uppercase tracking-wide mb-2">
 							What this means
 						</div>
 						<p className="text-sm text-stone-600 mb-2">
-							Look at the article. The adjective uses the same gender, case,
-							and number as the noun it describes.
+							Look at the article. The adjective uses the same gender, case, and
+							number as the noun it describes.
 						</p>
 						<div className="space-y-1">
 							<div>

@@ -11,8 +11,14 @@ const ICONS = {
 } as const;
 
 export const PrepositionNavigator = () => (
-	<Card variant="bordered" padding="lg" className="bg-honey-50 border-honey-300">
-		<h3 className="text-lg font-bold text-honey-text mb-3">Which preposition do I need?</h3>
+	<Card
+		variant="bordered"
+		padding="lg"
+		className="bg-honey-50 border-honey-300"
+	>
+		<h3 className="text-lg font-bold text-honey-text mb-3">
+			Which preposition do I need?
+		</h3>
 		<p className="text-sm text-stone-600 mb-4">
 			Ask yourself what <strong>relationship</strong> you're describing:
 		</p>
@@ -56,8 +62,8 @@ export const PrepositionNavigator = () => (
 		</div>
 
 		<div className="mt-4 pt-3 border-t border-honey-300 text-sm text-honey-text">
-			<strong>Remember:</strong> σε is the most common and contracts with articles (σε + το = στο).
-			The others stay unchanged.
+			<strong>Remember:</strong> σε is the most common and contracts with
+			articles (σε + το = στο). The others stay unchanged.
 		</div>
 	</Card>
 );

@@ -1,8 +1,15 @@
+import {
+	BookOpen,
+	ChevronLeft,
+	Hash,
+	MapPin,
+	Palette,
+	Sun,
+	TrendingUp,
+} from "lucide-react";
 import { Link } from "react-router";
-import { Hash, MapPin, Sun, TrendingUp, Palette, ChevronLeft } from "lucide-react";
 import { Card } from "@/components/Card";
 import { TabHero } from "@/components/TabHero";
-import { BookOpen } from "lucide-react";
 
 const TOOLKIT_SECTIONS = [
 	{
@@ -46,7 +53,8 @@ const COLOR_CLASSES = {
 	ocean: "bg-ocean-50 border-ocean-300 hover:border-ocean-400",
 	honey: "bg-honey-50 border-honey-300 hover:border-honey-400",
 	olive: "bg-olive-50 border-olive-300 hover:border-olive-400",
-	terracotta: "bg-terracotta-50 border-terracotta-300 hover:border-terracotta-400",
+	terracotta:
+		"bg-terracotta-50 border-terracotta-300 hover:border-terracotta-400",
 } as const;
 
 const ICON_CLASSES = {
@@ -73,8 +81,8 @@ export default function EssentialsIndex() {
 				colorScheme="honey"
 				icon={<BookOpen size={18} />}
 			>
-				Numbers, colours, times, and position words — the building blocks
-				you'll need constantly in everyday Greek.
+				Numbers, colours, times, and position words — the building blocks you'll
+				need constantly in everyday Greek.
 			</TabHero>
 
 			<div className="grid grid-cols-2 gap-4">
@@ -92,7 +100,9 @@ export default function EssentialsIndex() {
 								className={`${COLOR_CLASSES[section.color]} transition-colors h-full`}
 							>
 								<div className="flex flex-col items-center text-center gap-2">
-									<div className={`p-2 rounded-lg ${ICON_CLASSES[section.color]}`}>
+									<div
+										className={`p-2 rounded-lg ${ICON_CLASSES[section.color]}`}
+									>
 										<Icon size={20} />
 									</div>
 									<h3 className="font-semibold text-stone-900">

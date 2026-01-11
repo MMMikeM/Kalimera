@@ -1,15 +1,15 @@
-import { useState, useEffect, useCallback } from "react";
-import { Bell, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/Card";
 import {
-	isPushSupported,
-	getNotificationPermission,
-	requestNotificationPermission,
-	subscribeToPush,
 	getCurrentSubscription,
+	getNotificationPermission,
+	isPushSupported,
+	requestNotificationPermission,
 	serializeSubscription,
+	subscribeToPush,
 } from "@mmmike/web-push/client";
+import { Bell, X } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
+import { Card } from "@/components/Card";
+import { Button } from "@/components/ui/button";
 
 interface NotificationAskProps {
 	userId: number;
@@ -54,8 +54,7 @@ export const NotificationAsk = ({
 
 			if (isDismissed()) return;
 
-			const shouldShow =
-				sessionCount >= 3 || streakDays >= 3 || isLapsedReturn;
+			const shouldShow = sessionCount >= 3 || streakDays >= 3 || isLapsedReturn;
 			setIsVisible(shouldShow);
 		};
 

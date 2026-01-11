@@ -1,7 +1,7 @@
-import { useRef, useEffect, type ReactNode } from "react";
+import { motion, useMotionValue, useScroll, useTransform } from "motion/react";
+import { type ReactNode, useEffect, useRef } from "react";
 import { Link } from "react-router";
 import { tv } from "tailwind-variants";
-import { motion, useScroll, useTransform, useMotionValue } from "motion/react";
 
 const navTabsVariants = tv({
 	slots: {

@@ -1,5 +1,11 @@
 import { AlertTriangle, ArrowRight, Clock, Lightbulb } from "lucide-react";
 import type React from "react";
+import { Card } from "@/components/Card";
+import { CollapsibleSection } from "@/components/CollapsibleSection";
+import { ContentSection } from "@/components/ContentSection";
+import { MonoText } from "@/components/MonoText";
+import { SectionHeading } from "@/components/SectionHeading";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
 	BIG_4_PREPOSITIONS,
 	COMPOUND_CONTRAST_PAIRS,
@@ -9,12 +15,6 @@ import {
 	SE_CONTRACTIONS,
 	TIME_EXPRESSIONS,
 } from "@/constants/prepositions";
-import { Card } from "@/components/Card";
-import { ContentSection } from "@/components/ContentSection";
-import { CollapsibleSection } from "@/components/CollapsibleSection";
-import { MonoText } from "@/components/MonoText";
-import { SectionHeading } from "@/components/SectionHeading";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { PrepositionNavigator } from "./preposition-navigator";
 
 export const PrepositionsSection: React.FC = () => (
@@ -284,17 +284,19 @@ export const PrepositionsSection: React.FC = () => (
 							className="grid grid-cols-1 sm:grid-cols-2 gap-3"
 						>
 							<div
-								className={`p-3 rounded-lg border ${pair.left.usesσε
+								className={`p-3 rounded-lg border ${
+									pair.left.usesσε
 										? "bg-olive-100 border-olive-300"
 										: "bg-ocean-100 border-ocean-300"
-									}`}
+								}`}
 							>
 								<div className="flex items-baseline justify-between mb-1">
 									<MonoText
 										variant="greek"
 										size="md"
-										className={`font-semibold ${pair.left.usesσε ? "text-olive-text" : "text-ocean-text"
-											}`}
+										className={`font-semibold ${
+											pair.left.usesσε ? "text-olive-text" : "text-ocean-text"
+										}`}
 									>
 										{pair.left.greek}
 									</MonoText>
@@ -312,17 +314,19 @@ export const PrepositionsSection: React.FC = () => (
 							</div>
 
 							<div
-								className={`p-3 rounded-lg border ${pair.right.usesσε
+								className={`p-3 rounded-lg border ${
+									pair.right.usesσε
 										? "bg-olive-100 border-olive-300"
 										: "bg-ocean-100 border-ocean-300"
-									}`}
+								}`}
 							>
 								<div className="flex items-baseline justify-between mb-1">
 									<MonoText
 										variant="greek"
 										size="md"
-										className={`font-semibold ${pair.right.usesσε ? "text-olive-text" : "text-ocean-text"
-											}`}
+										className={`font-semibold ${
+											pair.right.usesσε ? "text-olive-text" : "text-ocean-text"
+										}`}
 									>
 										{pair.right.greek}
 									</MonoText>

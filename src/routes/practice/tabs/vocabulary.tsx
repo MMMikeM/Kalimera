@@ -1,7 +1,7 @@
 import { useOutletContext } from "react-router";
+import SrsDrill from "../components/srs-drill";
 import type { PracticeLoaderData } from "../layout";
 import { UserRequiredMessage } from "../layout";
-import SrsDrill from "../components/srs-drill";
 
 export function VocabularyTab() {
 	const context = useOutletContext<PracticeLoaderData>();
@@ -11,5 +11,11 @@ export function VocabularyTab() {
 		return <UserRequiredMessage />;
 	}
 
-	return <SrsDrill variant="vocabulary" items={newVocabItems} streakDays={stats?.streak} />;
+	return (
+		<SrsDrill
+			variant="vocabulary"
+			items={newVocabItems}
+			streakDays={stats?.streak}
+		/>
+	);
 }

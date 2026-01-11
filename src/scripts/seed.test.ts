@@ -3,10 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { beforeAll, describe, expect, it } from "vitest";
-import type {
-	NewVerbDetails,
-	NewVocabulary,
-} from "../db.server/schema";
+import type { NewVerbDetails, NewVocabulary } from "../db.server/schema";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

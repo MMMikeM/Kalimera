@@ -1,7 +1,7 @@
 import { Utensils } from "lucide-react";
 import { ConversationHero } from "@/components/ConversationHero";
 import type { DialogueLine } from "@/components/DialogueExchange";
-import { ScenarioCard, LearningTips, useConversationContext } from "../layout";
+import { LearningTips, ScenarioCard, useConversationContext } from "../layout";
 
 const OFFERING_FOOD: DialogueLine[] = [
 	{ speaker: "host", greek: "Θέλεις κάτι;", english: "Do you want something?" },

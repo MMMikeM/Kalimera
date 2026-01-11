@@ -1,7 +1,7 @@
+import { BookOpen, ChevronLeft, Languages, Package } from "lucide-react";
 import { Link, Outlet, useLocation } from "react-router";
-import { NavTabs } from "@/components/NavTabs";
 import type { NavTab } from "@/components/NavTabs";
-import { Package, Languages, BookOpen, ChevronLeft } from "lucide-react";
+import { NavTabs } from "@/components/NavTabs";
 import type { Route } from "./+types/layout";
 import { getVocabularyData } from "./data.server";
 
@@ -21,8 +21,18 @@ export function meta() {
 
 const VOCABULARY_TABS: NavTab[] = [
 	{ id: "nouns", label: "Nouns", icon: <Package size={16} />, color: "ocean" },
-	{ id: "verbs", label: "Verbs", icon: <Languages size={16} />, color: "honey" },
-	{ id: "essentials", label: "Essentials", icon: <BookOpen size={16} />, color: "olive" },
+	{
+		id: "verbs",
+		label: "Verbs",
+		icon: <Languages size={16} />,
+		color: "honey",
+	},
+	{
+		id: "essentials",
+		label: "Essentials",
+		icon: <BookOpen size={16} />,
+		color: "olive",
+	},
 ];
 
 export default function VocabularyLayout({ loaderData }: Route.ComponentProps) {

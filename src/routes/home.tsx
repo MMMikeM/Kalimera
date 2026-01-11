@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import { Link, useSearchParams, useRevalidator } from "react-router";
+import { differenceInDays, getDate, getDay } from "date-fns";
 import {
 	ArrowRight,
 	Calendar,
@@ -9,8 +8,10 @@ import {
 	Play,
 	Sparkles,
 } from "lucide-react";
-import { differenceInDays, getDay, getDate } from "date-fns";
-import type { Route } from "./+types/home";
+import { useEffect, useState } from "react";
+import { Link, useRevalidator, useSearchParams } from "react-router";
+import { FreezeIndicator } from "@/components/FreezeIndicator";
+import { MilestoneCelebration } from "@/components/MilestoneCelebration";
 import {
 	getItemsDueTomorrow,
 	getLastPracticeDate,
@@ -18,12 +19,11 @@ import {
 	getUserById,
 } from "@/db.server/queries/practice";
 import {
-	getFreezeStatus,
 	calculateDaysUntilNextFreeze,
 	type FreezeStatus,
+	getFreezeStatus,
 } from "@/db.server/queries/streak";
-import { FreezeIndicator } from "@/components/FreezeIndicator";
-import { MilestoneCelebration } from "@/components/MilestoneCelebration";
+import type { Route } from "./+types/home";
 
 const AUTH_STORAGE_KEY = "greek-authenticated-user";
 

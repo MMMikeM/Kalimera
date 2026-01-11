@@ -1,6 +1,6 @@
-import { useState, useCallback } from "react";
-import { startRegistration } from "@simplewebauthn/browser";
 import type { PublicKeyCredentialCreationOptionsJSON } from "@simplewebauthn/browser";
+import { startRegistration } from "@simplewebauthn/browser";
+import { useCallback, useState } from "react";
 
 type PasskeyState = "idle" | "loading" | "success" | "error";
 
@@ -66,9 +66,7 @@ export function usePasskeyRegistration(
 		} catch (err) {
 			console.error("Passkey setup error:", err);
 			setState("error");
-			setError(
-				err instanceof Error ? err.message : "Failed to set up passkey",
-			);
+			setError(err instanceof Error ? err.message : "Failed to set up passkey");
 		}
 	}, [options.userId, options.username]);
 

@@ -1,5 +1,5 @@
-import type { ReactNode } from "react";
 import { Lightbulb } from "lucide-react";
+import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { Card } from "./Card";
 import { MonoText } from "./MonoText";
@@ -31,7 +31,9 @@ export type TabHeroColorScheme =
 	| "stone";
 
 export interface TabHeroProps<T extends string = string> {
-	title: ShortTitle<T> extends never ? `Title too long (max 30 chars): ${T}` : T;
+	title: ShortTitle<T> extends never
+		? `Title too long (max 30 chars): ${T}`
+		: T;
 	children: ReactNode;
 	icon?: ReactNode;
 	greekPhrase?: string;

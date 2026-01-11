@@ -1,19 +1,23 @@
+import {
+	isValidationErrorResponse,
+	parseFormData,
+	useForm,
+	validationError,
+} from "@rvf/react-router";
+import { KeyRound, Loader2, LogIn } from "lucide-react";
 import { useEffect } from "react";
 import { Link } from "react-router";
-import {
-	useForm,
-	parseFormData,
-	validationError,
-	isValidationErrorResponse,
-} from "@rvf/react-router";
-import { LogIn, KeyRound, Loader2 } from "lucide-react";
-import type { Route } from "./+types/login";
+import { Card } from "@/components/Card";
+import { Button } from "@/components/ui/button";
+import { FormField } from "@/components/ui/form-field";
 import {
 	findUserByCode,
 	findUserByUsername,
 	getUserPasswordHash,
 	setUserPassword,
 } from "@/db.server/queries/auth";
+import { loginAndRedirect } from "@/lib/auth-storage";
+import { usePasskeyAuth } from "@/lib/hooks/use-passkey-auth";
 import { hashPassword, verifyPassword } from "@/lib/password";
 import {
 	loginSchema,
@@ -21,11 +25,7 @@ import {
 	passwordSetupSchema,
 	passwordSetupValidator,
 } from "@/lib/validators/auth";
-import { usePasskeyAuth } from "@/lib/hooks/use-passkey-auth";
-import { loginAndRedirect } from "@/lib/auth-storage";
-import { Card } from "@/components/Card";
-import { Button } from "@/components/ui/button";
-import { FormField } from "@/components/ui/form-field";
+import type { Route } from "./+types/login";
 
 export function meta() {
 	return [

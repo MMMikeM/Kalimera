@@ -2,9 +2,10 @@
  * Generate PWA icons from favicon.svg
  * Run with: npx tsx scripts/generate-icons.ts
  */
-import sharp from "sharp";
-import { readFileSync, mkdirSync } from "node:fs";
+
+import { mkdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
+import sharp from "sharp";
 
 const FAVICON_PATH = join(process.cwd(), "public/favicon.svg");
 const OUTPUT_DIR = join(process.cwd(), "public/icons");
@@ -28,10 +29,7 @@ const generateIcons = async () => {
 	// Generate standard icons
 	for (const { size, name } of SIZES) {
 		const outputPath = join(OUTPUT_DIR, name);
-		await sharp(svgBuffer)
-			.resize(size, size)
-			.png()
-			.toFile(outputPath);
+		await sharp(svgBuffer).resize(size, size).png().toFile(outputPath);
 		console.log(`Generated: ${name} (${size}x${size})`);
 	}
 
@@ -51,7 +49,9 @@ const generateIcons = async () => {
 		})
 		.png()
 		.toFile(maskableOutput);
-	console.log(`Generated: icon-maskable-512.png (${MASKABLE_SIZE}x${MASKABLE_SIZE} with safe zone)`);
+	console.log(
+		`Generated: icon-maskable-512.png (${MASKABLE_SIZE}x${MASKABLE_SIZE} with safe zone)`,
+	);
 
 	console.log("\nAll icons generated successfully!");
 };

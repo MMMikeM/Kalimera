@@ -79,18 +79,12 @@ export const LESSON_2024_06_26 = {
 	grammarNotes: [
 		{
 			pattern: "γίνομαι conjugation (-ομαι)",
-			examples: [
-				"γίνομαι, γίνεσαι, γίνεται",
-				"γινόμαστε, γίνεστε, γίνονται",
-			],
+			examples: ["γίνομαι, γίνεσαι, γίνεται", "γινόμαστε, γίνεστε, γίνονται"],
 			explanation: "Deponent verb - passive form, active meaning",
 		},
 		{
 			pattern: "έρχομαι conjugation (-ομαι)",
-			examples: [
-				"έρχομαι, έρχεσαι, έρχεται",
-				"ερχόμαστε, έρχεστε, έρχονται",
-			],
+			examples: ["έρχομαι, έρχεσαι, έρχεται", "ερχόμαστε, έρχεστε, έρχονται"],
 			explanation: "Note: ερχόσαστε is alternative form for έρχεστε",
 		},
 	],

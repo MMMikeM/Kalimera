@@ -4,11 +4,11 @@ import { MonoText } from "@/components/MonoText";
 
 // Re-export types from data.server - single source of truth
 export type {
-	VocabItem,
-	VocabularyLoaderData,
-	VerbWithPattern,
 	VerbCategory,
 	VerbSubCategory,
+	VerbWithPattern,
+	VocabItem,
+	VocabularyLoaderData,
 } from "../data.server";
 
 export const VocabItemDisplay: React.FC<{

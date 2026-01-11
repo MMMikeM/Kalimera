@@ -1,11 +1,11 @@
 import { and, eq, lt } from "drizzle-orm";
 import { db } from "../index";
 import {
+	type AuthenticatorTransport,
 	authChallenges,
+	type ChallengeType,
 	passkeys,
 	users,
-	type AuthenticatorTransport,
-	type ChallengeType,
 } from "../schema";
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -40,7 +40,10 @@ export const createPasskey = async (data: NewPasskey) => {
 	return passkey;
 };
 
-export const updatePasskeyCounter = async (credentialId: string, counter: number) => {
+export const updatePasskeyCounter = async (
+	credentialId: string,
+	counter: number,
+) => {
 	await db
 		.update(passkeys)
 		.set({ counter, lastUsedAt: new Date() })
@@ -77,13 +80,20 @@ export const findChallenge = async (challenge: string, type: ChallengeType) => {
 	// Opportunistically clean up a few expired challenges
 	await db
 		.delete(authChallenges)
-		.where(and(eq(authChallenges.type, type), lt(authChallenges.expiresAt, now)));
+		.where(
+			and(eq(authChallenges.type, type), lt(authChallenges.expiresAt, now)),
+		);
 
 	// Find the valid challenge
 	const [record] = await db
 		.select()
 		.from(authChallenges)
-		.where(and(eq(authChallenges.challenge, challenge), eq(authChallenges.type, type)));
+		.where(
+			and(
+				eq(authChallenges.challenge, challenge),
+				eq(authChallenges.type, type),
+			),
+		);
 
 	// Return null if expired
 	if (record && record.expiresAt < now) {
@@ -94,7 +104,9 @@ export const findChallenge = async (challenge: string, type: ChallengeType) => {
 };
 
 export const deleteChallenge = async (challenge: string) => {
-	await db.delete(authChallenges).where(eq(authChallenges.challenge, challenge));
+	await db
+		.delete(authChallenges)
+		.where(eq(authChallenges.challenge, challenge));
 };
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -159,8 +171,14 @@ export const findUserByCode = async (code: string) => {
 	return user;
 };
 
-export const setUserPassword = async (userId: number, passwordHash: string, username?: string) => {
-	const updateData: { passwordHash: string; username?: string } = { passwordHash };
+export const setUserPassword = async (
+	userId: number,
+	passwordHash: string,
+	username?: string,
+) => {
+	const updateData: { passwordHash: string; username?: string } = {
+		passwordHash,
+	};
 	if (username) {
 		updateData.username = username.toLowerCase();
 	}
