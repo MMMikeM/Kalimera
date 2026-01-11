@@ -1,22 +1,23 @@
 import {
 	AlertCircle,
-	Zap,
-	Sparkles,
-	RefreshCw,
-	Lightbulb,
 	ArrowRight,
+	ArrowRightLeft,
 	BookOpen,
+	Lightbulb,
+	RefreshCw,
+	Sparkles,
+	Zap,
 } from "lucide-react";
 import type React from "react";
 import { Link } from "react-router";
 
 import { Card } from "@/components/Card";
+import { CollapsibleSection } from "@/components/CollapsibleSection";
+import { ContentSection } from "@/components/ContentSection";
 import { MonoText } from "@/components/MonoText";
 import { ParadigmTable } from "@/components/ParadigmTable";
 import { SectionHeading } from "@/components/SectionHeading";
-import { ContentSection } from "@/components/ContentSection";
-import { CollapsibleSection } from "@/components/CollapsibleSection";
-import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { IRREGULAR_VERBS, VERB_PATTERNS } from "@/constants/verbs";
 
 interface UsageExample {
@@ -306,6 +307,144 @@ const PatternIdentifier: React.FC = () => (
 	</Card>
 );
 
+const VoiceExplanation: React.FC = () => (
+	<Card
+		variant="bordered"
+		padding="lg"
+		className="bg-slate-50 border-2 border-slate-300"
+	>
+		<div className="flex items-center gap-3 mb-4">
+			<div className="p-2.5 rounded-xl bg-slate-200">
+				<ArrowRightLeft size={20} className="text-slate-text" />
+			</div>
+			<div>
+				<h3 className="text-lg font-bold text-stone-800">
+					Voice: Who Does the Action?
+				</h3>
+				<p className="text-sm text-stone-600">
+					Greek verbs show not just WHO (the endings) but also the DIRECTION of
+					action
+				</p>
+			</div>
+		</div>
+
+		<div className="space-y-4">
+			{/* Active voice */}
+			<div className="bg-ocean-50 rounded-lg p-4 border border-ocean-200">
+				<h4 className="font-semibold text-ocean-text mb-2">
+					Active: Subject DOES the action
+				</h4>
+				<div className="space-y-2">
+					<div className="flex items-baseline gap-2">
+						<MonoText className="text-ocean-text font-bold">
+							βλέπω τον φίλο
+						</MonoText>
+						<span className="text-stone-600">=</span>
+						<span className="text-stone-700">I see the friend</span>
+					</div>
+					<p className="text-sm text-stone-500 italic pl-2 border-l-2 border-ocean-200">
+						Action flows FROM me TO the friend
+					</p>
+				</div>
+			</div>
+
+			{/* Passive voice */}
+			<div className="bg-terracotta-50 rounded-lg p-4 border border-terracotta-200">
+				<h4 className="font-semibold text-terracotta-text mb-2">
+					Passive: Subject RECEIVES the action
+				</h4>
+				<div className="space-y-2">
+					<div className="flex items-baseline gap-2">
+						<MonoText className="text-terracotta-text font-bold">
+							βλέπομαι από τον φίλο
+						</MonoText>
+						<span className="text-stone-600">=</span>
+						<span className="text-stone-700">I am seen by the friend</span>
+					</div>
+					<p className="text-sm text-stone-500 italic pl-2 border-l-2 border-terracotta-200">
+						Action flows TO me FROM the friend
+					</p>
+				</div>
+			</div>
+
+			{/* The -μαι marker */}
+			<div className="bg-white rounded-lg p-4 border border-stone-200">
+				<p className="text-sm text-stone-700 mb-3">
+					The{" "}
+					<MonoText className="text-terracotta-text font-bold">-μαι</MonoText>{" "}
+					ending is the passive marker:
+				</p>
+				<div className="grid sm:grid-cols-2 gap-3">
+					<div className="flex items-center gap-2 text-sm">
+						<MonoText className="text-ocean-text font-semibold">βλέπω</MonoText>
+						<span className="text-stone-400">(I see)</span>
+						<ArrowRight size={14} className="text-stone-400" />
+						<MonoText className="text-terracotta-text font-semibold">
+							βλέπομαι
+						</MonoText>
+						<span className="text-stone-400">(I am seen)</span>
+					</div>
+					<div className="flex items-center gap-2 text-sm">
+						<MonoText className="text-ocean-text font-semibold">ακούω</MonoText>
+						<span className="text-stone-400">(I hear)</span>
+						<ArrowRight size={14} className="text-stone-400" />
+						<MonoText className="text-terracotta-text font-semibold">
+							ακούομαι
+						</MonoText>
+						<span className="text-stone-400">(I am heard)</span>
+					</div>
+				</div>
+			</div>
+
+			{/* Deponent verbs */}
+			<div className="bg-olive-50 rounded-lg p-4 border border-olive-200">
+				<h4 className="font-semibold text-olive-text mb-2">
+					Deponent: Passive form, active meaning
+				</h4>
+				<p className="text-sm text-stone-600 mb-3">
+					Some verbs ONLY exist in{" "}
+					<MonoText className="text-olive-text font-bold">-μαι</MonoText> form,
+					but their meaning is active:
+				</p>
+				<div className="space-y-2">
+					<div className="flex items-baseline gap-2">
+						<MonoText className="text-olive-text font-bold">έρχομαι</MonoText>
+						<span className="text-stone-600">=</span>
+						<span className="text-stone-700">I come</span>
+						<span className="text-stone-400 text-sm">(not "I am come-d")</span>
+					</div>
+					<div className="flex items-baseline gap-2">
+						<MonoText className="text-olive-text font-bold">θυμάμαι</MonoText>
+						<span className="text-stone-600">=</span>
+						<span className="text-stone-700">I remember</span>
+						<span className="text-stone-400 text-sm">
+							(not "I am remembered")
+						</span>
+					</div>
+					<div className="flex items-baseline gap-2">
+						<MonoText className="text-olive-text font-bold">κοιμάμαι</MonoText>
+						<span className="text-stone-600">=</span>
+						<span className="text-stone-700">I sleep</span>
+						<span className="text-stone-400 text-sm">(not "I am slept")</span>
+					</div>
+				</div>
+				<p className="text-sm text-stone-500 mt-3 pt-3 border-t border-olive-200">
+					The endings follow passive patterns, but YOU are doing the action.
+				</p>
+			</div>
+
+			{/* Etymology note */}
+			<div className="p-3 bg-stone-100 rounded-lg border border-stone-200">
+				<p className="text-sm text-slate-text">
+					<strong className="text-navy-text">Why "deponent"?</strong> From Latin{" "}
+					<em>deponere</em> (to put aside) — these verbs have "set aside" their
+					active forms.
+				</p>
+			</div>
+		</div>
+	</Card>
+);
+
 // Find είμαι (to be) from irregular verbs for promotion
 const eimai = IRREGULAR_VERBS.find((v) => v.infinitive === "είμαι");
 const otherIrregulars = IRREGULAR_VERBS.filter((v) => v.infinitive !== "είμαι");
@@ -317,13 +456,16 @@ export const VerbsSection: React.FC = () => (
 			subtitle="Greek verbs change their endings to show who is doing the action"
 		/>
 
+		{/* Voice explanation - Active vs Passive vs Deponent */}
+		<VoiceExplanation />
+
 		{/* Essential First: είμαι (to be) - promoted from irregulars */}
 		{eimai && (
 			<ContentSection title="είμαι (to be)" colorScheme="olive">
 				<div className="p-3 space-y-3">
 					<p className="text-sm text-stone-600">
-						The most common Greek verb. Memorize it first. You'll use it in every
-						conversation.
+						The most common Greek verb. Memorize it first. You'll use it in
+						every conversation.
 					</p>
 					<ParadigmTable
 						infinitive={eimai.infinitive}
