@@ -5,10 +5,17 @@ export const COLORS: AdjectiveSeed[] = [
 	{ lemma: "μαύρο", english: "black" },
 	{ lemma: "κόκκινο", english: "red" },
 	{ lemma: "μπλε", english: "blue" },
+	{ lemma: "γαλάζιο", english: "light blue/sky blue" },
 	{ lemma: "πράσινο", english: "green" },
 	{ lemma: "κίτρινο", english: "yellow" },
 	{ lemma: "πορτοκαλί", english: "orange" },
-	{ lemma: "σκούρο μπλε", english: "navy/dark blue" },
+	{ lemma: "μωβ", english: "purple" },
+	{ lemma: "ροζ", english: "pink" },
+	{ lemma: "γκρι", english: "grey" },
+	{ lemma: "καφέ", english: "brown" },
+	{ lemma: "μπεζ", english: "beige" },
+	{ lemma: "χρυσό", english: "gold/golden" },
+	{ lemma: "ασημί", english: "silver" },
 ];
 
 export const ADJECTIVES: AdjectiveSeed[] = [
