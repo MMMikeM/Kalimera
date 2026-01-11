@@ -1,6 +1,6 @@
-import { useState, useMemo, useEffect } from "react";
-import { useFetcher } from "react-router";
 import { createFuzzySearch } from "@mmmike/mikrofuzz";
+import { useEffect, useMemo, useState } from "react";
+import { useFetcher } from "react-router";
 import type { SearchVocabItem } from "@/db.server/queries/vocabulary";
 
 interface UseVocabularySearchOptions {

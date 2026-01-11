@@ -132,15 +132,12 @@ export const LESSON_2024_12_16 = {
 				"Είναι πιο ψηλός από εμένα (He is taller than me)",
 				"Η κουζίνα είναι πιο μεγάλη από το μπάνιο",
 			],
-			explanation: "Use από (than) after the comparative to introduce what you're comparing to.",
+			explanation:
+				"Use από (than) after the comparative to introduce what you're comparing to.",
 		},
 		{
 			pattern: "Adjective agreement reminder",
-			examples: [
-				"στενός/στενή/στενό",
-				"ήσυχος/ήσυχη/ήσυχο",
-				"ψηλός/ψηλή/ψηλό",
-			],
+			examples: ["στενός/στενή/στενό", "ήσυχος/ήσυχη/ήσυχο", "ψηλός/ψηλή/ψηλό"],
 			explanation:
 				"These adjectives follow the standard -ος/-η/-ο pattern. Remember to match gender with the noun.",
 		},
@@ -151,7 +148,8 @@ export const LESSON_2024_12_16 = {
 				"πριν φάω (before I eat)",
 				"πριν κοιμηθώ (before I sleep)",
 			],
-			explanation: "πριν (before) is followed by the subjunctive mood (no να needed).",
+			explanation:
+				"πριν (before) is followed by the subjunctive mood (no να needed).",
 		},
 	],
 } as const;

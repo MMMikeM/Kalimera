@@ -1,16 +1,13 @@
+import { CheckCircle, ChevronRight, Keyboard, XCircle } from "lucide-react";
 import type React from "react";
-import { useReducer, useEffect, useRef, useCallback, useState } from "react";
-import { CheckCircle, XCircle, ChevronRight, Keyboard } from "lucide-react";
-import { Progress } from "@/components/ui/progress";
+import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import { Card } from "@/components/Card";
+import CountdownTimer from "@/components/CountdownTimer";
 import { MonoText } from "@/components/MonoText";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import CountdownTimer from "@/components/CountdownTimer";
-import {
-	matchPhonetic,
-	greekToPhonetic,
-} from "@/lib/greek-transliteration";
+import { Progress } from "@/components/ui/progress";
+import { greekToPhonetic, matchPhonetic } from "@/lib/greek-transliteration";
 import DrillSummary from "./drill-summary";
 
 export interface UnifiedQuestion {
@@ -164,10 +161,8 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 	sessionCount,
 	streakDays,
 }) => {
-	const [state, dispatch] = useReducer(
-		unifiedReducer,
-		questions,
-		(questions) => initialUnifiedState(questions),
+	const [state, dispatch] = useReducer(unifiedReducer, questions, (questions) =>
+		initialUnifiedState(questions),
 	);
 
 	const questionStartTimeRef = useRef<number>(Date.now());
@@ -216,7 +211,13 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 				attempts: state.attempts,
 			});
 		}
-	}, [state.isComplete, state.score, state.totalResponseTime, state.attempts, onComplete]);
+	}, [
+		state.isComplete,
+		state.score,
+		state.totalResponseTime,
+		state.attempts,
+		onComplete,
+	]);
 
 	// Keyboard handler for advancing
 	useEffect(() => {

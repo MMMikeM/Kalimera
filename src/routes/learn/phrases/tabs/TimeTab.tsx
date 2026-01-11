@@ -1,9 +1,9 @@
 import { Clock } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { ContentSection, TwoColumnList } from "@/components/ContentSection";
 import { MonoText } from "@/components/MonoText";
 import { TabHero } from "@/components/TabHero";
-import type { PhrasesLoaderData, PhraseItem } from "../components/shared";
+import { cn } from "@/lib/utils";
+import type { PhraseItem, PhrasesLoaderData } from "../components/shared";
 
 type TimeListItem = {
 	id: string | number;
@@ -101,16 +101,34 @@ const TimeTellingSection = ({ items }: { items: PhraseItem[] }) => {
 				<div className="space-y-1 text-sm text-stone-600">
 					<div>
 						<strong className="text-ocean-text">Basic:</strong>{" "}
-						<MonoText variant="greek" size="sm">Είναι</MonoText> + time /{" "}
-						<MonoText variant="greek" size="sm">Η ώρα είναι</MonoText> + time
+						<MonoText variant="greek" size="sm">
+							Είναι
+						</MonoText>{" "}
+						+ time /{" "}
+						<MonoText variant="greek" size="sm">
+							Η ώρα είναι
+						</MonoText>{" "}
+						+ time
 					</div>
 					<div className="flex flex-wrap gap-x-6">
 						<span>
-							<MonoText variant="greek" size="sm" className="text-ocean-text font-semibold">και</MonoText>{" "}
+							<MonoText
+								variant="greek"
+								size="sm"
+								className="text-ocean-text font-semibold"
+							>
+								και
+							</MonoText>{" "}
 							= past (add minutes)
 						</span>
 						<span>
-							<MonoText variant="greek" size="sm" className="text-ocean-text font-semibold">παρά</MonoText>{" "}
+							<MonoText
+								variant="greek"
+								size="sm"
+								className="text-ocean-text font-semibold"
+							>
+								παρά
+							</MonoText>{" "}
 							= to (subtract from next hour)
 						</span>
 					</div>

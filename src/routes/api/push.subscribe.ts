@@ -1,7 +1,7 @@
-import type { Route } from "./+types/push.subscribe";
+import { eq } from "drizzle-orm";
 import { db } from "@/db.server";
 import { pushSubscriptions } from "@/db.server/schema";
-import { eq } from "drizzle-orm";
+import type { Route } from "./+types/push.subscribe";
 
 interface SubscribeBody {
 	userId: number;
@@ -27,7 +27,10 @@ export const action = async ({ request, context }: Route.ActionArgs) => {
 
 		if (!userId || !endpoint || !keys?.p256dh || !keys?.auth) {
 			return Response.json(
-				{ error: "Missing required fields: userId, endpoint, keys.p256dh, keys.auth" },
+				{
+					error:
+						"Missing required fields: userId, endpoint, keys.p256dh, keys.auth",
+				},
 				{ status: 400 },
 			);
 		}

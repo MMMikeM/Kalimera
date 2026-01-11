@@ -1,5 +1,5 @@
 import { createRequestHandler } from "react-router";
-import { createDb, type CloudflareEnv } from "../src/db/client.cloudflare";
+import { type CloudflareEnv, createDb } from "../src/db/client.cloudflare";
 
 declare module "react-router" {
 	interface AppLoadContext {
@@ -14,14 +14,14 @@ declare module "react-router" {
 const requestHandler = createRequestHandler(
 	// @ts-expect-error - virtual module
 	() => import("virtual:react-router/server-build"),
-	import.meta.env.MODE
+	import.meta.env.MODE,
 );
 
 export default {
 	async fetch(
 		request: Request,
 		env: CloudflareEnv,
-		ctx: ExecutionContext
+		ctx: ExecutionContext,
 	): Promise<Response> {
 		const db = createDb(env);
 		return requestHandler(request, {

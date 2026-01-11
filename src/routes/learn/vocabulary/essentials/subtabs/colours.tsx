@@ -1,5 +1,5 @@
-import { Link } from "react-router";
 import { ChevronLeft } from "lucide-react";
+import { Link } from "react-router";
 import { ContentSection } from "@/components/ContentSection";
 import { MonoText } from "@/components/MonoText";
 import type { EssentialsLoaderData } from "../data.server";
@@ -181,9 +181,7 @@ export function ColoursSubtab({ data }: Props) {
 				</div>
 
 				<div className="mx-3 mt-3 p-2.5 bg-honey-100 rounded-lg border border-honey-200">
-					<p className="text-sm text-honey-text font-medium mb-2">
-						In context
-					</p>
+					<p className="text-sm text-honey-text font-medium mb-2">In context</p>
 					<div className="space-y-1.5 text-sm">
 						<div>
 							<MonoText variant="greek">Θέλω το σκούρο μπλε.</MonoText>
@@ -264,7 +262,9 @@ export function ColoursSubtab({ data }: Props) {
 							</div>
 							<div>
 								<MonoText variant="greek">χρυσός, -ή, -ό</MonoText>
-								<span className="text-xs text-stone-500 ml-2">(gold/golden)</span>
+								<span className="text-xs text-stone-500 ml-2">
+									(gold/golden)
+								</span>
 							</div>
 						</div>
 					</div>

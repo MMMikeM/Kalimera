@@ -52,9 +52,7 @@ const USAGE_EXAMPLES = [
 ];
 
 export function FrequencySubtab({ data }: Props) {
-	const adverbByGreek = new Map(
-		data.frequencyAdverbs.map((a) => [a.greek, a]),
-	);
+	const adverbByGreek = new Map(data.frequencyAdverbs.map((a) => [a.greek, a]));
 
 	return (
 		<div className="space-y-6">
@@ -116,17 +114,13 @@ export function FrequencySubtab({ data }: Props) {
 						<MonoText variant="greek">
 							ποτ<span className="text-honey-600 font-bold">έ</span>
 						</MonoText>
-						<div className="text-xs text-stone-500">
-							never (accent on ε)
-						</div>
+						<div className="text-xs text-stone-500">never (accent on ε)</div>
 					</div>
 					<div className="py-2.5 px-3">
 						<MonoText variant="greek">
 							π<span className="text-honey-600 font-bold">ό</span>τε
 						</MonoText>
-						<div className="text-xs text-stone-500">
-							when? (accent on ο)
-						</div>
+						<div className="text-xs text-stone-500">when? (accent on ο)</div>
 					</div>
 				</div>
 
@@ -240,9 +234,7 @@ export function FrequencySubtab({ data }: Props) {
 				</div>
 
 				<div className="mx-3 mt-3 p-2.5 bg-terracotta-100 rounded-lg border border-terracotta-200">
-					<p className="text-sm text-terracotta-text font-medium">
-						Word order
-					</p>
+					<p className="text-sm text-terracotta-text font-medium">Word order</p>
 					<p className="text-xs text-stone-500 mt-1">
 						Frequency adverb typically comes <strong>before</strong> the verb
 					</p>

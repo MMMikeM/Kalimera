@@ -1,20 +1,20 @@
+import { Card } from "@/components/Card";
+import { CollapsibleSection } from "@/components/CollapsibleSection";
+import { ContentSection } from "@/components/ContentSection";
+import { MonoText } from "@/components/MonoText";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
-	EMPHATIC_PRONOUNS,
 	EMPHATIC_PRONOUN_EXAMPLES,
-	OBJECT_PRONOUNS,
+	EMPHATIC_PRONOUNS,
 	OBJECT_PRONOUN_EXAMPLES,
-	POSSESSIVE_PRONOUNS,
+	OBJECT_PRONOUNS,
 	POSSESSIVE_PRONOUN_EXAMPLES,
+	POSSESSIVE_PRONOUNS,
 	PRONOUN_PATTERNS,
 	PRONOUN_PHRASES,
-	SUBJECT_PRONOUNS,
 	SUBJECT_PRONOUN_EXAMPLES,
+	SUBJECT_PRONOUNS,
 } from "@/constants/pronouns";
-import { Card } from "@/components/Card";
-import { MonoText } from "@/components/MonoText";
-import { ContentSection } from "@/components/ContentSection";
-import { CollapsibleSection } from "@/components/CollapsibleSection";
-import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { PronounDecisionGuide } from "./pronoun-decision-guide";
 import { PronounParadigmTable } from "./pronoun-paradigm-table";
 

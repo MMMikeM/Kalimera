@@ -1,5 +1,5 @@
-import { Link } from "react-router";
 import { ChevronLeft } from "lucide-react";
+import { Link } from "react-router";
 import { ContentSection } from "@/components/ContentSection";
 import { MonoText } from "@/components/MonoText";
 import type { EssentialsLoaderData } from "../data.server";
@@ -35,9 +35,7 @@ const RELATIVE_POSITION_EXAMPLES = [
 ];
 
 export function PositionSubtab({ data }: Props) {
-	const adverbByGreek = new Map(
-		data.positionAdverbs.map((a) => [a.greek, a]),
-	);
+	const adverbByGreek = new Map(data.positionAdverbs.map((a) => [a.greek, a]));
 
 	return (
 		<div className="space-y-6">
@@ -145,7 +143,9 @@ export function PositionSubtab({ data }: Props) {
 					<div className="space-y-1.5 text-sm">
 						<div>
 							<MonoText variant="greek">στρίψε</MonoText>
-							<span className="text-stone-500 text-xs ml-2">turn (command)</span>
+							<span className="text-stone-500 text-xs ml-2">
+								turn (command)
+							</span>
 						</div>
 						<div>
 							<MonoText variant="greek">πήγαινε</MonoText>
@@ -153,7 +153,9 @@ export function PositionSubtab({ data }: Props) {
 						</div>
 						<div>
 							<MonoText variant="greek">έλα</MonoText>
-							<span className="text-stone-500 text-xs ml-2">come (command)</span>
+							<span className="text-stone-500 text-xs ml-2">
+								come (command)
+							</span>
 						</div>
 					</div>
 				</div>

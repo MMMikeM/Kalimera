@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
-import { Card as ShadCard, CardContent } from "./ui/card";
+import { CardContent, Card as ShadCard } from "./ui/card";
 
 const variantStyles = {
 	default: "",
@@ -37,7 +37,7 @@ export const Card = ({
 			variantStyles[variant],
 			paddingStyles[padding],
 			hover && "hover:bg-stone-50 transition-colors cursor-pointer",
-			className
+			className,
 		)}
 		{...props}
 	>

@@ -1,5 +1,6 @@
+import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { Button } from "@/components/ui/button";
 import {
 	Dialog,
 	DialogContent,
@@ -7,14 +8,19 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 
 const MILESTONES = [7, 30, 100] as const;
 type Milestone = (typeof MILESTONES)[number];
 
 const MILESTONE_DATA: Record<
 	Milestone,
-	{ badge: string; title: string; message: string; greek: string; english: string }
+	{
+		badge: string;
+		title: string;
+		message: string;
+		greek: string;
+		english: string;
+	}
 > = {
 	7: {
 		badge: "1 Week",
@@ -26,14 +32,16 @@ const MILESTONE_DATA: Record<
 	30: {
 		badge: "1 Month",
 		title: "One month strong!",
-		message: "Greek is becoming part of your routine. Your dedication is paying off.",
+		message:
+			"Greek is becoming part of your routine. Your dedication is paying off.",
 		greek: "Εξαιρετικά!",
 		english: "Excellent!",
 	},
 	100: {
 		badge: "100 Days",
 		title: "100 days of learning!",
-		message: "You're truly dedicated. Most learners never make it this far. Keep going!",
+		message:
+			"You're truly dedicated. Most learners never make it this far. Keep going!",
 		greek: "Απίστευτο!",
 		english: "Incredible!",
 	},
@@ -76,7 +84,11 @@ const fetchServerMilestones = async (userId: number): Promise<Set<number>> => {
 	}
 };
 
-const recordMilestoneOnServer = async (userId: number, milestone: number, streak: number): Promise<void> => {
+const recordMilestoneOnServer = async (
+	userId: number,
+	milestone: number,
+	streak: number,
+): Promise<void> => {
 	try {
 		await fetch("/api/milestones", {
 			method: "POST",
@@ -88,7 +100,10 @@ const recordMilestoneOnServer = async (userId: number, milestone: number, streak
 	}
 };
 
-const mergeMilestones = (local: Set<number>, server: Set<number>): Set<number> => {
+const mergeMilestones = (
+	local: Set<number>,
+	server: Set<number>,
+): Set<number> => {
 	return new Set([...local, ...server]);
 };
 
@@ -174,7 +189,13 @@ const Sparkle = ({ delay, x, y }: { delay: number; x: number; y: number }) => (
 			repeatDelay: 0.8,
 		}}
 	>
-		<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+		<svg
+			width="16"
+			height="16"
+			viewBox="0 0 16 16"
+			fill="none"
+			aria-hidden="true"
+		>
 			<path
 				d="M8 0L9.5 6.5L16 8L9.5 9.5L8 16L6.5 9.5L0 8L6.5 6.5L8 0Z"
 				fill="var(--color-honey)"
@@ -188,7 +209,10 @@ export interface MilestoneCelebrationProps {
 	userId?: number;
 }
 
-export const MilestoneCelebration = ({ streak, userId }: MilestoneCelebrationProps) => {
+export const MilestoneCelebration = ({
+	streak,
+	userId,
+}: MilestoneCelebrationProps) => {
 	const [showMilestone, setShowMilestone] = useState<Milestone | null>(null);
 	const [isOpen, setIsOpen] = useState(false);
 	const [particles] = useState(() => generateParticles(16));
@@ -208,7 +232,9 @@ export const MilestoneCelebration = ({ streak, userId }: MilestoneCelebrationPro
 			}
 
 			// Check if current streak is a milestone that hasn't been seen
-			const allSeen = userId ? mergeMilestones(localSeen, serverSeen) : localSeen;
+			const allSeen = userId
+				? mergeMilestones(localSeen, serverSeen)
+				: localSeen;
 			if (MILESTONES.includes(streak as Milestone) && !allSeen.has(streak)) {
 				setShowMilestone(streak as Milestone);
 				setIsOpen(true);
@@ -266,7 +292,8 @@ export const MilestoneCelebration = ({ streak, userId }: MilestoneCelebrationPro
 									<motion.div
 										className="absolute inset-0 rounded-full"
 										style={{
-											background: "radial-gradient(circle, var(--color-honey-300) 0%, transparent 70%)",
+											background:
+												"radial-gradient(circle, var(--color-honey-300) 0%, transparent 70%)",
 										}}
 										initial={{ scale: 0.5, opacity: 0 }}
 										animate={{ scale: 1.5, opacity: [0, 0.6, 0] }}

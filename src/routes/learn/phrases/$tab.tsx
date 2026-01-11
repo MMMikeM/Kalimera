@@ -1,11 +1,11 @@
 import { useOutletContext } from "react-router";
 import type { Route } from "./+types/$tab";
 import type { PhrasesLoaderData } from "./components/shared";
-import { SurvivalTab } from "./tabs/SurvivalTab";
-import { ResponsesTab } from "./tabs/ResponsesTab";
-import { RequestsTab } from "./tabs/RequestsTab";
-import { OpinionsTab } from "./tabs/OpinionsTab";
 import { ConnectorsTab } from "./tabs/ConnectorsTab";
+import { OpinionsTab } from "./tabs/OpinionsTab";
+import { RequestsTab } from "./tabs/RequestsTab";
+import { ResponsesTab } from "./tabs/ResponsesTab";
+import { SurvivalTab } from "./tabs/SurvivalTab";
 import { TimeTab } from "./tabs/TimeTab";
 
 const VALID_TABS = [

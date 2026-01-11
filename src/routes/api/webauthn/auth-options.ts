@@ -1,6 +1,6 @@
-import type { Route } from "./+types/auth-options";
-import { createWebAuthn } from "@/lib/auth";
 import { findUserByUsername, userHasPasskey } from "@/db.server/queries/auth";
+import { createWebAuthn } from "@/lib/auth";
+import type { Route } from "./+types/auth-options";
 
 interface AuthOptionsBody {
 	username?: string;

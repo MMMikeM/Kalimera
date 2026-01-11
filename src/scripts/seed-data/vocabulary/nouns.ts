@@ -137,7 +137,11 @@ export const NOUNS = {
 		{ lemma: "ουρανός", gender: "masculine", english: "sky" },
 		{ lemma: "βράχος", gender: "masculine", english: "rock" },
 		{ lemma: "νερό", gender: "neuter", english: "water" },
-		{ lemma: "κεραυνός", gender: "masculine", english: "lightning/thunderbolt" },
+		{
+			lemma: "κεραυνός",
+			gender: "masculine",
+			english: "lightning/thunderbolt",
+		},
 	],
 
 	animals: [
@@ -159,5 +163,7 @@ export const NOUNS = {
 
 	body: [{ lemma: "λαιμός", gender: "masculine", english: "neck" }],
 
-	objects: [{ lemma: "πίνακας", gender: "masculine", english: "board/painting" }],
+	objects: [
+		{ lemma: "πίνακας", gender: "masculine", english: "board/painting" },
+	],
 } as const satisfies Record<string, NounSeed[]>;

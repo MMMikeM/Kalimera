@@ -14,7 +14,12 @@ export const genders = ["masculine", "feminine", "neuter"] as const;
 export type Gender = (typeof genders)[number];
 
 // Case types enum values
-export const caseTypes = ["accusative", "genitive", "nominative", "vocative"] as const;
+export const caseTypes = [
+	"accusative",
+	"genitive",
+	"nominative",
+	"vocative",
+] as const;
 export type CaseType = (typeof caseTypes)[number];
 
 // Session types enum values
@@ -35,15 +40,32 @@ export const areaTypes = ["case", "gender", "verb_family"] as const;
 export type AreaType = (typeof areaTypes)[number];
 
 // Display sections for UI organization (tag_sections lookup table)
-export const displaySections = ["nouns", "verbs", "phrases", "reference"] as const;
+export const displaySections = [
+	"nouns",
+	"verbs",
+	"phrases",
+	"reference",
+] as const;
 export type DisplaySection = (typeof displaySections)[number];
 
 // Verb tenses for conjugation paradigms
-export const verbTenses = ["present", "aorist", "past_continuous", "future"] as const;
+export const verbTenses = [
+	"present",
+	"aorist",
+	"past_continuous",
+	"future",
+] as const;
 export type VerbTense = (typeof verbTenses)[number];
 
 // Person-number combinations (sg = singular, pl = plural)
-export const personNumbers = ["sg1", "sg2", "sg3", "pl1", "pl2", "pl3"] as const;
+export const personNumbers = [
+	"sg1",
+	"sg2",
+	"sg3",
+	"pl1",
+	"pl2",
+	"pl3",
+] as const;
 export type PersonNumber = (typeof personNumbers)[number];
 
 // Imperative aspects

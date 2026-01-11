@@ -1,7 +1,7 @@
 import { Hand } from "lucide-react";
 import { ConversationHero } from "@/components/ConversationHero";
 import type { DialogueLine } from "@/components/DialogueExchange";
-import { ScenarioCard, LearningTips, useConversationContext } from "../layout";
+import { LearningTips, ScenarioCard, useConversationContext } from "../layout";
 
 const INTRODUCTIONS: DialogueLine[] = [
 	{ speaker: "stranger", greek: "Πώς σε λένε;", english: "What's your name?" },
@@ -162,8 +162,7 @@ export function RequestsTab() {
 				commonMistake={{
 					wrong: "Πώς είσαι;",
 					right: "Πώς σε λένε;",
-					explanation:
-						"Πώς είσαι means 'How are you?' - different question!",
+					explanation: "Πώς είσαι means 'How are you?' - different question!",
 				}}
 			/>
 		</div>

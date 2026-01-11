@@ -10,11 +10,19 @@ export const LESSON_2024_07_29 = {
 	// -μαι and -άμαι family verbs (deponent - passive form, active meaning)
 	verbs: [
 		{ lemma: "έρχομαι", english: "I come", conjugationFamily: "-ομαι" },
-		{ lemma: "φοβάμαι", english: "I am scared/afraid", conjugationFamily: "-άμαι" },
+		{
+			lemma: "φοβάμαι",
+			english: "I am scared/afraid",
+			conjugationFamily: "-άμαι",
+		},
 		{ lemma: "κάθομαι", english: "I sit", conjugationFamily: "-ομαι" },
 		{ lemma: "θυμάμαι", english: "I remember", conjugationFamily: "-άμαι" },
 		{ lemma: "διασκεδάζω", english: "I have fun", conjugationFamily: "-ω" },
-		{ lemma: "καμπουριάζω", english: "I hunch/slouch", conjugationFamily: "-ω" },
+		{
+			lemma: "καμπουριάζω",
+			english: "I hunch/slouch",
+			conjugationFamily: "-ω",
+		},
 	] satisfies VerbSeed[],
 
 	nouns: [
@@ -73,11 +81,9 @@ export const LESSON_2024_07_29 = {
 	grammarNotes: [
 		{
 			pattern: "Deponent verb conjugation (-μαι)",
-			examples: [
-				"-μαι, -σαι, -ται",
-				"-όμαστε, -στε, -ο(υ)νται",
-			],
-			explanation: "Passive form endings but active meaning (I come, I sit, etc.)",
+			examples: ["-μαι, -σαι, -ται", "-όμαστε, -στε, -ο(υ)νται"],
+			explanation:
+				"Passive form endings but active meaning (I come, I sit, etc.)",
 		},
 		{
 			pattern: "Imperative of deponent verbs",

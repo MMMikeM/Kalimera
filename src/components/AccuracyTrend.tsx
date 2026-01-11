@@ -1,5 +1,5 @@
-import { useState, useMemo } from "react";
 import { format, parseISO } from "date-fns";
+import { useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
 
 export interface AccuracyTrendProps {
@@ -39,74 +39,82 @@ export const AccuracyTrend = ({ data, className }: AccuracyTrendProps) => {
 		y: number;
 	} | null>(null);
 
-	const { points, pathD, areaD, xTicks, chartWidth, chartHeight, xScale, yScale } =
-		useMemo(() => {
-			if (data.length === 0) {
-				return {
-					points: [],
-					pathD: "",
-					areaD: "",
-					xTicks: [],
-					chartWidth: 100,
-					chartHeight: CHART_HEIGHT - CHART_PADDING.top - CHART_PADDING.bottom,
-					xScale: () => 0,
-					yScale: () => 0,
-				};
-			}
-
-			const rollingData = computeRollingAverage(data, 7);
-			const cWidth = 100;
-			const cHeight = CHART_HEIGHT - CHART_PADDING.top - CHART_PADDING.bottom;
-
-			const xScaleFn = (date: string) => {
-				const idx = rollingData.findIndex((d) => d.date === date);
-				if (rollingData.length <= 1) return cWidth / 2;
-				return (idx / (rollingData.length - 1)) * cWidth;
-			};
-
-			const yScaleFn = (accuracy: number) => {
-				return cHeight - accuracy * cHeight;
-			};
-
-			const pts = rollingData.map((d) => ({
-				x: xScaleFn(d.date),
-				y: yScaleFn(d.accuracy),
-				date: d.date,
-				accuracy: d.accuracy,
-				rawAccuracy: d.rawAccuracy,
-			}));
-
-			const linePath = pts
-				.map((p, i) => `${i === 0 ? "M" : "L"} ${p.x} ${p.y}`)
-				.join(" ");
-
-			const lastPt = pts[pts.length - 1];
-			const firstPt = pts[0];
-			const areaPath =
-				pts.length > 0 && lastPt && firstPt
-					? `${linePath} L ${lastPt.x} ${cHeight} L ${firstPt.x} ${cHeight} Z`
-					: "";
-
-			const dates = rollingData.map((d) => d.date);
-			const tickDates =
-				dates.length <= 7
-					? dates
-					: dates.filter((_, i) => {
-							const step = Math.ceil(dates.length / 6);
-							return i % step === 0 || i === dates.length - 1;
-						});
-
+	const {
+		points,
+		pathD,
+		areaD,
+		xTicks,
+		chartWidth,
+		chartHeight,
+		xScale,
+		yScale,
+	} = useMemo(() => {
+		if (data.length === 0) {
 			return {
-				points: pts,
-				pathD: linePath,
-				areaD: areaPath,
-				xTicks: tickDates,
-				chartWidth: cWidth,
-				chartHeight: cHeight,
-				xScale: xScaleFn,
-				yScale: yScaleFn,
+				points: [],
+				pathD: "",
+				areaD: "",
+				xTicks: [],
+				chartWidth: 100,
+				chartHeight: CHART_HEIGHT - CHART_PADDING.top - CHART_PADDING.bottom,
+				xScale: () => 0,
+				yScale: () => 0,
 			};
-		}, [data]);
+		}
+
+		const rollingData = computeRollingAverage(data, 7);
+		const cWidth = 100;
+		const cHeight = CHART_HEIGHT - CHART_PADDING.top - CHART_PADDING.bottom;
+
+		const xScaleFn = (date: string) => {
+			const idx = rollingData.findIndex((d) => d.date === date);
+			if (rollingData.length <= 1) return cWidth / 2;
+			return (idx / (rollingData.length - 1)) * cWidth;
+		};
+
+		const yScaleFn = (accuracy: number) => {
+			return cHeight - accuracy * cHeight;
+		};
+
+		const pts = rollingData.map((d) => ({
+			x: xScaleFn(d.date),
+			y: yScaleFn(d.accuracy),
+			date: d.date,
+			accuracy: d.accuracy,
+			rawAccuracy: d.rawAccuracy,
+		}));
+
+		const linePath = pts
+			.map((p, i) => `${i === 0 ? "M" : "L"} ${p.x} ${p.y}`)
+			.join(" ");
+
+		const lastPt = pts[pts.length - 1];
+		const firstPt = pts[0];
+		const areaPath =
+			pts.length > 0 && lastPt && firstPt
+				? `${linePath} L ${lastPt.x} ${cHeight} L ${firstPt.x} ${cHeight} Z`
+				: "";
+
+		const dates = rollingData.map((d) => d.date);
+		const tickDates =
+			dates.length <= 7
+				? dates
+				: dates.filter((_, i) => {
+						const step = Math.ceil(dates.length / 6);
+						return i % step === 0 || i === dates.length - 1;
+					});
+
+		return {
+			points: pts,
+			pathD: linePath,
+			areaD: areaPath,
+			xTicks: tickDates,
+			chartWidth: cWidth,
+			chartHeight: cHeight,
+			xScale: xScaleFn,
+			yScale: yScaleFn,
+		};
+	}, [data]);
 
 	const yTicks = [0, 0.25, 0.5, 0.75, 1];
 
@@ -134,8 +142,16 @@ export const AccuracyTrend = ({ data, className }: AccuracyTrendProps) => {
 			>
 				<defs>
 					<linearGradient id="accuracy-gradient" x1="0" y1="0" x2="0" y2="1">
-						<stop offset="0%" stopColor="var(--color-olive-400)" stopOpacity="0.3" />
-						<stop offset="100%" stopColor="var(--color-olive-400)" stopOpacity="0.05" />
+						<stop
+							offset="0%"
+							stopColor="var(--color-olive-400)"
+							stopOpacity="0.3"
+						/>
+						<stop
+							offset="100%"
+							stopColor="var(--color-olive-400)"
+							stopOpacity="0.05"
+						/>
 					</linearGradient>
 				</defs>
 

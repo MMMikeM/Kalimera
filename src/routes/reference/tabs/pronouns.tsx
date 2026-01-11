@@ -1,8 +1,8 @@
+import { ArrowLeft, Users } from "lucide-react";
 import { Link } from "react-router";
-import { Users, ArrowLeft } from "lucide-react";
+import { Card } from "@/components/Card";
 import { PracticeCTA } from "@/components/PracticeCTA";
 import { TabHero } from "@/components/TabHero";
-import { Card } from "@/components/Card";
 import { PronounsSection } from "../components/pronouns-section";
 
 export function PronounsTab() {

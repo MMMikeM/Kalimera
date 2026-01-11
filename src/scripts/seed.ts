@@ -1,6 +1,12 @@
 import { inArray, sql } from "drizzle-orm";
 import { db } from "../db.server";
-import { tags, tagSections, verbDetails, vocabulary, vocabularyTags } from "../db.server/schema";
+import {
+	tagSections,
+	tags,
+	verbDetails,
+	vocabulary,
+	vocabularyTags,
+} from "../db.server/schema";
 import type { NewVocabulary, NewVocabularyTag } from "../db.server/types";
 import { formatNounWithArticle } from "../lib/greek-grammar";
 import {
@@ -17,8 +23,8 @@ import {
 	ESSENTIAL_PHRASES,
 	FOOD_PHRASES,
 	FREQUENCY_ADVERBS,
-	LESSONS,
 	LESSON_TAGS,
+	LESSONS,
 	LIKES_CONSTRUCTION,
 	MONTHS,
 	NAME_CONSTRUCTION,
@@ -166,7 +172,10 @@ async function seed() {
 
 	// Upsert all tags (content tags + lesson tags)
 	console.log("Upserting tags...");
-	const allTags = [...Object.values(CONTENT_TAGS), ...Object.values(LESSON_TAGS)];
+	const allTags = [
+		...Object.values(CONTENT_TAGS),
+		...Object.values(LESSON_TAGS),
+	];
 	const tagValues = allTags.map((tag) => ({
 		slug: tag.slug,
 		name: tag.name,
@@ -275,22 +284,50 @@ async function seed() {
 		items: Array<{ text: string; english: string; metadata?: unknown }>;
 		tags: string[];
 	}> = [
-			{ name: "essential phrases", items: ESSENTIAL_PHRASES, tags: ["essential"] },
-			{ name: "survival phrases", items: SURVIVAL_PHRASES, tags: ["survival"] },
-			{ name: "request phrases", items: REQUEST_PHRASES, tags: ["request"] },
-			{ name: "discourse fillers", items: DISCOURSE_FILLERS, tags: ["discourse-filler", "expression"] },
-			{ name: "social phrases", items: SOCIAL_PHRASES, tags: ["social-phrase", "expression"] },
-			{ name: "question words", items: QUESTION_WORDS, tags: ["question"] },
-			{ name: "commands", items: COMMANDS, tags: ["command"] },
-			{ name: "time phrases", items: TIME_PHRASES, tags: ["time-expression"] },
-			{ name: "name construction", items: NAME_CONSTRUCTION, tags: ["name-construction"] },
-			{ name: "discourse markers", items: DISCOURSE_MARKERS, tags: ["discourse-markers"] },
-			{ name: "common responses", items: COMMON_RESPONSES, tags: ["responses"] },
-			{ name: "opinion phrases", items: OPINION_PHRASES, tags: ["opinions"] },
-			{ name: "arriving phrases", items: ARRIVING_PHRASES, tags: ["conversation-arriving"] },
-			{ name: "food phrases", items: FOOD_PHRASES, tags: ["conversation-food"] },
-			{ name: "small talk phrases", items: SMALLTALK_PHRASES, tags: ["conversation-smalltalk"] },
-		];
+		{
+			name: "essential phrases",
+			items: ESSENTIAL_PHRASES,
+			tags: ["essential"],
+		},
+		{ name: "survival phrases", items: SURVIVAL_PHRASES, tags: ["survival"] },
+		{ name: "request phrases", items: REQUEST_PHRASES, tags: ["request"] },
+		{
+			name: "discourse fillers",
+			items: DISCOURSE_FILLERS,
+			tags: ["discourse-filler", "expression"],
+		},
+		{
+			name: "social phrases",
+			items: SOCIAL_PHRASES,
+			tags: ["social-phrase", "expression"],
+		},
+		{ name: "question words", items: QUESTION_WORDS, tags: ["question"] },
+		{ name: "commands", items: COMMANDS, tags: ["command"] },
+		{ name: "time phrases", items: TIME_PHRASES, tags: ["time-expression"] },
+		{
+			name: "name construction",
+			items: NAME_CONSTRUCTION,
+			tags: ["name-construction"],
+		},
+		{
+			name: "discourse markers",
+			items: DISCOURSE_MARKERS,
+			tags: ["discourse-markers"],
+		},
+		{ name: "common responses", items: COMMON_RESPONSES, tags: ["responses"] },
+		{ name: "opinion phrases", items: OPINION_PHRASES, tags: ["opinions"] },
+		{
+			name: "arriving phrases",
+			items: ARRIVING_PHRASES,
+			tags: ["conversation-arriving"],
+		},
+		{ name: "food phrases", items: FOOD_PHRASES, tags: ["conversation-food"] },
+		{
+			name: "small talk phrases",
+			items: SMALLTALK_PHRASES,
+			tags: ["conversation-smalltalk"],
+		},
+	];
 
 	for (const category of phraseCategories) {
 		const items: VocabWithTags[] = category.items.map((phrase) => ({
@@ -316,7 +353,12 @@ async function seed() {
 		},
 		tags: ["time-telling"],
 	}));
-	await processCategory("time-telling phrases", timeTellingItems, tagMap, vocabTagLinks);
+	await processCategory(
+		"time-telling phrases",
+		timeTellingItems,
+		tagMap,
+		vocabTagLinks,
+	);
 
 	// ============================================
 	// DAYS & MONTHS
@@ -355,7 +397,12 @@ async function seed() {
 			tags: ["transport-action"],
 		};
 	});
-	await processCategory("transport actions", transportItems, tagMap, vocabTagLinks);
+	await processCategory(
+		"transport actions",
+		transportItems,
+		tagMap,
+		vocabTagLinks,
+	);
 
 	// ============================================
 	// ADVERBS
@@ -368,7 +415,12 @@ async function seed() {
 		},
 		tags: ["frequency"],
 	}));
-	await processCategory("frequency adverbs", frequencyItems, tagMap, vocabTagLinks);
+	await processCategory(
+		"frequency adverbs",
+		frequencyItems,
+		tagMap,
+		vocabTagLinks,
+	);
 
 	const positionItems: VocabWithTags[] = POSITION_ADVERBS.map((adverb) => ({
 		vocab: {
@@ -378,30 +430,49 @@ async function seed() {
 		},
 		tags: ["position"],
 	}));
-	await processCategory("position adverbs", positionItems, tagMap, vocabTagLinks);
+	await processCategory(
+		"position adverbs",
+		positionItems,
+		tagMap,
+		vocabTagLinks,
+	);
 
 	// ============================================
 	// LIKES CONSTRUCTION
 	// ============================================
-	const likesSingularItems: VocabWithTags[] = LIKES_CONSTRUCTION.singular.map((like) => ({
-		vocab: {
-			greekText: like.text,
-			englishTranslation: like.english,
-			wordType: "phrase" as const,
-		},
-		tags: ["likes-singular"],
-	}));
-	await processCategory("likes construction (singular)", likesSingularItems, tagMap, vocabTagLinks);
+	const likesSingularItems: VocabWithTags[] = LIKES_CONSTRUCTION.singular.map(
+		(like) => ({
+			vocab: {
+				greekText: like.text,
+				englishTranslation: like.english,
+				wordType: "phrase" as const,
+			},
+			tags: ["likes-singular"],
+		}),
+	);
+	await processCategory(
+		"likes construction (singular)",
+		likesSingularItems,
+		tagMap,
+		vocabTagLinks,
+	);
 
-	const likesPluralItems: VocabWithTags[] = LIKES_CONSTRUCTION.plural.map((like) => ({
-		vocab: {
-			greekText: like.text,
-			englishTranslation: like.english,
-			wordType: "phrase" as const,
-		},
-		tags: ["likes-plural"],
-	}));
-	await processCategory("likes construction (plural)", likesPluralItems, tagMap, vocabTagLinks);
+	const likesPluralItems: VocabWithTags[] = LIKES_CONSTRUCTION.plural.map(
+		(like) => ({
+			vocab: {
+				greekText: like.text,
+				englishTranslation: like.english,
+				wordType: "phrase" as const,
+			},
+			tags: ["likes-plural"],
+		}),
+	);
+	await processCategory(
+		"likes construction (plural)",
+		likesPluralItems,
+		tagMap,
+		vocabTagLinks,
+	);
 
 	// ============================================
 	// COLORS & ADJECTIVES

@@ -1,5 +1,5 @@
+import { BookOpen, MessageCircle, Quote } from "lucide-react";
 import { Link } from "react-router";
-import { MessageCircle, Quote, BookOpen } from "lucide-react";
 
 const sections = [
 	{

@@ -117,7 +117,8 @@ export interface PhoneticMatchResult {
 }
 
 // Greek definite articles (ο, η, το and their case forms)
-const GREEK_ARTICLE_PATTERN = /^(ο|η|το|τον|την|του|της|οι|τα|τους|τις|των)\s+/i;
+const GREEK_ARTICLE_PATTERN =
+	/^(ο|η|το|τον|την|του|της|οι|τα|τους|τις|των)\s+/i;
 
 /**
  * Strip the Greek definite article from the beginning of a phrase.

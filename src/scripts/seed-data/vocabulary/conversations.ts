@@ -66,7 +66,10 @@ export const FOOD_PHRASES: Phrase[] = [
 // Small Talk phrases
 export const SMALLTALK_PHRASES: Phrase[] = [
 	{ text: "Τι κάνεις στη δουλειά;", english: "How's work?" },
-	{ text: "Τι θα κάνετε το Σαββατοκύριακο;", english: "What are you doing this weekend?" },
+	{
+		text: "Τι θα κάνετε το Σαββατοκύριακο;",
+		english: "What are you doing this weekend?",
+	},
 	{ text: "Πώς είναι τα παιδιά;", english: "How are the kids?" },
 	{ text: "Κάνει ζέστη σήμερα", english: "It's hot today" },
 	{ text: "Κάνει κρύο σήμερα", english: "It's cold today" },

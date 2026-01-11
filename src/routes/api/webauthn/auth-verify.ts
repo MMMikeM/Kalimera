@@ -1,7 +1,7 @@
 import type { AuthenticationResponseJSON } from "@simplewebauthn/server";
-import type { Route } from "./+types/auth-verify";
-import { createWebAuthn } from "@/lib/auth";
 import { getUserById } from "@/db.server/queries/practice";
+import { createWebAuthn } from "@/lib/auth";
+import type { Route } from "./+types/auth-verify";
 
 interface AuthVerifyBody {
 	response: AuthenticationResponseJSON;
@@ -41,7 +41,8 @@ export const action = async ({ request }: Route.ActionArgs) => {
 		});
 	} catch (error) {
 		console.error("WebAuthn auth verify error:", error);
-		const message = error instanceof Error ? error.message : "Authentication failed";
+		const message =
+			error instanceof Error ? error.message : "Authentication failed";
 		return Response.json({ error: message }, { status: 400 });
 	}
 };

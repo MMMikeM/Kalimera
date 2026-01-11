@@ -1,5 +1,5 @@
-import type { Route } from "./+types/route";
 import { getVerbWithConjugations } from "@/db.server/queries/vocabulary";
+import type { Route } from "./+types/route";
 
 export const loader = async ({ params }: Route.LoaderArgs) => {
 	const verbId = Number(params.verbId);

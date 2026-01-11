@@ -93,17 +93,29 @@ export const SE_CONTRACTIONS = {
 		{
 			formula: "σε + το = στο",
 			gender: "neuter",
-			examples: ["στο σπίτι (at home)", "στο κέντρο (downtown)", "στο γραφείο (at the office)"],
+			examples: [
+				"στο σπίτι (at home)",
+				"στο κέντρο (downtown)",
+				"στο γραφείο (at the office)",
+			],
 		},
 		{
 			formula: "σε + τη(ν) = στη(ν)",
 			gender: "feminine",
-			examples: ["στη δουλειά (at work)", "στην Ελλάδα (in Greece)", "στη θάλασσα (at the sea)"],
+			examples: [
+				"στη δουλειά (at work)",
+				"στην Ελλάδα (in Greece)",
+				"στη θάλασσα (at the sea)",
+			],
 		},
 		{
 			formula: "σε + τον = στον",
 			gender: "masculine",
-			examples: ["στον κήπο (in the garden)", "στον δρόμο (on the road)", "στον σταθμό (at the station)"],
+			examples: [
+				"στον κήπο (in the garden)",
+				"στον δρόμο (on the road)",
+				"στον σταθμό (at the station)",
+			],
 		},
 	],
 	noArticle: {

@@ -1,20 +1,30 @@
-import { useState, useEffect } from "react";
 import {
+	BarChart3,
+	BookOpen,
+	FileText,
+	Home,
+	Info,
+	LogOut,
+	Search,
+	User,
+	Zap,
+} from "lucide-react";
+import { useEffect, useState } from "react";
+import {
+	isRouteErrorResponse,
+	Link,
 	Links,
 	Meta,
 	Outlet,
 	Scripts,
 	ScrollRestoration,
-	Link,
 	useLocation,
 	useNavigate,
-	isRouteErrorResponse,
 	useRouteError,
 } from "react-router";
-import { BookOpen, FileText, Search, Zap, User, BarChart3, Info, LogOut, Home } from "lucide-react";
+import { GlobalSearch } from "@/components/GlobalSearch";
 import { Header } from "@/components/Header";
 import { LandingPage } from "@/components/LandingPage";
-import { GlobalSearch } from "@/components/GlobalSearch";
 import {
 	Popover,
 	PopoverContent,
@@ -64,7 +74,9 @@ const MobileAccountPopover = ({ onLogout }: MobileAccountPopoverProps) => {
 				<button
 					type="button"
 					className={`p-2 rounded-lg transition-colors outline-none outline-transparent ring-0 shadow-none ${
-						isOpen ? "text-terracotta bg-terracotta/10" : "text-stone-500 hover:text-stone-700"
+						isOpen
+							? "text-terracotta bg-terracotta/10"
+							: "text-stone-500 hover:text-stone-700"
 					}`}
 				>
 					<User size={20} strokeWidth={1.5} />
@@ -118,7 +130,9 @@ const MobileHeader = ({ isAuthenticated, onLogout }: MobileHeaderProps) => {
 					{({ isActive }) => (
 						<span
 							className={`flex items-center justify-center p-2 rounded-lg transition-colors ${
-								isActive ? "text-terracotta bg-terracotta/10" : "text-stone-500 hover:text-stone-700"
+								isActive
+									? "text-terracotta bg-terracotta/10"
+									: "text-stone-500 hover:text-stone-700"
 							}`}
 						>
 							<Search size={20} strokeWidth={1.5} />
@@ -126,9 +140,7 @@ const MobileHeader = ({ isAuthenticated, onLogout }: MobileHeaderProps) => {
 					)}
 				</GlobalSearch>
 
-				{isAuthenticated && (
-					<MobileAccountPopover onLogout={onLogout} />
-				)}
+				{isAuthenticated && <MobileAccountPopover onLogout={onLogout} />}
 
 				{!isAuthenticated && (
 					<Link
@@ -148,11 +160,17 @@ export function Layout({ children }: { children: React.ReactNode }) {
 		<html lang="en">
 			<head>
 				<meta charSet="utf-8" />
-				<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+				<meta
+					name="viewport"
+					content="width=device-width, initial-scale=1, viewport-fit=cover"
+				/>
 				<meta name="theme-color" content="#4A7C8F" />
 				<meta name="mobile-web-app-capable" content="yes" />
 				<meta name="apple-mobile-web-app-capable" content="yes" />
-				<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+				<meta
+					name="apple-mobile-web-app-status-bar-style"
+					content="black-translucent"
+				/>
 				<meta name="apple-mobile-web-app-title" content="καλημέρα" />
 				<link rel="preconnect" href="https://fonts.googleapis.com" />
 				<link
@@ -180,8 +198,11 @@ export default function Root() {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const currentSection = location.pathname.split("/")[1] || "home";
-	const isAuthPage = location.pathname === "/login" || location.pathname === "/register";
-	const isPublicRoute = PUBLIC_ROUTES.some((route) => location.pathname.startsWith(route));
+	const isAuthPage =
+		location.pathname === "/login" || location.pathname === "/register";
+	const isPublicRoute = PUBLIC_ROUTES.some((route) =>
+		location.pathname.startsWith(route),
+	);
 
 	const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
@@ -191,7 +212,10 @@ export default function Root() {
 
 		if (stored) {
 			try {
-				const parsed = JSON.parse(stored) as { userId?: number; username?: string };
+				const parsed = JSON.parse(stored) as {
+					userId?: number;
+					username?: string;
+				};
 				isValid = typeof parsed.userId === "number" && !!parsed.username;
 			} catch {
 				localStorage.removeItem(AUTH_STORAGE_KEY);
@@ -340,7 +364,8 @@ export function ErrorBoundary() {
 				message: errorMessage,
 				stack: errorStack,
 				url: typeof window !== "undefined" ? window.location.href : undefined,
-				userAgent: typeof navigator !== "undefined" ? navigator.userAgent : undefined,
+				userAgent:
+					typeof navigator !== "undefined" ? navigator.userAgent : undefined,
 				timestamp: new Date().toISOString(),
 			}),
 		}).catch(() => {
@@ -352,14 +377,19 @@ export function ErrorBoundary() {
 		<html lang="en">
 			<head>
 				<meta charSet="utf-8" />
-				<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+				<meta
+					name="viewport"
+					content="width=device-width, initial-scale=1, viewport-fit=cover"
+				/>
 				<title>{title}</title>
 				<Links />
 			</head>
 			<body className="font-sans text-stone-800 antialiased bg-cream">
 				<div className="min-h-screen flex items-center justify-center p-6">
 					<div className="text-center max-w-md">
-						<h1 className="text-3xl font-serif text-terracotta mb-4">{title}</h1>
+						<h1 className="text-3xl font-serif text-terracotta mb-4">
+							{title}
+						</h1>
 						<p className="text-stone-600 mb-6">{message}</p>
 						<a
 							href="/"

@@ -1,4 +1,9 @@
-import type { AdjectiveSeed, NounSeed, Phrase, VerbSeed } from "../../../../types/seed";
+import type {
+	AdjectiveSeed,
+	NounSeed,
+	Phrase,
+	VerbSeed,
+} from "../../../../types/seed";
 
 export const LESSON_2023_12_31 = {
 	meta: {
@@ -10,7 +15,11 @@ export const LESSON_2023_12_31 = {
 	verbs: [
 		{ lemma: "απειλώ", english: "I threaten", conjugationFamily: "-άω/-ώ" },
 		{ lemma: "εμφανίζομαι", english: "I appear", conjugationFamily: "-ομαι" },
-		{ lemma: "μεταφέρω", english: "I transfer/transport", conjugationFamily: "-ω" },
+		{
+			lemma: "μεταφέρω",
+			english: "I transfer/transport",
+			conjugationFamily: "-ω",
+		},
 		{ lemma: "ταΐζω", english: "I feed", conjugationFamily: "-ω" },
 		{ lemma: "εξουσιάζω", english: "I rule/dominate", conjugationFamily: "-ω" },
 	] satisfies VerbSeed[],
@@ -55,7 +64,11 @@ export const LESSON_2023_12_31 = {
 	grammarNotes: [
 		{
 			pattern: "Comparative with -τερος",
-			examples: ["παλιός → παλιότερος", "βαθύς → βαθύτερος", "ψηλός → ψηλότερος"],
+			examples: [
+				"παλιός → παλιότερος",
+				"βαθύς → βαθύτερος",
+				"ψηλός → ψηλότερος",
+			],
 			explanation: "Alternative to πιο + adjective",
 		},
 	],

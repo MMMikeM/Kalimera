@@ -186,9 +186,21 @@ export const PRONOUN_PATTERNS = {
 			literal: "give to-me it",
 		},
 		examples: [
-			{ greek: "δώσε μου το", english: "give it to me", literal: "give to-me it" },
-			{ greek: "πες μου το", english: "tell it to me", literal: "tell to-me it" },
-			{ greek: "φέρε της το", english: "bring it to her", literal: "bring to-her it" },
+			{
+				greek: "δώσε μου το",
+				english: "give it to me",
+				literal: "give to-me it",
+			},
+			{
+				greek: "πες μου το",
+				english: "tell it to me",
+				literal: "tell to-me it",
+			},
+			{
+				greek: "φέρε της το",
+				english: "bring it to her",
+				literal: "bring to-her it",
+			},
 		],
 	},
 	formalYou: {
@@ -198,7 +210,8 @@ export const PRONOUN_PATTERNS = {
 			{ greek: "σας παρακαλώ", english: "please (formal)" },
 			{ greek: "η γνώμη σας", english: "your opinion (formal)" },
 		],
-		explanation: "Use σας/εσάς with people you don't know well, elders, or in formal situations",
+		explanation:
+			"Use σας/εσάς with people you don't know well, elders, or in formal situations",
 	},
 };
 
@@ -212,9 +225,21 @@ export const PRONOUN_PHRASES = [
 	{ greek: "μ' αρέσει", english: "I like it", category: "opinions" },
 	{ greek: "δε μ' αρέσει", english: "I don't like it", category: "opinions" },
 	{ greek: "μου φαίνεται", english: "it seems to me", category: "opinions" },
-	{ greek: "τι σου φαίνεται;", english: "what do you think?", category: "questions" },
-	{ greek: "πώς σε λένε;", english: "what's your name?", category: "questions" },
-	{ greek: "με λένε...", english: "my name is... (they call me)", category: "answers" },
+	{
+		greek: "τι σου φαίνεται;",
+		english: "what do you think?",
+		category: "questions",
+	},
+	{
+		greek: "πώς σε λένε;",
+		english: "what's your name?",
+		category: "questions",
+	},
+	{
+		greek: "με λένε...",
+		english: "my name is... (they call me)",
+		category: "answers",
+	},
 	{ greek: "σ' αγαπώ", english: "I love you", category: "family" },
 	{ greek: "μου λείπεις", english: "I miss you", category: "family" },
 ];

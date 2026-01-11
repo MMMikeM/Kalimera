@@ -1,6 +1,6 @@
-import { useState, useCallback } from "react";
-import { startAuthentication } from "@simplewebauthn/browser";
 import type { PublicKeyCredentialRequestOptionsJSON } from "@simplewebauthn/browser";
+import { startAuthentication } from "@simplewebauthn/browser";
+import { useCallback, useState } from "react";
 import { loginAndRedirect } from "../auth-storage";
 
 interface UsePasskeyAuthOptions {

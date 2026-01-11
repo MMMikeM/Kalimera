@@ -1,16 +1,16 @@
-import { useState, useEffect } from "react";
-import { Link, useSearchParams, useRevalidator } from "react-router";
-import { ArrowLeft, Clock, Target, TrendingUp, Calendar } from "lucide-react";
-import type { Route } from "./+types/progress";
+import { ArrowLeft, Calendar, Clock, Target, TrendingUp } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Link, useRevalidator, useSearchParams } from "react-router";
+import { AccuracyTrend } from "@/components/AccuracyTrend";
 import { Card } from "@/components/Card";
 import { StreakCalendar } from "@/components/StreakCalendar";
-import { AccuracyTrend } from "@/components/AccuracyTrend";
 import { getPracticeStats } from "@/db.server/queries/practice";
 import {
-	getPracticeDatesForCalendar,
 	getAccuracyTrends,
+	getPracticeDatesForCalendar,
 	getTimeInvested,
 } from "@/db.server/queries/progress";
+import type { Route } from "./+types/progress";
 
 const AUTH_STORAGE_KEY = "greek-authenticated-user";
 
@@ -133,7 +133,9 @@ export default function ProgressPage({ loaderData }: Route.ComponentProps) {
 			<h1 className="text-2xl font-serif text-terracotta mb-1">
 				Your Progress
 			</h1>
-			<p className="text-stone-600 text-sm mb-6">Track your Greek learning journey</p>
+			<p className="text-stone-600 text-sm mb-6">
+				Track your Greek learning journey
+			</p>
 
 			{/* Summary Stats */}
 			<div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">

@@ -13,9 +13,7 @@ export const LESSON_2024_06_10 = {
 		{ lemma: "αφτί", gender: "neuter", english: "ear" },
 	] satisfies NounSeed[],
 
-	adverbs: [
-		{ lemma: "πολύ", english: "very/a lot" },
-	] satisfies AdverbSeed[],
+	adverbs: [{ lemma: "πολύ", english: "very/a lot" }] satisfies AdverbSeed[],
 
 	phrases: [
 		{

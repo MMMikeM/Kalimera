@@ -21,9 +21,7 @@ export const LESSON_2023_11_08 = {
 		{ lemma: "θέατρο", gender: "neuter", english: "theater" },
 	] satisfies NounSeed[],
 
-	adverbs: [
-		{ lemma: "κοντά", english: "close/near" },
-	],
+	adverbs: [{ lemma: "κοντά", english: "close/near" }],
 
 	phrases: [] satisfies Phrase[],
 

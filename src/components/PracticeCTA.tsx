@@ -1,7 +1,7 @@
+import { Zap } from "lucide-react";
 import { Link } from "react-router";
 import { Card } from "@/components/Card";
 import { Button } from "@/components/ui/button";
-import { Zap } from "lucide-react";
 
 interface PracticeCTAProps {
 	title?: string;
@@ -25,9 +25,7 @@ export const PracticeCTA = ({
 					<p className="text-sm text-stone-600">{description}</p>
 				</div>
 				<Link to="/register" className="flex-shrink-0">
-					<Button variant="primary">
-						Try a Drill
-					</Button>
+					<Button variant="primary">Try a Drill</Button>
 				</Link>
 			</div>
 		</Card>

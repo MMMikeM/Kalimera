@@ -20,7 +20,7 @@ const CASE_MAP = {
 
 const getStemFromLemma = (
 	lemma: string,
-	pattern: DeclensionPattern
+	pattern: DeclensionPattern,
 ): string => {
 	switch (pattern) {
 		case "masc-os":
@@ -72,7 +72,7 @@ const mapArticleForAccusative = (article: string): string => {
 
 const declineNounSingular = (
 	lemma: string,
-	pattern: DeclensionPattern
+	pattern: DeclensionPattern,
 ): DeclinedForm[] => {
 	const paradigm = AGREEMENT_PARADIGMS.find((p) => p.id === pattern);
 	if (!paradigm) {
@@ -84,7 +84,7 @@ const declineNounSingular = (
 
 	for (const form of paradigm.forms) {
 		const grammaticalCase = Object.keys(CASE_MAP).find(
-			(key) => CASE_MAP[key as Case] === form.case
+			(key) => CASE_MAP[key as Case] === form.case,
 		) as Case | undefined;
 
 		if (!grammaticalCase) continue;
@@ -92,10 +92,7 @@ const declineNounSingular = (
 		const article = mapArticleForAccusative(form.article);
 		const noun = applyEnding(stem, form.ending);
 
-		const fullForm =
-			article === "—"
-				? noun
-				: `${article} ${noun}`;
+		const fullForm = article === "—" ? noun : `${article} ${noun}`;
 
 		forms.push({
 			case: grammaticalCase,
@@ -111,7 +108,7 @@ const declineNounSingular = (
 
 const declineNounPlural = (
 	lemma: string,
-	pattern: DeclensionPattern
+	pattern: DeclensionPattern,
 ): DeclinedForm[] => {
 	const paradigm = AGREEMENT_PARADIGMS.find((p) => p.id === pattern);
 	if (!paradigm) {
@@ -123,7 +120,7 @@ const declineNounPlural = (
 
 	for (const form of paradigm.pluralForms) {
 		const grammaticalCase = Object.keys(CASE_MAP).find(
-			(key) => CASE_MAP[key as Case] === form.case
+			(key) => CASE_MAP[key as Case] === form.case,
 		) as Case | undefined;
 
 		if (!grammaticalCase) continue;
@@ -131,10 +128,7 @@ const declineNounPlural = (
 		const article = form.article;
 		const noun = applyEnding(stem, form.ending);
 
-		const fullForm =
-			article === "—"
-				? noun
-				: `${article} ${noun}`;
+		const fullForm = article === "—" ? noun : `${article} ${noun}`;
 
 		forms.push({
 			case: grammaticalCase,
@@ -150,7 +144,7 @@ const declineNounPlural = (
 
 export const declineNoun = (
 	lemma: string,
-	pattern: DeclensionPattern
+	pattern: DeclensionPattern,
 ): DeclinedForm[] => {
 	const singularForms = declineNounSingular(lemma, pattern);
 	const pluralForms = declineNounPlural(lemma, pattern);
@@ -162,10 +156,10 @@ export const getNounForm = (
 	lemma: string,
 	pattern: DeclensionPattern,
 	grammaticalCase: Case,
-	number: Number
+	number: Number,
 ): DeclinedForm | undefined => {
 	const allForms = declineNoun(lemma, pattern);
 	return allForms.find(
-		(form) => form.case === grammaticalCase && form.number === number
+		(form) => form.case === grammaticalCase && form.number === number,
 	);
 };

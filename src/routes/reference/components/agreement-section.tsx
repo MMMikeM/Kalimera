@@ -1,23 +1,22 @@
-import { Lightbulb } from "lucide-react";
+import { ChevronLeft, ChevronRight, Lightbulb } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Card } from "@/components/Card";
+import { CollapsibleSection } from "@/components/CollapsibleSection";
+import { ContentSection } from "@/components/ContentSection";
+import { MistakeComparison } from "@/components/MistakeComparison";
+import { MonoText } from "@/components/MonoText";
+import { SectionHeading } from "@/components/SectionHeading";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
 	AGREEMENT_MISTAKES,
 	AGREEMENT_PARADIGMS,
-	ARTICLE_AGREEMENT_QUICK_REF,
 	type AgreementParadigm,
+	ARTICLE_AGREEMENT_QUICK_REF,
 } from "@/constants/agreement";
-import { GENDER_HINTS } from "@/constants/nouns";
 import { MOVABLE_NU_RULE } from "@/constants/articles";
-import { Card } from "@/components/Card";
-import { MonoText } from "@/components/MonoText";
-import { SectionHeading } from "@/components/SectionHeading";
-import { ContentSection } from "@/components/ContentSection";
-import { CollapsibleSection } from "@/components/CollapsibleSection";
-import { MistakeComparison } from "@/components/MistakeComparison";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { GENDER_HINTS } from "@/constants/nouns";
 
 // Reusable paradigm table for agreement patterns (streamlined - removed Article column)
 const AgreementParadigmTable: React.FC<{
@@ -69,12 +68,13 @@ const AgreementParadigmTable: React.FC<{
 				</MonoText>
 				<span className={`text-sm ${style.text}`}>{paradigm.title}</span>
 				<span
-					className={`text-xs px-2 py-0.5 rounded ${paradigm.frequency === "very common"
+					className={`text-xs px-2 py-0.5 rounded ${
+						paradigm.frequency === "very common"
 							? "bg-olive-200 text-olive-text"
 							: paradigm.frequency === "common"
 								? "bg-honey-200 text-honey-text"
 								: "bg-stone-100 text-stone-600"
-						}`}
+					}`}
 				>
 					{paradigm.frequency}
 				</span>
@@ -400,8 +400,9 @@ const ParadigmCarousel: React.FC<{
 							key={p.id}
 							type="button"
 							onClick={() => setCurrentIndex(idx)}
-							className={`w-2 h-2 rounded-full transition-colors ${idx === currentIndex ? "bg-stone-600" : "bg-stone-300"
-								}`}
+							className={`w-2 h-2 rounded-full transition-colors ${
+								idx === currentIndex ? "bg-stone-600" : "bg-stone-300"
+							}`}
 						/>
 					))}
 				</div>
@@ -437,7 +438,10 @@ export const AgreementSection: React.FC = () => {
 				subtitle="How articles and nouns must match in gender, case, and number"
 			/>
 
-			<ContentSection title="When uncertain, use the -ν form" colorScheme="honey">
+			<ContentSection
+				title="When uncertain, use the -ν form"
+				colorScheme="honey"
+			>
 				<div className="p-3 space-y-3">
 					<p className="text-sm text-stone-600">
 						You'll never be wrong if you keep the final ν on τον/την/στον/στην.

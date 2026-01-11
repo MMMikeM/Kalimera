@@ -1,25 +1,56 @@
+import {
+	CheckCircle,
+	Flame,
+	RotateCcw,
+	Sparkles,
+	Trophy,
+	XCircle,
+} from "lucide-react";
 import type React from "react";
-import { CheckCircle, XCircle, RotateCcw, Flame, Trophy, Sparkles } from "lucide-react";
 import { Card } from "@/components/Card";
 import { MonoText } from "@/components/MonoText";
-import { Button } from "@/components/ui/button";
 import { NotificationAsk } from "@/components/NotificationAsk";
+import { Button } from "@/components/ui/button";
 import { greekToPhonetic } from "@/lib/greek-transliteration";
 import type { SessionStats } from "./unified-drill";
 
 const ENCOURAGEMENT_MESSAGES = [
-	{ threshold: 100, messages: ["Flawless!", "Perfect score!", "You're on fire!"] },
-	{ threshold: 80, messages: ["Great session!", "Solid performance!", "Keep it up!"] },
-	{ threshold: 60, messages: ["Good effort!", "Making progress!", "Every session counts!"] },
-	{ threshold: 0, messages: ["Practice makes progress!", "You showed up - that's what matters!", "Keep building the habit!"] },
+	{
+		threshold: 100,
+		messages: ["Flawless!", "Perfect score!", "You're on fire!"],
+	},
+	{
+		threshold: 80,
+		messages: ["Great session!", "Solid performance!", "Keep it up!"],
+	},
+	{
+		threshold: 60,
+		messages: ["Good effort!", "Making progress!", "Every session counts!"],
+	},
+	{
+		threshold: 0,
+		messages: [
+			"Practice makes progress!",
+			"You showed up - that's what matters!",
+			"Keep building the habit!",
+		],
+	},
 ];
 
-const getEncouragementMessage = (percentage: number): { message: string; icon: React.ReactNode } => {
-	const tier = ENCOURAGEMENT_MESSAGES.find((t) => percentage >= t.threshold) ?? ENCOURAGEMENT_MESSAGES[3];
-	const message = tier?.messages[Math.floor(Math.random() * (tier?.messages.length ?? 1))] ?? "Nice work!";
+const getEncouragementMessage = (
+	percentage: number,
+): { message: string; icon: React.ReactNode } => {
+	const tier =
+		ENCOURAGEMENT_MESSAGES.find((t) => percentage >= t.threshold) ??
+		ENCOURAGEMENT_MESSAGES[3];
+	const message =
+		tier?.messages[Math.floor(Math.random() * (tier?.messages.length ?? 1))] ??
+		"Nice work!";
 
-	if (percentage === 100) return { message, icon: <Trophy className="w-6 h-6 text-honey" /> };
-	if (percentage >= 80) return { message, icon: <Flame className="w-6 h-6 text-terracotta" /> };
+	if (percentage === 100)
+		return { message, icon: <Trophy className="w-6 h-6 text-honey" /> };
+	if (percentage >= 80)
+		return { message, icon: <Flame className="w-6 h-6 text-terracotta" /> };
 	return { message, icon: <Sparkles className="w-6 h-6 text-ocean" /> };
 };
 
@@ -40,7 +71,8 @@ const DrillSummary: React.FC<DrillSummaryProps> = ({
 }) => {
 	const percentage = Math.round((stats.correct / stats.total) * 100);
 	const avgTime = (stats.avgResponseTime / 1000).toFixed(1);
-	const { message: encouragement, icon: encouragementIcon } = getEncouragementMessage(percentage);
+	const { message: encouragement, icon: encouragementIcon } =
+		getEncouragementMessage(percentage);
 
 	const missedAttempts = stats.attempts.filter((a) => !a.isCorrect);
 
@@ -57,11 +89,14 @@ const DrillSummary: React.FC<DrillSummaryProps> = ({
 			acc[key].count++;
 			return acc;
 		},
-		{} as Record<string, { prompt: string; correctGreek: string; count: number }>
+		{} as Record<
+			string,
+			{ prompt: string; correctGreek: string; count: number }
+		>,
 	);
 
 	const sortedMissed = Object.values(missedByQuestion).sort(
-		(a, b) => b.count - a.count
+		(a, b) => b.count - a.count,
 	);
 
 	return (
@@ -70,7 +105,9 @@ const DrillSummary: React.FC<DrillSummaryProps> = ({
 				{/* Encouragement header */}
 				<div className="flex items-center justify-center gap-2 mb-4">
 					{encouragementIcon}
-					<span className="text-lg font-semibold text-stone-800">{encouragement}</span>
+					<span className="text-lg font-semibold text-stone-800">
+						{encouragement}
+					</span>
 				</div>
 
 				<div className="text-center mb-6">
@@ -153,7 +190,8 @@ const DrillSummary: React.FC<DrillSummaryProps> = ({
 						Practice Again
 					</Button>
 					<p className="text-xs text-stone-400 mt-4">
-						Consistency beats intensity. Small daily practice builds real fluency.
+						Consistency beats intensity. Small daily practice builds real
+						fluency.
 					</p>
 				</div>
 			</div>

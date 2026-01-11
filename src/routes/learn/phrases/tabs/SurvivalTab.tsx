@@ -1,7 +1,7 @@
 import { Sparkles } from "lucide-react";
 import { TabHero } from "@/components/TabHero";
 import type { PhrasesLoaderData } from "../components/shared";
-import { PhraseSection, PhraseItemDisplay } from "../components/shared";
+import { PhraseItemDisplay, PhraseSection } from "../components/shared";
 
 export const SurvivalTab = ({ data }: { data: PhrasesLoaderData }) => {
 	const { essential, survival } = data.survival;

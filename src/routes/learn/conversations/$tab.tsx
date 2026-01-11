@@ -1,8 +1,8 @@
 import type { Route } from "./+types/$tab";
 import { ArrivingTab } from "./tabs/arriving";
 import { FoodTab } from "./tabs/food";
-import { SmalltalkTab } from "./tabs/smalltalk";
 import { RequestsTab } from "./tabs/requests";
+import { SmalltalkTab } from "./tabs/smalltalk";
 
 const VALID_TABS = ["arriving", "food", "smalltalk", "requests"] as const;
 type TabId = (typeof VALID_TABS)[number];

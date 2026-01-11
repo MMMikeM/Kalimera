@@ -1,8 +1,8 @@
 // Seed-only input types - used during database seeding, not stored as-is
 // These define the shape of seed data before transformation to DB format
 
-import type { Gender, ConjugationFamily } from "../lib/greek-grammar";
 import type { VerbTense } from "../db.server/enums";
+import type { ConjugationFamily, Gender } from "../lib/greek-grammar";
 import type { Phrase } from "./phrase";
 
 export interface VerbConjugationFormsSeed {

@@ -39,4 +39,6 @@ export async function getEssentialsData() {
 	};
 }
 
-export type EssentialsLoaderData = Awaited<ReturnType<typeof getEssentialsData>>;
+export type EssentialsLoaderData = Awaited<
+	ReturnType<typeof getEssentialsData>
+>;

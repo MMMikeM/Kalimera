@@ -1,7 +1,7 @@
-import { type ReactNode, useState } from "react";
-import { ChevronDown } from "lucide-react";
 import * as CollapsiblePrimitive from "@radix-ui/react-collapsible";
-import { motion, AnimatePresence } from "motion/react";
+import { ChevronDown } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
+import { type ReactNode, useState } from "react";
 import { cn } from "@/lib/utils";
 
 export type CollapsibleColorScheme =

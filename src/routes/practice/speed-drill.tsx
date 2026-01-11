@@ -1,18 +1,18 @@
+import { RotateCcw, Zap } from "lucide-react";
 import type React from "react";
-import { useMemo, useState, useRef, useCallback } from "react";
-import { Zap, RotateCcw } from "lucide-react";
-import { useOutletContext, useFetcher } from "react-router";
-import UnifiedDrill, {
-	type UnifiedAttemptResult,
-	type SessionStats,
-} from "./components/unified-drill";
-import { Button } from "@/components/ui/button";
+import { useCallback, useMemo, useRef, useState } from "react";
+import { useFetcher, useOutletContext } from "react-router";
 import { Card } from "@/components/Card";
+import { Button } from "@/components/ui/button";
 import {
-	generateQuestions,
 	CATEGORY_CONFIG,
+	generateQuestions,
 	type QuestionCategory,
 } from "@/lib/drill/generate-questions";
+import UnifiedDrill, {
+	type SessionStats,
+	type UnifiedAttemptResult,
+} from "./components/unified-drill";
 import type { PracticeLoaderData } from "./layout";
 
 export type FocusType = QuestionCategory | "all";
@@ -38,7 +38,7 @@ const SpeedDrill: React.FC = () => {
 
 	const questions = useMemo(
 		() => generateQuestions(focus === "all" ? "all" : [focus], drillSize),
-		[drillSize, focus]
+		[drillSize, focus],
 	);
 
 	const startDbSession = useCallback(() => {
@@ -51,7 +51,7 @@ const SpeedDrill: React.FC = () => {
 				sessionType: "case_drill",
 				category: "speed_drill",
 			},
-			{ method: "post", action: "/practice" }
+			{ method: "post", action: "/practice" },
 		);
 	}, [userId, fetcher]);
 
@@ -92,10 +92,10 @@ const SpeedDrill: React.FC = () => {
 					...(weakAreaType && { weakAreaType }),
 					...(weakAreaIdentifier && { weakAreaIdentifier }),
 				},
-				{ method: "post", action: "/practice" }
+				{ method: "post", action: "/practice" },
 			);
 		},
-		[userId, fetcher]
+		[userId, fetcher],
 	);
 
 	const handleComplete = useCallback(
@@ -111,10 +111,10 @@ const SpeedDrill: React.FC = () => {
 					totalQuestions: stats.total.toString(),
 					correctAnswers: stats.correct.toString(),
 				},
-				{ method: "post", action: "/practice" }
+				{ method: "post", action: "/practice" },
 			);
 		},
-		[userId, fetcher]
+		[userId, fetcher],
 	);
 
 	const handleNewSession = () => {
@@ -132,7 +132,8 @@ const SpeedDrill: React.FC = () => {
 	}
 
 	const focusConfig = focus !== "all" ? CATEGORY_CONFIG[focus] : null;
-	const drillTitle = focus !== "all" ? `${focusConfig?.label} Drill` : "Speed Drill";
+	const drillTitle =
+		focus !== "all" ? `${focusConfig?.label} Drill` : "Speed Drill";
 
 	if (sessionCount === 0 && !lastStats) {
 		return (

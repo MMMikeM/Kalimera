@@ -1,4 +1,10 @@
-import type { AdjectiveSeed, AdverbSeed, NounSeed, Phrase, VerbSeed } from "../../../../types/seed";
+import type {
+	AdjectiveSeed,
+	AdverbSeed,
+	NounSeed,
+	Phrase,
+	VerbSeed,
+} from "../../../../types/seed";
 
 export const LESSON_2024_07_08 = {
 	meta: {
@@ -8,7 +14,11 @@ export const LESSON_2024_07_08 = {
 	},
 
 	verbs: [
-		{ lemma: "νευριάζω", english: "I get nervous/annoyed", conjugationFamily: "-ω" },
+		{
+			lemma: "νευριάζω",
+			english: "I get nervous/annoyed",
+			conjugationFamily: "-ω",
+		},
 	] satisfies VerbSeed[],
 
 	nouns: [
@@ -71,12 +81,20 @@ export const LESSON_2024_07_08 = {
 	grammarNotes: [
 		{
 			pattern: "αρέσει construction with pronouns",
-			examples: ["μου αρέσει", "σου αρέσει", "του/της αρέσει", "μας/σας/τους αρέσει"],
+			examples: [
+				"μου αρέσει",
+				"σου αρέσει",
+				"του/της αρέσει",
+				"μας/σας/τους αρέσει",
+			],
 			explanation: "Dative-like construction: 'to me is pleasing'",
 		},
 		{
 			pattern: "πότε vs όταν",
-			examples: ["Πότε θα έρθεις; (when will you come?)", "Όταν έρθεις... (when you come...)"],
+			examples: [
+				"Πότε θα έρθεις; (when will you come?)",
+				"Όταν έρθεις... (when you come...)",
+			],
 			explanation: "πότε = question word, όταν = conjunction",
 		},
 	],
