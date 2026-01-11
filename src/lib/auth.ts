@@ -42,7 +42,9 @@ export const createWebAuthn = (config: WebAuthnConfig) => {
 				attestationType: "none",
 				excludeCredentials: existingCredentials.map((cred) => ({
 					id: cred.credentialId,
-					transports: cred.transports as AuthenticatorTransportFuture[] | undefined,
+					transports: cred.transports as
+						| AuthenticatorTransportFuture[]
+						| undefined,
 				})),
 				authenticatorSelection: {
 					residentKey: "preferred",
@@ -61,7 +63,10 @@ export const createWebAuthn = (config: WebAuthnConfig) => {
 			response: RegistrationResponseJSON,
 			expectedChallenge: string,
 		) => {
-			const challengeRecord = await findChallenge(expectedChallenge, "registration");
+			const challengeRecord = await findChallenge(
+				expectedChallenge,
+				"registration",
+			);
 			if (!challengeRecord) {
 				throw new Error("Challenge not found or expired");
 			}
@@ -86,10 +91,12 @@ export const createWebAuthn = (config: WebAuthnConfig) => {
 				credentialId: credential.id,
 				publicKey: isoBase64URL.fromBuffer(credential.publicKey),
 				counter: credential.counter,
-				transports: (response.response.transports as AuthenticatorTransport[]) ?? null,
+				transports:
+					(response.response.transports as AuthenticatorTransport[]) ?? null,
 				deviceType: credentialDeviceType,
 				backedUp: credentialBackedUp,
-				name: credentialDeviceType === "singleDevice" ? "Security Key" : "Passkey",
+				name:
+					credentialDeviceType === "singleDevice" ? "Security Key" : "Passkey",
 			});
 
 			await deleteChallenge(expectedChallenge);
@@ -103,20 +110,26 @@ export const createWebAuthn = (config: WebAuthnConfig) => {
 		},
 
 		generateAuthenticationOptions: async (userId?: number) => {
-			let allowCredentials: { id: string; transports?: AuthenticatorTransportFuture[] }[] = [];
+			let allowCredentials: {
+				id: string;
+				transports?: AuthenticatorTransportFuture[];
+			}[] = [];
 
 			if (userId) {
 				const credentials = await findPasskeysByUserId(userId);
 				allowCredentials = credentials.map((cred) => ({
 					id: cred.credentialId,
-					transports: cred.transports as AuthenticatorTransportFuture[] | undefined,
+					transports: cred.transports as
+						| AuthenticatorTransportFuture[]
+						| undefined,
 				}));
 			}
 
 			const options = await generateAuthenticationOptions({
 				rpID,
 				userVerification: "preferred",
-				allowCredentials: allowCredentials.length > 0 ? allowCredentials : undefined,
+				allowCredentials:
+					allowCredentials.length > 0 ? allowCredentials : undefined,
 			});
 
 			await createChallenge(options.challenge, "authentication", userId);
@@ -128,7 +141,10 @@ export const createWebAuthn = (config: WebAuthnConfig) => {
 			response: AuthenticationResponseJSON,
 			expectedChallenge: string,
 		) => {
-			const challengeRecord = await findChallenge(expectedChallenge, "authentication");
+			const challengeRecord = await findChallenge(
+				expectedChallenge,
+				"authentication",
+			);
 			if (!challengeRecord) {
 				throw new Error("Challenge not found or expired");
 			}
@@ -147,7 +163,9 @@ export const createWebAuthn = (config: WebAuthnConfig) => {
 					id: credential.credentialId,
 					publicKey: isoBase64URL.toBuffer(credential.publicKey),
 					counter: credential.counter,
-					transports: credential.transports as AuthenticatorTransportFuture[] | undefined,
+					transports: credential.transports as
+						| AuthenticatorTransportFuture[]
+						| undefined,
 				},
 				requireUserVerification: false,
 			});

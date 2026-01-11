@@ -64,18 +64,12 @@ export const LESSON_2024_06_05 = {
 		},
 		{
 			pattern: "Irregular πάω",
-			examples: [
-				"πάω, πας, πάει",
-				"πάμε, πάτε, πάνε",
-			],
+			examples: ["πάω, πας, πάει", "πάμε, πάτε, πάνε"],
 			explanation: "Short form of πηγαίνω - irregular",
 		},
 		{
 			pattern: "Irregular τρώω",
-			examples: [
-				"τρώω, τρως, τρώει",
-				"τρώμε, τρώτε, τρώνε",
-			],
+			examples: ["τρώω, τρως, τρώει", "τρώμε, τρώτε, τρώνε"],
 			explanation: "Irregular verb - note the ω throughout",
 		},
 	],

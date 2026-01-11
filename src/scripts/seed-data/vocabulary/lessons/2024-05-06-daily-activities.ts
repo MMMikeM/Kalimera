@@ -31,9 +31,17 @@ export const LESSON_2024_05_06 = {
 		{ text: "τρώω μεσημεριανό", english: "I eat lunch", metadata: {} },
 		{ text: "ακούω μουσική", english: "I listen to music", metadata: {} },
 		{ text: "πίνω καφέ", english: "I drink coffee", metadata: {} },
-		{ text: "διαβάζω εφημερίδα", english: "I read the newspaper", metadata: {} },
+		{
+			text: "διαβάζω εφημερίδα",
+			english: "I read the newspaper",
+			metadata: {},
+		},
 		{ text: "βλέπω τηλεόραση", english: "I watch TV", metadata: {} },
-		{ text: "πάω σινεμά", english: "I go to the cinema", metadata: { note: "no article needed" } },
+		{
+			text: "πάω σινεμά",
+			english: "I go to the cinema",
+			metadata: { note: "no article needed" },
+		},
 		{ text: "κάνω σπορ", english: "I do sport", metadata: {} },
 	] satisfies Phrase[],
 

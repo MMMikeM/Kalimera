@@ -46,7 +46,11 @@ export const LESSON_2024_12_30 = {
 		// From error correction sentences
 		{ lemma: "καρέκλα", gender: "feminine", english: "chair" },
 		{ lemma: "καρπούζι", gender: "neuter", english: "watermelon" },
-		{ lemma: "πορτοκαλάδα", gender: "feminine", english: "orange juice/orangeade" },
+		{
+			lemma: "πορτοκαλάδα",
+			gender: "feminine",
+			english: "orange juice/orangeade",
+		},
 		{ lemma: "γιαγιά", gender: "feminine", english: "grandmother" },
 	] satisfies NounSeed[],
 
@@ -65,9 +69,7 @@ export const LESSON_2024_12_30 = {
 		{ lemma: "νότιος", english: "south/southern" },
 	] satisfies AdjectiveSeed[],
 
-	adverbs: [
-		{ lemma: "έξω", english: "outside/out" },
-	] satisfies AdverbSeed[],
+	adverbs: [{ lemma: "έξω", english: "outside/out" }] satisfies AdverbSeed[],
 
 	phrases: [
 		// Entertainment questions

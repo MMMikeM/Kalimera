@@ -64,14 +64,14 @@ export const DEFINITE_ARTICLES: Record<
 export const getArticle = (
 	gender: Gender,
 	number: GrammaticalNumber = "singular",
-	grammaticalCase: Case = "nominative"
+	grammaticalCase: Case = "nominative",
 ): string => DEFINITE_ARTICLES[gender][number][grammaticalCase];
 
 export const formatNounWithArticle = (
 	lemma: string,
 	gender: Gender,
 	number: GrammaticalNumber = "singular",
-	grammaticalCase: Case = "nominative"
+	grammaticalCase: Case = "nominative",
 ): string => {
 	const article = getArticle(gender, number, grammaticalCase);
 	return article ? `${article} ${lemma}` : lemma;

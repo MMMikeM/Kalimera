@@ -1,7 +1,7 @@
-import type { Route } from "./+types/push.unsubscribe";
+import { eq } from "drizzle-orm";
 import { db } from "@/db.server";
 import { pushSubscriptions } from "@/db.server/schema";
-import { eq } from "drizzle-orm";
+import type { Route } from "./+types/push.unsubscribe";
 
 interface UnsubscribeBody {
 	endpoint: string;

@@ -1,10 +1,14 @@
 import { MessageCircle } from "lucide-react";
 import { ConversationHero } from "@/components/ConversationHero";
 import type { DialogueLine } from "@/components/DialogueExchange";
-import { ScenarioCard, LearningTips, useConversationContext } from "../layout";
+import { LearningTips, ScenarioCard, useConversationContext } from "../layout";
 
 const ORIGIN_CHAT: DialogueLine[] = [
-	{ speaker: "friend", greek: "Από πού είσαι;", english: "Where are you from?" },
+	{
+		speaker: "friend",
+		greek: "Από πού είσαι;",
+		english: "Where are you from?",
+	},
 	{
 		speaker: "you",
 		greek: "Είμαι από...",

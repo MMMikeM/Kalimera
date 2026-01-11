@@ -141,7 +141,10 @@ export const LESSON_2024_12_09 = {
 		{
 			text: "μιλάω ελληνικά",
 			english: "I speak Greek",
-			metadata: { pattern: "μιλάω + language (neuter plural)", usage: "languages" },
+			metadata: {
+				pattern: "μιλάω + language (neuter plural)",
+				usage: "languages",
+			},
 		},
 		{
 			text: "μιλάω αγγλικά",
@@ -240,31 +243,19 @@ export const LESSON_2024_12_09 = {
 		},
 		{
 			pattern: "Adjective plural forms",
-			examples: [
-				"ελληνικοί/ελληνικές/ελληνικά",
-				"καλοί/καλές/καλά",
-			],
+			examples: ["ελληνικοί/ελληνικές/ελληνικά", "καλοί/καλές/καλά"],
 			explanation:
 				"Plural: -οι (m), -ές (f), -ά (n). Note the accent shift in feminine plural.",
 		},
 		{
 			pattern: "Countries take feminine article η",
-			examples: [
-				"η Ελλάδα",
-				"η Κύπρος",
-				"η Αγγλία",
-				"η Γερμανία",
-			],
+			examples: ["η Ελλάδα", "η Κύπρος", "η Αγγλία", "η Γερμανία"],
 			explanation:
 				"Most country names are feminine singular. Exception: ο Καναδάς (masculine)",
 		},
 		{
 			pattern: "Languages are neuter plural adjectives",
-			examples: [
-				"τα ελληνικά",
-				"τα αγγλικά",
-				"τα γερμανικά",
-			],
+			examples: ["τα ελληνικά", "τα αγγλικά", "τα γερμανικά"],
 			explanation:
 				"Languages use neuter plural of nationality adjective: μιλάω ελληνικά (no article needed with μιλάω)",
 		},

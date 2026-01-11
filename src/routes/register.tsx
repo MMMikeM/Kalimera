@@ -1,30 +1,30 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router";
 import {
-	useForm,
-	parseFormData,
-	validationError,
 	isValidationErrorResponse,
+	parseFormData,
+	useForm,
+	validationError,
 } from "@rvf/react-router";
 import {
-	UserPlus,
-	KeyRound,
+	AlertCircle,
 	ArrowRight,
 	Check,
-	AlertCircle,
+	KeyRound,
+	UserPlus,
 } from "lucide-react";
-import type { Route } from "./+types/register";
+import { useEffect, useState } from "react";
+import { Link } from "react-router";
+import { Card } from "@/components/Card";
+import { Button } from "@/components/ui/button";
+import { FormField } from "@/components/ui/form-field";
 import {
 	createUserWithPassword,
 	findUserByUsername,
 } from "@/db.server/queries/auth";
+import { loginAndRedirect } from "@/lib/auth-storage";
+import { usePasskeyRegistration } from "@/lib/hooks/use-passkey-registration";
 import { hashPassword } from "@/lib/password";
 import { registerSchema, registerValidator } from "@/lib/validators/auth";
-import { usePasskeyRegistration } from "@/lib/hooks/use-passkey-registration";
-import { loginAndRedirect } from "@/lib/auth-storage";
-import { Card } from "@/components/Card";
-import { Button } from "@/components/ui/button";
-import { FormField } from "@/components/ui/form-field";
+import type { Route } from "./+types/register";
 
 export function meta() {
 	return [

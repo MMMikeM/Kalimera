@@ -1,6 +1,6 @@
-import { useId, type ReactNode } from "react";
+import { type ReactNode, useId } from "react";
+import { type ColorScheme, colorStyles } from "@/lib/colors";
 import { cn } from "@/lib/utils";
-import { colorStyles, type ColorScheme } from "@/lib/colors";
 
 export type ContentColorScheme = ColorScheme;
 

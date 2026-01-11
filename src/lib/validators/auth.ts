@@ -44,4 +44,3 @@ export const registerSchema = z
 	});
 
 export const registerValidator = withZod(registerSchema);
-

@@ -6,9 +6,7 @@ import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig(({ isSsrBuild, command }) => ({
 	build: {
-		rollupOptions: isSsrBuild
-			? { input: "./src/entry.worker.ts" }
-			: undefined,
+		rollupOptions: isSsrBuild ? { input: "./src/entry.worker.ts" } : undefined,
 	},
 	ssr:
 		command === "build"
@@ -33,11 +31,7 @@ export default defineConfig(({ isSsrBuild, command }) => ({
 				srcDir: "service-worker",
 				filename: "sw.ts",
 				registerType: "prompt",
-				includeAssets: [
-					"favicon.svg",
-					"apple-touch-icon.png",
-					"icons/*.png",
-				],
+				includeAssets: ["favicon.svg", "apple-touch-icon.png", "icons/*.png"],
 				manifest: false,
 				injectManifest: {
 					globPatterns: ["**/*.{js,css,html,ico,png,svg,woff2}"],

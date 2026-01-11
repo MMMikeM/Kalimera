@@ -1,7 +1,7 @@
+import { subDays, subMonths } from "date-fns";
 import { and, count, eq, gte, sql } from "drizzle-orm";
-import { subMonths, subDays } from "date-fns";
 import { db } from "../index";
-import { practiceAttempts, practiceSessions, } from "../schema";
+import { practiceAttempts, practiceSessions } from "../schema";
 
 // =====================================================================================
 // TYPES
@@ -36,7 +36,9 @@ export const getPracticeDatesForCalendar = async (
 
 	const results = await db
 		.select({
-			date: sql<string>`date(${practiceSessions.completedAt}, 'unixepoch')`.as("date"),
+			date: sql<string>`date(${practiceSessions.completedAt}, 'unixepoch')`.as(
+				"date",
+			),
 			sessionCount: count().as("session_count"),
 		})
 		.from(practiceSessions)
@@ -64,11 +66,14 @@ export const getAccuracyTrends = async (
 
 	const results = await db
 		.select({
-			date: sql<string>`date(${practiceAttempts.attemptedAt}, 'unixepoch')`.as("date"),
-			totalAttempts: count().as("total"),
-			correctAttempts: sql<number>`sum(case when ${practiceAttempts.isCorrect} = 1 then 1 else 0 end)`.as(
-				"correct",
+			date: sql<string>`date(${practiceAttempts.attemptedAt}, 'unixepoch')`.as(
+				"date",
 			),
+			totalAttempts: count().as("total"),
+			correctAttempts:
+				sql<number>`sum(case when ${practiceAttempts.isCorrect} = 1 then 1 else 0 end)`.as(
+					"correct",
+				),
 		})
 		.from(practiceAttempts)
 		.where(
@@ -85,16 +90,22 @@ export const getAccuracyTrends = async (
 		date: r.date,
 		totalAttempts: r.totalAttempts,
 		correctAttempts: r.correctAttempts ?? 0,
-		accuracy: r.totalAttempts > 0 ? Math.round(((r.correctAttempts ?? 0) / r.totalAttempts) * 100) : 0,
+		accuracy:
+			r.totalAttempts > 0
+				? Math.round(((r.correctAttempts ?? 0) / r.totalAttempts) * 100)
+				: 0,
 	}));
 };
 
-export const getTimeInvested = async (userId: number): Promise<TimeInvested> => {
+export const getTimeInvested = async (
+	userId: number,
+): Promise<TimeInvested> => {
 	const [result] = await db
 		.select({
-			totalSeconds: sql<number>`sum(${practiceSessions.completedAt} - ${practiceSessions.startedAt})`.as(
-				"total_seconds",
-			),
+			totalSeconds:
+				sql<number>`sum(${practiceSessions.completedAt} - ${practiceSessions.startedAt})`.as(
+					"total_seconds",
+				),
 			sessionCount: count().as("session_count"),
 		})
 		.from(practiceSessions)

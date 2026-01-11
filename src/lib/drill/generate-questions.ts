@@ -1,10 +1,7 @@
-import {
-	OBJECT_PRONOUNS,
-	POSSESSIVE_PRONOUNS,
-} from "@/constants/pronouns";
+import { OBJECT_PRONOUNS, POSSESSIVE_PRONOUNS } from "@/constants/pronouns";
 import { VERB_CONJUGATIONS } from "@/constants/verbs";
-import { declineNoun } from "@/lib/noun-declension";
 import type { DeclensionPattern } from "@/db.server/enums";
+import { declineNoun } from "@/lib/noun-declension";
 
 export interface DrillQuestion {
 	id: string;
@@ -154,26 +151,26 @@ const generateNounQuestions = (): DrillQuestion[] => {
 		pattern: DeclensionPattern;
 		english: string;
 	}> = [
-			{ lemma: "φίλος", pattern: "masc-os", english: "friend" },
-			{ lemma: "καφές", pattern: "masc-es", english: "coffee" },
-			{ lemma: "γυναίκα", pattern: "fem-a", english: "woman" },
-			{ lemma: "παιδί", pattern: "neut-i", english: "child" },
-			{ lemma: "βιβλίο", pattern: "neut-o", english: "book" },
-			{ lemma: "σπίτι", pattern: "neut-i", english: "house" },
-			{ lemma: "πατέρας", pattern: "masc-as", english: "father" },
-			{ lemma: "μητέρα", pattern: "fem-a", english: "mother" },
-		];
+		{ lemma: "φίλος", pattern: "masc-os", english: "friend" },
+		{ lemma: "καφές", pattern: "masc-es", english: "coffee" },
+		{ lemma: "γυναίκα", pattern: "fem-a", english: "woman" },
+		{ lemma: "παιδί", pattern: "neut-i", english: "child" },
+		{ lemma: "βιβλίο", pattern: "neut-o", english: "book" },
+		{ lemma: "σπίτι", pattern: "neut-i", english: "house" },
+		{ lemma: "πατέρας", pattern: "masc-as", english: "father" },
+		{ lemma: "μητέρα", pattern: "fem-a", english: "mother" },
+	];
 
 	for (const noun of nouns) {
 		const forms = declineNoun(noun.lemma, noun.pattern);
 		const nomForm = forms.find(
-			(f) => f.case === "nominative" && f.number === "singular"
+			(f) => f.case === "nominative" && f.number === "singular",
 		);
 		const accForm = forms.find(
-			(f) => f.case === "accusative" && f.number === "singular"
+			(f) => f.case === "accusative" && f.number === "singular",
 		);
 		const genForm = forms.find(
-			(f) => f.case === "genitive" && f.number === "singular"
+			(f) => f.case === "genitive" && f.number === "singular",
 		);
 
 		if (nomForm && accForm) {
@@ -198,7 +195,7 @@ const generateNounQuestions = (): DrillQuestion[] => {
 	return questions;
 };
 
-const shuffleArray = <T,>(array: T[]): T[] => {
+const shuffleArray = <T>(array: T[]): T[] => {
 	const shuffled = [...array];
 	for (let i = shuffled.length - 1; i > 0; i--) {
 		const j = Math.floor(Math.random() * (i + 1));
@@ -218,7 +215,7 @@ const generators: Record<QuestionCategory, () => DrillQuestion[]> = {
 
 export const generateQuestions = (
 	categories: QuestionCategory[] | "all",
-	count?: number
+	count?: number,
 ): DrillQuestion[] => {
 	const cats =
 		categories === "all"

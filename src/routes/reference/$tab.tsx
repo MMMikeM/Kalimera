@@ -1,13 +1,13 @@
+import { type NavTab, NavTabs } from "@/components/NavTabs";
 import type { Route } from "./+types/$tab";
-import { NavTabs, type NavTab } from "@/components/NavTabs";
-import { CasesTab } from "./tabs/cases";
-import { PronounsTab } from "./tabs/pronouns";
-import { NounsArticlesTab } from "./tabs/nouns-articles";
-import { AdjectivesTab } from "./tabs/adjectives";
-import { PrepositionsTab } from "./tabs/prepositions";
-import { VerbsTab } from "./tabs/verbs";
-import { PatternsTab } from "./tabs/patterns";
 import { getPatternsData } from "./data.server";
+import { AdjectivesTab } from "./tabs/adjectives";
+import { CasesTab } from "./tabs/cases";
+import { NounsArticlesTab } from "./tabs/nouns-articles";
+import { PatternsTab } from "./tabs/patterns";
+import { PrepositionsTab } from "./tabs/prepositions";
+import { PronounsTab } from "./tabs/pronouns";
+import { VerbsTab } from "./tabs/verbs";
 
 const VALID_TABS = [
 	"cases",

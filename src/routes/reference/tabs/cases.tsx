@@ -1,7 +1,7 @@
+import { ArrowRight, Scale } from "lucide-react";
 import { Link } from "react-router";
-import { Scale, ArrowRight } from "lucide-react";
-import { TabHero } from "@/components/TabHero";
 import { Card } from "@/components/Card";
+import { TabHero } from "@/components/TabHero";
 import { CasesSection } from "../components/cases-section";
 
 export function CasesTab() {
@@ -13,8 +13,8 @@ export function CasesTab() {
 				colorScheme="ocean"
 				icon={<Scale size={18} />}
 			>
-				Cases show a word's role in a sentence. Master these three questions
-				and word endings make sense.
+				Cases show a word's role in a sentence. Master these three questions and
+				word endings make sense.
 			</TabHero>
 
 			<CasesSection />
@@ -29,9 +29,7 @@ export function CasesTab() {
 					className="flex items-center justify-between group"
 				>
 					<div>
-						<h4 className="font-bold text-ocean-text">
-							Continue to Pronouns
-						</h4>
+						<h4 className="font-bold text-ocean-text">Continue to Pronouns</h4>
 						<p className="text-sm text-stone-600">
 							See cases in action with the words you'll use most
 						</p>

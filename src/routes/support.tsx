@@ -1,6 +1,6 @@
+import { ArrowLeft, Coffee, Heart } from "lucide-react";
 import { Link } from "react-router";
 import { Card } from "@/components/Card";
-import { Heart, Coffee, ArrowLeft } from "lucide-react";
 
 export default function SupportPage() {
 	return (
@@ -25,9 +25,9 @@ export default function SupportPage() {
 				</p>
 				<p className="text-stone-600 leading-relaxed">
 					Problem is, I'm learning from square one. Apps, textbooks, courses.
-					Everything trained me to recognise Greek, not produce it. I
-					could tap the right answer in a multiple choice quiz, but when someone
-					asked me something, my mind went blank.
+					Everything trained me to recognise Greek, not produce it. I could tap
+					the right answer in a multiple choice quiz, but when someone asked me
+					something, my mind went blank.
 				</p>
 				<p className="text-stone-600 leading-relaxed">
 					So I built this. Timed drills that force retrieval under pressure. 3.5
@@ -50,7 +50,9 @@ export default function SupportPage() {
 							<Coffee size={20} className="text-terracotta" />
 						</div>
 						<div>
-							<h3 className="font-medium text-stone-800 mb-1">Buy me a coffee</h3>
+							<h3 className="font-medium text-stone-800 mb-1">
+								Buy me a coffee
+							</h3>
 							<p className="text-sm text-stone-600 mb-3">
 								One-time support to keep this project going.
 							</p>
@@ -72,7 +74,9 @@ export default function SupportPage() {
 							<Heart size={20} className="text-terracotta" />
 						</div>
 						<div>
-							<h3 className="font-medium text-stone-800 mb-1">Spread the word</h3>
+							<h3 className="font-medium text-stone-800 mb-1">
+								Spread the word
+							</h3>
 							<p className="text-sm text-stone-600 mb-3">
 								Share with someone learning Greek. Word of mouth helps the most.
 							</p>
@@ -107,8 +111,8 @@ export default function SupportPage() {
 			<div className="text-center text-stone-500 text-sm">
 				<p>
 					Built with care in Cyprus.{" "}
-					<span className="font-serif text-terracotta">Ευχαριστώ</span> for using
-					this.
+					<span className="font-serif text-terracotta">Ευχαριστώ</span> for
+					using this.
 				</p>
 			</div>
 		</div>

@@ -1,5 +1,5 @@
-import { forwardRef, type ReactNode } from "react";
 import { Search, X } from "lucide-react";
+import { forwardRef, type ReactNode } from "react";
 import { tv } from "tailwind-variants";
 
 export const searchInputVariants = tv({
@@ -79,32 +79,33 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
 		},
 		ref,
 	) => {
-	const hasValue = value !== undefined && value !== "";
+		const hasValue = value !== undefined && value !== "";
 
-	return (
-		<div
-			className={searchInputVariants({ size, className: containerClassName })}
-		>
-			<div className={searchInputIconVariants({ size })}>{icon}</div>
-			<input
-				ref={ref}
-				type="text"
-				value={value}
-				className={searchInputFieldVariants({ size, className })}
-				{...props}
-			/>
-			{hasValue && onClear && (
-				<button
-					type="button"
-					onClick={onClear}
-					className={clearButtonVariants({ size })}
-					aria-label="Clear search"
-				>
-					<X />
-				</button>
-			)}
-		</div>
-	);
-});
+		return (
+			<div
+				className={searchInputVariants({ size, className: containerClassName })}
+			>
+				<div className={searchInputIconVariants({ size })}>{icon}</div>
+				<input
+					ref={ref}
+					type="text"
+					value={value}
+					className={searchInputFieldVariants({ size, className })}
+					{...props}
+				/>
+				{hasValue && onClear && (
+					<button
+						type="button"
+						onClick={onClear}
+						className={clearButtonVariants({ size })}
+						aria-label="Clear search"
+					>
+						<X />
+					</button>
+				)}
+			</div>
+		);
+	},
+);
 
 SearchInput.displayName = "SearchInput";

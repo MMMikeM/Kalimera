@@ -1,8 +1,8 @@
 import type React from "react";
 import { useMemo } from "react";
-import UnifiedDrill, { type UnifiedQuestion } from "./unified-drill";
-import { getNounForm, type Case } from "@/lib/noun-declension";
 import type { DeclensionPattern } from "@/db.server/enums";
+import { type Case, getNounForm } from "@/lib/noun-declension";
+import UnifiedDrill, { type UnifiedQuestion } from "./unified-drill";
 
 interface PracticeNoun {
 	lemma: string;

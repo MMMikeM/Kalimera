@@ -5,14 +5,14 @@ import { HydratedRouter } from "react-router/dom";
 const root = document.getElementById("root");
 
 if (!root) {
-  throw new Error("Root element not found");
+	throw new Error("Root element not found");
 }
 
 startTransition(() => {
-  hydrateRoot(
-    root,
-    <StrictMode>
-      <HydratedRouter />
-    </StrictMode>
-  );
+	hydrateRoot(
+		root,
+		<StrictMode>
+			<HydratedRouter />
+		</StrictMode>,
+	);
 });

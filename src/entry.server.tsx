@@ -1,13 +1,13 @@
-import type { EntryContext } from "react-router";
-import { ServerRouter } from "react-router";
 import { isbot } from "isbot";
 import { renderToReadableStream } from "react-dom/server.edge";
+import type { EntryContext } from "react-router";
+import { ServerRouter } from "react-router";
 
 export default async function handleRequest(
 	request: Request,
 	responseStatusCode: number,
 	responseHeaders: Headers,
-	entryContext: EntryContext
+	entryContext: EntryContext,
 ) {
 	const body = await renderToReadableStream(
 		<ServerRouter context={entryContext} url={request.url} />,
@@ -17,7 +17,7 @@ export default async function handleRequest(
 				console.error(error);
 				responseStatusCode = 500;
 			},
-		}
+		},
 	);
 
 	if (isbot(request.headers.get("user-agent") || "")) {

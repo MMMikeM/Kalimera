@@ -1,6 +1,6 @@
 import { AlertTriangle } from "lucide-react";
-import { MonoText } from "./MonoText";
 import { cn } from "@/lib/utils";
+import { MonoText } from "./MonoText";
 
 export interface StemInsightProps {
 	isSuppletive: boolean;

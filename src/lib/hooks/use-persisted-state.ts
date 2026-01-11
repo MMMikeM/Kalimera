@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 type SetValue<T> = T | ((prev: T) => T);
 
@@ -8,7 +8,7 @@ type SetValue<T> = T | ((prev: T) => T);
  */
 export const usePersistedState = <T>(
 	key: string,
-	defaultValue: T
+	defaultValue: T,
 ): [T, (value: SetValue<T>) => void] => {
 	const [state, setState] = useState<T>(() => {
 		if (typeof window === "undefined") return defaultValue;
@@ -30,7 +30,9 @@ export const usePersistedState = <T>(
 	}, [key, state]);
 
 	const setValue = useCallback((value: SetValue<T>) => {
-		setState((prev) => (typeof value === "function" ? (value as (prev: T) => T)(prev) : value));
+		setState((prev) =>
+			typeof value === "function" ? (value as (prev: T) => T)(prev) : value,
+		);
 	}, []);
 
 	return [state, setValue];

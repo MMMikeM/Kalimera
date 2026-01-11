@@ -1,4 +1,9 @@
-import type { AdjectiveSeed, NounSeed, Phrase, VerbSeed } from "../../../../types/seed";
+import type {
+	AdjectiveSeed,
+	NounSeed,
+	Phrase,
+	VerbSeed,
+} from "../../../../types/seed";
 
 export const LESSON_2024_04_04 = {
 	meta: {
@@ -9,12 +14,24 @@ export const LESSON_2024_04_04 = {
 
 	verbs: [
 		{ lemma: "δημιουργώ", english: "I create", conjugationFamily: "-άω/-ώ" },
-		{ lemma: "ενισχύω", english: "I boost/strengthen", conjugationFamily: "-ω" },
+		{
+			lemma: "ενισχύω",
+			english: "I boost/strengthen",
+			conjugationFamily: "-ω",
+		},
 		{ lemma: "απολαμβάνω", english: "I enjoy", conjugationFamily: "-ω" },
-		{ lemma: "εξοικονομώ", english: "I save (money)", conjugationFamily: "-άω/-ώ" },
+		{
+			lemma: "εξοικονομώ",
+			english: "I save (money)",
+			conjugationFamily: "-άω/-ώ",
+		},
 		{ lemma: "ξοδεύω", english: "I spend", conjugationFamily: "-ω" },
 		{ lemma: "επισκέπτομαι", english: "I visit", conjugationFamily: "-ομαι" },
-		{ lemma: "ταυτίζομαι", english: "I relate/identify with", conjugationFamily: "-ομαι" },
+		{
+			lemma: "ταυτίζομαι",
+			english: "I relate/identify with",
+			conjugationFamily: "-ομαι",
+		},
 	] satisfies VerbSeed[],
 
 	nouns: [

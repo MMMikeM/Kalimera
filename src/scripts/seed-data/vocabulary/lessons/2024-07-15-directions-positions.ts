@@ -1,4 +1,9 @@
-import type { AdverbSeed, NounSeed, Phrase, VerbSeed } from "../../../../types/seed";
+import type {
+	AdverbSeed,
+	NounSeed,
+	Phrase,
+	VerbSeed,
+} from "../../../../types/seed";
 
 export const LESSON_2024_07_15 = {
 	meta: {
@@ -31,9 +36,7 @@ export const LESSON_2024_07_15 = {
 		{ lemma: "μήπως", english: "maybe/perhaps" },
 	] satisfies AdverbSeed[],
 
-	adjectives: [
-		{ lemma: "καινούριος", english: "new" },
-	],
+	adjectives: [{ lemma: "καινούριος", english: "new" }],
 
 	phrases: [
 		// Position patterns with prepositions

@@ -1,6 +1,6 @@
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { ParadigmTable, type ParadigmForms } from "./ParadigmTable";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
+import { type ParadigmForms, ParadigmTable } from "./ParadigmTable";
 
 const TENSE_CONFIG: Record<
 	string,
@@ -131,11 +131,7 @@ export const TenseNavigator = ({
 						value={tense}
 						className={cn("rounded-lg border p-4 mt-2", styles.content)}
 					>
-						<ParadigmTable
-							stem={stem}
-							meaning={meaning}
-							forms={forms}
-						/>
+						<ParadigmTable stem={stem} meaning={meaning} forms={forms} />
 					</TabsContent>
 				);
 			})}

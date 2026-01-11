@@ -114,7 +114,10 @@ export const QUESTION_WORDS: Phrase[] = [
 ];
 
 // Legacy export for backwards compatibility
-export const USEFUL_EXPRESSIONS: Phrase[] = [...DISCOURSE_FILLERS, ...SOCIAL_PHRASES];
+export const USEFUL_EXPRESSIONS: Phrase[] = [
+	...DISCOURSE_FILLERS,
+	...SOCIAL_PHRASES,
+];
 
 export const COMMANDS: Phrase[] = [
 	{ text: "κάτσε κάτω", english: "sit down" },
@@ -160,7 +163,9 @@ export const NAME_CONSTRUCTION: Phrase[] = [
 ];
 
 // Time expression phrases (with article, showing accusative usage)
-export const TIME_PHRASES: Phrase[] = [{ text: "κάθε μέρα", english: "every day" }];
+export const TIME_PHRASES: Phrase[] = [
+	{ text: "κάθε μέρα", english: "every day" },
+];
 
 // Example sentences for practicing case and verb usage
 export const EXAMPLE_SENTENCES: Phrase[] = [

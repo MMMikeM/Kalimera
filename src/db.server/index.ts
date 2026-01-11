@@ -1,11 +1,10 @@
-import { drizzle } from "drizzle-orm/libsql/web";
-import { createClient, type Client } from "@libsql/client/web";
 import { AsyncLocalStorage } from "node:async_hooks";
+import { type Client, createClient } from "@libsql/client/web";
+import { drizzle } from "drizzle-orm/libsql/web";
 import { relations } from "./relations";
 
 // Helper to create a typed db instance
-const createTypedDb = (client: Client) =>
-	drizzle({ client, relations });
+const createTypedDb = (client: Client) => drizzle({ client, relations });
 
 type DbClient = ReturnType<typeof createTypedDb>;
 

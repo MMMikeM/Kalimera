@@ -18,7 +18,8 @@ export const calculateSRS = (input: SRSInput): SRSOutput => {
 	const { quality, easeFactor, intervalDays, reviewCount } = input;
 
 	// SM-2 ease factor adjustment: EF' = EF + (0.1 - (5 - q) * (0.08 + (5 - q) * 0.02))
-	let newEaseFactor = easeFactor + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02));
+	let newEaseFactor =
+		easeFactor + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02));
 	newEaseFactor = Math.max(MIN_EASE_FACTOR, newEaseFactor);
 
 	let newInterval: number;
@@ -54,7 +55,10 @@ export const calculateSRS = (input: SRSInput): SRSOutput => {
 // - incorrect = 2 (hard, need more practice)
 const FAST_RESPONSE_THRESHOLD_MS = 2000;
 
-export const qualityFromAttempt = (isCorrect: boolean, timeMs: number): number => {
+export const qualityFromAttempt = (
+	isCorrect: boolean,
+	timeMs: number,
+): number => {
 	if (!isCorrect) {
 		return 2;
 	}

@@ -1,4 +1,9 @@
-import type { AdjectiveSeed, NounSeed, Phrase, VerbSeed } from "../../../../types/seed";
+import type {
+	AdjectiveSeed,
+	NounSeed,
+	Phrase,
+	VerbSeed,
+} from "../../../../types/seed";
 
 export const LESSON_2024_04_15 = {
 	meta: {
@@ -38,8 +43,16 @@ export const LESSON_2024_04_15 = {
 
 	phrases: [
 		{ text: "κατοικίδια ζώα", english: "domestic animals/pets", metadata: {} },
-		{ text: "εκπαίδευση σκύλου", english: "dog training", metadata: { grammar: "genitive" } },
-		{ text: "μαθαίνω στο σκύλο να κάθεται", english: "I teach the dog to sit", metadata: { pattern: "μαθαίνω + να + verb" } },
+		{
+			text: "εκπαίδευση σκύλου",
+			english: "dog training",
+			metadata: { grammar: "genitive" },
+		},
+		{
+			text: "μαθαίνω στο σκύλο να κάθεται",
+			english: "I teach the dog to sit",
+			metadata: { pattern: "μαθαίνω + να + verb" },
+		},
 		{ text: "μισό", english: "half", metadata: { note: "also adjective" } },
 	] satisfies Phrase[],
 

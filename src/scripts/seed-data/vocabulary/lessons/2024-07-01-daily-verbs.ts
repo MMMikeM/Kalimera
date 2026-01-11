@@ -9,9 +9,21 @@ export const LESSON_2024_07_01 = {
 
 	verbs: [
 		{ lemma: "παίρνω", english: "I take", conjugationFamily: "-ω" },
-		{ lemma: "περνάω", english: "I pass/cross/have fun", conjugationFamily: "-άω/-ώ" },
-		{ lemma: "ζεσταίνομαι", english: "I feel warm/get hot", conjugationFamily: "-ομαι" },
-		{ lemma: "κλείνω", english: "I close/turn off/book", conjugationFamily: "-ω" },
+		{
+			lemma: "περνάω",
+			english: "I pass/cross/have fun",
+			conjugationFamily: "-άω/-ώ",
+		},
+		{
+			lemma: "ζεσταίνομαι",
+			english: "I feel warm/get hot",
+			conjugationFamily: "-ομαι",
+		},
+		{
+			lemma: "κλείνω",
+			english: "I close/turn off/book",
+			conjugationFamily: "-ω",
+		},
 		{ lemma: "φτάνω", english: "I arrive", conjugationFamily: "-ω" },
 	] satisfies VerbSeed[],
 
@@ -40,7 +52,10 @@ export const LESSON_2024_07_01 = {
 		{
 			text: "μου λείπεις",
 			english: "I miss you",
-			metadata: { literal: "you are missing to me", grammar: "dative-like construction" },
+			metadata: {
+				literal: "you are missing to me",
+				grammar: "dative-like construction",
+			},
 		},
 	] satisfies Phrase[],
 

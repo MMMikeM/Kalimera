@@ -1,7 +1,7 @@
 import { redirect } from "react-router";
 import type { Route } from "./+types/$tab";
-import { VocabularyTab } from "./tabs/vocabulary";
 import { ReviewTab } from "./tabs/review";
+import { VocabularyTab } from "./tabs/vocabulary";
 
 export { action } from "./layout";
 

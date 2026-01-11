@@ -1,4 +1,10 @@
-import type { AdjectiveSeed, AdverbSeed, NounSeed, Phrase, VerbSeed } from "../../../../types/seed";
+import type {
+	AdjectiveSeed,
+	AdverbSeed,
+	NounSeed,
+	Phrase,
+	VerbSeed,
+} from "../../../../types/seed";
 
 export const LESSON_2024_04_29 = {
 	meta: {
@@ -11,7 +17,11 @@ export const LESSON_2024_04_29 = {
 		{ lemma: "μπορώ", english: "I can", conjugationFamily: "-άω/-ώ" },
 		{ lemma: "οδηγώ", english: "I drive", conjugationFamily: "-άω/-ώ" },
 		{ lemma: "τηλεφωνώ", english: "I phone/call", conjugationFamily: "-άω/-ώ" },
-		{ lemma: "λυπάμαι", english: "I feel sorry/am sad", conjugationFamily: "-άμαι" },
+		{
+			lemma: "λυπάμαι",
+			english: "I feel sorry/am sad",
+			conjugationFamily: "-άμαι",
+		},
 		{ lemma: "ξυπνάω", english: "I wake up", conjugationFamily: "-άω/-ώ" },
 	] satisfies VerbSeed[],
 
@@ -38,8 +48,16 @@ export const LESSON_2024_04_29 = {
 	] satisfies AdverbSeed[],
 
 	phrases: [
-		{ text: "ποτέ δεν πίνω καφέ", english: "I never drink coffee", metadata: { grammar: "ποτέ δεν + verb" } },
-		{ text: "πότε πότε φεύγω από το σπίτι", english: "every now and then I leave the house", metadata: {} },
+		{
+			text: "ποτέ δεν πίνω καφέ",
+			english: "I never drink coffee",
+			metadata: { grammar: "ποτέ δεν + verb" },
+		},
+		{
+			text: "πότε πότε φεύγω από το σπίτι",
+			english: "every now and then I leave the house",
+			metadata: {},
+		},
 	] satisfies Phrase[],
 
 	grammarNotes: [

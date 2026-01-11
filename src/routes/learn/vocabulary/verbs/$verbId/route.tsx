@@ -1,13 +1,13 @@
-import { Link } from "react-router";
 import { ArrowLeft } from "lucide-react";
-import type { Route } from "./+types/route";
+import { Link } from "react-router";
 import { Card } from "@/components/Card";
+import { ImperativeTable } from "@/components/ImperativeTable";
 import { MonoText } from "@/components/MonoText";
 import { SectionHeading } from "@/components/SectionHeading";
-import { TenseNavigator } from "@/components/TenseNavigator";
-import { ImperativeTable } from "@/components/ImperativeTable";
 import { StemInsight } from "@/components/StemInsight";
+import { TenseNavigator } from "@/components/TenseNavigator";
 import { Badge } from "@/components/ui/badge";
+import type { Route } from "./+types/route";
 
 export { loader } from "./loader.server";
 
@@ -112,10 +112,10 @@ export default function VerbDetailPage({ loaderData }: Route.ComponentProps) {
 						verbDetails={
 							verb.verbDetails
 								? {
-									presentStem: verb.verbDetails.presentStem,
-									aoristStem: verb.verbDetails.aoristStem,
-									futureStem: verb.verbDetails.futureStem,
-								}
+										presentStem: verb.verbDetails.presentStem,
+										aoristStem: verb.verbDetails.aoristStem,
+										futureStem: verb.verbDetails.futureStem,
+									}
 								: undefined
 						}
 						meaning={verb.englishTranslation}

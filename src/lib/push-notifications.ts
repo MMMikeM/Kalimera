@@ -1,11 +1,26 @@
 /**
  * Push notification sending utilities for Cloudflare Workers
  */
-import { sendPushNotification, type PushSubscriptionData, type VapidConfig } from "@mmmike/web-push/send";
-import type { LibSQLDatabase } from "drizzle-orm/libsql";
+import {
+	type PushSubscriptionData,
+	sendPushNotification,
+	type VapidConfig,
+} from "@mmmike/web-push/send";
+import {
+	differenceInDays,
+	endOfDay,
+	format,
+	parseISO,
+	startOfDay,
+	subDays,
+} from "date-fns";
 import { and, eq, gte, isNotNull, lt, sql } from "drizzle-orm";
-import { format, subDays, startOfDay, endOfDay, parseISO, differenceInDays } from "date-fns";
-import { practiceSessions, pushSubscriptions, vocabularySkills } from "@/db.server/schema";
+import type { LibSQLDatabase } from "drizzle-orm/libsql";
+import {
+	practiceSessions,
+	pushSubscriptions,
+	vocabularySkills,
+} from "@/db.server/schema";
 
 interface NotificationResult {
 	sent: number;
@@ -62,7 +77,11 @@ export const sendPracticeReminders = async (
 	db: LibSQLDatabase<Record<string, unknown>>,
 	vapid: VapidConfig,
 ): Promise<NotificationResult> => {
-	const result: NotificationResult = { sent: 0, failed: 0, invalidSubscriptions: [] };
+	const result: NotificationResult = {
+		sent: 0,
+		failed: 0,
+		invalidSubscriptions: [],
+	};
 
 	// Get all push subscriptions with their user's last practice session
 	const subscriptions = await db
@@ -122,7 +141,11 @@ export const sendReviewDueNotifications = async (
 	db: LibSQLDatabase<Record<string, unknown>>,
 	vapid: VapidConfig,
 ): Promise<NotificationResult> => {
-	const result: NotificationResult = { sent: 0, failed: 0, invalidSubscriptions: [] };
+	const result: NotificationResult = {
+		sent: 0,
+		failed: 0,
+		invalidSubscriptions: [],
+	};
 
 	const now = new Date();
 
@@ -219,7 +242,11 @@ export const sendStreakWarningNotifications = async (
 	db: LibSQLDatabase<Record<string, unknown>>,
 	vapid: VapidConfig,
 ): Promise<NotificationResult> => {
-	const result: NotificationResult = { sent: 0, failed: 0, invalidSubscriptions: [] };
+	const result: NotificationResult = {
+		sent: 0,
+		failed: 0,
+		invalidSubscriptions: [],
+	};
 
 	const now = new Date();
 	const yesterday = format(subDays(now, 1), "yyyy-MM-dd");
@@ -324,7 +351,13 @@ export const sendStreakWarningNotifications = async (
 				? `${dueCount} words waiting — takes ${timeEstimate} minutes`
 				: "A quick session keeps your streak alive";
 
-		const success = await sendNotification(subscription, title, body, vapid, "/");
+		const success = await sendNotification(
+			subscription,
+			title,
+			body,
+			vapid,
+			"/",
+		);
 
 		if (success) {
 			result.sent++;
