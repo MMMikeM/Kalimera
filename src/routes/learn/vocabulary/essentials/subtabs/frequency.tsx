@@ -1,6 +1,6 @@
+import { ChevronLeft, Lightbulb } from "lucide-react";
 import { Link } from "react-router";
-import { TrendingUp, ChevronLeft, Lightbulb } from "lucide-react";
-import { Card } from "@/components/Card";
+import { ContentSection } from "@/components/ContentSection";
 import { MonoText } from "@/components/MonoText";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import type { EssentialsLoaderData } from "../data.server";
@@ -37,6 +37,14 @@ const FREQUENCY_PERCENT: Record<string, number> = {
 	πάντα: 100,
 };
 
+const getSpectrumBorder = (percent: number): string => {
+	if (percent <= 10) return "border-l-olive-200";
+	if (percent <= 30) return "border-l-olive-300";
+	if (percent <= 50) return "border-l-olive-400";
+	if (percent <= 75) return "border-l-olive-500";
+	return "border-l-olive-600";
+};
+
 export function FrequencySubtab({ data }: Props) {
 	const sortedFrequency = [...data.frequencyAdverbs].sort((a, b) => {
 		const aOrder = FREQUENCY_ORDER.indexOf(a.greek);
@@ -54,21 +62,12 @@ export function FrequencySubtab({ data }: Props) {
 				Essentials
 			</Link>
 
-			<Card
-				variant="bordered"
-				padding="lg"
-				className="bg-olive-50 border-olive-300"
+			<ContentSection
+				title="Frequency"
+				subtitle="never → always"
+				colorScheme="olive"
 			>
-				<div className="flex items-center gap-3 mb-4">
-					<div className="p-2 rounded-lg bg-olive-200">
-						<TrendingUp size={20} className="text-olive-text" />
-					</div>
-					<h3 className="text-lg font-bold text-olive-text">
-						Adverbs of Frequency
-					</h3>
-				</div>
-
-				<Alert variant="warning" className="mb-4">
+				<Alert variant="warning" className="mx-3 mt-3">
 					<Lightbulb size={16} />
 					<AlertDescription>
 						<strong>Remember:</strong> ποτέ = never, πότε = when (question) —
@@ -76,47 +75,33 @@ export function FrequencySubtab({ data }: Props) {
 					</AlertDescription>
 				</Alert>
 
-				<div className="mb-4 flex items-center justify-between text-xs text-stone-500 px-1">
-					<span>never</span>
-					<span>always</span>
-				</div>
-
-				<div className="space-y-3">
+				<div className="divide-y divide-stone-200/60 mt-3">
 					{sortedFrequency.map((adverb) => {
 						const percent = FREQUENCY_PERCENT[adverb.greek] ?? 50;
 						return (
-							<div key={adverb.id} className="flex items-center gap-3">
-								<div className="flex-1 flex items-baseline gap-2 min-w-0">
-									<MonoText variant="greek" size="md" className="shrink-0">
-										{adverb.greek}
-									</MonoText>
-									<span className="text-stone-600 text-sm truncate">
-										{adverb.english}
-									</span>
-								</div>
-								<div className="w-24 h-2 bg-stone-200 rounded-full overflow-hidden shrink-0">
-									<div
-										className="h-full bg-olive-500 rounded-full transition-all"
-										style={{ width: `${percent}%` }}
-									/>
-								</div>
+							<div
+								key={adverb.id}
+								className={`py-2.5 px-3 border-l-4 ${getSpectrumBorder(percent)}`}
+							>
+								<MonoText variant="greek">{adverb.greek}</MonoText>
+								<div className="text-xs text-stone-500">{adverb.english}</div>
 							</div>
 						);
 					})}
 				</div>
 
-				<div className="mt-6 p-3 bg-olive-100 rounded-lg border border-olive-200">
-					<p className="text-sm text-olive-text font-medium mb-1">
+				<div className="mx-3 mt-3 p-2.5 bg-olive-100 rounded-lg border border-olive-200">
+					<p className="text-sm text-olive-text font-medium mb-2">
 						Usage example
 					</p>
-					<p className="text-sm">
+					<div className="text-sm">
 						<MonoText variant="greek">Συνήθως πίνω καφέ το πρωί</MonoText>
-						<span className="text-stone-600 ml-2">
-							(I usually drink coffee in the morning)
+						<span className="text-stone-500 text-xs ml-2">
+							I usually drink coffee in the morning
 						</span>
-					</p>
+					</div>
 				</div>
-			</Card>
+			</ContentSection>
 		</div>
 	);
 }
