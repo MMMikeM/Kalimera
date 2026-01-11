@@ -1,49 +1,8 @@
 import { useId, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { colorStyles, type ColorScheme } from "@/lib/colors";
 
-export type ContentColorScheme =
-	| "ocean"
-	| "terracotta"
-	| "olive"
-	| "honey"
-	| "navy"
-	| "slate";
-
-const colorStyles: Record<
-	ContentColorScheme,
-	{ border: string; header: string; bg: string }
-> = {
-	ocean: {
-		border: "border-ocean-400",
-		header: "bg-ocean-400",
-		bg: "bg-ocean-50",
-	},
-	terracotta: {
-		border: "border-terracotta-400",
-		header: "bg-terracotta-400",
-		bg: "bg-terracotta-50",
-	},
-	olive: {
-		border: "border-olive-400",
-		header: "bg-olive-400",
-		bg: "bg-olive-50",
-	},
-	honey: {
-		border: "border-honey-400",
-		header: "bg-honey-400",
-		bg: "bg-honey-50",
-	},
-	navy: {
-		border: "border-navy-400",
-		header: "bg-navy-400",
-		bg: "bg-navy-50",
-	},
-	slate: {
-		border: "border-slate-400",
-		header: "bg-slate-400",
-		bg: "bg-slate-50",
-	},
-};
+export type ContentColorScheme = ColorScheme;
 
 // ─── Section Header ─────────────────────────────────────────────────────────
 
@@ -81,7 +40,7 @@ export const ContentSection = ({
 				<div className="flex items-center gap-2">
 					<h3
 						id={headingId}
-						className="font-black uppercase tracking-wider text-white text-sm"
+						className="font-black tracking-wide text-white text-sm"
 					>
 						{title}
 					</h3>
