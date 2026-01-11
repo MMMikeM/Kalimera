@@ -1,6 +1,6 @@
 import { Link } from "react-router";
-import { Sun, Calendar, CalendarDays, ChevronLeft } from "lucide-react";
-import { Card } from "@/components/Card";
+import { ChevronLeft } from "lucide-react";
+import { ContentSection } from "@/components/ContentSection";
 import { MonoText } from "@/components/MonoText";
 import type { EssentialsLoaderData } from "../data.server";
 
@@ -65,138 +65,150 @@ export function TimeSubtab({ data }: Props) {
 			</Link>
 
 			{/* Times of Day */}
-			<Card
-				variant="bordered"
-				padding="lg"
-				className="bg-honey-50 border-honey-300"
+			<ContentSection
+				title="Times of Day"
+				subtitle="Οι ώρες της ημέρας"
+				colorScheme="honey"
 			>
-				<div className="flex items-center gap-3 mb-4">
-					<div className="p-2 rounded-lg bg-honey-200">
-						<Sun size={20} className="text-honey-text" />
-					</div>
-					<h3 className="text-lg font-bold text-honey-text">Times of Day</h3>
-				</div>
-
-				<div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+				<div className="divide-y divide-stone-200/60">
 					{sortedTimes.map((time) => (
 						<div
 							key={time.id}
-							className="text-center p-3 bg-white rounded-lg border border-honey-200 shadow-sm"
+							className="grid grid-cols-[3fr_2fr] items-center gap-x-3 py-2.5 px-3"
 						>
-							<MonoText variant="greek" size="lg" className="block mb-1">
-								{time.greek}
-							</MonoText>
-							<div className="text-stone-600 text-sm">{time.english}</div>
-							{time.timeRange && (
-								<div className="text-xs text-stone-500 mt-1">
-									{time.timeRange}
-								</div>
-							)}
+							<MonoText variant="greek">{time.greek}</MonoText>
+							<div>
+								<span className="text-stone-500 text-sm">{time.english}</span>
+								{time.timeRange && (
+									<span className="text-stone-400 text-xs ml-1.5">
+										({time.timeRange})
+									</span>
+								)}
+							</div>
 						</div>
 					))}
 				</div>
-
-				<div className="mt-6 p-3 bg-honey-100 rounded-lg border border-honey-200">
-					<p className="text-sm text-honey-text font-medium mb-1">
-						Usage example
+				<div className="mx-3 mt-3 p-2.5 bg-honey-100 rounded-lg border border-honey-200">
+					<p className="text-sm text-honey-text font-medium mb-2">
+						Pattern: το + time of day
 					</p>
-					<p className="text-sm">
-						<MonoText variant="greek">στις δύο το μεσημέρι</MonoText>
-						<span className="text-stone-600 ml-2">
-							(at two in the afternoon)
-						</span>
-					</p>
+					<div className="space-y-2 text-sm">
+						<div>
+							<MonoText variant="greek">
+								στις δύο <span className="font-semibold">το μεσημέρι</span>
+							</MonoText>
+							<div className="text-stone-500 text-xs">at two in the afternoon</div>
+						</div>
+						<div>
+							<MonoText variant="greek">
+								στις οκτώ <span className="font-semibold">το βράδυ</span>
+							</MonoText>
+							<div className="text-stone-500 text-xs">at eight in the evening</div>
+						</div>
+						<p className="text-stone-500 text-xs pt-1.5 border-t border-honey-200/50">
+							<MonoText variant="greek" className="text-stone-700">το</MonoText> (neuter) — time
+							periods are neuter nouns
+						</p>
+					</div>
 				</div>
-			</Card>
+			</ContentSection>
 
 			{/* Days of the Week */}
 			{sortedDays.length > 0 && (
-				<Card
-					variant="bordered"
-					padding="lg"
-					className="bg-ocean-50 border-ocean-300"
+				<ContentSection
+					title="Days of the Week"
+					subtitle="Οι μέρες της εβδομάδας"
+					colorScheme="ocean"
 				>
-					<div className="flex items-center gap-3 mb-4">
-						<div className="p-2 rounded-lg bg-ocean-200">
-							<Calendar size={20} className="text-ocean-text" />
-						</div>
-						<div>
-							<h3 className="text-lg font-bold text-ocean-text">
-								Days of the Week
-							</h3>
-							<p className="text-sm text-stone-600">Οι μέρες της εβδομάδας</p>
-						</div>
-					</div>
-
-					<div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+					<div className="divide-y divide-stone-200/60">
 						{sortedDays.map((day) => (
 							<div
 								key={day.id}
-								className="text-center p-3 bg-white rounded-lg border border-ocean-200 shadow-sm"
+								className="grid grid-cols-[3fr_2fr] items-center gap-x-3 py-2.5 px-3"
 							>
-								<MonoText variant="greek" size="lg" className="block mb-1">
-									{day.greek}
-								</MonoText>
-								<div className="text-stone-600 text-sm">{day.english}</div>
+								<MonoText variant="greek">{day.greek}</MonoText>
+								<span className="text-stone-500 text-sm">{day.english}</span>
 							</div>
 						))}
 					</div>
-
-					<div className="mt-6 p-3 bg-ocean-100 rounded-lg border border-ocean-200">
-						<p className="text-sm text-ocean-text font-medium mb-1">
-							Usage example
+					<div className="mx-3 mt-3 p-2.5 bg-ocean-100 rounded-lg border border-ocean-200">
+						<p className="text-sm text-ocean-text font-medium mb-2">
+							Days use feminine accusative
 						</p>
-						<p className="text-sm">
-							<MonoText variant="greek">την Τρίτη</MonoText>
-							<span className="text-stone-600 ml-2">(on Tuesday)</span>
-						</p>
+						<div className="space-y-2 text-sm">
+							<div>
+								<MonoText variant="greek">
+									<span className="font-semibold">την</span> Τρίτη
+								</MonoText>
+								<div className="text-stone-500 text-xs">on Tuesday (specific)</div>
+							</div>
+							<div>
+								<MonoText variant="greek">κάθε Τρίτη</MonoText>
+								<div className="text-stone-500 text-xs">every Tuesday (no article)</div>
+							</div>
+							<div>
+								<MonoText variant="greek">
+									<span className="font-semibold">την</span> περασμένη Τρίτη
+								</MonoText>
+								<div className="text-stone-500 text-xs">last Tuesday</div>
+							</div>
+							<p className="text-stone-500 text-xs pt-1.5 border-t border-ocean-200/50">
+								<MonoText variant="greek" className="text-stone-700">την</MonoText> = accusative
+								of <MonoText variant="greek" className="text-stone-700">η</MonoText> (fem.)
+							</p>
+						</div>
 					</div>
-				</Card>
+				</ContentSection>
 			)}
 
 			{/* Months of the Year */}
 			{sortedMonths.length > 0 && (
-				<Card
-					variant="bordered"
-					padding="lg"
-					className="bg-olive-50 border-olive-300"
+				<ContentSection
+					title="Months of the Year"
+					subtitle="Οι μήνες του χρόνου"
+					colorScheme="olive"
 				>
-					<div className="flex items-center gap-3 mb-4">
-						<div className="p-2 rounded-lg bg-olive-200">
-							<CalendarDays size={20} className="text-olive-text" />
-						</div>
-						<div>
-							<h3 className="text-lg font-bold text-olive-text">
-								Months of the Year
-							</h3>
-							<p className="text-sm text-stone-600">Οι μήνες του χρόνου</p>
-						</div>
-					</div>
-
-					<div className="grid grid-cols-3 md:grid-cols-4 gap-3">
+					<div className="divide-y divide-stone-200/60">
 						{sortedMonths.map((month) => (
 							<div
 								key={month.id}
-								className="text-center p-3 bg-white rounded-lg border border-olive-200 shadow-sm"
+								className="grid grid-cols-[3fr_2fr] items-center gap-x-3 py-2.5 px-3"
 							>
-								<MonoText variant="greek" size="lg" className="block mb-1">
-									{month.greek}
-								</MonoText>
-								<div className="text-stone-600 text-sm">{month.english}</div>
+								<MonoText variant="greek">{month.greek}</MonoText>
+								<span className="text-stone-500 text-sm">{month.english}</span>
 							</div>
 						))}
 					</div>
-
-					<div className="mt-6 p-3 bg-olive-100 rounded-lg border border-olive-200">
-						<p className="text-sm text-olive-text font-medium mb-1">
-							Usage example
+					<div className="mx-3 mt-3 p-2.5 bg-olive-100 rounded-lg border border-olive-200">
+						<p className="text-sm text-olive-text font-medium mb-2">
+							Months use masculine accusative
 						</p>
-						<p className="text-sm">
-							<MonoText variant="greek">τον Ιούλιο</MonoText>
-							<span className="text-stone-600 ml-2">(in July)</span>
-						</p>
+						<div className="space-y-2 text-sm">
+							<div>
+								<MonoText variant="greek">
+									<span className="font-semibold">τον</span> Ιούλιο
+								</MonoText>
+								<div className="text-stone-500 text-xs">in July</div>
+							</div>
+							<div>
+								<MonoText variant="greek">
+									<span className="font-semibold">τον</span> περασμένο Μάρτιο
+								</MonoText>
+								<div className="text-stone-500 text-xs">last March</div>
+							</div>
+							<div>
+								<MonoText variant="greek">
+									<span className="font-semibold">τον</span> επόμενο μήνα
+								</MonoText>
+								<div className="text-stone-500 text-xs">next month</div>
+							</div>
+							<p className="text-stone-500 text-xs pt-1.5 border-t border-olive-200/50">
+								<MonoText variant="greek" className="text-stone-700">τον</MonoText> = accusative
+								of <MonoText variant="greek" className="text-stone-700">ο</MonoText> (masc.)
+							</p>
+						</div>
 					</div>
-				</Card>
+				</ContentSection>
 			)}
 		</div>
 	);
