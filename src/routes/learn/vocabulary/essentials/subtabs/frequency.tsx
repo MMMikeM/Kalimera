@@ -9,27 +9,19 @@ interface Props {
 	data: EssentialsLoaderData;
 }
 
-const FREQUENCY_BANDS = [
-	{
-		label: "Rarely",
-		range: "0-20%",
-		items: ["ποτέ", "σχεδόν ποτέ", "σπάνια"],
-	},
-	{
-		label: "Sometimes",
-		range: "20-50%",
-		items: ["πότε πότε", "κάπου κάπου", "καμιά φορά", "μερικές φορές"],
-	},
-	{
-		label: "Often",
-		range: "50-80%",
-		items: ["συχνά", "πολλές φορές", "συνήθως"],
-	},
-	{
-		label: "Always",
-		range: "80-100%",
-		items: ["σχεδόν πάντα", "πάντα"],
-	},
+const FREQUENCY_ORDER = [
+	"ποτέ",
+	"σχεδόν ποτέ",
+	"σπάνια",
+	"πότε πότε",
+	"κάπου κάπου",
+	"καμιά φορά",
+	"μερικές φορές",
+	"συχνά",
+	"πολλές φορές",
+	"συνήθως",
+	"σχεδόν πάντα",
+	"πάντα",
 ];
 
 const FREQUENCY_PERCENT: Record<string, number> = {
@@ -80,40 +72,30 @@ export function FrequencySubtab({ data }: Props) {
 				subtitle="never → always"
 				colorScheme="olive"
 			>
-				{FREQUENCY_BANDS.map((band) => (
-					<div key={band.label}>
-						<div className="px-3 py-1.5 bg-olive-100/50 border-y border-olive-200/60">
-							<span className="text-xs font-semibold text-olive-text uppercase tracking-wide">
-								{band.label}
-							</span>
-							<span className="text-xs text-stone-400 ml-2">{band.range}</span>
-						</div>
-						<div className="divide-y divide-stone-200/60">
-							{band.items.map((greek) => {
-								const adverb = adverbByGreek.get(greek);
-								const percent = FREQUENCY_PERCENT[greek] ?? 50;
-								return (
-									<div key={greek} className="py-2.5 px-3">
-										<div className="flex items-center justify-between gap-3">
-											<div className="min-w-0">
-												<MonoText variant="greek">{greek}</MonoText>
-												<div className="text-xs text-stone-500">
-													{adverb?.english ?? greek}
-												</div>
-											</div>
-											<div className="w-28 h-2 bg-stone-200 rounded-full overflow-hidden shrink-0">
-												<div
-													className="h-full bg-olive-500 rounded-full"
-													style={{ width: `${percent}%` }}
-												/>
-											</div>
+				<div className="divide-y divide-stone-200/60">
+					{FREQUENCY_ORDER.map((greek) => {
+						const adverb = adverbByGreek.get(greek);
+						const percent = FREQUENCY_PERCENT[greek] ?? 50;
+						return (
+							<div key={greek} className="py-2.5 px-3">
+								<div className="flex items-center justify-between gap-3">
+									<div className="min-w-0">
+										<MonoText variant="greek">{greek}</MonoText>
+										<div className="text-xs text-stone-500">
+											{adverb?.english ?? greek}
 										</div>
 									</div>
-								);
-							})}
-						</div>
-					</div>
-				))}
+									<div className="w-24 h-2 bg-stone-200 rounded-full overflow-hidden shrink-0">
+										<div
+											className="h-full bg-olive-500 rounded-full"
+											style={{ width: `${percent}%` }}
+										/>
+									</div>
+								</div>
+							</div>
+						);
+					})}
+				</div>
 			</ContentSection>
 
 			{/* Accent Warning */}
