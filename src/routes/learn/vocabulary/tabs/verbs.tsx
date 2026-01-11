@@ -99,6 +99,7 @@ export function VerbsTab() {
 											pl2: VERB_CONJUGATIONS.erhomai?.[4]?.form ?? "",
 											pl3: VERB_CONJUGATIONS.erhomai?.[5]?.form ?? "",
 										}}
+										compact
 									/>
 								</div>
 
@@ -117,6 +118,7 @@ export function VerbsTab() {
 											pl2: VERB_CONJUGATIONS.thymamai?.[4]?.form ?? "",
 											pl3: VERB_CONJUGATIONS.thymamai?.[5]?.form ?? "",
 										}}
+										compact
 									/>
 								</div>
 							</div>
@@ -155,9 +157,10 @@ export function VerbsTab() {
 											infinitive={verb.infinitive}
 											meaning={verb.meaning}
 											forms={verb.forms}
+											compact
 										/>
 										{verb.note && (
-											<p className="mt-2 text-sm text-stone-600 italic">
+											<p className="mt-3 text-sm text-stone-600 italic border-t border-honey-200 pt-2">
 												{verb.note}
 											</p>
 										)}
@@ -195,6 +198,7 @@ export function VerbsTab() {
 										pl2: conjugation[4]?.form ?? "",
 										pl3: conjugation[5]?.form ?? "",
 									}}
+									compact
 								/>
 							</div>
 						)}
