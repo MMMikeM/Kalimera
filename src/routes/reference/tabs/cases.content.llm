@@ -1,0 +1,82 @@
+# Cases Reference Content
+
+The foundation of Greek grammar: understanding cases through three essential questions.
+
+## Purpose
+
+Teach the case system conceptually before showing pronoun forms. Cases explain WHY word endings change.
+
+## Key Insight
+
+In English, word order shows meaning ("The dog bit the man" vs "The man bit the dog").
+In Greek, word ENDINGS show meaning, so word order is flexible. These endings are called cases.
+
+---
+
+## The Four Questions (Hero Element)
+
+<paradigm name="quick-rules" purpose="Core case identification">
+<principle>Ask these questions to know which case to use.</principle>
+<example-noun>Γιάννης (Giannis) - showing how the name changes form</example-noun>
+
+| Question           | Answer       | Greek Example      | Translation       |
+|--------------------|--------------|--------------------|--------------------|
+| WHO does it?       | Nominative   | ο Γιάννης τρέχει   | Giannis runs       |
+| WHOM/WHAT do I [verb]? | Accusative | βλέπω τον Γιάννη  | I see Giannis      |
+| WHOSE is it?       | Genitive     | το σπίτι του Γιάννη | Giannis's house   |
+
+<guidance>
+Focus on Nominative and Accusative first. They cover most of what you'll encounter.
+Genitive comes up with possession and some prepositions.
+</guidance>
+</paradigm>
+
+---
+
+## Vocative (Collapsible - Less Common)
+
+<case name="vocative" expandable="true" default="collapsed">
+<question>Calling someone directly?</question>
+<example>Γιάννη! Έλα!</example>
+<translation>Giannis! Come!</translation>
+<note>Names/nouns change when calling someone directly</note>
+</case>
+
+---
+
+## Quick Spot-Check Patterns (Collapsible Reference)
+
+<patterns name="quick-spot-check" expandable="true" default="collapsed">
+
+| Pattern               | Meaning                         | Examples                              |
+|-----------------------|---------------------------------|---------------------------------------|
+| Ends in -ν?           | Probably accusative object      | βλέπω τον καφέ, αγοράζω την εφημερίδα |
+| After στο/στη/στον?   | Going somewhere (accusative)    | πηγαίνω στο σπίτι, στη δουλειά        |
+| "του/της + name"?     | Belongs to them (genitive)      | της Μαρίας, του Νίκου                 |
+| After με/από/για?     | These prepositions = accusative | με τον φίλο, από το σπίτι             |
+| Time expressions?     | Usually accusative              | τη Δευτέρα, το πρωί                   |
+
+</patterns>
+
+---
+
+## Navigation
+
+<next-step>
+Continue to Pronouns - see cases in action with the words you'll use most.
+Link: /reference/pronouns
+</next-step>
+
+---
+
+## Data Source
+
+Static content from: `@/constants/recognition` (CASE_RECOGNITION)
+
+## Verification
+
+- [x] greek-first: Greek examples prominent, English explains
+- [x] function-first-labels: "WHO/WHOM/WHOSE" questions lead
+- [x] progressive-disclosure: Vocative and spot-check patterns collapsible
+- [x] concept-order: Cases taught before pronouns (dependency respected)
+- [x] decision-guides: Question-based case identification
