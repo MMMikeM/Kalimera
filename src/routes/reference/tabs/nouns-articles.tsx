@@ -2,15 +2,15 @@ import { BookOpen } from "lucide-react";
 import { PracticeCTA } from "@/components/PracticeCTA";
 import { TabHero } from "@/components/TabHero";
 import {
-	AgreementSection,
+	ArticlesSection,
 	MovableNuSection,
-} from "../components/agreement-section";
+} from "../components/articles-section";
 
-export function NounsArticlesTab() {
+export function ArticlesTab() {
 	return (
 		<div className="space-y-12">
 			<TabHero
-				title="Articles and nouns"
+				title="Articles"
 				greekPhrase="ο, η, το → τον, την, το"
 				colorScheme="olive"
 				icon={<BookOpen size={18} />}
@@ -18,7 +18,7 @@ export function NounsArticlesTab() {
 				Greek articles change to match their noun's gender, case, and number.
 				Once you see the pattern, it becomes predictable.
 			</TabHero>
-			<AgreementSection />
+			<ArticlesSection />
 			<MovableNuSection />
 			<PracticeCTA
 				title="Practice articles"
