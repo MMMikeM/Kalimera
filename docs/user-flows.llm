@@ -292,8 +292,9 @@ In-page filter buttons before starting drill:
 <data-source>Static: hardcoded grammar content + DB for patterns</data-source>
 <tabs>
 - cases: Case system foundation (nominative, accusative, genitive)
-- pronouns: Pronoun paradigms and decision guides
+- pronouns: Pronoun paradigms, decision guides, indefinite reference
 - articles: Article paradigms, gender agreement, movable nu
+- nouns: Noun declensions by gender (masculine, feminine, neuter)
 - adjectives: Adjective agreement patterns
 - prepositions: Preposition + case combinations
 - verbs: Conjugation patterns, tense overview
