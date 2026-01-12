@@ -1,0 +1,226 @@
+# Adjectives Reference Content
+
+Adjective agreement patterns - words that describe nouns and must match in gender, case, and number.
+
+## Purpose
+
+Show how adjectives follow the same patterns as articles and nouns. Once you know noun patterns, adjectives follow the same rules.
+
+## Key Insight
+
+Adjectives agree with their noun in gender, case, and number. The adjective ending follows the same pattern as nouns.
+
+---
+
+## Core Rule: Adjectives Copy the Noun
+
+<insight name="agreement-rule" highlight="true">
+<title>Match the article's gender and case</title>
+<explanation>
+Look at the article. The adjective uses the same gender, case, and number as the noun it describes.
+</explanation>
+<examples>
+- ο καλός φίλος (all masculine nominative)
+- τον καλό φίλο (all masculine accusative - drop the -ς)
+</examples>
+</insight>
+
+---
+
+## Word Order
+
+<rule>
+Greek adjectives usually come BEFORE the noun:
+- ο καλός φίλος (the good friend)
+- NOT: *ο φίλος καλός
+</rule>
+
+---
+
+## Adjective Endings Quick Reference
+
+<paradigm name="adjective-endings" pattern="-ος, -η, -ο">
+<title>Standard adjective endings (covers ~80% of adjectives)</title>
+
+### Singular
+
+|      | Masculine | Feminine | Neuter |
+|------|-----------|----------|--------|
+| Nom  | -ος       | -η       | -ο     |
+| Acc  | -ο        | -η       | -ο     |
+| Gen  | -ου       | -ης      | -ου    |
+
+### Plural
+
+|      | Masculine | Feminine | Neuter |
+|------|-----------|----------|--------|
+| Nom  | -οι       | -ες      | -α     |
+| Acc  | -ους      | -ες      | -α     |
+| Gen  | -ων       | -ων      | -ων    |
+
+</paradigm>
+
+---
+
+## Agreement in Action
+
+<examples name="agreement-examples">
+<title>Article + Adjective + Noun</title>
+
+### Nominative (subject)
+| Greek                     | English          | Gender    |
+|---------------------------|------------------|-----------|
+| ο καλός φίλος             | the good friend  | masculine |
+| η μεγάλη πόλη             | the big city     | feminine  |
+| το καινούριο αυτοκίνητο   | the new car      | neuter    |
+
+### Accusative (object)
+| Greek                     | English                    | Gender    |
+|---------------------------|----------------------------|-----------|
+| τον καλό φίλο             | the good friend (object)   | masculine |
+| την ωραία θάλασσα         | the beautiful sea          | feminine  |
+| το ζεστό καφέ             | the hot coffee             | neuter    |
+
+</examples>
+
+---
+
+## Main Paradigm: -ος, -η, -ο
+
+<paradigm name="kalos" frequency="very common">
+<pattern>-ος, -η, -ο</pattern>
+<title>Standard adjectives</title>
+<example>καλός / καλή / καλό = good</example>
+<tip>Most adjectives follow this pattern. Masculine like -ος nouns, feminine like -η nouns, neuter like -ο nouns.</tip>
+
+### Masculine
+| Case | Singular | Plural |
+|------|----------|--------|
+| Nom  | καλός    | καλοί  |
+| Acc  | καλό     | καλούς |
+| Gen  | καλού    | καλών  |
+
+### Feminine
+| Case | Singular | Plural |
+|------|----------|--------|
+| Nom  | καλή     | καλές  |
+| Acc  | καλή     | καλές  |
+| Gen  | καλής    | καλών  |
+
+### Neuter
+| Case | Singular | Plural |
+|------|----------|--------|
+| Nom  | καλό     | καλά   |
+| Acc  | καλό     | καλά   |
+| Gen  | καλού    | καλών  |
+
+</paradigm>
+
+---
+
+## High-Frequency Adjectives
+
+<vocabulary name="common-adjectives">
+<note>All follow the -ος/-η/-ο pattern</note>
+
+| Greek     | English       |
+|-----------|---------------|
+| καλός     | good          |
+| κακός     | bad           |
+| μεγάλος   | big/great     |
+| μικρός    | small         |
+| νέος      | new/young     |
+| παλιός    | old           |
+| ωραίος    | beautiful/nice|
+| άσχημος   | ugly          |
+| ζεστός    | hot/warm      |
+| κρύος     | cold          |
+| γρήγορος  | fast          |
+| αργός     | slow          |
+
+</vocabulary>
+
+---
+
+## Other Adjective Patterns (Collapsible)
+
+<section expandable="true" default="collapsed">
+
+### Pattern: -ος, -α, -ο
+
+<paradigm name="oraios" frequency="common">
+<pattern>-ος, -α, -ο</pattern>
+<title>Adjectives with -α feminine</title>
+<example>ωραίος / ωραία / ωραίο = beautiful/nice</example>
+<tip>When the stem ends in a vowel or ρ, the feminine uses -α instead of -η.</tip>
+
+| Gender    | Singular | Plural |
+|-----------|----------|--------|
+| Masculine | ωραίος   | ωραίοι |
+| Feminine  | ωραία    | ωραίες |
+| Neuter    | ωραίο    | ωραία  |
+
+</paradigm>
+
+### Pattern: -ύς, -ιά, -ύ
+
+<paradigm name="varys" frequency="less common">
+<pattern>-ύς, -ιά, -ύ</pattern>
+<title>Short adjectives</title>
+<example>βαρύς / βαριά / βαρύ = heavy</example>
+<tip>A smaller group including βαρύς (heavy), ελαφρύς (light), μακρύς (long), φαρδύς (wide).</tip>
+
+| Gender    | Singular | Plural |
+|-----------|----------|--------|
+| Masculine | βαρύς    | βαρείς |
+| Feminine  | βαριά    | βαριές |
+| Neuter    | βαρύ     | βαριά  |
+
+</paradigm>
+
+</section>
+
+---
+
+## Common Adjective Mistakes (Collapsible)
+
+<mistakes expandable="true" default="collapsed">
+
+| Wrong                    | Correct                 | Why                                        |
+|--------------------------|-------------------------|--------------------------------------------|
+| ο καλή φίλος             | ο καλός φίλος           | φίλος is masculine - use -ος ending        |
+| βλέπω τον καλός φίλος    | βλέπω τον καλό φίλο     | Object needs accusative - drop the -ς      |
+| η πόλη μεγάλη            | η μεγάλη πόλη           | Adjectives come before the noun            |
+| το καλός βιβλίο          | το καλό βιβλίο          | βιβλίο is neuter - use -ό ending           |
+
+<note>
+θέλω το κρύο νερό - This is correct!
+Neuter accusative = nominative, so το κρύο νερό stays the same.
+</note>
+
+</mistakes>
+
+---
+
+## Navigation
+
+<practice>Build fluency with timed retrieval drills: /practice/speed?focus=adjectives</practice>
+
+---
+
+## Data Source
+
+Static content from: `@/constants/adjectives`
+- ADJECTIVE_PARADIGMS, COMMON_ADJECTIVES
+- ADJECTIVE_AGREEMENT_EXAMPLES, ADJECTIVE_MISTAKES
+- ADJECTIVE_ENDINGS_QUICK_REF
+
+## Verification
+
+- [x] greek-first: Greek forms prominent in all paradigms
+- [x] paradigm-tables: Gender x Case tables reveal patterns
+- [x] progressive-disclosure: Other patterns and mistakes collapsible
+- [x] function-first-labels: "Words that describe" title
+- [x] frequency-priority: "very common" / "common" / "less common" markers
+- [x] no-redundancy: Tables show forms clearly
+- [x] contextual-examples: Full article + adjective + noun examples

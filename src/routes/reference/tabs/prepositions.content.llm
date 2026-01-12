@@ -1,0 +1,211 @@
+# Prepositions Reference Content
+
+Connecting words and their case requirements - location, direction, and relationships.
+
+## Purpose
+
+Show how prepositions work in Greek, with special focus on the σε contraction and the "Big Four" prepositions that cover 90%+ of usage.
+
+## Key Insight
+
+All Greek prepositions take accusative case. The Big Four (σε, από, για, με) cover most situations.
+
+---
+
+## Decision Navigator
+
+<decision-guide name="preposition-selection">
+<question>Which preposition do I need?</question>
+
+| Question              | Answer    | Examples                              |
+|-----------------------|-----------|---------------------------------------|
+| Where is it / going TO? | σε → στο | Πάω στο σπίτι (going home)           |
+| Where FROM?           | από       | Είμαι από την Ελλάδα (from Greece)   |
+| WITH whom/what?       | με        | Καφέ με γάλα (with milk)             |
+| FOR whom/purpose?     | για       | Αυτό είναι για σένα (for you)        |
+
+</decision-guide>
+
+---
+
+## The Big Four Prepositions
+
+<preposition name="σε" color="ocean">
+<meaning>to / at / in</meaning>
+<note>Contracts with articles!</note>
+<examples>
+- Πάω στο σπίτι = I'm going home
+- Είμαι στη δουλειά = I'm at work
+</examples>
+</preposition>
+
+<preposition name="από" color="terracotta">
+<meaning>from</meaning>
+<examples>
+- Είμαι από την Αθήνα = I'm from Athens
+- Έρχομαι από το σπίτι = I'm coming from home
+</examples>
+</preposition>
+
+<preposition name="με" color="olive">
+<meaning>with</meaning>
+<examples>
+- Καφέ με γάλα = Coffee with milk
+- Πάω με τον φίλο μου = I'm going with my friend
+</examples>
+</preposition>
+
+<preposition name="για" color="honey">
+<meaning>for</meaning>
+<examples>
+- Αυτό είναι για σένα = This is for you
+- Δουλεύω για την εταιρεία = I work for the company
+</examples>
+</preposition>
+
+---
+
+## The σε Contraction (Hero Element)
+
+<section name="se-contraction" highlight="true">
+<title>σε + article ALWAYS contracts</title>
+<explanation>You'll never hear "σε το" in speech.</explanation>
+
+| Formula         | Gender    | Examples                           |
+|-----------------|-----------|------------------------------------|
+| σε + το = στο   | neuter    | στο σπίτι, στο κέντρο, στο γραφείο |
+| σε + τη(ν) = στη(ν) | feminine | στη δουλειά, στην Ελλάδα, στη θάλασσα |
+| σε + τον = στον | masculine | στον κήπο, στον δρόμο, στον σταθμό |
+
+### When σε stays as σε
+Without an article, there's nothing to contract with:
+- σε δύο μέρες = in two days
+- σε λίγο = in a bit
+
+</section>
+
+---
+
+## Prepositions with Pronouns
+
+<section name="prep-pronouns">
+<rule>After prepositions, use emphatic (long) pronoun forms</rule>
+<why>Short pronouns (με, σε) go BEFORE verbs. After prepositions, you need the emphatic forms.</why>
+
+| Greek         | English      |
+|---------------|--------------|
+| για μένα      | for me       |
+| με σένα       | with you     |
+| από αυτόν     | from him     |
+| χωρίς εμάς    | without us   |
+| μαζί σου      | with you (together) |
+
+</section>
+
+---
+
+## Time Expressions
+
+<patterns name="time-expressions">
+
+| Pattern              | Meaning           | Examples                           |
+|----------------------|-------------------|------------------------------------|
+| στις + time          | at (o'clock)      | στις πέντε (at five), στις οκτώ   |
+| τη(ν) + day          | on (weekday)      | τη Δευτέρα (on Monday), την Παρασκευή |
+| μέχρι / μετά / πριν + τις | until/after/before | μέχρι τις πέντε, μετά τις πέντε |
+
+</patterns>
+
+---
+
+## Common Mistakes
+
+<mistakes>
+
+| Wrong            | Correct         | Rule                                 |
+|------------------|-----------------|--------------------------------------|
+| σε το σπίτι      | στο σπίτι       | Contraction is mandatory             |
+| για με           | για μένα        | Use emphatic pronouns after prepositions |
+| πάνω το τραπέζι  | πάνω στο τραπέζι| Compound prepositions need σε/από    |
+| από στο σπίτι    | από το σπίτι    | Only σε contracts, not από           |
+
+</mistakes>
+
+---
+
+## Other Prepositions (Collapsible)
+
+<section expandable="true" default="collapsed" title="More Prepositions">
+<subtitle>Less common but still useful</subtitle>
+
+| Greek   | English      | Example            |
+|---------|--------------|---------------------|
+| προς    | toward       | προς τον σταθμό     |
+| μέχρι   | until / up to| μέχρι τις πέντε     |
+| πριν    | before       | πριν το φαγητό      |
+| μετά    | after        | μετά τη δουλειά     |
+| χωρίς   | without      | χωρίς ζάχαρη        |
+
+</section>
+
+---
+
+## Compound Prepositions (Collapsible)
+
+<section expandable="true" default="collapsed" title="Compound Prepositions">
+<subtitle>Spatial descriptions: on, under, next to, behind...</subtitle>
+
+### The Pattern
+Compound prepositions = **position word** + σε or από.
+- The σε ones contract with articles (πάνω **στο**)
+- The από ones don't (κάτω **από το**)
+
+### Color Coding = Contraction Behavior
+- **Olive = σε** (contracts: δίπλα **στο**)
+- **Blue = από** (no contraction: κάτω **από το**)
+
+### Contrast Pairs
+
+| σε-based (contracts)  | από-based (no contraction) |
+|-----------------------|----------------------------|
+| πάνω σε = on          | κάτω από = under           |
+| δίπλα σε = next to    | απέναντι από = across      |
+| κοντά σε = near       | μακριά από = far           |
+| ανάμεσα σε = between  | γύρω από = around          |
+
+| σε Example            | από Example                |
+|-----------------------|----------------------------|
+| πάνω στο τραπέζι      | κάτω από το κρεβάτι        |
+| δίπλα στο παράθυρο    | απέναντι από το πάρκο      |
+| κοντά στο σχολείο     | μακριά από την πόλη        |
+| ανάμεσα στα δέντρα    | γύρω από το τραπέζι        |
+
+Note: μπροστά από (in front) and πίσω από (behind) both use από.
+
+</section>
+
+---
+
+## Navigation
+
+<practice>Build fluency with timed retrieval drills: /practice/speed?focus=prepositions</practice>
+
+---
+
+## Data Source
+
+Static content from: `@/constants/prepositions`
+- BIG_4_PREPOSITIONS, PREPOSITION_NAVIGATOR_OPTIONS
+- SE_CONTRACTIONS, PREPOSITION_MISTAKES
+- PREPOSITION_PRONOUN_INFO, TIME_EXPRESSIONS
+- OTHER_PREPOSITIONS, COMPOUND_CONTRAST_PAIRS
+
+## Verification
+
+- [x] greek-first: Greek forms prominent throughout
+- [x] progressive-disclosure: Other/compound prepositions collapsible
+- [x] function-first-labels: "Where TO?", "Where FROM?" questions lead
+- [x] frequency-priority: Big Four highlighted first
+- [x] contextual-examples: Examples show prepositions in phrases
+- [x] decision-guides: Navigator for choosing prepositions
+- [x] pair-opposites: σε vs από compounds contrasted

@@ -1,0 +1,138 @@
+# Patterns Reference Content
+
+Greek-specific sentence constructions that work differently than English.
+
+## Purpose
+
+Explain grammar patterns that don't map directly to English. These constructions require understanding the Greek way of thinking.
+
+## Key Insight
+
+Some Greek constructions work differently than English. Learn these patterns and you'll understand why "I like coffee" becomes "Coffee pleases me."
+
+---
+
+## Likes Construction (μου αρέσει / αρέσουν)
+
+<pattern name="likes-construction" color="ocean">
+<title>Likes Construction</title>
+<subtitle>μου αρέσει / αρέσουν</subtitle>
+
+<principle>
+[Person] αρέσει (one thing) / αρέσουν (many things)
+The thing liked is the SUBJECT!
+</principle>
+
+### One thing (αρέσει)
+| Greek              | English           |
+|--------------------|-------------------|
+| Μου αρέσει         | I like (it)       |
+| Σου αρέσει         | You like (it)     |
+| Του/Της αρέσει     | He/She likes (it) |
+| Μας αρέσει         | We like (it)      |
+| Σας αρέσει         | You (pl.) like (it)|
+| Τους αρέσει        | They like (it)    |
+
+### Many things (αρέσουν)
+| Greek              | English            |
+|--------------------|--------------------|
+| Μου αρέσουν        | I like (them)      |
+| Σου αρέσουν        | You like (them)    |
+| Του/Της αρέσουν    | He/She likes (them)|
+| Μας αρέσουν        | We like (them)     |
+| Σας αρέσουν        | You (pl.) like (them)|
+| Τους αρέσουν       | They like (them)   |
+
+</pattern>
+
+---
+
+## Quick Test: αρέσει or αρέσουν?
+
+<decision-guide name="likes-test">
+<intro>Choose the correct verb form based on what is liked.</intro>
+
+### One thing is liked (singular subject) → αρέσει
+| Greek                   | English               |
+|-------------------------|-----------------------|
+| Μου αρέσει ο καφές      | I like coffee         |
+| Σου αρέσει η μουσική;   | Do you like the music?|
+
+### Multiple things are liked (plural subject) → αρέσουν
+| Greek                   | English               |
+|-------------------------|-----------------------|
+| Μου αρέσουν οι γάτες    | I like cats           |
+| Τους αρέσουν τα βιβλία  | They like books       |
+
+<summary>
+Remember: the thing liked is the **subject**, so the verb agrees with it!
+</summary>
+
+</decision-guide>
+
+---
+
+## Name Construction (με λένε)
+
+<pattern name="name-construction" color="ocean">
+<title>Name Construction</title>
+<subtitle>με λένε = my name is (lit. "they call me")</subtitle>
+
+<principle>
+[Pronoun] λένε + name - literally "they call me..."
+</principle>
+
+| Greek              | English                    |
+|--------------------|----------------------------|
+| Με λένε...         | My name is... (they call me) |
+| Σε λένε...         | Your name is...            |
+| Τον/Την λένε...    | His/Her name is...         |
+| Πώς σε λένε;       | What's your name?          |
+
+</pattern>
+
+---
+
+## Pattern Logic
+
+<insight>
+Both constructions flip the English perspective:
+
+**"I like coffee"** → Literally: "To-me is-pleasing the-coffee"
+- μου = to me (indirect object)
+- αρέσει = is pleasing (verb agrees with coffee!)
+- ο καφές = the coffee (subject)
+
+**"My name is..."** → Literally: "They call me..."
+- με = me (object)
+- λένε = they call (3rd person plural)
+- The "they" is impersonal
+
+</insight>
+
+---
+
+## Future Patterns
+
+More patterns to be documented as identified:
+- Other "backwards" constructions
+- Impersonal expressions
+- Modal patterns
+
+---
+
+## Data Source
+
+Dynamic content from database:
+- `getVocabBySection("phrases")` - name-construction tag
+- `getVocabBySection("verbs")` - likes-singular, likes-plural tags
+
+See: `src/routes/reference/data.server.ts`
+
+## Verification
+
+- [x] greek-first: Greek constructions prominent
+- [x] paradigm-tables: Person paradigms for both patterns
+- [x] function-first-labels: "Likes Construction", "Name Construction"
+- [x] contextual-examples: Full sentences showing usage
+- [x] decision-guides: αρέσει vs αρέσουν test included
