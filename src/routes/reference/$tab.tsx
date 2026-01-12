@@ -2,8 +2,9 @@ import { type NavTab, NavTabs } from "@/components/NavTabs";
 import type { Route } from "./+types/$tab";
 import { getPatternsData } from "./data.server";
 import { AdjectivesTab } from "./tabs/adjectives";
+import { ArticlesTab } from "./tabs/nouns-articles";
 import { CasesTab } from "./tabs/cases";
-import { NounsArticlesTab } from "./tabs/nouns-articles";
+import { NounsTab } from "./tabs/nouns";
 import { PatternsTab } from "./tabs/patterns";
 import { PrepositionsTab } from "./tabs/prepositions";
 import { PronounsTab } from "./tabs/pronouns";
@@ -13,6 +14,7 @@ const VALID_TABS = [
 	"cases",
 	"pronouns",
 	"articles",
+	"nouns",
 	"adjectives",
 	"prepositions",
 	"verbs",
@@ -24,6 +26,7 @@ const REFERENCE_TABS: NavTab[] = [
 	{ id: "cases", label: "Cases", color: "ocean" },
 	{ id: "pronouns", label: "Pronouns", color: "ocean" },
 	{ id: "articles", label: "Articles", color: "olive" },
+	{ id: "nouns", label: "Nouns", color: "olive" },
 	{ id: "adjectives", label: "Adjectives", color: "honey" },
 	{ id: "prepositions", label: "Prepositions", color: "terracotta" },
 	{ id: "verbs", label: "Verbs", color: "ocean" },
@@ -52,7 +55,9 @@ export default function TabRoute({ loaderData }: Route.ComponentProps) {
 			case "pronouns":
 				return <PronounsTab />;
 			case "articles":
-				return <NounsArticlesTab />;
+				return <ArticlesTab />;
+			case "nouns":
+				return <NounsTab />;
 			case "adjectives":
 				return <AdjectivesTab />;
 			case "prepositions":

@@ -29,9 +29,17 @@ const sections = [
 	{
 		id: "articles",
 		label: "Articles",
-		description: "Article paradigms and gender agreement",
+		description: "The definite article and agreement rules",
 		icon: <FileText size={24} />,
 		href: "/reference/articles",
+		color: "bg-olive-100 text-olive-700 border-olive-200",
+	},
+	{
+		id: "nouns",
+		label: "Nouns",
+		description: "Noun declensions by gender and case",
+		icon: <FileText size={24} />,
+		href: "/reference/nouns",
 		color: "bg-olive-100 text-olive-700 border-olive-200",
 	},
 	{
