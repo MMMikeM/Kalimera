@@ -59,6 +59,11 @@ export interface AdjectiveSeed {
 	english: string;
 }
 
+export interface PronounSeed {
+	lemma: string;
+	english: string;
+}
+
 export interface NumberSeed {
 	lemma: string;
 	value: number;
