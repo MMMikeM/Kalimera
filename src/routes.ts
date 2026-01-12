@@ -34,14 +34,12 @@ export default [
 			index("routes/learn/phrases/index.tsx"),
 			route(":tab", "routes/learn/phrases/$tab.tsx"),
 		]),
-		route("vocabulary", "routes/learn/vocabulary/layout.tsx", [
-			index("routes/learn/vocabulary/index.tsx"),
-			route(":tab", "routes/learn/vocabulary/$tab.tsx"),
-			route("verbs/:verbId", "routes/learn/vocabulary/verbs/$verbId/route.tsx"),
-			route("essentials", "routes/learn/vocabulary/essentials/layout.tsx", [
-				index("routes/learn/vocabulary/essentials/index.tsx"),
-				route(":subtab", "routes/learn/vocabulary/essentials/$subtab.tsx"),
-			]),
+		route("nouns", "routes/learn/nouns/route.tsx"),
+		route("verbs", "routes/learn/verbs/route.tsx"),
+		route("verbs/:verbId", "routes/learn/verbs/$verbId/route.tsx"),
+		route("essentials", "routes/learn/essentials/layout.tsx", [
+			index("routes/learn/essentials/index.tsx"),
+			route(":subtab", "routes/learn/essentials/$subtab.tsx"),
 		]),
 	]),
 
