@@ -1,0 +1,242 @@
+# Nouns Reference Content
+
+Noun declensions by gender and case - how Greek nouns change their endings.
+
+## Purpose
+
+Show how Greek nouns decline according to gender, case, and number. The ending patterns reveal the underlying system.
+
+## Key Insight
+
+Greek nouns change their endings to show grammatical function (case) and number. Learn the pattern by gender and the system becomes predictable.
+
+---
+
+## Gender Detection (Hero Element)
+
+<quick-reference name="gender-hints">
+<title>Spot gender by ending</title>
+
+| Gender    | Common Endings | Tip |
+|-----------|----------------|-----|
+| Masculine | -ος, -ας, -ης, -ές | Most words for male people |
+| Feminine  | -α, -η, -ση/-ξη | Female people, abstract nouns (-η) |
+| Neuter    | -ο, -ι, -μα | Diminutives (-ι, -άκι), result nouns (-μα) |
+
+</quick-reference>
+
+---
+
+## Core Insight
+
+<insight>
+Greek nouns change their endings to show:
+- **Case**: nominative (subject), accusative (object), genitive (possession)
+- **Number**: singular / plural
+
+The article changes along with the noun and helps identify the gender.
+</insight>
+
+---
+
+## Noun Paradigms by Gender
+
+### Masculine Patterns
+
+<paradigm name="masculine-os" frequency="very common">
+<pattern>-ος</pattern>
+<example>φίλος (friend)</example>
+
+| Case | Singular | Plural |
+|------|----------|--------|
+| Nom  | ο φίλος  | οι φίλοι |
+| Acc  | τον φίλο | τους φίλους |
+| Gen  | του φίλου | των φίλων |
+| Voc  | φίλε! | φίλοι! |
+
+</paradigm>
+
+<paradigm name="masculine-as" frequency="common">
+<pattern>-ας</pattern>
+<example>πατέρας (father)</example>
+<tip>Many family words: πατέρας, άντρας, παππούς</tip>
+
+| Case | Singular | Plural |
+|------|----------|--------|
+| Nom  | ο πατέρας | οι πατέρες |
+| Acc  | τον πατέρα | τους πατέρες |
+| Gen  | του πατέρα | των πατέρων |
+| Voc  | πατέρα! | πατέρες! |
+
+</paradigm>
+
+<paradigm name="masculine-is" frequency="common">
+<pattern>-ης</pattern>
+<example>μαθητής (student)</example>
+
+| Case | Singular | Plural |
+|------|----------|--------|
+| Nom  | ο μαθητής | οι μαθητές |
+| Acc  | τον μαθητή | τους μαθητές |
+| Gen  | του μαθητή | των μαθητών |
+| Voc  | μαθητή! | μαθητές! |
+
+</paradigm>
+
+<paradigm name="masculine-es" frequency="less common">
+<pattern>-ές</pattern>
+<example>καφές (coffee)</example>
+<tip>Often borrowed words: καφές, καναπές</tip>
+
+| Case | Singular | Plural |
+|------|----------|--------|
+| Nom  | ο καφές | οι καφέδες |
+| Acc  | τον καφέ | τους καφέδες |
+| Gen  | του καφέ | των καφέδων |
+| Voc  | καφέ! | καφέδες! |
+
+</paradigm>
+
+### Feminine Patterns
+
+<paradigm name="feminine-a" frequency="very common">
+<pattern>-α</pattern>
+<example>γυναίκα (woman/wife)</example>
+<tip>Vocative = Nominative for feminine nouns</tip>
+
+| Case | Singular | Plural |
+|------|----------|--------|
+| Nom  | η γυναίκα | οι γυναίκες |
+| Acc  | τη γυναίκα | τις γυναίκες |
+| Gen  | της γυναίκας | των γυναικών |
+| Voc  | γυναίκα! | γυναίκες! |
+
+</paradigm>
+
+<paradigm name="feminine-i" frequency="very common">
+<pattern>-η</pattern>
+<example>ζωή (life)</example>
+
+| Case | Singular | Plural |
+|------|----------|--------|
+| Nom  | η ζωή | οι ζωές |
+| Acc  | τη ζωή | τις ζωές |
+| Gen  | της ζωής | των ζωών |
+| Voc  | ζωή! | ζωές! |
+
+</paradigm>
+
+<paradigm name="feminine-si" frequency="common">
+<pattern>-ση/-ξη</pattern>
+<example>ερώτηση (question)</example>
+<tip>Action nouns (like English -tion)</tip>
+
+| Case | Singular | Plural |
+|------|----------|--------|
+| Nom  | η ερώτηση | οι ερωτήσεις |
+| Acc  | την ερώτηση | τις ερωτήσεις |
+| Gen  | της ερώτησης | των ερωτήσεων |
+| Voc  | ερώτηση! | ερωτήσεις! |
+
+</paradigm>
+
+### Neuter Patterns
+
+<paradigm name="neuter-o" frequency="very common">
+<pattern>-ο</pattern>
+<example>βιβλίο (book)</example>
+<tip>Nom = Acc = Voc (neuter simplification!)</tip>
+
+| Case | Singular | Plural |
+|------|----------|--------|
+| Nom  | το βιβλίο | τα βιβλία |
+| Acc  | το βιβλίο | τα βιβλία |
+| Gen  | του βιβλίου | των βιβλίων |
+| Voc  | βιβλίο! | βιβλία! |
+
+</paradigm>
+
+<paradigm name="neuter-i" frequency="common">
+<pattern>-ι</pattern>
+<example>παιδί (child)</example>
+
+| Case | Singular | Plural |
+|------|----------|--------|
+| Nom  | το παιδί | τα παιδιά |
+| Acc  | το παιδί | τα παιδιά |
+| Gen  | του παιδιού | των παιδιών |
+| Voc  | παιδί! | παιδιά! |
+
+</paradigm>
+
+<paradigm name="neuter-ma" frequency="common">
+<pattern>-μα</pattern>
+<example>όνομα (name)</example>
+<tip>Ancient Greek pattern, Nom = Acc = Voc</tip>
+
+| Case | Singular | Plural |
+|------|----------|--------|
+| Nom  | το όνομα | τα ονόματα |
+| Acc  | το όνομα | τα ονόματα |
+| Gen  | του ονόματος | των ονομάτων |
+| Voc  | όνομα! | ονόματα! |
+
+</paradigm>
+
+---
+
+## Vocative Changes (Collapsible)
+
+<section expandable="true" default="collapsed">
+<title>Vocative Changes (Direct Address)</title>
+
+Masculine nouns change their ending for direct address:
+- -ος → -ε (φίλος → φίλε!)
+- -ας → -α (πατέρας → πατέρα!)
+- -ης → -η (μαθητής → μαθητή!)
+- -ές → -έ (καφές → καφέ!)
+
+Feminine and neuter nouns keep nominative form.
+
+</section>
+
+---
+
+## Common Noun Mistakes (Collapsible)
+
+<mistakes expandable="true" default="collapsed">
+
+| Wrong              | Correct            | Why                                      |
+|--------------------|--------------------|------------------------------------------|
+| βλέπω ο πατέρας    | βλέπω τον πατέρα   | Object needs accusative, not nominative  |
+| θέλω ο καφές       | θέλω τον καφέ      | "I want" takes accusative object         |
+| το σπίτι ο Νίκος   | το σπίτι του Νίκου | Possession needs genitive                |
+| οι παιδί           | τα παιδιά          | παιδί is neuter, use τα for plural       |
+| το βιβλία          | τα βιβλία          | Plural nouns need plural article         |
+
+</mistakes>
+
+---
+
+## Navigation
+
+<previous>See article forms first: /reference/articles</previous>
+<practice>Build fluency with timed retrieval drills: /practice/speed?focus=nouns</practice>
+
+---
+
+## Data Source
+
+Static content from:
+- `@/constants/agreement` (AGREEMENT_PARADIGMS)
+- `@/constants/nouns` (GENDER_HINTS)
+
+## Verification
+
+- [x] greek-first: Greek forms prominent in all paradigms
+- [x] paradigm-tables: Case (rows) reveals patterns
+- [x] progressive-disclosure: Vocative and mistakes collapsible
+- [x] function-first-labels: Patterns named by ending + example word
+- [x] frequency-priority: "very common" / "common" / "less common" markers
+- [x] no-redundancy: Article + noun shown together in examples
+- [x] contextual-examples: Examples show usage
