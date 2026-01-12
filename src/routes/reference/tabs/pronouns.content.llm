@@ -181,6 +181,75 @@ You're already using cases every time you use a pronoun!
 
 ---
 
+## Indefinite Reference (Collapsible)
+
+<section expandable="true" default="collapsed">
+<title>Indefinite Reference (someone, somewhere, sometime)</title>
+
+### Key Insight
+
+Greek indefinites share prefixes - learn the pattern, decode many words:
+- **κά-** = some- (positive indefinite)
+- **πουθ-/κανέ-** = no-/any- (negative/question)
+- **παντ-** = every- (universal)
+- **οπου-δήποτε** = -ever (free choice)
+
+### The κά-/πουθ-/παντ- Pattern
+
+| Prefix | Pronoun (WHO) | Place (WHERE) | Time (WHEN) | Manner (HOW) |
+|--------|---------------|---------------|-------------|--------------|
+| κά- (some-) | κάποιος | κάπου | κάποτε | κάπως |
+| πουθ-/κανέ- (no-) | κανένας, τίποτα | πουθενά | — | — |
+| παντ- (every-) | όλοι | παντού | — | — |
+| οπου-δήποτε (-ever) | όποιος, ό,τι | οπουδήποτε | οποτεδήποτε | οπωσδήποτε |
+
+### Indefinite Pronouns - Core (Invariable)
+
+These don't change form:
+
+| Greek | English | Example |
+|-------|---------|---------|
+| κάτι | something | Θέλω κάτι = I want something |
+| τίποτα | nothing/anything | Δεν θέλω τίποτα = I don't want anything |
+| όλα | everything | Όλα καλά = Everything's fine |
+| ό,τι | whatever | Ό,τι θέλεις = Whatever you want |
+
+### Indefinite Pronouns - Gendered
+
+These decline like adjectives (match the noun's gender):
+
+| Masculine | Feminine | Neuter | English |
+|-----------|----------|--------|---------|
+| κάποιος | κάποια | κάποιο | someone/some |
+| κανένας | καμία | κανένα | no one/none |
+| όποιος | όποια | όποιο | whoever/whichever |
+| όλος | όλη | όλο | all/every |
+| άλλος | άλλη | άλλο | another/other |
+| μερικοί | μερικές | μερικά | some/several (plural) |
+| καθένας | καθεμία | καθένα | each one |
+| τέτοιος | τέτοια | τέτοιο | such |
+
+### Indefinite Adverbs
+
+Same prefixes, answering WHERE/WHEN/HOW instead of WHO:
+
+| Category | Positive | Negative | Universal | Free Choice |
+|----------|----------|----------|-----------|-------------|
+| **Place** | κάπου (somewhere) | πουθενά (nowhere) | παντού (everywhere) | οπουδήποτε (wherever) |
+| **Time** | κάποτε (sometime) | — | — | οποτεδήποτε (whenever) |
+| **Manner** | κάπως (somehow) | — | — | οπωσδήποτε (definitely) |
+
+<examples>
+- Είδες κάποιον; = Did you see someone?
+- Δεν είδα κανέναν = I didn't see anyone
+- Πάμε κάπου; = Shall we go somewhere?
+- Δεν πάω πουθενά = I'm not going anywhere
+</examples>
+
+</section>
+
+---
+
 ## Navigation
 
 <previous>Review the case system first: /reference/cases</previous>

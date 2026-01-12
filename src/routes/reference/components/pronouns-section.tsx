@@ -308,6 +308,339 @@ export const PronounsSection: React.FC = () => {
 					))}
 				</div>
 			</CollapsibleSection>
+
+			{/* Indefinite Reference - Collapsible */}
+			<CollapsibleSection
+				title="Indefinite Reference (someone, somewhere, sometime)"
+				colorScheme="default"
+				defaultOpen={false}
+			>
+				<div className="space-y-6">
+					{/* Key insight */}
+					<Alert variant="purple">
+						<AlertTitle>Pattern Recognition</AlertTitle>
+						<AlertDescription>
+							Greek indefinites share prefixes. Learn the pattern, decode many
+							words:
+							<strong className="ml-1">κά-</strong> = some-,
+							<strong className="ml-1">πουθ-/κανέ-</strong> = no-/any-,
+							<strong className="ml-1">παντ-</strong> = every-,
+							<strong className="ml-1">οπου-δήποτε</strong> = -ever
+						</AlertDescription>
+					</Alert>
+
+					{/* The Pattern Table */}
+					<Card variant="bordered" padding="md" className="bg-white">
+						<h4 className="font-bold text-navy-text mb-3">
+							The κά-/πουθ-/παντ- Pattern
+						</h4>
+						<div className="overflow-x-auto">
+							<table className="w-full text-sm">
+								<thead>
+									<tr className="border-b border-stone-200">
+										<th className="text-left py-2 pr-4 text-stone-600">
+											Prefix
+										</th>
+										<th className="text-left py-2 px-2 text-stone-600">
+											WHO (pronoun)
+										</th>
+										<th className="text-left py-2 px-2 text-stone-600">
+											WHERE (adverb)
+										</th>
+										<th className="text-left py-2 px-2 text-stone-600">
+											WHEN (adverb)
+										</th>
+										<th className="text-left py-2 pl-2 text-stone-600">
+											HOW (adverb)
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr className="border-b border-stone-100">
+										<td className="py-2 pr-4 text-stone-600">κά- (some-)</td>
+										<td className="py-2 px-2">
+											<MonoText variant="greek" size="sm">
+												κάποιος
+											</MonoText>
+										</td>
+										<td className="py-2 px-2">
+											<MonoText variant="greek" size="sm">
+												κάπου
+											</MonoText>
+										</td>
+										<td className="py-2 px-2">
+											<MonoText variant="greek" size="sm">
+												κάποτε
+											</MonoText>
+										</td>
+										<td className="py-2 pl-2">
+											<MonoText variant="greek" size="sm">
+												κάπως
+											</MonoText>
+										</td>
+									</tr>
+									<tr className="border-b border-stone-100">
+										<td className="py-2 pr-4 text-stone-600">
+											πουθ-/κανέ- (no-)
+										</td>
+										<td className="py-2 px-2">
+											<MonoText variant="greek" size="sm">
+												κανένας, τίποτα
+											</MonoText>
+										</td>
+										<td className="py-2 px-2">
+											<MonoText variant="greek" size="sm">
+												πουθενά
+											</MonoText>
+										</td>
+										<td className="py-2 px-2 text-stone-400">—</td>
+										<td className="py-2 pl-2 text-stone-400">—</td>
+									</tr>
+									<tr className="border-b border-stone-100">
+										<td className="py-2 pr-4 text-stone-600">παντ- (every-)</td>
+										<td className="py-2 px-2">
+											<MonoText variant="greek" size="sm">
+												όλοι
+											</MonoText>
+										</td>
+										<td className="py-2 px-2">
+											<MonoText variant="greek" size="sm">
+												παντού
+											</MonoText>
+										</td>
+										<td className="py-2 px-2 text-stone-400">—</td>
+										<td className="py-2 pl-2 text-stone-400">—</td>
+									</tr>
+									<tr>
+										<td className="py-2 pr-4 text-stone-600">
+											οπου-δήποτε (-ever)
+										</td>
+										<td className="py-2 px-2">
+											<MonoText variant="greek" size="sm">
+												όποιος, ό,τι
+											</MonoText>
+										</td>
+										<td className="py-2 px-2">
+											<MonoText variant="greek" size="sm">
+												οπουδήποτε
+											</MonoText>
+										</td>
+										<td className="py-2 px-2">
+											<MonoText variant="greek" size="sm">
+												οποτεδήποτε
+											</MonoText>
+										</td>
+										<td className="py-2 pl-2">
+											<MonoText variant="greek" size="sm">
+												οπωσδήποτε
+											</MonoText>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</Card>
+
+					{/* Two columns: Pronouns and Adverbs */}
+					<div className="grid md:grid-cols-2 gap-6">
+						{/* Indefinite Pronouns */}
+						<div className="space-y-4">
+							<h4 className="font-bold text-navy-text">Indefinite Pronouns</h4>
+
+							{/* Core (invariable) */}
+							<div>
+								<h5 className="text-sm font-medium text-stone-600 mb-2">
+									Core (don't change form)
+								</h5>
+								<div className="space-y-1.5">
+									{[
+										{ greek: "κάτι", english: "something" },
+										{ greek: "τίποτα", english: "nothing/anything" },
+										{ greek: "όλα", english: "everything" },
+										{ greek: "ό,τι", english: "whatever" },
+									].map((item) => (
+										<div
+											key={item.greek}
+											className="flex items-baseline gap-2 text-sm"
+										>
+											<MonoText variant="greek" className="text-stone-800">
+												{item.greek}
+											</MonoText>
+											<span className="text-stone-500">{item.english}</span>
+										</div>
+									))}
+								</div>
+							</div>
+
+							{/* Gendered */}
+							<div>
+								<h5 className="text-sm font-medium text-stone-600 mb-2">
+									Gendered (decline like adjectives)
+								</h5>
+								<div className="overflow-x-auto">
+									<table className="w-full text-sm">
+										<thead>
+											<tr className="border-b border-stone-200">
+												<th className="text-left py-1.5 text-stone-500 text-xs">
+													m
+												</th>
+												<th className="text-left py-1.5 text-stone-500 text-xs">
+													f
+												</th>
+												<th className="text-left py-1.5 text-stone-500 text-xs">
+													n
+												</th>
+												<th className="text-left py-1.5 text-stone-500 text-xs">
+													meaning
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+											{[
+												["κάποιος", "κάποια", "κάποιο", "someone"],
+												["κανένας", "καμία", "κανένα", "no one"],
+												["όποιος", "όποια", "όποιο", "whoever"],
+												["άλλος", "άλλη", "άλλο", "other"],
+											].map(([m, f, n, eng]) => (
+												<tr key={m} className="border-b border-stone-100">
+													<td className="py-1.5">
+														<MonoText variant="greek" size="sm">
+															{m}
+														</MonoText>
+													</td>
+													<td className="py-1.5">
+														<MonoText variant="greek" size="sm">
+															{f}
+														</MonoText>
+													</td>
+													<td className="py-1.5">
+														<MonoText variant="greek" size="sm">
+															{n}
+														</MonoText>
+													</td>
+													<td className="py-1.5 text-stone-500">{eng}</td>
+												</tr>
+											))}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+
+						{/* Indefinite Adverbs */}
+						<div className="space-y-4">
+							<h4 className="font-bold text-navy-text">Indefinite Adverbs</h4>
+
+							<div className="overflow-x-auto">
+								<table className="w-full text-sm">
+									<thead>
+										<tr className="border-b border-stone-200">
+											<th className="text-left py-1.5 text-stone-500 text-xs">
+												category
+											</th>
+											<th className="text-left py-1.5 text-stone-500 text-xs">
+												+
+											</th>
+											<th className="text-left py-1.5 text-stone-500 text-xs">
+												−
+											</th>
+											<th className="text-left py-1.5 text-stone-500 text-xs">
+												all
+											</th>
+											<th className="text-left py-1.5 text-stone-500 text-xs">
+												any
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr className="border-b border-stone-100">
+											<td className="py-1.5 text-stone-600">Place</td>
+											<td className="py-1.5">
+												<MonoText variant="greek" size="sm">
+													κάπου
+												</MonoText>
+											</td>
+											<td className="py-1.5">
+												<MonoText variant="greek" size="sm">
+													πουθενά
+												</MonoText>
+											</td>
+											<td className="py-1.5">
+												<MonoText variant="greek" size="sm">
+													παντού
+												</MonoText>
+											</td>
+											<td className="py-1.5">
+												<MonoText variant="greek" size="sm">
+													οπουδήποτε
+												</MonoText>
+											</td>
+										</tr>
+										<tr className="border-b border-stone-100">
+											<td className="py-1.5 text-stone-600">Time</td>
+											<td className="py-1.5">
+												<MonoText variant="greek" size="sm">
+													κάποτε
+												</MonoText>
+											</td>
+											<td className="py-1.5 text-stone-400">—</td>
+											<td className="py-1.5 text-stone-400">—</td>
+											<td className="py-1.5">
+												<MonoText variant="greek" size="sm">
+													οποτεδήποτε
+												</MonoText>
+											</td>
+										</tr>
+										<tr>
+											<td className="py-1.5 text-stone-600">Manner</td>
+											<td className="py-1.5">
+												<MonoText variant="greek" size="sm">
+													κάπως
+												</MonoText>
+											</td>
+											<td className="py-1.5 text-stone-400">—</td>
+											<td className="py-1.5 text-stone-400">—</td>
+											<td className="py-1.5">
+												<MonoText variant="greek" size="sm">
+													οπωσδήποτε
+												</MonoText>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+
+							{/* Examples */}
+							<div className="mt-4 p-3 bg-stone-50 rounded-lg border border-stone-200">
+								<h5 className="text-sm font-medium text-stone-600 mb-2">
+									Examples
+								</h5>
+								<div className="space-y-1.5 text-sm">
+									{[
+										{ greek: "Είδες κάποιον;", english: "Did you see someone?" },
+										{
+											greek: "Δεν είδα κανέναν",
+											english: "I didn't see anyone",
+										},
+										{ greek: "Πάμε κάπου;", english: "Shall we go somewhere?" },
+										{
+											greek: "Δεν πάω πουθενά",
+											english: "I'm not going anywhere",
+										},
+									].map((ex) => (
+										<div key={ex.greek} className="flex items-baseline gap-2">
+											<MonoText variant="greek" className="text-stone-800">
+												{ex.greek}
+											</MonoText>
+											<span className="text-stone-500">{ex.english}</span>
+										</div>
+									))}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</CollapsibleSection>
 		</section>
 	);
 };
