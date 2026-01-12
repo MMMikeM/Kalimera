@@ -6,6 +6,7 @@ export const wordTypes = [
 	"adverb",
 	"phrase",
 	"preposition",
+	"pronoun",
 ] as const;
 export type WordType = (typeof wordTypes)[number];
 

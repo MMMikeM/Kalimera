@@ -16,6 +16,9 @@ dist-ssr
 build/
 .react-router/
 
+# Wrangler
+.wrangler/
+
 # Database
 *.db
 *.sqlite
