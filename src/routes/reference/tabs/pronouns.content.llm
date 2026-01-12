@@ -1,0 +1,206 @@
+# Pronouns Reference Content
+
+Cases in action - the words you'll use most frequently in Greek.
+
+## Purpose
+
+Show pronouns as the practical application of cases. High-frequency forms that demonstrate how cases work in daily speech.
+
+## Key Insight
+
+Pronouns are where you'll use cases most. Master these forms and cases click into place.
+
+---
+
+## Decision Guide (Hero Element)
+
+<decision-guide name="pronoun-selection">
+<question>Which "me/you" do I use?</question>
+
+```
+Position relative to the verb/noun?
+├─ BEFORE verb → Object pronoun (accusative: με, σε, τον)
+│   → "σε βλέπω" = I see you
+│
+├─ AFTER noun → Possessive pronoun (genitive: μου, σου, του)
+│   → "το σπίτι μου" = my house
+│
+└─ AFTER preposition → Emphatic pronoun (εμένα, εσένα, αυτόν)
+    → "για μένα" = for me
+```
+</decision-guide>
+
+---
+
+## Pronoun Paradigms
+
+### Accusative - Object Pronouns (Essential)
+
+<paradigm name="accusative-pronouns" badge="Essential">
+<rule>Go BEFORE the verb: σε βλέπω (you I-see) = I see you</rule>
+
+| Person | Singular    | Plural        |
+|--------|-------------|---------------|
+| 1st    | με (me)     | μας (us)      |
+| 2nd    | σε (you)    | σας (you pl.) |
+| 3rd m  | τον (him)   | τους (them)   |
+| 3rd f  | την (her)   | τις (them)    |
+| 3rd n  | το (it)     | τα (them)     |
+
+<examples>
+- με βλέπεις; = do you see me?
+- σε αγαπώ = I love you
+- τον ξέρω = I know him
+- μας περιμένουν = they're waiting for us
+- σας ευχαριστώ = thank you (formal)
+</examples>
+</paradigm>
+
+### Genitive - Possessive Pronouns (Essential)
+
+<paradigm name="genitive-pronouns" badge="Essential">
+<rule>Go AFTER the noun: το σπίτι μου (the house my) = my house</rule>
+<note>Neuter uses same form as masculine (του)</note>
+
+| Person | Singular     | Plural        |
+|--------|--------------|---------------|
+| 1st    | μου (my)     | μας (our)     |
+| 2nd    | σου (your)   | σας (your pl.)|
+| 3rd m  | του (his)    | τους (their)  |
+| 3rd f  | της (her)    | τους (their)  |
+| 3rd n  | του (its)    | τους (their)  |
+
+<examples>
+- το σπίτι μου = my house
+- η μητέρα σου = your mother
+- ο φίλος του = his friend
+- το σπίτι μας = our house
+- τα παιδιά τους = their children
+</examples>
+</paradigm>
+
+### Nominative - Subject Pronouns
+
+<paradigm name="nominative-pronouns">
+<rule>Often dropped! Verb endings already show person.</rule>
+
+| Person | Singular       | Plural         |
+|--------|----------------|----------------|
+| 1st    | εγώ (I)        | εμείς (we)     |
+| 2nd    | εσύ (you)      | εσείς (you pl.)|
+| 3rd m  | αυτός (he)     | αυτοί (they)   |
+| 3rd f  | αυτή (she)     | αυτές (they)   |
+| 3rd n  | αυτό (it)      | αυτά (they)    |
+
+<examples>
+- (εγώ) μιλάω = I speak (pronoun optional)
+- αυτός μιλάει = HE speaks (for emphasis/clarity)
+</examples>
+</paradigm>
+
+### Emphatic - After Prepositions
+
+<paradigm name="emphatic-pronouns">
+<rule>Use after prepositions (για, με, από, σε): για μένα = for me</rule>
+
+| Person | Singular           | Plural             |
+|--------|--------------------|--------------------|
+| 1st    | εμένα/μένα (me)    | εμάς/μας (us)      |
+| 2nd    | εσένα/σένα (you)   | εσάς/σας (you pl.) |
+| 3rd m  | αυτόν (him)        | αυτούς (them)      |
+| 3rd f  | αυτήν/αυτή (her)   | αυτές (them)       |
+| 3rd n  | αυτό (it)          | αυτά (them)        |
+
+<examples>
+- για μένα = for me
+- με σένα = with you
+- για αυτόν = for him
+- για αυτό = that's why / for this reason
+</examples>
+</paradigm>
+
+---
+
+## Connection Alert
+
+<insight>
+Pronouns = Cases in Action!
+
+**Accusative** (με, σε, τον) answers "WHOM/WHAT do I [verb]?"
+**Genitive** (μου, σου, του) answers "WHOSE?"
+
+You're already using cases every time you use a pronoun!
+</insight>
+
+---
+
+## Double Object Pattern
+
+<pattern name="double-object">
+<title>"Give me it" word order</title>
+<explanation>Greek puts the person before the thing</explanation>
+
+| English          | Greek       | Literal        |
+|------------------|-------------|----------------|
+| give it to me    | δώσε μου το | give to-me it  |
+| tell it to me    | πες μου το  | tell to-me it  |
+| bring it to her  | φέρε της το | bring to-her it|
+
+</pattern>
+
+---
+
+## Common Phrases with Pronouns (Collapsible)
+
+<phrases expandable="true" default="collapsed">
+
+### Requests
+- πες μου = tell me
+- δώσε μου = give me
+- περίμενέ με = wait for me
+- βοήθησέ με = help me
+- άκουσέ με = listen to me
+
+### Opinions
+- μ' αρέσει = I like it
+- δε μ' αρέσει = I don't like it
+- μου φαίνεται = it seems to me
+
+### Questions
+- τι σου φαίνεται; = what do you think?
+- πώς σε λένε; = what's your name?
+
+### Answers
+- με λένε... = my name is... (lit: they call me)
+
+### Family
+- σ' αγαπώ = I love you
+- μου λείπεις = I miss you
+
+</phrases>
+
+---
+
+## Navigation
+
+<previous>Review the case system first: /reference/cases</previous>
+<practice>Build fluency with timed retrieval drills: /practice/speed?focus=pronouns</practice>
+
+---
+
+## Data Source
+
+Static content from: `@/constants/pronouns`
+- OBJECT_PRONOUNS, POSSESSIVE_PRONOUNS, SUBJECT_PRONOUNS, EMPHATIC_PRONOUNS
+- PRONOUN_PATTERNS, PRONOUN_PHRASES
+
+## Verification
+
+- [x] greek-first: Greek forms prominent in all paradigms
+- [x] paradigm-tables: Person (rows) x Number (columns) reveals patterns
+- [x] progressive-disclosure: Phrases collapsible
+- [x] function-first-labels: "Object/Possessive/Emphatic" + grammatical term
+- [x] frequency-priority: Accusative and Genitive marked "Essential"
+- [x] no-redundancy: Tables show Greek/English without duplicate columns
+- [x] contextual-examples: Examples show usage in phrases
+- [x] decision-guides: "Which pronoun?" flowchart included

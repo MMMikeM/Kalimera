@@ -1,0 +1,301 @@
+# Articles and Nouns Reference Content
+
+Article paradigms and noun agreement patterns - how Greek marks gender, case, and number.
+
+## Purpose
+
+Show how articles and nouns must match in gender, case, and number. The article is your guide to understanding any noun.
+
+## Key Insight
+
+Greek articles change to match their noun's gender, case, and number. Once you see the pattern, it becomes predictable.
+
+---
+
+## Quick Win: The -ν Rule
+
+<insight name="nu-rule" highlight="true">
+<title>When uncertain, use the -ν form</title>
+<explanation>
+You'll never be wrong if you keep the final -ν on τον/την/στον/στην.
+Native speakers sometimes drop it, but keeping it is never wrong.
+</explanation>
+<example>τον φίλο or τη φίλη - both correct!</example>
+</insight>
+
+---
+
+## Gender Hints
+
+<quick-reference name="gender-hints">
+<title>Spot gender by ending</title>
+
+| Gender    | Common Endings |
+|-----------|----------------|
+| Masculine | -ος, -ας, -ης, -ές |
+| Feminine  | -α, -η, -ση, -ξη |
+| Neuter    | -ο, -ι, -μα |
+
+</quick-reference>
+
+---
+
+## Article Quick Lookup (Expanded by Default)
+
+<paradigm name="article-paradigm" default="expanded">
+
+### Singular
+
+|      | Masculine | Feminine | Neuter |
+|------|-----------|----------|--------|
+| Nom  | ο         | η        | το     |
+| Acc  | τον       | τη(ν)    | το     |
+| Gen  | του       | της      | του    |
+
+### Plural
+
+|      | Masculine | Feminine | Neuter |
+|------|-----------|----------|--------|
+| Nom  | οι        | οι       | τα     |
+| Acc  | τους      | τις      | τα     |
+| Gen  | των       | των      | των    |
+
+</paradigm>
+
+---
+
+## The Core Pattern
+
+<insight>
+The article must AGREE with its noun in three ways:
+- **Gender**: masculine / feminine / neuter
+- **Case**: nominative / accusative / genitive
+- **Number**: singular / plural
+
+This is why "the" has so many forms!
+</insight>
+
+---
+
+## Noun Paradigms by Gender (Carousel)
+
+### Masculine Patterns
+
+<paradigm name="masculine-os" frequency="very common">
+<pattern>-ος</pattern>
+<example>φίλος (friend)</example>
+
+| Case | Singular (ending → full) | Plural (ending → full) |
+|------|--------------------------|------------------------|
+| Nom  | -ος → ο φίλος            | -οι → οι φίλοι         |
+| Acc  | -ο → τον φίλο            | -ους → τους φίλους     |
+| Gen  | -ου → του φίλου          | -ων → των φίλων        |
+| Voc  | -ε → φίλε!               | -οι → φίλοι!           |
+
+</paradigm>
+
+<paradigm name="masculine-as" frequency="common">
+<pattern>-ας</pattern>
+<example>πατέρας (father)</example>
+<tip>Many family words: πατέρας, άντρας, παππούς</tip>
+
+| Case | Singular (ending → full)   | Plural (ending → full)     |
+|------|----------------------------|----------------------------|
+| Nom  | -ας → ο πατέρας            | -ες → οι πατέρες           |
+| Acc  | -α → τον πατέρα            | -ες → τους πατέρες         |
+| Gen  | -α → του πατέρα            | -ων → των πατέρων          |
+| Voc  | -α → πατέρα!               | -ες → πατέρες!             |
+
+</paradigm>
+
+<paradigm name="masculine-is" frequency="common">
+<pattern>-ης</pattern>
+<example>μαθητής (student)</example>
+
+| Case | Singular (ending → full)   | Plural (ending → full)     |
+|------|----------------------------|----------------------------|
+| Nom  | -ης → ο μαθητής            | -ές → οι μαθητές           |
+| Acc  | -ή → τον μαθητή            | -ές → τους μαθητές         |
+| Gen  | -ή → του μαθητή            | -ών → των μαθητών          |
+| Voc  | -ή → μαθητή!               | -ές → μαθητές!             |
+
+</paradigm>
+
+<paradigm name="masculine-es" frequency="less common">
+<pattern>-ές</pattern>
+<example>καφές (coffee)</example>
+<tip>Often borrowed words: καφές, καναπές</tip>
+
+| Case | Singular (ending → full)   | Plural (ending → full)     |
+|------|----------------------------|----------------------------|
+| Nom  | -ές → ο καφές              | -έδες → οι καφέδες         |
+| Acc  | -έ → τον καφέ              | -έδες → τους καφέδες       |
+| Gen  | -έ → του καφέ              | -έδων → των καφέδων        |
+| Voc  | -έ → καφέ!                 | -έδες → καφέδες!           |
+
+</paradigm>
+
+### Feminine Patterns
+
+<paradigm name="feminine-a" frequency="very common">
+<pattern>-α</pattern>
+<example>γυναίκα (woman/wife)</example>
+<tip>Vocative = Nominative for feminine nouns</tip>
+
+| Case | Singular (ending → full)   | Plural (ending → full)     |
+|------|----------------------------|----------------------------|
+| Nom  | -α → η γυναίκα             | -ες → οι γυναίκες          |
+| Acc  | -α → τη γυναίκα            | -ες → τις γυναίκες         |
+| Gen  | -ας → της γυναίκας         | -ων → των γυναικών         |
+| Voc  | -α → γυναίκα!              | -ες → γυναίκες!            |
+
+</paradigm>
+
+<paradigm name="feminine-i" frequency="very common">
+<pattern>-η</pattern>
+<example>ζωή (life)</example>
+
+| Case | Singular (ending → full)   | Plural (ending → full)     |
+|------|----------------------------|----------------------------|
+| Nom  | -η → η ζωή                 | -ές → οι ζωές              |
+| Acc  | -η → τη ζωή                | -ές → τις ζωές             |
+| Gen  | -ης → της ζωής             | -ών → των ζωών             |
+| Voc  | -η → ζωή!                  | -ές → ζωές!                |
+
+</paradigm>
+
+<paradigm name="feminine-si" frequency="common">
+<pattern>-ση/-ξη</pattern>
+<example>ερώτηση (question)</example>
+<tip>Action nouns (like English -tion)</tip>
+
+| Case | Singular (ending → full)     | Plural (ending → full)       |
+|------|------------------------------|------------------------------|
+| Nom  | -ση → η ερώτηση              | -σεις → οι ερωτήσεις         |
+| Acc  | -ση → την ερώτηση            | -σεις → τις ερωτήσεις        |
+| Gen  | -σης → της ερώτησης          | -σεων → των ερωτήσεων        |
+| Voc  | -ση → ερώτηση!               | -σεις → ερωτήσεις!           |
+
+</paradigm>
+
+### Neuter Patterns
+
+<paradigm name="neuter-o" frequency="very common">
+<pattern>-ο</pattern>
+<example>βιβλίο (book)</example>
+<tip>Nom = Acc = Voc (neuter simplification!)</tip>
+
+| Case | Singular (ending → full)   | Plural (ending → full)     |
+|------|----------------------------|----------------------------|
+| Nom  | -ο → το βιβλίο             | -α → τα βιβλία             |
+| Acc  | -ο → το βιβλίο             | -α → τα βιβλία             |
+| Gen  | -ου → του βιβλίου          | -ων → των βιβλίων          |
+| Voc  | -ο → βιβλίο!               | -α → βιβλία!               |
+
+</paradigm>
+
+<paradigm name="neuter-i" frequency="common">
+<pattern>-ι</pattern>
+<example>παιδί (child)</example>
+
+| Case | Singular (ending → full)   | Plural (ending → full)     |
+|------|----------------------------|----------------------------|
+| Nom  | -ί → το παιδί              | -ιά → τα παιδιά            |
+| Acc  | -ί → το παιδί              | -ιά → τα παιδιά            |
+| Gen  | -ιού → του παιδιού         | -ιών → των παιδιών         |
+| Voc  | -ί → παιδί!                | -ιά → παιδιά!              |
+
+</paradigm>
+
+<paradigm name="neuter-ma" frequency="common">
+<pattern>-μα</pattern>
+<example>όνομα (name)</example>
+<tip>Ancient Greek pattern, Nom = Acc = Voc</tip>
+
+| Case | Singular (ending → full)   | Plural (ending → full)     |
+|------|----------------------------|----------------------------|
+| Nom  | -μα → το όνομα             | -ματα → τα ονόματα         |
+| Acc  | -μα → το όνομα             | -ματα → τα ονόματα         |
+| Gen  | -ματος → του ονόματος      | -μάτων → των ονομάτων      |
+| Voc  | -μα → όνομα!               | -ματα → ονόματα!           |
+
+</paradigm>
+
+---
+
+## Masculine Vocative Changes
+
+<quick-reference>
+- -ος → -ε (φίλος → φίλε!)
+- -ας → -α (πατέρας → πατέρα!)
+- -ης → -η (μαθητής → μαθητή!)
+- -ές → -έ (καφές → καφέ!)
+</quick-reference>
+
+---
+
+## The -ν Rule (Movable Nu)
+
+<section name="movable-nu">
+<title>Fine-tuning: when to keep or drop final -ν on articles</title>
+
+<rule>
+Keep the -ν before vowels and certain consonants (κ, π, τ, γκ, μπ, ντ, ξ, ψ).
+Drop the -ν before other consonants.
+</rule>
+
+### Keep the -ν
+- τον άνθρωπο (before vowel α)
+- την πόρτα (before π)
+- στον κήπο (before κ)
+
+### Drop the -ν
+- τη μητέρα (before μ)
+- τη θάλασσα (before θ)
+- στο σπίτι (neuter - no ν anyway)
+
+</section>
+
+---
+
+## Common Agreement Mistakes (Collapsible)
+
+<mistakes expandable="true" default="collapsed">
+
+| Wrong              | Correct            | Why                                      |
+|--------------------|--------------------|------------------------------------------|
+| τα άνθρωπο         | τον άνθρωπο        | άνθρωπος is masculine, not neuter plural |
+| ο μητέρα μου       | η μητέρα μου       | μητέρα is feminine, not masculine        |
+| η βιβλίο           | το βιβλίο          | βιβλίο is neuter, not feminine           |
+| βλέπω ο πατέρας    | βλέπω τον πατέρα   | Object needs accusative, not nominative  |
+| θέλω ο καφές       | θέλω τον καφέ      | "I want" takes accusative object         |
+| το σπίτι ο Νίκος   | το σπίτι του Νίκου | Possession needs genitive                |
+| οι παιδί           | τα παιδιά          | παιδί is neuter, use τα for plural       |
+| το βιβλία          | τα βιβλία          | Plural nouns need plural article         |
+
+</mistakes>
+
+---
+
+## Navigation
+
+<practice>Build fluency with timed retrieval drills: /practice/speed?focus=articles</practice>
+
+---
+
+## Data Source
+
+Static content from:
+- `@/constants/agreement` (AGREEMENT_PARADIGMS, AGREEMENT_MISTAKES, ARTICLE_AGREEMENT_QUICK_REF)
+- `@/constants/articles` (MOVABLE_NU_RULE)
+- `@/constants/nouns` (GENDER_HINTS)
+
+## Verification
+
+- [x] greek-first: Greek forms prominent in all paradigms
+- [x] paradigm-tables: Case (rows) x Number (columns) reveals patterns
+- [x] progressive-disclosure: Mistakes section collapsible
+- [x] function-first-labels: Patterns named by ending + example word
+- [x] frequency-priority: "very common" / "common" / "less common" markers
+- [x] no-redundancy: Ending + full form shown together
+- [x] contextual-examples: Examples show full article + noun

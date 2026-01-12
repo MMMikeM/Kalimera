@@ -1,0 +1,240 @@
+# Verbs Reference Content
+
+Verb conjugation patterns and the system behind Greek verbs.
+
+## Purpose
+
+Explain the conjugation SYSTEM - learn 3 patterns, conjugate thousands of verbs. Verb vocabulary browsing is at /learn/verbs.
+
+## Key Insight
+
+Greek verb endings show who's doing the action, so you often don't need separate pronouns. Learn three patterns and conjugate thousands of verbs.
+
+---
+
+## Voice: Who Does the Action?
+
+<section name="voice-explanation">
+<title>Greek verbs show not just WHO (the endings) but also the DIRECTION of action</title>
+
+### Active: Subject DOES the action
+- βλέπω τον φίλο = I see the friend
+- Action flows FROM me TO the friend
+
+### Passive: Subject RECEIVES the action
+- βλέπομαι από τον φίλο = I am seen by the friend
+- Action flows TO me FROM the friend
+
+### The -μαι Marker
+The -μαι ending is the passive marker:
+- βλέπω (I see) → βλέπομαι (I am seen)
+- ακούω (I hear) → ακούομαι (I am heard)
+
+### Deponent: Passive form, active meaning
+Some verbs ONLY exist in -μαι form, but their meaning is active:
+- έρχομαι = I come (not "I am come-d")
+- θυμάμαι = I remember (not "I am remembered")
+- κοιμάμαι = I sleep (not "I am slept")
+
+<etymology>
+Why "deponent"? From Latin deponere (to put aside) - these verbs have "set aside" their active forms.
+</etymology>
+
+</section>
+
+---
+
+## Start Here: είμαι (to be)
+
+<paradigm name="eimai" highlight="true">
+<verb>είμαι</verb>
+<meaning>to be</meaning>
+<note>The most common Greek verb. Memorize it first. You'll use it in every conversation.</note>
+<note>3rd person is the same for singular and plural</note>
+
+| Person       | Singular  | Plural    |
+|--------------|-----------|-----------|
+| 1st          | είμαι     | είμαστε   |
+| 2nd          | είσαι     | είστε     |
+| 3rd          | είναι     | είναι     |
+
+</paradigm>
+
+---
+
+## Pattern Power
+
+<insight>
+Learn just **3 ending patterns** and you can conjugate thousands of verbs.
+The endings tell you WHO is doing the action.
+</insight>
+
+<note name="negation">
+**Negation:** Add δεν before the verb: Δεν μιλάω (I don't speak)
+</note>
+
+---
+
+## Pattern Identifier
+
+<decision-guide name="pattern-identifier">
+<question>Which pattern? Look at the verb's dictionary form (1st person singular)</question>
+
+| Ending    | Pattern Name | Examples                |
+|-----------|--------------|-------------------------|
+| -ω        | Active       | κάνω, θέλω, βλέπω       |
+| -άω/-ώ    | Contracted   | μιλάω, αγαπάω, ρωτάω    |
+| -μαι      | Deponent     | έρχομαι, θυμάμαι        |
+
+</decision-guide>
+
+---
+
+## Pattern 1: Active -ω
+
+<paradigm name="active" color="ocean">
+<pattern>-ω</pattern>
+<title>Standard Active</title>
+<description>Most Greek verbs follow this pattern. Learn the endings once, apply them to thousands of verbs.</description>
+
+### Canonical: κάνω (do, make)
+
+| Person | Singular      | Plural        |
+|--------|---------------|---------------|
+| 1st    | κάν**ω**      | κάν**ουμε**   |
+| 2nd    | κάν**εις**    | κάν**ετε**    |
+| 3rd    | κάν**ει**     | κάν**ουν**    |
+
+### Same Pattern
+- θέλω (want)
+- έχω (have)
+- βλέπω (see)
+
+### In Context
+- Τι κάνεις; = How are you? (What do you do?)
+- Κάνει κρύο. = It's cold. (It makes cold)
+- Κάνουμε διάλειμμα. = We're taking a break.
+
+</paradigm>
+
+---
+
+## Pattern 2: Contracted -άω/-ώ
+
+<paradigm name="contracted" color="terracotta">
+<pattern>-άω/-ώ</pattern>
+<title>Contracted</title>
+<description>The α contracts with endings. Two forms exist - both are correct.</description>
+
+### Canonical: μιλάω (speak)
+
+| Person | Singular      | Plural        |
+|--------|---------------|---------------|
+| 1st    | μιλ**άω**     | μιλ**άμε**    |
+| 2nd    | μιλ**άς**     | μιλ**άτε**    |
+| 3rd    | μιλ**άει**    | μιλ**άνε**    |
+
+### Same Pattern
+- αγαπάω (love)
+- ρωτάω (ask)
+- περνάω (pass)
+
+### In Context
+- Μιλάς ελληνικά; = Do you speak Greek?
+- Δεν μιλάμε πολύ. = We don't speak much.
+
+</paradigm>
+
+---
+
+## Pattern 3: Deponent -μαι
+
+<paradigm name="deponent" color="olive">
+<pattern>-μαι</pattern>
+<title>Deponent</title>
+<description>Look passive but have active meaning. Two sub-patterns: -ομαι and -άμαι.</description>
+
+### Canonical: έρχομαι (come)
+
+| Person | Singular        | Plural          |
+|--------|-----------------|-----------------|
+| 1st    | έρχ**ομαι**     | ερχ**όμαστε**   |
+| 2nd    | έρχ**εσαι**     | έρχ**εστε**     |
+| 3rd    | έρχ**εται**     | έρχ**ονται**    |
+
+### Same Pattern
+- γίνομαι (become)
+- κάθομαι (sit)
+
+### In Context
+- Έρχομαι αύριο. = I'm coming tomorrow.
+- Πότε έρχεσαι; = When are you coming?
+- Δεν θυμάμαι. = I don't remember.
+
+</paradigm>
+
+---
+
+## Other Irregular Verbs
+
+<section name="irregulars">
+<note>These common verbs don't follow patterns. You'll learn them naturally through frequent exposure.</note>
+
+### λέω (say, tell)
+| Person | Singular | Plural |
+|--------|----------|--------|
+| 1st    | λέω      | λέμε   |
+| 2nd    | λές      | λέτε   |
+| 3rd    | λέει     | λένε   |
+<note>"τα λέμε" = see you later</note>
+
+### τρώω (eat)
+| Person | Singular | Plural |
+|--------|----------|--------|
+| 1st    | τρώω     | τρώμε  |
+| 2nd    | τρώς     | τρώτε  |
+| 3rd    | τρώει    | τρώνε  |
+
+### πάω (go)
+| Person | Singular | Plural |
+|--------|----------|--------|
+| 1st    | πάω      | πάμε   |
+| 2nd    | πάς      | πάτε   |
+| 3rd    | πάει     | πάνε   |
+<note>Alternative regular form: πηγαίνω</note>
+
+</section>
+
+---
+
+## Cross-Links
+
+<navigation>
+- Browse all verbs by conjugation family: /learn/verbs
+- Practice verb conjugation: /practice/speed?focus=verbs
+</navigation>
+
+---
+
+## Scope Note
+
+This section covers present tense only. Past and future tenses coming soon.
+
+---
+
+## Data Source
+
+Static content from: `@/constants/verbs`
+- VERB_PATTERNS (active, contracted, deponent)
+- VERB_FAMILIES, VERB_CONJUGATIONS
+- IRREGULAR_VERBS
+
+## Verification
+
+- [x] greek-first: Greek verb forms prominent
+- [x] paradigm-tables: Person (rows) x Number (columns) reveals patterns
+- [x] progressive-disclosure: Same-pattern verbs and context collapsible
+- [x] function-first-labels: "Active", "Contracted", "Deponent" with endings
+- [x] frequency-priority: είμαι promoted as most important
+- [x] contextual-examples: Usage examples for each pattern
+- [x] decision-guides: Pattern identifier included
