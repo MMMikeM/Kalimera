@@ -32,3 +32,20 @@ export const POSITION_ADVERBS: AdverbSeed[] = [
 	{ lemma: "εδώ", english: "here" },
 	{ lemma: "εκεί", english: "there" },
 ];
+
+// Indefinite adverbs (somewhere, sometime, somehow, etc.)
+export const INDEFINITE_ADVERBS: AdverbSeed[] = [
+	// Place (paired opposites)
+	{ lemma: "κάπου", english: "somewhere" },
+	{ lemma: "πουθενά", english: "nowhere/anywhere" },
+	{ lemma: "οπουδήποτε", english: "anywhere/wherever" },
+	{ lemma: "παντού", english: "everywhere" },
+
+	// Time (paired opposites)
+	{ lemma: "κάποτε", english: "sometime/once" },
+	{ lemma: "οποτεδήποτε", english: "anytime/whenever" },
+
+	// Manner
+	{ lemma: "κάπως", english: "somehow" },
+	{ lemma: "οπωσδήποτε", english: "by all means/definitely" },
+];

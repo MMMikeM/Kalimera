@@ -1,7 +1,11 @@
 // Aggregate all vocabulary exports
 
 export { ADJECTIVES, COLORS } from "./adjectives";
-export { FREQUENCY_ADVERBS, POSITION_ADVERBS } from "./adverbs";
+export {
+	FREQUENCY_ADVERBS,
+	INDEFINITE_ADVERBS,
+	POSITION_ADVERBS,
+} from "./adverbs";
 export {
 	ARRIVING_PHRASES,
 	COMMON_RESPONSES,
@@ -13,6 +17,7 @@ export {
 // Re-export from lessons
 export * from "./lessons";
 export { NOUNS } from "./nouns";
+export { GENDERED_PRONOUNS, INDEFINITE_PRONOUNS } from "./pronouns";
 export { NUMBERS } from "./numbers";
 export {
 	COMMANDS,

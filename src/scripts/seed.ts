@@ -23,6 +23,9 @@ import {
 	ESSENTIAL_PHRASES,
 	FOOD_PHRASES,
 	FREQUENCY_ADVERBS,
+	GENDERED_PRONOUNS,
+	INDEFINITE_ADVERBS,
+	INDEFINITE_PRONOUNS,
 	LESSON_TAGS,
 	LESSONS,
 	LIKES_CONSTRUCTION,
@@ -496,6 +499,63 @@ async function seed() {
 		tags: [], // No content tags for standalone adjectives
 	}));
 	await processCategory("adjectives", adjectiveItems, tagMap, vocabTagLinks);
+
+	// ============================================
+	// PRONOUNS
+	// ============================================
+	const indefinitePronounItems: VocabWithTags[] = INDEFINITE_PRONOUNS.map(
+		(pronoun) => ({
+			vocab: {
+				greekText: pronoun.lemma,
+				englishTranslation: pronoun.english,
+				wordType: "pronoun" as const,
+			},
+			tags: [],
+		}),
+	);
+	await processCategory(
+		"indefinite pronouns",
+		indefinitePronounItems,
+		tagMap,
+		vocabTagLinks,
+	);
+
+	const genderedPronounItems: VocabWithTags[] = GENDERED_PRONOUNS.map(
+		(pronoun) => ({
+			vocab: {
+				greekText: pronoun.lemma,
+				englishTranslation: pronoun.english,
+				wordType: "pronoun" as const,
+			},
+			tags: [],
+		}),
+	);
+	await processCategory(
+		"gendered pronouns",
+		genderedPronounItems,
+		tagMap,
+		vocabTagLinks,
+	);
+
+	// ============================================
+	// INDEFINITE ADVERBS
+	// ============================================
+	const indefiniteAdverbItems: VocabWithTags[] = INDEFINITE_ADVERBS.map(
+		(adverb) => ({
+			vocab: {
+				greekText: adverb.lemma,
+				englishTranslation: adverb.english,
+				wordType: "adverb" as const,
+			},
+			tags: [],
+		}),
+	);
+	await processCategory(
+		"indefinite adverbs",
+		indefiniteAdverbItems,
+		tagMap,
+		vocabTagLinks,
+	);
 
 	// ============================================
 	// NUMBERS
