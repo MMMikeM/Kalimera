@@ -1,6 +1,7 @@
 ---
 name: engagement-design-reviewer
-description: Use this agent when designing or reviewing features that affect user engagement, retention, notifications, streaks, rewards, or practice motivation. The agent optimises for maximum engagement within patterns that work for language learning apps.
+description: |
+  Use this agent when designing or reviewing features that affect user engagement, retention, notifications, streaks, rewards, or practice motivation. The agent optimises for maximum engagement within patterns that work for language learning apps.
 
   Examples:
 

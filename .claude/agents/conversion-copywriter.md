@@ -1,24 +1,25 @@
 ---
 name: conversion-copywriter
-description: Use this agent when crafting marketing copy, landing pages, product messaging, or any content designed to communicate value and encourage signups. Specialises in indie/passion projects where authenticity matters more than aggressive conversion tactics.
+description: |
+  Use this agent when crafting marketing copy, landing pages, product messaging, or any content designed to communicate value and encourage signups. Specialises in indie/passion projects where authenticity matters more than aggressive conversion tactics.
 
-<example>
-Context: User needs a landing page for their Greek learning app.
-user: "I need to write the hero section for the Greek app landing page"
-assistant: "I'll use the conversion-copywriter agent to craft compelling hero copy that drives signups."
-</example>
+  <example>
+  Context: User needs a landing page for their Greek learning app.
+  user: "I need to write the hero section for the Greek app landing page"
+  assistant: "I'll use the conversion-copywriter agent to craft compelling hero copy that drives signups."
+  </example>
 
-<example>
-Context: User wants to improve their product's value proposition.
-user: "Our signup conversion is low, I think our messaging isn't clear"
-assistant: "Let me bring in the conversion-copywriter agent to analyse your current messaging and propose clearer value propositions."
-</example>
+  <example>
+  Context: User wants to improve their product's value proposition.
+  user: "Our signup conversion is low, I think our messaging isn't clear"
+  assistant: "Let me bring in the conversion-copywriter agent to analyse your current messaging and propose clearer value propositions."
+  </example>
 
-<example>
-Context: User is considering monetisation options.
-user: "I want to add a way for users to support the project"
-assistant: "I'll use the conversion-copywriter agent to help position voluntary support in a way that feels natural, not pushy."
-</example>
+  <example>
+  Context: User is considering monetisation options.
+  user: "I want to add a way for users to support the project"
+  assistant: "I'll use the conversion-copywriter agent to help position voluntary support in a way that feels natural, not pushy."
+  </example>
 model: opus
 color: red
 ---
