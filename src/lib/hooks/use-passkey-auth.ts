@@ -1,7 +1,7 @@
 import type { PublicKeyCredentialRequestOptionsJSON } from "@simplewebauthn/browser";
 import { startAuthentication } from "@simplewebauthn/browser";
 import { useCallback, useState } from "react";
-import { loginAndRedirect } from "../auth-storage";
+import { setStoredAuth } from "../auth-storage";
 
 interface UsePasskeyAuthOptions {
 	/** Optional username to pre-filter credentials */
@@ -71,10 +71,13 @@ export function usePasskeyAuth(
 			};
 
 			if (result.verified && result.userId) {
-				loginAndRedirect({
+				// Keep localStorage in sync for backward compatibility during migration
+				setStoredAuth({
 					userId: result.userId,
 					username: result.username || "user",
 				});
+				// Cookie is set by the API response, do a full page reload to pick it up
+				window.location.href = "/";
 			}
 		} catch (err) {
 			const message =

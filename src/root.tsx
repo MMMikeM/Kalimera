@@ -16,6 +16,7 @@ import {
 	Links,
 	Meta,
 	Outlet,
+	redirect,
 	Scripts,
 	ScrollRestoration,
 	useLocation,
@@ -32,6 +33,8 @@ import {
 } from "@/components/ui/popover";
 import "./index.css";
 import type { LinksFunction } from "react-router";
+import { clearAuthCookie, getAuthSession } from "@/lib/auth-cookie";
+import type { Route } from "./+types/root";
 
 const AUTH_STORAGE_KEY = "greek-authenticated-user";
 
@@ -40,6 +43,27 @@ export const links: LinksFunction = () => [
 	{ rel: "manifest", href: "/manifest.json" },
 	{ rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
 ];
+
+export const loader = async ({ request }: Route.LoaderArgs) => {
+	const auth = getAuthSession(request);
+	return { auth };
+};
+
+export type RootLoaderData = Awaited<ReturnType<typeof loader>>;
+
+export const action = async ({ request }: Route.ActionArgs) => {
+	const formData = await request.formData();
+	const intent = formData.get("intent");
+
+	if (intent === "logout") {
+		const cookie = clearAuthCookie();
+		return redirect("/login", {
+			headers: { "Set-Cookie": cookie },
+		});
+	}
+
+	return { success: false };
+};
 
 const MOBILE_NAV_ITEMS = [
 	{ id: "home", label: "Home", path: "/", icon: Home },
@@ -194,9 +218,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
 	);
 }
 
-export default function Root() {
+export default function Root({ loaderData }: Route.ComponentProps) {
 	const location = useLocation();
-	const navigate = useNavigate();
 	const currentSection = location.pathname.split("/")[1] || "home";
 	const isAuthPage =
 		location.pathname === "/login" || location.pathname === "/register";
@@ -204,31 +227,22 @@ export default function Root() {
 		location.pathname.startsWith(route),
 	);
 
-	const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
-
-	useEffect(() => {
-		const stored = localStorage.getItem(AUTH_STORAGE_KEY);
-		let isValid = false;
-
-		if (stored) {
-			try {
-				const parsed = JSON.parse(stored) as {
-					userId?: number;
-					username?: string;
-				};
-				isValid = typeof parsed.userId === "number" && !!parsed.username;
-			} catch {
-				localStorage.removeItem(AUTH_STORAGE_KEY);
-			}
-		}
-
-		setIsAuthenticated(isValid);
-	}, []);
+	const isAuthenticated = loaderData.auth !== null;
 
 	const handleLogout = () => {
+		// Clear localStorage for backward compatibility
 		localStorage.removeItem(AUTH_STORAGE_KEY);
-		setIsAuthenticated(false);
-		navigate("/login");
+		// Navigate to logout action which clears the cookie
+		const form = document.createElement("form");
+		form.method = "POST";
+		form.action = "/";
+		const input = document.createElement("input");
+		input.type = "hidden";
+		input.name = "intent";
+		input.value = "logout";
+		form.appendChild(input);
+		document.body.appendChild(form);
+		form.submit();
 	};
 
 	// Don't render full layout for auth pages
@@ -246,17 +260,6 @@ export default function Root() {
 						</header>
 						<Outlet />
 					</div>
-				</main>
-			</div>
-		);
-	}
-
-	// Show nothing while checking auth (prevents flash)
-	if (isAuthenticated === null) {
-		return (
-			<div className="app-shell bg-cream">
-				<main className="app-main flex items-center justify-center">
-					<span className="text-2xl font-serif text-terracotta">καλημέρα</span>
 				</main>
 			</div>
 		);
