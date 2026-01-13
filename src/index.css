@@ -46,6 +46,23 @@
 	--color-terracotta-dark: var(--color-terracotta-700);
 	--color-terracotta-text: #5c2d14;
 
+	/* === SUNSET - Feminine Accent (dusty rose) === */
+	--color-sunset-50: #fdf5f7;
+	--color-sunset-100: #fceaef;
+	--color-sunset-200: #f9d4df;
+	--color-sunset-300: #f0acbf;
+	--color-sunset-400: #b6557e;
+	--color-sunset-500: #a34a6f;
+	--color-sunset-600: #8c3d5d;
+	--color-sunset-700: #75324d;
+	--color-sunset-800: #622c42;
+	--color-sunset-900: #53283a;
+	--color-sunset-950: #30121d;
+	--color-sunset: var(--color-sunset-400);
+	--color-sunset-light: var(--color-sunset-300);
+	--color-sunset-dark: var(--color-sunset-600);
+	--color-sunset-text: #6b2a45;
+
 	/* === OLIVE - Secondary (silvery olive leaf) === */
 	--color-olive-50: #f8f9f6;
 	--color-olive-100: #eef1ea;
@@ -148,10 +165,10 @@
 	--color-case-genitive-text: var(--color-olive-text);
 	--color-case-vocative-text: var(--color-honey-text);
 
-	/* Gender - For text that needs to be readable (AAA 7:1+ on cream/white) */
-	--color-gender-masculine: #1d4ed8; /* Blue-700: ~7.2:1 contrast on cream */
-	--color-gender-feminine: #9d174d; /* Pink-800: ~8.1:1 contrast on cream */
-	--color-gender-neuter: #44403c; /* Stone-700: ~9.1:1 contrast on cream */
+	/* Gender - Mapped to palette colours for consistency */
+	--color-gender-masculine: var(--color-navy-text); /* Navy family */
+	--color-gender-feminine: var(--color-sunset-text); /* Sunset family */
+	--color-gender-neuter: var(--color-slate-text); /* Slate family */
 
 	/* Learning feedback states */
 	--color-correct: #16a34a;

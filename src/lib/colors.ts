@@ -1,10 +1,14 @@
 export type ColorScheme =
 	| "ocean"
 	| "terracotta"
+	| "sunset"
 	| "olive"
 	| "honey"
 	| "navy"
-	| "slate";
+	| "slate"
+	| "masculine"
+	| "feminine"
+	| "neuter";
 
 export const colorStyles: Record<
 	ColorScheme,
@@ -19,6 +23,11 @@ export const colorStyles: Record<
 		border: "border-terracotta-400",
 		header: "bg-terracotta-400",
 		bg: "bg-terracotta-50",
+	},
+	sunset: {
+		border: "border-sunset-400",
+		header: "bg-sunset-400",
+		bg: "bg-sunset-50",
 	},
 	olive: {
 		border: "border-olive-400",
@@ -36,6 +45,21 @@ export const colorStyles: Record<
 		bg: "bg-navy-50",
 	},
 	slate: {
+		border: "border-slate-400",
+		header: "bg-slate-400",
+		bg: "bg-slate-50",
+	},
+	masculine: {
+		border: "border-navy-400",
+		header: "bg-navy-400",
+		bg: "bg-navy-50",
+	},
+	feminine: {
+		border: "border-sunset-400",
+		header: "bg-sunset-400",
+		bg: "bg-sunset-50",
+	},
+	neuter: {
 		border: "border-slate-400",
 		header: "bg-slate-400",
 		bg: "bg-slate-50",
