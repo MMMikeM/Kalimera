@@ -1,6 +1,7 @@
 ---
 name: react-router-specialist
-description: Use this agent when working with React Router 7 framework mode features including route configuration, loaders, actions, middleware, document head management, nested routes, type-safe route modules, and data fetching patterns. This agent should be consulted for any routing-related implementation, route module structure, form handling, navigation, and React Router's server-side rendering capabilities.
+description: |
+  Use this agent when working with React Router 7 framework mode features including route configuration, loaders, actions, middleware, document head management, nested routes, type-safe route modules, and data fetching patterns. This agent should be consulted for any routing-related implementation, route module structure, form handling, navigation, and React Router's server-side rendering capabilities.
 
   Examples:
 
