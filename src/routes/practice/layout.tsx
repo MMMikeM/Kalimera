@@ -1,13 +1,8 @@
 import { Clock, Zap } from "lucide-react";
-import { useEffect, useState } from "react";
-import {
-	Outlet,
-	useLocation,
-	useRevalidator,
-	useSearchParams,
-} from "react-router";
+import { Outlet, useLocation } from "react-router";
 import type { NavTab } from "@/components/NavTabs";
 import { NavTabs } from "@/components/NavTabs";
+import { getAuthSession } from "@/lib/auth-cookie";
 import type { Route } from "./+types/layout";
 import {
 	type ActionIntent,
@@ -20,8 +15,6 @@ import {
 	type VocabItemWithSkill,
 } from "./data.server";
 
-const AUTH_STORAGE_KEY = "greek-authenticated-user";
-
 export function meta() {
 	return [
 		{ title: "Practice - Greek Learning" },
@@ -33,9 +26,10 @@ export function meta() {
 }
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
+	const auth = getAuthSession(request);
+	const userId = auth?.userId ?? null;
+
 	const url = new URL(request.url);
-	const userIdParam = url.searchParams.get("userId");
-	const userId = userIdParam ? parseInt(userIdParam, 10) : null;
 	const limitParam = url.searchParams.get("limit");
 	const limit = limitParam
 		? Math.min(Math.max(parseInt(limitParam, 10), 1), 100)
@@ -99,55 +93,10 @@ const PRACTICE_TABS: NavTab[] = [
 
 export default function PracticeLayout({ loaderData }: Route.ComponentProps) {
 	const { stats } = loaderData;
-	const [searchParams, setSearchParams] = useSearchParams();
-	const revalidator = useRevalidator();
 	const location = useLocation();
-	const [isInitialized, setIsInitialized] = useState(false);
 
 	const pathSegments = location.pathname.split("/").filter(Boolean);
 	const activeTab = pathSegments[1] || "speed";
-
-	// On mount, sync authenticated user to URL params
-	useEffect(() => {
-		const stored = localStorage.getItem(AUTH_STORAGE_KEY);
-		const urlUserId = searchParams.get("userId");
-
-		if (stored) {
-			try {
-				const parsed = JSON.parse(stored) as { userId?: number };
-				const userId = parsed.userId?.toString();
-				if (userId && userId !== urlUserId) {
-					setSearchParams({ userId });
-					revalidator.revalidate();
-				}
-			} catch {
-				// Invalid JSON, ignore
-			}
-		}
-		setIsInitialized(true);
-	}, [revalidator.revalidate, searchParams.get, setSearchParams]); // eslint-disable-line react-hooks/exhaustive-deps
-
-	const buildTabUrl = (tabId: string) => {
-		const userId = searchParams.get("userId");
-		const base = `/practice/${tabId}`;
-		return userId ? `${base}?userId=${userId}` : base;
-	};
-
-	// Show loading state while syncing user
-	if (!isInitialized) {
-		return (
-			<div className="space-y-4">
-				<div className="flex items-center justify-between gap-4">
-					<NavTabs
-						tabs={PRACTICE_TABS}
-						activeTab={activeTab}
-						buildUrl={buildTabUrl}
-					/>
-				</div>
-				<div className="text-center py-8 text-stone-500">Loading...</div>
-			</div>
-		);
-	}
 
 	return (
 		<div className="space-y-4">
@@ -158,10 +107,9 @@ export default function PracticeLayout({ loaderData }: Route.ComponentProps) {
 						: tab,
 				)}
 				activeTab={activeTab}
-				buildUrl={buildTabUrl}
+				buildUrl={(tabId) => `/practice/${tabId}`}
 			/>
 
-			{/* Drill content */}
 			<Outlet context={loaderData} />
 		</div>
 	);

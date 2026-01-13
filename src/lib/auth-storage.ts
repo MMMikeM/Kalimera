@@ -5,19 +5,11 @@ export interface AuthUser {
 	username: string;
 }
 
+/**
+ * Store auth in localStorage for backward compatibility.
+ * Primary auth is now via HTTP-only cookie, but we keep localStorage
+ * in sync during the migration period.
+ */
 export function setStoredAuth(user: AuthUser): void {
 	localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(user));
-}
-
-/**
- * Store auth and redirect to home.
- * Uses full page reload to ensure Root remounts and reads fresh auth state.
- * Uses setTimeout to let React finish its current render cycle before navigating,
- * preventing race conditions with form library state updates.
- */
-export function loginAndRedirect(user: AuthUser): void {
-	setStoredAuth(user);
-	setTimeout(() => {
-		window.location.href = "/";
-	}, 0);
 }

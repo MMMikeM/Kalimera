@@ -1,6 +1,5 @@
 import { ArrowLeft, Calendar, Clock, Target, TrendingUp } from "lucide-react";
-import { useEffect, useState } from "react";
-import { Link, useRevalidator, useSearchParams } from "react-router";
+import { Link } from "react-router";
 import { AccuracyTrend } from "@/components/AccuracyTrend";
 import { Card } from "@/components/Card";
 import { StreakCalendar } from "@/components/StreakCalendar";
@@ -10,9 +9,8 @@ import {
 	getPracticeDatesForCalendar,
 	getTimeInvested,
 } from "@/db.server/queries/progress";
+import { getAuthSession } from "@/lib/auth-cookie";
 import type { Route } from "./+types/progress";
-
-const AUTH_STORAGE_KEY = "greek-authenticated-user";
 
 export function meta() {
 	return [
@@ -22,11 +20,9 @@ export function meta() {
 }
 
 export async function loader({ request }: Route.LoaderArgs) {
-	const url = new URL(request.url);
-	const userIdParam = url.searchParams.get("userId");
-	const userId = userIdParam ? parseInt(userIdParam, 10) : null;
+	const auth = getAuthSession(request);
+	const userId = auth?.userId ?? null;
 
-	// No userId yet - client will sync from localStorage
 	if (!userId) {
 		return {
 			userId: null,
@@ -69,10 +65,6 @@ const formatMinutes = (minutes: number): string => {
 };
 
 export default function ProgressPage({ loaderData }: Route.ComponentProps) {
-	const [searchParams, setSearchParams] = useSearchParams();
-	const revalidator = useRevalidator();
-	const [isInitialized, setIsInitialized] = useState(false);
-
 	const {
 		userId,
 		currentStreak,
@@ -82,28 +74,7 @@ export default function ProgressPage({ loaderData }: Route.ComponentProps) {
 		masteredCount,
 	} = loaderData;
 
-	// On mount, sync authenticated user to URL params
-	useEffect(() => {
-		const stored = localStorage.getItem(AUTH_STORAGE_KEY);
-		const urlUserId = searchParams.get("userId");
-
-		if (stored) {
-			try {
-				const parsed = JSON.parse(stored) as { userId?: number };
-				const storedUserId = parsed.userId?.toString();
-				if (storedUserId && storedUserId !== urlUserId) {
-					setSearchParams({ userId: storedUserId });
-					revalidator.revalidate();
-				}
-			} catch {
-				// Invalid JSON, ignore
-			}
-		}
-		setIsInitialized(true);
-	}, [searchParams, setSearchParams, revalidator]);
-
-	// Show loading state while syncing user
-	if (!isInitialized || !userId) {
+	if (!userId) {
 		return (
 			<div className="flex items-center justify-center min-h-[50vh]">
 				<span className="text-2xl font-serif text-terracotta">καλημέρα</span>

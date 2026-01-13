@@ -6,7 +6,7 @@ import {
 } from "@rvf/react-router";
 import { KeyRound, Loader2, LogIn } from "lucide-react";
 import { useEffect } from "react";
-import { Link } from "react-router";
+import { Link, redirect } from "react-router";
 import { Card } from "@/components/Card";
 import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/ui/form-field";
@@ -16,7 +16,7 @@ import {
 	getUserPasswordHash,
 	setUserPassword,
 } from "@/db.server/queries/auth";
-import { loginAndRedirect } from "@/lib/auth-storage";
+import { createAuthCookie } from "@/lib/auth-cookie";
 import { usePasskeyAuth } from "@/lib/hooks/use-passkey-auth";
 import { hashPassword, verifyPassword } from "@/lib/password";
 import {
@@ -41,7 +41,6 @@ export const loader = async () => {
 	return {};
 };
 
-type ActionSuccess = { success: true; userId: number; username: string };
 type ActionError = { success: false; error: string };
 type ActionNeedsPasswordSetup = {
 	success: false;
@@ -50,6 +49,13 @@ type ActionNeedsPasswordSetup = {
 	userCode: string;
 	displayName: string | null;
 };
+
+function createAuthRedirect(userId: number, username: string) {
+	const cookie = createAuthCookie({ userId, username });
+	return redirect("/", {
+		headers: { "Set-Cookie": cookie },
+	});
+}
 
 export const action = async ({ request }: Route.ActionArgs) => {
 	const formData = await request.formData();
@@ -65,11 +71,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
 		const hash = await hashPassword(newPassword);
 		await setUserPassword(Number(userId), hash, username);
 
-		return {
-			success: true,
-			userId: Number(userId),
-			username: username.toLowerCase(),
-		} satisfies ActionSuccess;
+		return createAuthRedirect(Number(userId), username.toLowerCase());
 	}
 
 	// Login flow
@@ -114,11 +116,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
 		return { success: false, error: "Invalid password" } satisfies ActionError;
 	}
 
-	return {
-		success: true,
-		userId: user.id,
-		username: user.username || user.code,
-	} satisfies ActionSuccess;
+	return createAuthRedirect(user.id, user.username || user.code);
 };
 
 export default function LoginRoute({ actionData }: Route.ComponentProps) {
@@ -152,19 +150,6 @@ export default function LoginRoute({ actionData }: Route.ComponentProps) {
 
 	const needsPasswordSetup =
 		businessData && "needsPasswordSetup" in businessData;
-
-	useEffect(() => {
-		if (
-			businessData?.success &&
-			"userId" in businessData &&
-			"username" in businessData
-		) {
-			loginAndRedirect({
-				userId: businessData.userId,
-				username: businessData.username,
-			});
-		}
-	}, [businessData]);
 
 	// Update password setup form defaults when we get needsPasswordSetup response
 	useEffect(() => {

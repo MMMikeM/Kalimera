@@ -1,6 +1,7 @@
 import type { AuthenticationResponseJSON } from "@simplewebauthn/server";
 import { getUserById } from "@/db.server/queries/practice";
 import { createWebAuthn } from "@/lib/auth";
+import { createAuthCookie } from "@/lib/auth-cookie";
 import type { Route } from "./+types/auth-verify";
 
 interface AuthVerifyBody {
@@ -32,13 +33,15 @@ export const action = async ({ request }: Route.ActionArgs) => {
 		});
 
 		const result = await webauthn.verifyAuthentication(response, challenge);
-
 		const user = await getUserById(result.userId);
+		const username = user?.username || "user";
 
-		return Response.json({
-			...result,
-			username: user?.username,
-		});
+		const cookie = createAuthCookie({ userId: result.userId, username });
+
+		return Response.json(
+			{ ...result, username },
+			{ headers: { "Set-Cookie": cookie } },
+		);
 	} catch (error) {
 		console.error("WebAuthn auth verify error:", error);
 		const message =
