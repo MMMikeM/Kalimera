@@ -1,13 +1,17 @@
-import { RotateCcw, Zap } from "lucide-react";
+import { Clock, RotateCcw, Zap } from "lucide-react";
 import type React from "react";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { useFetcher, useOutletContext } from "react-router";
 import { Card } from "@/components/Card";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
 	CATEGORY_CONFIG,
 	generateQuestions,
 	type QuestionCategory,
+	GRAMMAR_EXERCISE_CONFIG,
+	generateGrammarQuestions,
+	type GrammarExerciseType,
 } from "@/lib/drill/generate-questions";
 import UnifiedDrill, {
 	type SessionStats,
@@ -16,6 +20,7 @@ import UnifiedDrill, {
 import type { PracticeLoaderData } from "./layout";
 
 export type FocusType = QuestionCategory | "all";
+export type DrillMode = "category" | "grammar";
 
 const FOCUS_OPTIONS: { value: FocusType; label: string }[] = [
 	{ value: "all", label: "All" },
@@ -25,35 +30,57 @@ const FOCUS_OPTIONS: { value: FocusType; label: string }[] = [
 	{ value: "nouns", label: "Nouns" },
 ];
 
+const GRAMMAR_EXERCISES = Object.entries(GRAMMAR_EXERCISE_CONFIG) as [
+	GrammarExerciseType,
+	(typeof GRAMMAR_EXERCISE_CONFIG)[GrammarExerciseType],
+][];
+
+const formatTimeLimit = (ms: number): string => {
+	const seconds = ms / 1000;
+	return seconds % 1 === 0 ? `${seconds}s` : `${seconds.toFixed(1)}s`;
+};
+
 const SpeedDrill: React.FC = () => {
 	const { userId, stats } = useOutletContext<PracticeLoaderData>();
 	const fetcher = useFetcher();
 	const sessionIdRef = useRef<number | null>(null);
 
+	const [drillMode, setDrillMode] = useState<DrillMode>("category");
 	const [focus, setFocus] = useState<FocusType>("all");
+	const [grammarExercise, setGrammarExercise] =
+		useState<GrammarExerciseType | null>(null);
 
 	const [sessionCount, setSessionCount] = useState(0);
 	const [lastStats, setLastStats] = useState<SessionStats | null>(null);
 	const [drillSize, setDrillSize] = useState(15);
 
-	const questions = useMemo(
-		() => generateQuestions(focus === "all" ? "all" : [focus], drillSize),
-		[drillSize, focus],
-	);
+	const questions = useMemo(() => {
+		if (drillMode === "grammar" && grammarExercise) {
+			const allQuestions = generateGrammarQuestions(grammarExercise);
+			const shuffled = [...allQuestions].sort(() => Math.random() - 0.5);
+			return shuffled.slice(0, drillSize);
+		}
+		return generateQuestions(focus === "all" ? "all" : [focus], drillSize);
+	}, [drillMode, grammarExercise, focus, drillSize]);
 
 	const startDbSession = useCallback(() => {
 		if (!userId) return;
+
+		const category =
+			drillMode === "grammar" && grammarExercise
+				? `grammar_${grammarExercise}`
+				: "speed_drill";
 
 		fetcher.submit(
 			{
 				intent: "startSession",
 				userId: userId.toString(),
 				sessionType: "case_drill",
-				category: "speed_drill",
+				category,
 			},
 			{ method: "post", action: "/practice" },
 		);
-	}, [userId, fetcher]);
+	}, [userId, fetcher, drillMode, grammarExercise]);
 
 	const handleAttempt = useCallback(
 		(attempt: UnifiedAttemptResult) => {
@@ -62,7 +89,24 @@ const SpeedDrill: React.FC = () => {
 			let weakAreaType: "case" | "gender" | "verb_family" | undefined;
 			let weakAreaIdentifier: string | undefined;
 
-			if (
+			if (attempt.questionId.startsWith("grammar-")) {
+				if (
+					attempt.questionId.includes("-art-") ||
+					attempt.questionId.includes("-fill-")
+				) {
+					weakAreaType = "case";
+					weakAreaIdentifier = "articles";
+				} else if (attempt.questionId.includes("-case-")) {
+					weakAreaType = "case";
+					weakAreaIdentifier = "case_transformation";
+				} else if (attempt.questionId.includes("-verb-")) {
+					weakAreaType = "verb_family";
+					weakAreaIdentifier = "verb_conjugation";
+				} else if (attempt.questionId.includes("-fix-")) {
+					weakAreaType = "case";
+					weakAreaIdentifier = "error_correction";
+				}
+			} else if (
 				attempt.questionId.includes("obj-") ||
 				attempt.questionId.includes("poss-")
 			) {
@@ -132,8 +176,19 @@ const SpeedDrill: React.FC = () => {
 	}
 
 	const focusConfig = focus !== "all" ? CATEGORY_CONFIG[focus] : null;
-	const drillTitle =
-		focus !== "all" ? `${focusConfig?.label} Drill` : "Speed Drill";
+	const grammarConfig = grammarExercise
+		? GRAMMAR_EXERCISE_CONFIG[grammarExercise]
+		: null;
+
+	const drillTitle = (() => {
+		if (drillMode === "grammar" && grammarConfig) {
+			return grammarConfig.label;
+		}
+		return focus !== "all" ? `${focusConfig?.label} Drill` : "Speed Drill";
+	})();
+
+	const canStart =
+		drillMode === "category" || (drillMode === "grammar" && grammarExercise);
 
 	if (sessionCount === 0 && !lastStats) {
 		return (
@@ -148,21 +203,87 @@ const SpeedDrill: React.FC = () => {
 							Rapid-fire production practice. Type fast, build automaticity.
 						</p>
 
+						{/* Mode Toggle */}
 						<div className="mb-6">
-							<span className="text-sm text-stone-500 block mb-2">Focus</span>
-							<div className="flex flex-wrap justify-center gap-2">
-								{FOCUS_OPTIONS.map((option) => (
-									<Button
-										key={option.value}
-										variant={focus === option.value ? "primary" : "outline"}
-										size="sm"
-										onClick={() => setFocus(option.value)}
-									>
-										{option.label}
-									</Button>
-								))}
+							<span className="text-sm text-stone-500 block mb-2">Mode</span>
+							<div className="flex justify-center gap-2">
+								<Button
+									variant={drillMode === "category" ? "primary" : "outline"}
+									size="sm"
+									onClick={() => {
+										setDrillMode("category");
+										setGrammarExercise(null);
+									}}
+								>
+									Vocab
+								</Button>
+								<Button
+									variant={drillMode === "grammar" ? "primary" : "outline"}
+									size="sm"
+									onClick={() => setDrillMode("grammar")}
+								>
+									Grammar
+								</Button>
 							</div>
 						</div>
+
+						{/* Category Selection */}
+						{drillMode === "category" && (
+							<div className="mb-6">
+								<span className="text-sm text-stone-500 block mb-2">Focus</span>
+								<div className="flex flex-wrap justify-center gap-2">
+									{FOCUS_OPTIONS.map((option) => (
+										<Button
+											key={option.value}
+											variant={focus === option.value ? "primary" : "outline"}
+											size="sm"
+											onClick={() => setFocus(option.value)}
+										>
+											{option.label}
+										</Button>
+									))}
+								</div>
+							</div>
+						)}
+
+						{/* Grammar Exercise Selection */}
+						{drillMode === "grammar" && (
+							<div className="mb-6 text-left">
+								<span className="text-sm text-stone-500 block mb-3 text-center">
+									Exercise Type
+								</span>
+								<div className="space-y-2">
+									{GRAMMAR_EXERCISES.map(([type, config]) => (
+										<button
+											key={type}
+											type="button"
+											onClick={() => setGrammarExercise(type)}
+											className={`w-full p-4 rounded-lg border-2 text-left transition-colors ${
+												grammarExercise === type
+													? "border-terracotta bg-terracotta-50"
+													: "border-stone-200 hover:border-stone-300 bg-white"
+											}`}
+										>
+											<div className="flex items-center justify-between mb-2">
+												<span className="font-semibold text-stone-800">
+													{config.label}
+												</span>
+												<Badge variant="outline" className="gap-1">
+													<Clock size={12} />
+													{formatTimeLimit(config.timeLimit)}
+												</Badge>
+											</div>
+											<p className="text-base font-mono text-terracotta-700 mb-1">
+												{config.greekExample}
+											</p>
+											<p className="text-sm text-stone-500">
+												{config.description}
+											</p>
+										</button>
+									))}
+								</div>
+							</div>
+						)}
 
 						<div className="mb-6">
 							<span className="text-sm text-stone-500 block mb-2">
@@ -189,6 +310,7 @@ const SpeedDrill: React.FC = () => {
 								startDbSession();
 							}}
 							className="gap-2"
+							disabled={!canStart}
 						>
 							<Zap size={20} />
 							Start Training
@@ -215,14 +337,19 @@ const SpeedDrill: React.FC = () => {
 		);
 	}
 
+	const sessionTitle = (() => {
+		if (drillMode === "grammar" && grammarConfig) {
+			return `${grammarConfig.label} #${sessionCount}`;
+		}
+		return focus !== "all"
+			? `${focusConfig?.label} #${sessionCount}`
+			: `Speed Drill #${sessionCount}`;
+	})();
+
 	return (
 		<div className="max-w-xl mx-auto">
 			<UnifiedDrill
-				title={
-					focus !== "all"
-						? `${focusConfig?.label} #${sessionCount}`
-						: `Speed Drill #${sessionCount}`
-				}
+				title={sessionTitle}
 				questions={questions}
 				onAttempt={handleAttempt}
 				onComplete={handleComplete}
