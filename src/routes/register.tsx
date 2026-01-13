@@ -12,7 +12,7 @@ import {
 	UserPlus,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link } from "react-router";
+import { Link, } from "react-router";
 import { Card } from "@/components/Card";
 import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/ui/form-field";
@@ -20,7 +20,8 @@ import {
 	createUserWithPassword,
 	findUserByUsername,
 } from "@/db.server/queries/auth";
-import { loginAndRedirect } from "@/lib/auth-storage";
+import { createAuthCookie } from "@/lib/auth-cookie";
+import { setStoredAuth } from "@/lib/auth-storage";
 import { usePasskeyRegistration } from "@/lib/hooks/use-passkey-registration";
 import { hashPassword } from "@/lib/password";
 import { registerSchema, registerValidator } from "@/lib/validators/auth";
@@ -53,7 +54,6 @@ export const action = async ({ request }: Route.ActionArgs) => {
 
 	const existingUser = await findUserByUsername(username);
 	if (existingUser) {
-		// Use validationError for field-specific errors
 		return validationError({
 			fieldErrors: { username: "Username already taken" },
 		});
@@ -74,11 +74,14 @@ export const action = async ({ request }: Route.ActionArgs) => {
 			} satisfies ActionError;
 		}
 
-		return {
-			success: true,
-			userId: newUser.id,
-			username: newUser.username ?? username,
-		} satisfies ActionSuccess;
+		const finalUsername = newUser.username ?? username;
+		const cookie = createAuthCookie({ userId: newUser.id, username: finalUsername });
+
+		// Return success data with cookie set - component will show passkey setup screen
+		return Response.json(
+			{ success: true, userId: newUser.id, username: finalUsername } satisfies ActionSuccess,
+			{ headers: { "Set-Cookie": cookie } },
+		);
 	} catch (error) {
 		console.error("Registration error:", error);
 		const message =
@@ -117,15 +120,18 @@ export default function RegisterRoute({ actionData }: Route.ComponentProps) {
 			"username" in businessData
 		) {
 			setRegisteredUser({
-				userId: businessData.userId,
-				username: businessData.username,
+				userId: businessData.userId as number,
+				username: businessData.username as string,
 			});
 		}
 	}, [businessData]);
 
 	const handleComplete = () => {
 		if (registeredUser) {
-			loginAndRedirect(registeredUser);
+			// Keep localStorage in sync for backward compatibility during migration
+			setStoredAuth(registeredUser);
+			// Cookie is already set by the action, just navigate
+			window.location.href = "/";
 		}
 	};
 
