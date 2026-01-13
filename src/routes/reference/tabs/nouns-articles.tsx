@@ -1,10 +1,7 @@
 import { BookOpen } from "lucide-react";
 import { PracticeCTA } from "@/components/PracticeCTA";
 import { TabHero } from "@/components/TabHero";
-import {
-	ArticlesSection,
-	MovableNuSection,
-} from "../components/articles-section";
+import { ArticlesSection } from "../components/articles-section";
 
 export function ArticlesTab() {
 	return (
@@ -19,7 +16,6 @@ export function ArticlesTab() {
 				Once you see the pattern, it becomes predictable.
 			</TabHero>
 			<ArticlesSection />
-			<MovableNuSection />
 			<PracticeCTA
 				title="Practice articles"
 				description="Build fluency with timed retrieval drills on Greek articles."

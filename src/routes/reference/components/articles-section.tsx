@@ -1,58 +1,17 @@
-import { Lightbulb } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import type React from "react";
+import { Link } from "react-router";
 import { Card } from "@/components/Card";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
 import { ContentSection } from "@/components/ContentSection";
-import { MistakeComparison } from "@/components/MistakeComparison";
 import { MonoText } from "@/components/MonoText";
 import { SectionHeading } from "@/components/SectionHeading";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import {
-	AGREEMENT_MISTAKES,
-	ARTICLE_AGREEMENT_QUICK_REF,
-} from "@/constants/agreement";
-import { MOVABLE_NU_RULE } from "@/constants/articles";
-import { GENDER_HINTS } from "@/constants/nouns";
-
-const GenderHintsCompact: React.FC = () => (
-	<Card variant="bordered" padding="md">
-		<div className="text-sm font-medium text-stone-700 mb-2">
-			Spot gender by noun ending:
-		</div>
-		<div className="flex flex-wrap gap-x-6 gap-y-1 text-sm">
-			<div className="flex items-center gap-2">
-				<span className="w-2 h-2 rounded-full bg-gender-masculine" />
-				<span className="text-stone-600">Masculine:</span>
-				<span className="text-stone-800">
-					{GENDER_HINTS.masculine.endings.join(", ")}
-				</span>
-			</div>
-			<div className="flex items-center gap-2">
-				<span className="w-2 h-2 rounded-full bg-gender-feminine" />
-				<span className="text-stone-600">Feminine:</span>
-				<span className="text-stone-800">
-					{GENDER_HINTS.feminine.endings.join(", ")}
-				</span>
-			</div>
-			<div className="flex items-center gap-2">
-				<span className="w-2 h-2 rounded-full bg-gender-neuter" />
-				<span className="text-stone-600">Neuter:</span>
-				<span className="text-stone-800">
-					{GENDER_HINTS.neuter.endings.join(", ")}
-				</span>
-			</div>
-		</div>
-	</Card>
-);
+import { ARTICLE_AGREEMENT_QUICK_REF } from "@/constants/agreement";
 
 const ArticleQuickLookup: React.FC = () => (
-	<CollapsibleSection
-		title="Article Quick Lookup (ο, η, το, τον, την...)"
-		colorScheme="ocean"
-		defaultOpen={true}
-	>
+	<Card variant="bordered" padding="md" className="bg-ocean-50/30">
 		<div className="grid md:grid-cols-2 gap-4">
-			<Card variant="bordered" padding="sm">
+			<div>
 				<div className="text-xs font-medium text-stone-600 mb-2">Singular</div>
 				<table className="w-full text-sm">
 					<thead>
@@ -126,8 +85,8 @@ const ArticleQuickLookup: React.FC = () => (
 						</tr>
 					</tbody>
 				</table>
-			</Card>
-			<Card variant="bordered" padding="sm">
+			</div>
+			<div>
 				<div className="text-xs font-medium text-stone-600 mb-2">Plural</div>
 				<table className="w-full text-sm">
 					<thead>
@@ -201,16 +160,172 @@ const ArticleQuickLookup: React.FC = () => (
 						</tr>
 					</tbody>
 				</table>
-			</Card>
+			</div>
 		</div>
-	</CollapsibleSection>
+		<p className="text-xs text-stone-500 mt-3">
+			Need to identify gender?{" "}
+			<Link to="/reference/nouns" className="text-olive-600 hover:underline">
+				Check noun endings →
+			</Link>
+		</p>
+	</Card>
+);
+
+const PrepositionContractions: React.FC = () => (
+	<ContentSection title="σε + article contractions" colorScheme="ocean">
+		<div className="p-4">
+			<p className="text-sm text-stone-600 mb-3">
+				The preposition{" "}
+				<MonoText variant="greek" size="sm">
+					σε
+				</MonoText>{" "}
+				(to/at/in) contracts with the article:
+			</p>
+			<div className="grid grid-cols-3 gap-2 text-sm">
+				<div className="p-2 bg-stone-50 rounded border text-center">
+					<div className="text-stone-500 text-xs mb-1">σε + τον</div>
+					<MonoText variant="greek">στον</MonoText>
+				</div>
+				<div className="p-2 bg-stone-50 rounded border text-center">
+					<div className="text-stone-500 text-xs mb-1">σε + την</div>
+					<MonoText variant="greek">στην</MonoText>
+				</div>
+				<div className="p-2 bg-stone-50 rounded border text-center">
+					<div className="text-stone-500 text-xs mb-1">σε + το</div>
+					<MonoText variant="greek">στο</MonoText>
+				</div>
+				<div className="p-2 bg-stone-50 rounded border text-center">
+					<div className="text-stone-500 text-xs mb-1">σε + τους</div>
+					<MonoText variant="greek">στους</MonoText>
+				</div>
+				<div className="p-2 bg-stone-50 rounded border text-center">
+					<div className="text-stone-500 text-xs mb-1">σε + τις</div>
+					<MonoText variant="greek">στις</MonoText>
+				</div>
+				<div className="p-2 bg-stone-50 rounded border text-center">
+					<div className="text-stone-500 text-xs mb-1">σε + τα</div>
+					<MonoText variant="greek">στα</MonoText>
+				</div>
+			</div>
+		</div>
+	</ContentSection>
+);
+
+const ArticleUsageDifferences: React.FC = () => (
+	<ContentSection
+		title="When Greek uses articles differently"
+		colorScheme="honey"
+	>
+		<div className="p-4 space-y-3">
+			<p className="text-sm text-stone-600">
+				Greek uses articles where English doesn't (and vice versa):
+			</p>
+			<div className="space-y-2">
+				<div className="p-2 bg-stone-50 rounded border">
+					<MonoText variant="greek" size="sm">
+						η αγάπη είναι τυφλή
+					</MonoText>
+					<span className="text-stone-500 text-sm ml-2">
+						Abstract nouns need the article
+					</span>
+				</div>
+				<div className="p-2 bg-stone-50 rounded border">
+					<MonoText variant="greek" size="sm">
+						είναι γιατρός
+					</MonoText>
+					<span className="text-stone-500 text-sm ml-2">
+						Professions after είμαι: no article
+					</span>
+				</div>
+				<div className="p-2 bg-stone-50 rounded border">
+					<MonoText variant="greek" size="sm">
+						ο φίλος μου
+					</MonoText>
+					<span className="text-stone-500 text-sm ml-2">
+						Possessives use definite article (not "a friend of mine")
+					</span>
+				</div>
+				<div className="p-2 bg-stone-50 rounded border">
+					<MonoText variant="greek" size="sm">
+						η Ελλάδα
+					</MonoText>
+					<span className="text-stone-500 text-sm ml-2">
+						Countries and proper nouns take the article
+					</span>
+				</div>
+			</div>
+		</div>
+	</ContentSection>
+);
+
+const MovableNuQuickWin: React.FC = () => (
+	<ContentSection title="The -ν on τον/την" colorScheme="olive">
+		<div className="p-4 space-y-3">
+			<div className="p-3 bg-correct-100 rounded-lg border border-correct-300">
+				<div className="text-sm font-medium text-correct mb-1">
+					The simple rule
+				</div>
+				<p className="text-sm text-stone-600">
+					Always keep the -ν on{" "}
+					<MonoText variant="greek" size="sm">
+						τον/την/στον/στην
+					</MonoText>
+					. Native speakers sometimes drop it, but keeping it is never wrong.
+				</p>
+			</div>
+			<CollapsibleSection
+				title="When do natives drop it?"
+				colorScheme="default"
+				defaultOpen={false}
+			>
+				<div className="p-3 text-sm text-stone-600 space-y-2">
+					<p>
+						Keep the -ν before vowels and κ, π, τ, ξ, ψ, γκ, μπ, ντ. Drop it
+						before other consonants (μ, δ, θ, etc.).
+					</p>
+					<div className="grid md:grid-cols-2 gap-3">
+						<div>
+							<div className="font-medium text-correct mb-1">Keep -ν:</div>
+							<div className="space-y-1">
+								<div>
+									<MonoText variant="greek" size="sm">
+										τον άντρα
+									</MonoText>{" "}
+									<span className="text-stone-400">(before vowel)</span>
+								</div>
+								<div>
+									<MonoText variant="greek" size="sm">
+										στην πόρτα
+									</MonoText>{" "}
+									<span className="text-stone-400">(before π)</span>
+								</div>
+							</div>
+						</div>
+						<div>
+							<div className="font-medium text-incorrect mb-1">Drop -ν:</div>
+							<div className="space-y-1">
+								<div>
+									<MonoText variant="greek" size="sm">
+										τη μητέρα
+									</MonoText>{" "}
+									<span className="text-stone-400">(before μ)</span>
+								</div>
+								<div>
+									<MonoText variant="greek" size="sm">
+										στη θάλασσα
+									</MonoText>{" "}
+									<span className="text-stone-400">(before θ)</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</CollapsibleSection>
+		</div>
+	</ContentSection>
 );
 
 export const ArticlesSection: React.FC = () => {
-	const genderMistakes = AGREEMENT_MISTAKES.filter(
-		(m) => m.category === "gender",
-	);
-
 	return (
 		<section id="articles" className="space-y-6">
 			<SectionHeading
@@ -218,122 +333,32 @@ export const ArticlesSection: React.FC = () => {
 				subtitle="Greek articles change to match their noun's gender, case, and number"
 			/>
 
-			<Alert variant="info">
-				<Lightbulb size={16} />
-				<AlertTitle>The Core Pattern</AlertTitle>
-				<AlertDescription>
-					In Greek, the article must <strong>agree</strong> with its noun in
-					three ways: gender (masculine/feminine/neuter), case
-					(nominative/accusative/genitive), and number (singular/plural). This
-					is why "the" has so many forms!
-				</AlertDescription>
-			</Alert>
-
-			<GenderHintsCompact />
-
 			<ArticleQuickLookup />
 
-			<ContentSection title="When uncertain, use the -ν form" colorScheme="honey">
-				<div className="p-3 space-y-3">
-					<p className="text-sm text-stone-600">
-						You'll never be wrong if you keep the final ν on τον/την/στον/στην.
-					</p>
-					<div className="p-3 bg-stone-50 rounded-lg border border-stone-200">
-						<div className="text-xs font-semibold text-honey-text uppercase tracking-wide mb-2">
-							The simple rule
-						</div>
-						<p className="text-sm text-stone-600 mb-2">
-							For{" "}
-							<MonoText variant="greek" size="sm">
-								τον/την
-							</MonoText>{" "}
-							and{" "}
-							<MonoText variant="greek" size="sm">
-								στον/στην
-							</MonoText>
-							, you can always include the -ν. Native speakers sometimes drop
-							it, but keeping it is never wrong.
-						</p>
-						<div className="text-stone-600 text-sm">
-							<MonoText variant="greek" size="sm">
-								τον φίλο
-							</MonoText>{" "}
-							or{" "}
-							<MonoText variant="greek" size="sm">
-								τη φίλη
-							</MonoText>{" "}
-							— both correct!
-						</div>
-					</div>
-				</div>
-			</ContentSection>
+			<MovableNuQuickWin />
 
-			<CollapsibleSection
-				title="Common Gender Mistakes"
-				colorScheme="terracotta"
-				defaultOpen={false}
-			>
-				<MistakeComparison mistakes={genderMistakes} title="" />
-			</CollapsibleSection>
+			<PrepositionContractions />
+
+			<ArticleUsageDifferences />
+
+			<Card variant="bordered" padding="md" className="bg-stone-50">
+				<div className="flex items-center justify-between">
+					<div>
+						<div className="text-sm font-medium text-stone-700">
+							How noun endings change
+						</div>
+						<p className="text-xs text-stone-500">
+							See declension patterns by gender
+						</p>
+					</div>
+					<Link
+						to="/reference/nouns"
+						className="flex items-center gap-1 text-sm text-olive-600 hover:text-olive-700"
+					>
+						Nouns <ArrowRight size={14} />
+					</Link>
+				</div>
+			</Card>
 		</section>
 	);
 };
-
-export const MovableNuSection: React.FC = () => (
-	<section id="movable-nu" className="space-y-6">
-		<SectionHeading
-			title="The -ν Rule"
-			subtitle="Fine-tuning: when to keep or drop final ν on articles"
-		/>
-
-		<Card
-			variant="elevated"
-			padding="lg"
-			className="bg-stone-50 border-2 border-stone-200"
-		>
-			<Alert variant="info" className="mb-6">
-				<Lightbulb size={16} />
-				<AlertTitle>The Rule</AlertTitle>
-				<AlertDescription>{MOVABLE_NU_RULE.rule}</AlertDescription>
-			</Alert>
-			<div className="grid md:grid-cols-2 gap-6">
-				<div className="space-y-4">
-					<h4 className="text-lg font-bold text-correct">Keep the -ν</h4>
-					<div className="space-y-3">
-						{MOVABLE_NU_RULE.examples.keep.map((example) => (
-							<div
-								key={example.text}
-								className="p-3 bg-correct-100 rounded-lg border border-correct-300"
-							>
-								<MonoText variant="success" size="lg" className="block mb-1">
-									{example.text}
-								</MonoText>
-								<div className="text-olive-text text-sm italic">
-									{example.reason}
-								</div>
-							</div>
-						))}
-					</div>
-				</div>
-				<div className="space-y-4">
-					<h4 className="text-lg font-bold text-incorrect">Drop the -ν</h4>
-					<div className="space-y-3">
-						{MOVABLE_NU_RULE.examples.drop.map((example) => (
-							<div
-								key={example.text}
-								className="p-3 bg-incorrect-100 rounded-lg border border-incorrect-300"
-							>
-								<MonoText variant="error" size="lg" className="block mb-1">
-									{example.text}
-								</MonoText>
-								<div className="text-terracotta-text text-sm italic">
-									{example.reason}
-								</div>
-							</div>
-						))}
-					</div>
-				</div>
-			</div>
-		</Card>
-	</section>
-);
