@@ -77,10 +77,14 @@ const splitFormByEnding = (
 const endingColors: Record<ColorScheme, string> = {
 	ocean: "text-ocean-500 font-bold",
 	terracotta: "text-terracotta-600 font-bold",
+	sunset: "text-sunset-500 font-bold",
 	olive: "text-olive-500 font-bold",
 	honey: "text-honey-500 font-bold",
 	navy: "text-navy-500 font-bold",
 	slate: "text-slate-500 font-bold",
+	masculine: "text-navy-500 font-bold",
+	feminine: "text-sunset-500 font-bold",
+	neuter: "text-slate-500 font-bold",
 };
 
 const ConjugationCell: React.FC<ConjugationCellProps> = ({

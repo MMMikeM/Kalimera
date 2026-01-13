@@ -4,7 +4,7 @@ export const MOVABLE_NU_RULE = {
 		keep: [
 			{ text: "τον άντρα", reason: "before vowel" },
 			{ text: "την κόρη", reason: "before κ" },
-			{ text: "στον παρκ", reason: "before π" },
+			{ text: "στην πόρτα", reason: "before π" },
 		],
 		drop: [
 			{ text: "τη μητέρα", reason: "before μ" },

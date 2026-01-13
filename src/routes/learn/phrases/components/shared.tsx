@@ -12,10 +12,14 @@ export type { PhraseItem, PhrasesLoaderData } from "../data.server";
 const textColors: Record<ContentColorScheme, string> = {
 	ocean: "text-ocean-800",
 	terracotta: "text-terracotta-800",
+	sunset: "text-sunset-800",
 	olive: "text-olive-800",
 	honey: "text-honey-800",
 	navy: "text-navy-800",
 	slate: "text-slate-800",
+	masculine: "text-navy-800",
+	feminine: "text-sunset-800",
+	neuter: "text-slate-700",
 };
 
 export const PhraseItemDisplay: React.FC<{
