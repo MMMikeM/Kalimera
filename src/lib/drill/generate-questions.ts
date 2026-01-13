@@ -13,6 +13,12 @@ export interface DrillQuestion {
 
 export type QuestionCategory = "pronouns" | "articles" | "verbs" | "nouns";
 
+export {
+	type GrammarExerciseType,
+	GRAMMAR_EXERCISE_CONFIG,
+	generateGrammarQuestions,
+} from "./grammar-generators";
+
 const generatePronounQuestions = (): DrillQuestion[] => {
 	const questions: DrillQuestion[] = [];
 
