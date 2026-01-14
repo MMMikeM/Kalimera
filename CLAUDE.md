@@ -1,24 +1,100 @@
 # Greek Learning App
 
-React Router 7 app deployed to Cloudflare Workers with Turso (libsql) database.
+React Router 7 app on Cloudflare Workers with Turso (libsql) database.
+
+## Critical Rules
+
+**Makefile first.** Check the Makefile before running any command.
+
+**Database via Makefile only.** Direct `pnpm` commands skip `.env` and hit local instead of Turso.
+
+```bash
+# Local (Docker libsql on port 8080)
+make db-push          # Push schema
+make db-seed          # Seed data
+make db-setup         # Push + seed
+make db-studio        # Drizzle Studio
+
+# Production (Turso)
+make prod-db-push
+make prod-db-seed
+make prod-db-setup
+make prod-db-studio
+```
+
+**Git operations:**
+
+- Use `git mv` to rename/move files (preserves history)
+- Use `git rm` to delete (only after task verified complete)
+- Never commit without explicit user approval
+
+**Linting after tasks:**
+
+```bash
+pnpm lint:fix && pnpm lint:unused && pnpm lint:types && pnpm lint:dupes
+```
+
+## Code Style
+
+- Self-documenting code; comments only for non-obvious logic
+- Queen's English (colour, favourite)
+- No hardcoded names in the codebase
+- Derive route types from loader: `Route.ComponentProps["loaderData"]`
+
+## Architecture
+
+```
+src/components/*.tsx      # Custom components (tailwind-variants)
+src/components/ui/*.tsx   # ShadCN (use CLI: pnpm dlx shadcn@latest add X)
+src/routes/               # React Router 7 routes
+src/db.server/            # Drizzle schema and queries
+```
+
+**Path alias:** `@/` → `./src/`
+
+**Data access:** Import query functions from `@/db.server/queries/*`:
+
+```typescript
+import { getVocabBySection } from "@/db.server/queries/vocabulary";
+```
+
+**Route types:** If type errors after changing loaders, run `pnpm react-router typegen`.
+
+## Routes
+
+**Default to page routes** (loader + action + component). Use `<Form>` and `useFetcher`.
+
+**Resource routes** (no component) only for: webhooks, polling endpoints, background jobs.
+
+## Deployment
+
+```bash
+make deploy       # Build and deploy to Cloudflare Workers
+make deploy-dry   # Dry run
+make logs         # Tail worker logs
+```
+
+## LLM Context Files
+
+`.llm` files are structured documentation for LLM consumption (not rendered).
+
+| File                                         | Purpose                               |
+|----------------------------------------------|---------------------------------------|
+| `docs/user-flows.llm`                        | Route map, user journeys, data tables |
+| `src/routes/reference/tabs/*.content.llm`    | Grammar topics                        |
+| `src/routes/learn/phrases/content.llm`       | Phrase tabs                           |
+| `src/routes/learn/conversations/content.llm` | Conversation tabs                     |
+| `src/routes/learn/essentials/content.llm`    | Essentials subtabs                    |
+
+Read `docs/user-flows.llm` first when understanding app structure.
 
 ## Educational Design Principles
 
-### Greek First, English as Context
+**Greek first.** Present Greek prominently; English is context.
 
-This is a Greek learning app. Always present Greek prominently, with English as supporting context.
-
-```
-GOOD: με = me           (Greek first, English explains)
-BAD:  me | με | me      (Redundant, English-centric)
-```
-
-### Show Structure, Not Flat Lists
-
-Language has patterns. Present data in ways that reveal the underlying structure:
+**Show structure.** Paradigm tables reveal patterns:
 
 ```
-GOOD - Paradigm table showing relationships:
 ┌─────────┬───────────┬───────────┐
 │         │ Singular  │ Plural    │
 ├─────────┼───────────┼───────────┤
@@ -28,226 +104,32 @@ GOOD - Paradigm table showing relationships:
 │ 3rd f   │ την (her) │ τις       │
 │ 3rd n   │ το (it)   │ τα        │
 └─────────┴───────────┴───────────┘
-
-BAD - Flat grid hiding the pattern:
-┌────────┐ ┌────────┐ ┌────────┐
-│ με=me  │ │ σε=you │ │ τον=him│
-└────────┘ └────────┘ └────────┘
 ```
 
-The paradigm table shows:
-- 1st/2nd/3rd person progression (vertical)
-- Singular/plural relationship (horizontal)
-- Gender variations in 3rd person
-- Pattern similarities (με/μας, σε/σας)
+Not flat grids that hide relationships.
 
-### Avoid Redundancy
+**Avoid redundancy.** If two columns show the same info, remove one.
 
-If two columns contain the same information, remove one:
+**Examples show usage.** Context, not definitions:
 
 ```
-BAD:  | Person | Greek | English |
-      | my     | μου   | my      |  ← "Person" and "English" are identical
-
-GOOD: | Greek | English | Example |
-      | μου   | my      | το σπίτι μου |
+GOOD: μου = my → το σπίτι μου (my house)
+BAD:  μου = my → Example: my
 ```
 
-### Examples Show Usage, Not Definitions
+## PWA Layout
 
-Examples should demonstrate the word in context, not repeat the definition:
-
-```
-GOOD: μου = my
-      το σπίτι μου (my house)
-
-BAD:  μου = my
-      Example: my
-```
-
-### Concept Progression (Quick Reference Page)
-
-Order content by conceptual dependency, not alphabetically:
-
-1. **Cases** - The framework (WHO/WHAT/WHOSE)
-2. **Pronouns** - Most frequent words, demonstrate cases
-3. **Articles** - Same job as pronouns, but for nouns
-4. **Nouns** - How endings change by case
-5. **Prepositions** - Combine with articles/pronouns
-6. **Common Mistakes** - Reinforce with error pairs
-7. **Verbs** - Separate system (conjugation)
-8. **Fine-tuning** - The -ν rule, etc.
-
-## Code Style
-
-Code should be self-documenting. Comments should only explain complex or non-obvious logic - never narrate what code does.
-
-In route files, derive types from loader data via `Route.ComponentProps["loaderData"]` rather than manually defining them. This keeps types in sync with what the loader actually returns.
-
-Do not hardcode names in the codebase.
-
-Always communicate using the Queen's English (colour, favourite, etc.).
-
-## Makefile
-
-**ALWAYS check the Makefile before running ANY command.** Most operations have Make targets.
-
-## Database Commands
-
-**CRITICAL:** Always use the Makefile for database operations. Direct `pnpm` commands do NOT load `.env` variables.
-
-### Local Development (Docker libsql-server on port 8080)
-
-```bash
-make db-push      # Push schema to local database
-make db-seed      # Seed local database
-make db-setup     # Push schema and seed locally
-make db-studio    # Open Drizzle Studio (local)
-```
-
-### Production (Turso Cloud)
-
-```bash
-make prod-db-push     # Push schema to production
-make prod-db-seed     # Seed production database
-make prod-db-setup    # Push schema and seed production
-make prod-db-studio   # Open Drizzle Studio (production)
-```
-
-### Why This Matters
-
-The `src/db/index.ts` falls back to `http://127.0.0.1:8080` when `TURSO_DATABASE_URL` is not set:
-
-```typescript
-const client = createClient({
-  url: process.env.TURSO_DATABASE_URL || "http://127.0.0.1:8080",
-  authToken: process.env.TURSO_AUTH_TOKEN,
-});
-```
-
-Running `pnpm db:seed` directly will seed a local database, not Turso. The Makefile's `prod-*` targets source `.env` first:
-
-```makefile
-prod-db-seed:
-  set -a && . ./.env && set +a && pnpm db:seed
-```
-
-**ALWAYS do migrations via Drizzle using the Makefile commands.**
-
-## Deployment
-
-```bash
-make deploy       # Build and deploy to Cloudflare Workers
-make deploy-dry   # Dry run deployment
-make logs         # Tail Cloudflare Worker logs
-```
-
-## Architecture
-
-- **Cloudflare Workers:** Uses `context.db` from `entry.worker.ts` for database access
-- **Local Dev:** Falls back to direct import when `context.db` is unavailable
-- **Loaders pattern:** `const db = context?.db ?? (await import("../db")).db;`
-
-## UI Components
-
-### Directory Structure
-
-- **`src/components/*.tsx`** - Custom components (tailwind-variants)
-- **`src/components/ui/*.tsx`** - ShadCN components (class-variance-authority)
-
-### Custom Components
-
-Import from `@/components`:
-
-```typescript
-import { Card, Badge, MonoText, SearchInput, Table } from "@/components";
-```
-
-### ShadCN Components
-
-**Always use the CLI** - never hand-write ShadCN components:
-
-```bash
-pnpm dlx shadcn@latest add button card dialog
-```
-
-Import from `@/components/ui/<component>`:
-
-```typescript
-import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-```
-
-### Path Alias
-
-The `@/` alias maps to `./src/`. Configured in `tsconfig.json` and `vite.config.ts`.
-
-## PWA Viewport Pattern
-
-The app uses a fixed-position shell where scrolling happens inside `.app-main`. The root layout (`src/root.tsx`) wraps content in:
+Fixed shell with scrolling inside `.app-main`:
 
 ```tsx
-<div className="app-shell bg-cream">
-  <main className="app-main">
-    {/* content */}
-  </main>
-  <nav className="fixed bottom-0 ...">
-    {/* mobile nav */}
-  </nav>
+<div className="app-shell">
+  <main className="app-main">{/* scrollable */}</main>
+  <nav className="fixed bottom-0">{/* mobile nav */}</nav>
 </div>
 ```
 
-CSS classes in `src/index.css`:
+CSS classes (in `src/index.css`):
+
 - `.app-shell` - fixed, inset-0, overflow hidden
-- `.app-main` - flex-1, overflow-y auto (the scroll container)
+- `.app-main` - flex-1, overflow-y auto (scroll container)
 - `.safe-area-pb` - padding for mobile safe area
-
-## Delegation Pattern
-
-When delegating to subagents, **do research first** then provide specific context:
-
-**Good delegation:**
-
-```
-Implement the verb conjugation explorer.
-
-FILES: Create src/routes/explore/words/verbs.$verbId/route.tsx, modify src/routes.ts
-PATTERN: Follow src/routes/explore/words/nouns/route.tsx (detail view layout)
-DATA: db.query.vocabulary, db.query.verbConjugations
-TYPES: Vocabulary, VerbConjugation from @/db/types
-```
-
-**Bad:** "Create a verb detail page. Look at existing code."
-
-The bad version wastes tokens having agents explore what you already know.
-
-## Route Types
-
-**Default to page routes** (loader + action + component). Use `<Form>` and `useFetcher`.
-
-**Resource routes** (no component) only for:
-
-- Dynamic client fetches (polling, infinite scroll)
-- Webhooks, health checks
-- Background job triggers
-
-## Gotchas
-
-**Route types are generated** - If you see type errors after changing loaders/actions, regenerate with `pnpm react-router typegen`. Types live in `.react-router/types/`.
-
-## Git Operations
-
-- **Prefer `git mv`** over recreating files - preserves history and saves tokens
-- **Run `rm`/`git rm`** only after all other tasks are completed and verified
-- **Never commit** without explicit user approval
-
-## Linting
-
-After completing a task, run:
-
-```bash
-pnpm lint:fix
-pnpm lint:unused
-pnpm lint:types
-pnpm lint:dupes
-```
