@@ -1,0 +1,266 @@
+# Essentials Content Map
+
+Building block vocabulary: numbers, colours, position, frequency, and time expressions.
+
+## Route Structure
+
+```
+/learn/essentials           → Landing page (5 section cards)
+/learn/essentials/:subtab   → Individual subtab content
+```
+
+Subtabs: numbers, position, time, frequency, colours
+
+## Data Source
+
+DB query via `getEssentialsData()` in `data.server.ts`:
+- `getVocabBySection("reference")` - All reference vocabulary
+
+Content grouped by tags:
+- `number` → numbers subtab
+- `position` → position subtab
+- `time-of-day`, `days-of-week`, `months` → time subtab
+- `frequency` → frequency subtab
+- `color` → colours subtab
+
+## Subtab: numbers
+
+<subtab id="numbers" route="/learn/essentials/numbers">
+<purpose>Count, tell time, give prices, express ages</purpose>
+<file>subtabs/numbers.tsx</file>
+
+<section name="Units & Tens" colorScheme="ocean">
+Paired layout showing 0-9 alongside 10-90 to reveal derivation patterns.
+Highlights stem connections (τρι-, πεν-, εξ-) where tens derive from units.
+</section>
+
+<section name="Teens" colorScheme="honey">
+The δεκα- family (10-19) with pattern highlighting.
+Pattern: δεκα + unit (13-19).
+Exceptions: έντεκα (11), δώδεκα (12) are irregular.
+</section>
+
+<section name="Combining" colorScheme="olive">
+Building 21-99: tens + units as separate words.
+Examples: τριάντα δύο (32), πενήντα πέντε (55), ενενήντα εννέα (99).
+</section>
+
+<section name="Usage" colorScheme="terracotta">
+Context examples:
+- Telling time: στις τρεις, στις δέκα και μισή
+- Money: πέντε ευρώ, δύο κιλά
+- Ages: είμαι τριάντα δύο χρονών
+
+Gender agreement callout: 1, 3, 4 change form by gender.
+Grid showing ένας/μία/ένα, τρεις/τρεις/τρία, τέσσερις/τέσσερις/τέσσερα.
+Note: Numbers 2 and 5+ don't change for gender.
+</section>
+</subtab>
+
+## Subtab: position
+
+<subtab id="position" route="/learn/essentials/position">
+<purpose>Give and understand directions, describe locations</purpose>
+<file>subtabs/position.tsx</file>
+
+<section name="Opposites" colorScheme="ocean">
+Paired grid showing position words as opposites:
+- αριστερά / δεξιά (left/right)
+- πάνω / κάτω (up/down)
+- μέσα / έξω (inside/outside)
+- μπροστά / πίσω (front/back)
+- εδώ / εκεί (here/there)
+- κοντά / μακριά (near/far)
+
+Pattern callout: Greek pairs direction verbs with position words.
+Examples: μπες μέσα, βγες έξω, ανέβα πάνω, κατέβα κάτω.
+</section>
+
+<section name="Giving Directions" colorScheme="terracotta">
+Navigation commands:
+- στρίψε αριστερά/δεξιά (turn left/right)
+- πήγαινε ευθεία (go straight)
+- γύρισε πίσω (turn around)
+- έλα μέσα (come inside)
+
+Key verbs: στρίψε (turn), πήγαινε (go), έλα (come).
+</section>
+
+<section name="Relative Position" colorScheme="olive">
+Describing where things are:
+- μπροστά από την τράπεζα (in front of the bank)
+- κοντά στο σταθμό (near the station)
+- απέναντι από την εκκλησία (across from the church)
+
+Preposition patterns:
+- μπροστά / πίσω / μακριά + από
+- κοντά / μέσα + σε
+- ανάμεσα + σε
+- απέναντι + από
+
+Note: κοντά στο = κοντά + σε + το (contracted).
+</section>
+</subtab>
+
+## Subtab: time
+
+<subtab id="time" route="/learn/essentials/time">
+<purpose>Times of day and scheduling</purpose>
+<file>subtabs/time.tsx</file>
+
+<section name="Times of Day" colorScheme="honey" tag="time-of-day">
+Vocabulary sorted by time progression (morning → night).
+Each item shows Greek, English, and optional time range.
+
+Pattern callout: το + time of day (neuter).
+Examples: στις δύο το μεσημέρι, στις οκτώ το βράδυ.
+</section>
+
+<section name="Days of the Week" colorScheme="ocean" tag="days-of-week">
+Monday through Sunday in order.
+
+Grammar callout: Days use feminine accusative.
+- την Τρίτη (on Tuesday - specific)
+- κάθε Τρίτη (every Tuesday - no article)
+- την περασμένη Τρίτη (last Tuesday)
+
+Note: την = accusative of η (feminine).
+</section>
+
+<section name="Months of the Year" colorScheme="olive" tag="months">
+January through December in order.
+
+Grammar callout: Months use masculine accusative.
+- τον Ιούλιο (in July)
+- τον περασμένο Μάρτιο (last March)
+- τον επόμενο μήνα (next month)
+
+Note: τον = accusative of ο (masculine).
+</section>
+</subtab>
+
+## Subtab: frequency
+
+<subtab id="frequency" route="/learn/essentials/frequency">
+<purpose>How often things happen</purpose>
+<file>subtabs/frequency.tsx</file>
+
+<section name="Frequency Spectrum" colorScheme="olive">
+Visual spectrum from ποτέ (0%) to πάντα (100%):
+ποτέ → σχεδόν ποτέ → σπάνια → πότε πότε → κάπου κάπου → καμιά φορά → μερικές φορές → συχνά → πολλές φορές → συνήθως → σχεδόν πάντα → πάντα
+
+Each adverb shown with progress bar indicating approximate frequency.
+</section>
+
+<section name="Watch the Accent" colorScheme="honey">
+Critical distinction:
+- ποτέ (accent on ε) = never
+- πότε (accent on ο) = when?
+
+Grammar pattern: ποτέ δεν + verb = never do X.
+Example: Ποτέ δεν τρώω κρέας. (I never eat meat.)
+</section>
+
+<section name="Which 'Sometimes'?" colorScheme="ocean">
+Decision guide for the four "sometimes" options:
+- καμιά φορά - Once in a while, unexpectedly
+- μερικές φορές - Several times, countable occurrences
+- πότε πότε - Now and then, neutral/standard
+- κάπου κάπου - Here and there, casual/colloquial
+
+Each with example sentence.
+</section>
+
+<section name="Usage" colorScheme="terracotta">
+Example sentences showing word order.
+Pattern: Frequency adverb typically comes before the verb.
+Examples: Ποτέ δεν πίνω καφέ. Συνήθως ξυπνάω στις 7.
+</section>
+</subtab>
+
+## Subtab: colours
+
+<subtab id="colours" route="/learn/essentials/colours">
+<purpose>Describe what you see</purpose>
+<file>subtabs/colours.tsx</file>
+
+<section name="Basic Colours" colorScheme="ocean">
+Paired grid with colour swatches:
+- άσπρο / μαύρο (white/black)
+- κόκκινο / πορτοκαλί (red/orange)
+- κίτρινο / πράσινο (yellow/green)
+- μπλε / γαλάζιο (blue/sky blue)
+- μωβ / ροζ (purple/pink)
+- καφέ / μπεζ (brown/beige)
+- γκρι (grey)
+- χρυσό / ασημί (gold/silver)
+</section>
+
+<section name="Modifiers" colorScheme="honey">
+Shade descriptors:
+- σκούρο (dark)
+- ανοιχτό (light)
+- έντονο (vivid/intense)
+- απαλό (soft/pale)
+- φωτεινό (bright)
+
+Examples with swatches: σκούρο μπλε, ανοιχτό πράσινο, απαλό ροζ.
+</section>
+
+<section name="Usage" colorScheme="terracotta">
+Sentence examples:
+- θέλω το κόκκινο (I want the red one)
+- η κόκκινη τσάντα (the red bag)
+- το μπλε αυτοκίνητο (the blue car)
+
+Agreement callout - two categories:
+
+Indeclinable (don't change form):
+μπλε, μωβ, ροζ, γκρι, καφέ, πορτοκαλί, μπεζ, ασημί
+
+Declinable (change like adjectives):
+- άσπρος, -η, -ο (white)
+- μαύρος, -η, -ο (black)
+- κόκκινος, -η, -ο (red)
+- πράσινος, -η, -ο (green)
+- κίτρινος, -η, -ο (yellow)
+- γαλάζιος, -α, -ο (sky blue)
+- χρυσός, -ή, -ό (gold/golden)
+</section>
+</subtab>
+
+## Tag to Subtab Mapping
+
+```
+Tag Slug       → Subtab     → Section
+──────────────────────────────────────
+number         → numbers    → Units & Tens, Teens
+position       → position   → Opposites
+time-of-day    → time       → Times of Day
+days-of-week   → time       → Days of the Week
+months         → time       → Months of the Year
+frequency      → frequency  → Frequency Spectrum
+color          → colours    → Basic Colours
+```
+
+## Content Guidelines
+
+When adding essentials vocabulary:
+
+1. **Tag appropriately** - Use existing reference tags
+2. **Include metadata** for special displays:
+   - `number`: needs `numericValue` for sorting
+   - `time-of-day`: needs `timeRange` for display
+3. **Use British spelling** - colours, not colors
+4. **Greek first** - Show Greek prominently with English as context
+5. **Reveal patterns** - Use paired layouts where opposites exist
+
+## Verification
+
+- [x] Numbers show unit/ten derivation patterns
+- [x] Position words displayed as opposite pairs
+- [x] Time vocabulary sorted chronologically
+- [x] Frequency spectrum shows visual progression
+- [x] Colours include swatches for visual reference
+- [x] Grammar notes explain case usage (accusative for days/months)
+- [x] Agreement patterns documented (declinable vs indeclinable)
