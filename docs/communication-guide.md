@@ -38,7 +38,7 @@ How to surface features and why they work.
 
 **What:** 8pm reminder if you haven't practiced and have an active streak.
 
-**Where:** `src/components/PushNotificationToggle.tsx`, `wrangler.toml` cron
+**Where:** `src/lib/push-notifications.ts`, `wrangler.toml` cron
 
 **Why it works:**
 - Fogg Behavior Model: Trigger + Ability + Motivation = Behavior
