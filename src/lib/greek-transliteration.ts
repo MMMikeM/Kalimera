@@ -17,7 +17,7 @@ const DIGRAPH_MAP: [RegExp, string][] = [
 	[/ου/gi, "ou"],
 	[/αι/gi, "e"],
 	[/ει/gi, "i"],
-	[/οι/gi, "i"],
+	[/οι/gi, "oi"],
 	[/υι/gi, "i"],
 
 	// αυ/ευ - voiced before vowels/voiced consonants, unvoiced otherwise
@@ -142,6 +142,13 @@ const stripGreekArticle = (greek: string): string => {
  * matchPhonetic("to kalokeri", "το καλοκαίρι")
  * // { isCorrect: true, ... }
  */
+// Collapse spelling-faithful digraphs to their phonetic equivalents
+// so both "oi adelfes" and "i adelfes" are accepted
+const toPhoneticCanonical = (text: string): string => text.replace(/oi/g, "i");
+
+const phoneticEquals = (a: string, b: string): boolean =>
+	a === b || toPhoneticCanonical(a) === toPhoneticCanonical(b);
+
 export const matchPhonetic = (
 	userInput: string,
 	correctGreek: string,
@@ -149,8 +156,7 @@ export const matchPhonetic = (
 	const userPhonetic = normalizeInput(userInput);
 	const correctPhonetic = greekToPhonetic(correctGreek);
 
-	// Check exact match first
-	if (userPhonetic === correctPhonetic) {
+	if (phoneticEquals(userPhonetic, correctPhonetic)) {
 		return {
 			isCorrect: true,
 			userPhonetic,
@@ -163,7 +169,7 @@ export const matchPhonetic = (
 	const greekWithoutArticle = stripGreekArticle(correctGreek);
 	if (greekWithoutArticle !== correctGreek) {
 		const phoneticWithoutArticle = greekToPhonetic(greekWithoutArticle);
-		if (userPhonetic === phoneticWithoutArticle) {
+		if (phoneticEquals(userPhonetic, phoneticWithoutArticle)) {
 			return {
 				isCorrect: true,
 				userPhonetic,
