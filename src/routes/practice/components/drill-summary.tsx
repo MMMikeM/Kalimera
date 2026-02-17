@@ -7,6 +7,7 @@ import {
 	XCircle,
 } from "lucide-react";
 import type React from "react";
+import { useMemo } from "react";
 import { Card } from "@/components/Card";
 import { MonoText } from "@/components/MonoText";
 import { NotificationAsk } from "@/components/NotificationAsk";
@@ -71,8 +72,10 @@ const DrillSummary: React.FC<DrillSummaryProps> = ({
 }) => {
 	const percentage = Math.round((stats.correct / stats.total) * 100);
 	const avgTime = (stats.avgResponseTime / 1000).toFixed(1);
-	const { message: encouragement, icon: encouragementIcon } =
-		getEncouragementMessage(percentage);
+	const { message: encouragement, icon: encouragementIcon } = useMemo(
+		() => getEncouragementMessage(percentage),
+		[percentage],
+	);
 
 	const missedAttempts = stats.attempts.filter((a) => !a.isCorrect);
 
