@@ -2,6 +2,7 @@ import { OBJECT_PRONOUNS, POSSESSIVE_PRONOUNS } from "@/constants/pronouns";
 import { VERB_CONJUGATIONS } from "@/constants/verbs";
 import type { DeclensionPattern } from "@/db.server/enums";
 import { declineNoun } from "@/lib/noun-declension";
+import { generateArticleQuestions } from "./article-generator";
 
 export interface DrillQuestion {
 	id: string;
@@ -9,6 +10,7 @@ export interface DrillQuestion {
 	correctGreek: string;
 	timeLimit?: number;
 	hint?: string;
+	targetMs?: number; // future weak-spot targeting
 }
 
 export type QuestionCategory = "pronouns" | "articles" | "verbs" | "nouns";
@@ -112,36 +114,6 @@ const generateVerbQuestions = (): DrillQuestion[] => {
 			id: `speed-vphrase-${i}`,
 			prompt: phrase.english,
 			correctGreek: phrase.greek,
-			timeLimit: 4500,
-		});
-	}
-
-	return questions;
-};
-
-const generateArticleQuestions = (): DrillQuestion[] => {
-	const questions: DrillQuestion[] = [];
-
-	const articles = [
-		{ english: "the father", greek: "ο πατέρας" },
-		{ english: "the mother", greek: "η μητέρα" },
-		{ english: "the child", greek: "το παιδί" },
-		{ english: "the friends", greek: "οι φίλοι" },
-		{ english: "the sisters", greek: "οι αδελφές" },
-		{ english: "the children", greek: "τα παιδιά" },
-		{ english: "I see the father", greek: "Βλέπω τον πατέρα" },
-		{ english: "I see the mother", greek: "Βλέπω την μητέρα" },
-		{ english: "I see the child", greek: "Βλέπω το παιδί" },
-		{ english: "I want the coffee", greek: "Θέλω τον καφέ" },
-		{ english: "I open the door", greek: "Ανοίγω την πόρτα" },
-		{ english: "I read the book", greek: "Διαβάζω το βιβλίο" },
-	];
-
-	for (const [i, art] of articles.entries()) {
-		questions.push({
-			id: `speed-art-${i}`,
-			prompt: art.english,
-			correctGreek: art.greek,
 			timeLimit: 4500,
 		});
 	}
