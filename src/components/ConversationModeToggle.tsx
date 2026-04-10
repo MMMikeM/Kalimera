@@ -1,4 +1,4 @@
-import { BookOpen, Eye, MessageSquare } from "lucide-react";
+import { BookOpen, MessageSquare } from "lucide-react";
 import type React from "react";
 import { cn } from "@/lib/utils";
 import type { ConversationMode } from "./DialogueExchange";
@@ -20,12 +20,6 @@ const modes: {
 		label: "Study",
 		icon: <BookOpen size={16} />,
 		description: "See Greek with English translations",
-	},
-	{
-		value: "practice",
-		label: "Recall",
-		icon: <Eye size={16} />,
-		description: "English hidden - tap to reveal",
 	},
 	{
 		value: "roleplay",
@@ -57,7 +51,7 @@ export const ConversationModeToggle: React.FC<ConversationModeToggleProps> = ({
 						? "bg-white text-stone-800 shadow-sm"
 						: "text-stone-600 hover:text-stone-800 hover:bg-stone-50",
 				)}
-				title={m.description}
+				aria-label={`${m.label}: ${m.description}`}
 			>
 				{m.icon}
 				{m.label}

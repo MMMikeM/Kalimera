@@ -176,10 +176,11 @@ export default function ConversationsLayout() {
 	const pathSegments = location.pathname.split("/").filter(Boolean);
 	const activeTab = pathSegments[2] || "arriving";
 
-	const [mode, setMode] = usePersistedState<ConversationMode>(
+	const [rawMode, setMode] = usePersistedState<string>(
 		"conversation-mode",
 		"read",
 	);
+	const mode: ConversationMode = rawMode === "roleplay" ? "roleplay" : "read";
 
 	return (
 		<div className="space-y-4">
