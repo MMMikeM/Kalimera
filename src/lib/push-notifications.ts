@@ -2,6 +2,7 @@
  * Push notification sending utilities for Cloudflare Workers
  */
 import {
+	type PushPayload,
 	type PushSubscriptionData,
 	sendPushNotification,
 	type VapidConfig,
@@ -36,12 +37,18 @@ export const sendNotification = async (
 	title: string,
 	body: string,
 	vapid: VapidConfig,
-	url?: string,
+	options: { url?: string; userId?: number } = {},
 ): Promise<boolean> => {
 	try {
 		return await sendPushNotification(
 			subscription,
-			{ title, body, url },
+			{
+				title,
+				body,
+				url: options.url,
+				userId: options.userId,
+				quickSessionUrl: "/practice/speed?size=quick",
+			} as PushPayload & { userId?: number; quickSessionUrl?: string },
 			vapid,
 			{ ttl: 86400 }, // 24 hours
 		);
@@ -113,7 +120,7 @@ export const sendPracticeReminders = async (
 			"Quick 2-minute review?",
 			"Your review queue is ready.",
 			vapid,
-			"/practice",
+			{ url: "/practice", userId: sub.userId },
 		);
 
 		if (success) {
@@ -213,7 +220,7 @@ export const sendReviewDueNotifications = async (
 			`${count} word${count > 1 ? "s" : ""} ready for review!`,
 			"Spaced repetition works best with timely reviews.",
 			vapid,
-			"/practice/review",
+			{ url: "/practice/review", userId: sub.userId },
 		);
 
 		if (success) {
@@ -403,7 +410,7 @@ export const sendStreakWarningNotifications = async (
 			title,
 			body,
 			vapid,
-			"/",
+			{ url: "/", userId: sub.userId },
 		);
 
 		if (success) {
