@@ -11,17 +11,11 @@ export type UserMilestone = Pick<
 export const getUserMilestones = async (
 	userId: number,
 ): Promise<UserMilestone[]> => {
-	const results = await db
-		.select({
-			milestone: milestonesAchieved.milestone,
-			achievedAt: milestonesAchieved.achievedAt,
-			streakAtAchievement: milestonesAchieved.streakAtAchievement,
-		})
-		.from(milestonesAchieved)
-		.where(eq(milestonesAchieved.userId, userId))
-		.orderBy(milestonesAchieved.milestone);
-
-	return results;
+	return db.query.milestonesAchieved.findMany({
+		where: { userId },
+		columns: { milestone: true, achievedAt: true, streakAtAchievement: true },
+		orderBy: { milestone: "asc" },
+	});
 };
 
 export const recordMilestone = async (
