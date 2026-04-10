@@ -9,7 +9,7 @@ import {
 	Sparkles,
 } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useFetcher } from "react-router";
 import { FreezeIndicator } from "@/components/FreezeIndicator";
 import {
 	getItemsDueTomorrow,
@@ -17,6 +17,10 @@ import {
 	getPracticeStats,
 	getUserById,
 } from "@/db.server/queries/practice";
+import {
+	getPushSubscriptionByUserId,
+	setNotificationMode,
+} from "@/db.server/queries/push-notifications";
 import {
 	calculateDaysUntilNextFreeze,
 	type FreezeStatus,
@@ -70,6 +74,7 @@ export async function loader({ request }: Route.LoaderArgs) {
 			daysUntilNextFreeze: null,
 			itemsDueTomorrow: 0,
 			daysSinceLastPractice: null,
+			taperOfferPending: false,
 		};
 	}
 
@@ -114,6 +119,8 @@ export async function loader({ request }: Route.LoaderArgs) {
 		? calculateDaysUntilNextFreeze(stats.streak, user)
 		: 7;
 
+	const pushSub = await getPushSubscriptionByUserId(userId);
+
 	return {
 		userId,
 		stats,
@@ -123,7 +130,27 @@ export async function loader({ request }: Route.LoaderArgs) {
 		daysUntilNextFreeze,
 		itemsDueTomorrow,
 		daysSinceLastPractice,
+		taperOfferPending: pushSub?.taperOfferPending ?? false,
 	};
+}
+
+export async function action({ request }: Route.ActionArgs) {
+	const auth = getAuthSession(request);
+	const userId = auth?.userId ?? null;
+	if (!userId) return { error: "Unauthorised" };
+
+	const formData = await request.formData();
+	const intent = formData.get("intent") as string;
+
+	if (intent === "setNotificationMode") {
+		const mode = formData.get("mode") as string;
+		if (mode === "adaptive" || mode === "always") {
+			await setNotificationMode(userId, mode);
+		}
+		return { ok: true };
+	}
+
+	return { error: "Unknown intent" };
 }
 
 // Practice CTA - Primary action when items are due
@@ -144,25 +171,25 @@ const PracticeCTA = ({
 		<div className="space-y-3">
 			<Link
 				to="/practice"
-				className="block rounded-2xl p-6 bg-linear-to-br from-honey-100 to-honey-200 border-2 border-honey-400 shadow-md hover:shadow-lg transition-all hover:scale-[1.01]"
+				className="block rounded-2xl border-2 border-honey-400 bg-linear-to-br from-honey-100 to-honey-200 p-6 shadow-md transition-all hover:scale-[1.01] hover:shadow-lg"
 			>
 				<div className="flex items-center justify-between">
 					<div>
 						<p className="text-3xl font-bold text-honey-text">
 							{dueCount} items due
 						</p>
-						<p className="text-stone-600 mt-1">~{estimatedMinutes} min</p>
+						<p className="mt-1 text-stone-600">~{estimatedMinutes} min</p>
 					</div>
-					<div className="flex items-center justify-center w-14 h-14 rounded-full bg-honey-400 text-white shadow-sm">
-						<Play className="w-6 h-6 ml-0.5" />
+					<div className="flex h-14 w-14 items-center justify-center rounded-full bg-honey-400 text-white shadow-sm">
+						<Play className="ml-0.5 h-6 w-6" />
 					</div>
 				</div>
-				<div className="mt-4 py-3 rounded-xl bg-white/60 text-center font-semibold text-honey-text">
+				<div className="mt-4 rounded-xl bg-white/60 py-3 text-center font-semibold text-honey-text">
 					Start Practice
 				</div>
 				{itemsDueTomorrow > 0 && (
-					<div className="flex items-center justify-center gap-2 mt-3 text-sm text-stone-500">
-						<Calendar className="w-4 h-4" />
+					<div className="mt-3 flex items-center justify-center gap-2 text-sm text-stone-500">
+						<Calendar className="h-4 w-4" />
 						<span>
 							Tomorrow: {itemsDueTomorrow}{" "}
 							{itemsDueTomorrow === 1 ? "item" : "items"}
@@ -174,7 +201,7 @@ const PracticeCTA = ({
 			{showQuickOption && (
 				<Link
 					to={`/practice/review?limit=${QUICK_REVIEW_COUNT}`}
-					className="block rounded-xl p-4 bg-stone-50 border border-stone-200 hover:bg-stone-100 transition-colors text-center"
+					className="block rounded-xl border border-stone-200 bg-stone-50 p-4 text-center transition-colors hover:bg-stone-100"
 				>
 					<span className="text-stone-600">Short on time? </span>
 					<span className="font-medium text-stone-800">
@@ -229,19 +256,19 @@ const LapsedUserCTA = ({
 	const { greeting, message, emphasis } = getMessage();
 
 	return (
-		<div className="rounded-2xl bg-linear-to-brrom-ocean-50 to-ocean-100 border border-ocean-200 p-6">
-			<p className="text-2xl font-serif text-ocean-text">{greeting}</p>
-			<p className="text-stone-600 mt-1">{message}</p>
-			<p className="text-stone-700 font-medium mt-1">{emphasis}</p>
+		<div className="bg-linear-to-brrom-ocean-50 rounded-2xl border border-ocean-200 to-ocean-100 p-6">
+			<p className="font-serif text-2xl text-ocean-text">{greeting}</p>
+			<p className="mt-1 text-stone-600">{message}</p>
+			<p className="mt-1 font-medium text-stone-700">{emphasis}</p>
 
 			<Link
 				to={`/practice/review?limit=${QUICK_REVIEW_COUNT}`}
-				className="block mt-5 py-3 rounded-xl bg-ocean text-white text-center font-semibold hover:bg-ocean-dark transition-colors"
+				className="mt-5 block rounded-xl bg-ocean py-3 text-center font-semibold text-white transition-colors hover:bg-ocean-dark"
 			>
 				Start with just {QUICK_REVIEW_COUNT} items
 			</Link>
 
-			<p className="text-center text-sm text-stone-500 mt-3">
+			<p className="mt-3 text-center text-sm text-stone-500">
 				{dueCount} items total (~{Math.ceil(dueCount * 0.25)} min)
 			</p>
 		</div>
@@ -256,18 +283,18 @@ const AllCaughtUpCTA = ({
 	newAvailable: number;
 	itemsDueTomorrow: number;
 }) => (
-	<div className="text-center py-8 rounded-2xl bg-olive-50 border border-olive-200">
-		<div className="mx-auto w-16 h-16 rounded-full bg-olive-100 flex items-center justify-center mb-4">
-			<Check className="w-8 h-8 text-olive" />
+	<div className="rounded-2xl border border-olive-200 bg-olive-50 py-8 text-center">
+		<div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-olive-100">
+			<Check className="h-8 w-8 text-olive" />
 		</div>
-		<p className="text-2xl font-serif text-olive greek-text">Μπράβο!</p>
-		<p className="text-lg text-stone-700 mt-1">All caught up</p>
-		<p className="text-sm text-stone-500 mt-2">
+		<p className="greek-text font-serif text-2xl text-olive">Μπράβο!</p>
+		<p className="mt-1 text-lg text-stone-700">All caught up</p>
+		<p className="mt-2 text-sm text-stone-500">
 			You've reviewed all due items. Check back later or learn something new.
 		</p>
 		{itemsDueTomorrow > 0 && (
-			<div className="flex items-center justify-center gap-2 mt-4 text-sm text-stone-600">
-				<Calendar className="w-4 h-4 text-ocean" />
+			<div className="mt-4 flex items-center justify-center gap-2 text-sm text-stone-600">
+				<Calendar className="h-4 w-4 text-ocean" />
 				<span>
 					{itemsDueTomorrow} {itemsDueTomorrow === 1 ? "item" : "items"} due
 					tomorrow
@@ -277,9 +304,9 @@ const AllCaughtUpCTA = ({
 		{newAvailable > 0 && (
 			<Link
 				to="/practice/vocabulary"
-				className="inline-flex items-center gap-2 mt-6 px-6 py-3 rounded-xl bg-ocean-100 border border-ocean-300 text-ocean font-medium hover:bg-ocean-200 transition-colors"
+				className="mt-6 inline-flex items-center gap-2 rounded-xl border border-ocean-300 bg-ocean-100 px-6 py-3 font-medium text-ocean transition-colors hover:bg-ocean-200"
 			>
-				<Sparkles className="w-4 h-4" />
+				<Sparkles className="h-4 w-4" />
 				Learn {Math.min(5, newAvailable)} new items
 			</Link>
 		)}
@@ -288,21 +315,21 @@ const AllCaughtUpCTA = ({
 
 // First time user state
 const FirstTimeUserCTA = () => (
-	<div className="text-center py-8 rounded-2xl bg-cream border border-stone-200">
-		<p className="text-3xl font-serif text-navy greek-text mb-2">
+	<div className="rounded-2xl border border-stone-200 bg-cream py-8 text-center">
+		<p className="greek-text mb-2 font-serif text-3xl text-navy">
 			Καλώς ήρθες!
 		</p>
-		<p className="text-lg text-stone-600 mb-6">
+		<p className="mb-6 text-lg text-stone-600">
 			Let's learn your first Greek words.
 		</p>
 		<Link
 			to="/practice/vocabulary"
-			className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-terracotta text-white font-semibold shadow-md hover:bg-terracotta-dark transition-colors"
+			className="inline-flex items-center gap-2 rounded-xl bg-terracotta px-8 py-4 font-semibold text-white shadow-md transition-colors hover:bg-terracotta-dark"
 		>
 			Begin Learning
-			<ArrowRight className="w-5 h-5" />
+			<ArrowRight className="h-5 w-5" />
 		</Link>
-		<p className="text-sm text-stone-500 mt-4">~2 min to get started</p>
+		<p className="mt-4 text-sm text-stone-500">~2 min to get started</p>
 	</div>
 );
 
@@ -354,11 +381,11 @@ const DailyPhrase = () => {
 
 	return (
 		<div className="rounded-2xl border border-stone-200 bg-white p-5">
-			<p className="text-xs uppercase tracking-widest text-stone-400 mb-4">
+			<p className="mb-4 text-xs tracking-widest text-stone-400 uppercase">
 				Today's Phrase
 			</p>
 
-			<p className="text-lg text-stone-700 mb-4">"{phrase?.english}"</p>
+			<p className="mb-4 text-lg text-stone-700">"{phrase?.english}"</p>
 
 			<button
 				type="button"
@@ -366,18 +393,18 @@ const DailyPhrase = () => {
 				disabled={revealed}
 				className={`w-full rounded-xl p-4 transition-all ${
 					!revealed
-						? "border-2 border-dashed border-terracotta-300 bg-terracotta-50 hover:bg-terracotta-100 cursor-pointer"
-						: "bg-stone-50 border border-stone-200"
+						? "cursor-pointer border-2 border-dashed border-terracotta-300 bg-terracotta-50 hover:bg-terracotta-100"
+						: "border border-stone-200 bg-stone-50"
 				}`}
 			>
 				{!revealed ? (
-					<p className="text-terracotta font-medium">Tap to reveal Greek</p>
+					<p className="font-medium text-terracotta">Tap to reveal Greek</p>
 				) : (
 					<div>
-						<p className="text-2xl font-serif text-navy greek-text">
+						<p className="greek-text font-serif text-2xl text-navy">
 							{phrase?.greek}
 						</p>
-						<p className="text-sm text-stone-500 italic mt-1">
+						<p className="mt-1 text-sm text-stone-500 italic">
 							lit. "{phrase?.literal}"
 						</p>
 					</div>
@@ -388,7 +415,7 @@ const DailyPhrase = () => {
 				<button
 					type="button"
 					onClick={() => setShowGrammar(!showGrammar)}
-					className="mt-3 flex items-center gap-1 text-sm text-ocean hover:text-ocean-dark transition-colors"
+					className="mt-3 flex items-center gap-1 text-sm text-ocean transition-colors hover:text-ocean-dark"
 				>
 					Why this works
 					{showGrammar ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
@@ -396,7 +423,7 @@ const DailyPhrase = () => {
 			)}
 
 			{showGrammar && (
-				<div className="mt-3 p-3 bg-ocean-50 rounded-lg border border-ocean-200">
+				<div className="mt-3 rounded-lg border border-ocean-200 bg-ocean-50 p-3">
 					<p className="text-sm text-ocean-text">{phrase?.grammar}</p>
 				</div>
 			)}
@@ -419,8 +446,8 @@ const WeekStreak = ({
 
 	return (
 		<div className="rounded-2xl border border-stone-200 bg-white p-5">
-			<p className="text-sm font-medium text-stone-600 mb-3">This Week</p>
-			<div className="flex gap-2 justify-between">
+			<p className="mb-3 text-sm font-medium text-stone-600">This Week</p>
+			<div className="flex justify-between gap-2">
 				{DAYS.map((day, i) => {
 					const isToday = i === mondayOffset;
 					const isPast = i < mondayOffset;
@@ -448,9 +475,9 @@ const WeekStreak = ({
 							<span className="text-xs text-stone-400">{day}</span>
 							<div className={className}>
 								{(isPast || (isToday && todayPracticed)) && didPractice ? (
-									<Check className="w-4 h-4" />
+									<Check className="h-4 w-4" />
 								) : isToday && !todayPracticed ? (
-									<span className="w-2 h-2 rounded-full bg-current" />
+									<span className="h-2 w-2 rounded-full bg-current" />
 								) : null}
 							</div>
 						</div>
@@ -470,11 +497,11 @@ const StatsSummary = ({
 	totalLearned: number;
 }) => (
 	<div className="flex gap-3">
-		<div className="flex-1 rounded-xl bg-olive-50 border border-olive-200 p-4 text-center">
+		<div className="flex-1 rounded-xl border border-olive-200 bg-olive-50 p-4 text-center">
 			<p className="text-2xl font-bold text-olive">{itemsMastered}</p>
 			<p className="text-xs text-stone-500">Mastered</p>
 		</div>
-		<div className="flex-1 rounded-xl bg-ocean-50 border border-ocean-200 p-4 text-center">
+		<div className="flex-1 rounded-xl border border-ocean-200 bg-ocean-50 p-4 text-center">
 			<p className="text-2xl font-bold text-ocean">{totalLearned}</p>
 			<p className="text-xs text-stone-500">Learning</p>
 		</div>
@@ -491,12 +518,25 @@ export default function DashboardRoute({ loaderData }: Route.ComponentProps) {
 		daysUntilNextFreeze,
 		itemsDueTomorrow,
 		daysSinceLastPractice,
+		taperOfferPending,
 	} = loaderData;
+
+	const taperFetcher = useFetcher();
+
+	const handleTaperResponse = (mode: "reduce" | "always") => {
+		taperFetcher.submit(
+			{
+				intent: "setNotificationMode",
+				mode: mode === "reduce" ? "adaptive" : "always",
+			},
+			{ method: "POST" },
+		);
+	};
 
 	if (!userId) {
 		return (
-			<div className="flex items-center justify-center min-h-[50vh]">
-				<span className="text-2xl font-serif text-terracotta">καλημέρα</span>
+			<div className="flex min-h-[50vh] items-center justify-center">
+				<span className="font-serif text-2xl text-terracotta">καλημέρα</span>
 			</div>
 		);
 	}
@@ -539,9 +579,40 @@ export default function DashboardRoute({ loaderData }: Route.ComponentProps) {
 	};
 
 	return (
-		<div className="pb-8 space-y-6">
+		<div className="space-y-6 pb-8">
 			{/* Primary CTA Section */}
 			<section>{renderCTA()}</section>
+
+			{/* Taper offer — shown when user consistently practises before notification fires */}
+			{taperOfferPending &&
+				taperFetcher.state === "idle" &&
+				!taperFetcher.data && (
+					<section>
+						<div className="rounded-md border border-stone-200 bg-amber-50 px-4 py-3 text-sm text-stone-600">
+							<p>
+								You've been practising before your reminder arrives. Want fewer
+								nudges?
+							</p>
+							<div className="mt-2 flex gap-3">
+								<button
+									type="button"
+									onClick={() => handleTaperResponse("reduce")}
+									className="text-ocean-700 underline underline-offset-2"
+								>
+									Yes, reduce reminders
+								</button>
+								<span className="text-stone-400">·</span>
+								<button
+									type="button"
+									onClick={() => handleTaperResponse("always")}
+									className="text-stone-500 underline underline-offset-2"
+								>
+									I rely on these, keep them coming
+								</button>
+							</div>
+						</div>
+					</section>
+				)}
 
 			{/* Daily Phrase */}
 			<section>
@@ -559,7 +630,7 @@ export default function DashboardRoute({ loaderData }: Route.ComponentProps) {
 					protectedDate={freezeStatus.protectedDate}
 				/>
 				{stats.streak === 1 && freezeStatus.freezeCount === 0 && (
-					<p className="text-xs text-stone-500 text-center">
+					<p className="text-center text-xs text-stone-500">
 						Day 1! Practice for 7 days to earn a streak freeze.
 					</p>
 				)}
