@@ -5,12 +5,12 @@ import { tv } from "tailwind-variants";
 
 const navTabsVariants = tv({
 	slots: {
-		root: "flex flex-col gap-2 w-full",
-		list: "bg-muted text-muted-foreground flex h-auto w-full items-center rounded-lg p-[3px] gap-1 overflow-x-auto scrollbar-none",
+		root: "flex w-full flex-col gap-2",
+		list: "scrollbar-none flex h-auto w-full items-center gap-1 overflow-x-auto rounded-lg bg-muted p-[3px] text-muted-foreground",
 		trigger:
-			"relative flex h-[calc(100%-1px)] flex-1 min-w-max items-center justify-center gap-1.5 rounded-md border border-transparent px-3 py-1.5 text-sm font-medium whitespace-nowrap transition-[color,box-shadow] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+			"relative flex h-[calc(100%-1px)] min-w-max flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-3 py-1.5 text-sm font-medium whitespace-nowrap transition-[color,box-shadow] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
 		badge:
-			"absolute -top-1 -right-1 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center",
+			"absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full text-xs text-white",
 	},
 });
 
@@ -18,7 +18,7 @@ const triggerStateVariants = tv({
 	base: "",
 	variants: {
 		active: {
-			true: "bg-white dark:bg-input/30 shadow-sm dark:border-input text-foreground",
+			true: "bg-white text-foreground shadow-sm dark:border-input dark:bg-input/30",
 			false: "text-foreground dark:text-muted-foreground",
 		},
 		color: {
@@ -58,7 +58,7 @@ const triggerStateVariants = tv({
 });
 
 const badgeColorVariants = tv({
-	base: "absolute -top-1 -right-1 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center",
+	base: "absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full text-xs text-white",
 	variants: {
 		color: {
 			ocean: "bg-ocean",
@@ -137,7 +137,7 @@ const NavTabs = ({ tabs, activeTab, buildUrl, className }: NavTabsProps) => {
 		<div className={root({ className })}>
 			<div className="relative overflow-hidden rounded-lg">
 				<motion.div
-					className="absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-stone-400/25 to-transparent z-10 pointer-events-none"
+					className="pointer-events-none absolute top-0 bottom-0 left-0 z-10 w-6 bg-gradient-to-r from-stone-400/25 to-transparent"
 					style={{ x: leftShadowX }}
 				/>
 
@@ -167,7 +167,7 @@ const NavTabs = ({ tabs, activeTab, buildUrl, className }: NavTabsProps) => {
 				</div>
 
 				<motion.div
-					className="absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-stone-400/25 to-transparent z-10 pointer-events-none"
+					className="pointer-events-none absolute top-0 right-0 bottom-0 z-10 w-6 bg-gradient-to-l from-stone-400/25 to-transparent"
 					style={{ x: rightShadowX }}
 				/>
 			</div>

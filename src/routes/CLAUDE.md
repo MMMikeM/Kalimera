@@ -18,8 +18,8 @@ routes/example/
 **Types:** Import from generated path, not parent
 
 ```typescript
-import type { Route } from "./+types/layout";  // for layout.tsx
-import type { Route } from "./+types/$tab";    // for $tab.tsx
+import type { Route } from "./+types/layout"; // for layout.tsx
+import type { Route } from "./+types/$tab"; // for $tab.tsx
 ```
 
 **Data:** All server logic in `data.server.ts`
@@ -27,7 +27,7 @@ import type { Route } from "./+types/$tab";    // for $tab.tsx
 ```typescript
 // data.server.ts
 export async function getPageData() {
-  return db.query.vocabulary.findMany({ with: { tags: true } });
+	return db.query.vocabulary.findMany({ with: { tags: true } });
 }
 
 // layout.tsx
@@ -49,9 +49,9 @@ return actionHandlers[intent](formData);
 ```typescript
 // routes.ts
 route("practice", "routes/practice/layout.tsx", [
-  index("routes/practice/index.tsx"),
-  route(":tab", "routes/practice/$tab.tsx"),
-])
+	index("routes/practice/index.tsx"),
+	route(":tab", "routes/practice/$tab.tsx"),
+]);
 ```
 
 - `route()` - Adds URL segment

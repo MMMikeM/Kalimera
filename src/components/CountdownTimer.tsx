@@ -70,13 +70,13 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({
 
 	return (
 		<div className={cn("flex flex-col items-center gap-2", className)}>
-			<div className="text-3xl font-mono font-bold tabular-nums text-stone-700">
+			<div className="font-mono text-3xl font-bold text-stone-700 tabular-nums">
 				{seconds.toFixed(1)}s
 			</div>
 
-			<div className="w-full h-2 bg-stone-200 rounded-full overflow-hidden">
+			<div className="h-2 w-full overflow-hidden rounded-full bg-stone-200">
 				<div
-					className="h-full transition-all duration-100 ease-linear rounded-full bg-terracotta-500"
+					className="h-full rounded-full bg-terracotta-500 transition-all duration-100 ease-linear"
 					style={{ width: `${progress}%` }}
 				/>
 			</div>

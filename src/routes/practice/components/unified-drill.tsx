@@ -187,7 +187,9 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 	useEffect(() => {
 		if (state.phase !== "feedback" || !state.lastResult) return;
 
-		const delay = state.lastResult.isCorrect ? AUTO_ADVANCE_DELAY : WRONG_ADVANCE_DELAY;
+		const delay = state.lastResult.isCorrect
+			? AUTO_ADVANCE_DELAY
+			: WRONG_ADVANCE_DELAY;
 		setIsAutoAdvancing(true);
 		autoAdvanceTimerRef.current = setTimeout(() => {
 			dispatch({ type: "NEXT_QUESTION" });
@@ -342,7 +344,7 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 		<Card variant="bordered" padding="lg" className="bg-stone-50">
 			{/* Compact Header */}
 			<div className="mb-4">
-				<div className="flex items-center justify-between mb-2">
+				<div className="mb-2 flex items-center justify-between">
 					<div className="flex items-center gap-2">
 						<Keyboard size={18} className="text-stone-500" />
 						<span className="text-sm font-medium text-stone-700">{title}</span>
@@ -369,9 +371,9 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 			)}
 
 			{/* Question Area */}
-			<div className="bg-white rounded-lg p-6 mb-4 border">
-				<div className="text-center mb-6">
-					<p className="text-sm text-stone-500 mb-2">Translate to Greek:</p>
+			<div className="mb-4 rounded-lg border bg-white p-6">
+				<div className="mb-6 text-center">
+					<p className="mb-2 text-sm text-stone-500">Translate to Greek:</p>
 					<p
 						className={`text-2xl font-semibold text-stone-800 transition-all duration-200 ${
 							state.phase === "ready" ? "blur-md select-none" : ""
@@ -383,11 +385,11 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 
 				{/* Ready state - show Start button */}
 				{state.phase === "ready" && (
-					<div className="text-center py-4">
+					<div className="py-4 text-center">
 						<Button onClick={handleStart} size="lg" className="gap-2">
 							Start
 						</Button>
-						<p className="text-xs text-stone-400 mt-3">
+						<p className="mt-3 text-xs text-stone-400">
 							Press Space or click to start • Timer will begin
 						</p>
 					</div>
@@ -405,17 +407,17 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 							}
 							onKeyDown={handleKeyDown}
 							placeholder="Type phonetically (e.g., thelo kafe)"
-							className="text-lg text-center py-6"
+							className="py-6 text-center text-lg"
 							autoComplete="off"
 							autoCorrect="off"
 							autoCapitalize="off"
 							spellCheck={false}
 						/>
-						<p className="text-xs text-stone-400 text-center">
+						<p className="text-center text-xs text-stone-400">
 							Type using Latin letters • Press Enter to submit
 						</p>
 						{state.currentIndex === 0 && !state.userInput && (
-							<p className="text-xs text-ocean text-center mt-2">
+							<p className="mt-2 text-center text-xs text-ocean">
 								Tip: Type "thelo" or "θέλω" — both work
 							</p>
 						)}
@@ -427,7 +429,7 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 					<div className="space-y-4">
 						{/* Result indicator */}
 						<div
-							className={`flex items-center justify-center gap-2 p-3 rounded-lg ${
+							className={`flex items-center justify-center gap-2 rounded-lg p-3 ${
 								state.lastResult?.isCorrect
 									? "bg-correct-100 text-correct"
 									: "bg-incorrect-100 text-incorrect"
@@ -438,7 +440,7 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 							) : (
 								<XCircle size={24} />
 							)}
-							<span className="font-bold text-lg">
+							<span className="text-lg font-bold">
 								{state.lastResult?.timedOut
 									? "Time's up!"
 									: state.lastResult?.isCorrect
@@ -453,27 +455,31 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 						</div>
 
 						{/* Show correct Greek prominently */}
-						<div className="text-center py-4 bg-stone-50 rounded-lg">
-							<MonoText size="lg" className="text-3xl block mb-2">
+						<div className="rounded-lg bg-stone-50 py-4 text-center">
+							<MonoText size="lg" className="mb-2 block text-3xl">
 								{currentQuestion.correctGreek}
 							</MonoText>
-							<p className="text-stone-500 font-mono">
+							<p className="font-mono text-stone-500">
 								/{greekToPhonetic(currentQuestion.correctGreek)}/
 							</p>
 						</div>
 
 						{/* Wrong answer comparison */}
 						{state.lastResult && !state.lastResult.isCorrect && (
-							<div className="rounded-lg border border-incorrect-200 bg-incorrect-50 p-3 text-sm space-y-1.5">
+							<div className="border-incorrect-200 bg-incorrect-50 space-y-1.5 rounded-lg border p-3 text-sm">
 								<div className="flex items-baseline gap-2">
-									<span className="text-xs text-stone-400 w-20 shrink-0">you typed</span>
+									<span className="w-20 shrink-0 text-xs text-stone-400">
+										you typed
+									</span>
 									<MonoText className="text-incorrect line-through">
 										{state.lastResult.userAnswer || "(nothing)"}
 									</MonoText>
 								</div>
 								<div className="flex items-baseline gap-2">
-									<span className="text-xs text-stone-400 w-20 shrink-0">correct</span>
-									<MonoText className="text-correct font-semibold">
+									<span className="w-20 shrink-0 text-xs text-stone-400">
+										correct
+									</span>
+									<MonoText className="font-semibold text-correct">
 										{currentQuestion.correctGreek}
 									</MonoText>
 								</div>
@@ -484,7 +490,7 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 						{state.lastResult &&
 							!state.lastResult.isCorrect &&
 							currentQuestion.hint && (
-								<p className="text-sm text-stone-500 text-center italic">
+								<p className="text-center text-sm text-stone-500 italic">
 									<span className="font-medium not-italic">Remember:</span>{" "}
 									{currentQuestion.hint}
 								</p>
@@ -492,12 +498,12 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 
 						{/* Auto-advance indicator */}
 						{isAutoAdvancing && state.lastResult?.isCorrect && (
-							<p className="text-xs text-stone-400 text-center animate-pulse">
+							<p className="animate-pulse text-center text-xs text-stone-400">
 								Next question...
 							</p>
 						)}
 						{isAutoAdvancing && !state.lastResult?.isCorrect && (
-							<p className="text-xs text-stone-400 text-center animate-pulse">
+							<p className="animate-pulse text-center text-xs text-stone-400">
 								Advancing in 3s...
 							</p>
 						)}
@@ -506,7 +512,7 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 			</div>
 
 			{/* Actions */}
-			<div className="flex justify-between items-center">
+			<div className="flex items-center justify-between">
 				{state.phase === "active" && (
 					<Button
 						onClick={() => {

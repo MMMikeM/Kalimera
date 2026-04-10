@@ -61,15 +61,15 @@ export const Header = ({
 	return (
 		<header className="pt-8 pb-6">
 			<div className="flex items-center justify-between gap-4">
-				<Link to="/" className="flex items-baseline shrink-0">
-					<span className="text-2xl font-serif text-terracotta">Kalimera</span>
+				<Link to="/" className="flex shrink-0 items-baseline">
+					<span className="font-serif text-2xl text-terracotta">Kalimera</span>
 				</Link>
 
 				{/* Desktop search - Gmail style centered */}
-				<div className="hidden md:block flex-1 max-w-md mx-4">
+				<div className="mx-4 hidden max-w-md flex-1 md:block">
 					<div className="relative">
 						<Search
-							className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400"
+							className="absolute top-1/2 left-3 -translate-y-1/2 text-stone-400"
 							size={18}
 						/>
 						<input
@@ -80,13 +80,13 @@ export const Header = ({
 							onChange={(e) => setSearchTerm(e.target.value)}
 							onFocus={handleSearchFocus}
 							onBlur={handleSearchBlur}
-							className="w-full pl-10 pr-4 py-2 text-sm bg-stone-100 border border-transparent rounded-full focus:outline-none focus:bg-white focus:border-stone-300 focus:ring-2 focus:ring-terracotta-300 transition-all placeholder:text-stone-500"
+							className="w-full rounded-full border border-transparent bg-stone-100 py-2 pr-4 pl-10 text-sm transition-all placeholder:text-stone-500 focus:border-stone-300 focus:bg-white focus:ring-2 focus:ring-terracotta-300 focus:outline-none"
 						/>
 						{isSearchOpen && searchTerm.length > 0 && (
-							<div className="absolute top-full left-0 right-0 mt-2 z-50 bg-popover text-popover-foreground rounded-md border p-0 max-h-[60vh] overflow-hidden shadow-md">
-								<div className="p-3 overflow-y-auto max-h-[60vh]">
+							<div className="absolute top-full right-0 left-0 z-50 mt-2 max-h-[60vh] overflow-hidden rounded-md border bg-popover p-0 text-popover-foreground shadow-md">
+								<div className="max-h-[60vh] overflow-y-auto p-3">
 									{isLoading ? (
-										<div className="text-center py-4 text-stone-400 text-sm">
+										<div className="py-4 text-center text-sm text-stone-400">
 											Loading...
 										</div>
 									) : (
@@ -103,7 +103,7 @@ export const Header = ({
 				</div>
 
 				{/* Desktop navigation */}
-				<nav className="hidden md:flex items-center gap-1 shrink-0">
+				<nav className="hidden shrink-0 items-center gap-1 md:flex">
 					{navItems.map((item) => {
 						const isActive = currentSection === item.id;
 						const isPrimary = "primary" in item && item.primary;
@@ -112,12 +112,12 @@ export const Header = ({
 							<Link
 								key={item.id}
 								to={item.path}
-								className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+								className={`rounded-lg px-4 py-2 text-sm font-medium transition-all ${
 									isActive
 										? "bg-stone-800 text-cream"
 										: isPrimary
-											? "text-terracotta hover:text-terracotta-dark hover:bg-terracotta/10"
-											: "text-stone-600 hover:text-stone-800 hover:bg-stone-100"
+											? "text-terracotta hover:bg-terracotta/10 hover:text-terracotta-dark"
+											: "text-stone-600 hover:bg-stone-100 hover:text-stone-800"
 								}`}
 							>
 								{item.label}
@@ -126,7 +126,7 @@ export const Header = ({
 					})}
 					{isAuthenticated ? (
 						<DropdownMenu>
-							<DropdownMenuTrigger className="flex items-center gap-1 px-3 py-2 text-sm text-stone-600 hover:text-stone-800 transition-colors rounded-lg hover:bg-stone-100">
+							<DropdownMenuTrigger className="flex items-center gap-1 rounded-lg px-3 py-2 text-sm text-stone-600 transition-colors hover:bg-stone-100 hover:text-stone-800">
 								Account
 								<ChevronDown size={16} strokeWidth={1.5} />
 							</DropdownMenuTrigger>
@@ -136,7 +136,7 @@ export const Header = ({
 										render={
 											<Link
 												to="/progress"
-												className="flex items-center gap-2 cursor-pointer"
+												className="flex cursor-pointer items-center gap-2"
 											/>
 										}
 									>
@@ -147,7 +147,7 @@ export const Header = ({
 										render={
 											<Link
 												to="/support"
-												className="flex items-center gap-2 cursor-pointer"
+												className="flex cursor-pointer items-center gap-2"
 											/>
 										}
 									>
@@ -157,7 +157,7 @@ export const Header = ({
 									<DropdownMenuSeparator />
 									<DropdownMenuItem
 										onClick={onLogout}
-										className="flex items-center gap-2 cursor-pointer"
+										className="flex cursor-pointer items-center gap-2"
 									>
 										<LogOut size={16} strokeWidth={1.5} />
 										Sign Out
@@ -169,7 +169,7 @@ export const Header = ({
 						<>
 							<Link
 								to="/login"
-								className="px-4 py-2 text-sm font-medium text-stone-600 hover:text-stone-800 transition-colors"
+								className="px-4 py-2 text-sm font-medium text-stone-600 transition-colors hover:text-stone-800"
 							>
 								Sign In
 							</Link>

@@ -71,7 +71,7 @@ function ColourSwatch({ greek }: { greek: string }) {
 
 	return (
 		<span
-			className={`w-5 h-5 rounded-full inline-block shrink-0 ${isLight ? "border border-stone-300" : ""}`}
+			className={`inline-block h-5 w-5 shrink-0 rounded-full ${isLight ? "border border-stone-300" : ""}`}
 			style={{ backgroundColor: hex }}
 		/>
 	);
@@ -109,7 +109,7 @@ export function ColoursSubtab({ data }: Props) {
 								className="grid grid-cols-2 divide-x divide-stone-200/60"
 							>
 								{/* Left column */}
-								<div className="py-2.5 px-3 flex items-start gap-2.5">
+								<div className="flex items-start gap-2.5 px-3 py-2.5">
 									{left && (
 										<>
 											<ColourSwatch greek={left.greek} />
@@ -124,7 +124,7 @@ export function ColoursSubtab({ data }: Props) {
 								</div>
 
 								{/* Right column */}
-								<div className="py-2.5 px-3 flex items-start gap-2.5">
+								<div className="flex items-start gap-2.5 px-3 py-2.5">
 									{right && (
 										<>
 											<ColourSwatch greek={right.greek} />
@@ -153,16 +153,16 @@ export function ColoursSubtab({ data }: Props) {
 					{MODIFIERS.map((mod) => (
 						<div
 							key={mod.greek}
-							className="grid grid-cols-[1fr_1fr] gap-x-3 py-2.5 px-3"
+							className="grid grid-cols-[1fr_1fr] gap-x-3 px-3 py-2.5"
 						>
 							<MonoText variant="greek">{mod.greek}</MonoText>
-							<span className="text-stone-500 text-sm">{mod.english}</span>
+							<span className="text-sm text-stone-500">{mod.english}</span>
 						</div>
 					))}
 				</div>
 
 				<div className="px-3 pt-3 pb-1">
-					<p className="text-xs text-stone-500 uppercase tracking-wide font-medium mb-2">
+					<p className="mb-2 text-xs font-medium tracking-wide text-stone-500 uppercase">
 						Examples
 					</p>
 					<div className="space-y-2">
@@ -171,7 +171,7 @@ export function ColoursSubtab({ data }: Props) {
 								<ColourSwatch greek={example.greek} />
 								<div>
 									<MonoText variant="greek">{example.greek}</MonoText>
-									<span className="text-stone-500 text-xs ml-2">
+									<span className="ml-2 text-xs text-stone-500">
 										{example.english}
 									</span>
 								</div>
@@ -180,8 +180,8 @@ export function ColoursSubtab({ data }: Props) {
 					</div>
 				</div>
 
-				<div className="mx-3 mt-3 p-2.5 bg-honey-100 rounded-lg border border-honey-200">
-					<p className="text-sm text-honey-text font-medium mb-2">In context</p>
+				<div className="mx-3 mt-3 rounded-lg border border-honey-200 bg-honey-100 p-2.5">
+					<p className="mb-2 text-sm font-medium text-honey-text">In context</p>
 					<div className="space-y-1.5 text-sm">
 						<div>
 							<MonoText variant="greek">Θέλω το σκούρο μπλε.</MonoText>
@@ -207,15 +207,15 @@ export function ColoursSubtab({ data }: Props) {
 			>
 				<div className="divide-y divide-stone-200/60">
 					{USAGE_EXAMPLES.map((example) => (
-						<div key={example.greek} className="py-2.5 px-3">
+						<div key={example.greek} className="px-3 py-2.5">
 							<MonoText variant="greek">{example.greek}</MonoText>
 							<div className="text-xs text-stone-500">{example.english}</div>
 						</div>
 					))}
 				</div>
 
-				<div className="mx-3 mt-3 p-2.5 bg-terracotta-100 rounded-lg border border-terracotta-200">
-					<p className="text-sm text-terracotta-text font-medium mb-2">
+				<div className="mx-3 mt-3 rounded-lg border border-terracotta-200 bg-terracotta-100 p-2.5">
+					<p className="mb-2 text-sm font-medium text-terracotta-text">
 						Colour agreement
 					</p>
 					<div className="space-y-1.5 text-sm">
@@ -223,7 +223,7 @@ export function ColoursSubtab({ data }: Props) {
 							Most colours are <strong>indeclinable</strong> — they don't change
 							form:
 						</p>
-						<div className="pl-2 space-y-1">
+						<div className="space-y-1 pl-2">
 							<div>
 								<MonoText variant="greek">
 									μπλε, μωβ, ροζ, γκρι, καφέ, πορτοκαλί, μπεζ, ασημί
@@ -231,38 +231,38 @@ export function ColoursSubtab({ data }: Props) {
 							</div>
 						</div>
 					</div>
-					<div className="mt-2 pt-2 border-t border-terracotta-200/50 space-y-1.5 text-sm">
+					<div className="mt-2 space-y-1.5 border-t border-terracotta-200/50 pt-2 text-sm">
 						<p className="text-stone-600">
 							Some colours <strong>do decline</strong> like adjectives:
 						</p>
-						<div className="pl-2 space-y-1">
+						<div className="space-y-1 pl-2">
 							<div>
 								<MonoText variant="greek">άσπρος, -η, -ο</MonoText>
-								<span className="text-xs text-stone-500 ml-2">(white)</span>
+								<span className="ml-2 text-xs text-stone-500">(white)</span>
 							</div>
 							<div>
 								<MonoText variant="greek">μαύρος, -η, -ο</MonoText>
-								<span className="text-xs text-stone-500 ml-2">(black)</span>
+								<span className="ml-2 text-xs text-stone-500">(black)</span>
 							</div>
 							<div>
 								<MonoText variant="greek">κόκκινος, -η, -ο</MonoText>
-								<span className="text-xs text-stone-500 ml-2">(red)</span>
+								<span className="ml-2 text-xs text-stone-500">(red)</span>
 							</div>
 							<div>
 								<MonoText variant="greek">πράσινος, -η, -ο</MonoText>
-								<span className="text-xs text-stone-500 ml-2">(green)</span>
+								<span className="ml-2 text-xs text-stone-500">(green)</span>
 							</div>
 							<div>
 								<MonoText variant="greek">κίτρινος, -η, -ο</MonoText>
-								<span className="text-xs text-stone-500 ml-2">(yellow)</span>
+								<span className="ml-2 text-xs text-stone-500">(yellow)</span>
 							</div>
 							<div>
 								<MonoText variant="greek">γαλάζιος, -α, -ο</MonoText>
-								<span className="text-xs text-stone-500 ml-2">(sky blue)</span>
+								<span className="ml-2 text-xs text-stone-500">(sky blue)</span>
 							</div>
 							<div>
 								<MonoText variant="greek">χρυσός, -ή, -ό</MonoText>
-								<span className="text-xs text-stone-500 ml-2">
+								<span className="ml-2 text-xs text-stone-500">
 									(gold/golden)
 								</span>
 							</div>

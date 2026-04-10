@@ -47,7 +47,7 @@ export const CollapsibleSection = ({
 					{icon && <span className={colors.accent}>{icon}</span>}
 					<span className={cn("font-medium", colors.text)}>{title}</span>
 					{subtitle && (
-						<span className="text-sm text-stone-500 ml-1">{subtitle}</span>
+						<span className="ml-1 text-sm text-stone-500">{subtitle}</span>
 					)}
 					<span className="ml-auto flex items-center gap-1.5">
 						<AnimatePresence mode="wait" initial={false}>
@@ -93,7 +93,7 @@ export const CollapsibleSection = ({
 							}}
 							className="overflow-hidden"
 						>
-							<div className="p-4 border-t border-stone-200/60 bg-cream-dark/50">
+							<div className="border-t border-stone-200/60 bg-cream-dark/50 p-4">
 								{children}
 							</div>
 						</motion.div>

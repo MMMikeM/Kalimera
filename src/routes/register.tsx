@@ -12,7 +12,7 @@ import {
 	UserPlus,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link, } from "react-router";
+import { Link } from "react-router";
 import { Card } from "@/components/Card";
 import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/ui/form-field";
@@ -75,11 +75,18 @@ export const action = async ({ request }: Route.ActionArgs) => {
 		}
 
 		const finalUsername = newUser.username ?? username;
-		const cookie = createAuthCookie({ userId: newUser.id, username: finalUsername });
+		const cookie = createAuthCookie({
+			userId: newUser.id,
+			username: finalUsername,
+		});
 
 		// Return success data with cookie set - component will show passkey setup screen
 		return Response.json(
-			{ success: true, userId: newUser.id, username: finalUsername } satisfies ActionSuccess,
+			{
+				success: true,
+				userId: newUser.id,
+				username: finalUsername,
+			} satisfies ActionSuccess,
 			{ headers: { "Set-Cookie": cookie } },
 		);
 	} catch (error) {
@@ -138,12 +145,12 @@ export default function RegisterRoute({ actionData }: Route.ComponentProps) {
 	// Post-registration: passkey setup screen
 	if (registeredUser) {
 		return (
-			<div className="min-h-[60vh] flex flex-col items-center justify-center space-y-8">
-				<div className="text-center space-y-2">
-					<div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
+			<div className="flex min-h-[60vh] flex-col items-center justify-center space-y-8">
+				<div className="space-y-2 text-center">
+					<div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
 						<Check size={32} className="text-green-600" />
 					</div>
-					<h1 className="text-3xl font-serif text-terracotta">
+					<h1 className="font-serif text-3xl text-terracotta">
 						Account Created
 					</h1>
 					<p className="text-stone-600">Welcome to Greek Learning!</p>
@@ -152,16 +159,16 @@ export default function RegisterRoute({ actionData }: Route.ComponentProps) {
 				<Card className="w-full max-w-md p-6">
 					<div className="space-y-6">
 						<div className="text-center">
-							<KeyRound size={48} className="text-terracotta mx-auto mb-3" />
+							<KeyRound size={48} className="mx-auto mb-3 text-terracotta" />
 							<h2 className="text-xl font-medium">Set Up Passkey</h2>
-							<p className="text-sm text-stone-500 mt-1">
+							<p className="mt-1 text-sm text-stone-500">
 								Use Face ID, Touch ID, or your device PIN for faster sign-in
 								next time.
 							</p>
 						</div>
 
 						{passkey.state === "error" && (
-							<div className="flex items-center gap-2 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
+							<div className="flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
 								<AlertCircle size={16} />
 								{passkey.error || "Failed to set up passkey"}
 							</div>
@@ -169,7 +176,7 @@ export default function RegisterRoute({ actionData }: Route.ComponentProps) {
 
 						{passkey.state === "success" ? (
 							<div className="space-y-4">
-								<div className="flex items-center gap-2 p-3 bg-green-50 border border-green-200 rounded-lg text-green-700 text-sm">
+								<div className="flex items-center gap-2 rounded-lg border border-green-200 bg-green-50 p-3 text-sm text-green-700">
 									<Check size={16} />
 									Passkey set up successfully!
 								</div>
@@ -212,9 +219,9 @@ export default function RegisterRoute({ actionData }: Route.ComponentProps) {
 	}
 
 	return (
-		<div className="min-h-[60vh] flex flex-col items-center justify-center space-y-8">
-			<div className="text-center space-y-2">
-				<h1 className="text-3xl font-serif text-terracotta">Create Account</h1>
+		<div className="flex min-h-[60vh] flex-col items-center justify-center space-y-8">
+			<div className="space-y-2 text-center">
+				<h1 className="font-serif text-3xl text-terracotta">Create Account</h1>
 				<p className="text-stone-600">Start your Greek learning journey</p>
 			</div>
 
@@ -251,7 +258,7 @@ export default function RegisterRoute({ actionData }: Route.ComponentProps) {
 					/>
 
 					{businessData && "error" in businessData && (
-						<div className="flex items-center gap-2 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
+						<div className="flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
 							<AlertCircle size={16} />
 							{businessData.error}
 						</div>
@@ -273,7 +280,7 @@ export default function RegisterRoute({ actionData }: Route.ComponentProps) {
 				Already have an account?{" "}
 				<Link
 					to="/login"
-					className="text-terracotta hover:underline font-medium"
+					className="font-medium text-terracotta hover:underline"
 				>
 					Sign in
 				</Link>

@@ -18,9 +18,9 @@ export const SearchResults = ({
 	if (searchTerm && results.length === 0) {
 		return (
 			<div className="flex flex-col items-center py-8 text-stone-500">
-				<SearchX size={24} className="text-stone-300 mb-2" />
+				<SearchX size={24} className="mb-2 text-stone-300" />
 				<p className="text-sm">No results for "{searchTerm}"</p>
-				<p className="text-xs text-stone-400 mt-1">
+				<p className="mt-1 text-xs text-stone-400">
 					Try a different spelling or search term
 				</p>
 			</div>
@@ -37,20 +37,20 @@ export const SearchResults = ({
 				{results.map((result) => (
 					<div
 						key={result.id}
-						className="py-2 px-1 flex items-center gap-2 hover:bg-stone-50 rounded transition-colors"
+						className="flex items-center gap-2 rounded px-1 py-2 transition-colors hover:bg-stone-50"
 					>
 						<MonoText
 							variant="greek"
 							size="sm"
-							className="font-medium truncate max-w-[180px]"
+							className="max-w-[180px] truncate font-medium"
 						>
 							{result.greek}
 						</MonoText>
 						<span className="text-stone-300">—</span>
-						<span className="text-sm text-stone-600 flex-1 truncate">
+						<span className="flex-1 truncate text-sm text-stone-600">
 							{result.english}
 						</span>
-						<span className="text-xs text-stone-400 shrink-0">
+						<span className="shrink-0 text-xs text-stone-400">
 							{result.type}
 						</span>
 					</div>
@@ -71,22 +71,19 @@ export const SearchResults = ({
 				);
 
 				return (
-					<div
-						key={result.id}
-						className={cn("rounded-lg p-4", bgClass)}
-					>
-						<div className="flex justify-between items-start gap-3">
-							<div className="flex-1 min-w-0">
+					<div key={result.id} className={cn("rounded-lg p-4", bgClass)}>
+						<div className="flex items-start justify-between gap-3">
+							<div className="min-w-0 flex-1">
 								<MonoText
 									variant="greek"
 									size="lg"
-									className="font-medium block text-2xl mb-1"
+									className="mb-1 block text-2xl font-medium"
 								>
 									{result.greek}
 								</MonoText>
 								<p className="text-stone-600">{result.english}</p>
 							</div>
-							<div className="flex gap-1.5 flex-wrap justify-end flex-shrink-0">
+							<div className="flex flex-shrink-0 flex-wrap justify-end gap-1.5">
 								{result.type && (
 									<Badge variant="default" size="md">
 										{result.type}
@@ -100,7 +97,7 @@ export const SearchResults = ({
 							</div>
 						</div>
 						{result.tags.length > 0 && (
-							<div className="mt-2 flex gap-1 flex-wrap">
+							<div className="mt-2 flex flex-wrap gap-1">
 								{result.tags.map((tag) => (
 									<Badge key={tag} variant="secondary" size="sm">
 										{tag}

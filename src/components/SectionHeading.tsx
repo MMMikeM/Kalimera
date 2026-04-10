@@ -4,11 +4,11 @@ const sectionHeadingVariants = tv({
 	slots: {
 		container: "",
 		title: "font-bold text-navy-text",
-		subtitle: "text-slate-text mt-1",
+		subtitle: "mt-1 text-slate-text",
 	},
 	variants: {
 		level: {
-			h2: { title: "text-2xl font-serif" },
+			h2: { title: "font-serif text-2xl" },
 			h3: { title: "text-xl" },
 			h4: { title: "text-lg" },
 		},

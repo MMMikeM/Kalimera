@@ -97,7 +97,7 @@ const ConjugationCell: React.FC<ConjugationCellProps> = ({
 	const split = splitFormByEnding(form, highlighted);
 
 	return (
-		<div className="flex items-baseline gap-1.5 min-w-0">
+		<div className="flex min-w-0 items-baseline gap-1.5">
 			<span className="font-mono text-sm font-bold">
 				{split ? (
 					<>
@@ -108,7 +108,7 @@ const ConjugationCell: React.FC<ConjugationCellProps> = ({
 					<span className="text-stone-800">{form}</span>
 				)}
 			</span>
-			<span className="text-xs text-stone-400 shrink-0">({pronoun})</span>
+			<span className="shrink-0 text-xs text-stone-400">({pronoun})</span>
 		</div>
 	);
 };
@@ -170,16 +170,16 @@ const VerbCard: React.FC<VerbCardProps> = ({
 		>
 			{category && (
 				<header className={cn("px-3 py-2", styles.header)}>
-					<h3 className="font-black tracking-wide text-white text-sm">
+					<h3 className="text-sm font-black tracking-wide text-white">
 						{category}
 					</h3>
 					{subtitle && (
-						<p className="text-white/80 text-xs mt-0.5">{subtitle}</p>
+						<p className="mt-0.5 text-xs text-white/80">{subtitle}</p>
 					)}
 				</header>
 			)}
 
-			<div className="p-3 bg-white">
+			<div className="bg-white p-3">
 				<div className="mb-3">
 					<div className="flex items-center gap-2">
 						<h4 className="font-mono text-lg font-bold text-stone-800">
@@ -191,18 +191,18 @@ const VerbCard: React.FC<VerbCardProps> = ({
 				</div>
 
 				<div>
-					<div className="grid grid-cols-2 gap-2 mb-1.5">
-						<div className="text-xs font-medium text-stone-400 uppercase tracking-wide">
+					<div className="mb-1.5 grid grid-cols-2 gap-2">
+						<div className="text-xs font-medium tracking-wide text-stone-400 uppercase">
 							Singular
 						</div>
-						<div className="text-xs font-medium text-stone-400 uppercase tracking-wide">
+						<div className="text-xs font-medium tracking-wide text-stone-400 uppercase">
 							Plural
 						</div>
 					</div>
 					{[0, 1, 2].map((idx) => (
 						<div
 							key={idx}
-							className="grid grid-cols-2 gap-2 py-1.5 border-b border-stone-100 last:border-0"
+							className="grid grid-cols-2 gap-2 border-b border-stone-100 py-1.5 last:border-0"
 						>
 							<ConjugationCell
 								form={singularForms[idx]?.form ?? ""}
@@ -221,7 +221,7 @@ const VerbCard: React.FC<VerbCardProps> = ({
 				</div>
 
 				{note && (
-					<div className="mt-2 pt-2 border-t border-stone-100">
+					<div className="mt-2 border-t border-stone-100 pt-2">
 						<p className="text-sm text-stone-600 italic">{note}</p>
 					</div>
 				)}
@@ -232,7 +232,7 @@ const VerbCard: React.FC<VerbCardProps> = ({
 					<button
 						type="button"
 						onClick={() => setShowExamples(!showExamples)}
-						className="w-full flex items-center justify-center gap-1.5 py-2 text-xs font-medium text-stone-600 hover:bg-stone-50 transition-colors"
+						className="flex w-full items-center justify-center gap-1.5 py-2 text-xs font-medium text-stone-600 transition-colors hover:bg-stone-50"
 					>
 						{showExamples ? (
 							<>
@@ -248,7 +248,7 @@ const VerbCard: React.FC<VerbCardProps> = ({
 					</button>
 
 					{showExamples && (
-						<div className="bg-stone-50 border-t border-stone-200 p-3 space-y-2">
+						<div className="space-y-2 border-t border-stone-200 bg-stone-50 p-3">
 							{examples.map((example) => (
 								<div key={example.greek}>
 									<p className="font-mono text-sm text-stone-800">
@@ -278,10 +278,10 @@ interface VerbListProps {
 
 const VerbList: React.FC<VerbListProps> = ({ verbs, label }) => (
 	<details className="group">
-		<summary className="cursor-pointer text-sm text-stone-600 hover:text-stone-800 flex items-center gap-1">
+		<summary className="flex cursor-pointer items-center gap-1 text-sm text-stone-600 hover:text-stone-800">
 			<ChevronDown
 				size={14}
-				className="group-open:rotate-180 transition-transform"
+				className="transition-transform group-open:rotate-180"
 			/>
 			<span>
 				All {verbs.length} {label}
@@ -291,7 +291,7 @@ const VerbList: React.FC<VerbListProps> = ({ verbs, label }) => (
 			{verbs.map((verb) => (
 				<div
 					key={verb.id}
-					className="flex items-baseline gap-2 p-1.5 bg-white/60 rounded"
+					className="flex items-baseline gap-2 rounded bg-white/60 p-1.5"
 				>
 					<span className="font-mono text-sm font-medium text-stone-800">
 						{verb.greek}
@@ -326,8 +326,8 @@ const PATTERN_GUIDE_DATA = [
 ];
 
 const PatternGuide: React.FC = () => (
-	<div className="bg-white rounded-xl border border-stone-200 overflow-hidden">
-		<h3 className="text-xs font-semibold text-stone-500 uppercase tracking-wide px-3 pt-3 pb-2">
+	<div className="overflow-hidden rounded-xl border border-stone-200 bg-white">
+		<h3 className="px-3 pt-3 pb-2 text-xs font-semibold tracking-wide text-stone-500 uppercase">
 			Which pattern?
 		</h3>
 		<div className="divide-y divide-stone-100">
@@ -342,11 +342,11 @@ const PatternGuide: React.FC = () => (
 						>
 							{item.ending}
 						</span>
-						<span className="font-medium text-stone-700 text-sm">
+						<span className="text-sm font-medium text-stone-700">
 							{item.pattern}
 						</span>
 					</div>
-					<p className="text-stone-500 text-xs mt-0.5 leading-relaxed">
+					<p className="mt-0.5 text-xs leading-relaxed text-stone-500">
 						{item.description}
 					</p>
 				</div>
@@ -356,43 +356,43 @@ const PatternGuide: React.FC = () => (
 );
 
 const ActivePassiveExplainer: React.FC = () => (
-	<details className="bg-stone-50 rounded-lg border border-stone-200">
-		<summary className="cursor-pointer px-3 py-2 text-sm font-medium text-stone-600 hover:text-stone-800 flex items-center gap-1.5">
+	<details className="rounded-lg border border-stone-200 bg-stone-50">
+		<summary className="flex cursor-pointer items-center gap-1.5 px-3 py-2 text-sm font-medium text-stone-600 hover:text-stone-800">
 			<ChevronDown
 				size={14}
 				className="transition-transform [details[open]_&]:rotate-180"
 			/>
 			What's active/passive?
 		</summary>
-		<div className="px-3 pb-3 pt-1 space-y-3 text-sm">
+		<div className="space-y-3 px-3 pt-1 pb-3 text-sm">
 			<div>
 				<p className="font-medium text-stone-700">Active</p>
-				<p className="text-stone-500 text-xs">Subject DOES the action</p>
+				<p className="text-xs text-stone-500">Subject DOES the action</p>
 				<p className="mt-1">
 					<span className="font-mono font-bold text-stone-800">
 						βλέπω τον φίλο
 					</span>
-					<span className="text-stone-500 text-xs ml-2">
+					<span className="ml-2 text-xs text-stone-500">
 						= I see the friend
 					</span>
 				</p>
 			</div>
 			<div>
 				<p className="font-medium text-stone-700">Passive</p>
-				<p className="text-stone-500 text-xs">Subject RECEIVES the action</p>
+				<p className="text-xs text-stone-500">Subject RECEIVES the action</p>
 				<p className="mt-1">
 					<span className="font-mono font-bold text-stone-800">βλέπομαι</span>
-					<span className="text-stone-500 text-xs ml-2">= I am seen</span>
+					<span className="ml-2 text-xs text-stone-500">= I am seen</span>
 				</p>
 			</div>
 			<div>
 				<p className="font-medium text-stone-700">Deponent</p>
-				<p className="text-stone-500 text-xs">
+				<p className="text-xs text-stone-500">
 					-μαι ending but YOU'RE doing the action
 				</p>
 				<p className="mt-1">
 					<span className="font-mono font-bold text-stone-800">έρχομαι</span>
-					<span className="text-stone-500 text-xs ml-2">
+					<span className="ml-2 text-xs text-stone-500">
 						= I come (not "I am come-d")
 					</span>
 				</p>
@@ -423,15 +423,15 @@ const PATTERN_COMPARISON_DATA = {
 };
 
 const PatternComparison: React.FC = () => (
-	<div className="bg-white rounded-xl border border-stone-200 overflow-hidden">
-		<h3 className="text-xs font-semibold text-stone-500 uppercase tracking-wide px-3 pt-3 pb-2">
+	<div className="overflow-hidden rounded-xl border border-stone-200 bg-white">
+		<h3 className="px-3 pt-3 pb-2 text-xs font-semibold tracking-wide text-stone-500 uppercase">
 			Ending patterns
 		</h3>
 		<div className="overflow-x-auto">
 			<table className="w-full text-sm">
 				<thead>
 					<tr className="border-b border-stone-200">
-						<th className="text-left text-xs text-stone-400 font-normal px-3 py-1.5 w-16" />
+						<th className="w-16 px-3 py-1.5 text-left text-xs font-normal text-stone-400" />
 						{PATTERN_COMPARISON_DATA.patterns.map((p) => (
 							<th
 								key={p.name}
@@ -454,7 +454,7 @@ const PatternComparison: React.FC = () => (
 									"border-b border-stone-100",
 							)}
 						>
-							<td className="text-xs text-stone-500 px-3 py-1.5">{pronoun}</td>
+							<td className="px-3 py-1.5 text-xs text-stone-500">{pronoun}</td>
 							{PATTERN_COMPARISON_DATA.patterns.map((p) => (
 								<td
 									key={p.name}
@@ -613,7 +613,7 @@ export default function VerbsPage({ loaderData }: Route.ComponentProps) {
 		<div className="space-y-4">
 			<Link
 				to="/learn"
-				className="inline-flex items-center gap-1 text-sm text-stone-600 hover:text-stone-800 transition-colors"
+				className="inline-flex items-center gap-1 text-sm text-stone-600 transition-colors hover:text-stone-800"
 			>
 				<ChevronLeft size={16} />
 				<span>Learn</span>
@@ -669,7 +669,7 @@ export default function VerbsPage({ loaderData }: Route.ComponentProps) {
 			</div>
 
 			<div className="space-y-3">
-				<h2 className="font-bold text-stone-700 text-sm px-1">
+				<h2 className="px-1 text-sm font-bold text-stone-700">
 					Short-stem irregulars
 				</h2>
 				<div className="grid gap-3 md:grid-cols-2">

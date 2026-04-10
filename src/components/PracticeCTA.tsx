@@ -15,13 +15,13 @@ export const PracticeCTA = ({
 	topic: _topic,
 }: PracticeCTAProps) => {
 	return (
-		<Card className="bg-terracotta/5 border-terracotta/20">
-			<div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
-				<div className="w-12 h-12 rounded-full bg-terracotta/10 flex items-center justify-center flex-shrink-0">
+		<Card className="border-terracotta/20 bg-terracotta/5">
+			<div className="flex flex-col items-center gap-4 sm:flex-row sm:gap-6">
+				<div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-terracotta/10">
 					<Zap size={24} className="text-terracotta" />
 				</div>
 				<div className="flex-1 text-center sm:text-left">
-					<h3 className="font-medium text-stone-800 mb-1">{title}</h3>
+					<h3 className="mb-1 font-medium text-stone-800">{title}</h3>
 					<p className="text-sm text-stone-600">{description}</p>
 				</div>
 				<Link to="/register" className="flex-shrink-0">

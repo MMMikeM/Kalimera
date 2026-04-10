@@ -111,7 +111,7 @@ export const DialogueExchange: React.FC<DialogueExchangeProps> = ({
 						)}
 					>
 						<SpeakerBadge role={line.speaker} className="mb-2" />
-						<MonoText variant="greek" size="lg" className="block mt-2">
+						<MonoText variant="greek" size="lg" className="mt-2 block">
 							{shouldHideGreek(line, idx) ? (
 								<RevealableText
 									text={line.greek}
@@ -123,7 +123,7 @@ export const DialogueExchange: React.FC<DialogueExchangeProps> = ({
 								line.greek
 							)}
 						</MonoText>
-						<div className="text-stone-600 text-sm mt-1">
+						<div className="mt-1 text-sm text-stone-600">
 							<RevealableText
 								text={line.english}
 								isHidden={shouldHideEnglish(line, idx)}
@@ -131,7 +131,7 @@ export const DialogueExchange: React.FC<DialogueExchangeProps> = ({
 							/>
 						</div>
 						{line.note && !shouldHideEnglish(line, idx) && (
-							<div className="text-stone-500 text-xs mt-2 italic">
+							<div className="mt-2 text-xs text-stone-500 italic">
 								{line.note}
 							</div>
 						)}
@@ -186,7 +186,7 @@ export const DialogueScenario: React.FC<DialogueScenarioProps> = ({
 				)}
 			</div>
 			{description && (
-				<p className="text-sm text-stone-600 mt-1">{description}</p>
+				<p className="mt-1 text-sm text-stone-600">{description}</p>
 			)}
 		</div>
 		<DialogueExchange lines={dialogue} colorScheme={colorScheme} mode={mode} />

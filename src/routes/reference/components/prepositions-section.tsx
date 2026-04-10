@@ -28,7 +28,7 @@ export const PrepositionsSection: React.FC = () => (
 		<PrepositionNavigator />
 
 		{/* 2. The Big 4 */}
-		<div className="grid sm:grid-cols-2 gap-4">
+		<div className="grid gap-4 sm:grid-cols-2">
 			{BIG_4_PREPOSITIONS.map((prep) => (
 				<ContentSection
 					key={prep.greek}
@@ -42,12 +42,12 @@ export const PrepositionsSection: React.FC = () => (
 								<MonoText size="sm" variant="greek" className="font-medium">
 									{ex.greek}
 								</MonoText>
-								<span className="text-stone-600 ml-2">{ex.english}</span>
+								<span className="ml-2 text-stone-600">{ex.english}</span>
 							</div>
 						))}
 					</div>
 					{prep.contracts && (
-						<div className="mx-3 mt-2 pt-2 border-t border-stone-200 text-xs text-stone-500">
+						<div className="mx-3 mt-2 border-t border-stone-200 pt-2 text-xs text-stone-500">
 							Contracts with articles → στο, στη, στον
 						</div>
 					)}
@@ -59,23 +59,23 @@ export const PrepositionsSection: React.FC = () => (
 		<Card
 			variant="elevated"
 			padding="lg"
-			className="bg-ocean-50 border-2 border-ocean-300"
+			className="border-2 border-ocean-300 bg-ocean-50"
 		>
-			<h3 className="text-xl font-bold text-ocean-text mb-2">
+			<h3 className="mb-2 text-xl font-bold text-ocean-text">
 				The σε Contraction
 			</h3>
-			<p className="text-stone-600 mb-4">{SE_CONTRACTIONS.intro}</p>
+			<p className="mb-4 text-stone-600">{SE_CONTRACTIONS.intro}</p>
 
-			<div className="grid sm:grid-cols-3 gap-3 mb-4">
+			<div className="mb-4 grid gap-3 sm:grid-cols-3">
 				{SE_CONTRACTIONS.formulas.map((f) => (
 					<div
 						key={f.formula}
-						className="text-center p-3 bg-white rounded-xl border border-ocean-300"
+						className="rounded-xl border border-ocean-300 bg-white p-3 text-center"
 					>
-						<div className="text-lg font-bold text-ocean-text mb-1">
+						<div className="mb-1 text-lg font-bold text-ocean-text">
 							{f.formula}
 						</div>
-						<div className="text-xs text-stone-500 mb-2">{f.gender}</div>
+						<div className="mb-2 text-xs text-stone-500">{f.gender}</div>
 						<div className="space-y-0.5">
 							{f.examples.slice(0, 2).map((ex) => (
 								<MonoText
@@ -111,7 +111,7 @@ export const PrepositionsSection: React.FC = () => (
 
 		{/* 4. Preposition + Pronouns */}
 		<Card variant="bordered" padding="lg">
-			<h3 className="text-lg font-bold text-olive-text mb-2">
+			<h3 className="mb-2 text-lg font-bold text-olive-text">
 				Prepositions with Pronouns
 			</h3>
 			<Alert variant="purple" className="mb-4">
@@ -123,12 +123,12 @@ export const PrepositionsSection: React.FC = () => (
 				{PREPOSITION_PRONOUN_INFO.examples.map((ex) => (
 					<div
 						key={ex.greek}
-						className="px-3 py-1.5 bg-olive-50 rounded-full border border-olive-300 text-sm"
+						className="rounded-full border border-olive-300 bg-olive-50 px-3 py-1.5 text-sm"
 					>
-						<MonoText size="sm" className="text-olive-text font-medium">
+						<MonoText size="sm" className="font-medium text-olive-text">
 							{ex.greek}
 						</MonoText>
-						<span className="text-stone-600 ml-1">({ex.english})</span>
+						<span className="ml-1 text-stone-600">({ex.english})</span>
 					</div>
 				))}
 			</div>
@@ -136,25 +136,25 @@ export const PrepositionsSection: React.FC = () => (
 
 		{/* 5. Time Expressions */}
 		<Card variant="bordered" padding="lg">
-			<h3 className="text-lg font-bold text-stone-700 mb-3 flex items-center gap-2">
+			<h3 className="mb-3 flex items-center gap-2 text-lg font-bold text-stone-700">
 				<Clock size={18} className="text-olive-text" />
 				Time Expressions
 			</h3>
 
-			<div className="grid sm:grid-cols-3 gap-4">
+			<div className="grid gap-4 sm:grid-cols-3">
 				{TIME_EXPRESSIONS.patterns.map((p) => (
 					<div key={p.pattern}>
-						<div className="text-sm font-semibold text-olive-text mb-1">
+						<div className="mb-1 text-sm font-semibold text-olive-text">
 							{p.pattern}
 						</div>
-						<div className="text-xs text-stone-500 mb-2">{p.meaning}</div>
+						<div className="mb-2 text-xs text-stone-500">{p.meaning}</div>
 						<div className="space-y-1">
 							{p.examples.map((ex) => (
 								<div key={ex.greek} className="text-sm">
 									<MonoText size="sm" variant="greek">
 										{ex.greek}
 									</MonoText>
-									<span className="text-stone-500 ml-1 text-xs">
+									<span className="ml-1 text-xs text-stone-500">
 										{ex.english}
 									</span>
 								</div>
@@ -169,9 +169,9 @@ export const PrepositionsSection: React.FC = () => (
 		<Card
 			variant="bordered"
 			padding="lg"
-			className="bg-terracotta-50 border-terracotta-300"
+			className="border-terracotta-300 bg-terracotta-50"
 		>
-			<h3 className="text-lg font-bold text-terracotta-text mb-3 flex items-center gap-2">
+			<h3 className="mb-3 flex items-center gap-2 text-lg font-bold text-terracotta-text">
 				<AlertTriangle size={18} />
 				Common Mistakes
 			</h3>
@@ -180,19 +180,19 @@ export const PrepositionsSection: React.FC = () => (
 				{PREPOSITION_MISTAKES.map((mistake) => (
 					<div
 						key={mistake.wrong}
-						className="flex items-start gap-3 p-2 bg-white rounded-lg border border-terracotta-200"
+						className="flex items-start gap-3 rounded-lg border border-terracotta-200 bg-white p-2"
 					>
-						<div className="flex-1 min-w-0">
+						<div className="min-w-0 flex-1">
 							<div className="flex items-center gap-2 text-sm">
 								<span className="text-terracotta-text line-through">
 									<MonoText size="sm">{mistake.wrong}</MonoText>
 								</span>
-								<ArrowRight size={14} className="text-stone-400 shrink-0" />
-								<span className="text-olive-text font-medium">
+								<ArrowRight size={14} className="shrink-0 text-stone-400" />
+								<span className="font-medium text-olive-text">
 									<MonoText size="sm">{mistake.right}</MonoText>
 								</span>
 							</div>
-							<div className="text-xs text-stone-500 mt-0.5">
+							<div className="mt-0.5 text-xs text-stone-500">
 								{mistake.rule}
 							</div>
 						</div>
@@ -208,21 +208,21 @@ export const PrepositionsSection: React.FC = () => (
 			colorScheme="ocean"
 			defaultOpen={false}
 		>
-			<div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+			<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
 				{OTHER_PREPOSITIONS.map((prep) => (
 					<div
 						key={prep.greek}
-						className="p-3 bg-white rounded-lg border border-ocean-200"
+						className="rounded-lg border border-ocean-200 bg-white p-3"
 					>
-						<div className="flex items-baseline gap-2 mb-1">
+						<div className="mb-1 flex items-baseline gap-2">
 							<MonoText
 								variant="greek"
 								size="md"
-								className="text-ocean-text font-semibold"
+								className="font-semibold text-ocean-text"
 							>
 								{prep.greek}
 							</MonoText>
-							<span className="text-stone-600 text-sm">{prep.english}</span>
+							<span className="text-sm text-stone-600">{prep.english}</span>
 						</div>
 						<MonoText variant="greek" size="sm" className="text-stone-500">
 							{prep.example}
@@ -247,28 +247,29 @@ export const PrepositionsSection: React.FC = () => (
 						<MonoText size="sm">σε</MonoText> or{" "}
 						<MonoText size="sm">από</MonoText>. The{" "}
 						<MonoText size="sm">σε</MonoText> ones contract with articles (πάνω{" "}
-						<strong>στο</strong>), the <MonoText size="sm">από</MonoText> ones
-						don't (κάτω <strong>από το</strong>).
+						<strong>στο</strong>
+						), the <MonoText size="sm">από</MonoText> ones don't (κάτω{" "}
+						<strong>από το</strong>).
 					</AlertDescription>
 				</Alert>
 
 				{/* Color Legend */}
-				<Alert variant="default" className="bg-stone-50 border-stone-200">
+				<Alert variant="default" className="border-stone-200 bg-stone-50">
 					<Lightbulb size={16} className="text-stone-600" />
 					<AlertTitle className="text-stone-700">
 						Color coding = contraction behavior
 					</AlertTitle>
-					<AlertDescription className="flex items-center gap-4 flex-wrap">
+					<AlertDescription className="flex flex-wrap items-center gap-4">
 						<span className="flex items-center gap-2">
-							<span className="w-4 h-4 rounded bg-olive-300 border border-olive-400" />
-							<span className="text-olive-text font-medium">Olive = σε</span>
+							<span className="h-4 w-4 rounded border border-olive-400 bg-olive-300" />
+							<span className="font-medium text-olive-text">Olive = σε</span>
 							<span className="text-stone-600">
 								(contracts: δίπλα <strong>στο</strong>)
 							</span>
 						</span>
 						<span className="flex items-center gap-2">
-							<span className="w-4 h-4 rounded bg-ocean-300 border border-ocean-400" />
-							<span className="text-ocean-text font-medium">Blue = από</span>
+							<span className="h-4 w-4 rounded border border-ocean-400 bg-ocean-300" />
+							<span className="font-medium text-ocean-text">Blue = από</span>
 							<span className="text-stone-600">
 								(no contraction: κάτω <strong>από το</strong>)
 							</span>
@@ -281,26 +282,24 @@ export const PrepositionsSection: React.FC = () => (
 					{COMPOUND_CONTRAST_PAIRS.map((pair) => (
 						<div
 							key={pair.left.greek}
-							className="grid grid-cols-1 sm:grid-cols-2 gap-3"
+							className="grid grid-cols-1 gap-3 sm:grid-cols-2"
 						>
 							<div
-								className={`p-3 rounded-lg border ${
+								className={`rounded-lg border p-3 ${
 									pair.left.usesσε
-										? "bg-olive-100 border-olive-300"
-										: "bg-ocean-100 border-ocean-300"
+										? "border-olive-300 bg-olive-100"
+										: "border-ocean-300 bg-ocean-100"
 								}`}
 							>
-								<div className="flex items-baseline justify-between mb-1">
+								<div className="mb-1 flex items-baseline justify-between">
 									<MonoText
 										variant="greek"
 										size="md"
-										className={`font-semibold ${
-											pair.left.usesσε ? "text-olive-text" : "text-ocean-text"
-										}`}
+										className={`font-semibold ${pair.left.usesσε ? "text-olive-text" : "text-ocean-text"}`}
 									>
 										{pair.left.greek}
 									</MonoText>
-									<span className="text-stone-600 text-sm">
+									<span className="text-sm text-stone-600">
 										{pair.left.english}
 									</span>
 								</div>
@@ -314,23 +313,21 @@ export const PrepositionsSection: React.FC = () => (
 							</div>
 
 							<div
-								className={`p-3 rounded-lg border ${
+								className={`rounded-lg border p-3 ${
 									pair.right.usesσε
-										? "bg-olive-100 border-olive-300"
-										: "bg-ocean-100 border-ocean-300"
+										? "border-olive-300 bg-olive-100"
+										: "border-ocean-300 bg-ocean-100"
 								}`}
 							>
-								<div className="flex items-baseline justify-between mb-1">
+								<div className="mb-1 flex items-baseline justify-between">
 									<MonoText
 										variant="greek"
 										size="md"
-										className={`font-semibold ${
-											pair.right.usesσε ? "text-olive-text" : "text-ocean-text"
-										}`}
+										className={`font-semibold ${pair.right.usesσε ? "text-olive-text" : "text-ocean-text"}`}
 									>
 										{pair.right.greek}
 									</MonoText>
-									<span className="text-stone-600 text-sm">
+									<span className="text-sm text-stone-600">
 										{pair.right.english}
 									</span>
 								</div>

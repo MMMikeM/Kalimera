@@ -49,7 +49,7 @@ const TimeSubsection = ({
 			>
 				{label}
 				{subtitle && (
-					<span className="text-stone-400 font-normal"> {subtitle}</span>
+					<span className="font-normal text-stone-400"> {subtitle}</span>
 				)}
 			</div>
 			<TwoColumnList
@@ -63,7 +63,7 @@ const TimeSubsection = ({
 					<>
 						{item.secondary}
 						{item.note && (
-							<span className="text-stone-400 text-xs ml-2">({item.note})</span>
+							<span className="ml-2 text-xs text-stone-400">({item.note})</span>
 						)}
 					</>
 				)}
@@ -94,8 +94,8 @@ const TimeTellingSection = ({ items }: { items: PhraseItem[] }) => {
 			subtitle="Τι ώρα είναι;"
 			colorScheme="ocean"
 		>
-			<div className="px-4 py-3 bg-ocean-50 border-b border-ocean-200">
-				<div className="text-sm font-semibold text-ocean-text mb-1.5">
+			<div className="border-b border-ocean-200 bg-ocean-50 px-4 py-3">
+				<div className="mb-1.5 text-sm font-semibold text-ocean-text">
 					How to Tell Time
 				</div>
 				<div className="space-y-1 text-sm text-stone-600">
@@ -115,7 +115,7 @@ const TimeTellingSection = ({ items }: { items: PhraseItem[] }) => {
 							<MonoText
 								variant="greek"
 								size="sm"
-								className="text-ocean-text font-semibold"
+								className="font-semibold text-ocean-text"
 							>
 								και
 							</MonoText>{" "}
@@ -125,7 +125,7 @@ const TimeTellingSection = ({ items }: { items: PhraseItem[] }) => {
 							<MonoText
 								variant="greek"
 								size="sm"
-								className="text-ocean-text font-semibold"
+								className="font-semibold text-ocean-text"
 							>
 								παρά
 							</MonoText>{" "}
@@ -139,7 +139,7 @@ const TimeTellingSection = ({ items }: { items: PhraseItem[] }) => {
 				label="Basic Structure"
 				items={toTimeListItems(basic)}
 				variant="muted"
-				className="py-4 border-b-2 border-ocean-400"
+				className="border-b-2 border-ocean-400 py-4"
 			/>
 
 			{(pastHour.length > 0 || toHour.length > 0) && (
@@ -148,7 +148,7 @@ const TimeTellingSection = ({ items }: { items: PhraseItem[] }) => {
 						label="Past the Hour"
 						subtitle="(και)"
 						items={toTimeListItems(pastHour)}
-						className="py-4 border-b-2 md:border-b-0 md:border-r-2 border-ocean-400"
+						className="border-b-2 border-ocean-400 py-4 md:border-r-2 md:border-b-0"
 					/>
 					<TimeSubsection
 						label="To the Hour"
@@ -163,7 +163,7 @@ const TimeTellingSection = ({ items }: { items: PhraseItem[] }) => {
 				label={`"At" Times (στις)`}
 				items={toTimeListItems(atTimes)}
 				variant="muted"
-				className="py-4 border-t-2 border-ocean-400 bg-ocean-50"
+				className="border-t-2 border-ocean-400 bg-ocean-50 py-4"
 			/>
 		</ContentSection>
 	);

@@ -36,7 +36,7 @@ const FormCell = ({ form, isEmpty }: { form?: string; isEmpty?: boolean }) => (
 				{form}
 			</MonoText>
 		) : (
-			<span className="text-stone-400 italic text-sm">-</span>
+			<span className="text-sm text-stone-400 italic">-</span>
 		)}
 	</td>
 );
@@ -50,7 +50,7 @@ export const ImperativeTable = ({
 
 	if (!hasImperfective && !hasPerfective) {
 		return (
-			<div className="text-stone-500 italic p-4">
+			<div className="p-4 text-stone-500 italic">
 				No imperative forms available
 			</div>
 		);
@@ -58,24 +58,24 @@ export const ImperativeTable = ({
 
 	return (
 		<div className={cn("space-y-3", className)}>
-			<div className="flex items-center gap-2 mb-2">
+			<div className="mb-2 flex items-center gap-2">
 				<h4 className="font-semibold text-navy-text">Imperatives</h4>
 				<span className="text-xs text-stone-500">Commands</span>
 			</div>
 
-			<table className="w-full border-collapse rounded-lg overflow-hidden bg-cream-dark border border-stone-200">
+			<table className="w-full border-collapse overflow-hidden rounded-lg border border-stone-200 bg-cream-dark">
 				<thead>
 					<tr className="bg-stone-100">
-						<th className="p-2 text-left text-xs text-stone-600 font-normal border-b border-stone-200 w-1/3">
+						<th className="w-1/3 border-b border-stone-200 p-2 text-left text-xs font-normal text-stone-600">
 							Aspect
 						</th>
-						<th className="p-2 text-center text-xs text-stone-600 font-normal border-b border-stone-200">
+						<th className="border-b border-stone-200 p-2 text-center text-xs font-normal text-stone-600">
 							Singular
 							<div className="text-[10px] text-stone-400">
 								(you - one person)
 							</div>
 						</th>
-						<th className="p-2 text-center text-xs text-stone-600 font-normal border-b border-stone-200">
+						<th className="border-b border-stone-200 p-2 text-center text-xs font-normal text-stone-600">
 							Plural
 							<div className="text-[10px] text-stone-400">(you - group)</div>
 						</th>
@@ -84,7 +84,7 @@ export const ImperativeTable = ({
 				<tbody>
 					{hasImperfective && (
 						<tr className="bg-ocean-50/30">
-							<td className="p-3 border border-stone-200 bg-ocean-50">
+							<td className="border border-stone-200 bg-ocean-50 p-3">
 								<AspectLabel
 									aspect="Imperfective"
 									description="Ongoing action"
@@ -96,7 +96,7 @@ export const ImperativeTable = ({
 					)}
 					{hasPerfective && (
 						<tr className="bg-terracotta-50/30">
-							<td className="p-3 border border-stone-200 bg-terracotta-50">
+							<td className="border border-stone-200 bg-terracotta-50 p-3">
 								<AspectLabel aspect="Perfective" description="Single action" />
 							</td>
 							<FormCell form={imperatives.perfective?.singular} />
@@ -106,7 +106,7 @@ export const ImperativeTable = ({
 				</tbody>
 			</table>
 
-			<div className="text-xs text-stone-500 bg-stone-50 rounded p-2 border border-stone-200">
+			<div className="rounded border border-stone-200 bg-stone-50 p-2 text-xs text-stone-500">
 				<strong>Aspect distinction:</strong> Use imperfective for
 				ongoing/repeated actions ("keep doing this"), perfective for
 				single/completed actions ("do this once").

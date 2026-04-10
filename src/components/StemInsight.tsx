@@ -92,12 +92,12 @@ export const StemInsight = ({
 				className,
 			)}
 		>
-			<div className="flex items-center gap-2 mb-3">
+			<div className="mb-3 flex items-center gap-2">
 				<AlertTriangle size={18} className={honey.text} />
 				<h4 className={cn("font-semibold", honey.text)}>Suppletive Verb</h4>
 			</div>
 
-			<p className="text-sm text-stone-600 mb-4">
+			<p className="mb-4 text-sm text-stone-600">
 				This verb uses different roots for different tenses. This is similar to
 				English "go / went / gone" - the stems are unrelated and must be
 				memorized separately.
@@ -122,11 +122,7 @@ export const StemInsight = ({
 				{hasAorist && hasFuture && <Arrow />}
 				{!hasAorist && hasPresent && hasFuture && <Arrow />}
 				{hasFuture && (
-					<StemBox
-						label="Future"
-						stem={stems.future as string}
-						color="olive"
-					/>
+					<StemBox label="Future" stem={stems.future as string} color="olive" />
 				)}
 			</div>
 		</div>

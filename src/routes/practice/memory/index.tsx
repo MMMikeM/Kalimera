@@ -32,16 +32,28 @@ const PARADIGMS = [
 ];
 
 const COLOR_CLASSES = {
-	honey: { border: "border-honey/30", text: "text-honey-text", count: "text-honey" },
-	terracotta: { border: "border-terracotta/30", text: "text-terracotta-text", count: "text-terracotta" },
-	olive: { border: "border-olive/30", text: "text-olive-text", count: "text-olive" },
+	honey: {
+		border: "border-honey/30",
+		text: "text-honey-text",
+		count: "text-honey",
+	},
+	terracotta: {
+		border: "border-terracotta/30",
+		text: "text-terracotta-text",
+		count: "text-terracotta",
+	},
+	olive: {
+		border: "border-olive/30",
+		text: "text-olive-text",
+		count: "text-olive",
+	},
 } as const;
 
 export default function MemoryIndex() {
 	return (
-		<div className="px-6 py-8 max-w-md">
-			<h2 className="font-serif text-2xl text-navy-text mb-1">Memory Drills</h2>
-			<p className="text-sm text-muted-foreground mb-8">
+		<div className="max-w-md px-6 py-8">
+			<h2 className="mb-1 font-serif text-2xl text-navy-text">Memory Drills</h2>
+			<p className="mb-8 text-sm text-muted-foreground">
 				Timed recall for forms that need to become automatic.
 			</p>
 
@@ -52,7 +64,7 @@ export default function MemoryIndex() {
 						<Link
 							key={p.id}
 							to={p.id}
-							className={`block px-4 py-3 rounded-lg border ${c.border} hover:bg-cream-dark transition-colors`}
+							className={`block rounded-lg border px-4 py-3 ${c.border} transition-colors hover:bg-cream-dark`}
 						>
 							<div className="flex items-baseline justify-between gap-3">
 								<span className={`text-sm font-medium ${c.text}`}>
@@ -64,7 +76,7 @@ export default function MemoryIndex() {
 							</div>
 							<p
 								lang="el"
-								className="greek-text text-sm text-muted-foreground mt-1"
+								className="greek-text mt-1 text-sm text-muted-foreground"
 							>
 								{p.preview}
 							</p>

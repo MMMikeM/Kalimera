@@ -97,11 +97,11 @@ export default function EssentialsIndex() {
 							<Card
 								variant="bordered"
 								padding="md"
-								className={`${COLOR_CLASSES[section.color]} transition-colors h-full`}
+								className={`${COLOR_CLASSES[section.color]} h-full transition-colors`}
 							>
-								<div className="flex flex-col items-center text-center gap-2">
+								<div className="flex flex-col items-center gap-2 text-center">
 									<div
-										className={`p-2 rounded-lg ${ICON_CLASSES[section.color]}`}
+										className={`rounded-lg p-2 ${ICON_CLASSES[section.color]}`}
 									>
 										<Icon size={20} />
 									</div>

@@ -14,13 +14,13 @@ export interface FreezeIndicatorProps {
 }
 
 const freezeIndicatorVariants = tv({
-	base: "flex items-center gap-2 px-3 py-2 rounded-lg text-sm",
+	base: "flex items-center gap-2 rounded-lg px-3 py-2 text-sm",
 	variants: {
 		status: {
-			available: "bg-ocean-100 border border-ocean-300",
-			recovering: "bg-stone-100 border border-stone-300",
-			none: "bg-stone-50 border border-stone-200",
-			just_used: "bg-olive-100 border border-olive-400",
+			available: "border border-ocean-300 bg-ocean-100",
+			recovering: "border border-stone-300 bg-stone-100",
+			none: "border border-stone-200 bg-stone-50",
+			just_used: "border border-olive-400 bg-olive-100",
 		},
 	},
 	defaultVariants: {

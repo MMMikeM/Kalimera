@@ -59,7 +59,7 @@ const wordsSections: Section[] = [
 const SectionCard = ({ section }: { section: Section }) => (
 	<Link
 		to={section.href}
-		className={`flex items-center gap-4 p-4 rounded-xl border-2 ${section.color} hover:shadow-md transition-shadow`}
+		className={`flex items-center gap-4 rounded-xl border-2 p-4 ${section.color} transition-shadow hover:shadow-md`}
 	>
 		<div className="shrink-0">{section.icon}</div>
 		<div>
@@ -74,11 +74,11 @@ export default function LearnIndex() {
 		<div className="space-y-6">
 			<div>
 				<h1 className="text-2xl font-bold text-stone-800">Learn</h1>
-				<p className="text-stone-600 mt-1">Browse Greek content by topic</p>
+				<p className="mt-1 text-stone-600">Browse Greek content by topic</p>
 			</div>
 
 			<section>
-				<h2 className="text-xs font-semibold text-stone-500 uppercase tracking-wide mb-3">
+				<h2 className="mb-3 text-xs font-semibold tracking-wide text-stone-500 uppercase">
 					Communication
 				</h2>
 				<div className="grid gap-3">
@@ -89,7 +89,7 @@ export default function LearnIndex() {
 			</section>
 
 			<section>
-				<h2 className="text-xs font-semibold text-stone-500 uppercase tracking-wide mb-3">
+				<h2 className="mb-3 text-xs font-semibold tracking-wide text-stone-500 uppercase">
 					Words
 				</h2>
 				<div className="grid gap-3">

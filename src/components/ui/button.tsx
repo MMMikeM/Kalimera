@@ -2,16 +2,16 @@ import type { ReactNode } from "react";
 import { tv } from "tailwind-variants";
 
 export const buttonVariants = tv({
-	base: "inline-flex items-center justify-center gap-2 rounded-xl font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-terracotta-400 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm hover:shadow-md transform hover:-translate-y-0.5",
+	base: "inline-flex transform items-center justify-center gap-2 rounded-xl font-medium shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus:ring-2 focus:ring-terracotta-400 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50",
 	variants: {
 		variant: {
 			primary:
-				"bg-terracotta text-white hover:bg-terracotta-600 shadow-terracotta-200",
+				"bg-terracotta text-white shadow-terracotta-200 hover:bg-terracotta-600",
 			secondary:
-				"bg-white/80 backdrop-blur-sm text-stone-700 hover:bg-white border border-stone-200 hover:border-stone-300 shadow-stone-100",
+				"border border-stone-200 bg-white/80 text-stone-700 shadow-stone-100 backdrop-blur-sm hover:border-stone-300 hover:bg-white",
 			outline:
-				"border-2 border-stone-300 bg-white/50 text-stone-700 hover:bg-stone-50 hover:border-stone-400",
-			ghost: "text-stone-700 hover:bg-white/60 backdrop-blur-sm",
+				"border-2 border-stone-300 bg-white/50 text-stone-700 hover:border-stone-400 hover:bg-stone-50",
+			ghost: "text-stone-700 backdrop-blur-sm hover:bg-white/60",
 		},
 		size: {
 			sm: "px-3 py-1.5 text-sm",
@@ -28,7 +28,7 @@ export const buttonVariants = tv({
 			variant: "secondary",
 			active: true,
 			class:
-				"bg-terracotta text-white border-terracotta shadow-lg shadow-terracotta-300 hover:bg-terracotta-600",
+				"border-terracotta bg-terracotta text-white shadow-lg shadow-terracotta-300 hover:bg-terracotta-600",
 		},
 		{
 			variant: "primary",
@@ -43,8 +43,7 @@ export const buttonVariants = tv({
 	},
 });
 
-export interface ButtonProps
-	extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	variant?: "primary" | "secondary" | "outline" | "ghost";
 	size?: "sm" | "md" | "lg";
 	active?: boolean;

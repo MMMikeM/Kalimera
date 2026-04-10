@@ -74,13 +74,13 @@ export function TimeSubtab({ data }: Props) {
 					{sortedTimes.map((time) => (
 						<div
 							key={time.id}
-							className="grid grid-cols-[3fr_2fr] items-center gap-x-3 py-2.5 px-3"
+							className="grid grid-cols-[3fr_2fr] items-center gap-x-3 px-3 py-2.5"
 						>
 							<MonoText variant="greek">{time.greek}</MonoText>
 							<div>
-								<span className="text-stone-500 text-sm">{time.english}</span>
+								<span className="text-sm text-stone-500">{time.english}</span>
 								{time.timeRange && (
-									<span className="text-stone-400 text-xs ml-1.5">
+									<span className="ml-1.5 text-xs text-stone-400">
 										({time.timeRange})
 									</span>
 								)}
@@ -88,8 +88,8 @@ export function TimeSubtab({ data }: Props) {
 						</div>
 					))}
 				</div>
-				<div className="mx-3 mt-3 p-2.5 bg-honey-100 rounded-lg border border-honey-200">
-					<p className="text-sm text-honey-text font-medium mb-2">
+				<div className="mx-3 mt-3 rounded-lg border border-honey-200 bg-honey-100 p-2.5">
+					<p className="mb-2 text-sm font-medium text-honey-text">
 						Pattern: το + time of day
 					</p>
 					<div className="space-y-2 text-sm">
@@ -97,7 +97,7 @@ export function TimeSubtab({ data }: Props) {
 							<MonoText variant="greek">
 								στις δύο <span className="font-semibold">το μεσημέρι</span>
 							</MonoText>
-							<div className="text-stone-500 text-xs">
+							<div className="text-xs text-stone-500">
 								at two in the afternoon
 							</div>
 						</div>
@@ -105,11 +105,11 @@ export function TimeSubtab({ data }: Props) {
 							<MonoText variant="greek">
 								στις οκτώ <span className="font-semibold">το βράδυ</span>
 							</MonoText>
-							<div className="text-stone-500 text-xs">
+							<div className="text-xs text-stone-500">
 								at eight in the evening
 							</div>
 						</div>
-						<p className="text-stone-500 text-xs pt-1.5 border-t border-honey-200/50">
+						<p className="border-t border-honey-200/50 pt-1.5 text-xs text-stone-500">
 							<MonoText variant="greek" className="text-stone-700">
 								το
 							</MonoText>{" "}
@@ -130,15 +130,15 @@ export function TimeSubtab({ data }: Props) {
 						{sortedDays.map((day) => (
 							<div
 								key={day.id}
-								className="grid grid-cols-[3fr_2fr] items-center gap-x-3 py-2.5 px-3"
+								className="grid grid-cols-[3fr_2fr] items-center gap-x-3 px-3 py-2.5"
 							>
 								<MonoText variant="greek">{day.greek}</MonoText>
-								<span className="text-stone-500 text-sm">{day.english}</span>
+								<span className="text-sm text-stone-500">{day.english}</span>
 							</div>
 						))}
 					</div>
-					<div className="mx-3 mt-3 p-2.5 bg-ocean-100 rounded-lg border border-ocean-200">
-						<p className="text-sm text-ocean-text font-medium mb-2">
+					<div className="mx-3 mt-3 rounded-lg border border-ocean-200 bg-ocean-100 p-2.5">
+						<p className="mb-2 text-sm font-medium text-ocean-text">
 							Days use feminine accusative
 						</p>
 						<div className="space-y-2 text-sm">
@@ -146,13 +146,13 @@ export function TimeSubtab({ data }: Props) {
 								<MonoText variant="greek">
 									<span className="font-semibold">την</span> Τρίτη
 								</MonoText>
-								<div className="text-stone-500 text-xs">
+								<div className="text-xs text-stone-500">
 									on Tuesday (specific)
 								</div>
 							</div>
 							<div>
 								<MonoText variant="greek">κάθε Τρίτη</MonoText>
-								<div className="text-stone-500 text-xs">
+								<div className="text-xs text-stone-500">
 									every Tuesday (no article)
 								</div>
 							</div>
@@ -160,9 +160,9 @@ export function TimeSubtab({ data }: Props) {
 								<MonoText variant="greek">
 									<span className="font-semibold">την</span> περασμένη Τρίτη
 								</MonoText>
-								<div className="text-stone-500 text-xs">last Tuesday</div>
+								<div className="text-xs text-stone-500">last Tuesday</div>
 							</div>
-							<p className="text-stone-500 text-xs pt-1.5 border-t border-ocean-200/50">
+							<p className="border-t border-ocean-200/50 pt-1.5 text-xs text-stone-500">
 								<MonoText variant="greek" className="text-stone-700">
 									την
 								</MonoText>{" "}
@@ -188,15 +188,15 @@ export function TimeSubtab({ data }: Props) {
 						{sortedMonths.map((month) => (
 							<div
 								key={month.id}
-								className="grid grid-cols-[3fr_2fr] items-center gap-x-3 py-2.5 px-3"
+								className="grid grid-cols-[3fr_2fr] items-center gap-x-3 px-3 py-2.5"
 							>
 								<MonoText variant="greek">{month.greek}</MonoText>
-								<span className="text-stone-500 text-sm">{month.english}</span>
+								<span className="text-sm text-stone-500">{month.english}</span>
 							</div>
 						))}
 					</div>
-					<div className="mx-3 mt-3 p-2.5 bg-olive-100 rounded-lg border border-olive-200">
-						<p className="text-sm text-olive-text font-medium mb-2">
+					<div className="mx-3 mt-3 rounded-lg border border-olive-200 bg-olive-100 p-2.5">
+						<p className="mb-2 text-sm font-medium text-olive-text">
 							Months use masculine accusative
 						</p>
 						<div className="space-y-2 text-sm">
@@ -204,21 +204,21 @@ export function TimeSubtab({ data }: Props) {
 								<MonoText variant="greek">
 									<span className="font-semibold">τον</span> Ιούλιο
 								</MonoText>
-								<div className="text-stone-500 text-xs">in July</div>
+								<div className="text-xs text-stone-500">in July</div>
 							</div>
 							<div>
 								<MonoText variant="greek">
 									<span className="font-semibold">τον</span> περασμένο Μάρτιο
 								</MonoText>
-								<div className="text-stone-500 text-xs">last March</div>
+								<div className="text-xs text-stone-500">last March</div>
 							</div>
 							<div>
 								<MonoText variant="greek">
 									<span className="font-semibold">τον</span> επόμενο μήνα
 								</MonoText>
-								<div className="text-stone-500 text-xs">next month</div>
+								<div className="text-xs text-stone-500">next month</div>
 							</div>
-							<p className="text-stone-500 text-xs pt-1.5 border-t border-olive-200/50">
+							<p className="border-t border-olive-200/50 pt-1.5 text-xs text-stone-500">
 								<MonoText variant="greek" className="text-stone-700">
 									τον
 								</MonoText>{" "}

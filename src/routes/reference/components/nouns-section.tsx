@@ -117,15 +117,15 @@ const nomEqualsAcc = (paradigm: AgreementParadigm) =>
 
 const CaseGuide = () => (
 	<ContentSection title="Which case should I use?" colorScheme="ocean">
-		<div className="p-4 space-y-3">
+		<div className="space-y-3 p-4">
 			{CASE_QUESTIONS.map(({ case: c, question, greek, english }) => (
 				<div key={c} className="flex items-start gap-3">
-					<span className="font-mono text-xs bg-stone-100 px-2 py-1 rounded shrink-0">
+					<span className="shrink-0 rounded bg-stone-100 px-2 py-1 font-mono text-xs">
 						{c}
 					</span>
 					<div>
-						<span className="font-medium text-sm">{question}</span>
-						<div className="text-stone-500 text-sm">
+						<span className="text-sm font-medium">{question}</span>
+						<div className="text-sm text-stone-500">
 							<MonoText variant="greek" size="sm">
 								{greek}
 							</MonoText>{" "}
@@ -134,7 +134,7 @@ const CaseGuide = () => (
 					</div>
 				</div>
 			))}
-			<p className="text-sm text-stone-500 pt-2 border-t border-stone-100">
+			<p className="border-t border-stone-100 pt-2 text-sm text-stone-500">
 				All prepositions (σε, με, για, από...) take accusative.
 			</p>
 		</div>
@@ -143,28 +143,28 @@ const CaseGuide = () => (
 
 const GenderHints = () => (
 	<Card variant="bordered" padding="md" className="bg-stone-50/50">
-		<div className="text-sm font-medium text-stone-700 mb-3">
+		<div className="mb-3 text-sm font-medium text-stone-700">
 			Recognise gender by ending
 		</div>
 		<div className="grid grid-cols-3 gap-3 text-sm">
 			{(["masculine", "feminine", "neuter"] as const).map((gender) => (
 				<div key={gender} className="space-y-1">
 					<div className="flex items-center gap-1.5">
-						<span className={`w-2.5 h-2.5 rounded-full bg-gender-${gender}`} />
+						<span className={`h-2.5 w-2.5 rounded-full bg-gender-${gender}`} />
 						<span className={`font-medium text-gender-${gender} capitalize`}>
 							{gender}
 						</span>
 					</div>
-					<div className="text-stone-600 text-xs">
+					<div className="text-xs text-stone-600">
 						{GENDER_HINTS[gender].endings}
 					</div>
-					<div className="text-stone-500 text-xs">
+					<div className="text-xs text-stone-500">
 						{GENDER_HINTS[gender].hint}
 					</div>
 				</div>
 			))}
 		</div>
-		<p className="text-xs text-stone-500 mt-3 pt-2 border-t border-stone-200">
+		<p className="mt-3 border-t border-stone-200 pt-2 text-xs text-stone-500">
 			The ending tells you the gender → the gender tells you how it declines
 		</p>
 	</Card>
@@ -177,7 +177,7 @@ const ViewToggle = ({
 	mode: "endings" | "full";
 	onChange: (mode: "endings" | "full") => void;
 }) => (
-	<div className="flex rounded-lg border border-stone-200 overflow-hidden text-xs">
+	<div className="flex overflow-hidden rounded-lg border border-stone-200 text-xs">
 		{(["endings", "full"] as const).map((m) => (
 			<button
 				key={m}
@@ -204,17 +204,17 @@ const ParadigmTable = ({
 	mode?: "endings" | "full";
 	showNomAccHighlight?: boolean;
 }) => (
-	<div className="overflow-x-auto -mx-4 px-4">
-		<table className="w-full text-sm min-w-[280px]">
+	<div className="-mx-4 overflow-x-auto px-4">
+		<table className="w-full min-w-[280px] text-sm">
 			<thead>
 				<tr className="border-b border-stone-200">
-					<th className="text-left py-2 pr-2 font-medium text-stone-500 text-xs w-12">
+					<th className="w-12 py-2 pr-2 text-left text-xs font-medium text-stone-500">
 						Case
 					</th>
 					{paradigms.map((p) => (
 						<th
 							key={p.id}
-							className={`text-left py-2 px-2 font-medium text-xs text-gender-${p.gender}`}
+							className={`px-2 py-2 text-left text-xs font-medium text-gender-${p.gender}`}
 						>
 							<MonoText size="sm">{p.pattern}</MonoText>
 						</th>
@@ -224,16 +224,18 @@ const ParadigmTable = ({
 			<tbody>
 				{CASES.map((caseType) => (
 					<tr key={caseType} className="border-b border-stone-100">
-						<td className="py-2 pr-2 text-stone-500 text-xs">{caseType}</td>
+						<td className="py-2 pr-2 text-xs text-stone-500">{caseType}</td>
 						{paradigms.map((p) => {
 							const highlight =
 								showNomAccHighlight && caseType === "Acc" && nomEqualsAcc(p);
 							const value =
-								mode === "endings" ? getEnding(p, caseType) : getFull(p, caseType);
+								mode === "endings"
+									? getEnding(p, caseType)
+									: getFull(p, caseType);
 							return (
 								<td
 									key={p.id}
-									className={`py-2 px-2 ${highlight ? "bg-olive-50" : ""}`}
+									className={`px-2 py-2 ${highlight ? "bg-olive-50" : ""}`}
 								>
 									<MonoText
 										size="sm"
@@ -243,7 +245,7 @@ const ParadigmTable = ({
 										{value}
 									</MonoText>
 									{highlight && (
-										<span className="ml-1 text-olive-600 text-xs">★</span>
+										<span className="ml-1 text-xs text-olive-600">★</span>
 									)}
 								</td>
 							);
@@ -273,9 +275,9 @@ const EssentialPatterns = () => {
 					mode={mode}
 					showNomAccHighlight={true}
 				/>
-				<div className="pt-3 border-t border-stone-200">
+				<div className="border-t border-stone-200 pt-3">
 					<div className="flex items-start gap-2">
-						<span className="text-olive-600 text-lg">★</span>
+						<span className="text-lg text-olive-600">★</span>
 						<div>
 							<div className="text-sm font-medium text-olive-700">
 								Feminine & neuter: Nominative = Accusative
@@ -285,7 +287,7 @@ const EssentialPatterns = () => {
 							</p>
 						</div>
 					</div>
-					<p className="text-xs text-stone-500 mt-2">
+					<p className="mt-2 text-xs text-stone-500">
 						Masculine is the tricky one — it changes in every case.
 					</p>
 				</div>
@@ -304,7 +306,7 @@ const GenderVariants = ({ gender }: { gender: Gender }) => {
 		<ContentSection title={title} colorScheme={gender}>
 			<div className="p-3">
 				<ParadigmTable paradigms={paradigms} mode="endings" />
-				<div className="flex flex-wrap gap-x-3 gap-y-1 mt-3 pt-2 border-t border-stone-200 text-xs text-stone-600">
+				<div className="mt-3 flex flex-wrap gap-x-3 gap-y-1 border-t border-stone-200 pt-2 text-xs text-stone-600">
 					{paradigms.map((p) => (
 						<span key={p.id}>
 							<MonoText size="sm" variant={gender}>
@@ -325,10 +327,10 @@ const DecisionGuide = () => (
 		colorScheme="honey"
 		defaultOpen={false}
 	>
-		<div className="p-4 space-y-3">
+		<div className="space-y-3 p-4">
 			{DECISION_GUIDES.map(({ question, explanation, examples }) => (
-				<div key={question} className="p-3 bg-stone-50 rounded-lg">
-					<div className="font-medium text-sm text-stone-700 mb-1">
+				<div key={question} className="rounded-lg bg-stone-50 p-3">
+					<div className="mb-1 text-sm font-medium text-stone-700">
 						"{question}"
 					</div>
 					<p className="text-sm text-stone-600">
@@ -357,14 +359,14 @@ const VocativeSection = () => (
 		colorScheme="stone"
 		defaultOpen={false}
 	>
-		<div className="p-4 space-y-4">
+		<div className="space-y-4 p-4">
 			<p className="text-sm text-stone-600">
 				When calling someone directly, masculine nouns change. Feminine and
 				neuter stay the same.
 			</p>
 			<div className="grid grid-cols-2 gap-4 text-sm">
 				<div>
-					<div className="font-medium text-gender-masculine mb-2">
+					<div className="mb-2 font-medium text-gender-masculine">
 						Masculine changes
 					</div>
 					<div className="space-y-1">
@@ -377,7 +379,7 @@ const VocativeSection = () => (
 					</div>
 				</div>
 				<div>
-					<div className="font-medium text-stone-600 mb-2">Fem & Neut</div>
+					<div className="mb-2 font-medium text-stone-600">Fem & Neut</div>
 					<p className="text-stone-500">Same as nominative</p>
 					<div className="mt-1 text-stone-500">γυναίκα! παιδί!</div>
 				</div>
@@ -393,7 +395,9 @@ const ArticlesLink = () => (
 				<div className="text-sm font-medium text-stone-700">
 					Article forms by case
 				</div>
-				<p className="text-xs text-stone-500">See the definite article paradigm</p>
+				<p className="text-xs text-stone-500">
+					See the definite article paradigm
+				</p>
 			</div>
 			<Link
 				to="/reference/articles"

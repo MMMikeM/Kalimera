@@ -83,8 +83,8 @@ const NounDeclensionDrill: React.FC<NounDeclensionDrillProps> = ({
 
 	if (questions.length === 0) {
 		return (
-			<div className="text-center py-12 bg-stone-100 rounded-xl border border-stone-300">
-				<h3 className="text-xl font-semibold text-stone-700 mb-2">
+			<div className="rounded-xl border border-stone-300 bg-stone-100 py-12 text-center">
+				<h3 className="mb-2 text-xl font-semibold text-stone-700">
 					No questions available
 				</h3>
 				<p className="text-stone-600">
@@ -95,7 +95,7 @@ const NounDeclensionDrill: React.FC<NounDeclensionDrillProps> = ({
 	}
 
 	return (
-		<div className="max-w-xl mx-auto">
+		<div className="mx-auto max-w-xl">
 			<UnifiedDrill
 				title={`Noun Declension (${questions.length} items)`}
 				questions={questions}
