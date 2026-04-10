@@ -1,6 +1,6 @@
 import type React from "react";
+import { type ColorScheme, colorStyles } from "@/lib/colors";
 import { cn } from "@/lib/utils";
-import type { ColorScheme } from "./DialogueExchange";
 import { MonoText } from "./MonoText";
 
 export interface ConversationHeroProps {
@@ -12,32 +12,6 @@ export interface ConversationHeroProps {
 	className?: string;
 }
 
-const heroStyles: Record<
-	ColorScheme,
-	{ bg: string; border: string; text: string }
-> = {
-	olive: {
-		bg: "bg-olive-50",
-		border: "border-olive-200",
-		text: "text-olive-dark",
-	},
-	terracotta: {
-		bg: "bg-terracotta-50",
-		border: "border-terracotta-200",
-		text: "text-terracotta-dark",
-	},
-	ocean: {
-		bg: "bg-ocean-50",
-		border: "border-ocean-200",
-		text: "text-ocean-dark",
-	},
-	honey: {
-		bg: "bg-honey-50",
-		border: "border-honey-200",
-		text: "text-honey-dark",
-	},
-};
-
 export const ConversationHero: React.FC<ConversationHeroProps> = ({
 	icon,
 	title,
@@ -46,14 +20,14 @@ export const ConversationHero: React.FC<ConversationHeroProps> = ({
 	colorScheme,
 	className,
 }) => {
-	const styles = heroStyles[colorScheme];
+	const styles = colorStyles[colorScheme];
 
 	return (
 		<div
 			className={cn(
 				"rounded-xl border-2 p-6",
 				styles.bg,
-				styles.border,
+				styles.borderMuted,
 				className,
 			)}
 		>
@@ -63,7 +37,7 @@ export const ConversationHero: React.FC<ConversationHeroProps> = ({
 						"flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center",
 						styles.bg,
 						"border",
-						styles.border,
+						styles.borderMuted,
 					)}
 				>
 					<span className={styles.text}>{icon}</span>

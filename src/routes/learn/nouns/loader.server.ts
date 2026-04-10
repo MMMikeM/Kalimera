@@ -68,4 +68,3 @@ export async function loader() {
 	return { categories };
 }
 
-export type NounsLoaderData = Awaited<ReturnType<typeof loader>>;

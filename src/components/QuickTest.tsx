@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { type ColorScheme, colorStyles } from "@/lib/colors";
 import { Card } from "./Card";
 import { MonoText } from "./MonoText";
 
@@ -13,35 +14,8 @@ export interface QuickTestProps {
 	intro?: string;
 	options: QuickTestOption[];
 	summary?: ReactNode;
-	colorScheme?: "honey" | "ocean" | "olive" | "terracotta";
+	colorScheme?: Extract<ColorScheme, "honey" | "ocean" | "olive" | "terracotta">;
 }
-
-const colorStyles = {
-	honey: {
-		bg: "bg-honey-100",
-		border: "border-honey-400",
-		text: "text-honey-text",
-		shadow: "shadow-md shadow-honey-100",
-	},
-	ocean: {
-		bg: "bg-ocean-100",
-		border: "border-ocean-400",
-		text: "text-ocean-text",
-		shadow: "shadow-md shadow-ocean-100",
-	},
-	olive: {
-		bg: "bg-olive-100",
-		border: "border-olive-400",
-		text: "text-olive-text",
-		shadow: "shadow-md shadow-olive-100",
-	},
-	terracotta: {
-		bg: "bg-terracotta-100",
-		border: "border-terracotta-400",
-		text: "text-terracotta-text",
-		shadow: "shadow-md shadow-terracotta-100",
-	},
-};
 
 export const QuickTest = ({
 	title,
@@ -56,7 +30,7 @@ export const QuickTest = ({
 		<Card
 			variant="bordered"
 			padding="lg"
-			className={`${colors.bg} ${colors.border} ${colors.shadow}`}
+			className={`${colors.bgMuted} ${colors.border} shadow-md`}
 		>
 			<h3 className={`text-lg font-bold ${colors.text} mb-2`}>{title}</h3>
 			{intro && <p className="text-sm text-stone-600 mb-4">{intro}</p>}
@@ -65,7 +39,7 @@ export const QuickTest = ({
 				{options.map((option) => (
 					<div
 						key={option.condition}
-						className={`p-3 bg-white rounded-lg border ${colors.border}`}
+						className="py-3 border-b border-stone-200 last:border-b-0"
 					>
 						<div className="flex items-start gap-3">
 							<div className={`${colors.text} font-bold text-sm shrink-0`}>

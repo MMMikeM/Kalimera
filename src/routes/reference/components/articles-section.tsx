@@ -275,7 +275,7 @@ const MovableNuQuickWin: React.FC = () => (
 			</div>
 			<CollapsibleSection
 				title="When do natives drop it?"
-				colorScheme="default"
+				colorScheme="stone"
 				defaultOpen={false}
 			>
 				<div className="p-3 text-sm text-stone-600 space-y-2">

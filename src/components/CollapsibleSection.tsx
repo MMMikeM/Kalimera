@@ -2,15 +2,10 @@ import * as CollapsiblePrimitive from "@radix-ui/react-collapsible";
 import { ChevronDown } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { type ReactNode, useState } from "react";
+import { type ColorScheme, colorStyles } from "@/lib/colors";
 import { cn } from "@/lib/utils";
 
-export type CollapsibleColorScheme =
-	| "honey"
-	| "ocean"
-	| "olive"
-	| "terracotta"
-	| "navy"
-	| "default";
+export type CollapsibleColorScheme = ColorScheme;
 
 export interface CollapsibleSectionProps {
 	title: string;
@@ -22,65 +17,17 @@ export interface CollapsibleSectionProps {
 	className?: string;
 }
 
-const colorMap: Record<
-	CollapsibleColorScheme,
-	{ bg: string; hover: string; border: string; text: string; icon: string }
-> = {
-	honey: {
-		bg: "bg-honey-100",
-		hover: "hover:bg-honey-200",
-		border: "border-honey-400",
-		text: "text-honey-text",
-		icon: "text-honey",
-	},
-	ocean: {
-		bg: "bg-ocean-100",
-		hover: "hover:bg-ocean-200",
-		border: "border-ocean-400",
-		text: "text-ocean-text",
-		icon: "text-ocean",
-	},
-	olive: {
-		bg: "bg-olive-100",
-		hover: "hover:bg-olive-200",
-		border: "border-olive-400",
-		text: "text-olive-text",
-		icon: "text-olive",
-	},
-	terracotta: {
-		bg: "bg-terracotta-100",
-		hover: "hover:bg-terracotta-200",
-		border: "border-terracotta-400",
-		text: "text-terracotta-text",
-		icon: "text-terracotta",
-	},
-	navy: {
-		bg: "bg-navy-100",
-		hover: "hover:bg-navy-200",
-		border: "border-navy-400",
-		text: "text-navy-text",
-		icon: "text-navy",
-	},
-	default: {
-		bg: "bg-stone-50",
-		hover: "hover:bg-stone-100",
-		border: "border-stone-200",
-		text: "text-stone-700",
-		icon: "text-stone-600",
-	},
-};
-
 export const CollapsibleSection = ({
 	title,
 	subtitle,
 	icon,
-	colorScheme = "default",
+	colorScheme = "stone",
 	defaultOpen = false,
 	children,
 	className,
 }: CollapsibleSectionProps) => {
 	const [isOpen, setIsOpen] = useState(defaultOpen);
-	const colors = colorMap[colorScheme];
+	const colors = colorStyles[colorScheme];
 
 	return (
 		<CollapsiblePrimitive.Root
@@ -92,12 +39,12 @@ export const CollapsibleSection = ({
 				<CollapsiblePrimitive.Trigger
 					className={cn(
 						"flex items-center gap-2 w-full p-3 transition-colors text-left group cursor-pointer",
-						colors.bg,
+						colors.bgMuted,
 						colors.hover,
 						"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-900/30 focus-visible:ring-inset",
 					)}
 				>
-					{icon && <span className={colors.icon}>{icon}</span>}
+					{icon && <span className={colors.accent}>{icon}</span>}
 					<span className={cn("font-medium", colors.text)}>{title}</span>
 					{subtitle && (
 						<span className="text-sm text-stone-500 ml-1">{subtitle}</span>
@@ -146,7 +93,7 @@ export const CollapsibleSection = ({
 							}}
 							className="overflow-hidden"
 						>
-							<div className="p-4 border-t border-stone-200/60 bg-white/50">
+							<div className="p-4 border-t border-stone-200/60 bg-cream-dark/50">
 								{children}
 							</div>
 						</motion.div>

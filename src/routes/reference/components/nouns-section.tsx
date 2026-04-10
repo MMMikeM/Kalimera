@@ -354,7 +354,7 @@ const DecisionGuide = () => (
 const VocativeSection = () => (
 	<CollapsibleSection
 		title="Vocative (direct address)"
-		colorScheme="default"
+		colorScheme="stone"
 		defaultOpen={false}
 	>
 		<div className="p-4 space-y-4">

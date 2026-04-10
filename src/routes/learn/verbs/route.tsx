@@ -85,6 +85,7 @@ const endingColors: Record<ColorScheme, string> = {
 	masculine: "text-navy-500 font-bold",
 	feminine: "text-sunset-500 font-bold",
 	neuter: "text-slate-500 font-bold",
+	stone: "text-stone-500 font-bold",
 };
 
 const ConjugationCell: React.FC<ConjugationCellProps> = ({

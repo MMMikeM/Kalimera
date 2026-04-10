@@ -1,4 +1,5 @@
 import { AlertTriangle } from "lucide-react";
+import { type ColorScheme, colorStyles } from "@/lib/colors";
 import { cn } from "@/lib/utils";
 import { MonoText } from "./MonoText";
 
@@ -12,38 +13,22 @@ export interface StemInsightProps {
 	className?: string;
 }
 
+type StemColor = Extract<ColorScheme, "ocean" | "terracotta" | "olive">;
+
 interface StemBoxProps {
 	label: string;
 	stem: string;
-	colorScheme: "ocean" | "terracotta" | "olive";
+	color: StemColor;
 }
 
-const colorStyles = {
-	ocean: {
-		bg: "bg-ocean-100",
-		border: "border-ocean-300",
-		text: "text-ocean-text",
-	},
-	terracotta: {
-		bg: "bg-terracotta-100",
-		border: "border-terracotta-300",
-		text: "text-terracotta-text",
-	},
-	olive: {
-		bg: "bg-olive-100",
-		border: "border-olive-300",
-		text: "text-olive-text",
-	},
-};
-
-const StemBox = ({ label, stem, colorScheme }: StemBoxProps) => {
-	const styles = colorStyles[colorScheme];
+const StemBox = ({ label, stem, color }: StemBoxProps) => {
+	const styles = colorStyles[color];
 	return (
 		<div
 			className={cn(
 				"flex flex-col items-center p-3 rounded-lg border",
-				styles.bg,
-				styles.border,
+				styles.bgMuted,
+				styles.borderMuted,
 			)}
 		>
 			<span className={cn("text-xs font-medium mb-1", styles.text)}>
@@ -96,16 +81,20 @@ export const StemInsight = ({
 		return null;
 	}
 
+	const honey = colorStyles.honey;
+
 	return (
 		<div
 			className={cn(
-				"rounded-lg border-2 border-honey-300 bg-honey-50 p-4",
+				"rounded-lg border-2 p-4",
+				honey.borderMuted,
+				honey.bg,
 				className,
 			)}
 		>
 			<div className="flex items-center gap-2 mb-3">
-				<AlertTriangle size={18} className="text-honey-text" />
-				<h4 className="font-semibold text-honey-text">Suppletive Verb</h4>
+				<AlertTriangle size={18} className={honey.text} />
+				<h4 className={cn("font-semibold", honey.text)}>Suppletive Verb</h4>
 			</div>
 
 			<p className="text-sm text-stone-600 mb-4">
@@ -119,7 +108,7 @@ export const StemInsight = ({
 					<StemBox
 						label="Present"
 						stem={stems.present as string}
-						colorScheme="ocean"
+						color="ocean"
 					/>
 				)}
 				{hasPresent && hasAorist && <Arrow />}
@@ -127,7 +116,7 @@ export const StemInsight = ({
 					<StemBox
 						label="Aorist"
 						stem={stems.aorist as string}
-						colorScheme="terracotta"
+						color="terracotta"
 					/>
 				)}
 				{hasAorist && hasFuture && <Arrow />}
@@ -136,7 +125,7 @@ export const StemInsight = ({
 					<StemBox
 						label="Future"
 						stem={stems.future as string}
-						colorScheme="olive"
+						color="olive"
 					/>
 				)}
 			</div>
