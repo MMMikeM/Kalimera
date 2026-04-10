@@ -11,7 +11,6 @@ import {
 import { useState } from "react";
 import { Link } from "react-router";
 import { FreezeIndicator } from "@/components/FreezeIndicator";
-import { MilestoneCelebration } from "@/components/MilestoneCelebration";
 import {
 	getItemsDueTomorrow,
 	getLastPracticeDate,
@@ -145,7 +144,7 @@ const PracticeCTA = ({
 		<div className="space-y-3">
 			<Link
 				to="/practice"
-				className="block rounded-2xl p-6 bg-gradient-to-br from-honey-100 to-honey-200 border-2 border-honey-400 shadow-md hover:shadow-lg transition-all hover:scale-[1.01]"
+				className="block rounded-2xl p-6 bg-linear-to-br from-honey-100 to-honey-200 border-2 border-honey-400 shadow-md hover:shadow-lg transition-all hover:scale-[1.01]"
 			>
 				<div className="flex items-center justify-between">
 					<div>
@@ -230,7 +229,7 @@ const LapsedUserCTA = ({
 	const { greeting, message, emphasis } = getMessage();
 
 	return (
-		<div className="rounded-2xl bg-gradient-to-br from-ocean-50 to-ocean-100 border border-ocean-200 p-6">
+		<div className="rounded-2xl bg-linear-to-brrom-ocean-50 to-ocean-100 border border-ocean-200 p-6">
 			<p className="text-2xl font-serif text-ocean-text">{greeting}</p>
 			<p className="text-stone-600 mt-1">{message}</p>
 			<p className="text-stone-700 font-medium mt-1">{emphasis}</p>
@@ -541,8 +540,6 @@ export default function DashboardRoute({ loaderData }: Route.ComponentProps) {
 
 	return (
 		<div className="pb-8 space-y-6">
-			<MilestoneCelebration streak={stats.streak} userId={userId} />
-
 			{/* Primary CTA Section */}
 			<section>{renderCTA()}</section>
 
