@@ -6,7 +6,9 @@ import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig(({ isSsrBuild, command }) => ({
 	build: {
-		rollupOptions: isSsrBuild ? { input: "./src/entry.worker.ts" } : undefined,
+		rolldownOptions: isSsrBuild
+			? { input: "./src/entry.worker.ts" }
+			: undefined,
 	},
 	ssr:
 		command === "build"
