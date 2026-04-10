@@ -49,7 +49,7 @@ Greek learning app with SRS-based vocabulary practice and timed production drill
 - Tap "Learn new items" → /practice/vocabulary (when caught up)
 - Navigate via bottom nav
 </user-actions>
-<engagement>Primary habit trigger - due count creates urgency, streak creates loss aversion</engagement>
+<engagement>Primary habit trigger - due count is informational ("12 items, ~3 min"), practice calendar is a passive consistency record</engagement>
 </route>
 
 <route path="/login">
@@ -214,7 +214,7 @@ In-page filter buttons before starting drill:
 - Quality 2: Incorrect → decrease interval (hard)
 - Mastery threshold: 21+ day interval
 </srs-algorithm>
-<engagement>Due count urgency, completion satisfaction</engagement>
+<engagement>Informational due count, completion as natural endpoint</engagement>
 </route>
 
 <route path="/practice/:tab" tabs="vocabulary,review">
@@ -422,7 +422,7 @@ In-page filter buttons before starting drill:
 - View historical practice data
 - Navigate back to dashboard
 </user-actions>
-<engagement>Investment visibility, progress reinforcement</engagement>
+<engagement>Self-comparison over time — user-accessed competence data, not pushed metrics</engagement>
 </route>
 
 <route path="/support">
@@ -439,73 +439,175 @@ In-page filter buttons before starting drill:
 ## Core Engagement Loop
 
 ```
-Open app → Dashboard ("X due") → Practice (2-3 min) → Streak updated → Close
+Open app → Dashboard (due count + practice history) → Practice (2-3 min) → See what you practised → Decide what's next or stop
 ```
 
-## Engagement Hooks
+The loop centres on the activity and its real output. The streak calendar is a
+passive record of consistency, not the payoff. The payoff is the practice itself
+and the competence signals that emerge from it over time.
+
+## Motivation Design
+
+The app's engagement philosophy follows Self-Determination Theory. Every feedback
+moment is evaluated on two axes:
+
+1. **Informational vs controlling.** The app describes what happened ("You practised
+   14 forms in 4 minutes"). It does not evaluate the user ("Great job!") or direct
+   their behaviour ("Keep going!"). The user decides how to feel about their session.
+
+2. **Internal vs external locus.** The user practises because the activity itself
+   is valuable to them. The app reflects their progress honestly but never becomes
+   the reason they practise. If you removed every feedback mechanic and the user
+   would still practise, the design is working.
+
+### User stage context
+
+The primary user is Stage 1 (initiation) — building the habit from scratch. Recall
+is poor, understanding is developing, reference material is heavily relied upon.
+External scaffolding is appropriate and necessary at this stage: reminders, due
+counts, and consistency tracking all serve the goal of getting enough repetitions
+for the behaviour to start becoming automatic. But the *form* of that scaffolding
+matters — it should be informational, never controlling.
 
 <hooks>
-<hook name="due-count" location="dashboard" mechanism="urgency">
-Shows number of items due for review, creates FOMO
+<hook name="due-count" location="dashboard" mechanism="informational">
+Shows number of items due for review with time estimate. Factual: "12 items (~3 min)".
+No urgency framing, no FOMO language. The count is useful information, not pressure.
 </hook>
-<hook name="streak-display" location="dashboard" mechanism="loss-aversion">
-Weekly grid showing practice days, users don't want to break chain
+<hook name="practice-calendar" location="dashboard" mechanism="informational">
+Weekly grid showing practice days. A passive record of consistency — the user can
+see their pattern without the app evaluating it. No streak counter, no "X days!"
+label. The calendar speaks for itself.
 </hook>
 <hook name="short-sessions" location="practice" mechanism="low-friction">
-2-3 minute sessions, easy to fit into spare moments
+2-3 minute sessions lower the activation threshold. The user can always do "just
+one drill." Starting is the hard part; most users continue once they begin.
 </hook>
 <hook name="auto-advance" location="speed-drill" mechanism="flow-state">
-Correct answers auto-advance, maintains momentum
+Correct answers auto-advance, maintaining momentum. Flow produces its own
+dopamine — don't interrupt it with celebrations.
 </hook>
 <hook name="push-notifications" location="system" mechanism="external-prompt">
-Remind users to practice, preserve streaks
+Daily reminders for first 2 weeks, tapering to every-other-day by week 3.
+Content is informational: "Your Greek is waiting" not "Don't break your streak!"
+Includes one-tap "Not today" that triggers no guilt. Around day 14, offer:
+"You seem to have this — want fewer reminders?"
 </hook>
 <hook name="lapsed-user-recovery" location="dashboard" mechanism="reduced-friction">
-Users returning after 7+ days with 15+ due items see contextual "Welcome back" messaging with "Just 5 items" option
+Users returning after 7+ days see warm, no-guilt messaging. "Your vocabulary is
+still here." For large queues (15+ items): "Just 5 items" as default tiny action.
+After longer gaps: show what they'd built before the break, offer a lighter
+re-entry session. Never reset or penalise progress.
 </hook>
-<hook name="post-session-celebration" location="drill-summary" mechanism="positive-reinforcement">
-Variable encouragement messages with icons based on accuracy (Trophy/Flame/Sparkles)
+<hook name="post-session-acknowledgement" location="drill-summary" mechanism="informational">
+Describes what happened: items practised, time spent, which items took the most
+effort. No person-praise ("You're amazing!"), no evaluation ("Great session!").
+When sessions are hard, reframe the struggle: "These 3 forms took the most effort.
+That's where durable learning happens." Offer a fork: 2-3 genuinely different next
+steps as low-key links, not one dominant CTA.
 </hook>
-<hook name="milestone-celebration" location="dashboard" mechanism="achievement">
-Confetti + modal at 7, 30, 100, 365 day streaks - persisted so only shown once
+<hook name="consistency-milestones" location="dashboard" mechanism="informational">
+Quiet inline text at natural breakpoints. "You've been practising for a week."
+Period. No confetti, no modal, no forced interaction. The user feels whatever they
+feel about it without the app directing the emotion. These appear as part of the
+normal dashboard flow, not as interruptions.
 </hook>
-<hook name="streak-warning-notification" location="system" mechanism="loss-aversion">
-Push notification at 8pm UTC for users at risk of losing streak
+<hook name="evening-reminder" location="system" mechanism="external-prompt">
+Push notification at 8pm UTC for users who haven't practised today (first few
+weeks only). Content: "Your review queue has X items" — factual, no streak
+mention, no loss framing. Tapers as the habit forms.
 </hook>
 </hooks>
 
-## Current Gaps
+### Anti-patterns to avoid
 
-<gaps>
-<gap name="streak-reset" status="implemented">
+These are explicitly rejected, regardless of how effective they appear short-term:
+
+| Pattern | Why it fails |
+|---------|-------------|
+| "Don't lose your streak!" | Loss framing is controlling. Creates anxiety, not motivation. Missing a day doesn't impact habit formation (Lally). |
+| Confetti / particle celebrations | Habituates within days, interrupts flow, positions app as judge. |
+| Modal celebration dialogs | Blocks autonomy, forces interaction, app as authority. |
+| "You're amazing!" / "Great job!" | Person-praise creates fixed mindset (Dweck). App is judging identity, not describing action. |
+| Same celebration for easy and hard | Disconnects feedback from reality. User detects the dishonesty. |
+| XP / points for completion | Expected tangible reward undermines intrinsic motivation. User optimises for points, not learning. |
+
+### Good patterns to use
+
+| Pattern | Why it works |
+|---------|-------------|
+| Acknowledge, don't praise | "You practised 14 forms." Informational, user retains agency. |
+| Tiny default action | "Review 1 card" or "Just 5 items." Crosses activation threshold without requiring motivation. |
+| The fork | 2-3 genuinely different next steps. User directs their own path. |
+| Struggle reframe | "These took the most effort. That's where lasting learning happens." Reframes difficulty as productive. |
+| Reward recovery | After a lapse: welcome back warmly, no guilt, show what's waiting. |
+| Domain bridge (sparingly) | "The tense you just practised is how news articles are written." Real-world connection. Once a week max. |
+
+### Stage progression notes
+
+As the user accumulates practice data (weeks 3-10), introduce:
+- **The delta:** Self-comparison over time. "These forms took 4 min today. Last week: 12."
+  Only show when the data tells a real story. This is the strongest competence signal.
+- **Self-set targets:** "You've been doing about 10 minutes. Want to set that as your target?"
+  Let them adjust freely, no penalty for falling short.
+- **Desirable difficulty:** Increase spacing, interleave topics. Acknowledge when it's harder:
+  "This drill mixes tenses. Mixing is harder but produces more lasting memory."
+
+## Current Implementation
+
+<features>
+<feature name="streak-freeze" status="implemented">
 <current>Streak freeze system with auto-activation</current>
 <details>
 - Earn 1 freeze per 7 consecutive days (max 3)
 - Auto-activates on missed day
 - 24h cooldown between freeze uses
 - Dashboard shows freeze count and status
+- Uses protective framing: "Freeze saved your streak" (not loss framing)
 </details>
-</gap>
-<gap name="streak-warning" status="implemented">
-<current>Push notification at 8pm UTC for users who haven't practiced</current>
+<motivation-note>Freeze mechanic is acceptable scaffolding at Stage 1. It reduces
+anxiety about missed days without loss-framing. The framing matters: "miss a day,
+keep your streak" is protective; "don't lose your streak" is controlling.</motivation-note>
+</feature>
+<feature name="evening-reminder" status="implemented">
+<current>Push notification at 8pm UTC for users who haven't practised</current>
 <details>
 - Cron trigger in wrangler.toml (0 20 * * *)
-- Checks users with active streaks who haven't practiced today
-- Sends "Don't lose your X-day streak!" notification
+- Checks users with active streaks who haven't practised today
 </details>
-</gap>
-<gap name="milestones" status="implemented">
-<current>Celebration modal at 7, 30, 100, 365 days</current>
+<motivation-note>Appropriate at Stage 1 but needs reframing. Current copy "Don't
+lose your X-day streak!" is loss-framed — replace with informational: "Your review
+queue has X items." Should taper after week 3 as the habit forms.</motivation-note>
+</feature>
+<feature name="milestones" status="needs-rework">
+<current>Celebration modal at 7, 30, 100, 365 days with confetti</current>
 <details>
 - MilestoneCelebration component shows confetti + message
 - Persisted to milestonesAchieved table via /api/milestones
 - Only shows once per milestone per user
 </details>
-</gap>
-<gap name="tomorrow-hook" status="implemented">
+<motivation-note>Confetti + modal combines two universal anti-patterns. Replace with
+quiet inline text on dashboard: "You've been practising for a week." No modal, no
+confetti, no forced interaction. Persist the milestone data (useful for analytics)
+but change the presentation.</motivation-note>
+</feature>
+<feature name="post-session-messages" status="needs-rework">
+<current>Variable encouragement messages with icons based on accuracy</current>
+<details>
+- Trophy/Flame/Sparkles icons tiered by accuracy
+- Messages like "You're on fire!", "Great session!", "You showed up — that's what matters!"
+</details>
+<motivation-note>Person-praise and app-as-judge. Replace with informational
+acknowledgement: describe what happened (items practised, time, effort distribution),
+offer the fork (2-3 next steps), and when sessions were hard, use the struggle
+reframe instead of hollow encouragement.</motivation-note>
+</feature>
+<feature name="tomorrow-hook" status="implemented">
 <current>Dashboard shows "Tomorrow: X items" with calendar icon</current>
-</gap>
-</gaps>
+<motivation-note>Informational — shows what's coming without pressure. Acceptable
+as passive data the user can glance at.</motivation-note>
+</feature>
+</features>
 
 ## Data Tables
 
