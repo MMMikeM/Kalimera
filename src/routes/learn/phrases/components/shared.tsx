@@ -20,6 +20,7 @@ const textColors: Record<ContentColorScheme, string> = {
 	masculine: "text-navy-800",
 	feminine: "text-sunset-800",
 	neuter: "text-slate-700",
+	stone: "text-stone-800",
 };
 
 export const PhraseItemDisplay: React.FC<{

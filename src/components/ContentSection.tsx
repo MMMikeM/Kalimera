@@ -96,30 +96,3 @@ export const TwoColumnList = <T extends TwoColumnItem>({
 		))}
 	</div>
 );
-
-// ─── Convenience: Section + List Combined ───────────────────────────────────
-
-export interface ContentListSectionProps<T extends TwoColumnItem>
-	extends Omit<ContentSectionProps, "children">,
-		Omit<TwoColumnListProps<T>, "className"> {
-	listClassName?: string;
-}
-
-export const ContentListSection = <T extends TwoColumnItem>({
-	title,
-	colorScheme = "honey",
-	items,
-	renderPrimary,
-	renderSecondary,
-	className,
-	listClassName,
-}: ContentListSectionProps<T>) => (
-	<ContentSection title={title} colorScheme={colorScheme} className={className}>
-		<TwoColumnList
-			items={items}
-			renderPrimary={renderPrimary}
-			renderSecondary={renderSecondary}
-			className={listClassName}
-		/>
-	</ContentSection>
-);

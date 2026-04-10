@@ -214,16 +214,9 @@ export const PronounsSection: React.FC = () => {
 			<Alert variant="info">
 				<AlertTitle>Pronouns = Cases in Action!</AlertTitle>
 				<AlertDescription>
-					<strong>Accusative</strong> (
-					<MonoText variant="greek" size="sm">
-						με, σε, τον
-					</MonoText>
-					) answers "WHOM/WHAT do I [verb]?" <strong>Genitive</strong> (
-					<MonoText variant="greek" size="sm">
-						μου, σου, του
-					</MonoText>
-					) answers "WHOSE?" You're already using cases every time you use a
-					pronoun!
+					<p>
+						<strong>Accusative</strong> (<MonoText variant="greek" size="sm">με, σε, τον</MonoText>) answers "WHOM/WHAT do I [verb]?" <strong>Genitive</strong> (<MonoText variant="greek" size="sm">μου, σου, του</MonoText>) answers "WHOSE?" You're already using cases every time you use a pronoun!
+					</p>
 				</AlertDescription>
 			</Alert>
 
@@ -278,7 +271,7 @@ export const PronounsSection: React.FC = () => {
 			{/* Common Phrases - Collapsible */}
 			<CollapsibleSection
 				title="Common Phrases with Pronouns"
-				colorScheme="default"
+				colorScheme="stone"
 				defaultOpen={false}
 			>
 				<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -312,7 +305,7 @@ export const PronounsSection: React.FC = () => {
 			{/* Indefinite Reference - Collapsible */}
 			<CollapsibleSection
 				title="Indefinite Reference (someone, somewhere, sometime)"
-				colorScheme="default"
+				colorScheme="stone"
 				defaultOpen={false}
 			>
 				<div className="space-y-6">

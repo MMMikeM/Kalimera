@@ -82,4 +82,3 @@ export async function loader() {
 	};
 }
 
-export type VerbsLoaderData = Awaited<ReturnType<typeof loader>>;
