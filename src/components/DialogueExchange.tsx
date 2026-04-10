@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { MonoText } from "./MonoText";
 import { SpeakerBadge, type SpeakerRole } from "./SpeakerBadge";
 
-export type ConversationMode = "read" | "practice" | "roleplay";
+export type ConversationMode = "read" | "roleplay";
 
 export interface DialogueLine {
 	speaker: SpeakerRole;
@@ -17,12 +17,12 @@ export interface DialogueLine {
 export type ColorScheme = "olive" | "terracotta" | "ocean" | "honey";
 
 const speakerBubbleStyles: Record<SpeakerRole, string> = {
-	you: "bg-navy-100 border-r-4 border-navy-500",
-	host: "bg-stone-50 border-l-4 border-stone-300",
-	friend: "bg-stone-50 border-l-4 border-stone-300",
-	waiter: "bg-stone-50 border-l-4 border-stone-300",
-	shopkeeper: "bg-stone-50 border-l-4 border-stone-300",
-	stranger: "bg-stone-50 border-l-4 border-stone-300",
+	you: "bg-cream-dark",
+	host: "bg-stone-50",
+	friend: "bg-stone-50",
+	waiter: "bg-stone-50",
+	shopkeeper: "bg-stone-50",
+	stranger: "bg-stone-50",
 };
 
 interface DialogueExchangeProps {
@@ -82,6 +82,7 @@ export const DialogueExchange: React.FC<DialogueExchangeProps> = ({
 		return true;
 	};
 
+	// In roleplay mode, hide Greek for "you" lines so the user must recall before revealing
 	const shouldHideGreek = (line: DialogueLine, idx: number) => {
 		if (mode !== "roleplay") return false;
 		if (line.speaker !== "you") return false;
