@@ -303,11 +303,44 @@ export const pushSubscriptions = sqliteTable(
 		endpoint: string("endpoint"),
 		p256dh: string("p256dh"), // Client's ECDH public key
 		auth: string("auth"), // Client's auth secret
+		snoozedUntil: nullableTimestamp("snoozed_until"),
+		notificationMode: oneOf("notification_mode", [
+			"adaptive",
+			"always",
+		] as const).default("adaptive"),
+		taperOfferPending: bool("taper_offer_pending").default(false),
 		createdAt: createdAt(),
 	},
 	(table) => [
 		index("idx_push_subscriptions_user").on(table.userId),
 		uniqueIndex("idx_push_subscriptions_endpoint").on(table.endpoint),
+	],
+);
+
+// ============================================
+// NOTIFICATION_LOGS TABLE
+// ============================================
+export const notificationLogs = sqliteTable(
+	"notification_logs",
+	{
+		id: pk(),
+		userId: cascadeFk("user_id", () => users.id),
+		sentAt: nullableTimestamp("sent_at"),
+		type: oneOf("type", [
+			"streak_warning",
+			"practice_reminder",
+			"review_due",
+		] as const),
+		tappedAction: nullableOneOf("tapped_action", [
+			"2min",
+			"body",
+			"snooze",
+		] as const),
+		tappedAt: nullableTimestamp("tapped_at"),
+	},
+	(table) => [
+		index("idx_notification_logs_user").on(table.userId),
+		index("idx_notification_logs_sent_at").on(table.sentAt),
 	],
 );
 

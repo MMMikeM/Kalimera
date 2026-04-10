@@ -1,0 +1,2 @@
+ALTER TABLE `push_subscriptions` ADD `notification_mode` text DEFAULT 'adaptive' NOT NULL;--> statement-breakpoint
+ALTER TABLE `push_subscriptions` ADD `taper_offer_pending` integer DEFAULT false NOT NULL;
