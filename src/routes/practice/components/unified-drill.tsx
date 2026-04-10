@@ -133,7 +133,8 @@ const unifiedReducer = (
 };
 
 const DEFAULT_TIME_LIMIT = 5000; // 5 seconds
-const AUTO_ADVANCE_DELAY = 1500; // 1.5 seconds
+const AUTO_ADVANCE_DELAY = 1500; // 1.5 seconds (correct answers)
+const WRONG_ADVANCE_DELAY = 3000; // 3 seconds (wrong answers — time to read the diff)
 
 export interface SessionStats {
 	correct: number;
@@ -180,22 +181,25 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 		}
 	}, [state.phase]);
 
-	// Auto-advance on correct answer
+	// Auto-advance after feedback (correct: 1.5s, incorrect: 3s)
 	useEffect(() => {
-		if (state.phase === "feedback" && state.lastResult?.isCorrect) {
-			setIsAutoAdvancing(true);
-			autoAdvanceTimerRef.current = setTimeout(() => {
-				dispatch({ type: "NEXT_QUESTION" });
-				setIsAutoAdvancing(false);
-			}, AUTO_ADVANCE_DELAY);
-		}
+		if (state.phase !== "feedback" || !state.lastResult) return;
+
+		const delay = state.lastResult.isCorrect ? AUTO_ADVANCE_DELAY : WRONG_ADVANCE_DELAY;
+		setIsAutoAdvancing(true);
+		autoAdvanceTimerRef.current = setTimeout(() => {
+			dispatch({ type: "NEXT_QUESTION" });
+			setIsAutoAdvancing(false);
+		}, delay);
 
 		return () => {
 			if (autoAdvanceTimerRef.current) {
 				clearTimeout(autoAdvanceTimerRef.current);
+				autoAdvanceTimerRef.current = null;
 			}
+			setIsAutoAdvancing(false);
 		};
-	}, [state.phase, state.lastResult?.isCorrect]);
+	}, [state.phase, state.lastResult]);
 
 	// Call onComplete when drill is done
 	useEffect(() => {
@@ -455,17 +459,23 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 							</p>
 						</div>
 
-						{/* Show what user typed if incorrect */}
-						{state.lastResult &&
-							!state.lastResult.isCorrect &&
-							state.lastResult.userAnswer && (
-								<p className="text-sm text-stone-500 text-center">
-									You typed:{" "}
-									<span className="font-mono">
+						{/* Wrong answer comparison */}
+						{state.lastResult && !state.lastResult.isCorrect && (
+							<div className="rounded-lg border border-incorrect-200 bg-incorrect-50 p-3 text-sm space-y-1.5">
+								<div className="flex items-baseline gap-2">
+									<span className="text-xs text-stone-400 w-20 shrink-0">you typed</span>
+									<MonoText className="text-incorrect line-through">
 										{state.lastResult.userAnswer || "(nothing)"}
-									</span>
-								</p>
-							)}
+									</MonoText>
+								</div>
+								<div className="flex items-baseline gap-2">
+									<span className="text-xs text-stone-400 w-20 shrink-0">correct</span>
+									<MonoText className="text-correct font-semibold">
+										{currentQuestion.correctGreek}
+									</MonoText>
+								</div>
+							</div>
+						)}
 
 						{/* Hint on incorrect */}
 						{state.lastResult &&
@@ -477,12 +487,17 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 								</p>
 							)}
 
-						{/* Auto-advance indicator or manual next */}
-						{state.lastResult?.isCorrect && isAutoAdvancing ? (
+						{/* Auto-advance indicator */}
+						{isAutoAdvancing && state.lastResult?.isCorrect && (
 							<p className="text-xs text-stone-400 text-center animate-pulse">
 								Next question...
 							</p>
-						) : null}
+						)}
+						{isAutoAdvancing && !state.lastResult?.isCorrect && (
+							<p className="text-xs text-stone-400 text-center animate-pulse">
+								Advancing in 3s...
+							</p>
+						)}
 					</div>
 				)}
 			</div>
