@@ -13,7 +13,7 @@ import { MonoText } from "@/components/MonoText";
 import { NotificationAsk } from "@/components/NotificationAsk";
 import { Button } from "@/components/ui/button";
 import { greekToPhonetic } from "@/lib/greek-transliteration";
-import type { SessionStats } from "./unified-drill";
+import type { SessionStats, UnifiedQuestion } from "./unified-drill";
 
 const ENCOURAGEMENT_MESSAGES = [
 	{
@@ -61,6 +61,7 @@ interface DrillSummaryProps {
 	userId?: number | null;
 	sessionCount?: number;
 	streakDays?: number;
+	onDrillMistakes?: (questions: UnifiedQuestion[]) => void;
 }
 
 const DrillSummary: React.FC<DrillSummaryProps> = ({
@@ -69,6 +70,7 @@ const DrillSummary: React.FC<DrillSummaryProps> = ({
 	userId,
 	sessionCount,
 	streakDays,
+	onDrillMistakes,
 }) => {
 	const percentage = Math.round((stats.correct / stats.total) * 100);
 	const avgTime = (stats.avgResponseTime / 1000).toFixed(1);
@@ -86,15 +88,17 @@ const DrillSummary: React.FC<DrillSummaryProps> = ({
 				acc[key] = {
 					prompt: attempt.prompt,
 					correctGreek: attempt.correctGreek,
+					userAnswer: attempt.userAnswer,
 					count: 0,
 				};
 			}
+			acc[key].userAnswer = attempt.userAnswer; // keep most recent wrong answer
 			acc[key].count++;
 			return acc;
 		},
 		{} as Record<
 			string,
-			{ prompt: string; correctGreek: string; count: number }
+			{ prompt: string; correctGreek: string; userAnswer: string; count: number }
 		>,
 	);
 
@@ -140,9 +144,18 @@ const DrillSummary: React.FC<DrillSummaryProps> = ({
 									key={item.correctGreek}
 									className="flex items-center justify-between bg-white p-3 rounded-lg border text-sm"
 								>
-									<div className="flex-1 min-w-0">
-										<p className="text-stone-600 truncate">{item.prompt}</p>
+									<div className="flex-1 min-w-0 space-y-0.5">
+										<p className="text-stone-600 truncate text-xs">{item.prompt}</p>
+										{item.userAnswer && (
+											<div className="flex items-center gap-2">
+												<span className="text-xs text-stone-400 w-16 shrink-0">you typed</span>
+												<MonoText className="text-incorrect text-xs line-through">
+													{item.userAnswer}
+												</MonoText>
+											</div>
+										)}
 										<div className="flex items-center gap-2">
+											<span className="text-xs text-stone-400 w-16 shrink-0">correct</span>
 											<MonoText className="text-stone-900 font-medium">
 												{item.correctGreek}
 											</MonoText>
@@ -188,6 +201,32 @@ const DrillSummary: React.FC<DrillSummaryProps> = ({
 				)}
 
 				<div className="text-center">
+					{onDrillMistakes && missedAttempts.length > 0 && (
+						<Button
+							variant="outline"
+							onClick={() => {
+								const seen = new Set<string>();
+								const missedQuestions: UnifiedQuestion[] = stats.attempts
+									.filter((a) => !a.isCorrect)
+									.filter((a) => {
+										if (seen.has(a.questionId)) return false;
+										seen.add(a.questionId);
+										return true;
+									})
+									.map((a) => ({
+										id: a.questionId,
+										prompt: a.prompt,
+										correctGreek: a.correctGreek,
+										timeLimit: 5000,
+									}));
+								onDrillMistakes(missedQuestions);
+							}}
+							className="gap-2 mb-3 w-full"
+						>
+							<RotateCcw size={16} />
+							Drill mistakes ({sortedMissed.length})
+						</Button>
+					)}
 					<Button onClick={onRestart} className="gap-2">
 						<RotateCcw size={16} />
 						Practice Again

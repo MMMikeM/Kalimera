@@ -16,6 +16,7 @@ import {
 import UnifiedDrill, {
 	type SessionStats,
 	type UnifiedAttemptResult,
+	type UnifiedQuestion,
 } from "./components/unified-drill";
 import type { PracticeLoaderData } from "./layout";
 
@@ -53,15 +54,18 @@ const SpeedDrill: React.FC = () => {
 	const [sessionCount, setSessionCount] = useState(0);
 	const [lastStats, setLastStats] = useState<SessionStats | null>(null);
 	const [drillSize, setDrillSize] = useState(15);
+	const [reDrillQuestions, setReDrillQuestions] = useState<UnifiedQuestion[] | null>(null);
+	const isReDrillRef = useRef(false);
 
 	const questions = useMemo(() => {
+		if (reDrillQuestions) return reDrillQuestions;
 		if (drillMode === "grammar" && grammarExercise) {
 			const allQuestions = generateGrammarQuestions(grammarExercise);
 			const shuffled = [...allQuestions].sort(() => Math.random() - 0.5);
 			return shuffled.slice(0, drillSize);
 		}
 		return generateQuestions(focus === "all" ? "all" : [focus], drillSize);
-	}, [drillMode, grammarExercise, focus, drillSize]);
+	}, [reDrillQuestions, drillMode, grammarExercise, focus, drillSize]);
 
 	const startDbSession = useCallback(() => {
 		if (!userId) return;
@@ -84,7 +88,7 @@ const SpeedDrill: React.FC = () => {
 
 	const handleAttempt = useCallback(
 		(attempt: UnifiedAttemptResult) => {
-			if (!userId) return;
+			if (!userId || isReDrillRef.current) return;
 
 			let weakAreaType: "case" | "gender" | "verb_family" | undefined;
 			let weakAreaIdentifier: string | undefined;
@@ -146,7 +150,7 @@ const SpeedDrill: React.FC = () => {
 		(stats: SessionStats) => {
 			setLastStats(stats);
 
-			if (!userId || !sessionIdRef.current) return;
+			if (!userId || !sessionIdRef.current || isReDrillRef.current) return;
 
 			fetcher.submit(
 				{
@@ -161,7 +165,20 @@ const SpeedDrill: React.FC = () => {
 		[userId, fetcher],
 	);
 
+	const handleDrillMistakes = useCallback(
+		(missedQuestions: UnifiedQuestion[]) => {
+			isReDrillRef.current = true;
+			setReDrillQuestions(missedQuestions);
+			setSessionCount((c) => c + 1);
+			setLastStats(null);
+			sessionIdRef.current = null;
+		},
+		[],
+	);
+
 	const handleNewSession = () => {
+		setReDrillQuestions(null);
+		isReDrillRef.current = false;
 		setSessionCount((c) => c + 1);
 		setLastStats(null);
 		sessionIdRef.current = null;
@@ -349,6 +366,7 @@ const SpeedDrill: React.FC = () => {
 	return (
 		<div className="max-w-xl mx-auto">
 			<UnifiedDrill
+				key={sessionCount}
 				title={sessionTitle}
 				questions={questions}
 				onAttempt={handleAttempt}
@@ -356,6 +374,7 @@ const SpeedDrill: React.FC = () => {
 				userId={userId}
 				sessionCount={sessionCount}
 				streakDays={stats?.streak}
+				onDrillMistakes={handleDrillMistakes}
 			/>
 
 			{lastStats && (
