@@ -1,6 +1,6 @@
 # Learn Section Content
 
-Browse Greek content organised by topic: conversations, phrases, and vocabulary.
+Browse Greek content organised by topic: conversations, phrases, nouns, verbs, and essentials.
 
 ## Route Structure
 
@@ -8,7 +8,10 @@ Browse Greek content organised by topic: conversations, phrases, and vocabulary.
 /learn                        Landing page with section cards
 /learn/conversations/:tab     Themed dialogues
 /learn/phrases/:tab           Common expressions
-/learn/vocabulary/:tab        Words by category
+/learn/nouns                  Noun browser by gender/category
+/learn/verbs                  Verb browser by conjugation family
+/learn/verbs/:verbId          Full verb conjugation detail
+/learn/essentials/:subtab     Building blocks (numbers, colours, etc.)
 ```
 
 ## Landing Page
@@ -18,11 +21,15 @@ Browse Greek content organised by topic: conversations, phrases, and vocabulary.
 <file>src/routes/learn/index.tsx</file>
 <displays>
 - Header: "Learn" with subtitle "Browse Greek content by topic"
-- Section cards (3 items):
-  - Conversations: "Real situations with family and friends"
-  - Phrases: "Common expressions and useful phrases"
-  - Vocabulary: "Words organised by category"
-- Each card links to first tab of that section
+- Two groups with section cards:
+  - Communication (2 items):
+    - Conversations: "Real situations with family and friends"
+    - Phrases: "Common expressions and useful phrases"
+  - Words (3 items):
+    - Nouns: "Objects, people, places — with gender"
+    - Verbs: "Actions by conjugation family"
+    - Essentials: "Numbers, colours, time, position"
+- Each card links to that section's landing/first tab
 </displays>
 <note>
 Cards use colour-coded borders (olive, ocean, honey) matching section themes.
@@ -34,4 +41,4 @@ Cards use colour-coded borders (olive, ocean, honey) matching section themes.
 See individual content files for detailed documentation:
 - `conversations/content.llm` - Themed dialogues
 - `phrases/content.llm` - Common expressions
-- `vocabulary/content.llm` - Word categories
+- `essentials/content.llm` - Numbers, colours, time, position, frequency
