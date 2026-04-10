@@ -151,6 +151,7 @@ interface UnifiedDrillProps {
 	userId?: number | null;
 	sessionCount?: number;
 	streakDays?: number;
+	onDrillMistakes?: (questions: UnifiedQuestion[]) => void;
 }
 
 const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
@@ -161,6 +162,7 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 	userId,
 	sessionCount,
 	streakDays,
+	onDrillMistakes,
 }) => {
 	const [state, dispatch] = useReducer(unifiedReducer, questions, (questions) =>
 		initialUnifiedState(questions),
@@ -331,6 +333,7 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 				userId={userId}
 				sessionCount={sessionCount}
 				streakDays={streakDays}
+				onDrillMistakes={onDrillMistakes}
 			/>
 		);
 	}
