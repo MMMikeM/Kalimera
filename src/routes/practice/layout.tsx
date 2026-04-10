@@ -1,4 +1,4 @@
-import { Clock, Zap } from "lucide-react";
+import { Brain, Clock, Zap } from "lucide-react";
 import { Outlet, useLocation } from "react-router";
 import type { NavTab } from "@/components/NavTabs";
 import { NavTabs } from "@/components/NavTabs";
@@ -87,6 +87,12 @@ const PRACTICE_TABS: NavTab[] = [
 		label: "Speed Drill",
 		icon: <Zap size={16} />,
 		color: "terracotta",
+	},
+	{
+		id: "memory",
+		label: "Memory",
+		icon: <Brain size={16} />,
+		color: "honey",
 	},
 	{ id: "review", label: "Review", icon: <Clock size={16} />, color: "ocean" },
 ];
