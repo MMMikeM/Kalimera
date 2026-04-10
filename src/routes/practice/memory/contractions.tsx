@@ -79,10 +79,7 @@ const CONTRACTIONS: Contraction[] = [
 	},
 ];
 
-const GENDER_STYLE: Record<
-	Gender,
-	{ label: string; selectorBg: string; selectorText: string }
-> = {
+const GENDER_STYLE: Record<Gender, { label: string; selectorBg: string; selectorText: string }> = {
 	masculine: {
 		label: "text-navy-text",
 		selectorBg: "bg-navy-100",
@@ -148,9 +145,7 @@ const ConfigScreen = ({
 				<tbody>
 					{PARADIGM_ROWS.map((row) => (
 						<tr key={row.label} className="border-t border-stone-100">
-							<td className="py-1.5 pr-4 text-xs font-medium text-terracotta-text">
-								{row.label}
-							</td>
+							<td className="py-1.5 pr-4 text-xs font-medium text-terracotta-text">{row.label}</td>
 							{row.forms.map((form) => (
 								<td
 									key={form}
@@ -182,9 +177,7 @@ export default function ContractionsDrill() {
 	const [cardIndex, setCardIndex] = useState(0);
 	const [input, setInput] = useState("");
 	const [attempts, setAttempts] = useState<Attempt<Contraction>[]>([]);
-	const [lastAttempt, setLastAttempt] = useState<Attempt<Contraction> | null>(
-		null,
-	);
+	const [lastAttempt, setLastAttempt] = useState<Attempt<Contraction> | null>(null);
 	const [selGender, setSelGender] = useState<Gender | null>(null);
 	const [selNumber, setSelNumber] = useState<Num | null>(null);
 
@@ -223,11 +216,7 @@ export default function ContractionsDrill() {
 		recordAttempt(false, timerMs, true);
 	}, [phase, mode, currentForm, timerMs, MAX_TIMER_MS, recordAttempt]);
 
-	const { progress, startedAt } = useCountdown(
-		timerMs,
-		isActive,
-		handleTimeout,
-	);
+	const { progress, startedAt } = useCountdown(timerMs, isActive, handleTimeout);
 
 	const handleForwardSubmit = useCallback(() => {
 		if (phase !== "active") return;
@@ -239,8 +228,7 @@ export default function ContractionsDrill() {
 	const handleReverseSubmit = useCallback(() => {
 		if (phase !== "active" || !selGender || !selNumber) return;
 		const timeTaken = performance.now() - startedAt.current;
-		const isCorrect =
-			selGender === currentForm.gender && selNumber === currentForm.number;
+		const isCorrect = selGender === currentForm.gender && selNumber === currentForm.number;
 		recordAttempt(isCorrect, timeTaken);
 	}, [phase, selGender, selNumber, currentForm, startedAt, recordAttempt]);
 
@@ -299,11 +287,7 @@ export default function ContractionsDrill() {
 	}
 	if (phase === "complete") {
 		return (
-			<SummaryScreen
-				attempts={attempts}
-				total={sessionSize}
-				onAgain={() => setPhase("config")}
-			/>
+			<SummaryScreen attempts={attempts} total={sessionSize} onAgain={() => setPhase("config")} />
 		);
 	}
 
@@ -329,12 +313,8 @@ export default function ContractionsDrill() {
 						<p className="mb-4 text-xs font-medium tracking-[0.18em] text-ocean-text uppercase">
 							to the / at the
 						</p>
-						<p className={`font-serif text-5xl leading-tight ${gs.label}`}>
-							{currentForm.gender}
-						</p>
-						<p className="mt-2 text-sm text-muted-foreground">
-							{currentForm.number}
-						</p>
+						<p className={`font-serif text-5xl leading-tight ${gs.label}`}>{currentForm.gender}</p>
+						<p className="mt-2 text-sm text-muted-foreground">{currentForm.number}</p>
 					</div>
 
 					<div>
@@ -345,18 +325,13 @@ export default function ContractionsDrill() {
 							inputRef={inputRef}
 							phase={phase}
 						/>
-						{phase === "feedback" && lastAttempt && (
-							<FeedbackDisplay lastAttempt={lastAttempt} />
-						)}
+						{phase === "feedback" && lastAttempt && <FeedbackDisplay lastAttempt={lastAttempt} />}
 					</div>
 				</>
 			) : (
 				<>
 					<div className="pt-2">
-						<p
-							lang="el"
-							className="greek-text font-sans text-8xl leading-none text-foreground"
-						>
+						<p lang="el" className="greek-text font-sans text-8xl leading-none text-foreground">
 							{currentForm.greek}
 						</p>
 					</div>
@@ -390,9 +365,7 @@ export default function ContractionsDrill() {
 							))}
 						</div>
 
-						{phase === "feedback" && lastAttempt && (
-							<ReverseFeedback lastAttempt={lastAttempt} />
-						)}
+						{phase === "feedback" && lastAttempt && <ReverseFeedback lastAttempt={lastAttempt} />}
 					</div>
 				</>
 			)}

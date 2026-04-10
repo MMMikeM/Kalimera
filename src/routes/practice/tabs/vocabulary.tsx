@@ -11,11 +11,5 @@ export function VocabularyTab() {
 		return <UserRequiredMessage />;
 	}
 
-	return (
-		<SrsDrill
-			variant="vocabulary"
-			items={newVocabItems}
-			streakDays={stats?.streak}
-		/>
-	);
+	return <SrsDrill variant="vocabulary" items={newVocabItems} streakDays={stats?.streak} />;
 }

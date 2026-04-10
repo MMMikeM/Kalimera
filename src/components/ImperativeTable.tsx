@@ -11,13 +11,7 @@ export interface ImperativeTableProps {
 	className?: string;
 }
 
-const AspectLabel = ({
-	aspect,
-	description,
-}: {
-	aspect: string;
-	description: string;
-}) => (
+const AspectLabel = ({ aspect, description }: { aspect: string; description: string }) => (
 	<div className="flex flex-col">
 		<span className="font-semibold text-stone-800">{aspect}</span>
 		<span className="text-xs text-stone-500">{description}</span>
@@ -25,12 +19,7 @@ const AspectLabel = ({
 );
 
 const FormCell = ({ form, isEmpty }: { form?: string; isEmpty?: boolean }) => (
-	<td
-		className={cn(
-			"p-3 text-center border border-stone-200",
-			isEmpty && "bg-stone-50",
-		)}
-	>
+	<td className={cn("p-3 text-center border border-stone-200", isEmpty && "bg-stone-50")}>
 		{form ? (
 			<MonoText variant="greek" size="lg">
 				{form}
@@ -41,19 +30,12 @@ const FormCell = ({ form, isEmpty }: { form?: string; isEmpty?: boolean }) => (
 	</td>
 );
 
-export const ImperativeTable = ({
-	imperatives,
-	className,
-}: ImperativeTableProps) => {
+export const ImperativeTable = ({ imperatives, className }: ImperativeTableProps) => {
 	const hasImperfective = imperatives.imperfective !== null;
 	const hasPerfective = imperatives.perfective !== null;
 
 	if (!hasImperfective && !hasPerfective) {
-		return (
-			<div className="p-4 text-stone-500 italic">
-				No imperative forms available
-			</div>
-		);
+		return <div className="p-4 text-stone-500 italic">No imperative forms available</div>;
 	}
 
 	return (
@@ -71,9 +53,7 @@ export const ImperativeTable = ({
 						</th>
 						<th className="border-b border-stone-200 p-2 text-center text-xs font-normal text-stone-600">
 							Singular
-							<div className="text-[10px] text-stone-400">
-								(you - one person)
-							</div>
+							<div className="text-[10px] text-stone-400">(you - one person)</div>
 						</th>
 						<th className="border-b border-stone-200 p-2 text-center text-xs font-normal text-stone-600">
 							Plural
@@ -85,10 +65,7 @@ export const ImperativeTable = ({
 					{hasImperfective && (
 						<tr className="bg-ocean-50/30">
 							<td className="border border-stone-200 bg-ocean-50 p-3">
-								<AspectLabel
-									aspect="Imperfective"
-									description="Ongoing action"
-								/>
+								<AspectLabel aspect="Imperfective" description="Ongoing action" />
 							</td>
 							<FormCell form={imperatives.imperfective?.singular} />
 							<FormCell form={imperatives.imperfective?.plural} />
@@ -107,9 +84,8 @@ export const ImperativeTable = ({
 			</table>
 
 			<div className="rounded border border-stone-200 bg-stone-50 p-2 text-xs text-stone-500">
-				<strong>Aspect distinction:</strong> Use imperfective for
-				ongoing/repeated actions ("keep doing this"), perfective for
-				single/completed actions ("do this once").
+				<strong>Aspect distinction:</strong> Use imperfective for ongoing/repeated actions ("keep
+				doing this"), perfective for single/completed actions ("do this once").
 			</div>
 		</div>
 	);

@@ -5,10 +5,7 @@ import { MonoText } from "@/components/MonoText";
 import { SearchInput } from "@/components/SearchInput";
 import { TabHero } from "@/components/TabHero";
 import { Badge } from "@/components/ui/badge";
-import {
-	type SearchVocabItem,
-	searchVocabulary,
-} from "@/db.server/queries/vocabulary";
+import { type SearchVocabItem, searchVocabulary } from "@/db.server/queries/vocabulary";
 import { cn } from "@/lib/utils";
 import type { Route } from "./+types/search";
 
@@ -63,8 +60,8 @@ export default function SearchRoute({ loaderData }: Route.ComponentProps) {
 				colorScheme="ocean"
 				icon={<Search size={18} />}
 			>
-				Search Greek or English words from your vocabulary. Find what you need
-				fast — type in either language to find matches.
+				Search Greek or English words from your vocabulary. Find what you need fast — type in either
+				language to find matches.
 			</TabHero>
 
 			<SearchInput
@@ -92,29 +89,18 @@ export default function SearchRoute({ loaderData }: Route.ComponentProps) {
 						);
 
 						return (
-							<div
-								key={result.id}
-								className={cn("p-4 bg-stone-50 rounded-lg", borderClass)}
-							>
+							<div key={result.id} className={cn("p-4 bg-stone-50 rounded-lg", borderClass)}>
 								<div className="flex items-start justify-between gap-4">
 									<div className="min-w-0 flex-1">
 										{/* Greek text prominently displayed */}
-										<MonoText
-											variant="greek"
-											size="lg"
-											className="mb-1 block text-2xl font-medium"
-										>
+										<MonoText variant="greek" size="lg" className="mb-1 block text-2xl font-medium">
 											{result.greek}
 										</MonoText>
 										<p className="text-stone-600">{result.english}</p>
 									</div>
 									<div className="flex flex-shrink-0 flex-wrap justify-end gap-2">
-										{result.type && (
-											<Badge variant="default">{result.type}</Badge>
-										)}
-										{result.family && (
-											<Badge variant="primary">{result.family}</Badge>
-										)}
+										{result.type && <Badge variant="default">{result.type}</Badge>}
+										{result.family && <Badge variant="primary">{result.family}</Badge>}
 									</div>
 								</div>
 								{result.tags.length > 0 && (
@@ -133,9 +119,7 @@ export default function SearchRoute({ loaderData }: Route.ComponentProps) {
 			)}
 
 			{searchTerm && searchResults.length === 0 && (
-				<div className="py-8 text-center text-stone-600">
-					No results found for "{searchTerm}"
-				</div>
+				<div className="py-8 text-center text-stone-600">No results found for "{searchTerm}"</div>
 			)}
 
 			<div className="rounded-lg bg-stone-50 p-4">

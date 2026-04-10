@@ -31,9 +31,7 @@ const StemBox = ({ label, stem, color }: StemBoxProps) => {
 				styles.borderMuted,
 			)}
 		>
-			<span className={cn("text-xs font-medium mb-1", styles.text)}>
-				{label}
-			</span>
+			<span className={cn("text-xs font-medium mb-1", styles.text)}>{label}</span>
 			<MonoText variant="greek" size="xl" weight="bold">
 				{stem}-
 			</MonoText>
@@ -63,11 +61,7 @@ const Arrow = () => (
 	</div>
 );
 
-export const StemInsight = ({
-	isSuppletive,
-	stems,
-	className,
-}: StemInsightProps) => {
+export const StemInsight = ({ isSuppletive, stems, className }: StemInsightProps) => {
 	if (!isSuppletive) {
 		return null;
 	}
@@ -84,46 +78,24 @@ export const StemInsight = ({
 	const honey = colorStyles.honey;
 
 	return (
-		<div
-			className={cn(
-				"rounded-lg border-2 p-4",
-				honey.borderMuted,
-				honey.bg,
-				className,
-			)}
-		>
+		<div className={cn("rounded-lg border-2 p-4", honey.borderMuted, honey.bg, className)}>
 			<div className="mb-3 flex items-center gap-2">
 				<AlertTriangle size={18} className={honey.text} />
 				<h4 className={cn("font-semibold", honey.text)}>Suppletive Verb</h4>
 			</div>
 
 			<p className="mb-4 text-sm text-stone-600">
-				This verb uses different roots for different tenses. This is similar to
-				English "go / went / gone" - the stems are unrelated and must be
-				memorized separately.
+				This verb uses different roots for different tenses. This is similar to English "go / went /
+				gone" - the stems are unrelated and must be memorized separately.
 			</p>
 
 			<div className="flex flex-wrap items-center justify-center gap-2">
-				{hasPresent && (
-					<StemBox
-						label="Present"
-						stem={stems.present as string}
-						color="ocean"
-					/>
-				)}
+				{hasPresent && <StemBox label="Present" stem={stems.present as string} color="ocean" />}
 				{hasPresent && hasAorist && <Arrow />}
-				{hasAorist && (
-					<StemBox
-						label="Aorist"
-						stem={stems.aorist as string}
-						color="terracotta"
-					/>
-				)}
+				{hasAorist && <StemBox label="Aorist" stem={stems.aorist as string} color="terracotta" />}
 				{hasAorist && hasFuture && <Arrow />}
 				{!hasAorist && hasPresent && hasFuture && <Arrow />}
-				{hasFuture && (
-					<StemBox label="Future" stem={stems.future as string} color="olive" />
-				)}
+				{hasFuture && <StemBox label="Future" stem={stems.future as string} color="olive" />}
 			</div>
 		</div>
 	);

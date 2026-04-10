@@ -1,7 +1,4 @@
-import {
-	getVerbsWithPatterns,
-	type VerbWithPattern,
-} from "@/db.server/queries/vocabulary";
+import { getVerbsWithPatterns, type VerbWithPattern } from "@/db.server/queries/vocabulary";
 
 export type { VerbWithPattern };
 

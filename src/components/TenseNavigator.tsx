@@ -18,10 +18,7 @@ const TENSE_CONFIG: Record<
 
 type TenseColorScheme = "ocean" | "terracotta" | "olive" | "honey";
 
-const colorStyles: Record<
-	TenseColorScheme,
-	{ tab: string; activeTab: string; content: string }
-> = {
+const colorStyles: Record<TenseColorScheme, { tab: string; activeTab: string; content: string }> = {
 	ocean: {
 		tab: "data-[state=active]:bg-ocean-200 data-[state=active]:text-ocean-text",
 		activeTab: "border-ocean-400",
@@ -66,16 +63,10 @@ export const TenseNavigator = ({
 	);
 
 	if (availableTenses.length === 0) {
-		return (
-			<div className="p-4 text-stone-500 italic">
-				No conjugation data available
-			</div>
-		);
+		return <div className="p-4 text-stone-500 italic">No conjugation data available</div>;
 	}
 
-	const defaultTense = availableTenses.includes("present")
-		? "present"
-		: availableTenses[0];
+	const defaultTense = availableTenses.includes("present") ? "present" : availableTenses[0];
 
 	const getStemForTense = (tense: string): string | undefined => {
 		if (!verbDetails) return undefined;
@@ -103,10 +94,7 @@ export const TenseNavigator = ({
 						<TabsTrigger
 							key={tense}
 							value={tense}
-							className={cn(
-								"flex-1 min-w-[100px] px-3 py-2 text-sm",
-								styles.tab,
-							)}
+							className={cn("flex-1 min-w-[100px] px-3 py-2 text-sm", styles.tab)}
 						>
 							<span className="flex flex-col items-center gap-0.5">
 								<span className="font-mono text-xs">{config.greek}</span>

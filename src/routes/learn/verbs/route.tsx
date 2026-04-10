@@ -42,11 +42,7 @@ const FrequencyStars: React.FC<{ level: FrequencyLevel }> = ({ level }) => (
 			<Star
 				key={star}
 				size={12}
-				className={
-					star <= level
-						? "fill-honey-500 text-honey-500"
-						: "fill-none text-stone-300"
-				}
+				className={star <= level ? "fill-honey-500 text-honey-500" : "fill-none text-stone-300"}
 			/>
 		))}
 	</div>
@@ -138,9 +134,7 @@ interface VerbCardProps {
 	footer?: React.ReactNode;
 }
 
-const extractForm = (
-	f: string | VerbFormWithHighlight,
-): { form: string; highlighted?: string } =>
+const extractForm = (f: string | VerbFormWithHighlight): { form: string; highlighted?: string } =>
 	typeof f === "string" ? { form: f } : f;
 
 const VerbCard: React.FC<VerbCardProps> = ({
@@ -170,21 +164,15 @@ const VerbCard: React.FC<VerbCardProps> = ({
 		>
 			{category && (
 				<header className={cn("px-3 py-2", styles.header)}>
-					<h3 className="text-sm font-black tracking-wide text-white">
-						{category}
-					</h3>
-					{subtitle && (
-						<p className="mt-0.5 text-xs text-white/80">{subtitle}</p>
-					)}
+					<h3 className="text-sm font-black tracking-wide text-white">{category}</h3>
+					{subtitle && <p className="mt-0.5 text-xs text-white/80">{subtitle}</p>}
 				</header>
 			)}
 
 			<div className="bg-white p-3">
 				<div className="mb-3">
 					<div className="flex items-center gap-2">
-						<h4 className="font-mono text-lg font-bold text-stone-800">
-							{infinitive}
-						</h4>
+						<h4 className="font-mono text-lg font-bold text-stone-800">{infinitive}</h4>
 						<FrequencyStars level={frequency} />
 					</div>
 					<p className="text-sm text-stone-600">{meaning}</p>
@@ -195,9 +183,7 @@ const VerbCard: React.FC<VerbCardProps> = ({
 						<div className="text-xs font-medium tracking-wide text-stone-400 uppercase">
 							Singular
 						</div>
-						<div className="text-xs font-medium tracking-wide text-stone-400 uppercase">
-							Plural
-						</div>
+						<div className="text-xs font-medium tracking-wide text-stone-400 uppercase">Plural</div>
 					</div>
 					{[0, 1, 2].map((idx) => (
 						<div
@@ -251,9 +237,7 @@ const VerbCard: React.FC<VerbCardProps> = ({
 						<div className="space-y-2 border-t border-stone-200 bg-stone-50 p-3">
 							{examples.map((example) => (
 								<div key={example.greek}>
-									<p className="font-mono text-sm text-stone-800">
-										{example.greek}
-									</p>
+									<p className="font-mono text-sm text-stone-800">{example.greek}</p>
 									<p className="text-xs text-stone-500">{example.english}</p>
 								</div>
 							))}
@@ -262,11 +246,7 @@ const VerbCard: React.FC<VerbCardProps> = ({
 				</div>
 			)}
 
-			{footer && (
-				<div className="border-t border-stone-200 bg-stone-50 px-3 py-2">
-					{footer}
-				</div>
-			)}
+			{footer && <div className="border-t border-stone-200 bg-stone-50 px-3 py-2">{footer}</div>}
 		</div>
 	);
 };
@@ -279,23 +259,15 @@ interface VerbListProps {
 const VerbList: React.FC<VerbListProps> = ({ verbs, label }) => (
 	<details className="group">
 		<summary className="flex cursor-pointer items-center gap-1 text-sm text-stone-600 hover:text-stone-800">
-			<ChevronDown
-				size={14}
-				className="transition-transform group-open:rotate-180"
-			/>
+			<ChevronDown size={14} className="transition-transform group-open:rotate-180" />
 			<span>
 				All {verbs.length} {label}
 			</span>
 		</summary>
 		<div className="mt-2 grid grid-cols-2 gap-1.5">
 			{verbs.map((verb) => (
-				<div
-					key={verb.id}
-					className="flex items-baseline gap-2 rounded bg-white/60 p-1.5"
-				>
-					<span className="font-mono text-sm font-medium text-stone-800">
-						{verb.greek}
-					</span>
+				<div key={verb.id} className="flex items-baseline gap-2 rounded bg-white/60 p-1.5">
+					<span className="font-mono text-sm font-medium text-stone-800">{verb.greek}</span>
 					<span className="text-xs text-stone-500">{verb.english}</span>
 				</div>
 			))}
@@ -319,8 +291,7 @@ const PATTERN_GUIDE_DATA = [
 	{
 		ending: "-μαι",
 		pattern: "Deponent",
-		description:
-			"Ending says 'I am ___ed' but means 'I ___' — έρχομαι = I come",
+		description: "Ending says 'I am ___ed' but means 'I ___' — έρχομαι = I come",
 		colorScheme: "olive" as ColorScheme,
 	},
 ];
@@ -334,21 +305,12 @@ const PatternGuide: React.FC = () => (
 			{PATTERN_GUIDE_DATA.map((item) => (
 				<div key={item.ending} className="px-3 py-2.5">
 					<div className="flex items-baseline gap-2">
-						<span
-							className={cn(
-								"font-mono font-bold text-base",
-								endingColors[item.colorScheme],
-							)}
-						>
+						<span className={cn("font-mono font-bold text-base", endingColors[item.colorScheme])}>
 							{item.ending}
 						</span>
-						<span className="text-sm font-medium text-stone-700">
-							{item.pattern}
-						</span>
+						<span className="text-sm font-medium text-stone-700">{item.pattern}</span>
 					</div>
-					<p className="mt-0.5 text-xs leading-relaxed text-stone-500">
-						{item.description}
-					</p>
+					<p className="mt-0.5 text-xs leading-relaxed text-stone-500">{item.description}</p>
 				</div>
 			))}
 		</div>
@@ -358,10 +320,7 @@ const PatternGuide: React.FC = () => (
 const ActivePassiveExplainer: React.FC = () => (
 	<details className="rounded-lg border border-stone-200 bg-stone-50">
 		<summary className="flex cursor-pointer items-center gap-1.5 px-3 py-2 text-sm font-medium text-stone-600 hover:text-stone-800">
-			<ChevronDown
-				size={14}
-				className="transition-transform [details[open]_&]:rotate-180"
-			/>
+			<ChevronDown size={14} className="transition-transform [details[open]_&]:rotate-180" />
 			What's active/passive?
 		</summary>
 		<div className="space-y-3 px-3 pt-1 pb-3 text-sm">
@@ -369,12 +328,8 @@ const ActivePassiveExplainer: React.FC = () => (
 				<p className="font-medium text-stone-700">Active</p>
 				<p className="text-xs text-stone-500">Subject DOES the action</p>
 				<p className="mt-1">
-					<span className="font-mono font-bold text-stone-800">
-						βλέπω τον φίλο
-					</span>
-					<span className="ml-2 text-xs text-stone-500">
-						= I see the friend
-					</span>
+					<span className="font-mono font-bold text-stone-800">βλέπω τον φίλο</span>
+					<span className="ml-2 text-xs text-stone-500">= I see the friend</span>
 				</p>
 			</div>
 			<div>
@@ -387,14 +342,10 @@ const ActivePassiveExplainer: React.FC = () => (
 			</div>
 			<div>
 				<p className="font-medium text-stone-700">Deponent</p>
-				<p className="text-xs text-stone-500">
-					-μαι ending but YOU'RE doing the action
-				</p>
+				<p className="text-xs text-stone-500">-μαι ending but YOU'RE doing the action</p>
 				<p className="mt-1">
 					<span className="font-mono font-bold text-stone-800">έρχομαι</span>
-					<span className="ml-2 text-xs text-stone-500">
-						= I come (not "I am come-d")
-					</span>
+					<span className="ml-2 text-xs text-stone-500">= I come (not "I am come-d")</span>
 				</p>
 			</div>
 		</div>
@@ -450,18 +401,14 @@ const PatternComparison: React.FC = () => (
 						<tr
 							key={pronoun}
 							className={cn(
-								idx !== PATTERN_COMPARISON_DATA.pronouns.length - 1 &&
-									"border-b border-stone-100",
+								idx !== PATTERN_COMPARISON_DATA.pronouns.length - 1 && "border-b border-stone-100",
 							)}
 						>
 							<td className="px-3 py-1.5 text-xs text-stone-500">{pronoun}</td>
 							{PATTERN_COMPARISON_DATA.patterns.map((p) => (
 								<td
 									key={p.name}
-									className={cn(
-										"text-center font-mono px-2 py-1.5",
-										endingColors[p.colorScheme],
-									)}
+									className={cn("text-center font-mono px-2 py-1.5", endingColors[p.colorScheme])}
 								>
 									{p.endings[idx]}
 								</td>
@@ -474,10 +421,7 @@ const PatternComparison: React.FC = () => (
 	</div>
 );
 
-const IRREGULAR_HEADERS: Record<
-	string,
-	{ category: string; subtitle: string }
-> = {
+const IRREGULAR_HEADERS: Record<string, { category: string; subtitle: string }> = {
 	είμαι: {
 		category: "είμαι (to be)",
 		subtitle: "Unique — no other verb works like this",
@@ -496,10 +440,7 @@ const IRREGULAR_HEADERS: Record<
 	},
 };
 
-const VERB_EXAMPLES: Record<
-	string,
-	Array<{ greek: string; english: string }>
-> = {
+const VERB_EXAMPLES: Record<string, Array<{ greek: string; english: string }>> = {
 	είμαι: [
 		{ greek: "Είμαι καλά.", english: "I'm fine." },
 		{ greek: "Είσαι έτοιμος;", english: "Are you ready?" },
@@ -552,9 +493,7 @@ export default function VerbsPage({ loaderData }: Route.ComponentProps) {
 			const patternKey = familyConfig?.patternKey ?? null;
 			const conjugationKey = familyConfig?.conjugationKey ?? null;
 			const pattern = patternKey ? VERB_PATTERNS[patternKey] : null;
-			const conjugation = conjugationKey
-				? VERB_CONJUGATIONS[conjugationKey]
-				: null;
+			const conjugation = conjugationKey ? VERB_CONJUGATIONS[conjugationKey] : null;
 
 			if (!pattern || !conjugation) return null;
 
@@ -602,11 +541,8 @@ export default function VerbsPage({ loaderData }: Route.ComponentProps) {
 		.filter((cat): cat is NonNullable<typeof cat> => cat !== null);
 
 	const eimai = IRREGULAR_VERBS.find((v) => v.infinitive === "είμαι");
-	const shortStemIrregulars = IRREGULAR_VERBS.filter(
-		(v) => v.infinitive !== "είμαι",
-	).sort(
-		(a, b) =>
-			(VERB_FREQUENCY[b.infinitive] ?? 2) - (VERB_FREQUENCY[a.infinitive] ?? 2),
+	const shortStemIrregulars = IRREGULAR_VERBS.filter((v) => v.infinitive !== "είμαι").sort(
+		(a, b) => (VERB_FREQUENCY[b.infinitive] ?? 2) - (VERB_FREQUENCY[a.infinitive] ?? 2),
 	);
 
 	return (
@@ -619,11 +555,7 @@ export default function VerbsPage({ loaderData }: Route.ComponentProps) {
 				<span>Learn</span>
 			</Link>
 
-			<TabHero
-				title="Verbs"
-				greekPhrase="κάνω, μιλάω, έρχομαι"
-				colorScheme="olive"
-			>
+			<TabHero title="Verbs" greekPhrase="κάνω, μιλάω, έρχομαι" colorScheme="olive">
 				Patterns and conjugations organised by frequency.
 			</TabHero>
 
@@ -660,18 +592,14 @@ export default function VerbsPage({ loaderData }: Route.ComponentProps) {
 						subtitle={cat.subtitle}
 						colorScheme={cat.colorScheme as ColorScheme}
 						footer={
-							cat.verbs.length > 1 ? (
-								<VerbList verbs={cat.verbs} label={cat.shortName} />
-							) : null
+							cat.verbs.length > 1 ? <VerbList verbs={cat.verbs} label={cat.shortName} /> : null
 						}
 					/>
 				))}
 			</div>
 
 			<div className="space-y-3">
-				<h2 className="px-1 text-sm font-bold text-stone-700">
-					Short-stem irregulars
-				</h2>
+				<h2 className="px-1 text-sm font-bold text-stone-700">Short-stem irregulars</h2>
 				<div className="grid gap-3 md:grid-cols-2">
 					{shortStemIrregulars.map((verb) => (
 						<VerbCard

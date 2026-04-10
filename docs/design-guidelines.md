@@ -9,6 +9,7 @@ Research-backed design principles for effective language learning interfaces.
 **Research:** Cool colors (blue, green) promote relaxation and sustained focus. Warm colors (red, orange) increase arousal and draw attention.
 
 **Application:**
+
 - Use cream (`#FAF8F5`) as the primary background for reading/study areas
 - Reserve terracotta (`#C4663F`) for interactive elements and emphasis
 - Never use warm colors as large background fills
@@ -18,6 +19,7 @@ Research-backed design principles for effective language learning interfaces.
 **Research:** Color-coding aids retention, but too many colors increases cognitive load and reverses the benefit.
 
 **Application:**
+
 - Show case colors OR gender colors, never both simultaneously
 - Limit visible accent colors to 3-4 in any single view
 - Use progressive disclosure: start without color coding, add as concepts are introduced
@@ -27,6 +29,7 @@ Research-backed design principles for effective language learning interfaces.
 **Research:** 7:1 contrast ratio reduces eye strain during extended learning sessions.
 
 **Application:**
+
 - Body text must use high-contrast variants (`*-text` tokens)
 - Accent colors (terracotta, olive, ocean, honey) are for decorative use only
 - Always pair accent backgrounds with their `-text` variant for any text content
@@ -38,6 +41,7 @@ Research-backed design principles for effective language learning interfaces.
 **Research:** Greek characters are visually denser than Latin characters and require adjustments for equivalent readability.
 
 **Application:**
+
 - Render Greek at 1.1x the size of surrounding English text
 - Use line-height of 1.5-1.7 for mixed Greek/English content
 - Add slight letter-spacing (+0.01em) to prevent character collision
@@ -48,38 +52,39 @@ Research-backed design principles for effective language learning interfaces.
 
 ### Base Colors
 
-| Token | Hex | Use |
-|-------|-----|-----|
-| `cream` | `#FAF8F5` | Primary background |
-| `cream-dark` | `#F5F1EB` | Secondary background |
-| `foreground` | `#1c1917` | Primary text |
-| `muted-foreground` | `#57534e` | Secondary text |
+| Token              | Hex       | Use                  |
+| ------------------ | --------- | -------------------- |
+| `cream`            | `#FAF8F5` | Primary background   |
+| `cream-dark`       | `#F5F1EB` | Secondary background |
+| `foreground`       | `#1c1917` | Primary text         |
+| `muted-foreground` | `#57534e` | Secondary text       |
 
 ### Accent Colors (Decorative Only)
 
 These colors fail WCAG AA for body text. Use only for:
+
 - Borders and dividers
 - Icons and decorative elements
 - Large text (18px+ or 14px+ bold)
 - Interactive state indicators
 
-| Token | Hex | Contrast | Use |
-|-------|-----|----------|-----|
-| `terracotta` | `#C4663F` | 3.9:1 | Primary actions, emphasis |
-| `olive` | `#6B7B5C` | 4.2:1 | Nature, connection |
-| `ocean` | `#4A7C8F` | 4.1:1 | Stability, calm |
-| `honey` | `#D4A853` | 3.2:1 | Highlights, hints |
+| Token        | Hex       | Contrast | Use                       |
+| ------------ | --------- | -------- | ------------------------- |
+| `terracotta` | `#C4663F` | 3.9:1    | Primary actions, emphasis |
+| `olive`      | `#6B7B5C` | 4.2:1    | Nature, connection        |
+| `ocean`      | `#4A7C8F` | 4.1:1    | Stability, calm           |
+| `honey`      | `#D4A853` | 3.2:1    | Highlights, hints         |
 
 ### Text-Safe Variants (AAA Compliant)
 
 Use these for any text content. Contrast ratios calculated against both cream backgrounds AND tinted backgrounds (e.g., `bg-honey-100`).
 
-| Token | Hex | On Cream | On Tinted BG |
-|-------|-----|----------|--------------|
-| `terracotta-text` | `#5C2D14` | 10:1+ | 10:1+ |
-| `olive-text` | `#1F2A18` | 12:1+ | 12:1+ |
-| `ocean-text` | `#14333F` | 11:1+ | 11:1+ |
-| `honey-text` | `#4A3508` | 11:1+ | 11:1+ |
+| Token             | Hex       | On Cream | On Tinted BG |
+| ----------------- | --------- | -------- | ------------ |
+| `terracotta-text` | `#5C2D14` | 10:1+    | 10:1+        |
+| `olive-text`      | `#1F2A18` | 12:1+    | 12:1+        |
+| `ocean-text`      | `#14333F` | 11:1+    | 11:1+        |
+| `honey-text`      | `#4A3508` | 11:1+    | 11:1+        |
 
 **Critical:** These colors are intentionally very dark to maintain AAA compliance on tinted backgrounds.
 
@@ -87,19 +92,19 @@ Use these for any text content. Contrast ratios calculated against both cream ba
 
 Additional colors inspired by Greek landscapes and pottery:
 
-| Token | Hex | Contrast | Use |
-|-------|-----|----------|-----|
-| `santorini` | `#02B8D9` | 3.1:1 | Links, interactive, modern accent |
-| `navy` | `#3B5478` | 5.8:1 | Headings, emphasis, scholarly |
-| `slate` | `#66817C` | 4.0:1 | Secondary accents, subtle contrast |
+| Token       | Hex       | Contrast | Use                                |
+| ----------- | --------- | -------- | ---------------------------------- |
+| `santorini` | `#02B8D9` | 3.1:1    | Links, interactive, modern accent  |
+| `navy`      | `#3B5478` | 5.8:1    | Headings, emphasis, scholarly      |
+| `slate`     | `#66817C` | 4.0:1    | Secondary accents, subtle contrast |
 
 ### Expanded Palette Text-Safe Variants
 
-| Token | Hex | On Cream | On Tinted BG |
-|-------|-----|----------|--------------|
-| `santorini-text` | `#084A52` | 9:1+ | 9:1+ |
-| `navy-text` | `#1A2838` | 12:1+ | 12:1+ |
-| `slate-text` | `#1A2D2A` | 11:1+ | 11:1+ |
+| Token            | Hex       | On Cream | On Tinted BG |
+| ---------------- | --------- | -------- | ------------ |
+| `santorini-text` | `#084A52` | 9:1+     | 9:1+         |
+| `navy-text`      | `#1A2838` | 12:1+    | 12:1+        |
+| `slate-text`     | `#1A2D2A` | 11:1+    | 11:1+        |
 
 ---
 
@@ -109,14 +114,15 @@ Additional colors inspired by Greek landscapes and pottery:
 
 Each Greek case has an assigned color based on its grammatical function:
 
-| Case | Color | Rationale |
-|------|-------|-----------|
-| Nominative | Ocean (blue) | Subject - stable, foundational |
-| Accusative | Terracotta (orange) | Direct object - action target |
-| Genitive | Olive (green) | Possession - connection, relation |
-| Vocative | Honey (gold) | Direct address - attention-getting |
+| Case       | Color               | Rationale                          |
+| ---------- | ------------------- | ---------------------------------- |
+| Nominative | Ocean (blue)        | Subject - stable, foundational     |
+| Accusative | Terracotta (orange) | Direct object - action target      |
+| Genitive   | Olive (green)       | Possession - connection, relation  |
+| Vocative   | Honey (gold)        | Direct address - attention-getting |
 
 **CSS Classes:**
+
 ```css
 .case-nominative    /* Left border indicator */
 .case-accusative
@@ -133,13 +139,14 @@ Each Greek case has an assigned color based on its grammatical function:
 
 Gender colors are intentionally subtle - use only as thin left borders, never as backgrounds or text colors.
 
-| Gender | Color |
-|--------|-------|
+| Gender    | Color                 |
+| --------- | --------------------- |
 | Masculine | `#5B8DEF` (blue tint) |
-| Feminine | `#E57399` (rose tint) |
-| Neuter | `#9CA3AF` (gray) |
+| Feminine  | `#E57399` (rose tint) |
+| Neuter    | `#9CA3AF` (gray)      |
 
 **CSS Classes:**
+
 ```css
 .gender-masculine    /* 3px left border at 60% opacity */
 .gender-feminine
@@ -148,13 +155,14 @@ Gender colors are intentionally subtle - use only as thin left borders, never as
 
 ### Learning Feedback
 
-| State | Border | Background |
-|-------|--------|------------|
-| Correct | `#16A34A` | `#DCFCE7` |
-| Incorrect | `#DC2626` | `#FEE2E2` |
-| Hint | `#D4A853` | `#FEF3C7` |
+| State     | Border    | Background |
+| --------- | --------- | ---------- |
+| Correct   | `#16A34A` | `#DCFCE7`  |
+| Incorrect | `#DC2626` | `#FEE2E2`  |
+| Hint      | `#D4A853` | `#FEF3C7`  |
 
 **CSS Classes:**
+
 ```css
 .feedback-correct
 .feedback-incorrect
@@ -174,14 +182,14 @@ Gender colors are intentionally subtle - use only as thin left borders, never as
 
 ### Usage
 
-| Context | Font | Size |
-|---------|------|------|
-| Page titles | Serif | 2.5-3rem |
-| Section headings | Serif | 1.5-2rem |
-| Body text | Sans | 1rem |
-| Greek vocabulary | Sans | 1.1rem (1.1x scale) |
-| Paradigm tables | Mono | 0.9rem |
-| Captions/labels | Sans | 0.875rem |
+| Context          | Font  | Size                |
+| ---------------- | ----- | ------------------- |
+| Page titles      | Serif | 2.5-3rem            |
+| Section headings | Serif | 1.5-2rem            |
+| Body text        | Sans  | 1rem                |
+| Greek vocabulary | Sans  | 1.1rem (1.1x scale) |
+| Paradigm tables  | Mono  | 0.9rem              |
+| Captions/labels  | Sans  | 0.875rem            |
 
 ### Greek Text Helper
 
@@ -209,6 +217,7 @@ Reveal grammatical patterns through structure, not flat grids:
 ```
 
 This layout shows:
+
 - Person progression (vertical)
 - Number relationship (horizontal)
 - Gender variations in 3rd person
@@ -289,22 +298,22 @@ Tailwind's opacity modifier syntax (`text-honey-text/80`) reduces contrast:
 The `-text` color variants are carefully calibrated to achieve 10:1+ contrast ratios on tinted backgrounds. Any opacity reduction (even `/90`) can drop below the 7:1 AAA threshold:
 
 | Original | With /80 | With /70 |
-|----------|----------|----------|
-| 10:1 | ~8:1 | ~7:1 |
-| 11:1 | ~9:1 | ~8:1 |
+| -------- | -------- | -------- |
+| 10:1     | ~8:1     | ~7:1     |
+| 11:1     | ~9:1     | ~8:1     |
 
 ### Rule: Never Use Opacity on `-text` Colors
 
 ```tsx
 // NEVER do this:
-text-honey-text/80
-text-ocean-text/70
-text-olive-text/90
+text - honey - text / 80;
+text - ocean - text / 70;
+text - olive - text / 90;
 
 // Always use full opacity:
-text-honey-text
-text-ocean-text
-text-olive-text
+text - honey - text;
+text - ocean - text;
+text - olive - text;
 ```
 
 ### When You Need Lighter Text
@@ -324,7 +333,7 @@ Opacity modifiers are fine for backgrounds since they don't affect text contrast
 ```tsx
 // GOOD - background opacity doesn't affect text readability
 <div className="bg-honey-100">
-  <p className="text-honey-text">Still readable</p>
+	<p className="text-honey-text">Still readable</p>
 </div>
 ```
 
@@ -333,6 +342,7 @@ Opacity modifiers are fine for backgrounds since they don't affect text contrast
 **No.** Tailwind CSS v4 doesn't provide a configuration option to disable the `/` opacity modifier syntax. It's a core feature.
 
 **Enforcement options:**
+
 1. **Pre-commit check:** `rg "text-[a-z]+-text/\d+" --type tsx`
 2. **ESLint rule:** Custom rule to flag the pattern
 3. **Code review:** Check for `/XX` on `-text` color classes
@@ -346,11 +356,7 @@ Opacity modifiers are fine for backgrounds since they don't affect text contrast
 Use `SectionHeading` component for consistent navy/slate styling:
 
 ```tsx
-<SectionHeading
-  title="Cases"
-  subtitle="The framework that explains why words change"
-  level="h2"
-/>
+<SectionHeading title="Cases" subtitle="The framework that explains why words change" level="h2" />
 ```
 
 - H2: `text-2xl font-bold text-navy-text`
@@ -363,13 +369,13 @@ Use `KeyInsight` component for prominent callouts:
 
 ```tsx
 <KeyInsight
-  title="All prepositions take accusative"
-  expandedExample={{
-    label: "What this means",
-    content: <div>Use τον/την/το after prepositions...</div>
-  }}
+	title="All prepositions take accusative"
+	expandedExample={{
+		label: "What this means",
+		content: <div>Use τον/την/το after prepositions...</div>,
+	}}
 >
-  No exceptions! This simplifies things.
+	No exceptions! This simplifies things.
 </KeyInsight>
 ```
 
@@ -382,12 +388,8 @@ Use `KeyInsight` component for prominent callouts:
 Use `CollapsibleSection` component with color schemes:
 
 ```tsx
-<CollapsibleSection
-  title="Quick Spot-Check"
-  colorScheme="honey"
-  defaultOpen={true}
->
-  Content here
+<CollapsibleSection title="Quick Spot-Check" colorScheme="honey" defaultOpen={true}>
+	Content here
 </CollapsibleSection>
 ```
 
@@ -401,15 +403,15 @@ Use `QuickTest` component for self-testing patterns:
 
 ```tsx
 <QuickTest
-  title="Which preposition?"
-  colorScheme="olive"
-  options={[
-    {
-      answer: "σε / στο",
-      condition: "Location where something IS or going TO",
-      examples: [{ greek: "στο σπίτι", english: "at/to home" }]
-    }
-  ]}
+	title="Which preposition?"
+	colorScheme="olive"
+	options={[
+		{
+			answer: "σε / στο",
+			condition: "Location where something IS or going TO",
+			examples: [{ greek: "στο σπίτι", english: "at/to home" }],
+		},
+	]}
 />
 ```
 
@@ -420,10 +422,7 @@ Excellent pedagogy - replicate across sections. Based on "Which me/you do I use?
 Use `MistakeComparison` component for wrong/correct pairs:
 
 ```tsx
-<MistakeComparison
-  mistakes={AGREEMENT_MISTAKES}
-  title="Common Agreement Mistakes"
-/>
+<MistakeComparison mistakes={AGREEMENT_MISTAKES} title="Common Agreement Mistakes" />
 ```
 
 - Always includes "Wrong:" / "Correct:" text labels
@@ -434,17 +433,13 @@ Use `MistakeComparison` component for wrong/correct pairs:
 Use `CategoryCard` component for content differentiation by importance:
 
 ```tsx
-<CategoryCard
-  title="Object Pronouns"
-  priority="primary"
-  colorScheme="ocean"
-  badge="Essential"
->
-  Content here
+<CategoryCard title="Object Pronouns" priority="primary" colorScheme="ocean" badge="Essential">
+	Content here
 </CategoryCard>
 ```
 
 Priority levels:
+
 - `primary` - Essential content (most prominent styling)
 - `secondary` - Standard content
 - `tertiary` - Nice-to-know (subtle styling)
@@ -455,29 +450,29 @@ Priority levels:
 
 ### Component-Level Color Assignments
 
-| Element | Color Token | Rationale |
-|---------|-------------|-----------|
-| Section h2/h3 headings | `text-navy-text` | Scholarly, hierarchical |
-| Subtitles/descriptions | `text-slate-text` | Subtle, supporting |
-| Interactive (collapsibles, links) | `text-santorini-text` | Interactive affordance |
-| Key insight callouts | `bg-santorini-50`, `border-santorini-300` | Attention, important |
-| Tips and self-tests | `bg-honey-50`, `border-honey-300` | Hints, warmth |
-| Decorative icons | Base color (e.g., `text-honey`) | Visual accent only |
-| Icon labels/text | `-text` variant (e.g., `text-honey-text`) | AAA compliance |
+| Element                           | Color Token                               | Rationale               |
+| --------------------------------- | ----------------------------------------- | ----------------------- |
+| Section h2/h3 headings            | `text-navy-text`                          | Scholarly, hierarchical |
+| Subtitles/descriptions            | `text-slate-text`                         | Subtle, supporting      |
+| Interactive (collapsibles, links) | `text-santorini-text`                     | Interactive affordance  |
+| Key insight callouts              | `bg-santorini-50`, `border-santorini-300` | Attention, important    |
+| Tips and self-tests               | `bg-honey-50`, `border-honey-300`         | Hints, warmth           |
+| Decorative icons                  | Base color (e.g., `text-honey`)           | Visual accent only      |
+| Icon labels/text                  | `-text` variant (e.g., `text-honey-text`) | AAA compliance          |
 
 ### Semantic Color Mapping by Grammar Concept
 
-| Concept | Color | Rationale |
-|---------|-------|-----------|
-| Cases - Nominative | Ocean | Subject - stable, foundational |
-| Cases - Accusative | Terracotta | Object - action target |
-| Cases - Genitive | Olive | Possession - connection |
-| Cases - Vocative | Honey | Address - attention |
-| Verbs - Active (-ω) | Ocean | Standard, calm |
-| Verbs - Contracted (-άω) | Terracotta | Emphasis, variation |
-| Verbs - Deponent (-μαι) | Olive | Passive-looking |
-| Prepositions - σε | Olive | Location (contracts) |
-| Prepositions - από | Ocean | Origin (no contraction) |
+| Concept                  | Color      | Rationale                      |
+| ------------------------ | ---------- | ------------------------------ |
+| Cases - Nominative       | Ocean      | Subject - stable, foundational |
+| Cases - Accusative       | Terracotta | Object - action target         |
+| Cases - Genitive         | Olive      | Possession - connection        |
+| Cases - Vocative         | Honey      | Address - attention            |
+| Verbs - Active (-ω)      | Ocean      | Standard, calm                 |
+| Verbs - Contracted (-άω) | Terracotta | Emphasis, variation            |
+| Verbs - Deponent (-μαι)  | Olive      | Passive-looking                |
+| Prepositions - σε        | Olive      | Location (contracts)           |
+| Prepositions - από       | Ocean      | Origin (no contraction)        |
 
 ---
 

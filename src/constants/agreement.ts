@@ -736,22 +736,19 @@ export const AGREEMENT_MISTAKES: AgreementMistake[] = [
 	{
 		wrong: "τα άνθρωπο",
 		correct: "τον άνθρωπο",
-		explanation:
-			"Gender mismatch: άνθρωπος is masculine, use τον (not τα which is neuter plural)",
+		explanation: "Gender mismatch: άνθρωπος is masculine, use τον (not τα which is neuter plural)",
 		category: "gender",
 	},
 	{
 		wrong: "ο μητέρα μου",
 		correct: "η μητέρα μου",
-		explanation:
-			"Gender mismatch: μητέρα is feminine, use η (not ο which is masculine)",
+		explanation: "Gender mismatch: μητέρα is feminine, use η (not ο which is masculine)",
 		category: "gender",
 	},
 	{
 		wrong: "η βιβλίο",
 		correct: "το βιβλίο",
-		explanation:
-			"Gender mismatch: βιβλίο is neuter, use το (not η which is feminine)",
+		explanation: "Gender mismatch: βιβλίο is neuter, use το (not η which is feminine)",
 		category: "gender",
 	},
 
@@ -773,8 +770,7 @@ export const AGREEMENT_MISTAKES: AgreementMistake[] = [
 	{
 		wrong: "το σπίτι ο Νίκος",
 		correct: "το σπίτι του Νίκου",
-		explanation:
-			"Case mismatch: possession needs genitive (του Νίκου = of Nikos), not nominative",
+		explanation: "Case mismatch: possession needs genitive (του Νίκου = of Nikos), not nominative",
 		category: "case",
 	},
 
@@ -782,15 +778,13 @@ export const AGREEMENT_MISTAKES: AgreementMistake[] = [
 	{
 		wrong: "οι παιδί",
 		correct: "τα παιδιά",
-		explanation:
-			"Number mismatch: plural needs τα παιδιά (not οι which is masc/fem plural)",
+		explanation: "Number mismatch: plural needs τα παιδιά (not οι which is masc/fem plural)",
 		category: "number",
 	},
 	{
 		wrong: "το βιβλία",
 		correct: "τα βιβλία",
-		explanation:
-			"Number mismatch: plural nouns need plural article τα (not το which is singular)",
+		explanation: "Number mismatch: plural nouns need plural article τα (not το which is singular)",
 		category: "number",
 	},
 ];

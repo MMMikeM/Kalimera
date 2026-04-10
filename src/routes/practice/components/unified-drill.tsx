@@ -59,9 +59,7 @@ type UnifiedDrillAction =
 	| { type: "NEXT_QUESTION" }
 	| { type: "RESTART" };
 
-const initialUnifiedState = (
-	questions: UnifiedQuestion[],
-): UnifiedDrillState => {
+const initialUnifiedState = (questions: UnifiedQuestion[]): UnifiedDrillState => {
 	return {
 		questions,
 		currentIndex: 0,
@@ -170,9 +168,7 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 
 	const questionStartTimeRef = useRef<number>(Date.now());
 	const inputRef = useRef<HTMLInputElement>(null);
-	const autoAdvanceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(
-		null,
-	);
+	const autoAdvanceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 	const [isAutoAdvancing, setIsAutoAdvancing] = useState(false);
 
 	// Focus input when question becomes active
@@ -187,9 +183,7 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 	useEffect(() => {
 		if (state.phase !== "feedback" || !state.lastResult) return;
 
-		const delay = state.lastResult.isCorrect
-			? AUTO_ADVANCE_DELAY
-			: WRONG_ADVANCE_DELAY;
+		const delay = state.lastResult.isCorrect ? AUTO_ADVANCE_DELAY : WRONG_ADVANCE_DELAY;
 		setIsAutoAdvancing(true);
 		autoAdvanceTimerRef.current = setTimeout(() => {
 			dispatch({ type: "NEXT_QUESTION" });
@@ -209,9 +203,7 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 	useEffect(() => {
 		if (state.isComplete && onComplete) {
 			const avgResponseTime =
-				state.score.total > 0
-					? Math.round(state.totalResponseTime / state.score.total)
-					: 0;
+				state.score.total > 0 ? Math.round(state.totalResponseTime / state.score.total) : 0;
 			onComplete({
 				correct: state.score.correct,
 				total: state.score.total,
@@ -219,13 +211,7 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 				attempts: state.attempts,
 			});
 		}
-	}, [
-		state.isComplete,
-		state.score,
-		state.totalResponseTime,
-		state.attempts,
-		onComplete,
-	]);
+	}, [state.isComplete, state.score, state.totalResponseTime, state.attempts, onComplete]);
 
 	// Keyboard handler for advancing
 	useEffect(() => {
@@ -261,10 +247,7 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 			if (!currentQuestion || state.phase !== "active") return;
 
 			const timeTaken = Date.now() - questionStartTimeRef.current;
-			const result = matchPhonetic(
-				state.userInput,
-				currentQuestion.correctGreek,
-			);
+			const result = matchPhonetic(state.userInput, currentQuestion.correctGreek);
 
 			const attempt: UnifiedAttemptResult = {
 				questionId: currentQuestion.id,
@@ -309,19 +292,13 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 
 	const timeLimit = currentQuestion.timeLimit ?? DEFAULT_TIME_LIMIT;
 	const progressPercent =
-		((state.currentIndex + (state.phase === "feedback" ? 1 : 0)) /
-			state.questions.length) *
-		100;
+		((state.currentIndex + (state.phase === "feedback" ? 1 : 0)) / state.questions.length) * 100;
 	const avgResponseTime =
-		state.score.total > 0
-			? (state.totalResponseTime / state.score.total / 1000).toFixed(1)
-			: "0.0";
+		state.score.total > 0 ? (state.totalResponseTime / state.score.total / 1000).toFixed(1) : "0.0";
 
 	if (state.isComplete) {
 		const avgResponseTime =
-			state.score.total > 0
-				? Math.round(state.totalResponseTime / state.score.total)
-				: 0;
+			state.score.total > 0 ? Math.round(state.totalResponseTime / state.score.total) : 0;
 
 		return (
 			<DrillSummary
@@ -362,11 +339,7 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 			{/* Timer */}
 			{state.phase === "active" && (
 				<div className="mb-4">
-					<CountdownTimer
-						durationMs={timeLimit}
-						isRunning={true}
-						onTimeout={handleTimeout}
-					/>
+					<CountdownTimer durationMs={timeLimit} isRunning={true} onTimeout={handleTimeout} />
 				</div>
 			)}
 
@@ -402,9 +375,7 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 							ref={inputRef}
 							type="text"
 							value={state.userInput}
-							onChange={(e) =>
-								dispatch({ type: "SET_INPUT", value: e.target.value })
-							}
+							onChange={(e) => dispatch({ type: "SET_INPUT", value: e.target.value })}
 							onKeyDown={handleKeyDown}
 							placeholder="Type phonetically (e.g., thelo kafe)"
 							className="py-6 text-center text-lg"
@@ -435,11 +406,7 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 									: "bg-incorrect-100 text-incorrect"
 							}`}
 						>
-							{state.lastResult?.isCorrect ? (
-								<CheckCircle size={24} />
-							) : (
-								<XCircle size={24} />
-							)}
+							{state.lastResult?.isCorrect ? <CheckCircle size={24} /> : <XCircle size={24} />}
 							<span className="text-lg font-bold">
 								{state.lastResult?.timedOut
 									? "Time's up!"
@@ -468,17 +435,13 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 						{state.lastResult && !state.lastResult.isCorrect && (
 							<div className="border-incorrect-200 bg-incorrect-50 space-y-1.5 rounded-lg border p-3 text-sm">
 								<div className="flex items-baseline gap-2">
-									<span className="w-20 shrink-0 text-xs text-stone-400">
-										you typed
-									</span>
+									<span className="w-20 shrink-0 text-xs text-stone-400">you typed</span>
 									<MonoText className="text-incorrect line-through">
 										{state.lastResult.userAnswer || "(nothing)"}
 									</MonoText>
 								</div>
 								<div className="flex items-baseline gap-2">
-									<span className="w-20 shrink-0 text-xs text-stone-400">
-										correct
-									</span>
+									<span className="w-20 shrink-0 text-xs text-stone-400">correct</span>
 									<MonoText className="font-semibold text-correct">
 										{currentQuestion.correctGreek}
 									</MonoText>
@@ -487,25 +450,18 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 						)}
 
 						{/* Hint on incorrect */}
-						{state.lastResult &&
-							!state.lastResult.isCorrect &&
-							currentQuestion.hint && (
-								<p className="text-center text-sm text-stone-500 italic">
-									<span className="font-medium not-italic">Remember:</span>{" "}
-									{currentQuestion.hint}
-								</p>
-							)}
+						{state.lastResult && !state.lastResult.isCorrect && currentQuestion.hint && (
+							<p className="text-center text-sm text-stone-500 italic">
+								<span className="font-medium not-italic">Remember:</span> {currentQuestion.hint}
+							</p>
+						)}
 
 						{/* Auto-advance indicator */}
 						{isAutoAdvancing && state.lastResult?.isCorrect && (
-							<p className="animate-pulse text-center text-xs text-stone-400">
-								Next question...
-							</p>
+							<p className="animate-pulse text-center text-xs text-stone-400">Next question...</p>
 						)}
 						{isAutoAdvancing && !state.lastResult?.isCorrect && (
-							<p className="animate-pulse text-center text-xs text-stone-400">
-								Advancing in 3s...
-							</p>
+							<p className="animate-pulse text-center text-xs text-stone-400">Advancing in 3s...</p>
 						)}
 					</div>
 				)}
@@ -524,10 +480,7 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 				)}
 
 				{state.phase === "feedback" && !state.lastResult?.isCorrect && (
-					<Button
-						onClick={() => dispatch({ type: "NEXT_QUESTION" })}
-						className="gap-2"
-					>
+					<Button onClick={() => dispatch({ type: "NEXT_QUESTION" })} className="gap-2">
 						{state.currentIndex < state.questions.length - 1 ? (
 							<>
 								Next <ChevronRight size={16} />

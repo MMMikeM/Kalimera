@@ -7,13 +7,7 @@ import { NumbersSubtab } from "./subtabs/numbers";
 import { PositionSubtab } from "./subtabs/position";
 import { TimeSubtab } from "./subtabs/time";
 
-const VALID_SUBTABS = [
-	"numbers",
-	"position",
-	"time",
-	"frequency",
-	"colours",
-] as const;
+const VALID_SUBTABS = ["numbers", "position", "time", "frequency", "colours"] as const;
 type SubtabId = (typeof VALID_SUBTABS)[number];
 
 export function loader({ params }: Route.LoaderArgs) {

@@ -141,15 +141,9 @@ const generateNounQuestions = (): DrillQuestion[] => {
 
 	for (const noun of nouns) {
 		const forms = declineNoun(noun.lemma, noun.pattern);
-		const nomForm = forms.find(
-			(f) => f.case === "nominative" && f.number === "singular",
-		);
-		const accForm = forms.find(
-			(f) => f.case === "accusative" && f.number === "singular",
-		);
-		const genForm = forms.find(
-			(f) => f.case === "genitive" && f.number === "singular",
-		);
+		const nomForm = forms.find((f) => f.case === "nominative" && f.number === "singular");
+		const accForm = forms.find((f) => f.case === "accusative" && f.number === "singular");
+		const genForm = forms.find((f) => f.case === "genitive" && f.number === "singular");
 
 		if (nomForm && accForm) {
 			questions.push({
@@ -195,10 +189,7 @@ export const generateQuestions = (
 	categories: QuestionCategory[] | "all",
 	count?: number,
 ): DrillQuestion[] => {
-	const cats =
-		categories === "all"
-			? (Object.keys(generators) as QuestionCategory[])
-			: categories;
+	const cats = categories === "all" ? (Object.keys(generators) as QuestionCategory[]) : categories;
 
 	const all = cats.flatMap((c) => generators[c]());
 	const shuffled = shuffleArray(all);
@@ -206,10 +197,7 @@ export const generateQuestions = (
 	return count ? shuffled.slice(0, count) : shuffled;
 };
 
-export const CATEGORY_CONFIG: Record<
-	QuestionCategory,
-	{ label: string; description: string }
-> = {
+export const CATEGORY_CONFIG: Record<QuestionCategory, { label: string; description: string }> = {
 	pronouns: {
 		label: "Pronouns",
 		description: "Object and possessive pronouns",

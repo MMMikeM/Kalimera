@@ -4,9 +4,7 @@ import { Link } from "react-router";
 import { Card } from "@/components/Card";
 import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
-import UnifiedDrill, {
-	type SessionStats,
-} from "./practice/components/unified-drill";
+import UnifiedDrill, { type SessionStats } from "./practice/components/unified-drill";
 
 export function meta() {
 	return [
@@ -54,8 +52,8 @@ const TryDrillIntro = ({ onStart }: { onStart: () => void }) => (
 						</div>
 						<h1 className="mb-2 text-2xl font-bold">Try a Speed Drill</h1>
 						<p className="mb-6 text-stone-600">
-							8 questions. Type Greek with your normal keyboard. We understand
-							phonetic spelling. Let's see what you've got.
+							8 questions. Type Greek with your normal keyboard. We understand phonetic spelling.
+							Let's see what you've got.
 						</p>
 
 						<Button size="lg" onClick={onStart} className="gap-2">
@@ -65,16 +63,12 @@ const TryDrillIntro = ({ onStart }: { onStart: () => void }) => (
 
 						<div className="mt-6 space-y-1 text-xs text-stone-400">
 							<p>
-								<kbd className="rounded bg-stone-100 px-1.5 py-0.5 text-stone-600">
-									Space
-								</kbd>{" "}
-								to start each question
+								<kbd className="rounded bg-stone-100 px-1.5 py-0.5 text-stone-600">Space</kbd> to
+								start each question
 							</p>
 							<p>
-								<kbd className="rounded bg-stone-100 px-1.5 py-0.5 text-stone-600">
-									Enter
-								</kbd>{" "}
-								to submit answer
+								<kbd className="rounded bg-stone-100 px-1.5 py-0.5 text-stone-600">Enter</kbd> to
+								submit answer
 							</p>
 						</div>
 					</div>
@@ -87,8 +81,7 @@ const TryDrillIntro = ({ onStart }: { onStart: () => void }) => (
 const TryDrillComplete = ({ stats }: { stats: SessionStats }) => {
 	const percentage = Math.round((stats.correct / stats.total) * 100);
 	const getMessage = () => {
-		if (percentage >= 80)
-			return { emoji: "🎉", text: "Excellent! You've got solid foundations." };
+		if (percentage >= 80) return { emoji: "🎉", text: "Excellent! You've got solid foundations." };
 		if (percentage >= 50)
 			return {
 				emoji: "💪",
@@ -118,13 +111,10 @@ const TryDrillComplete = ({ stats }: { stats: SessionStats }) => {
 							<p className="mb-6 text-stone-600">{text}</p>
 
 							<div className="mb-6 rounded-xl border border-ocean-200 bg-ocean-50 p-6 text-left">
-								<p className="mb-2 font-medium text-ocean-text">
-									This was just a taste.
-								</p>
+								<p className="mb-2 font-medium text-ocean-text">This was just a taste.</p>
 								<p className="text-sm text-stone-600">
-									Create an account to track your progress, build streaks with
-									automatic freeze protection, and access the full drill
-									library. It's free.
+									Create an account to track your progress, build streaks with automatic freeze
+									protection, and access the full drill library. It's free.
 								</p>
 							</div>
 
@@ -163,9 +153,7 @@ const TryDrillComplete = ({ stats }: { stats: SessionStats }) => {
 
 export default function TryDrillRoute() {
 	const [started, setStarted] = useState(false);
-	const [completedStats, setCompletedStats] = useState<SessionStats | null>(
-		null,
-	);
+	const [completedStats, setCompletedStats] = useState<SessionStats | null>(null);
 
 	if (completedStats) {
 		return <TryDrillComplete stats={completedStats} />;

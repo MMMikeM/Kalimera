@@ -16,10 +16,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
 		const { userId, username } = body;
 
 		if (!userId || !username) {
-			return Response.json(
-				{ error: "Missing required fields: userId, username" },
-				{ status: 400 },
-			);
+			return Response.json({ error: "Missing required fields: userId, username" }, { status: 400 });
 		}
 
 		const url = new URL(request.url);
@@ -29,17 +26,11 @@ export const action = async ({ request }: Route.ActionArgs) => {
 			origin: url.origin,
 		});
 
-		const options = await webauthn.generateRegistrationOptions(
-			userId,
-			username,
-		);
+		const options = await webauthn.generateRegistrationOptions(userId, username);
 
 		return Response.json(options);
 	} catch (error) {
 		console.error("WebAuthn register options error:", error);
-		return Response.json(
-			{ error: "Failed to generate registration options" },
-			{ status: 500 },
-		);
+		return Response.json({ error: "Failed to generate registration options" }, { status: 500 });
 	}
 };

@@ -12,8 +12,8 @@ export function AdjectivesTab() {
 				colorScheme="honey"
 				icon={<Sparkles size={18} />}
 			>
-				Adjectives agree with their noun in gender, case, and number. Once you
-				know noun patterns, adjectives follow the same rules.
+				Adjectives agree with their noun in gender, case, and number. Once you know noun patterns,
+				adjectives follow the same rules.
 			</TabHero>
 			<AdjectivesSection />
 			<PracticeCTA

@@ -17,70 +17,46 @@ const ArticleQuickLookup: React.FC = () => (
 					<thead>
 						<tr className="border-b border-stone-200">
 							<th className="w-12 py-1 pr-2 text-left font-medium text-stone-600" />
-							<th className="px-2 py-1 text-left font-medium text-gender-masculine">
-								M
-							</th>
-							<th className="px-2 py-1 text-left font-medium text-gender-feminine">
-								F
-							</th>
-							<th className="px-2 py-1 text-left font-medium text-gender-neuter">
-								N
-							</th>
+							<th className="px-2 py-1 text-left font-medium text-gender-masculine">M</th>
+							<th className="px-2 py-1 text-left font-medium text-gender-feminine">F</th>
+							<th className="px-2 py-1 text-left font-medium text-gender-neuter">N</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr className="border-b border-stone-100">
 							<td className="py-1 pr-2 text-xs text-stone-500">Nom</td>
 							<td className="px-2 py-1">
-								<MonoText size="sm">
-									{ARTICLE_AGREEMENT_QUICK_REF.singular.masculine.nom}
-								</MonoText>
+								<MonoText size="sm">{ARTICLE_AGREEMENT_QUICK_REF.singular.masculine.nom}</MonoText>
 							</td>
 							<td className="px-2 py-1">
-								<MonoText size="sm">
-									{ARTICLE_AGREEMENT_QUICK_REF.singular.feminine.nom}
-								</MonoText>
+								<MonoText size="sm">{ARTICLE_AGREEMENT_QUICK_REF.singular.feminine.nom}</MonoText>
 							</td>
 							<td className="px-2 py-1">
-								<MonoText size="sm">
-									{ARTICLE_AGREEMENT_QUICK_REF.singular.neuter.nom}
-								</MonoText>
+								<MonoText size="sm">{ARTICLE_AGREEMENT_QUICK_REF.singular.neuter.nom}</MonoText>
 							</td>
 						</tr>
 						<tr className="border-b border-stone-100">
 							<td className="py-1 pr-2 text-xs text-stone-500">Acc</td>
 							<td className="px-2 py-1">
-								<MonoText size="sm">
-									{ARTICLE_AGREEMENT_QUICK_REF.singular.masculine.acc}
-								</MonoText>
+								<MonoText size="sm">{ARTICLE_AGREEMENT_QUICK_REF.singular.masculine.acc}</MonoText>
 							</td>
 							<td className="px-2 py-1">
-								<MonoText size="sm">
-									{ARTICLE_AGREEMENT_QUICK_REF.singular.feminine.acc}
-								</MonoText>
+								<MonoText size="sm">{ARTICLE_AGREEMENT_QUICK_REF.singular.feminine.acc}</MonoText>
 							</td>
 							<td className="px-2 py-1">
-								<MonoText size="sm">
-									{ARTICLE_AGREEMENT_QUICK_REF.singular.neuter.acc}
-								</MonoText>
+								<MonoText size="sm">{ARTICLE_AGREEMENT_QUICK_REF.singular.neuter.acc}</MonoText>
 							</td>
 						</tr>
 						<tr>
 							<td className="py-1 pr-2 text-xs text-stone-500">Gen</td>
 							<td className="px-2 py-1">
-								<MonoText size="sm">
-									{ARTICLE_AGREEMENT_QUICK_REF.singular.masculine.gen}
-								</MonoText>
+								<MonoText size="sm">{ARTICLE_AGREEMENT_QUICK_REF.singular.masculine.gen}</MonoText>
 							</td>
 							<td className="px-2 py-1">
-								<MonoText size="sm">
-									{ARTICLE_AGREEMENT_QUICK_REF.singular.feminine.gen}
-								</MonoText>
+								<MonoText size="sm">{ARTICLE_AGREEMENT_QUICK_REF.singular.feminine.gen}</MonoText>
 							</td>
 							<td className="px-2 py-1">
-								<MonoText size="sm">
-									{ARTICLE_AGREEMENT_QUICK_REF.singular.neuter.gen}
-								</MonoText>
+								<MonoText size="sm">{ARTICLE_AGREEMENT_QUICK_REF.singular.neuter.gen}</MonoText>
 							</td>
 						</tr>
 					</tbody>
@@ -92,70 +68,46 @@ const ArticleQuickLookup: React.FC = () => (
 					<thead>
 						<tr className="border-b border-stone-200">
 							<th className="w-12 py-1 pr-2 text-left font-medium text-stone-600" />
-							<th className="px-2 py-1 text-left font-medium text-gender-masculine">
-								M
-							</th>
-							<th className="px-2 py-1 text-left font-medium text-gender-feminine">
-								F
-							</th>
-							<th className="px-2 py-1 text-left font-medium text-gender-neuter">
-								N
-							</th>
+							<th className="px-2 py-1 text-left font-medium text-gender-masculine">M</th>
+							<th className="px-2 py-1 text-left font-medium text-gender-feminine">F</th>
+							<th className="px-2 py-1 text-left font-medium text-gender-neuter">N</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr className="border-b border-stone-100">
 							<td className="py-1 pr-2 text-xs text-stone-500">Nom</td>
 							<td className="px-2 py-1">
-								<MonoText size="sm">
-									{ARTICLE_AGREEMENT_QUICK_REF.plural.masculine.nom}
-								</MonoText>
+								<MonoText size="sm">{ARTICLE_AGREEMENT_QUICK_REF.plural.masculine.nom}</MonoText>
 							</td>
 							<td className="px-2 py-1">
-								<MonoText size="sm">
-									{ARTICLE_AGREEMENT_QUICK_REF.plural.feminine.nom}
-								</MonoText>
+								<MonoText size="sm">{ARTICLE_AGREEMENT_QUICK_REF.plural.feminine.nom}</MonoText>
 							</td>
 							<td className="px-2 py-1">
-								<MonoText size="sm">
-									{ARTICLE_AGREEMENT_QUICK_REF.plural.neuter.nom}
-								</MonoText>
+								<MonoText size="sm">{ARTICLE_AGREEMENT_QUICK_REF.plural.neuter.nom}</MonoText>
 							</td>
 						</tr>
 						<tr className="border-b border-stone-100">
 							<td className="py-1 pr-2 text-xs text-stone-500">Acc</td>
 							<td className="px-2 py-1">
-								<MonoText size="sm">
-									{ARTICLE_AGREEMENT_QUICK_REF.plural.masculine.acc}
-								</MonoText>
+								<MonoText size="sm">{ARTICLE_AGREEMENT_QUICK_REF.plural.masculine.acc}</MonoText>
 							</td>
 							<td className="px-2 py-1">
-								<MonoText size="sm">
-									{ARTICLE_AGREEMENT_QUICK_REF.plural.feminine.acc}
-								</MonoText>
+								<MonoText size="sm">{ARTICLE_AGREEMENT_QUICK_REF.plural.feminine.acc}</MonoText>
 							</td>
 							<td className="px-2 py-1">
-								<MonoText size="sm">
-									{ARTICLE_AGREEMENT_QUICK_REF.plural.neuter.acc}
-								</MonoText>
+								<MonoText size="sm">{ARTICLE_AGREEMENT_QUICK_REF.plural.neuter.acc}</MonoText>
 							</td>
 						</tr>
 						<tr>
 							<td className="py-1 pr-2 text-xs text-stone-500">Gen</td>
 							<td className="px-2 py-1">
-								<MonoText size="sm">
-									{ARTICLE_AGREEMENT_QUICK_REF.plural.masculine.gen}
-								</MonoText>
+								<MonoText size="sm">{ARTICLE_AGREEMENT_QUICK_REF.plural.masculine.gen}</MonoText>
 							</td>
 							<td className="px-2 py-1">
-								<MonoText size="sm">
-									{ARTICLE_AGREEMENT_QUICK_REF.plural.feminine.gen}
-								</MonoText>
+								<MonoText size="sm">{ARTICLE_AGREEMENT_QUICK_REF.plural.feminine.gen}</MonoText>
 							</td>
 							<td className="px-2 py-1">
-								<MonoText size="sm">
-									{ARTICLE_AGREEMENT_QUICK_REF.plural.neuter.gen}
-								</MonoText>
+								<MonoText size="sm">{ARTICLE_AGREEMENT_QUICK_REF.plural.neuter.gen}</MonoText>
 							</td>
 						</tr>
 					</tbody>
@@ -212,10 +164,7 @@ const PrepositionContractions: React.FC = () => (
 );
 
 const ArticleUsageDifferences: React.FC = () => (
-	<ContentSection
-		title="When Greek uses articles differently"
-		colorScheme="honey"
-	>
+	<ContentSection title="When Greek uses articles differently" colorScheme="honey">
 		<div className="space-y-3 p-4">
 			<p className="text-sm text-stone-600">
 				Greek uses articles where English doesn't (and vice versa):
@@ -225,17 +174,13 @@ const ArticleUsageDifferences: React.FC = () => (
 					<MonoText variant="greek" size="sm">
 						η αγάπη είναι τυφλή
 					</MonoText>
-					<span className="ml-2 text-sm text-stone-500">
-						Abstract nouns need the article
-					</span>
+					<span className="ml-2 text-sm text-stone-500">Abstract nouns need the article</span>
 				</div>
 				<div className="rounded border bg-stone-50 p-2">
 					<MonoText variant="greek" size="sm">
 						είναι γιατρός
 					</MonoText>
-					<span className="ml-2 text-sm text-stone-500">
-						Professions after είμαι: no article
-					</span>
+					<span className="ml-2 text-sm text-stone-500">Professions after είμαι: no article</span>
 				</div>
 				<div className="rounded border bg-stone-50 p-2">
 					<MonoText variant="greek" size="sm">
@@ -262,9 +207,7 @@ const MovableNuQuickWin: React.FC = () => (
 	<ContentSection title="The -ν on τον/την" colorScheme="olive">
 		<div className="space-y-3 p-4">
 			<div className="bg-correct-100 border-correct-300 rounded-lg border p-3">
-				<div className="mb-1 text-sm font-medium text-correct">
-					The simple rule
-				</div>
+				<div className="mb-1 text-sm font-medium text-correct">The simple rule</div>
 				<p className="text-sm text-stone-600">
 					Always keep the -ν on{" "}
 					<MonoText variant="greek" size="sm">
@@ -273,15 +216,11 @@ const MovableNuQuickWin: React.FC = () => (
 					. Native speakers sometimes drop it, but keeping it is never wrong.
 				</p>
 			</div>
-			<CollapsibleSection
-				title="When do natives drop it?"
-				colorScheme="stone"
-				defaultOpen={false}
-			>
+			<CollapsibleSection title="When do natives drop it?" colorScheme="stone" defaultOpen={false}>
 				<div className="space-y-2 p-3 text-sm text-stone-600">
 					<p>
-						Keep the -ν before vowels and κ, π, τ, ξ, ψ, γκ, μπ, ντ. Drop it
-						before other consonants (μ, δ, θ, etc.).
+						Keep the -ν before vowels and κ, π, τ, ξ, ψ, γκ, μπ, ντ. Drop it before other consonants
+						(μ, δ, θ, etc.).
 					</p>
 					<div className="grid gap-3 md:grid-cols-2">
 						<div>
@@ -344,12 +283,8 @@ export const ArticlesSection: React.FC = () => {
 			<Card variant="bordered" padding="md" className="bg-stone-50">
 				<div className="flex items-center justify-between">
 					<div>
-						<div className="text-sm font-medium text-stone-700">
-							How noun endings change
-						</div>
-						<p className="text-xs text-stone-500">
-							See declension patterns by gender
-						</p>
+						<div className="text-sm font-medium text-stone-700">How noun endings change</div>
+						<p className="text-xs text-stone-500">See declension patterns by gender</p>
 					</div>
 					<Link
 						to="/reference/nouns"

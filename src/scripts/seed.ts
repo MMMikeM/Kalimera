@@ -1,12 +1,6 @@
 import { inArray, sql } from "drizzle-orm";
 import { db } from "../db.server";
-import {
-	tagSections,
-	tags,
-	verbDetails,
-	vocabulary,
-	vocabularyTags,
-} from "../db.server/schema";
+import { tagSections, tags, verbDetails, vocabulary, vocabularyTags } from "../db.server/schema";
 import type { NewVocabulary, NewVocabularyTag } from "../db.server/types";
 import { formatNounWithArticle } from "../lib/greek-grammar";
 import {
@@ -63,9 +57,7 @@ type VocabWithTags = {
  * Batch insert vocabulary items and return a map of greekText -> id
  * Handles conflicts by fetching existing IDs in batch
  */
-async function batchInsertVocab(
-	items: NewVocabulary[],
-): Promise<Map<string, number>> {
+async function batchInsertVocab(items: NewVocabulary[]): Promise<Map<string, number>> {
 	const resultMap = new Map<string, number>();
 	if (items.length === 0) return resultMap;
 
@@ -88,9 +80,7 @@ async function batchInsertVocab(
 	}
 
 	// Batch-fetch IDs for items that already existed
-	const missingTexts = items
-		.map((item) => item.greekText)
-		.filter((text) => !resultMap.has(text));
+	const missingTexts = items.map((item) => item.greekText).filter((text) => !resultMap.has(text));
 
 	if (missingTexts.length > 0) {
 		for (let i = 0; i < missingTexts.length; i += BATCH_SIZE) {
@@ -120,10 +110,7 @@ async function batchInsertVerbDetails(details: VerbDetailRecord[]) {
 
 	for (let i = 0; i < details.length; i += BATCH_SIZE) {
 		const batch = details.slice(i, i + BATCH_SIZE);
-		await db
-			.insert(verbDetails)
-			.values(batch)
-			.onConflictDoNothing({ target: verbDetails.vocabId });
+		await db.insert(verbDetails).values(batch).onConflictDoNothing({ target: verbDetails.vocabId });
 	}
 }
 
@@ -175,10 +162,7 @@ async function seed() {
 
 	// Upsert all tags (content tags + lesson tags)
 	console.log("Upserting tags...");
-	const allTags = [
-		...Object.values(CONTENT_TAGS),
-		...Object.values(LESSON_TAGS),
-	];
+	const allTags = [...Object.values(CONTENT_TAGS), ...Object.values(LESSON_TAGS)];
 	const tagValues = allTags.map((tag) => ({
 		slug: tag.slug,
 		name: tag.name,
@@ -257,9 +241,7 @@ async function seed() {
 			});
 		}
 	}
-	allVerbDetails.push(
-		...(await processCategory("nouns", nounItems, tagMap, vocabTagLinks)),
-	);
+	allVerbDetails.push(...(await processCategory("nouns", nounItems, tagMap, vocabTagLinks)));
 
 	// ============================================
 	// VERBS (no word-type tag)
@@ -275,9 +257,7 @@ async function seed() {
 			conjugationFamily: verb.conjugationFamily,
 		},
 	}));
-	allVerbDetails.push(
-		...(await processCategory("verbs", verbItems, tagMap, vocabTagLinks)),
-	);
+	allVerbDetails.push(...(await processCategory("verbs", verbItems, tagMap, vocabTagLinks)));
 
 	// ============================================
 	// PHRASES (no word-type tags)
@@ -356,12 +336,7 @@ async function seed() {
 		},
 		tags: ["time-telling"],
 	}));
-	await processCategory(
-		"time-telling phrases",
-		timeTellingItems,
-		tagMap,
-		vocabTagLinks,
-	);
+	await processCategory("time-telling phrases", timeTellingItems, tagMap, vocabTagLinks);
 
 	// ============================================
 	// DAYS & MONTHS
@@ -400,12 +375,7 @@ async function seed() {
 			tags: ["transport-action"],
 		};
 	});
-	await processCategory(
-		"transport actions",
-		transportItems,
-		tagMap,
-		vocabTagLinks,
-	);
+	await processCategory("transport actions", transportItems, tagMap, vocabTagLinks);
 
 	// ============================================
 	// ADVERBS
@@ -418,12 +388,7 @@ async function seed() {
 		},
 		tags: ["frequency"],
 	}));
-	await processCategory(
-		"frequency adverbs",
-		frequencyItems,
-		tagMap,
-		vocabTagLinks,
-	);
+	await processCategory("frequency adverbs", frequencyItems, tagMap, vocabTagLinks);
 
 	const positionItems: VocabWithTags[] = POSITION_ADVERBS.map((adverb) => ({
 		vocab: {
@@ -433,49 +398,30 @@ async function seed() {
 		},
 		tags: ["position"],
 	}));
-	await processCategory(
-		"position adverbs",
-		positionItems,
-		tagMap,
-		vocabTagLinks,
-	);
+	await processCategory("position adverbs", positionItems, tagMap, vocabTagLinks);
 
 	// ============================================
 	// LIKES CONSTRUCTION
 	// ============================================
-	const likesSingularItems: VocabWithTags[] = LIKES_CONSTRUCTION.singular.map(
-		(like) => ({
-			vocab: {
-				greekText: like.text,
-				englishTranslation: like.english,
-				wordType: "phrase" as const,
-			},
-			tags: ["likes-singular"],
-		}),
-	);
-	await processCategory(
-		"likes construction (singular)",
-		likesSingularItems,
-		tagMap,
-		vocabTagLinks,
-	);
+	const likesSingularItems: VocabWithTags[] = LIKES_CONSTRUCTION.singular.map((like) => ({
+		vocab: {
+			greekText: like.text,
+			englishTranslation: like.english,
+			wordType: "phrase" as const,
+		},
+		tags: ["likes-singular"],
+	}));
+	await processCategory("likes construction (singular)", likesSingularItems, tagMap, vocabTagLinks);
 
-	const likesPluralItems: VocabWithTags[] = LIKES_CONSTRUCTION.plural.map(
-		(like) => ({
-			vocab: {
-				greekText: like.text,
-				englishTranslation: like.english,
-				wordType: "phrase" as const,
-			},
-			tags: ["likes-plural"],
-		}),
-	);
-	await processCategory(
-		"likes construction (plural)",
-		likesPluralItems,
-		tagMap,
-		vocabTagLinks,
-	);
+	const likesPluralItems: VocabWithTags[] = LIKES_CONSTRUCTION.plural.map((like) => ({
+		vocab: {
+			greekText: like.text,
+			englishTranslation: like.english,
+			wordType: "phrase" as const,
+		},
+		tags: ["likes-plural"],
+	}));
+	await processCategory("likes construction (plural)", likesPluralItems, tagMap, vocabTagLinks);
 
 	// ============================================
 	// COLORS & ADJECTIVES
@@ -503,59 +449,38 @@ async function seed() {
 	// ============================================
 	// PRONOUNS
 	// ============================================
-	const indefinitePronounItems: VocabWithTags[] = INDEFINITE_PRONOUNS.map(
-		(pronoun) => ({
-			vocab: {
-				greekText: pronoun.lemma,
-				englishTranslation: pronoun.english,
-				wordType: "pronoun" as const,
-			},
-			tags: [],
-		}),
-	);
-	await processCategory(
-		"indefinite pronouns",
-		indefinitePronounItems,
-		tagMap,
-		vocabTagLinks,
-	);
+	const indefinitePronounItems: VocabWithTags[] = INDEFINITE_PRONOUNS.map((pronoun) => ({
+		vocab: {
+			greekText: pronoun.lemma,
+			englishTranslation: pronoun.english,
+			wordType: "pronoun" as const,
+		},
+		tags: [],
+	}));
+	await processCategory("indefinite pronouns", indefinitePronounItems, tagMap, vocabTagLinks);
 
-	const genderedPronounItems: VocabWithTags[] = GENDERED_PRONOUNS.map(
-		(pronoun) => ({
-			vocab: {
-				greekText: pronoun.lemma,
-				englishTranslation: pronoun.english,
-				wordType: "pronoun" as const,
-			},
-			tags: [],
-		}),
-	);
-	await processCategory(
-		"gendered pronouns",
-		genderedPronounItems,
-		tagMap,
-		vocabTagLinks,
-	);
+	const genderedPronounItems: VocabWithTags[] = GENDERED_PRONOUNS.map((pronoun) => ({
+		vocab: {
+			greekText: pronoun.lemma,
+			englishTranslation: pronoun.english,
+			wordType: "pronoun" as const,
+		},
+		tags: [],
+	}));
+	await processCategory("gendered pronouns", genderedPronounItems, tagMap, vocabTagLinks);
 
 	// ============================================
 	// INDEFINITE ADVERBS
 	// ============================================
-	const indefiniteAdverbItems: VocabWithTags[] = INDEFINITE_ADVERBS.map(
-		(adverb) => ({
-			vocab: {
-				greekText: adverb.lemma,
-				englishTranslation: adverb.english,
-				wordType: "adverb" as const,
-			},
-			tags: [],
-		}),
-	);
-	await processCategory(
-		"indefinite adverbs",
-		indefiniteAdverbItems,
-		tagMap,
-		vocabTagLinks,
-	);
+	const indefiniteAdverbItems: VocabWithTags[] = INDEFINITE_ADVERBS.map((adverb) => ({
+		vocab: {
+			greekText: adverb.lemma,
+			englishTranslation: adverb.english,
+			wordType: "adverb" as const,
+		},
+		tags: [],
+	}));
+	await processCategory("indefinite adverbs", indefiniteAdverbItems, tagMap, vocabTagLinks);
 
 	// ============================================
 	// NUMBERS

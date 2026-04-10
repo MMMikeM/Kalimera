@@ -12,8 +12,8 @@ export function PrepositionsTab() {
 				colorScheme="terracotta"
 				icon={<MapPin size={18} />}
 			>
-				Prepositions show relationships: location, direction, purpose. The big
-				four (σε, από, για, με) cover most situations.
+				Prepositions show relationships: location, direction, purpose. The big four (σε, από, για,
+				με) cover most situations.
 			</TabHero>
 			<PrepositionsSection />
 			<PracticeCTA

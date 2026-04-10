@@ -52,7 +52,7 @@ Flat grid of cards: με, σε, τον, την
 Show minimal content by default. Offer expansion on demand.
 
 | Content       | Default View            | Expandable          |
-|---------------|-------------------------|---------------------|
+| ------------- | ----------------------- | ------------------- |
 | Pronouns      | Singular                | Plural              |
 | Articles      | Nominative + Accusative | Genitive            |
 | Verbs         | Singular conjugation    | Plural              |
@@ -173,7 +173,7 @@ Reference content follows this dependency sequence:
 11. Adjectives (requires 4-6 as prerequisites)
 12. Additional verb patterns (-άω, irregular είμαι)
 13. Fine-tuning (-ν rule, vocative)
-</concept-order>
+    </concept-order>
 
 <content-types>
 
@@ -232,7 +232,7 @@ When reviewing content, verify each rule:
 - [ ] pair-opposites: Antonyms grouped
 - [ ] decision-guides: "Which one?" trees for confusions
 - [ ] concept-order: Dependencies respected
-</evaluation>
+      </evaluation>
 
 <output-format>
 When proposing content changes:

@@ -12,9 +12,8 @@ export function VerbsTab() {
 				colorScheme="ocean"
 				icon={<Zap size={18} />}
 			>
-				Greek verb endings show who's doing the action, so you often don't need
-				separate pronouns. Learn three patterns and conjugate thousands of
-				verbs.
+				Greek verb endings show who's doing the action, so you often don't need separate pronouns.
+				Learn three patterns and conjugate thousands of verbs.
 			</TabHero>
 			<VerbsSection />
 			<PracticeCTA

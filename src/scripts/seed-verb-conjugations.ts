@@ -6,11 +6,7 @@ import type {
 	PersonNumber,
 	VerbTense,
 } from "../db.server/enums";
-import {
-	verbConjugations,
-	verbDetails,
-	verbImperatives,
-} from "../db.server/schema";
+import { verbConjugations, verbDetails, verbImperatives } from "../db.server/schema";
 import type { NewVerbConjugation, NewVerbImperative } from "../db.server/types";
 import { FULL_VERB_CONJUGATIONS } from "./seed-data/vocabulary/verb-conjugations";
 
@@ -30,9 +26,7 @@ async function seedVerbConjugations() {
 		});
 
 		if (!vocabEntry) {
-			console.warn(
-				`  Warning: Verb "${verb.lemma}" not found in vocabulary table. Skipping.`,
-			);
+			console.warn(`  Warning: Verb "${verb.lemma}" not found in vocabulary table. Skipping.`);
 			skippedVerbs++;
 			continue;
 		}
@@ -65,14 +59,7 @@ async function seedVerbConjugations() {
 			const conjugationRows: NewVerbConjugation[] = [];
 
 			for (const conj of verb.conjugations) {
-				const persons: PersonNumber[] = [
-					"sg1",
-					"sg2",
-					"sg3",
-					"pl1",
-					"pl2",
-					"pl3",
-				];
+				const persons: PersonNumber[] = ["sg1", "sg2", "sg3", "pl1", "pl2", "pl3"];
 				for (const person of persons) {
 					const form = conj.forms[person];
 					if (form) {
@@ -93,11 +80,7 @@ async function seedVerbConjugations() {
 					.insert(verbConjugations)
 					.values(batch)
 					.onConflictDoUpdate({
-						target: [
-							verbConjugations.vocabId,
-							verbConjugations.tense,
-							verbConjugations.person,
-						],
+						target: [verbConjugations.vocabId, verbConjugations.tense, verbConjugations.person],
 						set: {
 							form: sql`excluded.form`,
 							stem: sql`excluded.stem`,
@@ -145,11 +128,7 @@ async function seedVerbConjugations() {
 					.insert(verbImperatives)
 					.values(imperativeRows)
 					.onConflictDoUpdate({
-						target: [
-							verbImperatives.vocabId,
-							verbImperatives.aspect,
-							verbImperatives.number,
-						],
+						target: [verbImperatives.vocabId, verbImperatives.aspect, verbImperatives.number],
 						set: {
 							form: sql`excluded.form`,
 						},

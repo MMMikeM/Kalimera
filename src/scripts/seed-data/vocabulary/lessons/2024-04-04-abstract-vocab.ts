@@ -1,9 +1,4 @@
-import type {
-	AdjectiveSeed,
-	NounSeed,
-	Phrase,
-	VerbSeed,
-} from "../../../../types/seed";
+import type { AdjectiveSeed, NounSeed, Phrase, VerbSeed } from "../../../../types/seed";
 
 export const LESSON_2024_04_04 = {
 	meta: {

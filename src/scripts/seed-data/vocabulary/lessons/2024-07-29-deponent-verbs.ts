@@ -82,8 +82,7 @@ export const LESSON_2024_07_29 = {
 		{
 			pattern: "Deponent verb conjugation (-μαι)",
 			examples: ["-μαι, -σαι, -ται", "-όμαστε, -στε, -ο(υ)νται"],
-			explanation:
-				"Passive form endings but active meaning (I come, I sit, etc.)",
+			explanation: "Passive form endings but active meaning (I come, I sit, etc.)",
 		},
 		{
 			pattern: "Imperative of deponent verbs",

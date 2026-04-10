@@ -79,7 +79,7 @@ make logs         # Tail worker logs
 `.llm` files are structured documentation for LLM consumption (not rendered).
 
 | File                                         | Purpose                               |
-|----------------------------------------------|---------------------------------------|
+| -------------------------------------------- | ------------------------------------- |
 | `docs/user-flows.llm`                        | Route map, user journeys, data tables |
 | `src/routes/reference/tabs/*.content.llm`    | Grammar topics                        |
 | `src/routes/learn/phrases/content.llm`       | Phrase tabs                           |
@@ -146,7 +146,7 @@ Like a well-worn study guide — serious about what it teaches, never intimidati
 ### Design Principles
 
 1. **Greek is the hero.** Greek characters should be prominent and beautifully rendered. English is gloss — smaller, quieter, subordinate.
-2. **Structure is pedagogy.** Paradigm tables are the primary teaching surface. Lay them out with typographic precision; the table *is* the lesson.
+2. **Structure is pedagogy.** Paradigm tables are the primary teaching surface. Lay them out with typographic precision; the table _is_ the lesson.
 3. **Warmth without whimsy.** Scholarly rigour doesn't mean clinical. Colour and voice should feel like a trusted teacher, never a children's app.
 4. **Honest feedback.** Correct is correct. Incorrect is incorrect. No artificial euphoria, no punishing reds. Just honest, immediate signal.
 5. **Light earns its space.** Whitespace separates concepts. Every element on screen should justify its presence by helping the learner focus.
@@ -157,8 +157,8 @@ Fixed shell with scrolling inside `.app-main`:
 
 ```tsx
 <div className="app-shell">
-  <main className="app-main">{/* scrollable */}</main>
-  <nav className="fixed bottom-0">{/* mobile nav */}</nav>
+	<main className="app-main">{/* scrollable */}</main>
+	<nav className="fixed bottom-0">{/* mobile nav */}</nav>
 </div>
 ```
 

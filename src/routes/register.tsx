@@ -4,22 +4,13 @@ import {
 	useForm,
 	validationError,
 } from "@rvf/react-router";
-import {
-	AlertCircle,
-	ArrowRight,
-	Check,
-	KeyRound,
-	UserPlus,
-} from "lucide-react";
+import { AlertCircle, ArrowRight, Check, KeyRound, UserPlus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { Card } from "@/components/Card";
 import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/ui/form-field";
-import {
-	createUserWithPassword,
-	findUserByUsername,
-} from "@/db.server/queries/auth";
+import { createUserWithPassword, findUserByUsername } from "@/db.server/queries/auth";
 import { createAuthCookie } from "@/lib/auth-cookie";
 import { setStoredAuth } from "@/lib/auth-storage";
 import { usePasskeyRegistration } from "@/lib/hooks/use-passkey-registration";
@@ -61,11 +52,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
 
 	try {
 		const passwordHash = await hashPassword(password);
-		const newUser = await createUserWithPassword(
-			username,
-			displayName,
-			passwordHash,
-		);
+		const newUser = await createUserWithPassword(username, displayName, passwordHash);
 
 		if (!newUser) {
 			return {
@@ -91,8 +78,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
 		);
 	} catch (error) {
 		console.error("Registration error:", error);
-		const message =
-			error instanceof Error ? error.message : "Failed to create account";
+		const message = error instanceof Error ? error.message : "Failed to create account";
 		return { success: false, error: message } satisfies ActionError;
 	}
 };
@@ -117,15 +103,10 @@ export default function RegisterRoute({ actionData }: Route.ComponentProps) {
 	const isSubmitting = form.formState.isSubmitting;
 
 	// Skip validation error responses - RVF handles those automatically
-	const businessData =
-		actionData && !isValidationErrorResponse(actionData) ? actionData : null;
+	const businessData = actionData && !isValidationErrorResponse(actionData) ? actionData : null;
 
 	useEffect(() => {
-		if (
-			businessData?.success &&
-			"userId" in businessData &&
-			"username" in businessData
-		) {
+		if (businessData?.success && "userId" in businessData && "username" in businessData) {
 			setRegisteredUser({
 				userId: businessData.userId as number,
 				username: businessData.username as string,
@@ -150,9 +131,7 @@ export default function RegisterRoute({ actionData }: Route.ComponentProps) {
 					<div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
 						<Check size={32} className="text-green-600" />
 					</div>
-					<h1 className="font-serif text-3xl text-terracotta">
-						Account Created
-					</h1>
+					<h1 className="font-serif text-3xl text-terracotta">Account Created</h1>
 					<p className="text-stone-600">Welcome to Greek Learning!</p>
 				</div>
 
@@ -162,8 +141,7 @@ export default function RegisterRoute({ actionData }: Route.ComponentProps) {
 							<KeyRound size={48} className="mx-auto mb-3 text-terracotta" />
 							<h2 className="text-xl font-medium">Set Up Passkey</h2>
 							<p className="mt-1 text-sm text-stone-500">
-								Use Face ID, Touch ID, or your device PIN for faster sign-in
-								next time.
+								Use Face ID, Touch ID, or your device PIN for faster sign-in next time.
 							</p>
 						</div>
 
@@ -180,11 +158,7 @@ export default function RegisterRoute({ actionData }: Route.ComponentProps) {
 									<Check size={16} />
 									Passkey set up successfully!
 								</div>
-								<Button
-									variant="primary"
-									className="w-full"
-									onClick={handleComplete}
-								>
+								<Button variant="primary" className="w-full" onClick={handleComplete}>
 									Continue to App
 									<ArrowRight size={16} />
 								</Button>
@@ -205,9 +179,7 @@ export default function RegisterRoute({ actionData }: Route.ComponentProps) {
 									onClick={passkey.register}
 									disabled={passkey.state === "loading"}
 								>
-									{passkey.state === "loading"
-										? "Setting up..."
-										: "Set Up Passkey"}
+									{passkey.state === "loading" ? "Setting up..." : "Set Up Passkey"}
 									{passkey.state !== "loading" && <KeyRound size={16} />}
 								</Button>
 							</div>
@@ -264,12 +236,7 @@ export default function RegisterRoute({ actionData }: Route.ComponentProps) {
 						</div>
 					)}
 
-					<Button
-						type="submit"
-						variant="primary"
-						className="w-full"
-						disabled={isSubmitting}
-					>
+					<Button type="submit" variant="primary" className="w-full" disabled={isSubmitting}>
 						{isSubmitting ? "Creating Account..." : "Create Account"}
 						{!isSubmitting && <UserPlus size={16} />}
 					</Button>
@@ -278,10 +245,7 @@ export default function RegisterRoute({ actionData }: Route.ComponentProps) {
 
 			<p className="text-sm text-stone-500">
 				Already have an account?{" "}
-				<Link
-					to="/login"
-					className="font-medium text-terracotta hover:underline"
-				>
+				<Link to="/login" className="font-medium text-terracotta hover:underline">
 					Sign in
 				</Link>
 			</p>

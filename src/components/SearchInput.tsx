@@ -69,24 +69,11 @@ export interface SearchInputProps extends Omit<
 }
 
 export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
-	(
-		{
-			size,
-			icon = <Search />,
-			containerClassName,
-			className,
-			onClear,
-			value,
-			...props
-		},
-		ref,
-	) => {
+	({ size, icon = <Search />, containerClassName, className, onClear, value, ...props }, ref) => {
 		const hasValue = value !== undefined && value !== "";
 
 		return (
-			<div
-				className={searchInputVariants({ size, className: containerClassName })}
-			>
+			<div className={searchInputVariants({ size, className: containerClassName })}>
 				<div className={searchInputIconVariants({ size })}>{icon}</div>
 				<input
 					ref={ref}

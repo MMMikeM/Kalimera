@@ -15,9 +15,7 @@ interface UsePasskeyAuthReturn {
 	clearError: () => void;
 }
 
-export function usePasskeyAuth(
-	options: UsePasskeyAuthOptions = {},
-): UsePasskeyAuthReturn {
+export function usePasskeyAuth(options: UsePasskeyAuthOptions = {}): UsePasskeyAuthReturn {
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 
@@ -38,13 +36,10 @@ export function usePasskeyAuth(
 
 			if (!optionsResponse.ok) {
 				const errorData = (await optionsResponse.json()) as { error?: string };
-				throw new Error(
-					errorData.error || "Failed to get authentication options",
-				);
+				throw new Error(errorData.error || "Failed to get authentication options");
 			}
 
-			const authOptions: PublicKeyCredentialRequestOptionsJSON =
-				await optionsResponse.json();
+			const authOptions: PublicKeyCredentialRequestOptionsJSON = await optionsResponse.json();
 
 			const authResponse = await startAuthentication({
 				optionsJSON: authOptions,
@@ -80,8 +75,7 @@ export function usePasskeyAuth(
 				window.location.href = "/";
 			}
 		} catch (err) {
-			const message =
-				err instanceof Error ? err.message : "Passkey authentication failed";
+			const message = err instanceof Error ? err.message : "Passkey authentication failed";
 
 			if (message.includes("not allowed") || message.includes("AbortError")) {
 				setError("Authentication was cancelled");

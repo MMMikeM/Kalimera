@@ -1,8 +1,5 @@
 import React from "react";
-import {
-	type ContentColorScheme,
-	ContentSection,
-} from "@/components/ContentSection";
+import { type ContentColorScheme, ContentSection } from "@/components/ContentSection";
 import { MonoText } from "@/components/MonoText";
 import { cn } from "@/lib/utils";
 
@@ -50,12 +47,9 @@ export const PhraseSection: React.FC<{
 		<div className="divide-y divide-stone-200/60">
 			{React.Children.map(children, (child) =>
 				React.isValidElement(child)
-					? React.cloneElement(
-							child as React.ReactElement<{ colorScheme?: ContentColorScheme }>,
-							{
-								colorScheme,
-							},
-						)
+					? React.cloneElement(child as React.ReactElement<{ colorScheme?: ContentColorScheme }>, {
+							colorScheme,
+						})
 					: child,
 			)}
 		</div>

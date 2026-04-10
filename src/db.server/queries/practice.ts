@@ -1,26 +1,6 @@
-import {
-	differenceInDays,
-	endOfTomorrow,
-	format,
-	parseISO,
-	subDays,
-} from "date-fns";
-import {
-	and,
-	count,
-	desc,
-	eq,
-	gt,
-	isNotNull,
-	isNull,
-	lte,
-	sql,
-} from "drizzle-orm";
-import {
-	calculateSRS,
-	getInitialSRSValues,
-	qualityFromAttempt,
-} from "../../routes/practice/srs";
+import { differenceInDays, endOfTomorrow, format, parseISO, subDays } from "date-fns";
+import { and, count, desc, eq, gt, isNotNull, isNull, lte, sql } from "drizzle-orm";
+import { calculateSRS, getInitialSRSValues, qualityFromAttempt } from "../../routes/practice/srs";
 import { db } from "../index";
 import {
 	type AreaType,
@@ -39,9 +19,7 @@ import {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 /** Vocabulary item with SRS skill data */
-export type VocabItemWithSkill = Awaited<
-	ReturnType<typeof getItemsDueForReview>
->[number];
+export type VocabItemWithSkill = Awaited<ReturnType<typeof getItemsDueForReview>>[number];
 
 /** Weak area information */
 export type WeakAreaInfo = Awaited<ReturnType<typeof getWeakAreas>>[number];
@@ -50,9 +28,7 @@ export type WeakAreaInfo = Awaited<ReturnType<typeof getWeakAreas>>[number];
 export type PracticeStats = Awaited<ReturnType<typeof getPracticeStats>>;
 
 /** Vocabulary progress */
-export type VocabularyProgress = Awaited<
-	ReturnType<typeof getVocabularyProgress>
->;
+export type VocabularyProgress = Awaited<ReturnType<typeof getVocabularyProgress>>;
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // QUERIES
@@ -116,10 +92,7 @@ export const getNewVocabularyItems = async (userId: number, limit = 20) => {
 		.from(vocabulary)
 		.leftJoin(
 			vocabularySkills,
-			and(
-				eq(vocabularySkills.vocabularyId, vocabulary.id),
-				eq(vocabularySkills.userId, userId),
-			),
+			and(eq(vocabularySkills.vocabularyId, vocabulary.id), eq(vocabularySkills.userId, userId)),
 		)
 		.where(isNull(vocabularySkills.userId))
 		.orderBy(vocabulary.difficultyLevel)
@@ -141,10 +114,7 @@ export const getWeakAreas = async (userId: number) => {
 	});
 };
 
-export const getPracticeStats = async (
-	userId: number,
-	skillType: SkillType = "recognition",
-) => {
+export const getPracticeStats = async (userId: number, skillType: SkillType = "recognition") => {
 	const now = new Date();
 	const masteredThresholdDays = 21;
 
@@ -156,12 +126,7 @@ export const getPracticeStats = async (
 			total: sql<number>`(SELECT COUNT(*) FROM vocabulary)`,
 		})
 		.from(vocabularySkills)
-		.where(
-			and(
-				eq(vocabularySkills.userId, userId),
-				eq(vocabularySkills.skillType, skillType),
-			),
-		);
+		.where(and(eq(vocabularySkills.userId, userId), eq(vocabularySkills.skillType, skillType)));
 
 	const streak = await calculateStreak(userId);
 
@@ -177,10 +142,7 @@ export const getPracticeStats = async (
 	};
 };
 
-export const getItemsDueTomorrow = async (
-	userId: number,
-	skillType: SkillType = "recognition",
-) => {
+export const getItemsDueTomorrow = async (userId: number, skillType: SkillType = "recognition") => {
 	const now = new Date();
 	const tomorrowEnd = endOfTomorrow();
 
@@ -199,18 +161,11 @@ export const getItemsDueTomorrow = async (
 	return result?.count || 0;
 };
 
-export const getLastPracticeDate = async (
-	userId: number,
-): Promise<Date | null> => {
+export const getLastPracticeDate = async (userId: number): Promise<Date | null> => {
 	const [result] = await db
 		.select({ completedAt: practiceSessions.completedAt })
 		.from(practiceSessions)
-		.where(
-			and(
-				eq(practiceSessions.userId, userId),
-				isNotNull(practiceSessions.completedAt),
-			),
-		)
+		.where(and(eq(practiceSessions.userId, userId), isNotNull(practiceSessions.completedAt)))
 		.orderBy(desc(practiceSessions.completedAt))
 		.limit(1);
 
@@ -223,12 +178,7 @@ const calculateStreak = async (userId: number): Promise<number> => {
 			completedAt: practiceSessions.completedAt,
 		})
 		.from(practiceSessions)
-		.where(
-			and(
-				eq(practiceSessions.userId, userId),
-				isNotNull(practiceSessions.completedAt),
-			),
-		)
+		.where(and(eq(practiceSessions.userId, userId), isNotNull(practiceSessions.completedAt)))
 		.orderBy(desc(practiceSessions.completedAt))
 		.limit(365);
 

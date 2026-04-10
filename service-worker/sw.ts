@@ -69,7 +69,10 @@ self.addEventListener("push", (event) => {
 		};
 	}
 
-	const options: NotificationOptions & { renotify?: boolean; actions?: { action: string; title: string }[] } = {
+	const options: NotificationOptions & {
+		renotify?: boolean;
+		actions?: { action: string; title: string }[];
+	} = {
 		body: data.body,
 		icon: "/icons/icon-192.png",
 		badge: "/icons/icon-192.png",

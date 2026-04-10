@@ -1,7 +1,4 @@
-import {
-	getVocabBySection,
-	type VocabItemWithSection,
-} from "@/db.server/queries/vocabulary";
+import { getVocabBySection, type VocabItemWithSection } from "@/db.server/queries/vocabulary";
 
 // Re-export VocabItemWithSection as PhraseItem for semantic clarity
 export type PhraseItem = VocabItemWithSection;
@@ -10,9 +7,7 @@ export type PhraseItem = VocabItemWithSection;
 // TRANSFORMS
 // ═══════════════════════════════════════════════════════════════════════════════
 
-function groupByTag<T extends { tagSlug: string }>(
-	items: T[],
-): Record<string, T[]> {
+function groupByTag<T extends { tagSlug: string }>(items: T[]): Record<string, T[]> {
 	const result: Record<string, T[]> = {};
 	for (const item of items) {
 		const key = item.tagSlug;

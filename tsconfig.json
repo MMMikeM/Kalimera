@@ -36,10 +36,5 @@
 		"noUncheckedIndexedAccess": true,
 		"forceConsistentCasingInFileNames": true
 	},
-	"include": [
-		".react-router/types/**/*",
-		"react-router.config.ts",
-		"src",
-		"vite.config.ts"
-	]
+	"include": [".react-router/types/**/*", "react-router.config.ts", "src", "vite.config.ts"]
 }

@@ -92,9 +92,7 @@ const UsageExamples: React.FC<{
 		{examples.map((ex) => (
 			<div key={ex.greek} className="space-y-1">
 				<div className="flex items-baseline gap-2">
-					<MonoText className={`${config.textClass} text-base font-bold`}>
-						{ex.verb}
-					</MonoText>
+					<MonoText className={`${config.textClass} text-base font-bold`}>{ex.verb}</MonoText>
 					<span className="text-sm text-stone-500">{ex.formNote}</span>
 				</div>
 				<div className="border-l-2 border-stone-200 pl-2">
@@ -112,13 +110,8 @@ const SamePatternList: React.FC<{
 }> = ({ verbs, config }) => (
 	<div className="divide-y divide-stone-100">
 		{verbs.map((v) => (
-			<div
-				key={v.infinitive}
-				className="flex items-baseline gap-2 py-2 first:pt-0 last:pb-0"
-			>
-				<MonoText className={`${config.textClass} font-semibold`}>
-					{v.infinitive}
-				</MonoText>
+			<div key={v.infinitive} className="flex items-baseline gap-2 py-2 first:pt-0 last:pb-0">
+				<MonoText className={`${config.textClass} font-semibold`}>{v.infinitive}</MonoText>
 				<span className="text-sm text-stone-600">({v.meaning})</span>
 				<span className="ml-auto text-xs text-stone-400">same endings</span>
 			</div>
@@ -189,9 +182,7 @@ const PatternSection: React.FC<{
 		>
 			{/* Simplified header - ending as primary anchor */}
 			<div className="mb-4 flex items-center gap-3">
-				<span className={`font-mono text-3xl font-bold ${config.textClass}`}>
-					{config.ending}
-				</span>
+				<span className={`font-mono text-3xl font-bold ${config.textClass}`}>{config.ending}</span>
 				<div className="min-w-0 flex-1">
 					<h3 className="font-semibold text-stone-800">
 						{pattern.name.replace(` (${config.ending})`, "")}
@@ -224,26 +215,15 @@ const PatternSection: React.FC<{
 			</CollapsibleSection>
 
 			{/* Collapsible: In context */}
-			<CollapsibleSection
-				title="See it in action"
-				colorScheme={colorScheme}
-				defaultOpen={false}
-			>
-				<UsageExamples
-					examples={USAGE_EXAMPLES[patternKey] ?? []}
-					config={config}
-				/>
+			<CollapsibleSection title="See it in action" colorScheme={colorScheme} defaultOpen={false}>
+				<UsageExamples examples={USAGE_EXAMPLES[patternKey] ?? []} config={config} />
 			</CollapsibleSection>
 		</Card>
 	);
 };
 
 const PatternIdentifier: React.FC = () => (
-	<Card
-		variant="bordered"
-		padding="lg"
-		className="border-2 border-stone-300 bg-honey-50 shadow-sm"
-	>
+	<Card variant="bordered" padding="lg" className="border-2 border-stone-300 bg-honey-50 shadow-sm">
 		<div className="mb-4 flex items-center gap-3">
 			<div className="rounded-xl bg-honey-200 p-2.5">
 				<Lightbulb size={20} className="text-honey-text" />
@@ -275,9 +255,7 @@ const PatternIdentifier: React.FC = () => (
 				<div className="shrink-0 rounded-lg bg-terracotta-300 p-2">
 					<Sparkles size={18} className="text-terracotta-text" />
 				</div>
-				<MonoText className="text-xl font-bold text-terracotta-text">
-					-άω/-ώ
-				</MonoText>
+				<MonoText className="text-xl font-bold text-terracotta-text">-άω/-ώ</MonoText>
 				<span className="font-semibold text-stone-800">Contracted</span>
 				<div className="ml-auto hidden gap-2 sm:flex">
 					<span className="rounded-md border border-terracotta-400 bg-white px-2 py-1 font-mono text-sm text-terracotta-text">
@@ -308,22 +286,15 @@ const PatternIdentifier: React.FC = () => (
 );
 
 const VoiceExplanation: React.FC = () => (
-	<Card
-		variant="bordered"
-		padding="lg"
-		className="border-2 border-slate-300 bg-slate-50"
-	>
+	<Card variant="bordered" padding="lg" className="border-2 border-slate-300 bg-slate-50">
 		<div className="mb-4 flex items-center gap-3">
 			<div className="rounded-xl bg-slate-200 p-2.5">
 				<ArrowRightLeft size={20} className="text-slate-text" />
 			</div>
 			<div>
-				<h3 className="text-lg font-bold text-stone-800">
-					Voice: Who Does the Action?
-				</h3>
+				<h3 className="text-lg font-bold text-stone-800">Voice: Who Does the Action?</h3>
 				<p className="text-sm text-stone-600">
-					Greek verbs show not just WHO (the endings) but also the DIRECTION of
-					action
+					Greek verbs show not just WHO (the endings) but also the DIRECTION of action
 				</p>
 			</div>
 		</div>
@@ -331,14 +302,10 @@ const VoiceExplanation: React.FC = () => (
 		<div className="space-y-4">
 			{/* Active voice */}
 			<div className="rounded-lg border border-ocean-200 bg-ocean-50 p-4">
-				<h4 className="mb-2 font-semibold text-ocean-text">
-					Active: Subject DOES the action
-				</h4>
+				<h4 className="mb-2 font-semibold text-ocean-text">Active: Subject DOES the action</h4>
 				<div className="space-y-2">
 					<div className="flex items-baseline gap-2">
-						<MonoText className="font-bold text-ocean-text">
-							βλέπω τον φίλο
-						</MonoText>
+						<MonoText className="font-bold text-ocean-text">βλέπω τον φίλο</MonoText>
 						<span className="text-stone-600">=</span>
 						<span className="text-stone-700">I see the friend</span>
 					</div>
@@ -355,9 +322,7 @@ const VoiceExplanation: React.FC = () => (
 				</h4>
 				<div className="space-y-2">
 					<div className="flex items-baseline gap-2">
-						<MonoText className="font-bold text-terracotta-text">
-							βλέπομαι από τον φίλο
-						</MonoText>
+						<MonoText className="font-bold text-terracotta-text">βλέπομαι από τον φίλο</MonoText>
 						<span className="text-stone-600">=</span>
 						<span className="text-stone-700">I am seen by the friend</span>
 					</div>
@@ -370,27 +335,22 @@ const VoiceExplanation: React.FC = () => (
 			{/* The -μαι marker */}
 			<div className="rounded-lg border border-stone-200 bg-white p-4">
 				<p className="mb-3 text-sm text-stone-700">
-					The{" "}
-					<MonoText className="font-bold text-terracotta-text">-μαι</MonoText>{" "}
-					ending is the passive marker:
+					The <MonoText className="font-bold text-terracotta-text">-μαι</MonoText> ending is the
+					passive marker:
 				</p>
 				<div className="grid gap-3 sm:grid-cols-2">
 					<div className="flex items-center gap-2 text-sm">
 						<MonoText className="font-semibold text-ocean-text">βλέπω</MonoText>
 						<span className="text-stone-400">(I see)</span>
 						<ArrowRight size={14} className="text-stone-400" />
-						<MonoText className="font-semibold text-terracotta-text">
-							βλέπομαι
-						</MonoText>
+						<MonoText className="font-semibold text-terracotta-text">βλέπομαι</MonoText>
 						<span className="text-stone-400">(I am seen)</span>
 					</div>
 					<div className="flex items-center gap-2 text-sm">
 						<MonoText className="font-semibold text-ocean-text">ακούω</MonoText>
 						<span className="text-stone-400">(I hear)</span>
 						<ArrowRight size={14} className="text-stone-400" />
-						<MonoText className="font-semibold text-terracotta-text">
-							ακούομαι
-						</MonoText>
+						<MonoText className="font-semibold text-terracotta-text">ακούομαι</MonoText>
 						<span className="text-stone-400">(I am heard)</span>
 					</div>
 				</div>
@@ -402,9 +362,8 @@ const VoiceExplanation: React.FC = () => (
 					Deponent: Passive form, active meaning
 				</h4>
 				<p className="mb-3 text-sm text-stone-600">
-					Some verbs ONLY exist in{" "}
-					<MonoText className="font-bold text-olive-text">-μαι</MonoText> form,
-					but their meaning is active:
+					Some verbs ONLY exist in <MonoText className="font-bold text-olive-text">-μαι</MonoText>{" "}
+					form, but their meaning is active:
 				</p>
 				<div className="space-y-2">
 					<div className="flex items-baseline gap-2">
@@ -417,9 +376,7 @@ const VoiceExplanation: React.FC = () => (
 						<MonoText className="font-bold text-olive-text">θυμάμαι</MonoText>
 						<span className="text-stone-600">=</span>
 						<span className="text-stone-700">I remember</span>
-						<span className="text-sm text-stone-400">
-							(not "I am remembered")
-						</span>
+						<span className="text-sm text-stone-400">(not "I am remembered")</span>
 					</div>
 					<div className="flex items-baseline gap-2">
 						<MonoText className="font-bold text-olive-text">κοιμάμαι</MonoText>
@@ -436,9 +393,8 @@ const VoiceExplanation: React.FC = () => (
 			{/* Etymology note */}
 			<div className="rounded-lg border border-stone-200 bg-stone-100 p-3">
 				<p className="text-sm text-slate-text">
-					<strong className="text-navy-text">Why "deponent"?</strong> From Latin{" "}
-					<em>deponere</em> (to put aside) — these verbs have "set aside" their
-					active forms.
+					<strong className="text-navy-text">Why "deponent"?</strong> From Latin <em>deponere</em>{" "}
+					(to put aside) — these verbs have "set aside" their active forms.
 				</p>
 			</div>
 		</div>
@@ -464,8 +420,7 @@ export const VerbsSection: React.FC = () => (
 			<ContentSection title="είμαι (to be)" colorScheme="olive">
 				<div className="space-y-3 p-3">
 					<p className="text-sm text-stone-600">
-						The most common Greek verb. Memorize it first. You'll use it in
-						every conversation.
+						The most common Greek verb. Memorize it first. You'll use it in every conversation.
 					</p>
 					<ParadigmTable
 						infinitive={eimai.infinitive}
@@ -486,8 +441,8 @@ export const VerbsSection: React.FC = () => (
 			<Lightbulb size={16} />
 			<AlertTitle>The Power of Patterns</AlertTitle>
 			<AlertDescription>
-				Learn just <strong>3 ending patterns</strong> and you can conjugate
-				thousands of verbs. The endings tell you WHO is doing the action.
+				Learn just <strong>3 ending patterns</strong> and you can conjugate thousands of verbs. The
+				endings tell you WHO is doing the action.
 			</AlertDescription>
 		</Alert>
 
@@ -515,37 +470,25 @@ export const VerbsSection: React.FC = () => (
 				<PatternSection patternKey="active" pattern={VERB_PATTERNS.active} />
 			)}
 			{VERB_PATTERNS.contracted && (
-				<PatternSection
-					patternKey="contracted"
-					pattern={VERB_PATTERNS.contracted}
-				/>
+				<PatternSection patternKey="contracted" pattern={VERB_PATTERNS.contracted} />
 			)}
 			{VERB_PATTERNS.deponent && (
-				<PatternSection
-					patternKey="deponent"
-					pattern={VERB_PATTERNS.deponent}
-				/>
+				<PatternSection patternKey="deponent" pattern={VERB_PATTERNS.deponent} />
 			)}
 		</div>
 
 		{/* Other Irregular Verbs (excluding είμαι which is promoted above) */}
 		{otherIrregulars.length > 0 && (
-			<Card
-				variant="bordered"
-				padding="lg"
-				className="border-2 border-honey-300 bg-honey-50"
-			>
+			<Card variant="bordered" padding="lg" className="border-2 border-honey-300 bg-honey-50">
 				<div className="mb-4 flex items-start gap-3">
 					<div className="rounded-xl bg-honey-200 p-2.5">
 						<AlertCircle size={20} className="text-honey-text" />
 					</div>
 					<div>
-						<h3 className="text-lg font-bold text-honey-text">
-							Other Irregular Verbs
-						</h3>
+						<h3 className="text-lg font-bold text-honey-text">Other Irregular Verbs</h3>
 						<p className="text-sm text-stone-600">
-							These common verbs don't follow patterns. You'll learn them
-							naturally through frequent exposure.
+							These common verbs don't follow patterns. You'll learn them naturally through frequent
+							exposure.
 						</p>
 					</div>
 				</div>
@@ -590,8 +533,7 @@ export const VerbsSection: React.FC = () => (
 
 		{/* Tense scope note */}
 		<p className="text-center text-sm text-stone-500 italic">
-			This section covers present tense only. Past and future tenses coming
-			soon.
+			This section covers present tense only. Past and future tenses coming soon.
 		</p>
 	</section>
 );

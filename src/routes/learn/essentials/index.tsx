@@ -1,12 +1,4 @@
-import {
-	BookOpen,
-	ChevronLeft,
-	Hash,
-	MapPin,
-	Palette,
-	Sun,
-	TrendingUp,
-} from "lucide-react";
+import { BookOpen, ChevronLeft, Hash, MapPin, Palette, Sun, TrendingUp } from "lucide-react";
 import { Link } from "react-router";
 import { Card } from "@/components/Card";
 import { TabHero } from "@/components/TabHero";
@@ -53,8 +45,7 @@ const COLOR_CLASSES = {
 	ocean: "bg-ocean-50 border-ocean-300 hover:border-ocean-400",
 	honey: "bg-honey-50 border-honey-300 hover:border-honey-400",
 	olive: "bg-olive-50 border-olive-300 hover:border-olive-400",
-	terracotta:
-		"bg-terracotta-50 border-terracotta-300 hover:border-terracotta-400",
+	terracotta: "bg-terracotta-50 border-terracotta-300 hover:border-terracotta-400",
 } as const;
 
 const ICON_CLASSES = {
@@ -81,36 +72,26 @@ export default function EssentialsIndex() {
 				colorScheme="honey"
 				icon={<BookOpen size={18} />}
 			>
-				Numbers, colours, times, and position words — the building blocks you'll
-				need constantly in everyday Greek.
+				Numbers, colours, times, and position words — the building blocks you'll need constantly in
+				everyday Greek.
 			</TabHero>
 
 			<div className="grid grid-cols-2 gap-4">
 				{TOOLKIT_SECTIONS.map((section) => {
 					const Icon = section.icon;
 					return (
-						<Link
-							key={section.id}
-							to={`/learn/essentials/${section.id}`}
-							className="block"
-						>
+						<Link key={section.id} to={`/learn/essentials/${section.id}`} className="block">
 							<Card
 								variant="bordered"
 								padding="md"
 								className={`${COLOR_CLASSES[section.color]} h-full transition-colors`}
 							>
 								<div className="flex flex-col items-center gap-2 text-center">
-									<div
-										className={`rounded-lg p-2 ${ICON_CLASSES[section.color]}`}
-									>
+									<div className={`rounded-lg p-2 ${ICON_CLASSES[section.color]}`}>
 										<Icon size={20} />
 									</div>
-									<h3 className="font-semibold text-stone-900">
-										{section.label}
-									</h3>
-									<p className="text-xs text-stone-600">
-										{section.description}
-									</p>
+									<h3 className="font-semibold text-stone-900">{section.label}</h3>
+									<p className="text-xs text-stone-600">{section.description}</p>
 								</div>
 							</Card>
 						</Link>

@@ -3,15 +3,9 @@ import { db } from "../db.server";
 import { tags, vocabulary, vocabularyTags } from "../db.server/schema";
 
 async function main() {
-	const [vocabCount] = await db
-		.select({ count: sql<number>`COUNT(*)` })
-		.from(vocabulary);
-	const [tagsCount] = await db
-		.select({ count: sql<number>`COUNT(*)` })
-		.from(tags);
-	const [vtCount] = await db
-		.select({ count: sql<number>`COUNT(*)` })
-		.from(vocabularyTags);
+	const [vocabCount] = await db.select({ count: sql<number>`COUNT(*)` }).from(vocabulary);
+	const [tagsCount] = await db.select({ count: sql<number>`COUNT(*)` }).from(tags);
+	const [vtCount] = await db.select({ count: sql<number>`COUNT(*)` }).from(vocabularyTags);
 
 	console.log("vocabulary count:", vocabCount?.count ?? 0);
 	console.log("tags count:", tagsCount?.count ?? 0);

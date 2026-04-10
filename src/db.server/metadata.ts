@@ -15,10 +15,7 @@ export type VocabMetadata = Record<string, unknown> | null;
 export const hasTimeRange = (
 	m: VocabMetadata,
 ): m is { timeRange: string } & Record<string, unknown> =>
-	m !== null &&
-	typeof m === "object" &&
-	"timeRange" in m &&
-	typeof m.timeRange === "string";
+	m !== null && typeof m === "object" && "timeRange" in m && typeof m.timeRange === "string";
 
 /**
  * Type guard: metadata has numericValue (used for number tagged items)
@@ -26,7 +23,4 @@ export const hasTimeRange = (
 export const hasNumericValue = (
 	m: VocabMetadata,
 ): m is { numericValue: number } & Record<string, unknown> =>
-	m !== null &&
-	typeof m === "object" &&
-	"numericValue" in m &&
-	typeof m.numericValue === "number";
+	m !== null && typeof m === "object" && "numericValue" in m && typeof m.numericValue === "number";

@@ -38,14 +38,10 @@ export const action = async ({ request }: Route.ActionArgs) => {
 
 		const cookie = createAuthCookie({ userId: result.userId, username });
 
-		return Response.json(
-			{ ...result, username },
-			{ headers: { "Set-Cookie": cookie } },
-		);
+		return Response.json({ ...result, username }, { headers: { "Set-Cookie": cookie } });
 	} catch (error) {
 		console.error("WebAuthn auth verify error:", error);
-		const message =
-			error instanceof Error ? error.message : "Authentication failed";
+		const message = error instanceof Error ? error.message : "Authentication failed";
 		return Response.json({ error: message }, { status: 400 });
 	}
 };

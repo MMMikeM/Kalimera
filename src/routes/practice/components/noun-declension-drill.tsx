@@ -36,21 +36,11 @@ const generateQuestions = (count: number): UnifiedQuestion[] => {
 		const noun = PRACTICE_NOUNS[nounIndex];
 		if (!noun) continue;
 
-		const nominativeForm = getNounForm(
-			noun.lemma,
-			noun.pattern,
-			"nominative",
-			"singular",
-		);
+		const nominativeForm = getNounForm(noun.lemma, noun.pattern, "nominative", "singular");
 		if (!nominativeForm) continue;
 
 		const targetCase: Case = "accusative";
-		const targetForm = getNounForm(
-			noun.lemma,
-			noun.pattern,
-			targetCase,
-			"singular",
-		);
+		const targetForm = getNounForm(noun.lemma, noun.pattern, targetCase, "singular");
 		if (!targetForm) continue;
 
 		const combinationKey = `${noun.lemma}-${targetCase}`;
@@ -73,9 +63,7 @@ interface NounDeclensionDrillProps {
 	questionCount?: number;
 }
 
-const NounDeclensionDrill: React.FC<NounDeclensionDrillProps> = ({
-	questionCount = 8,
-}) => {
+const NounDeclensionDrill: React.FC<NounDeclensionDrillProps> = ({ questionCount = 8 }) => {
 	const questions = useMemo(
 		() => generateQuestions(Math.min(questionCount, PRACTICE_NOUNS.length)),
 		[questionCount],
@@ -84,22 +72,15 @@ const NounDeclensionDrill: React.FC<NounDeclensionDrillProps> = ({
 	if (questions.length === 0) {
 		return (
 			<div className="rounded-xl border border-stone-300 bg-stone-100 py-12 text-center">
-				<h3 className="mb-2 text-xl font-semibold text-stone-700">
-					No questions available
-				</h3>
-				<p className="text-stone-600">
-					Could not generate declension questions.
-				</p>
+				<h3 className="mb-2 text-xl font-semibold text-stone-700">No questions available</h3>
+				<p className="text-stone-600">Could not generate declension questions.</p>
 			</div>
 		);
 	}
 
 	return (
 		<div className="mx-auto max-w-xl">
-			<UnifiedDrill
-				title={`Noun Declension (${questions.length} items)`}
-				questions={questions}
-			/>
+			<UnifiedDrill title={`Noun Declension (${questions.length} items)`} questions={questions} />
 		</div>
 	);
 };

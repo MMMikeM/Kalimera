@@ -14,29 +14,20 @@ export const SurvivalTab = ({ data }: { data: PhrasesLoaderData }) => {
 				colorScheme="honey"
 				icon={<Sparkles size={18} />}
 			>
-				These phrases will get you through most situations. Practice them until
-				they're automatic — when someone says "Γεια σας", your response should
-				be instant.
+				These phrases will get you through most situations. Practice them until they're automatic —
+				when someone says "Γεια σας", your response should be instant.
 			</TabHero>
 
 			<PhraseSection title="Essential Greetings" colorScheme="honey">
 				{essential.map((phrase) => (
-					<PhraseItemDisplay
-						key={phrase.id}
-						greek={phrase.greek}
-						english={phrase.english}
-					/>
+					<PhraseItemDisplay key={phrase.id} greek={phrase.greek} english={phrase.english} />
 				))}
 			</PhraseSection>
 
 			{survival.length > 0 && (
 				<PhraseSection title="Survival Phrases" colorScheme="terracotta">
 					{survival.map((phrase) => (
-						<PhraseItemDisplay
-							key={phrase.id}
-							greek={phrase.greek}
-							english={phrase.english}
-						/>
+						<PhraseItemDisplay key={phrase.id} greek={phrase.greek} english={phrase.english} />
 					))}
 				</PhraseSection>
 			)}

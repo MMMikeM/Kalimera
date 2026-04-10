@@ -7,18 +7,21 @@ Why timed production drills work, grounded in second language acquisition resear
 Language knowledge exists on a spectrum:
 
 ### Declarative Knowledge
+
 - Explicit, conscious knowledge of rules
 - "The accusative of ο is τον"
 - Stored as facts, retrieved deliberately
 - Slow, effortful, attention-demanding
 
 ### Procedural Knowledge
+
 - Implicit, automatic application of rules
 - No conscious rule retrieval during use
 - Faster, requires less attention
 - Built through repeated successful application
 
 ### Automatic Knowledge
+
 - Instant, effortless production
 - No attention required
 - Conversational speed
@@ -30,12 +33,12 @@ Language knowledge exists on a spectrum:
 
 Recognition and production use different neural pathways:
 
-| Recognition | Production |
-|-------------|------------|
+| Recognition                  | Production                    |
+| ---------------------------- | ----------------------------- |
 | See Greek → activate meaning | Have meaning → generate Greek |
-| Passive retrieval | Active retrieval |
-| Context provides cues | No external cues |
-| "I know that word" | "I can say that word" |
+| Passive retrieval            | Active retrieval              |
+| Context provides cues        | No external cues              |
+| "I know that word"           | "I can say that word"         |
 
 **Recognition practice builds recognition speed. Production practice builds production speed.** They don't transfer well to each other.
 
@@ -44,12 +47,14 @@ This is why traditional flashcards (Greek → English) feel productive but don't
 ## Time Pressure and Proceduralization
 
 Procedural knowledge is built when:
+
 1. The learner must produce (not just recognise)
 2. Time pressure prevents conscious rule application
 3. The attempt is immediately followed by feedback
 4. The cycle repeats many times
 
 **Time pressure is not optional.** Without it:
+
 - Learners use declarative knowledge slowly
 - They reinforce the slow pathway
 - Speed never improves
@@ -60,6 +65,7 @@ The discomfort of time pressure is the learning signal. If it feels comfortable,
 ## The Role of Errors
 
 Errors under time pressure are expected and useful:
+
 - They reveal which forms haven't proceduralized
 - Immediate correction strengthens the right pathway
 - The emotional salience of "getting it wrong" aids memory
@@ -71,6 +77,7 @@ Errors under time pressure are expected and useful:
 Krashen's input hypothesis: Acquisition happens when learners receive input slightly above their current level (i+1).
 
 For this user, i+1 means:
+
 - Vocabulary they know
 - Grammar they understand
 - Speed they can't yet achieve
@@ -80,6 +87,7 @@ The +1 is speed, not complexity. They don't need harder Greek. They need faster 
 ## Spaced Repetition for Speed
 
 Traditional SRS optimises for retention (remembering over time). For procedural learning, optimise for:
+
 - **Spacing** - Revisit forms across sessions
 - **Interleaving** - Mix different form types within sessions
 - **Speed tracking** - Retire items based on response time, not just accuracy
@@ -89,6 +97,7 @@ An item isn't "learned" when the user gets it right. It's learned when they get 
 ## Volume Requirements
 
 Proceduralization requires massive repetition:
+
 - Hundreds of reps per form
 - Distributed across weeks/months
 - Under consistent time pressure
@@ -98,6 +107,7 @@ A few minutes of practice per day isn't enough. The app should facilitate 15-30 
 ## Transfer to Conversation
 
 Drilled forms transfer to conversation when:
+
 1. The drill direction matches speaking (English thought → Greek production)
 2. Time pressure approximates conversational pace
 3. Forms are practised in varied contexts, not just one prompt

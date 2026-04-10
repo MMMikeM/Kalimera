@@ -117,8 +117,7 @@ export interface PhoneticMatchResult {
 }
 
 // Greek definite articles (ο, η, το and their case forms)
-const GREEK_ARTICLE_PATTERN =
-	/^(ο|η|το|τον|την|του|της|οι|τα|τους|τις|των)\s+/i;
+const GREEK_ARTICLE_PATTERN = /^(ο|η|το|τον|την|του|της|οι|τα|τους|τις|των)\s+/i;
 
 /**
  * Strip the Greek definite article from the beginning of a phrase.
@@ -149,10 +148,7 @@ const toPhoneticCanonical = (text: string): string => text.replace(/oi/g, "i");
 const phoneticEquals = (a: string, b: string): boolean =>
 	a === b || toPhoneticCanonical(a) === toPhoneticCanonical(b);
 
-export const matchPhonetic = (
-	userInput: string,
-	correctGreek: string,
-): PhoneticMatchResult => {
+export const matchPhonetic = (userInput: string, correctGreek: string): PhoneticMatchResult => {
 	const userPhonetic = normalizeInput(userInput);
 	const correctPhonetic = greekToPhonetic(correctGreek);
 

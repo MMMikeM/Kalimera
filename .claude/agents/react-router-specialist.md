@@ -177,30 +177,30 @@ export { getAllUsers, getItemsDueForReview };
 
 // Action handler factory
 const createHandler = <TSchema extends z.ZodType>(
-  schema: TSchema,
-  handler: (data: z.infer<TSchema>) => Promise<{ success: true } & Record<string, unknown>>,
+	schema: TSchema,
+	handler: (data: z.infer<TSchema>) => Promise<{ success: true } & Record<string, unknown>>,
 ) => {
-  return async (formData: FormData) => {
-    const result = schema.safeParse(formData);
-    if (!result.success) {
-      return { success: false, error: result.error.issues[0]?.message ?? "Invalid input" };
-    }
-    return await handler(result.data);
-  };
+	return async (formData: FormData) => {
+		const result = schema.safeParse(formData);
+		if (!result.success) {
+			return { success: false, error: result.error.issues[0]?.message ?? "Invalid input" };
+		}
+		return await handler(result.data);
+	};
 };
 
 // Schemas
 const createUserSchema = zfd.formData({
-  displayName: zfd.text(z.string().min(1, "Name is required")),
-  code: zfd.text(z.string().min(1, "Code is required")),
+	displayName: zfd.text(z.string().min(1, "Name is required")),
+	code: zfd.text(z.string().min(1, "Code is required")),
 });
 
 // Handlers
 export const actionHandlers = {
-  createUser: createHandler(createUserSchema, async (data) => {
-    const user = await createUser(data);
-    return { success: true, user };
-  }),
+	createUser: createHandler(createUserSchema, async (data) => {
+		const user = await createUser(data);
+		return { success: true, user };
+	}),
 } as const;
 
 export type ActionIntent = keyof typeof actionHandlers;
@@ -213,19 +213,19 @@ export type ActionIntent = keyof typeof actionHandlers;
 import { actionHandlers, type ActionIntent, getAllUsers } from "./data.server";
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
-  const users = await getAllUsers();
-  return { users };
+	const users = await getAllUsers();
+	return { users };
 };
 
 export const action = async ({ request }: Route.ActionArgs) => {
-  const formData = await request.formData();
-  const intent = formData.get("intent") as string | null;
+	const formData = await request.formData();
+	const intent = formData.get("intent") as string | null;
 
-  if (!intent || !(intent in actionHandlers)) {
-    return { success: false, error: "Unknown action" };
-  }
+	if (!intent || !(intent in actionHandlers)) {
+		return { success: false, error: "Unknown action" };
+	}
 
-  return actionHandlers[intent as ActionIntent](formData);
+	return actionHandlers[intent as ActionIntent](formData);
 };
 ```
 
@@ -238,13 +238,7 @@ This codebase uses programmatic route configuration with four core functions:
 ### Core Configuration Functions
 
 ```typescript
-import {
-  type RouteConfig,
-  route,
-  index,
-  layout,
-  prefix,
-} from "@react-router/dev/routes";
+import { type RouteConfig, route, index, layout, prefix } from "@react-router/dev/routes";
 ```
 
 #### 1. `route(path, file, children?)` - Standard Routes
@@ -252,12 +246,12 @@ import {
 Creates a route that **adds a URL segment** and renders a component:
 
 ```typescript
-route("about", "routes/about.tsx")
+route("about", "routes/about.tsx");
 // Creates route at /about
 
 route("practice", "routes/practice/layout.tsx", [
-  route("speed", "routes/practice/speed-drill.tsx"),
-])
+	route("speed", "routes/practice/speed-drill.tsx"),
+]);
 // Creates /practice and /practice/speed
 ```
 
@@ -267,9 +261,9 @@ Renders at the **parent's URL** as the default child. Cannot have children:
 
 ```typescript
 route("practice", "routes/practice/layout.tsx", [
-  index("routes/practice/index.tsx"),  // Renders at /practice
-  route("speed", "routes/practice/speed-drill.tsx"),  // Renders at /practice/speed
-])
+	index("routes/practice/index.tsx"), // Renders at /practice
+	route("speed", "routes/practice/speed-drill.tsx"), // Renders at /practice/speed
+]);
 ```
 
 **CRITICAL:** Without an index route, navigating to `/practice` shows only the layout's `<Outlet/>` with nothing inside it.
@@ -280,17 +274,17 @@ Creates UI nesting **WITHOUT** adding a URL segment. Use when you want shared UI
 
 ```typescript
 layout("routes/auth/layout.tsx", [
-  route("login", "routes/auth/login.tsx"),     // /login (NOT /auth/login)
-  route("register", "routes/auth/register.tsx"), // /register
-])
+	route("login", "routes/auth/login.tsx"), // /login (NOT /auth/login)
+	route("register", "routes/auth/register.tsx"), // /register
+]);
 ```
 
 **When to use `layout()` vs `route()` with children:**
 
-| Pattern | URL Result | Use Case |
-|---------|-----------|----------|
-| `route("auth", "layout.tsx", [...])` | `/auth/login` | Auth section has its own URL prefix |
-| `layout("layout.tsx", [...])` | `/login` | Shared UI wrapper without URL change |
+| Pattern                              | URL Result    | Use Case                             |
+| ------------------------------------ | ------------- | ------------------------------------ |
+| `route("auth", "layout.tsx", [...])` | `/auth/login` | Auth section has its own URL prefix  |
+| `layout("layout.tsx", [...])`        | `/login`      | Shared UI wrapper without URL change |
 
 #### 4. `prefix(path, children)` - Path Prefix (NO route created)
 
@@ -307,44 +301,38 @@ Adds a **path prefix** to children without creating a route. Must use spread ope
 
 **When to use `prefix()` vs `route()` with children:**
 
-| Pattern | Creates `/api` route? | Use Case |
-|---------|----------------------|----------|
-| `route("api", "layout.tsx", [...])` | Yes | API routes share a layout |
-| `...prefix("api", [...])` | No | Just grouping by URL prefix |
+| Pattern                             | Creates `/api` route? | Use Case                    |
+| ----------------------------------- | --------------------- | --------------------------- |
+| `route("api", "layout.tsx", [...])` | Yes                   | API routes share a layout   |
+| `...prefix("api", [...])`           | No                    | Just grouping by URL prefix |
 
 ### Complete Example
 
 ```typescript
-import {
-  type RouteConfig,
-  route,
-  index,
-  layout,
-  prefix,
-} from "@react-router/dev/routes";
+import { type RouteConfig, route, index, layout, prefix } from "@react-router/dev/routes";
 
 export default [
-  // Home page
-  index("routes/home.tsx"),
+	// Home page
+	index("routes/home.tsx"),
 
-  // Auth routes - shared layout, no /auth URL
-  layout("routes/auth/layout.tsx", [
-    route("login", "routes/auth/login.tsx"),
-    route("register", "routes/auth/register.tsx"),
-  ]),
+	// Auth routes - shared layout, no /auth URL
+	layout("routes/auth/layout.tsx", [
+		route("login", "routes/auth/login.tsx"),
+		route("register", "routes/auth/register.tsx"),
+	]),
 
-  // Practice section - has /practice URL with layout
-  route("practice", "routes/practice/layout.tsx", [
-    index("routes/practice/index.tsx"),  // /practice default content
-    route("speed", "routes/practice/speed-drill.tsx"),
-    route(":tab", "routes/practice/$tab.tsx"),
-  ]),
+	// Practice section - has /practice URL with layout
+	route("practice", "routes/practice/layout.tsx", [
+		index("routes/practice/index.tsx"), // /practice default content
+		route("speed", "routes/practice/speed-drill.tsx"),
+		route(":tab", "routes/practice/$tab.tsx"),
+	]),
 
-  // API routes - grouped by prefix, no shared layout
-  ...prefix("api", [
-    route("push/subscribe", "routes/api/push.subscribe.ts"),
-    route("push/unsubscribe", "routes/api/push.unsubscribe.ts"),
-  ]),
+	// API routes - grouped by prefix, no shared layout
+	...prefix("api", [
+		route("push/subscribe", "routes/api/push.subscribe.ts"),
+		route("push/unsubscribe", "routes/api/push.unsubscribe.ts"),
+	]),
 ] satisfies RouteConfig;
 ```
 
@@ -355,14 +343,14 @@ export default [
 ```typescript
 // WRONG - /practice shows empty Outlet
 route("practice", "routes/practice/layout.tsx", [
-  route("speed", "routes/practice/speed-drill.tsx"),
-])
+	route("speed", "routes/practice/speed-drill.tsx"),
+]);
 
 // CORRECT - /practice has default content
 route("practice", "routes/practice/layout.tsx", [
-  index("routes/practice/index.tsx"),  // or redirect
-  route("speed", "routes/practice/speed-drill.tsx"),
-])
+	index("routes/practice/index.tsx"), // or redirect
+	route("speed", "routes/practice/speed-drill.tsx"),
+]);
 ```
 
 #### Using `route()` When `layout()` Is Appropriate
@@ -370,13 +358,13 @@ route("practice", "routes/practice/layout.tsx", [
 ```typescript
 // WRONG - creates unnecessary /auth URL
 route("auth", "routes/auth/layout.tsx", [
-  route("login", "routes/auth/login.tsx"),  // /auth/login
-])
+	route("login", "routes/auth/login.tsx"), // /auth/login
+]);
 
 // CORRECT - no /auth URL, just shared layout
 layout("routes/auth/layout.tsx", [
-  route("login", "routes/auth/login.tsx"),  // /login
-])
+	route("login", "routes/auth/login.tsx"), // /login
+]);
 ```
 
 #### Forgetting Spread on `prefix()`
@@ -399,33 +387,33 @@ layout("routes/auth/layout.tsx", [
 
 ```typescript
 // Required text
-name: zfd.text(z.string().min(1, "Required"))
+name: zfd.text(z.string().min(1, "Required"));
 
 // Optional text
-description: zfd.text(z.string().optional())
+description: zfd.text(z.string().optional());
 
 // Numeric (parses string to number)
-score: zfd.numeric(z.number().int().min(1).max(5))
+score: zfd.numeric(z.number().int().min(1).max(5));
 
 // Optional numeric
-score: zfd.numeric(z.number().optional())
+score: zfd.numeric(z.number().optional());
 
 // Enum validation
-status: zfd.text(z.enum(["pending", "complete", "archived"]))
+status: zfd.text(z.enum(["pending", "complete", "archived"]));
 
 // Literal for intent matching
-intent: zfd.text(z.literal("create"))
+intent: zfd.text(z.literal("create"));
 
 // Boolean from string
-isActive: zfd.text(z.enum(["true", "false"])).transform((v) => v === "true")
+isActive: zfd.text(z.enum(["true", "false"])).transform((v) => v === "true");
 
 // JSON array from string
-tags: zfd.text(z.string().optional()).transform((v) =>
-  v ? (JSON.parse(v) as string[]) : undefined
-)
+tags: zfd
+	.text(z.string().optional())
+	.transform((v) => (v ? (JSON.parse(v) as string[]) : undefined));
 
 // Trim whitespace
-content: zfd.text(z.string().min(1)).transform((v) => v.trim())
+content: zfd.text(z.string().min(1)).transform((v) => v.trim());
 ```
 
 ---
@@ -439,8 +427,8 @@ content: zfd.text(z.string().min(1)).transform((v) => v.trim())
 import type { Route } from "../+types/layout";
 
 // CORRECT - imports this route's types
-import type { Route } from "./+types/layout";  // for layout.tsx
-import type { Route } from "./+types/$tab";    // for $tab.tsx
+import type { Route } from "./+types/layout"; // for layout.tsx
+import type { Route } from "./+types/$tab"; // for $tab.tsx
 ```
 
 **Why it matters:** Wrong import gives you the parent's loaderData type, causing silent type mismatches.
@@ -452,20 +440,20 @@ import type { Route } from "./+types/$tab";    // for $tab.tsx
 import { computeScore } from "@/db/queries";
 
 export default function Page({ loaderData }: Route.ComponentProps) {
-  const score = computeScore(loaderData.attempts); // Bad!
+	const score = computeScore(loaderData.attempts); // Bad!
 }
 
 // CORRECT - compute in loader, pass to component
 // data.server.ts
 export async function getDataWithScore(userId: string) {
-  const attempts = await getAttempts(userId);
-  const score = computeScore(attempts);
-  return { attempts, score }; // Pre-computed
+	const attempts = await getAttempts(userId);
+	const score = computeScore(attempts);
+	return { attempts, score }; // Pre-computed
 }
 
 // layout.tsx
 export default function Page({ loaderData }: Route.ComponentProps) {
-  const { score } = loaderData; // Already computed
+	const { score } = loaderData; // Already computed
 }
 ```
 
@@ -611,8 +599,8 @@ const revalidator = useRevalidator();
 
 // Refresh after user action
 const handleUserChange = (userId: string) => {
-  setSearchParams({ userId });
-  revalidator.revalidate();
+	setSearchParams({ userId });
+	revalidator.revalidate();
 };
 ```
 
@@ -634,7 +622,7 @@ const activeTab = pathSegments[1] || "default";
 const fetcher = useFetcher<{ success: boolean; user?: User; error?: string }>();
 
 if (fetcher.data?.success && fetcher.data?.user) {
-  // TypeScript knows user exists
+	// TypeScript knows user exists
 }
 ```
 
@@ -643,10 +631,7 @@ if (fetcher.data?.success && fetcher.data?.user) {
 ```typescript
 const fetcher = useFetcher();
 
-fetcher.submit(
-  { intent: "createUser", displayName: name, code },
-  { method: "post" }
-);
+fetcher.submit({ intent: "createUser", displayName: name, code }, { method: "post" });
 ```
 
 ### State Tracking
@@ -666,21 +651,21 @@ const isLoading = fetcher.state !== "idle";
 const fetcher = useFetcher();
 
 const submitComplex = (data: ComplexData) => {
-  const formData = new FormData();
-  formData.set("intent", "create");
-  formData.set("data", JSON.stringify(data));
-  // Arrays need special handling
-  if (data.tags?.length) {
-    formData.set("tags", JSON.stringify(data.tags));
-  }
-  fetcher.submit(formData, { method: "post" });
+	const formData = new FormData();
+	formData.set("intent", "create");
+	formData.set("data", JSON.stringify(data));
+	// Arrays need special handling
+	if (data.tags?.length) {
+		formData.set("tags", JSON.stringify(data.tags));
+	}
+	fetcher.submit(formData, { method: "post" });
 };
 ```
 
 ### Fetcher vs Form Decision Tree
 
 | Scenario                      | Use                                    |
-|-------------------------------|----------------------------------------|
+| ----------------------------- | -------------------------------------- |
 | Page-level form with redirect | `<Form>`                               |
 | In-place mutation (like/vote) | `useFetcher`                           |
 | Search/filter (GET)           | `<Form method="get">`                  |
@@ -707,7 +692,7 @@ Use when fetcher POST submissions shouldn't trigger full page revalidation:
 import type { ShouldRevalidateFunctionArgs } from "react-router";
 
 export const shouldRevalidate = ({ formMethod }: ShouldRevalidateFunctionArgs) =>
-  formMethod !== undefined && formMethod !== "GET";
+	formMethod !== undefined && formMethod !== "GET";
 ```
 
 ### Pattern 2: Revalidate on Search Param Changes
@@ -716,14 +701,14 @@ Use when GET form submissions (search) should refresh but POST mutations should 
 
 ```typescript
 export const shouldRevalidate = ({
-  formMethod,
-  currentUrl,
-  nextUrl,
+	formMethod,
+	currentUrl,
+	nextUrl,
 }: ShouldRevalidateFunctionArgs) => {
-  // Always revalidate when search params change
-  if (currentUrl.search !== nextUrl.search) return true;
-  // Skip revalidation for POST mutations
-  return formMethod?.toUpperCase() !== "POST";
+	// Always revalidate when search params change
+	if (currentUrl.search !== nextUrl.search) return true;
+	// Skip revalidation for POST mutations
+	return formMethod?.toUpperCase() !== "POST";
 };
 ```
 
@@ -731,17 +716,17 @@ export const shouldRevalidate = ({
 
 ```typescript
 interface ShouldRevalidateFunctionArgs {
-  currentUrl: URL;
-  currentParams: Params;
-  nextUrl: URL;
-  nextParams: Params;
-  formMethod?: string;
-  formAction?: string;
-  formEncType?: string;
-  formData?: FormData;
-  actionResult?: any;
-  actionStatus?: number;
-  defaultShouldRevalidate: boolean;
+	currentUrl: URL;
+	currentParams: Params;
+	nextUrl: URL;
+	nextParams: Params;
+	formMethod?: string;
+	formAction?: string;
+	formEncType?: string;
+	formData?: FormData;
+	actionResult?: any;
+	actionStatus?: number;
+	defaultShouldRevalidate: boolean;
 }
 ```
 
@@ -796,9 +781,9 @@ Control HTTP caching:
 
 ```typescript
 export function headers({ loaderHeaders }: Route.HeadersArgs) {
-  return {
-    "Cache-Control": loaderHeaders.get("Cache-Control") || "max-age=300",
-  };
+	return {
+		"Cache-Control": loaderHeaders.get("Cache-Control") || "max-age=300",
+	};
 }
 ```
 
@@ -832,9 +817,9 @@ src/routes/example/
 Always import from the generated types:
 
 ```typescript
-import type { Route } from "./+types/layout";   // for layout.tsx
-import type { Route } from "./+types/$tab";     // for $tab.tsx
-import type { Route } from "./+types/search";   // for search.tsx
+import type { Route } from "./+types/layout"; // for layout.tsx
+import type { Route } from "./+types/$tab"; // for $tab.tsx
+import type { Route } from "./+types/search"; // for search.tsx
 ```
 
 ### 3. Data Access
@@ -846,8 +831,8 @@ import { searchVocabulary } from "@/db/queries/vocabulary";
 import { getItemsDueForReview, getPracticeStats } from "@/db/queries";
 
 export async function loader() {
-  const vocabulary = await searchVocabulary();
-  return { vocabulary };
+	const vocabulary = await searchVocabulary();
+	return { vocabulary };
 }
 ```
 
@@ -859,13 +844,13 @@ Default to `useFetcher` for in-place mutations, `<Form>` for navigation.
 
 ```typescript
 export const loader = async ({ request }: Route.LoaderArgs) => {
-  const [reviewItems, newVocabItems, stats] = await Promise.all([
-    getItemsDueForReview(userId),
-    getNewVocabularyItems(userId, 20),
-    getPracticeStats(userId),
-  ]);
+	const [reviewItems, newVocabItems, stats] = await Promise.all([
+		getItemsDueForReview(userId),
+		getNewVocabularyItems(userId, 20),
+		getPracticeStats(userId),
+	]);
 
-  return { reviewItems, newVocabItems, stats };
+	return { reviewItems, newVocabItems, stats };
 };
 ```
 
@@ -873,18 +858,18 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 
 ## Codebase Examples Reference
 
-| Pattern                  | Example File                              | Description                                |
-|--------------------------|-------------------------------------------|--------------------------------------------|
-| Layout with tabs         | `src/routes/vocabulary/layout.tsx`        | NavTabs + Outlet pattern                   |
-| Data server file         | `src/routes/practice/data.server.ts`      | Action handlers, schemas, queries          |
-| Route-specific components| `src/routes/practice/components/`         | Drill cards, forms                         |
-| Dynamic tab routes       | `src/routes/vocabulary/$tab.tsx`          | Parameter-based routing                    |
-| Search route             | `src/routes/search.tsx`                   | Standalone route with loader               |
-| Programmatic routes      | `src/routes.ts`                           | Route configuration                        |
-| User state via URL       | `src/routes/practice/layout.tsx`          | useSearchParams for userId                 |
-| Multi-intent action      | `src/routes/practice/layout.tsx`          | actionHandlers pattern                     |
-| Type-safe fetcher        | `src/routes/practice/layout.tsx`          | useFetcher with response type              |
-| Meta function            | `src/routes/vocabulary/layout.tsx`        | SEO metadata                               |
+| Pattern                   | Example File                         | Description                       |
+| ------------------------- | ------------------------------------ | --------------------------------- |
+| Layout with tabs          | `src/routes/vocabulary/layout.tsx`   | NavTabs + Outlet pattern          |
+| Data server file          | `src/routes/practice/data.server.ts` | Action handlers, schemas, queries |
+| Route-specific components | `src/routes/practice/components/`    | Drill cards, forms                |
+| Dynamic tab routes        | `src/routes/vocabulary/$tab.tsx`     | Parameter-based routing           |
+| Search route              | `src/routes/search.tsx`              | Standalone route with loader      |
+| Programmatic routes       | `src/routes.ts`                      | Route configuration               |
+| User state via URL        | `src/routes/practice/layout.tsx`     | useSearchParams for userId        |
+| Multi-intent action       | `src/routes/practice/layout.tsx`     | actionHandlers pattern            |
+| Type-safe fetcher         | `src/routes/practice/layout.tsx`     | useFetcher with response type     |
+| Meta function             | `src/routes/vocabulary/layout.tsx`   | SEO metadata                      |
 
 ---
 

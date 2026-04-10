@@ -21,11 +21,11 @@ The user is **stuck at declarative knowledge**. They know "accusative changes ο
 
 ## The Core Diagnosis
 
-| Stage | Description | Status |
-|-------|-------------|--------|
-| Declarative | "I know the rule" | Done |
-| Procedural | Apply without conscious thought | Stuck |
-| Automatic | Produce at conversational speed | Blocked |
+| Stage       | Description                     | Status  |
+| ----------- | ------------------------------- | ------- |
+| Declarative | "I know the rule"               | Done    |
+| Procedural  | Apply without conscious thought | Stuck   |
+| Automatic   | Produce at conversational speed | Blocked |
 
 **The transition requires retrieval under pressure.** Not recognition. Not careful, untimed exercises. Fast, forced production.
 
@@ -52,11 +52,11 @@ That's it. Everything else is optional.
 
 **Critical question:** Does the user generate Greek from nothing, or select from options?
 
-| Production (Good) | Recognition (Bad) |
-|-------------------|-------------------|
-| Type the translation | Select the correct answer |
-| Generate the conjugation | Match Greek to English |
-| Fill in from memory | Multiple choice |
+| Production (Good)        | Recognition (Bad)         |
+| ------------------------ | ------------------------- |
+| Type the translation     | Select the correct answer |
+| Generate the conjugation | Match Greek to English    |
+| Fill in from memory      | Multiple choice           |
 
 **Recognition feels productive but doesn't transfer to speaking.** Different neural pathways.
 
@@ -143,13 +143,13 @@ Slow, careful practice builds accuracy at the expense of automaticity. The user 
 
 ## Valid Drill Types
 
-| Type | Prompt | Response |
-|------|--------|----------|
-| Translation sprint | "I see the child" | Βλέπω το παιδί |
-| Conjugation | "θέλω → they" | θέλουν |
-| Case transformation | "ο φίλος → accusative" | τον φίλο |
-| Article selection | "coffee (masc) + accusative" | τον καφέ |
-| Pronoun insertion | "I see ___" (him) | τον |
+| Type                | Prompt                       | Response       |
+| ------------------- | ---------------------------- | -------------- |
+| Translation sprint  | "I see the child"            | Βλέπω το παιδί |
+| Conjugation         | "θέλω → they"                | θέλουν         |
+| Case transformation | "ο φίλος → accusative"       | τον φίλο       |
+| Article selection   | "coffee (masc) + accusative" | τον καφέ       |
+| Pronoun insertion   | "I see \_\_\_" (him)         | τον            |
 
 All require production. All should be timed.
 
@@ -159,27 +159,35 @@ All require production. All should be timed.
 ## Practice Effectiveness: [Feature/Section Name]
 
 ### Does This Build Retrieval Speed?
+
 [Yes/Partially/No] - [Why]
 
 ### Production vs Recognition
+
 [What the user actually does - produce or recognize?]
 
 ### Time Pressure
+
 [Is there a timer? Is it uncomfortable enough?]
 
 ### Direction
+
 [English → Greek (production) or Greek → English (recognition)?]
 
 ### Red Flags
+
 - [Problems that block the goal]
 
 ### Yellow Flags
+
 - [Problems that dilute the goal]
 
 ### What Works
+
 - [Elements that support retrieval speed]
 
 ### Recommendations
+
 1. [Change] - [How it improves retrieval speed]
 ```
 

@@ -156,9 +156,7 @@ const NavTabs = ({ tabs, activeTab, buildUrl, className }: NavTabsProps) => {
 								<span>{tab.label}</span>
 								{tab.badge !== undefined && tab.badge !== 0 && (
 									<span className={badgeColorVariants({ color })}>
-										{typeof tab.badge === "number" && tab.badge > 99
-											? "99+"
-											: tab.badge}
+										{typeof tab.badge === "number" && tab.badge > 99 ? "99+" : tab.badge}
 									</span>
 								)}
 							</Link>

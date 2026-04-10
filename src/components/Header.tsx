@@ -30,18 +30,12 @@ interface HeaderProps {
 	onLogout?: () => void;
 }
 
-export const Header = ({
-	isAuthenticated,
-	currentSection = "",
-	onLogout,
-}: HeaderProps) => {
+export const Header = ({ isAuthenticated, currentSection = "", onLogout }: HeaderProps) => {
 	const navItems = isAuthenticated ? NAV_ITEMS_AUTH : NAV_ITEMS_UNAUTH;
 	const [isSearchOpen, setIsSearchOpen] = useState(false);
-	const { searchTerm, setSearchTerm, results, isLoading } = useVocabularySearch(
-		{
-			enabled: isSearchOpen,
-		},
-	);
+	const { searchTerm, setSearchTerm, results, isLoading } = useVocabularySearch({
+		enabled: isSearchOpen,
+	});
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
@@ -68,10 +62,7 @@ export const Header = ({
 				{/* Desktop search - Gmail style centered */}
 				<div className="mx-4 hidden max-w-md flex-1 md:block">
 					<div className="relative">
-						<Search
-							className="absolute top-1/2 left-3 -translate-y-1/2 text-stone-400"
-							size={18}
-						/>
+						<Search className="absolute top-1/2 left-3 -translate-y-1/2 text-stone-400" size={18} />
 						<input
 							ref={inputRef}
 							type="text"
@@ -86,15 +77,9 @@ export const Header = ({
 							<div className="absolute top-full right-0 left-0 z-50 mt-2 max-h-[60vh] overflow-hidden rounded-md border bg-popover p-0 text-popover-foreground shadow-md">
 								<div className="max-h-[60vh] overflow-y-auto p-3">
 									{isLoading ? (
-										<div className="py-4 text-center text-sm text-stone-400">
-											Loading...
-										</div>
+										<div className="py-4 text-center text-sm text-stone-400">Loading...</div>
 									) : (
-										<SearchResults
-											results={results}
-											searchTerm={searchTerm}
-											compact
-										/>
+										<SearchResults results={results} searchTerm={searchTerm} compact />
 									)}
 								</div>
 							</div>
@@ -134,10 +119,7 @@ export const Header = ({
 								<DropdownMenuContent className="w-48">
 									<DropdownMenuItem
 										render={
-											<Link
-												to="/progress"
-												className="flex cursor-pointer items-center gap-2"
-											/>
+											<Link to="/progress" className="flex cursor-pointer items-center gap-2" />
 										}
 									>
 										<BarChart3 size={16} strokeWidth={1.5} />
@@ -145,10 +127,7 @@ export const Header = ({
 									</DropdownMenuItem>
 									<DropdownMenuItem
 										render={
-											<Link
-												to="/support"
-												className="flex cursor-pointer items-center gap-2"
-											/>
+											<Link to="/support" className="flex cursor-pointer items-center gap-2" />
 										}
 									>
 										<Info size={16} strokeWidth={1.5} />

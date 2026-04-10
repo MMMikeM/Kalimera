@@ -1,11 +1,4 @@
-import {
-	CheckCircle,
-	Flame,
-	RotateCcw,
-	Sparkles,
-	Trophy,
-	XCircle,
-} from "lucide-react";
+import { CheckCircle, Flame, RotateCcw, Sparkles, Trophy, XCircle } from "lucide-react";
 import type React from "react";
 import { useMemo } from "react";
 import { Card } from "@/components/Card";
@@ -42,16 +35,12 @@ const getEncouragementMessage = (
 	percentage: number,
 ): { message: string; icon: React.ReactNode } => {
 	const tier =
-		ENCOURAGEMENT_MESSAGES.find((t) => percentage >= t.threshold) ??
-		ENCOURAGEMENT_MESSAGES[3];
+		ENCOURAGEMENT_MESSAGES.find((t) => percentage >= t.threshold) ?? ENCOURAGEMENT_MESSAGES[3];
 	const message =
-		tier?.messages[Math.floor(Math.random() * (tier?.messages.length ?? 1))] ??
-		"Nice work!";
+		tier?.messages[Math.floor(Math.random() * (tier?.messages.length ?? 1))] ?? "Nice work!";
 
-	if (percentage === 100)
-		return { message, icon: <Trophy className="h-6 w-6 text-honey" /> };
-	if (percentage >= 80)
-		return { message, icon: <Flame className="h-6 w-6 text-terracotta" /> };
+	if (percentage === 100) return { message, icon: <Trophy className="h-6 w-6 text-honey" /> };
+	if (percentage >= 80) return { message, icon: <Flame className="h-6 w-6 text-terracotta" /> };
 	return { message, icon: <Sparkles className="h-6 w-6 text-ocean" /> };
 };
 
@@ -107,9 +96,7 @@ const DrillSummary: React.FC<DrillSummaryProps> = ({
 		>,
 	);
 
-	const sortedMissed = Object.values(missedByQuestion).sort(
-		(a, b) => b.count - a.count,
-	);
+	const sortedMissed = Object.values(missedByQuestion).sort((a, b) => b.count - a.count);
 
 	return (
 		<Card variant="bordered" padding="lg" className="bg-stone-50">
@@ -117,9 +104,7 @@ const DrillSummary: React.FC<DrillSummaryProps> = ({
 				{/* Encouragement header */}
 				<div className="mb-4 flex items-center justify-center gap-2">
 					{encouragementIcon}
-					<span className="text-lg font-semibold text-stone-800">
-						{encouragement}
-					</span>
+					<span className="text-lg font-semibold text-stone-800">{encouragement}</span>
 				</div>
 
 				<div className="mb-6 text-center">
@@ -150,23 +135,17 @@ const DrillSummary: React.FC<DrillSummaryProps> = ({
 									className="flex items-center justify-between rounded-lg border bg-white p-3 text-sm"
 								>
 									<div className="min-w-0 flex-1 space-y-0.5">
-										<p className="truncate text-xs text-stone-600">
-											{item.prompt}
-										</p>
+										<p className="truncate text-xs text-stone-600">{item.prompt}</p>
 										{item.userAnswer && (
 											<div className="flex items-center gap-2">
-												<span className="w-16 shrink-0 text-xs text-stone-400">
-													you typed
-												</span>
+												<span className="w-16 shrink-0 text-xs text-stone-400">you typed</span>
 												<MonoText className="text-xs text-incorrect line-through">
 													{item.userAnswer}
 												</MonoText>
 											</div>
 										)}
 										<div className="flex items-center gap-2">
-											<span className="w-16 shrink-0 text-xs text-stone-400">
-												correct
-											</span>
+											<span className="w-16 shrink-0 text-xs text-stone-400">correct</span>
 											<MonoText className="font-medium text-stone-900">
 												{item.correctGreek}
 											</MonoText>
@@ -203,11 +182,7 @@ const DrillSummary: React.FC<DrillSummaryProps> = ({
 
 				{userId && (
 					<div className="mb-6">
-						<NotificationAsk
-							userId={userId}
-							sessionCount={sessionCount}
-							streakDays={streakDays}
-						/>
+						<NotificationAsk userId={userId} sessionCount={sessionCount} streakDays={streakDays} />
 					</div>
 				)}
 
@@ -243,8 +218,7 @@ const DrillSummary: React.FC<DrillSummaryProps> = ({
 						Practice Again
 					</Button>
 					<p className="mt-4 text-xs text-stone-400">
-						Consistency beats intensity. Small daily practice builds real
-						fluency.
+						Consistency beats intensity. Small daily practice builds real fluency.
 					</p>
 				</div>
 			</div>

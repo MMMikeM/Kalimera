@@ -61,14 +61,7 @@ All column types import from `drizzle-orm/sqlite-core`.
 ### Table definition
 
 ```typescript
-import {
-	sqliteTable,
-	text,
-	integer,
-	real,
-	index,
-	uniqueIndex,
-} from "drizzle-orm/sqlite-core";
+import { sqliteTable, text, integer, real, index, uniqueIndex } from "drizzle-orm/sqlite-core";
 
 export const users = sqliteTable("users", {
 	id: integer().primaryKey({ autoIncrement: true }),
@@ -117,10 +110,7 @@ export const posts = sqliteTable(
 		title: text(),
 		authorId: integer("author_id").references(() => users.id),
 	},
-	(table) => [
-		uniqueIndex("slug_idx").on(table.slug),
-		index("title_idx").on(table.title),
-	],
+	(table) => [uniqueIndex("slug_idx").on(table.slug), index("title_idx").on(table.title)],
 );
 ```
 

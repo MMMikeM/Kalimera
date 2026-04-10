@@ -8,9 +8,7 @@ export type UserMilestone = Pick<
 	"milestone" | "achievedAt" | "streakAtAchievement"
 >;
 
-export const getUserMilestones = async (
-	userId: number,
-): Promise<UserMilestone[]> => {
+export const getUserMilestones = async (userId: number): Promise<UserMilestone[]> => {
 	return db.query.milestonesAchieved.findMany({
 		where: { userId },
 		columns: { milestone: true, achievedAt: true, streakAtAchievement: true },

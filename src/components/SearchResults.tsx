@@ -10,19 +10,13 @@ interface SearchResultsProps {
 	compact?: boolean;
 }
 
-export const SearchResults = ({
-	results,
-	searchTerm,
-	compact = false,
-}: SearchResultsProps) => {
+export const SearchResults = ({ results, searchTerm, compact = false }: SearchResultsProps) => {
 	if (searchTerm && results.length === 0) {
 		return (
 			<div className="flex flex-col items-center py-8 text-stone-500">
 				<SearchX size={24} className="mb-2 text-stone-300" />
 				<p className="text-sm">No results for "{searchTerm}"</p>
-				<p className="mt-1 text-xs text-stone-400">
-					Try a different spelling or search term
-				</p>
+				<p className="mt-1 text-xs text-stone-400">Try a different spelling or search term</p>
 			</div>
 		);
 	}
@@ -39,20 +33,12 @@ export const SearchResults = ({
 						key={result.id}
 						className="flex items-center gap-2 rounded px-1 py-2 transition-colors hover:bg-stone-50"
 					>
-						<MonoText
-							variant="greek"
-							size="sm"
-							className="max-w-[180px] truncate font-medium"
-						>
+						<MonoText variant="greek" size="sm" className="max-w-[180px] truncate font-medium">
 							{result.greek}
 						</MonoText>
 						<span className="text-stone-300">—</span>
-						<span className="flex-1 truncate text-sm text-stone-600">
-							{result.english}
-						</span>
-						<span className="shrink-0 text-xs text-stone-400">
-							{result.type}
-						</span>
+						<span className="flex-1 truncate text-sm text-stone-600">{result.english}</span>
+						<span className="shrink-0 text-xs text-stone-400">{result.type}</span>
 					</div>
 				))}
 			</div>
@@ -74,11 +60,7 @@ export const SearchResults = ({
 					<div key={result.id} className={cn("rounded-lg p-4", bgClass)}>
 						<div className="flex items-start justify-between gap-3">
 							<div className="min-w-0 flex-1">
-								<MonoText
-									variant="greek"
-									size="lg"
-									className="mb-1 block text-2xl font-medium"
-								>
+								<MonoText variant="greek" size="lg" className="mb-1 block text-2xl font-medium">
 									{result.greek}
 								</MonoText>
 								<p className="text-stone-600">{result.english}</p>

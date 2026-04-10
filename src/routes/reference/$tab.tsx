@@ -73,11 +73,7 @@ export default function TabRoute({ loaderData }: Route.ComponentProps) {
 
 	return (
 		<div className="space-y-4">
-			<NavTabs
-				tabs={REFERENCE_TABS}
-				activeTab={tab}
-				buildUrl={(tabId) => `/reference/${tabId}`}
-			/>
+			<NavTabs tabs={REFERENCE_TABS} activeTab={tab} buildUrl={(tabId) => `/reference/${tabId}`} />
 			{renderTab()}
 		</div>
 	);

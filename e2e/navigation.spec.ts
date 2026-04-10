@@ -19,9 +19,7 @@ test.describe("Navigation", () => {
 		await page.goto(BASE_URL);
 		await page.click("text=Practice");
 		await expect(page).toHaveURL(/\/practice\/speed/);
-		await expect(
-			page.getByRole("heading", { name: "Speed Drill" }),
-		).toBeVisible();
+		await expect(page.getByRole("heading", { name: "Speed Drill" })).toBeVisible();
 	});
 
 	test("Explore nav link works", async ({ page }) => {
@@ -35,9 +33,7 @@ test.describe("Navigation", () => {
 		await page.goto(BASE_URL);
 		await page.click("text=Reference");
 		await expect(page).toHaveURL(/\/reference\/cases-pronouns/);
-		await expect(
-			page.getByRole("heading", { name: "Quick Reference" }),
-		).toBeVisible();
+		await expect(page.getByRole("heading", { name: "Quick Reference" })).toBeVisible();
 	});
 
 	test("Explore subsection tabs work", async ({ page }) => {

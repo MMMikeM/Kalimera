@@ -237,9 +237,7 @@ function Button({ color, size, children }: ButtonProps) {
 
 ```typescript
 interface ButtonProps
-	extends
-		Omit<ButtonVariants, "color">,
-		Required<Pick<ButtonVariants, "color">> {
+	extends Omit<ButtonVariants, "color">, Required<Pick<ButtonVariants, "color">> {
 	children: React.ReactNode;
 }
 ```

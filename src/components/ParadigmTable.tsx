@@ -70,13 +70,7 @@ const COMPACT_PRONOUNS = {
 
 const FormCell: React.FC<{
 	form: VerbForm | string;
-	position:
-		| "topLeft"
-		| "topRight"
-		| "middleLeft"
-		| "middleRight"
-		| "bottomLeft"
-		| "bottomRight";
+	position: "topLeft" | "topRight" | "middleLeft" | "middleRight" | "bottomLeft" | "bottomRight";
 	formClassName?: string;
 	endingClassName?: string;
 	fadeStem?: boolean;
@@ -92,9 +86,7 @@ const FormCell: React.FC<{
 			<span className={formClassName}>{form}</span>
 		) : (
 			<>
-				<span className={fadeStem ? "text-stone-600" : "text-stone-700"}>
-					{form.stem}
-				</span>
+				<span className={fadeStem ? "text-stone-600" : "text-stone-700"}>{form.stem}</span>
 				<span className={endingClassName}>{form.ending}</span>
 			</>
 		)}
@@ -124,9 +116,7 @@ const CompactFormRow: React.FC<{
 				<span className={formClassName}>{form}</span>
 			) : (
 				<>
-					<span className={fadeStem ? "text-stone-600" : "text-stone-700"}>
-						{form.stem}
-					</span>
+					<span className={fadeStem ? "text-stone-600" : "text-stone-700"}>{form.stem}</span>
 					<span className={endingClassName}>{form.ending}</span>
 				</>
 			)}
@@ -218,21 +208,15 @@ export const ParadigmTable: React.FC<ParadigmTableProps> = ({
 				<span className="font-mono text-lg font-semibold text-stone-800 sm:text-xl">
 					{infinitive || (stem ? `${stem}-` : "")}
 				</span>
-				<span className="ml-2 text-sm text-stone-600 sm:text-base">
-					({meaning})
-				</span>
+				<span className="ml-2 text-sm text-stone-600 sm:text-base">({meaning})</span>
 			</div>
 			<table className={paradigmTableVariants()}>
 				{showHeaders && (
 					<thead>
 						<tr>
 							<th className="w-12 sm:w-14" />
-							<th className="pb-2 text-xs font-normal text-stone-500">
-								Singular
-							</th>
-							<th className="pb-2 text-xs font-normal text-stone-500">
-								Plural
-							</th>
+							<th className="pb-2 text-xs font-normal text-stone-500">Singular</th>
+							<th className="pb-2 text-xs font-normal text-stone-500">Plural</th>
 						</tr>
 					</thead>
 				)}

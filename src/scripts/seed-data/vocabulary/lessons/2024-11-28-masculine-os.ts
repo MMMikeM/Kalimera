@@ -58,8 +58,7 @@ export const LESSON_2024_11_28 = {
 				"ο γιατρός → του γιατρού → τον γιατρό",
 				"οι γιατροί → των γιατρών → τους γιατρούς",
 			],
-			explanation:
-				"Regular masculine nouns ending in -ος follow predictable case endings",
+			explanation: "Regular masculine nouns ending in -ος follow predictable case endings",
 		},
 		{
 			pattern: "Genitive singular -ου",

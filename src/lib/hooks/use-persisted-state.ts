@@ -30,9 +30,7 @@ export const usePersistedState = <T>(
 	}, [key, state]);
 
 	const setValue = useCallback((value: SetValue<T>) => {
-		setState((prev) =>
-			typeof value === "function" ? (value as (prev: T) => T)(prev) : value,
-		);
+		setState((prev) => (typeof value === "function" ? (value as (prev: T) => T)(prev) : value));
 	}, []);
 
 	return [state, setValue];

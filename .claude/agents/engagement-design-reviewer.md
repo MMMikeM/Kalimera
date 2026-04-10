@@ -54,44 +54,48 @@ You have deep expertise in behavioural psychology, habit formation, spaced repet
 
 ### Mobile Engagement Realities
 
-| Desktop Mindset | Mobile Reality |
-|----------------|----------------|
-| "Click to start" | Tap with thumb while holding phone |
-| Full-page navigation | Bottom sheets, minimal page changes |
-| Mouse hover states | Tap states, long-press for secondary |
-| 10+ minute sessions | 2-3 minute sessions between activities |
-| Dedicated study time | Fragmented attention, interruptions |
+| Desktop Mindset      | Mobile Reality                         |
+| -------------------- | -------------------------------------- |
+| "Click to start"     | Tap with thumb while holding phone     |
+| Full-page navigation | Bottom sheets, minimal page changes    |
+| Mouse hover states   | Tap states, long-press for secondary   |
+| 10+ minute sessions  | 2-3 minute sessions between activities |
+| Dedicated study time | Fragmented attention, interruptions    |
 
 ### Mobile-First Engagement Patterns
 
 **Notifications are your primary lever:**
+
 - Push notifications land on mobile lockscreens
 - One tap from notification → practicing (no intermediate screens)
 - Notification → app → practice should be < 3 seconds
 
 **Bottom of screen = action zone:**
+
 - CTAs ("Start Practice", "Continue") belong at the bottom
 - Progress/streaks can be at top (glanceable, not interactive)
 - Primary actions must be reachable with one thumb
 
 **Interruption-friendly design:**
+
 - Auto-save progress constantly
 - "Resume where you left off" on next open
 - Sessions completable in 2-3 minutes (before interruption comes)
 
 **Offline-first mindset:**
+
 - Core practice must work offline
 - Sync when connection returns
 - Never show errors for connectivity issues during practice
 
 ### Touch Target Rules for Engagement
 
-| Element | Requirement |
-|---------|------------|
-| Practice CTA | 48px+ height, full width on mobile |
-| Streak display | Tappable for details (44px+ touch target) |
-| Session cards | Large tap targets, no tiny buttons |
-| Notification actions | System-sized, accessible |
+| Element              | Requirement                               |
+| -------------------- | ----------------------------------------- |
+| Practice CTA         | 48px+ height, full width on mobile        |
+| Streak display       | Tappable for details (44px+ touch target) |
+| Session cards        | Large tap targets, no tiny buttons        |
+| Notification actions | System-sized, accessible                  |
 
 ### Mobile Session Flow
 
@@ -208,7 +212,7 @@ Streaks are proven in language learning. Duolingo built a $5B company on them.
 **What works:**
 
 | Tactic                     | Implementation                      | Why It Works                           |
-|----------------------------|-------------------------------------|----------------------------------------|
+| -------------------------- | ----------------------------------- | -------------------------------------- |
 | **Prominent display**      | Streak count visible on home screen | Constant reminder of investment        |
 | **Milestone celebrations** | 7, 30, 100, 365 days with fanfare   | Dopamine hits at key moments           |
 | **Streak freeze**          | One free pass per week/month        | Reduces anxiety, prevents rage-quits   |
@@ -218,7 +222,7 @@ Streaks are proven in language learning. Duolingo built a $5B company on them.
 **What backfires:**
 
 | Pattern                     | Why It Fails                                  |
-|-----------------------------|-----------------------------------------------|
+| --------------------------- | --------------------------------------------- |
 | **Hard reset, no recovery** | Losing 100 days = uninstall, not restart      |
 | **Invisible streaks**       | No streak display = no streak motivation      |
 | **Multiple streak types**   | Confusing, dilutes the core metric            |
@@ -272,7 +276,7 @@ Visible progress creates investment. Investment prevents churn.
 **High-engagement progress displays:**
 
 | Display                             | Why It Works                     |
-|-------------------------------------|----------------------------------|
+| ----------------------------------- | -------------------------------- |
 | **Words mastered count**            | Concrete, growing number         |
 | **Mastery percentage per category** | Shows depth of knowledge         |
 | **Review streak calendar**          | Visual habit reinforcement       |
@@ -291,7 +295,7 @@ Visible progress creates investment. Investment prevents churn.
 **Short sessions win.** Every time.
 
 | Session Length | Completion Rate | Retention |
-|----------------|-----------------|-----------|
+| -------------- | --------------- | --------- |
 | 2-3 minutes    | 85%+            | High      |
 | 5-10 minutes   | 60%             | Medium    |
 | 15+ minutes    | 30%             | Low       |
@@ -352,7 +356,7 @@ Gamification works but can feel childish. Use selectively:
 These boost short-term metrics but destroy long-term retention:
 
 | Pattern                              | Why It Kills Retention                            |
-|--------------------------------------|---------------------------------------------------|
+| ------------------------------------ | ------------------------------------------------- |
 | **Long mandatory sessions**          | Users skip entirely rather than commit 20 minutes |
 | **Guilt notifications**              | Creates negative app association                  |
 | **Punishing difficulty**             | Users feel stupid, stop trying                    |

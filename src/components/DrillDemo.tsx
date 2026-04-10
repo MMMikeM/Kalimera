@@ -50,9 +50,7 @@ export const DrillDemo = () => {
 	}, [phase, typedChars]);
 
 	const displayText =
-		phase === "transform" || phase === "success"
-			? GREEK
-			: GREEKLISH.slice(0, typedChars);
+		phase === "transform" || phase === "success" ? GREEK : GREEKLISH.slice(0, typedChars);
 
 	const showCursor = phase === "typing";
 	const showSuccess = phase === "success";
@@ -138,9 +136,7 @@ export const DrillDemo = () => {
 									<span className="font-mono">καλημέρα</span>
 								</span>
 							) : (
-								<span className="text-stone-400">
-									Type with English letters
-								</span>
+								<span className="text-stone-400">Type with English letters</span>
 							)}
 						</motion.p>
 					</AnimatePresence>

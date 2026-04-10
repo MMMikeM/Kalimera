@@ -48,17 +48,14 @@ const SpeedDrill: React.FC = () => {
 
 	const [drillMode, setDrillMode] = useState<DrillMode>("category");
 	const [focus, setFocus] = useState<FocusType>("all");
-	const [grammarExercise, setGrammarExercise] =
-		useState<GrammarExerciseType | null>(null);
+	const [grammarExercise, setGrammarExercise] = useState<GrammarExerciseType | null>(null);
 
 	const [sessionCount, setSessionCount] = useState(0);
 	const [lastStats, setLastStats] = useState<SessionStats | null>(null);
 	const [searchParams] = useSearchParams();
 	const initialDrillSize = searchParams.get("size") === "quick" ? 10 : 15;
 	const [drillSize, setDrillSize] = useState(initialDrillSize);
-	const [reDrillQuestions, setReDrillQuestions] = useState<
-		UnifiedQuestion[] | null
-	>(null);
+	const [reDrillQuestions, setReDrillQuestions] = useState<UnifiedQuestion[] | null>(null);
 	const isReDrillRef = useRef(false);
 
 	const questions = useMemo(() => {
@@ -75,9 +72,7 @@ const SpeedDrill: React.FC = () => {
 		if (!userId) return;
 
 		const category =
-			drillMode === "grammar" && grammarExercise
-				? `grammar_${grammarExercise}`
-				: "speed_drill";
+			drillMode === "grammar" && grammarExercise ? `grammar_${grammarExercise}` : "speed_drill";
 
 		fetcher.submit(
 			{
@@ -98,10 +93,7 @@ const SpeedDrill: React.FC = () => {
 			let weakAreaIdentifier: string | undefined;
 
 			if (attempt.questionId.startsWith("grammar-")) {
-				if (
-					attempt.questionId.includes("-art-") ||
-					attempt.questionId.includes("-fill-")
-				) {
+				if (attempt.questionId.includes("-art-") || attempt.questionId.includes("-fill-")) {
 					weakAreaType = "case";
 					weakAreaIdentifier = "articles";
 				} else if (attempt.questionId.includes("-case-")) {
@@ -114,10 +106,7 @@ const SpeedDrill: React.FC = () => {
 					weakAreaType = "case";
 					weakAreaIdentifier = "error_correction";
 				}
-			} else if (
-				attempt.questionId.includes("obj-") ||
-				attempt.questionId.includes("poss-")
-			) {
+			} else if (attempt.questionId.includes("obj-") || attempt.questionId.includes("poss-")) {
 				weakAreaType = "case";
 				weakAreaIdentifier = attempt.questionId.includes("obj-")
 					? "object_pronouns"
@@ -169,16 +158,13 @@ const SpeedDrill: React.FC = () => {
 		[userId, fetcher],
 	);
 
-	const handleDrillMistakes = useCallback(
-		(missedQuestions: UnifiedQuestion[]) => {
-			isReDrillRef.current = true;
-			setReDrillQuestions(missedQuestions);
-			setSessionCount((c) => c + 1);
-			setLastStats(null);
-			sessionIdRef.current = null;
-		},
-		[],
-	);
+	const handleDrillMistakes = useCallback((missedQuestions: UnifiedQuestion[]) => {
+		isReDrillRef.current = true;
+		setReDrillQuestions(missedQuestions);
+		setSessionCount((c) => c + 1);
+		setLastStats(null);
+		sessionIdRef.current = null;
+	}, []);
 
 	const handleNewSession = () => {
 		setReDrillQuestions(null);
@@ -188,18 +174,12 @@ const SpeedDrill: React.FC = () => {
 		sessionIdRef.current = null;
 	};
 
-	if (
-		fetcher.data?.success &&
-		fetcher.data?.session?.id &&
-		!sessionIdRef.current
-	) {
+	if (fetcher.data?.success && fetcher.data?.session?.id && !sessionIdRef.current) {
 		sessionIdRef.current = fetcher.data.session.id;
 	}
 
 	const focusConfig = focus !== "all" ? CATEGORY_CONFIG[focus] : null;
-	const grammarConfig = grammarExercise
-		? GRAMMAR_EXERCISE_CONFIG[grammarExercise]
-		: null;
+	const grammarConfig = grammarExercise ? GRAMMAR_EXERCISE_CONFIG[grammarExercise] : null;
 
 	const drillTitle = (() => {
 		if (drillMode === "grammar" && grammarConfig) {
@@ -208,8 +188,7 @@ const SpeedDrill: React.FC = () => {
 		return focus !== "all" ? `${focusConfig?.label} Drill` : "Speed Drill";
 	})();
 
-	const canStart =
-		drillMode === "category" || (drillMode === "grammar" && grammarExercise);
+	const canStart = drillMode === "category" || (drillMode === "grammar" && grammarExercise);
 
 	if (sessionCount === 0 && !lastStats) {
 		return (
@@ -270,9 +249,7 @@ const SpeedDrill: React.FC = () => {
 						{/* Grammar Exercise Selection */}
 						{drillMode === "grammar" && (
 							<div className="mb-6 text-left">
-								<span className="mb-3 block text-center text-sm text-stone-500">
-									Exercise Type
-								</span>
+								<span className="mb-3 block text-center text-sm text-stone-500">Exercise Type</span>
 								<div className="space-y-2">
 									{GRAMMAR_EXERCISES.map(([type, config]) => (
 										<button
@@ -286,9 +263,7 @@ const SpeedDrill: React.FC = () => {
 											}`}
 										>
 											<div className="mb-2 flex items-center justify-between">
-												<span className="font-semibold text-stone-800">
-													{config.label}
-												</span>
+												<span className="font-semibold text-stone-800">{config.label}</span>
 												<Badge variant="outline" className="gap-1">
 													<Clock size={12} />
 													{formatTimeLimit(config.timeLimit)}
@@ -297,9 +272,7 @@ const SpeedDrill: React.FC = () => {
 											<p className="mb-1 font-mono text-base text-terracotta-700">
 												{config.greekExample}
 											</p>
-											<p className="text-sm text-stone-500">
-												{config.description}
-											</p>
+											<p className="text-sm text-stone-500">{config.description}</p>
 										</button>
 									))}
 								</div>
@@ -307,9 +280,7 @@ const SpeedDrill: React.FC = () => {
 						)}
 
 						<div className="mb-6">
-							<span className="mb-2 block text-sm text-stone-500">
-								Questions
-							</span>
+							<span className="mb-2 block text-sm text-stone-500">Questions</span>
 							<div className="flex justify-center gap-2">
 								{[10, 15, 20, 30].map((size) => (
 									<Button
@@ -339,16 +310,12 @@ const SpeedDrill: React.FC = () => {
 
 						<div className="mt-6 space-y-1 text-xs text-stone-400">
 							<p>
-								<kbd className="rounded bg-stone-100 px-1.5 py-0.5 text-stone-600">
-									Space
-								</kbd>{" "}
-								to start each question
+								<kbd className="rounded bg-stone-100 px-1.5 py-0.5 text-stone-600">Space</kbd> to
+								start each question
 							</p>
 							<p>
-								<kbd className="rounded bg-stone-100 px-1.5 py-0.5 text-stone-600">
-									Enter
-								</kbd>{" "}
-								to submit answer
+								<kbd className="rounded bg-stone-100 px-1.5 py-0.5 text-stone-600">Enter</kbd> to
+								submit answer
 							</p>
 							<p>Auto-advance on correct answers</p>
 						</div>

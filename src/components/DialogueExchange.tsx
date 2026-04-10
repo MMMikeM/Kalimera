@@ -39,12 +39,7 @@ interface RevealableTextProps {
 	className?: string;
 }
 
-const RevealableText: React.FC<RevealableTextProps> = ({
-	text,
-	isHidden,
-	onReveal,
-	className,
-}) => {
+const RevealableText: React.FC<RevealableTextProps> = ({ text, isHidden, onReveal, className }) => {
 	if (!isHidden) {
 		return <span className={className}>{text}</span>;
 	}
@@ -98,10 +93,7 @@ export const DialogueExchange: React.FC<DialogueExchangeProps> = ({
 					initial={{ opacity: 0, x: line.speaker === "you" ? 20 : -20 }}
 					animate={{ opacity: 1, x: 0 }}
 					transition={{ delay: idx * 0.1, duration: 0.3, ease: "easeOut" }}
-					className={cn(
-						"flex",
-						line.speaker === "you" ? "justify-end" : "justify-start",
-					)}
+					className={cn("flex", line.speaker === "you" ? "justify-end" : "justify-start")}
 				>
 					<div
 						className={cn(
@@ -131,9 +123,7 @@ export const DialogueExchange: React.FC<DialogueExchangeProps> = ({
 							/>
 						</div>
 						{line.note && !shouldHideEnglish(line, idx) && (
-							<div className="mt-2 text-xs text-stone-500 italic">
-								{line.note}
-							</div>
+							<div className="mt-2 text-xs text-stone-500 italic">{line.note}</div>
 						)}
 					</div>
 				</motion.div>
@@ -154,12 +144,11 @@ export interface DialogueScenarioProps {
 	className?: string;
 }
 
-const formalityLabels: Record<Formality, { text: string; className: string }> =
-	{
-		formal: { text: "Formal", className: "bg-stone-100 text-stone-600" },
-		informal: { text: "Informal", className: "bg-olive-100 text-olive-700" },
-		mixed: { text: "Mixed", className: "bg-ocean-100 text-ocean-700" },
-	};
+const formalityLabels: Record<Formality, { text: string; className: string }> = {
+	formal: { text: "Formal", className: "bg-stone-100 text-stone-600" },
+	informal: { text: "Informal", className: "bg-olive-100 text-olive-700" },
+	mixed: { text: "Mixed", className: "bg-ocean-100 text-ocean-700" },
+};
 
 export const DialogueScenario: React.FC<DialogueScenarioProps> = ({
 	title,
@@ -185,9 +174,7 @@ export const DialogueScenario: React.FC<DialogueScenarioProps> = ({
 					</span>
 				)}
 			</div>
-			{description && (
-				<p className="mt-1 text-sm text-stone-600">{description}</p>
-			)}
+			{description && <p className="mt-1 text-sm text-stone-600">{description}</p>}
 		</div>
 		<DialogueExchange lines={dialogue} colorScheme={colorScheme} mode={mode} />
 	</div>

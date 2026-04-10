@@ -25,8 +25,7 @@ const isDismissed = (): boolean => {
 	const dismissed = localStorage.getItem(STORAGE_KEY);
 	if (!dismissed) return false;
 	const dismissedAt = new Date(dismissed);
-	const daysSince =
-		(Date.now() - dismissedAt.getTime()) / (1000 * 60 * 60 * 24);
+	const daysSince = (Date.now() - dismissedAt.getTime()) / (1000 * 60 * 60 * 24);
 	return daysSince < DISMISS_DAYS;
 };
 

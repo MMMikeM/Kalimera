@@ -1,11 +1,7 @@
 // Aggregate all vocabulary exports
 
 export { ADJECTIVES, COLORS } from "./adjectives";
-export {
-	FREQUENCY_ADVERBS,
-	INDEFINITE_ADVERBS,
-	POSITION_ADVERBS,
-} from "./adverbs";
+export { FREQUENCY_ADVERBS, INDEFINITE_ADVERBS, POSITION_ADVERBS } from "./adverbs";
 export {
 	ARRIVING_PHRASES,
 	COMMON_RESPONSES,

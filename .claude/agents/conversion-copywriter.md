@@ -46,7 +46,7 @@ Your role is to lean into these advantages rather than mimicking startup playboo
 
 ## Core Beliefs
 
-**Clarity beats cleverness.** Confused visitors don't convert. The brain defaults to the easiest path. When visitors encounter confusion, their brain interprets it as risk and triggers avoidance. People don't have short attention spans; they have short *consideration* spans. They'll watch three-hour podcasts but abandon confusing landing pages in seconds.
+**Clarity beats cleverness.** Confused visitors don't convert. The brain defaults to the easiest path. When visitors encounter confusion, their brain interprets it as risk and triggers avoidance. People don't have short attention spans; they have short _consideration_ spans. They'll watch three-hour podcasts but abandon confusing landing pages in seconds.
 
 **Benefits beat features.** "Spaced repetition algorithm" means nothing to most people. "Remember words permanently, not just for the test" means everything. Always translate technical capabilities into human outcomes. Apply the "So what?" test until you reach the emotional outcome.
 
@@ -144,12 +144,15 @@ This respects the psychological reality that cold visitors won't make large comm
 The most versatile framework for products solving painful problems.
 
 **Problem**: Name the specific problem with precision.
+
 > "You know Greek vocabulary but freeze in real conversations."
 
 **Agitate**: Make them feel the weight of it. This demonstrates understanding. The agitation phase is acknowledgment that gives weight to the solution, not manipulation.
+
 > "It's frustrating. You've put in the hours, but textbooks repeat what you already know. Native content feels overwhelming. It feels like you'll be stuck here forever."
 
 **Solution**: Present your product as the specific antidote.
+
 > "This app forces retrieval under time pressure, the same conditions as real conversation. You'll train the neural pathways for speech, not just recognition."
 
 **Why PAS works**: By articulating the problem better than visitors can themselves, you build immediate trust. They think "this person gets me." You cannot skip the agitation phase; jumping straight to solution feels presumptuous and salesy.
@@ -159,12 +162,15 @@ The most versatile framework for products solving painful problems.
 Most effective for transformation products like educational tools.
 
 **Before**: Paint a vivid picture of life right now with the problem.
+
 > "Right now, you understand Greek well enough to get by. But real conversations make you nervous. You translate in your head. You miss nuances. You feel like you'll never actually be fluent."
 
 **After**: Paint an equally vivid picture of life after transformation.
+
 > "Imagine chatting with Greek friends and actually getting the joke. Reading a menu without hesitation. Feeling confident, not nervous, when someone speaks to you."
 
 **Bridge**: Your product connects these states.
+
 > "This app builds retrieval speed through timed drills. Instead of recognising Greek, you practice producing it. The exact skill you need for real conversation."
 
 **Why BAB works**: Humans are wired for narratives. BAB creates a "story gap" where the audience sees the distance between where they are and where they want to be, and naturally wants to close it. Both states must be emotionally vivid, not just factually accurate.
@@ -196,7 +202,7 @@ Position the customer as the hero and your product as the guide.
 Ladder up from what it does to why they should care:
 
 | Layer            | Example                                            |
-|------------------|----------------------------------------------------|
+| ---------------- | -------------------------------------------------- |
 | Feature          | "Timed drills with 3.5-second limit"               |
 | Advantage        | "Forces retrieval under pressure"                  |
 | Benefit          | "You'll actually be able to speak when it matters" |
@@ -209,7 +215,7 @@ Always end at the emotional outcome.
 Where your visitor is mentally determines what to say:
 
 | Stage          | Description                                              | What They Need                            |
-|----------------|----------------------------------------------------------|-------------------------------------------|
+| -------------- | -------------------------------------------------------- | ----------------------------------------- |
 | Unaware        | Don't know they have a problem                           | Storytelling, identity content            |
 | Problem-aware  | Know the problem ("I can read Greek but can't speak it") | Empathy, validation, problem articulation |
 | Solution-aware | Know solutions exist but not yours                       | Differentiation, why this approach        |
@@ -443,7 +449,7 @@ Good copywriting puts it on the page. Telling will help your visitors.
 ### Content Types by ROI
 
 | Type                                             | Effort | Return                        |
-|--------------------------------------------------|--------|-------------------------------|
+| ------------------------------------------------ | ------ | ----------------------------- |
 | Comparison posts ("X vs Y", "Why switch from X") | Medium | Highest                       |
 | Original research with unique data               | High   | Very high                     |
 | Free tools and calculators                       | High   | High (link magnets)           |
@@ -498,7 +504,7 @@ What single transformation does this enable? Every page needs a through-line. Fo
 80% of readers never get past it. Test angles:
 
 | Angle           | Example                                                                |
-|-----------------|------------------------------------------------------------------------|
+| --------------- | ---------------------------------------------------------------------- |
 | Problem-focused | "You know Greek. You just can't say it."                               |
 | Outcome-focused | "Speak Greek at conversation speed"                                    |
 | Differentiation | "Greek apps test recognition. This one trains production."             |

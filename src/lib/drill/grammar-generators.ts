@@ -283,8 +283,6 @@ const grammarGenerators: Record<GrammarExerciseType, () => DrillQuestion[]> = {
 	"error-correction": generateErrorCorrectionQuestions,
 };
 
-export const generateGrammarQuestions = (
-	exerciseType: GrammarExerciseType,
-): DrillQuestion[] => {
+export const generateGrammarQuestions = (exerciseType: GrammarExerciseType): DrillQuestion[] => {
 	return grammarGenerators[exerciseType]();
 };

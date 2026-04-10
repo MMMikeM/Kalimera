@@ -1,10 +1,4 @@
-import type {
-	AdjectiveSeed,
-	AdverbSeed,
-	NounSeed,
-	Phrase,
-	VerbSeed,
-} from "../../../../types/seed";
+import type { AdjectiveSeed, AdverbSeed, NounSeed, Phrase, VerbSeed } from "../../../../types/seed";
 
 export const LESSON_2024_12_30 = {
 	meta: {
@@ -162,11 +156,7 @@ export const LESSON_2024_12_30 = {
 	grammarNotes: [
 		{
 			pattern: "στην vs στη before vowels",
-			examples: [
-				"στην Πάφο (before Π)",
-				"στην Αθήνα (before Α)",
-				"στη Λεμεσό (before Λ)",
-			],
+			examples: ["στην Πάφο (before Π)", "στην Αθήνα (before Α)", "στη Λεμεσό (before Λ)"],
 			explanation:
 				"Use στην before words starting with vowels or certain consonants. The -ν helps avoid vowel hiatus.",
 		},

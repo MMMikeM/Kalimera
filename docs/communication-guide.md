@@ -7,7 +7,7 @@ How to surface features and why they work.
 ## Quick Reference: What's Hidden
 
 | Feature           | On Landing | In-App            | Gap                 |
-|-------------------|------------|-------------------|---------------------|
+| ----------------- | ---------- | ----------------- | ------------------- |
 | Timed drills      | Yes        | Yes               | None                |
 | SRS               | Yes        | Partial           | Explain "why"       |
 | Streaks           | Yes        | Yes               | Missing freeze info |
@@ -27,11 +27,13 @@ How to surface features and why they work.
 **Where:** `src/lib/greek-transliteration.ts`
 
 **Why it works:**
+
 - Chikamatsu (1996): Romanisation serves as bridge during early learning
 - Tests phonological knowledge (what speaking requires)
 - Input is Greeklish, output always shows Greek script
 
 **Marketing:**
+
 > "Type with your normal keyboard. We understand Greek sounds."
 
 ### 2. Push Notifications
@@ -41,10 +43,12 @@ How to surface features and why they work.
 **Where:** `src/lib/push-notifications.ts`, `wrangler.toml` cron
 
 **Why it works:**
+
 - Fogg Behavior Model: Trigger + Ability + Motivation = Behavior
 - Loss aversion: "Don't lose your X-day streak"
 
 **Marketing:**
+
 > "We'll remind you before your streak breaks."
 
 ### 3. Streak Freezes
@@ -54,10 +58,12 @@ How to surface features and why they work.
 **Where:** `src/components/FreezeIndicator.tsx`, users table
 
 **Why it works:**
+
 - Reduces anxiety without removing motivation
 - Earning (not buying) maintains intrinsic motivation
 
 **Marketing:**
+
 > "Miss a day without losing everything."
 
 ### 4. Timed Production Drills
@@ -65,11 +71,13 @@ How to surface features and why they work.
 **What:** 3.5-5s per question. Type Greek, no multiple choice.
 
 **Why it works:**
+
 - DeKeyser (2007): Practice under pressure builds automaticity
 - Laufer & Goldstein (2004): Production > recognition
 - Roediger & Karpicke (2006): Retrieval > re-study
 
 **Marketing (already on landing):**
+
 > "Recognition isn't fluency. Retrieval is."
 
 ### 5. Spaced Repetition
@@ -77,10 +85,12 @@ How to surface features and why they work.
 **What:** SM-2 algorithm. Items you get right shown less frequently.
 
 **Why it works:**
+
 - Ebbinghaus forgetting curve
 - Review at optimal intervals maximises retention per time
 
 **Marketing:**
+
 > "Review at the right time, not all the time."
 
 ---
@@ -90,7 +100,7 @@ How to surface features and why they work.
 ### Greeklish Input
 
 | Context               | Copy                                                                     |
-|-----------------------|--------------------------------------------------------------------------|
+| --------------------- | ------------------------------------------------------------------------ |
 | Landing feature card  | "3.5 seconds. Your normal keyboard. Pure retrieval."                     |
 | Try drill intro       | "Type Greek with your normal keyboard. We understand phonetic spelling." |
 | First question helper | "Tip: Type 'thelo' or 'θέλω' — both work"                                |
@@ -98,7 +108,7 @@ How to surface features and why they work.
 ### Streak Freezes
 
 | Context                 | Copy                                                  |
-|-------------------------|-------------------------------------------------------|
+| ----------------------- | ----------------------------------------------------- |
 | Dashboard (streak 1-6)  | "X days to earn a streak freeze"                      |
 | Dashboard (available)   | "X freeze(s) ready — miss a day, keep your streak"    |
 | Dashboard (just used)   | "Streak protected! Freeze saved your streak."         |
@@ -107,7 +117,7 @@ How to surface features and why they work.
 ### Push Notifications
 
 | Context             | Copy                                              |
-|---------------------|---------------------------------------------------|
+| ------------------- | ------------------------------------------------- |
 | Inline ask headline | "Stay on track"                                   |
 | Inline ask body     | "Get a reminder at 8pm if you haven't practiced." |
 | CTA                 | "Enable Reminders" / "Not now"                    |

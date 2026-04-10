@@ -3,10 +3,7 @@ import { useCallback, useMemo } from "react";
 import { useFetcher } from "react-router";
 import type { VocabItemWithSkill } from "../data.server";
 import { useCurrentUserId } from "../hooks";
-import UnifiedDrill, {
-	type UnifiedAttemptResult,
-	type UnifiedQuestion,
-} from "./unified-drill";
+import UnifiedDrill, { type UnifiedAttemptResult, type UnifiedQuestion } from "./unified-drill";
 
 export type SrsDrillVariant = "vocabulary" | "review";
 
@@ -62,9 +59,7 @@ const SrsDrill: React.FC<SrsDrillProps> = ({ variant, items, streakDays }) => {
 		(result: UnifiedAttemptResult) => {
 			if (!userId) return;
 
-			const match = result.questionId.match(
-				new RegExp(`${config.idPrefix}-(\\d+)`),
-			);
+			const match = result.questionId.match(new RegExp(`${config.idPrefix}-(\\d+)`));
 			const vocabularyId = match?.[1] ? parseInt(match[1], 10) : undefined;
 
 			fetcher.submit(
@@ -89,9 +84,7 @@ const SrsDrill: React.FC<SrsDrillProps> = ({ variant, items, streakDays }) => {
 		return (
 			<div className="rounded-xl border border-olive-300 bg-olive-100 py-12 text-center">
 				<div className="mb-4 text-5xl">?</div>
-				<h3 className="mb-2 text-xl font-semibold text-olive-text">
-					{config.emptyTitle}
-				</h3>
+				<h3 className="mb-2 text-xl font-semibold text-olive-text">{config.emptyTitle}</h3>
 				<p className="text-olive-text">{config.emptyMessage}</p>
 				<p className="mt-2 text-sm text-stone-600">{config.emptyHint}</p>
 			</div>

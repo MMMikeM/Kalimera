@@ -5,8 +5,7 @@ export const buttonVariants = tv({
 	base: "inline-flex transform items-center justify-center gap-2 rounded-xl font-medium shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus:ring-2 focus:ring-terracotta-400 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50",
 	variants: {
 		variant: {
-			primary:
-				"bg-terracotta text-white shadow-terracotta-200 hover:bg-terracotta-600",
+			primary: "bg-terracotta text-white shadow-terracotta-200 hover:bg-terracotta-600",
 			secondary:
 				"border border-stone-200 bg-white/80 text-stone-700 shadow-stone-100 backdrop-blur-sm hover:border-stone-300 hover:bg-white",
 			outline:
@@ -59,10 +58,7 @@ export const Button: React.FC<ButtonProps> = ({
 	...props
 }) => {
 	return (
-		<button
-			className={buttonVariants({ variant, size, active, className })}
-			{...props}
-		>
+		<button className={buttonVariants({ variant, size, active, className })} {...props}>
 			{children}
 		</button>
 	);
