@@ -7,14 +7,10 @@ import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
+	DropdownMenuPositioner,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-	Popover,
-	PopoverAnchor,
-	PopoverContent,
-} from "@/components/ui/popover";
 import { useVocabularySearch } from "@/lib/use-vocabulary-search";
 
 const NAV_ITEMS_AUTH = [
@@ -71,46 +67,39 @@ export const Header = ({
 
 				{/* Desktop search - Gmail style centered */}
 				<div className="hidden md:block flex-1 max-w-md mx-4">
-					<Popover open={isSearchOpen && searchTerm.length > 0}>
-						<PopoverAnchor asChild>
-							<div className="relative">
-								<Search
-									className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400"
-									size={18}
-								/>
-								<input
-									ref={inputRef}
-									type="text"
-									placeholder="Search Greek, English, or tags..."
-									value={searchTerm}
-									onChange={(e) => setSearchTerm(e.target.value)}
-									onFocus={handleSearchFocus}
-									onBlur={handleSearchBlur}
-									className="w-full pl-10 pr-4 py-2 text-sm bg-stone-100 border border-transparent rounded-full focus:outline-none focus:bg-white focus:border-stone-300 focus:ring-2 focus:ring-terracotta-300 transition-all placeholder:text-stone-500"
-								/>
+					<div className="relative">
+						<Search
+							className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400"
+							size={18}
+						/>
+						<input
+							ref={inputRef}
+							type="text"
+							placeholder="Search Greek, English, or tags..."
+							value={searchTerm}
+							onChange={(e) => setSearchTerm(e.target.value)}
+							onFocus={handleSearchFocus}
+							onBlur={handleSearchBlur}
+							className="w-full pl-10 pr-4 py-2 text-sm bg-stone-100 border border-transparent rounded-full focus:outline-none focus:bg-white focus:border-stone-300 focus:ring-2 focus:ring-terracotta-300 transition-all placeholder:text-stone-500"
+						/>
+						{isSearchOpen && searchTerm.length > 0 && (
+							<div className="absolute top-full left-0 right-0 mt-2 z-50 bg-popover text-popover-foreground rounded-md border p-0 max-h-[60vh] overflow-hidden shadow-md">
+								<div className="p-3 overflow-y-auto max-h-[60vh]">
+									{isLoading ? (
+										<div className="text-center py-4 text-stone-400 text-sm">
+											Loading...
+										</div>
+									) : (
+										<SearchResults
+											results={results}
+											searchTerm={searchTerm}
+											compact
+										/>
+									)}
+								</div>
 							</div>
-						</PopoverAnchor>
-						<PopoverContent
-							align="start"
-							sideOffset={8}
-							className="w-[var(--radix-popover-trigger-width)] p-0 max-h-[60vh] overflow-hidden"
-							onOpenAutoFocus={(e) => e.preventDefault()}
-						>
-							<div className="p-3 overflow-y-auto max-h-[60vh]">
-								{isLoading ? (
-									<div className="text-center py-4 text-stone-400 text-sm">
-										Loading...
-									</div>
-								) : (
-									<SearchResults
-										results={results}
-										searchTerm={searchTerm}
-										compact
-									/>
-								)}
-							</div>
-						</PopoverContent>
-					</Popover>
+						)}
+					</div>
 				</div>
 
 				{/* Desktop navigation */}
@@ -141,34 +130,40 @@ export const Header = ({
 								Account
 								<ChevronDown size={16} strokeWidth={1.5} />
 							</DropdownMenuTrigger>
-							<DropdownMenuContent align="end" className="w-48">
-								<DropdownMenuItem asChild>
-									<Link
-										to="/progress"
-										className="flex items-center gap-2 cursor-pointer"
+							<DropdownMenuPositioner align="end">
+								<DropdownMenuContent className="w-48">
+									<DropdownMenuItem
+										render={
+											<Link
+												to="/progress"
+												className="flex items-center gap-2 cursor-pointer"
+											/>
+										}
 									>
 										<BarChart3 size={16} strokeWidth={1.5} />
 										Progress
-									</Link>
-								</DropdownMenuItem>
-								<DropdownMenuItem asChild>
-									<Link
-										to="/support"
-										className="flex items-center gap-2 cursor-pointer"
+									</DropdownMenuItem>
+									<DropdownMenuItem
+										render={
+											<Link
+												to="/support"
+												className="flex items-center gap-2 cursor-pointer"
+											/>
+										}
 									>
 										<Info size={16} strokeWidth={1.5} />
 										About
-									</Link>
-								</DropdownMenuItem>
-								<DropdownMenuSeparator />
-								<DropdownMenuItem
-									onClick={onLogout}
-									className="flex items-center gap-2 cursor-pointer"
-								>
-									<LogOut size={16} strokeWidth={1.5} />
-									Sign Out
-								</DropdownMenuItem>
-							</DropdownMenuContent>
+									</DropdownMenuItem>
+									<DropdownMenuSeparator />
+									<DropdownMenuItem
+										onClick={onLogout}
+										className="flex items-center gap-2 cursor-pointer"
+									>
+										<LogOut size={16} strokeWidth={1.5} />
+										Sign Out
+									</DropdownMenuItem>
+								</DropdownMenuContent>
+							</DropdownMenuPositioner>
 						</DropdownMenu>
 					) : (
 						<>
