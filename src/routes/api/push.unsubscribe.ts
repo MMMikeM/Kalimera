@@ -1,24 +1,18 @@
-import { eq } from "drizzle-orm";
-import { db } from "@/db.server";
-import { pushSubscriptions } from "@/db.server/schema";
+import { deletePushSubscription } from "@/db.server/queries/push-notifications";
 import type { Route } from "./+types/push.unsubscribe";
-
-interface UnsubscribeBody {
-	endpoint: string;
-}
 
 /**
  * POST /api/push/unsubscribe
  * Remove a push subscription
  */
-export const action = async ({ request, context }: Route.ActionArgs) => {
+export const action = async ({ request }: Route.ActionArgs) => {
 	if (request.method !== "POST") {
 		return Response.json({ error: "Method not allowed" }, { status: 405 });
 	}
 
 	try {
-		const body = (await request.json()) as UnsubscribeBody;
-		const { endpoint } = body;
+		const body = (await request.json()) as Record<string, unknown>;
+		const endpoint = typeof body?.endpoint === "string" ? body.endpoint : null;
 
 		if (!endpoint) {
 			return Response.json(
@@ -27,11 +21,7 @@ export const action = async ({ request, context }: Route.ActionArgs) => {
 			);
 		}
 
-		const database = context?.db ?? db;
-
-		await database
-			.delete(pushSubscriptions)
-			.where(eq(pushSubscriptions.endpoint, endpoint));
+		await deletePushSubscription(endpoint);
 
 		return Response.json({ success: true });
 	} catch (error) {

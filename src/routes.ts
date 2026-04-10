@@ -71,6 +71,8 @@ export default [
 		route("push/subscribe", "routes/api/push.subscribe.ts"),
 		route("push/unsubscribe", "routes/api/push.unsubscribe.ts"),
 		route("push/vapid-key", "routes/api/push.vapid-key.ts"),
+		route("push/snooze", "routes/api/push.snooze.ts"),
+		route("push/log-tap", "routes/api/push.log-tap.ts"),
 
 		// Milestones
 		route("milestones", "routes/api/milestones.ts"),
