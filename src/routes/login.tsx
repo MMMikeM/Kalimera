@@ -64,8 +64,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
 	// Handle password setup for existing users
 	if (intent === "setup-password") {
 		const result = await parseFormData(formData, passwordSetupSchema);
-		if (result.error)
-			return validationError(result.error, result.submittedData);
+		if (result.error) return validationError(result.error, result.submittedData);
 
 		const { newPassword, userId, username } = result.data;
 		const hash = await hashPassword(newPassword);
@@ -141,15 +140,12 @@ export default function LoginRoute({ actionData }: Route.ComponentProps) {
 	});
 
 	// Skip validation error responses - RVF handles those automatically
-	const businessData =
-		actionData && !isValidationErrorResponse(actionData) ? actionData : null;
+	const businessData = actionData && !isValidationErrorResponse(actionData) ? actionData : null;
 
 	const error =
-		(businessData && "error" in businessData ? businessData.error : null) ||
-		passkey.error;
+		(businessData && "error" in businessData ? businessData.error : null) || passkey.error;
 
-	const needsPasswordSetup =
-		businessData && "needsPasswordSetup" in businessData;
+	const needsPasswordSetup = businessData && "needsPasswordSetup" in businessData;
 
 	// Update password setup form defaults when we get needsPasswordSetup response
 	useEffect(() => {
@@ -168,9 +164,7 @@ export default function LoginRoute({ actionData }: Route.ComponentProps) {
 		return (
 			<div className="flex min-h-[60vh] flex-col items-center justify-center space-y-8 px-4">
 				<div className="space-y-2 text-center">
-					<h1 className="font-serif text-3xl text-terracotta">
-						Set Up Your Password
-					</h1>
+					<h1 className="font-serif text-3xl text-terracotta">Set Up Your Password</h1>
 					<p className="text-stone-600">
 						Welcome back
 						{"displayName" in businessData && businessData.displayName
@@ -209,16 +203,9 @@ export default function LoginRoute({ actionData }: Route.ComponentProps) {
 							/>
 						</div>
 
-						{error && (
-							<p className="text-center text-sm text-red-600">{error}</p>
-						)}
+						{error && <p className="text-center text-sm text-red-600">{error}</p>}
 
-						<Button
-							type="submit"
-							variant="primary"
-							className="w-full"
-							disabled={isSubmitting}
-						>
+						<Button type="submit" variant="primary" className="w-full" disabled={isSubmitting}>
 							{isSubmitting ? (
 								<>
 									<Loader2 size={16} className="animate-spin" />
@@ -270,8 +257,7 @@ export default function LoginRoute({ actionData }: Route.ComponentProps) {
 							/>
 							<div className="mt-3 rounded-lg border border-ocean-300 bg-ocean-100 p-3">
 								<p className="text-sm font-medium text-ocean-800">
-									Existing user? Enter your code without a password to set one
-									up.
+									Existing user? Enter your code without a password to set one up.
 								</p>
 							</div>
 						</div>
@@ -332,10 +318,7 @@ export default function LoginRoute({ actionData }: Route.ComponentProps) {
 
 				<div className="mt-6 text-center text-sm text-stone-600">
 					Don't have an account?{" "}
-					<Link
-						to="/register"
-						className="font-medium text-terracotta hover:text-terracotta-dark"
-					>
+					<Link to="/register" className="font-medium text-terracotta hover:text-terracotta-dark">
 						Create one
 					</Link>
 				</div>

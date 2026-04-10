@@ -10,15 +10,7 @@ interface Props {
 
 const TIME_ORDER = ["morning", "midday", "afternoon", "evening", "night"];
 
-const DAY_ORDER = [
-	"monday",
-	"tuesday",
-	"wednesday",
-	"thursday",
-	"friday",
-	"saturday",
-	"sunday",
-];
+const DAY_ORDER = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
 
 const MONTH_ORDER = [
 	"january",
@@ -65,11 +57,7 @@ export function TimeSubtab({ data }: Props) {
 			</Link>
 
 			{/* Times of Day */}
-			<ContentSection
-				title="Times of Day"
-				subtitle="Οι ώρες της ημέρας"
-				colorScheme="honey"
-			>
+			<ContentSection title="Times of Day" subtitle="Οι ώρες της ημέρας" colorScheme="honey">
 				<div className="divide-y divide-stone-200/60">
 					{sortedTimes.map((time) => (
 						<div
@@ -80,34 +68,26 @@ export function TimeSubtab({ data }: Props) {
 							<div>
 								<span className="text-sm text-stone-500">{time.english}</span>
 								{time.timeRange && (
-									<span className="ml-1.5 text-xs text-stone-400">
-										({time.timeRange})
-									</span>
+									<span className="ml-1.5 text-xs text-stone-400">({time.timeRange})</span>
 								)}
 							</div>
 						</div>
 					))}
 				</div>
 				<div className="mx-3 mt-3 rounded-lg border border-honey-200 bg-honey-100 p-2.5">
-					<p className="mb-2 text-sm font-medium text-honey-text">
-						Pattern: το + time of day
-					</p>
+					<p className="mb-2 text-sm font-medium text-honey-text">Pattern: το + time of day</p>
 					<div className="space-y-2 text-sm">
 						<div>
 							<MonoText variant="greek">
 								στις δύο <span className="font-semibold">το μεσημέρι</span>
 							</MonoText>
-							<div className="text-xs text-stone-500">
-								at two in the afternoon
-							</div>
+							<div className="text-xs text-stone-500">at two in the afternoon</div>
 						</div>
 						<div>
 							<MonoText variant="greek">
 								στις οκτώ <span className="font-semibold">το βράδυ</span>
 							</MonoText>
-							<div className="text-xs text-stone-500">
-								at eight in the evening
-							</div>
+							<div className="text-xs text-stone-500">at eight in the evening</div>
 						</div>
 						<p className="border-t border-honey-200/50 pt-1.5 text-xs text-stone-500">
 							<MonoText variant="greek" className="text-stone-700">
@@ -138,23 +118,17 @@ export function TimeSubtab({ data }: Props) {
 						))}
 					</div>
 					<div className="mx-3 mt-3 rounded-lg border border-ocean-200 bg-ocean-100 p-2.5">
-						<p className="mb-2 text-sm font-medium text-ocean-text">
-							Days use feminine accusative
-						</p>
+						<p className="mb-2 text-sm font-medium text-ocean-text">Days use feminine accusative</p>
 						<div className="space-y-2 text-sm">
 							<div>
 								<MonoText variant="greek">
 									<span className="font-semibold">την</span> Τρίτη
 								</MonoText>
-								<div className="text-xs text-stone-500">
-									on Tuesday (specific)
-								</div>
+								<div className="text-xs text-stone-500">on Tuesday (specific)</div>
 							</div>
 							<div>
 								<MonoText variant="greek">κάθε Τρίτη</MonoText>
-								<div className="text-xs text-stone-500">
-									every Tuesday (no article)
-								</div>
+								<div className="text-xs text-stone-500">every Tuesday (no article)</div>
 							</div>
 							<div>
 								<MonoText variant="greek">

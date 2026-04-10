@@ -13,35 +13,28 @@ export default function SupportPage() {
 				<span>Back</span>
 			</Link>
 
-			<h1 className="mb-4 font-serif text-3xl text-terracotta">
-				About This Project
-			</h1>
+			<h1 className="mb-4 font-serif text-3xl text-terracotta">About This Project</h1>
 
 			<div className="prose prose-stone mb-12 max-w-none">
 				<p className="text-lg leading-relaxed text-stone-600">
-					My wife is Cypriot. We've moved to Cyprus and we're starting a family.
-					I want our son to grow up speaking Greek. As close to native as
-					possible.
+					My wife is Cypriot. We've moved to Cyprus and we're starting a family. I want our son to
+					grow up speaking Greek. As close to native as possible.
 				</p>
 				<p className="leading-relaxed text-stone-600">
-					Problem is, I'm learning from square one. Apps, textbooks, courses.
-					Everything trained me to recognise Greek, not produce it. I could tap
-					the right answer in a multiple choice quiz, but when someone asked me
-					something, my mind went blank.
+					Problem is, I'm learning from square one. Apps, textbooks, courses. Everything trained me
+					to recognise Greek, not produce it. I could tap the right answer in a multiple choice
+					quiz, but when someone asked me something, my mind went blank.
 				</p>
 				<p className="leading-relaxed text-stone-600">
-					So I built this. Timed drills that force retrieval under pressure. 3.5
-					seconds to produce the Greek. No hints. No multiple choice. Either you
-					know it or you don't.
+					So I built this. Timed drills that force retrieval under pressure. 3.5 seconds to produce
+					the Greek. No hints. No multiple choice. Either you know it or you don't.
 				</p>
 				<p className="leading-relaxed text-stone-600">
 					It's how I'm learning. Maybe it'll help you too.
 				</p>
 			</div>
 
-			<h2 className="mb-6 font-serif text-2xl text-stone-800">
-				Support This Project
-			</h2>
+			<h2 className="mb-6 font-serif text-2xl text-stone-800">Support This Project</h2>
 
 			<div className="mb-12 grid gap-4 sm:grid-cols-2">
 				<Card className="p-6">
@@ -50,9 +43,7 @@ export default function SupportPage() {
 							<Coffee size={20} className="text-terracotta" />
 						</div>
 						<div>
-							<h3 className="mb-1 font-medium text-stone-800">
-								Buy me a coffee
-							</h3>
+							<h3 className="mb-1 font-medium text-stone-800">Buy me a coffee</h3>
 							<p className="mb-3 text-sm text-stone-600">
 								One-time support to keep this project going.
 							</p>
@@ -74,9 +65,7 @@ export default function SupportPage() {
 							<Heart size={20} className="text-terracotta" />
 						</div>
 						<div>
-							<h3 className="mb-1 font-medium text-stone-800">
-								Spread the word
-							</h3>
+							<h3 className="mb-1 font-medium text-stone-800">Spread the word</h3>
 							<p className="mb-3 text-sm text-stone-600">
 								Share with someone learning Greek. Word of mouth helps the most.
 							</p>
@@ -110,9 +99,8 @@ export default function SupportPage() {
 
 			<div className="text-center text-sm text-stone-500">
 				<p>
-					Built with care in Cyprus.{" "}
-					<span className="font-serif text-terracotta">Ευχαριστώ</span> for
-					using this.
+					Built with care in Cyprus. <span className="font-serif text-terracotta">Ευχαριστώ</span>{" "}
+					for using this.
 				</p>
 			</div>
 		</div>

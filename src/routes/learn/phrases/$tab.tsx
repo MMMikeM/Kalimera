@@ -8,14 +8,7 @@ import { ResponsesTab } from "./tabs/ResponsesTab";
 import { SurvivalTab } from "./tabs/SurvivalTab";
 import { TimeTab } from "./tabs/TimeTab";
 
-const VALID_TABS = [
-	"survival",
-	"responses",
-	"requests",
-	"opinions",
-	"connectors",
-	"time",
-] as const;
+const VALID_TABS = ["survival", "responses", "requests", "opinions", "connectors", "time"] as const;
 type TabId = (typeof VALID_TABS)[number];
 
 export function loader({ params }: Route.LoaderArgs) {

@@ -32,9 +32,7 @@ export async function getVocabBySection(section: DisplaySection) {
 }
 
 /** Type for a vocabulary item with section info */
-export type VocabItemWithSection = Awaited<
-	ReturnType<typeof getVocabBySection>
->[number];
+export type VocabItemWithSection = Awaited<ReturnType<typeof getVocabBySection>>[number];
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // VERBS WITH PATTERNS
@@ -58,9 +56,7 @@ export async function getVerbsWithPatterns() {
 }
 
 /** Type for a verb with its conjugation pattern */
-export type VerbWithPattern = Awaited<
-	ReturnType<typeof getVerbsWithPatterns>
->[number];
+export type VerbWithPattern = Awaited<ReturnType<typeof getVerbsWithPatterns>>[number];
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // SEARCH VOCABULARY
@@ -86,16 +82,12 @@ export async function searchVocabulary() {
 		english: v.englishTranslation,
 		type: v.wordType,
 		family: v.verbDetails?.conjugationFamily ?? null,
-		tags: v.vocabularyTags
-			.map((vt) => vt.tag?.name)
-			.filter(Boolean) as string[],
+		tags: v.vocabularyTags.map((vt) => vt.tag?.name).filter(Boolean) as string[],
 	}));
 }
 
 /** Type for a searchable vocabulary item */
-export type SearchVocabItem = Awaited<
-	ReturnType<typeof searchVocabulary>
->[number];
+export type SearchVocabItem = Awaited<ReturnType<typeof searchVocabulary>>[number];
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // VERB CONJUGATIONS

@@ -29,9 +29,7 @@ export const LESSON_2024_07_01 = {
 
 	nouns: [],
 
-	adverbs: [
-		{ lemma: "όμως", english: "though/however" },
-	] satisfies AdverbSeed[],
+	adverbs: [{ lemma: "όμως", english: "though/however" }] satisfies AdverbSeed[],
 
 	phrases: [
 		{

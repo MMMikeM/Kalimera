@@ -48,9 +48,7 @@ const TimeSubsection = ({
 				)}
 			>
 				{label}
-				{subtitle && (
-					<span className="font-normal text-stone-400"> {subtitle}</span>
-				)}
+				{subtitle && <span className="font-normal text-stone-400"> {subtitle}</span>}
 			</div>
 			<TwoColumnList
 				items={items}
@@ -62,9 +60,7 @@ const TimeSubsection = ({
 				renderSecondary={(item) => (
 					<>
 						{item.secondary}
-						{item.note && (
-							<span className="ml-2 text-xs text-stone-400">({item.note})</span>
-						)}
+						{item.note && <span className="ml-2 text-xs text-stone-400">({item.note})</span>}
 					</>
 				)}
 			/>
@@ -75,9 +71,7 @@ const TimeSubsection = ({
 const TimeTellingSection = ({ items }: { items: PhraseItem[] }) => {
 	if (items.length === 0) return null;
 
-	const basic = items.filter(
-		(i) => (i.metadata as Record<string, unknown>)?.category === "basic",
-	);
+	const basic = items.filter((i) => (i.metadata as Record<string, unknown>)?.category === "basic");
 	const fractions = items.filter(
 		(i) => (i.metadata as Record<string, unknown>)?.category === "fractions",
 	);
@@ -89,15 +83,9 @@ const TimeTellingSection = ({ items }: { items: PhraseItem[] }) => {
 	const toHour = fractions.filter((i) => i.greek.includes("παρά"));
 
 	return (
-		<ContentSection
-			title="Telling Time"
-			subtitle="Τι ώρα είναι;"
-			colorScheme="ocean"
-		>
+		<ContentSection title="Telling Time" subtitle="Τι ώρα είναι;" colorScheme="ocean">
 			<div className="border-b border-ocean-200 bg-ocean-50 px-4 py-3">
-				<div className="mb-1.5 text-sm font-semibold text-ocean-text">
-					How to Tell Time
-				</div>
+				<div className="mb-1.5 text-sm font-semibold text-ocean-text">How to Tell Time</div>
 				<div className="space-y-1 text-sm text-stone-600">
 					<div>
 						<strong className="text-ocean-text">Basic:</strong>{" "}
@@ -112,21 +100,13 @@ const TimeTellingSection = ({ items }: { items: PhraseItem[] }) => {
 					</div>
 					<div className="flex flex-wrap gap-x-6">
 						<span>
-							<MonoText
-								variant="greek"
-								size="sm"
-								className="font-semibold text-ocean-text"
-							>
+							<MonoText variant="greek" size="sm" className="font-semibold text-ocean-text">
 								και
 							</MonoText>{" "}
 							= past (add minutes)
 						</span>
 						<span>
-							<MonoText
-								variant="greek"
-								size="sm"
-								className="font-semibold text-ocean-text"
-							>
+							<MonoText variant="greek" size="sm" className="font-semibold text-ocean-text">
 								παρά
 							</MonoText>{" "}
 							= to (subtract from next hour)
@@ -180,8 +160,8 @@ export const TimeTab = ({ data }: { data: PhrasesLoaderData }) => {
 				colorScheme="ocean"
 				icon={<Clock size={18} />}
 			>
-				How to ask and tell time in Greek — essential patterns for scheduling
-				and understanding when things happen.
+				How to ask and tell time in Greek — essential patterns for scheduling and understanding when
+				things happen.
 			</TabHero>
 
 			<TimeTellingSection items={timeTelling} />

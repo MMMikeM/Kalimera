@@ -6,19 +6,19 @@
 
 The explicit instruction debate has been largely settled by meta-analyses. **Norris & Ortega's (2000)** landmark analysis of 49 studies found explicit instruction produces substantially larger effect sizes than implicit approaches, a finding confirmed by **Goo et al. (2015)** and **Spada & Tomita (2010)**. However, the picture is more nuanced than "grammar-first wins."
 
-**DeKeyser's Skill Acquisition Theory** provides the strongest argument for explicit grammar with adults. Based on Anderson's ACT model, DeKeyser demonstrates that adults can and should learn rules explicitly, then proceduralize them through practice—following the same power-law learning curves as other cognitive skills. His 1997 study in *Studies in Second Language Acquisition* showed explicitly learned morphosyntactic rules **can be automatized** through practice. For adults with limited time and analytical minds (like developers), this explicit-to-procedural pathway is efficient.
+**DeKeyser's Skill Acquisition Theory** provides the strongest argument for explicit grammar with adults. Based on Anderson's ACT model, DeKeyser demonstrates that adults can and should learn rules explicitly, then proceduralize them through practice—following the same power-law learning curves as other cognitive skills. His 1997 study in _Studies in Second Language Acquisition_ showed explicitly learned morphosyntactic rules **can be automatized** through practice. For adults with limited time and analytical minds (like developers), this explicit-to-procedural pathway is efficient.
 
-**VanPatten's Processing Instruction** offers a middle path that research supports strongly. His approach includes explicit information about grammar *plus* structured input activities that help learners make form-meaning connections. Critically, VanPatten & Borst (2012) found PI outperformed traditional instruction for German case marking. The key insight: explicit information helps when the rule is "easy and portable" for real-time processing.
+**VanPatten's Processing Instruction** offers a middle path that research supports strongly. His approach includes explicit information about grammar _plus_ structured input activities that help learners make form-meaning connections. Critically, VanPatten & Borst (2012) found PI outperformed traditional instruction for German case marking. The key insight: explicit information helps when the rule is "easy and portable" for real-time processing.
 
 **Rod Ellis's weak interface position** synthesizes these views: explicit knowledge facilitates acquisition by helping learners notice features in input, identify gaps between their output and target forms, and guide initial practice. His research distinguishes "Focus on Form" (attention to grammar arising during communication) from "Focus on FormS" (isolated grammar teaching)—with modern consensus favoring the former.
 
-**Krashen's pure input hypothesis has been empirically refuted** for adult learners of complex morphology. A 2025 critique in *Frontiers in Psychology* by Nguyen & Doan characterizes his comprehensible input hypothesis as "conceptually flawed, empirically outdated, and practically insufficient." Modern neurolinguistics shows language learning requires active engagement, feedback, and practice—not passive absorption.
+**Krashen's pure input hypothesis has been empirically refuted** for adult learners of complex morphology. A 2025 critique in _Frontiers in Psychology_ by Nguyen & Doan characterizes his comprehensible input hypothesis as "conceptually flawed, empirically outdated, and practically insufficient." Modern neurolinguistics shows language learning requires active engagement, feedback, and practice—not passive absorption.
 
-**The practical recommendation**: For Greek, start with explicit explanations of case functions (what they *mean*), followed immediately by structured input activities where you identify case-marked forms in meaningful sentences. Pure grammar-translation drills in isolation are ineffective; pure communication without attention to form leads to fossilized errors.
+**The practical recommendation**: For Greek, start with explicit explanations of case functions (what they _mean_), followed immediately by structured input activities where you identify case-marked forms in meaningful sentences. Pure grammar-translation drills in isolation are ineffective; pure communication without attention to form leads to fossilized errors.
 
 ## How adults best acquire case systems
 
-Research on case acquisition reveals a surprising finding: **paradigm complexity matters less than cue reliability**. Kempe & MacWhinney's (1998) seminal *Studies in Second Language Acquisition* study compared English speakers learning Russian versus German. Despite Russian having 6 cases (versus German's 4) and far more complex paradigms, Russian learners acquired case marking **significantly earlier**.
+Research on case acquisition reveals a surprising finding: **paradigm complexity matters less than cue reliability**. Kempe & MacWhinney's (1998) seminal _Studies in Second Language Acquisition_ study compared English speakers learning Russian versus German. Despite Russian having 6 cases (versus German's 4) and far more complex paradigms, Russian learners acquired case marking **significantly earlier**.
 
 The reason: Russian case endings are **~97% reliable** cues to sentence meaning, while German case endings are only **~56% reliable** due to extensive syncretism (identical forms across cases). German learners compensate by over-relying on word order and animacy. This has direct implications for Greek, which falls somewhere between these extremes.
 
@@ -26,7 +26,7 @@ The reason: Russian case endings are **~97% reliable** cues to sentence meaning,
 
 The system-first versus function-first debate has been examined directly. **Walter & van Compernolle (2017, 2020)** compared concept-based instruction (presenting declension as a complete meaning-making system) against additive/incremental approaches. The concept-based group showed **larger gains in interpreting non-standard word orders**—precisely where case marking matters most. However, the additive group showed broader production improvements initially.
 
-**The optimal synthesis**: Present cases as an interconnected conceptual system (what they *do* in terms of meaning), then develop proficiency through function-focused practice. Avoid both extremes—pure paradigm memorization fragments understanding, but purely incremental introduction prevents learners from grasping the system's logic.
+**The optimal synthesis**: Present cases as an interconnected conceptual system (what they _do_ in terms of meaning), then develop proficiency through function-focused practice. Avoid both extremes—pure paradigm memorization fragments understanding, but purely incremental introduction prevents learners from grasping the system's logic.
 
 **Common difficulties for English speakers** include:
 
@@ -43,14 +43,14 @@ The system-first versus function-first debate has been examined directly. **Walt
 **Full paradigm tables create split-attention overload** by requiring learners to:
 
 - Hold multiple forms in working memory simultaneously
-- Search for relationships across rows and columns  
+- Search for relationships across rows and columns
 - Integrate case, gender, and number features simultaneously
 
 **Research-based limits on new material**: For complex morphological forms, research suggests introducing **2-4 new related forms per session** with extensive practice before adding more. This aligns with working memory's processing capacity and the need for schema construction.
 
-**Exemplar-plus-rule learning works best**. Nick Ellis's (2022) research in *JESLA* shows language learning occurs through "exemplar-based, rational, associative learning"—high-frequency exemplars closest to the prototype are learned first. A 2024 study on Polish verbal morphology found rule-based instruction showed advantages only when grammatical instances were already unambiguous; exemplar approaches performed better for ambiguous contexts.
+**Exemplar-plus-rule learning works best**. Nick Ellis's (2022) research in _JESLA_ shows language learning occurs through "exemplar-based, rational, associative learning"—high-frequency exemplars closest to the prototype are learned first. A 2024 study on Polish verbal morphology found rule-based instruction showed advantages only when grammatical instances were already unambiguous; exemplar approaches performed better for ambiguous contexts.
 
-**Practical application**: Start with high-frequency prototypical forms (masculine nominative/accusative for animate nouns in Greek), introduce rules to *organize* already-encountered exemplars, and progressively reveal paradigm complexity as mastery develops. Never present a complete declension table to a beginner.
+**Practical application**: Start with high-frequency prototypical forms (masculine nominative/accusative for animate nouns in Greek), introduce rules to _organize_ already-encountered exemplars, and progressively reveal paradigm complexity as mastery develops. Never present a complete declension table to a beginner.
 
 ## Verb timing: Early introduction with constraints
 
@@ -75,9 +75,9 @@ The traditional nouns-before-verbs assumption has been challenged by cross-lingu
 
 ## Optimal structures for 15-30 minutes daily
 
-**Spaced repetition works for grammar, not just vocabulary**. Kim & Webb's (2022) meta-analysis in *Language Learning* analyzed 48 experiments and found spaced practice significantly outperforms massed practice for **both vocabulary and grammar**. Longer spacing intervals produce better long-term retention.
+**Spaced repetition works for grammar, not just vocabulary**. Kim & Webb's (2022) meta-analysis in _Language Learning_ analyzed 48 experiments and found spaced practice significantly outperforms massed practice for **both vocabulary and grammar**. Longer spacing intervals produce better long-term retention.
 
-**Optimal spacing intervals for morphology**: Suzuki's (2017) *Language Learning* study found **3-4 day intervals** optimal during initial learning of morphological rules—shorter than the 7+ day intervals sometimes used for vocabulary. For long-term retention, expanding intervals (1 day → 7 days → 16 days → 35 days) work best.
+**Optimal spacing intervals for morphology**: Suzuki's (2017) _Language Learning_ study found **3-4 day intervals** optimal during initial learning of morphological rules—shorter than the 7+ day intervals sometimes used for vocabulary. For long-term retention, expanding intervals (1 day → 7 days → 16 days → 35 days) work best.
 
 **Session length research** suggests 15-30 minutes is near-optimal for focused grammar study:
 
@@ -88,12 +88,12 @@ The traditional nouns-before-verbs assumption has been challenged by cross-lingu
 
 **Recommended session structure for 15-30 minutes**:
 
-| Minutes | Activity |
-|---------|----------|
-| 0-5 | SRS review of previously learned morphological forms |
-| 5-20 | Focused practice on one new grammatical concept |
-| 20-25 | Brief comprehension input (reading/listening with target forms) |
-| 25-30 | Production practice (generating sentences using new forms) |
+| Minutes | Activity                                                        |
+| ------- | --------------------------------------------------------------- |
+| 0-5     | SRS review of previously learned morphological forms            |
+| 5-20    | Focused practice on one new grammatical concept                 |
+| 20-25   | Brief comprehension input (reading/listening with target forms) |
+| 25-30   | Production practice (generating sentences using new forms)      |
 
 **Interleaving beats blocking**. Serfaty & Serrano (2022) found mixing different grammar topics within sessions—rather than focusing on one topic exclusively—improves transfer and long-term retention. Practice noun cases mixed with verb practice, even if counterintuitive.
 
@@ -118,7 +118,7 @@ This explains conflicting research findings: short-term studies favor explicit i
 
 Based on the research synthesis, here is an evidence-based approach for an adult English-speaking developer learning Greek with 15-30 minutes daily:
 
-**Paradigm presentation**: Never attempt to learn complete paradigm tables. Start with high-frequency forms (masculine/feminine nominative singular and accusative singular) as isolated exemplars. Introduce the *concept* of cases as a meaning-making system (nominative marks subjects, accusative marks direct objects) before exposing additional forms. Add genitive for possession, then dative (if covering ancient Greek) or remaining forms progressively as earlier forms are automatized.
+**Paradigm presentation**: Never attempt to learn complete paradigm tables. Start with high-frequency forms (masculine/feminine nominative singular and accusative singular) as isolated exemplars. Introduce the _concept_ of cases as a meaning-making system (nominative marks subjects, accusative marks direct objects) before exposing additional forms. Add genitive for possession, then dative (if covering ancient Greek) or remaining forms progressively as earlier forms are automatized.
 
 **Grammar-communication balance**: Begin each new grammatical concept with a brief explicit explanation (30 seconds to 2 minutes), followed immediately by structured input activities where you identify the form in meaningful sentences. Progress to production practice where you generate sentences. Avoid both pure drilling and pure immersion.
 

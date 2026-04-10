@@ -26,9 +26,7 @@ describe("Data Seeding Pipeline", () => {
 	it("should generate the seed data files", () => {
 		expect(fs.existsSync(path.join(dataDir, "vocabulary.json"))).toBe(true);
 		expect(fs.existsSync(path.join(dataDir, "verbDetails.json"))).toBe(true);
-		expect(fs.existsSync(path.join(dataDir, "verbConjugations.json"))).toBe(
-			true,
-		);
+		expect(fs.existsSync(path.join(dataDir, "verbConjugations.json"))).toBe(true);
 	});
 
 	it("should have valid vocabulary data", () => {

@@ -25,10 +25,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
 
 			const hasPasskey = await userHasPasskey(user.id);
 			if (!hasPasskey) {
-				return Response.json(
-					{ error: "No passkey registered for this user" },
-					{ status: 400 },
-				);
+				return Response.json({ error: "No passkey registered for this user" }, { status: 400 });
 			}
 
 			userId = user.id;
@@ -46,9 +43,6 @@ export const action = async ({ request }: Route.ActionArgs) => {
 		return Response.json(options);
 	} catch (error) {
 		console.error("WebAuthn auth options error:", error);
-		return Response.json(
-			{ error: "Failed to generate authentication options" },
-			{ status: 500 },
-		);
+		return Response.json({ error: "Failed to generate authentication options" }, { status: 500 });
 	}
 };

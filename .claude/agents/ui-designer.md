@@ -23,12 +23,12 @@ Design and review UI components for the Greek learning app, ensuring every visua
 
 ### Touch Target Requirements
 
-| Element | Minimum Size | Recommended |
-|---------|-------------|-------------|
-| Buttons | 44×44px | 48×48px |
-| Nav items | 44×44px | 48×48px |
-| Form inputs | 44px height | 48px height |
-| Icon buttons | 44×44px | 48×48px |
+| Element      | Minimum Size | Recommended |
+| ------------ | ------------ | ----------- |
+| Buttons      | 44×44px      | 48×48px     |
+| Nav items    | 44×44px      | 48×48px     |
+| Form inputs  | 44px height  | 48px height |
+| Icon buttons | 44×44px      | 48×48px     |
 
 ### Thumb Zone Design
 
@@ -48,6 +48,7 @@ On mobile, the bottom 1/3 of the screen is the "easy reach" zone:
 ```
 
 **Place primary actions in the bottom third.** This includes:
+
 - Practice/CTA buttons
 - Navigation
 - Form submit buttons
@@ -64,16 +65,24 @@ On mobile, the bottom 1/3 of the screen is the "easy reach" zone:
 
 ```css
 /* Mobile first - no media query needed */
-.component { /* mobile styles */ }
+.component {
+	/* mobile styles */
+}
 
 /* Tablet enhancement */
-@media (min-width: 640px) { /* sm: */ }
+@media (min-width: 640px) {
+	/* sm: */
+}
 
 /* Desktop enhancement */
-@media (min-width: 768px) { /* md: */ }
+@media (min-width: 768px) {
+	/* md: */
+}
 
 /* Large desktop */
-@media (min-width: 1024px) { /* lg: */ }
+@media (min-width: 1024px) {
+	/* lg: */
+}
 ```
 
 ### Mobile-Specific Considerations
@@ -110,7 +119,7 @@ On mobile, the bottom 1/3 of the screen is the "easy reach" zone:
 **Principle:** The language being learned should always be visually prominent—but what "prominent" means depends on context.
 
 | Context           | Visual Hierarchy                                  | Rationale                   |
-|-------------------|---------------------------------------------------|-----------------------------|
+| ----------------- | ------------------------------------------------- | --------------------------- |
 | Reference/study   | Greek prominent, English supporting               | User is absorbing Greek     |
 | Recognition drill | Greek prompt prominent                            | User is comprehending Greek |
 | Production drill  | English prompt clear, Greek input field prominent | User is producing Greek     |
@@ -162,7 +171,7 @@ Production drills are fundamentally different from reference material. The brain
 ### Visual Distinction: Reference vs Practice
 
 | Aspect         | Reference Mode           | Practice Mode                           |
-|----------------|--------------------------|-----------------------------------------|
+| -------------- | ------------------------ | --------------------------------------- |
 | Background     | Cream (`#FAF8F5`)        | Cream-dark (`#F5F1EB`) or subtle border |
 | Visual density | Rich, detailed paradigms | Minimal—just prompt + input + timer     |
 | Pacing         | User-controlled          | Timer-controlled                        |
@@ -190,7 +199,7 @@ The timer is a primary UI element in production drills, not a secondary indicato
 **Colour states (urgency progression):**
 
 | Time Remaining | Colour                 | CSS Class        | Meaning        |
-|----------------|------------------------|------------------|----------------|
+| -------------- | ---------------------- | ---------------- | -------------- |
 | 100-50%        | Ocean (`#4A7C8F`)      | `.timer-calm`    | Plenty of time |
 | 50-25%         | Honey (`#D4A853`)      | `.timer-warning` | Pace yourself  |
 | 25-0%          | Terracotta (`#C4663F`) | `.timer-urgent`  | Hurry          |
@@ -205,11 +214,11 @@ The timer is a primary UI element in production drills, not a secondary indicato
 
 ```tsx
 interface CountdownTimerProps {
-  durationMs: number
-  onTimeout: () => void
-  isRunning: boolean
-  size?: 'sm' | 'md' | 'lg'  // 32px, 48px, 64px
-  variant?: 'ring' | 'bar' | 'numeric'
+	durationMs: number;
+	onTimeout: () => void;
+	isRunning: boolean;
+	size?: "sm" | "md" | "lg"; // 32px, 48px, 64px
+	variant?: "ring" | "bar" | "numeric";
 }
 ```
 
@@ -217,15 +226,15 @@ interface CountdownTimerProps {
 
 ```css
 .timer-calm {
-  @apply text-ocean border-ocean;
+	@apply text-ocean border-ocean;
 }
 
 .timer-warning {
-  @apply text-honey border-honey;
+	@apply text-honey border-honey;
 }
 
 .timer-urgent {
-  @apply text-terracotta border-terracotta;
+	@apply text-terracotta border-terracotta;
 }
 ```
 
@@ -234,7 +243,7 @@ interface CountdownTimerProps {
 Production drills have more feedback states than recognition drills. Speed is a primary metric.
 
 | Result         | Display                         | CSS Class             | Colour      |
-|----------------|---------------------------------|-----------------------|-------------|
+| -------------- | ------------------------------- | --------------------- | ----------- |
 | Fast + correct | "✓ **1.8s**"                    | `.feedback-fast`      | Olive       |
 | Correct        | "✓ Correct (3.2s)"              | `.feedback-correct`   | Green       |
 | Slow + correct | "✓ Correct (5.1s) — try faster" | `.feedback-slow`      | Muted green |
@@ -247,24 +256,24 @@ Production drills have more feedback states than recognition drills. Speed is a 
 
 ```css
 .feedback-fast {
-  @apply bg-olive-50 border-olive-400 text-olive-text;
+	@apply bg-olive-50 border-olive-400 text-olive-text;
 }
 
 .feedback-slow {
-  @apply bg-green-50/50 border-green-300 text-green-800;
+	@apply bg-green-50/50 border-green-300 text-green-800;
 }
 
 .feedback-timeout {
-  @apply bg-honey-50 border-honey-400 text-honey-text;
+	@apply bg-honey-50 border-honey-400 text-honey-text;
 }
 
 /* Existing */
 .feedback-correct {
-  @apply bg-green-50 border-green-500 text-green-800;
+	@apply bg-green-50 border-green-500 text-green-800;
 }
 
 .feedback-incorrect {
-  @apply bg-red-50 border-red-500 text-red-800;
+	@apply bg-red-50 border-red-500 text-red-800;
 }
 ```
 
@@ -289,7 +298,7 @@ Production drills have more feedback states than recognition drills. Speed is a 
 **Challenge:** User types Latin (transliteration) or Greek. Field must be comfortable for both.
 
 | Aspect      | Recommendation                          |
-|-------------|-----------------------------------------|
+| ----------- | --------------------------------------- |
 | Font size   | 1.25rem minimum (Greek needs room)      |
 | Font family | System or Greek-friendly mono           |
 | Width       | Full card width—don't cramp             |
@@ -300,7 +309,7 @@ Production drills have more feedback states than recognition drills. Speed is a 
 **Placeholder text:**
 
 | Mode            | Placeholder                        |
-|-----------------|------------------------------------|
+| --------------- | ---------------------------------- |
 | Greek keyboard  | "Πληκτρολογήστε..." or just cursor |
 | Transliteration | "Type the sounds..."               |
 
@@ -317,16 +326,10 @@ If user types Latin and system converts to Greek, show preview below input:
 
 ```tsx
 <div className="space-y-1">
-  <Input 
-    className="text-xl h-14 font-mono"
-    autoFocus
-    placeholder="Type the sounds..."
-  />
-  {transliteratedPreview && (
-    <p className="text-lg text-muted-foreground greek-text pl-2">
-      {transliteratedPreview}
-    </p>
-  )}
+	<Input className="text-xl h-14 font-mono" autoFocus placeholder="Type the sounds..." />
+	{transliteratedPreview && (
+		<p className="text-lg text-muted-foreground greek-text pl-2">{transliteratedPreview}</p>
+	)}
 </div>
 ```
 
@@ -380,7 +383,7 @@ After answer:
 - If queue is large, break into multiple sessions
 
 | Bad                 | Good                                  |
-|---------------------|---------------------------------------|
+| ------------------- | ------------------------------------- |
 | "Question 1 of 55"  | "5 items" (small set)                 |
 | "Question 12 of 55" | "Session 2 of 4" (chunked)            |
 | Long progress bar   | ●●●○○ (dots showing session progress) |
@@ -389,7 +392,7 @@ After answer:
 // Session progress dots
 <div className="flex gap-1">
   {Array.from({ length: sessionSize }, (_, i) => (
-    <div 
+    <div
       key={i}
       className={cn(
         "w-2 h-2 rounded-full",
@@ -412,7 +415,7 @@ After answer:
 **Solution:** Progressive scaffolding based on accuracy.
 
 | Learner State             | Paradigm Display                  | Rationale           |
-|---------------------------|-----------------------------------|---------------------|
+| ------------------------- | --------------------------------- | ------------------- |
 | Learning (< 70% accuracy) | Visible, current cell highlighted | Scaffolding needed  |
 | Reinforcing (70-90%)      | Collapsed, toggle available       | Weaning off support |
 | Mastered (> 90%)          | Hidden                            | Pure retrieval      |
@@ -421,27 +424,27 @@ After answer:
 
 ```tsx
 interface DrillCardProps {
-  // ...
-  showParadigm?: 'always' | 'toggle' | 'never' | 'auto'
-  accuracy?: number  // Used when showParadigm='auto'
+	// ...
+	showParadigm?: "always" | "toggle" | "never" | "auto";
+	accuracy?: number; // Used when showParadigm='auto'
 }
 
 // Auto mode logic
 const paradigmVisibility = useMemo(() => {
-  if (showParadigm !== 'auto') return showParadigm
-  if (accuracy < 0.7) return 'always'
-  if (accuracy < 0.9) return 'toggle'
-  return 'never'
-}, [showParadigm, accuracy])
+	if (showParadigm !== "auto") return showParadigm;
+	if (accuracy < 0.7) return "always";
+	if (accuracy < 0.9) return "toggle";
+	return "never";
+}, [showParadigm, accuracy]);
 ```
 
 When visible, highlight the current target cell:
 
 ```tsx
 <ParadigmTable
-  data={pronounParadigm}
-  highlightCell={{ person: '1st', number: 'singular' }}
-  dimOtherCells
+	data={pronounParadigm}
+	highlightCell={{ person: "1st", number: "singular" }}
+	dimOtherCells
 />
 ```
 
@@ -454,7 +457,7 @@ New UI patterns for displaying performance metrics. The key metric is response t
 ### Colour Encoding for Speed
 
 | Speed Category    | Colour     | CSS Class        | Threshold |
-|-------------------|------------|------------------|-----------|
+| ----------------- | ---------- | ---------------- | --------- |
 | Fast (automatic)  | Olive      | `.speed-fast`    | < 2s      |
 | Medium (thinking) | Ocean      | `.speed-medium`  | 2-4s      |
 | Slow (effortful)  | Honey      | `.speed-slow`    | 4-6s      |
@@ -463,10 +466,18 @@ New UI patterns for displaying performance metrics. The key metric is response t
 **Use in:** Metrics dashboard, historical review, per-item stats. **Not during** active drills (would distract).
 
 ```css
-.speed-fast { @apply text-olive-text bg-olive-50; }
-.speed-medium { @apply text-ocean-text bg-ocean-50; }
-.speed-slow { @apply text-honey-text bg-honey-50; }
-.speed-timeout { @apply text-terracotta-text bg-terracotta-50; }
+.speed-fast {
+	@apply text-olive-text bg-olive-50;
+}
+.speed-medium {
+	@apply text-ocean-text bg-ocean-50;
+}
+.speed-slow {
+	@apply text-honey-text bg-honey-50;
+}
+.speed-timeout {
+	@apply text-terracotta-text bg-terracotta-50;
+}
 ```
 
 ### Response Time Trend Chart
@@ -482,26 +493,17 @@ New UI patterns for displaying performance metrics. The key metric is response t
 
 ```tsx
 <Card>
-  <CardHeader>
-    <CardTitle className="text-navy-text">Response Time</CardTitle>
-    <CardDescription>
-      Average time to produce correct answer
-    </CardDescription>
-  </CardHeader>
-  <CardContent>
-    <LineChart 
-      data={responseTimeData}
-      yAxisLabel="Seconds"
-      color="ocean"
-      trendIndicator
-    />
-    <div className="flex items-center gap-2 mt-2">
-      <TrendingDown className="text-olive" />
-      <span className="text-olive-text text-sm">
-        15% faster than last week
-      </span>
-    </div>
-  </CardContent>
+	<CardHeader>
+		<CardTitle className="text-navy-text">Response Time</CardTitle>
+		<CardDescription>Average time to produce correct answer</CardDescription>
+	</CardHeader>
+	<CardContent>
+		<LineChart data={responseTimeData} yAxisLabel="Seconds" color="ocean" trendIndicator />
+		<div className="flex items-center gap-2 mt-2">
+			<TrendingDown className="text-olive" />
+			<span className="text-olive-text text-sm">15% faster than last week</span>
+		</div>
+	</CardContent>
 </Card>
 ```
 
@@ -517,19 +519,19 @@ New UI patterns for displaying performance metrics. The key metric is response t
 
 ```tsx
 <Card>
-  <CardHeader>
-    <CardTitle className="text-navy-text">Speed by Topic</CardTitle>
-  </CardHeader>
-  <CardContent>
-    <BarChart
-      data={[
-        { topic: 'Object pronouns', avgTime: 2.1, color: 'olive' },
-        { topic: 'Articles', avgTime: 3.4, color: 'ocean' },
-        { topic: 'Verb conjugation', avgTime: 4.8, color: 'honey' },
-      ]}
-      layout="horizontal"
-    />
-  </CardContent>
+	<CardHeader>
+		<CardTitle className="text-navy-text">Speed by Topic</CardTitle>
+	</CardHeader>
+	<CardContent>
+		<BarChart
+			data={[
+				{ topic: "Object pronouns", avgTime: 2.1, color: "olive" },
+				{ topic: "Articles", avgTime: 3.4, color: "ocean" },
+				{ topic: "Verb conjugation", avgTime: 4.8, color: "honey" },
+			]}
+			layout="horizontal"
+		/>
+	</CardContent>
 </Card>
 ```
 
@@ -543,12 +545,10 @@ New UI patterns for displaying performance metrics. The key metric is response t
 
 ```tsx
 <Card className="stat-card">
-  <div className="text-4xl font-bold text-navy-text">73</div>
-  <div className="text-sm text-muted-foreground">Automaticity Score</div>
-  <Progress value={73} className="mt-2" />
-  <p className="text-xs text-slate-text mt-1">
-    Goal: 85+ for conversational fluency
-  </p>
+	<div className="text-4xl font-bold text-navy-text">73</div>
+	<div className="text-sm text-muted-foreground">Automaticity Score</div>
+	<Progress value={73} className="mt-2" />
+	<p className="text-xs text-slate-text mt-1">Goal: 85+ for conversational fluency</p>
 </Card>
 ```
 
@@ -560,17 +560,17 @@ New UI patterns for displaying performance metrics. The key metric is response t
 
 ```tsx
 <div className="flex gap-4">
-  <div className="stat-card-streak">
-    <Zap className="stat-card-streak-icon" />
-    <div className="stat-card-streak-value">1.2s</div>
-    <div className="stat-card-streak-label">Fastest today</div>
-  </div>
-  
-  <div className="stat-card-success">
-    <Target className="stat-card-success-icon" />
-    <div className="stat-card-success-value">12</div>
-    <div className="stat-card-success-label">Sub-2s streak</div>
-  </div>
+	<div className="stat-card-streak">
+		<Zap className="stat-card-streak-icon" />
+		<div className="stat-card-streak-value">1.2s</div>
+		<div className="stat-card-streak-label">Fastest today</div>
+	</div>
+
+	<div className="stat-card-success">
+		<Target className="stat-card-success-icon" />
+		<div className="stat-card-success-value">12</div>
+		<div className="stat-card-success-label">Sub-2s streak</div>
+	</div>
 </div>
 ```
 
@@ -632,7 +632,7 @@ Need a UI element?
 ### Existing Component Catalog
 
 | Component                | Purpose                                | Use When                    |
-|--------------------------|----------------------------------------|-----------------------------|
+| ------------------------ | -------------------------------------- | --------------------------- |
 | `Card`                   | Content container with variants        | Grouping related content    |
 | `MonoText`               | Greek text with proper sizing/spacing  | Displaying Greek vocabulary |
 | `SearchInput`            | Search field with debounce             | Filtering lists             |
@@ -650,12 +650,12 @@ Need a UI element?
 | `NavTabs`                | Navigation tabs                        | Section navigation          |
 | `PushNotificationToggle` | Push notification opt-in               | Notification settings       |
 
-### Custom Components (src/components/*.tsx)
+### Custom Components (src/components/\*.tsx)
 
 - Use tailwind-variants for styling
 - Import pattern: `import { Card, MonoText, ParadigmTable } from "@/components"`
 
-### ShadCN Components (src/components/ui/*.tsx)
+### ShadCN Components (src/components/ui/\*.tsx)
 
 - Use class-variance-authority
 - Add via: `pnpm dlx shadcn@latest add <component>`
@@ -671,19 +671,19 @@ import { Input } from "@/components/ui/input";
 import { tv } from "tailwind-variants";
 
 const greekInput = tv({
-  base: "text-xl h-14 font-mono",
-  variants: {
-    size: {
-      sm: "text-lg h-12",
-      md: "text-xl h-14",
-      lg: "text-2xl h-16",
-    },
-  },
-  defaultVariants: { size: "md" },
+	base: "text-xl h-14 font-mono",
+	variants: {
+		size: {
+			sm: "text-lg h-12",
+			md: "text-xl h-14",
+			lg: "text-2xl h-16",
+		},
+	},
+	defaultVariants: { size: "md" },
 });
 
 export function GreekInput({ size, className, ...props }) {
-  return <Input className={greekInput({ size, className })} {...props} />;
+	return <Input className={greekInput({ size, className })} {...props} />;
 }
 ```
 
@@ -696,7 +696,7 @@ export function GreekInput({ size, className, ...props }) {
 ### Base Colours
 
 | Token              | Hex       | Use                                 |
-|--------------------|-----------|-------------------------------------|
+| ------------------ | --------- | ----------------------------------- |
 | `cream`            | `#FAF8F5` | Primary background                  |
 | `cream-dark`       | `#F5F1EB` | Secondary background, practice mode |
 | `foreground`       | `#1c1917` | Primary text                        |
@@ -707,7 +707,7 @@ export function GreekInput({ size, className, ...props }) {
 These colours fail WCAG AA for body text. Use only for borders, icons, large text (18px+), and interactive states.
 
 | Token        | Hex       | Contrast | Use                                       |
-|--------------|-----------|----------|-------------------------------------------|
+| ------------ | --------- | -------- | ----------------------------------------- |
 | `terracotta` | `#C4663F` | 3.9:1    | Primary actions, emphasis, urgent timer   |
 | `olive`      | `#8A9A78` | 4.2:1    | Success, fast speed, improvement          |
 | `ocean`      | `#4A7C8F` | 4.1:1    | Calm states, informational, timer default |
@@ -720,7 +720,7 @@ These colours fail WCAG AA for body text. Use only for borders, icons, large tex
 Use these for any text content. 10:1+ contrast on both cream and tinted backgrounds.
 
 | Token             | Hex       |
-|-------------------|-----------|
+| ----------------- | --------- |
 | `terracotta-text` | `#5C2D14` |
 | `olive-text`      | `#1F2A18` |
 | `ocean-text`      | `#14333F` |
@@ -762,7 +762,7 @@ Available: `situation-{terracotta|olive|ocean|honey|navy|slate}`
 **Gender** colours are intentionally subtle - use only as thin left borders, never as backgrounds:
 
 | Gender    | Colour                |
-|-----------|-----------------------|
+| --------- | --------------------- |
 | Masculine | `#1D4ED8` (blue-700)  |
 | Feminine  | `#9D174D` (pink-800)  |
 | Neuter    | `#44403C` (stone-700) |
@@ -772,7 +772,7 @@ CSS classes: `.gender-masculine`, `.gender-feminine`, `.gender-neuter` (applied 
 **Timer States:**
 
 | State   | Colour     | CSS Class        |
-|---------|------------|------------------|
+| ------- | ---------- | ---------------- |
 | Calm    | Ocean      | `.timer-calm`    |
 | Warning | Honey      | `.timer-warning` |
 | Urgent  | Terracotta | `.timer-urgent`  |
@@ -780,7 +780,7 @@ CSS classes: `.gender-masculine`, `.gender-feminine`, `.gender-neuter` (applied 
 **Speed Encoding:**
 
 | Speed   | Colour     | CSS Class        | Threshold |
-|---------|------------|------------------|-----------|
+| ------- | ---------- | ---------------- | --------- |
 | Fast    | Olive      | `.speed-fast`    | < 2s      |
 | Medium  | Ocean      | `.speed-medium`  | 2-4s      |
 | Slow    | Honey      | `.speed-slow`    | 4-6s      |
@@ -789,7 +789,7 @@ CSS classes: `.gender-masculine`, `.gender-feminine`, `.gender-neuter` (applied 
 **Learning Feedback:**
 
 | State     | Border    | Background  | CSS Class             |
-|-----------|-----------|-------------|-----------------------|
+| --------- | --------- | ----------- | --------------------- |
 | Fast      | Olive     | Olive-50    | `.feedback-fast`      |
 | Correct   | Green     | Green-50    | `.feedback-correct`   |
 | Slow      | Green-300 | Green-50/50 | `.feedback-slow`      |
@@ -800,7 +800,7 @@ CSS classes: `.gender-masculine`, `.gender-feminine`, `.gender-neuter` (applied 
 **Info Boxes** - For tips, warnings, and informational callouts:
 
 | Type    | CSS Class           | Use                              |
-|---------|---------------------|----------------------------------|
+| ------- | ------------------- | -------------------------------- |
 | Tip     | `.info-box-tip`     | Helpful hints (honey background) |
 | Info    | `.info-box-info`    | Informational (ocean background) |
 | Success | `.info-box-success` | Positive feedback (green)        |
@@ -812,7 +812,7 @@ Each has corresponding `-text` or `-title` classes for content.
 **Stat Cards** - For displaying metrics:
 
 | Type    | CSS Class            | Use                        |
-|---------|----------------------|----------------------------|
+| ------- | -------------------- | -------------------------- |
 | Streak  | `.stat-card-streak`  | Streak counts (terracotta) |
 | Success | `.stat-card-success` | Success rates (olive)      |
 | Due     | `.stat-card-due`     | Due items (ocean)          |
@@ -822,7 +822,7 @@ Each has `-icon`, `-value`, and `-label` sub-classes.
 **Verb Patterns** - For indicating conjugation types:
 
 | Pattern    | CSS Class                  | Colour     |
-|------------|----------------------------|------------|
+| ---------- | -------------------------- | ---------- |
 | Active     | `.verb-pattern-active`     | ocean      |
 | Contracted | `.verb-pattern-contracted` | terracotta |
 | Deponent   | `.verb-pattern-deponent`   | olive      |
@@ -907,11 +907,8 @@ When working on Quick Reference pages, prefer these shared components:
 ### `KeyInsight`
 
 ```tsx
-<KeyInsight
-  title="Key point"
-  expandedExample={{ label: "Example", content: <div>...</div> }}
->
-  Main explanation text
+<KeyInsight title="Key point" expandedExample={{ label: "Example", content: <div>...</div> }}>
+	Main explanation text
 </KeyInsight>
 ```
 
@@ -922,7 +919,7 @@ When working on Quick Reference pages, prefer these shared components:
 
 ```tsx
 <CollapsibleSection title="Details" colorScheme="honey" defaultOpen={false}>
-  Content
+	Content
 </CollapsibleSection>
 ```
 
@@ -933,15 +930,15 @@ When working on Quick Reference pages, prefer these shared components:
 
 ```tsx
 <QuickTest
-  title="Which one?"
-  colorScheme="honey"
-  options={[
-    {
-      answer: "Answer",
-      condition: "When to use",
-      examples: [{ greek: "example", english: "translation" }]
-    }
-  ]}
+	title="Which one?"
+	colorScheme="honey"
+	options={[
+		{
+			answer: "Answer",
+			condition: "When to use",
+			examples: [{ greek: "example", english: "translation" }],
+		},
+	]}
 />
 ```
 
@@ -960,13 +957,8 @@ When working on Quick Reference pages, prefer these shared components:
 ### `CategoryCard`
 
 ```tsx
-<CategoryCard
-  title="Object Pronouns"
-  priority="primary"
-  colorScheme="ocean"
-  badge="Essential"
->
-  Content
+<CategoryCard title="Object Pronouns" priority="primary" colorScheme="ocean" badge="Essential">
+	Content
 </CategoryCard>
 ```
 
@@ -981,11 +973,11 @@ When working on Quick Reference pages, prefer these shared components:
 
 ```tsx
 <CountdownTimer
-  durationMs={5000}
-  onTimeout={handleTimeout}
-  isRunning={isActive}
-  size="lg"
-  variant="ring"
+	durationMs={5000}
+	onTimeout={handleTimeout}
+	isRunning={isActive}
+	size="lg"
+	variant="ring"
 />
 ```
 
@@ -997,14 +989,14 @@ When working on Quick Reference pages, prefer these shared components:
 
 ```tsx
 <ProductionDrillCard
-  prompt="I want coffee"
-  correctAnswer="Θέλω καφέ"
-  acceptedAnswers={["Θέλω καφέ", "θέλω καφέ", "thelo kafe"]}
-  timeLimit={5000}
-  inputMode="transliteration"
-  onComplete={handleComplete}
-  showParadigm="auto"
-  accuracy={0.75}
+	prompt="I want coffee"
+	correctAnswer="Θέλω καφέ"
+	acceptedAnswers={["Θέλω καφέ", "θέλω καφέ", "thelo kafe"]}
+	timeLimit={5000}
+	inputMode="transliteration"
+	onComplete={handleComplete}
+	showParadigm="auto"
+	accuracy={0.75}
 />
 ```
 
@@ -1016,11 +1008,11 @@ When working on Quick Reference pages, prefer these shared components:
 
 ```tsx
 <SpeedFeedback
-  isCorrect={true}
-  responseTimeMs={2300}
-  correctAnswer="Θέλω καφέ"
-  userAnswer="θελο καφε"
-  differences={["accent on έ", "ω not ο"]}
+	isCorrect={true}
+	responseTimeMs={2300}
+	correctAnswer="Θέλω καφέ"
+	userAnswer="θελο καφε"
+	differences={["accent on έ", "ω not ο"]}
 />
 ```
 
@@ -1031,13 +1023,7 @@ When working on Quick Reference pages, prefer these shared components:
 ### `SessionProgress`
 
 ```tsx
-<SessionProgress
-  current={3}
-  total={8}
-  sessionNumber={1}
-  totalSessions={3}
-  variant="dots"
-/>
+<SessionProgress current={3} total={8} sessionNumber={1} totalSessions={3} variant="dots" />
 ```
 
 - Variants: dots (●●●○○), bar (progress bar), minimal (text only)
@@ -1048,7 +1034,7 @@ When working on Quick Reference pages, prefer these shared components:
 ## Quick Reference Colour Strategy
 
 | Element                           | Colour Token                              |
-|-----------------------------------|-------------------------------------------|
+| --------------------------------- | ----------------------------------------- |
 | Section h2/h3 headings            | `text-navy-text`                          |
 | Subtitles/descriptions            | `text-slate-text`                         |
 | Interactive (collapsibles, links) | `text-terracotta`                         |
@@ -1060,7 +1046,7 @@ When working on Quick Reference pages, prefer these shared components:
 ## Production Drill Colour Strategy
 
 | Element                   | Colour Token                           |
-|---------------------------|----------------------------------------|
+| ------------------------- | -------------------------------------- |
 | Timer (calm)              | `text-ocean`, `border-ocean`           |
 | Timer (warning)           | `text-honey`, `border-honey`           |
 | Timer (urgent)            | `text-terracotta`, `border-terracotta` |
@@ -1089,7 +1075,7 @@ Colour functions as an **attention-directing mechanism**. Use it sparingly to hi
 Research confirms colour-coded material improves vocabulary retention when categories are meaningful and consistent. For Greek, use colour to encode:
 
 | Category               | Recommended Approach                                                   |
-|------------------------|------------------------------------------------------------------------|
+| ---------------------- | ---------------------------------------------------------------------- |
 | **Grammatical Gender** | Consistent colours for masculine/feminine/neuter                       |
 | **Grammatical Case**   | Cases already mapped (nom→ocean, acc→terracotta, gen→olive, voc→honey) |
 | **Part of Speech**     | Group related types (verbs/adverbs vs nouns/adjectives)                |
@@ -1101,7 +1087,7 @@ Research confirms colour-coded material improves vocabulary retention when categ
 Use the subtle gender colours defined in CSS (not accent colours) for gender indication:
 
 | Gender        | Colour                | CSS Class           |
-|---------------|-----------------------|---------------------|
+| ------------- | --------------------- | ------------------- |
 | Masculine (ο) | `#1D4ED8` (blue-700)  | `.gender-masculine` |
 | Feminine (η)  | `#9D174D` (pink-800)  | `.gender-feminine`  |
 | Neuter (το)   | `#44403C` (stone-700) | `.gender-neuter`    |

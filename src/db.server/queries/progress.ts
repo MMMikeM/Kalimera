@@ -36,9 +36,7 @@ export const getPracticeDatesForCalendar = async (
 
 	const results = await db
 		.select({
-			date: sql<string>`date(${practiceSessions.completedAt}, 'unixepoch')`.as(
-				"date",
-			),
+			date: sql<string>`date(${practiceSessions.completedAt}, 'unixepoch')`.as("date"),
 			sessionCount: count().as("session_count"),
 		})
 		.from(practiceSessions)
@@ -58,17 +56,12 @@ export const getPracticeDatesForCalendar = async (
 	}));
 };
 
-export const getAccuracyTrends = async (
-	userId: number,
-	days: number,
-): Promise<AccuracyTrend[]> => {
+export const getAccuracyTrends = async (userId: number, days: number): Promise<AccuracyTrend[]> => {
 	const cutoff = subDays(new Date(), days);
 
 	const results = await db
 		.select({
-			date: sql<string>`date(${practiceAttempts.attemptedAt}, 'unixepoch')`.as(
-				"date",
-			),
+			date: sql<string>`date(${practiceAttempts.attemptedAt}, 'unixepoch')`.as("date"),
 			totalAttempts: count().as("total"),
 			correctAttempts:
 				sql<number>`sum(case when ${practiceAttempts.isCorrect} = 1 then 1 else 0 end)`.as(
@@ -91,15 +84,11 @@ export const getAccuracyTrends = async (
 		totalAttempts: r.totalAttempts,
 		correctAttempts: r.correctAttempts ?? 0,
 		accuracy:
-			r.totalAttempts > 0
-				? Math.round(((r.correctAttempts ?? 0) / r.totalAttempts) * 100)
-				: 0,
+			r.totalAttempts > 0 ? Math.round(((r.correctAttempts ?? 0) / r.totalAttempts) * 100) : 0,
 	}));
 };
 
-export const getTimeInvested = async (
-	userId: number,
-): Promise<TimeInvested> => {
+export const getTimeInvested = async (userId: number): Promise<TimeInvested> => {
 	const [result] = await db
 		.select({
 			totalSeconds:
@@ -109,12 +98,7 @@ export const getTimeInvested = async (
 			sessionCount: count().as("session_count"),
 		})
 		.from(practiceSessions)
-		.where(
-			and(
-				eq(practiceSessions.userId, userId),
-				isNotNull(practiceSessions.completedAt),
-			),
-		);
+		.where(and(eq(practiceSessions.userId, userId), isNotNull(practiceSessions.completedAt)));
 
 	return {
 		totalMinutes: Math.round((result?.totalSeconds ?? 0) / 60),

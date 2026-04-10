@@ -136,8 +136,7 @@ export function FoodTab() {
 				commonMistake={{
 					wrong: "Είμαι γεμάτος",
 					right: "Χόρτασα",
-					explanation:
-						"Είμαι γεμάτος sounds odd in Greek - use χόρτασα for 'I'm full'",
+					explanation: "Είμαι γεμάτος sounds odd in Greek - use χόρτασα for 'I'm full'",
 				}}
 			/>
 		</div>

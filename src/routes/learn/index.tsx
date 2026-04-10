@@ -89,9 +89,7 @@ export default function LearnIndex() {
 			</section>
 
 			<section>
-				<h2 className="mb-3 text-xs font-semibold tracking-wide text-stone-500 uppercase">
-					Words
-				</h2>
+				<h2 className="mb-3 text-xs font-semibold tracking-wide text-stone-500 uppercase">Words</h2>
 				<div className="grid gap-3">
 					{wordsSections.map((section) => (
 						<SectionCard key={section.id} section={section} />

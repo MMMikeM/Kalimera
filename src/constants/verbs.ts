@@ -178,8 +178,7 @@ export const VERB_PATTERNS: Record<string, VerbPattern> = {
 	},
 	contracted: {
 		name: "Contracted (-άω/-ώ)",
-		description:
-			"The α contracts with endings. Two forms exist - both are correct.",
+		description: "The α contracts with endings. Two forms exist - both are correct.",
 		endings: {
 			sg1: "-άω/-ώ",
 			sg2: "-άς",

@@ -38,10 +38,7 @@ export const ContentSection = ({
 		>
 			<header className={cn("px-3 py-2.5", styles.header)}>
 				<div className="flex items-center gap-2">
-					<h3
-						id={headingId}
-						className="text-sm font-black tracking-wide text-white"
-					>
+					<h3 id={headingId} className="text-sm font-black tracking-wide text-white">
 						{title}
 					</h3>
 					{badge && (

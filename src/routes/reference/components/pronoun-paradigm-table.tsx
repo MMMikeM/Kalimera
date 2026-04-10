@@ -19,11 +19,7 @@ const PronounCell = ({ form }: { form: PronounForm }) => (
 	</div>
 );
 
-export const PronounParadigmTable = ({
-	data,
-	colorClass,
-	note,
-}: PronounParadigmTableProps) => (
+export const PronounParadigmTable = ({ data, colorClass, note }: PronounParadigmTableProps) => (
 	<div>
 		<table className="w-full border-collapse text-sm">
 			<thead>
@@ -36,9 +32,7 @@ export const PronounParadigmTable = ({
 			<tbody>
 				{data.map((row) => (
 					<tr key={row.person}>
-						<td className="px-2 py-2.5 align-middle text-xs text-stone-500">
-							{row.person}
-						</td>
+						<td className="px-2 py-2.5 align-middle text-xs text-stone-500">{row.person}</td>
 						<td className="px-2 py-2.5 align-middle">
 							<PronounCell form={row.singular} />
 						</td>

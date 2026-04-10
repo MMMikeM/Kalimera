@@ -17,10 +17,7 @@ export const findPasskeysByUserId = async (userId: number) => {
 };
 
 export const findPasskeyByCredentialId = async (credentialId: string) => {
-	const [passkey] = await db
-		.select()
-		.from(passkeys)
-		.where(eq(passkeys.credentialId, credentialId));
+	const [passkey] = await db.select().from(passkeys).where(eq(passkeys.credentialId, credentialId));
 	return passkey;
 };
 
@@ -40,10 +37,7 @@ export const createPasskey = async (data: NewPasskey) => {
 	return passkey;
 };
 
-export const updatePasskeyCounter = async (
-	credentialId: string,
-	counter: number,
-) => {
+export const updatePasskeyCounter = async (credentialId: string, counter: number) => {
 	await db
 		.update(passkeys)
 		.set({ counter, lastUsedAt: new Date() })
@@ -56,11 +50,7 @@ export const updatePasskeyCounter = async (
 
 const CHALLENGE_TTL_MS = 5 * 60 * 1000; // 5 minutes
 
-export const createChallenge = async (
-	challenge: string,
-	type: ChallengeType,
-	userId?: number,
-) => {
+export const createChallenge = async (challenge: string, type: ChallengeType, userId?: number) => {
 	const expiresAt = new Date(Date.now() + CHALLENGE_TTL_MS);
 	const [record] = await db
 		.insert(authChallenges)
@@ -80,20 +70,13 @@ export const findChallenge = async (challenge: string, type: ChallengeType) => {
 	// Opportunistically clean up a few expired challenges
 	await db
 		.delete(authChallenges)
-		.where(
-			and(eq(authChallenges.type, type), lt(authChallenges.expiresAt, now)),
-		);
+		.where(and(eq(authChallenges.type, type), lt(authChallenges.expiresAt, now)));
 
 	// Find the valid challenge
 	const [record] = await db
 		.select()
 		.from(authChallenges)
-		.where(
-			and(
-				eq(authChallenges.challenge, challenge),
-				eq(authChallenges.type, type),
-			),
-		);
+		.where(and(eq(authChallenges.challenge, challenge), eq(authChallenges.type, type)));
 
 	// Return null if expired
 	if (record && record.expiresAt < now) {
@@ -104,9 +87,7 @@ export const findChallenge = async (challenge: string, type: ChallengeType) => {
 };
 
 export const deleteChallenge = async (challenge: string) => {
-	await db
-		.delete(authChallenges)
-		.where(eq(authChallenges.challenge, challenge));
+	await db.delete(authChallenges).where(eq(authChallenges.challenge, challenge));
 };
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -162,18 +143,11 @@ export const userHasPasskey = async (userId: number) => {
 };
 
 export const findUserByCode = async (code: string) => {
-	const [user] = await db
-		.select()
-		.from(users)
-		.where(eq(users.code, code.toLowerCase()));
+	const [user] = await db.select().from(users).where(eq(users.code, code.toLowerCase()));
 	return user;
 };
 
-export const setUserPassword = async (
-	userId: number,
-	passwordHash: string,
-	username?: string,
-) => {
+export const setUserPassword = async (userId: number, passwordHash: string, username?: string) => {
 	const updateData: { passwordHash: string; username?: string } = {
 		passwordHash,
 	};

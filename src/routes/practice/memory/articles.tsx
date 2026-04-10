@@ -219,10 +219,7 @@ const CASE_STYLE: Record<
 	},
 };
 
-const GENDER_STYLE: Record<
-	Gender,
-	{ label: string; selectorBg: string; selectorText: string }
-> = {
+const GENDER_STYLE: Record<Gender, { label: string; selectorBg: string; selectorText: string }> = {
 	masculine: {
 		label: "text-navy-text",
 		selectorBg: "bg-navy-100",
@@ -284,23 +281,15 @@ const ConfigScreen = ({
 				<thead>
 					<tr>
 						<th className="py-1 pr-4 text-left text-xs font-normal text-muted-foreground" />
-						<th className="px-3 py-1 text-center text-xs font-medium text-navy-text">
-							Masc
-						</th>
-						<th className="px-3 py-1 text-center text-xs font-medium text-sunset-text">
-							Fem
-						</th>
-						<th className="px-3 py-1 text-center text-xs font-medium text-slate-text">
-							Neut
-						</th>
+						<th className="px-3 py-1 text-center text-xs font-medium text-navy-text">Masc</th>
+						<th className="px-3 py-1 text-center text-xs font-medium text-sunset-text">Fem</th>
+						<th className="px-3 py-1 text-center text-xs font-medium text-slate-text">Neut</th>
 					</tr>
 				</thead>
 				<tbody>
 					{PARADIGM_ROWS.map((row) => (
 						<tr key={row.label} className="border-t border-stone-100">
-							<td
-								className={`py-1.5 pr-4 text-xs font-medium ${CASE_STYLE[row.caseKey].text}`}
-							>
+							<td className={`py-1.5 pr-4 text-xs font-medium ${CASE_STYLE[row.caseKey].text}`}>
 								{row.label}
 							</td>
 							{(["masculine", "feminine", "neuter"] as const).map((g, i) => (
@@ -359,10 +348,7 @@ export default function MemoryDrill() {
 		if (phase !== "active") return;
 		const currentInput = inputValueRef.current.trim();
 		if (mode === "forward" && currentInput) {
-			const isCorrect = matchPhonetic(
-				currentInput,
-				currentArticle.greek,
-			).isCorrect;
+			const isCorrect = matchPhonetic(currentInput, currentArticle.greek).isCorrect;
 			if (isCorrect) {
 				recordAttempt(true, timerMs, true);
 				return;
@@ -372,19 +358,12 @@ export default function MemoryDrill() {
 		recordAttempt(false, timerMs, true);
 	}, [phase, mode, currentArticle, timerMs, MAX_TIMER_MS, recordAttempt]);
 
-	const { progress, startedAt } = useCountdown(
-		timerMs,
-		isActive,
-		handleTimeout,
-	);
+	const { progress, startedAt } = useCountdown(timerMs, isActive, handleTimeout);
 
 	const handleForwardSubmit = useCallback(() => {
 		if (phase !== "active") return;
 		const timeTaken = Math.min(performance.now() - startedAt.current, timerMs);
-		const isCorrect = matchPhonetic(
-			input.trim(),
-			currentArticle.greek,
-		).isCorrect;
+		const isCorrect = matchPhonetic(input.trim(), currentArticle.greek).isCorrect;
 		recordAttempt(isCorrect, timeTaken);
 	}, [phase, input, currentArticle, startedAt, timerMs, recordAttempt]);
 
@@ -396,15 +375,7 @@ export default function MemoryDrill() {
 			selNumber === currentArticle.number &&
 			selCase === currentArticle.case;
 		recordAttempt(isCorrect, timeTaken);
-	}, [
-		phase,
-		selGender,
-		selNumber,
-		selCase,
-		currentArticle,
-		startedAt,
-		recordAttempt,
-	]);
+	}, [phase, selGender, selNumber, selCase, currentArticle, startedAt, recordAttempt]);
 
 	const resetSelectors = useCallback(() => {
 		setSelGender(null);
@@ -431,13 +402,7 @@ export default function MemoryDrill() {
 
 	// Auto-submit reverse when all three attributes selected
 	useEffect(() => {
-		if (
-			mode === "reverse" &&
-			selGender &&
-			selNumber &&
-			selCase &&
-			phase === "active"
-		) {
+		if (mode === "reverse" && selGender && selNumber && selCase && phase === "active") {
 			handleReverseSubmit();
 		}
 	}, [selGender, selNumber, selCase, mode, phase, handleReverseSubmit]);
@@ -468,22 +433,14 @@ export default function MemoryDrill() {
 	}
 	if (phase === "complete") {
 		return (
-			<SummaryScreen
-				attempts={attempts}
-				total={sessionSize}
-				onAgain={() => setPhase("config")}
-			/>
+			<SummaryScreen attempts={attempts} total={sessionSize} onAgain={() => setPhase("config")} />
 		);
 	}
 
 	const cs = CASE_STYLE[currentArticle.case];
 	const gs = GENDER_STYLE[currentArticle.gender];
 	const barColor =
-		phase === "feedback"
-			? lastAttempt?.isCorrect
-				? "bg-correct"
-				: "bg-incorrect"
-			: cs.bar;
+		phase === "feedback" ? (lastAttempt?.isCorrect ? "bg-correct" : "bg-incorrect") : cs.bar;
 
 	return (
 		<DrillShell
@@ -495,17 +452,13 @@ export default function MemoryDrill() {
 			{mode === "forward" ? (
 				<>
 					<div>
-						<p
-							className={`mb-4 text-xs font-medium tracking-[0.18em] uppercase ${gs.label}`}
-						>
+						<p className={`mb-4 text-xs font-medium tracking-[0.18em] uppercase ${gs.label}`}>
 							{currentArticle.gender}
 						</p>
 						<p className="font-serif text-5xl leading-tight text-foreground">
 							{currentArticle.number}
 						</p>
-						<p className={`font-serif text-5xl leading-tight ${cs.text}`}>
-							{currentArticle.case}
-						</p>
+						<p className={`font-serif text-5xl leading-tight ${cs.text}`}>{currentArticle.case}</p>
 					</div>
 
 					<div>
@@ -516,18 +469,13 @@ export default function MemoryDrill() {
 							inputRef={inputRef}
 							phase={phase}
 						/>
-						{phase === "feedback" && lastAttempt && (
-							<FeedbackDisplay lastAttempt={lastAttempt} />
-						)}
+						{phase === "feedback" && lastAttempt && <FeedbackDisplay lastAttempt={lastAttempt} />}
 					</div>
 				</>
 			) : (
 				<>
 					<div className="pt-2">
-						<p
-							lang="el"
-							className="greek-text font-sans text-8xl leading-none text-foreground"
-						>
+						<p lang="el" className="greek-text font-sans text-8xl leading-none text-foreground">
 							{currentArticle.greek}
 						</p>
 					</div>
@@ -575,9 +523,7 @@ export default function MemoryDrill() {
 							))}
 						</div>
 
-						{phase === "feedback" && lastAttempt && (
-							<ReverseFeedback lastAttempt={lastAttempt} />
-						)}
+						{phase === "feedback" && lastAttempt && <ReverseFeedback lastAttempt={lastAttempt} />}
 					</div>
 				</>
 			)}

@@ -31,12 +31,12 @@ See `/docs/learning-theory.md` for full citations. Key findings:
 **The framework that explains why words change.**
 
 | Case       | Question     | Example                 |
-|------------|--------------|-------------------------|
+| ---------- | ------------ | ----------------------- |
 | Nominative | WHO does it? | **Ο Γιάννης** τρώει     |
 | Accusative | WHAT/WHOM?   | Βλέπω **τον Γιάννη**    |
 | Genitive   | WHOSE?       | Το σπίτι **του Γιάννη** |
 
-**Why first:** Cases are the organizing principle. Present them as a meaning-making system (what they *do*), not paradigm tables to memorize.
+**Why first:** Cases are the organizing principle. Present them as a meaning-making system (what they _do_), not paradigm tables to memorize.
 
 **Key insight:** Greek uses word endings where English uses word order.
 
@@ -49,7 +49,7 @@ See `/docs/learning-theory.md` for full citations. Key findings:
 **Gender and case signals—but only the forms you need now.**
 
 |     | Masculine | Feminine | Neuter |
-|-----|-----------|----------|--------|
+| --- | --------- | -------- | ------ |
 | Nom | ο         | η        | το     |
 | Acc | τον       | την      | το     |
 
@@ -66,7 +66,7 @@ See `/docs/learning-theory.md` for full citations. Key findings:
 **First complete sentences: "I am", "I want".**
 
 | Person | είμαι (to be) | θέλω (to want) |
-|--------|---------------|----------------|
+| ------ | ------------- | -------------- |
 | εγώ    | είμαι         | θέλω           |
 | εσύ    | είσαι         | θέλεις         |
 | αυτός  | είναι         | θέλει          |
@@ -90,11 +90,11 @@ See `/docs/learning-theory.md` for full citations. Key findings:
 
 **Why Greek drops them—and when you need them.**
 
-| Person | Pronoun        | When to use                    |
-|--------|----------------|--------------------------------|
-| 1st    | εγώ (I)        | Emphasis: "I did it, not you"  |
-| 2nd    | εσύ (you)      | Contrast: "What about you?"    |
-| 3rd    | αυτός/ή/ό      | Clarity when subject is ambiguous |
+| Person | Pronoun   | When to use                       |
+| ------ | --------- | --------------------------------- |
+| 1st    | εγώ (I)   | Emphasis: "I did it, not you"     |
+| 2nd    | εσύ (you) | Contrast: "What about you?"       |
+| 3rd    | αυτός/ή/ό | Clarity when subject is ambiguous |
 
 **Why here:** Now that learners know verb endings show person, they can understand why subject pronouns are optional—and when to use them for emphasis.
 
@@ -108,8 +108,8 @@ See `/docs/learning-theory.md` for full citations. Key findings:
 
 Example: ο φίλος (the friend, masculine)
 
-| Case | Form         | Example sentence              |
-|------|--------------|-------------------------------|
+| Case | Form         | Example sentence                       |
+| ---- | ------------ | -------------------------------------- |
 | Nom  | ο φίλ**ος**  | Ο φίλος είναι εδώ (The friend is here) |
 | Acc  | τον φίλ**ο** | Θέλω τον φίλο (I want the friend)      |
 
@@ -126,7 +126,7 @@ Example: ο φίλος (the friend, masculine)
 **Who receives the action.**
 
 |       | Singular  | Plural      |
-|-------|-----------|-------------|
+| ----- | --------- | ----------- |
 | 1st   | με (me)   | μας (us)    |
 | 2nd   | σε (you)  | σας (you)   |
 | 3rd m | τον (him) | τους (them) |
@@ -135,7 +135,7 @@ Example: ο φίλος (the friend, masculine)
 
 **Why here:** Learners can now say "I want it", "He sees me", "Do you want them?"
 
-**Key insight:** Object pronouns come *before* the verb in Greek: **Τον** θέλω (I want him), not *Θέλω τον.
+**Key insight:** Object pronouns come _before_ the verb in Greek: **Τον** θέλω (I want him), not \*Θέλω τον.
 
 **What learner can now say:** "Με βλέπεις;" (Do you see me?), "Το θέλω" (I want it)
 
@@ -147,12 +147,12 @@ Example: ο φίλος (the friend, masculine)
 
 **Action verbs for everyday communication.**
 
-| Verb    | Meaning    | εγώ    | εσύ     | αυτός   |
-|---------|------------|--------|---------|---------|
-| έχω     | to have    | έχω    | έχεις   | έχει    |
-| κάνω    | to do/make | κάνω   | κάνεις  | κάνει   |
-| πάω     | to go      | πάω    | πας     | πάει    |
-| μιλάω   | to speak   | μιλάω  | μιλάς   | μιλάει  |
+| Verb  | Meaning    | εγώ   | εσύ    | αυτός  |
+| ----- | ---------- | ----- | ------ | ------ |
+| έχω   | to have    | έχω   | έχεις  | έχει   |
+| κάνω  | to do/make | κάνω  | κάνεις | κάνει  |
+| πάω   | to go      | πάω   | πας    | πάει   |
+| μιλάω | to speak   | μιλάω | μιλάς  | μιλάει |
 
 **Why here:** With nouns and pronouns established, learners can now build varied sentences.
 
@@ -168,10 +168,10 @@ Example: ο φίλος (the friend, masculine)
 
 Adjectives must match the noun in gender and case.
 
-|        | Masculine | Feminine  | Neuter    |
-|--------|-----------|-----------|-----------|
-| Nom sg | καλ**ός** | καλ**ή**  | καλ**ό**  |
-| Acc sg | καλ**ό**  | καλ**ή**  | καλ**ό**  |
+|        | Masculine | Feminine | Neuter   |
+| ------ | --------- | -------- | -------- |
+| Nom sg | καλ**ός** | καλ**ή** | καλ**ό** |
+| Acc sg | καλ**ό**  | καλ**ή** | καλ**ό** |
 
 **Why here:** Prerequisites met—learners understand cases, recognize gender from articles, and know noun patterns. Adjectives are a natural extension.
 
@@ -191,12 +191,12 @@ Adjectives must match the noun in gender and case.
 
 **Location, direction, purpose—all take accusative.**
 
-| Preposition | Meaning   | Example                     |
-|-------------|-----------|-----------------------------|
+| Preposition | Meaning   | Example                       |
+| ----------- | --------- | ----------------------------- |
 | σε          | to/at/in  | Πάω **στο** σπίτι (I go home) |
-| από         | from      | Είμαι **από** την Αθήνα     |
-| για         | for/about | Είναι **για** σένα          |
-| με          | with      | Έρχομαι **με** τον φίλο     |
+| από         | from      | Είμαι **από** την Αθήνα       |
+| για         | for/about | Είναι **για** σένα            |
+| με          | with      | Έρχομαι **με** τον φίλο       |
 
 **Why here:** Prepositions require knowing accusative forms. The σε contractions (στον, στην, στο) build on article knowledge.
 
@@ -211,14 +211,14 @@ Adjectives must match the noun in gender and case.
 **Possession and the "of" relationship.**
 
 |     | Masculine | Feminine | Neuter |
-|-----|-----------|----------|--------|
+| --- | --------- | -------- | ------ |
 | Gen | του       | της      | του    |
 
 Possessive pronouns: μου (my), σου (your), του/της/του (his/her/its)
 
 **Why here:** Genitive is less frequent than nominative/accusative. Introducing it now lets learners say "my house", "John's car".
 
-**Key insight:** Possessives come *after* the noun: το σπίτι **μου** (my house), not *μου σπίτι.
+**Key insight:** Possessives come _after_ the noun: το σπίτι **μου** (my house), not \*μου σπίτι.
 
 ---
 
@@ -226,8 +226,8 @@ Possessive pronouns: μου (my), σου (your), του/της/του (his/her/i
 
 **Third person and plurals.**
 
-| Person | Singular | Plural    |
-|--------|----------|-----------|
+| Person | Singular   | Plural     |
+| ------ | ---------- | ---------- |
 | 1st    | μιλ**άω**  | μιλ**άμε** |
 | 2nd    | μιλ**άς**  | μιλ**άτε** |
 | 3rd    | μιλ**άει** | μιλ**άνε** |
@@ -258,10 +258,10 @@ Now introduce:
 
 **Direct address—lower priority.**
 
-| Nominative | Vocative   | Usage           |
-|------------|------------|-----------------|
-| Γιάννης    | Γιάννη!    | Hey John!       |
-| φίλος      | φίλε!      | Friend! (calling)|
+| Nominative | Vocative | Usage             |
+| ---------- | -------- | ----------------- |
+| Γιάννης    | Γιάννη!  | Hey John!         |
+| φίλος      | φίλε!    | Friend! (calling) |
 
 **Why last among cases:** In casual speech, nominative is rarely wrong for address. Vocative is polish, not necessity.
 
@@ -328,14 +328,14 @@ Use εσείς (you-plural) for:
 
 ## Why This Order Works
 
-| Phase | What's New | What Learner Can Now Say |
-|-------|-----------|-------------------------|
-| 1.3 | είμαι, θέλω | "I am fine", "I want coffee" |
-| 2.6 | Object pronouns | "He sees me", "I want it" |
-| 3.7 | More verbs | "I have a car", "I speak Greek" |
-| 3.8 | Adjectives | "The good friend", "hot coffee" |
-| 3.9 | Prepositions | "I go to the house", "from Athens" |
-| 4.10 | Genitive | "my house", "John's car" |
+| Phase | What's New      | What Learner Can Now Say           |
+| ----- | --------------- | ---------------------------------- |
+| 1.3   | είμαι, θέλω     | "I am fine", "I want coffee"       |
+| 2.6   | Object pronouns | "He sees me", "I want it"          |
+| 3.7   | More verbs      | "I have a car", "I speak Greek"    |
+| 3.8   | Adjectives      | "The good friend", "hot coffee"    |
+| 3.9   | Prepositions    | "I go to the house", "from Athens" |
+| 4.10  | Genitive        | "my house", "John's car"           |
 
 **The key difference from traditional progressions:** Learners form complete sentences at every stage. They don't accumulate six stages of nominal grammar before saying their first verb.
 
@@ -351,7 +351,7 @@ The original progression placed verbs at position 8. This violated both research
 
 ### Why Cases Stay First (Conceptually)
 
-Cases are still introduced first—but as a *conceptual framework*, not paradigm tables. The learner needs to understand that word endings signal meaning before seeing specific forms.
+Cases are still introduced first—but as a _conceptual framework_, not paradigm tables. The learner needs to understand that word endings signal meaning before seeing specific forms.
 
 ### Adjectives: The Placement Decision
 

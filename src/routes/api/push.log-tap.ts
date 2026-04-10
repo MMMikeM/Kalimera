@@ -1,7 +1,4 @@
-import {
-	logNotificationTap,
-	type TappedAction,
-} from "@/db.server/queries/push-notifications";
+import { logNotificationTap, type TappedAction } from "@/db.server/queries/push-notifications";
 import type { Route } from "./+types/push.log-tap";
 
 const VALID_TAPPED_ACTIONS: TappedAction[] = ["2min", "body", "snooze"];
@@ -25,10 +22,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
 				: null;
 
 		if (!userId || !tappedAction) {
-			return Response.json(
-				{ error: "Missing userId or tappedAction" },
-				{ status: 400 },
-			);
+			return Response.json({ error: "Missing userId or tappedAction" }, { status: 400 });
 		}
 
 		await logNotificationTap(userId, tappedAction);

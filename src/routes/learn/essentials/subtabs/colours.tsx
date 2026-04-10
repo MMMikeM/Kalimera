@@ -91,11 +91,7 @@ export function ColoursSubtab({ data }: Props) {
 			</Link>
 
 			{/* Basic Colours */}
-			<ContentSection
-				title="Basic Colours"
-				subtitle="Τα βασικά χρώματα"
-				colorScheme="ocean"
-			>
+			<ContentSection title="Basic Colours" subtitle="Τα βασικά χρώματα" colorScheme="ocean">
 				<div className="divide-y divide-stone-200/60">
 					{COLOUR_ORDER.map(([leftGreek, rightGreek]) => {
 						const left = colourByGreek.get(leftGreek);
@@ -115,9 +111,7 @@ export function ColoursSubtab({ data }: Props) {
 											<ColourSwatch greek={left.greek} />
 											<div className="min-w-0">
 												<MonoText variant="greek">{left.greek}</MonoText>
-												<div className="text-xs text-stone-500">
-													{left.english}
-												</div>
+												<div className="text-xs text-stone-500">{left.english}</div>
 											</div>
 										</>
 									)}
@@ -130,9 +124,7 @@ export function ColoursSubtab({ data }: Props) {
 											<ColourSwatch greek={right.greek} />
 											<div className="min-w-0">
 												<MonoText variant="greek">{right.greek}</MonoText>
-												<div className="text-xs text-stone-500">
-													{right.english}
-												</div>
+												<div className="text-xs text-stone-500">{right.english}</div>
 											</div>
 										</>
 									)}
@@ -144,17 +136,10 @@ export function ColoursSubtab({ data }: Props) {
 			</ContentSection>
 
 			{/* Modifiers */}
-			<ContentSection
-				title="Modifiers"
-				subtitle="Describing shades"
-				colorScheme="honey"
-			>
+			<ContentSection title="Modifiers" subtitle="Describing shades" colorScheme="honey">
 				<div className="divide-y divide-stone-200/60">
 					{MODIFIERS.map((mod) => (
-						<div
-							key={mod.greek}
-							className="grid grid-cols-[1fr_1fr] gap-x-3 px-3 py-2.5"
-						>
+						<div key={mod.greek} className="grid grid-cols-[1fr_1fr] gap-x-3 px-3 py-2.5">
 							<MonoText variant="greek">{mod.greek}</MonoText>
 							<span className="text-sm text-stone-500">{mod.english}</span>
 						</div>
@@ -171,9 +156,7 @@ export function ColoursSubtab({ data }: Props) {
 								<ColourSwatch greek={example.greek} />
 								<div>
 									<MonoText variant="greek">{example.greek}</MonoText>
-									<span className="ml-2 text-xs text-stone-500">
-										{example.english}
-									</span>
+									<span className="ml-2 text-xs text-stone-500">{example.english}</span>
 								</div>
 							</div>
 						))}
@@ -185,26 +168,18 @@ export function ColoursSubtab({ data }: Props) {
 					<div className="space-y-1.5 text-sm">
 						<div>
 							<MonoText variant="greek">Θέλω το σκούρο μπλε.</MonoText>
-							<div className="text-xs text-stone-500">
-								I want the dark blue (one).
-							</div>
+							<div className="text-xs text-stone-500">I want the dark blue (one).</div>
 						</div>
 						<div>
 							<MonoText variant="greek">Έχετε απαλό ροζ;</MonoText>
-							<div className="text-xs text-stone-500">
-								Do you have soft pink?
-							</div>
+							<div className="text-xs text-stone-500">Do you have soft pink?</div>
 						</div>
 					</div>
 				</div>
 			</ContentSection>
 
 			{/* Usage */}
-			<ContentSection
-				title="Usage"
-				subtitle="Colours in sentences"
-				colorScheme="terracotta"
-			>
+			<ContentSection title="Usage" subtitle="Colours in sentences" colorScheme="terracotta">
 				<div className="divide-y divide-stone-200/60">
 					{USAGE_EXAMPLES.map((example) => (
 						<div key={example.greek} className="px-3 py-2.5">
@@ -215,13 +190,10 @@ export function ColoursSubtab({ data }: Props) {
 				</div>
 
 				<div className="mx-3 mt-3 rounded-lg border border-terracotta-200 bg-terracotta-100 p-2.5">
-					<p className="mb-2 text-sm font-medium text-terracotta-text">
-						Colour agreement
-					</p>
+					<p className="mb-2 text-sm font-medium text-terracotta-text">Colour agreement</p>
 					<div className="space-y-1.5 text-sm">
 						<p className="text-stone-600">
-							Most colours are <strong>indeclinable</strong> — they don't change
-							form:
+							Most colours are <strong>indeclinable</strong> — they don't change form:
 						</p>
 						<div className="space-y-1 pl-2">
 							<div>
@@ -262,9 +234,7 @@ export function ColoursSubtab({ data }: Props) {
 							</div>
 							<div>
 								<MonoText variant="greek">χρυσός, -ή, -ό</MonoText>
-								<span className="ml-2 text-xs text-stone-500">
-									(gold/golden)
-								</span>
+								<span className="ml-2 text-xs text-stone-500">(gold/golden)</span>
 							</div>
 						</div>
 					</div>

@@ -1,7 +1,4 @@
-import {
-	getVocabBySection,
-	type VocabItemWithSection,
-} from "@/db.server/queries/vocabulary";
+import { getVocabBySection, type VocabItemWithSection } from "@/db.server/queries/vocabulary";
 
 export type VocabItem = VocabItemWithSection;
 
@@ -21,9 +18,7 @@ const parseNoun = (item: VocabItem): NounWithGender => ({
 	gender: detectGender(item.greek),
 });
 
-function groupByTag<T extends { tagSlug: string }>(
-	items: T[],
-): Record<string, T[]> {
+function groupByTag<T extends { tagSlug: string }>(items: T[]): Record<string, T[]> {
 	const result: Record<string, T[]> = {};
 	for (const item of items) {
 		const key = item.tagSlug;

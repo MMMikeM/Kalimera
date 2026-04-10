@@ -1,23 +1,14 @@
 import type React from "react";
 import { cn } from "@/lib/utils";
 
-export type SpeakerRole =
-	| "host"
-	| "you"
-	| "friend"
-	| "waiter"
-	| "shopkeeper"
-	| "stranger";
+export type SpeakerRole = "host" | "you" | "friend" | "waiter" | "shopkeeper" | "stranger";
 
 interface SpeakerBadgeProps {
 	role: SpeakerRole;
 	className?: string;
 }
 
-const SPEAKER_CONFIG: Record<
-	SpeakerRole,
-	{ label: string; bgClass: string; textClass: string }
-> = {
+const SPEAKER_CONFIG: Record<SpeakerRole, { label: string; bgClass: string; textClass: string }> = {
 	you: { label: "You", bgClass: "bg-navy-600", textClass: "text-white" },
 	host: { label: "Host", bgClass: "bg-olive-100", textClass: "text-olive-700" },
 	friend: {
@@ -42,10 +33,7 @@ const SPEAKER_CONFIG: Record<
 	},
 };
 
-export const SpeakerBadge: React.FC<SpeakerBadgeProps> = ({
-	role,
-	className,
-}) => {
+export const SpeakerBadge: React.FC<SpeakerBadgeProps> = ({ role, className }) => {
 	const config = SPEAKER_CONFIG[role];
 
 	return (

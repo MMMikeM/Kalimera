@@ -6,6 +6,7 @@ description: DEPRECATED: This skill has been renamed to 'impeccable'. Run /impec
 This skill has been renamed to **impeccable**. All design functionality now lives in the `/i-impeccable` skill.
 
 Check if the i-impeccable skill is available:
+
 - If `/i-impeccable` exists, use it directly. You can safely inform the user that the `frontend-design` folder is a deprecated leftover and can be deleted.
 - If `/i-impeccable` does NOT exist, tell the user to update their skills by running `npx impeccable skills update` in their terminal.
 

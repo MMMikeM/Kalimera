@@ -115,11 +115,7 @@ const user = await db.query.users.findFirst({ where: { id: userId } });
 const tasks = await db.query.tasks.findMany({ where: { userId } });
 
 // WRONG — don't use Select Builder for simple reads
-const [user] = await db
-	.select()
-	.from(users)
-	.where(eq(users.id, userId))
-	.limit(1);
+const [user] = await db.select().from(users).where(eq(users.id, userId)).limit(1);
 ```
 
 ## Implementation rules
@@ -169,11 +165,7 @@ await db.insert(tasks).values({ id, title, columnId }).onConflictDoUpdate({
 // CORRECT — caller gets generated ID, timestamps, defaults
 const [task] = await db.insert(tasks).values(data).returning();
 
-const [updated] = await db
-	.update(tasks)
-	.set({ title })
-	.where(eq(tasks.id, id))
-	.returning();
+const [updated] = await db.update(tasks).set({ title }).where(eq(tasks.id, id)).returning();
 ```
 
 Skip `.returning()` only for fire-and-forget operations (batch cleanup, etc.).

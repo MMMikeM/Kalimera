@@ -6,10 +6,7 @@ import { CollapsibleSection } from "@/components/CollapsibleSection";
 import { ContentSection } from "@/components/ContentSection";
 import { MonoText } from "@/components/MonoText";
 import { SectionHeading } from "@/components/SectionHeading";
-import {
-	AGREEMENT_PARADIGMS,
-	type AgreementParadigm,
-} from "@/constants/agreement";
+import { AGREEMENT_PARADIGMS, type AgreementParadigm } from "@/constants/agreement";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // Types & Constants
@@ -120,9 +117,7 @@ const CaseGuide = () => (
 		<div className="space-y-3 p-4">
 			{CASE_QUESTIONS.map(({ case: c, question, greek, english }) => (
 				<div key={c} className="flex items-start gap-3">
-					<span className="shrink-0 rounded bg-stone-100 px-2 py-1 font-mono text-xs">
-						{c}
-					</span>
+					<span className="shrink-0 rounded bg-stone-100 px-2 py-1 font-mono text-xs">{c}</span>
 					<div>
 						<span className="text-sm font-medium">{question}</span>
 						<div className="text-sm text-stone-500">
@@ -143,24 +138,16 @@ const CaseGuide = () => (
 
 const GenderHints = () => (
 	<Card variant="bordered" padding="md" className="bg-stone-50/50">
-		<div className="mb-3 text-sm font-medium text-stone-700">
-			Recognise gender by ending
-		</div>
+		<div className="mb-3 text-sm font-medium text-stone-700">Recognise gender by ending</div>
 		<div className="grid grid-cols-3 gap-3 text-sm">
 			{(["masculine", "feminine", "neuter"] as const).map((gender) => (
 				<div key={gender} className="space-y-1">
 					<div className="flex items-center gap-1.5">
 						<span className={`h-2.5 w-2.5 rounded-full bg-gender-${gender}`} />
-						<span className={`font-medium text-gender-${gender} capitalize`}>
-							{gender}
-						</span>
+						<span className={`font-medium text-gender-${gender} capitalize`}>{gender}</span>
 					</div>
-					<div className="text-xs text-stone-600">
-						{GENDER_HINTS[gender].endings}
-					</div>
-					<div className="text-xs text-stone-500">
-						{GENDER_HINTS[gender].hint}
-					</div>
+					<div className="text-xs text-stone-600">{GENDER_HINTS[gender].endings}</div>
+					<div className="text-xs text-stone-500">{GENDER_HINTS[gender].hint}</div>
 				</div>
 			))}
 		</div>
@@ -184,9 +171,7 @@ const ViewToggle = ({
 				type="button"
 				onClick={() => onChange(m)}
 				className={`px-3 py-1.5 transition-colors ${
-					mode === m
-						? "bg-stone-700 text-white"
-						: "bg-white text-stone-600 hover:bg-stone-50"
+					mode === m ? "bg-stone-700 text-white" : "bg-white text-stone-600 hover:bg-stone-50"
 				}`}
 			>
 				{m === "endings" ? "Endings" : "Full forms"}
@@ -208,9 +193,7 @@ const ParadigmTable = ({
 		<table className="w-full min-w-[280px] text-sm">
 			<thead>
 				<tr className="border-b border-stone-200">
-					<th className="w-12 py-2 pr-2 text-left text-xs font-medium text-stone-500">
-						Case
-					</th>
+					<th className="w-12 py-2 pr-2 text-left text-xs font-medium text-stone-500">Case</th>
 					{paradigms.map((p) => (
 						<th
 							key={p.id}
@@ -226,27 +209,14 @@ const ParadigmTable = ({
 					<tr key={caseType} className="border-b border-stone-100">
 						<td className="py-2 pr-2 text-xs text-stone-500">{caseType}</td>
 						{paradigms.map((p) => {
-							const highlight =
-								showNomAccHighlight && caseType === "Acc" && nomEqualsAcc(p);
-							const value =
-								mode === "endings"
-									? getEnding(p, caseType)
-									: getFull(p, caseType);
+							const highlight = showNomAccHighlight && caseType === "Acc" && nomEqualsAcc(p);
+							const value = mode === "endings" ? getEnding(p, caseType) : getFull(p, caseType);
 							return (
-								<td
-									key={p.id}
-									className={`px-2 py-2 ${highlight ? "bg-olive-50" : ""}`}
-								>
-									<MonoText
-										size="sm"
-										variant={p.gender}
-										className={highlight ? "font-medium" : ""}
-									>
+								<td key={p.id} className={`px-2 py-2 ${highlight ? "bg-olive-50" : ""}`}>
+									<MonoText size="sm" variant={p.gender} className={highlight ? "font-medium" : ""}>
 										{value}
 									</MonoText>
-									{highlight && (
-										<span className="ml-1 text-xs text-olive-600">★</span>
-									)}
+									{highlight && <span className="ml-1 text-xs text-olive-600">★</span>}
 								</td>
 							);
 						})}
@@ -265,16 +235,10 @@ const EssentialPatterns = () => {
 		<Card variant="bordered" padding="md" className="bg-white">
 			<div className="space-y-3">
 				<div className="flex items-center justify-between">
-					<div className="text-sm font-medium text-stone-700">
-						Essential patterns
-					</div>
+					<div className="text-sm font-medium text-stone-700">Essential patterns</div>
 					<ViewToggle mode={mode} onChange={setMode} />
 				</div>
-				<ParadigmTable
-					paradigms={paradigms}
-					mode={mode}
-					showNomAccHighlight={true}
-				/>
+				<ParadigmTable paradigms={paradigms} mode={mode} showNomAccHighlight={true} />
 				<div className="border-t border-stone-200 pt-3">
 					<div className="flex items-start gap-2">
 						<span className="text-lg text-olive-600">★</span>
@@ -282,9 +246,7 @@ const EssentialPatterns = () => {
 							<div className="text-sm font-medium text-olive-700">
 								Feminine & neuter: Nominative = Accusative
 							</div>
-							<p className="text-sm text-stone-600">
-								Only genitive changes. Less to memorise!
-							</p>
+							<p className="text-sm text-stone-600">Only genitive changes. Less to memorise!</p>
 						</div>
 					</div>
 					<p className="mt-2 text-xs text-stone-500">
@@ -322,20 +284,13 @@ const GenderVariants = ({ gender }: { gender: Gender }) => {
 };
 
 const DecisionGuide = () => (
-	<CollapsibleSection
-		title="When you're unsure"
-		colorScheme="honey"
-		defaultOpen={false}
-	>
+	<CollapsibleSection title="When you're unsure" colorScheme="honey" defaultOpen={false}>
 		<div className="space-y-3 p-4">
 			{DECISION_GUIDES.map(({ question, explanation, examples }) => (
 				<div key={question} className="rounded-lg bg-stone-50 p-3">
-					<div className="mb-1 text-sm font-medium text-stone-700">
-						"{question}"
-					</div>
+					<div className="mb-1 text-sm font-medium text-stone-700">"{question}"</div>
 					<p className="text-sm text-stone-600">
-						Is it <strong>{explanation[0]}</strong> or{" "}
-						<strong>{explanation[1]}</strong>?
+						Is it <strong>{explanation[0]}</strong> or <strong>{explanation[1]}</strong>?
 					</p>
 					<div className="mt-2 space-y-1 text-sm">
 						{examples.map(({ label, greek }) => (
@@ -354,21 +309,14 @@ const DecisionGuide = () => (
 );
 
 const VocativeSection = () => (
-	<CollapsibleSection
-		title="Vocative (direct address)"
-		colorScheme="stone"
-		defaultOpen={false}
-	>
+	<CollapsibleSection title="Vocative (direct address)" colorScheme="stone" defaultOpen={false}>
 		<div className="space-y-4 p-4">
 			<p className="text-sm text-stone-600">
-				When calling someone directly, masculine nouns change. Feminine and
-				neuter stay the same.
+				When calling someone directly, masculine nouns change. Feminine and neuter stay the same.
 			</p>
 			<div className="grid grid-cols-2 gap-4 text-sm">
 				<div>
-					<div className="mb-2 font-medium text-gender-masculine">
-						Masculine changes
-					</div>
+					<div className="mb-2 font-medium text-gender-masculine">Masculine changes</div>
 					<div className="space-y-1">
 						{VOCATIVE_CHANGES.map(({ pattern, example }) => (
 							<div key={pattern}>
@@ -392,12 +340,8 @@ const ArticlesLink = () => (
 	<Card variant="bordered" padding="md" className="bg-stone-50">
 		<div className="flex items-center justify-between">
 			<div>
-				<div className="text-sm font-medium text-stone-700">
-					Article forms by case
-				</div>
-				<p className="text-xs text-stone-500">
-					See the definite article paradigm
-				</p>
+				<div className="text-sm font-medium text-stone-700">Article forms by case</div>
+				<p className="text-xs text-stone-500">See the definite article paradigm</p>
 			</div>
 			<Link
 				to="/reference/articles"
@@ -415,10 +359,7 @@ const ArticlesLink = () => (
 
 export const NounsSection = () => (
 	<section id="nouns" className="space-y-6">
-		<SectionHeading
-			title="How Noun Endings Change"
-			subtitle="Patterns by gender and case"
-		/>
+		<SectionHeading title="How Noun Endings Change" subtitle="Patterns by gender and case" />
 		<CaseGuide />
 		<GenderHints />
 		<EssentialPatterns />

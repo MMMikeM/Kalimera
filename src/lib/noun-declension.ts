@@ -18,10 +18,7 @@ const CASE_MAP = {
 	genitive: "Gen",
 } as const;
 
-const getStemFromLemma = (
-	lemma: string,
-	pattern: DeclensionPattern,
-): string => {
+const getStemFromLemma = (lemma: string, pattern: DeclensionPattern): string => {
 	switch (pattern) {
 		case "masc-os":
 			return lemma.slice(0, -2); // Remove -ος
@@ -70,10 +67,7 @@ const mapArticleForAccusative = (article: string): string => {
 	return article;
 };
 
-const declineNounSingular = (
-	lemma: string,
-	pattern: DeclensionPattern,
-): DeclinedForm[] => {
+const declineNounSingular = (lemma: string, pattern: DeclensionPattern): DeclinedForm[] => {
 	const paradigm = AGREEMENT_PARADIGMS.find((p) => p.id === pattern);
 	if (!paradigm) {
 		throw new Error(`Unknown declension pattern: ${pattern}`);
@@ -106,10 +100,7 @@ const declineNounSingular = (
 	return forms;
 };
 
-const declineNounPlural = (
-	lemma: string,
-	pattern: DeclensionPattern,
-): DeclinedForm[] => {
+const declineNounPlural = (lemma: string, pattern: DeclensionPattern): DeclinedForm[] => {
 	const paradigm = AGREEMENT_PARADIGMS.find((p) => p.id === pattern);
 	if (!paradigm) {
 		throw new Error(`Unknown declension pattern: ${pattern}`);
@@ -142,10 +133,7 @@ const declineNounPlural = (
 	return forms;
 };
 
-export const declineNoun = (
-	lemma: string,
-	pattern: DeclensionPattern,
-): DeclinedForm[] => {
+export const declineNoun = (lemma: string, pattern: DeclensionPattern): DeclinedForm[] => {
 	const singularForms = declineNounSingular(lemma, pattern);
 	const pluralForms = declineNounPlural(lemma, pattern);
 
@@ -159,7 +147,5 @@ export const getNounForm = (
 	number: Number,
 ): DeclinedForm | undefined => {
 	const allForms = declineNoun(lemma, pattern);
-	return allForms.find(
-		(form) => form.case === grammaticalCase && form.number === number,
-	);
+	return allForms.find((form) => form.case === grammaticalCase && form.number === number);
 };

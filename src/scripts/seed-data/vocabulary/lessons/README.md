@@ -18,13 +18,9 @@ export const LESSON_YYYY_MM_DD = {
 		source: "Weekly lesson / Self-study / etc.",
 	},
 
-	nouns: [
-		{ lemma: "σπίτι", gender: "neuter", english: "house" },
-	] satisfies NounSeed[],
+	nouns: [{ lemma: "σπίτι", gender: "neuter", english: "house" }] satisfies NounSeed[],
 
-	verbs: [
-		{ lemma: "τρώω", english: "I eat", conjugationFamily: "irregular" },
-	] satisfies VerbSeed[],
+	verbs: [{ lemma: "τρώω", english: "I eat", conjugationFamily: "irregular" }] satisfies VerbSeed[],
 
 	phrases: [{ text: "Καλημέρα", english: "Good morning" }] satisfies Phrase[],
 };

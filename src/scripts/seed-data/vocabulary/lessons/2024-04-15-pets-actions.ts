@@ -1,9 +1,4 @@
-import type {
-	AdjectiveSeed,
-	NounSeed,
-	Phrase,
-	VerbSeed,
-} from "../../../../types/seed";
+import type { AdjectiveSeed, NounSeed, Phrase, VerbSeed } from "../../../../types/seed";
 
 export const LESSON_2024_04_15 = {
 	meta: {
@@ -35,9 +30,7 @@ export const LESSON_2024_04_15 = {
 		{ lemma: "ζώο", gender: "neuter", english: "animal" },
 	] satisfies NounSeed[],
 
-	adjectives: [
-		{ lemma: "καλύτερος", english: "better/best" },
-	] satisfies AdjectiveSeed[],
+	adjectives: [{ lemma: "καλύτερος", english: "better/best" }] satisfies AdjectiveSeed[],
 
 	adverbs: [],
 

@@ -210,8 +210,7 @@ export const PRONOUN_PATTERNS = {
 			{ greek: "σας παρακαλώ", english: "please (formal)" },
 			{ greek: "η γνώμη σας", english: "your opinion (formal)" },
 		],
-		explanation:
-			"Use σας/εσάς with people you don't know well, elders, or in formal situations",
+		explanation: "Use σας/εσάς with people you don't know well, elders, or in formal situations",
 	},
 };
 

@@ -47,28 +47,17 @@ const renderDescription = (text: string) => {
 };
 
 export const PronounDecisionGuide = () => (
-	<Card
-		variant="bordered"
-		padding="lg"
-		className="border-honey-300 bg-honey-50"
-	>
-		<h3 className="mb-3 text-lg font-bold text-honey-text">
-			Which "me/you" do I use?
-		</h3>
+	<Card variant="bordered" padding="lg" className="border-honey-300 bg-honey-50">
+		<h3 className="mb-3 text-lg font-bold text-honey-text">Which "me/you" do I use?</h3>
 		<p className="mb-4 text-sm text-stone-600">
 			English "me" is one word. Greek splits it by <strong>function</strong>:
 		</p>
 
 		<div className="space-y-3">
 			{PRONOUN_OPTIONS.map((option) => (
-				<div
-					key={option.label}
-					className="rounded-lg border border-honey-300 bg-white p-3"
-				>
+				<div key={option.label} className="rounded-lg border border-honey-300 bg-white p-3">
 					<div className="flex items-start gap-3">
-						<div className="w-20 shrink-0 text-sm font-bold text-honey-text">
-							{option.label}
-						</div>
+						<div className="w-20 shrink-0 text-sm font-bold text-honey-text">{option.label}</div>
 						<div className="flex-1">
 							<div className="mb-1 text-sm font-medium text-stone-800">
 								{renderDescription(option.description)}
@@ -91,25 +80,17 @@ export const PronounDecisionGuide = () => (
 
 		{/* Cross-type comparison table */}
 		<div className="mt-4 border-t border-honey-300 pt-3">
-			<p className="mb-2 text-xs text-stone-500">
-				One English word → multiple Greek forms:
-			</p>
+			<p className="mb-2 text-xs text-stone-500">One English word → multiple Greek forms:</p>
 			<div className="overflow-x-auto">
 				<table className="w-full border-collapse text-sm">
 					<thead>
 						<tr className="border-b border-honey-300">
-							<th className="px-2 py-1.5 text-left text-xs font-medium text-stone-500">
-								English
-							</th>
-							<th className="px-2 py-1.5 text-left text-xs font-medium text-stone-500">
-								Object
-							</th>
+							<th className="px-2 py-1.5 text-left text-xs font-medium text-stone-500">English</th>
+							<th className="px-2 py-1.5 text-left text-xs font-medium text-stone-500">Object</th>
 							<th className="px-2 py-1.5 text-left text-xs font-medium text-stone-500">
 								Possessive
 							</th>
-							<th className="px-2 py-1.5 text-left text-xs font-medium text-stone-500">
-								Emphatic
-							</th>
+							<th className="px-2 py-1.5 text-left text-xs font-medium text-stone-500">Emphatic</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -168,8 +149,8 @@ export const PronounDecisionGuide = () => (
 
 		<div className="mt-4 border-t border-honey-300 pt-3 text-sm text-honey-text">
 			<strong>Quick test:</strong> Can you insert "to" before it? → Use{" "}
-			<MonoText size="sm">μου/σου</MonoText>. Is there a preposition before it?
-			→ Use <MonoText size="sm">εμένα/εσένα</MonoText>. Otherwise → Use{" "}
+			<MonoText size="sm">μου/σου</MonoText>. Is there a preposition before it? → Use{" "}
+			<MonoText size="sm">εμένα/εσένα</MonoText>. Otherwise → Use{" "}
 			<MonoText size="sm">με/σε</MonoText>.
 		</div>
 	</Card>

@@ -84,12 +84,7 @@ const createUserSchema = zfd.formData({
 const startSessionSchema = zfd.formData({
 	userId: zfd.numeric(),
 	sessionType: zfd.text(
-		z.enum([
-			"vocab_quiz",
-			"case_drill",
-			"conjugation_drill",
-			"weak_area_focus",
-		]),
+		z.enum(["vocab_quiz", "case_drill", "conjugation_drill", "weak_area_focus"]),
 	),
 	category: zfd.text(z.string().optional()).optional(),
 	focusArea: zfd.text(z.string().optional()).optional(),
@@ -108,9 +103,7 @@ const recordAttemptSchema = zfd.formData({
 		.text(z.enum(["recognition", "production"]))
 		.optional()
 		.default("recognition"),
-	weakAreaType: zfd
-		.text(z.enum(["case", "gender", "verb_family"]).optional())
-		.optional(),
+	weakAreaType: zfd.text(z.enum(["case", "gender", "verb_family"]).optional()).optional(),
 	weakAreaIdentifier: zfd.text(z.string().optional()).optional(),
 });
 

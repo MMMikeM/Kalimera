@@ -34,13 +34,12 @@ export async function loader({ request }: Route.LoaderArgs) {
 		};
 	}
 
-	const [stats, calendarDates, accuracyTrends, timeInvested] =
-		await Promise.all([
-			getPracticeStats(userId),
-			getPracticeDatesForCalendar(userId, 3),
-			getAccuracyTrends(userId, 30),
-			getTimeInvested(userId),
-		]);
+	const [stats, calendarDates, accuracyTrends, timeInvested] = await Promise.all([
+		getPracticeStats(userId),
+		getPracticeDatesForCalendar(userId, 3),
+		getAccuracyTrends(userId, 30),
+		getTimeInvested(userId),
+	]);
 
 	const accuracyData = accuracyTrends.map((d) => ({
 		date: d.date,
@@ -65,14 +64,8 @@ const formatMinutes = (minutes: number): string => {
 };
 
 export default function ProgressPage({ loaderData }: Route.ComponentProps) {
-	const {
-		userId,
-		currentStreak,
-		practiceDates,
-		accuracyData,
-		timeInvested,
-		masteredCount,
-	} = loaderData;
+	const { userId, currentStreak, practiceDates, accuracyData, timeInvested, masteredCount } =
+		loaderData;
 
 	if (!userId) {
 		return (
@@ -85,9 +78,7 @@ export default function ProgressPage({ loaderData }: Route.ComponentProps) {
 	const avgAccuracy =
 		accuracyData.length > 0
 			? Math.round(
-					(accuracyData.reduce((sum, d) => sum + d.accuracy, 0) /
-						accuracyData.length) *
-						100,
+					(accuracyData.reduce((sum, d) => sum + d.accuracy, 0) / accuracyData.length) * 100,
 				)
 			: 0;
 
@@ -101,12 +92,8 @@ export default function ProgressPage({ loaderData }: Route.ComponentProps) {
 				<span>Back</span>
 			</Link>
 
-			<h1 className="mb-1 font-serif text-2xl text-terracotta">
-				Your Progress
-			</h1>
-			<p className="mb-6 text-sm text-stone-600">
-				Track your Greek learning journey
-			</p>
+			<h1 className="mb-1 font-serif text-2xl text-terracotta">Your Progress</h1>
+			<p className="mb-6 text-sm text-stone-600">Track your Greek learning journey</p>
 
 			{/* Summary Stats */}
 			<div className="mb-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
@@ -147,13 +134,8 @@ export default function ProgressPage({ loaderData }: Route.ComponentProps) {
 
 			{/* Streak Calendar */}
 			<Card className="mb-6 p-6">
-				<h2 className="mb-4 text-lg font-medium text-stone-800">
-					Practice Calendar
-				</h2>
-				<StreakCalendar
-					practiceDates={practiceDates}
-					currentStreak={currentStreak}
-				/>
+				<h2 className="mb-4 text-lg font-medium text-stone-800">Practice Calendar</h2>
+				<StreakCalendar practiceDates={practiceDates} currentStreak={currentStreak} />
 			</Card>
 
 			{/* Accuracy Trend */}
@@ -169,9 +151,7 @@ export default function ProgressPage({ loaderData }: Route.ComponentProps) {
 			{/* Empty State */}
 			{accuracyData.length === 0 && (
 				<Card className="p-8 text-center">
-					<p className="mb-4 text-stone-500">
-						Start practising to see your accuracy trends here.
-					</p>
+					<p className="mb-4 text-stone-500">Start practising to see your accuracy trends here.</p>
 					<Link
 						to="/practice"
 						className="inline-flex items-center gap-2 font-medium text-terracotta hover:text-terracotta-dark"

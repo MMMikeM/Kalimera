@@ -27,11 +27,7 @@ const requestHandler = createRequestHandler(
 );
 
 export default {
-	async fetch(
-		request: Request,
-		env: CloudflareEnv,
-		ctx: ExecutionContext,
-	): Promise<Response> {
+	async fetch(request: Request, env: CloudflareEnv, ctx: ExecutionContext): Promise<Response> {
 		const db = createDb(env);
 		return runWithDb(db, () =>
 			requestHandler(request, {
@@ -71,25 +67,19 @@ export default {
 		if (isNineAm && event.cron === "0 9 * * *") {
 			console.log("Running daily practice reminder...");
 			const result = await sendPracticeReminders(db, vapid);
-			console.log(
-				`Practice reminders: sent=${result.sent}, failed=${result.failed}`,
-			);
+			console.log(`Practice reminders: sent=${result.sent}, failed=${result.failed}`);
 		}
 
 		if (event.cron === "0 */6 * * *") {
 			console.log("Checking for due reviews...");
 			const result = await sendReviewDueNotifications(db, vapid);
-			console.log(
-				`Review notifications: sent=${result.sent}, failed=${result.failed}`,
-			);
+			console.log(`Review notifications: sent=${result.sent}, failed=${result.failed}`);
 		}
 
 		if (event.cron === "0 20 * * *") {
 			console.log("Running streak warning notifications...");
 			const result = await sendStreakWarningNotifications(db, vapid);
-			console.log(
-				`Streak warnings: sent=${result.sent}, failed=${result.failed}`,
-			);
+			console.log(`Streak warnings: sent=${result.sent}, failed=${result.failed}`);
 		}
 	},
 };

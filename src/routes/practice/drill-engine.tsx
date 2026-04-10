@@ -39,11 +39,7 @@ export const buildDeck = <T,>(forms: T[], size: SessionSize): T[] => {
 	return [...first, ...second];
 };
 
-export const useCountdown = (
-	durationMs: number,
-	isRunning: boolean,
-	onTimeout: () => void,
-) => {
+export const useCountdown = (durationMs: number, isRunning: boolean, onTimeout: () => void) => {
 	const [progress, setProgress] = useState(1);
 	const rafRef = useRef<number | null>(null);
 	const startRef = useRef<number>(0);
@@ -119,18 +115,14 @@ export const SummaryScreen = <T extends DrillForm>({
 	onAgain: () => void;
 }) => {
 	const correct = attempts.filter((a) => a.isCorrect).length;
-	const avgTime =
-		attempts.reduce((s, a) => s + a.timeTaken, 0) / attempts.length;
+	const avgTime = attempts.reduce((s, a) => s + a.timeTaken, 0) / attempts.length;
 
 	const slowestByForm = new Map<string, Attempt<T>>();
 	for (const a of attempts) {
 		const existing = slowestByForm.get(a.form.id);
-		if (!existing || a.timeTaken > existing.timeTaken)
-			slowestByForm.set(a.form.id, a);
+		if (!existing || a.timeTaken > existing.timeTaken) slowestByForm.set(a.form.id, a);
 	}
-	const slowest = [...slowestByForm.values()]
-		.sort((a, b) => b.timeTaken - a.timeTaken)
-		.slice(0, 3);
+	const slowest = [...slowestByForm.values()].sort((a, b) => b.timeTaken - a.timeTaken).slice(0, 3);
 
 	return (
 		<div className="max-w-xs px-6 py-8">
@@ -155,21 +147,14 @@ export const SummaryScreen = <T extends DrillForm>({
 
 			{slowest.length > 0 && (
 				<div className="mb-10">
-					<p className="mb-3 text-xs tracking-widest text-muted-foreground uppercase">
-						Slowest
-					</p>
+					<p className="mb-3 text-xs tracking-widest text-muted-foreground uppercase">Slowest</p>
 					<div className="space-y-3">
 						{slowest.map((a) => (
 							<div key={a.form.id} className="flex items-baseline gap-3">
-								<span
-									lang="el"
-									className="greek-text w-10 text-xl text-foreground"
-								>
+								<span lang="el" className="greek-text w-10 text-xl text-foreground">
 									{a.form.greek}
 								</span>
-								<span className="text-xs text-muted-foreground">
-									{a.form.label}
-								</span>
+								<span className="text-xs text-muted-foreground">{a.form.label}</span>
 							</div>
 						))}
 					</div>
@@ -309,9 +294,7 @@ export const ForwardInput = ({
 			className="w-full border-b-2 border-stone-200 bg-transparent pb-2 text-3xl text-foreground caret-terracotta transition-colors outline-none placeholder:text-stone-300 focus:border-terracotta disabled:opacity-50"
 		/>
 
-		{phase === "active" && (
-			<p className="mt-2 text-xs text-stone-400">enter to check</p>
-		)}
+		{phase === "active" && <p className="mt-2 text-xs text-stone-400">enter to check</p>}
 	</div>
 );
 
@@ -324,11 +307,7 @@ export const FeedbackDisplay = <T extends DrillForm>({
 		<p
 			className={`text-sm font-medium ${lastAttempt.isCorrect ? "text-correct" : "text-incorrect"}`}
 		>
-			{lastAttempt.isCorrect
-				? "Correct"
-				: lastAttempt.timedOut
-					? "Time's up"
-					: "Incorrect"}
+			{lastAttempt.isCorrect ? "Correct" : lastAttempt.timedOut ? "Time's up" : "Incorrect"}
 		</p>
 		<div className="mt-1 flex items-baseline gap-2">
 			<span lang="el" className="greek-text text-2xl text-foreground">
@@ -375,9 +354,7 @@ export const ConfigShell = ({
 		{children}
 
 		<fieldset className="mb-8">
-			<legend className="mb-3 text-xs tracking-widest text-muted-foreground uppercase">
-				Mode
-			</legend>
+			<legend className="mb-3 text-xs tracking-widest text-muted-foreground uppercase">Mode</legend>
 			<div className="space-y-2">
 				<button
 					type="button"
@@ -428,10 +405,7 @@ export const ConfigShell = ({
 			</div>
 		</fieldset>
 
-		<Button
-			onClick={onStart}
-			className="w-full bg-terracotta text-cream hover:bg-terracotta-dark"
-		>
+		<Button onClick={onStart} className="w-full bg-terracotta text-cream hover:bg-terracotta-dark">
 			Begin
 		</Button>
 	</div>
@@ -466,9 +440,7 @@ export const DrillShell = ({
 			</span>
 		</div>
 
-		<div className="flex max-w-sm flex-col gap-10 px-6 pt-4 pb-6">
-			{children}
-		</div>
+		<div className="flex max-w-sm flex-col gap-10 px-6 pt-4 pb-6">{children}</div>
 	</div>
 );
 
@@ -481,16 +453,10 @@ export const ReverseFeedback = <T extends DrillForm>({
 		<p
 			className={`text-sm font-medium ${lastAttempt.isCorrect ? "text-correct" : "text-incorrect"}`}
 		>
-			{lastAttempt.isCorrect
-				? "Correct"
-				: lastAttempt.timedOut
-					? "Time's up"
-					: "Incorrect"}
+			{lastAttempt.isCorrect ? "Correct" : lastAttempt.timedOut ? "Time's up" : "Incorrect"}
 		</p>
 		{!lastAttempt.isCorrect && (
-			<p className="mt-1 text-sm text-muted-foreground">
-				{lastAttempt.form.label}
-			</p>
+			<p className="mt-1 text-sm text-muted-foreground">{lastAttempt.form.label}</p>
 		)}
 	</div>
 );

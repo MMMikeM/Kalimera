@@ -23,14 +23,7 @@ export const ConversationHero: React.FC<ConversationHeroProps> = ({
 	const styles = colorStyles[colorScheme];
 
 	return (
-		<div
-			className={cn(
-				"rounded-xl border-2 p-6",
-				styles.bg,
-				styles.borderMuted,
-				className,
-			)}
-		>
+		<div className={cn("rounded-xl border-2 p-6", styles.bg, styles.borderMuted, className)}>
 			<div className="flex items-start gap-4">
 				<div
 					className={cn(
@@ -44,16 +37,10 @@ export const ConversationHero: React.FC<ConversationHeroProps> = ({
 				</div>
 				<div className="min-w-0 flex-1">
 					<h2 className={cn("text-xl font-bold", styles.text)}>{title}</h2>
-					<MonoText
-						variant="greek"
-						size="sm"
-						className="mt-1 block text-stone-600"
-					>
+					<MonoText variant="greek" size="sm" className="mt-1 block text-stone-600">
 						{greekPhrase}
 					</MonoText>
-					<p className="mt-2 text-sm leading-relaxed text-stone-600">
-						{description}
-					</p>
+					<p className="mt-2 text-sm leading-relaxed text-stone-600">{description}</p>
 				</div>
 			</div>
 		</div>

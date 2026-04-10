@@ -9,9 +9,7 @@ interface UseVocabularySearchOptions {
 	enabled?: boolean;
 }
 
-export const useVocabularySearch = (
-	options: UseVocabularySearchOptions = {},
-) => {
+export const useVocabularySearch = (options: UseVocabularySearchOptions = {}) => {
 	const { enabled = true } = options;
 	const fetcher = useFetcher<{ vocabulary: SearchVocabItem[] }>();
 	const [searchTerm, setSearchTerm] = useState("");

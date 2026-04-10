@@ -11,9 +11,7 @@ export const LESSON_2024_08_12 = {
 		{ lemma: "ξεχνάω", english: "I forget", conjugationFamily: "-άω/-ώ" },
 	] satisfies VerbSeed[],
 
-	nouns: [
-		{ lemma: "λαχανικά", gender: "neuter", english: "vegetables" },
-	] satisfies NounSeed[],
+	nouns: [{ lemma: "λαχανικά", gender: "neuter", english: "vegetables" }] satisfies NounSeed[],
 
 	adverbs: [],
 

@@ -6,14 +6,8 @@ const BASE_URL = process.env.BASE_URL || "http://localhost:5173";
 const USER_ID = process.env.USER_ID || "1";
 
 const isMobile = process.argv.includes("--mobile");
-const OUTPUT_DIR = join(
-	process.cwd(),
-	"screenshots",
-	isMobile ? "mobile" : "desktop",
-);
-const VIEWPORT = isMobile
-	? { width: 375, height: 812 }
-	: { width: 1280, height: 720 };
+const OUTPUT_DIR = join(process.cwd(), "screenshots", isMobile ? "mobile" : "desktop");
+const VIEWPORT = isMobile ? { width: 375, height: 812 } : { width: 1280, height: 720 };
 
 const PAGES = [
 	{ route: "/", name: "homepage" },

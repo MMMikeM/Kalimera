@@ -1,7 +1,4 @@
-import {
-	getUserMilestones,
-	recordMilestone,
-} from "@/db.server/queries/milestones";
+import { getUserMilestones, recordMilestone } from "@/db.server/queries/milestones";
 import type { Route } from "./+types/milestones";
 
 interface RecordMilestoneBody {
@@ -32,10 +29,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 		return Response.json({ milestones });
 	} catch (error) {
 		console.error("Get milestones error:", error);
-		return Response.json(
-			{ error: "Failed to get milestones" },
-			{ status: 500 },
-		);
+		return Response.json({ error: "Failed to get milestones" }, { status: 500 });
 	}
 };
 
@@ -63,9 +57,6 @@ export const action = async ({ request }: Route.ActionArgs) => {
 		return Response.json({ success: true, recorded: result !== null });
 	} catch (error) {
 		console.error("Record milestone error:", error);
-		return Response.json(
-			{ error: "Failed to record milestone" },
-			{ status: 500 },
-		);
+		return Response.json({ error: "Failed to record milestone" }, { status: 500 });
 	}
 };

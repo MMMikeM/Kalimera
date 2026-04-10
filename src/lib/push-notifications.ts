@@ -7,14 +7,7 @@ import {
 	sendPushNotification,
 	type VapidConfig,
 } from "@mmmike/web-push/send";
-import {
-	differenceInDays,
-	endOfDay,
-	format,
-	parseISO,
-	startOfDay,
-	subDays,
-} from "date-fns";
+import { differenceInDays, endOfDay, format, parseISO, startOfDay, subDays } from "date-fns";
 import { and, eq, gte, isNotNull, lt, sql } from "drizzle-orm";
 import type { LibSQLDatabase } from "drizzle-orm/libsql";
 import {
@@ -146,9 +139,7 @@ export const sendPracticeReminders = async (
 
 	// Clean up invalid subscriptions
 	for (const endpoint of result.invalidSubscriptions) {
-		await db
-			.delete(pushSubscriptions)
-			.where(eq(pushSubscriptions.endpoint, endpoint));
+		await db.delete(pushSubscriptions).where(eq(pushSubscriptions.endpoint, endpoint));
 	}
 
 	return result;
@@ -173,12 +164,7 @@ export const sendReviewDueNotifications = async (
 	const usersWithDueItems = await db
 		.selectDistinct({ userId: vocabularySkills.userId })
 		.from(vocabularySkills)
-		.where(
-			and(
-				isNotNull(vocabularySkills.nextReviewAt),
-				lt(vocabularySkills.nextReviewAt, now),
-			),
-		)
+		.where(and(isNotNull(vocabularySkills.nextReviewAt), lt(vocabularySkills.nextReviewAt, now)))
 		.all();
 
 	if (usersWithDueItems.length === 0) {
@@ -201,9 +187,7 @@ export const sendReviewDueNotifications = async (
 		.all();
 
 	// Filter to users with due items
-	const relevantSubs = subscriptions.filter(
-		(s) => s.userId && userIds.includes(s.userId),
-	);
+	const relevantSubs = subscriptions.filter((s) => s.userId && userIds.includes(s.userId));
 
 	for (const sub of relevantSubs) {
 		if (!sub.userId) continue;
@@ -255,9 +239,7 @@ export const sendReviewDueNotifications = async (
 
 	// Clean up invalid subscriptions
 	for (const endpoint of result.invalidSubscriptions) {
-		await db
-			.delete(pushSubscriptions)
-			.where(eq(pushSubscriptions.endpoint, endpoint));
+		await db.delete(pushSubscriptions).where(eq(pushSubscriptions.endpoint, endpoint));
 	}
 
 	return result;
@@ -273,9 +255,7 @@ const STREAK_WARNING_COPY: NotificationCopy[] = [
 		// Bounded commitment (Urgency)
 		title: "Quick 2-minute review?",
 		body: (dueCount) =>
-			dueCount > 0
-				? `${dueCount} items in your queue.`
-				: "Your Greek is waiting.",
+			dueCount > 0 ? `${dueCount} items in your queue.` : "Your Greek is waiting.",
 	},
 	{
 		// Content preview (Interest)
@@ -289,9 +269,7 @@ const STREAK_WARNING_COPY: NotificationCopy[] = [
 		// Competence callback (Confidence)
 		title: "You've been consistent.",
 		body: (_, streak) =>
-			streak > 1
-				? `${streak} days of practice. Keep the momentum.`
-				: "Your review queue is ready.",
+			streak > 1 ? `${streak} days of practice. Keep the momentum.` : "Your review queue is ready.",
 	},
 	{
 		// Domain bridge (Passion)
@@ -311,8 +289,7 @@ export const selectCopy = (
 	// Deterministic per-user per-day rotation (UTC day boundary) — different users get
 	// different copy types on the same day, cycling through all four variants over 4 days.
 	const dayIndex = Math.floor(Date.now() / 86_400_000);
-	const copy =
-		STREAK_WARNING_COPY[(userId + dayIndex) % STREAK_WARNING_COPY.length];
+	const copy = STREAK_WARNING_COPY[(userId + dayIndex) % STREAK_WARNING_COPY.length];
 	if (!copy) return { title: "Your Greek is waiting.", body: "Quick review?" };
 	return { title: copy.title, body: copy.body(dueCount, streak) };
 };
@@ -332,12 +309,7 @@ const shouldOfferTaper = async (
 	const recentSends = await db
 		.select({ sentAt: notificationLogs.sentAt })
 		.from(notificationLogs)
-		.where(
-			and(
-				eq(notificationLogs.userId, userId),
-				gte(notificationLogs.sentAt, sevenDaysAgo),
-			),
-		)
+		.where(and(eq(notificationLogs.userId, userId), gte(notificationLogs.sentAt, sevenDaysAgo)))
 		.orderBy(notificationLogs.sentAt)
 		.all();
 
@@ -525,9 +497,7 @@ export const sendStreakWarningNotifications = async (
 
 	// Clean up invalid subscriptions
 	for (const endpoint of result.invalidSubscriptions) {
-		await db
-			.delete(pushSubscriptions)
-			.where(eq(pushSubscriptions.endpoint, endpoint));
+		await db.delete(pushSubscriptions).where(eq(pushSubscriptions.endpoint, endpoint));
 	}
 
 	return result;

@@ -12,8 +12,7 @@ export function NounsTab() {
 				colorScheme="olive"
 				icon={<BookText size={18} />}
 			>
-				Greek nouns change their endings to show case and number. Learn the
-				patterns by gender.
+				Greek nouns change their endings to show case and number. Learn the patterns by gender.
 			</TabHero>
 			<NounsSection />
 			<PracticeCTA

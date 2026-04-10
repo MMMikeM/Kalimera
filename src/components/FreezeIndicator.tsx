@@ -75,8 +75,8 @@ export const FreezeIndicator = ({
 					<>
 						<Snowflake className={iconVariants({ status })} />
 						<span className={textVariants({ status })}>
-							{freezeCount} {formatPlural(freezeCount, "freeze", "freezes")}{" "}
-							ready — miss a day, keep your streak
+							{freezeCount} {formatPlural(freezeCount, "freeze", "freezes")} ready — miss a day,
+							keep your streak
 						</span>
 					</>
 				);
@@ -85,9 +85,7 @@ export const FreezeIndicator = ({
 				return (
 					<>
 						<Snowflake className={cn(iconVariants({ status }), "opacity-60")} />
-						<span className={textVariants({ status })}>
-							Available in {hoursUntilRecovery}h
-						</span>
+						<span className={textVariants({ status })}>Available in {hoursUntilRecovery}h</span>
 					</>
 				);
 
@@ -96,8 +94,7 @@ export const FreezeIndicator = ({
 					<>
 						<Snowflake className={cn(iconVariants({ status }), "opacity-50")} />
 						<span className={textVariants({ status })}>
-							{daysUntilNextEarn}{" "}
-							{formatPlural(daysUntilNextEarn ?? 0, "day", "days")} to earn a
+							{daysUntilNextEarn} {formatPlural(daysUntilNextEarn ?? 0, "day", "days")} to earn a
 							streak freeze
 						</span>
 					</>

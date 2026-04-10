@@ -5,6 +5,7 @@ Common traps that feel productive but don't build retrieval speed.
 ## 1. Curriculum Creep
 
 **What it looks like:**
+
 - Skill trees with unlockable levels
 - Learning paths with prerequisites
 - Progress percentages across grammar topics
@@ -24,6 +25,7 @@ Simple topic selection. Drill whatever's slow. Topic coverage matters far less t
 ## 2. Recognition Disguised as Production
 
 **What it looks like:**
+
 - "Select the correct translation" (multiple choice)
 - "Match the Greek to the English" (matching)
 - "Is this sentence correct?" (judgment)
@@ -43,6 +45,7 @@ Blank input only. User types the answer from memory. No options, no selections, 
 ## 3. Comfortable Practice
 
 **What it looks like:**
+
 - Generous time limits (15+ seconds)
 - No timer at all
 - "Take your time"
@@ -62,6 +65,7 @@ Timer should feel slightly rushed. If it's comfortable, it's too long. Target 3-
 ## 4. Hint Dependency
 
 **What it looks like:**
+
 - First letter hints
 - Word banks to select from
 - Grammar tables visible during practice
@@ -69,7 +73,7 @@ Timer should feel slightly rushed. If it's comfortable, it's too long. Target 3-
 - Declining difficulty after errors
 
 **Why it fails:**
-Hints short-circuit retrieval. When you see "τ__", you're recognising, not retrieving. The hint does the hard part for you.
+Hints short-circuit retrieval. When you see "τ\_\_", you're recognising, not retrieving. The hint does the hard part for you.
 
 **The trap:** Hints feel helpful. They reduce frustration. But they prevent the retrieval practice that builds automaticity.
 
@@ -81,6 +85,7 @@ No hints during production. Show the correct answer after the attempt, not durin
 ## 5. Overemphasis on Accuracy
 
 **What it looks like:**
+
 - Requiring 100% accuracy before advancing
 - Penalising errors heavily
 - "Get it right before moving on"
@@ -100,6 +105,7 @@ Track speed as the primary metric. Accept ~20-40% error rate on new material. Ma
 ## 6. Perfect Before Shipping
 
 **What it looks like:**
+
 - Waiting for beautiful UI before launching
 - "Just need to add X feature first"
 - Extensive polish before user testing
@@ -119,6 +125,7 @@ Ship ugly. A text input, a timer, and a prompt is enough to start. Iterate based
 ## 7. Feature Creep
 
 **What it looks like:**
+
 - Gamification (points, badges, streaks)
 - Social features (leaderboards, friends)
 - Elaborate statistics dashboards
@@ -138,6 +145,7 @@ The core loop is: prompt → timer → input → feedback → repeat. Build that
 ## 8. Study Mode vs. Practice Mode
 
 **What it looks like:**
+
 - "Learn" tab with grammar explanations
 - Reference materials prominently featured
 - "Study first, then practice"
@@ -157,6 +165,7 @@ Reference material can exist but should be de-emphasised. The default action sho
 ## 9. Wrong Direction Emphasis
 
 **What it looks like:**
+
 - Greek → English as primary direction
 - "What does this mean?" exercises
 - Comprehension-focused practice
@@ -174,14 +183,14 @@ English → Greek as the primary (or only) direction. If Greek → English exist
 
 ## Summary Table
 
-| Anti-Pattern | Feels Like | Actually Does |
-|--------------|------------|---------------|
-| Curriculum Creep | Organised learning | Procrastination |
-| Recognition Practice | Getting answers right | Wrong neural pathway |
-| Comfortable Practice | Stress-free learning | Blocks proceduralization |
-| Hint Dependency | Helpful scaffolding | Short-circuits retrieval |
-| Accuracy Focus | Quality control | Ignores the real problem |
-| Perfectionism | High standards | Delays what works |
-| Feature Creep | Better product | Distraction |
-| Study Mode | Solid foundation | Avoidance |
-| Wrong Direction | Productive practice | Wrong skill |
+| Anti-Pattern         | Feels Like            | Actually Does            |
+| -------------------- | --------------------- | ------------------------ |
+| Curriculum Creep     | Organised learning    | Procrastination          |
+| Recognition Practice | Getting answers right | Wrong neural pathway     |
+| Comfortable Practice | Stress-free learning  | Blocks proceduralization |
+| Hint Dependency      | Helpful scaffolding   | Short-circuits retrieval |
+| Accuracy Focus       | Quality control       | Ignores the real problem |
+| Perfectionism        | High standards        | Delays what works        |
+| Feature Creep        | Better product        | Distraction              |
+| Study Mode           | Solid foundation      | Avoidance                |
+| Wrong Direction      | Productive practice   | Wrong skill              |

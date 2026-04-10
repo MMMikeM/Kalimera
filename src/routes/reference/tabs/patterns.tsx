@@ -94,9 +94,8 @@ export function PatternsTab({ data }: { data: PatternsData }) {
 				colorScheme="honey"
 				icon={<Blocks size={18} />}
 			>
-				Some Greek constructions work differently than English. Learn these
-				patterns and you'll understand why "I like coffee" becomes "Coffee
-				pleases me."
+				Some Greek constructions work differently than English. Learn these patterns and you'll
+				understand why "I like coffee" becomes "Coffee pleases me."
 			</TabHero>
 
 			<ParadigmCard
@@ -144,35 +143,25 @@ export function PatternsTab({ data }: { data: PatternsData }) {
 				]}
 				summary={
 					<>
-						Remember: the thing liked is the <strong>subject</strong>, so the
-						verb agrees with it!
+						Remember: the thing liked is the <strong>subject</strong>, so the verb agrees with it!
 					</>
 				}
 			/>
 
 			{nameConstruction.length > 0 && (
-				<Card
-					variant="bordered"
-					padding="lg"
-					className="border-ocean-300 bg-ocean-50"
-				>
+				<Card variant="bordered" padding="lg" className="border-ocean-300 bg-ocean-50">
 					<div className="mb-4 flex items-center gap-3">
 						<div className="rounded-lg bg-ocean-200 p-2">
 							<UserCircle size={20} className="text-ocean-text" />
 						</div>
 						<div>
-							<h3 className="text-lg font-bold text-ocean-text">
-								Name Construction
-							</h3>
-							<p className="text-sm text-stone-600">
-								με λένε = my name is (lit. "they call me")
-							</p>
+							<h3 className="text-lg font-bold text-ocean-text">Name Construction</h3>
+							<p className="text-sm text-stone-600">με λένε = my name is (lit. "they call me")</p>
 						</div>
 					</div>
 					<Alert variant="info" className="mb-4">
 						<AlertDescription>
-							<strong>Pattern:</strong> [Pronoun] λένε + name - literally "they
-							call me..."
+							<strong>Pattern:</strong> [Pronoun] λένε + name - literally "they call me..."
 						</AlertDescription>
 					</Alert>
 					<div className="grid gap-3 md:grid-cols-2">

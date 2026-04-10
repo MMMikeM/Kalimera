@@ -11,10 +11,7 @@ export { loader } from "./loader.server";
 
 type Gender = "masculine" | "feminine" | "neuter";
 
-const genderStyles: Record<
-	Gender,
-	{ text: string; bg: string; ending: string }
-> = {
+const genderStyles: Record<Gender, { text: string; bg: string; ending: string }> = {
 	masculine: {
 		text: "text-ocean-500",
 		bg: "bg-ocean-100",
@@ -54,9 +51,7 @@ const NOUN_ENDINGS = [
 	"ϊ",
 ];
 
-const parseGreekNoun = (
-	greek: string,
-): { article: string; noun: string; ending: string } => {
+const parseGreekNoun = (greek: string): { article: string; noun: string; ending: string } => {
 	const parts = greek.trim().split(" ");
 	const article = parts[0] ?? "";
 	const noun = parts.slice(1).join(" ");
@@ -80,9 +75,7 @@ const NounDisplay: React.FC<{ noun: NounWithGender }> = ({ noun }) => {
 	return (
 		<div className="px-3 py-2.5">
 			<div className="flex items-baseline gap-2">
-				<span
-					className={`rounded px-1.5 py-0.5 text-sm font-bold ${styles.text} ${styles.bg}`}
-				>
+				<span className={`rounded px-1.5 py-0.5 text-sm font-bold ${styles.text} ${styles.bg}`}>
 					{article}
 				</span>
 				<MonoText variant="greek" className="text-stone-900">
@@ -152,10 +145,7 @@ const splitIntoPairsAndSingles = (
 	return { pairs, singles };
 };
 
-const categoryColors: Record<
-	string,
-	"terracotta" | "olive" | "ocean" | "honey"
-> = {
+const categoryColors: Record<string, "terracotta" | "olive" | "ocean" | "honey"> = {
 	people: "terracotta",
 	shopping: "olive",
 	household: "ocean",
@@ -169,10 +159,7 @@ const CategorySection: React.FC<{
 }> = ({ categoryKey, category }) => {
 	if (category.nouns.length === 0) return null;
 
-	const { pairs, singles } = splitIntoPairsAndSingles(
-		category.nouns,
-		categoryKey,
-	);
+	const { pairs, singles } = splitIntoPairsAndSingles(category.nouns, categoryKey);
 	const colorScheme = categoryColors[categoryKey] ?? "ocean";
 
 	return (
@@ -210,9 +197,7 @@ const CategorySection: React.FC<{
 	);
 };
 
-export default function NounsRefactorPage({
-	loaderData,
-}: Route.ComponentProps) {
+export default function NounsRefactorPage({ loaderData }: Route.ComponentProps) {
 	const { categories } = loaderData;
 
 	return (
@@ -240,8 +225,7 @@ export default function NounsRefactorPage({
 							<div className="flex flex-wrap gap-3 text-sm">
 								<span>
 									<strong className="text-ocean-500">ο</strong> +{" "}
-									<span className="text-ocean-500">-ος, -ης, -ας</span> =
-									masculine
+									<span className="text-ocean-500">-ος, -ης, -ας</span> = masculine
 								</span>
 								<span>
 									<strong className="text-rose-600">η</strong> +{" "}
@@ -257,8 +241,8 @@ export default function NounsRefactorPage({
 				}}
 			>
 				The words you'll use most, organised by situation. The{" "}
-				<span className="font-medium text-ocean-500">coloured article</span>{" "}
-				shows gender at a glance.
+				<span className="font-medium text-ocean-500">coloured article</span> shows gender at a
+				glance.
 			</TabHero>
 
 			<div className="flex items-center gap-3 px-1 text-xs text-stone-500">
@@ -270,9 +254,7 @@ export default function NounsRefactorPage({
 					masculine
 				</span>
 				<span className="flex items-center gap-1.5">
-					<span className="rounded bg-rose-100 px-1 py-0.5 text-xs font-bold text-rose-600">
-						η
-					</span>
+					<span className="rounded bg-rose-100 px-1 py-0.5 text-xs font-bold text-rose-600">η</span>
 					feminine
 				</span>
 				<span className="flex items-center gap-1.5">
@@ -285,18 +267,9 @@ export default function NounsRefactorPage({
 
 			<div className="space-y-4">
 				<CategorySection categoryKey="people" category={categories.people} />
-				<CategorySection
-					categoryKey="shopping"
-					category={categories.shopping}
-				/>
-				<CategorySection
-					categoryKey="household"
-					category={categories.household}
-				/>
-				<CategorySection
-					categoryKey="vehicles"
-					category={categories.vehicles}
-				/>
+				<CategorySection categoryKey="shopping" category={categories.shopping} />
+				<CategorySection categoryKey="household" category={categories.household} />
+				<CategorySection categoryKey="vehicles" category={categories.vehicles} />
 				<CategorySection categoryKey="summer" category={categories.summer} />
 			</div>
 		</div>

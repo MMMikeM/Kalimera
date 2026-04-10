@@ -14,10 +14,7 @@ export interface QuickTestProps {
 	intro?: string;
 	options: QuickTestOption[];
 	summary?: ReactNode;
-	colorScheme?: Extract<
-		ColorScheme,
-		"honey" | "ocean" | "olive" | "terracotta"
-	>;
+	colorScheme?: Extract<ColorScheme, "honey" | "ocean" | "olive" | "terracotta">;
 }
 
 export const QuickTest = ({
@@ -40,18 +37,11 @@ export const QuickTest = ({
 
 			<div className="space-y-3">
 				{options.map((option) => (
-					<div
-						key={option.condition}
-						className="border-b border-stone-200 py-3 last:border-b-0"
-					>
+					<div key={option.condition} className="border-b border-stone-200 py-3 last:border-b-0">
 						<div className="flex items-start gap-3">
-							<div className={`${colors.text} shrink-0 text-sm font-bold`}>
-								{option.answer}
-							</div>
+							<div className={`${colors.text} shrink-0 text-sm font-bold`}>{option.answer}</div>
 							<div className="flex-1">
-								<div className="mb-1 text-sm font-medium text-stone-800">
-									{option.condition}
-								</div>
+								<div className="mb-1 text-sm font-medium text-stone-800">{option.condition}</div>
 								{option.examples && (
 									<div className="space-y-0.5 text-sm text-stone-600">
 										{option.examples.map((ex) => (
@@ -59,9 +49,7 @@ export const QuickTest = ({
 												<MonoText size="sm" variant="greek">
 													{ex.greek}
 												</MonoText>
-												<span className="ml-2 text-stone-600">
-													— {ex.english}
-												</span>
+												<span className="ml-2 text-stone-600">— {ex.english}</span>
 											</div>
 										))}
 									</div>
@@ -73,9 +61,7 @@ export const QuickTest = ({
 			</div>
 
 			{summary && (
-				<div
-					className={`mt-4 border-t pt-3 ${colors.border} text-sm ${colors.text}`}
-				>
+				<div className={`mt-4 border-t pt-3 ${colors.border} text-sm ${colors.text}`}>
 					{summary}
 				</div>
 			)}

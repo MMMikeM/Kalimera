@@ -13,21 +13,14 @@ export function CasesTab() {
 				colorScheme="ocean"
 				icon={<Scale size={18} />}
 			>
-				Cases show a word's role in a sentence. Master these three questions and
-				word endings make sense.
+				Cases show a word's role in a sentence. Master these three questions and word endings make
+				sense.
 			</TabHero>
 
 			<CasesSection />
 
-			<Card
-				variant="bordered"
-				padding="md"
-				className="border-ocean-300 bg-ocean-50"
-			>
-				<Link
-					to="/reference/pronouns"
-					className="group flex items-center justify-between"
-				>
+			<Card variant="bordered" padding="md" className="border-ocean-300 bg-ocean-50">
+				<Link to="/reference/pronouns" className="group flex items-center justify-between">
 					<div>
 						<h4 className="font-bold text-ocean-text">Continue to Pronouns</h4>
 						<p className="text-sm text-stone-600">

@@ -37,13 +37,10 @@ export function usePasskeyRegistration(
 
 			if (!optionsResponse.ok) {
 				const errorData = (await optionsResponse.json()) as { error?: string };
-				throw new Error(
-					errorData.error || "Failed to get registration options",
-				);
+				throw new Error(errorData.error || "Failed to get registration options");
 			}
 
-			const regOptions: PublicKeyCredentialCreationOptionsJSON =
-				await optionsResponse.json();
+			const regOptions: PublicKeyCredentialCreationOptionsJSON = await optionsResponse.json();
 
 			const attestation = await startRegistration({ optionsJSON: regOptions });
 

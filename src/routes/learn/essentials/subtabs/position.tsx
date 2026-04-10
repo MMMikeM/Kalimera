@@ -48,11 +48,7 @@ export function PositionSubtab({ data }: Props) {
 			</Link>
 
 			{/* Opposites Grid */}
-			<ContentSection
-				title="Opposites"
-				subtitle="Position words come in pairs"
-				colorScheme="ocean"
-			>
+			<ContentSection title="Opposites" subtitle="Position words come in pairs" colorScheme="ocean">
 				<div className="divide-y divide-stone-200/60">
 					{POSITION_PAIRS.map(([leftGreek, rightGreek]) => {
 						const left = adverbByGreek.get(leftGreek);
@@ -70,9 +66,7 @@ export function PositionSubtab({ data }: Props) {
 									{left && (
 										<>
 											<MonoText variant="greek">{left.greek}</MonoText>
-											<div className="text-xs text-stone-500">
-												{left.english}
-											</div>
+											<div className="text-xs text-stone-500">{left.english}</div>
 										</>
 									)}
 								</div>
@@ -82,9 +76,7 @@ export function PositionSubtab({ data }: Props) {
 									{right && (
 										<>
 											<MonoText variant="greek">{right.greek}</MonoText>
-											<div className="text-xs text-stone-500">
-												{right.english}
-											</div>
+											<div className="text-xs text-stone-500">{right.english}</div>
 										</>
 									)}
 								</div>
@@ -94,9 +86,7 @@ export function PositionSubtab({ data }: Props) {
 				</div>
 
 				<div className="mx-3 mt-3 rounded-lg border border-ocean-200 bg-ocean-100 p-2.5">
-					<p className="mb-2 text-sm font-medium text-ocean-text">
-						Using opposites with verbs
-					</p>
+					<p className="mb-2 text-sm font-medium text-ocean-text">Using opposites with verbs</p>
 					<div className="space-y-1.5 text-sm">
 						<div>
 							<MonoText variant="greek">μπες μέσα</MonoText>
@@ -137,15 +127,11 @@ export function PositionSubtab({ data }: Props) {
 				</div>
 
 				<div className="mx-3 mt-3 rounded-lg border border-terracotta-200 bg-terracotta-100 p-2.5">
-					<p className="mb-2 text-sm font-medium text-terracotta-text">
-						Key verbs for directions
-					</p>
+					<p className="mb-2 text-sm font-medium text-terracotta-text">Key verbs for directions</p>
 					<div className="space-y-1.5 text-sm">
 						<div>
 							<MonoText variant="greek">στρίψε</MonoText>
-							<span className="ml-2 text-xs text-stone-500">
-								turn (command)
-							</span>
+							<span className="ml-2 text-xs text-stone-500">turn (command)</span>
 						</div>
 						<div>
 							<MonoText variant="greek">πήγαινε</MonoText>
@@ -153,9 +139,7 @@ export function PositionSubtab({ data }: Props) {
 						</div>
 						<div>
 							<MonoText variant="greek">έλα</MonoText>
-							<span className="ml-2 text-xs text-stone-500">
-								come (command)
-							</span>
+							<span className="ml-2 text-xs text-stone-500">come (command)</span>
 						</div>
 					</div>
 				</div>
@@ -177,9 +161,7 @@ export function PositionSubtab({ data }: Props) {
 				</div>
 
 				<div className="mx-3 mt-3 rounded-lg border border-olive-200 bg-olive-100 p-2.5">
-					<p className="mb-2 text-sm font-medium text-olive-text">
-						Preposition patterns
-					</p>
+					<p className="mb-2 text-sm font-medium text-olive-text">Preposition patterns</p>
 					<div className="space-y-1.5 text-sm">
 						<div>
 							<MonoText variant="greek">μπροστά / πίσω / μακριά</MonoText>
@@ -199,8 +181,7 @@ export function PositionSubtab({ data }: Props) {
 						</div>
 					</div>
 					<p className="mt-2 border-t border-olive-200/50 pt-1.5 text-xs text-stone-500">
-						<MonoText className="text-stone-700">κοντά στο</MonoText> = κοντά +
-						σε + το (contracted)
+						<MonoText className="text-stone-700">κοντά στο</MonoText> = κοντά + σε + το (contracted)
 					</p>
 				</div>
 			</ContentSection>

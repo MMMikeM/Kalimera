@@ -9,9 +9,7 @@ export const LESSON_2024_06_10 = {
 
 	verbs: [],
 
-	nouns: [
-		{ lemma: "αφτί", gender: "neuter", english: "ear" },
-	] satisfies NounSeed[],
+	nouns: [{ lemma: "αφτί", gender: "neuter", english: "ear" }] satisfies NounSeed[],
 
 	adverbs: [{ lemma: "πολύ", english: "very/a lot" }] satisfies AdverbSeed[],
 
@@ -53,10 +51,7 @@ export const LESSON_2024_06_10 = {
 	grammarNotes: [
 		{
 			pattern: "πολύ vs πολλοί",
-			examples: [
-				"πολύ καλός (very good) - adverb",
-				"πολλοί άνθρωποι (many people) - adjective",
-			],
+			examples: ["πολύ καλός (very good) - adverb", "πολλοί άνθρωποι (many people) - adjective"],
 			explanation: "πολύ modifies adjectives/verbs, πολλοί/ές/ά modifies nouns",
 		},
 		{

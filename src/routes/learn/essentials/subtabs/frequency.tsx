@@ -65,11 +65,7 @@ export function FrequencySubtab({ data }: Props) {
 			</Link>
 
 			{/* Frequency Spectrum */}
-			<ContentSection
-				title="Frequency"
-				subtitle="never → always"
-				colorScheme="olive"
-			>
+			<ContentSection title="Frequency" subtitle="never → always" colorScheme="olive">
 				<div className="divide-y divide-stone-200/60">
 					{FREQUENCY_ORDER.map((greek) => {
 						const adverb = adverbByGreek.get(greek);
@@ -79,9 +75,7 @@ export function FrequencySubtab({ data }: Props) {
 								<div className="flex items-center justify-between gap-3">
 									<div className="min-w-0">
 										<MonoText variant="greek">{greek}</MonoText>
-										<div className="text-xs text-stone-500">
-											{adverb?.english ?? greek}
-										</div>
+										<div className="text-xs text-stone-500">{adverb?.english ?? greek}</div>
 									</div>
 									<div className="h-2 w-24 shrink-0 overflow-hidden rounded-full bg-stone-200">
 										<div
@@ -97,16 +91,10 @@ export function FrequencySubtab({ data }: Props) {
 			</ContentSection>
 
 			{/* Accent Warning */}
-			<ContentSection
-				title="Watch the Accent"
-				subtitle="ποτέ vs πότε"
-				colorScheme="honey"
-			>
+			<ContentSection title="Watch the Accent" subtitle="ποτέ vs πότε" colorScheme="honey">
 				<Alert variant="warning" className="mx-3 mt-3 mb-2">
 					<Lightbulb size={16} />
-					<AlertDescription>
-						The accent changes meaning completely!
-					</AlertDescription>
+					<AlertDescription>The accent changes meaning completely!</AlertDescription>
 				</Alert>
 
 				<div className="divide-y divide-stone-200/60">
@@ -125,9 +113,7 @@ export function FrequencySubtab({ data }: Props) {
 				</div>
 
 				<div className="mx-3 mt-3 rounded-lg border border-honey-200 bg-honey-100 p-2.5">
-					<p className="mb-2 text-sm font-medium text-honey-text">
-						Grammar pattern
-					</p>
+					<p className="mb-2 text-sm font-medium text-honey-text">Grammar pattern</p>
 					<div className="space-y-1.5 text-sm">
 						<div>
 							<MonoText variant="greek">ποτέ δεν + verb</MonoText>
@@ -152,16 +138,12 @@ export function FrequencySubtab({ data }: Props) {
 						<MonoText variant="greek" className="font-semibold">
 							καμιά φορά
 						</MonoText>
-						<p className="mt-0.5 text-xs text-stone-500">
-							Once in a while, unexpectedly
-						</p>
+						<p className="mt-0.5 text-xs text-stone-500">Once in a while, unexpectedly</p>
 						<div className="mt-1">
 							<MonoText variant="greek" size="sm">
 								Καμιά φορά τρώω γλυκά.
 							</MonoText>
-							<span className="ml-2 text-xs text-stone-400">
-								I eat sweets once in a while.
-							</span>
+							<span className="ml-2 text-xs text-stone-400">I eat sweets once in a while.</span>
 						</div>
 					</div>
 
@@ -169,16 +151,12 @@ export function FrequencySubtab({ data }: Props) {
 						<MonoText variant="greek" className="font-semibold">
 							μερικές φορές
 						</MonoText>
-						<p className="mt-0.5 text-xs text-stone-500">
-							Several times, countable occurrences
-						</p>
+						<p className="mt-0.5 text-xs text-stone-500">Several times, countable occurrences</p>
 						<div className="mt-1">
 							<MonoText variant="greek" size="sm">
 								Έχω πάει μερικές φορές.
 							</MonoText>
-							<span className="ml-2 text-xs text-stone-400">
-								I've been several times.
-							</span>
+							<span className="ml-2 text-xs text-stone-400">I've been several times.</span>
 						</div>
 					</div>
 
@@ -186,16 +164,12 @@ export function FrequencySubtab({ data }: Props) {
 						<MonoText variant="greek" className="font-semibold">
 							πότε πότε
 						</MonoText>
-						<p className="mt-0.5 text-xs text-stone-500">
-							Now and then, neutral/standard
-						</p>
+						<p className="mt-0.5 text-xs text-stone-500">Now and then, neutral/standard</p>
 						<div className="mt-1">
 							<MonoText variant="greek" size="sm">
 								Πότε πότε πάω γυμναστήριο.
 							</MonoText>
-							<span className="ml-2 text-xs text-stone-400">
-								I go to the gym now and then.
-							</span>
+							<span className="ml-2 text-xs text-stone-400">I go to the gym now and then.</span>
 						</div>
 					</div>
 
@@ -203,27 +177,19 @@ export function FrequencySubtab({ data }: Props) {
 						<MonoText variant="greek" className="font-semibold">
 							κάπου κάπου
 						</MonoText>
-						<p className="mt-0.5 text-xs text-stone-500">
-							Here and there, casual/colloquial
-						</p>
+						<p className="mt-0.5 text-xs text-stone-500">Here and there, casual/colloquial</p>
 						<div className="mt-1">
 							<MonoText variant="greek" size="sm">
 								Κάπου κάπου βλέπω ταινίες.
 							</MonoText>
-							<span className="ml-2 text-xs text-stone-400">
-								I watch films here and there.
-							</span>
+							<span className="ml-2 text-xs text-stone-400">I watch films here and there.</span>
 						</div>
 					</div>
 				</div>
 			</ContentSection>
 
 			{/* Usage Examples */}
-			<ContentSection
-				title="Usage"
-				subtitle="Adverb before verb"
-				colorScheme="terracotta"
-			>
+			<ContentSection title="Usage" subtitle="Adverb before verb" colorScheme="terracotta">
 				<div className="divide-y divide-stone-200/60">
 					{USAGE_EXAMPLES.map((example) => (
 						<div key={example.greek} className="px-3 py-2.5">

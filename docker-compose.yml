@@ -6,4 +6,4 @@ services:
       - "8080:8080"
     volumes:
       - ./data/libsql:/var/lib/sqld
-    restart: unless-stopped 
+    restart: unless-stopped

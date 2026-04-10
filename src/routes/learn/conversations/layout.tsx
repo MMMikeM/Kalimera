@@ -20,11 +20,7 @@ import {
 import { MonoText } from "@/components/MonoText";
 import type { NavTab } from "@/components/NavTabs";
 import { NavTabs } from "@/components/NavTabs";
-import {
-	Collapsible,
-	CollapsibleContent,
-	CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { usePersistedState } from "@/lib/hooks/use-persisted-state";
 
 type ConversationContext = {
@@ -32,8 +28,7 @@ type ConversationContext = {
 	setMode: (mode: ConversationMode) => void;
 };
 
-export const useConversationContext = () =>
-	useOutletContext<ConversationContext>();
+export const useConversationContext = () => useOutletContext<ConversationContext>();
 
 export function meta() {
 	return [
@@ -60,11 +55,7 @@ export interface LearningTipsProps {
 	};
 }
 
-export const LearningTips: React.FC<LearningTipsProps> = ({
-	patterns,
-	tips,
-	commonMistake,
-}) => (
+export const LearningTips: React.FC<LearningTipsProps> = ({ patterns, tips, commonMistake }) => (
 	<Collapsible defaultOpen>
 		<CollapsibleTrigger className="group flex w-full items-center gap-2 rounded-lg bg-stone-50 p-3 text-left transition-colors hover:bg-stone-100">
 			<Lightbulb size={18} className="text-honey" />
@@ -79,9 +70,7 @@ export const LearningTips: React.FC<LearningTipsProps> = ({
 				<div className="grid gap-6 text-sm md:grid-cols-2">
 					{patterns && (
 						<div>
-							<h4 className="mb-2 font-semibold text-honey-text">
-								{patterns.title}
-							</h4>
+							<h4 className="mb-2 font-semibold text-honey-text">{patterns.title}</h4>
 							<ul className="space-y-1.5 text-stone-700">
 								{patterns.items.map((item) => (
 									<li key={item}>{item}</li>
@@ -91,9 +80,7 @@ export const LearningTips: React.FC<LearningTipsProps> = ({
 					)}
 					{tips && (
 						<div>
-							<h4 className="mb-2 font-semibold text-honey-text">
-								{tips.title}
-							</h4>
+							<h4 className="mb-2 font-semibold text-honey-text">{tips.title}</h4>
 							<ul className="space-y-1.5 text-stone-700">
 								{tips.items.map((item) => (
 									<li key={item}>{item}</li>
@@ -104,9 +91,7 @@ export const LearningTips: React.FC<LearningTipsProps> = ({
 				</div>
 				{commonMistake && (
 					<div className="mt-4 border-t border-amber-200 pt-4">
-						<h4 className="mb-2 font-semibold text-honey-text">
-							Common Mistake
-						</h4>
+						<h4 className="mb-2 font-semibold text-honey-text">Common Mistake</h4>
 						<div className="flex items-start gap-4 text-sm">
 							<div className="flex-1">
 								<span className="font-medium text-red-600">✗</span>{" "}
@@ -121,9 +106,7 @@ export const LearningTips: React.FC<LearningTipsProps> = ({
 								</MonoText>
 							</div>
 						</div>
-						<p className="mt-2 text-xs text-stone-600">
-							{commonMistake.explanation}
-						</p>
+						<p className="mt-2 text-xs text-stone-600">{commonMistake.explanation}</p>
 					</div>
 				)}
 			</div>
@@ -176,10 +159,7 @@ export default function ConversationsLayout() {
 	const pathSegments = location.pathname.split("/").filter(Boolean);
 	const activeTab = pathSegments[2] || "arriving";
 
-	const [rawMode, setMode] = usePersistedState<string>(
-		"conversation-mode",
-		"read",
-	);
+	const [rawMode, setMode] = usePersistedState<string>("conversation-mode", "read");
 	const mode: ConversationMode = rawMode === "roleplay" ? "roleplay" : "read";
 
 	return (

@@ -12,8 +12,8 @@ export function ArticlesTab() {
 				colorScheme="olive"
 				icon={<BookOpen size={18} />}
 			>
-				Greek articles change to match their noun's gender, case, and number.
-				Once you see the pattern, it becomes predictable.
+				Greek articles change to match their noun's gender, case, and number. Once you see the
+				pattern, it becomes predictable.
 			</TabHero>
 			<ArticlesSection />
 			<PracticeCTA

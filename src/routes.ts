@@ -1,9 +1,4 @@
-import {
-	index,
-	prefix,
-	type RouteConfig,
-	route,
-} from "@react-router/dev/routes";
+import { index, prefix, type RouteConfig, route } from "@react-router/dev/routes";
 
 export default [
 	// Auth
@@ -81,10 +76,7 @@ export default [
 		route("errors", "routes/api/errors.ts"),
 
 		// WebAuthn
-		route(
-			"webauthn/register-options",
-			"routes/api/webauthn/register-options.ts",
-		),
+		route("webauthn/register-options", "routes/api/webauthn/register-options.ts"),
 		route("webauthn/register-verify", "routes/api/webauthn/register-verify.ts"),
 		route("webauthn/auth-options", "routes/api/webauthn/auth-options.ts"),
 		route("webauthn/auth-verify", "routes/api/webauthn/auth-verify.ts"),

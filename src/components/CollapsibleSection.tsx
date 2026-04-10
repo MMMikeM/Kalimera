@@ -30,11 +30,7 @@ export const CollapsibleSection = ({
 	const colors = colorStyles[colorScheme];
 
 	return (
-		<CollapsiblePrimitive.Root
-			open={isOpen}
-			onOpenChange={setIsOpen}
-			className={className}
-		>
+		<CollapsiblePrimitive.Root open={isOpen} onOpenChange={setIsOpen} className={className}>
 			<div className={cn("rounded-lg border overflow-hidden", colors.border)}>
 				<CollapsiblePrimitive.Trigger
 					className={cn(
@@ -46,9 +42,7 @@ export const CollapsibleSection = ({
 				>
 					{icon && <span className={colors.accent}>{icon}</span>}
 					<span className={cn("font-medium", colors.text)}>{title}</span>
-					{subtitle && (
-						<span className="ml-1 text-sm text-stone-500">{subtitle}</span>
-					)}
+					{subtitle && <span className="ml-1 text-sm text-stone-500">{subtitle}</span>}
 					<span className="ml-auto flex items-center gap-1.5">
 						<AnimatePresence mode="wait" initial={false}>
 							<motion.span
@@ -93,9 +87,7 @@ export const CollapsibleSection = ({
 							}}
 							className="overflow-hidden"
 						>
-							<div className="border-t border-stone-200/60 bg-cream-dark/50 p-4">
-								{children}
-							</div>
+							<div className="border-t border-stone-200/60 bg-cream-dark/50 p-4">{children}</div>
 						</motion.div>
 					)}
 				</AnimatePresence>

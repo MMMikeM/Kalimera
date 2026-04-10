@@ -1,13 +1,5 @@
 import { differenceInDays, getDate, getDay } from "date-fns";
-import {
-	ArrowRight,
-	Calendar,
-	Check,
-	ChevronDown,
-	ChevronUp,
-	Play,
-	Sparkles,
-} from "lucide-react";
+import { ArrowRight, Calendar, Check, ChevronDown, ChevronUp, Play, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { Link, useFetcher } from "react-router";
 import { FreezeIndicator } from "@/components/FreezeIndicator";
@@ -78,13 +70,12 @@ export async function loader({ request }: Route.LoaderArgs) {
 		};
 	}
 
-	const [rawStats, user, itemsDueTomorrow, lastPracticeDate] =
-		await Promise.all([
-			getPracticeStats(userId),
-			getUserById(userId),
-			getItemsDueTomorrow(userId),
-			getLastPracticeDate(userId),
-		]);
+	const [rawStats, user, itemsDueTomorrow, lastPracticeDate] = await Promise.all([
+		getPracticeStats(userId),
+		getUserById(userId),
+		getItemsDueTomorrow(userId),
+		getLastPracticeDate(userId),
+	]);
 
 	const daysSinceLastPractice = lastPracticeDate
 		? differenceInDays(new Date(), lastPracticeDate)
@@ -112,12 +103,8 @@ export async function loader({ request }: Route.LoaderArgs) {
 	const todayPracticed = stats.streak > 0 && mondayOffset <= stats.streak;
 
 	// Get freeze status
-	const freezeStatus = user
-		? getFreezeStatus(user)
-		: { status: "none" as const, freezeCount: 0 };
-	const daysUntilNextFreeze = user
-		? calculateDaysUntilNextFreeze(stats.streak, user)
-		: 7;
+	const freezeStatus = user ? getFreezeStatus(user) : { status: "none" as const, freezeCount: 0 };
+	const daysUntilNextFreeze = user ? calculateDaysUntilNextFreeze(stats.streak, user) : 7;
 
 	const pushSub = await getPushSubscriptionByUserId(userId);
 
@@ -175,9 +162,7 @@ const PracticeCTA = ({
 			>
 				<div className="flex items-center justify-between">
 					<div>
-						<p className="text-3xl font-bold text-honey-text">
-							{dueCount} items due
-						</p>
+						<p className="text-3xl font-bold text-honey-text">{dueCount} items due</p>
 						<p className="mt-1 text-stone-600">~{estimatedMinutes} min</p>
 					</div>
 					<div className="flex h-14 w-14 items-center justify-center rounded-full bg-honey-400 text-white shadow-sm">
@@ -191,8 +176,7 @@ const PracticeCTA = ({
 					<div className="mt-3 flex items-center justify-center gap-2 text-sm text-stone-500">
 						<Calendar className="h-4 w-4" />
 						<span>
-							Tomorrow: {itemsDueTomorrow}{" "}
-							{itemsDueTomorrow === 1 ? "item" : "items"}
+							Tomorrow: {itemsDueTomorrow} {itemsDueTomorrow === 1 ? "item" : "items"}
 						</span>
 					</div>
 				)}
@@ -204,9 +188,7 @@ const PracticeCTA = ({
 					className="block rounded-xl border border-stone-200 bg-stone-50 p-4 text-center transition-colors hover:bg-stone-100"
 				>
 					<span className="text-stone-600">Short on time? </span>
-					<span className="font-medium text-stone-800">
-						Just {QUICK_REVIEW_COUNT} items
-					</span>
+					<span className="font-medium text-stone-800">Just {QUICK_REVIEW_COUNT} items</span>
 					<span className="text-stone-500"> (~1 min)</span>
 				</Link>
 			)}
@@ -296,8 +278,7 @@ const AllCaughtUpCTA = ({
 			<div className="mt-4 flex items-center justify-center gap-2 text-sm text-stone-600">
 				<Calendar className="h-4 w-4 text-ocean" />
 				<span>
-					{itemsDueTomorrow} {itemsDueTomorrow === 1 ? "item" : "items"} due
-					tomorrow
+					{itemsDueTomorrow} {itemsDueTomorrow === 1 ? "item" : "items"} due tomorrow
 				</span>
 			</div>
 		)}
@@ -316,12 +297,8 @@ const AllCaughtUpCTA = ({
 // First time user state
 const FirstTimeUserCTA = () => (
 	<div className="rounded-2xl border border-stone-200 bg-cream py-8 text-center">
-		<p className="greek-text mb-2 font-serif text-3xl text-navy">
-			Καλώς ήρθες!
-		</p>
-		<p className="mb-6 text-lg text-stone-600">
-			Let's learn your first Greek words.
-		</p>
+		<p className="greek-text mb-2 font-serif text-3xl text-navy">Καλώς ήρθες!</p>
+		<p className="mb-6 text-lg text-stone-600">Let's learn your first Greek words.</p>
 		<Link
 			to="/practice/vocabulary"
 			className="inline-flex items-center gap-2 rounded-xl bg-terracotta px-8 py-4 font-semibold text-white shadow-md transition-colors hover:bg-terracotta-dark"
@@ -381,9 +358,7 @@ const DailyPhrase = () => {
 
 	return (
 		<div className="rounded-2xl border border-stone-200 bg-white p-5">
-			<p className="mb-4 text-xs tracking-widest text-stone-400 uppercase">
-				Today's Phrase
-			</p>
+			<p className="mb-4 text-xs tracking-widest text-stone-400 uppercase">Today's Phrase</p>
 
 			<p className="mb-4 text-lg text-stone-700">"{phrase?.english}"</p>
 
@@ -401,12 +376,8 @@ const DailyPhrase = () => {
 					<p className="font-medium text-terracotta">Tap to reveal Greek</p>
 				) : (
 					<div>
-						<p className="greek-text font-serif text-2xl text-navy">
-							{phrase?.greek}
-						</p>
-						<p className="mt-1 text-sm text-stone-500 italic">
-							lit. "{phrase?.literal}"
-						</p>
+						<p className="greek-text font-serif text-2xl text-navy">{phrase?.greek}</p>
+						<p className="mt-1 text-sm text-stone-500 italic">lit. "{phrase?.literal}"</p>
 					</div>
 				)}
 			</button>
@@ -463,8 +434,7 @@ const WeekStreak = ({
 					} else if (isToday && todayPracticed) {
 						className += "bg-terracotta text-white";
 					} else if (isToday && !todayPracticed) {
-						className +=
-							"border-2 border-terracotta text-terracotta animate-pulse";
+						className += "border-2 border-terracotta text-terracotta animate-pulse";
 					} else {
 						className += "border border-stone-200 text-stone-300";
 					}
@@ -554,10 +524,7 @@ export default function DashboardRoute({ loaderData }: Route.ComponentProps) {
 		}
 		if (stats.dueCount === 0) {
 			return (
-				<AllCaughtUpCTA
-					newAvailable={stats.newAvailable}
-					itemsDueTomorrow={itemsDueTomorrow}
-				/>
+				<AllCaughtUpCTA newAvailable={stats.newAvailable} itemsDueTomorrow={itemsDueTomorrow} />
 			);
 		}
 		if (isLapsedUser) {
@@ -570,12 +537,7 @@ export default function DashboardRoute({ loaderData }: Route.ComponentProps) {
 				/>
 			);
 		}
-		return (
-			<PracticeCTA
-				dueCount={stats.dueCount}
-				itemsDueTomorrow={itemsDueTomorrow}
-			/>
-		);
+		return <PracticeCTA dueCount={stats.dueCount} itemsDueTomorrow={itemsDueTomorrow} />;
 	};
 
 	return (
@@ -584,35 +546,30 @@ export default function DashboardRoute({ loaderData }: Route.ComponentProps) {
 			<section>{renderCTA()}</section>
 
 			{/* Taper offer — shown when user consistently practises before notification fires */}
-			{taperOfferPending &&
-				taperFetcher.state === "idle" &&
-				!taperFetcher.data && (
-					<section>
-						<div className="rounded-md border border-stone-200 bg-amber-50 px-4 py-3 text-sm text-stone-600">
-							<p>
-								You've been practising before your reminder arrives. Want fewer
-								nudges?
-							</p>
-							<div className="mt-2 flex gap-3">
-								<button
-									type="button"
-									onClick={() => handleTaperResponse("reduce")}
-									className="text-ocean-700 underline underline-offset-2"
-								>
-									Yes, reduce reminders
-								</button>
-								<span className="text-stone-400">·</span>
-								<button
-									type="button"
-									onClick={() => handleTaperResponse("always")}
-									className="text-stone-500 underline underline-offset-2"
-								>
-									I rely on these, keep them coming
-								</button>
-							</div>
+			{taperOfferPending && taperFetcher.state === "idle" && !taperFetcher.data && (
+				<section>
+					<div className="rounded-md border border-stone-200 bg-amber-50 px-4 py-3 text-sm text-stone-600">
+						<p>You've been practising before your reminder arrives. Want fewer nudges?</p>
+						<div className="mt-2 flex gap-3">
+							<button
+								type="button"
+								onClick={() => handleTaperResponse("reduce")}
+								className="text-ocean-700 underline underline-offset-2"
+							>
+								Yes, reduce reminders
+							</button>
+							<span className="text-stone-400">·</span>
+							<button
+								type="button"
+								onClick={() => handleTaperResponse("always")}
+								className="text-stone-500 underline underline-offset-2"
+							>
+								I rely on these, keep them coming
+							</button>
 						</div>
-					</section>
-				)}
+					</div>
+				</section>
+			)}
 
 			{/* Daily Phrase */}
 			<section>
@@ -639,10 +596,7 @@ export default function DashboardRoute({ loaderData }: Route.ComponentProps) {
 			{/* Stats Summary */}
 			{stats.totalLearned > 0 && (
 				<section>
-					<StatsSummary
-						itemsMastered={stats.itemsMastered}
-						totalLearned={stats.totalLearned}
-					/>
+					<StatsSummary itemsMastered={stats.itemsMastered} totalLearned={stats.totalLearned} />
 				</section>
 			)}
 		</div>

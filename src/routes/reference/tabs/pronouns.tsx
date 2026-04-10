@@ -14,15 +14,10 @@ export function PronounsTab() {
 				colorScheme="ocean"
 				icon={<Users size={18} />}
 			>
-				Pronouns are where you'll use cases most. Master these forms and cases
-				click into place.
+				Pronouns are where you'll use cases most. Master these forms and cases click into place.
 			</TabHero>
 
-			<Card
-				variant="bordered"
-				padding="md"
-				className="border-stone-200 bg-stone-50"
-			>
+			<Card variant="bordered" padding="md" className="border-stone-200 bg-stone-50">
 				<Link
 					to="/reference/cases"
 					className="flex items-center gap-2 text-stone-600 transition-colors hover:text-stone-800"

@@ -7,9 +7,7 @@ export const LESSON_2024_10_15 = {
 		source: "Weekly lesson - job descriptions",
 	},
 
-	verbs: [
-		{ lemma: "διδάσκω", english: "I teach", conjugationFamily: "-ω" },
-	] satisfies VerbSeed[],
+	verbs: [{ lemma: "διδάσκω", english: "I teach", conjugationFamily: "-ω" }] satisfies VerbSeed[],
 
 	nouns: [
 		{ lemma: "λογισμικό", gender: "neuter", english: "software" },

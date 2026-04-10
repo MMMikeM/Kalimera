@@ -1,12 +1,4 @@
-import {
-	ChevronLeft,
-	Clock,
-	Hand,
-	Heart,
-	Link2,
-	MessageCircle,
-	Sparkles,
-} from "lucide-react";
+import { ChevronLeft, Clock, Hand, Heart, Link2, MessageCircle, Sparkles } from "lucide-react";
 import { Link, Outlet, useLocation } from "react-router";
 import type { NavTab } from "@/components/NavTabs";
 import { NavTabs } from "@/components/NavTabs";

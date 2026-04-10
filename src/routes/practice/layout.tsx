@@ -31,9 +31,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 
 	const url = new URL(request.url);
 	const limitParam = url.searchParams.get("limit");
-	const limit = limitParam
-		? Math.min(Math.max(parseInt(limitParam, 10), 1), 100)
-		: 20;
+	const limit = limitParam ? Math.min(Math.max(parseInt(limitParam, 10), 1), 100) : 20;
 
 	let reviewItems: VocabItemWithSkill[] = [];
 	let newVocabItems: VocabItemWithSkill[] = [];
@@ -72,9 +70,7 @@ export type PracticeLoaderData = Awaited<ReturnType<typeof loader>>;
 export const UserRequiredMessage = () => (
 	<div className="rounded-xl border border-border bg-muted py-12 text-center">
 		<div className="mb-4 text-5xl">?</div>
-		<h3 className="mb-2 text-xl font-semibold text-foreground">
-			Select a user
-		</h3>
+		<h3 className="mb-2 text-xl font-semibold text-foreground">Select a user</h3>
 		<p className="text-muted-foreground">
 			Choose a user from the dropdown above to start practicing.
 		</p>
@@ -108,9 +104,7 @@ export default function PracticeLayout({ loaderData }: Route.ComponentProps) {
 		<div className="space-y-4">
 			<NavTabs
 				tabs={PRACTICE_TABS.map((tab) =>
-					tab.id === "review" && stats?.dueCount
-						? { ...tab, badge: stats.dueCount }
-						: tab,
+					tab.id === "review" && stats?.dueCount ? { ...tab, badge: stats.dueCount } : tab,
 				)}
 				activeTab={activeTab}
 				buildUrl={(tabId) => `/practice/${tabId}`}

@@ -1,14 +1,4 @@
-import {
-	BarChart3,
-	BookOpen,
-	FileText,
-	Home,
-	Info,
-	LogOut,
-	Search,
-	User,
-	Zap,
-} from "lucide-react";
+import { BarChart3, BookOpen, FileText, Home, Info, LogOut, Search, User, Zap } from "lucide-react";
 import { useEffect, useState } from "react";
 import {
 	isRouteErrorResponse,
@@ -99,10 +89,8 @@ const MobileAccountPopover = ({ onLogout }: MobileAccountPopoverProps) => {
 				render={
 					<button
 						type="button"
-						className={`p-2 rounded-lg transition-colors outline-none outline-transparent ring-0 shadow-none ${
-							isOpen
-								? "text-terracotta bg-terracotta/10"
-								: "text-stone-500 hover:text-stone-700"
+						className={`rounded-lg p-2 shadow-none ring-0 outline-transparent transition-colors outline-none ${
+							isOpen ? "bg-terracotta/10 text-terracotta" : "text-stone-500 hover:text-stone-700"
 						}`}
 					/>
 				}
@@ -110,33 +98,33 @@ const MobileAccountPopover = ({ onLogout }: MobileAccountPopoverProps) => {
 				<User size={20} strokeWidth={1.5} />
 			</PopoverTrigger>
 			<PopoverPositioner align="end" sideOffset={8}>
-			<PopoverContent className="w-48 p-1">
-				<button
-					type="button"
-					onClick={() => handleNavigate("/progress")}
-					className="flex items-center gap-2 w-full px-3 py-2 text-left text-sm rounded-md hover:bg-stone-100 transition-colors"
-				>
-					<BarChart3 size={16} strokeWidth={1.5} className="text-stone-500" />
-					<span className="text-stone-800">Progress</span>
-				</button>
-				<button
-					type="button"
-					onClick={() => handleNavigate("/support")}
-					className="flex items-center gap-2 w-full px-3 py-2 text-left text-sm rounded-md hover:bg-stone-100 transition-colors"
-				>
-					<Info size={16} strokeWidth={1.5} className="text-stone-500" />
-					<span className="text-stone-800">About</span>
-				</button>
-				<div className="border-t border-stone-200 my-1" />
-				<button
-					type="button"
-					onClick={handleLogoutClick}
-					className="flex items-center gap-2 w-full px-3 py-2 text-left text-sm rounded-md hover:bg-stone-100 transition-colors"
-				>
-					<LogOut size={16} strokeWidth={1.5} className="text-stone-500" />
-					<span className="text-stone-800">Sign Out</span>
-				</button>
-			</PopoverContent>
+				<PopoverContent className="w-48 p-1">
+					<button
+						type="button"
+						onClick={() => handleNavigate("/progress")}
+						className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm transition-colors hover:bg-stone-100"
+					>
+						<BarChart3 size={16} strokeWidth={1.5} className="text-stone-500" />
+						<span className="text-stone-800">Progress</span>
+					</button>
+					<button
+						type="button"
+						onClick={() => handleNavigate("/support")}
+						className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm transition-colors hover:bg-stone-100"
+					>
+						<Info size={16} strokeWidth={1.5} className="text-stone-500" />
+						<span className="text-stone-800">About</span>
+					</button>
+					<div className="my-1 border-t border-stone-200" />
+					<button
+						type="button"
+						onClick={handleLogoutClick}
+						className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm transition-colors hover:bg-stone-100"
+					>
+						<LogOut size={16} strokeWidth={1.5} className="text-stone-500" />
+						<span className="text-stone-800">Sign Out</span>
+					</button>
+				</PopoverContent>
 			</PopoverPositioner>
 		</Popover>
 	);
@@ -149,18 +137,18 @@ interface MobileHeaderProps {
 
 const MobileHeader = ({ isAuthenticated, onLogout }: MobileHeaderProps) => {
 	return (
-		<header className="md:hidden flex items-center justify-between py-3 px-1">
+		<header className="flex items-center justify-between px-1 py-3 md:hidden">
 			<Link to="/" className="flex items-baseline">
-				<span className="text-xl font-serif text-terracotta">Kalimera</span>
+				<span className="font-serif text-xl text-terracotta">Kalimera</span>
 			</Link>
 
 			<div className="flex items-center gap-1">
 				<GlobalSearch>
 					{({ isActive }) => (
 						<span
-							className={`flex items-center justify-center p-2 rounded-lg transition-colors ${
+							className={`flex items-center justify-center rounded-lg p-2 transition-colors ${
 								isActive
-									? "text-terracotta bg-terracotta/10"
+									? "bg-terracotta/10 text-terracotta"
 									: "text-stone-500 hover:text-stone-700"
 							}`}
 						>
@@ -174,7 +162,7 @@ const MobileHeader = ({ isAuthenticated, onLogout }: MobileHeaderProps) => {
 				{!isAuthenticated && (
 					<Link
 						to="/login"
-						className="text-sm font-medium text-stone-600 hover:text-stone-800 px-3 py-1.5"
+						className="px-3 py-1.5 text-sm font-medium text-stone-600 hover:text-stone-800"
 					>
 						Sign In
 					</Link>
@@ -189,24 +177,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
 		<html lang="en">
 			<head>
 				<meta charSet="utf-8" />
-				<meta
-					name="viewport"
-					content="width=device-width, initial-scale=1, viewport-fit=cover"
-				/>
+				<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 				<meta name="theme-color" content="#4A7C8F" />
 				<meta name="mobile-web-app-capable" content="yes" />
 				<meta name="apple-mobile-web-app-capable" content="yes" />
-				<meta
-					name="apple-mobile-web-app-status-bar-style"
-					content="black-translucent"
-				/>
+				<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 				<meta name="apple-mobile-web-app-title" content="καλημέρα" />
 				<link rel="preconnect" href="https://fonts.googleapis.com" />
-				<link
-					rel="preconnect"
-					href="https://fonts.gstatic.com"
-					crossOrigin=""
-				/>
+				<link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
 				<link
 					href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
 					rel="stylesheet"
@@ -226,11 +204,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
 export default function Root({ loaderData }: Route.ComponentProps) {
 	const location = useLocation();
 	const currentSection = location.pathname.split("/")[1] || "home";
-	const isAuthPage =
-		location.pathname === "/login" || location.pathname === "/register";
-	const isPublicRoute = PUBLIC_ROUTES.some((route) =>
-		location.pathname.startsWith(route),
-	);
+	const isAuthPage = location.pathname === "/login" || location.pathname === "/register";
+	const isPublicRoute = PUBLIC_ROUTES.some((route) => location.pathname.startsWith(route));
 
 	const isAuthenticated = loaderData.auth !== null;
 
@@ -255,12 +230,10 @@ export default function Root({ loaderData }: Route.ComponentProps) {
 		return (
 			<div className="app-shell bg-cream">
 				<main className="app-main">
-					<div className="max-w-6xl mx-auto px-6 md:px-8">
+					<div className="mx-auto max-w-6xl px-6 md:px-8">
 						<header className="pt-8 pb-6">
 							<div className="flex items-center justify-center">
-								<span className="text-2xl font-serif text-terracotta">
-									καλημέρα
-								</span>
+								<span className="font-serif text-2xl text-terracotta">καλημέρα</span>
 							</div>
 						</header>
 						<Outlet />
@@ -279,12 +252,9 @@ export default function Root({ loaderData }: Route.ComponentProps) {
 		<div className="app-shell bg-cream">
 			{/* Scrollable main area */}
 			<main className="app-main">
-				<div className="max-w-6xl mx-auto px-6 md:px-8">
+				<div className="mx-auto max-w-6xl px-6 md:px-8">
 					{/* Mobile header */}
-					<MobileHeader
-						isAuthenticated={isAuthenticated}
-						onLogout={handleLogout}
-					/>
+					<MobileHeader isAuthenticated={isAuthenticated} onLogout={handleLogout} />
 
 					{/* Desktop header */}
 					<div className="hidden md:block">
@@ -301,12 +271,9 @@ export default function Root({ loaderData }: Route.ComponentProps) {
 					</div>
 
 					{/* Footer - desktop only */}
-					<footer className="hidden md:block py-12 border-t border-stone-200 mt-12">
+					<footer className="mt-12 hidden border-t border-stone-200 py-12 md:block">
 						<div className="flex items-center justify-between text-sm text-stone-600">
-							<p>
-								Patterns over memorization. Once you see the structure, the
-								language clicks.
-							</p>
+							<p>Patterns over memorization. Once you see the structure, the language clicks.</p>
 							<p className="font-serif text-terracotta-text">Ελληνικά</p>
 						</div>
 					</footer>
@@ -314,8 +281,8 @@ export default function Root({ loaderData }: Route.ComponentProps) {
 			</main>
 
 			{/* Mobile Navigation - fixed bottom */}
-			<nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-cream/95 backdrop-blur-sm border-t border-stone-200 px-4 py-2 safe-area-pb">
-				<div className="flex justify-around items-center max-w-md mx-auto">
+			<nav className="safe-area-pb fixed right-0 bottom-0 left-0 z-50 border-t border-stone-200 bg-cream/95 px-4 py-2 backdrop-blur-sm md:hidden">
+				<div className="mx-auto flex max-w-md items-center justify-around">
 					{MOBILE_NAV_ITEMS.map((item) => {
 						const Icon = item.icon;
 						const isActive = currentSection === item.id;
@@ -324,10 +291,8 @@ export default function Root({ loaderData }: Route.ComponentProps) {
 							<Link
 								key={item.id}
 								to={item.path}
-								className={`flex flex-col items-center gap-1 px-4 py-2 rounded-xl transition-all ${
-									isActive
-										? "text-terracotta bg-terracotta/10"
-										: "text-stone-500"
+								className={`flex flex-col items-center gap-1 rounded-xl px-4 py-2 transition-all ${
+									isActive ? "bg-terracotta/10 text-terracotta" : "text-stone-500"
 								}`}
 							>
 								<Icon size={22} strokeWidth={1.5} />
@@ -372,8 +337,7 @@ export function ErrorBoundary() {
 				message: errorMessage,
 				stack: errorStack,
 				url: typeof window !== "undefined" ? window.location.href : undefined,
-				userAgent:
-					typeof navigator !== "undefined" ? navigator.userAgent : undefined,
+				userAgent: typeof navigator !== "undefined" ? navigator.userAgent : undefined,
 				timestamp: new Date().toISOString(),
 			}),
 		}).catch(() => {
@@ -385,23 +349,18 @@ export function ErrorBoundary() {
 		<html lang="en">
 			<head>
 				<meta charSet="utf-8" />
-				<meta
-					name="viewport"
-					content="width=device-width, initial-scale=1, viewport-fit=cover"
-				/>
+				<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 				<title>{title}</title>
 				<Links />
 			</head>
-			<body className="font-sans text-stone-800 antialiased bg-cream">
-				<div className="min-h-screen flex items-center justify-center p-6">
-					<div className="text-center max-w-md">
-						<h1 className="text-3xl font-serif text-terracotta mb-4">
-							{title}
-						</h1>
-						<p className="text-stone-600 mb-6">{message}</p>
+			<body className="bg-cream font-sans text-stone-800 antialiased">
+				<div className="flex min-h-screen items-center justify-center p-6">
+					<div className="max-w-md text-center">
+						<h1 className="mb-4 font-serif text-3xl text-terracotta">{title}</h1>
+						<p className="mb-6 text-stone-600">{message}</p>
 						<a
 							href="/"
-							className="inline-block px-6 py-3 bg-terracotta text-white rounded-xl font-medium hover:bg-terracotta-dark transition-colors"
+							className="inline-block rounded-xl bg-terracotta px-6 py-3 font-medium text-white transition-colors hover:bg-terracotta-dark"
 						>
 							Go Home
 						</a>

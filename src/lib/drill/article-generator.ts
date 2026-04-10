@@ -43,21 +43,15 @@ export const generateArticleQuestions = (): DrillQuestion[] => {
 
 	for (const noun of ARTICLE_DRILL_NOUNS) {
 		const forms = declineNoun(noun.lemma, noun.pattern);
-		const nomSg = forms.find(
-			(f) => f.case === "nominative" && f.number === "singular",
-		);
-		const nomPl = forms.find(
-			(f) => f.case === "nominative" && f.number === "plural",
-		);
+		const nomSg = forms.find((f) => f.case === "nominative" && f.number === "singular");
+		const nomPl = forms.find((f) => f.case === "nominative" && f.number === "plural");
 
 		if (!nomSg || !nomPl) continue;
 
 		// C-format: Greek transformation (accusative + genitive, both numbers)
 		for (const caseType of ["accusative", "genitive"] as const) {
 			for (const number of ["singular", "plural"] as const) {
-				const form = forms.find(
-					(f) => f.case === caseType && f.number === number,
-				);
+				const form = forms.find((f) => f.case === caseType && f.number === number);
 				if (!form) continue;
 				const baseForm = number === "singular" ? nomSg : nomPl;
 				questions.push({
@@ -73,9 +67,7 @@ export const generateArticleQuestions = (): DrillQuestion[] => {
 		// A-format: English + case label (all three cases, both numbers)
 		for (const caseType of ["nominative", "accusative", "genitive"] as const) {
 			for (const number of ["singular", "plural"] as const) {
-				const form = forms.find(
-					(f) => f.case === caseType && f.number === number,
-				);
+				const form = forms.find((f) => f.case === caseType && f.number === number);
 				if (!form) continue;
 				questions.push({
 					id: `art-a-${noun.lemma}-${caseType}-${number}`,

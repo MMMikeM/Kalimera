@@ -111,10 +111,7 @@ const POSSESSIVES: Possessive[] = [
 	},
 ];
 
-const GENDER_STYLE: Record<
-	Gender,
-	{ selectorBg: string; selectorText: string }
-> = {
+const GENDER_STYLE: Record<Gender, { selectorBg: string; selectorText: string }> = {
 	masculine: { selectorBg: "bg-navy-100", selectorText: "text-navy-text" },
 	feminine: { selectorBg: "bg-sunset-100", selectorText: "text-sunset-text" },
 	neuter: { selectorBg: "bg-slate-100", selectorText: "text-slate-text" },
@@ -176,9 +173,7 @@ const ConfigScreen = ({
 				<tbody>
 					{PARADIGM_ROWS.map((row) => (
 						<tr key={row.label} className="border-t border-stone-100">
-							<td className="py-1.5 pr-4 text-xs font-medium text-olive-text">
-								{row.label}
-							</td>
+							<td className="py-1.5 pr-4 text-xs font-medium text-olive-text">{row.label}</td>
 							{row.forms.map((form) => (
 								<td
 									key={form}
@@ -204,9 +199,7 @@ export default function PossessivesDrill() {
 	const [cardIndex, setCardIndex] = useState(0);
 	const [input, setInput] = useState("");
 	const [attempts, setAttempts] = useState<Attempt<Possessive>[]>([]);
-	const [lastAttempt, setLastAttempt] = useState<Attempt<Possessive> | null>(
-		null,
-	);
+	const [lastAttempt, setLastAttempt] = useState<Attempt<Possessive> | null>(null);
 	const [selPerson, setSelPerson] = useState<Person | null>(null);
 	const [selNumber, setSelNumber] = useState<Num | null>(null);
 	const [selGender, setSelGender] = useState<Gender | null>(null);
@@ -218,8 +211,7 @@ export default function PossessivesDrill() {
 	const MAX_TIMER_MS = mode === "forward" ? 5000 : 8000;
 	const currentForm = (deck[cardIndex] ?? POSSESSIVES[0]) as Possessive;
 
-	const needsGender =
-		currentForm.person === "third" && currentForm.number === "singular";
+	const needsGender = currentForm.person === "third" && currentForm.number === "singular";
 	const showGenderRow = selPerson === "third" && selNumber === "singular";
 
 	const recordAttempt = useCallback(
@@ -250,11 +242,7 @@ export default function PossessivesDrill() {
 		recordAttempt(false, timerMs, true);
 	}, [phase, mode, currentForm, timerMs, MAX_TIMER_MS, recordAttempt]);
 
-	const { progress, startedAt } = useCountdown(
-		timerMs,
-		isActive,
-		handleTimeout,
-	);
+	const { progress, startedAt } = useCountdown(timerMs, isActive, handleTimeout);
 
 	const handleForwardSubmit = useCallback(() => {
 		if (phase !== "active") return;
@@ -272,16 +260,7 @@ export default function PossessivesDrill() {
 			selNumber === currentForm.number &&
 			(!needsGender || selGender === currentForm.gender);
 		recordAttempt(isCorrect, timeTaken);
-	}, [
-		phase,
-		selPerson,
-		selNumber,
-		selGender,
-		needsGender,
-		currentForm,
-		startedAt,
-		recordAttempt,
-	]);
+	}, [phase, selPerson, selNumber, selGender, needsGender, currentForm, startedAt, recordAttempt]);
 
 	const resetSelectors = useCallback(() => {
 		setSelPerson(null);
@@ -341,20 +320,12 @@ export default function PossessivesDrill() {
 	}
 	if (phase === "complete") {
 		return (
-			<SummaryScreen
-				attempts={attempts}
-				total={sessionSize}
-				onAgain={() => setPhase("config")}
-			/>
+			<SummaryScreen attempts={attempts} total={sessionSize} onAgain={() => setPhase("config")} />
 		);
 	}
 
 	const barColor =
-		phase === "feedback"
-			? lastAttempt?.isCorrect
-				? "bg-correct"
-				: "bg-incorrect"
-			: "bg-olive";
+		phase === "feedback" ? (lastAttempt?.isCorrect ? "bg-correct" : "bg-incorrect") : "bg-olive";
 
 	const englishWord = ENGLISH[currentForm.id] ?? "";
 	const personLabel = `${PERSON_LABELS[currentForm.person]} person`;
@@ -375,9 +346,7 @@ export default function PossessivesDrill() {
 						<p className="mb-4 text-xs font-medium tracking-[0.18em] text-olive-text uppercase">
 							{personLabel}
 						</p>
-						<p className="font-serif text-5xl leading-tight text-foreground">
-							{englishWord}
-						</p>
+						<p className="font-serif text-5xl leading-tight text-foreground">{englishWord}</p>
 						<p className="mt-2 text-sm text-muted-foreground">{subtitle}</p>
 					</div>
 
@@ -389,18 +358,13 @@ export default function PossessivesDrill() {
 							inputRef={inputRef}
 							phase={phase}
 						/>
-						{phase === "feedback" && lastAttempt && (
-							<FeedbackDisplay lastAttempt={lastAttempt} />
-						)}
+						{phase === "feedback" && lastAttempt && <FeedbackDisplay lastAttempt={lastAttempt} />}
 					</div>
 				</>
 			) : (
 				<>
 					<div className="pt-2">
-						<p
-							lang="el"
-							className="greek-text font-sans text-8xl leading-none text-foreground"
-						>
+						<p lang="el" className="greek-text font-sans text-8xl leading-none text-foreground">
 							{currentForm.greek}
 						</p>
 					</div>
@@ -450,9 +414,7 @@ export default function PossessivesDrill() {
 							</div>
 						)}
 
-						{phase === "feedback" && lastAttempt && (
-							<ReverseFeedback lastAttempt={lastAttempt} />
-						)}
+						{phase === "feedback" && lastAttempt && <ReverseFeedback lastAttempt={lastAttempt} />}
 					</div>
 				</>
 			)}

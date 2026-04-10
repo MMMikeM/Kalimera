@@ -1,12 +1,4 @@
-import {
-	ArrowRightLeft,
-	Blocks,
-	FileText,
-	Languages,
-	Palette,
-	Scale,
-	Users,
-} from "lucide-react";
+import { ArrowRightLeft, Blocks, FileText, Languages, Palette, Scale, Users } from "lucide-react";
 import { Link } from "react-router";
 
 const sections = [

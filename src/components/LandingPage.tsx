@@ -40,8 +40,7 @@ export const LandingPage = () => (
 					</h1>
 
 					<p className="mx-auto mb-8 max-w-xl text-lg text-stone-600 md:text-xl">
-						Recognition isn't fluency. Retrieval is. Train your Greek with timed
-						production drills.
+						Recognition isn't fluency. Retrieval is. Train your Greek with timed production drills.
 					</p>
 
 					{/* Drill Demo */}
@@ -67,10 +66,7 @@ export const LandingPage = () => (
 
 					<p className="mt-4 text-sm text-stone-500">
 						Already have an account?{" "}
-						<Link
-							to="/login"
-							className="font-medium text-terracotta hover:text-terracotta-dark"
-						>
+						<Link to="/login" className="font-medium text-terracotta hover:text-terracotta-dark">
 							Sign in
 						</Link>
 					</p>
@@ -84,26 +80,21 @@ export const LandingPage = () => (
 						</h2>
 						<div className="space-y-4 leading-relaxed text-stone-700">
 							<p>
-								My wife is Cypriot. We've moved to Cyprus and we're starting a
-								family. I want our son to grow up speaking Greek. As close to
-								native as possible.
+								My wife is Cypriot. We've moved to Cyprus and we're starting a family. I want our
+								son to grow up speaking Greek. As close to native as possible.
 							</p>
 							<p>
-								Problem is, I'm learning from square one. Apps, textbooks,
-								courses. Everything trained me to <em>recognise</em> Greek, not{" "}
-								<em>produce</em> it. I could tap the right answer in a multiple
-								choice quiz, but when my{" "}
-								<span className="font-serif text-terracotta">παππούς</span>{" "}
-								asked me something, my mind went blank.
+								Problem is, I'm learning from square one. Apps, textbooks, courses. Everything
+								trained me to <em>recognise</em> Greek, not <em>produce</em> it. I could tap the
+								right answer in a multiple choice quiz, but when my{" "}
+								<span className="font-serif text-terracotta">παππούς</span> asked me something, my
+								mind went blank.
 							</p>
 							<p>
-								So I built this. Timed drills that force retrieval under
-								pressure. 3.5 seconds to produce the Greek. No hints. No
-								multiple choice. Either you know it or you don't.
+								So I built this. Timed drills that force retrieval under pressure. 3.5 seconds to
+								produce the Greek. No hints. No multiple choice. Either you know it or you don't.
 							</p>
-							<p className="text-stone-600">
-								It's how I'm learning. Maybe it'll help you too.
-							</p>
+							<p className="text-stone-600">It's how I'm learning. Maybe it'll help you too.</p>
 						</div>
 					</Card>
 				</section>
@@ -118,9 +109,7 @@ export const LandingPage = () => (
 									<div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-terracotta/10">
 										<Icon size={24} className="text-terracotta" />
 									</div>
-									<h3 className="mb-2 text-lg font-medium text-stone-800">
-										{feature.title}
-									</h3>
+									<h3 className="mb-2 text-lg font-medium text-stone-800">{feature.title}</h3>
 									<p className="text-stone-600">{feature.description}</p>
 								</Card>
 							);
@@ -133,16 +122,12 @@ export const LandingPage = () => (
 					<p className="font-serif text-2xl text-stone-700">
 						Just <span className="text-terracotta">2-3 minutes</span> a day
 					</p>
-					<p className="mt-2 text-stone-500">
-						Small consistent effort beats occasional cramming
-					</p>
+					<p className="mt-2 text-stone-500">Small consistent effort beats occasional cramming</p>
 				</section>
 
 				{/* Footer CTA */}
 				<section className="border-t border-stone-200 py-12 text-center md:py-16">
-					<h2 className="mb-4 font-serif text-2xl text-terracotta">
-						Ready to start?
-					</h2>
+					<h2 className="mb-4 font-serif text-2xl text-terracotta">Ready to start?</h2>
 					<Link to="/try">
 						<Button variant="primary" size="lg">
 							Try a Drill
@@ -154,10 +139,7 @@ export const LandingPage = () => (
 				<footer className="space-y-2 py-8 text-center text-sm text-stone-500">
 					<p className="font-serif text-terracotta-text">Kalimera</p>
 					<p>
-						<Link
-							to="/support"
-							className="text-stone-500 transition-colors hover:text-terracotta"
-						>
+						<Link to="/support" className="text-stone-500 transition-colors hover:text-terracotta">
 							About this project
 						</Link>
 					</p>

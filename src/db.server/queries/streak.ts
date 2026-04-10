@@ -1,8 +1,7 @@
 import { differenceInHours } from "date-fns";
 import type { User } from "../types";
 
-const getHoursSince = (date: Date): number =>
-	differenceInHours(new Date(), date);
+const getHoursSince = (date: Date): number => differenceInHours(new Date(), date);
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // CONFIGURATION
@@ -46,9 +45,7 @@ export const getFreezeStatus = (user: User): FreezeStatus => {
 		return {
 			status: freezeUsedForDate ? "just_used" : "recovering",
 			freezeCount,
-			hoursUntilRecovery: Math.ceil(
-				STREAK_CONFIG.RECOVERY_HOURS - hoursSinceLastUse,
-			),
+			hoursUntilRecovery: Math.ceil(STREAK_CONFIG.RECOVERY_HOURS - hoursSinceLastUse),
 			protectedDate: freezeUsedForDate ?? undefined,
 		};
 	}
@@ -56,15 +53,11 @@ export const getFreezeStatus = (user: User): FreezeStatus => {
 	return { status: "available", freezeCount };
 };
 
-export const calculateDaysUntilNextFreeze = (
-	currentStreak: number,
-	user: User,
-): number | null => {
+export const calculateDaysUntilNextFreeze = (currentStreak: number, user: User): number | null => {
 	if (user.freezeCount >= STREAK_CONFIG.MAX_FREEZES) {
 		return null;
 	}
 
-	const daysIntoCurrentCycle =
-		currentStreak % STREAK_CONFIG.DAYS_TO_EARN_FREEZE;
+	const daysIntoCurrentCycle = currentStreak % STREAK_CONFIG.DAYS_TO_EARN_FREEZE;
 	return STREAK_CONFIG.DAYS_TO_EARN_FREEZE - daysIntoCurrentCycle;
 };

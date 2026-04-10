@@ -67,17 +67,10 @@ export default function MemoryIndex() {
 							className={`block rounded-lg border px-4 py-3 ${c.border} transition-colors hover:bg-cream-dark`}
 						>
 							<div className="flex items-baseline justify-between gap-3">
-								<span className={`text-sm font-medium ${c.text}`}>
-									{p.title}
-								</span>
-								<span className={`text-xs tabular-nums ${c.count}`}>
-									{p.forms} forms
-								</span>
+								<span className={`text-sm font-medium ${c.text}`}>{p.title}</span>
+								<span className={`text-xs tabular-nums ${c.count}`}>{p.forms} forms</span>
 							</div>
-							<p
-								lang="el"
-								className="greek-text mt-1 text-sm text-muted-foreground"
-							>
+							<p lang="el" className="greek-text mt-1 text-sm text-muted-foreground">
 								{p.preview}
 							</p>
 						</Link>

@@ -163,7 +163,5 @@ export const NOUNS = {
 
 	body: [{ lemma: "λαιμός", gender: "masculine", english: "neck" }],
 
-	objects: [
-		{ lemma: "πίνακας", gender: "masculine", english: "board/painting" },
-	],
+	objects: [{ lemma: "πίνακας", gender: "masculine", english: "board/painting" }],
 } as const satisfies Record<string, NounSeed[]>;

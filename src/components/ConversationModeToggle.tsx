@@ -34,12 +34,7 @@ export const ConversationModeToggle: React.FC<ConversationModeToggleProps> = ({
 	onModeChange,
 	className,
 }) => (
-	<div
-		className={cn(
-			"flex items-center gap-1 p-1 bg-stone-100 rounded-lg sm:w-fit",
-			className,
-		)}
-	>
+	<div className={cn("flex items-center gap-1 p-1 bg-stone-100 rounded-lg sm:w-fit", className)}>
 		{modes.map((m) => (
 			<button
 				key={m.value}

@@ -9,9 +9,7 @@ export const LESSON_2024_03_25 = {
 
 	verbs: [],
 
-	nouns: [
-		{ lemma: "δόντι", gender: "neuter", english: "tooth" },
-	] satisfies NounSeed[],
+	nouns: [{ lemma: "δόντι", gender: "neuter", english: "tooth" }] satisfies NounSeed[],
 
 	adjectives: [
 		{ lemma: "κρύος", english: "cold" },

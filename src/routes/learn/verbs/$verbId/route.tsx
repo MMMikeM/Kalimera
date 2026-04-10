@@ -44,8 +44,7 @@ export default function VerbDetailPage({ loaderData }: Route.ComponentProps) {
 	const isSuppletive = verb.verbDetails?.isSuppletive ?? false;
 	const hasConjugations = Object.keys(verb.conjugations).length > 0;
 	const hasImperatives =
-		verb.imperatives.imperfective !== null ||
-		verb.imperatives.perfective !== null;
+		verb.imperatives.imperfective !== null || verb.imperatives.perfective !== null;
 
 	return (
 		<div className="space-y-6">
@@ -63,9 +62,7 @@ export default function VerbDetailPage({ loaderData }: Route.ComponentProps) {
 						<MonoText variant="greek" size="2xl" weight="bold">
 							{verb.greekText}
 						</MonoText>
-						<p className="mt-1 text-lg text-stone-600">
-							{verb.englishTranslation}
-						</p>
+						<p className="mt-1 text-lg text-stone-600">{verb.englishTranslation}</p>
 					</div>
 
 					<div className="flex flex-wrap items-center gap-2">
@@ -130,14 +127,8 @@ export default function VerbDetailPage({ loaderData }: Route.ComponentProps) {
 			)}
 
 			{!hasConjugations && !hasImperatives && (
-				<Card
-					variant="bordered"
-					padding="lg"
-					className="bg-stone-50 text-center"
-				>
-					<p className="text-stone-600">
-						No conjugation data available for this verb yet.
-					</p>
+				<Card variant="bordered" padding="lg" className="bg-stone-50 text-center">
+					<p className="text-stone-600">No conjugation data available for this verb yet.</p>
 				</Card>
 			)}
 		</div>

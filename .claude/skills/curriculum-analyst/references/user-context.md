@@ -13,22 +13,24 @@
 Knowledge hasn't become automatic. Sentence construction is effortful.
 
 The user can:
+
 - Recognise Greek when reading/hearing it
 - Apply grammar rules when given time to think
 - Understand explanations of why something is correct
 
 The user struggles to:
+
 - Produce Greek at conversational speed
 - Apply grammar automatically without conscious thought
 - Retrieve vocabulary instantly when speaking
 
 ## The Diagnosis
 
-| Stage | Description | User's Status |
-|-------|-------------|---------------|
-| Declarative | "I know the rule" | ✓ Complete |
-| Procedural | Apply without conscious thought | ✗ Stuck here |
-| Automatic | Produce at conversational speed | ✗ Blocked |
+| Stage       | Description                     | User's Status |
+| ----------- | ------------------------------- | ------------- |
+| Declarative | "I know the rule"               | ✓ Complete    |
+| Procedural  | Apply without conscious thought | ✗ Stuck here  |
+| Automatic   | Produce at conversational speed | ✗ Blocked     |
 
 **This is a procedural gap, not a knowledge gap.**
 
@@ -39,12 +41,14 @@ The user knows that accusative changes ο→τον. They can explain it. They ca
 **Primary goal:** Make retrieval faster, not teach more Greek.
 
 The user doesn't need:
+
 - More vocabulary
 - Better grammar explanations
 - Recognition practice
 - Careful, untimed exercises
 
 The user needs:
+
 - Hundreds of forced-production reps per week
 - Time pressure that prevents conscious rule application
 - Speed metrics showing improvement over time
@@ -63,11 +67,13 @@ Everything else is optional.
 ## Tutor Session Integration
 
 The weekly tutor session provides conversation practice. The app complements this by:
+
 - Drilling specific forms between sessions
 - Building automaticity that transfers to conversation
 - Preparing vocabulary/structures for upcoming topics
 
 The app does NOT replace the tutor for:
+
 - Pronunciation feedback
 - Natural conversation flow
 - Cultural context

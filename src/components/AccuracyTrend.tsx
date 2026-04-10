@@ -39,16 +39,7 @@ export const AccuracyTrend = ({ data, className }: AccuracyTrendProps) => {
 		y: number;
 	} | null>(null);
 
-	const {
-		points,
-		pathD,
-		areaD,
-		xTicks,
-		chartWidth,
-		chartHeight,
-		xScale,
-		yScale,
-	} = useMemo(() => {
+	const { points, pathD, areaD, xTicks, chartWidth, chartHeight, xScale, yScale } = useMemo(() => {
 		if (data.length === 0) {
 			return {
 				points: [],
@@ -84,9 +75,7 @@ export const AccuracyTrend = ({ data, className }: AccuracyTrendProps) => {
 			rawAccuracy: d.rawAccuracy,
 		}));
 
-		const linePath = pts
-			.map((p, i) => `${i === 0 ? "M" : "L"} ${p.x} ${p.y}`)
-			.join(" ");
+		const linePath = pts.map((p, i) => `${i === 0 ? "M" : "L"} ${p.x} ${p.y}`).join(" ");
 
 		const lastPt = pts[pts.length - 1];
 		const firstPt = pts[0];
@@ -142,49 +131,24 @@ export const AccuracyTrend = ({ data, className }: AccuracyTrendProps) => {
 			>
 				<defs>
 					<linearGradient id="accuracy-gradient" x1="0" y1="0" x2="0" y2="1">
-						<stop
-							offset="0%"
-							stopColor="var(--color-olive-400)"
-							stopOpacity="0.3"
-						/>
-						<stop
-							offset="100%"
-							stopColor="var(--color-olive-400)"
-							stopOpacity="0.05"
-						/>
+						<stop offset="0%" stopColor="var(--color-olive-400)" stopOpacity="0.3" />
+						<stop offset="100%" stopColor="var(--color-olive-400)" stopOpacity="0.05" />
 					</linearGradient>
 				</defs>
 
 				<g transform={`translate(${CHART_PADDING.left}, ${CHART_PADDING.top})`}>
 					{yTicks.map((tick) => (
 						<g key={tick} transform={`translate(0, ${yScale(tick)})`}>
-							<line
-								x1={0}
-								x2={chartWidth}
-								stroke="var(--color-stone-200)"
-								strokeDasharray="2,2"
-							/>
-							<text
-								x={-8}
-								y={4}
-								textAnchor="end"
-								className="fill-stone-400 text-[8px]"
-							>
+							<line x1={0} x2={chartWidth} stroke="var(--color-stone-200)" strokeDasharray="2,2" />
+							<text x={-8} y={4} textAnchor="end" className="fill-stone-400 text-[8px]">
 								{formatPercent(tick)}
 							</text>
 						</g>
 					))}
 
 					{xTicks.map((date) => (
-						<g
-							key={date}
-							transform={`translate(${xScale(date)}, ${chartHeight})`}
-						>
-							<text
-								y={16}
-								textAnchor="middle"
-								className="fill-stone-400 text-[7px]"
-							>
+						<g key={date} transform={`translate(${xScale(date)}, ${chartHeight})`}>
+							<text y={16} textAnchor="middle" className="fill-stone-400 text-[7px]">
 								{formatDate(date)}
 							</text>
 						</g>
@@ -231,13 +195,9 @@ export const AccuracyTrend = ({ data, className }: AccuracyTrendProps) => {
 						transform: "translate(-50%, -120%)",
 					}}
 				>
-					<div className="font-medium text-stone-700">
-						{formatDate(hoveredPoint.date)}
-					</div>
+					<div className="font-medium text-stone-700">{formatDate(hoveredPoint.date)}</div>
 					<div className="text-olive-text">
-						<span className="font-semibold">
-							{formatPercent(hoveredPoint.accuracy)}
-						</span>
+						<span className="font-semibold">{formatPercent(hoveredPoint.accuracy)}</span>
 						<span className="ml-1 text-stone-400">(7-day avg)</span>
 					</div>
 					<div className="text-[10px] text-stone-500">

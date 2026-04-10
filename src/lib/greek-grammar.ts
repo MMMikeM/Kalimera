@@ -4,19 +4,11 @@ export type Gender = "masculine" | "feminine" | "neuter";
 export type GrammaticalNumber = "singular" | "plural";
 export type Case = "nominative" | "genitive" | "accusative" | "vocative";
 
-export type ConjugationFamily =
-	| "-ω"
-	| "-άω/-ώ"
-	| "-ομαι"
-	| "-άμαι"
-	| "irregular";
+export type ConjugationFamily = "-ω" | "-άω/-ώ" | "-ομαι" | "-άμαι" | "irregular";
 
 // Definite article lookup table
 // Usage: DEFINITE_ARTICLES[gender][number][case]
-export const DEFINITE_ARTICLES: Record<
-	Gender,
-	Record<GrammaticalNumber, Record<Case, string>>
-> = {
+export const DEFINITE_ARTICLES: Record<Gender, Record<GrammaticalNumber, Record<Case, string>>> = {
 	masculine: {
 		singular: {
 			nominative: "ο",

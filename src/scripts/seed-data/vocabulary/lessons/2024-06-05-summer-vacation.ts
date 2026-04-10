@@ -48,18 +48,12 @@ export const LESSON_2024_06_05 = {
 	grammarNotes: [
 		{
 			pattern: "-ω verb conjugation",
-			examples: [
-				"πηγαίνω, πηγαίνεις, πηγαίνει",
-				"πηγαίνουμε, πηγαίνετε, πηγαίνουν",
-			],
+			examples: ["πηγαίνω, πηγαίνεις, πηγαίνει", "πηγαίνουμε, πηγαίνετε, πηγαίνουν"],
 			explanation: "Regular -ω family pattern",
 		},
 		{
 			pattern: "-άω verb conjugation",
-			examples: [
-				"κολυμπάω, κολυμπάς, κολυμπάει",
-				"κολυμπάμε, κολυμπάτε, κολυμπάνε",
-			],
+			examples: ["κολυμπάω, κολυμπάς, κολυμπάει", "κολυμπάμε, κολυμπάτε, κολυμπάνε"],
 			explanation: "Regular -άω/-ώ family pattern",
 		},
 		{

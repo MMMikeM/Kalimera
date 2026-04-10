@@ -126,10 +126,7 @@ export const MonoText: React.FC<MonoTextProps> = ({
 	...props
 }) => {
 	return (
-		<span
-			className={monoTextVariants({ variant, size, weight, className })}
-			{...props}
-		>
+		<span className={monoTextVariants({ variant, size, weight, className })} {...props}>
 			{children}
 		</span>
 	);

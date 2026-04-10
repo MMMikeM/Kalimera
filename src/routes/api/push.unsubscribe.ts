@@ -15,10 +15,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
 		const endpoint = typeof body?.endpoint === "string" ? body.endpoint : null;
 
 		if (!endpoint) {
-			return Response.json(
-				{ error: "Missing required field: endpoint" },
-				{ status: 400 },
-			);
+			return Response.json({ error: "Missing required field: endpoint" }, { status: 400 });
 		}
 
 		await deletePushSubscription(endpoint);
@@ -26,9 +23,6 @@ export const action = async ({ request }: Route.ActionArgs) => {
 		return Response.json({ success: true });
 	} catch (error) {
 		console.error("Push unsubscribe error:", error);
-		return Response.json(
-			{ error: "Failed to remove subscription" },
-			{ status: 500 },
-		);
+		return Response.json({ error: "Failed to remove subscription" }, { status: 500 });
 	}
 };

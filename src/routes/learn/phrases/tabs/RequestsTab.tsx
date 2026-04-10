@@ -14,18 +14,14 @@ export const RequestsTab = ({ data }: { data: PhrasesLoaderData }) => {
 				colorScheme="olive"
 				icon={<Hand size={18} />}
 			>
-				Adding "παρακαλώ" (please) to any request makes it more polite. Greeks
-				appreciate the effort — politeness goes a long way!
+				Adding "παρακαλώ" (please) to any request makes it more polite. Greeks appreciate the effort
+				— politeness goes a long way!
 			</TabHero>
 
 			{requests.length > 0 && (
 				<PhraseSection title="Polite Requests" colorScheme="terracotta">
 					{requests.map((phrase) => (
-						<PhraseItemDisplay
-							key={phrase.id}
-							greek={phrase.greek}
-							english={phrase.english}
-						/>
+						<PhraseItemDisplay key={phrase.id} greek={phrase.greek} english={phrase.english} />
 					))}
 				</PhraseSection>
 			)}
@@ -33,11 +29,7 @@ export const RequestsTab = ({ data }: { data: PhrasesLoaderData }) => {
 			{commands.length > 0 && (
 				<PhraseSection title="Commands" colorScheme="olive">
 					{commands.map((phrase) => (
-						<PhraseItemDisplay
-							key={phrase.id}
-							greek={phrase.greek}
-							english={phrase.english}
-						/>
+						<PhraseItemDisplay key={phrase.id} greek={phrase.greek} english={phrase.english} />
 					))}
 				</PhraseSection>
 			)}

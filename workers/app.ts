@@ -18,11 +18,7 @@ const requestHandler = createRequestHandler(
 );
 
 export default {
-	async fetch(
-		request: Request,
-		env: CloudflareEnv,
-		ctx: ExecutionContext,
-	): Promise<Response> {
+	async fetch(request: Request, env: CloudflareEnv, ctx: ExecutionContext): Promise<Response> {
 		const db = createDb(env);
 		return requestHandler(request, {
 			db,

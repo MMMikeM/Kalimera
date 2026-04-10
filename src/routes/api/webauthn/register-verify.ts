@@ -31,17 +31,12 @@ export const action = async ({ request }: Route.ActionArgs) => {
 			origin: url.origin,
 		});
 
-		const result = await webauthn.verifyRegistration(
-			userId,
-			response,
-			challenge,
-		);
+		const result = await webauthn.verifyRegistration(userId, response, challenge);
 
 		return Response.json(result);
 	} catch (error) {
 		console.error("WebAuthn register verify error:", error);
-		const message =
-			error instanceof Error ? error.message : "Verification failed";
+		const message = error instanceof Error ? error.message : "Verification failed";
 		return Response.json({ error: message }, { status: 400 });
 	}
 };
