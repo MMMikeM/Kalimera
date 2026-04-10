@@ -18,6 +18,7 @@ import {
 import { and, eq, gte, isNotNull, lt, sql } from "drizzle-orm";
 import type { LibSQLDatabase } from "drizzle-orm/libsql";
 import {
+	notificationLogs,
 	practiceSessions,
 	pushSubscriptions,
 	vocabularySkills,
@@ -90,6 +91,8 @@ export const sendPracticeReminders = async (
 		invalidSubscriptions: [],
 	};
 
+	const now = new Date();
+
 	// Get all push subscriptions with their user's last practice session
 	const subscriptions = await db
 		.select({
@@ -97,6 +100,7 @@ export const sendPracticeReminders = async (
 			p256dh: pushSubscriptions.p256dh,
 			auth: pushSubscriptions.auth,
 			userId: pushSubscriptions.userId,
+			snoozedUntil: pushSubscriptions.snoozedUntil,
 		})
 		.from(pushSubscriptions)
 		.all();
@@ -108,6 +112,10 @@ export const sendPracticeReminders = async (
 
 	for (const sub of subscriptions) {
 		if (!sub.userId) continue;
+
+		if (sub.snoozedUntil && sub.snoozedUntil > now) {
+			continue; // User tapped "Later" — skip for today
+		}
 
 		// TODO: Add "practiced today" check to skip users who already practiced
 		const subscription: PushSubscriptionData = {
@@ -125,6 +133,11 @@ export const sendPracticeReminders = async (
 
 		if (success) {
 			result.sent++;
+			await db.insert(notificationLogs).values({
+				userId: sub.userId,
+				sentAt: new Date(),
+				type: "practice_reminder",
+			});
 		} else {
 			result.failed++;
 			result.invalidSubscriptions.push(sub.endpoint);
@@ -182,6 +195,7 @@ export const sendReviewDueNotifications = async (
 			p256dh: pushSubscriptions.p256dh,
 			auth: pushSubscriptions.auth,
 			userId: pushSubscriptions.userId,
+			snoozedUntil: pushSubscriptions.snoozedUntil,
 		})
 		.from(pushSubscriptions)
 		.all();
@@ -194,9 +208,13 @@ export const sendReviewDueNotifications = async (
 	for (const sub of relevantSubs) {
 		if (!sub.userId) continue;
 
+		if (sub.snoozedUntil && sub.snoozedUntil > now) {
+			continue; // User tapped "Later" — skip for today
+		}
+
 		// Count due items for this user
-		const dueCount = await db
-			.select({ count: vocabularySkills.userId })
+		const [dueResult] = await db
+			.select({ count: sql<number>`count(*)` })
 			.from(vocabularySkills)
 			.where(
 				and(
@@ -204,10 +222,9 @@ export const sendReviewDueNotifications = async (
 					isNotNull(vocabularySkills.nextReviewAt),
 					lt(vocabularySkills.nextReviewAt, now),
 				),
-			)
-			.all();
+			);
 
-		const count = dueCount.length;
+		const count = dueResult?.count ?? 0;
 		if (count === 0) continue;
 
 		const subscription: PushSubscriptionData = {
@@ -225,6 +242,11 @@ export const sendReviewDueNotifications = async (
 
 		if (success) {
 			result.sent++;
+			await db.insert(notificationLogs).values({
+				userId: sub.userId,
+				sentAt: new Date(),
+				type: "review_due",
+			});
 		} else {
 			result.failed++;
 			result.invalidSubscriptions.push(sub.endpoint);
@@ -251,7 +273,9 @@ const STREAK_WARNING_COPY: NotificationCopy[] = [
 		// Bounded commitment (Urgency)
 		title: "Quick 2-minute review?",
 		body: (dueCount) =>
-			dueCount > 0 ? `${dueCount} items in your queue.` : "Your Greek is waiting.",
+			dueCount > 0
+				? `${dueCount} items in your queue.`
+				: "Your Greek is waiting.",
 	},
 	{
 		// Content preview (Interest)
@@ -294,6 +318,60 @@ export const selectCopy = (
 };
 
 /**
+ * Returns true if the user consistently practises before the notification window —
+ * meaning the notification is no longer needed as activation. Criteria: practised
+ * before the notification window on 5+ of the last 7 notified days.
+ */
+const shouldOfferTaper = async (
+	db: LibSQLDatabase<Record<string, unknown>>,
+	userId: number,
+	notificationHourUtc: number,
+): Promise<boolean> => {
+	const sevenDaysAgo = subDays(new Date(), 7);
+
+	const recentSends = await db
+		.select({ sentAt: notificationLogs.sentAt })
+		.from(notificationLogs)
+		.where(
+			and(
+				eq(notificationLogs.userId, userId),
+				gte(notificationLogs.sentAt, sevenDaysAgo),
+			),
+		)
+		.orderBy(notificationLogs.sentAt)
+		.all();
+
+	if (recentSends.length < 5) return false;
+
+	let practicedBeforeNotification = 0;
+
+	for (const send of recentSends) {
+		if (!send.sentAt) continue;
+
+		const sendDay = startOfDay(send.sentAt);
+		const notificationTime = new Date(sendDay);
+		notificationTime.setUTCHours(notificationHourUtc, 0, 0, 0);
+
+		const [session] = await db
+			.select({ count: sql<number>`count(*)` })
+			.from(practiceSessions)
+			.where(
+				and(
+					eq(practiceSessions.userId, userId),
+					gte(practiceSessions.startedAt, sendDay),
+					lt(practiceSessions.startedAt, notificationTime),
+				),
+			);
+
+		if ((session?.count ?? 0) > 0) {
+			practicedBeforeNotification++;
+		}
+	}
+
+	return practicedBeforeNotification >= 5;
+};
+
+/**
  * Send streak warning notifications to users who haven't practiced today
  * but have an active streak from yesterday
  */
@@ -317,6 +395,7 @@ export const sendStreakWarningNotifications = async (
 			p256dh: pushSubscriptions.p256dh,
 			auth: pushSubscriptions.auth,
 			userId: pushSubscriptions.userId,
+			snoozedUntil: pushSubscriptions.snoozedUntil,
 		})
 		.from(pushSubscriptions)
 		.all();
@@ -328,6 +407,10 @@ export const sendStreakWarningNotifications = async (
 
 	for (const sub of subscriptions) {
 		if (!sub.userId) continue;
+
+		if (sub.snoozedUntil && sub.snoozedUntil > now) {
+			continue; // User tapped "Later" — skip for today
+		}
 
 		// Check if user practiced today
 		const todayStart = startOfDay(now);
@@ -405,16 +488,35 @@ export const sendStreakWarningNotifications = async (
 
 		const { title, body } = selectCopy(sub.userId, dueCount, streak);
 
-		const success = await sendNotification(
-			subscription,
-			title,
-			body,
-			vapid,
-			{ url: "/", userId: sub.userId },
-		);
+		const success = await sendNotification(subscription, title, body, vapid, {
+			url: "/",
+			userId: sub.userId,
+		});
 
 		if (success) {
 			result.sent++;
+			await db.insert(notificationLogs).values({
+				userId: sub.userId,
+				sentAt: new Date(),
+				type: "streak_warning",
+			});
+
+			// Check if user habitually practises before notification time (20:00 UTC)
+			const offerTaper = await shouldOfferTaper(db, sub.userId, 20);
+			if (offerTaper) {
+				const subscription = await db
+					.select({ notificationMode: pushSubscriptions.notificationMode })
+					.from(pushSubscriptions)
+					.where(eq(pushSubscriptions.userId, sub.userId))
+					.get();
+
+				if (subscription?.notificationMode === "adaptive") {
+					await db
+						.update(pushSubscriptions)
+						.set({ taperOfferPending: true })
+						.where(eq(pushSubscriptions.userId, sub.userId));
+				}
+			}
 		} else {
 			result.failed++;
 			result.invalidSubscriptions.push(sub.endpoint);
