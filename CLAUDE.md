@@ -117,6 +117,40 @@ GOOD: μου = my → το σπίτι μου (my house)
 BAD:  μου = my → Example: my
 ```
 
+## Design Context
+
+### Users
+
+**Primary (now):** Mike Murray — an intermediate Greek learner using the app between weekly Preply tutoring sessions. He knows the grammar rules declaratively but needs to build procedural fluency: applying them at speed without conscious effort.
+
+**Future:** Public learners at the same stage — 1+ year in, conversational aspiration, stuck in the knowing-but-not-producing gap. Used during daytime study sessions; reading density is high, cognitive load management matters.
+
+**Job to be done:** Drill Greek grammar and vocabulary until responses become automatic. The interface should feel like practice, not like an app.
+
+### Brand Personality
+
+**Three words:** Scholarly · warm · honest
+
+Like a well-worn study guide — serious about what it teaches, never intimidating, completely free of gamification theatre. The λ (lambda) mark anchors the identity: spare, precise, unmistakably Greek.
+
+### Aesthetic Direction
+
+**Primary theme:** Light — cream backgrounds for extended reading sessions. Mediterranean palette (terracotta, olive, ocean, honey) is intentional; lean into it.
+
+**Visual tone:** Editorial reference materials — the kind of printed study guide typeset at a university press. Not a digital product trying to look premium.
+
+**Anti-references:** Duolingo (gamified, cartoon), generic SaaS dashboards (cards everywhere, hero metrics, gradients), "learning app" defaults (emoji as UX, streaks as manipulation).
+
+**What makes it memorable:** The colour system encodes grammar. Nominative = ocean. Accusative = terracotta. Genitive = olive. Users feel the cases before they read the labels.
+
+### Design Principles
+
+1. **Greek is the hero.** Greek characters should be prominent and beautifully rendered. English is gloss — smaller, quieter, subordinate.
+2. **Structure is pedagogy.** Paradigm tables are the primary teaching surface. Lay them out with typographic precision; the table *is* the lesson.
+3. **Warmth without whimsy.** Scholarly rigour doesn't mean clinical. Colour and voice should feel like a trusted teacher, never a children's app.
+4. **Honest feedback.** Correct is correct. Incorrect is incorrect. No artificial euphoria, no punishing reds. Just honest, immediate signal.
+5. **Light earns its space.** Whitespace separates concepts. Every element on screen should justify its presence by helping the learner focus.
+
 ## PWA Layout
 
 Fixed shell with scrolling inside `.app-main`:

@@ -16,10 +16,11 @@ Grammar reference for understanding how Greek works: cases, pronouns, articles, 
 <file>src/routes/reference/index.tsx</file>
 <displays>
 - Header: "Reference" with subtitle "Grammar patterns and paradigms"
-- Section cards (7 items):
+- Section cards (8 items):
   - Cases: "The framework for understanding Greek grammar"
   - Pronouns: "Cases in action - the words you'll use most"
   - Articles: "Article paradigms and gender agreement"
+  - Nouns: "Noun declensions by gender"
   - Adjectives: "Agreement patterns that follow the noun"
   - Prepositions: "Connecting words and their case requirements"
   - Verbs: "Conjugation patterns and verb families"
@@ -37,10 +38,11 @@ Cards use colour-coded borders matching tab colours (ocean, olive, honey, terrac
 cases        → Case system foundation (nominative, accusative, genitive)
 pronouns     → Pronoun paradigms and decision guides
 articles     → Article paradigms and gender agreement
+nouns        → Noun declensions by gender (masculine, feminine, neuter)
 adjectives   → Adjective agreement patterns
 prepositions → Preposition + case combinations
 verbs        → Verb conjugation patterns
-patterns     → Greek-specific constructions (NEW - moved from phrases)
+patterns     → Greek-specific constructions (moved from phrases)
 ```
 
 ## Data Source
@@ -106,10 +108,10 @@ Split from cases-pronouns. Progressive disclosure - cases first, then pronouns.
 
 <tab route="/reference/articles">
 <purpose>Article paradigms and noun agreement</purpose>
-<file>src/routes/reference/tabs/articles.tsx</file>
+<file>src/routes/reference/tabs/nouns-articles.tsx</file>
 <components>
+- ArticlesSection (components/articles-section.tsx)
 - AgreementSection (components/agreement-section.tsx)
-- MovableNuSection (components/agreement-section.tsx)
 </components>
 <displays>
 - Hero: "Articles and nouns" - ο, η, το → τον, την, το
@@ -120,6 +122,27 @@ Split from cases-pronouns. Progressive disclosure - cases first, then pronouns.
 - Movable nu rule (-ν)
 - Common agreement mistakes (collapsible)
 - Practice CTA linking to /practice/speed?focus=articles
+</displays>
+</tab>
+
+## Tab: nouns
+
+<tab route="/reference/nouns">
+<purpose>Noun declension patterns by gender</purpose>
+<file>src/routes/reference/tabs/nouns.tsx</file>
+<components>
+- NounsSection (components/nouns-section.tsx)
+</components>
+<displays>
+- Hero: Gender detection hints (spot gender by ending)
+- Core insight: nouns change endings for case and number
+- Noun paradigms by gender:
+  - Masculine: -ος, -ας, -ης, -ές patterns
+  - Feminine: -α, -η, -ση/-ξη patterns
+  - Neuter: -ο, -ι, -μα patterns
+- Vocative changes (collapsible)
+- Common noun mistakes (collapsible)
+- Practice CTA linking to /practice/speed?focus=nouns
 </displays>
 </tab>
 
@@ -184,11 +207,11 @@ Split from cases-pronouns. Progressive disclosure - cases first, then pronouns.
   - Contracted -άω (μιλάω family)
   - Deponent -μαι (έρχομαι family)
 - Other irregular verbs
-- Cross-link to /learn/vocabulary/verbs for browsing
+- Cross-link to /learn/verbs for browsing
 - Practice CTA linking to /practice/speed?focus=verbs
 </displays>
 <note>
-This explains the conjugation SYSTEM. Verb vocabulary browsing is at /learn/vocabulary/verbs.
+This explains the conjugation SYSTEM. Verb vocabulary browsing is at /learn/verbs.
 </note>
 </tab>
 
@@ -234,8 +257,16 @@ Reusable table for displaying pronoun forms by person/number
 Flowchart for choosing correct pronoun form
 </component>
 
+<component file="components/articles-section.tsx">
+Article paradigm display
+</component>
+
 <component file="components/agreement-section.tsx">
 Article paradigm table and gender agreement rules
+</component>
+
+<component file="components/nouns-section.tsx">
+Noun declension paradigms by gender with vocative changes
 </component>
 
 <component file="components/adjectives-section.tsx">
@@ -263,7 +294,8 @@ Tabs appear in this order (conceptual dependency):
 1. cases - Framework for understanding Greek
 2. pronouns - Cases in action (most frequent words)
 3. articles - Same patterns applied to nouns
-4. adjectives - Agreement following article patterns
-5. prepositions - Combines with articles/pronouns
-6. verbs - Separate system (conjugation)
-7. patterns - Special constructions
+4. nouns - Noun declensions by gender
+5. adjectives - Agreement following article/noun patterns
+6. prepositions - Combines with articles/pronouns
+7. verbs - Separate system (conjugation)
+8. patterns - Special constructions

@@ -9,12 +9,20 @@ Greek learning app with SRS-based vocabulary practice and timed production drill
 /login               Sign in (password or passkey)
 /register            Create account
 /try                 Anonymous drill (conversion flow)
+/practice            Redirects to /practice/speed
 /practice/speed      Timed mixed drills (with ?focus= filters)
-/practice/review     SRS review queue (?limit=N supported)
+/practice/memory     Memory drill hub (articles, pronouns, possessives, contractions)
+/practice/memory/*   Individual memory drills (timed paradigm recall)
+/practice/:tab       SRS drills (vocabulary, review)
 /learn               Learn landing page (section cards)
-/learn/*             Browse content by topic
+/learn/conversations Themed dialogues
+/learn/phrases       Common expressions
+/learn/nouns         Noun browser by gender/category
+/learn/verbs         Verb browser by conjugation family
+/learn/verbs/:verbId Full verb conjugation detail
+/learn/essentials    Building blocks (numbers, colours, time, position, frequency)
 /reference           Reference landing page (section cards)
-/reference/*         Grammar reference by topic
+/reference/*         Grammar reference by topic (8 tabs)
 /search              Vocabulary search
 /progress            Analytics (streak calendar, accuracy trends)
 /support             About page
@@ -97,6 +105,12 @@ Greek learning app with SRS-based vocabulary practice and timed production drill
 <engagement>Foot-in-the-door - experience value before commitment</engagement>
 </route>
 
+<route path="/practice">
+<purpose>Redirects to /practice/speed</purpose>
+<file>src/routes/practice/index.tsx</file>
+<behaviour>Loader redirects to /practice/speed</behaviour>
+</route>
+
 <route path="/practice/speed">
 <purpose>Timed mixed production drills - core retrieval practice</purpose>
 <file>src/routes/practice/speed-drill.tsx</file>
@@ -132,6 +146,48 @@ In-page filter buttons before starting drill:
 - Common sentences
 </question-types>
 <engagement>Time pressure creates flow state, variable content prevents boredom</engagement>
+</route>
+
+<route path="/practice/memory">
+<purpose>Memory drill hub - timed paradigm recall for forms that need to become automatic</purpose>
+<file>src/routes/practice/memory/index.tsx</file>
+<data-source>Static: hardcoded paradigm data</data-source>
+<displays>
+- Header: "Memory Drills" with subtitle
+- Paradigm cards (4 items):
+  - Definite Articles (18 forms)
+  - Object Pronouns (10 forms)
+  - Possessive Pronouns (8 forms)
+  - Contractions/σε (6 forms)
+- Each card shows form count and Greek preview
+</displays>
+<user-actions>
+- Tap a paradigm card → individual memory drill
+</user-actions>
+<engagement>Form count creates concrete goal, Greek preview primes recall</engagement>
+</route>
+
+<route path="/practice/memory/:drill" drills="articles,pronouns,possessives,contractions">
+<purpose>Individual timed memory drills for specific paradigms</purpose>
+<files>
+- src/routes/practice/memory/articles.tsx
+- src/routes/practice/memory/pronouns.tsx
+- src/routes/practice/memory/possessives.tsx
+- src/routes/practice/memory/contractions.tsx
+</files>
+<data-source>Static: hardcoded paradigm questions per drill type</data-source>
+<displays>
+- Timed recall drill for specific paradigm
+- Progress indicator
+- Feedback on each answer
+- Session summary with accuracy
+</displays>
+<user-actions>
+- Type Greek form under time pressure
+- View feedback
+- Complete drill → view stats
+</user-actions>
+<engagement>Focused paradigm drilling builds automaticity for specific form sets</engagement>
 </route>
 
 <route path="/practice/review">
@@ -183,8 +239,10 @@ In-page filter buttons before starting drill:
 <file>src/routes/learn/index.tsx</file>
 <displays>
 - Header: "Learn" with subtitle "Browse Greek content by topic"
-- Section cards linking to Conversations, Phrases, Vocabulary
-- Colour-coded borders by section (olive, ocean, honey)
+- Two groups with section cards:
+  - Communication: Conversations, Phrases
+  - Words: Nouns, Verbs, Essentials
+- Colour-coded borders by section (olive, ocean, honey, terracotta)
 </displays>
 <engagement>Progressive disclosure - browse overview, then dive into content</engagement>
 </route>
@@ -202,7 +260,7 @@ In-page filter buttons before starting drill:
 <displays>
 - Dialogue exchanges (speaker roles: you, friend, host, waiter, etc.)
 - Greek text with English translation
-- Read mode / Practice mode toggle (shared across conversations)
+- Study / Speak mode toggle (shared across conversations)
 - Optional notes for phrases (literal meanings, context)
 </displays>
 <legacy-redirect>/explore/conversations/* → /learn/conversations/*</legacy-redirect>
@@ -231,33 +289,41 @@ In-page filter buttons before starting drill:
 <engagement>Quick reference, practical utility</engagement>
 </route>
 
-<route path="/learn/vocabulary/:tab" tabs="nouns,verbs,phrases,essentials">
-<purpose>Vocabulary browsing by category</purpose>
-<file>src/routes/learn/vocabulary/$tab.tsx</file>
-<data-source>DB: vocabulary (grouped by tags) + static verb patterns</data-source>
-<tabs>
-- nouns: Nouns by semantic category (people, shopping, household, vehicles, summer)
-- verbs: Verbs by conjugation family (-ω, -άω, -μαι, irregular) with paradigm tables
-- phrases: Redirects to /learn/phrases
-- essentials: Numbers, colours, times of day, frequency/position adverbs
-</tabs>
+<route path="/learn/nouns">
+<purpose>Noun browser by gender and semantic category</purpose>
+<file>src/routes/learn/nouns/route.tsx</file>
+<data-source>DB: vocabulary (grouped by tags)</data-source>
 <displays>
-- Vocabulary cards grouped by subcategory
+- Nouns by semantic category (people, shopping, household, vehicles, summer)
 - Greek text, English translation
-- Gender badges (for nouns), conjugation family (for verbs)
-- Collapsible sections for verb lists
+- Gender badges
 </displays>
 <user-actions>
 - Browse categories
-- Expand/collapse verb family lists
 </user-actions>
-<legacy-redirect>/explore/words/* → /learn/vocabulary/*</legacy-redirect>
 <engagement>Discovery mode, fill knowledge gaps</engagement>
 </route>
 
-<route path="/learn/vocabulary/verbs/:verbId">
+<route path="/learn/verbs">
+<purpose>Verb browser by conjugation family</purpose>
+<file>src/routes/learn/verbs/route.tsx</file>
+<data-source>DB: vocabulary + verbDetails</data-source>
+<displays>
+- Verbs by conjugation family (-ω, -άω, -μαι, irregular) with paradigm tables
+- Conjugation family badges
+- Collapsible sections for verb lists
+</displays>
+<user-actions>
+- Browse families
+- Expand/collapse verb lists
+- Tap verb → detail page
+</user-actions>
+<engagement>Discovery mode, understand verb patterns</engagement>
+</route>
+
+<route path="/learn/verbs/:verbId">
 <purpose>Full verb conjugation detail page</purpose>
-<file>src/routes/learn/vocabulary/verbs/$verbId/route.tsx</file>
+<file>src/routes/learn/verbs/$verbId/route.tsx</file>
 <data-source>DB: vocabulary, verbDetails, verbConjugations, verbImperatives</data-source>
 <displays>
 - Verb header (lemma, English, conjugation family badge)
@@ -280,7 +346,7 @@ In-page filter buttons before starting drill:
 <file>src/routes/reference/index.tsx</file>
 <displays>
 - Header: "Reference" with subtitle "Grammar patterns and paradigms"
-- Section cards with icons linking to each tab
+- Section cards with icons linking to each of 8 tabs
 - Colour-coded borders by topic (ocean, olive, honey, terracotta)
 </displays>
 <engagement>Progressive disclosure - browse overview, then dive into specifics</engagement>
@@ -300,6 +366,7 @@ In-page filter buttons before starting drill:
 - verbs: Conjugation patterns, tense overview
 - patterns: Greek-specific constructions (μου αρέσει, με λένε)
 </tabs>
+<note>8 tabs total. Articles tab component is nouns-articles.tsx (combines article paradigms with noun gender context).</note>
 <displays>
 - Tab navigation bar
 - Paradigm tables

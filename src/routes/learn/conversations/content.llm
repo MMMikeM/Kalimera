@@ -18,8 +18,8 @@ This allows precise control over dialogue flow and cultural notes.
 ## Display Modes
 
 Conversations support two modes (toggled in layout, persists across tabs):
-- **Read mode**: Full dialogue visible with translations
-- **Practice mode**: Greek hidden, user tests recall
+- **Study mode**: Full dialogue visible with translations
+- **Speak mode**: Greek hidden for "you" lines, English hidden on all lines - tap to reveal
 
 ## Dialogue Line Structure
 
