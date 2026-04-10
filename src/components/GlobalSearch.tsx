@@ -29,7 +29,7 @@ export const GlobalSearch = ({ children }: GlobalSearchProps) => {
 			<PopoverTrigger asChild>
 				<button
 					type="button"
-					className="outline-none outline-transparent ring-0 border-none shadow-none focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0"
+					className="outline-none focus-visible:ring-2 focus-visible:ring-terracotta-300 rounded-md"
 				>
 					{children({ isActive: isOpen })}
 				</button>
@@ -76,7 +76,7 @@ const SearchContent = () => {
 					icon={<Search size={16} />}
 				/>
 			</div>
-			<div className="flex-1 overflow-y-auto p-3 min-h-0 max-h-[50vh] bg-white">
+			<div className="flex-1 overflow-y-auto p-3 min-h-0 max-h-[50vh] bg-cream-dark">
 				{isLoading ? (
 					<div className="text-center py-8 text-stone-400 text-sm">
 						Loading...

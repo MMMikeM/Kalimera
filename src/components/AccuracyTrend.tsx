@@ -224,7 +224,7 @@ export const AccuracyTrend = ({ data, className }: AccuracyTrendProps) => {
 
 			{hoveredPoint && (
 				<div
-					className="absolute bg-white border border-stone-200 rounded-lg shadow-lg px-3 py-2 text-xs pointer-events-none z-10"
+					className="absolute bg-cream-dark border border-stone-200 rounded-lg shadow-lg px-3 py-2 text-xs pointer-events-none z-10"
 					style={{
 						left: `${((hoveredPoint.x + CHART_PADDING.left) / (chartWidth + CHART_PADDING.left + CHART_PADDING.right)) * 100}%`,
 						top: `${((hoveredPoint.y + CHART_PADDING.top) / CHART_HEIGHT) * 100}%`,

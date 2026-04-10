@@ -30,7 +30,7 @@ export const MistakeComparison = ({
 					key={mistake.wrong}
 					variant="bordered"
 					padding="sm"
-					className="bg-white"
+					className="bg-cream-dark"
 				>
 					<div className="flex items-start gap-2 mb-1">
 						<span className="text-xs font-semibold text-incorrect uppercase tracking-wide w-16 shrink-0">

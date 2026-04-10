@@ -8,7 +8,7 @@ const sectionHeadingVariants = tv({
 	},
 	variants: {
 		level: {
-			h2: { title: "text-2xl" },
+			h2: { title: "text-2xl font-serif" },
 			h3: { title: "text-xl" },
 			h4: { title: "text-lg" },
 		},
