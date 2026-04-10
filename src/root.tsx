@@ -29,6 +29,7 @@ import { LandingPage } from "@/components/LandingPage";
 import {
 	Popover,
 	PopoverContent,
+	PopoverPositioner,
 	PopoverTrigger,
 } from "@/components/ui/popover";
 import "./index.css";
@@ -94,19 +95,22 @@ const MobileAccountPopover = ({ onLogout }: MobileAccountPopoverProps) => {
 
 	return (
 		<Popover open={isOpen} onOpenChange={setIsOpen}>
-			<PopoverTrigger asChild>
-				<button
-					type="button"
-					className={`p-2 rounded-lg transition-colors outline-none outline-transparent ring-0 shadow-none ${
-						isOpen
-							? "text-terracotta bg-terracotta/10"
-							: "text-stone-500 hover:text-stone-700"
-					}`}
-				>
-					<User size={20} strokeWidth={1.5} />
-				</button>
+			<PopoverTrigger
+				render={
+					<button
+						type="button"
+						className={`p-2 rounded-lg transition-colors outline-none outline-transparent ring-0 shadow-none ${
+							isOpen
+								? "text-terracotta bg-terracotta/10"
+								: "text-stone-500 hover:text-stone-700"
+						}`}
+					/>
+				}
+			>
+				<User size={20} strokeWidth={1.5} />
 			</PopoverTrigger>
-			<PopoverContent align="end" sideOffset={8} className="w-48 p-1">
+			<PopoverPositioner align="end" sideOffset={8}>
+			<PopoverContent className="w-48 p-1">
 				<button
 					type="button"
 					onClick={() => handleNavigate("/progress")}
@@ -133,6 +137,7 @@ const MobileAccountPopover = ({ onLogout }: MobileAccountPopoverProps) => {
 					<span className="text-stone-800">Sign Out</span>
 				</button>
 			</PopoverContent>
+			</PopoverPositioner>
 		</Popover>
 	);
 };

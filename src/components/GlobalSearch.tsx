@@ -5,6 +5,7 @@ import { SearchResults } from "@/components/SearchResults";
 import {
 	Popover,
 	PopoverContent,
+	PopoverPositioner,
 	PopoverTrigger,
 } from "@/components/ui/popover";
 import { useVocabularySearch } from "@/lib/use-vocabulary-search";
@@ -26,21 +27,21 @@ export const GlobalSearch = ({ children }: GlobalSearchProps) => {
 
 	return (
 		<Popover open={isOpen} onOpenChange={setIsOpen}>
-			<PopoverTrigger asChild>
-				<button
-					type="button"
-					className="outline-none focus-visible:ring-2 focus-visible:ring-terracotta-300 rounded-md"
-				>
-					{children({ isActive: isOpen })}
-				</button>
-			</PopoverTrigger>
-			<PopoverContent
-				align="end"
-				sideOffset={8}
-				className="w-[min(420px,calc(100vw-1rem))] p-0 max-h-[70vh] flex flex-col overflow-hidden rounded-xl bg-cream shadow-lg border-stone-200"
+			<PopoverTrigger
+				render={
+					<button
+						type="button"
+						className="outline-none focus-visible:ring-2 focus-visible:ring-terracotta-300 rounded-md"
+					/>
+				}
 			>
-				<SearchContent />
-			</PopoverContent>
+				{children({ isActive: isOpen })}
+			</PopoverTrigger>
+			<PopoverPositioner align="end" sideOffset={8}>
+				<PopoverContent className="w-[min(420px,calc(100vw-1rem))] p-0 max-h-[70vh] flex flex-col overflow-hidden rounded-xl bg-cream shadow-lg border-stone-200">
+					<SearchContent />
+				</PopoverContent>
+			</PopoverPositioner>
 		</Popover>
 	);
 };

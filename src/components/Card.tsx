@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
-import { CardContent, Card as ShadCard } from "./ui/card";
 
 const variantStyles = {
 	default: "",
@@ -10,10 +9,10 @@ const variantStyles = {
 };
 
 const paddingStyles = {
-	none: "py-0 [&>[data-slot=card-content]]:px-0",
-	sm: "py-2 [&>[data-slot=card-content]]:px-3",
-	md: "py-4 [&>[data-slot=card-content]]:px-4",
-	lg: "py-6 [&>[data-slot=card-content]]:px-6",
+	none: "p-0",
+	sm: "px-3 py-2",
+	md: "px-4 py-4",
+	lg: "px-6 py-6",
 };
 
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -31,9 +30,9 @@ export const Card = ({
 	children,
 	...props
 }: CardProps) => (
-	<ShadCard
+	<div
 		className={cn(
-			"gap-0",
+			"rounded-xl border bg-card text-card-foreground shadow-sm",
 			variantStyles[variant],
 			paddingStyles[padding],
 			hover && "hover:bg-stone-50 transition-colors cursor-pointer",
@@ -41,6 +40,6 @@ export const Card = ({
 		)}
 		{...props}
 	>
-		<CardContent>{children}</CardContent>
-	</ShadCard>
+		{children}
+	</div>
 );
