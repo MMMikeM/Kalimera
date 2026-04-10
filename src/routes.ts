@@ -20,6 +20,13 @@ export default [
 	route("practice", "routes/practice/layout.tsx", [
 		index("routes/practice/index.tsx"),
 		route("speed", "routes/practice/speed-drill.tsx"),
+		route("memory", "routes/practice/memory/layout.tsx", [
+			index("routes/practice/memory/index.tsx"),
+			route("articles", "routes/practice/memory/articles.tsx"),
+			route("pronouns", "routes/practice/memory/pronouns.tsx"),
+			route("possessives", "routes/practice/memory/possessives.tsx"),
+			route("contractions", "routes/practice/memory/contractions.tsx"),
+		]),
 		route(":tab", "routes/practice/$tab.tsx"),
 	]),
 
