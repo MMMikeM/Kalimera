@@ -68,38 +68,15 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({
 	const seconds = remainingMs / 1000;
 	const progress = (remainingMs / durationMs) * 100;
 
-	// Color based on remaining time
-	const getColorClass = () => {
-		if (progress > 50) return "text-green-600";
-		if (progress > 25) return "text-yellow-600";
-		return "text-red-600";
-	};
-
-	const getProgressColorClass = () => {
-		if (progress > 50) return "bg-green-500";
-		if (progress > 25) return "bg-yellow-500";
-		return "bg-red-500";
-	};
-
 	return (
 		<div className={cn("flex flex-col items-center gap-2", className)}>
-			{/* Time display */}
-			<div
-				className={cn(
-					"text-3xl font-mono font-bold tabular-nums",
-					getColorClass(),
-				)}
-			>
+			<div className="text-3xl font-mono font-bold tabular-nums text-stone-700">
 				{seconds.toFixed(1)}s
 			</div>
 
-			{/* Progress bar */}
 			<div className="w-full h-2 bg-stone-200 rounded-full overflow-hidden">
 				<div
-					className={cn(
-						"h-full transition-all duration-100 ease-linear rounded-full",
-						getProgressColorClass(),
-					)}
+					className="h-full transition-all duration-100 ease-linear rounded-full bg-terracotta-500"
 					style={{ width: `${progress}%` }}
 				/>
 			</div>

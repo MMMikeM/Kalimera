@@ -63,7 +63,7 @@ export const ImperativeTable = ({
 				<span className="text-xs text-stone-500">Commands</span>
 			</div>
 
-			<table className="w-full border-collapse rounded-lg overflow-hidden bg-white border border-stone-200">
+			<table className="w-full border-collapse rounded-lg overflow-hidden bg-cream-dark border border-stone-200">
 				<thead>
 					<tr className="bg-stone-100">
 						<th className="p-2 text-left text-xs text-stone-600 font-normal border-b border-stone-200 w-1/3">

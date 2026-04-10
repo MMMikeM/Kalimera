@@ -62,19 +62,18 @@ export const SearchResults = ({
 	return (
 		<div className="space-y-2">
 			{results.map((result) => {
-				const borderClass = cn(
-					"border-l-4",
-					result.type === "verb" && "border-ocean-500",
-					result.type === "noun" && "border-olive-500",
-					result.type === "phrase" && "border-terracotta-500",
-					result.type === "adverb" && "border-honey-500",
-					!result.type && "border-stone-300",
+				const bgClass = cn(
+					result.type === "verb" && "bg-ocean-50",
+					result.type === "noun" && "bg-olive-50",
+					result.type === "phrase" && "bg-terracotta-50",
+					result.type === "adverb" && "bg-honey-50",
+					!result.type && "bg-stone-50",
 				);
 
 				return (
 					<div
 						key={result.id}
-						className={cn("bg-stone-50 rounded-lg p-4", borderClass)}
+						className={cn("rounded-lg p-4", bgClass)}
 					>
 						<div className="flex justify-between items-start gap-3">
 							<div className="flex-1 min-w-0">
