@@ -59,12 +59,12 @@ export const DrillDemo = () => {
 	const isTransforming = phase === "transform";
 
 	return (
-		<div className="w-full max-w-sm mx-auto">
-			<div className="bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden">
+		<div className="mx-auto w-full max-w-sm">
+			<div className="overflow-hidden rounded-xl border border-stone-200 bg-white shadow-sm">
 				{/* Prompt */}
-				<div className="px-4 py-3 bg-stone-50 border-b border-stone-200">
+				<div className="border-b border-stone-200 bg-stone-50 px-4 py-3">
 					<p className="text-sm text-stone-500">Translate:</p>
-					<p className="text-lg text-stone-800 font-medium">"good morning"</p>
+					<p className="text-lg font-medium text-stone-800">"good morning"</p>
 				</div>
 
 				{/* Input area */}
@@ -72,12 +72,7 @@ export const DrillDemo = () => {
 					<div className="relative">
 						{/* Input display */}
 						<div
-							className={`
-                min-h-[48px] px-4 py-3 rounded-lg border-2 font-mono text-lg
-                flex items-center
-                ${showSuccess ? "border-olive-400 bg-olive-50" : "border-stone-200 bg-white"}
-                transition-colors duration-200
-              `}
+							className={`flex min-h-[48px] items-center rounded-lg border-2 px-4 py-3 font-mono text-lg ${showSuccess ? "border-olive-400 bg-olive-50" : "border-stone-200 bg-white"} transition-colors duration-200`}
 						>
 							<AnimatePresence mode="wait">
 								<motion.span
@@ -102,7 +97,7 @@ export const DrillDemo = () => {
 										times: [0, 0.5],
 										repeatType: "reverse",
 									}}
-									className="text-ocean-500 ml-0.5"
+									className="ml-0.5 text-ocean-500"
 								>
 									|
 								</motion.span>
@@ -116,9 +111,9 @@ export const DrillDemo = () => {
 									initial={{ opacity: 0, scale: 0.8 }}
 									animate={{ opacity: 1, scale: 1 }}
 									exit={{ opacity: 0, scale: 0.8 }}
-									className="absolute right-3 top-1/2 -translate-y-1/2"
+									className="absolute top-1/2 right-3 -translate-y-1/2"
 								>
-									<div className="w-6 h-6 rounded-full bg-olive-500 flex items-center justify-center">
+									<div className="flex h-6 w-6 items-center justify-center rounded-full bg-olive-500">
 										<Check className="text-white" size={14} />
 									</div>
 								</motion.div>
@@ -134,7 +129,7 @@ export const DrillDemo = () => {
 							animate={{ opacity: 1 }}
 							exit={{ opacity: 0 }}
 							transition={{ duration: 0.15 }}
-							className="text-xs text-center mt-3"
+							className="mt-3 text-center text-xs"
 						>
 							{showSuccess ? (
 								<span className="text-olive-600">

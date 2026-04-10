@@ -42,17 +42,79 @@ const ENGLISH: Record<string, string> = {
 };
 
 const POSSESSIVES: Possessive[] = [
-	{ id: "1sg", person: "first", number: "singular", greek: "μου", greeklish: "mou", label: "my \u00b7 1st singular" },
-	{ id: "2sg", person: "second", number: "singular", greek: "σου", greeklish: "sou", label: "your \u00b7 2nd singular" },
-	{ id: "3sg-m", person: "third", number: "singular", gender: "masculine", greek: "του", greeklish: "tou", label: "his \u00b7 3rd singular" },
-	{ id: "3sg-f", person: "third", number: "singular", gender: "feminine", greek: "της", greeklish: "tis", label: "her \u00b7 3rd singular" },
-	{ id: "3sg-n", person: "third", number: "singular", gender: "neuter", greek: "του", greeklish: "tou", label: "its \u00b7 3rd singular" },
-	{ id: "1pl", person: "first", number: "plural", greek: "μας", greeklish: "mas", label: "our \u00b7 1st plural" },
-	{ id: "2pl", person: "second", number: "plural", greek: "σας", greeklish: "sas", label: "your \u00b7 2nd plural" },
-	{ id: "3pl", person: "third", number: "plural", greek: "τους", greeklish: "tous", label: "their \u00b7 3rd plural" },
+	{
+		id: "1sg",
+		person: "first",
+		number: "singular",
+		greek: "μου",
+		greeklish: "mou",
+		label: "my \u00b7 1st singular",
+	},
+	{
+		id: "2sg",
+		person: "second",
+		number: "singular",
+		greek: "σου",
+		greeklish: "sou",
+		label: "your \u00b7 2nd singular",
+	},
+	{
+		id: "3sg-m",
+		person: "third",
+		number: "singular",
+		gender: "masculine",
+		greek: "του",
+		greeklish: "tou",
+		label: "his \u00b7 3rd singular",
+	},
+	{
+		id: "3sg-f",
+		person: "third",
+		number: "singular",
+		gender: "feminine",
+		greek: "της",
+		greeklish: "tis",
+		label: "her \u00b7 3rd singular",
+	},
+	{
+		id: "3sg-n",
+		person: "third",
+		number: "singular",
+		gender: "neuter",
+		greek: "του",
+		greeklish: "tou",
+		label: "its \u00b7 3rd singular",
+	},
+	{
+		id: "1pl",
+		person: "first",
+		number: "plural",
+		greek: "μας",
+		greeklish: "mas",
+		label: "our \u00b7 1st plural",
+	},
+	{
+		id: "2pl",
+		person: "second",
+		number: "plural",
+		greek: "σας",
+		greeklish: "sas",
+		label: "your \u00b7 2nd plural",
+	},
+	{
+		id: "3pl",
+		person: "third",
+		number: "plural",
+		greek: "τους",
+		greeklish: "tous",
+		label: "their \u00b7 3rd plural",
+	},
 ];
 
-const GENDER_STYLE: Record<Gender, { selectorBg: string; selectorText: string }> = {
+const GENDER_STYLE: Record<
+	Gender,
+	{ selectorBg: string; selectorText: string }
+> = {
 	masculine: { selectorBg: "bg-navy-100", selectorText: "text-navy-text" },
 	feminine: { selectorBg: "bg-sunset-100", selectorText: "text-sunset-text" },
 	neuter: { selectorBg: "bg-slate-100", selectorText: "text-slate-text" },
@@ -99,22 +161,30 @@ const ConfigScreen = ({
 		reverseDesc="see \u03c4\u03bf\u03c5 \u2192 identify person, number, gender"
 	>
 		<div className="mb-8 overflow-x-auto">
-			<table className="w-full text-sm border-collapse">
+			<table className="w-full border-collapse text-sm">
 				<thead>
 					<tr>
-						<th className="text-left pr-4 py-1 text-xs text-muted-foreground font-normal" />
-						<th className="px-3 py-1 text-xs font-medium text-muted-foreground text-center">Singular</th>
-						<th className="px-3 py-1 text-xs font-medium text-muted-foreground text-center">Plural</th>
+						<th className="py-1 pr-4 text-left text-xs font-normal text-muted-foreground" />
+						<th className="px-3 py-1 text-center text-xs font-medium text-muted-foreground">
+							Singular
+						</th>
+						<th className="px-3 py-1 text-center text-xs font-medium text-muted-foreground">
+							Plural
+						</th>
 					</tr>
 				</thead>
 				<tbody>
 					{PARADIGM_ROWS.map((row) => (
 						<tr key={row.label} className="border-t border-stone-100">
-							<td className="pr-4 py-1.5 text-xs font-medium text-olive-text">
+							<td className="py-1.5 pr-4 text-xs font-medium text-olive-text">
 								{row.label}
 							</td>
 							{row.forms.map((form) => (
-								<td key={form} lang="el" className="px-3 py-1.5 greek-text text-base text-foreground text-center">
+								<td
+									key={form}
+									lang="el"
+									className="greek-text px-3 py-1.5 text-center text-base text-foreground"
+								>
 									{form}
 								</td>
 							))}
@@ -134,7 +204,9 @@ export default function PossessivesDrill() {
 	const [cardIndex, setCardIndex] = useState(0);
 	const [input, setInput] = useState("");
 	const [attempts, setAttempts] = useState<Attempt<Possessive>[]>([]);
-	const [lastAttempt, setLastAttempt] = useState<Attempt<Possessive> | null>(null);
+	const [lastAttempt, setLastAttempt] = useState<Attempt<Possessive> | null>(
+		null,
+	);
 	const [selPerson, setSelPerson] = useState<Person | null>(null);
 	const [selNumber, setSelNumber] = useState<Num | null>(null);
 	const [selGender, setSelGender] = useState<Gender | null>(null);
@@ -146,12 +218,18 @@ export default function PossessivesDrill() {
 	const MAX_TIMER_MS = mode === "forward" ? 5000 : 8000;
 	const currentForm = (deck[cardIndex] ?? POSSESSIVES[0]) as Possessive;
 
-	const needsGender = currentForm.person === "third" && currentForm.number === "singular";
+	const needsGender =
+		currentForm.person === "third" && currentForm.number === "singular";
 	const showGenderRow = selPerson === "third" && selNumber === "singular";
 
 	const recordAttempt = useCallback(
 		(isCorrect: boolean, timeTaken: number, timedOut = false) => {
-			const attempt: Attempt<Possessive> = { form: currentForm, isCorrect, timeTaken, timedOut };
+			const attempt: Attempt<Possessive> = {
+				form: currentForm,
+				isCorrect,
+				timeTaken,
+				timedOut,
+			};
 			setLastAttempt(attempt);
 			setAttempts((prev) => [...prev, attempt]);
 			setPhase("feedback");
@@ -172,7 +250,11 @@ export default function PossessivesDrill() {
 		recordAttempt(false, timerMs, true);
 	}, [phase, mode, currentForm, timerMs, MAX_TIMER_MS, recordAttempt]);
 
-	const { progress, startedAt } = useCountdown(timerMs, isActive, handleTimeout);
+	const { progress, startedAt } = useCountdown(
+		timerMs,
+		isActive,
+		handleTimeout,
+	);
 
 	const handleForwardSubmit = useCallback(() => {
 		if (phase !== "active") return;
@@ -190,7 +272,16 @@ export default function PossessivesDrill() {
 			selNumber === currentForm.number &&
 			(!needsGender || selGender === currentForm.gender);
 		recordAttempt(isCorrect, timeTaken);
-	}, [phase, selPerson, selNumber, selGender, needsGender, currentForm, startedAt, recordAttempt]);
+	}, [
+		phase,
+		selPerson,
+		selNumber,
+		selGender,
+		needsGender,
+		currentForm,
+		startedAt,
+		recordAttempt,
+	]);
 
 	const resetSelectors = useCallback(() => {
 		setSelPerson(null);
@@ -238,10 +329,24 @@ export default function PossessivesDrill() {
 	}, [mode, sessionSize, resetSelectors]);
 
 	if (phase === "config") {
-		return <ConfigScreen mode={mode} onModeChange={setMode} sessionSize={sessionSize} onSizeChange={setSessionSize} onStart={startDrill} />;
+		return (
+			<ConfigScreen
+				mode={mode}
+				onModeChange={setMode}
+				sessionSize={sessionSize}
+				onSizeChange={setSessionSize}
+				onStart={startDrill}
+			/>
+		);
 	}
 	if (phase === "complete") {
-		return <SummaryScreen attempts={attempts} total={sessionSize} onAgain={() => setPhase("config")} />;
+		return (
+			<SummaryScreen
+				attempts={attempts}
+				total={sessionSize}
+				onAgain={() => setPhase("config")}
+			/>
+		);
 	}
 
 	const barColor =
@@ -258,19 +363,22 @@ export default function PossessivesDrill() {
 	const subtitle = subtitleParts.join(" \u00b7 ");
 
 	return (
-		<DrillShell progress={progress} barColor={barColor} cardIndex={cardIndex} sessionSize={sessionSize}>
+		<DrillShell
+			progress={progress}
+			barColor={barColor}
+			cardIndex={cardIndex}
+			sessionSize={sessionSize}
+		>
 			{mode === "forward" ? (
 				<>
 					<div>
-						<p className="text-xs uppercase tracking-[0.18em] font-medium mb-4 text-olive-text">
+						<p className="mb-4 text-xs font-medium tracking-[0.18em] text-olive-text uppercase">
 							{personLabel}
 						</p>
-						<p className="font-serif text-5xl text-foreground leading-tight">
+						<p className="font-serif text-5xl leading-tight text-foreground">
 							{englishWord}
 						</p>
-						<p className="text-sm text-muted-foreground mt-2">
-							{subtitle}
-						</p>
+						<p className="mt-2 text-sm text-muted-foreground">{subtitle}</p>
 					</div>
 
 					<div>
@@ -289,7 +397,10 @@ export default function PossessivesDrill() {
 			) : (
 				<>
 					<div className="pt-2">
-						<p lang="el" className="greek-text font-sans text-8xl text-foreground leading-none">
+						<p
+							lang="el"
+							className="greek-text font-sans text-8xl leading-none text-foreground"
+						>
 							{currentForm.greek}
 						</p>
 					</div>

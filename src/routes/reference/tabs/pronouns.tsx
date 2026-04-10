@@ -21,11 +21,11 @@ export function PronounsTab() {
 			<Card
 				variant="bordered"
 				padding="md"
-				className="bg-stone-50 border-stone-200"
+				className="border-stone-200 bg-stone-50"
 			>
 				<Link
 					to="/reference/cases"
-					className="flex items-center gap-2 text-stone-600 hover:text-stone-800 transition-colors"
+					className="flex items-center gap-2 text-stone-600 transition-colors hover:text-stone-800"
 				>
 					<ArrowLeft size={16} />
 					<span className="text-sm">Review the case system first</span>

@@ -19,78 +19,78 @@ import {
 // Adjective endings quick lookup table
 const AdjectiveEndingsTable: React.FC = () => (
 	<Card variant="bordered" padding="md" className="bg-stone-50/50">
-		<div className="text-sm font-medium text-stone-700 mb-3">
+		<div className="mb-3 text-sm font-medium text-stone-700">
 			Standard adjective endings (-ος, -η, -ο pattern)
 		</div>
-		<div className="grid md:grid-cols-2 gap-4">
+		<div className="grid gap-4 md:grid-cols-2">
 			{/* Singular */}
 			<div>
-				<div className="text-xs font-medium text-stone-600 mb-2">Singular</div>
+				<div className="mb-2 text-xs font-medium text-stone-600">Singular</div>
 				<table className="w-full text-sm">
 					<thead>
 						<tr className="border-b border-stone-200">
-							<th className="text-left py-1 pr-2 text-stone-600 font-medium w-12" />
-							<th className="text-left py-1 px-2 text-gender-masculine font-medium">
+							<th className="w-12 py-1 pr-2 text-left font-medium text-stone-600" />
+							<th className="px-2 py-1 text-left font-medium text-gender-masculine">
 								M
 							</th>
-							<th className="text-left py-1 px-2 text-gender-feminine font-medium">
+							<th className="px-2 py-1 text-left font-medium text-gender-feminine">
 								F
 							</th>
-							<th className="text-left py-1 px-2 text-gender-neuter font-medium">
+							<th className="px-2 py-1 text-left font-medium text-gender-neuter">
 								N
 							</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr className="border-b border-stone-100">
-							<td className="py-1 pr-2 text-stone-500 text-xs">Nom</td>
-							<td className="py-1 px-2">
+							<td className="py-1 pr-2 text-xs text-stone-500">Nom</td>
+							<td className="px-2 py-1">
 								<MonoText size="sm">
 									{ADJECTIVE_ENDINGS_QUICK_REF.singular.masculine.nom}
 								</MonoText>
 							</td>
-							<td className="py-1 px-2">
+							<td className="px-2 py-1">
 								<MonoText size="sm">
 									{ADJECTIVE_ENDINGS_QUICK_REF.singular.feminine.nom}
 								</MonoText>
 							</td>
-							<td className="py-1 px-2">
+							<td className="px-2 py-1">
 								<MonoText size="sm">
 									{ADJECTIVE_ENDINGS_QUICK_REF.singular.neuter.nom}
 								</MonoText>
 							</td>
 						</tr>
 						<tr className="border-b border-stone-100">
-							<td className="py-1 pr-2 text-stone-500 text-xs">Acc</td>
-							<td className="py-1 px-2">
+							<td className="py-1 pr-2 text-xs text-stone-500">Acc</td>
+							<td className="px-2 py-1">
 								<MonoText size="sm">
 									{ADJECTIVE_ENDINGS_QUICK_REF.singular.masculine.acc}
 								</MonoText>
 							</td>
-							<td className="py-1 px-2">
+							<td className="px-2 py-1">
 								<MonoText size="sm">
 									{ADJECTIVE_ENDINGS_QUICK_REF.singular.feminine.acc}
 								</MonoText>
 							</td>
-							<td className="py-1 px-2">
+							<td className="px-2 py-1">
 								<MonoText size="sm">
 									{ADJECTIVE_ENDINGS_QUICK_REF.singular.neuter.acc}
 								</MonoText>
 							</td>
 						</tr>
 						<tr>
-							<td className="py-1 pr-2 text-stone-500 text-xs">Gen</td>
-							<td className="py-1 px-2">
+							<td className="py-1 pr-2 text-xs text-stone-500">Gen</td>
+							<td className="px-2 py-1">
 								<MonoText size="sm">
 									{ADJECTIVE_ENDINGS_QUICK_REF.singular.masculine.gen}
 								</MonoText>
 							</td>
-							<td className="py-1 px-2">
+							<td className="px-2 py-1">
 								<MonoText size="sm">
 									{ADJECTIVE_ENDINGS_QUICK_REF.singular.feminine.gen}
 								</MonoText>
 							</td>
-							<td className="py-1 px-2">
+							<td className="px-2 py-1">
 								<MonoText size="sm">
 									{ADJECTIVE_ENDINGS_QUICK_REF.singular.neuter.gen}
 								</MonoText>
@@ -101,72 +101,72 @@ const AdjectiveEndingsTable: React.FC = () => (
 			</div>
 			{/* Plural */}
 			<div>
-				<div className="text-xs font-medium text-stone-600 mb-2">Plural</div>
+				<div className="mb-2 text-xs font-medium text-stone-600">Plural</div>
 				<table className="w-full text-sm">
 					<thead>
 						<tr className="border-b border-stone-200">
-							<th className="text-left py-1 pr-2 text-stone-600 font-medium w-12" />
-							<th className="text-left py-1 px-2 text-gender-masculine font-medium">
+							<th className="w-12 py-1 pr-2 text-left font-medium text-stone-600" />
+							<th className="px-2 py-1 text-left font-medium text-gender-masculine">
 								M
 							</th>
-							<th className="text-left py-1 px-2 text-gender-feminine font-medium">
+							<th className="px-2 py-1 text-left font-medium text-gender-feminine">
 								F
 							</th>
-							<th className="text-left py-1 px-2 text-gender-neuter font-medium">
+							<th className="px-2 py-1 text-left font-medium text-gender-neuter">
 								N
 							</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr className="border-b border-stone-100">
-							<td className="py-1 pr-2 text-stone-500 text-xs">Nom</td>
-							<td className="py-1 px-2">
+							<td className="py-1 pr-2 text-xs text-stone-500">Nom</td>
+							<td className="px-2 py-1">
 								<MonoText size="sm">
 									{ADJECTIVE_ENDINGS_QUICK_REF.plural.masculine.nom}
 								</MonoText>
 							</td>
-							<td className="py-1 px-2">
+							<td className="px-2 py-1">
 								<MonoText size="sm">
 									{ADJECTIVE_ENDINGS_QUICK_REF.plural.feminine.nom}
 								</MonoText>
 							</td>
-							<td className="py-1 px-2">
+							<td className="px-2 py-1">
 								<MonoText size="sm">
 									{ADJECTIVE_ENDINGS_QUICK_REF.plural.neuter.nom}
 								</MonoText>
 							</td>
 						</tr>
 						<tr className="border-b border-stone-100">
-							<td className="py-1 pr-2 text-stone-500 text-xs">Acc</td>
-							<td className="py-1 px-2">
+							<td className="py-1 pr-2 text-xs text-stone-500">Acc</td>
+							<td className="px-2 py-1">
 								<MonoText size="sm">
 									{ADJECTIVE_ENDINGS_QUICK_REF.plural.masculine.acc}
 								</MonoText>
 							</td>
-							<td className="py-1 px-2">
+							<td className="px-2 py-1">
 								<MonoText size="sm">
 									{ADJECTIVE_ENDINGS_QUICK_REF.plural.feminine.acc}
 								</MonoText>
 							</td>
-							<td className="py-1 px-2">
+							<td className="px-2 py-1">
 								<MonoText size="sm">
 									{ADJECTIVE_ENDINGS_QUICK_REF.plural.neuter.acc}
 								</MonoText>
 							</td>
 						</tr>
 						<tr>
-							<td className="py-1 pr-2 text-stone-500 text-xs">Gen</td>
-							<td className="py-1 px-2">
+							<td className="py-1 pr-2 text-xs text-stone-500">Gen</td>
+							<td className="px-2 py-1">
 								<MonoText size="sm">
 									{ADJECTIVE_ENDINGS_QUICK_REF.plural.masculine.gen}
 								</MonoText>
 							</td>
-							<td className="py-1 px-2">
+							<td className="px-2 py-1">
 								<MonoText size="sm">
 									{ADJECTIVE_ENDINGS_QUICK_REF.plural.feminine.gen}
 								</MonoText>
 							</td>
-							<td className="py-1 px-2">
+							<td className="px-2 py-1">
 								<MonoText size="sm">
 									{ADJECTIVE_ENDINGS_QUICK_REF.plural.neuter.gen}
 								</MonoText>
@@ -190,20 +190,20 @@ const AgreementExamplesCard: React.FC = () => {
 
 	return (
 		<Card variant="bordered" padding="md">
-			<div className="text-sm font-medium text-stone-700 mb-3">
+			<div className="mb-3 text-sm font-medium text-stone-700">
 				Agreement in action: article + adjective + noun
 			</div>
-			<div className="grid md:grid-cols-2 gap-6">
+			<div className="grid gap-6 md:grid-cols-2">
 				{/* Nominative */}
 				<div>
-					<div className="text-xs font-medium text-ocean-text mb-2 uppercase tracking-wide">
+					<div className="mb-2 text-xs font-medium tracking-wide text-ocean-text uppercase">
 						Nominative (subject)
 					</div>
 					<div className="space-y-2">
 						{nomExamples.map((ex) => (
 							<div
 								key={ex.greek}
-								className="p-2 bg-stone-50 rounded border border-stone-200"
+								className="rounded border border-stone-200 bg-stone-50 p-2"
 							>
 								<div className="flex items-baseline gap-2">
 									<MonoText
@@ -219,21 +219,21 @@ const AgreementExamplesCard: React.FC = () => {
 										{ex.greek}
 									</MonoText>
 								</div>
-								<div className="text-stone-600 text-sm mt-1">{ex.english}</div>
+								<div className="mt-1 text-sm text-stone-600">{ex.english}</div>
 							</div>
 						))}
 					</div>
 				</div>
 				{/* Accusative */}
 				<div>
-					<div className="text-xs font-medium text-terracotta-text mb-2 uppercase tracking-wide">
+					<div className="mb-2 text-xs font-medium tracking-wide text-terracotta-text uppercase">
 						Accusative (object)
 					</div>
 					<div className="space-y-2">
 						{accExamples.map((ex) => (
 							<div
 								key={ex.greek}
-								className="p-2 bg-stone-50 rounded border border-stone-200"
+								className="rounded border border-stone-200 bg-stone-50 p-2"
 							>
 								<div className="flex items-baseline gap-2">
 									<MonoText
@@ -249,7 +249,7 @@ const AgreementExamplesCard: React.FC = () => {
 										{ex.greek}
 									</MonoText>
 								</div>
-								<div className="text-stone-600 text-sm mt-1">{ex.english}</div>
+								<div className="mt-1 text-sm text-stone-600">{ex.english}</div>
 							</div>
 						))}
 					</div>
@@ -302,11 +302,11 @@ const AdjectiveParadigmCard: React.FC<{ paradigm: AdjectiveParadigm }> = ({
 				<table className="w-full text-sm">
 					<thead>
 						<tr className={`${style.headerBg} border-b ${style.border}`}>
-							<th className="text-left py-1 px-2 text-stone-600 font-medium text-xs w-10" />
-							<th className="text-left py-1 px-2 text-stone-600 font-medium text-xs">
+							<th className="w-10 px-2 py-1 text-left text-xs font-medium text-stone-600" />
+							<th className="px-2 py-1 text-left text-xs font-medium text-stone-600">
 								Sg
 							</th>
-							<th className="text-left py-1 px-2 text-stone-600 font-medium text-xs">
+							<th className="px-2 py-1 text-left text-xs font-medium text-stone-600">
 								Pl
 							</th>
 						</tr>
@@ -316,15 +316,15 @@ const AdjectiveParadigmCard: React.FC<{ paradigm: AdjectiveParadigm }> = ({
 							const pl = forms.plural[idx];
 							return (
 								<tr key={sg.case} className="border-b border-stone-100/50">
-									<td className="py-1 px-2 text-stone-500 text-xs">
+									<td className="px-2 py-1 text-xs text-stone-500">
 										{sg.case}
 									</td>
-									<td className="py-1 px-2">
+									<td className="px-2 py-1">
 										<MonoText variant={variant} size="sm">
 											{sg.form}
 										</MonoText>
 									</td>
-									<td className="py-1 px-2">
+									<td className="px-2 py-1">
 										<MonoText variant={variant} size="sm">
 											{pl?.form}
 										</MonoText>
@@ -340,13 +340,13 @@ const AdjectiveParadigmCard: React.FC<{ paradigm: AdjectiveParadigm }> = ({
 
 	return (
 		<Card variant="bordered" padding="md">
-			<div className="flex items-center gap-3 mb-3">
+			<div className="mb-3 flex items-center gap-3">
 				<MonoText variant="greek" size="lg" className="font-bold">
 					{paradigm.pattern}
 				</MonoText>
 				<span className="text-sm text-stone-600">{paradigm.title}</span>
 				<span
-					className={`text-xs px-2 py-0.5 rounded ${
+					className={`rounded px-2 py-0.5 text-xs ${
 						paradigm.frequency === "very common"
 							? "bg-olive-200 text-olive-text"
 							: paradigm.frequency === "common"
@@ -358,7 +358,7 @@ const AdjectiveParadigmCard: React.FC<{ paradigm: AdjectiveParadigm }> = ({
 				</span>
 			</div>
 
-			<div className="flex items-baseline gap-2 mb-3 text-sm">
+			<div className="mb-3 flex items-baseline gap-2 text-sm">
 				<span className="text-stone-600">Example:</span>
 				<MonoText variant="masculine">{paradigm.example.masculine}</MonoText>
 				<span className="text-stone-400">/</span>
@@ -369,10 +369,10 @@ const AdjectiveParadigmCard: React.FC<{ paradigm: AdjectiveParadigm }> = ({
 			</div>
 
 			{paradigm.tip && (
-				<p className="text-sm text-stone-600 mb-4 italic">{paradigm.tip}</p>
+				<p className="mb-4 text-sm text-stone-600 italic">{paradigm.tip}</p>
 			)}
 
-			<div className="grid md:grid-cols-3 gap-3">
+			<div className="grid gap-3 md:grid-cols-3">
 				{renderGenderTable("masculine", paradigm.masculine)}
 				{renderGenderTable("feminine", paradigm.feminine)}
 				{renderGenderTable("neuter", paradigm.neuter)}
@@ -384,10 +384,10 @@ const AdjectiveParadigmCard: React.FC<{ paradigm: AdjectiveParadigm }> = ({
 // Common adjectives quick list
 const CommonAdjectivesCard: React.FC = () => (
 	<Card variant="bordered" padding="md" className="bg-honey-50/30">
-		<div className="text-sm font-medium text-honey-text mb-3">
+		<div className="mb-3 text-sm font-medium text-honey-text">
 			High-frequency adjectives (all follow -ος/-η/-ο pattern)
 		</div>
-		<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-4 gap-y-1 text-sm">
+		<div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm sm:grid-cols-3 md:grid-cols-4">
 			{COMMON_ADJECTIVES.map((adj) => (
 				<div key={adj.greek} className="flex items-baseline gap-2">
 					<MonoText variant="greek">{adj.greek}</MonoText>
@@ -410,29 +410,29 @@ export const AdjectivesSection: React.FC = () => {
 			/>
 
 			<ContentSection title="Adjectives copy the noun" colorScheme="olive">
-				<div className="p-3 space-y-3">
+				<div className="space-y-3 p-3">
 					<p className="text-sm text-stone-600">
 						Match the article's gender and case. The adjective ending follows
 						the same pattern as nouns.
 					</p>
-					<div className="p-3 bg-stone-50 rounded-lg border border-stone-200">
-						<div className="text-xs font-semibold text-olive-text uppercase tracking-wide mb-2">
+					<div className="rounded-lg border border-stone-200 bg-stone-50 p-3">
+						<div className="mb-2 text-xs font-semibold tracking-wide text-olive-text uppercase">
 							What this means
 						</div>
-						<p className="text-sm text-stone-600 mb-2">
+						<p className="mb-2 text-sm text-stone-600">
 							Look at the article. The adjective uses the same gender, case, and
 							number as the noun it describes.
 						</p>
 						<div className="space-y-1">
 							<div>
 								<MonoText variant="masculine">ο καλός φίλος</MonoText>
-								<span className="text-stone-600 text-sm ml-2">
+								<span className="ml-2 text-sm text-stone-600">
 									(all masculine nominative)
 								</span>
 							</div>
 							<div>
 								<MonoText variant="masculine">τον καλό φίλο</MonoText>
-								<span className="text-stone-600 text-sm ml-2">
+								<span className="ml-2 text-sm text-stone-600">
 									(all masculine accusative, drop the -ς)
 								</span>
 							</div>

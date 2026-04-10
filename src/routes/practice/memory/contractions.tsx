@@ -29,18 +29,75 @@ interface Contraction extends DrillForm {
 }
 
 const CONTRACTIONS: Contraction[] = [
-	{ id: "m-sg", gender: "masculine", number: "singular", greek: "στον", greeklish: "ston", label: "masculine \u00b7 singular" },
-	{ id: "f-sg", gender: "feminine", number: "singular", greek: "στην", greeklish: "stin", label: "feminine \u00b7 singular" },
-	{ id: "n-sg", gender: "neuter", number: "singular", greek: "στο", greeklish: "sto", label: "neuter \u00b7 singular" },
-	{ id: "m-pl", gender: "masculine", number: "plural", greek: "στους", greeklish: "stous", label: "masculine \u00b7 plural" },
-	{ id: "f-pl", gender: "feminine", number: "plural", greek: "στις", greeklish: "stis", label: "feminine \u00b7 plural" },
-	{ id: "n-pl", gender: "neuter", number: "plural", greek: "στα", greeklish: "sta", label: "neuter \u00b7 plural" },
+	{
+		id: "m-sg",
+		gender: "masculine",
+		number: "singular",
+		greek: "στον",
+		greeklish: "ston",
+		label: "masculine \u00b7 singular",
+	},
+	{
+		id: "f-sg",
+		gender: "feminine",
+		number: "singular",
+		greek: "στην",
+		greeklish: "stin",
+		label: "feminine \u00b7 singular",
+	},
+	{
+		id: "n-sg",
+		gender: "neuter",
+		number: "singular",
+		greek: "στο",
+		greeklish: "sto",
+		label: "neuter \u00b7 singular",
+	},
+	{
+		id: "m-pl",
+		gender: "masculine",
+		number: "plural",
+		greek: "στους",
+		greeklish: "stous",
+		label: "masculine \u00b7 plural",
+	},
+	{
+		id: "f-pl",
+		gender: "feminine",
+		number: "plural",
+		greek: "στις",
+		greeklish: "stis",
+		label: "feminine \u00b7 plural",
+	},
+	{
+		id: "n-pl",
+		gender: "neuter",
+		number: "plural",
+		greek: "στα",
+		greeklish: "sta",
+		label: "neuter \u00b7 plural",
+	},
 ];
 
-const GENDER_STYLE: Record<Gender, { label: string; selectorBg: string; selectorText: string }> = {
-	masculine: { label: "text-navy-text", selectorBg: "bg-navy-100", selectorText: "text-navy-text" },
-	feminine: { label: "text-sunset-text", selectorBg: "bg-sunset-100", selectorText: "text-sunset-text" },
-	neuter: { label: "text-slate-text", selectorBg: "bg-slate-100", selectorText: "text-slate-text" },
+const GENDER_STYLE: Record<
+	Gender,
+	{ label: string; selectorBg: string; selectorText: string }
+> = {
+	masculine: {
+		label: "text-navy-text",
+		selectorBg: "bg-navy-100",
+		selectorText: "text-navy-text",
+	},
+	feminine: {
+		label: "text-sunset-text",
+		selectorBg: "bg-sunset-100",
+		selectorText: "text-sunset-text",
+	},
+	neuter: {
+		label: "text-slate-text",
+		selectorBg: "bg-slate-100",
+		selectorText: "text-slate-text",
+	},
 };
 
 const PARADIGM_ROWS: { label: string; forms: [string, string] }[] = [
@@ -76,22 +133,30 @@ const ConfigScreen = ({
 		reverseDesc="see \u03c3\u03c4\u03b7\u03bd \u2192 identify gender, number"
 	>
 		<div className="mb-8 overflow-x-auto">
-			<table className="w-full text-sm border-collapse">
+			<table className="w-full border-collapse text-sm">
 				<thead>
 					<tr>
-						<th className="text-left pr-4 py-1 text-xs text-muted-foreground font-normal" />
-						<th className="px-3 py-1 text-xs font-medium text-muted-foreground text-center">Singular</th>
-						<th className="px-3 py-1 text-xs font-medium text-muted-foreground text-center">Plural</th>
+						<th className="py-1 pr-4 text-left text-xs font-normal text-muted-foreground" />
+						<th className="px-3 py-1 text-center text-xs font-medium text-muted-foreground">
+							Singular
+						</th>
+						<th className="px-3 py-1 text-center text-xs font-medium text-muted-foreground">
+							Plural
+						</th>
 					</tr>
 				</thead>
 				<tbody>
 					{PARADIGM_ROWS.map((row) => (
 						<tr key={row.label} className="border-t border-stone-100">
-							<td className="pr-4 py-1.5 text-xs font-medium text-terracotta-text">
+							<td className="py-1.5 pr-4 text-xs font-medium text-terracotta-text">
 								{row.label}
 							</td>
 							{row.forms.map((form) => (
-								<td key={form} lang="el" className="px-3 py-1.5 greek-text text-base text-foreground text-center">
+								<td
+									key={form}
+									lang="el"
+									className="greek-text px-3 py-1.5 text-center text-base text-foreground"
+								>
 									{form}
 								</td>
 							))}
@@ -99,8 +164,11 @@ const ConfigScreen = ({
 					))}
 				</tbody>
 			</table>
-			<p className="text-xs text-muted-foreground mt-2">
-				<span lang="el" className="greek-text">σε</span> + definite article (always accusative)
+			<p className="mt-2 text-xs text-muted-foreground">
+				<span lang="el" className="greek-text">
+					σε
+				</span>{" "}
+				+ definite article (always accusative)
 			</p>
 		</div>
 	</ConfigShell>
@@ -114,7 +182,9 @@ export default function ContractionsDrill() {
 	const [cardIndex, setCardIndex] = useState(0);
 	const [input, setInput] = useState("");
 	const [attempts, setAttempts] = useState<Attempt<Contraction>[]>([]);
-	const [lastAttempt, setLastAttempt] = useState<Attempt<Contraction> | null>(null);
+	const [lastAttempt, setLastAttempt] = useState<Attempt<Contraction> | null>(
+		null,
+	);
 	const [selGender, setSelGender] = useState<Gender | null>(null);
 	const [selNumber, setSelNumber] = useState<Num | null>(null);
 
@@ -127,7 +197,12 @@ export default function ContractionsDrill() {
 
 	const recordAttempt = useCallback(
 		(isCorrect: boolean, timeTaken: number, timedOut = false) => {
-			const attempt: Attempt<Contraction> = { form: currentForm, isCorrect, timeTaken, timedOut };
+			const attempt: Attempt<Contraction> = {
+				form: currentForm,
+				isCorrect,
+				timeTaken,
+				timedOut,
+			};
 			setLastAttempt(attempt);
 			setAttempts((prev) => [...prev, attempt]);
 			setPhase("feedback");
@@ -148,7 +223,11 @@ export default function ContractionsDrill() {
 		recordAttempt(false, timerMs, true);
 	}, [phase, mode, currentForm, timerMs, MAX_TIMER_MS, recordAttempt]);
 
-	const { progress, startedAt } = useCountdown(timerMs, isActive, handleTimeout);
+	const { progress, startedAt } = useCountdown(
+		timerMs,
+		isActive,
+		handleTimeout,
+	);
 
 	const handleForwardSubmit = useCallback(() => {
 		if (phase !== "active") return;
@@ -161,8 +240,7 @@ export default function ContractionsDrill() {
 		if (phase !== "active" || !selGender || !selNumber) return;
 		const timeTaken = performance.now() - startedAt.current;
 		const isCorrect =
-			selGender === currentForm.gender &&
-			selNumber === currentForm.number;
+			selGender === currentForm.gender && selNumber === currentForm.number;
 		recordAttempt(isCorrect, timeTaken);
 	}, [phase, selGender, selNumber, currentForm, startedAt, recordAttempt]);
 
@@ -209,10 +287,24 @@ export default function ContractionsDrill() {
 	}, [mode, sessionSize, resetSelectors]);
 
 	if (phase === "config") {
-		return <ConfigScreen mode={mode} onModeChange={setMode} sessionSize={sessionSize} onSizeChange={setSessionSize} onStart={startDrill} />;
+		return (
+			<ConfigScreen
+				mode={mode}
+				onModeChange={setMode}
+				sessionSize={sessionSize}
+				onSizeChange={setSessionSize}
+				onStart={startDrill}
+			/>
+		);
 	}
 	if (phase === "complete") {
-		return <SummaryScreen attempts={attempts} total={sessionSize} onAgain={() => setPhase("config")} />;
+		return (
+			<SummaryScreen
+				attempts={attempts}
+				total={sessionSize}
+				onAgain={() => setPhase("config")}
+			/>
+		);
 	}
 
 	const barColor =
@@ -225,17 +317,22 @@ export default function ContractionsDrill() {
 	const gs = GENDER_STYLE[currentForm.gender];
 
 	return (
-		<DrillShell progress={progress} barColor={barColor} cardIndex={cardIndex} sessionSize={sessionSize}>
+		<DrillShell
+			progress={progress}
+			barColor={barColor}
+			cardIndex={cardIndex}
+			sessionSize={sessionSize}
+		>
 			{mode === "forward" ? (
 				<>
 					<div>
-						<p className="text-xs uppercase tracking-[0.18em] font-medium mb-4 text-ocean-text">
+						<p className="mb-4 text-xs font-medium tracking-[0.18em] text-ocean-text uppercase">
 							to the / at the
 						</p>
 						<p className={`font-serif text-5xl leading-tight ${gs.label}`}>
 							{currentForm.gender}
 						</p>
-						<p className="text-sm text-muted-foreground mt-2">
+						<p className="mt-2 text-sm text-muted-foreground">
 							{currentForm.number}
 						</p>
 					</div>
@@ -256,7 +353,10 @@ export default function ContractionsDrill() {
 			) : (
 				<>
 					<div className="pt-2">
-						<p lang="el" className="greek-text font-sans text-8xl text-foreground leading-none">
+						<p
+							lang="el"
+							className="greek-text font-sans text-8xl leading-none text-foreground"
+						>
 							{currentForm.greek}
 						</p>
 					</div>

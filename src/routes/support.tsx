@@ -4,56 +4,56 @@ import { Card } from "@/components/Card";
 
 export default function SupportPage() {
 	return (
-		<div className="max-w-2xl mx-auto py-8">
+		<div className="mx-auto max-w-2xl py-8">
 			<Link
 				to="/"
-				className="inline-flex items-center gap-2 text-stone-500 hover:text-stone-700 mb-8"
+				className="mb-8 inline-flex items-center gap-2 text-stone-500 hover:text-stone-700"
 			>
 				<ArrowLeft size={16} />
 				<span>Back</span>
 			</Link>
 
-			<h1 className="text-3xl font-serif text-terracotta mb-4">
+			<h1 className="mb-4 font-serif text-3xl text-terracotta">
 				About This Project
 			</h1>
 
-			<div className="prose prose-stone max-w-none mb-12">
-				<p className="text-lg text-stone-600 leading-relaxed">
+			<div className="prose prose-stone mb-12 max-w-none">
+				<p className="text-lg leading-relaxed text-stone-600">
 					My wife is Cypriot. We've moved to Cyprus and we're starting a family.
 					I want our son to grow up speaking Greek. As close to native as
 					possible.
 				</p>
-				<p className="text-stone-600 leading-relaxed">
+				<p className="leading-relaxed text-stone-600">
 					Problem is, I'm learning from square one. Apps, textbooks, courses.
 					Everything trained me to recognise Greek, not produce it. I could tap
 					the right answer in a multiple choice quiz, but when someone asked me
 					something, my mind went blank.
 				</p>
-				<p className="text-stone-600 leading-relaxed">
+				<p className="leading-relaxed text-stone-600">
 					So I built this. Timed drills that force retrieval under pressure. 3.5
 					seconds to produce the Greek. No hints. No multiple choice. Either you
 					know it or you don't.
 				</p>
-				<p className="text-stone-600 leading-relaxed">
+				<p className="leading-relaxed text-stone-600">
 					It's how I'm learning. Maybe it'll help you too.
 				</p>
 			</div>
 
-			<h2 className="text-2xl font-serif text-stone-800 mb-6">
+			<h2 className="mb-6 font-serif text-2xl text-stone-800">
 				Support This Project
 			</h2>
 
-			<div className="grid gap-4 sm:grid-cols-2 mb-12">
+			<div className="mb-12 grid gap-4 sm:grid-cols-2">
 				<Card className="p-6">
 					<div className="flex items-start gap-4">
-						<div className="w-10 h-10 rounded-full bg-terracotta/10 flex items-center justify-center flex-shrink-0">
+						<div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-terracotta/10">
 							<Coffee size={20} className="text-terracotta" />
 						</div>
 						<div>
-							<h3 className="font-medium text-stone-800 mb-1">
+							<h3 className="mb-1 font-medium text-stone-800">
 								Buy me a coffee
 							</h3>
-							<p className="text-sm text-stone-600 mb-3">
+							<p className="mb-3 text-sm text-stone-600">
 								One-time support to keep this project going.
 							</p>
 							<a
@@ -70,14 +70,14 @@ export default function SupportPage() {
 
 				<Card className="p-6">
 					<div className="flex items-start gap-4">
-						<div className="w-10 h-10 rounded-full bg-terracotta/10 flex items-center justify-center flex-shrink-0">
+						<div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-terracotta/10">
 							<Heart size={20} className="text-terracotta" />
 						</div>
 						<div>
-							<h3 className="font-medium text-stone-800 mb-1">
+							<h3 className="mb-1 font-medium text-stone-800">
 								Spread the word
 							</h3>
-							<p className="text-sm text-stone-600 mb-3">
+							<p className="mb-3 text-sm text-stone-600">
 								Share with someone learning Greek. Word of mouth helps the most.
 							</p>
 						</div>
@@ -85,9 +85,9 @@ export default function SupportPage() {
 				</Card>
 			</div>
 
-			<h2 className="text-2xl font-serif text-stone-800 mb-6">What's Next</h2>
+			<h2 className="mb-6 font-serif text-2xl text-stone-800">What's Next</h2>
 
-			<Card className="p-6 mb-12">
+			<Card className="mb-12 p-6">
 				<ul className="space-y-3 text-stone-600">
 					<li className="flex items-start gap-3">
 						<span className="text-terracotta">•</span>
@@ -108,7 +108,7 @@ export default function SupportPage() {
 				</ul>
 			</Card>
 
-			<div className="text-center text-stone-500 text-sm">
+			<div className="text-center text-sm text-stone-500">
 				<p>
 					Built with care in Cyprus.{" "}
 					<span className="font-serif text-terracotta">Ευχαριστώ</span> for

@@ -49,10 +49,10 @@ const getEncouragementMessage = (
 		"Nice work!";
 
 	if (percentage === 100)
-		return { message, icon: <Trophy className="w-6 h-6 text-honey" /> };
+		return { message, icon: <Trophy className="h-6 w-6 text-honey" /> };
 	if (percentage >= 80)
-		return { message, icon: <Flame className="w-6 h-6 text-terracotta" /> };
-	return { message, icon: <Sparkles className="w-6 h-6 text-ocean" /> };
+		return { message, icon: <Flame className="h-6 w-6 text-terracotta" /> };
+	return { message, icon: <Sparkles className="h-6 w-6 text-ocean" /> };
 };
 
 interface DrillSummaryProps {
@@ -98,7 +98,12 @@ const DrillSummary: React.FC<DrillSummaryProps> = ({
 		},
 		{} as Record<
 			string,
-			{ prompt: string; correctGreek: string; userAnswer: string; count: number }
+			{
+				prompt: string;
+				correctGreek: string;
+				userAnswer: string;
+				count: number;
+			}
 		>,
 	);
 
@@ -110,15 +115,15 @@ const DrillSummary: React.FC<DrillSummaryProps> = ({
 		<Card variant="bordered" padding="lg" className="bg-stone-50">
 			<div className="py-6">
 				{/* Encouragement header */}
-				<div className="flex items-center justify-center gap-2 mb-4">
+				<div className="mb-4 flex items-center justify-center gap-2">
 					{encouragementIcon}
 					<span className="text-lg font-semibold text-stone-800">
 						{encouragement}
 					</span>
 				</div>
 
-				<div className="text-center mb-6">
-					<h3 className="text-2xl font-bold mb-2">
+				<div className="mb-6 text-center">
+					<h3 className="mb-2 text-2xl font-bold">
 						{stats.correct} / {stats.total} correct
 					</h3>
 
@@ -134,59 +139,65 @@ const DrillSummary: React.FC<DrillSummaryProps> = ({
 
 				{sortedMissed.length > 0 && (
 					<div className="mb-6">
-						<h4 className="text-sm font-semibold text-stone-700 mb-3 flex items-center gap-2">
+						<h4 className="mb-3 flex items-center gap-2 text-sm font-semibold text-stone-700">
 							<XCircle size={16} className="text-incorrect" />
 							Items to Review ({sortedMissed.length})
 						</h4>
-						<div className="space-y-2 max-h-48 overflow-y-auto">
+						<div className="max-h-48 space-y-2 overflow-y-auto">
 							{sortedMissed.slice(0, 5).map((item) => (
 								<div
 									key={item.correctGreek}
-									className="flex items-center justify-between bg-white p-3 rounded-lg border text-sm"
+									className="flex items-center justify-between rounded-lg border bg-white p-3 text-sm"
 								>
-									<div className="flex-1 min-w-0 space-y-0.5">
-										<p className="text-stone-600 truncate text-xs">{item.prompt}</p>
+									<div className="min-w-0 flex-1 space-y-0.5">
+										<p className="truncate text-xs text-stone-600">
+											{item.prompt}
+										</p>
 										{item.userAnswer && (
 											<div className="flex items-center gap-2">
-												<span className="text-xs text-stone-400 w-16 shrink-0">you typed</span>
-												<MonoText className="text-incorrect text-xs line-through">
+												<span className="w-16 shrink-0 text-xs text-stone-400">
+													you typed
+												</span>
+												<MonoText className="text-xs text-incorrect line-through">
 													{item.userAnswer}
 												</MonoText>
 											</div>
 										)}
 										<div className="flex items-center gap-2">
-											<span className="text-xs text-stone-400 w-16 shrink-0">correct</span>
-											<MonoText className="text-stone-900 font-medium">
+											<span className="w-16 shrink-0 text-xs text-stone-400">
+												correct
+											</span>
+											<MonoText className="font-medium text-stone-900">
 												{item.correctGreek}
 											</MonoText>
-											<span className="text-xs text-stone-400 font-mono">
+											<span className="font-mono text-xs text-stone-400">
 												/{greekToPhonetic(item.correctGreek)}/
 											</span>
 										</div>
 									</div>
 									{item.count > 1 && (
-										<span className="text-xs bg-incorrect-100 text-incorrect px-2 py-0.5 rounded-full ml-2">
+										<span className="bg-incorrect-100 ml-2 rounded-full px-2 py-0.5 text-xs text-incorrect">
 											{item.count}x
 										</span>
 									)}
 								</div>
 							))}
 							{sortedMissed.length > 5 && (
-								<p className="text-xs text-stone-400 text-center py-1">
+								<p className="py-1 text-center text-xs text-stone-400">
 									+{sortedMissed.length - 5} more items
 								</p>
 							)}
 						</div>
-						<p className="text-xs text-stone-500 mt-3 text-center italic">
+						<p className="mt-3 text-center text-xs text-stone-500 italic">
 							These items will appear more often in future sessions
 						</p>
 					</div>
 				)}
 
 				{sortedMissed.length === 0 && (
-					<div className="text-center mb-6 py-4 bg-correct-100 rounded-lg">
-						<CheckCircle size={32} className="text-correct mx-auto mb-2" />
-						<p className="text-correct font-medium">Perfect session!</p>
+					<div className="bg-correct-100 mb-6 rounded-lg py-4 text-center">
+						<CheckCircle size={32} className="mx-auto mb-2 text-correct" />
+						<p className="font-medium text-correct">Perfect session!</p>
 					</div>
 				)}
 
@@ -221,7 +232,7 @@ const DrillSummary: React.FC<DrillSummaryProps> = ({
 									}));
 								onDrillMistakes(missedQuestions);
 							}}
-							className="gap-2 mb-3 w-full"
+							className="mb-3 w-full gap-2"
 						>
 							<RotateCcw size={16} />
 							Drill mistakes ({sortedMissed.length})
@@ -231,7 +242,7 @@ const DrillSummary: React.FC<DrillSummaryProps> = ({
 						<RotateCcw size={16} />
 						Practice Again
 					</Button>
-					<p className="text-xs text-stone-400 mt-4">
+					<p className="mt-4 text-xs text-stone-400">
 						Consistency beats intensity. Small daily practice builds real
 						fluency.
 					</p>

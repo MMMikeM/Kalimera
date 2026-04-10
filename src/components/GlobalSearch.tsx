@@ -31,14 +31,14 @@ export const GlobalSearch = ({ children }: GlobalSearchProps) => {
 				render={
 					<button
 						type="button"
-						className="outline-none focus-visible:ring-2 focus-visible:ring-terracotta-300 rounded-md"
+						className="rounded-md outline-none focus-visible:ring-2 focus-visible:ring-terracotta-300"
 					/>
 				}
 			>
 				{children({ isActive: isOpen })}
 			</PopoverTrigger>
 			<PopoverPositioner align="end" sideOffset={8}>
-				<PopoverContent className="w-[min(420px,calc(100vw-1rem))] p-0 max-h-[70vh] flex flex-col overflow-hidden rounded-xl bg-cream shadow-lg border-stone-200">
+				<PopoverContent className="flex max-h-[70vh] w-[min(420px,calc(100vw-1rem))] flex-col overflow-hidden rounded-xl border-stone-200 bg-cream p-0 shadow-lg">
 					<SearchContent />
 				</PopoverContent>
 			</PopoverPositioner>
@@ -65,8 +65,8 @@ const SearchContent = () => {
 	const showEmptyState = !searchTerm && results.length === 0;
 
 	return (
-		<div className="flex flex-col h-full">
-			<div className="p-3 bg-cream-100/50">
+		<div className="flex h-full flex-col">
+			<div className="bg-cream-100/50 p-3">
 				<SearchInput
 					ref={inputRef}
 					placeholder="Search Greek, English, or tags..."
@@ -77,9 +77,9 @@ const SearchContent = () => {
 					icon={<Search size={16} />}
 				/>
 			</div>
-			<div className="flex-1 overflow-y-auto p-3 min-h-0 max-h-[50vh] bg-cream-dark">
+			<div className="max-h-[50vh] min-h-0 flex-1 overflow-y-auto bg-cream-dark p-3">
 				{isLoading ? (
-					<div className="text-center py-8 text-stone-400 text-sm">
+					<div className="py-8 text-center text-sm text-stone-400">
 						Loading...
 					</div>
 				) : showEmptyState ? (
@@ -98,7 +98,7 @@ interface SearchEmptyStateProps {
 
 const SearchEmptyState = ({ onQuickSearch }: SearchEmptyStateProps) => (
 	<div className="py-4">
-		<div className="flex items-center justify-center gap-2 text-stone-400 mb-4">
+		<div className="mb-4 flex items-center justify-center gap-2 text-stone-400">
 			<Sparkles size={16} className="text-honey-400" />
 			<span className="text-sm">Try searching for</span>
 		</div>
@@ -108,16 +108,16 @@ const SearchEmptyState = ({ onQuickSearch }: SearchEmptyStateProps) => (
 					key={item.greek}
 					type="button"
 					onClick={() => onQuickSearch(item.greek)}
-					className="flex flex-col items-start p-3 rounded-lg bg-cream-50 hover:bg-cream-100 border border-stone-200 hover:border-terracotta-300 transition-colors text-left min-h-[52px]"
+					className="flex min-h-[52px] flex-col items-start rounded-lg border border-stone-200 bg-cream-50 p-3 text-left transition-colors hover:border-terracotta-300 hover:bg-cream-100"
 				>
-					<span className="text-base font-medium text-stone-900 greek-text">
+					<span className="greek-text text-base font-medium text-stone-900">
 						{item.greek}
 					</span>
 					<span className="text-xs text-stone-500">{item.english}</span>
 				</button>
 			))}
 		</div>
-		<p className="text-center text-xs text-stone-400 mt-4">
+		<p className="mt-4 text-center text-xs text-stone-400">
 			Search by Greek, English, or tags like "food" or "travel"
 		</p>
 	</div>

@@ -31,39 +31,220 @@ interface Article extends DrillForm {
 }
 
 const ARTICLES: Article[] = [
-	{ id: "nom-m-sg", case: "nominative", gender: "masculine", number: "singular", greek: "ο", greeklish: "o", label: "masculine \u00b7 singular \u00b7 nominative" },
-	{ id: "nom-f-sg", case: "nominative", gender: "feminine", number: "singular", greek: "η", greeklish: "i", label: "feminine \u00b7 singular \u00b7 nominative" },
-	{ id: "nom-n-sg", case: "nominative", gender: "neuter", number: "singular", greek: "το", greeklish: "to", label: "neuter \u00b7 singular \u00b7 nominative" },
-	{ id: "acc-m-sg", case: "accusative", gender: "masculine", number: "singular", greek: "τον", greeklish: "ton", label: "masculine \u00b7 singular \u00b7 accusative" },
-	{ id: "acc-f-sg", case: "accusative", gender: "feminine", number: "singular", greek: "την", greeklish: "tin", label: "feminine \u00b7 singular \u00b7 accusative" },
-	{ id: "acc-n-sg", case: "accusative", gender: "neuter", number: "singular", greek: "το", greeklish: "to", label: "neuter \u00b7 singular \u00b7 accusative" },
-	{ id: "gen-m-sg", case: "genitive", gender: "masculine", number: "singular", greek: "του", greeklish: "tou", label: "masculine \u00b7 singular \u00b7 genitive" },
-	{ id: "gen-f-sg", case: "genitive", gender: "feminine", number: "singular", greek: "της", greeklish: "tis", label: "feminine \u00b7 singular \u00b7 genitive" },
-	{ id: "gen-n-sg", case: "genitive", gender: "neuter", number: "singular", greek: "του", greeklish: "tou", label: "neuter \u00b7 singular \u00b7 genitive" },
-	{ id: "nom-m-pl", case: "nominative", gender: "masculine", number: "plural", greek: "οι", greeklish: "i", label: "masculine \u00b7 plural \u00b7 nominative" },
-	{ id: "nom-f-pl", case: "nominative", gender: "feminine", number: "plural", greek: "οι", greeklish: "i", label: "feminine \u00b7 plural \u00b7 nominative" },
-	{ id: "nom-n-pl", case: "nominative", gender: "neuter", number: "plural", greek: "τα", greeklish: "ta", label: "neuter \u00b7 plural \u00b7 nominative" },
-	{ id: "acc-m-pl", case: "accusative", gender: "masculine", number: "plural", greek: "τους", greeklish: "tous", label: "masculine \u00b7 plural \u00b7 accusative" },
-	{ id: "acc-f-pl", case: "accusative", gender: "feminine", number: "plural", greek: "τις", greeklish: "tis", label: "feminine \u00b7 plural \u00b7 accusative" },
-	{ id: "acc-n-pl", case: "accusative", gender: "neuter", number: "plural", greek: "τα", greeklish: "ta", label: "neuter \u00b7 plural \u00b7 accusative" },
-	{ id: "gen-m-pl", case: "genitive", gender: "masculine", number: "plural", greek: "των", greeklish: "ton", label: "masculine \u00b7 plural \u00b7 genitive" },
-	{ id: "gen-f-pl", case: "genitive", gender: "feminine", number: "plural", greek: "των", greeklish: "ton", label: "feminine \u00b7 plural \u00b7 genitive" },
-	{ id: "gen-n-pl", case: "genitive", gender: "neuter", number: "plural", greek: "των", greeklish: "ton", label: "neuter \u00b7 plural \u00b7 genitive" },
+	{
+		id: "nom-m-sg",
+		case: "nominative",
+		gender: "masculine",
+		number: "singular",
+		greek: "ο",
+		greeklish: "o",
+		label: "masculine \u00b7 singular \u00b7 nominative",
+	},
+	{
+		id: "nom-f-sg",
+		case: "nominative",
+		gender: "feminine",
+		number: "singular",
+		greek: "η",
+		greeklish: "i",
+		label: "feminine \u00b7 singular \u00b7 nominative",
+	},
+	{
+		id: "nom-n-sg",
+		case: "nominative",
+		gender: "neuter",
+		number: "singular",
+		greek: "το",
+		greeklish: "to",
+		label: "neuter \u00b7 singular \u00b7 nominative",
+	},
+	{
+		id: "acc-m-sg",
+		case: "accusative",
+		gender: "masculine",
+		number: "singular",
+		greek: "τον",
+		greeklish: "ton",
+		label: "masculine \u00b7 singular \u00b7 accusative",
+	},
+	{
+		id: "acc-f-sg",
+		case: "accusative",
+		gender: "feminine",
+		number: "singular",
+		greek: "την",
+		greeklish: "tin",
+		label: "feminine \u00b7 singular \u00b7 accusative",
+	},
+	{
+		id: "acc-n-sg",
+		case: "accusative",
+		gender: "neuter",
+		number: "singular",
+		greek: "το",
+		greeklish: "to",
+		label: "neuter \u00b7 singular \u00b7 accusative",
+	},
+	{
+		id: "gen-m-sg",
+		case: "genitive",
+		gender: "masculine",
+		number: "singular",
+		greek: "του",
+		greeklish: "tou",
+		label: "masculine \u00b7 singular \u00b7 genitive",
+	},
+	{
+		id: "gen-f-sg",
+		case: "genitive",
+		gender: "feminine",
+		number: "singular",
+		greek: "της",
+		greeklish: "tis",
+		label: "feminine \u00b7 singular \u00b7 genitive",
+	},
+	{
+		id: "gen-n-sg",
+		case: "genitive",
+		gender: "neuter",
+		number: "singular",
+		greek: "του",
+		greeklish: "tou",
+		label: "neuter \u00b7 singular \u00b7 genitive",
+	},
+	{
+		id: "nom-m-pl",
+		case: "nominative",
+		gender: "masculine",
+		number: "plural",
+		greek: "οι",
+		greeklish: "i",
+		label: "masculine \u00b7 plural \u00b7 nominative",
+	},
+	{
+		id: "nom-f-pl",
+		case: "nominative",
+		gender: "feminine",
+		number: "plural",
+		greek: "οι",
+		greeklish: "i",
+		label: "feminine \u00b7 plural \u00b7 nominative",
+	},
+	{
+		id: "nom-n-pl",
+		case: "nominative",
+		gender: "neuter",
+		number: "plural",
+		greek: "τα",
+		greeklish: "ta",
+		label: "neuter \u00b7 plural \u00b7 nominative",
+	},
+	{
+		id: "acc-m-pl",
+		case: "accusative",
+		gender: "masculine",
+		number: "plural",
+		greek: "τους",
+		greeklish: "tous",
+		label: "masculine \u00b7 plural \u00b7 accusative",
+	},
+	{
+		id: "acc-f-pl",
+		case: "accusative",
+		gender: "feminine",
+		number: "plural",
+		greek: "τις",
+		greeklish: "tis",
+		label: "feminine \u00b7 plural \u00b7 accusative",
+	},
+	{
+		id: "acc-n-pl",
+		case: "accusative",
+		gender: "neuter",
+		number: "plural",
+		greek: "τα",
+		greeklish: "ta",
+		label: "neuter \u00b7 plural \u00b7 accusative",
+	},
+	{
+		id: "gen-m-pl",
+		case: "genitive",
+		gender: "masculine",
+		number: "plural",
+		greek: "των",
+		greeklish: "ton",
+		label: "masculine \u00b7 plural \u00b7 genitive",
+	},
+	{
+		id: "gen-f-pl",
+		case: "genitive",
+		gender: "feminine",
+		number: "plural",
+		greek: "των",
+		greeklish: "ton",
+		label: "feminine \u00b7 plural \u00b7 genitive",
+	},
+	{
+		id: "gen-n-pl",
+		case: "genitive",
+		gender: "neuter",
+		number: "plural",
+		greek: "των",
+		greeklish: "ton",
+		label: "neuter \u00b7 plural \u00b7 genitive",
+	},
 ];
 
-const CASE_STYLE: Record<ArticleCase, { text: string; bar: string; selectorBg: string; selectorText: string }> = {
-	nominative: { text: "text-ocean-text", bar: "bg-ocean", selectorBg: "bg-ocean-100", selectorText: "text-ocean-text" },
-	accusative: { text: "text-terracotta-text", bar: "bg-terracotta", selectorBg: "bg-terracotta-100", selectorText: "text-terracotta-text" },
-	genitive: { text: "text-olive-text", bar: "bg-olive", selectorBg: "bg-olive-100", selectorText: "text-olive-text" },
+const CASE_STYLE: Record<
+	ArticleCase,
+	{ text: string; bar: string; selectorBg: string; selectorText: string }
+> = {
+	nominative: {
+		text: "text-ocean-text",
+		bar: "bg-ocean",
+		selectorBg: "bg-ocean-100",
+		selectorText: "text-ocean-text",
+	},
+	accusative: {
+		text: "text-terracotta-text",
+		bar: "bg-terracotta",
+		selectorBg: "bg-terracotta-100",
+		selectorText: "text-terracotta-text",
+	},
+	genitive: {
+		text: "text-olive-text",
+		bar: "bg-olive",
+		selectorBg: "bg-olive-100",
+		selectorText: "text-olive-text",
+	},
 };
 
-const GENDER_STYLE: Record<Gender, { label: string; selectorBg: string; selectorText: string }> = {
-	masculine: { label: "text-navy-text", selectorBg: "bg-navy-100", selectorText: "text-navy-text" },
-	feminine: { label: "text-sunset-text", selectorBg: "bg-sunset-100", selectorText: "text-sunset-text" },
-	neuter: { label: "text-slate-text", selectorBg: "bg-slate-100", selectorText: "text-slate-text" },
+const GENDER_STYLE: Record<
+	Gender,
+	{ label: string; selectorBg: string; selectorText: string }
+> = {
+	masculine: {
+		label: "text-navy-text",
+		selectorBg: "bg-navy-100",
+		selectorText: "text-navy-text",
+	},
+	feminine: {
+		label: "text-sunset-text",
+		selectorBg: "bg-sunset-100",
+		selectorText: "text-sunset-text",
+	},
+	neuter: {
+		label: "text-slate-text",
+		selectorBg: "bg-slate-100",
+		selectorText: "text-slate-text",
+	},
 };
 
-const PARADIGM_ROWS: { label: string; caseKey: ArticleCase; forms: [string, string, string] }[] = [
+const PARADIGM_ROWS: {
+	label: string;
+	caseKey: ArticleCase;
+	forms: [string, string, string];
+}[] = [
 	{ label: "Nom sg", caseKey: "nominative", forms: ["ο", "η", "το"] },
 	{ label: "Acc sg", caseKey: "accusative", forms: ["τον", "την", "το"] },
 	{ label: "Gen sg", caseKey: "genitive", forms: ["του", "της", "του"] },
@@ -99,23 +280,35 @@ const ConfigScreen = ({
 		reverseDesc="see \u03c4\u03bf\u03bd \u2192 identify gender, number, case"
 	>
 		<div className="mb-8 overflow-x-auto">
-			<table className="w-full text-sm border-collapse">
+			<table className="w-full border-collapse text-sm">
 				<thead>
 					<tr>
-						<th className="text-left pr-4 py-1 text-xs text-muted-foreground font-normal" />
-						<th className="px-3 py-1 text-xs font-medium text-navy-text text-center">Masc</th>
-						<th className="px-3 py-1 text-xs font-medium text-sunset-text text-center">Fem</th>
-						<th className="px-3 py-1 text-xs font-medium text-slate-text text-center">Neut</th>
+						<th className="py-1 pr-4 text-left text-xs font-normal text-muted-foreground" />
+						<th className="px-3 py-1 text-center text-xs font-medium text-navy-text">
+							Masc
+						</th>
+						<th className="px-3 py-1 text-center text-xs font-medium text-sunset-text">
+							Fem
+						</th>
+						<th className="px-3 py-1 text-center text-xs font-medium text-slate-text">
+							Neut
+						</th>
 					</tr>
 				</thead>
 				<tbody>
 					{PARADIGM_ROWS.map((row) => (
 						<tr key={row.label} className="border-t border-stone-100">
-							<td className={`pr-4 py-1.5 text-xs font-medium ${CASE_STYLE[row.caseKey].text}`}>
+							<td
+								className={`py-1.5 pr-4 text-xs font-medium ${CASE_STYLE[row.caseKey].text}`}
+							>
 								{row.label}
 							</td>
 							{(["masculine", "feminine", "neuter"] as const).map((g, i) => (
-								<td key={g} lang="el" className="px-3 py-1.5 greek-text text-base text-foreground text-center">
+								<td
+									key={g}
+									lang="el"
+									className="greek-text px-3 py-1.5 text-center text-base text-foreground"
+								>
 									{row.forms[i]}
 								</td>
 							))}
@@ -149,7 +342,12 @@ export default function MemoryDrill() {
 
 	const recordAttempt = useCallback(
 		(isCorrect: boolean, timeTaken: number, timedOut = false) => {
-			const attempt: Attempt<Article> = { form: currentArticle, isCorrect, timeTaken, timedOut };
+			const attempt: Attempt<Article> = {
+				form: currentArticle,
+				isCorrect,
+				timeTaken,
+				timedOut,
+			};
 			setLastAttempt(attempt);
 			setAttempts((prev) => [...prev, attempt]);
 			setPhase("feedback");
@@ -161,7 +359,10 @@ export default function MemoryDrill() {
 		if (phase !== "active") return;
 		const currentInput = inputValueRef.current.trim();
 		if (mode === "forward" && currentInput) {
-			const isCorrect = matchPhonetic(currentInput, currentArticle.greek).isCorrect;
+			const isCorrect = matchPhonetic(
+				currentInput,
+				currentArticle.greek,
+			).isCorrect;
 			if (isCorrect) {
 				recordAttempt(true, timerMs, true);
 				return;
@@ -171,12 +372,19 @@ export default function MemoryDrill() {
 		recordAttempt(false, timerMs, true);
 	}, [phase, mode, currentArticle, timerMs, MAX_TIMER_MS, recordAttempt]);
 
-	const { progress, startedAt } = useCountdown(timerMs, isActive, handleTimeout);
+	const { progress, startedAt } = useCountdown(
+		timerMs,
+		isActive,
+		handleTimeout,
+	);
 
 	const handleForwardSubmit = useCallback(() => {
 		if (phase !== "active") return;
 		const timeTaken = Math.min(performance.now() - startedAt.current, timerMs);
-		const isCorrect = matchPhonetic(input.trim(), currentArticle.greek).isCorrect;
+		const isCorrect = matchPhonetic(
+			input.trim(),
+			currentArticle.greek,
+		).isCorrect;
 		recordAttempt(isCorrect, timeTaken);
 	}, [phase, input, currentArticle, startedAt, timerMs, recordAttempt]);
 
@@ -188,7 +396,15 @@ export default function MemoryDrill() {
 			selNumber === currentArticle.number &&
 			selCase === currentArticle.case;
 		recordAttempt(isCorrect, timeTaken);
-	}, [phase, selGender, selNumber, selCase, currentArticle, startedAt, recordAttempt]);
+	}, [
+		phase,
+		selGender,
+		selNumber,
+		selCase,
+		currentArticle,
+		startedAt,
+		recordAttempt,
+	]);
 
 	const resetSelectors = useCallback(() => {
 		setSelGender(null);
@@ -215,7 +431,13 @@ export default function MemoryDrill() {
 
 	// Auto-submit reverse when all three attributes selected
 	useEffect(() => {
-		if (mode === "reverse" && selGender && selNumber && selCase && phase === "active") {
+		if (
+			mode === "reverse" &&
+			selGender &&
+			selNumber &&
+			selCase &&
+			phase === "active"
+		) {
 			handleReverseSubmit();
 		}
 	}, [selGender, selNumber, selCase, mode, phase, handleReverseSubmit]);
@@ -234,10 +456,24 @@ export default function MemoryDrill() {
 	}, [mode, sessionSize, resetSelectors]);
 
 	if (phase === "config") {
-		return <ConfigScreen mode={mode} onModeChange={setMode} sessionSize={sessionSize} onSizeChange={setSessionSize} onStart={startDrill} />;
+		return (
+			<ConfigScreen
+				mode={mode}
+				onModeChange={setMode}
+				sessionSize={sessionSize}
+				onSizeChange={setSessionSize}
+				onStart={startDrill}
+			/>
+		);
 	}
 	if (phase === "complete") {
-		return <SummaryScreen attempts={attempts} total={sessionSize} onAgain={() => setPhase("config")} />;
+		return (
+			<SummaryScreen
+				attempts={attempts}
+				total={sessionSize}
+				onAgain={() => setPhase("config")}
+			/>
+		);
 	}
 
 	const cs = CASE_STYLE[currentArticle.case];
@@ -250,14 +486,21 @@ export default function MemoryDrill() {
 			: cs.bar;
 
 	return (
-		<DrillShell progress={progress} barColor={barColor} cardIndex={cardIndex} sessionSize={sessionSize}>
+		<DrillShell
+			progress={progress}
+			barColor={barColor}
+			cardIndex={cardIndex}
+			sessionSize={sessionSize}
+		>
 			{mode === "forward" ? (
 				<>
 					<div>
-						<p className={`text-xs uppercase tracking-[0.18em] font-medium mb-4 ${gs.label}`}>
+						<p
+							className={`mb-4 text-xs font-medium tracking-[0.18em] uppercase ${gs.label}`}
+						>
 							{currentArticle.gender}
 						</p>
-						<p className="font-serif text-5xl text-foreground leading-tight">
+						<p className="font-serif text-5xl leading-tight text-foreground">
 							{currentArticle.number}
 						</p>
 						<p className={`font-serif text-5xl leading-tight ${cs.text}`}>
@@ -281,7 +524,10 @@ export default function MemoryDrill() {
 			) : (
 				<>
 					<div className="pt-2">
-						<p lang="el" className="greek-text font-sans text-8xl text-foreground leading-none">
+						<p
+							lang="el"
+							className="greek-text font-sans text-8xl leading-none text-foreground"
+						>
 							{currentArticle.greek}
 						</p>
 					</div>

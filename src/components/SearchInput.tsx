@@ -17,12 +17,12 @@ export const searchInputVariants = tv({
 });
 
 export const searchInputFieldVariants = tv({
-	base: "w-full bg-white text-stone-900 placeholder:text-stone-600 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-terracotta-300 focus:ring-offset-0 focus:border-terracotta transition-colors",
+	base: "w-full rounded-lg border border-stone-300 bg-white text-stone-900 transition-colors placeholder:text-stone-600 focus:border-terracotta focus:ring-2 focus:ring-terracotta-300 focus:ring-offset-0 focus:outline-none",
 	variants: {
 		size: {
-			sm: "pl-8 pr-8 py-1.5 text-sm",
-			md: "pl-10 pr-10 py-2 text-base",
-			lg: "pl-12 pr-12 py-3 text-lg",
+			sm: "py-1.5 pr-8 pl-8 text-sm",
+			md: "py-2 pr-10 pl-10 text-base",
+			lg: "py-3 pr-12 pl-12 text-lg",
 		},
 	},
 	defaultVariants: {
@@ -31,7 +31,7 @@ export const searchInputFieldVariants = tv({
 });
 
 export const searchInputIconVariants = tv({
-	base: "absolute inset-y-0 flex items-center pointer-events-none text-stone-600",
+	base: "pointer-events-none absolute inset-y-0 flex items-center text-stone-600",
 	variants: {
 		size: {
 			sm: "left-2.5 [&>svg]:h-3.5 [&>svg]:w-3.5",
@@ -45,7 +45,7 @@ export const searchInputIconVariants = tv({
 });
 
 export const clearButtonVariants = tv({
-	base: "absolute inset-y-0 flex items-center text-stone-600 hover:text-stone-600 focus:outline-none focus:text-stone-600 transition-colors",
+	base: "absolute inset-y-0 flex items-center text-stone-600 transition-colors hover:text-stone-600 focus:text-stone-600 focus:outline-none",
 	variants: {
 		size: {
 			sm: "right-2.5 [&>svg]:h-3.5 [&>svg]:w-3.5",
@@ -58,8 +58,10 @@ export const clearButtonVariants = tv({
 	},
 });
 
-export interface SearchInputProps
-	extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size"> {
+export interface SearchInputProps extends Omit<
+	React.InputHTMLAttributes<HTMLInputElement>,
+	"size"
+> {
 	size?: "sm" | "md" | "lg";
 	icon?: ReactNode;
 	containerClassName?: string;

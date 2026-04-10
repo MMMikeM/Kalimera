@@ -76,8 +76,8 @@ export default function ProgressPage({ loaderData }: Route.ComponentProps) {
 
 	if (!userId) {
 		return (
-			<div className="flex items-center justify-center min-h-[50vh]">
-				<span className="text-2xl font-serif text-terracotta">καλημέρα</span>
+			<div className="flex min-h-[50vh] items-center justify-center">
+				<span className="font-serif text-2xl text-terracotta">καλημέρα</span>
 			</div>
 		);
 	}
@@ -92,62 +92,62 @@ export default function ProgressPage({ loaderData }: Route.ComponentProps) {
 			: 0;
 
 	return (
-		<div className="max-w-2xl mx-auto">
+		<div className="mx-auto max-w-2xl">
 			<Link
 				to="/"
-				className="inline-flex items-center gap-2 text-stone-500 hover:text-stone-700 text-sm mb-4"
+				className="mb-4 inline-flex items-center gap-2 text-sm text-stone-500 hover:text-stone-700"
 			>
 				<ArrowLeft size={14} />
 				<span>Back</span>
 			</Link>
 
-			<h1 className="text-2xl font-serif text-terracotta mb-1">
+			<h1 className="mb-1 font-serif text-2xl text-terracotta">
 				Your Progress
 			</h1>
-			<p className="text-stone-600 text-sm mb-6">
+			<p className="mb-6 text-sm text-stone-600">
 				Track your Greek learning journey
 			</p>
 
 			{/* Summary Stats */}
-			<div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+			<div className="mb-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
 				<Card className="p-4 text-center">
-					<div className="w-10 h-10 rounded-full bg-terracotta/10 flex items-center justify-center mx-auto mb-2">
+					<div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-terracotta/10">
 						<TrendingUp size={20} className="text-terracotta" />
 					</div>
-					<p className="text-2xl font-serif text-stone-800">{currentStreak}</p>
+					<p className="font-serif text-2xl text-stone-800">{currentStreak}</p>
 					<p className="text-xs text-stone-500">Day Streak</p>
 				</Card>
 
 				<Card className="p-4 text-center">
-					<div className="w-10 h-10 rounded-full bg-olive/10 flex items-center justify-center mx-auto mb-2">
+					<div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-olive/10">
 						<Target size={20} className="text-olive" />
 					</div>
-					<p className="text-2xl font-serif text-stone-800">{avgAccuracy}%</p>
+					<p className="font-serif text-2xl text-stone-800">{avgAccuracy}%</p>
 					<p className="text-xs text-stone-500">Avg Accuracy</p>
 				</Card>
 
 				<Card className="p-4 text-center">
-					<div className="w-10 h-10 rounded-full bg-ocean/10 flex items-center justify-center mx-auto mb-2">
+					<div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-ocean/10">
 						<Clock size={20} className="text-ocean" />
 					</div>
-					<p className="text-2xl font-serif text-stone-800">
+					<p className="font-serif text-2xl text-stone-800">
 						{formatMinutes(timeInvested.totalMinutes)}
 					</p>
 					<p className="text-xs text-stone-500">Time Invested</p>
 				</Card>
 
 				<Card className="p-4 text-center">
-					<div className="w-10 h-10 rounded-full bg-honey/10 flex items-center justify-center mx-auto mb-2">
+					<div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-full bg-honey/10">
 						<Calendar size={20} className="text-honey-text" />
 					</div>
-					<p className="text-2xl font-serif text-stone-800">{masteredCount}</p>
+					<p className="font-serif text-2xl text-stone-800">{masteredCount}</p>
 					<p className="text-xs text-stone-500">Words Mastered</p>
 				</Card>
 			</div>
 
 			{/* Streak Calendar */}
-			<Card className="p-6 mb-6">
-				<h2 className="text-lg font-medium text-stone-800 mb-4">
+			<Card className="mb-6 p-6">
+				<h2 className="mb-4 text-lg font-medium text-stone-800">
 					Practice Calendar
 				</h2>
 				<StreakCalendar
@@ -158,8 +158,8 @@ export default function ProgressPage({ loaderData }: Route.ComponentProps) {
 
 			{/* Accuracy Trend */}
 			{accuracyData.length > 0 && (
-				<Card className="p-6 mb-6">
-					<h2 className="text-lg font-medium text-stone-800 mb-4">
+				<Card className="mb-6 p-6">
+					<h2 className="mb-4 text-lg font-medium text-stone-800">
 						Accuracy Trend (7-day Rolling Average)
 					</h2>
 					<AccuracyTrend data={accuracyData} />
@@ -169,12 +169,12 @@ export default function ProgressPage({ loaderData }: Route.ComponentProps) {
 			{/* Empty State */}
 			{accuracyData.length === 0 && (
 				<Card className="p-8 text-center">
-					<p className="text-stone-500 mb-4">
+					<p className="mb-4 text-stone-500">
 						Start practising to see your accuracy trends here.
 					</p>
 					<Link
 						to="/practice"
-						className="inline-flex items-center gap-2 text-terracotta hover:text-terracotta-dark font-medium"
+						className="inline-flex items-center gap-2 font-medium text-terracotta hover:text-terracotta-dark"
 					>
 						Start Practice →
 					</Link>

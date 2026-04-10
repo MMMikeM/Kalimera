@@ -14,32 +14,32 @@ export const PrepositionNavigator = () => (
 	<Card
 		variant="bordered"
 		padding="lg"
-		className="bg-honey-50 border-honey-300"
+		className="border-honey-300 bg-honey-50"
 	>
-		<h3 className="text-lg font-bold text-honey-text mb-3">
+		<h3 className="mb-3 text-lg font-bold text-honey-text">
 			Which preposition do I need?
 		</h3>
-		<p className="text-sm text-stone-600 mb-4">
+		<p className="mb-4 text-sm text-stone-600">
 			Ask yourself what <strong>relationship</strong> you're describing:
 		</p>
 
-		<div className="grid sm:grid-cols-2 gap-3">
+		<div className="grid gap-3 sm:grid-cols-2">
 			{PREPOSITION_NAVIGATOR_OPTIONS.map((option) => {
 				const Icon = ICONS[option.icon as keyof typeof ICONS];
 				return (
 					<div
 						key={option.answer}
-						className="p-3 bg-white rounded-lg border border-honey-300"
+						className="rounded-lg border border-honey-300 bg-white p-3"
 					>
 						<div className="flex items-start gap-3">
 							<div className="mt-0.5 text-honey-text">
 								<Icon size={18} />
 							</div>
-							<div className="flex-1 min-w-0">
-								<div className="text-sm font-medium text-stone-700 mb-1">
+							<div className="min-w-0 flex-1">
+								<div className="mb-1 text-sm font-medium text-stone-700">
 									{option.question}
 								</div>
-								<div className="text-honey-text font-bold mb-2">
+								<div className="mb-2 font-bold text-honey-text">
 									→ <MonoText size="sm">{option.answer}</MonoText>
 								</div>
 								<div className="space-y-0.5">
@@ -48,7 +48,7 @@ export const PrepositionNavigator = () => (
 											<MonoText size="sm" variant="highlighted">
 												{ex.greek}
 											</MonoText>
-											<span className="text-stone-500 ml-1 text-xs">
+											<span className="ml-1 text-xs text-stone-500">
 												{ex.english}
 											</span>
 										</div>
@@ -61,7 +61,7 @@ export const PrepositionNavigator = () => (
 			})}
 		</div>
 
-		<div className="mt-4 pt-3 border-t border-honey-300 text-sm text-honey-text">
+		<div className="mt-4 border-t border-honey-300 pt-3 text-sm text-honey-text">
 			<strong>Remember:</strong> σε is the most common and contracts with
 			articles (σε + το = στο). The others stay unchanged.
 		</div>

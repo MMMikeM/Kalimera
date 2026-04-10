@@ -40,17 +40,17 @@ export const ContentSection = ({
 				<div className="flex items-center gap-2">
 					<h3
 						id={headingId}
-						className="font-black tracking-wide text-white text-sm"
+						className="text-sm font-black tracking-wide text-white"
 					>
 						{title}
 					</h3>
 					{badge && (
-						<span className="text-xs px-2 py-0.5 rounded bg-white/20 text-white font-medium">
+						<span className="rounded bg-white/20 px-2 py-0.5 text-xs font-medium text-white">
 							{badge}
 						</span>
 					)}
 				</div>
-				{subtitle && <p className="text-white/80 text-xs mt-0.5">{subtitle}</p>}
+				{subtitle && <p className="mt-0.5 text-xs text-white/80">{subtitle}</p>}
 			</header>
 			{children}
 		</section>
@@ -89,7 +89,7 @@ export const TwoColumnList = <T extends TwoColumnItem>({
 				<span className="text-lg font-semibold text-stone-900">
 					{renderPrimary ? renderPrimary(item) : item.primary}
 				</span>
-				<span className="text-stone-500 text-sm">
+				<span className="text-sm text-stone-500">
 					{renderSecondary ? renderSecondary(item) : item.secondary}
 				</span>
 			</div>

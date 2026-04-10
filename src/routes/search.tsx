@@ -33,7 +33,7 @@ export function meta() {
 }
 
 export default function SearchRoute({ loaderData }: Route.ComponentProps) {
-	const allWords = loaderData?.vocabulary ?? [];
+	const allWords = loaderData.vocabulary;
 
 	const [searchTerm, setSearchTerm] = useState("");
 
@@ -96,19 +96,19 @@ export default function SearchRoute({ loaderData }: Route.ComponentProps) {
 								key={result.id}
 								className={cn("p-4 bg-stone-50 rounded-lg", borderClass)}
 							>
-								<div className="flex justify-between items-start gap-4">
-									<div className="flex-1 min-w-0">
+								<div className="flex items-start justify-between gap-4">
+									<div className="min-w-0 flex-1">
 										{/* Greek text prominently displayed */}
 										<MonoText
 											variant="greek"
 											size="lg"
-											className="text-2xl font-medium block mb-1"
+											className="mb-1 block text-2xl font-medium"
 										>
 											{result.greek}
 										</MonoText>
 										<p className="text-stone-600">{result.english}</p>
 									</div>
-									<div className="flex gap-2 flex-wrap justify-end flex-shrink-0">
+									<div className="flex flex-shrink-0 flex-wrap justify-end gap-2">
 										{result.type && (
 											<Badge variant="default">{result.type}</Badge>
 										)}
@@ -118,7 +118,7 @@ export default function SearchRoute({ loaderData }: Route.ComponentProps) {
 									</div>
 								</div>
 								{result.tags.length > 0 && (
-									<div className="mt-3 flex gap-1 flex-wrap">
+									<div className="mt-3 flex flex-wrap gap-1">
 										{result.tags.map((tag) => (
 											<Badge key={tag} variant="secondary" size="sm">
 												{tag}
@@ -133,14 +133,14 @@ export default function SearchRoute({ loaderData }: Route.ComponentProps) {
 			)}
 
 			{searchTerm && searchResults.length === 0 && (
-				<div className="text-center py-8 text-stone-600">
+				<div className="py-8 text-center text-stone-600">
 					No results found for "{searchTerm}"
 				</div>
 			)}
 
-			<div className="bg-stone-50 p-4 rounded-lg">
-				<h4 className="font-bold mb-2">Search Tips</h4>
-				<ul className="text-sm text-stone-700 space-y-1">
+			<div className="rounded-lg bg-stone-50 p-4">
+				<h4 className="mb-2 font-bold">Search Tips</h4>
+				<ul className="space-y-1 text-sm text-stone-700">
 					<li>• Type in Greek or English to find matches</li>
 					<li>• Fuzzy matching finds close matches even with typos</li>
 					<li>• Results are ranked by relevance (best matches first)</li>

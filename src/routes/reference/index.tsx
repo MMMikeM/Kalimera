@@ -81,7 +81,7 @@ export default function ReferenceIndex() {
 		<div className="space-y-6">
 			<div>
 				<h1 className="text-2xl font-bold text-stone-800">Reference</h1>
-				<p className="text-stone-600 mt-1">Grammar patterns and paradigms</p>
+				<p className="mt-1 text-stone-600">Grammar patterns and paradigms</p>
 			</div>
 
 			<div className="grid gap-3">
@@ -89,7 +89,7 @@ export default function ReferenceIndex() {
 					<Link
 						key={section.id}
 						to={section.href}
-						className={`flex items-center gap-4 p-4 rounded-xl border-2 ${section.color} hover:shadow-md transition-shadow`}
+						className={`flex items-center gap-4 rounded-xl border-2 p-4 ${section.color} transition-shadow hover:shadow-md`}
 					>
 						<div className="shrink-0">{section.icon}</div>
 						<div>

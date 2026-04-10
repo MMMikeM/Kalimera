@@ -15,7 +15,7 @@ export const paradigmTableVariants = tv({
 });
 
 export const paradigmCellVariants = tv({
-	base: "p-2 sm:p-3 text-center font-mono text-sm sm:text-base",
+	base: "p-2 text-center font-mono text-sm sm:p-3 sm:text-base",
 	variants: {
 		position: {
 			topLeft: "border-b border-stone-200",
@@ -117,7 +117,7 @@ const CompactFormRow: React.FC<{
 	isLast = false,
 }) => (
 	<div
-		className={`flex items-center justify-between py-2 px-1 ${!isLast ? "border-b border-stone-200" : ""}`}
+		className={`flex items-center justify-between px-1 py-2 ${!isLast ? "border-b border-stone-200" : ""}`}
 	>
 		<span className="font-mono text-base">
 			{typeof form === "string" ? (
@@ -175,12 +175,12 @@ export const ParadigmTable: React.FC<ParadigmTableProps> = ({
 					<span className="font-mono text-lg font-semibold text-stone-800">
 						{infinitive || (stem ? `${stem}-` : "")}
 					</span>
-					<span className="text-stone-600 ml-2 text-sm">({meaning})</span>
+					<span className="ml-2 text-sm text-stone-600">({meaning})</span>
 				</div>
 
 				<div className="grid grid-cols-2 gap-3">
 					<div>
-						<div className="text-xs text-stone-500 mb-1 px-1">Singular</div>
+						<div className="mb-1 px-1 text-xs text-stone-500">Singular</div>
 						{singularForms.map((form, idx) => (
 							<CompactFormRow
 								key={COMPACT_PRONOUNS.sg[idx]}
@@ -194,7 +194,7 @@ export const ParadigmTable: React.FC<ParadigmTableProps> = ({
 						))}
 					</div>
 					<div>
-						<div className="text-xs text-stone-500 mb-1 px-1">Plural</div>
+						<div className="mb-1 px-1 text-xs text-stone-500">Plural</div>
 						{pluralForms.map((form, idx) => (
 							<CompactFormRow
 								key={COMPACT_PRONOUNS.pl[idx]}
@@ -215,10 +215,10 @@ export const ParadigmTable: React.FC<ParadigmTableProps> = ({
 	return (
 		<div className={className}>
 			<div className="mb-2 px-1">
-				<span className="font-mono text-lg sm:text-xl font-semibold text-stone-800">
+				<span className="font-mono text-lg font-semibold text-stone-800 sm:text-xl">
 					{infinitive || (stem ? `${stem}-` : "")}
 				</span>
-				<span className="text-stone-600 ml-2 text-sm sm:text-base">
+				<span className="ml-2 text-sm text-stone-600 sm:text-base">
 					({meaning})
 				</span>
 			</div>
@@ -227,10 +227,10 @@ export const ParadigmTable: React.FC<ParadigmTableProps> = ({
 					<thead>
 						<tr>
 							<th className="w-12 sm:w-14" />
-							<th className="text-xs text-stone-500 font-normal pb-2">
+							<th className="pb-2 text-xs font-normal text-stone-500">
 								Singular
 							</th>
-							<th className="text-xs text-stone-500 font-normal pb-2">
+							<th className="pb-2 text-xs font-normal text-stone-500">
 								Plural
 							</th>
 						</tr>
@@ -240,7 +240,7 @@ export const ParadigmTable: React.FC<ParadigmTableProps> = ({
 					{formRows.map((row, idx) => (
 						<tr key={PERSON_LABELS[idx]}>
 							{showHeaders && (
-								<td className="text-xs text-stone-600 pr-3 text-right align-middle">
+								<td className="pr-3 text-right align-middle text-xs text-stone-600">
 									<div>{PERSON_LABELS[idx]}</div>
 									<div className="text-[10px] text-stone-500">
 										{PERSON_HINTS[idx]?.[0]}/{PERSON_HINTS[idx]?.[1]}

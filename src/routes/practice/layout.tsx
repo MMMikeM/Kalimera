@@ -70,9 +70,9 @@ export const action = async ({ request }: Route.ActionArgs) => {
 export type PracticeLoaderData = Awaited<ReturnType<typeof loader>>;
 
 export const UserRequiredMessage = () => (
-	<div className="text-center py-12 bg-muted rounded-xl border border-border">
-		<div className="text-5xl mb-4">?</div>
-		<h3 className="text-xl font-semibold text-foreground mb-2">
+	<div className="rounded-xl border border-border bg-muted py-12 text-center">
+		<div className="mb-4 text-5xl">?</div>
+		<h3 className="mb-2 text-xl font-semibold text-foreground">
 			Select a user
 		</h3>
 		<p className="text-muted-foreground">

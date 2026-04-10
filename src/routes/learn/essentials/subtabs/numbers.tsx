@@ -27,13 +27,13 @@ const UNIT_TEN_PAIRS: Array<{
 function highlightTeenPattern(greek: string) {
 	// δέκα (10) - the whole word is "ten"
 	if (greek === "δέκα") {
-		return <span className="text-ocean-600 font-semibold">{greek}</span>;
+		return <span className="font-semibold text-ocean-600">{greek}</span>;
 	}
 	// δώδεκα (12) - "two-ten", highlight δεκα at end
 	if (greek === "δώδεκα") {
 		return (
 			<>
-				δώ<span className="text-ocean-600 font-semibold">δεκα</span>
+				δώ<span className="font-semibold text-ocean-600">δεκα</span>
 			</>
 		);
 	}
@@ -42,7 +42,7 @@ function highlightTeenPattern(greek: string) {
 	if (greek.startsWith(prefix)) {
 		return (
 			<>
-				<span className="text-ocean-600 font-semibold">{prefix}</span>
+				<span className="font-semibold text-ocean-600">{prefix}</span>
 				{greek.slice(prefix.length)}
 			</>
 		);
@@ -79,11 +79,11 @@ export function NumbersSubtab({ data }: Props) {
 			>
 				<div className="divide-y divide-stone-200/60">
 					{/* Header row */}
-					<div className="grid grid-cols-[1fr_1fr] gap-4 px-3 py-2 bg-ocean-100/50">
-						<span className="text-xs font-medium text-ocean-text uppercase tracking-wide">
+					<div className="grid grid-cols-[1fr_1fr] gap-4 bg-ocean-100/50 px-3 py-2">
+						<span className="text-xs font-medium tracking-wide text-ocean-text uppercase">
 							Units
 						</span>
-						<span className="text-xs font-medium text-ocean-text uppercase tracking-wide">
+						<span className="text-xs font-medium tracking-wide text-ocean-text uppercase">
 							Tens
 						</span>
 					</div>
@@ -95,7 +95,7 @@ export function NumbersSubtab({ data }: Props) {
 								<MonoText variant="greek">{zero.greek}</MonoText>
 								<div className="text-xs text-stone-500">{zero.english}</div>
 							</div>
-							<div className="text-stone-300 text-sm italic">—</div>
+							<div className="text-sm text-stone-300 italic">—</div>
 						</div>
 					)}
 
@@ -138,7 +138,7 @@ export function NumbersSubtab({ data }: Props) {
 										)}
 									</div>
 									{connection && (
-										<span className="text-xs text-ocean-600 bg-ocean-100 px-1.5 py-0.5 rounded font-medium mt-0.5">
+										<span className="mt-0.5 rounded bg-ocean-100 px-1.5 py-0.5 text-xs font-medium text-ocean-600">
 											{connection}
 										</span>
 									)}
@@ -159,21 +159,21 @@ export function NumbersSubtab({ data }: Props) {
 					{teens.map((number) => (
 						<div
 							key={number.id}
-							className="grid grid-cols-[3fr_2fr] items-center gap-x-3 py-2.5 px-3"
+							className="grid grid-cols-[3fr_2fr] items-center gap-x-3 px-3 py-2.5"
 						>
 							<MonoText variant="greek">
 								{highlightTeenPattern(number.greek)}
 							</MonoText>
-							<span className="text-stone-500 text-sm">{number.english}</span>
+							<span className="text-sm text-stone-500">{number.english}</span>
 						</div>
 					))}
 				</div>
-				<div className="mx-3 mt-3 p-2.5 bg-honey-100 rounded-lg border border-honey-200">
-					<p className="text-sm text-honey-text font-medium">
+				<div className="mx-3 mt-3 rounded-lg border border-honey-200 bg-honey-100 p-2.5">
+					<p className="text-sm font-medium text-honey-text">
 						Pattern: <MonoText className="text-honey-text">δεκα</MonoText> +
 						unit
 					</p>
-					<p className="text-xs text-stone-500 mt-1">
+					<p className="mt-1 text-xs text-stone-500">
 						Exception: 11, 12 are irregular (έντεκα, δώδεκα)
 					</p>
 				</div>
@@ -185,7 +185,7 @@ export function NumbersSubtab({ data }: Props) {
 				subtitle="Building 21-99"
 				colorScheme="olive"
 			>
-				<div className="px-3 pt-3 pb-1 space-y-3">
+				<div className="space-y-3 px-3 pt-3 pb-1">
 					<p className="text-sm text-stone-600">
 						Combine tens + units as separate words:
 					</p>
@@ -222,10 +222,10 @@ export function NumbersSubtab({ data }: Props) {
 				subtitle="Numbers in context"
 				colorScheme="terracotta"
 			>
-				<div className="px-3 pt-3 pb-1 space-y-4">
+				<div className="space-y-4 px-3 pt-3 pb-1">
 					{/* Telling Time */}
 					<div>
-						<p className="text-xs font-medium text-terracotta-text uppercase tracking-wide mb-2">
+						<p className="mb-2 text-xs font-medium tracking-wide text-terracotta-text uppercase">
 							Telling Time
 						</p>
 						<div className="space-y-2">
@@ -238,7 +238,7 @@ export function NumbersSubtab({ data }: Props) {
 								<div className="text-xs text-stone-500">at half past ten</div>
 							</div>
 						</div>
-						<p className="text-xs text-stone-500 mt-1.5 pt-1.5 border-t border-terracotta-200/50">
+						<p className="mt-1.5 border-t border-terracotta-200/50 pt-1.5 text-xs text-stone-500">
 							<MonoText className="text-stone-700">στις</MonoText> = at (uses
 							feminine accusative)
 						</p>
@@ -246,7 +246,7 @@ export function NumbersSubtab({ data }: Props) {
 
 					{/* Money & Quantities */}
 					<div>
-						<p className="text-xs font-medium text-terracotta-text uppercase tracking-wide mb-2">
+						<p className="mb-2 text-xs font-medium tracking-wide text-terracotta-text uppercase">
 							Money & Quantities
 						</p>
 						<div className="space-y-2">
@@ -269,7 +269,7 @@ export function NumbersSubtab({ data }: Props) {
 
 					{/* Talking About Age */}
 					<div>
-						<p className="text-xs font-medium text-terracotta-text uppercase tracking-wide mb-2">
+						<p className="mb-2 text-xs font-medium tracking-wide text-terracotta-text uppercase">
 							Talking About Age
 						</p>
 						<div className="space-y-2">
@@ -286,19 +286,19 @@ export function NumbersSubtab({ data }: Props) {
 				</div>
 
 				{/* Gender Agreement Warning */}
-				<div className="mx-3 mt-3 mb-2 p-2.5 bg-terracotta-100 rounded-lg border border-terracotta-200">
-					<p className="text-sm text-terracotta-text font-medium mb-2">
+				<div className="mx-3 mt-3 mb-2 rounded-lg border border-terracotta-200 bg-terracotta-100 p-2.5">
+					<p className="mb-2 text-sm font-medium text-terracotta-text">
 						Gender Agreement: 1, 3, 4 change form
 					</p>
 
 					{/* Gender grid */}
-					<div className="grid grid-cols-4 gap-1 text-sm mb-3">
+					<div className="mb-3 grid grid-cols-4 gap-1 text-sm">
 						<div className="text-xs text-stone-500" />
-						<div className="text-xs text-stone-500 text-center">masc.</div>
-						<div className="text-xs text-stone-500 text-center">fem.</div>
-						<div className="text-xs text-stone-500 text-center">neut.</div>
+						<div className="text-center text-xs text-stone-500">masc.</div>
+						<div className="text-center text-xs text-stone-500">fem.</div>
+						<div className="text-center text-xs text-stone-500">neut.</div>
 
-						<div className="text-xs text-stone-600 font-medium">1</div>
+						<div className="text-xs font-medium text-stone-600">1</div>
 						<div className="text-center">
 							<MonoText size="sm">ένας</MonoText>
 						</div>
@@ -309,7 +309,7 @@ export function NumbersSubtab({ data }: Props) {
 							<MonoText size="sm">ένα</MonoText>
 						</div>
 
-						<div className="text-xs text-stone-600 font-medium">3</div>
+						<div className="text-xs font-medium text-stone-600">3</div>
 						<div className="text-center">
 							<MonoText size="sm">τρεις</MonoText>
 						</div>
@@ -320,7 +320,7 @@ export function NumbersSubtab({ data }: Props) {
 							<MonoText size="sm">τρία</MonoText>
 						</div>
 
-						<div className="text-xs text-stone-600 font-medium">4</div>
+						<div className="text-xs font-medium text-stone-600">4</div>
 						<div className="text-center">
 							<MonoText size="sm">τέσσερις</MonoText>
 						</div>
@@ -335,25 +335,25 @@ export function NumbersSubtab({ data }: Props) {
 					<div className="space-y-1.5 text-sm">
 						<div>
 							<MonoText variant="greek">ένας καφές</MonoText>
-							<span className="text-stone-500 text-xs ml-2">
+							<span className="ml-2 text-xs text-stone-500">
 								(one coffee, masc.)
 							</span>
 						</div>
 						<div>
 							<MonoText variant="greek">μία μπύρα</MonoText>
-							<span className="text-stone-500 text-xs ml-2">
+							<span className="ml-2 text-xs text-stone-500">
 								(one beer, fem.)
 							</span>
 						</div>
 						<div>
 							<MonoText variant="greek">ένα νερό</MonoText>
-							<span className="text-stone-500 text-xs ml-2">
+							<span className="ml-2 text-xs text-stone-500">
 								(one water, neut.)
 							</span>
 						</div>
 					</div>
 
-					<p className="text-xs text-stone-500 mt-2 pt-1.5 border-t border-terracotta-200/50">
+					<p className="mt-2 border-t border-terracotta-200/50 pt-1.5 text-xs text-stone-500">
 						Numbers 2 and 5+ don't change for gender
 					</p>
 				</div>

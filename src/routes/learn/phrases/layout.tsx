@@ -71,7 +71,7 @@ export default function PhrasesLayout({ loaderData }: Route.ComponentProps) {
 			<div className="flex items-center">
 				<Link
 					to="/learn"
-					className="flex items-center gap-1 text-stone-600 hover:text-stone-800 transition-colors"
+					className="flex items-center gap-1 text-stone-600 transition-colors hover:text-stone-800"
 				>
 					<ChevronLeft size={20} />
 					<span className="font-medium">Phrases</span>

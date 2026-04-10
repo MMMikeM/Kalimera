@@ -166,9 +166,9 @@ export default function LoginRoute({ actionData }: Route.ComponentProps) {
 		const isSubmitting = passwordSetupForm.formState.isSubmitting;
 
 		return (
-			<div className="min-h-[60vh] flex flex-col items-center justify-center space-y-8 px-4">
-				<div className="text-center space-y-2">
-					<h1 className="text-3xl font-serif text-terracotta">
+			<div className="flex min-h-[60vh] flex-col items-center justify-center space-y-8 px-4">
+				<div className="space-y-2 text-center">
+					<h1 className="font-serif text-3xl text-terracotta">
 						Set Up Your Password
 					</h1>
 					<p className="text-stone-600">
@@ -210,7 +210,7 @@ export default function LoginRoute({ actionData }: Route.ComponentProps) {
 						</div>
 
 						{error && (
-							<p className="text-sm text-red-600 text-center">{error}</p>
+							<p className="text-center text-sm text-red-600">{error}</p>
 						)}
 
 						<Button
@@ -240,9 +240,9 @@ export default function LoginRoute({ actionData }: Route.ComponentProps) {
 	const isSubmitting = loginForm.formState.isSubmitting;
 
 	return (
-		<div className="min-h-[60vh] flex flex-col items-center justify-center space-y-8 px-4">
-			<div className="text-center space-y-2">
-				<h1 className="text-3xl font-serif text-terracotta">Welcome Back</h1>
+		<div className="flex min-h-[60vh] flex-col items-center justify-center space-y-8 px-4">
+			<div className="space-y-2 text-center">
+				<h1 className="font-serif text-3xl text-terracotta">Welcome Back</h1>
 				<p className="text-stone-600">Sign in to continue learning Greek</p>
 			</div>
 
@@ -268,8 +268,8 @@ export default function LoginRoute({ actionData }: Route.ComponentProps) {
 								placeholder="Enter your password"
 								disabled={isSubmitting || passkey.isLoading}
 							/>
-							<div className="mt-3 p-3 bg-ocean-100 border border-ocean-300 rounded-lg">
-								<p className="text-sm text-ocean-800 font-medium">
+							<div className="mt-3 rounded-lg border border-ocean-300 bg-ocean-100 p-3">
+								<p className="text-sm font-medium text-ocean-800">
 									Existing user? Enter your code without a password to set one
 									up.
 								</p>
@@ -277,7 +277,7 @@ export default function LoginRoute({ actionData }: Route.ComponentProps) {
 						</div>
 					</div>
 
-					{error && <p className="text-sm text-red-600 text-center">{error}</p>}
+					{error && <p className="text-center text-sm text-red-600">{error}</p>}
 
 					<div className="space-y-3">
 						<Button
@@ -334,7 +334,7 @@ export default function LoginRoute({ actionData }: Route.ComponentProps) {
 					Don't have an account?{" "}
 					<Link
 						to="/register"
-						className="text-terracotta hover:text-terracotta-dark font-medium"
+						className="font-medium text-terracotta hover:text-terracotta-dark"
 					>
 						Create one
 					</Link>

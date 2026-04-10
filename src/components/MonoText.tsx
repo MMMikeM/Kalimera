@@ -10,7 +10,7 @@ import { tv } from "tailwind-variants";
  * - Greek text renders at 1.1x size for visual balance
  */
 export const monoTextVariants = tv({
-	base: "font-mono tracking-wide leading-relaxed",
+	base: "font-mono leading-relaxed tracking-wide",
 	variants: {
 		variant: {
 			// Base variants
@@ -18,30 +18,30 @@ export const monoTextVariants = tv({
 			muted: "text-stone-600",
 
 			// Semantic variants (AAA compliant text colors)
-			primary: "text-terracotta-text font-semibold",
-			secondary: "text-ocean-text font-medium",
-			success: "text-[var(--color-correct)] font-medium",
-			warning: "text-honey-text font-medium",
-			error: "text-[var(--color-incorrect)] font-medium",
+			primary: "font-semibold text-terracotta-text",
+			secondary: "font-medium text-ocean-text",
+			success: "font-medium text-[var(--color-correct)]",
+			warning: "font-medium text-honey-text",
+			error: "font-medium text-[var(--color-incorrect)]",
 
 			// Gender variants - using semantic colors (AAA compliant)
-			masculine: "text-[var(--color-gender-masculine)] font-semibold",
-			feminine: "text-[var(--color-gender-feminine)] font-semibold",
-			neuter: "text-[var(--color-gender-neuter)] font-semibold",
+			masculine: "font-semibold text-[var(--color-gender-masculine)]",
+			feminine: "font-semibold text-[var(--color-gender-feminine)]",
+			neuter: "font-semibold text-[var(--color-gender-neuter)]",
 
 			// Case variants - using AAA compliant text colors
-			nominative: "text-ocean-text font-semibold",
-			accusative: "text-terracotta-text font-semibold",
-			genitive: "text-olive-text font-semibold",
-			vocative: "text-honey-text font-semibold",
+			nominative: "font-semibold text-ocean-text",
+			accusative: "font-semibold text-terracotta-text",
+			genitive: "font-semibold text-olive-text",
+			vocative: "font-semibold text-honey-text",
 
 			// Highlighted Greek text - warm tint instead of blue/indigo
 			// Includes greek-text class for proper 1.1x scaling
 			highlighted:
-				"bg-white text-stone-800 px-2 py-1 rounded font-semibold border border-stone-200 greek-text",
+				"greek-text rounded border border-stone-200 bg-white px-2 py-1 font-semibold text-stone-800",
 
 			// Greek text with terracotta accent
-			greek: "text-terracotta-text font-semibold greek-text",
+			greek: "greek-text font-semibold text-terracotta-text",
 		},
 		size: {
 			xs: "text-xs",

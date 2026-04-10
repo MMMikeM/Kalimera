@@ -131,11 +131,11 @@ export const StreakCalendar = ({
 
 	return (
 		<div className={cn("select-none", className)}>
-			<div className="flex items-center justify-between mb-4">
+			<div className="mb-4 flex items-center justify-between">
 				<button
 					type="button"
 					onClick={() => navigateMonth(-1)}
-					className="p-1.5 rounded-md hover:bg-stone-100 text-stone-600 transition-colors"
+					className="rounded-md p-1.5 text-stone-600 transition-colors hover:bg-stone-100"
 					aria-label="Previous month"
 				>
 					<ChevronLeft className="size-5" />
@@ -144,7 +144,7 @@ export const StreakCalendar = ({
 				<button
 					type="button"
 					onClick={goToToday}
-					className="text-sm font-medium text-navy-text hover:text-terracotta transition-colors"
+					className="text-sm font-medium text-navy-text transition-colors hover:text-terracotta"
 				>
 					{formatMonthYear(viewDate)}
 				</button>
@@ -152,18 +152,18 @@ export const StreakCalendar = ({
 				<button
 					type="button"
 					onClick={() => navigateMonth(1)}
-					className="p-1.5 rounded-md hover:bg-stone-100 text-stone-600 transition-colors"
+					className="rounded-md p-1.5 text-stone-600 transition-colors hover:bg-stone-100"
 					aria-label="Next month"
 				>
 					<ChevronRight className="size-5" />
 				</button>
 			</div>
 
-			<div className="grid grid-cols-7 gap-1 mb-2">
+			<div className="mb-2 grid grid-cols-7 gap-1">
 				{DAYS_OF_WEEK.map((day) => (
 					<div
 						key={day}
-						className="text-xs font-medium text-stone-400 text-center py-1"
+						className="py-1 text-center text-xs font-medium text-stone-400"
 					>
 						{day}
 					</div>
@@ -215,13 +215,13 @@ export const StreakCalendar = ({
 				})}
 			</div>
 
-			<div className="flex items-center justify-center gap-4 mt-4 text-xs text-stone-500">
+			<div className="mt-4 flex items-center justify-center gap-4 text-xs text-stone-500">
 				<div className="flex items-center gap-1.5">
 					<span className="size-3 rounded bg-olive-400" />
 					<span>Current streak</span>
 				</div>
 				<div className="flex items-center gap-1.5">
-					<span className="size-3 rounded bg-olive-100 border border-olive-200" />
+					<span className="size-3 rounded border border-olive-200 bg-olive-100" />
 					<span>Practised</span>
 				</div>
 				<div className="flex items-center gap-1.5">

@@ -25,30 +25,30 @@ export const PronounParadigmTable = ({
 	note,
 }: PronounParadigmTableProps) => (
 	<div>
-		<table className="w-full text-sm border-collapse">
+		<table className="w-full border-collapse text-sm">
 			<thead>
 				<tr className={`border-b-2 ${colorClass}`}>
-					<th className="text-left py-2 px-2 text-stone-600 font-medium" />
-					<th className="text-left py-2 px-2 font-semibold">Singular</th>
-					<th className="text-left py-2 px-2 font-semibold">Plural</th>
+					<th className="px-2 py-2 text-left font-medium text-stone-600" />
+					<th className="px-2 py-2 text-left font-semibold">Singular</th>
+					<th className="px-2 py-2 text-left font-semibold">Plural</th>
 				</tr>
 			</thead>
 			<tbody>
 				{data.map((row) => (
 					<tr key={row.person}>
-						<td className="py-2.5 px-2 text-stone-500 text-xs align-middle">
+						<td className="px-2 py-2.5 align-middle text-xs text-stone-500">
 							{row.person}
 						</td>
-						<td className="py-2.5 px-2 align-middle">
+						<td className="px-2 py-2.5 align-middle">
 							<PronounCell form={row.singular} />
 						</td>
-						<td className="py-2.5 px-2 align-middle">
+						<td className="px-2 py-2.5 align-middle">
 							<PronounCell form={row.plural} />
 						</td>
 					</tr>
 				))}
 			</tbody>
 		</table>
-		{note && <p className="text-xs text-stone-500 italic mt-2 px-2">{note}</p>}
+		{note && <p className="mt-2 px-2 text-xs text-stone-500 italic">{note}</p>}
 	</div>
 );

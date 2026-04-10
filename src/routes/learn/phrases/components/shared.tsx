@@ -37,7 +37,7 @@ export const PhraseItemDisplay: React.FC<{
 		>
 			{greek}
 		</MonoText>
-		<span className="text-stone-500 text-sm">{english}</span>
+		<span className="text-sm text-stone-500">{english}</span>
 	</div>
 );
 
@@ -52,7 +52,9 @@ export const PhraseSection: React.FC<{
 				React.isValidElement(child)
 					? React.cloneElement(
 							child as React.ReactElement<{ colorScheme?: ContentColorScheme }>,
-							{ colorScheme },
+							{
+								colorScheme,
+							},
 						)
 					: child,
 			)}

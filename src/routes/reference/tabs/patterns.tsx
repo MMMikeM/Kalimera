@@ -45,8 +45,8 @@ const ParadigmCard = ({
 
 	return (
 		<Card variant="bordered" padding="lg" className={`${c.bg} ${c.border}`}>
-			<div className="flex items-center gap-3 mb-4">
-				<div className={`p-2 rounded-lg ${c.iconBg}`}>
+			<div className="mb-4 flex items-center gap-3">
+				<div className={`rounded-lg p-2 ${c.iconBg}`}>
 					<span className={c.text}>{icon}</span>
 				</div>
 				<div>
@@ -59,7 +59,7 @@ const ParadigmCard = ({
 					<strong>Pattern:</strong> {patternNote}
 				</AlertDescription>
 			</Alert>
-			<div className="grid md:grid-cols-2 gap-6">
+			<div className="grid gap-6 md:grid-cols-2">
 				{columns.map((col) => (
 					<div key={col.title}>
 						<h5 className={`font-semibold ${c.text} mb-3`}>{col.title}</h5>
@@ -67,12 +67,12 @@ const ParadigmCard = ({
 							{col.items.map((item) => (
 								<div
 									key={item.id}
-									className="flex items-baseline gap-2 p-2 bg-white rounded border border-stone-200"
+									className="flex items-baseline gap-2 rounded border border-stone-200 bg-white p-2"
 								>
 									<MonoText variant="greek" size="md">
 										{item.greek}
 									</MonoText>
-									<span className="text-stone-600 text-sm">{item.english}</span>
+									<span className="text-sm text-stone-600">{item.english}</span>
 								</div>
 							))}
 						</div>
@@ -154,10 +154,10 @@ export function PatternsTab({ data }: { data: PatternsData }) {
 				<Card
 					variant="bordered"
 					padding="lg"
-					className="bg-ocean-50 border-ocean-300"
+					className="border-ocean-300 bg-ocean-50"
 				>
-					<div className="flex items-center gap-3 mb-4">
-						<div className="p-2 rounded-lg bg-ocean-200">
+					<div className="mb-4 flex items-center gap-3">
+						<div className="rounded-lg bg-ocean-200 p-2">
 							<UserCircle size={20} className="text-ocean-text" />
 						</div>
 						<div>
@@ -175,16 +175,16 @@ export function PatternsTab({ data }: { data: PatternsData }) {
 							call me..."
 						</AlertDescription>
 					</Alert>
-					<div className="grid md:grid-cols-2 gap-3">
+					<div className="grid gap-3 md:grid-cols-2">
 						{nameConstruction.map((name) => (
 							<div
 								key={name.id}
-								className="flex items-baseline gap-2 p-2 bg-white rounded border border-stone-200"
+								className="flex items-baseline gap-2 rounded border border-stone-200 bg-white p-2"
 							>
 								<MonoText variant="greek" size="md">
 									{name.greek}
 								</MonoText>
-								<span className="text-stone-600 text-sm">{name.english}</span>
+								<span className="text-sm text-stone-600">{name.english}</span>
 							</div>
 						))}
 					</div>

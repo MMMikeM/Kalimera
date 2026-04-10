@@ -52,7 +52,7 @@ const AgreementParadigmTable: React.FC<{
 			padding="md"
 			className={`${style.bg} ${style.border}`}
 		>
-			<div className="flex items-center gap-2 mb-3">
+			<div className="mb-3 flex items-center gap-2">
 				<MonoText
 					variant={
 						paradigm.gender === "masculine"
@@ -68,7 +68,7 @@ const AgreementParadigmTable: React.FC<{
 				</MonoText>
 				<span className={`text-sm ${style.text}`}>{paradigm.title}</span>
 				<span
-					className={`text-xs px-2 py-0.5 rounded ${
+					className={`rounded px-2 py-0.5 text-xs ${
 						paradigm.frequency === "very common"
 							? "bg-olive-200 text-olive-text"
 							: paradigm.frequency === "common"
@@ -81,23 +81,23 @@ const AgreementParadigmTable: React.FC<{
 			</div>
 
 			{paradigm.tip && (
-				<p className="text-sm text-stone-600 mb-3 italic">{paradigm.tip}</p>
+				<p className="mb-3 text-sm text-stone-600 italic">{paradigm.tip}</p>
 			)}
 
 			<div className="overflow-x-auto">
 				<table className="w-full text-sm">
 					<thead>
 						<tr className={`${style.headerBg} border-b ${style.border}`}>
-							<th className="text-left py-2 px-3 font-medium text-stone-600 w-16">
+							<th className="w-16 px-3 py-2 text-left font-medium text-stone-600">
 								Case
 							</th>
-							<th className="text-left py-2 px-3 font-medium text-stone-600">
+							<th className="px-3 py-2 text-left font-medium text-stone-600">
 								Ending
 							</th>
-							<th className="text-left py-2 px-3 font-medium text-stone-600">
+							<th className="px-3 py-2 text-left font-medium text-stone-600">
 								Example
 							</th>
-							<th className="text-left py-2 px-3 font-medium text-stone-600">
+							<th className="px-3 py-2 text-left font-medium text-stone-600">
 								English
 							</th>
 						</tr>
@@ -105,15 +105,15 @@ const AgreementParadigmTable: React.FC<{
 					<tbody>
 						{paradigm.forms.map((form) => (
 							<tr key={form.case} className="border-b border-stone-100">
-								<td className="py-2 px-3 text-stone-500 text-xs">
+								<td className="px-3 py-2 text-xs text-stone-500">
 									{form.case}
 								</td>
-								<td className="py-2 px-3">
+								<td className="px-3 py-2">
 									<MonoText size="sm" className="text-stone-600">
 										{form.ending}
 									</MonoText>
 								</td>
-								<td className="py-2 px-3">
+								<td className="px-3 py-2">
 									<MonoText
 										variant={
 											paradigm.gender === "masculine"
@@ -126,7 +126,7 @@ const AgreementParadigmTable: React.FC<{
 										{form.full}
 									</MonoText>
 								</td>
-								<td className="py-2 px-3 text-stone-600 text-sm">
+								<td className="px-3 py-2 text-sm text-stone-600">
 									{form.english}
 								</td>
 							</tr>
@@ -136,8 +136,8 @@ const AgreementParadigmTable: React.FC<{
 			</div>
 
 			{showPlural && paradigm.pluralForms && (
-				<div className="mt-4 pt-3 border-t border-stone-200">
-					<div className="text-xs text-stone-600 mb-2 font-medium">
+				<div className="mt-4 border-t border-stone-200 pt-3">
+					<div className="mb-2 text-xs font-medium text-stone-600">
 						Plural Forms
 					</div>
 					<div className="overflow-x-auto">
@@ -145,18 +145,18 @@ const AgreementParadigmTable: React.FC<{
 							<tbody>
 								{paradigm.pluralForms.map((form) => (
 									<tr key={form.case} className="border-b border-stone-50">
-										<td className="py-1.5 px-3 text-stone-500 text-xs w-16">
+										<td className="w-16 px-3 py-1.5 text-xs text-stone-500">
 											{form.case}
 										</td>
-										<td className="py-1.5 px-3">
+										<td className="px-3 py-1.5">
 											<MonoText size="sm" className="text-stone-600">
 												{form.ending}
 											</MonoText>
 										</td>
-										<td className="py-1.5 px-3">
+										<td className="px-3 py-1.5">
 											<MonoText size="sm">{form.full}</MonoText>
 										</td>
-										<td className="py-1.5 px-3 text-stone-600 text-xs">
+										<td className="px-3 py-1.5 text-xs text-stone-600">
 											{form.english}
 										</td>
 									</tr>
@@ -173,26 +173,26 @@ const AgreementParadigmTable: React.FC<{
 // Gender hints card - compact reference for spotting gender
 const GenderHintsCard: React.FC = () => (
 	<Card variant="bordered" padding="md">
-		<div className="text-sm font-medium text-stone-700 mb-2">
+		<div className="mb-2 text-sm font-medium text-stone-700">
 			Spot gender by ending:
 		</div>
 		<div className="flex flex-wrap gap-x-6 gap-y-1 text-sm">
 			<div className="flex items-center gap-2">
-				<span className="w-2 h-2 rounded-full bg-gender-masculine" />
+				<span className="h-2 w-2 rounded-full bg-gender-masculine" />
 				<span className="text-stone-600">Masculine:</span>
 				<span className="text-stone-800">
 					{GENDER_HINTS.masculine.endings.join(", ")}
 				</span>
 			</div>
 			<div className="flex items-center gap-2">
-				<span className="w-2 h-2 rounded-full bg-gender-feminine" />
+				<span className="h-2 w-2 rounded-full bg-gender-feminine" />
 				<span className="text-stone-600">Feminine:</span>
 				<span className="text-stone-800">
 					{GENDER_HINTS.feminine.endings.join(", ")}
 				</span>
 			</div>
 			<div className="flex items-center gap-2">
-				<span className="w-2 h-2 rounded-full bg-gender-neuter" />
+				<span className="h-2 w-2 rounded-full bg-gender-neuter" />
 				<span className="text-stone-600">Neuter:</span>
 				<span className="text-stone-800">
 					{GENDER_HINTS.neuter.endings.join(", ")}
@@ -209,75 +209,75 @@ const ArticleQuickLookup: React.FC = () => (
 		colorScheme="ocean"
 		defaultOpen={true}
 	>
-		<div className="grid md:grid-cols-2 gap-4">
+		<div className="grid gap-4 md:grid-cols-2">
 			{/* Singular */}
 			<Card variant="bordered" padding="sm">
-				<div className="text-xs font-medium text-stone-600 mb-2">Singular</div>
+				<div className="mb-2 text-xs font-medium text-stone-600">Singular</div>
 				<table className="w-full text-sm">
 					<thead>
 						<tr className="border-b border-stone-200">
-							<th className="text-left py-1 pr-2 text-stone-600 font-medium w-12"></th>
-							<th className="text-left py-1 px-2 text-gender-masculine font-medium">
+							<th className="w-12 py-1 pr-2 text-left font-medium text-stone-600"></th>
+							<th className="px-2 py-1 text-left font-medium text-gender-masculine">
 								M
 							</th>
-							<th className="text-left py-1 px-2 text-gender-feminine font-medium">
+							<th className="px-2 py-1 text-left font-medium text-gender-feminine">
 								F
 							</th>
-							<th className="text-left py-1 px-2 text-gender-neuter font-medium">
+							<th className="px-2 py-1 text-left font-medium text-gender-neuter">
 								N
 							</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr className="border-b border-stone-100">
-							<td className="py-1 pr-2 text-stone-500 text-xs">Nom</td>
-							<td className="py-1 px-2">
+							<td className="py-1 pr-2 text-xs text-stone-500">Nom</td>
+							<td className="px-2 py-1">
 								<MonoText size="sm">
 									{ARTICLE_AGREEMENT_QUICK_REF.singular.masculine.nom}
 								</MonoText>
 							</td>
-							<td className="py-1 px-2">
+							<td className="px-2 py-1">
 								<MonoText size="sm">
 									{ARTICLE_AGREEMENT_QUICK_REF.singular.feminine.nom}
 								</MonoText>
 							</td>
-							<td className="py-1 px-2">
+							<td className="px-2 py-1">
 								<MonoText size="sm">
 									{ARTICLE_AGREEMENT_QUICK_REF.singular.neuter.nom}
 								</MonoText>
 							</td>
 						</tr>
 						<tr className="border-b border-stone-100">
-							<td className="py-1 pr-2 text-stone-500 text-xs">Acc</td>
-							<td className="py-1 px-2">
+							<td className="py-1 pr-2 text-xs text-stone-500">Acc</td>
+							<td className="px-2 py-1">
 								<MonoText size="sm">
 									{ARTICLE_AGREEMENT_QUICK_REF.singular.masculine.acc}
 								</MonoText>
 							</td>
-							<td className="py-1 px-2">
+							<td className="px-2 py-1">
 								<MonoText size="sm">
 									{ARTICLE_AGREEMENT_QUICK_REF.singular.feminine.acc}
 								</MonoText>
 							</td>
-							<td className="py-1 px-2">
+							<td className="px-2 py-1">
 								<MonoText size="sm">
 									{ARTICLE_AGREEMENT_QUICK_REF.singular.neuter.acc}
 								</MonoText>
 							</td>
 						</tr>
 						<tr>
-							<td className="py-1 pr-2 text-stone-500 text-xs">Gen</td>
-							<td className="py-1 px-2">
+							<td className="py-1 pr-2 text-xs text-stone-500">Gen</td>
+							<td className="px-2 py-1">
 								<MonoText size="sm">
 									{ARTICLE_AGREEMENT_QUICK_REF.singular.masculine.gen}
 								</MonoText>
 							</td>
-							<td className="py-1 px-2">
+							<td className="px-2 py-1">
 								<MonoText size="sm">
 									{ARTICLE_AGREEMENT_QUICK_REF.singular.feminine.gen}
 								</MonoText>
 							</td>
-							<td className="py-1 px-2">
+							<td className="px-2 py-1">
 								<MonoText size="sm">
 									{ARTICLE_AGREEMENT_QUICK_REF.singular.neuter.gen}
 								</MonoText>
@@ -288,72 +288,72 @@ const ArticleQuickLookup: React.FC = () => (
 			</Card>
 			{/* Plural */}
 			<Card variant="bordered" padding="sm">
-				<div className="text-xs font-medium text-stone-600 mb-2">Plural</div>
+				<div className="mb-2 text-xs font-medium text-stone-600">Plural</div>
 				<table className="w-full text-sm">
 					<thead>
 						<tr className="border-b border-stone-200">
-							<th className="text-left py-1 pr-2 text-stone-600 font-medium w-12"></th>
-							<th className="text-left py-1 px-2 text-gender-masculine font-medium">
+							<th className="w-12 py-1 pr-2 text-left font-medium text-stone-600"></th>
+							<th className="px-2 py-1 text-left font-medium text-gender-masculine">
 								M
 							</th>
-							<th className="text-left py-1 px-2 text-gender-feminine font-medium">
+							<th className="px-2 py-1 text-left font-medium text-gender-feminine">
 								F
 							</th>
-							<th className="text-left py-1 px-2 text-gender-neuter font-medium">
+							<th className="px-2 py-1 text-left font-medium text-gender-neuter">
 								N
 							</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr className="border-b border-stone-100">
-							<td className="py-1 pr-2 text-stone-500 text-xs">Nom</td>
-							<td className="py-1 px-2">
+							<td className="py-1 pr-2 text-xs text-stone-500">Nom</td>
+							<td className="px-2 py-1">
 								<MonoText size="sm">
 									{ARTICLE_AGREEMENT_QUICK_REF.plural.masculine.nom}
 								</MonoText>
 							</td>
-							<td className="py-1 px-2">
+							<td className="px-2 py-1">
 								<MonoText size="sm">
 									{ARTICLE_AGREEMENT_QUICK_REF.plural.feminine.nom}
 								</MonoText>
 							</td>
-							<td className="py-1 px-2">
+							<td className="px-2 py-1">
 								<MonoText size="sm">
 									{ARTICLE_AGREEMENT_QUICK_REF.plural.neuter.nom}
 								</MonoText>
 							</td>
 						</tr>
 						<tr className="border-b border-stone-100">
-							<td className="py-1 pr-2 text-stone-500 text-xs">Acc</td>
-							<td className="py-1 px-2">
+							<td className="py-1 pr-2 text-xs text-stone-500">Acc</td>
+							<td className="px-2 py-1">
 								<MonoText size="sm">
 									{ARTICLE_AGREEMENT_QUICK_REF.plural.masculine.acc}
 								</MonoText>
 							</td>
-							<td className="py-1 px-2">
+							<td className="px-2 py-1">
 								<MonoText size="sm">
 									{ARTICLE_AGREEMENT_QUICK_REF.plural.feminine.acc}
 								</MonoText>
 							</td>
-							<td className="py-1 px-2">
+							<td className="px-2 py-1">
 								<MonoText size="sm">
 									{ARTICLE_AGREEMENT_QUICK_REF.plural.neuter.acc}
 								</MonoText>
 							</td>
 						</tr>
 						<tr>
-							<td className="py-1 pr-2 text-stone-500 text-xs">Gen</td>
-							<td className="py-1 px-2">
+							<td className="py-1 pr-2 text-xs text-stone-500">Gen</td>
+							<td className="px-2 py-1">
 								<MonoText size="sm">
 									{ARTICLE_AGREEMENT_QUICK_REF.plural.masculine.gen}
 								</MonoText>
 							</td>
-							<td className="py-1 px-2">
+							<td className="px-2 py-1">
 								<MonoText size="sm">
 									{ARTICLE_AGREEMENT_QUICK_REF.plural.feminine.gen}
 								</MonoText>
 							</td>
-							<td className="py-1 px-2">
+							<td className="px-2 py-1">
 								<MonoText size="sm">
 									{ARTICLE_AGREEMENT_QUICK_REF.plural.neuter.gen}
 								</MonoText>
@@ -389,7 +389,7 @@ const ParadigmCarousel: React.FC<{
 				<button
 					type="button"
 					onClick={handlePrev}
-					className="p-2 rounded-lg hover:bg-stone-100 transition-colors disabled:opacity-50"
+					className="rounded-lg p-2 transition-colors hover:bg-stone-100 disabled:opacity-50"
 					disabled={paradigms.length <= 1}
 				>
 					<ChevronLeft size={20} className="text-stone-600" />
@@ -400,7 +400,7 @@ const ParadigmCarousel: React.FC<{
 							key={p.id}
 							type="button"
 							onClick={() => setCurrentIndex(idx)}
-							className={`w-2 h-2 rounded-full transition-colors ${
+							className={`h-2 w-2 rounded-full transition-colors ${
 								idx === currentIndex ? "bg-stone-600" : "bg-stone-300"
 							}`}
 						/>
@@ -409,7 +409,7 @@ const ParadigmCarousel: React.FC<{
 				<button
 					type="button"
 					onClick={handleNext}
-					className="p-2 rounded-lg hover:bg-stone-100 transition-colors disabled:opacity-50"
+					className="rounded-lg p-2 transition-colors hover:bg-stone-100 disabled:opacity-50"
 					disabled={paradigms.length <= 1}
 				>
 					<ChevronRight size={20} className="text-stone-600" />
@@ -442,15 +442,15 @@ export const AgreementSection: React.FC = () => {
 				title="When uncertain, use the -ν form"
 				colorScheme="honey"
 			>
-				<div className="p-3 space-y-3">
+				<div className="space-y-3 p-3">
 					<p className="text-sm text-stone-600">
 						You'll never be wrong if you keep the final ν on τον/την/στον/στην.
 					</p>
-					<div className="p-3 bg-stone-50 rounded-lg border border-stone-200">
-						<div className="text-xs font-semibold text-honey-text uppercase tracking-wide mb-2">
+					<div className="rounded-lg border border-stone-200 bg-stone-50 p-3">
+						<div className="mb-2 text-xs font-semibold tracking-wide text-honey-text uppercase">
 							The simple rule
 						</div>
-						<p className="text-sm text-stone-600 mb-2">
+						<p className="mb-2 text-sm text-stone-600">
 							For{" "}
 							<MonoText variant="greek" size="sm">
 								τον/την
@@ -462,7 +462,7 @@ export const AgreementSection: React.FC = () => {
 							, you can always include the -ν. Native speakers sometimes drop
 							it, but keeping it is never wrong.
 						</p>
-						<div className="text-stone-600 text-sm">
+						<div className="text-sm text-stone-600">
 							<MonoText variant="greek" size="sm">
 								τον φίλο
 							</MonoText>{" "}
@@ -495,7 +495,7 @@ export const AgreementSection: React.FC = () => {
 
 			<Card variant="bordered" padding="lg" className="bg-stone-50/50">
 				<Tabs defaultValue="masculine" className="w-full">
-					<TabsList className="flex-wrap h-auto gap-1 mb-4">
+					<TabsList className="mb-4 h-auto flex-wrap gap-1">
 						<TabsTrigger value="masculine" className="text-gender-masculine">
 							Masculine ({masculineParadigms.length})
 						</TabsTrigger>
@@ -507,9 +507,9 @@ export const AgreementSection: React.FC = () => {
 						</TabsTrigger>
 					</TabsList>
 
-					<TabsContent value="masculine" className="space-y-4 mt-0">
+					<TabsContent value="masculine" className="mt-0 space-y-4">
 						<ParadigmCarousel paradigms={masculineParadigms} />
-						<div className="text-sm text-stone-600 flex flex-wrap items-center gap-x-4 gap-y-1 pt-2">
+						<div className="flex flex-wrap items-center gap-x-4 gap-y-1 pt-2 text-sm text-stone-600">
 							<span className="font-medium text-stone-700">
 								Vocative changes:
 							</span>
@@ -555,26 +555,26 @@ export const MovableNuSection: React.FC = () => (
 		<Card
 			variant="elevated"
 			padding="lg"
-			className="bg-stone-50 border-2 border-stone-200"
+			className="border-2 border-stone-200 bg-stone-50"
 		>
 			<Alert variant="info" className="mb-6">
 				<Lightbulb size={16} />
 				<AlertTitle>The Rule</AlertTitle>
 				<AlertDescription>{MOVABLE_NU_RULE.rule}</AlertDescription>
 			</Alert>
-			<div className="grid md:grid-cols-2 gap-6">
+			<div className="grid gap-6 md:grid-cols-2">
 				<div className="space-y-4">
 					<h4 className="text-lg font-bold text-correct">Keep the -ν</h4>
 					<div className="space-y-3">
 						{MOVABLE_NU_RULE.examples.keep.map((example) => (
 							<div
 								key={example.text}
-								className="p-3 bg-correct-100 rounded-lg border border-correct-300"
+								className="bg-correct-100 border-correct-300 rounded-lg border p-3"
 							>
-								<MonoText variant="success" size="lg" className="block mb-1">
+								<MonoText variant="success" size="lg" className="mb-1 block">
 									{example.text}
 								</MonoText>
-								<div className="text-olive-text text-sm italic">
+								<div className="text-sm text-olive-text italic">
 									{example.reason}
 								</div>
 							</div>
@@ -587,12 +587,12 @@ export const MovableNuSection: React.FC = () => (
 						{MOVABLE_NU_RULE.examples.drop.map((example) => (
 							<div
 								key={example.text}
-								className="p-3 bg-incorrect-100 rounded-lg border border-incorrect-300"
+								className="bg-incorrect-100 border-incorrect-300 rounded-lg border p-3"
 							>
-								<MonoText variant="error" size="lg" className="block mb-1">
+								<MonoText variant="error" size="lg" className="mb-1 block">
 									{example.text}
 								</MonoText>
-								<div className="text-terracotta-text text-sm italic">
+								<div className="text-sm text-terracotta-text italic">
 									{example.reason}
 								</div>
 							</div>

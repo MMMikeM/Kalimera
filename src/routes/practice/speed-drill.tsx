@@ -56,7 +56,9 @@ const SpeedDrill: React.FC = () => {
 	const [searchParams] = useSearchParams();
 	const initialDrillSize = searchParams.get("size") === "quick" ? 10 : 15;
 	const [drillSize, setDrillSize] = useState(initialDrillSize);
-	const [reDrillQuestions, setReDrillQuestions] = useState<UnifiedQuestion[] | null>(null);
+	const [reDrillQuestions, setReDrillQuestions] = useState<
+		UnifiedQuestion[] | null
+	>(null);
 	const isReDrillRef = useRef(false);
 
 	const questions = useMemo(() => {
@@ -211,20 +213,20 @@ const SpeedDrill: React.FC = () => {
 
 	if (sessionCount === 0 && !lastStats) {
 		return (
-			<div className="max-w-xl mx-auto">
+			<div className="mx-auto max-w-xl">
 				<Card variant="bordered" padding="lg" className="text-center">
 					<div className="py-8">
-						<div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-terracotta-100 mb-4">
+						<div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-terracotta-100">
 							<Zap size={32} className="text-terracotta" />
 						</div>
-						<h2 className="text-2xl font-bold mb-2">{drillTitle}</h2>
-						<p className="text-stone-600 mb-6">
+						<h2 className="mb-2 text-2xl font-bold">{drillTitle}</h2>
+						<p className="mb-6 text-stone-600">
 							Rapid-fire production practice. Type fast, build automaticity.
 						</p>
 
 						{/* Mode Toggle */}
 						<div className="mb-6">
-							<span className="text-sm text-stone-500 block mb-2">Mode</span>
+							<span className="mb-2 block text-sm text-stone-500">Mode</span>
 							<div className="flex justify-center gap-2">
 								<Button
 									variant={drillMode === "category" ? "primary" : "outline"}
@@ -249,7 +251,7 @@ const SpeedDrill: React.FC = () => {
 						{/* Category Selection */}
 						{drillMode === "category" && (
 							<div className="mb-6">
-								<span className="text-sm text-stone-500 block mb-2">Focus</span>
+								<span className="mb-2 block text-sm text-stone-500">Focus</span>
 								<div className="flex flex-wrap justify-center gap-2">
 									{FOCUS_OPTIONS.map((option) => (
 										<Button
@@ -268,7 +270,7 @@ const SpeedDrill: React.FC = () => {
 						{/* Grammar Exercise Selection */}
 						{drillMode === "grammar" && (
 							<div className="mb-6 text-left">
-								<span className="text-sm text-stone-500 block mb-3 text-center">
+								<span className="mb-3 block text-center text-sm text-stone-500">
 									Exercise Type
 								</span>
 								<div className="space-y-2">
@@ -277,13 +279,13 @@ const SpeedDrill: React.FC = () => {
 											key={type}
 											type="button"
 											onClick={() => setGrammarExercise(type)}
-											className={`w-full p-4 rounded-lg border-2 text-left transition-colors ${
+											className={`w-full rounded-lg border-2 p-4 text-left transition-colors ${
 												grammarExercise === type
 													? "border-terracotta bg-terracotta-50"
-													: "border-stone-200 hover:border-stone-300 bg-white"
+													: "border-stone-200 bg-white hover:border-stone-300"
 											}`}
 										>
-											<div className="flex items-center justify-between mb-2">
+											<div className="mb-2 flex items-center justify-between">
 												<span className="font-semibold text-stone-800">
 													{config.label}
 												</span>
@@ -292,7 +294,7 @@ const SpeedDrill: React.FC = () => {
 													{formatTimeLimit(config.timeLimit)}
 												</Badge>
 											</div>
-											<p className="text-base font-mono text-terracotta-700 mb-1">
+											<p className="mb-1 font-mono text-base text-terracotta-700">
 												{config.greekExample}
 											</p>
 											<p className="text-sm text-stone-500">
@@ -305,7 +307,7 @@ const SpeedDrill: React.FC = () => {
 						)}
 
 						<div className="mb-6">
-							<span className="text-sm text-stone-500 block mb-2">
+							<span className="mb-2 block text-sm text-stone-500">
 								Questions
 							</span>
 							<div className="flex justify-center gap-2">
@@ -335,15 +337,15 @@ const SpeedDrill: React.FC = () => {
 							Start Training
 						</Button>
 
-						<div className="mt-6 text-xs text-stone-400 space-y-1">
+						<div className="mt-6 space-y-1 text-xs text-stone-400">
 							<p>
-								<kbd className="px-1.5 py-0.5 bg-stone-100 rounded text-stone-600">
+								<kbd className="rounded bg-stone-100 px-1.5 py-0.5 text-stone-600">
 									Space
 								</kbd>{" "}
 								to start each question
 							</p>
 							<p>
-								<kbd className="px-1.5 py-0.5 bg-stone-100 rounded text-stone-600">
+								<kbd className="rounded bg-stone-100 px-1.5 py-0.5 text-stone-600">
 									Enter
 								</kbd>{" "}
 								to submit answer
@@ -366,7 +368,7 @@ const SpeedDrill: React.FC = () => {
 	})();
 
 	return (
-		<div className="max-w-xl mx-auto">
+		<div className="mx-auto max-w-xl">
 			<UnifiedDrill
 				key={sessionCount}
 				title={sessionTitle}

@@ -87,19 +87,19 @@ const SrsDrill: React.FC<SrsDrillProps> = ({ variant, items, streakDays }) => {
 
 	if (items.length === 0) {
 		return (
-			<div className="text-center py-12 bg-olive-100 rounded-xl border border-olive-300">
-				<div className="text-5xl mb-4">?</div>
-				<h3 className="text-xl font-semibold text-olive-text mb-2">
+			<div className="rounded-xl border border-olive-300 bg-olive-100 py-12 text-center">
+				<div className="mb-4 text-5xl">?</div>
+				<h3 className="mb-2 text-xl font-semibold text-olive-text">
 					{config.emptyTitle}
 				</h3>
 				<p className="text-olive-text">{config.emptyMessage}</p>
-				<p className="text-sm text-stone-600 mt-2">{config.emptyHint}</p>
+				<p className="mt-2 text-sm text-stone-600">{config.emptyHint}</p>
 			</div>
 		);
 	}
 
 	return (
-		<div className="max-w-xl mx-auto">
+		<div className="mx-auto max-w-xl">
 			<UnifiedDrill
 				title={config.title(items.length)}
 				questions={questions}

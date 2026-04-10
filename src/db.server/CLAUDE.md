@@ -22,8 +22,8 @@ types.ts        # Derived types from schema
 ```typescript
 // Fetch with relations
 const vocab = await db.query.vocabulary.findFirst({
-  where: { id },
-  with: { verbDetails: true, vocabularyTags: { with: { tag: true } } },
+	where: { id },
+	with: { verbDetails: true, vocabularyTags: { with: { tag: true } } },
 });
 
 // Import queries in routes

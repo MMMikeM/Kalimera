@@ -3,6 +3,8 @@ import { useEffect, useMemo, useState } from "react";
 import { useFetcher } from "react-router";
 import type { SearchVocabItem } from "@/db.server/queries/vocabulary";
 
+const EMPTY_VOCABULARY: SearchVocabItem[] = [];
+
 interface UseVocabularySearchOptions {
 	enabled?: boolean;
 }
@@ -20,7 +22,7 @@ export const useVocabularySearch = (
 		}
 	}, [enabled, fetcher]);
 
-	const vocabulary = fetcher.data?.vocabulary ?? [];
+	const vocabulary = fetcher.data?.vocabulary ?? EMPTY_VOCABULARY;
 	const isLoading = fetcher.state === "loading" || (!fetcher.data && enabled);
 
 	const fuzzySearch = useMemo(

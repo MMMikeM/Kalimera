@@ -42,16 +42,16 @@ export const ConversationHero: React.FC<ConversationHeroProps> = ({
 				>
 					<span className={styles.text}>{icon}</span>
 				</div>
-				<div className="flex-1 min-w-0">
+				<div className="min-w-0 flex-1">
 					<h2 className={cn("text-xl font-bold", styles.text)}>{title}</h2>
 					<MonoText
 						variant="greek"
 						size="sm"
-						className="block mt-1 text-stone-600"
+						className="mt-1 block text-stone-600"
 					>
 						{greekPhrase}
 					</MonoText>
-					<p className="text-stone-600 mt-2 text-sm leading-relaxed">
+					<p className="mt-2 text-sm leading-relaxed text-stone-600">
 						{description}
 					</p>
 				</div>

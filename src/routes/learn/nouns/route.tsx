@@ -78,10 +78,10 @@ const NounDisplay: React.FC<{ noun: NounWithGender }> = ({ noun }) => {
 	const stem = ending ? nounWord.slice(0, -ending.length) : nounWord;
 
 	return (
-		<div className="py-2.5 px-3">
+		<div className="px-3 py-2.5">
 			<div className="flex items-baseline gap-2">
 				<span
-					className={`px-1.5 py-0.5 rounded text-sm font-bold ${styles.text} ${styles.bg}`}
+					className={`rounded px-1.5 py-0.5 text-sm font-bold ${styles.text} ${styles.bg}`}
 				>
 					{article}
 				</span>
@@ -96,7 +96,7 @@ const NounDisplay: React.FC<{ noun: NounWithGender }> = ({ noun }) => {
 					)}
 				</MonoText>
 			</div>
-			<div className="text-xs text-stone-500 mt-0.5 ml-8">{noun.english}</div>
+			<div className="mt-0.5 ml-8 text-xs text-stone-500">{noun.english}</div>
 		</div>
 	);
 };
@@ -219,7 +219,7 @@ export default function NounsRefactorPage({
 		<div className="space-y-6">
 			<Link
 				to="/learn"
-				className="inline-flex items-center gap-1 text-sm text-stone-600 hover:text-stone-800 transition-colors"
+				className="inline-flex items-center gap-1 text-sm text-stone-600 transition-colors hover:text-stone-800"
 			>
 				<ChevronLeft size={16} />
 				<span>Learn</span>
@@ -257,26 +257,26 @@ export default function NounsRefactorPage({
 				}}
 			>
 				The words you'll use most, organised by situation. The{" "}
-				<span className="text-ocean-500 font-medium">coloured article</span>{" "}
+				<span className="font-medium text-ocean-500">coloured article</span>{" "}
 				shows gender at a glance.
 			</TabHero>
 
 			<div className="flex items-center gap-3 px-1 text-xs text-stone-500">
 				<span className="font-medium">Gender:</span>
 				<span className="flex items-center gap-1.5">
-					<span className="px-1 py-0.5 rounded text-xs font-bold text-ocean-500 bg-ocean-100">
+					<span className="rounded bg-ocean-100 px-1 py-0.5 text-xs font-bold text-ocean-500">
 						ο
 					</span>
 					masculine
 				</span>
 				<span className="flex items-center gap-1.5">
-					<span className="px-1 py-0.5 rounded text-xs font-bold text-rose-600 bg-rose-100">
+					<span className="rounded bg-rose-100 px-1 py-0.5 text-xs font-bold text-rose-600">
 						η
 					</span>
 					feminine
 				</span>
 				<span className="flex items-center gap-1.5">
-					<span className="px-1 py-0.5 rounded text-xs font-bold text-stone-600 bg-stone-200">
+					<span className="rounded bg-stone-200 px-1 py-0.5 text-xs font-bold text-stone-600">
 						το
 					</span>
 					neuter

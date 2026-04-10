@@ -135,7 +135,7 @@ export const AccuracyTrend = ({ data, className }: AccuracyTrendProps) => {
 		<div className={cn("relative", className)}>
 			<svg
 				viewBox={`0 0 ${chartWidth + CHART_PADDING.left + CHART_PADDING.right} ${CHART_HEIGHT}`}
-				className="w-full h-auto"
+				className="h-auto w-full"
 				preserveAspectRatio="xMidYMid meet"
 				role="img"
 				aria-label="Accuracy trend chart showing 7-day rolling average"
@@ -168,7 +168,7 @@ export const AccuracyTrend = ({ data, className }: AccuracyTrendProps) => {
 								x={-8}
 								y={4}
 								textAnchor="end"
-								className="text-[8px] fill-stone-400"
+								className="fill-stone-400 text-[8px]"
 							>
 								{formatPercent(tick)}
 							</text>
@@ -183,7 +183,7 @@ export const AccuracyTrend = ({ data, className }: AccuracyTrendProps) => {
 							<text
 								y={16}
 								textAnchor="middle"
-								className="text-[7px] fill-stone-400"
+								className="fill-stone-400 text-[7px]"
 							>
 								{formatDate(date)}
 							</text>
@@ -224,7 +224,7 @@ export const AccuracyTrend = ({ data, className }: AccuracyTrendProps) => {
 
 			{hoveredPoint && (
 				<div
-					className="absolute bg-cream-dark border border-stone-200 rounded-lg shadow-lg px-3 py-2 text-xs pointer-events-none z-10"
+					className="pointer-events-none absolute z-10 rounded-lg border border-stone-200 bg-cream-dark px-3 py-2 text-xs shadow-lg"
 					style={{
 						left: `${((hoveredPoint.x + CHART_PADDING.left) / (chartWidth + CHART_PADDING.left + CHART_PADDING.right)) * 100}%`,
 						top: `${((hoveredPoint.y + CHART_PADDING.top) / CHART_HEIGHT) * 100}%`,
@@ -238,15 +238,15 @@ export const AccuracyTrend = ({ data, className }: AccuracyTrendProps) => {
 						<span className="font-semibold">
 							{formatPercent(hoveredPoint.accuracy)}
 						</span>
-						<span className="text-stone-400 ml-1">(7-day avg)</span>
+						<span className="ml-1 text-stone-400">(7-day avg)</span>
 					</div>
-					<div className="text-stone-500 text-[10px]">
+					<div className="text-[10px] text-stone-500">
 						Daily: {formatPercent(hoveredPoint.rawAccuracy)}
 					</div>
 				</div>
 			)}
 
-			<div className="flex items-center justify-center gap-4 mt-3 text-xs">
+			<div className="mt-3 flex items-center justify-center gap-4 text-xs">
 				<div className="flex items-center gap-1.5">
 					<span className="size-2.5 rounded-full bg-olive-400" />
 					<span className="text-stone-600">7-day rolling average</span>

@@ -15,7 +15,12 @@ export type GrammarExerciseType =
 
 export const GRAMMAR_EXERCISE_CONFIG: Record<
 	GrammarExerciseType,
-	{ label: string; greekExample: string; description: string; timeLimit: number }
+	{
+		label: string;
+		greekExample: string;
+		description: string;
+		timeLimit: number;
+	}
 > = {
 	"article-sprint": {
 		label: "The Right Word",

@@ -11,8 +11,7 @@ export type NounWithGender = VocabItem & { gender: Gender };
 
 const detectGender = (greek: string): Gender => {
 	const trimmed = greek.trim().toLowerCase();
-	if (trimmed.startsWith("ο ") || trimmed.startsWith("οι "))
-		return "masculine";
+	if (trimmed.startsWith("ο ") || trimmed.startsWith("οι ")) return "masculine";
 	if (trimmed.startsWith("η ") || trimmed.startsWith("οι ")) return "feminine";
 	return "neuter";
 };
@@ -67,4 +66,3 @@ export async function loader() {
 
 	return { categories };
 }
-

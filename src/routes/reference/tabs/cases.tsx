@@ -22,11 +22,11 @@ export function CasesTab() {
 			<Card
 				variant="bordered"
 				padding="md"
-				className="bg-ocean-50 border-ocean-300"
+				className="border-ocean-300 bg-ocean-50"
 			>
 				<Link
 					to="/reference/pronouns"
-					className="flex items-center justify-between group"
+					className="group flex items-center justify-between"
 				>
 					<div>
 						<h4 className="font-bold text-ocean-text">Continue to Pronouns</h4>
@@ -36,7 +36,7 @@ export function CasesTab() {
 					</div>
 					<ArrowRight
 						size={20}
-						className="text-ocean-text group-hover:translate-x-1 transition-transform"
+						className="text-ocean-text transition-transform group-hover:translate-x-1"
 					/>
 				</Link>
 			</Card>

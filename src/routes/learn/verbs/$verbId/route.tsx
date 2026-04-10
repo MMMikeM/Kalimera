@@ -63,7 +63,7 @@ export default function VerbDetailPage({ loaderData }: Route.ComponentProps) {
 						<MonoText variant="greek" size="2xl" weight="bold">
 							{verb.greekText}
 						</MonoText>
-						<p className="text-lg text-stone-600 mt-1">
+						<p className="mt-1 text-lg text-stone-600">
 							{verb.englishTranslation}
 						</p>
 					</div>
@@ -83,7 +83,7 @@ export default function VerbDetailPage({ loaderData }: Route.ComponentProps) {
 				</div>
 
 				{verb.verbDetails?.notes && (
-					<p className="mt-4 text-sm text-stone-600 bg-stone-50 rounded-lg p-3 border border-stone-200">
+					<p className="mt-4 rounded-lg border border-stone-200 bg-stone-50 p-3 text-sm text-stone-600">
 						{verb.verbDetails.notes}
 					</p>
 				)}

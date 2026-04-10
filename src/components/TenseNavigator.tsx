@@ -67,7 +67,7 @@ export const TenseNavigator = ({
 
 	if (availableTenses.length === 0) {
 		return (
-			<div className="text-stone-500 italic p-4">
+			<div className="p-4 text-stone-500 italic">
 				No conjugation data available
 			</div>
 		);
@@ -94,7 +94,7 @@ export const TenseNavigator = ({
 
 	return (
 		<Tabs defaultValue={defaultTense} className={cn("w-full", className)}>
-			<TabsList className="w-full h-auto flex-wrap gap-1 bg-stone-100 p-1">
+			<TabsList className="h-auto w-full flex-wrap gap-1 bg-stone-100 p-1">
 				{availableTenses.map((tense) => {
 					const config = TENSE_CONFIG[tense];
 					if (!config) return null;

@@ -59,10 +59,16 @@ export const TabHero = <T extends string>({
 		<Card
 			variant="elevated"
 			padding="md"
-			className={cn(styles.bgMuted, "border-2", styles.border, "sm:p-6", className)}
+			className={cn(
+				styles.bgMuted,
+				"border-2",
+				styles.border,
+				"sm:p-6",
+				className,
+			)}
 		>
 			<div className="space-y-3 sm:space-y-4">
-				<div className="flex items-stretch gap-3 sm:gap-4 h-12 sm:h-14">
+				<div className="flex h-12 items-stretch gap-3 sm:h-14 sm:gap-4">
 					<div
 						className={cn(
 							"aspect-square h-full rounded-xl shrink-0 shadow-sm flex items-center justify-center",
@@ -71,12 +77,9 @@ export const TabHero = <T extends string>({
 					>
 						<span className={cn("block", styles.text)}>{icon}</span>
 					</div>
-					<div className="min-w-0 flex flex-col justify-center">
+					<div className="flex min-w-0 flex-col justify-center">
 						<h3
-							className={cn(
-								"sm:text-xl font-bold leading-tight",
-								styles.text,
-							)}
+							className={cn("sm:text-xl font-bold leading-tight", styles.text)}
 						>
 							{title}
 						</h3>
@@ -84,14 +87,14 @@ export const TabHero = <T extends string>({
 							<MonoText
 								variant="greek"
 								size="sm"
-								className="text-stone-600 mt-0.5"
+								className="mt-0.5 text-stone-600"
 							>
 								{greekPhrase}
 							</MonoText>
 						)}
 					</div>
 				</div>
-				<div className="text-slate-text text-sm leading-relaxed">
+				<div className="text-sm leading-relaxed text-slate-text">
 					{children}
 				</div>
 				{expandedExample && (

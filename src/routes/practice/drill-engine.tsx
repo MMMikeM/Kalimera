@@ -98,10 +98,10 @@ export const SelectorButton = ({
 			type="button"
 			onClick={onClick}
 			disabled={disabled}
-			className={`px-3 py-2 rounded-lg text-sm font-medium border transition-colors disabled:opacity-40 ${
+			className={`rounded-lg border px-3 py-2 text-sm font-medium transition-colors disabled:opacity-40 ${
 				selected
 					? `${selectedBg} ${selectedText} border-transparent`
-					: "border-border text-foreground hover:border-stone-400 bg-transparent"
+					: "border-border bg-transparent text-foreground hover:border-stone-400"
 			}`}
 		>
 			{label}
@@ -119,7 +119,8 @@ export const SummaryScreen = <T extends DrillForm>({
 	onAgain: () => void;
 }) => {
 	const correct = attempts.filter((a) => a.isCorrect).length;
-	const avgTime = attempts.reduce((s, a) => s + a.timeTaken, 0) / attempts.length;
+	const avgTime =
+		attempts.reduce((s, a) => s + a.timeTaken, 0) / attempts.length;
 
 	const slowestByForm = new Map<string, Attempt<T>>();
 	for (const a of attempts) {
@@ -132,15 +133,15 @@ export const SummaryScreen = <T extends DrillForm>({
 		.slice(0, 3);
 
 	return (
-		<div className="px-6 py-8 max-w-xs">
-			<h2 className="font-serif text-2xl text-navy-text mb-8">Done</h2>
+		<div className="max-w-xs px-6 py-8">
+			<h2 className="mb-8 font-serif text-2xl text-navy-text">Done</h2>
 
-			<div className="space-y-6 mb-10">
+			<div className="mb-10 space-y-6">
 				<div>
 					<p className="font-serif text-4xl text-foreground tabular-nums">
 						{correct} <span className="text-stone-300">/</span> {total}
 					</p>
-					<p className="text-sm text-muted-foreground mt-1">
+					<p className="mt-1 text-sm text-muted-foreground">
 						{Math.round((correct / total) * 100)}% correct
 					</p>
 				</div>
@@ -148,13 +149,13 @@ export const SummaryScreen = <T extends DrillForm>({
 					<p className="font-serif text-3xl text-foreground tabular-nums">
 						{(avgTime / 1000).toFixed(1)}s
 					</p>
-					<p className="text-sm text-muted-foreground mt-1">average response</p>
+					<p className="mt-1 text-sm text-muted-foreground">average response</p>
 				</div>
 			</div>
 
 			{slowest.length > 0 && (
 				<div className="mb-10">
-					<p className="text-xs uppercase tracking-widest text-muted-foreground mb-3">
+					<p className="mb-3 text-xs tracking-widest text-muted-foreground uppercase">
 						Slowest
 					</p>
 					<div className="space-y-3">
@@ -162,7 +163,7 @@ export const SummaryScreen = <T extends DrillForm>({
 							<div key={a.form.id} className="flex items-baseline gap-3">
 								<span
 									lang="el"
-									className="greek-text text-xl text-foreground w-10"
+									className="greek-text w-10 text-xl text-foreground"
 								>
 									{a.form.greek}
 								</span>
@@ -305,11 +306,11 @@ export const ForwardInput = ({
 			autoCorrect="off"
 			autoCapitalize="off"
 			spellCheck={false}
-			className="w-full text-3xl bg-transparent border-b-2 border-stone-200 focus:border-terracotta outline-none pb-2 placeholder:text-stone-300 text-foreground transition-colors caret-terracotta disabled:opacity-50"
+			className="w-full border-b-2 border-stone-200 bg-transparent pb-2 text-3xl text-foreground caret-terracotta transition-colors outline-none placeholder:text-stone-300 focus:border-terracotta disabled:opacity-50"
 		/>
 
 		{phase === "active" && (
-			<p className="text-xs text-stone-400 mt-2">enter to check</p>
+			<p className="mt-2 text-xs text-stone-400">enter to check</p>
 		)}
 	</div>
 );
@@ -321,9 +322,7 @@ export const FeedbackDisplay = <T extends DrillForm>({
 }) => (
 	<div className="mt-5">
 		<p
-			className={`text-sm font-medium ${
-				lastAttempt.isCorrect ? "text-correct" : "text-incorrect"
-			}`}
+			className={`text-sm font-medium ${lastAttempt.isCorrect ? "text-correct" : "text-incorrect"}`}
 		>
 			{lastAttempt.isCorrect
 				? "Correct"
@@ -331,11 +330,11 @@ export const FeedbackDisplay = <T extends DrillForm>({
 					? "Time's up"
 					: "Incorrect"}
 		</p>
-		<div className="flex items-baseline gap-2 mt-1">
+		<div className="mt-1 flex items-baseline gap-2">
 			<span lang="el" className="greek-text text-2xl text-foreground">
 				{lastAttempt.form.greek}
 			</span>
-			<span className="text-sm text-muted-foreground font-sans">
+			<span className="font-sans text-sm text-muted-foreground">
 				/{lastAttempt.form.greeklish}/
 			</span>
 		</div>
@@ -369,46 +368,46 @@ export const ConfigShell = ({
 	reverseDesc: string;
 	children: React.ReactNode;
 }) => (
-	<div className="px-6 py-8 max-w-sm">
-		<h2 className="font-serif text-2xl text-navy-text mb-1">{title}</h2>
-		<p className="text-sm text-muted-foreground mb-6">{subtitle}</p>
+	<div className="max-w-sm px-6 py-8">
+		<h2 className="mb-1 font-serif text-2xl text-navy-text">{title}</h2>
+		<p className="mb-6 text-sm text-muted-foreground">{subtitle}</p>
 
 		{children}
 
 		<fieldset className="mb-8">
-			<legend className="text-xs uppercase tracking-widest text-muted-foreground mb-3">
+			<legend className="mb-3 text-xs tracking-widest text-muted-foreground uppercase">
 				Mode
 			</legend>
 			<div className="space-y-2">
 				<button
 					type="button"
 					onClick={() => onModeChange("forward")}
-					className={`w-full text-left px-4 py-3 rounded-lg border transition-colors ${
+					className={`w-full rounded-lg border px-4 py-3 text-left transition-colors ${
 						mode === "forward"
 							? "border-terracotta bg-terracotta-50 text-terracotta-text"
 							: "border-border text-foreground hover:border-stone-400"
 					}`}
 				>
-					<span className="text-sm font-medium block">{forwardLabel}</span>
+					<span className="block text-sm font-medium">{forwardLabel}</span>
 					<span className="text-xs text-muted-foreground">{forwardDesc}</span>
 				</button>
 				<button
 					type="button"
 					onClick={() => onModeChange("reverse")}
-					className={`w-full text-left px-4 py-3 rounded-lg border transition-colors ${
+					className={`w-full rounded-lg border px-4 py-3 text-left transition-colors ${
 						mode === "reverse"
 							? "border-terracotta bg-terracotta-50 text-terracotta-text"
 							: "border-border text-foreground hover:border-stone-400"
 					}`}
 				>
-					<span className="text-sm font-medium block">{reverseLabel}</span>
+					<span className="block text-sm font-medium">{reverseLabel}</span>
 					<span className="text-xs text-muted-foreground">{reverseDesc}</span>
 				</button>
 			</div>
 		</fieldset>
 
 		<fieldset className="mb-8">
-			<legend className="text-xs uppercase tracking-widest text-muted-foreground mb-3">
+			<legend className="mb-3 text-xs tracking-widest text-muted-foreground uppercase">
 				Cards
 			</legend>
 			<div className="flex gap-2">
@@ -417,7 +416,7 @@ export const ConfigShell = ({
 						key={s}
 						type="button"
 						onClick={() => onSizeChange(s)}
-						className={`flex-1 py-2 rounded-lg text-sm font-medium border transition-colors ${
+						className={`flex-1 rounded-lg border py-2 text-sm font-medium transition-colors ${
 							sessionSize === s
 								? "border-terracotta bg-terracotta-50 text-terracotta-text"
 								: "border-border text-foreground hover:border-stone-400"
@@ -431,7 +430,7 @@ export const ConfigShell = ({
 
 		<Button
 			onClick={onStart}
-			className="w-full bg-terracotta hover:bg-terracotta-dark text-cream"
+			className="w-full bg-terracotta text-cream hover:bg-terracotta-dark"
 		>
 			Begin
 		</Button>
@@ -452,7 +451,7 @@ export const DrillShell = ({
 	children: React.ReactNode;
 }) => (
 	<div className="flex flex-col">
-		<div className="h-1 bg-stone-200 overflow-hidden">
+		<div className="h-1 overflow-hidden bg-stone-200">
 			<div
 				className={`h-full transition-colors duration-200 ${barColor}`}
 				style={{ width: `${progress * 100}%` }}
@@ -462,12 +461,12 @@ export const DrillShell = ({
 		<div className="flex justify-end px-4 pt-2">
 			<span className="text-xs text-stone-400 tabular-nums">
 				{cardIndex + 1}
-				<span className="text-stone-300 mx-0.5">/</span>
+				<span className="mx-0.5 text-stone-300">/</span>
 				{sessionSize}
 			</span>
 		</div>
 
-		<div className="flex flex-col gap-10 px-6 pt-4 pb-6 max-w-sm">
+		<div className="flex max-w-sm flex-col gap-10 px-6 pt-4 pb-6">
 			{children}
 		</div>
 	</div>
@@ -480,9 +479,7 @@ export const ReverseFeedback = <T extends DrillForm>({
 }) => (
 	<div className="pt-4">
 		<p
-			className={`text-sm font-medium ${
-				lastAttempt.isCorrect ? "text-correct" : "text-incorrect"
-			}`}
+			className={`text-sm font-medium ${lastAttempt.isCorrect ? "text-correct" : "text-incorrect"}`}
 		>
 			{lastAttempt.isCorrect
 				? "Correct"
@@ -491,7 +488,7 @@ export const ReverseFeedback = <T extends DrillForm>({
 					: "Incorrect"}
 		</p>
 		{!lastAttempt.isCorrect && (
-			<p className="text-sm text-muted-foreground mt-1">
+			<p className="mt-1 text-sm text-muted-foreground">
 				{lastAttempt.form.label}
 			</p>
 		)}
