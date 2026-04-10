@@ -106,10 +106,10 @@ export const NotificationAsk = ({
 
 	if (subscribed) {
 		return (
-			<Card className="bg-olive-50 border-olive-200 p-4">
+			<Card className="border-olive-200 bg-olive-50 p-4">
 				<div className="flex items-center gap-3">
 					<Bell className="text-olive-600" size={20} />
-					<p className="text-olive-800 font-medium">Reminders enabled!</p>
+					<p className="font-medium text-olive-800">Reminders enabled!</p>
 				</div>
 			</Card>
 		);
@@ -137,7 +137,7 @@ export const NotificationAsk = ({
 	const { headline, body } = getCopy();
 
 	return (
-		<Card className="bg-ocean-50 border-ocean-200 p-4 relative">
+		<Card className="relative border-ocean-200 bg-ocean-50 p-4">
 			<button
 				type="button"
 				onClick={handleDismiss}
@@ -147,11 +147,11 @@ export const NotificationAsk = ({
 				<X size={16} />
 			</button>
 			<div className="flex items-start gap-3">
-				<Bell className="text-ocean-500 mt-0.5" size={20} />
+				<Bell className="mt-0.5 text-ocean-500" size={20} />
 				<div className="flex-1">
 					<p className="font-medium text-ocean-800">{headline}</p>
-					<p className="text-sm text-ocean-600 mt-1">{body}</p>
-					<div className="flex gap-2 mt-3">
+					<p className="mt-1 text-sm text-ocean-600">{body}</p>
+					<div className="mt-3 flex gap-2">
 						<Button
 							size="sm"
 							onClick={handleEnable}
