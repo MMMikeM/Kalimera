@@ -1,5 +1,5 @@
 import { subDays, subMonths } from "date-fns";
-import { and, count, eq, gte, sql } from "drizzle-orm";
+import { and, count, eq, gte, isNotNull, sql } from "drizzle-orm";
 import { db } from "../index";
 import { practiceAttempts, practiceSessions } from "../schema";
 
@@ -45,7 +45,7 @@ export const getPracticeDatesForCalendar = async (
 		.where(
 			and(
 				eq(practiceSessions.userId, userId),
-				sql`${practiceSessions.completedAt} IS NOT NULL`,
+				isNotNull(practiceSessions.completedAt),
 				gte(practiceSessions.completedAt, cutoff),
 			),
 		)
@@ -79,7 +79,7 @@ export const getAccuracyTrends = async (
 		.where(
 			and(
 				eq(practiceAttempts.userId, userId),
-				sql`${practiceAttempts.isCorrect} IS NOT NULL`,
+				isNotNull(practiceAttempts.isCorrect),
 				gte(practiceAttempts.attemptedAt, cutoff),
 			),
 		)
@@ -112,7 +112,7 @@ export const getTimeInvested = async (
 		.where(
 			and(
 				eq(practiceSessions.userId, userId),
-				sql`${practiceSessions.completedAt} IS NOT NULL`,
+				isNotNull(practiceSessions.completedAt),
 			),
 		);
 

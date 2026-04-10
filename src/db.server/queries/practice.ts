@@ -5,7 +5,17 @@ import {
 	parseISO,
 	subDays,
 } from "date-fns";
-import { and, count, desc, eq, gte, sql } from "drizzle-orm";
+import {
+	and,
+	count,
+	desc,
+	eq,
+	gt,
+	isNotNull,
+	isNull,
+	lte,
+	sql,
+} from "drizzle-orm";
 import {
 	calculateSRS,
 	getInitialSRSValues,
@@ -75,7 +85,7 @@ export const getItemsDueForReview = async (
 				eq(vocabularySkills.skillType, skillType),
 			),
 		)
-		.where(sql`${vocabularySkills.nextReviewAt} <= ${now}`)
+		.where(lte(vocabularySkills.nextReviewAt, now))
 		.orderBy(vocabularySkills.nextReviewAt)
 		.limit(limit);
 
@@ -111,7 +121,7 @@ export const getNewVocabularyItems = async (userId: number, limit = 20) => {
 				eq(vocabularySkills.userId, userId),
 			),
 		)
-		.where(sql`${vocabularySkills.userId} IS NULL`)
+		.where(isNull(vocabularySkills.userId))
 		.orderBy(vocabulary.difficultyLevel)
 		.limit(limit);
 
@@ -125,20 +135,10 @@ export const getNewVocabularyItems = async (userId: number, limit = 20) => {
 };
 
 export const getWeakAreas = async (userId: number) => {
-	const results = await db
-		.select()
-		.from(weakAreas)
-		.where(and(eq(weakAreas.userId, userId), eq(weakAreas.needsFocus, true)))
-		.orderBy(desc(weakAreas.mistakeCount));
-
-	return results.map((r) => ({
-		id: r.id,
-		areaType: r.areaType,
-		areaIdentifier: r.areaIdentifier,
-		mistakeCount: r.mistakeCount,
-		needsFocus: r.needsFocus,
-		lastMistakeAt: r.lastMistakeAt,
-	}));
+	return db.query.weakAreas.findMany({
+		where: { userId, needsFocus: true },
+		orderBy: { mistakeCount: "desc" },
+	});
 };
 
 export const getPracticeStats = async (
@@ -148,30 +148,13 @@ export const getPracticeStats = async (
 	const now = new Date();
 	const masteredThresholdDays = 21;
 
-	const [masteredResult] = await db
-		.select({ count: count() })
-		.from(vocabularySkills)
-		.where(
-			and(
-				eq(vocabularySkills.userId, userId),
-				eq(vocabularySkills.skillType, skillType),
-				gte(vocabularySkills.intervalDays, masteredThresholdDays),
-			),
-		);
-
-	const [dueResult] = await db
-		.select({ count: count() })
-		.from(vocabularySkills)
-		.where(
-			and(
-				eq(vocabularySkills.userId, userId),
-				eq(vocabularySkills.skillType, skillType),
-				sql`${vocabularySkills.nextReviewAt} <= ${now}`,
-			),
-		);
-
-	const [learnedResult] = await db
-		.select({ count: count() })
+	const [skillStats] = await db
+		.select({
+			mastered: sql<number>`COUNT(CASE WHEN ${vocabularySkills.intervalDays} >= ${masteredThresholdDays} THEN 1 END)`,
+			due: sql<number>`COUNT(CASE WHEN ${vocabularySkills.nextReviewAt} <= ${now} THEN 1 END)`,
+			learned: count(),
+			total: sql<number>`(SELECT COUNT(*) FROM vocabulary)`,
+		})
 		.from(vocabularySkills)
 		.where(
 			and(
@@ -179,20 +162,16 @@ export const getPracticeStats = async (
 				eq(vocabularySkills.skillType, skillType),
 			),
 		);
-
-	const [totalVocabResult] = await db
-		.select({ count: count() })
-		.from(vocabulary);
 
 	const streak = await calculateStreak(userId);
 
-	const totalLearned = learnedResult?.count || 0;
-	const totalVocab = totalVocabResult?.count || 0;
+	const totalLearned = skillStats?.learned || 0;
+	const totalVocab = skillStats?.total || 0;
 
 	return {
 		streak,
-		itemsMastered: masteredResult?.count || 0,
-		dueCount: dueResult?.count || 0,
+		itemsMastered: skillStats?.mastered || 0,
+		dueCount: skillStats?.due || 0,
 		totalLearned,
 		newAvailable: totalVocab - totalLearned,
 	};
@@ -212,8 +191,8 @@ export const getItemsDueTomorrow = async (
 			and(
 				eq(vocabularySkills.userId, userId),
 				eq(vocabularySkills.skillType, skillType),
-				sql`${vocabularySkills.nextReviewAt} > ${now}`,
-				sql`${vocabularySkills.nextReviewAt} <= ${tomorrowEnd}`,
+				gt(vocabularySkills.nextReviewAt, now),
+				lte(vocabularySkills.nextReviewAt, tomorrowEnd),
 			),
 		);
 
@@ -229,7 +208,7 @@ export const getLastPracticeDate = async (
 		.where(
 			and(
 				eq(practiceSessions.userId, userId),
-				sql`${practiceSessions.completedAt} IS NOT NULL`,
+				isNotNull(practiceSessions.completedAt),
 			),
 		)
 		.orderBy(desc(practiceSessions.completedAt))
@@ -247,7 +226,7 @@ const calculateStreak = async (userId: number): Promise<number> => {
 		.where(
 			and(
 				eq(practiceSessions.userId, userId),
-				sql`${practiceSessions.completedAt} IS NOT NULL`,
+				isNotNull(practiceSessions.completedAt),
 			),
 		)
 		.orderBy(desc(practiceSessions.completedAt))
@@ -407,16 +386,9 @@ interface UpdateVocabularySkillInput {
 const updateVocabularySkill = async (input: UpdateVocabularySkillInput) => {
 	const { userId, vocabularyId, skillType, isCorrect, timeTaken } = input;
 
-	const [existingSkill] = await db
-		.select()
-		.from(vocabularySkills)
-		.where(
-			and(
-				eq(vocabularySkills.userId, userId),
-				eq(vocabularySkills.vocabularyId, vocabularyId),
-				eq(vocabularySkills.skillType, skillType),
-			),
-		);
+	const existingSkill = await db.query.vocabularySkills.findFirst({
+		where: { userId, vocabularyId, skillType },
+	});
 
 	const quality = qualityFromAttempt(isCorrect, timeTaken);
 
@@ -476,16 +448,9 @@ interface UpdateWeakAreaInput {
 const updateWeakArea = async (input: UpdateWeakAreaInput) => {
 	const { userId, areaType, areaIdentifier, isCorrect } = input;
 
-	const [existingArea] = await db
-		.select()
-		.from(weakAreas)
-		.where(
-			and(
-				eq(weakAreas.userId, userId),
-				eq(weakAreas.areaType, areaType),
-				eq(weakAreas.areaIdentifier, areaIdentifier),
-			),
-		);
+	const existingArea = await db.query.weakAreas.findFirst({
+		where: { userId, areaType, areaIdentifier },
+	});
 
 	if (isCorrect) {
 		if (existingArea) {
@@ -542,16 +507,11 @@ export const completeSession = async (input: CompleteSessionInput) => {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export const findUserByCode = async (code: string) => {
-	const [user] = await db
-		.select()
-		.from(users)
-		.where(eq(users.code, code.toLowerCase()));
-	return user;
+	return db.query.users.findFirst({ where: { code: code.toLowerCase() } });
 };
 
 export const getUserById = async (userId: number) => {
-	const [user] = await db.select().from(users).where(eq(users.id, userId));
-	return user;
+	return db.query.users.findFirst({ where: { id: userId } });
 };
 
 export const createUser = async (displayName: string, code: string) => {
@@ -571,5 +531,5 @@ export const createUser = async (displayName: string, code: string) => {
 };
 
 export const getAllUsers = async () => {
-	return db.select().from(users).orderBy(users.displayName);
+	return db.query.users.findMany({ orderBy: { displayName: "asc" } });
 };

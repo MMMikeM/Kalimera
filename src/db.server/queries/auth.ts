@@ -114,11 +114,9 @@ export const deleteChallenge = async (challenge: string) => {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export const findUserByUsername = async (username: string) => {
-	const [user] = await db
-		.select()
-		.from(users)
-		.where(eq(users.username, username.toLowerCase()));
-	return user;
+	return db.query.users.findFirst({
+		where: { username: username.toLowerCase() },
+	});
 };
 
 export const createUserWithPassword = async (
