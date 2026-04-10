@@ -1,7 +1,7 @@
 import { Clock, RotateCcw, Zap } from "lucide-react";
 import type React from "react";
 import { useCallback, useMemo, useRef, useState } from "react";
-import { useFetcher, useOutletContext } from "react-router";
+import { useFetcher, useOutletContext, useSearchParams } from "react-router";
 import { Card } from "@/components/Card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -53,7 +53,9 @@ const SpeedDrill: React.FC = () => {
 
 	const [sessionCount, setSessionCount] = useState(0);
 	const [lastStats, setLastStats] = useState<SessionStats | null>(null);
-	const [drillSize, setDrillSize] = useState(15);
+	const [searchParams] = useSearchParams();
+	const initialDrillSize = searchParams.get("size") === "quick" ? 10 : 15;
+	const [drillSize, setDrillSize] = useState(initialDrillSize);
 	const [reDrillQuestions, setReDrillQuestions] = useState<UnifiedQuestion[] | null>(null);
 	const isReDrillRef = useRef(false);
 
