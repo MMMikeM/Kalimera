@@ -110,8 +110,8 @@ export const sendPracticeReminders = async (
 
 		const success = await sendNotification(
 			subscription,
-			"Time to practice! 📚",
-			"Keep your Greek skills sharp with a quick session.",
+			"Quick 2-minute review?",
+			"Your review queue is ready.",
 			vapid,
 			"/practice",
 		);
@@ -234,6 +234,57 @@ export const sendReviewDueNotifications = async (
 	return result;
 };
 
+type NotificationCopy = {
+	title: string;
+	body: (dueCount: number, streak: number) => string;
+};
+
+const STREAK_WARNING_COPY: NotificationCopy[] = [
+	{
+		// Bounded commitment (Urgency)
+		title: "Quick 2-minute review?",
+		body: (dueCount) =>
+			dueCount > 0 ? `${dueCount} items in your queue.` : "Your Greek is waiting.",
+	},
+	{
+		// Content preview (Interest)
+		title: "Items due for review.",
+		body: (dueCount) =>
+			dueCount > 0
+				? `${dueCount} word${dueCount > 1 ? "s" : ""} ready — takes about ${Math.max(2, Math.ceil(dueCount * 0.25))} min.`
+				: "A few minutes keeps the memory sharp.",
+	},
+	{
+		// Competence callback (Confidence)
+		title: "You've been consistent.",
+		body: (_, streak) =>
+			streak > 1
+				? `${streak} days of practice. Keep the momentum.`
+				: "Your review queue is ready.",
+	},
+	{
+		// Domain bridge (Passion)
+		title: "The aorist is waiting.",
+		body: (dueCount) =>
+			dueCount > 0
+				? `${dueCount} items — the tense in every Greek news headline.`
+				: "A quick session keeps it sharp.",
+	},
+];
+
+const selectCopy = (
+	userId: number,
+	dueCount: number,
+	streak: number,
+): { title: string; body: string } => {
+	// Deterministic per-user per-day rotation — different users get different types on the same day
+	const dayIndex = Math.floor(Date.now() / 86_400_000);
+	const copy =
+		STREAK_WARNING_COPY[(userId + dayIndex) % STREAK_WARNING_COPY.length];
+	if (!copy) return { title: "Your Greek is waiting.", body: "Quick review?" };
+	return { title: copy.title, body: copy.body(dueCount, streak) };
+};
+
 /**
  * Send streak warning notifications to users who haven't practiced today
  * but have an active streak from yesterday
@@ -338,18 +389,13 @@ export const sendStreakWarningNotifications = async (
 			);
 
 		const dueCount = dueResult?.count ?? 0;
-		const timeEstimate = Math.max(2, Math.ceil(dueCount * 0.25));
 
 		const subscription: PushSubscriptionData = {
 			endpoint: sub.endpoint,
 			keys: { p256dh: sub.p256dh, auth: sub.auth },
 		};
 
-		const title = `Don't lose your ${streak}-day streak!`;
-		const body =
-			dueCount > 0
-				? `${dueCount} words waiting — takes ${timeEstimate} minutes`
-				: "A quick session keeps your streak alive";
+		const { title, body } = selectCopy(sub.userId, dueCount, streak);
 
 		const success = await sendNotification(
 			subscription,
