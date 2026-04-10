@@ -272,12 +272,13 @@ const STREAK_WARNING_COPY: NotificationCopy[] = [
 	},
 ];
 
-const selectCopy = (
+export const selectCopy = (
 	userId: number,
 	dueCount: number,
 	streak: number,
 ): { title: string; body: string } => {
-	// Deterministic per-user per-day rotation — different users get different types on the same day
+	// Deterministic per-user per-day rotation (UTC day boundary) — different users get
+	// different copy types on the same day, cycling through all four variants over 4 days.
 	const dayIndex = Math.floor(Date.now() / 86_400_000);
 	const copy =
 		STREAK_WARNING_COPY[(userId + dayIndex) % STREAK_WARNING_COPY.length];
