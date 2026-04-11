@@ -1,4 +1,4 @@
-import { index, integer, primaryKey, sqliteTable, uniqueIndex } from "drizzle-orm/sqlite-core";
+import { index, integer, primaryKey, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
 import {
 	cascadeFk,
 	createdAt,
@@ -15,6 +15,7 @@ import {
 	declensionPatterns,
 	displaySections,
 	genders,
+	grammaticalCases,
 	grammaticalNumbers,
 	imperativeAspects,
 	personNumbers,
@@ -47,7 +48,31 @@ export const nounDetails = sqliteTable("noun_details", {
 	declensionPattern: nullableOneOf("declension_pattern", declensionPatterns),
 });
 
-
+// Sparse inflected forms. `gender` stays null for nouns (lexical gender is on noun_details).
+// `gender_key` is the uniqueness slot: '' for noun rows, otherwise masculine|feminine|neuter.
+// One non-partial unique so SQLite UPSERT / ON CONFLICT works (partial uniques do not).
+export const nominalForms = sqliteTable(
+	"nominal_forms",
+	{
+		id: pk(),
+		vocabId: cascadeFk("vocab_id", () => vocabulary.id),
+		grammaticalCase: oneOf("grammatical_case", grammaticalCases),
+		number: oneOf("number", grammaticalNumbers),
+		form: string("form"),
+		article: nullableString("article"),
+		gender: nullableOneOf("gender", genders),
+		genderKey: text("gender_key").notNull().default(""),
+	},
+	(table) => [
+		index("idx_nominal_forms_vocab").on(table.vocabId),
+		uniqueIndex("idx_nominal_forms_unique").on(
+			table.vocabId,
+			table.grammaticalCase,
+			table.number,
+			table.genderKey,
+		),
+	],
+);
 
 export const verbDetails = sqliteTable("verb_details", {
 	vocabId: cascadeFk("vocab_id", () => vocabulary.id).primaryKey(),

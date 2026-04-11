@@ -1,5 +1,6 @@
 import type {
 	milestonesAchieved,
+	nominalForms,
 	nounDetails,
 	practiceAttempts,
 	practiceSessions,
@@ -19,6 +20,7 @@ import type {
 export type User = typeof users.$inferSelect;
 export type Vocabulary = typeof vocabulary.$inferSelect;
 export type NounDetails = typeof nounDetails.$inferSelect;
+export type NominalForm = typeof nominalForms.$inferSelect;
 export type Tag = typeof tags.$inferSelect;
 export type VocabularyTag = typeof vocabularyTags.$inferSelect;
 export type VerbDetails = typeof verbDetails.$inferSelect;
@@ -35,6 +37,7 @@ export type MilestoneAchieved = typeof milestonesAchieved.$inferSelect;
 export type NewUser = typeof users.$inferInsert;
 export type NewVocabulary = typeof vocabulary.$inferInsert;
 export type NewNounDetails = typeof nounDetails.$inferInsert;
+export type NewNominalForm = typeof nominalForms.$inferInsert;
 export type NewTag = typeof tags.$inferInsert;
 export type NewVocabularyTag = typeof vocabularyTags.$inferInsert;
 export type NewVerbDetails = typeof verbDetails.$inferInsert;

@@ -18,6 +18,7 @@ export const relations = defineRelations(schema, (r) => ({
 			from: r.vocabulary.id,
 			to: r.nounDetails.vocabId,
 		}),
+		nominalForms: r.many.nominalForms(),
 		verbDetails: r.one.verbDetails({
 			from: r.vocabulary.id,
 			to: r.verbDetails.vocabId,
@@ -31,6 +32,12 @@ export const relations = defineRelations(schema, (r) => ({
 	nounDetails: {
 		vocabulary: r.one.vocabulary({
 			from: r.nounDetails.vocabId,
+			to: r.vocabulary.id,
+		}),
+	},
+	nominalForms: {
+		vocabulary: r.one.vocabulary({
+			from: r.nominalForms.vocabId,
 			to: r.vocabulary.id,
 		}),
 	},
