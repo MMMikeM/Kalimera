@@ -1,6 +1,6 @@
 /// <reference types="@cloudflare/workers-types" />
 import { createRequestHandler } from "react-router";
-import { createDb, runWithDb } from "./db.server";
+import { createDb, runWithDb, type DbClient } from "./db.server";
 
 type CloudflareEnv = {
 	TURSO_DATABASE_URL: string;
@@ -13,7 +13,7 @@ type CloudflareEnv = {
 
 declare module "react-router" {
 	interface AppLoadContext {
-		db: ReturnType<typeof createDb>;
+		db: DbClient;
 		cloudflare: {
 			env: CloudflareEnv;
 			ctx: ExecutionContext;
@@ -57,29 +57,31 @@ export default {
 			return;
 		}
 
-		// Determine which cron triggered based on the schedule
-		// "0 9 * * *" = Daily at 9am UTC (practice reminder)
-		// "0 */6 * * *" = Every 6 hours (review due)
-		// "0 20 * * *" = Daily at 8pm UTC (streak warning)
-		const hour = new Date(event.scheduledTime).getUTCHours();
-		const isNineAm = hour === 9;
+		await runWithDb(db, async () => {
+			// Determine which cron triggered based on the schedule
+			// "0 9 * * *" = Daily at 9am UTC (practice reminder)
+			// "0 */6 * * *" = Every 6 hours (review due)
+			// "0 20 * * *" = Daily at 8pm UTC (streak warning)
+			const hour = new Date(event.scheduledTime).getUTCHours();
+			const isNineAm = hour === 9;
 
-		if (isNineAm && event.cron === "0 9 * * *") {
-			console.log("Running daily practice reminder...");
-			const result = await sendPracticeReminders(db, vapid);
-			console.log(`Practice reminders: sent=${result.sent}, failed=${result.failed}`);
-		}
+			if (isNineAm && event.cron === "0 9 * * *") {
+				console.log("Running daily practice reminder...");
+				const result = await sendPracticeReminders(vapid);
+				console.log(`Practice reminders: sent=${result.sent}, failed=${result.failed}`);
+			}
 
-		if (event.cron === "0 */6 * * *") {
-			console.log("Checking for due reviews...");
-			const result = await sendReviewDueNotifications(db, vapid);
-			console.log(`Review notifications: sent=${result.sent}, failed=${result.failed}`);
-		}
+			if (event.cron === "0 */6 * * *") {
+				console.log("Checking for due reviews...");
+				const result = await sendReviewDueNotifications(vapid);
+				console.log(`Review notifications: sent=${result.sent}, failed=${result.failed}`);
+			}
 
-		if (event.cron === "0 20 * * *") {
-			console.log("Running streak warning notifications...");
-			const result = await sendStreakWarningNotifications(db, vapid);
-			console.log(`Streak warnings: sent=${result.sent}, failed=${result.failed}`);
-		}
+			if (event.cron === "0 20 * * *") {
+				console.log("Running streak warning notifications...");
+				const result = await sendStreakWarningNotifications(vapid);
+				console.log(`Streak warnings: sent=${result.sent}, failed=${result.failed}`);
+			}
+		});
 	},
 };
