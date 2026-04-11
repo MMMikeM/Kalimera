@@ -18,7 +18,7 @@ const triggerStateVariants = tv({
 	base: "",
 	variants: {
 		active: {
-			true: "bg-white text-foreground shadow-sm border-b-2 border-b-terracotta dark:border-input dark:bg-input/30",
+			true: "border-b-2 bg-white text-foreground shadow-sm dark:border-input dark:bg-input/30",
 			false: "text-foreground dark:text-muted-foreground",
 		},
 		color: {
@@ -29,6 +29,13 @@ const triggerStateVariants = tv({
 			neutral: "",
 		},
 	},
+	compoundVariants: [
+		{ active: true, color: "ocean", class: "border-b-ocean dark:border-ocean" },
+		{ active: true, color: "olive", class: "border-b-olive dark:border-olive" },
+		{ active: true, color: "honey", class: "border-b-honey dark:border-honey" },
+		{ active: true, color: "terracotta", class: "border-b-terracotta dark:border-terracotta" },
+		{ active: true, color: "neutral", class: "border-b-stone-400 dark:border-stone-500" },
+	],
 	defaultVariants: {
 		active: false,
 		color: "neutral",
@@ -130,7 +137,7 @@ const NavTabs = ({ tabs, activeTab, buildUrl, className }: NavTabsProps) => {
 								to={buildUrl(tab.id)}
 								className={`${trigger()} ${triggerStateVariants({ active: isActive, color })}`}
 							>
-								{tab.icon}
+								<div className="flex h-4 items-center justify-center">{tab.icon}</div>
 								<span>{tab.label}</span>
 								{tab.badge !== undefined && tab.badge !== 0 && (
 									<span className={badgeColorVariants({ color })}>
