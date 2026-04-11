@@ -1,4 +1,4 @@
-import { Brain, Clock, Zap } from "lucide-react";
+import { Brain, Clock, Lightbulb, Zap } from "lucide-react";
 import { Outlet, useLocation } from "react-router";
 
 import type { NavTab } from "@/components/NavTabs";
@@ -85,16 +85,22 @@ export const UserRequiredMessage = () => (
 
 const PRACTICE_TABS: NavTab[] = [
 	{
-		id: "speed",
-		label: "Speed Drill",
+		id: "vocab",
+		label: "Vocabulary",
 		icon: <Zap size={16} />,
 		color: "terracotta",
+	},
+	{
+		id: "grammar",
+		label: "Grammar",
+		icon: <Lightbulb size={16} />,
+		color: "honey",
 	},
 	{
 		id: "memory",
 		label: "Memory",
 		icon: <Brain size={16} />,
-		color: "honey",
+		color: "olive",
 	},
 	{ id: "review", label: "Review", icon: <Clock size={16} />, color: "ocean" },
 ];
@@ -104,10 +110,10 @@ export default function PracticeLayout({ loaderData }: Route.ComponentProps) {
 	const location = useLocation();
 
 	const pathSegments = location.pathname.split("/").filter(Boolean);
-	const activeTab = pathSegments[1] || "speed";
+	const activeTab = pathSegments[1] || "vocab";
 
 	return (
-		<div className="space-y-4">
+		<div className="space-y-6">
 			<NavTabs
 				tabs={PRACTICE_TABS.map((tab) =>
 					tab.id === "review" && stats?.dueCount ? { ...tab, badge: stats.dueCount } : tab,
