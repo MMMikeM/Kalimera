@@ -1,9 +1,22 @@
 import { sql } from "drizzle-orm";
 import { db } from "../db.server";
-import { declensionPatterns, type DeclensionPattern } from "../db.server/enums";
-import { nounDetails, tags, verbDetails, vocabulary, vocabularyTags } from "../db.server/schema";
-import type { NewNounDetails, NewVocabulary, NewVocabularyTag } from "../db.server/types";
+import { tags, vocabularyTags } from "../db.server/schema";
+import type { NewNominalForm, NewVocabularyTag } from "../db.server/types";
 import { formatNounWithArticle } from "../lib/greek-grammar";
+import {
+	BATCH_SIZE,
+	batchInsertNounDetails,
+	batchInsertVerbDetails,
+	batchUpsertNominalForms,
+	nounDetailFromSeed,
+	pickAdjectiveNominalForms,
+	pickNounNominalForms,
+	runSeedCategory,
+	type NounDetailRecord,
+	type SeedAccumulators,
+	type VerbDetailRecord,
+	type VocabWithTags,
+} from "./seed-pipeline";
 import {
 	ADJECTIVES,
 	ARRIVING_PHRASES,
@@ -41,156 +54,6 @@ import {
 	VERBS,
 } from "./seed-data";
 
-const BATCH_SIZE = 100;
-
-type VerbDetailRecord = {
-	vocabId: number;
-	conjugationFamily: string;
-};
-
-type NounDetailRecord = NewNounDetails;
-
-const isDeclensionPattern = (value: unknown): value is DeclensionPattern =>
-	typeof value === "string" && (declensionPatterns as readonly string[]).includes(value);
-
-type VocabWithTags = {
-	vocab: NewVocabulary;
-	tags: string[];
-	nounDetail?: Omit<NounDetailRecord, "vocabId">;
-	verbDetail?: { conjugationFamily: string };
-};
-
-/**
- * Batch insert vocabulary items and return a map of greekText -> id
- * Handles conflicts by fetching existing IDs in batch
- */
-async function batchInsertVocab(items: NewVocabulary[]): Promise<Map<string, number>> {
-	const resultMap = new Map<string, number>();
-	if (items.length === 0) return resultMap;
-
-	let insertedCount = 0;
-
-	// Insert in chunks to avoid SQLite variable limits
-	for (let i = 0; i < items.length; i += BATCH_SIZE) {
-		const batch = items.slice(i, i + BATCH_SIZE);
-
-		const inserted = await db
-			.insert(vocabulary)
-			.values(batch)
-			.onConflictDoNothing({ target: vocabulary.greekText })
-			.returning({ id: vocabulary.id, greekText: vocabulary.greekText });
-
-		for (const row of inserted) {
-			resultMap.set(row.greekText, row.id);
-		}
-		insertedCount += inserted.length;
-	}
-
-	// Batch-fetch IDs for items that already existed
-	const missingTexts = items.map((item) => item.greekText).filter((text) => !resultMap.has(text));
-
-	if (missingTexts.length > 0) {
-		for (let i = 0; i < missingTexts.length; i += BATCH_SIZE) {
-			const batch = missingTexts.slice(i, i + BATCH_SIZE);
-			const existing = await db.query.vocabulary.findMany({
-				where: { greekText: { in: batch } },
-				columns: { id: true, greekText: true },
-			});
-
-			for (const row of existing) {
-				resultMap.set(row.greekText, row.id);
-			}
-		}
-	}
-
-	const skippedCount = items.length - insertedCount;
-	console.log(`  → ${insertedCount} inserted, ${skippedCount} skipped`);
-
-	return resultMap;
-}
-
-/**
- * Batch insert verb details
- */
-async function batchInsertVerbDetails(details: VerbDetailRecord[]) {
-	if (details.length === 0) return;
-
-	for (let i = 0; i < details.length; i += BATCH_SIZE) {
-		const batch = details.slice(i, i + BATCH_SIZE);
-		await db.insert(verbDetails).values(batch).onConflictDoNothing({ target: verbDetails.vocabId });
-	}
-}
-
-async function batchInsertNounDetails(details: NounDetailRecord[]) {
-	if (details.length === 0) return;
-
-	for (let i = 0; i < details.length; i += BATCH_SIZE) {
-		const batch = details.slice(i, i + BATCH_SIZE);
-		await db.insert(nounDetails).values(batch).onConflictDoUpdate({
-			target: nounDetails.vocabId,
-			set: {
-				gender: sql`excluded.gender`,
-				declensionPattern: sql`excluded.declension_pattern`,
-			},
-		});
-	}
-}
-
-/**
- * Process a category: collect items, batch insert, link tags
- */
-async function processCategory(
-	categoryName: string,
-	items: VocabWithTags[],
-	tagMap: Map<string, number>,
-	vocabTagLinks: NewVocabularyTag[],
-	tagDisplayOrderById: Map<number, number>,
-	nounDetailsToInsert: NounDetailRecord[],
-): Promise<VerbDetailRecord[]> {
-	console.log(`Seeding ${categoryName}...`);
-
-	const vocabItems = items.map((item) => item.vocab);
-	const idMap = await batchInsertVocab(vocabItems);
-
-	const verbDetailsToInsert: VerbDetailRecord[] = [];
-
-	for (const item of items) {
-		const vocabId = idMap.get(item.vocab.greekText);
-		if (!vocabId) {
-			console.warn(`  Warning: Could not find ID for ${item.vocab.greekText}`);
-			continue;
-		}
-
-		// Link tags
-		for (const tagSlug of item.tags) {
-			const tagId = tagMap.get(tagSlug);
-			if (tagId) {
-				const nextDisplayOrder = tagDisplayOrderById.get(tagId) ?? 0;
-				vocabTagLinks.push({ vocabularyId: vocabId, tagId, displayOrder: nextDisplayOrder });
-				tagDisplayOrderById.set(tagId, nextDisplayOrder + 1);
-			}
-		}
-
-		// Collect verb details for batch insert
-		if (item.verbDetail) {
-			verbDetailsToInsert.push({
-				vocabId,
-				conjugationFamily: item.verbDetail.conjugationFamily,
-			});
-		}
-
-		if (item.nounDetail) {
-			nounDetailsToInsert.push({
-				vocabId,
-				gender: item.nounDetail.gender,
-				declensionPattern: item.nounDetail.declensionPattern ?? null,
-			});
-		}
-	}
-
-	return verbDetailsToInsert;
-}
-
 async function seed() {
 	console.log("Seeding database (additive mode with batching)...\n");
 
@@ -218,12 +81,24 @@ async function seed() {
 		.returning();
 	console.log(`Upserted ${insertedTags.length} tags.`);
 
-	const tagMap = new Map(insertedTags.map((t) => [t.slug, t.id]));
 	console.log("Updated tag section metadata.\n");
 
 	const vocabTagLinks: NewVocabularyTag[] = [];
 	const tagDisplayOrderById = new Map<number, number>();
 	const allNounDetails: NounDetailRecord[] = [];
+	const allNominalForms: NewNominalForm[] = [];
+
+	const ctx: SeedAccumulators = {
+		tagMap: new Map(insertedTags.map((t) => [t.slug, t.id])),
+		vocabTagLinks,
+		tagDisplayOrderById,
+		allNounDetails,
+		allNominalForms,
+	};
+
+	const run = (categoryName: string, items: VocabWithTags[]) =>
+		runSeedCategory(categoryName, items, ctx);
+
 	const allVerbDetails: VerbDetailRecord[] = [];
 
 	// ============================================
@@ -256,28 +131,12 @@ async function seed() {
 					metadata: "metadata" in noun ? noun.metadata : undefined,
 				},
 				tags: itemTags,
-				nounDetail: {
-					gender: noun.gender,
-					declensionPattern:
-						"declensionPattern" in noun && isDeclensionPattern(noun.declensionPattern)
-							? noun.declensionPattern
-							: null,
-				},
+				nounDetail: nounDetailFromSeed(noun),
+				...pickNounNominalForms(noun),
 			});
 		}
 	}
-	allVerbDetails.push(
-		...(
-			await processCategory(
-				"nouns",
-				nounItems,
-				tagMap,
-				vocabTagLinks,
-				tagDisplayOrderById,
-				allNounDetails,
-			)
-		),
-	);
+	allVerbDetails.push(...(await run("nouns", nounItems)));
 
 	// ============================================
 	// VERBS (no word-type tag)
@@ -293,18 +152,7 @@ async function seed() {
 			conjugationFamily: verb.conjugationFamily,
 		},
 	}));
-	allVerbDetails.push(
-		...(
-			await processCategory(
-				"verbs",
-				verbItems,
-				tagMap,
-				vocabTagLinks,
-				tagDisplayOrderById,
-				allNounDetails,
-			)
-		),
-	);
+	allVerbDetails.push(...(await run("verbs", verbItems)));
 
 	// ============================================
 	// PHRASES (no word-type tags)
@@ -314,50 +162,50 @@ async function seed() {
 		items: Array<{ text: string; english: string; metadata?: unknown }>;
 		tags: string[];
 	}> = [
-		{
-			name: "essential phrases",
-			items: ESSENTIAL_PHRASES,
-			tags: ["essential"],
-		},
-		{ name: "survival phrases", items: SURVIVAL_PHRASES, tags: ["survival"] },
-		{ name: "request phrases", items: REQUEST_PHRASES, tags: ["request"] },
-		{
-			name: "discourse fillers",
-			items: DISCOURSE_FILLERS,
-			tags: ["discourse-filler", "expression"],
-		},
-		{
-			name: "social phrases",
-			items: SOCIAL_PHRASES,
-			tags: ["social-phrase", "expression"],
-		},
-		{ name: "question words", items: QUESTION_WORDS, tags: ["question"] },
-		{ name: "commands", items: COMMANDS, tags: ["command"] },
-		{ name: "time phrases", items: TIME_PHRASES, tags: ["time-expression"] },
-		{
-			name: "name construction",
-			items: NAME_CONSTRUCTION,
-			tags: ["name-construction"],
-		},
-		{
-			name: "discourse markers",
-			items: DISCOURSE_MARKERS,
-			tags: ["discourse-markers"],
-		},
-		{ name: "common responses", items: COMMON_RESPONSES, tags: ["responses"] },
-		{ name: "opinion phrases", items: OPINION_PHRASES, tags: ["opinions"] },
-		{
-			name: "arriving phrases",
-			items: ARRIVING_PHRASES,
-			tags: ["conversation-arriving"],
-		},
-		{ name: "food phrases", items: FOOD_PHRASES, tags: ["conversation-food"] },
-		{
-			name: "small talk phrases",
-			items: SMALLTALK_PHRASES,
-			tags: ["conversation-smalltalk"],
-		},
-	];
+			{
+				name: "essential phrases",
+				items: ESSENTIAL_PHRASES,
+				tags: ["essential"],
+			},
+			{ name: "survival phrases", items: SURVIVAL_PHRASES, tags: ["survival"] },
+			{ name: "request phrases", items: REQUEST_PHRASES, tags: ["request"] },
+			{
+				name: "discourse fillers",
+				items: DISCOURSE_FILLERS,
+				tags: ["discourse-filler", "expression"],
+			},
+			{
+				name: "social phrases",
+				items: SOCIAL_PHRASES,
+				tags: ["social-phrase", "expression"],
+			},
+			{ name: "question words", items: QUESTION_WORDS, tags: ["question"] },
+			{ name: "commands", items: COMMANDS, tags: ["command"] },
+			{ name: "time phrases", items: TIME_PHRASES, tags: ["time-expression"] },
+			{
+				name: "name construction",
+				items: NAME_CONSTRUCTION,
+				tags: ["name-construction"],
+			},
+			{
+				name: "discourse markers",
+				items: DISCOURSE_MARKERS,
+				tags: ["discourse-markers"],
+			},
+			{ name: "common responses", items: COMMON_RESPONSES, tags: ["responses"] },
+			{ name: "opinion phrases", items: OPINION_PHRASES, tags: ["opinions"] },
+			{
+				name: "arriving phrases",
+				items: ARRIVING_PHRASES,
+				tags: ["conversation-arriving"],
+			},
+			{ name: "food phrases", items: FOOD_PHRASES, tags: ["conversation-food"] },
+			{
+				name: "small talk phrases",
+				items: SMALLTALK_PHRASES,
+				tags: ["conversation-smalltalk"],
+			},
+		];
 
 	for (const category of phraseCategories) {
 		const items: VocabWithTags[] = category.items.map((phrase) => ({
@@ -368,13 +216,9 @@ async function seed() {
 			},
 			tags: category.tags,
 		}));
-		await processCategory(
+		await run(
 			category.name,
 			items,
-			tagMap,
-			vocabTagLinks,
-			tagDisplayOrderById,
-			allNounDetails,
 		);
 	}
 
@@ -390,13 +234,9 @@ async function seed() {
 		},
 		tags: ["time-telling"],
 	}));
-	await processCategory(
+	await run(
 		"time-telling phrases",
 		timeTellingItems,
-		tagMap,
-		vocabTagLinks,
-		tagDisplayOrderById,
-		allNounDetails,
 	);
 
 	// ============================================
@@ -410,13 +250,9 @@ async function seed() {
 		},
 		tags: ["days-of-week"],
 	}));
-	await processCategory(
+	await run(
 		"days of week",
 		dayItems,
-		tagMap,
-		vocabTagLinks,
-		tagDisplayOrderById,
-		allNounDetails,
 	);
 
 	const monthItems: VocabWithTags[] = MONTHS.map((month) => ({
@@ -427,13 +263,9 @@ async function seed() {
 		},
 		tags: ["months"],
 	}));
-	await processCategory(
+	await run(
 		"months",
 		monthItems,
-		tagMap,
-		vocabTagLinks,
-		tagDisplayOrderById,
-		allNounDetails,
 	);
 
 	// ============================================
@@ -450,13 +282,9 @@ async function seed() {
 			tags: ["transport-action"],
 		};
 	});
-	await processCategory(
+	await run(
 		"transport actions",
 		transportItems,
-		tagMap,
-		vocabTagLinks,
-		tagDisplayOrderById,
-		allNounDetails,
 	);
 
 	// ============================================
@@ -470,13 +298,9 @@ async function seed() {
 		},
 		tags: ["frequency"],
 	}));
-	await processCategory(
+	await run(
 		"frequency adverbs",
 		frequencyItems,
-		tagMap,
-		vocabTagLinks,
-		tagDisplayOrderById,
-		allNounDetails,
 	);
 
 	const positionItems: VocabWithTags[] = POSITION_ADVERBS.map((adverb) => ({
@@ -487,13 +311,9 @@ async function seed() {
 		},
 		tags: ["position"],
 	}));
-	await processCategory(
+	await run(
 		"position adverbs",
 		positionItems,
-		tagMap,
-		vocabTagLinks,
-		tagDisplayOrderById,
-		allNounDetails,
 	);
 
 	// ============================================
@@ -507,13 +327,9 @@ async function seed() {
 		},
 		tags: ["likes-singular"],
 	}));
-	await processCategory(
+	await run(
 		"likes construction (singular)",
 		likesSingularItems,
-		tagMap,
-		vocabTagLinks,
-		tagDisplayOrderById,
-		allNounDetails,
 	);
 
 	const likesPluralItems: VocabWithTags[] = LIKES_CONSTRUCTION.plural.map((like) => ({
@@ -524,13 +340,9 @@ async function seed() {
 		},
 		tags: ["likes-plural"],
 	}));
-	await processCategory(
+	await run(
 		"likes construction (plural)",
 		likesPluralItems,
-		tagMap,
-		vocabTagLinks,
-		tagDisplayOrderById,
-		allNounDetails,
 	);
 
 	// ============================================
@@ -543,14 +355,11 @@ async function seed() {
 			wordType: "adjective" as const,
 		},
 		tags: ["color"],
+		...pickAdjectiveNominalForms(color),
 	}));
-	await processCategory(
+	await run(
 		"colors",
 		colorItems,
-		tagMap,
-		vocabTagLinks,
-		tagDisplayOrderById,
-		allNounDetails,
 	);
 
 	const adjectiveItems: VocabWithTags[] = ADJECTIVES.map((adj) => ({
@@ -560,14 +369,11 @@ async function seed() {
 			wordType: "adjective" as const,
 		},
 		tags: [], // No content tags for standalone adjectives
+		...pickAdjectiveNominalForms(adj),
 	}));
-	await processCategory(
+	await run(
 		"adjectives",
 		adjectiveItems,
-		tagMap,
-		vocabTagLinks,
-		tagDisplayOrderById,
-		allNounDetails,
 	);
 
 	// ============================================
@@ -581,13 +387,9 @@ async function seed() {
 		},
 		tags: [],
 	}));
-	await processCategory(
+	await run(
 		"indefinite pronouns",
 		indefinitePronounItems,
-		tagMap,
-		vocabTagLinks,
-		tagDisplayOrderById,
-		allNounDetails,
 	);
 
 	const genderedPronounItems: VocabWithTags[] = GENDERED_PRONOUNS.map((pronoun) => ({
@@ -598,13 +400,9 @@ async function seed() {
 		},
 		tags: [],
 	}));
-	await processCategory(
+	await run(
 		"gendered pronouns",
 		genderedPronounItems,
-		tagMap,
-		vocabTagLinks,
-		tagDisplayOrderById,
-		allNounDetails,
 	);
 
 	// ============================================
@@ -618,13 +416,9 @@ async function seed() {
 		},
 		tags: [],
 	}));
-	await processCategory(
+	await run(
 		"indefinite adverbs",
 		indefiniteAdverbItems,
-		tagMap,
-		vocabTagLinks,
-		tagDisplayOrderById,
-		allNounDetails,
 	);
 
 	// ============================================
@@ -639,13 +433,9 @@ async function seed() {
 		},
 		tags: ["number"],
 	}));
-	await processCategory(
+	await run(
 		"numbers",
 		numberItems,
-		tagMap,
-		vocabTagLinks,
-		tagDisplayOrderById,
-		allNounDetails,
 	);
 
 	// ============================================
@@ -680,13 +470,9 @@ async function seed() {
 			});
 		}
 	}
-	await processCategory(
+	await run(
 		"daily patterns",
 		patternItems,
-		tagMap,
-		vocabTagLinks,
-		tagDisplayOrderById,
-		allNounDetails,
 	);
 
 	// ============================================
@@ -726,13 +512,8 @@ async function seed() {
 					metadata: { lessonDate: date },
 				},
 				tags: [lessonTag],
-				nounDetail: {
-					gender: noun.gender,
-					declensionPattern:
-						"declensionPattern" in noun && isDeclensionPattern(noun.declensionPattern)
-							? noun.declensionPattern
-							: null,
-				},
+				nounDetail: nounDetailFromSeed(noun),
+				...pickNounNominalForms(noun),
 			});
 		}
 
@@ -760,6 +541,7 @@ async function seed() {
 						metadata: { lessonDate: date },
 					},
 					tags: [lessonTag],
+					...pickAdjectiveNominalForms(adj),
 				});
 			}
 		}
@@ -777,14 +559,7 @@ async function seed() {
 			});
 		}
 
-		const lessonVerbDetails = await processCategory(
-			`lesson ${date}`,
-			lessonItems,
-			tagMap,
-			vocabTagLinks,
-			tagDisplayOrderById,
-			allNounDetails,
-		);
+		const lessonVerbDetails = await run(`lesson ${date}`, lessonItems);
 		allVerbDetails.push(...lessonVerbDetails);
 	}
 
@@ -793,6 +568,9 @@ async function seed() {
 	// ============================================
 	console.log(`\nInserting ${allNounDetails.length} noun details...`);
 	await batchInsertNounDetails(allNounDetails);
+
+	console.log(`\nUpserting ${allNominalForms.length} nominal forms...`);
+	await batchUpsertNominalForms(allNominalForms);
 
 	// ============================================
 	// BATCH INSERT VERB DETAILS
