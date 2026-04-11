@@ -18,7 +18,7 @@ const triggerStateVariants = tv({
 	base: "",
 	variants: {
 		active: {
-			true: "bg-white text-foreground shadow-sm dark:border-input dark:bg-input/30",
+			true: "bg-white text-foreground shadow-sm border-b-2 border-b-terracotta dark:border-input dark:bg-input/30",
 			false: "text-foreground dark:text-muted-foreground",
 		},
 		color: {
@@ -29,28 +29,6 @@ const triggerStateVariants = tv({
 			neutral: "",
 		},
 	},
-	compoundVariants: [
-		{
-			active: true,
-			color: "ocean",
-			class: "border-b-2 border-b-ocean text-ocean",
-		},
-		{
-			active: true,
-			color: "olive",
-			class: "border-b-2 border-b-olive text-olive",
-		},
-		{
-			active: true,
-			color: "honey",
-			class: "border-b-2 border-b-honey text-honey",
-		},
-		{
-			active: true,
-			color: "terracotta",
-			class: "border-b-2 border-b-terracotta text-terracotta",
-		},
-	],
 	defaultVariants: {
 		active: false,
 		color: "neutral",
