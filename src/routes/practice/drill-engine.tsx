@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router";
 
 import { Button } from "@/components/ui/button";
 
@@ -148,7 +149,7 @@ export const SummaryScreen = <T extends DrillForm>({
 
 			{slowest.length > 0 && (
 				<div className="mb-10">
-					<p className="mb-3 text-xs tracking-widest text-muted-foreground uppercase">Slowest</p>
+					<p className="mb-3 text-xs tracking-widest text-muted-foreground uppercase">Worth revisiting</p>
 					<div className="space-y-3">
 						{slowest.map((a) => (
 							<div key={a.form.id} className="flex items-baseline gap-3">
@@ -162,9 +163,17 @@ export const SummaryScreen = <T extends DrillForm>({
 				</div>
 			)}
 
-			<Button variant="outline" onClick={onAgain} className="w-full">
-				Go again
-			</Button>
+			<div className="mb-4">
+				<Button variant="outline" onClick={onAgain} className="w-full">
+					Go again
+				</Button>
+			</div>
+
+			<div className="text-center">
+				<Link to=".." className="text-xs text-stone-500 hover:text-stone-700 underline">
+					← back
+				</Link>
+			</div>
 		</div>
 	);
 };

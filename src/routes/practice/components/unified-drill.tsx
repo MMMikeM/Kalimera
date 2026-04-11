@@ -1,6 +1,6 @@
 import { CheckCircle, ChevronRight, Keyboard, XCircle } from "lucide-react";
 import type React from "react";
-import { useCallback, useEffect, useReducer, useRef, useState } from "react";
+import { useCallback, useEffect, useReducer, useRef } from "react";
 
 import { Card } from "@/components/Card";
 import CountdownTimer from "@/components/CountdownTimer";
@@ -171,7 +171,6 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 	const questionStartTimeRef = useRef<number>(Date.now());
 	const inputRef = useRef<HTMLInputElement>(null);
 	const autoAdvanceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-	const [isAutoAdvancing, setIsAutoAdvancing] = useState(false);
 
 	// Focus input when question becomes active
 	useEffect(() => {
@@ -186,10 +185,8 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 		if (state.phase !== "feedback" || !state.lastResult) return;
 
 		const delay = state.lastResult.isCorrect ? AUTO_ADVANCE_DELAY : WRONG_ADVANCE_DELAY;
-		setIsAutoAdvancing(true);
 		autoAdvanceTimerRef.current = setTimeout(() => {
 			dispatch({ type: "NEXT_QUESTION" });
-			setIsAutoAdvancing(false);
 		}, delay);
 
 		return () => {
@@ -197,7 +194,6 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 				clearTimeout(autoAdvanceTimerRef.current);
 				autoAdvanceTimerRef.current = null;
 			}
-			setIsAutoAdvancing(false);
 		};
 	}, [state.phase, state.lastResult]);
 
@@ -411,9 +407,9 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 							{state.lastResult?.isCorrect ? <CheckCircle size={24} /> : <XCircle size={24} />}
 							<span className="text-lg font-bold">
 								{state.lastResult?.timedOut
-									? "Time's up!"
+									? "Time's up"
 									: state.lastResult?.isCorrect
-										? "Correct!"
+										? "Correct"
 										: "Not quite"}
 							</span>
 							{!state.lastResult?.timedOut && state.lastResult && (
@@ -458,13 +454,6 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 							</p>
 						)}
 
-						{/* Auto-advance indicator */}
-						{isAutoAdvancing && state.lastResult?.isCorrect && (
-							<p className="animate-pulse text-center text-xs text-stone-400">Next question...</p>
-						)}
-						{isAutoAdvancing && !state.lastResult?.isCorrect && (
-							<p className="animate-pulse text-center text-xs text-stone-400">Advancing in 3s...</p>
-						)}
 					</div>
 				)}
 			</div>
@@ -481,7 +470,7 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 					</Button>
 				)}
 
-				{state.phase === "feedback" && !state.lastResult?.isCorrect && (
+				{state.phase === "feedback" && (
 					<Button onClick={() => dispatch({ type: "NEXT_QUESTION" })} className="gap-2">
 						{state.currentIndex < state.questions.length - 1 ? (
 							<>

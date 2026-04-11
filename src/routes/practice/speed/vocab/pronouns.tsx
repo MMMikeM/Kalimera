@@ -122,60 +122,58 @@ export default function PronounsDrill() {
 		return (
 			<div className="mx-auto max-w-xl">
 				<Card variant="bordered" padding="lg" className="text-center">
-					<div className="py-8">
-						<div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-terracotta-100">
-							<Zap size={32} className="text-terracotta" />
+					<div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-terracotta-100">
+						<Zap size={32} className="text-terracotta" />
+					</div>
+					<h2 className="mb-2 text-2xl font-bold text-foreground">
+						{categoryConfig.label} Drill
+					</h2>
+					<p className="mb-8 text-muted-foreground">
+						Rapid-fire production practice. Type fast, build automaticity.
+					</p>
+
+					<div className="mb-6">
+						<span className="mb-2 block text-sm text-muted-foreground">Questions</span>
+						<div className="flex justify-center gap-2">
+							{[10, 15, 20, 30].map((size) => (
+								<Button
+									key={size}
+									variant={drillSize === size ? "primary" : "outline"}
+									size="sm"
+									onClick={() => setDrillSize(size)}
+								>
+									{size}
+								</Button>
+							))}
 						</div>
-						<h2 className="mb-2 text-2xl font-bold">
-							{categoryConfig.label} Drill
-						</h2>
-						<p className="mb-6 text-stone-600">
-							Rapid-fire production practice. Type fast, build automaticity.
+					</div>
+
+					<Button
+						size="lg"
+						onClick={() => {
+							setSessionCount(1);
+							startDbSession();
+						}}
+						className="gap-2"
+					>
+						<Zap size={20} />
+						Start Training
+					</Button>
+
+					<div className="mt-6 space-y-1 text-xs text-muted-foreground">
+						<p>
+							<kbd className="rounded border border-border bg-muted px-1.5 py-0.5 text-muted-foreground">
+								Space
+							</kbd>{" "}
+							to start each question
 						</p>
-
-						<div className="mb-6">
-							<span className="mb-2 block text-sm text-stone-500">Questions</span>
-							<div className="flex justify-center gap-2">
-								{[10, 15, 20, 30].map((size) => (
-									<Button
-										key={size}
-										variant={drillSize === size ? "primary" : "outline"}
-										size="sm"
-										onClick={() => setDrillSize(size)}
-									>
-										{size}
-									</Button>
-								))}
-							</div>
-						</div>
-
-						<Button
-							size="lg"
-							onClick={() => {
-								setSessionCount(1);
-								startDbSession();
-							}}
-							className="gap-2"
-						>
-							<Zap size={20} />
-							Start Training
-						</Button>
-
-						<div className="mt-6 space-y-1 text-xs text-stone-400">
-							<p>
-								<kbd className="rounded bg-stone-100 px-1.5 py-0.5 text-stone-600">
-									Space
-								</kbd>{" "}
-								to start each question
-							</p>
-							<p>
-								<kbd className="rounded bg-stone-100 px-1.5 py-0.5 text-stone-600">
-									Enter
-								</kbd>{" "}
-								to submit answer
-							</p>
-							<p>Auto-advance on correct answers</p>
-						</div>
+						<p>
+							<kbd className="rounded border border-border bg-muted px-1.5 py-0.5 text-muted-foreground">
+								Enter
+							</kbd>{" "}
+							to submit answer
+						</p>
+						<p>Auto-advance on correct answers</p>
 					</div>
 				</Card>
 			</div>

@@ -1,5 +1,7 @@
 import { Link } from "react-router";
 
+import { Card } from "@/components/Card";
+
 const PARADIGMS = [
 	{
 		id: "articles",
@@ -33,17 +35,20 @@ const PARADIGMS = [
 
 const COLOR_CLASSES = {
 	honey: {
-		border: "border-honey/30",
+		border: "hover:border-honey",
+		hover: "hover:bg-honey-50",
 		text: "text-honey-text",
 		count: "text-honey",
 	},
 	terracotta: {
-		border: "border-terracotta/30",
+		border: "hover:border-terracotta",
+		hover: "hover:bg-terracotta-50",
 		text: "text-terracotta-text",
 		count: "text-terracotta",
 	},
 	olive: {
-		border: "border-olive/30",
+		border: "hover:border-olive",
+		hover: "hover:bg-olive-50",
 		text: "text-olive-text",
 		count: "text-olive",
 	},
@@ -51,32 +56,36 @@ const COLOR_CLASSES = {
 
 export default function MemoryIndex() {
 	return (
-		<div className="max-w-md px-6 py-8">
-			<h2 className="mb-1 font-serif text-2xl text-navy-text">Memory Drills</h2>
-			<p className="mb-8 text-sm text-muted-foreground">
-				Timed recall for forms that need to become automatic.
-			</p>
+		<div className="mx-auto max-w-xl">
+			<Card variant="bordered" padding="lg">
+				<div className="mb-8">
+					<h2 className="mb-2 text-2xl font-bold text-foreground">Memory Drills</h2>
+					<p className="text-muted-foreground">
+						Paradigm recall. Timed to surface the forms that need more work.
+					</p>
+				</div>
 
-			<div className="space-y-3">
-				{PARADIGMS.map((p) => {
-					const c = COLOR_CLASSES[p.color];
-					return (
-						<Link
-							key={p.id}
-							to={p.id}
-							className={`block rounded-lg border px-4 py-3 ${c.border} transition-colors hover:bg-cream-dark`}
-						>
-							<div className="flex items-baseline justify-between gap-3">
-								<span className={`text-sm font-medium ${c.text}`}>{p.title}</span>
-								<span className={`text-xs tabular-nums ${c.count}`}>{p.forms} forms</span>
-							</div>
-							<p lang="el" className="greek-text mt-1 text-sm text-muted-foreground">
-								{p.preview}
-							</p>
-						</Link>
-					);
-				})}
-			</div>
+				<div className="space-y-3">
+					{PARADIGMS.map((p) => {
+						const c = COLOR_CLASSES[p.color];
+						return (
+							<Link
+								key={p.id}
+								to={p.id}
+								className={`block rounded-lg border border-border p-4 transition-colors ${c.border} ${c.hover}`}
+							>
+								<div className="mb-1 flex items-baseline justify-between gap-3">
+									<span className={`text-sm font-medium ${c.text}`}>{p.title}</span>
+									<span className={`text-xs tabular-nums ${c.count}`}>{p.forms} forms</span>
+								</div>
+								<p lang="el" className="greek-text text-sm text-muted-foreground">
+									{p.preview}
+								</p>
+							</Link>
+						);
+					})}
+				</div>
+			</Card>
 		</div>
 	);
 }
