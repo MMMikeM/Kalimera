@@ -1,4 +1,10 @@
+import { formatNounWithArticle } from "../../../lib/greek-grammar";
 import type { NounSeed } from "../../../types/seed";
+import {
+	nounDetailFromSeed,
+	pickNounNominalForms,
+	type VocabWithTags,
+} from "../../seed-pipeline";
 
 export const NOUNS = {
 	summer: [
@@ -172,3 +178,36 @@ export const NOUNS = {
 
 	objects: [{ lemma: "πίνακας", gender: "masculine", english: "board/painting" }],
 } as const satisfies Record<string, NounSeed[]>;
+
+const themeTagMap: Record<string, string> = {
+	summer: "summer",
+	transport: "transport-vehicle",
+	timeOfDay: "time-of-day",
+	timeExpressions: "time-expression",
+	shopping: "shopping",
+	clothing: "clothing",
+	household: "household",
+	people: "people",
+	nature: "nature",
+};
+
+export const NOUN_ITEMS: VocabWithTags[] = [];
+for (const [theme, nouns] of Object.entries(NOUNS)) {
+	for (const noun of nouns) {
+		const displayText = formatNounWithArticle(noun.lemma, noun.gender);
+		const itemTags: string[] = [];
+		if (themeTagMap[theme]) itemTags.push(themeTagMap[theme]);
+
+		NOUN_ITEMS.push({
+			vocab: {
+				greekText: displayText,
+				englishTranslation: noun.english,
+				wordType: "noun",
+				metadata: "metadata" in noun ? noun.metadata : undefined,
+			},
+			tags: itemTags,
+			nounDetail: nounDetailFromSeed(noun),
+			...pickNounNominalForms(noun),
+		});
+	}
+}

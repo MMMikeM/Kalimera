@@ -1,4 +1,5 @@
 import type { PronounSeed } from "../../../types/seed";
+import type { VocabWithTags } from "../../seed-pipeline";
 
 // Core indefinite pronouns (invariable - no gender)
 export const INDEFINITE_PRONOUNS: PronounSeed[] = [
@@ -48,3 +49,21 @@ export const GENDERED_PRONOUNS: PronounSeed[] = [
 	// such (τέτοιος, τέτοια, τέτοιο)
 	{ lemma: "τέτοιος", english: "such (m: τέτοιος, f: τέτοια, n: τέτοιο)" },
 ];
+
+export const INDEFINITE_PRONOUN_ITEMS: VocabWithTags[] = INDEFINITE_PRONOUNS.map((pronoun) => ({
+	vocab: {
+		greekText: pronoun.lemma,
+		englishTranslation: pronoun.english,
+		wordType: "pronoun" as const,
+	},
+	tags: [],
+}));
+
+export const GENDERED_PRONOUN_ITEMS: VocabWithTags[] = GENDERED_PRONOUNS.map((pronoun) => ({
+	vocab: {
+		greekText: pronoun.lemma,
+		englishTranslation: pronoun.english,
+		wordType: "pronoun" as const,
+	},
+	tags: [],
+}));

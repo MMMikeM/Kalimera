@@ -1,4 +1,5 @@
 import type { AdverbSeed } from "../../../types/seed";
+import type { VocabWithTags } from "../../seed-pipeline";
 
 export const FREQUENCY_ADVERBS: AdverbSeed[] = [
 	{ lemma: "ποτέ", english: "never" },
@@ -49,3 +50,30 @@ export const INDEFINITE_ADVERBS: AdverbSeed[] = [
 	{ lemma: "κάπως", english: "somehow" },
 	{ lemma: "οπωσδήποτε", english: "by all means/definitely" },
 ];
+
+export const FREQUENCY_ITEMS: VocabWithTags[] = FREQUENCY_ADVERBS.map((adverb) => ({
+	vocab: {
+		greekText: adverb.lemma,
+		englishTranslation: adverb.english,
+		wordType: "adverb" as const,
+	},
+	tags: ["frequency"],
+}));
+
+export const POSITION_ITEMS: VocabWithTags[] = POSITION_ADVERBS.map((adverb) => ({
+	vocab: {
+		greekText: adverb.lemma,
+		englishTranslation: adverb.english,
+		wordType: "adverb" as const,
+	},
+	tags: ["position"],
+}));
+
+export const INDEFINITE_ADVERB_ITEMS: VocabWithTags[] = INDEFINITE_ADVERBS.map((adverb) => ({
+	vocab: {
+		greekText: adverb.lemma,
+		englishTranslation: adverb.english,
+		wordType: "adverb" as const,
+	},
+	tags: [],
+}));

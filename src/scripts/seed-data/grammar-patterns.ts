@@ -2,6 +2,7 @@
 // These are full phrases showing how cases work in daily Greek
 
 import type { Case } from "../../lib/greek-grammar";
+import type { VocabWithTags } from "../seed-pipeline";
 
 export interface GrammarPattern {
 	greek: string;
@@ -161,3 +162,33 @@ export const DAILY_PATTERNS = {
 	time: CASE_PATTERNS.accusative.timeExpressions,
 	family: CASE_PATTERNS.genitive.possession,
 } as const;
+
+const patternTagMap: Record<string, string> = {
+	coffee: "daily-coffee",
+	house: "daily-house",
+	time: "daily-time",
+	family: "daily-family",
+};
+
+export const DAILY_PATTERN_ITEMS: VocabWithTags[] = [];
+for (const [category, patterns] of Object.entries(DAILY_PATTERNS)) {
+	if (!patterns) continue;
+	for (const pattern of patterns) {
+		const itemTags: string[] = [];
+		const tagSlug = patternTagMap[category];
+		if (tagSlug) itemTags.push(tagSlug);
+
+		DAILY_PATTERN_ITEMS.push({
+			vocab: {
+				greekText: pattern.greek,
+				englishTranslation: pattern.english,
+				wordType: "phrase",
+				metadata: {
+					explanation: pattern.explanation,
+					whyThisCase: pattern.whyThisCase,
+				},
+			},
+			tags: itemTags,
+		});
+	}
+}

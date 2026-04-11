@@ -1,4 +1,5 @@
 import type { NumberSeed } from "../../../types/seed";
+import type { VocabWithTags } from "../../seed-pipeline";
 
 export const NUMBERS: NumberSeed[] = [
 	// Zero
@@ -36,3 +37,13 @@ export const NUMBERS: NumberSeed[] = [
 	// Hundred
 	{ lemma: "εκατό", value: 100 },
 ];
+
+export const NUMBER_ITEMS: VocabWithTags[] = NUMBERS.map((num) => ({
+	vocab: {
+		greekText: num.lemma,
+		englishTranslation: String(num.value),
+		wordType: "noun" as const,
+		metadata: { numericValue: num.value },
+	},
+	tags: ["number"],
+}));
