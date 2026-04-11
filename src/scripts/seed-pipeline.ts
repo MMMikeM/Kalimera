@@ -79,13 +79,10 @@ const parseAdjectiveNominalFormKey = (
 	return null;
 };
 
-export const nounDetailFromSeed = (noun: {
-	gender: Gender;
-	declensionPattern?: unknown;
-}): Omit<NounDetailRecord, "vocabId"> => ({
+export const nounDetailFromSeed = (noun: NounSeed): Omit<NounDetailRecord, "vocabId"> => ({
 	gender: noun.gender,
 	declensionPattern:
-		"declensionPattern" in noun && isDeclensionPattern(noun.declensionPattern)
+		noun.declensionPattern != null && isDeclensionPattern(noun.declensionPattern)
 			? noun.declensionPattern
 			: null,
 });
