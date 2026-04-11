@@ -26,6 +26,7 @@ build/
 
 # Environment variables
 .env
+.env.prod
 .env.local
 .env.*.local
 

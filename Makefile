@@ -27,22 +27,22 @@ db-setup: db-push db-seed
 db-studio:
 	pnpm db:studio
 
-# Production database (Turso Cloud - loads from .env)
+# Production database (Turso Cloud - loads from .env.prod)
 # Note: Uses generate + migrate to avoid transaction bug with db:push and PRAGMA foreign_keys
 prod-db-push:
-	set -a && . ./.env && set +a && pnpm drizzle-kit generate && \
-	set -a && . ./.env && set +a && pnpm drizzle-kit migrate
+	set -a && . ./.env.prod && set +a && pnpm drizzle-kit generate && \
+	set -a && . ./.env.prod && set +a && pnpm drizzle-kit migrate
 
 prod-db-seed:
-	set -a && . ./.env && set +a && pnpm db:seed
+	set -a && . ./.env.prod && set +a && pnpm db:seed
 
 prod-db-seed-conjugations:
-	set -a && . ./.env && set +a && pnpm tsx src/scripts/seed-verb-conjugations.ts
+	set -a && . ./.env.prod && set +a && pnpm tsx src/scripts/seed-verb-conjugations.ts
 
 prod-db-setup: prod-db-push prod-db-seed
 
 prod-db-studio:
-	set -a && . ./.env && set +a && pnpm db:studio
+	set -a && . ./.env.prod && set +a && pnpm db:studio
 
 # Deployment
 deploy: build
