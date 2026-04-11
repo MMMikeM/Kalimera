@@ -38,10 +38,6 @@ export const setTaperOfferPending = async (userId: number, pending: boolean) => 
 };
 export type TappedAction = "2min" | "body" | "snooze";
 
-// ═══════════════════════════════════════════════════════════════════════════════
-// PUSH SUBSCRIPTIONS
-// ═══════════════════════════════════════════════════════════════════════════════
-
 export type UpsertPushSubscriptionInput = Pick<
 	PushSubscriptionInsert,
 	"userId" | "endpoint" | "p256dh" | "auth"
@@ -70,10 +66,6 @@ export const snoozePushSubscription = async (userId: number) => {
 		.set({ snoozedUntil: endOfToday })
 		.where(eq(pushSubscriptions.userId, userId));
 };
-
-// ═══════════════════════════════════════════════════════════════════════════════
-// NOTIFICATION LOGS
-// ═══════════════════════════════════════════════════════════════════════════════
 
 export type LogNotificationSentInput = Pick<NotificationLogInsert, "userId" | "type">;
 

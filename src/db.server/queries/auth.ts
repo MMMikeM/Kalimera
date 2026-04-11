@@ -6,10 +6,6 @@ import { authenticatorTransports } from "../enums";
 import { db } from "../index";
 import { authChallenges, type ChallengeType, passkeys } from "../schema";
 
-// ═══════════════════════════════════════════════════════════════════════════════
-// PASSKEY QUERIES
-// ═══════════════════════════════════════════════════════════════════════════════
-
 export const findPasskeysByUserId = async (userId: number) => {
 	return await db.query.passkeys.findMany({ where: { userId } });
 };
@@ -34,10 +30,6 @@ export const updatePasskeyCounter = async (credentialId: string, counter: number
 		.set({ counter, lastUsedAt: new Date() })
 		.where(eq(passkeys.credentialId, credentialId));
 };
-
-// ═══════════════════════════════════════════════════════════════════════════════
-// CHALLENGE QUERIES
-// ═══════════════════════════════════════════════════════════════════════════════
 
 const CHALLENGE_TTL_MS = 5 * 60 * 1000; // 5 minutes
 
@@ -65,10 +57,6 @@ export const findChallenge = async (challenge: string, type: ChallengeType) => {
 export const deleteChallenge = async (challenge: string) => {
 	await db.delete(authChallenges).where(eq(authChallenges.challenge, challenge));
 };
-
-// ═══════════════════════════════════════════════════════════════════════════════
-// USER AUTH HELPERS (passkeys)
-// ═══════════════════════════════════════════════════════════════════════════════
 
 export const userHasPasskey = async (userId: number) => {
 	const count = await db.$count(passkeys, eq(passkeys.userId, userId));

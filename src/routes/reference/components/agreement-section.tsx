@@ -451,9 +451,6 @@ export const AgreementSection: React.FC = () => {
 	);
 };
 
-// ============================================================================
-// MOVABLE NU SECTION (The -ν Rule)
-// ============================================================================
 export const MovableNuSection: React.FC = () => (
 	<section id="movable-nu" className="space-y-6">
 		<SectionHeading

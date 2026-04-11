@@ -7,7 +7,7 @@ import { MonoText } from "@/components/MonoText";
 import { SectionHeading } from "@/components/SectionHeading";
 import { StemInsight } from "@/components/StemInsight";
 import { TenseNavigator } from "@/components/TenseNavigator";
-import { Badge } from "@/components/ui/Badge";
+import { Badge } from "@/components/ui/badge";
 
 import type { Route } from "./+types/route";
 

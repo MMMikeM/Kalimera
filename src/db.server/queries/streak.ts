@@ -4,19 +4,11 @@ import type { User } from "../types";
 
 const getHoursSince = (date: Date): number => differenceInHours(new Date(), date);
 
-// ═══════════════════════════════════════════════════════════════════════════════
-// CONFIGURATION
-// ═══════════════════════════════════════════════════════════════════════════════
-
 export const STREAK_CONFIG = {
 	DAYS_TO_EARN_FREEZE: 7,
 	MAX_FREEZES: 3,
 	RECOVERY_HOURS: 24,
 } as const;
-
-// ═══════════════════════════════════════════════════════════════════════════════
-// TYPES
-// ═══════════════════════════════════════════════════════════════════════════════
 
 export type FreezeStatus = {
 	status: "available" | "recovering" | "none" | "just_used";
@@ -24,10 +16,6 @@ export type FreezeStatus = {
 	hoursUntilRecovery?: number;
 	protectedDate?: string;
 };
-
-// ═══════════════════════════════════════════════════════════════════════════════
-// QUERIES
-// ═══════════════════════════════════════════════════════════════════════════════
 
 export const getFreezeStatus = (user: User): FreezeStatus => {
 	const { freezeCount, lastFreezeUsedAt, freezeUsedForDate } = user;

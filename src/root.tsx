@@ -349,28 +349,17 @@ export function ErrorBoundary() {
 	}, [error, errorMessage, errorStack]);
 
 	return (
-		<html lang="en">
-			<head>
-				<meta charSet="utf-8" />
-				<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-				<title>{title}</title>
-				<Links />
-			</head>
-			<body className="bg-cream font-sans text-stone-800 antialiased">
-				<div className="flex min-h-screen items-center justify-center p-6">
-					<div className="max-w-md text-center">
-						<h1 className="mb-4 font-serif text-3xl text-terracotta">{title}</h1>
-						<p className="mb-6 text-stone-600">{message}</p>
-						<a
-							href="/"
-							className="inline-block rounded-xl bg-terracotta px-6 py-3 font-medium text-white transition-colors hover:bg-terracotta-dark"
-						>
-							Go Home
-						</a>
-					</div>
-				</div>
-				<Scripts />
-			</body>
-		</html>
+		<div className="flex min-h-screen items-center justify-center bg-cream p-6">
+			<div className="max-w-md text-center">
+				<h1 className="mb-4 font-serif text-3xl text-terracotta">{title}</h1>
+				<p className="mb-6 text-stone-600">{message}</p>
+				<a
+					href="/"
+					className="inline-block rounded-xl bg-terracotta px-6 py-3 font-medium text-white transition-colors hover:bg-terracotta-dark"
+				>
+					Go Home
+				</a>
+			</div>
+		</div>
 	);
 }
