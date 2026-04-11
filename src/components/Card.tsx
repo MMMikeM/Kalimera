@@ -4,9 +4,9 @@ import { cn } from "@/lib/utils";
 
 const variantStyles = {
 	default: "",
-	bordered: "border-2 border-stone-300 shadow-none",
+	bordered: "border border-stone-200 shadow-none",
 	shadow: "shadow-lg border-0",
-	elevated: "shadow-md border-stone-100",
+	elevated: "shadow-md border border-stone-100",
 };
 
 const paddingStyles = {
