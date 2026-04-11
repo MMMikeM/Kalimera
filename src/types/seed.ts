@@ -68,8 +68,8 @@ export interface NounSeed {
 	lemma: string;
 	gender: Gender;
 	english: string;
-	declensionPattern?: DeclensionPattern;
-	nominalForms?: NounNominalFormsSeed;
+	declensionPattern: DeclensionPattern;
+	nominalForms: NounNominalFormsSeed;
 	metadata?: Record<string, unknown>;
 }
 
@@ -83,7 +83,7 @@ export interface AdverbSeed {
 export interface AdjectiveSeed {
 	lemma: string;
 	english: string;
-	nominalForms?: AdjectiveNominalFormsSeed;
+	nominalForms: AdjectiveNominalFormsSeed;
 }
 
 export interface PronounSeed {
