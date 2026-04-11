@@ -11,7 +11,12 @@ import {
 	type GrammaticalNumber,
 } from "../db.server/enums";
 import { nominalForms, nounDetails, verbDetails, vocabulary } from "../db.server/schema";
-import type { NewNounDetails, NewNominalForm, NewVocabulary, NewVocabularyTag } from "../db.server/types";
+import type {
+	NewNounDetails,
+	NewNominalForm,
+	NewVocabulary,
+	NewVocabularyTag,
+} from "../db.server/types";
 import type {
 	AdjectiveNominalFormsSeed,
 	AdjectiveSeed,
@@ -198,13 +203,16 @@ export async function batchInsertNounDetails(details: NounDetailRecord[]) {
 
 	for (let i = 0; i < details.length; i += BATCH_SIZE) {
 		const batch = details.slice(i, i + BATCH_SIZE);
-		await db.insert(nounDetails).values(batch).onConflictDoUpdate({
-			target: nounDetails.vocabId,
-			set: {
-				gender: sql`excluded.gender`,
-				declensionPattern: sql`excluded.declension_pattern`,
-			},
-		});
+		await db
+			.insert(nounDetails)
+			.values(batch)
+			.onConflictDoUpdate({
+				target: nounDetails.vocabId,
+				set: {
+					gender: sql`excluded.gender`,
+					declensionPattern: sql`excluded.declension_pattern`,
+				},
+			});
 	}
 }
 
