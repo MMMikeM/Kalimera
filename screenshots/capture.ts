@@ -3,8 +3,9 @@ import { join } from "node:path";
 
 import { chromium } from "playwright";
 
+import { loginWithCredentials } from "./login";
+
 const BASE_URL = process.env.BASE_URL || "http://localhost:5173";
-const USER_ID = process.env.USER_ID || "1";
 
 const isMobile = process.argv.includes("--mobile");
 const OUTPUT_DIR = join(process.cwd(), "screenshots", isMobile ? "mobile" : "desktop");
@@ -14,9 +15,10 @@ const PAGES = [
 	{ route: "/", name: "homepage" },
 
 	// Practice
+	{ route: "/practice/memory", name: "practice/memory" },
 	{ route: "/practice/speed", name: "practice/speed" },
-	{ route: "/practice/vocabulary", name: "practice/vocabulary" },
 	{ route: "/practice/review", name: "practice/review" },
+	{ route: "/practice/vocabulary", name: "practice/vocabulary" },
 
 	// Learn - Landing
 	{ route: "/learn", name: "learn/index" },
@@ -75,18 +77,18 @@ const takeScreenshots = async () => {
 	const context = await browser.newContext({ viewport: VIEWPORT });
 	const page = await context.newPage();
 
-	// Set localStorage to authenticate before navigating to any pages
-	await page.goto(BASE_URL, { waitUntil: "domcontentloaded" });
-	await page.evaluate((userId) => {
-		localStorage.setItem(
-			"greek-authenticated-user",
-			JSON.stringify({ userId: Number(userId), username: "demo" }),
-		);
-	}, USER_ID);
+	// Login with credentials before capturing screenshots
+	try {
+		await loginWithCredentials(page, BASE_URL);
+	} catch (error) {
+		console.error("Login failed:", error);
+		await browser.close();
+		throw error;
+	}
 
 	const mode = isMobile ? "mobile (375x812)" : "desktop (1280x720)";
 	console.log(`Mode: ${mode}`);
-	console.log(`Taking ${PAGES.length} screenshots as user ${USER_ID}...\n`);
+	console.log(`Taking ${PAGES.length} screenshots...\n`);
 
 	for (const { route, name } of PAGES) {
 		const url = `${BASE_URL}${route}`;
