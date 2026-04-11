@@ -1,15 +1,16 @@
-import { sql } from "drizzle-orm";
 import { db } from "../db.server";
 import { tags, vocabulary, vocabularyTags } from "../db.server/schema";
 
 async function main() {
-	const [vocabCount] = await db.select({ count: sql<number>`COUNT(*)` }).from(vocabulary);
-	const [tagsCount] = await db.select({ count: sql<number>`COUNT(*)` }).from(tags);
-	const [vtCount] = await db.select({ count: sql<number>`COUNT(*)` }).from(vocabularyTags);
+	const [vocabCount, tagsCount, vtCount] = await Promise.all([
+		db.$count(vocabulary),
+		db.$count(tags),
+		db.$count(vocabularyTags),
+	]);
 
-	console.log("vocabulary count:", vocabCount?.count ?? 0);
-	console.log("tags count:", tagsCount?.count ?? 0);
-	console.log("vocabulary_tags count:", vtCount?.count ?? 0);
+	console.log("vocabulary count:", vocabCount);
+	console.log("tags count:", tagsCount);
+	console.log("vocabulary_tags count:", vtCount);
 
 	process.exit(0);
 }
