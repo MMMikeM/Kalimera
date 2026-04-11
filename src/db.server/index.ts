@@ -6,7 +6,7 @@ import { relations } from "./relations";
 // Helper to create a typed db instance
 const createTypedDb = (client: Client) => drizzle({ client, relations });
 
-type DbClient = ReturnType<typeof createTypedDb>;
+export type DbClient = ReturnType<typeof createTypedDb>;
 
 // AsyncLocalStorage to hold the db instance per request
 const dbStorage = new AsyncLocalStorage<DbClient>();

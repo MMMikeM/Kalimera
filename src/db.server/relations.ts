@@ -8,8 +8,16 @@ export const relations = defineRelations(schema, (r) => ({
 		weakAreas: r.many.weakAreas(),
 		vocabularySkills: r.many.vocabularySkills(),
 		milestonesAchieved: r.many.milestonesAchieved(),
+		passkeys: r.many.passkeys(),
+		authChallenges: r.many.authChallenges(),
+		pushSubscriptions: r.many.pushSubscriptions(),
+		notificationLogs: r.many.notificationLogs(),
 	},
 	vocabulary: {
+		nounDetails: r.one.nounDetails({
+			from: r.vocabulary.id,
+			to: r.nounDetails.vocabId,
+		}),
 		verbDetails: r.one.verbDetails({
 			from: r.vocabulary.id,
 			to: r.verbDetails.vocabId,
@@ -20,18 +28,14 @@ export const relations = defineRelations(schema, (r) => ({
 		vocabularySkills: r.many.vocabularySkills(),
 		practiceAttempts: r.many.practiceAttempts(),
 	},
-	tags: {
-		vocabularyTags: r.many.vocabularyTags(),
-		section: r.one.tagSections({
-			from: r.tags.id,
-			to: r.tagSections.tagId,
+	nounDetails: {
+		vocabulary: r.one.vocabulary({
+			from: r.nounDetails.vocabId,
+			to: r.vocabulary.id,
 		}),
 	},
-	tagSections: {
-		tag: r.one.tags({
-			from: r.tagSections.tagId,
-			to: r.tags.id,
-		}),
+	tags: {
+		vocabularyTags: r.many.vocabularyTags(),
 	},
 	vocabularyTags: {
 		vocabulary: r.one.vocabulary({
@@ -101,6 +105,31 @@ export const relations = defineRelations(schema, (r) => ({
 	milestonesAchieved: {
 		user: r.one.users({
 			from: r.milestonesAchieved.userId,
+			to: r.users.id,
+		}),
+	},
+	passkeys: {
+		user: r.one.users({
+			from: r.passkeys.userId,
+			to: r.users.id,
+		}),
+	},
+	authChallenges: {
+		user: r.one.users({
+			from: r.authChallenges.userId,
+			to: r.users.id,
+			optional: true,
+		}),
+	},
+	pushSubscriptions: {
+		user: r.one.users({
+			from: r.pushSubscriptions.userId,
+			to: r.users.id,
+		}),
+	},
+	notificationLogs: {
+		user: r.one.users({
+			from: r.notificationLogs.userId,
 			to: r.users.id,
 		}),
 	},

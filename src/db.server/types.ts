@@ -1,9 +1,9 @@
 import type {
 	milestonesAchieved,
+	nounDetails,
 	practiceAttempts,
 	practiceSessions,
 	pushSubscriptions,
-	tagSections,
 	tags,
 	users,
 	verbConjugations,
@@ -18,8 +18,8 @@ import type {
 // Inferred select types (what you get when querying)
 export type User = typeof users.$inferSelect;
 export type Vocabulary = typeof vocabulary.$inferSelect;
+export type NounDetails = typeof nounDetails.$inferSelect;
 export type Tag = typeof tags.$inferSelect;
-export type TagSection = typeof tagSections.$inferSelect;
 export type VocabularyTag = typeof vocabularyTags.$inferSelect;
 export type VerbDetails = typeof verbDetails.$inferSelect;
 export type VerbConjugation = typeof verbConjugations.$inferSelect;
@@ -34,8 +34,8 @@ export type MilestoneAchieved = typeof milestonesAchieved.$inferSelect;
 // Inferred insert types (what you provide when inserting)
 export type NewUser = typeof users.$inferInsert;
 export type NewVocabulary = typeof vocabulary.$inferInsert;
+export type NewNounDetails = typeof nounDetails.$inferInsert;
 export type NewTag = typeof tags.$inferInsert;
-export type NewTagSection = typeof tagSections.$inferInsert;
 export type NewVocabularyTag = typeof vocabularyTags.$inferInsert;
 export type NewVerbDetails = typeof verbDetails.$inferInsert;
 export type NewVerbConjugation = typeof verbConjugations.$inferInsert;
