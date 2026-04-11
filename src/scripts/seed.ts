@@ -216,10 +216,7 @@ async function seed() {
 			},
 			tags: category.tags,
 		}));
-		await run(
-			category.name,
-			items,
-		);
+		await run(category.name, items);
 	}
 
 	// ============================================
