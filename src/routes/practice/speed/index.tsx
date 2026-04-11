@@ -9,31 +9,27 @@ export default function SpeedIndex() {
 
 	return (
 		<div className="mx-auto max-w-xl">
-			<Card variant="bordered" padding="lg" className="text-center">
-				<div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-terracotta-100">
-					<Zap size={32} className="text-terracotta" />
+			<Card variant="bordered" padding="lg">
+				<div className="mb-8 flex flex-col">
+					<div className="mx-auto mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-terracotta-100">
+						<Zap size={32} className="text-terracotta" />
+					</div>
+					<h2 className="mb-2 font-serif text-xl font-semibold text-navy-text">Speed Drill</h2>
+					<p className="text-sm text-muted-foreground">
+						Production practice. Recover forms until they no longer require effort.
+					</p>
 				</div>
-				<h2 className="mb-2 text-2xl font-bold text-foreground">Speed Drill</h2>
-				<p className="mb-8 text-muted-foreground">
-					Production practice. Recover forms until they no longer require effort.
-				</p>
 
 				<div className="space-y-3">
-					<Button
-						onClick={() => navigate("vocab")}
-						className="w-full gap-2"
-						size="lg"
-					>
-						<Zap size={20} />
+					<Button onClick={() => navigate("vocab")} className="w-full" size="lg">
 						Vocabulary Drills
 					</Button>
 					<Button
 						onClick={() => navigate("grammar")}
-						className="w-full gap-2"
+						className="w-full"
 						size="lg"
 						variant="outline"
 					>
-						<Zap size={20} />
 						Grammar Exercises
 					</Button>
 				</div>
