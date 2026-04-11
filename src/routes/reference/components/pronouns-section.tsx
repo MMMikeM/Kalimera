@@ -15,6 +15,7 @@ import {
 	SUBJECT_PRONOUN_EXAMPLES,
 	SUBJECT_PRONOUNS,
 } from "@/constants/pronouns";
+
 import { PronounDecisionGuide } from "./pronoun-decision-guide";
 import { PronounParadigmTable } from "./pronoun-paradigm-table";
 

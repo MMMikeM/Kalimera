@@ -1,8 +1,10 @@
 import { SearchX } from "lucide-react";
+
 import { MonoText } from "@/components/MonoText";
-import type { VocabularySearchGraphRow } from "@/db.server/queries/vocabulary";
+import type { VocabularySearchGraphRow } from "@/db.server/queries/vocabulary-search";
 import { cn } from "@/lib/utils";
-import { Badge } from "./ui/badge";
+
+import { Badge } from "./ui/Badge";
 
 interface SearchResultsProps {
 	results: VocabularySearchGraphRow[];

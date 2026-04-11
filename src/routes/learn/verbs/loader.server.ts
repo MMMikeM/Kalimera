@@ -1,5 +1,5 @@
-import type { VerbVocabularyWithDetailsRow } from "@/db.server/queries/vocabulary";
-import { fetchVerbsWithVerbDetails } from "@/db.server/queries/vocabulary";
+import type { VerbVocabularyWithDetailsRow } from "@/db.server/queries/verbs";
+import { fetchVerbsWithVerbDetails } from "@/db.server/queries/verbs";
 
 export type VerbWithPattern = VerbVocabularyWithDetailsRow;
 
@@ -35,7 +35,6 @@ function groupVerbsByPattern(verbs: VerbWithPattern[]): VerbCategory[] {
 				groups[pattern] = {
 					id: `verb-${pattern.toLowerCase().replace(/\s+/g, "-")}`,
 					title: pattern,
-					verbs: [],
 				};
 			}
 			groups[pattern]?.verbs.push(verb);

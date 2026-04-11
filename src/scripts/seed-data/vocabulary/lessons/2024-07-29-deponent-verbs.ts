@@ -1,7 +1,5 @@
-import type { Phrase, FullVerbSeed } from "../../../../types/seed";
-import type { NounSeedInput } from "../noun-seed-enrichment";
-import type { AdjectiveSeedInput } from "../adjective-seed-enrichment";
-export const LESSON_2024_07_29 = {
+import { createLesson } from "@/types/lesson-builder";
+export const LESSON_2024_07_29 = createLesson({
 	meta: {
 		date: "2024-07-29",
 		topic: "Deponent verbs (-μαι family) and commands",
@@ -24,14 +22,12 @@ export const LESSON_2024_07_29 = {
 			english: "I hunch/slouch",
 			conjugationFamily: "-ω",
 		},
-	] satisfies FullVerbSeed[],
+	],
 
 	nouns: [
 		{ lemma: "καμπούρα", gender: "feminine", english: "hunch/hunchback" },
 		{ lemma: "ξύλο", gender: "neuter", english: "wood/beating" },
-	] satisfies NounSeedInput[],
-
-	adverbs: [],
+	],
 
 	phrases: [
 		// Commands (imperative forms)
@@ -77,7 +73,7 @@ export const LESSON_2024_07_29 = {
 			english: "you'll get a beating",
 			metadata: { register: "colloquial", literal: "you will eat wood" },
 		},
-	] satisfies Phrase[],
+	],
 
 	grammarNotes: [
 		{
@@ -91,4 +87,4 @@ export const LESSON_2024_07_29 = {
 			explanation: "Irregular imperative forms - must memorize",
 		},
 	],
-} as const;
+});

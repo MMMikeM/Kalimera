@@ -1,7 +1,5 @@
-import type { Phrase, FullVerbSeed } from "../../../../types/seed";
-import type { NounSeedInput } from "../noun-seed-enrichment";
-import type { AdjectiveSeedInput } from "../adjective-seed-enrichment";
-export const LESSON_2024_05_06 = {
+import { createLesson } from "@/types/lesson-builder";
+export const LESSON_2024_05_06 = createLesson({
 	meta: {
 		date: "2024-05-06",
 		topic: "Daily activities and hobbies",
@@ -14,7 +12,7 @@ export const LESSON_2024_05_06 = {
 		{ lemma: "παίζω", english: "I play", conjugationFamily: "-ω" },
 		{ lemma: "χορεύω", english: "I dance", conjugationFamily: "-ω" },
 		{ lemma: "μαγειρεύω", english: "I cook", conjugationFamily: "-ω" },
-	] satisfies FullVerbSeed[],
+	],
 
 	nouns: [
 		{ lemma: "τραγούδι", gender: "neuter", english: "song" },
@@ -24,9 +22,7 @@ export const LESSON_2024_05_06 = {
 		{ lemma: "τηλεόραση", gender: "feminine", english: "television" },
 		{ lemma: "σινεμά", gender: "neuter", english: "cinema" },
 		{ lemma: "σπορ", gender: "neuter", english: "sport" },
-	] satisfies NounSeedInput[],
-
-	adverbs: [],
+	],
 
 	phrases: [
 		{ text: "τρώω μεσημεριανό", english: "I eat lunch", metadata: {} },
@@ -44,7 +40,7 @@ export const LESSON_2024_05_06 = {
 			metadata: { note: "no article needed" },
 		},
 		{ text: "κάνω σπορ", english: "I do sport", metadata: {} },
-	] satisfies Phrase[],
+	],
 
 	grammarNotes: [
 		{
@@ -53,4 +49,4 @@ export const LESSON_2024_05_06 = {
 			explanation: "Regular -ω verb",
 		},
 	],
-} as const;
+});

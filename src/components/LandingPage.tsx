@@ -1,5 +1,6 @@
 import { Brain, Clock, Flame } from "lucide-react";
 import { Link } from "react-router";
+
 import { Card } from "@/components/Card";
 import { DrillDemo } from "@/components/DrillDemo";
 import { Header } from "@/components/Header";

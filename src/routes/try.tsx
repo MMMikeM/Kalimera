@@ -1,9 +1,11 @@
 import { ArrowRight, UserPlus, Zap } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router";
+
 import { Card } from "@/components/Card";
 import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
+
 import UnifiedDrill, { type SessionStats } from "./practice/components/unified-drill";
 
 export function meta() {

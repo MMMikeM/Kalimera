@@ -13,18 +13,21 @@ import {
 	useNavigate,
 	useRouteError,
 } from "react-router";
+import type { LinksFunction } from "react-router";
+
 import { GlobalSearch } from "@/components/GlobalSearch";
 import { Header } from "@/components/Header";
 import { LandingPage } from "@/components/LandingPage";
+
+import "./index.css";
 import {
 	Popover,
 	PopoverContent,
 	PopoverPositioner,
 	PopoverTrigger,
 } from "@/components/ui/popover";
-import "./index.css";
-import type { LinksFunction } from "react-router";
 import { clearAuthCookie, getAuthSession } from "@/lib/auth-cookie";
+
 import type { Route } from "./+types/root";
 
 const AUTH_STORAGE_KEY = "greek-authenticated-user";

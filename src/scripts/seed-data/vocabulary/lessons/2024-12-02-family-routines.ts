@@ -1,7 +1,5 @@
-import type { Phrase, FullVerbSeed } from "../../../../types/seed";
-import type { NounSeedInput } from "../noun-seed-enrichment";
-import type { AdjectiveSeedInput } from "../adjective-seed-enrichment";
-export const LESSON_2024_12_02 = {
+import { createLesson } from "@/types/lesson-builder";
+export const LESSON_2024_12_02 = createLesson({
 	meta: {
 		date: "2024-12-02",
 		topic: "Family routines - daily schedules, weekend activities",
@@ -15,7 +13,7 @@ export const LESSON_2024_12_02 = {
 		{ lemma: "ξεκουράζομαι", english: "I rest", conjugationFamily: "-ομαι" },
 		{ lemma: "βγαίνω", english: "I go out", conjugationFamily: "-ω" },
 		{ lemma: "υπάρχω", english: "I exist / there is", conjugationFamily: "-ω" },
-	] satisfies FullVerbSeed[],
+	],
 
 	// Family and routine nouns
 	nouns: [
@@ -34,13 +32,13 @@ export const LESSON_2024_12_02 = {
 		{ lemma: "μαθηματικός", gender: "masculine", english: "mathematician" },
 		{ lemma: "ρολόι", gender: "neuter", english: "watch/clock" },
 		{ lemma: "φορά", gender: "feminine", english: "time (instance)" },
-	] satisfies NounSeedInput[],
+	],
 
 	// Adjectives from the lesson
 	adjectives: [
 		{ lemma: "παντρεμένος", english: "married" },
 		{ lemma: "εθνικός", english: "national" },
-	] satisfies AdjectiveSeedInput[],
+	],
 
 	// Frequency adverbs (critical for describing routines)
 	adverbs: [
@@ -48,7 +46,7 @@ export const LESSON_2024_12_02 = {
 		{ lemma: "σπάνια", english: "rarely" },
 		{ lemma: "πολλές φορές", english: "many times/often" },
 		{ lemma: "μερικές φορές", english: "sometimes" },
-	] satisfies AdverbSeed[],
+	],
 
 	// Routine phrases - patterns for describing daily life
 	phrases: [
@@ -123,7 +121,7 @@ export const LESSON_2024_12_02 = {
 			english: "they are married",
 			metadata: { grammar: "plural" },
 		},
-	] satisfies Phrase[],
+	],
 
 	// Grammar patterns demonstrated in the text
 	grammarNotes: [
@@ -143,4 +141,4 @@ export const LESSON_2024_12_02 = {
 			explanation: "Days, parts of day use accusative article",
 		},
 	],
-} as const;
+});

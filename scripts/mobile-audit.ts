@@ -1,4 +1,5 @@
 import { mkdir } from "node:fs/promises";
+
 import { chromium } from "playwright";
 
 const BASE_URL = "http://localhost:5173";

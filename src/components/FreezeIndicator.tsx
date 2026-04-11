@@ -1,5 +1,6 @@
 import { ShieldCheck, Snowflake } from "lucide-react";
 import { tv, type VariantProps } from "tailwind-variants";
+
 import { cn } from "@/lib/utils";
 
 export type FreezeStatus = "available" | "recovering" | "none" | "just_used";

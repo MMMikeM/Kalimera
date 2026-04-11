@@ -1,4 +1,4 @@
-import { fetchSectionVocabularyByTagSlug } from "@/db.server/queries/vocabulary";
+import { fetchNouns } from "@/db.server/queries/vocabulary-sections";
 import type { Vocabulary } from "@/db.server/types";
 
 export type VocabItem = Vocabulary;
@@ -30,7 +30,16 @@ type CategoryKey = "people" | "shopping" | "household" | "vehicles" | "summer";
 export type CategoriesMap = Record<CategoryKey, CategoryData>;
 
 export async function loader() {
-	const nouns = await fetchSectionVocabularyByTagSlug("nouns");
+	const rows = await fetchNouns();
+
+	// Group by tag slug
+	const nouns: Record<string, Vocabulary[]> = {};
+	for (const row of rows) {
+		const slug = row.tags.slug;
+		const items = nouns[slug] ?? [];
+		items.push(row.vocabulary);
+		nouns[slug] = items;
+	}
 
 	const buildCategory = (title: string, tagKey: string): CategoryData => {
 		const items = (nouns[tagKey] ?? []).map(parseNoun);

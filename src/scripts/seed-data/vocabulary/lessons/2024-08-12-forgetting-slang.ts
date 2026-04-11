@@ -1,20 +1,14 @@
-import type { Phrase, FullVerbSeed } from "../../../../types/seed";
-import type { NounSeedInput } from "../noun-seed-enrichment";
-import type { AdjectiveSeedInput } from "../adjective-seed-enrichment";
-export const LESSON_2024_08_12 = {
+import { createLesson } from "@/types/lesson-builder";
+export const LESSON_2024_08_12 = createLesson({
 	meta: {
 		date: "2024-08-12",
 		topic: "Forgetting, slang, vegetables",
 		source: "Weekly lesson",
 	},
 
-	verbs: [
-		{ lemma: "ξεχνάω", english: "I forget", conjugationFamily: "-άω/-ώ" },
-	] satisfies FullVerbSeed[],
+	verbs: [{ lemma: "ξεχνάω", english: "I forget", conjugationFamily: "-άω/-ώ" }],
 
-	nouns: [{ lemma: "λαχανικά", gender: "neuter", english: "vegetables" }] satisfies NounSeedInput[],
-
-	adverbs: [],
+	nouns: [{ lemma: "λαχανικά", gender: "neuter", english: "vegetables" }],
 
 	phrases: [
 		{
@@ -32,7 +26,5 @@ export const LESSON_2024_08_12 = {
 			english: "you're a total weirdo/crazy",
 			metadata: { register: "slang/playful", note: "augmentative form" },
 		},
-	] satisfies Phrase[],
-
-	grammarNotes: [],
-} as const;
+	],
+});

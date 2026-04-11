@@ -1,4 +1,8 @@
-import { fetchSectionVocabularyByTagSlug } from "@/db.server/queries/vocabulary";
+import {
+	fetchPhrases,
+	fetchReference,
+	fetchVerbsBySection,
+} from "@/db.server/queries/vocabulary-sections";
 import type { Vocabulary } from "@/db.server/types";
 
 export type PhraseItem = Vocabulary;
@@ -8,11 +12,27 @@ export type PhraseItem = Vocabulary;
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export async function getPhrasesData() {
-	const [phrases, reference, verbs] = await Promise.all([
-		fetchSectionVocabularyByTagSlug("phrases"),
-		fetchSectionVocabularyByTagSlug("reference"),
-		fetchSectionVocabularyByTagSlug("verbs"),
+	const [phraseRows, referenceRows, verbRows] = await Promise.all([
+		fetchPhrases(),
+		fetchReference(),
+		fetchVerbsBySection(),
 	]);
+
+	// Group each by tag slug
+	const groupBySlug = (rows: any[]) => {
+		const grouped: Record<string, any[]> = {};
+		for (const row of rows) {
+			const slug = row.tags.slug;
+			const items = grouped[slug] ?? [];
+			items.push(row.vocabulary);
+			grouped[slug] = items;
+		}
+		return grouped;
+	};
+
+	const phrases = groupBySlug(phraseRows);
+	const reference = groupBySlug(referenceRows);
+	const verbs = groupBySlug(verbRows);
 
 	return {
 		survival: {

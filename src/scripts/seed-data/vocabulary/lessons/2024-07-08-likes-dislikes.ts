@@ -1,7 +1,5 @@
-import type { Phrase, FullVerbSeed } from "../../../../types/seed";
-import type { NounSeedInput } from "../noun-seed-enrichment";
-import type { AdjectiveSeedInput } from "../adjective-seed-enrichment";
-export const LESSON_2024_07_08 = {
+import { createLesson } from "@/types/lesson-builder";
+export const LESSON_2024_07_08 = createLesson({
 	meta: {
 		date: "2024-07-08",
 		topic: "Likes/dislikes, possessive pronouns, when clauses",
@@ -14,22 +12,22 @@ export const LESSON_2024_07_08 = {
 			english: "I get nervous/annoyed",
 			conjugationFamily: "-ω",
 		},
-	] satisfies FullVerbSeed[],
+	],
 
 	nouns: [
 		{ lemma: "κύμα", gender: "neuter", english: "wave" },
 		{ lemma: "γραφείο", gender: "neuter", english: "office" },
-	] satisfies NounSeedInput[],
+	],
 
 	adjectives: [
 		{ lemma: "δυνατός", english: "strong/loud" },
 		{ lemma: "ενθουσιασμένος", english: "enthusiastic/excited" },
-	] satisfies AdjectiveSeedInput[],
+	],
 
 	adverbs: [
 		{ lemma: "όταν", english: "when (conjunction)" },
 		{ lemma: "ποτέ", english: "never" },
-	] satisfies AdverbSeed[],
+	],
 
 	phrases: [
 		// Location phrases
@@ -71,7 +69,7 @@ export const LESSON_2024_07_08 = {
 			english: "when?",
 			metadata: { note: "question word, different from όταν" },
 		},
-	] satisfies Phrase[],
+	],
 
 	grammarNotes: [
 		{
@@ -85,4 +83,4 @@ export const LESSON_2024_07_08 = {
 			explanation: "πότε = question word, όταν = conjunction",
 		},
 	],
-} as const;
+});

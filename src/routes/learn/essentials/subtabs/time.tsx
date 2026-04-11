@@ -1,7 +1,9 @@
 import { ChevronLeft } from "lucide-react";
 import { Link } from "react-router";
+
 import { ContentSection } from "@/components/ContentSection";
 import { MonoText } from "@/components/MonoText";
+
 import type { EssentialsLoaderData } from "../data.server";
 
 interface Props {

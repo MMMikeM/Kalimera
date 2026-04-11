@@ -1,7 +1,5 @@
-import type { Phrase, FullVerbSeed } from "../../../../types/seed";
-import type { NounSeedInput } from "../noun-seed-enrichment";
-import type { AdjectiveSeedInput } from "../adjective-seed-enrichment";
-export const LESSON_2024_07_01 = {
+import { createLesson } from "@/types/lesson-builder";
+export const LESSON_2024_07_01 = createLesson({
 	meta: {
 		date: "2024-07-01",
 		topic: "Daily action verbs",
@@ -26,11 +24,9 @@ export const LESSON_2024_07_01 = {
 			conjugationFamily: "-ω",
 		},
 		{ lemma: "φτάνω", english: "I arrive", conjugationFamily: "-ω" },
-	] satisfies FullVerbSeed[],
+	],
 
-	nouns: [],
-
-	adverbs: [{ lemma: "όμως", english: "though/however" }] satisfies AdverbSeed[],
+	adverbs: [{ lemma: "όμως", english: "though/however" }],
 
 	phrases: [
 		{
@@ -56,7 +52,7 @@ export const LESSON_2024_07_01 = {
 				grammar: "dative-like construction",
 			},
 		},
-	] satisfies Phrase[],
+	],
 
 	grammarNotes: [
 		{
@@ -69,4 +65,4 @@ export const LESSON_2024_07_01 = {
 			explanation: "Context determines meaning",
 		},
 	],
-} as const;
+});

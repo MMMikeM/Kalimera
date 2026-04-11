@@ -1,6 +1,8 @@
 import { BookOpen } from "lucide-react";
+
 import { PracticeCTA } from "@/components/PracticeCTA";
 import { TabHero } from "@/components/TabHero";
+
 import { ArticlesSection } from "../components/articles-section";
 
 export function ArticlesTab() {

@@ -1,7 +1,5 @@
-import type { Phrase, FullVerbSeed } from "../../../../types/seed";
-import type { NounSeedInput } from "../noun-seed-enrichment";
-import type { AdjectiveSeedInput } from "../adjective-seed-enrichment";
-export const LESSON_2024_12_30 = {
+import { createLesson } from "@/types/lesson-builder";
+export const LESSON_2024_12_30 = createLesson({
 	meta: {
 		date: "2024-12-30",
 		topic: "Entertainment, events, and descriptive adjectives",
@@ -12,7 +10,7 @@ export const LESSON_2024_12_30 = {
 		{ lemma: "μπαίνω", english: "I enter/get in", conjugationFamily: "-ω" },
 		{ lemma: "βγαίνω", english: "I exit/get out", conjugationFamily: "-ω" },
 		{ lemma: "παίζω", english: "I play", conjugationFamily: "-ω" },
-	] satisfies FullVerbSeed[],
+	],
 
 	nouns: [
 		// Entertainment
@@ -47,7 +45,7 @@ export const LESSON_2024_12_30 = {
 			english: "orange juice/orangeade",
 		},
 		{ lemma: "γιαγιά", gender: "feminine", english: "grandmother" },
-	] satisfies NounSeedInput[],
+	],
 
 	adjectives: [
 		// Descriptive adjectives for events (-ος/-η/-ο pattern)
@@ -62,9 +60,9 @@ export const LESSON_2024_12_30 = {
 		// From error correction
 		{ lemma: "κόκκινος", english: "red" },
 		{ lemma: "νότιος", english: "south/southern" },
-	] satisfies AdjectiveSeedInput[],
+	],
 
-	adverbs: [{ lemma: "έξω", english: "outside/out" }] satisfies AdverbSeed[],
+	adverbs: [{ lemma: "έξω", english: "outside/out" }],
 
 	phrases: [
 		// Entertainment questions
@@ -152,7 +150,7 @@ export const LESSON_2024_12_30 = {
 			english: "the man wants orange juice",
 			metadata: { pattern: "subject + θέλει + accusative" },
 		},
-	] satisfies Phrase[],
+	],
 
 	grammarNotes: [
 		{
@@ -188,4 +186,4 @@ export const LESSON_2024_12_30 = {
 				"γι'αυτό (= για αυτό) means 'that's why' or 'for this reason'. Connects cause to effect.",
 		},
 	],
-} as const;
+});

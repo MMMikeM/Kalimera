@@ -2,8 +2,8 @@ import { Clock, RotateCcw, Zap } from "lucide-react";
 import type React from "react";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { useFetcher, useOutletContext, useSearchParams } from "react-router";
+
 import { Card } from "@/components/Card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
 	CATEGORY_CONFIG,
@@ -13,12 +13,14 @@ import {
 	generateGrammarQuestions,
 	type GrammarExerciseType,
 } from "@/lib/drill/generate-questions";
+
 import UnifiedDrill, {
 	type SessionStats,
 	type UnifiedAttemptResult,
 	type UnifiedQuestion,
 } from "./components/unified-drill";
 import type { PracticeLoaderData } from "./layout";
+import { Badge } from "@/components/ui/Badge";
 
 export type FocusType = QuestionCategory | "all";
 export type DrillMode = "category" | "grammar";

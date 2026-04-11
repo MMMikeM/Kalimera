@@ -1,8 +1,17 @@
 import { hasNumericValue, hasTimeRange } from "@/db.server/metadata";
-import { fetchSectionVocabularyByTagSlug } from "@/db.server/queries/vocabulary";
+import { fetchReference } from "@/db.server/queries/vocabulary-sections";
 
 export async function getEssentialsData() {
-	const reference = await fetchSectionVocabularyByTagSlug("reference");
+	const rows = await fetchReference();
+
+	// Group by tag slug
+	const reference: Record<string, any[]> = {};
+	for (const row of rows) {
+		const slug = row.tags.slug;
+		const items = reference[slug] ?? [];
+		items.push(row.vocabulary);
+		reference[slug] = items;
+	}
 
 	return {
 		timesOfDay: (reference["time-of-day"] ?? []).map((t) => ({

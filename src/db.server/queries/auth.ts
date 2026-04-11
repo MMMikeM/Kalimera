@@ -1,6 +1,7 @@
 import { eq } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-orm/zod";
 import { z } from "zod/v4";
+
 import { authenticatorTransports } from "../enums";
 import { db } from "../index";
 import { authChallenges, type ChallengeType, passkeys } from "../schema";

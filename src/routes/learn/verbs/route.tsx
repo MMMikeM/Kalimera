@@ -2,6 +2,7 @@ import { ChevronDown, ChevronLeft, ChevronUp, Star } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
 import { Link } from "react-router";
+
 import { TabHero } from "@/components/TabHero";
 import {
 	IRREGULAR_VERBS,
@@ -11,6 +12,7 @@ import {
 } from "@/constants/verbs";
 import { type ColorScheme, colorStyles } from "@/lib/colors";
 import { cn } from "@/lib/utils";
+
 import type { Route } from "./+types/route";
 
 export { loader } from "./loader.server";

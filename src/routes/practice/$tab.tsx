@@ -1,4 +1,5 @@
 import { redirect } from "react-router";
+
 import type { Route } from "./+types/$tab";
 import { ReviewTab } from "./tabs/review";
 import { VocabularyTab } from "./tabs/vocabulary";

@@ -7,6 +7,7 @@ import {
 import { KeyRound, Loader2, LogIn } from "lucide-react";
 import { useEffect } from "react";
 import { Link, redirect } from "react-router";
+
 import { Card } from "@/components/Card";
 import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/ui/form-field";
@@ -25,6 +26,7 @@ import {
 	passwordSetupSchema,
 	passwordSetupValidator,
 } from "@/lib/validators/auth";
+
 import type { Route } from "./+types/login";
 
 export function meta() {

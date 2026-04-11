@@ -1,7 +1,5 @@
-import type { Phrase, FullVerbSeed } from "../../../../types/seed";
-import type { NounSeedInput } from "../noun-seed-enrichment";
-import type { AdjectiveSeedInput } from "../adjective-seed-enrichment";
-export const LESSON_2024_09_10 = {
+import { createLesson } from "@/types/lesson-builder";
+export const LESSON_2024_09_10 = createLesson({
 	meta: {
 		date: "2024-09-10",
 		topic: "Living abroad vocabulary",
@@ -12,7 +10,7 @@ export const LESSON_2024_09_10 = {
 		{ lemma: "υποφέρω", english: "I suffer", conjugationFamily: "-ω" },
 		{ lemma: "παιδεύομαι", english: "I struggle", conjugationFamily: "-ομαι" },
 		{ lemma: "προσπαθώ", english: "I try", conjugationFamily: "-άω/-ώ" },
-	] satisfies FullVerbSeed[],
+	],
 
 	nouns: [
 		{ lemma: "υγρασία", gender: "feminine", english: "humidity" },
@@ -22,16 +20,14 @@ export const LESSON_2024_09_10 = {
 		{ lemma: "καριέρα", gender: "feminine", english: "career" },
 		{ lemma: "εμβόλιο", gender: "neuter", english: "vaccine" },
 		{ lemma: "ορχήστρα", gender: "feminine", english: "orchestra" },
-	] satisfies NounSeedInput[],
+	],
 
 	adjectives: [
 		{ lemma: "επικίνδυνος", english: "dangerous" },
 		{ lemma: "θορυβώδης", english: "noisy/loud" },
 		{ lemma: "φοβισμένος", english: "scared" },
 		{ lemma: "άνετος", english: "comfortable" },
-	] satisfies AdjectiveSeedInput[],
-
-	adverbs: [],
+	],
 
 	phrases: [
 		{ text: "με τα χρόνια", english: "over the years", metadata: {} },
@@ -51,7 +47,5 @@ export const LESSON_2024_09_10 = {
 			english: "pity/what a shame",
 			metadata: { usage: "common exclamation" },
 		},
-	] satisfies Phrase[],
-
-	grammarNotes: [],
-} as const;
+	],
+});

@@ -1,20 +1,15 @@
-import type { Phrase, FullVerbSeed } from "../../../../types/seed";
-import type { NounSeedInput } from "../noun-seed-enrichment";
-import type { AdjectiveSeedInput } from "../adjective-seed-enrichment";
-export const LESSON_2023_12_09 = {
+import { createLesson } from "@/types/lesson-builder";
+export const LESSON_2023_12_09 = createLesson({
 	meta: {
 		date: "2023-12-09",
 		topic: "Past tense introduction, biography questions",
 		source: "Weekly lesson - γεννήθηκα, σπούδασα",
 	},
 
-	verbs: [],
-	nouns: [],
-
 	adverbs: [
 		{ lemma: "σήμερα", english: "today" },
 		{ lemma: "εχθές", english: "yesterday" },
-	] satisfies AdverbSeed[],
+	],
 
 	phrases: [
 		// Past tense questions
@@ -65,7 +60,7 @@ export const LESSON_2023_12_09 = {
 			english: "by myself (female)",
 			metadata: { grammar: "reflexive" },
 		},
-	] satisfies Phrase[],
+	],
 
 	grammarNotes: [
 		{
@@ -74,4 +69,4 @@ export const LESSON_2023_12_09 = {
 			explanation: "γεννιέμαι (I am born) → γεννήθηκα (I was born)",
 		},
 	],
-} as const;
+});

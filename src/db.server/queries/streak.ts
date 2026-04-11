@@ -1,4 +1,5 @@
 import { differenceInHours } from "date-fns";
+
 import type { User } from "../types";
 
 const getHoursSince = (date: Date): number => differenceInHours(new Date(), date);

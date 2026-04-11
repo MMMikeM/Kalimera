@@ -1,7 +1,8 @@
 import { eq } from "drizzle-orm";
+
 import { db } from "../index";
-import type { NewPracticeSession, PracticeSession } from "../types";
 import { practiceSessions } from "../schema";
+import type { NewPracticeSession, PracticeSession } from "../types";
 
 export type PracticeSessionInsert = NewPracticeSession;
 

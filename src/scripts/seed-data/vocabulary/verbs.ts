@@ -1,4 +1,4 @@
-import type { Phrase, FullVerbSeed } from "../../../types/seed";
+import type { FullVerbSeed, Phrase } from "../../../types/seed";
 import type { VocabWithTags } from "../../seed-pipeline";
 
 export const VERBS: FullVerbSeed[] = [

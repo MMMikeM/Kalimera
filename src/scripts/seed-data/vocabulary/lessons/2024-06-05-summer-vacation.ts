@@ -1,7 +1,5 @@
-import type { Phrase, FullVerbSeed } from "../../../../types/seed";
-import type { NounSeedInput } from "../noun-seed-enrichment";
-import type { AdjectiveSeedInput } from "../adjective-seed-enrichment";
-export const LESSON_2024_06_05 = {
+import { createLesson } from "@/types/lesson-builder";
+export const LESSON_2024_06_05 = createLesson({
 	meta: {
 		date: "2024-06-05",
 		topic: "Summer vacation vocabulary and verb conjugations",
@@ -14,7 +12,7 @@ export const LESSON_2024_06_05 = {
 		{ lemma: "φωτογραφίζω", english: "I photograph", conjugationFamily: "-ω" },
 		{ lemma: "ταξιδεύω", english: "I travel", conjugationFamily: "-ω" },
 		{ lemma: "χαλαρώνω", english: "I relax", conjugationFamily: "-ω" },
-	] satisfies FullVerbSeed[],
+	],
 
 	nouns: [
 		// Summer/beach
@@ -24,9 +22,7 @@ export const LESSON_2024_06_05 = {
 		{ lemma: "ροδάκινο", gender: "neuter", english: "peach" },
 		{ lemma: "πεπόνι", gender: "neuter", english: "melon" },
 		{ lemma: "ψάρι", gender: "neuter", english: "fish" },
-	] satisfies NounSeedInput[],
-
-	adverbs: [],
+	],
 
 	phrases: [
 		{
@@ -44,7 +40,7 @@ export const LESSON_2024_06_05 = {
 			english: "every day",
 			metadata: { usage: "time expression" },
 		},
-	] satisfies Phrase[],
+	],
 
 	grammarNotes: [
 		{
@@ -68,4 +64,4 @@ export const LESSON_2024_06_05 = {
 			explanation: "Irregular verb - note the ω throughout",
 		},
 	],
-} as const;
+});

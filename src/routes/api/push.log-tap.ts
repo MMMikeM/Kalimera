@@ -1,4 +1,5 @@
 import { logNotificationTap, type TappedAction } from "@/db.server/queries/push-notifications";
+
 import type { Route } from "./+types/push.log-tap";
 
 const VALID_TAPPED_ACTIONS: TappedAction[] = ["2min", "body", "snooze"];

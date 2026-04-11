@@ -1,6 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import type React from "react";
 import { Link } from "react-router";
+
 import { Card } from "@/components/Card";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
 import { ContentSection } from "@/components/ContentSection";

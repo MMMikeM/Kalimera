@@ -1,6 +1,7 @@
 import { userHasPasskey } from "@/db.server/queries/auth";
 import { findUserByUsername } from "@/db.server/queries/users";
 import { createWebAuthn } from "@/lib/auth";
+
 import type { Route } from "./+types/auth-options";
 
 interface AuthOptionsBody {

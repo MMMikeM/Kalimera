@@ -1,6 +1,8 @@
 import { Zap } from "lucide-react";
+
 import { PracticeCTA } from "@/components/PracticeCTA";
 import { TabHero } from "@/components/TabHero";
+
 import { VerbsSection } from "../components/verbs-section";
 
 export function VerbsTab() {

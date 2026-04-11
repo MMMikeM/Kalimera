@@ -1,6 +1,7 @@
 import { createFuzzySearch } from "@mmmike/mikrofuzz";
 import { Search } from "lucide-react";
 import { useMemo, useState } from "react";
+
 import { MonoText } from "@/components/MonoText";
 import { SearchInput } from "@/components/SearchInput";
 import { TabHero } from "@/components/TabHero";
@@ -8,8 +9,9 @@ import { Badge } from "@/components/ui/badge";
 import {
 	fetchVocabularyRowsForSearch,
 	type VocabularySearchGraphRow,
-} from "@/db.server/queries/vocabulary";
+} from "@/db.server/queries/vocabulary-search";
 import { cn } from "@/lib/utils";
+
 import type { Route } from "./+types/search";
 
 export async function loader() {

@@ -1,7 +1,5 @@
-import type { Phrase, FullVerbSeed } from "../../../../types/seed";
-import type { NounSeedInput } from "../noun-seed-enrichment";
-import type { AdjectiveSeedInput } from "../adjective-seed-enrichment";
-export const LESSON_2024_12_09 = {
+import { createLesson } from "@/types/lesson-builder";
+export const LESSON_2024_12_09 = createLesson({
 	meta: {
 		date: "2024-12-09",
 		topic: "Countries, nationalities, and languages",
@@ -13,7 +11,7 @@ export const LESSON_2024_12_09 = {
 		{ lemma: "συμφωνώ", english: "I agree", conjugationFamily: "-άω/-ώ" },
 		{ lemma: "αγαπώ", english: "I love", conjugationFamily: "-άω/-ώ" },
 		{ lemma: "λένε", english: "they call/say", conjugationFamily: "irregular" },
-	] satisfies FullVerbSeed[],
+	],
 
 	nouns: [
 		// Core concept
@@ -96,7 +94,7 @@ export const LESSON_2024_12_09 = {
 			english: "African (woman)",
 			metadata: { demonymOf: "Αφρική" },
 		},
-	] satisfies NounSeedInput[],
+	],
 
 	adjectives: [
 		// Nationality adjectives (with -ος/-η/-ο pattern)
@@ -121,7 +119,7 @@ export const LESSON_2024_12_09 = {
 		{ lemma: "εθνικός", english: "national" },
 		{ lemma: "εξωτικός", english: "exotic" },
 		{ lemma: "μεγάλος", english: "big/great" },
-	] satisfies AdjectiveSeedInput[],
+	],
 
 	adverbs: [
 		{ lemma: "καλά", english: "well" },
@@ -129,7 +127,7 @@ export const LESSON_2024_12_09 = {
 		{ lemma: "μαζί", english: "together" },
 		{ lemma: "εδώ", english: "here" },
 		{ lemma: "ίσως", english: "maybe/perhaps" },
-	] satisfies AdverbSeed[],
+	],
 
 	phrases: [
 		// Language expressions
@@ -223,7 +221,7 @@ export const LESSON_2024_12_09 = {
 			english: "they love music and dance",
 			metadata: { grammar: "αγαπώ + accusative" },
 		},
-	] satisfies Phrase[],
+	],
 
 	grammarNotes: [
 		{
@@ -267,4 +265,4 @@ export const LESSON_2024_12_09 = {
 			explanation: "είμαι is irregular. Note: 3rd person singular and plural are identical (είναι)",
 		},
 	],
-} as const;
+});

@@ -1,5 +1,7 @@
 import { Hand } from "lucide-react";
+
 import { TabHero } from "@/components/TabHero";
+
 import type { PhrasesLoaderData } from "../components/shared";
 import { PhraseItemDisplay, PhraseSection } from "../components/shared";
 

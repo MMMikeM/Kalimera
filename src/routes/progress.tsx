@@ -1,5 +1,6 @@
 import { ArrowLeft, Calendar, Clock, Target, TrendingUp } from "lucide-react";
 import { Link } from "react-router";
+
 import { AccuracyTrend } from "@/components/AccuracyTrend";
 import { Card } from "@/components/Card";
 import { StreakCalendar } from "@/components/StreakCalendar";
@@ -10,6 +11,7 @@ import {
 	getTimeInvested,
 } from "@/db.server/queries/progress";
 import { getAuthSession } from "@/lib/auth-cookie";
+
 import type { Route } from "./+types/progress";
 
 export function meta() {

@@ -1,16 +1,12 @@
-import type { Phrase, FullVerbSeed } from "../../../../types/seed";
-import type { NounSeedInput } from "../noun-seed-enrichment";
-import type { AdjectiveSeedInput } from "../adjective-seed-enrichment";
-export const LESSON_2024_10_15 = {
+import { createLesson } from "@/types/lesson-builder";
+export const LESSON_2024_10_15 = createLesson({
 	meta: {
 		date: "2024-10-15",
 		topic: "Work and profession vocabulary",
 		source: "Weekly lesson - job descriptions",
 	},
 
-	verbs: [
-		{ lemma: "διδάσκω", english: "I teach", conjugationFamily: "-ω" },
-	] satisfies FullVerbSeed[],
+	verbs: [{ lemma: "διδάσκω", english: "I teach", conjugationFamily: "-ω" }],
 
 	nouns: [
 		{ lemma: "λογισμικό", gender: "neuter", english: "software" },
@@ -22,9 +18,7 @@ export const LESSON_2024_10_15 = {
 			english: "computer/calculator",
 		},
 		{ lemma: "πληκτρολόγιο", gender: "neuter", english: "keyboard" },
-	] satisfies NounSeedInput[],
-
-	adverbs: [],
+	],
 
 	phrases: [
 		{
@@ -43,7 +37,5 @@ export const LESSON_2024_10_15 = {
 			english: "you're kidding me / messing with me",
 			metadata: { register: "colloquial" },
 		},
-	] satisfies Phrase[],
-
-	grammarNotes: [],
-} as const;
+	],
+});

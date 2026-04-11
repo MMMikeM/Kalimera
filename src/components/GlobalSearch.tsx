@@ -1,5 +1,6 @@
 import { Search, Sparkles } from "lucide-react";
 import { type ReactNode, useEffect, useRef, useState } from "react";
+
 import { SearchInput } from "@/components/SearchInput";
 import { SearchResults } from "@/components/SearchResults";
 import {

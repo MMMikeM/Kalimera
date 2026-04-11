@@ -1,5 +1,6 @@
 import { AlertTriangle, ArrowRight, Clock, Lightbulb } from "lucide-react";
 import type React from "react";
+
 import { Card } from "@/components/Card";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
 import { ContentSection } from "@/components/ContentSection";
@@ -15,6 +16,7 @@ import {
 	SE_CONTRACTIONS,
 	TIME_EXPRESSIONS,
 } from "@/constants/prepositions";
+
 import { PrepositionNavigator } from "./preposition-navigator";
 
 export const PrepositionsSection: React.FC = () => (

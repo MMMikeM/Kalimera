@@ -1,12 +1,14 @@
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router";
+
 import { Card } from "@/components/Card";
 import { ImperativeTable } from "@/components/ImperativeTable";
 import { MonoText } from "@/components/MonoText";
 import { SectionHeading } from "@/components/SectionHeading";
 import { StemInsight } from "@/components/StemInsight";
 import { TenseNavigator } from "@/components/TenseNavigator";
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/components/ui/Badge";
+
 import type { Route } from "./+types/route";
 
 export { loader } from "./loader.server";

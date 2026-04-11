@@ -1,10 +1,11 @@
 import { type NavTab, NavTabs } from "@/components/NavTabs";
+
 import type { Route } from "./+types/$tab";
 import { getPatternsData } from "./data.server";
 import { AdjectivesTab } from "./tabs/adjectives";
-import { ArticlesTab } from "./tabs/nouns-articles";
 import { CasesTab } from "./tabs/cases";
 import { NounsTab } from "./tabs/nouns";
+import { ArticlesTab } from "./tabs/nouns-articles";
 import { PatternsTab } from "./tabs/patterns";
 import { PrepositionsTab } from "./tabs/prepositions";
 import { PronounsTab } from "./tabs/pronouns";

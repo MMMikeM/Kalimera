@@ -8,15 +8,13 @@ import {
 	pickNounNominalForms,
 	type VocabWithTags,
 } from "../../../seed-pipeline";
-import { enrichNoun } from "../noun-seed-enrichment";
 import { enrichAdjective } from "../adjective-seed-enrichment";
-
+import { enrichNoun } from "../noun-seed-enrichment";
 // 2023 lessons
 import { LESSON_2023_10_30 } from "./2023-10-30-basic-nouns";
 import { LESSON_2023_11_08 } from "./2023-11-08-articles-places";
 import { LESSON_2023_12_09 } from "./2023-12-09-past-intro";
 import { LESSON_2023_12_31 } from "./2023-12-31-advanced-vocab";
-
 // 2024 lessons
 import { LESSON_2024_03_25 } from "./2024-03-25-intro-weather";
 import { LESSON_2024_04_04 } from "./2024-04-04-abstract-vocab";
@@ -118,7 +116,7 @@ function buildLessonSeedCategories(): Array<{ name: string; items: VocabWithTags
 		const lessonTag = `lesson-${date}`;
 		const lessonItems: VocabWithTags[] = [];
 
-		for (const verb of lesson.verbs) {
+		for (const verb of lesson.verbs ?? []) {
 			lessonItems.push({
 				vocab: {
 					greekText: verb.lemma,
@@ -133,7 +131,7 @@ function buildLessonSeedCategories(): Array<{ name: string; items: VocabWithTags
 			});
 		}
 
-		for (const nounInput of lesson.nouns) {
+		for (const nounInput of lesson.nouns ?? []) {
 			const noun = enrichNoun(nounInput);
 			const displayText = formatNounWithArticle(noun.lemma, noun.gender);
 			lessonItems.push({
@@ -149,7 +147,7 @@ function buildLessonSeedCategories(): Array<{ name: string; items: VocabWithTags
 			});
 		}
 
-		for (const adverb of lesson.adverbs) {
+		for (const adverb of lesson.adverbs ?? []) {
 			lessonItems.push({
 				vocab: {
 					greekText: adverb.lemma,
@@ -161,23 +159,21 @@ function buildLessonSeedCategories(): Array<{ name: string; items: VocabWithTags
 			});
 		}
 
-		if ("adjectives" in lesson) {
-			for (const adjInput of lesson.adjectives) {
-				const adj = enrichAdjective(adjInput);
-				lessonItems.push({
-					vocab: {
-						greekText: adj.lemma,
-						englishTranslation: adj.english,
-						wordType: "adjective",
-						metadata: { lessonDate: date },
-					},
-					tags: [lessonTag],
-					...pickAdjectiveNominalForms(adj),
-				});
-			}
+		for (const adjInput of lesson.adjectives ?? []) {
+			const adj = enrichAdjective(adjInput);
+			lessonItems.push({
+				vocab: {
+					greekText: adj.lemma,
+					englishTranslation: adj.english,
+					wordType: "adjective",
+					metadata: { lessonDate: date },
+				},
+				tags: [lessonTag],
+				...pickAdjectiveNominalForms(adj),
+			});
 		}
 
-		for (const phrase of lesson.phrases) {
+		for (const phrase of lesson.phrases ?? []) {
 			lessonItems.push({
 				vocab: {
 					greekText: phrase.text,

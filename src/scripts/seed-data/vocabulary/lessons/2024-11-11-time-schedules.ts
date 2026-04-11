@@ -1,7 +1,5 @@
-import type { Phrase, FullVerbSeed } from "../../../../types/seed";
-import type { NounSeedInput } from "../noun-seed-enrichment";
-import type { AdjectiveSeedInput } from "../adjective-seed-enrichment";
-export const LESSON_2024_11_11 = {
+import { createLesson } from "@/types/lesson-builder";
+export const LESSON_2024_11_11 = createLesson({
 	meta: {
 		date: "2024-11-11",
 		topic: "Telling time and schedules",
@@ -13,7 +11,7 @@ export const LESSON_2024_11_11 = {
 		{ lemma: "συναντώ", english: "I meet", conjugationFamily: "-άω/-ώ" },
 		{ lemma: "χρησιμοποιώ", english: "I use", conjugationFamily: "-άω/-ώ" },
 		{ lemma: "νομίζω", english: "I think (that)", conjugationFamily: "-ω" },
-	] satisfies FullVerbSeed[],
+	],
 
 	nouns: [
 		// Time-related
@@ -34,19 +32,19 @@ export const LESSON_2024_11_11 = {
 		{ lemma: "ομάδα", gender: "feminine", english: "team" },
 		// Other
 		{ lemma: "σχέδιο", gender: "neuter", english: "plan/sketch" },
-	] satisfies NounSeedInput[],
+	],
 
 	adjectives: [
 		{ lemma: "απασχολημένος", english: "busy" },
 		{ lemma: "ελεύθερος", english: "free/single" },
-	] satisfies AdjectiveSeedInput[],
+	],
 
 	adverbs: [
 		{ lemma: "αύριο", english: "tomorrow" },
 		{ lemma: "νωρίς", english: "early" },
 		{ lemma: "αργά", english: "late" },
 		{ lemma: "χωρίς", english: "without" },
-	] satisfies AdverbSeed[],
+	],
 
 	phrases: [
 		// Time telling patterns
@@ -103,7 +101,7 @@ export const LESSON_2024_11_11 = {
 			english: "I am free (male)",
 			metadata: { grammar: "masculine singular" },
 		},
-	] satisfies Phrase[],
+	],
 
 	grammarNotes: [
 		{
@@ -123,4 +121,4 @@ export const LESSON_2024_11_11 = {
 			explanation: "These numbers change form based on gender",
 		},
 	],
-} as const;
+});

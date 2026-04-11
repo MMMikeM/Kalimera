@@ -1,9 +1,11 @@
 import { ChevronLeft, Package } from "lucide-react";
 import type React from "react";
 import { Link } from "react-router";
+
 import { ContentSection } from "@/components/ContentSection";
 import { MonoText } from "@/components/MonoText";
 import { TabHero } from "@/components/TabHero";
+
 import type { Route } from "./+types/route";
 import type { CategoryData, NounWithGender } from "./loader.server";
 

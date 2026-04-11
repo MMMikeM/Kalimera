@@ -1,7 +1,5 @@
-import type { Phrase, FullVerbSeed } from "../../../../types/seed";
-import type { NounSeedInput } from "../noun-seed-enrichment";
-import type { AdjectiveSeedInput } from "../adjective-seed-enrichment";
-export const LESSON_2024_06_17 = {
+import { createLesson } from "@/types/lesson-builder";
+export const LESSON_2024_06_17 = createLesson({
 	meta: {
 		date: "2024-06-17",
 		topic: "Giving, kissing, frequency adverbs",
@@ -14,22 +12,22 @@ export const LESSON_2024_06_17 = {
 		{ lemma: "γελάω", english: "I laugh", conjugationFamily: "-άω/-ώ" },
 		{ lemma: "φωνάζω", english: "I yell/shout", conjugationFamily: "-ω" },
 		{ lemma: "αργώ", english: "I am late", conjugationFamily: "-άω/-ώ" },
-	] satisfies FullVerbSeed[],
+	],
 
 	nouns: [
 		{ lemma: "φιλί", gender: "neuter", english: "kiss" },
 		{ lemma: "γιορτή", gender: "feminine", english: "holiday/celebration" },
 		{ lemma: "νούμερο", gender: "neuter", english: "number" },
-	] satisfies NounSeedInput[],
+	],
 
-	adjectives: [{ lemma: "πρώτος", english: "first" }] satisfies AdjectiveSeedInput[],
+	adjectives: [{ lemma: "πρώτος", english: "first" }],
 
 	adverbs: [
 		{ lemma: "χτες", english: "yesterday" },
 		{ lemma: "ίσως", english: "maybe/perhaps" },
 		{ lemma: "πάντα", english: "always" },
 		{ lemma: "συνήθως", english: "usually" },
-	] satisfies AdverbSeed[],
+	],
 
 	phrases: [
 		// Giving construction
@@ -80,7 +78,7 @@ export const LESSON_2024_06_17 = {
 			english: "number one!",
 			metadata: { usage: "exclamation of being the best" },
 		},
-	] satisfies Phrase[],
+	],
 
 	grammarNotes: [
 		{
@@ -94,4 +92,4 @@ export const LESSON_2024_06_17 = {
 			explanation: "Give TO someone - σε contracts with article or pronoun",
 		},
 	],
-} as const;
+});

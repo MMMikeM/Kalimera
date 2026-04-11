@@ -1,14 +1,10 @@
-import type { Phrase, FullVerbSeed } from "../../../../types/seed";
-import type { NounSeedInput } from "../noun-seed-enrichment";
-import type { AdjectiveSeedInput } from "../adjective-seed-enrichment";
-export const LESSON_2023_11_08 = {
+import { createLesson } from "@/types/lesson-builder";
+export const LESSON_2023_11_08 = createLesson({
 	meta: {
 		date: "2023-11-08",
 		topic: "Articles and places vocabulary",
 		source: "Weekly lesson - ο/η/το, ένας/μία/ένα",
 	},
-
-	verbs: [],
 
 	nouns: [
 		{ lemma: "σχολείο", gender: "neuter", english: "school" },
@@ -20,11 +16,9 @@ export const LESSON_2023_11_08 = {
 		{ lemma: "φούρνος", gender: "masculine", english: "bakery/oven" },
 		{ lemma: "μαγαζί", gender: "neuter", english: "shop/store" },
 		{ lemma: "θέατρο", gender: "neuter", english: "theater" },
-	] satisfies NounSeedInput[],
+	],
 
 	adverbs: [{ lemma: "κοντά", english: "close/near" }],
-
-	phrases: [] satisfies Phrase[],
 
 	grammarNotes: [
 		{
@@ -38,4 +32,4 @@ export const LESSON_2023_11_08 = {
 			explanation: "A/an - non-specific item",
 		},
 	],
-} as const;
+});

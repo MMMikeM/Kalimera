@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
+
 import { type ColorScheme, colorStyles } from "@/lib/colors";
+
 import { Card } from "./Card";
 import { MonoText } from "./MonoText";
 

@@ -1,22 +1,18 @@
-import type { Phrase, FullVerbSeed } from "../../../../types/seed";
-import type { NounSeedInput } from "../noun-seed-enrichment";
-import type { AdjectiveSeedInput } from "../adjective-seed-enrichment";
-export const LESSON_2024_07_15 = {
+import { createLesson } from "@/types/lesson-builder";
+export const LESSON_2024_07_15 = createLesson({
 	meta: {
 		date: "2024-07-15",
 		topic: "Directions, positions, and locations",
 		source: "Weekly lesson - kahoot recap",
 	},
 
-	verbs: [
-		{ lemma: "υπάρχω", english: "I exist / there is", conjugationFamily: "-ω" },
-	] satisfies FullVerbSeed[],
+	verbs: [{ lemma: "υπάρχω", english: "I exist / there is", conjugationFamily: "-ω" }],
 
 	nouns: [
 		{ lemma: "λουλούδι", gender: "neuter", english: "flower" },
 		{ lemma: "ανθοπωλείο", gender: "neuter", english: "flower shop" },
 		{ lemma: "ταβέρνα", gender: "feminine", english: "tavern" },
-	] satisfies NounSeedInput[],
+	],
 
 	adverbs: [
 		{ lemma: "μέσα", english: "inside" },
@@ -30,7 +26,7 @@ export const LESSON_2024_07_15 = {
 		{ lemma: "δίπλα", english: "next to" },
 		{ lemma: "απέναντι", english: "across/opposite" },
 		{ lemma: "μήπως", english: "maybe/perhaps" },
-	] satisfies AdverbSeed[],
+	],
 
 	adjectives: [{ lemma: "καινούριος", english: "new" }],
 
@@ -87,7 +83,7 @@ export const LESSON_2024_07_15 = {
 			english: "there are",
 			metadata: { grammar: "3rd person plural of υπάρχω" },
 		},
-	] satisfies Phrase[],
+	],
 
 	grammarNotes: [
 		{
@@ -101,4 +97,4 @@ export const LESSON_2024_07_15 = {
 			explanation: "Some positions use από instead of σε",
 		},
 	],
-} as const;
+});
