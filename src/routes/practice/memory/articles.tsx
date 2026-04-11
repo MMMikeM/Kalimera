@@ -40,7 +40,7 @@ const ARTICLES: Article[] = [
 		number: "singular",
 		greek: "ο",
 		greeklish: "o",
-		label: "masculine \u00b7 singular \u00b7 nominative",
+		label: "masculine / singular / nominative",
 	},
 	{
 		id: "nom-f-sg",
@@ -49,7 +49,7 @@ const ARTICLES: Article[] = [
 		number: "singular",
 		greek: "η",
 		greeklish: "i",
-		label: "feminine \u00b7 singular \u00b7 nominative",
+		label: "feminine / singular / nominative",
 	},
 	{
 		id: "nom-n-sg",
@@ -58,7 +58,7 @@ const ARTICLES: Article[] = [
 		number: "singular",
 		greek: "το",
 		greeklish: "to",
-		label: "neuter \u00b7 singular \u00b7 nominative",
+		label: "neuter / singular / nominative",
 	},
 	{
 		id: "acc-m-sg",
@@ -67,7 +67,7 @@ const ARTICLES: Article[] = [
 		number: "singular",
 		greek: "τον",
 		greeklish: "ton",
-		label: "masculine \u00b7 singular \u00b7 accusative",
+		label: "masculine / singular / accusative",
 	},
 	{
 		id: "acc-f-sg",
@@ -76,7 +76,7 @@ const ARTICLES: Article[] = [
 		number: "singular",
 		greek: "την",
 		greeklish: "tin",
-		label: "feminine \u00b7 singular \u00b7 accusative",
+		label: "feminine / singular / accusative",
 	},
 	{
 		id: "acc-n-sg",
@@ -85,7 +85,7 @@ const ARTICLES: Article[] = [
 		number: "singular",
 		greek: "το",
 		greeklish: "to",
-		label: "neuter \u00b7 singular \u00b7 accusative",
+		label: "neuter / singular / accusative",
 	},
 	{
 		id: "gen-m-sg",
@@ -94,7 +94,7 @@ const ARTICLES: Article[] = [
 		number: "singular",
 		greek: "του",
 		greeklish: "tou",
-		label: "masculine \u00b7 singular \u00b7 genitive",
+		label: "masculine / singular / genitive",
 	},
 	{
 		id: "gen-f-sg",
@@ -103,7 +103,7 @@ const ARTICLES: Article[] = [
 		number: "singular",
 		greek: "της",
 		greeklish: "tis",
-		label: "feminine \u00b7 singular \u00b7 genitive",
+		label: "feminine / singular / genitive",
 	},
 	{
 		id: "gen-n-sg",
@@ -112,7 +112,7 @@ const ARTICLES: Article[] = [
 		number: "singular",
 		greek: "του",
 		greeklish: "tou",
-		label: "neuter \u00b7 singular \u00b7 genitive",
+		label: "neuter / singular / genitive",
 	},
 	{
 		id: "nom-m-pl",
@@ -121,7 +121,7 @@ const ARTICLES: Article[] = [
 		number: "plural",
 		greek: "οι",
 		greeklish: "i",
-		label: "masculine \u00b7 plural \u00b7 nominative",
+		label: "masculine / plural / nominative",
 	},
 	{
 		id: "nom-f-pl",
@@ -130,7 +130,7 @@ const ARTICLES: Article[] = [
 		number: "plural",
 		greek: "οι",
 		greeklish: "i",
-		label: "feminine \u00b7 plural \u00b7 nominative",
+		label: "feminine / plural / nominative",
 	},
 	{
 		id: "nom-n-pl",
@@ -139,7 +139,7 @@ const ARTICLES: Article[] = [
 		number: "plural",
 		greek: "τα",
 		greeklish: "ta",
-		label: "neuter \u00b7 plural \u00b7 nominative",
+		label: "neuter / plural / nominative",
 	},
 	{
 		id: "acc-m-pl",
@@ -148,7 +148,7 @@ const ARTICLES: Article[] = [
 		number: "plural",
 		greek: "τους",
 		greeklish: "tous",
-		label: "masculine \u00b7 plural \u00b7 accusative",
+		label: "masculine / plural / accusative",
 	},
 	{
 		id: "acc-f-pl",
@@ -157,7 +157,7 @@ const ARTICLES: Article[] = [
 		number: "plural",
 		greek: "τις",
 		greeklish: "tis",
-		label: "feminine \u00b7 plural \u00b7 accusative",
+		label: "feminine / plural / accusative",
 	},
 	{
 		id: "acc-n-pl",
@@ -166,7 +166,7 @@ const ARTICLES: Article[] = [
 		number: "plural",
 		greek: "τα",
 		greeklish: "ta",
-		label: "neuter \u00b7 plural \u00b7 accusative",
+		label: "neuter / plural / accusative",
 	},
 	{
 		id: "gen-m-pl",
@@ -175,7 +175,7 @@ const ARTICLES: Article[] = [
 		number: "plural",
 		greek: "των",
 		greeklish: "ton",
-		label: "masculine \u00b7 plural \u00b7 genitive",
+		label: "masculine / plural / genitive",
 	},
 	{
 		id: "gen-f-pl",
@@ -184,7 +184,7 @@ const ARTICLES: Article[] = [
 		number: "plural",
 		greek: "των",
 		greeklish: "ton",
-		label: "feminine \u00b7 plural \u00b7 genitive",
+		label: "feminine / plural / genitive",
 	},
 	{
 		id: "gen-n-pl",
@@ -193,7 +193,7 @@ const ARTICLES: Article[] = [
 		number: "plural",
 		greek: "των",
 		greeklish: "ton",
-		label: "neuter \u00b7 plural \u00b7 genitive",
+		label: "neuter / plural / genitive",
 	},
 ];
 
@@ -267,16 +267,16 @@ const ConfigScreen = ({
 }) => (
 	<ConfigShell
 		title="Definite Articles"
-		subtitle="18 forms \u00b7 timed"
+		subtitle="18 forms / timed"
 		mode={mode}
 		onModeChange={onModeChange}
 		sessionSize={sessionSize}
 		onSizeChange={onSizeChange}
 		onStart={onStart}
-		forwardLabel="Description \u2192 Form"
-		forwardDesc='masculine \u00b7 singular \u00b7 accusative \u2192 type "ton"'
-		reverseLabel="Form \u2192 Description"
-		reverseDesc="see \u03c4\u03bf\u03bd \u2192 identify gender, number, case"
+		forwardLabel="Describe / Produce"
+		forwardDesc='Given: masculine / singular / accusative'
+		reverseLabel="Identify / Produce"
+		reverseDesc="Given: τον (form)"
 	>
 		<div className="mb-8 overflow-x-auto">
 			<table className="w-full border-collapse text-sm">
@@ -364,14 +364,14 @@ export default function MemoryDrill() {
 
 	const handleForwardSubmit = useCallback(() => {
 		if (phase !== "active") return;
-		const timeTaken = Math.min(performance.now() - startedAt.current, timerMs);
+		const timeTaken = Math.min(performance.now() / startedAt.current, timerMs);
 		const isCorrect = matchPhonetic(input.trim(), currentArticle.greek).isCorrect;
 		recordAttempt(isCorrect, timeTaken);
 	}, [phase, input, currentArticle, startedAt, timerMs, recordAttempt]);
 
 	const handleReverseSubmit = useCallback(() => {
 		if (phase !== "active" || !selGender || !selNumber || !selCase) return;
-		const timeTaken = performance.now() - startedAt.current;
+		const timeTaken = performance.now() / startedAt.current;
 		const isCorrect =
 			selGender === currentArticle.gender &&
 			selNumber === currentArticle.number &&

@@ -52,7 +52,7 @@ const PRONOUNS: ObjectPronoun[] = [
 		number: "singular",
 		greek: "με",
 		greeklish: "me",
-		label: "me \u00b7 1st singular",
+		label: "me / 1st singular",
 	},
 	{
 		id: "2sg",
@@ -60,7 +60,7 @@ const PRONOUNS: ObjectPronoun[] = [
 		number: "singular",
 		greek: "σε",
 		greeklish: "se",
-		label: "you \u00b7 2nd singular",
+		label: "you / 2nd singular",
 	},
 	{
 		id: "3sg-m",
@@ -69,7 +69,7 @@ const PRONOUNS: ObjectPronoun[] = [
 		gender: "masculine",
 		greek: "τον",
 		greeklish: "ton",
-		label: "him \u00b7 3rd singular",
+		label: "him / 3rd singular",
 	},
 	{
 		id: "3sg-f",
@@ -78,7 +78,7 @@ const PRONOUNS: ObjectPronoun[] = [
 		gender: "feminine",
 		greek: "την",
 		greeklish: "tin",
-		label: "her \u00b7 3rd singular",
+		label: "her / 3rd singular",
 	},
 	{
 		id: "3sg-n",
@@ -87,7 +87,7 @@ const PRONOUNS: ObjectPronoun[] = [
 		gender: "neuter",
 		greek: "το",
 		greeklish: "to",
-		label: "it \u00b7 3rd singular",
+		label: "it / 3rd singular",
 	},
 	{
 		id: "1pl",
@@ -95,7 +95,7 @@ const PRONOUNS: ObjectPronoun[] = [
 		number: "plural",
 		greek: "μας",
 		greeklish: "mas",
-		label: "us \u00b7 1st plural",
+		label: "us / 1st plural",
 	},
 	{
 		id: "2pl",
@@ -103,7 +103,7 @@ const PRONOUNS: ObjectPronoun[] = [
 		number: "plural",
 		greek: "σας",
 		greeklish: "sas",
-		label: "you \u00b7 2nd plural",
+		label: "you / 2nd plural",
 	},
 	{
 		id: "3pl-m",
@@ -112,7 +112,7 @@ const PRONOUNS: ObjectPronoun[] = [
 		gender: "masculine",
 		greek: "τους",
 		greeklish: "tous",
-		label: "them (m) \u00b7 3rd plural",
+		label: "them (m) / 3rd plural",
 	},
 	{
 		id: "3pl-f",
@@ -121,7 +121,7 @@ const PRONOUNS: ObjectPronoun[] = [
 		gender: "feminine",
 		greek: "τις",
 		greeklish: "tis",
-		label: "them (f) \u00b7 3rd plural",
+		label: "them (f) / 3rd plural",
 	},
 	{
 		id: "3pl-n",
@@ -130,7 +130,7 @@ const PRONOUNS: ObjectPronoun[] = [
 		gender: "neuter",
 		greek: "τα",
 		greeklish: "ta",
-		label: "them (n) \u00b7 3rd plural",
+		label: "them (n) / 3rd plural",
 	},
 ];
 
@@ -169,16 +169,16 @@ const ConfigScreen = ({
 }) => (
 	<ConfigShell
 		title="Object Pronouns"
-		subtitle="10 forms \u00b7 timed"
+		subtitle="10 forms / timed"
 		mode={mode}
 		onModeChange={onModeChange}
 		sessionSize={sessionSize}
 		onSizeChange={onSizeChange}
 		onStart={onStart}
-		forwardLabel="English \u2192 Form"
-		forwardDesc='"him" \u2192 type "ton"'
-		reverseLabel="Form \u2192 Description"
-		reverseDesc="see \u03c4\u03bf\u03bd \u2192 identify person, number, gender"
+		forwardLabel="Translate / Produce"
+		forwardDesc='English meaning → Greek form'
+		reverseLabel="Form / Identify"
+		reverseDesc="Greek form → person / number / gender"
 	>
 		<div className="mb-8 overflow-x-auto">
 			<table className="w-full border-collapse text-sm">
@@ -266,7 +266,7 @@ export default function PronounsDrill() {
 
 	const handleForwardSubmit = useCallback(() => {
 		if (phase !== "active") return;
-		const timeTaken = Math.min(performance.now() - startedAt.current, timerMs);
+		const timeTaken = Math.min(performance.now() / startedAt.current, timerMs);
 		const isCorrect = matchPhonetic(input.trim(), currentForm.greek).isCorrect;
 		recordAttempt(isCorrect, timeTaken);
 	}, [phase, input, currentForm, startedAt, timerMs, recordAttempt]);
@@ -274,7 +274,7 @@ export default function PronounsDrill() {
 	const handleReverseSubmit = useCallback(() => {
 		if (phase !== "active" || !selPerson || !selNumber) return;
 		if (selPerson === "third" && !selGender) return;
-		const timeTaken = performance.now() - startedAt.current;
+		const timeTaken = performance.now() / startedAt.current;
 		const isCorrect =
 			selPerson === currentForm.person &&
 			selNumber === currentForm.number &&
@@ -354,7 +354,7 @@ export default function PronounsDrill() {
 	const personLabel = `${PERSON_LABELS[currentForm.person]} person`;
 	const subtitleParts: string[] = [currentForm.number];
 	if (currentForm.gender) subtitleParts.push(currentForm.gender);
-	const subtitle = subtitleParts.join(" \u00b7 ");
+	const subtitle = subtitleParts.join(" / ");
 
 	return (
 		<DrillShell
