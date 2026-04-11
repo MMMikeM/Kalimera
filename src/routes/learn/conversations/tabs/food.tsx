@@ -1,6 +1,8 @@
 import { Utensils } from "lucide-react";
+
 import { ConversationHero } from "@/components/ConversationHero";
 import type { DialogueLine } from "@/components/DialogueExchange";
+
 import { LearningTips, ScenarioCard, useConversationContext } from "../layout";
 
 const OFFERING_FOOD: DialogueLine[] = [

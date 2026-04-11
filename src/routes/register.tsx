@@ -7,6 +7,7 @@ import {
 import { AlertCircle, ArrowRight, Check, KeyRound, UserPlus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
+
 import { Card } from "@/components/Card";
 import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/ui/form-field";
@@ -16,6 +17,7 @@ import { setStoredAuth } from "@/lib/auth-storage";
 import { usePasskeyRegistration } from "@/lib/hooks/use-passkey-registration";
 import { hashPassword } from "@/lib/password";
 import { registerSchema, registerValidator } from "@/lib/validators/auth";
+
 import type { Route } from "./+types/register";
 
 export function meta() {

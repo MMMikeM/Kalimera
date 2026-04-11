@@ -1,7 +1,9 @@
 import { ArrowRight, Scale } from "lucide-react";
 import { Link } from "react-router";
+
 import { Card } from "@/components/Card";
 import { TabHero } from "@/components/TabHero";
+
 import { CasesSection } from "../components/cases-section";
 
 export function CasesTab() {

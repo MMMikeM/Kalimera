@@ -1,8 +1,10 @@
 import { ChevronLeft, Lightbulb } from "lucide-react";
 import { Link } from "react-router";
+
 import { ContentSection } from "@/components/ContentSection";
 import { MonoText } from "@/components/MonoText";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+
 import type { EssentialsLoaderData } from "../data.server";
 
 interface Props {

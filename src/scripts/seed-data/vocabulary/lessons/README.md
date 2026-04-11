@@ -9,7 +9,7 @@ YYYY-MM-DD-topic.ts
 ## Template
 
 ```typescript
-import type { NounSeed, FullVerbSeed, Phrase } from "../../../../types/seed";
+import type { NounSeed, Phrase } from "../../../../types/seed";
 
 export const LESSON_YYYY_MM_DD = {
 	meta: {

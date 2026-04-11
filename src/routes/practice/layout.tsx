@@ -1,8 +1,10 @@
 import { Brain, Clock, Zap } from "lucide-react";
 import { Outlet, useLocation } from "react-router";
+
 import type { NavTab } from "@/components/NavTabs";
 import { NavTabs } from "@/components/NavTabs";
 import { getAuthSession } from "@/lib/auth-cookie";
+
 import type { Route } from "./+types/layout";
 import {
 	type ActionIntent,

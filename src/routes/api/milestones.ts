@@ -1,4 +1,5 @@
 import { getUserMilestones, recordMilestone } from "@/db.server/queries/milestones";
+
 import type { Route } from "./+types/milestones";
 
 interface RecordMilestoneBody {

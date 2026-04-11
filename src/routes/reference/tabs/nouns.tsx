@@ -1,6 +1,8 @@
 import { BookText } from "lucide-react";
+
 import { PracticeCTA } from "@/components/PracticeCTA";
 import { TabHero } from "@/components/TabHero";
+
 import { NounsSection } from "../components/nouns-section";
 
 export function NounsTab() {

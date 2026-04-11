@@ -1,7 +1,5 @@
-import type { Phrase, FullVerbSeed } from "../../../../types/seed";
-import type { NounSeedInput } from "../noun-seed-enrichment";
-import type { AdjectiveSeedInput } from "../adjective-seed-enrichment";
-export const LESSON_2024_06_26 = {
+import { createLesson } from "@/types/lesson-builder";
+export const LESSON_2024_06_26 = createLesson({
 	meta: {
 		date: "2024-06-26",
 		topic: "Shopping, sleeping, and deponent verb conjugations",
@@ -13,13 +11,13 @@ export const LESSON_2024_06_26 = {
 		{ lemma: "κοιμάμαι", english: "I sleep", conjugationFamily: "-άμαι" },
 		{ lemma: "γίνομαι", english: "I become", conjugationFamily: "-ομαι" },
 		{ lemma: "λέω", english: "I say", conjugationFamily: "irregular" },
-	] satisfies FullVerbSeed[],
+	],
 
 	nouns: [
 		{ lemma: "ύπνος", gender: "masculine", english: "sleep" },
 		{ lemma: "χαρά", gender: "feminine", english: "joy" },
 		{ lemma: "χαιρετίσματα", gender: "neuter", english: "greetings" },
-	] satisfies NounSeedInput[],
+	],
 
 	adverbs: [
 		{ lemma: "μέχρι", english: "until" },
@@ -75,7 +73,7 @@ export const LESSON_2024_06_26 = {
 			english: "see you / talk to you later",
 			metadata: { literal: "we say them", usage: "informal goodbye" },
 		},
-	] satisfies Phrase[],
+	],
 
 	grammarNotes: [
 		{
@@ -89,4 +87,4 @@ export const LESSON_2024_06_26 = {
 			explanation: "Note: ερχόσαστε is alternative form for έρχεστε",
 		},
 	],
-} as const;
+});

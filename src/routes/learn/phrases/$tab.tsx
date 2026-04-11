@@ -1,4 +1,5 @@
 import { useOutletContext } from "react-router";
+
 import type { Route } from "./+types/$tab";
 import type { PhrasesLoaderData } from "./components/shared";
 import { ConnectorsTab } from "./tabs/ConnectorsTab";

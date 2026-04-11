@@ -2,8 +2,8 @@ import type { VocabWithTags } from "../../seed-pipeline";
 import { DAILY_PATTERN_ITEMS } from "../grammar-patterns";
 import { ADJECTIVE_ITEMS, COLOR_ITEMS } from "./adjectives";
 import { FREQUENCY_ITEMS, INDEFINITE_ADVERB_ITEMS, POSITION_ITEMS } from "./adverbs";
-import { NUMBER_ITEMS } from "./numbers";
 import { NOUN_ITEMS } from "./nouns";
+import { NUMBER_ITEMS } from "./numbers";
 import {
 	DAY_ITEMS,
 	LIKES_PLURAL_ITEMS,

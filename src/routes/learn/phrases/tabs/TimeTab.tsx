@@ -1,8 +1,10 @@
 import { Clock } from "lucide-react";
+
 import { ContentSection, TwoColumnList } from "@/components/ContentSection";
 import { MonoText } from "@/components/MonoText";
 import { TabHero } from "@/components/TabHero";
 import { cn } from "@/lib/utils";
+
 import type { PhraseItem, PhrasesLoaderData } from "../components/shared";
 
 type TimeListItem = {

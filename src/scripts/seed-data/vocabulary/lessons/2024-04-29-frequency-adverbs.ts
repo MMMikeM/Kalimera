@@ -1,7 +1,5 @@
-import type { Phrase, FullVerbSeed } from "../../../../types/seed";
-import type { NounSeedInput } from "../noun-seed-enrichment";
-import type { AdjectiveSeedInput } from "../adjective-seed-enrichment";
-export const LESSON_2024_04_29 = {
+import { createLesson } from "@/types/lesson-builder";
+export const LESSON_2024_04_29 = createLesson({
 	meta: {
 		date: "2024-04-29",
 		topic: "Frequency adverbs and daily routines",
@@ -18,16 +16,16 @@ export const LESSON_2024_04_29 = {
 			conjugationFamily: "-άμαι",
 		},
 		{ lemma: "ξυπνάω", english: "I wake up", conjugationFamily: "-άω/-ώ" },
-	] satisfies FullVerbSeed[],
+	],
 
-	nouns: [{ lemma: "πράγμα", gender: "neuter", english: "thing" }] satisfies NounSeedInput[],
+	nouns: [{ lemma: "πράγμα", gender: "neuter", english: "thing" }],
 
 	adjectives: [
 		{ lemma: "ζωηρός", english: "lively/full of life" },
 		{ lemma: "άτακτος", english: "naughty" },
 		{ lemma: "μικρός", english: "small/young" },
 		{ lemma: "μεγάλος", english: "big/old" },
-	] satisfies AdjectiveSeedInput[],
+	],
 
 	adverbs: [
 		{ lemma: "σχεδόν ποτέ", english: "almost never" },
@@ -38,7 +36,7 @@ export const LESSON_2024_04_29 = {
 		{ lemma: "πάρα πολύ", english: "very much" },
 		{ lemma: "επίσης", english: "also" },
 		{ lemma: "κάτι", english: "something" },
-	] satisfies AdverbSeed[],
+	],
 
 	phrases: [
 		{
@@ -51,7 +49,7 @@ export const LESSON_2024_04_29 = {
 			english: "every now and then I leave the house",
 			metadata: {},
 		},
-	] satisfies Phrase[],
+	],
 
 	grammarNotes: [
 		{
@@ -68,4 +66,4 @@ export const LESSON_2024_04_29 = {
 			explanation: "Regular -άω/-ώ family",
 		},
 	],
-} as const;
+});

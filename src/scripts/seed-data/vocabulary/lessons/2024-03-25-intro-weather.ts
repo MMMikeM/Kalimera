@@ -1,24 +1,18 @@
-import type { Phrase, FullVerbSeed } from "../../../../types/seed";
-import type { NounSeedInput } from "../noun-seed-enrichment";
-import type { AdjectiveSeedInput } from "../adjective-seed-enrichment";
-export const LESSON_2024_03_25 = {
+import { createLesson } from "@/types/lesson-builder";
+export const LESSON_2024_03_25 = createLesson({
 	meta: {
 		date: "2024-03-25",
 		topic: "Self introduction and weather",
 		source: "Weekly lesson - basic introduction questions",
 	},
 
-	verbs: [],
-
-	nouns: [{ lemma: "δόντι", gender: "neuter", english: "tooth" }] satisfies NounSeedInput[],
+	nouns: [{ lemma: "δόντι", gender: "neuter", english: "tooth" }],
 
 	adjectives: [
 		{ lemma: "κρύος", english: "cold" },
 		{ lemma: "ζεστός", english: "warm/hot" },
 		{ lemma: "κρυωμένος", english: "having a cold" },
-	] satisfies AdjectiveSeedInput[],
-
-	adverbs: [],
+	],
 
 	phrases: [
 		// Introduction questions and answers
@@ -66,7 +60,7 @@ export const LESSON_2024_03_25 = {
 			metadata: { pattern: "σε + accusative" },
 		},
 		{ text: "σε δύο εβδομάδες", english: "in two weeks", metadata: {} },
-	] satisfies Phrase[],
+	],
 
 	grammarNotes: [
 		{
@@ -75,4 +69,4 @@ export const LESSON_2024_03_25 = {
 			explanation: "Impersonal - κάνει + adjective/noun",
 		},
 	],
-} as const;
+});

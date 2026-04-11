@@ -1,14 +1,10 @@
-import type { Phrase, FullVerbSeed } from "../../../../types/seed";
-import type { NounSeedInput } from "../noun-seed-enrichment";
-import type { AdjectiveSeedInput } from "../adjective-seed-enrichment";
-export const LESSON_2023_10_30 = {
+import { createLesson } from "@/types/lesson-builder";
+export const LESSON_2023_10_30 = createLesson({
 	meta: {
 		date: "2023-10-30",
 		topic: "Basic nouns and articles introduction",
 		source: "Weekly lesson - Ellinika A book lesson 2",
 	},
-
-	verbs: [],
 
 	nouns: [
 		// Places - many overlap with 2023-11-08 but that's ok, additive seeding handles it
@@ -21,9 +17,5 @@ export const LESSON_2023_10_30 = {
 		{ lemma: "Αθήνα", gender: "feminine", english: "Athens" },
 		{ lemma: "Θεσσαλονίκη", gender: "feminine", english: "Thessaloniki" },
 		{ lemma: "Πεκίνο", gender: "neuter", english: "Beijing" },
-	] satisfies NounSeedInput[],
-
-	adverbs: [],
-	phrases: [] satisfies Phrase[],
-	grammarNotes: [],
-} as const;
+	],
+});

@@ -1,5 +1,6 @@
 import { createInsertSchema } from "drizzle-orm/zod";
 import { z } from "zod/v4";
+
 import { areaTypes, skillTypes } from "../enums";
 import { db } from "../index";
 import { practiceAttempts } from "../schema";

@@ -1,7 +1,5 @@
-import type { Phrase, FullVerbSeed } from "../../../../types/seed";
-import type { NounSeedInput } from "../noun-seed-enrichment";
-import type { AdjectiveSeedInput } from "../adjective-seed-enrichment";
-export const LESSON_2024_11_28 = {
+import { createLesson } from "@/types/lesson-builder";
+export const LESSON_2024_11_28 = createLesson({
 	meta: {
 		date: "2024-11-28",
 		topic: "Masculine nouns ending in -ος",
@@ -24,10 +22,7 @@ export const LESSON_2024_11_28 = {
 		{ lemma: "λύκος", gender: "masculine", english: "wolf" },
 		{ lemma: "βράχος", gender: "masculine", english: "rock" },
 		{ lemma: "άνθρωπος", gender: "masculine", english: "human/person" },
-	] satisfies NounSeedInput[],
-
-	verbs: [],
-	adverbs: [],
+	],
 
 	// Example sentences showing genitive usage
 	phrases: [
@@ -49,7 +44,7 @@ export const LESSON_2024_11_28 = {
 				note: "ποταμός → ποταμών (genitive plural -ος → -ών)",
 			},
 		},
-	] satisfies Phrase[],
+	],
 
 	// Grammar focus for this lesson
 	grammarNotes: [
@@ -72,4 +67,4 @@ export const LESSON_2024_11_28 = {
 			explanation: "Plural genitive always has accent on -ών",
 		},
 	],
-} as const;
+});

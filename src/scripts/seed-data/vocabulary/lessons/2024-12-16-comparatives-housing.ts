@@ -1,7 +1,6 @@
-import type { Phrase, FullVerbSeed } from "../../../../types/seed";
-import type { NounSeedInput } from "../noun-seed-enrichment";
-import type { AdjectiveSeedInput } from "../adjective-seed-enrichment";
-export const LESSON_2024_12_16 = {
+import { createLesson } from "@/types/lesson-builder";
+
+export const LESSON_2024_12_16 = createLesson({
 	meta: {
 		date: "2024-12-16",
 		topic: "Comparatives and housing vocabulary",
@@ -11,7 +10,7 @@ export const LESSON_2024_12_16 = {
 	verbs: [
 		{ lemma: "διαβάζω", english: "I read", conjugationFamily: "-ω" },
 		{ lemma: "οδηγώ", english: "I drive", conjugationFamily: "-άω/-ώ" },
-	] satisfies FullVerbSeed[],
+	],
 
 	nouns: [
 		// Food
@@ -45,7 +44,7 @@ export const LESSON_2024_12_16 = {
 		{ lemma: "έναρξη", gender: "feminine", english: "start/beginning" },
 		{ lemma: "οδηγός", gender: "masculine", english: "driver" },
 		{ lemma: "ύπνος", gender: "masculine", english: "sleep" },
-	] satisfies NounSeedInput[],
+	],
 
 	adjectives: [
 		{ lemma: "στενός", english: "tight/narrow" },
@@ -56,12 +55,12 @@ export const LESSON_2024_12_16 = {
 		{ lemma: "δύσκολος", english: "difficult" },
 		{ lemma: "φιλικός", english: "friendly" },
 		{ lemma: "μοσχαρίσιος", english: "beef (adj)" },
-	] satisfies AdjectiveSeedInput[],
+	],
 
 	adverbs: [
 		{ lemma: "πριν", english: "before" },
 		{ lemma: "μεταξύ", english: "between" },
-	] satisfies AdverbSeed[],
+	],
 
 	phrases: [
 		// Comparison pattern
@@ -108,8 +107,7 @@ export const LESSON_2024_12_16 = {
 			english: "I live in a house",
 			metadata: { pattern: "μένω σε + housing type" },
 		},
-	] satisfies Phrase[],
-
+	],
 	grammarNotes: [
 		{
 			pattern: "Comparatives with πιο",
@@ -145,4 +143,4 @@ export const LESSON_2024_12_16 = {
 			explanation: "πριν (before) is followed by the subjunctive mood (no να needed).",
 		},
 	],
-} as const;
+});

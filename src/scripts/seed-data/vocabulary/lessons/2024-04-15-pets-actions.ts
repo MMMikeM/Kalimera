@@ -1,7 +1,5 @@
-import type { Phrase, FullVerbSeed } from "../../../../types/seed";
-import type { NounSeedInput } from "../noun-seed-enrichment";
-import type { AdjectiveSeedInput } from "../adjective-seed-enrichment";
-export const LESSON_2024_04_15 = {
+import { createLesson } from "@/types/lesson-builder";
+export const LESSON_2024_04_15 = createLesson({
 	meta: {
 		date: "2024-04-15",
 		topic: "Pets, action verbs (open/close/start/finish)",
@@ -15,7 +13,7 @@ export const LESSON_2024_04_15 = {
 		{ lemma: "εκπαιδεύω", english: "I train", conjugationFamily: "-ω" },
 		{ lemma: "μαθαίνω", english: "I learn/teach", conjugationFamily: "-ω" },
 		{ lemma: "μισώ", english: "I hate", conjugationFamily: "-άω/-ώ" },
-	] satisfies FullVerbSeed[],
+	],
 
 	nouns: [
 		{ lemma: "εκπαίδευση", gender: "feminine", english: "training/education" },
@@ -29,11 +27,9 @@ export const LESSON_2024_04_15 = {
 		{ lemma: "αρουραίος", gender: "masculine", english: "rat" },
 		{ lemma: "κατοικίδιο", gender: "neuter", english: "pet" },
 		{ lemma: "ζώο", gender: "neuter", english: "animal" },
-	] satisfies NounSeedInput[],
+	],
 
-	adjectives: [{ lemma: "καλύτερος", english: "better/best" }] satisfies AdjectiveSeedInput[],
-
-	adverbs: [],
+	adjectives: [{ lemma: "καλύτερος", english: "better/best" }],
 
 	phrases: [
 		{ text: "κατοικίδια ζώα", english: "domestic animals/pets", metadata: {} },
@@ -48,7 +44,7 @@ export const LESSON_2024_04_15 = {
 			metadata: { pattern: "μαθαίνω + να + verb" },
 		},
 		{ text: "μισό", english: "half", metadata: { note: "also adjective" } },
-	] satisfies Phrase[],
+	],
 
 	grammarNotes: [
 		{
@@ -57,4 +53,4 @@ export const LESSON_2024_04_15 = {
 			explanation: "Learn verbs in pairs",
 		},
 	],
-} as const;
+});

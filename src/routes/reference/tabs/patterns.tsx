@@ -1,9 +1,11 @@
 import { Blocks, Heart, UserCircle } from "lucide-react";
+
 import { Card } from "@/components/Card";
 import { MonoText } from "@/components/MonoText";
 import { QuickTest } from "@/components/QuickTest";
 import { TabHero } from "@/components/TabHero";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+
 import type { PatternItem, PatternsData } from "../data.server";
 
 const ParadigmCard = ({

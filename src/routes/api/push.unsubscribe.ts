@@ -1,4 +1,5 @@
 import { deletePushSubscription } from "@/db.server/queries/push-notifications";
+
 import type { Route } from "./+types/push.unsubscribe";
 
 /**

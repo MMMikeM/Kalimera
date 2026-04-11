@@ -1,5 +1,6 @@
 import { BookOpen, ChevronLeft, Hash, MapPin, Palette, Sun, TrendingUp } from "lucide-react";
 import { Link } from "react-router";
+
 import { Card } from "@/components/Card";
 import { TabHero } from "@/components/TabHero";
 

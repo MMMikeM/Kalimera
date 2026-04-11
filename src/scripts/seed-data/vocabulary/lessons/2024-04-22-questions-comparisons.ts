@@ -1,26 +1,22 @@
-import type { Phrase, FullVerbSeed } from "../../../../types/seed";
-import type { NounSeedInput } from "../noun-seed-enrichment";
-import type { AdjectiveSeedInput } from "../adjective-seed-enrichment";
-export const LESSON_2024_04_22 = {
+import { createLesson } from "@/types/lesson-builder";
+export const LESSON_2024_04_22 = createLesson({
 	meta: {
 		date: "2024-04-22",
 		topic: "Question words and comparisons",
 		source: "Weekly lesson - interrogatives, πιο comparatives",
 	},
 
-	verbs: [
-		{ lemma: "ζηλεύω", english: "I am jealous", conjugationFamily: "-ω" },
-	] satisfies FullVerbSeed[],
+	verbs: [{ lemma: "ζηλεύω", english: "I am jealous", conjugationFamily: "-ω" }],
 
 	nouns: [
 		{ lemma: "φως", gender: "neuter", english: "light" },
 		{ lemma: "χιόνι", gender: "neuter", english: "snow" },
-	] satisfies NounSeedInput[],
+	],
 
 	adverbs: [
 		{ lemma: "πριν", english: "before" },
 		{ lemma: "τώρα", english: "now" },
-	] satisfies AdverbSeed[],
+	],
 
 	phrases: [
 		// Time expressions
@@ -91,7 +87,7 @@ export const LESSON_2024_04_22 = {
 			english: "he/she says",
 			metadata: { grammar: "present of λέω" },
 		},
-	] satisfies Phrase[],
+	],
 
 	grammarNotes: [
 		{
@@ -100,4 +96,4 @@ export const LESSON_2024_04_22 = {
 			explanation: "πιο + adjective = more + adjective",
 		},
 	],
-} as const;
+});

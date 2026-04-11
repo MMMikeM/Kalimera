@@ -1,6 +1,7 @@
 import { CheckCircle, ChevronRight, Keyboard, XCircle } from "lucide-react";
 import type React from "react";
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
+
 import { Card } from "@/components/Card";
 import CountdownTimer from "@/components/CountdownTimer";
 import { MonoText } from "@/components/MonoText";
@@ -8,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { greekToPhonetic, matchPhonetic } from "@/lib/greek-transliteration";
+
 import DrillSummary from "./drill-summary";
 
 export interface UnifiedQuestion {

@@ -1,5 +1,7 @@
 import type { RegistrationResponseJSON } from "@simplewebauthn/server";
+
 import { createWebAuthn } from "@/lib/auth";
+
 import type { Route } from "./+types/register-verify";
 
 interface RegisterVerifyBody {

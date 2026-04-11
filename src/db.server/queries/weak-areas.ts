@@ -1,5 +1,7 @@
 import { eq } from "drizzle-orm";
+
 import { planWeakAreaCommand } from "@/lib/weak-area";
+
 import { db } from "../index";
 import { type AreaType, weakAreas } from "../schema";
 import type { DbTransaction } from "./transaction-client";

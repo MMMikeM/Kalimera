@@ -1,6 +1,8 @@
 import { AlertTriangle } from "lucide-react";
+
 import { type ColorScheme, colorStyles } from "@/lib/colors";
 import { cn } from "@/lib/utils";
+
 import { MonoText } from "./MonoText";
 
 export interface StemInsightProps {

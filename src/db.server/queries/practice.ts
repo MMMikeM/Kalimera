@@ -11,7 +11,6 @@ export {
 	getVocabularyProgress,
 } from "./vocabulary-skills";
 export { getWeakAreas } from "./weak-areas";
-export { getNewVocabularyItems } from "./vocabulary";
 export {
 	completeSession,
 	getCompletedPracticeAtDatesForStreak,
@@ -29,9 +28,25 @@ export {
 	type RecordAttemptInput,
 } from "./practice-attempts";
 
+import { db } from "../index";
 import type { Vocabulary } from "../types";
 import { getPracticeStats, getVocabularyProgress } from "./vocabulary-skills";
 import { getWeakAreas } from "./weak-areas";
+
+/** Vocabulary the user has not started practising (no `vocabulary_skills` row for this user). */
+export const getNewVocabularyItems = async (userId: number, limit = 20) => {
+	return await db.query.vocabulary.findMany({
+		where: {
+			NOT: {
+				vocabularySkills: {
+					userId,
+				},
+			},
+		},
+		orderBy: { difficultyLevel: "asc" },
+		limit,
+	});
+};
 
 export type PracticeStats = Awaited<ReturnType<typeof getPracticeStats>>;
 export type VocabularyProgress = Awaited<ReturnType<typeof getVocabularyProgress>>;

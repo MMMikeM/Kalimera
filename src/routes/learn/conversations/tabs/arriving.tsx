@@ -1,6 +1,8 @@
 import { DoorOpen } from "lucide-react";
+
 import { ConversationHero } from "@/components/ConversationHero";
 import type { DialogueLine } from "@/components/DialogueExchange";
+
 import { LearningTips, ScenarioCard, useConversationContext } from "../layout";
 
 const CASUAL_GREETING: DialogueLine[] = [

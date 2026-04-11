@@ -1,6 +1,8 @@
 import { MapPin } from "lucide-react";
+
 import { PracticeCTA } from "@/components/PracticeCTA";
 import { TabHero } from "@/components/TabHero";
+
 import { PrepositionsSection } from "../components/prepositions-section";
 
 export function PrepositionsTab() {

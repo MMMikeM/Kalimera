@@ -1,7 +1,5 @@
-import type { Phrase, FullVerbSeed } from "../../../../types/seed";
-import type { NounSeedInput } from "../noun-seed-enrichment";
-import type { AdjectiveSeedInput } from "../adjective-seed-enrichment";
-export const LESSON_2023_12_31 = {
+import { createLesson } from "@/types/lesson-builder";
+export const LESSON_2023_12_31 = createLesson({
 	meta: {
 		date: "2023-12-31",
 		topic: "Advanced vocabulary - news, society",
@@ -18,7 +16,7 @@ export const LESSON_2023_12_31 = {
 		},
 		{ lemma: "ταΐζω", english: "I feed", conjugationFamily: "-ω" },
 		{ lemma: "εξουσιάζω", english: "I rule/dominate", conjugationFamily: "-ω" },
-	] satisfies FullVerbSeed[],
+	],
 
 	nouns: [
 		{ lemma: "θέρμανση", gender: "feminine", english: "heating" },
@@ -39,13 +37,13 @@ export const LESSON_2023_12_31 = {
 		{ lemma: "κυβέρνηση", gender: "feminine", english: "government" },
 		{ lemma: "παράδοση", gender: "feminine", english: "tradition" },
 		{ lemma: "έθιμο", gender: "neuter", english: "custom" },
-	] satisfies NounSeedInput[],
+	],
 
 	adjectives: [
 		{ lemma: "ασφαλής", english: "safe" },
 		{ lemma: "αποτελεσματικός", english: "effective" },
 		{ lemma: "βαθύς", english: "deep" },
-	] satisfies AdjectiveSeedInput[],
+	],
 
 	adverbs: [
 		{ lemma: "μείον", english: "minus" },
@@ -55,7 +53,7 @@ export const LESSON_2023_12_31 = {
 	phrases: [
 		{ text: "με τα χρόνια", english: "over the years", metadata: {} },
 		{ text: "οποιαδήποτε", english: "any (feminine)", metadata: {} },
-	] satisfies Phrase[],
+	],
 
 	grammarNotes: [
 		{
@@ -64,4 +62,4 @@ export const LESSON_2023_12_31 = {
 			explanation: "Alternative to πιο + adjective",
 		},
 	],
-} as const;
+});

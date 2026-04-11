@@ -1,7 +1,5 @@
-import type { Phrase, FullVerbSeed } from "../../../../types/seed";
-import type { NounSeedInput } from "../noun-seed-enrichment";
-import type { AdjectiveSeedInput } from "../adjective-seed-enrichment";
-export const LESSON_2024_04_04 = {
+import { createLesson } from "@/types/lesson-builder";
+export const LESSON_2024_04_04 = createLesson({
 	meta: {
 		date: "2024-04-04",
 		topic: "Abstract vocabulary - emotions, concepts",
@@ -28,7 +26,7 @@ export const LESSON_2024_04_04 = {
 			english: "I relate/identify with",
 			conjugationFamily: "-ομαι",
 		},
-	] satisfies FullVerbSeed[],
+	],
 
 	nouns: [
 		{ lemma: "διάθεση", gender: "feminine", english: "mood" },
@@ -36,7 +34,7 @@ export const LESSON_2024_04_04 = {
 		{ lemma: "απόλαυση", gender: "feminine", english: "pleasure" },
 		{ lemma: "εθισμός", gender: "masculine", english: "addiction" },
 		{ lemma: "ισορροπία", gender: "feminine", english: "balance" },
-	] satisfies NounSeedInput[],
+	],
 
 	adjectives: [
 		{ lemma: "διασκεδαστικός", english: "fun/entertaining" },
@@ -46,9 +44,5 @@ export const LESSON_2024_04_04 = {
 		{ lemma: "θετικός", english: "positive" },
 		{ lemma: "ενδιαφέρον", english: "interesting" },
 		{ lemma: "προσεκτικός", english: "careful" },
-	] satisfies AdjectiveSeedInput[],
-
-	adverbs: [],
-	phrases: [] satisfies Phrase[],
-	grammarNotes: [],
-} as const;
+	],
+});

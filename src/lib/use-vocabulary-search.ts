@@ -1,7 +1,8 @@
 import { createFuzzySearch } from "@mmmike/mikrofuzz";
 import { useEffect, useMemo, useState } from "react";
 import { useFetcher } from "react-router";
-import type { VocabularySearchGraphRow } from "@/db.server/queries/vocabulary";
+
+import type { VocabularySearchGraphRow } from "@/db.server/queries/vocabulary-search";
 
 const EMPTY_VOCABULARY: VocabularySearchGraphRow[] = [];
 

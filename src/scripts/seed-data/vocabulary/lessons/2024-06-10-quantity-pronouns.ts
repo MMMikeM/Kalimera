@@ -1,18 +1,14 @@
-import type { Phrase, FullVerbSeed } from "../../../../types/seed";
-import type { NounSeedInput } from "../noun-seed-enrichment";
-import type { AdjectiveSeedInput } from "../adjective-seed-enrichment";
-export const LESSON_2024_06_10 = {
+import { createLesson } from "@/types/lesson-builder";
+export const LESSON_2024_06_10 = createLesson({
 	meta: {
 		date: "2024-06-10",
 		topic: "Quantity words and pronouns",
 		source: "Weekly lesson - πολύ/πολλοί distinction",
 	},
 
-	verbs: [],
+	nouns: [{ lemma: "αφτί", gender: "neuter", english: "ear" }],
 
-	nouns: [{ lemma: "αφτί", gender: "neuter", english: "ear" }] satisfies NounSeedInput[],
-
-	adverbs: [{ lemma: "πολύ", english: "very/a lot" }] satisfies AdverbSeed[],
+	adverbs: [{ lemma: "πολύ", english: "very/a lot" }],
 
 	phrases: [
 		{
@@ -47,7 +43,7 @@ export const LESSON_2024_06_10 = {
 			english: "what does it mean?",
 			metadata: { usage: "very useful for learners!" },
 		},
-	] satisfies Phrase[],
+	],
 
 	grammarNotes: [
 		{
@@ -61,4 +57,4 @@ export const LESSON_2024_06_10 = {
 			explanation: "Watch the accent and doubled λ",
 		},
 	],
-} as const;
+});

@@ -2,13 +2,13 @@ import { differenceInDays, getDate, getDay } from "date-fns";
 import { ArrowRight, Calendar, Check, ChevronDown, ChevronUp, Play, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { Link, useFetcher } from "react-router";
+
 import { FreezeIndicator } from "@/components/FreezeIndicator";
 import {
 	getItemsDueTomorrow,
 	getLastPracticeDate,
 	getPracticeStats,
 } from "@/db.server/queries/practice";
-import { getUserById } from "@/db.server/queries/users";
 import {
 	getPushSubscriptionByUserId,
 	setNotificationMode,
@@ -18,7 +18,9 @@ import {
 	type FreezeStatus,
 	getFreezeStatus,
 } from "@/db.server/queries/streak";
+import { getUserById } from "@/db.server/queries/users";
 import { getAuthSession } from "@/lib/auth-cookie";
+
 import type { Route } from "./+types/home";
 
 type Stats = {

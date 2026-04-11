@@ -1,17 +1,12 @@
-import type { Phrase, FullVerbSeed } from "../../../../types/seed";
-import type { NounSeedInput } from "../noun-seed-enrichment";
-import type { AdjectiveSeedInput } from "../adjective-seed-enrichment";
-export const LESSON_2024_08_05 = {
+import { createLesson } from "@/types/lesson-builder";
+export const LESSON_2024_08_05 = createLesson({
 	meta: {
 		date: "2024-08-05",
 		topic: "Together, all, no one",
 		source: "Weekly lesson",
 	},
 
-	verbs: [],
-	nouns: [],
-
-	adverbs: [{ lemma: "μαζί", english: "together" }] satisfies AdverbSeed[],
+	adverbs: [{ lemma: "μαζί", english: "together" }],
 
 	phrases: [
 		{
@@ -39,7 +34,7 @@ export const LESSON_2024_08_05 = {
 			english: "none (neuter)",
 			metadata: { grammar: "neuter form" },
 		},
-	] satisfies Phrase[],
+	],
 
 	grammarNotes: [
 		{
@@ -48,4 +43,4 @@ export const LESSON_2024_08_05 = {
 			explanation: "Negative pronoun - changes for gender like adjectives",
 		},
 	],
-} as const;
+});

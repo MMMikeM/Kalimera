@@ -1,4 +1,5 @@
 import { createWebAuthn } from "@/lib/auth";
+
 import type { Route } from "./+types/register-options";
 
 interface RegisterOptionsBody {
