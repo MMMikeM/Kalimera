@@ -1,6 +1,6 @@
-import type { Phrase, VerbSeed } from "../../../types/seed";
+import type { Phrase, FullVerbSeed } from "../../../types/seed";
 
-export const VERBS: VerbSeed[] = [
+export const VERBS: FullVerbSeed[] = [
 	// -ω family (regular)
 	{ lemma: "κάνω", english: "I do/make", conjugationFamily: "-ω" },
 	{ lemma: "έχω", english: "I have", conjugationFamily: "-ω" },

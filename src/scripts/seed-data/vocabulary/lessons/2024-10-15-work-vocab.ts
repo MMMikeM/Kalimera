@@ -1,4 +1,4 @@
-import type { NounSeed, Phrase, VerbSeed } from "../../../../types/seed";
+import type { NounSeed, Phrase, FullVerbSeed } from "../../../../types/seed";
 
 export const LESSON_2024_10_15 = {
 	meta: {
@@ -7,7 +7,7 @@ export const LESSON_2024_10_15 = {
 		source: "Weekly lesson - job descriptions",
 	},
 
-	verbs: [{ lemma: "διδάσκω", english: "I teach", conjugationFamily: "-ω" }] satisfies VerbSeed[],
+	verbs: [{ lemma: "διδάσκω", english: "I teach", conjugationFamily: "-ω" }] satisfies FullVerbSeed[],
 
 	nouns: [
 		{ lemma: "λογισμικό", gender: "neuter", english: "software" },

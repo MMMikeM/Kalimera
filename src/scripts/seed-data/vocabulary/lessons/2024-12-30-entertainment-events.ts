@@ -1,4 +1,4 @@
-import type { AdjectiveSeed, AdverbSeed, NounSeed, Phrase, VerbSeed } from "../../../../types/seed";
+import type { AdjectiveSeed, AdverbSeed, NounSeed, Phrase, FullVerbSeed } from "../../../../types/seed";
 
 export const LESSON_2024_12_30 = {
 	meta: {
@@ -11,7 +11,7 @@ export const LESSON_2024_12_30 = {
 		{ lemma: "μπαίνω", english: "I enter/get in", conjugationFamily: "-ω" },
 		{ lemma: "βγαίνω", english: "I exit/get out", conjugationFamily: "-ω" },
 		{ lemma: "παίζω", english: "I play", conjugationFamily: "-ω" },
-	] satisfies VerbSeed[],
+	] satisfies FullVerbSeed[],
 
 	nouns: [
 		// Entertainment

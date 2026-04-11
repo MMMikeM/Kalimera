@@ -9,7 +9,7 @@ YYYY-MM-DD-topic.ts
 ## Template
 
 ```typescript
-import type { NounSeed, VerbSeed, Phrase } from "../../../../types/seed";
+import type { NounSeed, FullVerbSeed, Phrase } from "../../../../types/seed";
 
 export const LESSON_YYYY_MM_DD = {
 	meta: {
@@ -20,7 +20,7 @@ export const LESSON_YYYY_MM_DD = {
 
 	nouns: [{ lemma: "σπίτι", gender: "neuter", english: "house" }] satisfies NounSeed[],
 
-	verbs: [{ lemma: "τρώω", english: "I eat", conjugationFamily: "irregular" }] satisfies VerbSeed[],
+	verbs: [{ lemma: "τρώω", english: "I eat", conjugationFamily: "irregular" }] satisfies FullVerbSeed[],
 
 	phrases: [{ text: "Καλημέρα", english: "Good morning" }] satisfies Phrase[],
 };
