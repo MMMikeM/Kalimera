@@ -1,5 +1,6 @@
-import type { AdjectiveSeed, AdverbSeed, NounSeed, Phrase, FullVerbSeed } from "../../../../types/seed";
-
+import type { Phrase, FullVerbSeed } from "../../../../types/seed";
+import type { NounSeedInput } from "../noun-seed-enrichment";
+import type { AdjectiveSeedInput } from "../adjective-seed-enrichment";
 export const LESSON_2024_04_29 = {
 	meta: {
 		date: "2024-04-29",
@@ -19,14 +20,14 @@ export const LESSON_2024_04_29 = {
 		{ lemma: "ξυπνάω", english: "I wake up", conjugationFamily: "-άω/-ώ" },
 	] satisfies FullVerbSeed[],
 
-	nouns: [{ lemma: "πράγμα", gender: "neuter", english: "thing" }] satisfies NounSeed[],
+	nouns: [{ lemma: "πράγμα", gender: "neuter", english: "thing" }] satisfies NounSeedInput[],
 
 	adjectives: [
 		{ lemma: "ζωηρός", english: "lively/full of life" },
 		{ lemma: "άτακτος", english: "naughty" },
 		{ lemma: "μικρός", english: "small/young" },
 		{ lemma: "μεγάλος", english: "big/old" },
-	] satisfies AdjectiveSeed[],
+	] satisfies AdjectiveSeedInput[],
 
 	adverbs: [
 		{ lemma: "σχεδόν ποτέ", english: "almost never" },

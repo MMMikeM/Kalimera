@@ -1,5 +1,6 @@
-import type { AdjectiveSeed, AdverbSeed, NounSeed, Phrase, FullVerbSeed } from "../../../../types/seed";
-
+import type { Phrase, FullVerbSeed } from "../../../../types/seed";
+import type { NounSeedInput } from "../noun-seed-enrichment";
+import type { AdjectiveSeedInput } from "../adjective-seed-enrichment";
 export const LESSON_2024_12_09 = {
 	meta: {
 		date: "2024-12-09",
@@ -95,7 +96,7 @@ export const LESSON_2024_12_09 = {
 			english: "African (woman)",
 			metadata: { demonymOf: "Αφρική" },
 		},
-	] satisfies NounSeed[],
+	] satisfies NounSeedInput[],
 
 	adjectives: [
 		// Nationality adjectives (with -ος/-η/-ο pattern)
@@ -120,7 +121,7 @@ export const LESSON_2024_12_09 = {
 		{ lemma: "εθνικός", english: "national" },
 		{ lemma: "εξωτικός", english: "exotic" },
 		{ lemma: "μεγάλος", english: "big/great" },
-	] satisfies AdjectiveSeed[],
+	] satisfies AdjectiveSeedInput[],
 
 	adverbs: [
 		{ lemma: "καλά", english: "well" },

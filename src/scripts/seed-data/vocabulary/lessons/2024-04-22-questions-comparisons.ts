@@ -1,5 +1,6 @@
-import type { AdverbSeed, NounSeed, Phrase, FullVerbSeed } from "../../../../types/seed";
-
+import type { Phrase, FullVerbSeed } from "../../../../types/seed";
+import type { NounSeedInput } from "../noun-seed-enrichment";
+import type { AdjectiveSeedInput } from "../adjective-seed-enrichment";
 export const LESSON_2024_04_22 = {
 	meta: {
 		date: "2024-04-22",
@@ -14,7 +15,7 @@ export const LESSON_2024_04_22 = {
 	nouns: [
 		{ lemma: "φως", gender: "neuter", english: "light" },
 		{ lemma: "χιόνι", gender: "neuter", english: "snow" },
-	] satisfies NounSeed[],
+	] satisfies NounSeedInput[],
 
 	adverbs: [
 		{ lemma: "πριν", english: "before" },

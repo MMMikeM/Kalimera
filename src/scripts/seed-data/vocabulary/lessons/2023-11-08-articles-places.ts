@@ -1,5 +1,6 @@
-import type { NounSeed, Phrase } from "../../../../types/seed";
-
+import type { Phrase, FullVerbSeed } from "../../../../types/seed";
+import type { NounSeedInput } from "../noun-seed-enrichment";
+import type { AdjectiveSeedInput } from "../adjective-seed-enrichment";
 export const LESSON_2023_11_08 = {
 	meta: {
 		date: "2023-11-08",
@@ -19,7 +20,7 @@ export const LESSON_2023_11_08 = {
 		{ lemma: "φούρνος", gender: "masculine", english: "bakery/oven" },
 		{ lemma: "μαγαζί", gender: "neuter", english: "shop/store" },
 		{ lemma: "θέατρο", gender: "neuter", english: "theater" },
-	] satisfies NounSeed[],
+	] satisfies NounSeedInput[],
 
 	adverbs: [{ lemma: "κοντά", english: "close/near" }],
 

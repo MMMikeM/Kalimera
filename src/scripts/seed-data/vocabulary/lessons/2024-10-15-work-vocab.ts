@@ -1,5 +1,6 @@
-import type { NounSeed, Phrase, FullVerbSeed } from "../../../../types/seed";
-
+import type { Phrase, FullVerbSeed } from "../../../../types/seed";
+import type { NounSeedInput } from "../noun-seed-enrichment";
+import type { AdjectiveSeedInput } from "../adjective-seed-enrichment";
 export const LESSON_2024_10_15 = {
 	meta: {
 		date: "2024-10-15",
@@ -7,7 +8,9 @@ export const LESSON_2024_10_15 = {
 		source: "Weekly lesson - job descriptions",
 	},
 
-	verbs: [{ lemma: "διδάσκω", english: "I teach", conjugationFamily: "-ω" }] satisfies FullVerbSeed[],
+	verbs: [
+		{ lemma: "διδάσκω", english: "I teach", conjugationFamily: "-ω" },
+	] satisfies FullVerbSeed[],
 
 	nouns: [
 		{ lemma: "λογισμικό", gender: "neuter", english: "software" },
@@ -19,7 +22,7 @@ export const LESSON_2024_10_15 = {
 			english: "computer/calculator",
 		},
 		{ lemma: "πληκτρολόγιο", gender: "neuter", english: "keyboard" },
-	] satisfies NounSeed[],
+	] satisfies NounSeedInput[],
 
 	adverbs: [],
 

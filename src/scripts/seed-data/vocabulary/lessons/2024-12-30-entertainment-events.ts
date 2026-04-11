@@ -1,5 +1,6 @@
-import type { AdjectiveSeed, AdverbSeed, NounSeed, Phrase, FullVerbSeed } from "../../../../types/seed";
-
+import type { Phrase, FullVerbSeed } from "../../../../types/seed";
+import type { NounSeedInput } from "../noun-seed-enrichment";
+import type { AdjectiveSeedInput } from "../adjective-seed-enrichment";
 export const LESSON_2024_12_30 = {
 	meta: {
 		date: "2024-12-30",
@@ -46,7 +47,7 @@ export const LESSON_2024_12_30 = {
 			english: "orange juice/orangeade",
 		},
 		{ lemma: "γιαγιά", gender: "feminine", english: "grandmother" },
-	] satisfies NounSeed[],
+	] satisfies NounSeedInput[],
 
 	adjectives: [
 		// Descriptive adjectives for events (-ος/-η/-ο pattern)
@@ -61,7 +62,7 @@ export const LESSON_2024_12_30 = {
 		// From error correction
 		{ lemma: "κόκκινος", english: "red" },
 		{ lemma: "νότιος", english: "south/southern" },
-	] satisfies AdjectiveSeed[],
+	] satisfies AdjectiveSeedInput[],
 
 	adverbs: [{ lemma: "έξω", english: "outside/out" }] satisfies AdverbSeed[],
 

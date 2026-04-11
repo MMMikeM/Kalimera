@@ -1,5 +1,6 @@
-import type { AdjectiveSeed, NounSeed, Phrase, FullVerbSeed } from "../../../../types/seed";
-
+import type { Phrase, FullVerbSeed } from "../../../../types/seed";
+import type { NounSeedInput } from "../noun-seed-enrichment";
+import type { AdjectiveSeedInput } from "../adjective-seed-enrichment";
 export const LESSON_2024_04_15 = {
 	meta: {
 		date: "2024-04-15",
@@ -28,9 +29,9 @@ export const LESSON_2024_04_15 = {
 		{ lemma: "αρουραίος", gender: "masculine", english: "rat" },
 		{ lemma: "κατοικίδιο", gender: "neuter", english: "pet" },
 		{ lemma: "ζώο", gender: "neuter", english: "animal" },
-	] satisfies NounSeed[],
+	] satisfies NounSeedInput[],
 
-	adjectives: [{ lemma: "καλύτερος", english: "better/best" }] satisfies AdjectiveSeed[],
+	adjectives: [{ lemma: "καλύτερος", english: "better/best" }] satisfies AdjectiveSeedInput[],
 
 	adverbs: [],
 

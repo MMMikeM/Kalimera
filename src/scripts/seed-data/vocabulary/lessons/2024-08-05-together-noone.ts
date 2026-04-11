@@ -1,5 +1,6 @@
-import type { AdverbSeed, Phrase } from "../../../../types/seed";
-
+import type { Phrase, FullVerbSeed } from "../../../../types/seed";
+import type { NounSeedInput } from "../noun-seed-enrichment";
+import type { AdjectiveSeedInput } from "../adjective-seed-enrichment";
 export const LESSON_2024_08_05 = {
 	meta: {
 		date: "2024-08-05",

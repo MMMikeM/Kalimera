@@ -1,5 +1,6 @@
-import type { NounSeed, Phrase, FullVerbSeed } from "../../../../types/seed";
-
+import type { Phrase, FullVerbSeed } from "../../../../types/seed";
+import type { NounSeedInput } from "../noun-seed-enrichment";
+import type { AdjectiveSeedInput } from "../adjective-seed-enrichment";
 export const LESSON_2024_08_12 = {
 	meta: {
 		date: "2024-08-12",
@@ -11,7 +12,7 @@ export const LESSON_2024_08_12 = {
 		{ lemma: "ξεχνάω", english: "I forget", conjugationFamily: "-άω/-ώ" },
 	] satisfies FullVerbSeed[],
 
-	nouns: [{ lemma: "λαχανικά", gender: "neuter", english: "vegetables" }] satisfies NounSeed[],
+	nouns: [{ lemma: "λαχανικά", gender: "neuter", english: "vegetables" }] satisfies NounSeedInput[],
 
 	adverbs: [],
 
