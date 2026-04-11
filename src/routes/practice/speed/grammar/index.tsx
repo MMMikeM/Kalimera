@@ -1,4 +1,4 @@
-import { Clock } from "lucide-react";
+import { Clock, Zap } from "lucide-react";
 import { Link } from "react-router";
 
 import { Card } from "@/components/Card";
@@ -22,9 +22,12 @@ export default function GrammarIndex() {
 	return (
 		<div className="mx-auto max-w-xl">
 			<Card variant="bordered" padding="lg">
-				<div className="mb-8 text-center">
-					<h2 className="mb-2 text-2xl font-bold text-foreground">Grammar Exercises</h2>
-					<p className="text-muted-foreground">
+				<div className="mb-8">
+					<div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-terracotta-100">
+						<Zap size={32} className="text-terracotta" />
+					</div>
+					<h2 className="mb-2 font-serif text-xl font-semibold text-navy-text">Grammar Exercises</h2>
+					<p className="text-sm text-muted-foreground">
 						Select an exercise type to practice specific grammar patterns.
 					</p>
 				</div>
@@ -37,7 +40,7 @@ export default function GrammarIndex() {
 							className="block rounded-lg border border-border p-4 text-left transition-colors hover:border-terracotta hover:bg-terracotta-50"
 						>
 							<div className="mb-2 flex items-center justify-between">
-								<span className="font-semibold text-foreground">
+								<span className="font-medium text-foreground">
 									{config.label}
 								</span>
 								<Badge variant="outline" className="gap-1">
@@ -45,7 +48,7 @@ export default function GrammarIndex() {
 									{formatTimeLimit(config.timeLimit)}
 								</Badge>
 							</div>
-							<p className="mb-1 font-mono text-base text-terracotta">
+							<p lang="el" className="greek-text mb-1 text-sm text-terracotta">
 								{config.greekExample}
 							</p>
 							<p className="text-sm text-muted-foreground">{config.description}</p>

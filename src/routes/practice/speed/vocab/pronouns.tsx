@@ -121,20 +121,24 @@ export default function PronounsDrill() {
 	if (sessionCount === 0 && !lastStats) {
 		return (
 			<div className="mx-auto max-w-xl">
-				<Card variant="bordered" padding="lg" className="text-center">
-					<div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-terracotta-100">
-						<Zap size={32} className="text-terracotta" />
+				<Card variant="bordered" padding="lg">
+					<div className="mb-8">
+						<div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-terracotta-100">
+							<Zap size={32} className="text-terracotta" />
+						</div>
+						<h2 className="mb-2 font-serif text-xl font-semibold text-navy-text">
+							{categoryConfig.label} Drill
+						</h2>
+						<p className="text-sm text-muted-foreground">
+							Rapid-fire production practice. Type fast, build automaticity.
+						</p>
 					</div>
-					<h2 className="mb-2 text-2xl font-bold text-foreground">
-						{categoryConfig.label} Drill
-					</h2>
-					<p className="mb-8 text-muted-foreground">
-						Rapid-fire production practice. Type fast, build automaticity.
-					</p>
 
-					<div className="mb-6">
-						<span className="mb-2 block text-sm text-muted-foreground">Questions</span>
-						<div className="flex justify-center gap-2">
+					<fieldset className="mb-8">
+						<legend className="mb-3 text-xs tracking-widest text-muted-foreground uppercase">
+							Questions
+						</legend>
+						<div className="flex gap-2">
 							{[10, 15, 20, 30].map((size) => (
 								<Button
 									key={size}
@@ -146,7 +150,7 @@ export default function PronounsDrill() {
 								</Button>
 							))}
 						</div>
-					</div>
+					</fieldset>
 
 					<Button
 						size="lg"
@@ -154,9 +158,8 @@ export default function PronounsDrill() {
 							setSessionCount(1);
 							startDbSession();
 						}}
-						className="gap-2"
+						className="w-full"
 					>
-						<Zap size={20} />
 						Start Training
 					</Button>
 
