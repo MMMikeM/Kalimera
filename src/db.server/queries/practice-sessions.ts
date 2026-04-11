@@ -6,9 +6,6 @@ import type { NewPracticeSession, PracticeSession } from "../types";
 
 export type PracticeSessionInsert = NewPracticeSession;
 
-/** @deprecated Prefer `PracticeSessionInsert` */
-export type StartSessionInput = PracticeSessionInsert;
-
 export type CompleteSessionPatch = Pick<PracticeSession, "totalQuestions" | "correctAnswers">;
 
 export type CompleteSessionInput = CompleteSessionPatch & { sessionId: number };

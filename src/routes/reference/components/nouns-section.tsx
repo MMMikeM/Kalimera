@@ -9,10 +9,6 @@ import { MonoText } from "@/components/MonoText";
 import { SectionHeading } from "@/components/SectionHeading";
 import { AGREEMENT_PARADIGMS, type AgreementParadigm } from "@/constants/agreement";
 
-// ═══════════════════════════════════════════════════════════════════════════════
-// Types & Constants
-// ═══════════════════════════════════════════════════════════════════════════════
-
 type Gender = "masculine" | "feminine" | "neuter";
 type Case = "Nom" | "Acc" | "Gen";
 
@@ -91,10 +87,6 @@ const VOCATIVE_CHANGES = [
 	{ pattern: "-ης → -η", example: "μαθητή!" },
 ];
 
-// ═══════════════════════════════════════════════════════════════════════════════
-// Utilities
-// ═══════════════════════════════════════════════════════════════════════════════
-
 const getParadigms = (ids: readonly string[]): AgreementParadigm[] =>
 	ids
 		.map((id) => AGREEMENT_PARADIGMS.find((p) => p.id === id))
@@ -108,10 +100,6 @@ const getFull = (paradigm: AgreementParadigm, caseType: Case) =>
 
 const nomEqualsAcc = (paradigm: AgreementParadigm) =>
 	getEnding(paradigm, "Nom") === getEnding(paradigm, "Acc");
-
-// ═══════════════════════════════════════════════════════════════════════════════
-// Sub-components
-// ═══════════════════════════════════════════════════════════════════════════════
 
 const CaseGuide = () => (
 	<ContentSection title="Which case should I use?" colorScheme="ocean">
@@ -353,10 +341,6 @@ const ArticlesLink = () => (
 		</div>
 	</Card>
 );
-
-// ═══════════════════════════════════════════════════════════════════════════════
-// Main Export
-// ═══════════════════════════════════════════════════════════════════════════════
 
 export const NounsSection = () => (
 	<section id="nouns" className="space-y-6">

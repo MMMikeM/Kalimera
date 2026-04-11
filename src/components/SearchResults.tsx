@@ -4,7 +4,7 @@ import { MonoText } from "@/components/MonoText";
 import type { VocabularySearchGraphRow } from "@/db.server/queries/vocabulary-search";
 import { cn } from "@/lib/utils";
 
-import { Badge } from "./ui/Badge";
+import { Badge } from "./ui/badge";
 
 interface SearchResultsProps {
 	results: VocabularySearchGraphRow[];

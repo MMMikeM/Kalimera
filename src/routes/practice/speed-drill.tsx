@@ -4,6 +4,7 @@ import { useCallback, useMemo, useRef, useState } from "react";
 import { useFetcher, useOutletContext, useSearchParams } from "react-router";
 
 import { Card } from "@/components/Card";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
 	CATEGORY_CONFIG,
@@ -20,7 +21,6 @@ import UnifiedDrill, {
 	type UnifiedQuestion,
 } from "./components/unified-drill";
 import type { PracticeLoaderData } from "./layout";
-import { Badge } from "@/components/ui/Badge";
 
 export type FocusType = QuestionCategory | "all";
 export type DrillMode = "category" | "grammar";

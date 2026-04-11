@@ -73,24 +73,15 @@ async function seed() {
 		allVerbDetails.push(...(await run(name, items)));
 	}
 
-	// ============================================
-	// BATCH INSERT NOUN DETAILS
-	// ============================================
 	console.log(`\nInserting ${allNounDetails.length} noun details...`);
 	await batchInsertNounDetails(allNounDetails);
 
 	console.log(`\nUpserting ${allNominalForms.length} nominal forms...`);
 	await batchUpsertNominalForms(allNominalForms);
 
-	// ============================================
-	// BATCH INSERT VERB DETAILS
-	// ============================================
 	console.log(`\nInserting ${allVerbDetails.length} verb details...`);
 	await batchInsertVerbDetails(allVerbDetails);
 
-	// ============================================
-	// BATCH INSERT TAG LINKS
-	// ============================================
 	console.log("Creating vocabulary-tag associations...");
 	if (vocabTagLinks.length > 0) {
 		const uniqueLinks = new Map<string, NewVocabularyTag>();

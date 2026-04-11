@@ -7,10 +7,6 @@ import type { Vocabulary } from "@/db.server/types";
 
 export type PhraseItem = Vocabulary;
 
-// ═══════════════════════════════════════════════════════════════════════════════
-// TRANSFORMS
-// ═══════════════════════════════════════════════════════════════════════════════
-
 export async function getPhrasesData() {
 	const [phraseRows, referenceRows, verbRows] = await Promise.all([
 		fetchPhrases(),

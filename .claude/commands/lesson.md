@@ -37,17 +37,51 @@ $ARGUMENTS
 7. **Add grammar notes** for the lesson objective pattern
 
 8. **Create the file** at: `src/scripts/seed-data/vocabulary/lessons/YYYY-MM-DD-topic-slug.ts`
+   - Import `createLesson` from `@/types/lesson-builder`
+   - Export as `LESSON_YYYY_MM_DD = createLesson({ ... })`
 
 9. **Update the index** at: `src/scripts/seed-data/vocabulary/lessons/index.ts`
-   - Add import
+   - Add import: `import { LESSON_YYYY_MM_DD } from "./YYYY-MM-DD-topic-slug"`
    - Add to export block
-   - Add to LESSONS object
+   - Add to LESSONS object with date key: `"YYYY-MM-DD": LESSON_YYYY_MM_DD`
 
-10. **Type-check** with `pnpm tsc --noEmit`
+10. **Type-check** with `pnpm typecheck`
 
 ## Reference format
 
-Use @src/scripts/seed-data/vocabulary/lessons/2024-12-09-countries-languages.ts as the template for structure and formatting.
+Use `createLesson()` helper for type-safe lesson objects. Example:
+
+```typescript
+import { createLesson } from "@/types/lesson-builder";
+
+export const LESSON_YYYY_MM_DD = createLesson({
+  meta: {
+    date: "YYYY-MM-DD",
+    topic: "Topic description",
+    source: "Source reference",
+  },
+  verbs: [
+    { lemma: "λέμμα", english: "english", conjugationFamily: "-ω" },
+  ],
+  nouns: [
+    { lemma: "λέμμα", gender: "masculine", english: "english" },
+  ],
+  adverbs: [
+    { lemma: "λέμμα", english: "english" },
+  ],
+  adjectives: [
+    { lemma: "λέμμα", english: "english" },
+  ],
+  phrases: [
+    { text: "multi-word phrase", english: "english", metadata: { ... } },
+  ],
+  grammarNotes: [
+    { pattern: "Pattern name", examples: [...], explanation: "..." },
+  ],
+});
+```
+
+See @src/scripts/seed-data/vocabulary/lessons/2024-12-16-comparatives-housing.ts for a complete example.
 
 ## Output
 
