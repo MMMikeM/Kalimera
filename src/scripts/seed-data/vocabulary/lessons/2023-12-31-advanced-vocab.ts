@@ -1,5 +1,6 @@
-import type { AdjectiveSeed, NounSeed, Phrase, FullVerbSeed } from "../../../../types/seed";
-
+import type { Phrase, FullVerbSeed } from "../../../../types/seed";
+import type { NounSeedInput } from "../noun-seed-enrichment";
+import type { AdjectiveSeedInput } from "../adjective-seed-enrichment";
 export const LESSON_2023_12_31 = {
 	meta: {
 		date: "2023-12-31",
@@ -38,13 +39,13 @@ export const LESSON_2023_12_31 = {
 		{ lemma: "κυβέρνηση", gender: "feminine", english: "government" },
 		{ lemma: "παράδοση", gender: "feminine", english: "tradition" },
 		{ lemma: "έθιμο", gender: "neuter", english: "custom" },
-	] satisfies NounSeed[],
+	] satisfies NounSeedInput[],
 
 	adjectives: [
 		{ lemma: "ασφαλής", english: "safe" },
 		{ lemma: "αποτελεσματικός", english: "effective" },
 		{ lemma: "βαθύς", english: "deep" },
-	] satisfies AdjectiveSeed[],
+	] satisfies AdjectiveSeedInput[],
 
 	adverbs: [
 		{ lemma: "μείον", english: "minus" },

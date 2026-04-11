@@ -1,5 +1,6 @@
-import type { AdjectiveSeed, AdverbSeed, NounSeed, Phrase, FullVerbSeed } from "../../../../types/seed";
-
+import type { Phrase, FullVerbSeed } from "../../../../types/seed";
+import type { NounSeedInput } from "../noun-seed-enrichment";
+import type { AdjectiveSeedInput } from "../adjective-seed-enrichment";
 export const LESSON_2024_12_16 = {
 	meta: {
 		date: "2024-12-16",
@@ -44,7 +45,7 @@ export const LESSON_2024_12_16 = {
 		{ lemma: "έναρξη", gender: "feminine", english: "start/beginning" },
 		{ lemma: "οδηγός", gender: "masculine", english: "driver" },
 		{ lemma: "ύπνος", gender: "masculine", english: "sleep" },
-	] satisfies NounSeed[],
+	] satisfies NounSeedInput[],
 
 	adjectives: [
 		{ lemma: "στενός", english: "tight/narrow" },
@@ -55,7 +56,7 @@ export const LESSON_2024_12_16 = {
 		{ lemma: "δύσκολος", english: "difficult" },
 		{ lemma: "φιλικός", english: "friendly" },
 		{ lemma: "μοσχαρίσιος", english: "beef (adj)" },
-	] satisfies AdjectiveSeed[],
+	] satisfies AdjectiveSeedInput[],
 
 	adverbs: [
 		{ lemma: "πριν", english: "before" },

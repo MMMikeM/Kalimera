@@ -1,5 +1,6 @@
-import type { NounSeed, Phrase, FullVerbSeed } from "../../../../types/seed";
-
+import type { Phrase, FullVerbSeed } from "../../../../types/seed";
+import type { NounSeedInput } from "../noun-seed-enrichment";
+import type { AdjectiveSeedInput } from "../adjective-seed-enrichment";
 export const LESSON_2024_05_06 = {
 	meta: {
 		date: "2024-05-06",
@@ -23,7 +24,7 @@ export const LESSON_2024_05_06 = {
 		{ lemma: "τηλεόραση", gender: "feminine", english: "television" },
 		{ lemma: "σινεμά", gender: "neuter", english: "cinema" },
 		{ lemma: "σπορ", gender: "neuter", english: "sport" },
-	] satisfies NounSeed[],
+	] satisfies NounSeedInput[],
 
 	adverbs: [],
 

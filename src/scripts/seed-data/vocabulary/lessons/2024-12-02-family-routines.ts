@@ -1,5 +1,6 @@
-import type { AdjectiveSeed, AdverbSeed, NounSeed, Phrase, FullVerbSeed } from "../../../../types/seed";
-
+import type { Phrase, FullVerbSeed } from "../../../../types/seed";
+import type { NounSeedInput } from "../noun-seed-enrichment";
+import type { AdjectiveSeedInput } from "../adjective-seed-enrichment";
 export const LESSON_2024_12_02 = {
 	meta: {
 		date: "2024-12-02",
@@ -33,13 +34,13 @@ export const LESSON_2024_12_02 = {
 		{ lemma: "μαθηματικός", gender: "masculine", english: "mathematician" },
 		{ lemma: "ρολόι", gender: "neuter", english: "watch/clock" },
 		{ lemma: "φορά", gender: "feminine", english: "time (instance)" },
-	] satisfies NounSeed[],
+	] satisfies NounSeedInput[],
 
 	// Adjectives from the lesson
 	adjectives: [
 		{ lemma: "παντρεμένος", english: "married" },
 		{ lemma: "εθνικός", english: "national" },
-	] satisfies AdjectiveSeed[],
+	] satisfies AdjectiveSeedInput[],
 
 	// Frequency adverbs (critical for describing routines)
 	adverbs: [
