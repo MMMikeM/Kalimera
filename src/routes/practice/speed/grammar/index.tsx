@@ -22,9 +22,9 @@ export default function GrammarIndex() {
 	return (
 		<div className="mx-auto max-w-xl">
 			<Card variant="bordered" padding="lg">
-				<div className="text-center">
-					<h2 className="mb-2 text-2xl font-bold">Grammar Exercises</h2>
-					<p className="mb-8 text-stone-600">
+				<div className="mb-8 text-center">
+					<h2 className="mb-2 text-2xl font-bold text-foreground">Grammar Exercises</h2>
+					<p className="text-muted-foreground">
 						Select an exercise type to practice specific grammar patterns.
 					</p>
 				</div>
@@ -34,10 +34,10 @@ export default function GrammarIndex() {
 						<Link
 							key={type}
 							to={type}
-							className={`block rounded-lg border-2 p-4 text-left transition-colors hover:border-stone-300 hover:bg-stone-50 border-stone-200`}
+							className="block rounded-lg border border-border p-4 text-left transition-colors hover:border-terracotta hover:bg-terracotta-50"
 						>
 							<div className="mb-2 flex items-center justify-between">
-								<span className="font-semibold text-stone-800">
+								<span className="font-semibold text-foreground">
 									{config.label}
 								</span>
 								<Badge variant="outline" className="gap-1">
@@ -45,10 +45,10 @@ export default function GrammarIndex() {
 									{formatTimeLimit(config.timeLimit)}
 								</Badge>
 							</div>
-							<p className="mb-1 font-mono text-base text-terracotta-700">
+							<p className="mb-1 font-mono text-base text-terracotta">
 								{config.greekExample}
 							</p>
-							<p className="text-sm text-stone-500">{config.description}</p>
+							<p className="text-sm text-muted-foreground">{config.description}</p>
 						</Link>
 					))}
 				</div>
