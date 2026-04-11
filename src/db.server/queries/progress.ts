@@ -3,10 +3,6 @@ import { and, count, eq, gte, isNotNull, sql } from "drizzle-orm";
 import { db } from "../index";
 import { practiceAttempts, practiceSessions } from "../schema";
 
-// =====================================================================================
-// TYPES
-// =====================================================================================
-
 export type PracticeDate = {
 	date: string; // ISO date string (YYYY-MM-DD)
 	sessionCount: number;
@@ -23,10 +19,6 @@ export type TimeInvested = {
 	totalMinutes: number;
 	sessionCount: number;
 };
-
-// =====================================================================================
-// QUERIES
-// =====================================================================================
 
 export const getPracticeDatesForCalendar = async (
 	userId: number,
