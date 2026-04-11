@@ -14,15 +14,13 @@ export type WordType = (typeof wordTypes)[number];
 export const genders = ["masculine", "feminine", "neuter"] as const;
 export type Gender = (typeof genders)[number];
 
-
 export const adjectivePatterns = [
-	"os-i-o",      // καλός/καλή/καλό
-	"os-ia-o",     // ωραίος/ωραία/ωραίο
-	"is-is-es",    // διεθνής/διεθνής/διεθνές
+	"os-i-o", // καλός/καλή/καλό
+	"os-ia-o", // ωραίος/ωραία/ωραίο
+	"is-is-es", // διεθνής/διεθνής/διεθνές
 	"indeclinable", // μπλε, καφέ
 ] as const;
 export type AdjectivePattern = (typeof adjectivePatterns)[number];
-
 
 // Grammatical cases for nominal inflection (nominal_forms, drills)
 export const grammaticalCases = ["nominative", "genitive", "accusative", "vocative"] as const;
@@ -83,7 +81,6 @@ export type DeclensionPattern = (typeof declensionPatterns)[number];
 // Auth challenge types for WebAuthn flow
 export const challengeTypes = ["registration", "authentication"] as const;
 export type ChallengeType = (typeof challengeTypes)[number];
-
 
 // WebAuthn authenticator transports
 export const authenticatorTransports = [

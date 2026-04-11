@@ -10,7 +10,6 @@ export type PushSubscriptionInsert = z.infer<typeof pushSubscriptionInsertSchema
 const notificationLogInsertSchema = createInsertSchema(notificationLogs);
 type NotificationLogInsert = z.infer<typeof notificationLogInsertSchema>;
 
-
 /** One row per user is not enforced; updates apply to all rows for this user. Newest row is representative. */
 export const getPushSubscriptionByUserId = async (userId: number) => {
 	return await db.query.pushSubscriptions.findFirst({

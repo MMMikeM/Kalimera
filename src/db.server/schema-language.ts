@@ -1,4 +1,11 @@
-import { index, integer, primaryKey, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
+import {
+	index,
+	integer,
+	primaryKey,
+	sqliteTable,
+	text,
+	uniqueIndex,
+} from "drizzle-orm/sqlite-core";
 import {
 	cascadeFk,
 	createdAt,
@@ -116,8 +123,6 @@ export const verbImperatives = sqliteTable(
 		uniqueIndex("idx_verb_imperatives_unique").on(table.vocabId, table.aspect, table.number),
 	],
 );
-
-
 
 export const tags = sqliteTable(
 	"tags",
