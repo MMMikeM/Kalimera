@@ -1,9 +1,9 @@
 import { createFuzzySearch } from "@mmmike/mikrofuzz";
 import { useEffect, useMemo, useState } from "react";
 import { useFetcher } from "react-router";
-import type { SearchVocabItem } from "@/db.server/queries/vocabulary";
+import type { VocabularySearchGraphRow } from "@/db.server/queries/vocabulary";
 
-const EMPTY_VOCABULARY: SearchVocabItem[] = [];
+const EMPTY_VOCABULARY: VocabularySearchGraphRow[] = [];
 
 interface UseVocabularySearchOptions {
 	enabled?: boolean;
@@ -11,7 +11,7 @@ interface UseVocabularySearchOptions {
 
 export const useVocabularySearch = (options: UseVocabularySearchOptions = {}) => {
 	const { enabled = true } = options;
-	const fetcher = useFetcher<{ vocabulary: SearchVocabItem[] }>();
+	const fetcher = useFetcher<{ vocabulary: VocabularySearchGraphRow[] }>();
 	const [searchTerm, setSearchTerm] = useState("");
 
 	useEffect(() => {
@@ -25,10 +25,14 @@ export const useVocabularySearch = (options: UseVocabularySearchOptions = {}) =>
 
 	const fuzzySearch = useMemo(
 		() =>
-			createFuzzySearch<SearchVocabItem>(vocabulary, {
+			createFuzzySearch<VocabularySearchGraphRow>(vocabulary, {
 				getText: (item) => {
-					const vocab = item as SearchVocabItem;
-					return [vocab.greek, vocab.english, ...vocab.tags];
+					const row = item as VocabularySearchGraphRow;
+					return [
+						row.greekText,
+						row.englishTranslation,
+						...row.vocabularyTags.flatMap((vt) => (vt.tag?.name ? [vt.tag.name] : [])),
+					];
 				},
 			}),
 		[vocabulary],
