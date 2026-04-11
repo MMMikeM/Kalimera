@@ -1,14 +1,7 @@
 import type { VocabWithTags } from "../../seed-pipeline";
 import { DAILY_PATTERN_ITEMS } from "../grammar-patterns";
-import {
-	ADJECTIVE_ITEMS,
-	COLOR_ITEMS,
-} from "./adjectives";
-import {
-	FREQUENCY_ITEMS,
-	INDEFINITE_ADVERB_ITEMS,
-	POSITION_ITEMS,
-} from "./adverbs";
+import { ADJECTIVE_ITEMS, COLOR_ITEMS } from "./adjectives";
+import { FREQUENCY_ITEMS, INDEFINITE_ADVERB_ITEMS, POSITION_ITEMS } from "./adverbs";
 import { NUMBER_ITEMS } from "./numbers";
 import { NOUN_ITEMS } from "./nouns";
 import {
@@ -19,10 +12,7 @@ import {
 	PHRASE_SEED_CATEGORIES,
 	TIME_TELLING_ITEMS,
 } from "./phrases";
-import {
-	GENDERED_PRONOUN_ITEMS,
-	INDEFINITE_PRONOUN_ITEMS,
-} from "./pronouns";
+import { GENDERED_PRONOUN_ITEMS, INDEFINITE_PRONOUN_ITEMS } from "./pronouns";
 import { TRANSPORT_ACTION_ITEMS, VERB_ITEMS } from "./verbs";
 
 export const VOCAB_SEED_CATEGORIES: Array<{ name: string; items: VocabWithTags[] }> = [
