@@ -20,14 +20,22 @@ export const SurvivalTab = ({ data }: { data: PhrasesLoaderData }) => {
 
 			<PhraseSection title="Essential Greetings" colorScheme="honey">
 				{essential.map((phrase) => (
-					<PhraseItemDisplay key={phrase.id} greek={phrase.greek} english={phrase.english} />
+					<PhraseItemDisplay
+						key={phrase.id}
+						greek={phrase.greekText}
+						english={phrase.englishTranslation}
+					/>
 				))}
 			</PhraseSection>
 
 			{survival.length > 0 && (
 				<PhraseSection title="Survival Phrases" colorScheme="terracotta">
 					{survival.map((phrase) => (
-						<PhraseItemDisplay key={phrase.id} greek={phrase.greek} english={phrase.english} />
+						<PhraseItemDisplay
+							key={phrase.id}
+							greek={phrase.greekText}
+							english={phrase.englishTranslation}
+						/>
 					))}
 				</PhraseSection>
 			)}

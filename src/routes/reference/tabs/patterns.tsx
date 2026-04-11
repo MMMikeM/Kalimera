@@ -70,9 +70,9 @@ const ParadigmCard = ({
 									className="flex items-baseline gap-2 rounded border border-stone-200 bg-white p-2"
 								>
 									<MonoText variant="greek" size="md">
-										{item.greek}
+										{item.greekText}
 									</MonoText>
-									<span className="text-sm text-stone-600">{item.english}</span>
+									<span className="text-sm text-stone-600">{item.englishTranslation}</span>
 								</div>
 							))}
 						</div>
@@ -171,9 +171,9 @@ export function PatternsTab({ data }: { data: PatternsData }) {
 								className="flex items-baseline gap-2 rounded border border-stone-200 bg-white p-2"
 							>
 								<MonoText variant="greek" size="md">
-									{name.greek}
+									{name.greekText}
 								</MonoText>
-								<span className="text-sm text-stone-600">{name.english}</span>
+								<span className="text-sm text-stone-600">{name.englishTranslation}</span>
 							</div>
 						))}
 					</div>

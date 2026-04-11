@@ -10,7 +10,7 @@ import { Link } from "react-router";
 import { Card } from "@/components/Card";
 import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/ui/form-field";
-import { createUserWithPassword, findUserByUsername } from "@/db.server/queries/auth";
+import { createUserWithPassword, findUserByUsername } from "@/db.server/queries/users";
 import { createAuthCookie } from "@/lib/auth-cookie";
 import { setStoredAuth } from "@/lib/auth-storage";
 import { usePasskeyRegistration } from "@/lib/hooks/use-passkey-registration";
@@ -52,7 +52,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
 
 	try {
 		const passwordHash = await hashPassword(password);
-		const newUser = await createUserWithPassword(username, displayName, passwordHash);
+		const newUser = await createUserWithPassword({ username, displayName, passwordHash });
 
 		if (!newUser) {
 			return {

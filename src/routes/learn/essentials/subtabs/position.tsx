@@ -35,7 +35,7 @@ const RELATIVE_POSITION_EXAMPLES = [
 ];
 
 export function PositionSubtab({ data }: Props) {
-	const adverbByGreek = new Map(data.positionAdverbs.map((a) => [a.greek, a]));
+	const adverbByGreek = new Map(data.positionAdverbs.map((a) => [a.greekText, a]));
 
 	return (
 		<div className="space-y-6">
@@ -65,8 +65,8 @@ export function PositionSubtab({ data }: Props) {
 								<div className="px-3 py-2.5">
 									{left && (
 										<>
-											<MonoText variant="greek">{left.greek}</MonoText>
-											<div className="text-xs text-stone-500">{left.english}</div>
+											<MonoText variant="greek">{left.greekText}</MonoText>
+											<div className="text-xs text-stone-500">{left.englishTranslation}</div>
 										</>
 									)}
 								</div>
@@ -75,8 +75,8 @@ export function PositionSubtab({ data }: Props) {
 								<div className="px-3 py-2.5">
 									{right && (
 										<>
-											<MonoText variant="greek">{right.greek}</MonoText>
-											<div className="text-xs text-stone-500">{right.english}</div>
+											<MonoText variant="greek">{right.greekText}</MonoText>
+											<div className="text-xs text-stone-500">{right.englishTranslation}</div>
 										</>
 									)}
 								</div>

@@ -52,7 +52,7 @@ const USAGE_EXAMPLES = [
 ];
 
 export function FrequencySubtab({ data }: Props) {
-	const adverbByGreek = new Map(data.frequencyAdverbs.map((a) => [a.greek, a]));
+	const adverbByGreek = new Map(data.frequencyAdverbs.map((a) => [a.greekText, a]));
 
 	return (
 		<div className="space-y-6">
@@ -75,7 +75,9 @@ export function FrequencySubtab({ data }: Props) {
 								<div className="flex items-center justify-between gap-3">
 									<div className="min-w-0">
 										<MonoText variant="greek">{greek}</MonoText>
-										<div className="text-xs text-stone-500">{adverb?.english ?? greek}</div>
+										<div className="text-xs text-stone-500">
+											{adverb?.englishTranslation ?? greek}
+										</div>
 									</div>
 									<div className="h-2 w-24 shrink-0 overflow-hidden rounded-full bg-stone-200">
 										<div

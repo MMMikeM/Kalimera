@@ -21,7 +21,11 @@ export const RequestsTab = ({ data }: { data: PhrasesLoaderData }) => {
 			{requests.length > 0 && (
 				<PhraseSection title="Polite Requests" colorScheme="terracotta">
 					{requests.map((phrase) => (
-						<PhraseItemDisplay key={phrase.id} greek={phrase.greek} english={phrase.english} />
+						<PhraseItemDisplay
+							key={phrase.id}
+							greek={phrase.greekText}
+							english={phrase.englishTranslation}
+						/>
 					))}
 				</PhraseSection>
 			)}
@@ -29,7 +33,11 @@ export const RequestsTab = ({ data }: { data: PhrasesLoaderData }) => {
 			{commands.length > 0 && (
 				<PhraseSection title="Commands" colorScheme="olive">
 					{commands.map((phrase) => (
-						<PhraseItemDisplay key={phrase.id} greek={phrase.greek} english={phrase.english} />
+						<PhraseItemDisplay
+							key={phrase.id}
+							greek={phrase.greekText}
+							english={phrase.englishTranslation}
+						/>
 					))}
 				</PhraseSection>
 			)}

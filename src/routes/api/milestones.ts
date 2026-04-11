@@ -53,7 +53,11 @@ export const action = async ({ request }: Route.ActionArgs) => {
 			);
 		}
 
-		const result = await recordMilestone(userId, milestone, streak);
+		const result = await recordMilestone({
+			userId,
+			milestone,
+			streakAtAchievement: streak,
+		});
 		return Response.json({ success: true, recorded: result !== null });
 	} catch (error) {
 		console.error("Record milestone error:", error);

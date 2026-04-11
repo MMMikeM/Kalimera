@@ -252,7 +252,7 @@ const VerbCard: React.FC<VerbCardProps> = ({
 };
 
 interface VerbListProps {
-	verbs: Array<{ id: number; greek: string; english: string }>;
+	verbs: Array<{ id: number; greekText: string; englishTranslation: string }>;
 	label: string;
 }
 
@@ -267,8 +267,8 @@ const VerbList: React.FC<VerbListProps> = ({ verbs, label }) => (
 		<div className="mt-2 grid grid-cols-2 gap-1.5">
 			{verbs.map((verb) => (
 				<div key={verb.id} className="flex items-baseline gap-2 rounded bg-white/60 p-1.5">
-					<span className="font-mono text-sm font-medium text-stone-800">{verb.greek}</span>
-					<span className="text-xs text-stone-500">{verb.english}</span>
+					<span className="font-mono text-sm font-medium text-stone-800">{verb.greekText}</span>
+					<span className="text-xs text-stone-500">{verb.englishTranslation}</span>
 				</div>
 			))}
 		</div>

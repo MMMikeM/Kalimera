@@ -21,7 +21,11 @@ export const ConnectorsTab = ({ data }: { data: PhrasesLoaderData }) => {
 			{discourseMarkers.length > 0 && (
 				<PhraseSection title="Discourse Markers" colorScheme="olive">
 					{discourseMarkers.map((phrase) => (
-						<PhraseItemDisplay key={phrase.id} greek={phrase.greek} english={phrase.english} />
+						<PhraseItemDisplay
+							key={phrase.id}
+							greek={phrase.greekText}
+							english={phrase.englishTranslation}
+						/>
 					))}
 				</PhraseSection>
 			)}
@@ -29,7 +33,11 @@ export const ConnectorsTab = ({ data }: { data: PhrasesLoaderData }) => {
 			{discourseFillers.length > 0 && (
 				<PhraseSection title="Fillers & Connectors" colorScheme="ocean">
 					{discourseFillers.map((phrase) => (
-						<PhraseItemDisplay key={phrase.id} greek={phrase.greek} english={phrase.english} />
+						<PhraseItemDisplay
+							key={phrase.id}
+							greek={phrase.greekText}
+							english={phrase.englishTranslation}
+						/>
 					))}
 				</PhraseSection>
 			)}

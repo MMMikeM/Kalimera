@@ -1,5 +1,5 @@
 import type { AuthenticationResponseJSON } from "@simplewebauthn/server";
-import { getUserById } from "@/db.server/queries/practice";
+import { getUserById } from "@/db.server/queries/users";
 import { createWebAuthn } from "@/lib/auth";
 import { createAuthCookie } from "@/lib/auth-cookie";
 import type { Route } from "./+types/auth-verify";

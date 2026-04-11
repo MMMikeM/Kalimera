@@ -46,7 +46,11 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 			getPracticeStats(userId),
 		]);
 		userName = user?.displayName ?? null;
-		reviewItems = reviews;
+		reviewItems = reviews.map((r) => ({
+			id: r.vocabularyId,
+			greekText: r.vocabulary?.greekText ?? "",
+			englishTranslation: r.vocabulary?.englishTranslation ?? "",
+		}));
 		newVocabItems = newItems;
 		stats = practiceStats;
 	}

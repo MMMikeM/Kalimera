@@ -29,20 +29,20 @@ const MONTH_ORDER = [
 
 export function TimeSubtab({ data }: Props) {
 	const sortedTimes = [...data.timesOfDay].sort((a, b) => {
-		const aOrder = TIME_ORDER.indexOf(a.english.toLowerCase());
-		const bOrder = TIME_ORDER.indexOf(b.english.toLowerCase());
+		const aOrder = TIME_ORDER.indexOf(a.englishTranslation.toLowerCase());
+		const bOrder = TIME_ORDER.indexOf(b.englishTranslation.toLowerCase());
 		return (aOrder === -1 ? 999 : aOrder) - (bOrder === -1 ? 999 : bOrder);
 	});
 
 	const sortedDays = [...data.daysOfWeek].sort((a, b) => {
-		const aOrder = DAY_ORDER.indexOf(a.english.toLowerCase());
-		const bOrder = DAY_ORDER.indexOf(b.english.toLowerCase());
+		const aOrder = DAY_ORDER.indexOf(a.englishTranslation.toLowerCase());
+		const bOrder = DAY_ORDER.indexOf(b.englishTranslation.toLowerCase());
 		return (aOrder === -1 ? 999 : aOrder) - (bOrder === -1 ? 999 : bOrder);
 	});
 
 	const sortedMonths = [...data.months].sort((a, b) => {
-		const aOrder = MONTH_ORDER.indexOf(a.english.toLowerCase());
-		const bOrder = MONTH_ORDER.indexOf(b.english.toLowerCase());
+		const aOrder = MONTH_ORDER.indexOf(a.englishTranslation.toLowerCase());
+		const bOrder = MONTH_ORDER.indexOf(b.englishTranslation.toLowerCase());
 		return (aOrder === -1 ? 999 : aOrder) - (bOrder === -1 ? 999 : bOrder);
 	});
 
@@ -64,9 +64,9 @@ export function TimeSubtab({ data }: Props) {
 							key={time.id}
 							className="grid grid-cols-[3fr_2fr] items-center gap-x-3 px-3 py-2.5"
 						>
-							<MonoText variant="greek">{time.greek}</MonoText>
+							<MonoText variant="greek">{time.greekText}</MonoText>
 							<div>
-								<span className="text-sm text-stone-500">{time.english}</span>
+								<span className="text-sm text-stone-500">{time.englishTranslation}</span>
 								{time.timeRange && (
 									<span className="ml-1.5 text-xs text-stone-400">({time.timeRange})</span>
 								)}
@@ -112,8 +112,8 @@ export function TimeSubtab({ data }: Props) {
 								key={day.id}
 								className="grid grid-cols-[3fr_2fr] items-center gap-x-3 px-3 py-2.5"
 							>
-								<MonoText variant="greek">{day.greek}</MonoText>
-								<span className="text-sm text-stone-500">{day.english}</span>
+								<MonoText variant="greek">{day.greekText}</MonoText>
+								<span className="text-sm text-stone-500">{day.englishTranslation}</span>
 							</div>
 						))}
 					</div>
@@ -164,8 +164,8 @@ export function TimeSubtab({ data }: Props) {
 								key={month.id}
 								className="grid grid-cols-[3fr_2fr] items-center gap-x-3 px-3 py-2.5"
 							>
-								<MonoText variant="greek">{month.greek}</MonoText>
-								<span className="text-sm text-stone-500">{month.english}</span>
+								<MonoText variant="greek">{month.greekText}</MonoText>
+								<span className="text-sm text-stone-500">{month.englishTranslation}</span>
 							</div>
 						))}
 					</div>

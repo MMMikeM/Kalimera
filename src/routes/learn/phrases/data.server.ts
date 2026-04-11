@@ -1,38 +1,18 @@
-import { getVocabBySection, type VocabItemWithSection } from "@/db.server/queries/vocabulary";
+import { fetchSectionVocabularyByTagSlug } from "@/db.server/queries/vocabulary";
+import type { Vocabulary } from "@/db.server/types";
 
-// Re-export VocabItemWithSection as PhraseItem for semantic clarity
-export type PhraseItem = VocabItemWithSection;
+export type PhraseItem = Vocabulary;
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // TRANSFORMS
 // ═══════════════════════════════════════════════════════════════════════════════
 
-function groupByTag<T extends { tagSlug: string }>(items: T[]): Record<string, T[]> {
-	const result: Record<string, T[]> = {};
-	for (const item of items) {
-		const key = item.tagSlug;
-		if (!(key in result)) result[key] = [];
-		result[key]?.push(item);
-	}
-	return result;
-}
-
-// ═══════════════════════════════════════════════════════════════════════════════
-// DATA LOADER
-// ═══════════════════════════════════════════════════════════════════════════════
-
 export async function getPhrasesData() {
-	// Query sections that contain phrase-related tags
-	const [phrasesData, referenceData, verbsData] = await Promise.all([
-		getVocabBySection("phrases"),
-		getVocabBySection("reference"),
-		getVocabBySection("verbs"),
+	const [phrases, reference, verbs] = await Promise.all([
+		fetchSectionVocabularyByTagSlug("phrases"),
+		fetchSectionVocabularyByTagSlug("reference"),
+		fetchSectionVocabularyByTagSlug("verbs"),
 	]);
-
-	// Group each section's data by tag
-	const phrases = groupByTag(phrasesData);
-	const reference = groupByTag(referenceData);
-	const verbs = groupByTag(verbsData);
 
 	return {
 		survival: {
