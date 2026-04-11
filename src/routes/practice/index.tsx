@@ -1,3 +1,3 @@
 import { redirect } from "react-router";
 
-export const loader = () => redirect("/practice/speed");
+export const loader = () => redirect("/practice/vocab");

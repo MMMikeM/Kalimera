@@ -14,19 +14,14 @@ export default [
 	// Practice - core loop
 	route("practice", "routes/practice/layout.tsx", [
 		index("routes/practice/index.tsx"),
-		route("speed", "routes/practice/speed/layout.tsx", [
-			index("routes/practice/speed/index.tsx"),
-			...prefix("vocab", [
-				index("routes/practice/speed/vocab/index.tsx"),
-				route("pronouns", "routes/practice/speed/vocab/pronouns.tsx"),
-				route("articles", "routes/practice/speed/vocab/articles.tsx"),
-				route("verbs", "routes/practice/speed/vocab/verbs.tsx"),
-				route("nouns", "routes/practice/speed/vocab/nouns.tsx"),
-			]),
-			...prefix("grammar", [
-				index("routes/practice/speed/grammar/index.tsx"),
-			]),
+		...prefix("vocab", [
+			index("routes/practice/vocab/index.tsx"),
+			route("pronouns", "routes/practice/vocab/pronouns.tsx"),
+			route("articles", "routes/practice/vocab/articles.tsx"),
+			route("verbs", "routes/practice/vocab/verbs.tsx"),
+			route("nouns", "routes/practice/vocab/nouns.tsx"),
 		]),
+		...prefix("grammar", [index("routes/practice/grammar/index.tsx")]),
 		route("memory", "routes/practice/memory/layout.tsx", [
 			index("routes/practice/memory/index.tsx"),
 			route("articles", "routes/practice/memory/articles.tsx"),
