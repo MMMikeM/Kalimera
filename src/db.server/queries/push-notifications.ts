@@ -1,18 +1,26 @@
-import { and, eq, isNull } from "drizzle-orm";
+import { eq } from "drizzle-orm";
+import { createInsertSchema } from "drizzle-orm/zod";
+import type z from "zod/v4";
 import { db } from "../index";
 import { notificationLogs, pushSubscriptions } from "../schema";
 
-export type NotificationType = "streak_warning" | "practice_reminder" | "review_due";
+const pushSubscriptionInsertSchema = createInsertSchema(pushSubscriptions);
+export type PushSubscriptionInsert = z.infer<typeof pushSubscriptionInsertSchema>;
 
+const notificationLogInsertSchema = createInsertSchema(notificationLogs);
+type NotificationLogInsert = z.infer<typeof notificationLogInsertSchema>;
+
+
+/** One row per user is not enforced; updates apply to all rows for this user. Newest row is representative. */
 export const getPushSubscriptionByUserId = async (userId: number) => {
-	return db
-		.select({
-			notificationMode: pushSubscriptions.notificationMode,
-			taperOfferPending: pushSubscriptions.taperOfferPending,
-		})
-		.from(pushSubscriptions)
-		.where(eq(pushSubscriptions.userId, userId))
-		.get();
+	return await db.query.pushSubscriptions.findFirst({
+		where: { userId },
+		orderBy: { createdAt: "desc" },
+		columns: {
+			notificationMode: true,
+			taperOfferPending: true,
+		},
+	});
 };
 
 export const setNotificationMode = async (userId: number, mode: "adaptive" | "always") => {
@@ -34,18 +42,18 @@ export type TappedAction = "2min" | "body" | "snooze";
 // PUSH SUBSCRIPTIONS
 // ═══════════════════════════════════════════════════════════════════════════════
 
-export const upsertPushSubscription = async (params: {
-	userId: number;
-	endpoint: string;
-	p256dh: string;
-	auth: string;
-}) => {
+export type UpsertPushSubscriptionInput = Pick<
+	PushSubscriptionInsert,
+	"userId" | "endpoint" | "p256dh" | "auth"
+>;
+
+export const upsertPushSubscription = async (data: UpsertPushSubscriptionInput) => {
 	await db
 		.insert(pushSubscriptions)
-		.values(params)
+		.values(data)
 		.onConflictDoUpdate({
 			target: pushSubscriptions.endpoint,
-			set: { userId: params.userId, p256dh: params.p256dh, auth: params.auth },
+			set: { userId: data.userId, p256dh: data.p256dh, auth: data.auth },
 		});
 };
 
@@ -67,23 +75,25 @@ export const snoozePushSubscription = async (userId: number) => {
 // NOTIFICATION LOGS
 // ═══════════════════════════════════════════════════════════════════════════════
 
-export const logNotificationSent = async (userId: number, type: NotificationType) => {
-	await db.insert(notificationLogs).values({ userId, sentAt: new Date(), type });
+export type LogNotificationSentInput = Pick<NotificationLogInsert, "userId" | "type">;
+
+export const logNotificationSent = async (data: LogNotificationSentInput) => {
+	await db.insert(notificationLogs).values({ ...data, sentAt: new Date() });
 };
 
 export const logNotificationTap = async (userId: number, tappedAction: TappedAction) => {
-	const recentLog = await db
-		.select({ id: notificationLogs.id })
-		.from(notificationLogs)
-		.where(and(eq(notificationLogs.userId, userId), isNull(notificationLogs.tappedAction)))
-		.orderBy(notificationLogs.sentAt)
-		.limit(1)
-		.get();
+	await db.transaction(async (tx) => {
+		const recentLog = await tx.query.notificationLogs.findFirst({
+			where: { userId, tappedAction: { isNull: true } },
+			orderBy: { sentAt: "asc" },
+			columns: { id: true },
+		});
 
-	if (recentLog) {
-		await db
-			.update(notificationLogs)
-			.set({ tappedAction, tappedAt: new Date() })
-			.where(eq(notificationLogs.id, recentLog.id));
-	}
+		if (recentLog) {
+			await tx
+				.update(notificationLogs)
+				.set({ tappedAction, tappedAt: new Date() })
+				.where(eq(notificationLogs.id, recentLog.id));
+		}
+	});
 };

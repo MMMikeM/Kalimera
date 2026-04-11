@@ -1,38 +1,28 @@
-import { and, eq, lt } from "drizzle-orm";
+import { eq } from "drizzle-orm";
+import { createInsertSchema } from "drizzle-orm/zod";
+import { z } from "zod/v4";
+import { authenticatorTransports } from "../enums";
 import { db } from "../index";
-import {
-	type AuthenticatorTransport,
-	authChallenges,
-	type ChallengeType,
-	passkeys,
-	users,
-} from "../schema";
+import { authChallenges, type ChallengeType, passkeys } from "../schema";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // PASSKEY QUERIES
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export const findPasskeysByUserId = async (userId: number) => {
-	return db.select().from(passkeys).where(eq(passkeys.userId, userId));
+	return await db.query.passkeys.findMany({ where: { userId } });
 };
 
 export const findPasskeyByCredentialId = async (credentialId: string) => {
-	const [passkey] = await db.select().from(passkeys).where(eq(passkeys.credentialId, credentialId));
-	return passkey;
+	return await db.query.passkeys.findFirst({ where: { credentialId } });
 };
 
-export type NewPasskey = {
-	userId: number;
-	credentialId: string;
-	publicKey: string;
-	counter: number;
-	transports: AuthenticatorTransport[] | null;
-	deviceType?: string | null;
-	backedUp?: boolean | null;
-	name?: string | null;
-};
+const passkeyInsertSchema = createInsertSchema(passkeys, {
+	transports: z.array(z.enum(authenticatorTransports)).nullable().optional(),
+});
 
-export const createPasskey = async (data: NewPasskey) => {
+export type PasskeyInsert = z.infer<typeof passkeyInsertSchema>;
+export const createPasskey = async (data: PasskeyInsert) => {
 	const [passkey] = await db.insert(passkeys).values(data).returning();
 	return passkey;
 };
@@ -66,24 +56,9 @@ export const createChallenge = async (challenge: string, type: ChallengeType, us
 
 export const findChallenge = async (challenge: string, type: ChallengeType) => {
 	const now = new Date();
-
-	// Opportunistically clean up a few expired challenges
-	await db
-		.delete(authChallenges)
-		.where(and(eq(authChallenges.type, type), lt(authChallenges.expiresAt, now)));
-
-	// Find the valid challenge
-	const [record] = await db
-		.select()
-		.from(authChallenges)
-		.where(and(eq(authChallenges.challenge, challenge), eq(authChallenges.type, type)));
-
-	// Return null if expired
-	if (record && record.expiresAt < now) {
-		return null;
-	}
-
-	return record;
+	return await db.query.authChallenges.findFirst({
+		where: { challenge, type, expiresAt: { gte: now } },
+	});
 };
 
 export const deleteChallenge = async (challenge: string) => {
@@ -91,68 +66,10 @@ export const deleteChallenge = async (challenge: string) => {
 };
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// USER AUTH QUERIES
+// USER AUTH HELPERS (passkeys)
 // ═══════════════════════════════════════════════════════════════════════════════
 
-export const findUserByUsername = async (username: string) => {
-	return db.query.users.findFirst({
-		where: { username: username.toLowerCase() },
-	});
-};
-
-export const createUserWithPassword = async (
-	username: string,
-	displayName: string,
-	passwordHash: string,
-) => {
-	const normalizedUsername = username.toLowerCase();
-
-	const existing = await findUserByUsername(normalizedUsername);
-	if (existing) {
-		throw new Error("Username already taken");
-	}
-
-	const [newUser] = await db
-		.insert(users)
-		.values({
-			username: normalizedUsername,
-			displayName,
-			passwordHash,
-			code: normalizedUsername, // Use username as code for backwards compat
-		})
-		.returning();
-
-	return newUser;
-};
-
-export const getUserPasswordHash = async (userId: number) => {
-	const [user] = await db
-		.select({ passwordHash: users.passwordHash })
-		.from(users)
-		.where(eq(users.id, userId));
-	return user?.passwordHash;
-};
-
 export const userHasPasskey = async (userId: number) => {
-	const [passkey] = await db
-		.select({ id: passkeys.id })
-		.from(passkeys)
-		.where(eq(passkeys.userId, userId))
-		.limit(1);
-	return !!passkey;
-};
-
-export const findUserByCode = async (code: string) => {
-	const [user] = await db.select().from(users).where(eq(users.code, code.toLowerCase()));
-	return user;
-};
-
-export const setUserPassword = async (userId: number, passwordHash: string, username?: string) => {
-	const updateData: { passwordHash: string; username?: string } = {
-		passwordHash,
-	};
-	if (username) {
-		updateData.username = username.toLowerCase();
-	}
-	await db.update(users).set(updateData).where(eq(users.id, userId));
+	const count = await db.$count(passkeys, eq(passkeys.userId, userId));
+	return count > 0;
 };
