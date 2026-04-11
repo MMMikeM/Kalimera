@@ -1,69 +1,132 @@
-# React + TypeScript + Vite
+# Kalimera
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A Greek learning app for intermediate learners building procedural fluency — drilling grammar and vocabulary until responses become automatic.
 
-Currently, two official plugins are available:
+**Stack:** React Router 7 · Cloudflare Workers · Turso (libsql) · Drizzle ORM · Tailwind CSS v4
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## What it does
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Timed production drills** — type Greek under time pressure to build retrieval speed
+- **Spaced repetition** — SRS-based vocabulary review with SM-2 scheduling
+- **Grammar reference** — paradigm tables for cases, pronouns, articles, verbs, nouns, adjectives, prepositions, and patterns
+- **Memory drills** — timed paradigm recall for forms that need to be automatic
+- **Vocabulary browser** — nouns by gender/category, verbs by conjugation family with full paradigm tables
+- **Progress tracking** — streak calendar, accuracy trends, mastered vocabulary count
 
-```js
-export default tseslint.config([
-	globalIgnores(["dist"]),
-	{
-		files: ["**/*.{ts,tsx}"],
-		extends: [
-			// Other configs...
+## Getting started
 
-			// Remove tseslint.configs.recommended and replace with this
-			...tseslint.configs.recommendedTypeChecked,
-			// Alternatively, use this for stricter rules
-			...tseslint.configs.strictTypeChecked,
-			// Optionally, add this for stylistic rules
-			...tseslint.configs.stylisticTypeChecked,
+### Prerequisites
 
-			// Other configs...
-		],
-		languageOptions: {
-			parserOptions: {
-				project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-				tsconfigRootDir: import.meta.dirname,
-			},
-			// other options...
-		},
-	},
-]);
+- Node.js 22+
+- pnpm
+- Docker (for local database)
+- Wrangler CLI (`pnpm exec wrangler`)
+
+### Local development
+
+```bash
+pnpm install
+
+# Start local libsql database (Docker)
+docker run -p 8080:8080 ghcr.io/tursodatabase/libsql-server
+
+# Set up schema and seed data
+make db-setup
+
+# Start dev server
+make dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Copy `.env.example` to `.env` and fill in Turso credentials for production database access.
 
-```js
-// eslint.config.js
-import reactX from "eslint-plugin-react-x";
-import reactDom from "eslint-plugin-react-dom";
+## Commands
 
-export default tseslint.config([
-	globalIgnores(["dist"]),
-	{
-		files: ["**/*.{ts,tsx}"],
-		extends: [
-			// Other configs...
-			// Enable lint rules for React
-			reactX.configs["recommended-typescript"],
-			// Enable lint rules for React DOM
-			reactDom.configs.recommended,
-		],
-		languageOptions: {
-			parserOptions: {
-				project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-				tsconfigRootDir: import.meta.dirname,
-			},
-			// other options...
-		},
-	},
-]);
+All commands go through the Makefile — direct `pnpm` database commands skip `.env` and hit local instead of Turso.
+
+### Development
+
+| Command | Description |
+|---------|-------------|
+| `make dev` | Start development server |
+| `make build` | Build for production |
+| `make preview` | Preview with Wrangler locally |
+
+### Local database (Docker libsql on port 8080)
+
+| Command | Description |
+|---------|-------------|
+| `make db-push` | Push schema |
+| `make db-seed` | Seed data |
+| `make db-setup` | Push + seed |
+| `make db-studio` | Open Drizzle Studio |
+
+### Production database (Turso)
+
+| Command | Description |
+|---------|-------------|
+| `make prod-db-push` | Push schema |
+| `make prod-db-seed` | Seed data |
+| `make prod-db-setup` | Push + seed |
+| `make prod-db-studio` | Open Drizzle Studio |
+
+### Deployment
+
+| Command | Description |
+|---------|-------------|
+| `make deploy` | Build and deploy to Cloudflare Workers |
+| `make deploy-dry` | Dry run |
+| `make logs` | Tail worker logs |
+
+### Linting
+
+```bash
+pnpm lint:fix && pnpm lint:unused && pnpm lint:types && pnpm lint:dupes
 ```
+
+## Architecture
+
+```
+src/
+  components/        # Custom components (tailwind-variants)
+  components/ui/     # ShadCN components
+  routes/            # React Router 7 routes
+  db.server/         # Drizzle schema and queries
+  scripts/           # Seed scripts
+docs/
+  user-flows.llm     # Route map, user journeys, data tables
+```
+
+**Path alias:** `@/` → `./src/`
+
+**Route types:** Run `pnpm react-router typegen` after changing loaders.
+
+## Routes
+
+```
+/                    Dashboard
+/practice/speed      Timed mixed production drills
+/practice/memory     Memory drill hub
+/practice/review     SRS review queue
+/practice/vocabulary New vocabulary learning
+/learn               Content browser hub
+/learn/conversations Themed dialogues
+/learn/phrases       Common expressions
+/learn/nouns         Noun browser
+/learn/verbs         Verb browser with paradigm tables
+/reference           Grammar reference hub
+/reference/:tab      Grammar reference (cases, pronouns, articles, nouns, adjectives, prepositions, verbs, patterns)
+/search              Fuzzy vocabulary search
+/progress            Analytics
+/try                 Anonymous drill (conversion)
+```
+
+## Environment variables
+
+| Variable | Description |
+|----------|-------------|
+| `TURSO_DATABASE_URL` | Turso database URL |
+| `TURSO_AUTH_TOKEN` | Turso auth token |
+
+Set as Cloudflare Worker secrets: `make secrets-set-turso`
