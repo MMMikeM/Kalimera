@@ -208,12 +208,19 @@ const db = drizzle({ client, relations: { ...part1, ...part2 } });
 
 ## Queries
 
+### Reads: prefer `db.query`, not `.select(`
+
+**Any `db.select(` or `tx.select(` is almost always an antipattern** in this app. Use **`db.query.<table>.findFirst` / `findMany`** with object `where`, `orderBy`, `with`, and `columns` instead. The Select Builder is an **escape hatch** for aggregates (`COUNT`, `SUM`, `GROUP BY`), joins that **cannot** be expressed via `defineRelations`, and `db.selectDistinct()` — not for routine row fetch.
+
+The snippets below include Select Builder syntax for completeness and for those rare cases; skip straight to **Relational queries** for normal reads.
+
 ### CRUD operations
 
 ```typescript
 import { eq, lt, gt, and, or, sql } from 'drizzle-orm'
 
-// Select
+// Select — avoid for ordinary reads; use relational queries below.
+// Legitimate uses: aggregates, exotic joins, DISTINCT (see skill SKILL.md).
 const rows = await db.select().from(users)
 const filtered = await db.select().from(users).where(eq(users.id, 1))
 
@@ -350,6 +357,154 @@ await db.query.posts.findMany({
 		comments: { offset: 3, limit: 3 },
 	},
 });
+```
+
+---
+
+## Transactions
+
+A **SQL transaction** groups one or more statements into a single logical unit: either the whole group **commits** or it **rolls back** (undone) together.
+
+Drizzle runs statements inside a transaction via `db.transaction()`. Use the **`tx`** (transaction) client for all operations inside the callback — not the outer `db` — so everything participates in the same transaction.
+
+For reads inside a transaction, prefer **`tx.query`** (same rules as outside: `.select(` is almost always wrong). Some examples below use **`tx.select(...)`** to match upstream Drizzle docs; in this codebase, reach for `tx.query` first.
+
+### Basic transaction
+
+```typescript
+import { eq, sql } from "drizzle-orm";
+
+await db.transaction(async (tx) => {
+	await tx
+		.update(accounts)
+		.set({ balance: sql`${accounts.balance} - 100.00` })
+		.where(eq(users.name, "Dan"));
+	await tx
+		.update(accounts)
+		.set({ balance: sql`${accounts.balance} + 100.00` })
+		.where(eq(users.name, "Andrew"));
+});
+```
+
+### Passing `tx` to helpers (multi-step mutations)
+
+For one **atomic** unit of work (e.g. insert a row and update related tables), call **`db.transaction` once** in the public function and pass **`tx`** into private helpers. Helpers use `tx.insert` / `tx.query` / `tx.update` — they do **not** start another `db.transaction` for the same operation. That keeps a single commit/rollback boundary and matches how this repo structures `src/db.server/queries/*`.
+
+### Nested transactions (savepoints)
+
+Drizzle supports **savepoints** via nested `tx.transaction()`:
+
+```typescript
+await db.transaction(async (tx) => {
+	await tx
+		.update(accounts)
+		.set({ balance: sql`${accounts.balance} - 100.00` })
+		.where(eq(users.name, "Dan"));
+	await tx
+		.update(accounts)
+		.set({ balance: sql`${accounts.balance} + 100.00` })
+		.where(eq(users.name, "Andrew"));
+
+	await tx.transaction(async (tx2) => {
+		await tx2.update(users).set({ name: "Mr. Dan" }).where(eq(users.name, "Dan"));
+	});
+});
+```
+
+### Conditional rollback
+
+Embed business logic and abort the transaction when needed. `tx.rollback()` ends the transaction and rolls back (throws so the outer promise rejects unless you handle it).
+
+```typescript
+await db.transaction(async (tx) => {
+	const [account] = await tx
+		.select({ balance: accounts.balance })
+		.from(accounts)
+		.where(eq(users.name, "Dan"));
+	if (account.balance < 100) {
+		tx.rollback();
+	}
+
+	await tx
+		.update(accounts)
+		.set({ balance: sql`${accounts.balance} - 100.00` })
+		.where(eq(users.name, "Dan"));
+	await tx
+		.update(accounts)
+		.set({ balance: sql`${accounts.balance} + 100.00` })
+		.where(eq(users.name, "Andrew"));
+});
+```
+
+### Return value
+
+`db.transaction()` resolves to whatever the callback **returns**:
+
+```typescript
+const newBalance: number = await db.transaction(async (tx) => {
+	await tx
+		.update(accounts)
+		.set({ balance: sql`${accounts.balance} - 100.00` })
+		.where(eq(users.name, "Dan"));
+	await tx
+		.update(accounts)
+		.set({ balance: sql`${accounts.balance} + 100.00` })
+		.where(eq(users.name, "Andrew"));
+
+	const [account] = await tx
+		.select({ balance: accounts.balance })
+		.from(accounts)
+		.where(eq(users.name, "Dan"));
+	return account.balance;
+});
+```
+
+### Relational queries inside a transaction
+
+When the app uses `drizzle({ relations })`, the transaction client exposes the same **query API**:
+
+```typescript
+const db = drizzle({ client, relations });
+
+await db.transaction(async (tx) => {
+	await tx.query.users.findMany({
+		with: {
+			accounts: true,
+		},
+	});
+});
+```
+
+### Dialect-specific transaction options (PostgreSQL)
+
+The second argument configures the transaction for **PostgreSQL**-family drivers (e.g. `drizzle-orm/node-postgres`). **libSQL / SQLite** (this project’s default stack) does not expose the same surface; use driver-specific docs for behaviour and supported options.
+
+```typescript
+await db.transaction(
+	async (tx) => {
+		await tx
+			.update(accounts)
+			.set({ balance: sql`${accounts.balance} - 100.00` })
+			.where(eq(users.name, "Dan"));
+		await tx
+			.update(accounts)
+			.set({ balance: sql`${accounts.balance} + 100.00` })
+			.where(eq(users.name, "Andrew"));
+	},
+	{
+		isolationLevel: "read committed",
+		accessMode: "read write",
+		deferrable: true,
+	},
+);
+```
+
+```typescript
+interface PgTransactionConfig {
+	isolationLevel?: "read uncommitted" | "read committed" | "repeatable read" | "serializable";
+	accessMode?: "read only" | "read write";
+	deferrable?: boolean;
+}
 ```
 
 ---

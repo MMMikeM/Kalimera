@@ -6,13 +6,13 @@ argument-hint: "[task description]"
 
 # Drizzle ORM Skill
 
-This project uses **Drizzle ORM v1.0.0-beta.19** with **Turso (libSQL)**. All Drizzle code MUST follow the v1 API — not the legacy v0 API.
+This project uses **Drizzle ORM v1.0.0-beta.20** with **Turso (libSQL)**. All Drizzle code MUST follow the v1 API — not the legacy v0 API.
 
 Your task: $ARGUMENTS
 
 Before starting, read the reference docs in this skill directory:
 
-- `${CLAUDE_SKILL_DIR}/v1-reference.md` — v1 API, schema, relations, queries, config
+- `${CLAUDE_SKILL_DIR}/v1-reference.md` — v1 API, schema, relations, queries, transactions, config
 
 ## Project context
 
@@ -25,12 +25,13 @@ Before starting, read the reference docs in this skill directory:
 ## File conventions for this project
 
 ```
-src/
-  lib/
-    db.ts              ← Drizzle client instance
-    schema.ts          ← Table definitions (create if missing)
-    relations.ts       ← defineRelations (create if needed)
-drizzle.config.ts      ← Drizzle Kit config (create if missing)
+src/db.server/
+  index.ts             ← `createDb` / `db` proxy (AsyncLocalStorage); import `db` only from queries (see oxlint)
+  schema.ts            ← Table definitions
+  relations.ts         ← defineRelations
+  types.ts             ← Shared `typeof table.$inferSelect` / `$inferInsert` aliases (prefer reusing these)
+  queries/*.ts         ← All reads/writes; thin DAL — query only, infer types
+drizzle.config.ts
 drizzle/               ← Generated migrations (drizzle-kit output)
 ```
 
@@ -96,18 +97,22 @@ const findByIds = async (ids: string[]) => {
 
 ### Choose the right API
 
-**Default to the Query API (`db.query`) for all reads.** The Select Builder (`db.select().from()`) exists but should only be used for aggregates, complex JOINs not expressible via relations, or `DISTINCT`. If you reach for `db.select()` for a simple lookup, you're using the wrong API.
+**Default to the Query API (`db.query`) for all reads.**
 
-| Use Case                         | API                                   |
-| -------------------------------- | ------------------------------------- |
-| Fetching entities with relations | Query API (`db.query.table.*`)        |
-| Simple CRUD reads                | Query API                             |
-| Single-row lookup by ID/field    | Query API (`findFirst`)               |
-| Simple filtered count            | `db.$count(table, filter)`            |
-| Multiple counts in one query     | Raw SQL with scalar subqueries        |
-| COUNT, SUM, AVG, GROUP BY        | Select Builder (`db.select().from()`) |
-| Complex JOINs not in relations   | Select Builder                        |
-| DISTINCT with JOINs              | `db.selectDistinct()`                 |
+**Any `db.select(` or `tx.select(` is almost always an antipattern** in this project. If you are typing `.select(`, stop: you almost certainly mean `db.query.<table>.findFirst` / `findMany` (and `with:` for relations). The Select Builder exists for the **narrow** exceptions below — not for fetching rows, entities, or “get user by id” style reads.
+
+The Select Builder (`db.select().from()` …) is only appropriate for aggregates, complex `JOIN`s that relations cannot express, or `DISTINCT`. If you reach for `db.select()` for a simple lookup, you are using the wrong API.
+
+| Use Case                         | API                                    |
+| -------------------------------- | -------------------------------------- |
+| Fetching entities with relations | Query API (`db.query.table.*`)         |
+| Simple CRUD reads                | Query API                              |
+| Single-row lookup by ID/field    | Query API (`findFirst`)                |
+| Simple filtered count            | `db.$count(table, filter)`             |
+| Multiple counts in one query     | Raw SQL with scalar subqueries         |
+| COUNT, SUM, AVG, GROUP BY        | Select Builder (legitimate `.select(`) |
+| Complex JOINs not in relations   | Select Builder (rare)                  |
+| DISTINCT with JOINs              | `db.selectDistinct()`                  |
 
 ```typescript
 // CORRECT — Query API for lookups
@@ -146,7 +151,19 @@ const [user] = await db.select().from(users).where(eq(users.id, userId)).limit(1
 
 7. **Don't import from legacy packages** — validators come from `drizzle-orm/zod`, `drizzle-orm/valibot`, etc. (not `drizzle-zod`, `drizzle-valibot`)
 
-8. **Derive validators from schema** — use `createSelectSchema`, `createInsertSchema`, `createUpdateSchema` from `drizzle-orm/zod` to generate Zod schemas from table definitions. Never hand-roll input types that duplicate the schema. Use refinements to add constraints (`.min()`, `.max()`, etc.).
+8. **Types: prefer table inference, not guessed package exports** — In v1 beta, use `typeof myTable.$inferSelect` and `typeof myTable.$inferInsert` (or the aliases in `src/db.server/types.ts`). Do **not** assume `InferInsertModel` / `InferUpdateModel` exist on the main `drizzle-orm` entry; for partial update payloads use `Pick<Row, "colA" | "colB">` where `Row` is the table’s `$inferSelect` type (or a small explicit type).
+
+9. **Zod vs DAL** — Use `createInsertSchema` / `createUpdateSchema` where you need **runtime validation** (forms, actions, external input). For internal mutation helpers that only receive already-validated data, `$inferInsert` / shared types are enough; avoid duplicating the same shape in both Zod and manual interfaces.
+
+10. **No casual `.select(`** — treat `db.select(` / `tx.select(` as a red flag unless you are in one of the explicit escape hatches (aggregates, impossible-via-relations joins, `selectDistinct`). Ordinary reads belong on `db.query`.
+
+11. **Inserts and composite inputs** — If an object mixes **table columns** with **side-effect fields** (e.g. SRS skill type, weak-area keys not on the row), destructure the extras and pass only the insert shape to `.values({ ... })`. Never spread a superset into `insert().values()`.
+
+12. **Return types: infer from the function, do not hand-model rows** — Omit redundant `: Promise<...>` annotations on query helpers when TypeScript can infer them from `await db.query…` / `.returning()`. When a **route, loader, or another module** needs the result type, export an alias derived from the query — not a duplicate interface:
+    - Whole value: `export type Thing = Awaited<ReturnType<typeof getThing>>`
+    - Array element: `export type ThingRow = Awaited<ReturnType<typeof listThings>>[number]`
+    - Nullable `findFirst`: keep `… \| undefined` in the alias, or use `NonNullable<…>` only at the call site that asserts presence
+    - Composed stats objects: return a plain object from one function and use `Awaited<ReturnType<typeof getStats>>`; put **derivation** (math, formatting) in `lib/`, not parallel type definitions
 
 ## Common patterns
 
@@ -169,6 +186,32 @@ const [updated] = await db.update(tasks).set({ title }).where(eq(tasks.id, id)).
 ```
 
 Skip `.returning()` only for fire-and-forget operations (batch cleanup, etc.).
+
+### Return types (export from the query, not a second schema)
+
+```typescript
+// queries/things.ts — no extra return annotation if inference is clear
+export const getThing = async (id: number) => {
+	return await db.query.things.findFirst({
+		where: { id },
+		with: { owner: true },
+	});
+};
+
+export type ThingWithOwner = NonNullable<Awaited<ReturnType<typeof getThing>>>;
+
+export const listThings = async (userId: number) => {
+	return await db.query.things.findMany({ where: { userId } });
+};
+
+export type ThingRow = Awaited<ReturnType<typeof listThings>>[number];
+```
+
+Routes import `ThingWithOwner` / `ThingRow` from the query module — they do **not** redefine the same shape. For mutations, `Awaited<ReturnType<typeof createThing>>` often resolves to the row type from `.returning()` (or `undefined` if you return optional first element — prefer `return session` / `return attempt` so the alias matches what callers use).
+
+### Transactions
+
+Use **`db.transaction(async (tx) => { ... })` once** at the **orchestrating** function (e.g. one public mutation that does insert + related updates). Inside that callback, use **`tx`** (not `db`) for every query. **Internal helpers** should take `tx` as the first argument (`async (tx, input) => ...` or similar) — they must **not** call `db.transaction` again for the same logical unit; nested `tx.transaction()` is only for intentional savepoints. See `v1-reference.md` § Transactions for `tx.rollback()`, return values, relational `tx.query.*` inside transactions, and PostgreSQL-only options (`PgTransactionConfig`).
 
 ### Simple counts with `db.$count()`
 
