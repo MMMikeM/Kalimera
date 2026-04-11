@@ -38,13 +38,13 @@ Default to **page routes** (loader + action + component) using `<Form>` and `use
 
 `.llm` files are structured LLM documentation, not rendered.
 
-| File | Purpose |
-|---|---|
-| `docs/user-flows.llm` | Route map, user journeys, data tables — **read first** |
-| `src/routes/reference/tabs/*.content.llm` | Grammar topics |
-| `src/routes/learn/phrases/content.llm` | Phrase tabs |
-| `src/routes/learn/conversations/content.llm` | Conversation tabs |
-| `src/routes/learn/essentials/content.llm` | Essentials subtabs |
+| File                                         | Purpose                                                |
+| -------------------------------------------- | ------------------------------------------------------ |
+| `docs/user-flows.llm`                        | Route map, user journeys, data tables — **read first** |
+| `src/routes/reference/tabs/*.content.llm`    | Grammar topics                                         |
+| `src/routes/learn/phrases/content.llm`       | Phrase tabs                                            |
+| `src/routes/learn/conversations/content.llm` | Conversation tabs                                      |
+| `src/routes/learn/essentials/content.llm`    | Essentials subtabs                                     |
 
 ---
 
@@ -76,7 +76,7 @@ Like a well-worn study guide — serious, never intimidating, zero gamification.
 ## Design Principles
 
 1. **Greek is the hero.** English is gloss — smaller, quieter, subordinate.
-2. **Structure is pedagogy.** Tables are laid out with typographic precision; the table *is* the lesson.
+2. **Structure is pedagogy.** Tables are laid out with typographic precision; the table _is_ the lesson.
 3. **Warmth without whimsy.** Scholarly doesn't mean clinical; colour and voice should feel like a trusted teacher.
 4. **Honest feedback.** Correct is correct. Incorrect is incorrect. No artificial euphoria, no punishing reds.
 5. **Whitespace earns its place.** Every element justifies its presence by helping the learner focus.

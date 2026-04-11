@@ -47,37 +47,37 @@ All commands go through the Makefile — direct `pnpm` database commands skip `.
 
 ### Development
 
-| Command | Description |
-|---------|-------------|
-| `make dev` | Start development server |
-| `make build` | Build for production |
+| Command        | Description                   |
+| -------------- | ----------------------------- |
+| `make dev`     | Start development server      |
+| `make build`   | Build for production          |
 | `make preview` | Preview with Wrangler locally |
 
 ### Local database (Docker libsql on port 8080)
 
-| Command | Description |
-|---------|-------------|
-| `make db-push` | Push schema |
-| `make db-seed` | Seed data |
-| `make db-setup` | Push + seed |
+| Command          | Description         |
+| ---------------- | ------------------- |
+| `make db-push`   | Push schema         |
+| `make db-seed`   | Seed data           |
+| `make db-setup`  | Push + seed         |
 | `make db-studio` | Open Drizzle Studio |
 
 ### Production database (Turso)
 
-| Command | Description |
-|---------|-------------|
-| `make prod-db-push` | Push schema |
-| `make prod-db-seed` | Seed data |
-| `make prod-db-setup` | Push + seed |
+| Command               | Description         |
+| --------------------- | ------------------- |
+| `make prod-db-push`   | Push schema         |
+| `make prod-db-seed`   | Seed data           |
+| `make prod-db-setup`  | Push + seed         |
 | `make prod-db-studio` | Open Drizzle Studio |
 
 ### Deployment
 
-| Command | Description |
-|---------|-------------|
-| `make deploy` | Build and deploy to Cloudflare Workers |
-| `make deploy-dry` | Dry run |
-| `make logs` | Tail worker logs |
+| Command           | Description                            |
+| ----------------- | -------------------------------------- |
+| `make deploy`     | Build and deploy to Cloudflare Workers |
+| `make deploy-dry` | Dry run                                |
+| `make logs`       | Tail worker logs                       |
 
 ### Linting
 
@@ -124,9 +124,9 @@ docs/
 
 ## Environment variables
 
-| Variable | Description |
-|----------|-------------|
+| Variable             | Description        |
+| -------------------- | ------------------ |
 | `TURSO_DATABASE_URL` | Turso database URL |
-| `TURSO_AUTH_TOKEN` | Turso auth token |
+| `TURSO_AUTH_TOKEN`   | Turso auth token   |
 
 Set as Cloudflare Worker secrets: `make secrets-set-turso`

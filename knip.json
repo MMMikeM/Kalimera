@@ -7,11 +7,7 @@
 		"service-worker/sw.ts",
 		"scripts/*.ts"
 	],
-	"project": [
-		"src/**/*.{ts,tsx}",
-		"service-worker/**/*.ts",
-		"scripts/**/*.ts"
-	],
+	"project": ["src/**/*.{ts,tsx}", "service-worker/**/*.ts", "scripts/**/*.ts"],
 	"ignore": [
 		"src/routes/**/+types/**",
 		"src/db/migrations/**",
