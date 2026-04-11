@@ -1,3 +1,4 @@
+import { Brain } from "lucide-react";
 import { Link } from "react-router";
 
 import { Card } from "@/components/Card";
@@ -33,24 +34,21 @@ const PARADIGMS = [
 	},
 ];
 
-const COLOR_CLASSES = {
+const COLOR_STYLES = {
 	honey: {
-		border: "hover:border-honey",
-		hover: "hover:bg-honey-50",
-		text: "text-honey-text",
-		count: "text-honey",
+		textColor: "#4a3508",
+		countColor: "#d4a853",
+		hoverBgColor: "#faf7ec",
 	},
 	terracotta: {
-		border: "hover:border-terracotta",
-		hover: "hover:bg-terracotta-50",
-		text: "text-terracotta-text",
-		count: "text-terracotta",
+		textColor: "#5c2d14",
+		countColor: "#c4663f",
+		hoverBgColor: "#fbf6f1",
 	},
 	olive: {
-		border: "hover:border-olive",
-		hover: "hover:bg-olive-50",
-		text: "text-olive-text",
-		count: "text-olive",
+		textColor: "#2a3622",
+		countColor: "#8a9a78",
+		hoverBgColor: "#f8f9f6",
 	},
 } as const;
 
@@ -58,25 +56,41 @@ export default function MemoryIndex() {
 	return (
 		<div className="mx-auto max-w-xl">
 			<Card variant="bordered" padding="lg">
-				<div className="mb-8">
-					<h2 className="mb-2 text-2xl font-bold text-foreground">Memory Drills</h2>
-					<p className="text-muted-foreground">
+				<div className="mb-8 flex flex-col">
+					<div className="mx-auto mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-honey-100">
+						<Brain size={32} className="text-honey" />
+					</div>
+					<h2 className="mb-2 font-serif text-xl font-semibold text-navy-text">Memory Drills</h2>
+					<p className="text-sm text-muted-foreground">
 						Paradigm recall. Timed to surface the forms that need more work.
 					</p>
 				</div>
 
 				<div className="space-y-3">
 					{PARADIGMS.map((p) => {
-						const c = COLOR_CLASSES[p.color];
+						const colors = COLOR_STYLES[p.color];
 						return (
 							<Link
 								key={p.id}
 								to={p.id}
-								className={`block rounded-lg border border-border p-4 transition-colors ${c.border} ${c.hover}`}
+								className="hover:bg-opacity-50 block rounded-lg border border-border p-4 transition-colors"
+								style={{
+									backgroundColor: "transparent",
+								}}
+								onMouseEnter={(e) => {
+									(e.currentTarget as HTMLElement).style.backgroundColor = colors.hoverBgColor;
+								}}
+								onMouseLeave={(e) => {
+									(e.currentTarget as HTMLElement).style.backgroundColor = "transparent";
+								}}
 							>
 								<div className="mb-1 flex items-baseline justify-between gap-3">
-									<span className={`text-sm font-medium ${c.text}`}>{p.title}</span>
-									<span className={`text-xs tabular-nums ${c.count}`}>{p.forms} forms</span>
+									<span className="text-sm font-medium" style={{ color: colors.textColor }}>
+										{p.title}
+									</span>
+									<span className="text-xs tabular-nums" style={{ color: colors.countColor }}>
+										{p.forms} forms
+									</span>
 								</div>
 								<p lang="el" className="greek-text text-sm text-muted-foreground">
 									{p.preview}
