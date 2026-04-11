@@ -1,6 +1,7 @@
 // Aggregate all vocabulary exports
 
 export { ADJECTIVES, COLORS } from "./adjectives";
+export { VOCAB_SEED_CATEGORIES } from "./seed-categories";
 export { FREQUENCY_ADVERBS, INDEFINITE_ADVERBS, POSITION_ADVERBS } from "./adverbs";
 export {
 	ARRIVING_PHRASES,
