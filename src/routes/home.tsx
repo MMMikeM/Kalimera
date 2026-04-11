@@ -7,8 +7,8 @@ import {
 	getItemsDueTomorrow,
 	getLastPracticeDate,
 	getPracticeStats,
-	getUserById,
 } from "@/db.server/queries/practice";
+import { getUserById } from "@/db.server/queries/users";
 import {
 	getPushSubscriptionByUserId,
 	setNotificationMode,
