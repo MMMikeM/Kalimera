@@ -1,6 +1,14 @@
 // Aggregate all lesson vocabulary exports
 // Add new lesson imports here as they're created
 
+import { formatNounWithArticle } from "../../../../lib/greek-grammar";
+import {
+	nounDetailFromSeed,
+	pickAdjectiveNominalForms,
+	pickNounNominalForms,
+	type VocabWithTags,
+} from "../../../seed-pipeline";
+
 // 2023 lessons
 import { LESSON_2023_10_30 } from "./2023-10-30-basic-nouns";
 import { LESSON_2023_11_08 } from "./2023-11-08-articles-places";
@@ -98,3 +106,89 @@ export const LESSONS = {
 	"2024-12-16": LESSON_2024_12_16,
 	"2024-12-30": LESSON_2024_12_30,
 } as const;
+
+function buildLessonSeedCategories(): Array<{ name: string; items: VocabWithTags[] }> {
+	console.log("\nSeeding lessons...");
+	const categories: Array<{ name: string; items: VocabWithTags[] }> = [];
+
+	for (const [date, lesson] of Object.entries(LESSONS)) {
+		console.log(`  Lesson ${date}: ${lesson.meta.topic}`);
+		const lessonTag = `lesson-${date}`;
+		const lessonItems: VocabWithTags[] = [];
+
+		for (const verb of lesson.verbs) {
+			lessonItems.push({
+				vocab: {
+					greekText: verb.lemma,
+					englishTranslation: verb.english,
+					wordType: "verb",
+					metadata: { lessonDate: date },
+				},
+				tags: [lessonTag],
+				verbDetail: {
+					conjugationFamily: verb.conjugationFamily,
+				},
+			});
+		}
+
+		for (const noun of lesson.nouns) {
+			const displayText = formatNounWithArticle(noun.lemma, noun.gender);
+			lessonItems.push({
+				vocab: {
+					greekText: displayText,
+					englishTranslation: noun.english,
+					wordType: "noun",
+					metadata: { lessonDate: date },
+				},
+				tags: [lessonTag],
+				nounDetail: nounDetailFromSeed(noun),
+				...pickNounNominalForms(noun),
+			});
+		}
+
+		for (const adverb of lesson.adverbs) {
+			lessonItems.push({
+				vocab: {
+					greekText: adverb.lemma,
+					englishTranslation: adverb.english,
+					wordType: "adverb",
+					metadata: { lessonDate: date },
+				},
+				tags: [lessonTag],
+			});
+		}
+
+		if ("adjectives" in lesson) {
+			for (const adj of lesson.adjectives) {
+				lessonItems.push({
+					vocab: {
+						greekText: adj.lemma,
+						englishTranslation: adj.english,
+						wordType: "adjective",
+						metadata: { lessonDate: date },
+					},
+					tags: [lessonTag],
+					...pickAdjectiveNominalForms(adj),
+				});
+			}
+		}
+
+		for (const phrase of lesson.phrases) {
+			lessonItems.push({
+				vocab: {
+					greekText: phrase.text,
+					englishTranslation: phrase.english,
+					wordType: "phrase",
+					metadata: { ...phrase.metadata, lessonDate: date },
+				},
+				tags: [lessonTag],
+			});
+		}
+
+		categories.push({ name: `lesson ${date}`, items: lessonItems });
+	}
+
+	return categories;
+}
+
+export const LESSON_SEED_CATEGORIES = buildLessonSeedCategories();
