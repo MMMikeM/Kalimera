@@ -8,10 +8,13 @@ import UnifiedDrill, { type UnifiedAttemptResult, type UnifiedQuestion } from ".
 
 export type SrsDrillVariant = "vocabulary" | "review";
 
+type ColorVariant = "ocean" | "olive" | "honey" | "terracotta";
+
 interface SrsDrillProps {
 	variant: SrsDrillVariant;
 	items: VocabItemWithSkill[];
 	streakDays?: number;
+	themeColor?: ColorVariant;
 }
 
 const VARIANT_CONFIG: Record<
@@ -40,10 +43,18 @@ const VARIANT_CONFIG: Record<
 	},
 };
 
-const SrsDrill: React.FC<SrsDrillProps> = ({ variant, items, streakDays }) => {
+const EMPTY_STATE_THEME: Record<ColorVariant, { border: string; bg: string; text: string }> = {
+	ocean: { border: "border-ocean-300", bg: "bg-ocean-100", text: "text-ocean-text" },
+	olive: { border: "border-olive-300", bg: "bg-olive-100", text: "text-olive-text" },
+	honey: { border: "border-honey-300", bg: "bg-honey-100", text: "text-honey-text" },
+	terracotta: { border: "border-terracotta-300", bg: "bg-terracotta-100", text: "text-terracotta-text" },
+};
+
+const SrsDrill: React.FC<SrsDrillProps> = ({ variant, items, streakDays, themeColor = "ocean" }) => {
 	const config = VARIANT_CONFIG[variant];
 	const userId = useCurrentUserId();
 	const fetcher = useFetcher();
+	const theme = EMPTY_STATE_THEME[themeColor];
 
 	const questions = useMemo(
 		(): UnifiedQuestion[] =>
@@ -83,10 +94,10 @@ const SrsDrill: React.FC<SrsDrillProps> = ({ variant, items, streakDays }) => {
 
 	if (items.length === 0) {
 		return (
-			<div className="rounded-xl border border-olive-300 bg-olive-100 py-12 text-center">
+			<div className={`rounded-xl border ${theme.border} ${theme.bg} py-12 text-center`}>
 				<div className="mb-4 text-5xl">?</div>
-				<h3 className="mb-2 text-xl font-semibold text-olive-text">{config.emptyTitle}</h3>
-				<p className="text-olive-text">{config.emptyMessage}</p>
+				<h3 className={`mb-2 text-xl font-semibold ${theme.text}`}>{config.emptyTitle}</h3>
+				<p className={theme.text}>{config.emptyMessage}</p>
 				<p className="mt-2 text-sm text-stone-600">{config.emptyHint}</p>
 			</div>
 		);

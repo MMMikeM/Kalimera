@@ -12,5 +12,5 @@ export function ReviewTab() {
 		return <UserRequiredMessage />;
 	}
 
-	return <SrsDrill variant="review" items={reviewItems} streakDays={stats?.streak} />;
+	return <SrsDrill variant="review" items={reviewItems} streakDays={stats?.streak} themeColor="ocean" />;
 }
