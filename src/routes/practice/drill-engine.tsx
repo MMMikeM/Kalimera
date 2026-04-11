@@ -149,7 +149,9 @@ export const SummaryScreen = <T extends DrillForm>({
 
 			{slowest.length > 0 && (
 				<div className="mb-10">
-					<p className="mb-3 text-xs tracking-widest text-muted-foreground uppercase">Worth revisiting</p>
+					<p className="mb-3 text-xs tracking-widest text-muted-foreground uppercase">
+						Worth revisiting
+					</p>
 					<div className="space-y-3">
 						{slowest.map((a) => (
 							<div key={a.form.id} className="flex items-baseline gap-3">
@@ -170,7 +172,7 @@ export const SummaryScreen = <T extends DrillForm>({
 			</div>
 
 			<div className="text-center">
-				<Link to=".." className="text-xs text-stone-500 hover:text-stone-700 underline">
+				<Link to=".." className="text-xs text-stone-500 underline hover:text-stone-700">
 					← back
 				</Link>
 			</div>
