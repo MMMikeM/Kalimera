@@ -1,12 +1,8 @@
 import { formatNounWithArticle } from "../../../lib/greek-grammar";
-import type { NounSeed } from "../../../types/seed";
-import {
-	nounDetailFromSeed,
-	pickNounNominalForms,
-	type VocabWithTags,
-} from "../../seed-pipeline";
+import { nounDetailFromSeed, pickNounNominalForms, type VocabWithTags } from "../../seed-pipeline";
+import { enrichNounsRecord, type NounSeedInput } from "./noun-seed-enrichment";
 
-export const NOUNS = {
+const NOUNS_RAW = {
 	summer: [
 		{ lemma: "καλοκαίρι", gender: "neuter", english: "summer" },
 		{ lemma: "θάλασσα", gender: "feminine", english: "sea" },
@@ -177,7 +173,9 @@ export const NOUNS = {
 	body: [{ lemma: "λαιμός", gender: "masculine", english: "neck" }],
 
 	objects: [{ lemma: "πίνακας", gender: "masculine", english: "board/painting" }],
-} as const satisfies Record<string, NounSeed[]>;
+} as const satisfies Record<string, readonly NounSeedInput[]>;
+
+export const NOUNS = enrichNounsRecord(NOUNS_RAW);
 
 const themeTagMap: Record<string, string> = {
 	summer: "summer",

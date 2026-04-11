@@ -8,6 +8,8 @@ import {
 	pickNounNominalForms,
 	type VocabWithTags,
 } from "../../../seed-pipeline";
+import { enrichNoun } from "../noun-seed-enrichment";
+import { enrichAdjective } from "../adjective-seed-enrichment";
 
 // 2023 lessons
 import { LESSON_2023_10_30 } from "./2023-10-30-basic-nouns";
@@ -131,7 +133,8 @@ function buildLessonSeedCategories(): Array<{ name: string; items: VocabWithTags
 			});
 		}
 
-		for (const noun of lesson.nouns) {
+		for (const nounInput of lesson.nouns) {
+			const noun = enrichNoun(nounInput);
 			const displayText = formatNounWithArticle(noun.lemma, noun.gender);
 			lessonItems.push({
 				vocab: {
@@ -159,7 +162,8 @@ function buildLessonSeedCategories(): Array<{ name: string; items: VocabWithTags
 		}
 
 		if ("adjectives" in lesson) {
-			for (const adj of lesson.adjectives) {
+			for (const adjInput of lesson.adjectives) {
+				const adj = enrichAdjective(adjInput);
 				lessonItems.push({
 					vocab: {
 						greekText: adj.lemma,

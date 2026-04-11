@@ -1,6 +1,11 @@
 import type { DeclensionPattern } from "../../../db.server/enums";
 import { declensionPatterns } from "../../../db.server/enums";
-import { getArticle, type Case, type Gender, type GrammaticalNumber } from "../../../lib/greek-grammar";
+import {
+	getArticle,
+	type Case,
+	type Gender,
+	type GrammaticalNumber,
+} from "../../../lib/greek-grammar";
 import type { NominalFormCellSeed, NounNominalFormsSeed, NounSeed } from "../../../types/seed";
 
 type CaseNumberKey = `${Case}_${GrammaticalNumber}`;
