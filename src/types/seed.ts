@@ -14,21 +14,23 @@ export interface NominalFormCellSeed {
 /** Keys: `${case}_${number}` e.g. `accusative_singular`. */
 // At least one form required, but which ones are up to you
 type AtLeastOne<T> = {
-	[K in keyof T]: Pick<Required<T>, K> & Partial<T>
-}[keyof T]
+	[K in keyof T]: Pick<Required<T>, K> & Partial<T>;
+}[keyof T];
 
-type AllNounFormKeys = `${Case}_${GrammaticalNumber}`
+type AllNounFormKeys = `${Case}_${GrammaticalNumber}`;
 
-type FullNounNominalFormsSeed = Record<AllNounFormKeys, NominalFormCellSeed>
+type FullNounNominalFormsSeed = Record<AllNounFormKeys, NominalFormCellSeed>;
 
 // Requires at least one key, doesn't care which
-export type NounNominalFormsSeed = AtLeastOne<FullNounNominalFormsSeed>
+export type NounNominalFormsSeed = AtLeastOne<FullNounNominalFormsSeed>;
 
-
-type FullAdjectiveNominalFormsSeed = Record<`${Case}_${GrammaticalNumber}_${Gender}`, NominalFormCellSeed>
+type FullAdjectiveNominalFormsSeed = Record<
+	`${Case}_${GrammaticalNumber}_${Gender}`,
+	NominalFormCellSeed
+>;
 
 /** Keys: `${case}_${number}_${gender}` e.g. `nominative_singular_masculine`. */
-export type AdjectiveNominalFormsSeed = AtLeastOne<FullAdjectiveNominalFormsSeed>
+export type AdjectiveNominalFormsSeed = AtLeastOne<FullAdjectiveNominalFormsSeed>;
 
 export interface VerbConjugationFormsSeed {
 	sg1: string;
@@ -72,8 +74,6 @@ export interface NounSeed {
 	nominalForms: NounNominalFormsSeed;
 	metadata?: Record<string, unknown>;
 }
-
-
 
 export interface AdverbSeed {
 	lemma: string;
