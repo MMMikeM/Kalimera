@@ -1,4 +1,11 @@
-import { index, integer, primaryKey, real, sqliteTable, uniqueIndex } from "drizzle-orm/sqlite-core";
+import {
+	index,
+	integer,
+	primaryKey,
+	real,
+	sqliteTable,
+	uniqueIndex,
+} from "drizzle-orm/sqlite-core";
 import {
 	bool,
 	cascadeFk,
