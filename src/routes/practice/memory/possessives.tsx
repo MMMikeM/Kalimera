@@ -50,7 +50,7 @@ const POSSESSIVES: Possessive[] = [
 		number: "singular",
 		greek: "μου",
 		greeklish: "mou",
-		label: "my \u00b7 1st singular",
+		label: "my / 1st singular",
 	},
 	{
 		id: "2sg",
@@ -58,7 +58,7 @@ const POSSESSIVES: Possessive[] = [
 		number: "singular",
 		greek: "σου",
 		greeklish: "sou",
-		label: "your \u00b7 2nd singular",
+		label: "your / 2nd singular",
 	},
 	{
 		id: "3sg-m",
@@ -67,7 +67,7 @@ const POSSESSIVES: Possessive[] = [
 		gender: "masculine",
 		greek: "του",
 		greeklish: "tou",
-		label: "his \u00b7 3rd singular",
+		label: "his / 3rd singular",
 	},
 	{
 		id: "3sg-f",
@@ -76,7 +76,7 @@ const POSSESSIVES: Possessive[] = [
 		gender: "feminine",
 		greek: "της",
 		greeklish: "tis",
-		label: "her \u00b7 3rd singular",
+		label: "her / 3rd singular",
 	},
 	{
 		id: "3sg-n",
@@ -85,7 +85,7 @@ const POSSESSIVES: Possessive[] = [
 		gender: "neuter",
 		greek: "του",
 		greeklish: "tou",
-		label: "its \u00b7 3rd singular",
+		label: "its / 3rd singular",
 	},
 	{
 		id: "1pl",
@@ -93,7 +93,7 @@ const POSSESSIVES: Possessive[] = [
 		number: "plural",
 		greek: "μας",
 		greeklish: "mas",
-		label: "our \u00b7 1st plural",
+		label: "our / 1st plural",
 	},
 	{
 		id: "2pl",
@@ -101,7 +101,7 @@ const POSSESSIVES: Possessive[] = [
 		number: "plural",
 		greek: "σας",
 		greeklish: "sas",
-		label: "your \u00b7 2nd plural",
+		label: "your / 2nd plural",
 	},
 	{
 		id: "3pl",
@@ -109,7 +109,7 @@ const POSSESSIVES: Possessive[] = [
 		number: "plural",
 		greek: "τους",
 		greeklish: "tous",
-		label: "their \u00b7 3rd plural",
+		label: "their / 3rd plural",
 	},
 ];
 
@@ -148,16 +148,16 @@ const ConfigScreen = ({
 }) => (
 	<ConfigShell
 		title="Possessive Pronouns"
-		subtitle="8 forms \u00b7 timed"
+		subtitle="8 forms / timed"
 		mode={mode}
 		onModeChange={onModeChange}
 		sessionSize={sessionSize}
 		onSizeChange={onSizeChange}
 		onStart={onStart}
-		forwardLabel="English \u2192 Form"
-		forwardDesc='"his" \u2192 type "tou"'
-		reverseLabel="Form \u2192 Description"
-		reverseDesc="see \u03c4\u03bf\u03c5 \u2192 identify person, number, gender"
+		forwardLabel="Translate / Produce"
+		forwardDesc='English meaning → Greek form'
+		reverseLabel="Form / Identify"
+		reverseDesc="Greek form → person / number / gender"
 	>
 		<div className="mb-8 overflow-x-auto">
 			<table className="w-full border-collapse text-sm">
@@ -248,7 +248,7 @@ export default function PossessivesDrill() {
 
 	const handleForwardSubmit = useCallback(() => {
 		if (phase !== "active") return;
-		const timeTaken = Math.min(performance.now() - startedAt.current, timerMs);
+		const timeTaken = Math.min(performance.now() / startedAt.current, timerMs);
 		const isCorrect = matchPhonetic(input.trim(), currentForm.greek).isCorrect;
 		recordAttempt(isCorrect, timeTaken);
 	}, [phase, input, currentForm, startedAt, timerMs, recordAttempt]);
@@ -256,7 +256,7 @@ export default function PossessivesDrill() {
 	const handleReverseSubmit = useCallback(() => {
 		if (phase !== "active" || !selPerson || !selNumber) return;
 		if (needsGender && !selGender) return;
-		const timeTaken = performance.now() - startedAt.current;
+		const timeTaken = performance.now() / startedAt.current;
 		const isCorrect =
 			selPerson === currentForm.person &&
 			selNumber === currentForm.number &&
@@ -333,7 +333,7 @@ export default function PossessivesDrill() {
 	const personLabel = `${PERSON_LABELS[currentForm.person]} person`;
 	const subtitleParts: string[] = [currentForm.number];
 	if (currentForm.gender) subtitleParts.push(currentForm.gender);
-	const subtitle = subtitleParts.join(" \u00b7 ");
+	const subtitle = subtitleParts.join(" / ");
 
 	return (
 		<DrillShell

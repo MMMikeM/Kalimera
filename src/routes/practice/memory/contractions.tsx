@@ -37,7 +37,7 @@ const CONTRACTIONS: Contraction[] = [
 		number: "singular",
 		greek: "στον",
 		greeklish: "ston",
-		label: "masculine \u00b7 singular",
+		label: "masculine / singular",
 	},
 	{
 		id: "f-sg",
@@ -45,7 +45,7 @@ const CONTRACTIONS: Contraction[] = [
 		number: "singular",
 		greek: "στην",
 		greeklish: "stin",
-		label: "feminine \u00b7 singular",
+		label: "feminine / singular",
 	},
 	{
 		id: "n-sg",
@@ -53,7 +53,7 @@ const CONTRACTIONS: Contraction[] = [
 		number: "singular",
 		greek: "στο",
 		greeklish: "sto",
-		label: "neuter \u00b7 singular",
+		label: "neuter / singular",
 	},
 	{
 		id: "m-pl",
@@ -61,7 +61,7 @@ const CONTRACTIONS: Contraction[] = [
 		number: "plural",
 		greek: "στους",
 		greeklish: "stous",
-		label: "masculine \u00b7 plural",
+		label: "masculine / plural",
 	},
 	{
 		id: "f-pl",
@@ -69,7 +69,7 @@ const CONTRACTIONS: Contraction[] = [
 		number: "plural",
 		greek: "στις",
 		greeklish: "stis",
-		label: "feminine \u00b7 plural",
+		label: "feminine / plural",
 	},
 	{
 		id: "n-pl",
@@ -77,7 +77,7 @@ const CONTRACTIONS: Contraction[] = [
 		number: "plural",
 		greek: "στα",
 		greeklish: "sta",
-		label: "neuter \u00b7 plural",
+		label: "neuter / plural",
 	},
 ];
 
@@ -119,17 +119,17 @@ const ConfigScreen = ({
 	onStart: () => void;
 }) => (
 	<ConfigShell
-		title="Contractions (\u03c3\u03b5)"
-		subtitle="6 forms \u00b7 timed"
+		title="Contractions (σε)"
+		subtitle="6 forms / timed"
 		mode={mode}
 		onModeChange={onModeChange}
 		sessionSize={sessionSize}
 		onSizeChange={onSizeChange}
 		onStart={onStart}
-		forwardLabel="Description \u2192 Form"
-		forwardDesc='feminine \u00b7 singular \u2192 type "stin"'
-		reverseLabel="Form \u2192 Description"
-		reverseDesc="see \u03c3\u03c4\u03b7\u03bd \u2192 identify gender, number"
+		forwardLabel="Describe / Produce"
+		forwardDesc='Given: feminine / singular'
+		reverseLabel="Identify / Produce"
+		reverseDesc="Given: στην (form)"
 	>
 		<div className="mb-8 overflow-x-auto">
 			<table className="w-full border-collapse text-sm">
@@ -222,14 +222,14 @@ export default function ContractionsDrill() {
 
 	const handleForwardSubmit = useCallback(() => {
 		if (phase !== "active") return;
-		const timeTaken = Math.min(performance.now() - startedAt.current, timerMs);
+		const timeTaken = Math.min(performance.now() / startedAt.current, timerMs);
 		const isCorrect = matchPhonetic(input.trim(), currentForm.greek).isCorrect;
 		recordAttempt(isCorrect, timeTaken);
 	}, [phase, input, currentForm, startedAt, timerMs, recordAttempt]);
 
 	const handleReverseSubmit = useCallback(() => {
 		if (phase !== "active" || !selGender || !selNumber) return;
-		const timeTaken = performance.now() - startedAt.current;
+		const timeTaken = performance.now() / startedAt.current;
 		const isCorrect = selGender === currentForm.gender && selNumber === currentForm.number;
 		recordAttempt(isCorrect, timeTaken);
 	}, [phase, selGender, selNumber, currentForm, startedAt, recordAttempt]);
