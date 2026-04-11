@@ -453,7 +453,6 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 								<span className="font-medium not-italic">Remember:</span> {currentQuestion.hint}
 							</p>
 						)}
-
 					</div>
 				)}
 			</div>

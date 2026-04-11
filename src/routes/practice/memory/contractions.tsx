@@ -127,7 +127,7 @@ const ConfigScreen = ({
 		onSizeChange={onSizeChange}
 		onStart={onStart}
 		forwardLabel="Describe / Produce"
-		forwardDesc='Given: feminine / singular'
+		forwardDesc="Given: feminine / singular"
 		reverseLabel="Identify / Produce"
 		reverseDesc="Given: στην (form)"
 	>

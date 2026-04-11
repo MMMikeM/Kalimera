@@ -176,7 +176,7 @@ const ConfigScreen = ({
 		onSizeChange={onSizeChange}
 		onStart={onStart}
 		forwardLabel="Translate / Produce"
-		forwardDesc='English meaning → Greek form'
+		forwardDesc="English meaning → Greek form"
 		reverseLabel="Form / Identify"
 		reverseDesc="Greek form → person / number / gender"
 	>
