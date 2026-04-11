@@ -1,4 +1,4 @@
-import type { NounSeed, Phrase, VerbSeed } from "../../../../types/seed";
+import type { NounSeed, Phrase, FullVerbSeed } from "../../../../types/seed";
 
 export const LESSON_2024_07_29 = {
 	meta: {
@@ -23,7 +23,7 @@ export const LESSON_2024_07_29 = {
 			english: "I hunch/slouch",
 			conjugationFamily: "-ω",
 		},
-	] satisfies VerbSeed[],
+	] satisfies FullVerbSeed[],
 
 	nouns: [
 		{ lemma: "καμπούρα", gender: "feminine", english: "hunch/hunchback" },

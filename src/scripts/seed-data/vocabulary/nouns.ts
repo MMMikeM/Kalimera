@@ -104,7 +104,14 @@ export const NOUNS = {
 		{ lemma: "άντρας", gender: "masculine", english: "man/husband" },
 		{ lemma: "παιδί", gender: "neuter", english: "child" },
 		{ lemma: "σκύλος", gender: "masculine", english: "dog" },
-		{ lemma: "φίλος", gender: "masculine", english: "friend (male)" },
+		{
+			lemma: "φίλος",
+			gender: "masculine",
+			english: "friend (male)",
+			nominalForms: {
+				accusative_singular: { form: "φίλο", article: "τον" },
+			},
+		},
 		{ lemma: "φίλη", gender: "feminine", english: "friend (female)" },
 		{ lemma: "αδελφός", gender: "masculine", english: "brother" },
 		{ lemma: "αδελφή", gender: "feminine", english: "sister" },
