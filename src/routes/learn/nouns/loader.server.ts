@@ -1,6 +1,7 @@
-import { getVocabBySection, type VocabItemWithSection } from "@/db.server/queries/vocabulary";
+import { fetchSectionVocabularyByTagSlug } from "@/db.server/queries/vocabulary";
+import type { Vocabulary } from "@/db.server/types";
 
-export type VocabItem = VocabItemWithSection;
+export type VocabItem = Vocabulary;
 
 type Gender = "masculine" | "feminine" | "neuter";
 
@@ -15,18 +16,8 @@ const detectGender = (greek: string): Gender => {
 
 const parseNoun = (item: VocabItem): NounWithGender => ({
 	...item,
-	gender: detectGender(item.greek),
+	gender: detectGender(item.greekText),
 });
-
-function groupByTag<T extends { tagSlug: string }>(items: T[]): Record<string, T[]> {
-	const result: Record<string, T[]> = {};
-	for (const item of items) {
-		const key = item.tagSlug;
-		if (!(key in result)) result[key] = [];
-		result[key]?.push(item);
-	}
-	return result;
-}
 
 export type CategoryData = {
 	title: string;
@@ -39,8 +30,7 @@ type CategoryKey = "people" | "shopping" | "household" | "vehicles" | "summer";
 export type CategoriesMap = Record<CategoryKey, CategoryData>;
 
 export async function loader() {
-	const nounsData = await getVocabBySection("nouns");
-	const nouns = groupByTag(nounsData);
+	const nouns = await fetchSectionVocabularyByTagSlug("nouns");
 
 	const buildCategory = (title: string, tagKey: string): CategoryData => {
 		const items = (nouns[tagKey] ?? []).map(parseNoun);

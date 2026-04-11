@@ -1,20 +1,8 @@
 import { hasNumericValue, hasTimeRange } from "@/db.server/metadata";
-import { getVocabBySection } from "@/db.server/queries/vocabulary";
+import { fetchSectionVocabularyByTagSlug } from "@/db.server/queries/vocabulary";
 
 export async function getEssentialsData() {
-	const referenceData = await getVocabBySection("reference");
-
-	const groupByTag = <T extends { tagSlug: string }>(items: T[]): Record<string, T[]> => {
-		const result: Record<string, T[]> = {};
-		for (const item of items) {
-			const key = item.tagSlug;
-			if (!(key in result)) result[key] = [];
-			result[key]?.push(item);
-		}
-		return result;
-	};
-
-	const reference = groupByTag(referenceData);
+	const reference = await fetchSectionVocabularyByTagSlug("reference");
 
 	return {
 		timesOfDay: (reference["time-of-day"] ?? []).map((t) => ({

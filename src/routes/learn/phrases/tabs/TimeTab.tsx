@@ -15,8 +15,8 @@ type TimeListItem = {
 const toTimeListItems = (items: PhraseItem[]): TimeListItem[] =>
 	items.map((i) => ({
 		id: i.id,
-		primary: i.greek,
-		secondary: i.english,
+		primary: i.greekText,
+		secondary: i.englishTranslation,
 		note: (i.metadata as Record<string, unknown>)?.note as string | undefined,
 	}));
 
@@ -79,8 +79,8 @@ const TimeTellingSection = ({ items }: { items: PhraseItem[] }) => {
 		(i) => (i.metadata as Record<string, unknown>)?.category === "at-times",
 	);
 
-	const pastHour = fractions.filter((i) => i.greek.includes("και"));
-	const toHour = fractions.filter((i) => i.greek.includes("παρά"));
+	const pastHour = fractions.filter((i) => i.greekText.includes("και"));
+	const toHour = fractions.filter((i) => i.greekText.includes("παρά"));
 
 	return (
 		<ContentSection title="Telling Time" subtitle="Τι ώρα είναι;" colorScheme="ocean">

@@ -1,6 +1,7 @@
-import { getVerbsWithPatterns, type VerbWithPattern } from "@/db.server/queries/vocabulary";
+import type { VerbVocabularyWithDetailsRow } from "@/db.server/queries/vocabulary";
+import { fetchVerbsWithVerbDetails } from "@/db.server/queries/vocabulary";
 
-export type { VerbWithPattern };
+export type VerbWithPattern = VerbVocabularyWithDetailsRow;
 
 export interface VerbSubCategory {
 	title: string;
@@ -25,7 +26,7 @@ function groupVerbsByPattern(verbs: VerbWithPattern[]): VerbCategory[] {
 	};
 
 	for (const verb of verbs) {
-		const pattern = verb.pattern || "unknown";
+		const pattern = verb.verbDetails?.conjugationFamily || "unknown";
 
 		if (DEPONENT_PATTERNS.includes(pattern)) {
 			deponentVerbs[pattern]?.push(verb);
@@ -70,7 +71,7 @@ function groupVerbsByPattern(verbs: VerbWithPattern[]): VerbCategory[] {
 }
 
 export async function loader() {
-	const verbPatterns = await getVerbsWithPatterns();
+	const verbPatterns = await fetchVerbsWithVerbDetails();
 
 	return {
 		verbs: {

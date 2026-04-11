@@ -78,7 +78,7 @@ function ColourSwatch({ greek }: { greek: string }) {
 }
 
 export function ColoursSubtab({ data }: Props) {
-	const colourByGreek = new Map(data.colors.map((c) => [c.greek, c]));
+	const colourByGreek = new Map(data.colors.map((c) => [c.greekText, c]));
 
 	return (
 		<div className="space-y-6">
@@ -108,10 +108,10 @@ export function ColoursSubtab({ data }: Props) {
 								<div className="flex items-start gap-2.5 px-3 py-2.5">
 									{left && (
 										<>
-											<ColourSwatch greek={left.greek} />
+											<ColourSwatch greek={left.greekText} />
 											<div className="min-w-0">
-												<MonoText variant="greek">{left.greek}</MonoText>
-												<div className="text-xs text-stone-500">{left.english}</div>
+												<MonoText variant="greek">{left.greekText}</MonoText>
+												<div className="text-xs text-stone-500">{left.englishTranslation}</div>
 											</div>
 										</>
 									)}
@@ -121,10 +121,10 @@ export function ColoursSubtab({ data }: Props) {
 								<div className="flex items-start gap-2.5 px-3 py-2.5">
 									{right && (
 										<>
-											<ColourSwatch greek={right.greek} />
+											<ColourSwatch greek={right.greekText} />
 											<div className="min-w-0">
-												<MonoText variant="greek">{right.greek}</MonoText>
-												<div className="text-xs text-stone-500">{right.english}</div>
+												<MonoText variant="greek">{right.greekText}</MonoText>
+												<div className="text-xs text-stone-500">{right.englishTranslation}</div>
 											</div>
 										</>
 									)}

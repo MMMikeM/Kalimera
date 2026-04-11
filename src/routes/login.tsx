@@ -15,7 +15,7 @@ import {
 	findUserByUsername,
 	getUserPasswordHash,
 	setUserPassword,
-} from "@/db.server/queries/auth";
+} from "@/db.server/queries/users";
 import { createAuthCookie } from "@/lib/auth-cookie";
 import { usePasskeyAuth } from "@/lib/hooks/use-passkey-auth";
 import { hashPassword, verifyPassword } from "@/lib/password";

@@ -20,7 +20,11 @@ export const OpinionsTab = ({ data }: { data: PhrasesLoaderData }) => {
 
 			<PhraseSection title="Opinions & Feelings" colorScheme="olive">
 				{opinions.map((phrase) => (
-					<PhraseItemDisplay key={phrase.id} greek={phrase.greek} english={phrase.english} />
+					<PhraseItemDisplay
+						key={phrase.id}
+						greek={phrase.greekText}
+						english={phrase.englishTranslation}
+					/>
 				))}
 			</PhraseSection>
 		</div>

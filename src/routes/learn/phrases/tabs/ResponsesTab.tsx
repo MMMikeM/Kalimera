@@ -20,14 +20,22 @@ export const ResponsesTab = ({ data }: { data: PhrasesLoaderData }) => {
 
 			<PhraseSection title="Common Responses" colorScheme="terracotta">
 				{responses.map((phrase) => (
-					<PhraseItemDisplay key={phrase.id} greek={phrase.greek} english={phrase.english} />
+					<PhraseItemDisplay
+						key={phrase.id}
+						greek={phrase.greekText}
+						english={phrase.englishTranslation}
+					/>
 				))}
 			</PhraseSection>
 
 			{socialPhrases.length > 0 && (
 				<PhraseSection title="Social Phrases" colorScheme="olive">
 					{socialPhrases.map((phrase) => (
-						<PhraseItemDisplay key={phrase.id} greek={phrase.greek} english={phrase.english} />
+						<PhraseItemDisplay
+							key={phrase.id}
+							greek={phrase.greekText}
+							english={phrase.englishTranslation}
+						/>
 					))}
 				</PhraseSection>
 			)}

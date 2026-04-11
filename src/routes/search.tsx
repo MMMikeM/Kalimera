@@ -5,17 +5,20 @@ import { MonoText } from "@/components/MonoText";
 import { SearchInput } from "@/components/SearchInput";
 import { TabHero } from "@/components/TabHero";
 import { Badge } from "@/components/ui/badge";
-import { type SearchVocabItem, searchVocabulary } from "@/db.server/queries/vocabulary";
+import {
+	fetchVocabularyRowsForSearch,
+	type VocabularySearchGraphRow,
+} from "@/db.server/queries/vocabulary";
 import { cn } from "@/lib/utils";
 import type { Route } from "./+types/search";
 
 export async function loader() {
 	try {
-		const vocabulary = await searchVocabulary();
+		const vocabulary = await fetchVocabularyRowsForSearch();
 		return { vocabulary };
 	} catch (error) {
 		console.error("Database error:", error);
-		return { vocabulary: [] as SearchVocabItem[] };
+		return { vocabulary: [] as VocabularySearchGraphRow[] };
 	}
 }
 
@@ -37,10 +40,14 @@ export default function SearchRoute({ loaderData }: Route.ComponentProps) {
 	// Create fuzzy search function - memoized to avoid recreating on every render
 	const fuzzySearch = useMemo(
 		() =>
-			createFuzzySearch<SearchVocabItem>(allWords, {
+			createFuzzySearch(allWords, {
 				getText: (item) => {
-					const word = item as SearchVocabItem;
-					return [word.greek, word.english, ...word.tags];
+					const row = item as VocabularySearchGraphRow;
+					return [
+						row.greekText,
+						row.englishTranslation,
+						...row.vocabularyTags.flatMap((vt) => (vt.tag?.name ? [vt.tag.name] : [])),
+					];
 				},
 			}),
 		[allWords],
@@ -78,14 +85,18 @@ export default function SearchRoute({ loaderData }: Route.ComponentProps) {
 						Search Results ({searchResults.length}):
 					</h4>
 					{searchResults.map((result) => {
-						// Word-type visual differentiation with colored left borders
+						const tagNames = result.vocabularyTags
+							.map((vt) => vt.tag?.name)
+							.filter(Boolean) as string[];
+						const family = result.verbDetails?.conjugationFamily;
+						// Word-type visual differentiation with coloured left borders
 						const borderClass = cn(
 							"border-l-4",
-							result.type === "verb" && "border-ocean-500",
-							result.type === "noun" && "border-olive-500",
-							result.type === "phrase" && "border-terracotta-500",
-							result.type === "adverb" && "border-honey-500",
-							!result.type && "border-stone-300",
+							result.wordType === "verb" && "border-ocean-500",
+							result.wordType === "noun" && "border-olive-500",
+							result.wordType === "phrase" && "border-terracotta-500",
+							result.wordType === "adverb" && "border-honey-500",
+							!result.wordType && "border-stone-300",
 						);
 
 						return (
@@ -94,18 +105,18 @@ export default function SearchRoute({ loaderData }: Route.ComponentProps) {
 									<div className="min-w-0 flex-1">
 										{/* Greek text prominently displayed */}
 										<MonoText variant="greek" size="lg" className="mb-1 block text-2xl font-medium">
-											{result.greek}
+											{result.greekText}
 										</MonoText>
-										<p className="text-stone-600">{result.english}</p>
+										<p className="text-stone-600">{result.englishTranslation}</p>
 									</div>
 									<div className="flex flex-shrink-0 flex-wrap justify-end gap-2">
-										{result.type && <Badge variant="default">{result.type}</Badge>}
-										{result.family && <Badge variant="primary">{result.family}</Badge>}
+										{result.wordType && <Badge variant="default">{result.wordType}</Badge>}
+										{family && <Badge variant="primary">{family}</Badge>}
 									</div>
 								</div>
-								{result.tags.length > 0 && (
+								{tagNames.length > 0 && (
 									<div className="mt-3 flex flex-wrap gap-1">
-										{result.tags.map((tag) => (
+										{tagNames.map((tag) => (
 											<Badge key={tag} variant="secondary" size="sm">
 												{tag}
 											</Badge>

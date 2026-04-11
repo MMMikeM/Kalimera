@@ -1,25 +1,13 @@
-import { getVocabBySection, type VocabItemWithSection } from "@/db.server/queries/vocabulary";
+import { fetchSectionVocabularyByTagSlug } from "@/db.server/queries/vocabulary";
+import type { Vocabulary } from "@/db.server/types";
 
-export type PatternItem = VocabItemWithSection;
-
-function groupByTag<T extends { tagSlug: string }>(items: T[]): Record<string, T[]> {
-	const result: Record<string, T[]> = {};
-	for (const item of items) {
-		const key = item.tagSlug;
-		if (!(key in result)) result[key] = [];
-		result[key]?.push(item);
-	}
-	return result;
-}
+export type PatternItem = Vocabulary;
 
 export async function getPatternsData() {
-	const [phrasesData, verbsData] = await Promise.all([
-		getVocabBySection("phrases"),
-		getVocabBySection("verbs"),
+	const [phrases, verbs] = await Promise.all([
+		fetchSectionVocabularyByTagSlug("phrases"),
+		fetchSectionVocabularyByTagSlug("verbs"),
 	]);
-
-	const phrases = groupByTag(phrasesData);
-	const verbs = groupByTag(verbsData);
 
 	return {
 		likesConstruction: {

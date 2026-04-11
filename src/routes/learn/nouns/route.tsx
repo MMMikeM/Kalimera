@@ -69,7 +69,7 @@ const parseGreekNoun = (greek: string): { article: string; noun: string; ending:
 
 const NounDisplay: React.FC<{ noun: NounWithGender }> = ({ noun }) => {
 	const styles = genderStyles[noun.gender];
-	const { article, noun: nounWord, ending } = parseGreekNoun(noun.greek);
+	const { article, noun: nounWord, ending } = parseGreekNoun(noun.greekText);
 	const stem = ending ? nounWord.slice(0, -ending.length) : nounWord;
 
 	return (
@@ -89,7 +89,7 @@ const NounDisplay: React.FC<{ noun: NounWithGender }> = ({ noun }) => {
 					)}
 				</MonoText>
 			</div>
-			<div className="mt-0.5 ml-8 text-xs text-stone-500">{noun.english}</div>
+			<div className="mt-0.5 ml-8 text-xs text-stone-500">{noun.englishTranslation}</div>
 		</div>
 	);
 };
@@ -119,7 +119,7 @@ const splitIntoPairsAndSingles = (
 	const nounMap = new Map<string, NounWithGender>();
 
 	for (const noun of nouns) {
-		const word = noun.greek.split(" ").slice(1).join(" ").toLowerCase();
+		const word = noun.greekText.split(" ").slice(1).join(" ").toLowerCase();
 		nounMap.set(word, noun);
 	}
 
@@ -138,7 +138,7 @@ const splitIntoPairsAndSingles = (
 	}
 
 	const singles = nouns.filter((noun) => {
-		const word = noun.greek.split(" ").slice(1).join(" ").toLowerCase();
+		const word = noun.greekText.split(" ").slice(1).join(" ").toLowerCase();
 		return !usedWords.has(word);
 	});
 

@@ -3,14 +3,12 @@ import { zfd } from "zod-form-data";
 import {
 	type CompleteSessionInput,
 	completeSession,
-	createUser,
-	getAllUsers,
 	getItemsDueForReview,
 	getNewVocabularyItems,
 	getPracticeStats,
-	getUserById,
 	getVocabularyProgress,
 	getWeakAreas,
+	type PracticeSessionInsert,
 	type PracticeStats,
 	type RecordAttemptInput,
 	recordAttempt,
@@ -20,6 +18,7 @@ import {
 	type VocabularyProgress,
 	type WeakAreaInfo,
 } from "@/db.server/queries/practice";
+import { createUser, getAllUsers, getUserById } from "@/db.server/queries/users";
 import type { AreaType, SkillType } from "@/db.server/schema";
 
 // Re-export queries and types for route consumers
@@ -35,6 +34,7 @@ export {
 	recordAttempt,
 	startSession,
 	type CompleteSessionInput,
+	type PracticeSessionInsert,
 	type PracticeStats,
 	type RecordAttemptInput,
 	type StartSessionInput,
@@ -117,17 +117,19 @@ const completeSessionSchema = zfd.formData({
 
 export const actionHandlers = {
 	createUser: createHandler(createUserSchema, async (data) => {
-		const newUser = await createUser(data.displayName, data.code);
+		const newUser = await createUser({ ...data });
 		return { success: true, user: newUser };
 	}),
 
 	startSession: createHandler(startSessionSchema, async (data) => {
-		const session = await startSession({
+		const row: PracticeSessionInsert = {
 			userId: data.userId,
 			sessionType: data.sessionType,
-			category: data.category,
-			focusArea: data.focusArea,
-		});
+			category: data.category ?? null,
+			wordTypeFilter: null,
+			focusArea: data.focusArea ?? null,
+		};
+		const session = await startSession(row);
 		return { success: true, session };
 	}),
 

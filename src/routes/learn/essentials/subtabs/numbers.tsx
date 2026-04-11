@@ -89,8 +89,8 @@ export function NumbersSubtab({ data }: Props) {
 					{zero && (
 						<div className="grid grid-cols-[1fr_1fr] gap-4 px-3 py-2.5">
 							<div>
-								<MonoText variant="greek">{zero.greek}</MonoText>
-								<div className="text-xs text-stone-500">{zero.english}</div>
+								<MonoText variant="greek">{zero.greekText}</MonoText>
+								<div className="text-xs text-stone-500">{zero.englishTranslation}</div>
 							</div>
 							<div className="text-sm text-stone-300 italic">—</div>
 						</div>
@@ -107,8 +107,8 @@ export function NumbersSubtab({ data }: Props) {
 								<div>
 									{unitNum ? (
 										<>
-											<MonoText variant="greek">{unitNum.greek}</MonoText>
-											<div className="text-xs text-stone-500">{unitNum.english}</div>
+											<MonoText variant="greek">{unitNum.greekText}</MonoText>
+											<div className="text-xs text-stone-500">{unitNum.englishTranslation}</div>
 										</>
 									) : (
 										<span className="text-stone-300">—</span>
@@ -120,8 +120,8 @@ export function NumbersSubtab({ data }: Props) {
 									<div className="flex-1">
 										{tenNum ? (
 											<>
-												<MonoText variant="greek">{tenNum.greek}</MonoText>
-												<div className="text-xs text-stone-500">{tenNum.english}</div>
+												<MonoText variant="greek">{tenNum.greekText}</MonoText>
+												<div className="text-xs text-stone-500">{tenNum.englishTranslation}</div>
 											</>
 										) : (
 											<span className="text-stone-300">—</span>
@@ -147,8 +147,8 @@ export function NumbersSubtab({ data }: Props) {
 							key={number.id}
 							className="grid grid-cols-[3fr_2fr] items-center gap-x-3 px-3 py-2.5"
 						>
-							<MonoText variant="greek">{highlightTeenPattern(number.greek)}</MonoText>
-							<span className="text-sm text-stone-500">{number.english}</span>
+							<MonoText variant="greek">{highlightTeenPattern(number.greekText)}</MonoText>
+							<span className="text-sm text-stone-500">{number.englishTranslation}</span>
 						</div>
 					))}
 				</div>
