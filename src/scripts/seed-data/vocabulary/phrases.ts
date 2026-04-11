@@ -1,4 +1,13 @@
 import type { Phrase } from "../../../types/phrase";
+import type { VocabWithTags } from "../../seed-pipeline";
+import {
+	ARRIVING_PHRASES,
+	COMMON_RESPONSES,
+	DISCOURSE_MARKERS,
+	FOOD_PHRASES,
+	OPINION_PHRASES,
+	SMALLTALK_PHRASES,
+} from "./conversations";
 
 // Essential phrases - THE most important phrases for a beginner
 // These should be learned first
@@ -269,3 +278,102 @@ export const TIME_TELLING: Phrase[] = [
 		metadata: { category: "at-times" },
 	},
 ];
+
+function phraseVocabItems(
+	phrases: Array<{ text: string; english: string; metadata?: unknown }>,
+	tags: string[],
+): VocabWithTags[] {
+	return phrases.map((phrase) => ({
+		vocab: {
+			greekText: phrase.text,
+			englishTranslation: phrase.english,
+			wordType: "phrase" as const,
+		},
+		tags,
+	}));
+}
+
+export const PHRASE_SEED_CATEGORIES: Array<{ name: string; items: VocabWithTags[] }> = [
+	{
+		name: "essential phrases",
+		items: phraseVocabItems(ESSENTIAL_PHRASES, ["essential"]),
+	},
+	{ name: "survival phrases", items: phraseVocabItems(SURVIVAL_PHRASES, ["survival"]) },
+	{ name: "request phrases", items: phraseVocabItems(REQUEST_PHRASES, ["request"]) },
+	{
+		name: "discourse fillers",
+		items: phraseVocabItems(DISCOURSE_FILLERS, ["discourse-filler", "expression"]),
+	},
+	{
+		name: "social phrases",
+		items: phraseVocabItems(SOCIAL_PHRASES, ["social-phrase", "expression"]),
+	},
+	{ name: "question words", items: phraseVocabItems(QUESTION_WORDS, ["question"]) },
+	{ name: "commands", items: phraseVocabItems(COMMANDS, ["command"]) },
+	{ name: "time phrases", items: phraseVocabItems(TIME_PHRASES, ["time-expression"]) },
+	{
+		name: "name construction",
+		items: phraseVocabItems(NAME_CONSTRUCTION, ["name-construction"]),
+	},
+	{
+		name: "discourse markers",
+		items: phraseVocabItems(DISCOURSE_MARKERS, ["discourse-markers"]),
+	},
+	{ name: "common responses", items: phraseVocabItems(COMMON_RESPONSES, ["responses"]) },
+	{ name: "opinion phrases", items: phraseVocabItems(OPINION_PHRASES, ["opinions"]) },
+	{
+		name: "arriving phrases",
+		items: phraseVocabItems(ARRIVING_PHRASES, ["conversation-arriving"]),
+	},
+	{ name: "food phrases", items: phraseVocabItems(FOOD_PHRASES, ["conversation-food"]) },
+	{
+		name: "small talk phrases",
+		items: phraseVocabItems(SMALLTALK_PHRASES, ["conversation-smalltalk"]),
+	},
+];
+
+export const TIME_TELLING_ITEMS: VocabWithTags[] = TIME_TELLING.map((phrase) => ({
+	vocab: {
+		greekText: phrase.text,
+		englishTranslation: phrase.english,
+		wordType: "phrase" as const,
+		metadata: phrase.metadata,
+	},
+	tags: ["time-telling"],
+}));
+
+export const DAY_ITEMS: VocabWithTags[] = DAYS_OF_WEEK.map((day) => ({
+	vocab: {
+		greekText: day.text,
+		englishTranslation: day.english,
+		wordType: "noun" as const,
+	},
+	tags: ["days-of-week"],
+}));
+
+export const MONTH_ITEMS: VocabWithTags[] = MONTHS.map((month) => ({
+	vocab: {
+		greekText: month.text,
+		englishTranslation: month.english,
+		wordType: "noun" as const,
+	},
+	tags: ["months"],
+}));
+
+export const LIKES_SINGULAR_ITEMS: VocabWithTags[] = LIKES_CONSTRUCTION.singular.map((like) => ({
+	vocab: {
+		greekText: like.text,
+		englishTranslation: like.english,
+		wordType: "phrase" as const,
+	},
+	tags: ["likes-singular"],
+}));
+
+export const LIKES_PLURAL_ITEMS: VocabWithTags[] = LIKES_CONSTRUCTION.plural.map((like) => ({
+	vocab: {
+		greekText: like.text,
+		englishTranslation: like.english,
+		wordType: "phrase" as const,
+	},
+	tags: ["likes-plural"],
+}));

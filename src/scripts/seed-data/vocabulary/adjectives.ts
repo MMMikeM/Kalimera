@@ -1,4 +1,5 @@
 import type { AdjectiveSeed } from "../../../types/seed";
+import { pickAdjectiveNominalForms, type VocabWithTags } from "../../seed-pipeline";
 
 export const COLORS: AdjectiveSeed[] = [
 	{ lemma: "άσπρο", english: "white" },
@@ -34,3 +35,23 @@ export const ADJECTIVES: AdjectiveSeed[] = [
 	{ lemma: "οργανωμένος", english: "organized" },
 	{ lemma: "απλός", english: "simple" },
 ];
+
+export const COLOR_ITEMS: VocabWithTags[] = COLORS.map((color) => ({
+	vocab: {
+		greekText: color.lemma,
+		englishTranslation: color.english,
+		wordType: "adjective" as const,
+	},
+	tags: ["color"],
+	...pickAdjectiveNominalForms(color),
+}));
+
+export const ADJECTIVE_ITEMS: VocabWithTags[] = ADJECTIVES.map((adj) => ({
+	vocab: {
+		greekText: adj.lemma,
+		englishTranslation: adj.english,
+		wordType: "adjective" as const,
+	},
+	tags: [],
+	...pickAdjectiveNominalForms(adj),
+}));

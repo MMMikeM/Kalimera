@@ -1,4 +1,5 @@
 import type { Phrase, FullVerbSeed } from "../../../types/seed";
+import type { VocabWithTags } from "../../seed-pipeline";
 
 export const VERBS: FullVerbSeed[] = [
 	// -ω family (regular)
@@ -52,3 +53,27 @@ export const TRANSPORT_VERBS: Phrase[] = [
 	{ text: "παίρνω", english: "I take" },
 	{ text: "δουλεύει", english: "works" },
 ];
+
+export const VERB_ITEMS: VocabWithTags[] = VERBS.map((verb) => ({
+	vocab: {
+		greekText: verb.lemma,
+		englishTranslation: verb.english,
+		wordType: "verb" as const,
+	},
+	tags: [],
+	verbDetail: {
+		conjugationFamily: verb.conjugationFamily,
+	},
+}));
+
+export const TRANSPORT_ACTION_ITEMS: VocabWithTags[] = TRANSPORT_VERBS.map((action) => {
+	const wordType = action.english.startsWith("I ") ? "verb" : "phrase";
+	return {
+		vocab: {
+			greekText: action.text,
+			englishTranslation: action.english,
+			wordType: wordType as "verb" | "phrase",
+		},
+		tags: ["transport-action"],
+	};
+});
