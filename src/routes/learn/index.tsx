@@ -1,14 +1,6 @@
 import { Boxes, Hash, Languages, MessageCircle, Quote } from "lucide-react";
-import { Link } from "react-router";
 
-interface Section {
-	id: string;
-	label: string;
-	description: string;
-	icon: React.ReactNode;
-	href: string;
-	color: string;
-}
+import { SectionCard, type Section } from "@/components/SectionCard";
 
 const communicationSections: Section[] = [
 	{
@@ -55,19 +47,6 @@ const wordsSections: Section[] = [
 		color: "bg-olive-100 text-olive-700 border-olive-200",
 	},
 ];
-
-const SectionCard = ({ section }: { section: Section }) => (
-	<Link
-		to={section.href}
-		className={`flex items-center gap-4 rounded-xl border-2 p-4 ${section.color} transition-shadow hover:shadow-md`}
-	>
-		<div className="shrink-0">{section.icon}</div>
-		<div>
-			<h2 className="font-semibold">{section.label}</h2>
-			<p className="text-sm opacity-80">{section.description}</p>
-		</div>
-	</Link>
-);
 
 export default function LearnIndex() {
 	return (
