@@ -1,3 +1,4 @@
+import { GENDER_STYLE, PERSON_LABELS } from "./drill-constants";
 import { PersonNumberGenderDrill } from "./components/PersonNumberGenderDrill";
 
 type Person = "first" | "second" | "third";
@@ -115,18 +116,6 @@ const PRONOUNS: ObjectPronoun[] = [
 		label: "them (n) / 3rd plural",
 	},
 ];
-
-const GENDER_STYLE: Record<Gender, { selectorBg: string; selectorText: string }> = {
-	masculine: { selectorBg: "bg-navy-100", selectorText: "text-navy-text" },
-	feminine: { selectorBg: "bg-sunset-100", selectorText: "text-sunset-text" },
-	neuter: { selectorBg: "bg-slate-100", selectorText: "text-slate-text" },
-};
-
-const PERSON_LABELS: Record<Person, string> = {
-	first: "1st",
-	second: "2nd",
-	third: "3rd",
-};
 
 const PARADIGM_ROWS: { label: string; forms: [string, string] }[] = [
 	{ label: "1st", forms: ["με", "μας"] },

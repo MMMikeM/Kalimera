@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { matchPhonetic } from "@/lib/greek-transliteration";
 
+import { GENDER_STYLE } from "./drill-constants";
 import {
 	type Attempt,
 	ConfigShell,
@@ -80,24 +81,6 @@ const CONTRACTIONS: Contraction[] = [
 		label: "neuter / plural",
 	},
 ];
-
-const GENDER_STYLE: Record<Gender, { label: string; selectorBg: string; selectorText: string }> = {
-	masculine: {
-		label: "text-navy-text",
-		selectorBg: "bg-navy-100",
-		selectorText: "text-navy-text",
-	},
-	feminine: {
-		label: "text-sunset-text",
-		selectorBg: "bg-sunset-100",
-		selectorText: "text-sunset-text",
-	},
-	neuter: {
-		label: "text-slate-text",
-		selectorBg: "bg-slate-100",
-		selectorText: "text-slate-text",
-	},
-};
 
 const PARADIGM_ROWS: { label: string; forms: [string, string] }[] = [
 	{ label: "Masculine", forms: ["στον", "στους"] },
@@ -315,7 +298,7 @@ export default function ContractionsDrill() {
 						<p className="mb-4 text-xs font-medium tracking-[0.18em] text-ocean-text uppercase">
 							to the / at the
 						</p>
-						<p className={`font-serif text-5xl leading-tight ${gs.label}`}>{currentForm.gender}</p>
+						<p className={`font-serif text-5xl leading-tight ${gs.selectorText}`}>{currentForm.gender}</p>
 						<p className="mt-2 text-sm text-muted-foreground">{currentForm.number}</p>
 					</div>
 
