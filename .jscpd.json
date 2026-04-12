@@ -1,7 +1,7 @@
 {
 	"threshold": 5,
 	"minLines": 4,
-	"minTokens": 60,
+	"minTokens": 50,
 	"reporters": ["html", "json"],
 	"output": "reports/jscpd",
 	"ignore": [
