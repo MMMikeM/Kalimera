@@ -1,0 +1,19 @@
+{
+	"threshold": 5,
+	"minLines": 3,
+	"minTokens": 30,
+	"reporters": ["html", "json"],
+	"output": "reports/jscpd",
+	"ignore": [
+		"node_modules/**",
+		"dist/**",
+		"build/**",
+		".wrangler/**",
+		"coverage/**",
+		"reports/**",
+		"**/*.d.ts"
+	],
+	"absolute": true,
+	"gitignore": true,
+	"languages": ["typescript", "typescriptreact"]
+}
