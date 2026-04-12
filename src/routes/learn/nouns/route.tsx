@@ -268,11 +268,9 @@ export default function NounsRefactorPage({ loaderData }: Route.ComponentProps) 
 			</div>
 
 			<div className="space-y-4">
-				<CategorySection categoryKey="people" category={categories.people} />
-				<CategorySection categoryKey="shopping" category={categories.shopping} />
-				<CategorySection categoryKey="household" category={categories.household} />
-				<CategorySection categoryKey="vehicles" category={categories.vehicles} />
-				<CategorySection categoryKey="summer" category={categories.summer} />
+				{Object.entries(categories).map(([cName, cData]) => (
+					<CategorySection categoryKey={cName} category={cData} key={cName} />
+				))}
 			</div>
 		</div>
 	);
