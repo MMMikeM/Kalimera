@@ -19,6 +19,33 @@ import {
 import { PronounDecisionGuide } from "./pronoun-decision-guide";
 import { PronounParadigmTable } from "./pronoun-paradigm-table";
 
+const PronounExamplePills = ({
+	examples,
+	borderColor,
+	textColor,
+}: {
+	examples: Array<{ greek: string; english: string }>;
+	borderColor: string;
+	textColor: string;
+}) => (
+	<div className={`border-t ${borderColor} pt-4`}>
+		<div className="mb-2 text-sm font-medium text-stone-600">Examples:</div>
+		<div className="flex flex-wrap gap-2">
+			{examples.map((ex) => (
+				<div
+					key={ex.greek}
+					className={`rounded-full border ${borderColor} bg-white px-3 py-1.5 text-sm`}
+				>
+					<MonoText size="sm" className={textColor}>
+						{ex.greek}
+					</MonoText>
+					<span className="ml-1 text-stone-600">({ex.english})</span>
+				</div>
+			))}
+		</div>
+	</div>
+);
+
 // Group phrases by category
 const groupPhrasesByCategory = () => {
 	const groups: Record<string, typeof PRONOUN_PHRASES> = {};
@@ -61,22 +88,11 @@ export const PronounsSection: React.FC = () => {
 							</AlertDescription>
 						</Alert>
 						<PronounParadigmTable data={SUBJECT_PRONOUNS} colorClass="border-olive-400" />
-						<div className="border-t border-olive-300 pt-4">
-							<div className="mb-2 text-sm font-medium text-stone-600">Examples:</div>
-							<div className="flex flex-wrap gap-2">
-								{SUBJECT_PRONOUN_EXAMPLES.map((ex) => (
-									<div
-										key={ex.greek}
-										className="rounded-full border border-olive-300 bg-white px-3 py-1.5 text-sm"
-									>
-										<MonoText size="sm" className="text-olive-text">
-											{ex.greek}
-										</MonoText>
-										<span className="ml-1 text-stone-600">({ex.english})</span>
-									</div>
-								))}
-							</div>
-						</div>
+						<PronounExamplePills
+							examples={SUBJECT_PRONOUN_EXAMPLES}
+							borderColor="border-olive-300"
+							textColor="text-olive-text"
+						/>
 					</div>
 				</ContentSection>
 
@@ -96,22 +112,11 @@ export const PronounsSection: React.FC = () => {
 							colorClass="border-terracotta-400"
 							note="Neuter uses same form as masculine (του)"
 						/>
-						<div className="border-t border-terracotta-300 pt-4">
-							<div className="mb-2 text-sm font-medium text-stone-600">Examples:</div>
-							<div className="flex flex-wrap gap-2">
-								{POSSESSIVE_PRONOUN_EXAMPLES.map((ex) => (
-									<div
-										key={ex.greek}
-										className="rounded-full border border-terracotta-300 bg-white px-3 py-1.5 text-sm"
-									>
-										<MonoText size="sm" className="text-terracotta-text">
-											{ex.greek}
-										</MonoText>
-										<span className="ml-1 text-stone-600">({ex.english})</span>
-									</div>
-								))}
-							</div>
-						</div>
+						<PronounExamplePills
+							examples={POSSESSIVE_PRONOUN_EXAMPLES}
+							borderColor="border-terracotta-300"
+							textColor="text-terracotta-text"
+						/>
 					</div>
 				</ContentSection>
 			</div>
@@ -130,22 +135,11 @@ export const PronounsSection: React.FC = () => {
 							</AlertDescription>
 						</Alert>
 						<PronounParadigmTable data={OBJECT_PRONOUNS} colorClass="border-ocean-300" />
-						<div className="border-t border-ocean-300 pt-4">
-							<div className="mb-2 text-sm font-medium text-stone-600">Examples:</div>
-							<div className="flex flex-wrap gap-2">
-								{OBJECT_PRONOUN_EXAMPLES.map((ex) => (
-									<div
-										key={ex.greek}
-										className="rounded-full border border-ocean-300 bg-white px-3 py-1.5 text-sm"
-									>
-										<MonoText size="sm" className="text-ocean-text">
-											{ex.greek}
-										</MonoText>
-										<span className="ml-1 text-stone-600">({ex.english})</span>
-									</div>
-								))}
-							</div>
-						</div>
+						<PronounExamplePills
+							examples={OBJECT_PRONOUN_EXAMPLES}
+							borderColor="border-ocean-300"
+							textColor="text-ocean-text"
+						/>
 					</div>
 				</ContentSection>
 
@@ -161,22 +155,11 @@ export const PronounsSection: React.FC = () => {
 							</AlertDescription>
 						</Alert>
 						<PronounParadigmTable data={EMPHATIC_PRONOUNS} colorClass="border-honey-400" />
-						<div className="border-t border-honey-300 pt-4">
-							<div className="mb-2 text-sm font-medium text-stone-600">Examples:</div>
-							<div className="flex flex-wrap gap-2">
-								{EMPHATIC_PRONOUN_EXAMPLES.map((ex) => (
-									<div
-										key={ex.greek}
-										className="rounded-full border border-honey-300 bg-white px-3 py-1.5 text-sm"
-									>
-										<MonoText size="sm" className="text-honey-text">
-											{ex.greek}
-										</MonoText>
-										<span className="ml-1 text-stone-600">({ex.english})</span>
-									</div>
-								))}
-							</div>
-						</div>
+						<PronounExamplePills
+							examples={EMPHATIC_PRONOUN_EXAMPLES}
+							borderColor="border-honey-300"
+							textColor="text-honey-text"
+						/>
 					</div>
 				</ContentSection>
 			</div>
