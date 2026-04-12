@@ -4,6 +4,7 @@ import {
 	fetchVerbsBySection,
 } from "@/db.server/queries/vocabulary-sections";
 import type { Vocabulary } from "@/db.server/types";
+import { groupBySlug } from "@/lib/group-by-slug";
 
 export type PhraseItem = Vocabulary;
 
@@ -13,18 +14,6 @@ export async function getPhrasesData() {
 		fetchReference(),
 		fetchVerbsBySection(),
 	]);
-
-	// Group each by tag slug
-	const groupBySlug = (rows: any[]) => {
-		const grouped: Record<string, any[]> = {};
-		for (const row of rows) {
-			const slug = row.tags.slug;
-			const items = grouped[slug] ?? [];
-			items.push(row.vocabulary);
-			grouped[slug] = items;
-		}
-		return grouped;
-	};
 
 	const phrases = groupBySlug(phraseRows);
 	const reference = groupBySlug(referenceRows);
