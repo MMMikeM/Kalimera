@@ -8,7 +8,7 @@ import {
 	sendPushNotification,
 	type VapidConfig,
 } from "@mmmike/web-push/send";
-import { differenceInDays, endOfDay, format, parseISO, startOfDay, subDays } from "date-fns";
+import { endOfDay, format, parseISO, startOfDay, subDays } from "date-fns";
 
 import {
 	deletePushSubscriptionsByEndpoints,
@@ -26,6 +26,7 @@ import {
 	logNotificationSent,
 	setTaperOfferPending,
 } from "@/db.server/queries/push-notifications";
+import { streakLengthFromCompletedSessionDates } from "@/lib/practice-streak";
 
 interface NotificationResult {
 	sent: number;
@@ -277,7 +278,6 @@ export const sendStreakWarningNotifications = async (
 	};
 
 	const now = new Date();
-	const yesterday = format(subDays(now, 1), "yyyy-MM-dd");
 
 	const subscriptions = await listPushSubscriptionsForCron();
 	if (subscriptions.length === 0) {
@@ -312,26 +312,10 @@ export const sendStreakWarningNotifications = async (
 		const dates = datesByUser.get(sub.userId) ?? [];
 		if (dates.length === 0) continue;
 
-		const firstDate = dates[0];
-		if (!firstDate || firstDate !== yesterday) continue;
-
-		let streak = 1;
-		for (let i = 1; i < dates.length; i++) {
-			const prevDateStr = dates[i - 1];
-			const currDateStr = dates[i];
-			if (!prevDateStr || !currDateStr) break;
-
-			const prevDate = parseISO(prevDateStr);
-			const currDate = parseISO(currDateStr);
-			const diffDays = differenceInDays(prevDate, currDate);
-
-			if (diffDays === 1) {
-				streak++;
-			} else {
-				break;
-			}
-		}
-
+		const streak = streakLengthFromCompletedSessionDates(
+			dates.map((d) => parseISO(d)),
+			now,
+		);
 		if (streak === 0) continue;
 
 		const dueCount = dueByUser.get(sub.userId) ?? 0;
