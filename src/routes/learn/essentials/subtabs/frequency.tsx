@@ -5,6 +5,8 @@ import { ContentSection } from "@/components/ContentSection";
 import { MonoText } from "@/components/MonoText";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
+import { ExampleList } from "./ExampleList";
+
 import type { EssentialsLoaderData } from "../data.server";
 
 interface Props {
@@ -194,14 +196,7 @@ export function FrequencySubtab({ data }: Props) {
 
 			{/* Usage Examples */}
 			<ContentSection title="Usage" subtitle="Adverb before verb" colorScheme="terracotta">
-				<div className="divide-y divide-stone-200/60">
-					{USAGE_EXAMPLES.map((example) => (
-						<div key={example.greek} className="px-3 py-2.5">
-							<MonoText variant="greek">{example.greek}</MonoText>
-							<div className="text-xs text-stone-500">{example.english}</div>
-						</div>
-					))}
-				</div>
+				<ExampleList examples={USAGE_EXAMPLES} />
 
 				<div className="mx-3 mt-3 rounded-lg border border-terracotta-200 bg-terracotta-100 p-2.5">
 					<p className="text-sm font-medium text-terracotta-text">Word order</p>

@@ -4,6 +4,8 @@ import { Link } from "react-router";
 import { ContentSection } from "@/components/ContentSection";
 import { MonoText } from "@/components/MonoText";
 
+import { ExampleList } from "./ExampleList";
+
 import type { EssentialsLoaderData } from "../data.server";
 
 interface Props {
@@ -119,14 +121,7 @@ export function PositionSubtab({ data }: Props) {
 				subtitle="Commands for navigation"
 				colorScheme="terracotta"
 			>
-				<div className="divide-y divide-stone-200/60">
-					{DIRECTION_EXAMPLES.map((example) => (
-						<div key={example.greek} className="px-3 py-2.5">
-							<MonoText variant="greek">{example.greek}</MonoText>
-							<div className="text-xs text-stone-500">{example.english}</div>
-						</div>
-					))}
-				</div>
+				<ExampleList examples={DIRECTION_EXAMPLES} />
 
 				<div className="mx-3 mt-3 rounded-lg border border-terracotta-200 bg-terracotta-100 p-2.5">
 					<p className="mb-2 text-sm font-medium text-terracotta-text">Key verbs for directions</p>
@@ -153,14 +148,7 @@ export function PositionSubtab({ data }: Props) {
 				subtitle="Describing where things are"
 				colorScheme="olive"
 			>
-				<div className="divide-y divide-stone-200/60">
-					{RELATIVE_POSITION_EXAMPLES.map((example) => (
-						<div key={example.greek} className="px-3 py-2.5">
-							<MonoText variant="greek">{example.greek}</MonoText>
-							<div className="text-xs text-stone-500">{example.english}</div>
-						</div>
-					))}
-				</div>
+				<ExampleList examples={RELATIVE_POSITION_EXAMPLES} />
 
 				<div className="mx-3 mt-3 rounded-lg border border-olive-200 bg-olive-100 p-2.5">
 					<p className="mb-2 text-sm font-medium text-olive-text">Preposition patterns</p>
