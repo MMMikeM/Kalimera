@@ -1,4 +1,4 @@
-.PHONY: dev build deploy preview help
+.PHONY: dev build deploy preview help duplicates duplicates-report
 
 # Development
 dev:
@@ -68,6 +68,13 @@ secrets-set-turso:
 logs:
 	pnpm exec wrangler tail
 
+# Code quality
+duplicates:
+	pnpm duplicates
+
+duplicates-report:
+	pnpm duplicates:report
+
 # Help
 help:
 	@echo "Available targets:"
@@ -98,5 +105,9 @@ help:
 	@echo "Secrets:"
 	@echo "  secrets-list     - List Cloudflare secrets"
 	@echo "  secrets-set-turso - Set Turso credentials as secrets"
+	@echo ""
+	@echo "Code Quality:"
+	@echo "  duplicates         - Check for code duplicates"
+	@echo "  duplicates-report  - Check and open HTML report"
 	@echo ""
 	@echo "  logs             - Tail Cloudflare Worker logs"
