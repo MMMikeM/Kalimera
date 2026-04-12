@@ -16,6 +16,8 @@ import {
 	type AgreementParadigm,
 	ARTICLE_AGREEMENT_QUICK_REF,
 } from "@/constants/agreement";
+
+import { CaseTable } from "./CaseTable";
 import { MOVABLE_NU_RULE } from "@/constants/articles";
 import { GENDER_HINTS } from "@/constants/nouns";
 
@@ -179,109 +181,11 @@ const ArticleQuickLookup: React.FC = () => (
 		defaultOpen={true}
 	>
 		<div className="grid gap-4 md:grid-cols-2">
-			{/* Singular */}
 			<Card variant="bordered" padding="sm">
-				<div className="mb-2 text-xs font-medium text-stone-600">Singular</div>
-				<table className="w-full text-sm">
-					<thead>
-						<tr className="border-b border-stone-200">
-							<th className="w-12 py-1 pr-2 text-left font-medium text-stone-600"></th>
-							<th className="px-2 py-1 text-left font-medium text-gender-masculine">M</th>
-							<th className="px-2 py-1 text-left font-medium text-gender-feminine">F</th>
-							<th className="px-2 py-1 text-left font-medium text-gender-neuter">N</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr className="border-b border-stone-100">
-							<td className="py-1 pr-2 text-xs text-stone-500">Nom</td>
-							<td className="px-2 py-1">
-								<MonoText size="sm">{ARTICLE_AGREEMENT_QUICK_REF.singular.masculine.nom}</MonoText>
-							</td>
-							<td className="px-2 py-1">
-								<MonoText size="sm">{ARTICLE_AGREEMENT_QUICK_REF.singular.feminine.nom}</MonoText>
-							</td>
-							<td className="px-2 py-1">
-								<MonoText size="sm">{ARTICLE_AGREEMENT_QUICK_REF.singular.neuter.nom}</MonoText>
-							</td>
-						</tr>
-						<tr className="border-b border-stone-100">
-							<td className="py-1 pr-2 text-xs text-stone-500">Acc</td>
-							<td className="px-2 py-1">
-								<MonoText size="sm">{ARTICLE_AGREEMENT_QUICK_REF.singular.masculine.acc}</MonoText>
-							</td>
-							<td className="px-2 py-1">
-								<MonoText size="sm">{ARTICLE_AGREEMENT_QUICK_REF.singular.feminine.acc}</MonoText>
-							</td>
-							<td className="px-2 py-1">
-								<MonoText size="sm">{ARTICLE_AGREEMENT_QUICK_REF.singular.neuter.acc}</MonoText>
-							</td>
-						</tr>
-						<tr>
-							<td className="py-1 pr-2 text-xs text-stone-500">Gen</td>
-							<td className="px-2 py-1">
-								<MonoText size="sm">{ARTICLE_AGREEMENT_QUICK_REF.singular.masculine.gen}</MonoText>
-							</td>
-							<td className="px-2 py-1">
-								<MonoText size="sm">{ARTICLE_AGREEMENT_QUICK_REF.singular.feminine.gen}</MonoText>
-							</td>
-							<td className="px-2 py-1">
-								<MonoText size="sm">{ARTICLE_AGREEMENT_QUICK_REF.singular.neuter.gen}</MonoText>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+				<CaseTable label="Singular" data={ARTICLE_AGREEMENT_QUICK_REF.singular} />
 			</Card>
-			{/* Plural */}
 			<Card variant="bordered" padding="sm">
-				<div className="mb-2 text-xs font-medium text-stone-600">Plural</div>
-				<table className="w-full text-sm">
-					<thead>
-						<tr className="border-b border-stone-200">
-							<th className="w-12 py-1 pr-2 text-left font-medium text-stone-600"></th>
-							<th className="px-2 py-1 text-left font-medium text-gender-masculine">M</th>
-							<th className="px-2 py-1 text-left font-medium text-gender-feminine">F</th>
-							<th className="px-2 py-1 text-left font-medium text-gender-neuter">N</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr className="border-b border-stone-100">
-							<td className="py-1 pr-2 text-xs text-stone-500">Nom</td>
-							<td className="px-2 py-1">
-								<MonoText size="sm">{ARTICLE_AGREEMENT_QUICK_REF.plural.masculine.nom}</MonoText>
-							</td>
-							<td className="px-2 py-1">
-								<MonoText size="sm">{ARTICLE_AGREEMENT_QUICK_REF.plural.feminine.nom}</MonoText>
-							</td>
-							<td className="px-2 py-1">
-								<MonoText size="sm">{ARTICLE_AGREEMENT_QUICK_REF.plural.neuter.nom}</MonoText>
-							</td>
-						</tr>
-						<tr className="border-b border-stone-100">
-							<td className="py-1 pr-2 text-xs text-stone-500">Acc</td>
-							<td className="px-2 py-1">
-								<MonoText size="sm">{ARTICLE_AGREEMENT_QUICK_REF.plural.masculine.acc}</MonoText>
-							</td>
-							<td className="px-2 py-1">
-								<MonoText size="sm">{ARTICLE_AGREEMENT_QUICK_REF.plural.feminine.acc}</MonoText>
-							</td>
-							<td className="px-2 py-1">
-								<MonoText size="sm">{ARTICLE_AGREEMENT_QUICK_REF.plural.neuter.acc}</MonoText>
-							</td>
-						</tr>
-						<tr>
-							<td className="py-1 pr-2 text-xs text-stone-500">Gen</td>
-							<td className="px-2 py-1">
-								<MonoText size="sm">{ARTICLE_AGREEMENT_QUICK_REF.plural.masculine.gen}</MonoText>
-							</td>
-							<td className="px-2 py-1">
-								<MonoText size="sm">{ARTICLE_AGREEMENT_QUICK_REF.plural.feminine.gen}</MonoText>
-							</td>
-							<td className="px-2 py-1">
-								<MonoText size="sm">{ARTICLE_AGREEMENT_QUICK_REF.plural.neuter.gen}</MonoText>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+				<CaseTable label="Plural" data={ARTICLE_AGREEMENT_QUICK_REF.plural} />
 			</Card>
 		</div>
 	</CollapsibleSection>

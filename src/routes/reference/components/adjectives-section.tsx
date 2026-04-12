@@ -14,8 +14,11 @@ import {
 	ADJECTIVE_MISTAKES,
 	ADJECTIVE_PARADIGMS,
 	type AdjectiveParadigm,
+	type AgreementExample,
 	COMMON_ADJECTIVES,
 } from "@/constants/adjectives";
+
+import { CaseTableGrid } from "./CaseTable";
 
 // Adjective endings quick lookup table
 const AdjectiveEndingsTable: React.FC = () => (
@@ -23,113 +26,39 @@ const AdjectiveEndingsTable: React.FC = () => (
 		<div className="mb-3 text-sm font-medium text-stone-700">
 			Standard adjective endings (-ος, -η, -ο pattern)
 		</div>
-		<div className="grid gap-4 md:grid-cols-2">
-			{/* Singular */}
-			<div>
-				<div className="mb-2 text-xs font-medium text-stone-600">Singular</div>
-				<table className="w-full text-sm">
-					<thead>
-						<tr className="border-b border-stone-200">
-							<th className="w-12 py-1 pr-2 text-left font-medium text-stone-600" />
-							<th className="px-2 py-1 text-left font-medium text-gender-masculine">M</th>
-							<th className="px-2 py-1 text-left font-medium text-gender-feminine">F</th>
-							<th className="px-2 py-1 text-left font-medium text-gender-neuter">N</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr className="border-b border-stone-100">
-							<td className="py-1 pr-2 text-xs text-stone-500">Nom</td>
-							<td className="px-2 py-1">
-								<MonoText size="sm">{ADJECTIVE_ENDINGS_QUICK_REF.singular.masculine.nom}</MonoText>
-							</td>
-							<td className="px-2 py-1">
-								<MonoText size="sm">{ADJECTIVE_ENDINGS_QUICK_REF.singular.feminine.nom}</MonoText>
-							</td>
-							<td className="px-2 py-1">
-								<MonoText size="sm">{ADJECTIVE_ENDINGS_QUICK_REF.singular.neuter.nom}</MonoText>
-							</td>
-						</tr>
-						<tr className="border-b border-stone-100">
-							<td className="py-1 pr-2 text-xs text-stone-500">Acc</td>
-							<td className="px-2 py-1">
-								<MonoText size="sm">{ADJECTIVE_ENDINGS_QUICK_REF.singular.masculine.acc}</MonoText>
-							</td>
-							<td className="px-2 py-1">
-								<MonoText size="sm">{ADJECTIVE_ENDINGS_QUICK_REF.singular.feminine.acc}</MonoText>
-							</td>
-							<td className="px-2 py-1">
-								<MonoText size="sm">{ADJECTIVE_ENDINGS_QUICK_REF.singular.neuter.acc}</MonoText>
-							</td>
-						</tr>
-						<tr>
-							<td className="py-1 pr-2 text-xs text-stone-500">Gen</td>
-							<td className="px-2 py-1">
-								<MonoText size="sm">{ADJECTIVE_ENDINGS_QUICK_REF.singular.masculine.gen}</MonoText>
-							</td>
-							<td className="px-2 py-1">
-								<MonoText size="sm">{ADJECTIVE_ENDINGS_QUICK_REF.singular.feminine.gen}</MonoText>
-							</td>
-							<td className="px-2 py-1">
-								<MonoText size="sm">{ADJECTIVE_ENDINGS_QUICK_REF.singular.neuter.gen}</MonoText>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			{/* Plural */}
-			<div>
-				<div className="mb-2 text-xs font-medium text-stone-600">Plural</div>
-				<table className="w-full text-sm">
-					<thead>
-						<tr className="border-b border-stone-200">
-							<th className="w-12 py-1 pr-2 text-left font-medium text-stone-600" />
-							<th className="px-2 py-1 text-left font-medium text-gender-masculine">M</th>
-							<th className="px-2 py-1 text-left font-medium text-gender-feminine">F</th>
-							<th className="px-2 py-1 text-left font-medium text-gender-neuter">N</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr className="border-b border-stone-100">
-							<td className="py-1 pr-2 text-xs text-stone-500">Nom</td>
-							<td className="px-2 py-1">
-								<MonoText size="sm">{ADJECTIVE_ENDINGS_QUICK_REF.plural.masculine.nom}</MonoText>
-							</td>
-							<td className="px-2 py-1">
-								<MonoText size="sm">{ADJECTIVE_ENDINGS_QUICK_REF.plural.feminine.nom}</MonoText>
-							</td>
-							<td className="px-2 py-1">
-								<MonoText size="sm">{ADJECTIVE_ENDINGS_QUICK_REF.plural.neuter.nom}</MonoText>
-							</td>
-						</tr>
-						<tr className="border-b border-stone-100">
-							<td className="py-1 pr-2 text-xs text-stone-500">Acc</td>
-							<td className="px-2 py-1">
-								<MonoText size="sm">{ADJECTIVE_ENDINGS_QUICK_REF.plural.masculine.acc}</MonoText>
-							</td>
-							<td className="px-2 py-1">
-								<MonoText size="sm">{ADJECTIVE_ENDINGS_QUICK_REF.plural.feminine.acc}</MonoText>
-							</td>
-							<td className="px-2 py-1">
-								<MonoText size="sm">{ADJECTIVE_ENDINGS_QUICK_REF.plural.neuter.acc}</MonoText>
-							</td>
-						</tr>
-						<tr>
-							<td className="py-1 pr-2 text-xs text-stone-500">Gen</td>
-							<td className="px-2 py-1">
-								<MonoText size="sm">{ADJECTIVE_ENDINGS_QUICK_REF.plural.masculine.gen}</MonoText>
-							</td>
-							<td className="px-2 py-1">
-								<MonoText size="sm">{ADJECTIVE_ENDINGS_QUICK_REF.plural.feminine.gen}</MonoText>
-							</td>
-							<td className="px-2 py-1">
-								<MonoText size="sm">{ADJECTIVE_ENDINGS_QUICK_REF.plural.neuter.gen}</MonoText>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
+		<CaseTableGrid data={ADJECTIVE_ENDINGS_QUICK_REF} />
 	</Card>
+);
+
+const CaseExampleGroup: React.FC<{
+	label: string;
+	labelClass: string;
+	examples: AgreementExample[];
+}> = ({ label, labelClass, examples }) => (
+	<div>
+		<div className={`mb-2 text-xs font-medium tracking-wide ${labelClass} uppercase`}>{label}</div>
+		<div className="space-y-2">
+			{examples.map((ex) => (
+				<div key={ex.greek} className="rounded border border-stone-200 bg-stone-50 p-2">
+					<div className="flex items-baseline gap-2">
+						<MonoText
+							variant={
+								ex.gender === "masculine"
+									? "masculine"
+									: ex.gender === "feminine"
+										? "feminine"
+										: "neuter"
+							}
+							size="lg"
+						>
+							{ex.greek}
+						</MonoText>
+					</div>
+					<div className="mt-1 text-sm text-stone-600">{ex.english}</div>
+				</div>
+			))}
+		</div>
+	</div>
 );
 
 // Agreement examples showing article + adjective + noun
@@ -143,60 +72,16 @@ const AgreementExamplesCard: React.FC = () => {
 				Agreement in action: article + adjective + noun
 			</div>
 			<div className="grid gap-6 md:grid-cols-2">
-				{/* Nominative */}
-				<div>
-					<div className="mb-2 text-xs font-medium tracking-wide text-ocean-text uppercase">
-						Nominative (subject)
-					</div>
-					<div className="space-y-2">
-						{nomExamples.map((ex) => (
-							<div key={ex.greek} className="rounded border border-stone-200 bg-stone-50 p-2">
-								<div className="flex items-baseline gap-2">
-									<MonoText
-										variant={
-											ex.gender === "masculine"
-												? "masculine"
-												: ex.gender === "feminine"
-													? "feminine"
-													: "neuter"
-										}
-										size="lg"
-									>
-										{ex.greek}
-									</MonoText>
-								</div>
-								<div className="mt-1 text-sm text-stone-600">{ex.english}</div>
-							</div>
-						))}
-					</div>
-				</div>
-				{/* Accusative */}
-				<div>
-					<div className="mb-2 text-xs font-medium tracking-wide text-terracotta-text uppercase">
-						Accusative (object)
-					</div>
-					<div className="space-y-2">
-						{accExamples.map((ex) => (
-							<div key={ex.greek} className="rounded border border-stone-200 bg-stone-50 p-2">
-								<div className="flex items-baseline gap-2">
-									<MonoText
-										variant={
-											ex.gender === "masculine"
-												? "masculine"
-												: ex.gender === "feminine"
-													? "feminine"
-													: "neuter"
-										}
-										size="lg"
-									>
-										{ex.greek}
-									</MonoText>
-								</div>
-								<div className="mt-1 text-sm text-stone-600">{ex.english}</div>
-							</div>
-						))}
-					</div>
-				</div>
+				<CaseExampleGroup
+					label="Nominative (subject)"
+					labelClass="text-ocean-text"
+					examples={nomExamples}
+				/>
+				<CaseExampleGroup
+					label="Accusative (object)"
+					labelClass="text-terracotta-text"
+					examples={accExamples}
+				/>
 			</div>
 		</Card>
 	);
