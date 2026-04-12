@@ -1,32 +1,14 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-
-import { matchPhonetic } from "@/lib/greek-transliteration";
-
-import {
-	type Attempt,
-	ConfigShell,
-	type DrillForm,
-	type DrillMode,
-	DrillShell,
-	FeedbackDisplay,
-	ForwardInput,
-	type Phase,
-	ReverseFeedback,
-	SelectorButton,
-	type SessionSize,
-	SummaryScreen,
-	buildDeck,
-	useAutoAdvance,
-	useCountdown,
-	useFocusOnActive,
-	useForwardKeyboard,
-} from "../drill-engine";
+import { PersonNumberGenderDrill } from "./components/PersonNumberGenderDrill";
 
 type Person = "first" | "second" | "third";
 type Gender = "masculine" | "feminine" | "neuter";
 type Num = "singular" | "plural";
 
-interface ObjectPronoun extends DrillForm {
+interface ObjectPronoun {
+	id: string;
+	greek: string;
+	greeklish: string;
+	label: string;
 	person: Person;
 	number: Num;
 	gender?: Gender;
@@ -154,293 +136,25 @@ const PARADIGM_ROWS: { label: string; forms: [string, string] }[] = [
 	{ label: "3rd n", forms: ["το", "τα"] },
 ];
 
-const ConfigScreen = ({
-	mode,
-	onModeChange,
-	sessionSize,
-	onSizeChange,
-	onStart,
-}: {
-	mode: DrillMode;
-	onModeChange: (m: DrillMode) => void;
-	sessionSize: SessionSize;
-	onSizeChange: (s: SessionSize) => void;
-	onStart: () => void;
-}) => (
-	<ConfigShell
-		title="Object Pronouns"
-		subtitle="10 forms / timed"
-		mode={mode}
-		onModeChange={onModeChange}
-		sessionSize={sessionSize}
-		onSizeChange={onSizeChange}
-		onStart={onStart}
-		forwardLabel="Translate / Produce"
-		forwardDesc="English meaning → Greek form"
-		reverseLabel="Form / Identify"
-		reverseDesc="Greek form → person / number / gender"
-	>
-		<div className="mb-8 overflow-x-auto">
-			<table className="w-full border-collapse text-sm">
-				<thead>
-					<tr>
-						<th className="py-1 pr-4 text-left text-xs font-normal text-muted-foreground" />
-						<th className="px-3 py-1 text-center text-xs font-medium text-muted-foreground">
-							Singular
-						</th>
-						<th className="px-3 py-1 text-center text-xs font-medium text-muted-foreground">
-							Plural
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-					{PARADIGM_ROWS.map((row) => (
-						<tr key={row.label} className="border-t border-stone-100">
-							<td className="py-1.5 pr-4 text-xs font-medium text-terracotta-text">{row.label}</td>
-							{row.forms.map((form) => (
-								<td
-									key={form}
-									lang="el"
-									className="greek-text px-3 py-1.5 text-center text-base text-foreground"
-								>
-									{form}
-								</td>
-							))}
-						</tr>
-					))}
-				</tbody>
-			</table>
-		</div>
-	</ConfigShell>
-);
-
 export default function PronounsDrill() {
-	const [phase, setPhase] = useState<Phase>("config");
-	const [mode, setMode] = useState<DrillMode>("forward");
-	const [sessionSize, setSessionSize] = useState<SessionSize>(10);
-	const [deck, setDeck] = useState<ObjectPronoun[]>([]);
-	const [cardIndex, setCardIndex] = useState(0);
-	const [input, setInput] = useState("");
-	const [attempts, setAttempts] = useState<Attempt<ObjectPronoun>[]>([]);
-	const [lastAttempt, setLastAttempt] = useState<Attempt<ObjectPronoun> | null>(null);
-	const [selPerson, setSelPerson] = useState<Person | null>(null);
-	const [selNumber, setSelNumber] = useState<Num | null>(null);
-	const [selGender, setSelGender] = useState<Gender | null>(null);
-
-	const inputRef = useRef<HTMLInputElement>(null);
-	const inputValueRef = useRef("");
-	const isActive = phase === "active";
-	const [timerMs, setTimerMs] = useState(mode === "forward" ? 4000 : 6000);
-	const MAX_TIMER_MS = mode === "forward" ? 5000 : 8000;
-	const currentForm = (deck[cardIndex] ?? PRONOUNS[0]) as ObjectPronoun;
-
-	const recordAttempt = useCallback(
-		(isCorrect: boolean, timeTaken: number, timedOut = false) => {
-			const attempt: Attempt<ObjectPronoun> = {
-				form: currentForm,
-				isCorrect,
-				timeTaken,
-				timedOut,
-			};
-			setLastAttempt(attempt);
-			setAttempts((prev) => [...prev, attempt]);
-			setPhase("feedback");
-		},
-		[currentForm],
-	);
-
-	const handleTimeout = useCallback(() => {
-		if (phase !== "active") return;
-		const currentInput = inputValueRef.current.trim();
-		if (mode === "forward" && currentInput) {
-			if (matchPhonetic(currentInput, currentForm.greek).isCorrect) {
-				recordAttempt(true, timerMs, true);
-				return;
-			}
-		}
-		setTimerMs((prev) => Math.min(prev + 500, MAX_TIMER_MS));
-		recordAttempt(false, timerMs, true);
-	}, [phase, mode, currentForm, timerMs, MAX_TIMER_MS, recordAttempt]);
-
-	const { progress, startedAt } = useCountdown(timerMs, isActive, handleTimeout);
-
-	const handleForwardSubmit = useCallback(() => {
-		if (phase !== "active") return;
-		const timeTaken = Math.min(performance.now() / startedAt.current, timerMs);
-		const isCorrect = matchPhonetic(input.trim(), currentForm.greek).isCorrect;
-		recordAttempt(isCorrect, timeTaken);
-	}, [phase, input, currentForm, startedAt, timerMs, recordAttempt]);
-
-	const handleReverseSubmit = useCallback(() => {
-		if (phase !== "active" || !selPerson || !selNumber) return;
-		if (selPerson === "third" && !selGender) return;
-		const timeTaken = performance.now() / startedAt.current;
-		const isCorrect =
-			selPerson === currentForm.person &&
-			selNumber === currentForm.number &&
-			(currentForm.person !== "third" || selGender === currentForm.gender);
-		recordAttempt(isCorrect, timeTaken);
-	}, [phase, selPerson, selNumber, selGender, currentForm, startedAt, recordAttempt]);
-
-	const resetSelectors = useCallback(() => {
-		setSelPerson(null);
-		setSelNumber(null);
-		setSelGender(null);
-	}, []);
-
-	// Auto-submit reverse mode
-	useEffect(() => {
-		if (mode !== "reverse" || phase !== "active") return;
-		if (!selPerson || !selNumber) return;
-		if (selPerson === "third" && !selGender) return;
-		handleReverseSubmit();
-	}, [selPerson, selNumber, selGender, mode, phase, handleReverseSubmit]);
-
-	useAutoAdvance({
-		phase,
-		lastAttempt,
-		cardIndex,
-		sessionSize,
-		mode,
-		setPhase,
-		setCardIndex,
-		setInput,
-		inputValueRef,
-		resetSelectors,
-		inputRef,
-	});
-
-	useFocusOnActive({ phase, mode, inputRef });
-	useForwardKeyboard({ phase, mode, onSubmit: handleForwardSubmit });
-
-	const startDrill = useCallback(() => {
-		setDeck(buildDeck(PRONOUNS, sessionSize));
-		setCardIndex(0);
-		setInput("");
-		inputValueRef.current = "";
-		setAttempts([]);
-		setLastAttempt(null);
-		resetSelectors();
-		setTimerMs(mode === "forward" ? 4000 : 6000);
-		setPhase("active");
-		setTimeout(() => inputRef.current?.focus(), 30);
-	}, [mode, sessionSize, resetSelectors]);
-
-	if (phase === "config") {
-		return (
-			<ConfigScreen
-				mode={mode}
-				onModeChange={setMode}
-				sessionSize={sessionSize}
-				onSizeChange={setSessionSize}
-				onStart={startDrill}
-			/>
-		);
-	}
-	if (phase === "complete") {
-		return (
-			<SummaryScreen attempts={attempts} total={sessionSize} onAgain={() => setPhase("config")} />
-		);
-	}
-
-	const barColor =
-		phase === "feedback"
-			? lastAttempt?.isCorrect
-				? "bg-correct"
-				: "bg-incorrect"
-			: "bg-terracotta";
-
-	const englishWord = ENGLISH[currentForm.id] ?? "";
-	const personLabel = `${PERSON_LABELS[currentForm.person]} person`;
-	const subtitleParts: string[] = [currentForm.number];
-	if (currentForm.gender) subtitleParts.push(currentForm.gender);
-	const subtitle = subtitleParts.join(" / ");
-
 	return (
-		<DrillShell
-			progress={progress}
-			barColor={barColor}
-			cardIndex={cardIndex}
-			sessionSize={sessionSize}
-		>
-			{mode === "forward" ? (
-				<>
-					<div>
-						<p className="mb-4 text-xs font-medium tracking-[0.18em] text-terracotta-text uppercase">
-							{personLabel}
-						</p>
-						<p className="font-serif text-5xl leading-tight text-foreground">{englishWord}</p>
-						<p className="mt-2 text-sm text-muted-foreground">{subtitle}</p>
-					</div>
-
-					<div>
-						<ForwardInput
-							input={input}
-							setInput={setInput}
-							inputValueRef={inputValueRef}
-							inputRef={inputRef}
-							phase={phase}
-						/>
-						{phase === "feedback" && lastAttempt && <FeedbackDisplay lastAttempt={lastAttempt} />}
-					</div>
-				</>
-			) : (
-				<>
-					<div className="pt-2">
-						<p lang="el" className="greek-text font-sans text-8xl leading-none text-foreground">
-							{currentForm.greek}
-						</p>
-					</div>
-
-					<div className="space-y-3">
-						<div className="flex flex-wrap gap-2">
-							{(["first", "second", "third"] as const).map((p) => (
-								<SelectorButton
-									key={p}
-									label={PERSON_LABELS[p]}
-									selected={selPerson === p}
-									disabled={phase !== "active"}
-									onClick={() => setSelPerson(p)}
-									selectedBg="bg-terracotta-100"
-									selectedText="text-terracotta-text"
-								/>
-							))}
-						</div>
-
-						<div className="flex flex-wrap gap-2">
-							{(["singular", "plural"] as const).map((n) => (
-								<SelectorButton
-									key={n}
-									label={n}
-									selected={selNumber === n}
-									disabled={phase !== "active"}
-									onClick={() => setSelNumber(n)}
-									selectedBg="bg-terracotta-100"
-									selectedText="text-terracotta-text"
-								/>
-							))}
-						</div>
-
-						{selPerson === "third" && (
-							<div className="flex flex-wrap gap-2">
-								{(["masculine", "feminine", "neuter"] as const).map((g) => (
-									<SelectorButton
-										key={g}
-										label={g}
-										selected={selGender === g}
-										disabled={phase !== "active"}
-										onClick={() => setSelGender(g)}
-										selectedBg={GENDER_STYLE[g].selectorBg}
-										selectedText={GENDER_STYLE[g].selectorText}
-									/>
-								))}
-							</div>
-						)}
-
-						{phase === "feedback" && lastAttempt && <ReverseFeedback lastAttempt={lastAttempt} />}
-					</div>
-				</>
-			)}
-		</DrillShell>
+		<PersonNumberGenderDrill
+			forms={PRONOUNS}
+			englishMap={ENGLISH}
+			paradigmRows={PARADIGM_ROWS}
+			paradigmRowLabelColor="text-terracotta-text"
+			genderStyle={GENDER_STYLE}
+			personLabels={PERSON_LABELS}
+			colorTheme="terracotta"
+			barColorBase="bg-terracotta"
+			selectorBg="bg-terracotta-100"
+			selectorText="text-terracotta-text"
+			showGenderRow={(selPerson, _selNumber) => selPerson === "third"}
+			needsGender={(selPerson, _selNumber) => selPerson === "third"}
+			configTitle="Object Pronouns"
+			configSubtitle="10 forms / timed"
+			configForwardDesc="English meaning → Greek form"
+			configReverseDesc="Greek form → person / number / gender"
+		/>
 	);
 }
