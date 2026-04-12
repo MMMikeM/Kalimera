@@ -1,7 +1,30 @@
 import { ArrowRightLeft, Blocks, FileText, Languages, Palette, Scale, Users } from "lucide-react";
+import type React from "react";
 import { Link } from "react-router";
 
-const sections = [
+interface Section {
+	id: string;
+	label: string;
+	description: string;
+	icon: React.ReactNode;
+	href: string;
+	color: string;
+}
+
+const SectionCard = ({ section }: { section: Section }) => (
+	<Link
+		to={section.href}
+		className={`flex items-center gap-4 rounded-xl border-2 p-4 ${section.color} transition-shadow hover:shadow-md`}
+	>
+		<div className="shrink-0">{section.icon}</div>
+		<div>
+			<h2 className="font-semibold">{section.label}</h2>
+			<p className="text-sm opacity-80">{section.description}</p>
+		</div>
+	</Link>
+);
+
+const sections: Section[] = [
 	{
 		id: "cases",
 		label: "Cases",
@@ -78,17 +101,7 @@ export default function ReferenceIndex() {
 
 			<div className="grid gap-3">
 				{sections.map((section) => (
-					<Link
-						key={section.id}
-						to={section.href}
-						className={`flex items-center gap-4 rounded-xl border-2 p-4 ${section.color} transition-shadow hover:shadow-md`}
-					>
-						<div className="shrink-0">{section.icon}</div>
-						<div>
-							<h2 className="font-semibold">{section.label}</h2>
-							<p className="text-sm opacity-80">{section.description}</p>
-						</div>
-					</Link>
+					<SectionCard key={section.id} section={section} />
 				))}
 			</div>
 		</div>
