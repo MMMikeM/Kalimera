@@ -1,12 +1,11 @@
-import { ChevronLeft } from "lucide-react";
-import { Link } from "react-router";
-
 import { ContentSection } from "@/components/ContentSection";
 import { MonoText } from "@/components/MonoText";
 
 import { ExampleList } from "./ExampleList";
 
 import type { EssentialsLoaderData } from "../data.server";
+
+import { EssentialsBackLink } from "./EssentialsBackLink";
 
 interface Props {
 	data: EssentialsLoaderData;
@@ -43,13 +42,7 @@ export function PositionSubtab({ data }: Props) {
 
 	return (
 		<div className="space-y-6">
-			<Link
-				to="/learn/essentials"
-				className="inline-flex items-center gap-1 text-sm text-stone-600 hover:text-stone-900"
-			>
-				<ChevronLeft size={16} />
-				Essentials
-			</Link>
+			<EssentialsBackLink />
 
 			{/* Opposites Grid */}
 			<ContentSection title="Opposites" subtitle="Position words come in pairs" colorScheme="ocean">

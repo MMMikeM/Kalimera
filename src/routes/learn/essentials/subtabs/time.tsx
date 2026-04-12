@@ -1,10 +1,9 @@
-import { ChevronLeft } from "lucide-react";
-import { Link } from "react-router";
-
 import { ContentSection } from "@/components/ContentSection";
 import { MonoText } from "@/components/MonoText";
 
 import type { EssentialsLoaderData } from "../data.server";
+
+import { EssentialsBackLink } from "./EssentialsBackLink";
 
 interface Props {
 	data: EssentialsLoaderData;
@@ -50,13 +49,7 @@ export function TimeSubtab({ data }: Props) {
 
 	return (
 		<div className="space-y-6">
-			<Link
-				to="/learn/essentials"
-				className="inline-flex items-center gap-1 text-sm text-stone-600 hover:text-stone-900"
-			>
-				<ChevronLeft size={16} />
-				Essentials
-			</Link>
+			<EssentialsBackLink />
 
 			{/* Times of Day */}
 			<ContentSection title="Times of Day" subtitle="Οι ώρες της ημέρας" colorScheme="honey">
