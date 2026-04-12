@@ -3,7 +3,7 @@ import { Link2 } from "lucide-react";
 import { TabHero } from "@/components/TabHero";
 
 import type { PhrasesLoaderData } from "../components/shared";
-import { PhraseItemDisplay, PhraseSection } from "../components/shared";
+import { PhraseList } from "../components/shared";
 
 export const ConnectorsTab = ({ data }: { data: PhrasesLoaderData }) => {
 	const { discourseMarkers, discourseFillers } = data.connectors;
@@ -20,29 +20,8 @@ export const ConnectorsTab = ({ data }: { data: PhrasesLoaderData }) => {
 				fluent. These small words hold conversations together.
 			</TabHero>
 
-			{discourseMarkers.length > 0 && (
-				<PhraseSection title="Discourse Markers" colorScheme="olive">
-					{discourseMarkers.map((phrase) => (
-						<PhraseItemDisplay
-							key={phrase.id}
-							greek={phrase.greekText}
-							english={phrase.englishTranslation}
-						/>
-					))}
-				</PhraseSection>
-			)}
-
-			{discourseFillers.length > 0 && (
-				<PhraseSection title="Fillers & Connectors" colorScheme="ocean">
-					{discourseFillers.map((phrase) => (
-						<PhraseItemDisplay
-							key={phrase.id}
-							greek={phrase.greekText}
-							english={phrase.englishTranslation}
-						/>
-					))}
-				</PhraseSection>
-			)}
+			<PhraseList title="Discourse Markers" colorScheme="olive" phrases={discourseMarkers} />
+			<PhraseList title="Fillers & Connectors" colorScheme="ocean" phrases={discourseFillers} />
 		</div>
 	);
 };

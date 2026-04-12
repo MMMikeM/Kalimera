@@ -3,7 +3,7 @@ import { MessageCircle } from "lucide-react";
 import { TabHero } from "@/components/TabHero";
 
 import type { PhrasesLoaderData } from "../components/shared";
-import { PhraseItemDisplay, PhraseSection } from "../components/shared";
+import { PhraseList } from "../components/shared";
 
 export const ResponsesTab = ({ data }: { data: PhrasesLoaderData }) => {
 	const { responses, socialPhrases } = data.responses;
@@ -20,27 +20,8 @@ export const ResponsesTab = ({ data }: { data: PhrasesLoaderData }) => {
 				process and keep the conversation natural.
 			</TabHero>
 
-			<PhraseSection title="Common Responses" colorScheme="terracotta">
-				{responses.map((phrase) => (
-					<PhraseItemDisplay
-						key={phrase.id}
-						greek={phrase.greekText}
-						english={phrase.englishTranslation}
-					/>
-				))}
-			</PhraseSection>
-
-			{socialPhrases.length > 0 && (
-				<PhraseSection title="Social Phrases" colorScheme="olive">
-					{socialPhrases.map((phrase) => (
-						<PhraseItemDisplay
-							key={phrase.id}
-							greek={phrase.greekText}
-							english={phrase.englishTranslation}
-						/>
-					))}
-				</PhraseSection>
-			)}
+			<PhraseList title="Common Responses" colorScheme="terracotta" phrases={responses} alwaysShow />
+			<PhraseList title="Social Phrases" colorScheme="olive" phrases={socialPhrases} />
 		</div>
 	);
 };

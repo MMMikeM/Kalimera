@@ -4,8 +4,9 @@ import { type ContentColorScheme, ContentSection } from "@/components/ContentSec
 import { MonoText } from "@/components/MonoText";
 import { cn } from "@/lib/utils";
 
-// Re-export types from data.server - single source of truth
-export type { PhraseItem, PhrasesLoaderData } from "../data.server";
+import type { PhraseItem, PhrasesLoaderData } from "../data.server";
+
+export type { PhraseItem, PhrasesLoaderData };
 
 const textColors: Record<ContentColorScheme, string> = {
 	ocean: "text-ocean-800",
@@ -56,3 +57,28 @@ export const PhraseSection: React.FC<{
 		</div>
 	</ContentSection>
 );
+
+export function PhraseList({
+	title,
+	colorScheme,
+	phrases,
+	alwaysShow = false,
+}: {
+	title: string;
+	colorScheme: ContentColorScheme;
+	phrases: PhraseItem[];
+	alwaysShow?: boolean;
+}) {
+	if (!alwaysShow && phrases.length === 0) return null;
+	return (
+		<PhraseSection title={title} colorScheme={colorScheme}>
+			{phrases.map((phrase) => (
+				<PhraseItemDisplay
+					key={phrase.id}
+					greek={phrase.greekText}
+					english={phrase.englishTranslation}
+				/>
+			))}
+		</PhraseSection>
+	);
+}

@@ -3,7 +3,7 @@ import { Hand } from "lucide-react";
 import { TabHero } from "@/components/TabHero";
 
 import type { PhrasesLoaderData } from "../components/shared";
-import { PhraseItemDisplay, PhraseSection } from "../components/shared";
+import { PhraseList } from "../components/shared";
 
 export const RequestsTab = ({ data }: { data: PhrasesLoaderData }) => {
 	const { requests, commands } = data.requests;
@@ -20,29 +20,8 @@ export const RequestsTab = ({ data }: { data: PhrasesLoaderData }) => {
 				— politeness goes a long way!
 			</TabHero>
 
-			{requests.length > 0 && (
-				<PhraseSection title="Polite Requests" colorScheme="terracotta">
-					{requests.map((phrase) => (
-						<PhraseItemDisplay
-							key={phrase.id}
-							greek={phrase.greekText}
-							english={phrase.englishTranslation}
-						/>
-					))}
-				</PhraseSection>
-			)}
-
-			{commands.length > 0 && (
-				<PhraseSection title="Commands" colorScheme="olive">
-					{commands.map((phrase) => (
-						<PhraseItemDisplay
-							key={phrase.id}
-							greek={phrase.greekText}
-							english={phrase.englishTranslation}
-						/>
-					))}
-				</PhraseSection>
-			)}
+			<PhraseList title="Polite Requests" colorScheme="terracotta" phrases={requests} />
+			<PhraseList title="Commands" colorScheme="olive" phrases={commands} />
 		</div>
 	);
 };
