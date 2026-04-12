@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { matchPhonetic } from "@/lib/greek-transliteration";
 
+import { GENDER_STYLE } from "./drill-constants";
 import {
 	type Attempt,
 	ConfigShell,
@@ -221,24 +222,6 @@ const CASE_STYLE: Record<
 	},
 };
 
-const GENDER_STYLE: Record<Gender, { label: string; selectorBg: string; selectorText: string }> = {
-	masculine: {
-		label: "text-navy-text",
-		selectorBg: "bg-navy-100",
-		selectorText: "text-navy-text",
-	},
-	feminine: {
-		label: "text-sunset-text",
-		selectorBg: "bg-sunset-100",
-		selectorText: "text-sunset-text",
-	},
-	neuter: {
-		label: "text-slate-text",
-		selectorBg: "bg-slate-100",
-		selectorText: "text-slate-text",
-	},
-};
-
 const PARADIGM_ROWS: {
 	label: string;
 	caseKey: ArticleCase;
@@ -454,7 +437,7 @@ export default function MemoryDrill() {
 			{mode === "forward" ? (
 				<>
 					<div>
-						<p className={`mb-4 text-xs font-medium tracking-[0.18em] uppercase ${gs.label}`}>
+						<p className={`mb-4 text-xs font-medium tracking-[0.18em] uppercase ${gs.selectorText}`}>
 							{currentArticle.gender}
 						</p>
 						<p className="font-serif text-5xl leading-tight text-foreground">
