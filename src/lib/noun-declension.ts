@@ -67,7 +67,14 @@ const mapArticleForAccusative = (article: string): string => {
 	return article;
 };
 
-const declineNounSingular = (lemma: string, pattern: DeclensionPattern): DeclinedForm[] => {
+type ParadigmForms = (typeof AGREEMENT_PARADIGMS)[0]["forms"];
+
+const _declineNounForms = (
+	lemma: string,
+	pattern: DeclensionPattern,
+	getForms: (paradigm: (typeof AGREEMENT_PARADIGMS)[0]) => ParadigmForms,
+	number: "singular" | "plural",
+): DeclinedForm[] => {
 	const paradigm = AGREEMENT_PARADIGMS.find((p) => p.id === pattern);
 	if (!paradigm) {
 		throw new Error(`Unknown declension pattern: ${pattern}`);
@@ -76,7 +83,7 @@ const declineNounSingular = (lemma: string, pattern: DeclensionPattern): Decline
 	const stem = getStemFromLemma(lemma, pattern);
 	const forms: DeclinedForm[] = [];
 
-	for (const form of paradigm.forms) {
+	for (const form of getForms(paradigm)) {
 		const grammaticalCase = Object.keys(CASE_MAP).find(
 			(key) => CASE_MAP[key as Case] === form.case,
 		) as Case | undefined;
@@ -86,52 +93,23 @@ const declineNounSingular = (lemma: string, pattern: DeclensionPattern): Decline
 		const article = mapArticleForAccusative(form.article);
 		const noun = applyEnding(stem, form.ending);
 
-		const fullForm = article === "—" ? noun : `${article} ${noun}`;
-
 		forms.push({
 			case: grammaticalCase,
-			number: "singular",
+			number,
 			article,
 			noun,
-			full: fullForm,
+			full: article === "—" ? noun : `${article} ${noun}`,
 		});
 	}
 
 	return forms;
 };
 
-const declineNounPlural = (lemma: string, pattern: DeclensionPattern): DeclinedForm[] => {
-	const paradigm = AGREEMENT_PARADIGMS.find((p) => p.id === pattern);
-	if (!paradigm) {
-		throw new Error(`Unknown declension pattern: ${pattern}`);
-	}
+const declineNounSingular = (lemma: string, pattern: DeclensionPattern): DeclinedForm[] =>
+	_declineNounForms(lemma, pattern, (p) => p.forms, "singular");
 
-	const stem = getStemFromLemma(lemma, pattern);
-	const forms: DeclinedForm[] = [];
-
-	for (const form of paradigm.pluralForms) {
-		const grammaticalCase = Object.keys(CASE_MAP).find(
-			(key) => CASE_MAP[key as Case] === form.case,
-		) as Case | undefined;
-
-		if (!grammaticalCase) continue;
-
-		const article = form.article;
-		const noun = applyEnding(stem, form.ending);
-
-		const fullForm = article === "—" ? noun : `${article} ${noun}`;
-
-		forms.push({
-			case: grammaticalCase,
-			number: "plural",
-			article,
-			noun,
-			full: fullForm,
-		});
-	}
-
-	return forms;
-};
+const declineNounPlural = (lemma: string, pattern: DeclensionPattern): DeclinedForm[] =>
+	_declineNounForms(lemma, pattern, (p) => p.pluralForms, "plural");
 
 export const declineNoun = (lemma: string, pattern: DeclensionPattern): DeclinedForm[] => {
 	const singularForms = declineNounSingular(lemma, pattern);
