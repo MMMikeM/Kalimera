@@ -3,7 +3,7 @@ import { Sparkles } from "lucide-react";
 import { TabHero } from "@/components/TabHero";
 
 import type { PhrasesLoaderData } from "../components/shared";
-import { PhraseItemDisplay, PhraseSection } from "../components/shared";
+import { PhraseList } from "../components/shared";
 
 export const SurvivalTab = ({ data }: { data: PhrasesLoaderData }) => {
 	const { essential, survival } = data.survival;
@@ -20,27 +20,8 @@ export const SurvivalTab = ({ data }: { data: PhrasesLoaderData }) => {
 				when someone says "Γεια σας", your response should be instant.
 			</TabHero>
 
-			<PhraseSection title="Essential Greetings" colorScheme="honey">
-				{essential.map((phrase) => (
-					<PhraseItemDisplay
-						key={phrase.id}
-						greek={phrase.greekText}
-						english={phrase.englishTranslation}
-					/>
-				))}
-			</PhraseSection>
-
-			{survival.length > 0 && (
-				<PhraseSection title="Survival Phrases" colorScheme="terracotta">
-					{survival.map((phrase) => (
-						<PhraseItemDisplay
-							key={phrase.id}
-							greek={phrase.greekText}
-							english={phrase.englishTranslation}
-						/>
-					))}
-				</PhraseSection>
-			)}
+			<PhraseList title="Essential Greetings" colorScheme="honey" phrases={essential} alwaysShow />
+			<PhraseList title="Survival Phrases" colorScheme="terracotta" phrases={survival} />
 		</div>
 	);
 };

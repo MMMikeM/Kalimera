@@ -3,7 +3,7 @@ import { Heart } from "lucide-react";
 import { TabHero } from "@/components/TabHero";
 
 import type { PhrasesLoaderData } from "../components/shared";
-import { PhraseItemDisplay, PhraseSection } from "../components/shared";
+import { PhraseList } from "../components/shared";
 
 export const OpinionsTab = ({ data }: { data: PhrasesLoaderData }) => {
 	const { opinions } = data.opinions;
@@ -20,15 +20,7 @@ export const OpinionsTab = ({ data }: { data: PhrasesLoaderData }) => {
 				share what you actually think.
 			</TabHero>
 
-			<PhraseSection title="Opinions & Feelings" colorScheme="olive">
-				{opinions.map((phrase) => (
-					<PhraseItemDisplay
-						key={phrase.id}
-						greek={phrase.greekText}
-						english={phrase.englishTranslation}
-					/>
-				))}
-			</PhraseSection>
+			<PhraseList title="Opinions & Feelings" colorScheme="olive" phrases={opinions} alwaysShow />
 		</div>
 	);
 };
