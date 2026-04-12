@@ -118,13 +118,17 @@ export const SummaryScreen = <T extends DrillForm>({
 }) => {
 	const correct = attempts.filter((a) => a.isCorrect).length;
 	const avgTime = attempts.reduce((s, a) => s + a.timeTaken, 0) / attempts.length;
+	const accuracy = Math.round((correct / total) * 100);
 
-	const slowestByForm = new Map<string, Attempt<T>>();
+	// Find incorrect attempts
+	const incorrectByForm = new Map<string, Attempt<T>>();
 	for (const a of attempts) {
-		const existing = slowestByForm.get(a.form.id);
-		if (!existing || a.timeTaken > existing.timeTaken) slowestByForm.set(a.form.id, a);
+		if (!a.isCorrect) {
+			const existing = incorrectByForm.get(a.form.id);
+			if (!existing || a.timeTaken > existing.timeTaken) incorrectByForm.set(a.form.id, a);
+		}
 	}
-	const slowest = [...slowestByForm.values()].sort((a, b) => b.timeTaken - a.timeTaken).slice(0, 3);
+	const mistakes = [...incorrectByForm.values()].sort((a, b) => b.timeTaken - a.timeTaken).slice(0, 5);
 
 	return (
 		<div className="max-w-xs px-6 py-8">
@@ -136,26 +140,20 @@ export const SummaryScreen = <T extends DrillForm>({
 						{correct} <span className="text-stone-300">/</span> {total}
 					</p>
 					<p className="mt-1 text-sm text-muted-foreground">
-						{Math.round((correct / total) * 100)}% correct
+						{accuracy}% correct · {(avgTime / 1000).toFixed(1)}s avg
 					</p>
-				</div>
-				<div>
-					<p className="font-serif text-3xl text-foreground tabular-nums">
-						{(avgTime / 1000).toFixed(1)}s
-					</p>
-					<p className="mt-1 text-sm text-muted-foreground">average response</p>
 				</div>
 			</div>
 
-			{slowest.length > 0 && (
+			{mistakes.length > 0 && (
 				<div className="mb-10">
-					<p className="mb-3 text-xs tracking-widest text-muted-foreground uppercase">
-						Worth revisiting
+					<p className="mb-3 text-center text-sm text-stone-600 italic">
+						These caught you — that's where lasting learning happens.
 					</p>
-					<div className="space-y-3">
-						{slowest.map((a) => (
-							<div key={a.form.id} className="flex items-baseline gap-3">
-								<span lang="el" className="greek-text w-10 text-xl text-foreground">
+					<div className="space-y-2">
+						{mistakes.map((a) => (
+							<div key={a.form.id} className="flex items-baseline gap-3 rounded-lg border bg-white p-3">
+								<span lang="el" className="greek-text w-10 text-lg text-foreground">
 									{a.form.greek}
 								</span>
 								<span className="text-xs text-muted-foreground">{a.form.label}</span>
@@ -166,8 +164,8 @@ export const SummaryScreen = <T extends DrillForm>({
 			)}
 
 			<div className="mb-4">
-				<Button variant="outline" onClick={onAgain} className="w-full">
-					Go again
+				<Button onClick={onAgain} className="w-full">
+					Practice again
 				</Button>
 			</div>
 
