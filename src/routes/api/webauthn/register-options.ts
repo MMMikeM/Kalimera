@@ -1,4 +1,4 @@
-import { createWebAuthn } from "@/lib/auth";
+import { createWebAuthnFromRequest } from "@/lib/auth";
 
 import type { Route } from "./+types/register-options";
 
@@ -20,12 +20,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
 			return Response.json({ error: "Missing required fields: userId, username" }, { status: 400 });
 		}
 
-		const url = new URL(request.url);
-		const webauthn = createWebAuthn({
-			rpName: "Greek Learning",
-			rpID: url.hostname,
-			origin: url.origin,
-		});
+		const webauthn = createWebAuthnFromRequest(request);
 
 		const options = await webauthn.generateRegistrationOptions(userId, username);
 
