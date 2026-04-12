@@ -1,6 +1,6 @@
 import { userHasPasskey } from "@/db.server/queries/auth";
 import { findUserByUsername } from "@/db.server/queries/users";
-import { createWebAuthn } from "@/lib/auth";
+import { createWebAuthnFromRequest } from "@/lib/auth";
 
 import type { Route } from "./+types/auth-options";
 
@@ -33,12 +33,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
 			userId = user.id;
 		}
 
-		const url = new URL(request.url);
-		const webauthn = createWebAuthn({
-			rpName: "Greek Learning",
-			rpID: url.hostname,
-			origin: url.origin,
-		});
+		const webauthn = createWebAuthnFromRequest(request);
 
 		const options = await webauthn.generateAuthenticationOptions(userId);
 

@@ -28,6 +28,15 @@ type WebAuthnConfig = {
 	origin: string;
 };
 
+export const createWebAuthnFromRequest = (request: Request) => {
+	const url = new URL(request.url);
+	return createWebAuthn({
+		rpName: "Greek Learning",
+		rpID: url.hostname,
+		origin: url.origin,
+	});
+};
+
 export const createWebAuthn = (config: WebAuthnConfig) => {
 	const { rpName, rpID, origin } = config;
 

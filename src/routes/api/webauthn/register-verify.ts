@@ -1,6 +1,6 @@
 import type { RegistrationResponseJSON } from "@simplewebauthn/server";
 
-import { createWebAuthn } from "@/lib/auth";
+import { createWebAuthnFromRequest } from "@/lib/auth";
 
 import type { Route } from "./+types/register-verify";
 
@@ -26,12 +26,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
 			);
 		}
 
-		const url = new URL(request.url);
-		const webauthn = createWebAuthn({
-			rpName: "Greek Learning",
-			rpID: url.hostname,
-			origin: url.origin,
-		});
+		const webauthn = createWebAuthnFromRequest(request);
 
 		const result = await webauthn.verifyRegistration(userId, response, challenge);
 

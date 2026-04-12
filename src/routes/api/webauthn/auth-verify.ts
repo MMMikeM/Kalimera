@@ -1,7 +1,7 @@
 import type { AuthenticationResponseJSON } from "@simplewebauthn/server";
 
 import { getUserById } from "@/db.server/queries/users";
-import { createWebAuthn } from "@/lib/auth";
+import { createWebAuthnFromRequest } from "@/lib/auth";
 import { createAuthCookie } from "@/lib/auth-cookie";
 
 import type { Route } from "./+types/auth-verify";
@@ -27,12 +27,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
 			);
 		}
 
-		const url = new URL(request.url);
-		const webauthn = createWebAuthn({
-			rpName: "Greek Learning",
-			rpID: url.hostname,
-			origin: url.origin,
-		});
+		const webauthn = createWebAuthnFromRequest(request);
 
 		const result = await webauthn.verifyAuthentication(response, challenge);
 		const user = await getUserById(result.userId);
