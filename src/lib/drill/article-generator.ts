@@ -1,11 +1,11 @@
-import type { DeclensionPattern } from "@/db.server/enums";
+import type { NounDeclensionPattern } from "@/db.server/enums";
 import { declineNoun } from "@/lib/noun-declension";
 
 import type { DrillQuestion } from "./generate-questions";
 
 const ARTICLE_DRILL_NOUNS: Array<{
 	lemma: string;
-	pattern: DeclensionPattern;
+	pattern: NounDeclensionPattern;
 	english: string;
 }> = [
 	// Masculine -ος

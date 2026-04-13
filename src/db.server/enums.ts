@@ -14,14 +14,6 @@ export type WordType = (typeof wordTypes)[number];
 export const genders = ["masculine", "feminine", "neuter"] as const;
 export type Gender = (typeof genders)[number];
 
-export const adjectivePatterns = [
-	"os-i-o", // καλός/καλή/καλό
-	"os-ia-o", // ωραίος/ωραία/ωραίο
-	"is-is-es", // διεθνής/διεθνής/διεθνές
-	"indeclinable", // μπλε, καφέ
-] as const;
-export type AdjectivePattern = (typeof adjectivePatterns)[number];
-
 // Grammatical cases for nominal inflection (nominal_forms, drills)
 export const grammaticalCases = ["nominative", "genitive", "accusative", "vocative"] as const;
 export type GrammaticalCase = (typeof grammaticalCases)[number];
@@ -64,7 +56,7 @@ export const grammaticalNumbers = ["singular", "plural"] as const;
 export type GrammaticalNumber = (typeof grammaticalNumbers)[number];
 
 // Declension patterns for Greek nouns
-export const declensionPatterns = [
+export const nounDeclensionPatterns = [
 	"masc-os", // ο φίλος -> τον φίλο -> του φίλου
 	"masc-as", // ο πατέρας -> τον πατέρα -> του πατέρα
 	"masc-is", // ο μαθητής -> τον μαθητή -> του μαθητή
@@ -76,7 +68,7 @@ export const declensionPatterns = [
 	"neut-i", // το παιδί -> το παιδί -> του παιδιού
 	"neut-ma", // το όνομα -> το όνομα -> του ονόματος
 ] as const;
-export type DeclensionPattern = (typeof declensionPatterns)[number];
+export type NounDeclensionPattern = (typeof nounDeclensionPatterns)[number];
 
 // Auth challenge types for WebAuthn flow
 export const challengeTypes = ["registration", "authentication"] as const;

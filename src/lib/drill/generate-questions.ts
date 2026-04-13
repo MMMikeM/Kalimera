@@ -1,6 +1,6 @@
 import { OBJECT_PRONOUNS, POSSESSIVE_PRONOUNS } from "@/constants/pronouns";
 import { VERB_CONJUGATIONS } from "@/constants/verbs";
-import type { DeclensionPattern } from "@/db.server/enums";
+import type { NounDeclensionPattern } from "@/db.server/enums";
 import { declineNoun } from "@/lib/noun-declension";
 
 import { generateArticleQuestions } from "./article-generator";
@@ -127,7 +127,7 @@ const generateNounQuestions = (): DrillQuestion[] => {
 
 	const nouns: Array<{
 		lemma: string;
-		pattern: DeclensionPattern;
+		pattern: NounDeclensionPattern;
 		english: string;
 	}> = [
 		{ lemma: "φίλος", pattern: "masc-os", english: "friend" },

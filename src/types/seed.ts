@@ -1,7 +1,7 @@
 // Seed-only input types - used during database seeding, not stored as-is
 // These define the shape of seed data before transformation to DB format
 
-import type { DeclensionPattern, VerbTense } from "../db.server/enums";
+import type { NounDeclensionPattern, VerbTense } from "../db.server/enums";
 import type { Case, ConjugationFamily, Gender, GrammaticalNumber } from "../lib/greek-grammar";
 import type { Phrase } from "./phrase";
 
@@ -70,7 +70,7 @@ export interface NounSeed {
 	lemma: string;
 	gender: Gender;
 	english: string;
-	declensionPattern: DeclensionPattern;
+	declensionPattern: NounDeclensionPattern;
 	nominalForms: NounNominalFormsSeed;
 	metadata?: Record<string, unknown>;
 }
