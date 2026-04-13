@@ -3,7 +3,7 @@ import type { Vocabulary } from "@/db.server/types";
 
 export type PatternItem = Vocabulary;
 
-export async function getPatternsData() {
+export async function loader() {
 	const [phraseTags, verbTags] = await Promise.all([
 		getVocabBySlug("phrases", ["phrase"]),
 		getVocabBySlug("verbs", ["verb"]),
@@ -31,4 +31,4 @@ export async function getPatternsData() {
 	};
 }
 
-export type PatternsData = Awaited<ReturnType<typeof getPatternsData>>;
+export type PatternsData = Awaited<ReturnType<typeof loader>>;

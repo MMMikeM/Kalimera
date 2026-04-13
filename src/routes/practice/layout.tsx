@@ -15,7 +15,7 @@ import {
 	getUserById,
 	type PracticeStats,
 	type VocabItemWithSkill,
-} from "./data.server";
+} from "./loader.server";
 
 export function meta() {
 	return [

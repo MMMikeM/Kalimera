@@ -1,7 +1,7 @@
 import { type NavTab, NavTabs } from "@/components/NavTabs";
 
 import type { Route } from "./+types/$tab";
-import { getPatternsData } from "./data.server";
+import { loader as loadPatterns } from "./loader.server";
 import { AdjectivesTab } from "./tabs/adjectives";
 import { CasesTab } from "./tabs/cases";
 import { NounsTab } from "./tabs/nouns";
@@ -41,7 +41,7 @@ export async function loader({ params }: Route.LoaderArgs) {
 	}
 
 	// Only load patterns data when on patterns tab
-	const patterns = tab === "patterns" ? await getPatternsData() : null;
+	const patterns = tab === "patterns" ? await loadPatterns() : null;
 
 	return { tab: tab as TabId, patterns };
 }

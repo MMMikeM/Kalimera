@@ -1,7 +1,7 @@
 import { hasNumericValue, hasTimeRange } from "@/db.server/metadata";
 import { getVocabBySlug } from "@/db.server/queries/vocabulary-sections";
 
-export async function getEssentialsData() {
+export async function loader() {
 	const tags = await getVocabBySlug("reference", ["noun", "adverb", "adjective"]);
 	const reference = Object.fromEntries(
 		tags.map(t => [t.slug, t.vocabularyTags.map(vt => vt.vocabulary).filter(v => v !== null)])
@@ -26,4 +26,4 @@ export async function getEssentialsData() {
 	};
 }
 
-export type EssentialsLoaderData = Awaited<ReturnType<typeof getEssentialsData>>;
+export type EssentialsLoaderData = Awaited<ReturnType<typeof loader>>;

@@ -22,7 +22,7 @@ export default [
 			route("nouns", "routes/practice/vocab/nouns.tsx"),
 		]),
 		...prefix("grammar", [index("routes/practice/grammar/index.tsx")]),
-		route("memory", "routes/practice/memory/layout.tsx", [
+		...prefix("memory", [
 			index("routes/practice/memory/index.tsx"),
 			route("articles", "routes/practice/memory/articles.tsx"),
 			route("pronouns", "routes/practice/memory/pronouns.tsx"),
@@ -33,7 +33,7 @@ export default [
 	]),
 
 	// Learn - content exploration (conversations, phrases, vocabulary)
-	route("learn", "routes/learn/layout.tsx", [
+	...prefix("learn", [
 		index("routes/learn/index.tsx"),
 		route("conversations", "routes/learn/conversations/layout.tsx", [
 			index("routes/learn/conversations/index.tsx"),
@@ -53,7 +53,7 @@ export default [
 	]),
 
 	// Reference - grammar lookup
-	route("reference", "routes/reference/layout.tsx", [
+	...prefix("reference", [
 		index("routes/reference/index.tsx"),
 		route(":tab", "routes/reference/$tab.tsx"),
 	]),

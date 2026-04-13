@@ -2,7 +2,7 @@ import type React from "react";
 import { useCallback, useMemo } from "react";
 import { useFetcher } from "react-router";
 
-import type { VocabItemWithSkill } from "../data.server";
+import type { VocabItemWithSkill } from "../loader.server";
 import { useCurrentUserId } from "../hooks";
 import UnifiedDrill, { type UnifiedAttemptResult, type UnifiedQuestion } from "./unified-drill";
 
@@ -47,10 +47,19 @@ const EMPTY_STATE_THEME: Record<ColorVariant, { border: string; bg: string; text
 	ocean: { border: "border-ocean-300", bg: "bg-ocean-100", text: "text-ocean-text" },
 	olive: { border: "border-olive-300", bg: "bg-olive-100", text: "text-olive-text" },
 	honey: { border: "border-honey-300", bg: "bg-honey-100", text: "text-honey-text" },
-	terracotta: { border: "border-terracotta-300", bg: "bg-terracotta-100", text: "text-terracotta-text" },
+	terracotta: {
+		border: "border-terracotta-300",
+		bg: "bg-terracotta-100",
+		text: "text-terracotta-text",
+	},
 };
 
-const SrsDrill: React.FC<SrsDrillProps> = ({ variant, items, streakDays, themeColor = "ocean" }) => {
+const SrsDrill: React.FC<SrsDrillProps> = ({
+	variant,
+	items,
+	streakDays,
+	themeColor = "ocean",
+}) => {
 	const config = VARIANT_CONFIG[variant];
 	const userId = useCurrentUserId();
 	const fetcher = useFetcher();
