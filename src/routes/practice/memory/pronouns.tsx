@@ -1,5 +1,5 @@
-import { GENDER_STYLE, PERSON_LABELS } from "./drill-constants";
 import { PersonNumberGenderDrill } from "./components/PersonNumberGenderDrill";
+import { GENDER_STYLE, PERSON_LABELS } from "./drill-constants";
 
 type Person = "first" | "second" | "third";
 type Gender = "masculine" | "feminine" | "neuter";

@@ -26,7 +26,9 @@ type Person = "first" | "second" | "third";
 type Gender = "masculine" | "feminine" | "neuter";
 type Num = "singular" | "plural";
 
-interface PersonNumberGenderDrillProps<T extends DrillForm & { person: Person; number: Num; gender?: Gender }> {
+interface PersonNumberGenderDrillProps<
+	T extends DrillForm & { person: Person; number: Num; gender?: Gender },
+> {
 	forms: T[];
 	englishMap: Record<string, string>;
 	paradigmRows: { label: string; forms: [string, string] }[];
@@ -120,7 +122,7 @@ const ConfigScreen = ({
 );
 
 export function PersonNumberGenderDrill<
-	T extends DrillForm & { person: Person; number: Num; gender?: Gender }
+	T extends DrillForm & { person: Person; number: Num; gender?: Gender },
 >({
 	forms,
 	englishMap,

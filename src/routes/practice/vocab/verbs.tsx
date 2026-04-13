@@ -1,5 +1,5 @@
-import { VocabDrillPage } from "./components/VocabDrillPage";
 import type { UnifiedAttemptResult } from "../components/unified-drill";
+import { VocabDrillPage } from "./components/VocabDrillPage";
 
 export default function VerbsDrill() {
 	return (

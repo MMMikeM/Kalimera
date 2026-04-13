@@ -16,10 +16,10 @@ import {
 	type AgreementParadigm,
 	ARTICLE_AGREEMENT_QUICK_REF,
 } from "@/constants/agreement";
-
-import { CaseTable } from "./CaseTable";
 import { MOVABLE_NU_RULE } from "@/constants/articles";
 import { GENDER_HINTS } from "@/constants/nouns";
+
+import { CaseTable } from "./CaseTable";
 
 // Reusable paradigm table for agreement patterns (streamlined - removed Article column)
 const AgreementParadigmTable: React.FC<{

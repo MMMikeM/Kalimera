@@ -2,7 +2,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { matchPhonetic } from "@/lib/greek-transliteration";
 
-import { GENDER_STYLE } from "./drill-constants";
 import {
 	type Attempt,
 	ConfigShell,
@@ -22,6 +21,7 @@ import {
 	useFocusOnActive,
 	useForwardKeyboard,
 } from "../drill-engine";
+import { GENDER_STYLE } from "./drill-constants";
 
 type Gender = "masculine" | "feminine" | "neuter";
 type Num = "singular" | "plural";
@@ -298,7 +298,9 @@ export default function ContractionsDrill() {
 						<p className="mb-4 text-xs font-medium tracking-[0.18em] text-ocean-text uppercase">
 							to the / at the
 						</p>
-						<p className={`font-serif text-5xl leading-tight ${gs.selectorText}`}>{currentForm.gender}</p>
+						<p className={`font-serif text-5xl leading-tight ${gs.selectorText}`}>
+							{currentForm.gender}
+						</p>
 						<p className="mt-2 text-sm text-muted-foreground">{currentForm.number}</p>
 					</div>
 
