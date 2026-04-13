@@ -13,9 +13,7 @@ export const action = ({ request }: Route.ActionArgs) =>
 		async (userId, body) => {
 			const endpoint = typeof body?.endpoint === "string" ? body.endpoint : null;
 			const keys =
-				body?.keys && typeof body.keys === "object"
-					? (body.keys as Record<string, unknown>)
-					: null;
+				body?.keys && typeof body.keys === "object" ? (body.keys as Record<string, unknown>) : null;
 			const p256dh = typeof keys?.p256dh === "string" ? keys.p256dh : null;
 			const auth = typeof keys?.auth === "string" ? keys.auth : null;
 			if (!endpoint || !p256dh || !auth) {

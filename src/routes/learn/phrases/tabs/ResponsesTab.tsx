@@ -20,7 +20,12 @@ export const ResponsesTab = ({ data }: { data: PhrasesLoaderData }) => {
 				process and keep the conversation natural.
 			</TabHero>
 
-			<PhraseList title="Common Responses" colorScheme="terracotta" phrases={responses} alwaysShow />
+			<PhraseList
+				title="Common Responses"
+				colorScheme="terracotta"
+				phrases={responses}
+				alwaysShow
+			/>
 			<PhraseList title="Social Phrases" colorScheme="olive" phrases={socialPhrases} />
 		</div>
 	);

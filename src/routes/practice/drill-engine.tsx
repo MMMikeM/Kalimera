@@ -128,7 +128,9 @@ export const SummaryScreen = <T extends DrillForm>({
 			if (!existing || a.timeTaken > existing.timeTaken) incorrectByForm.set(a.form.id, a);
 		}
 	}
-	const mistakes = [...incorrectByForm.values()].sort((a, b) => b.timeTaken - a.timeTaken).slice(0, 5);
+	const mistakes = [...incorrectByForm.values()]
+		.sort((a, b) => b.timeTaken - a.timeTaken)
+		.slice(0, 5);
 
 	return (
 		<div className="max-w-xs px-6 py-8">
@@ -152,7 +154,10 @@ export const SummaryScreen = <T extends DrillForm>({
 					</p>
 					<div className="space-y-2">
 						{mistakes.map((a) => (
-							<div key={a.form.id} className="flex items-baseline gap-3 rounded-lg border bg-white p-3">
+							<div
+								key={a.form.id}
+								className="flex items-baseline gap-3 rounded-lg border bg-white p-3"
+							>
 								<span lang="el" className="greek-text w-10 text-lg text-foreground">
 									{a.form.greek}
 								</span>

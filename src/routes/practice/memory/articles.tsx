@@ -2,7 +2,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { matchPhonetic } from "@/lib/greek-transliteration";
 
-import { GENDER_STYLE } from "./drill-constants";
 import {
 	type Attempt,
 	ConfigShell,
@@ -22,6 +21,7 @@ import {
 	useFocusOnActive,
 	useForwardKeyboard,
 } from "../drill-engine";
+import { GENDER_STYLE } from "./drill-constants";
 
 type ArticleCase = "nominative" | "accusative" | "genitive";
 type Gender = "masculine" | "feminine" | "neuter";
@@ -437,7 +437,9 @@ export default function MemoryDrill() {
 			{mode === "forward" ? (
 				<>
 					<div>
-						<p className={`mb-4 text-xs font-medium tracking-[0.18em] uppercase ${gs.selectorText}`}>
+						<p
+							className={`mb-4 text-xs font-medium tracking-[0.18em] uppercase ${gs.selectorText}`}
+						>
 							{currentArticle.gender}
 						</p>
 						<p className="font-serif text-5xl leading-tight text-foreground">
