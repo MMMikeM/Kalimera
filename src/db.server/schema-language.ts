@@ -20,7 +20,7 @@ import {
 	string,
 } from "./columns";
 import {
-	declensionPatterns,
+	nounDeclensionPatterns,
 	displaySections,
 	genders,
 	grammaticalCases,
@@ -53,7 +53,7 @@ export const vocabulary = sqliteTable(
 export const nounDetails = sqliteTable("noun_details", {
 	vocabId: cascadeFk("vocab_id", () => vocabulary.id).primaryKey(),
 	gender: oneOf("gender", genders),
-	declensionPattern: nullableOneOf("declension_pattern", declensionPatterns),
+	declensionPattern: oneOf("declension_pattern", nounDeclensionPatterns),
 });
 
 // Sparse inflected forms. `gender` stays null for nouns (lexical gender is on noun_details).

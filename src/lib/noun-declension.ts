@@ -1,5 +1,5 @@
 import { AGREEMENT_PARADIGMS } from "@/constants/agreement";
-import type { DeclensionPattern } from "@/db.server/enums";
+import type { NounDeclensionPattern } from "@/db.server/enums";
 
 export type Case = "nominative" | "accusative" | "genitive";
 export type Number = "singular" | "plural";
@@ -18,7 +18,7 @@ const CASE_MAP = {
 	genitive: "Gen",
 } as const;
 
-const getStemFromLemma = (lemma: string, pattern: DeclensionPattern): string => {
+const getStemFromLemma = (lemma: string, pattern: NounDeclensionPattern): string => {
 	switch (pattern) {
 		case "masc-os":
 			return lemma.slice(0, -2); // Remove -ος
@@ -71,7 +71,7 @@ type ParadigmForms = (typeof AGREEMENT_PARADIGMS)[0]["forms"];
 
 const _declineNounForms = (
 	lemma: string,
-	pattern: DeclensionPattern,
+	pattern: NounDeclensionPattern,
 	getForms: (paradigm: (typeof AGREEMENT_PARADIGMS)[0]) => ParadigmForms,
 	number: "singular" | "plural",
 ): DeclinedForm[] => {
@@ -105,13 +105,13 @@ const _declineNounForms = (
 	return forms;
 };
 
-const declineNounSingular = (lemma: string, pattern: DeclensionPattern): DeclinedForm[] =>
+const declineNounSingular = (lemma: string, pattern: NounDeclensionPattern): DeclinedForm[] =>
 	_declineNounForms(lemma, pattern, (p) => p.forms, "singular");
 
-const declineNounPlural = (lemma: string, pattern: DeclensionPattern): DeclinedForm[] =>
+const declineNounPlural = (lemma: string, pattern: NounDeclensionPattern): DeclinedForm[] =>
 	_declineNounForms(lemma, pattern, (p) => p.pluralForms, "plural");
 
-export const declineNoun = (lemma: string, pattern: DeclensionPattern): DeclinedForm[] => {
+export const declineNoun = (lemma: string, pattern: NounDeclensionPattern): DeclinedForm[] => {
 	const singularForms = declineNounSingular(lemma, pattern);
 	const pluralForms = declineNounPlural(lemma, pattern);
 
@@ -120,7 +120,7 @@ export const declineNoun = (lemma: string, pattern: DeclensionPattern): Declined
 
 export const getNounForm = (
 	lemma: string,
-	pattern: DeclensionPattern,
+	pattern: NounDeclensionPattern,
 	grammaticalCase: Case,
 	number: Number,
 ): DeclinedForm | undefined => {

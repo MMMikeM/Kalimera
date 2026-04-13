@@ -2,11 +2,11 @@ import { sql } from "drizzle-orm";
 
 import { db } from "../db.server";
 import {
-	declensionPatterns,
+	nounDeclensionPatterns,
 	genders,
 	grammaticalCases,
 	grammaticalNumbers,
-	type DeclensionPattern,
+	type NounDeclensionPattern,
 	type Gender,
 	type GrammaticalCase,
 	type GrammaticalNumber,
@@ -52,8 +52,8 @@ export type SeedAccumulators = {
 	allNominalForms: NewNominalForm[];
 };
 
-export const isDeclensionPattern = (value: unknown): value is DeclensionPattern =>
-	typeof value === "string" && (declensionPatterns as readonly string[]).includes(value);
+export const isNounDeclensionPattern = (value: unknown): value is NounDeclensionPattern =>
+	typeof value === "string" && (nounDeclensionPatterns as readonly string[]).includes(value);
 
 const isGrammaticalCase = (value: string): value is GrammaticalCase =>
 	(grammaticalCases as readonly string[]).includes(value);
@@ -87,10 +87,7 @@ const parseAdjectiveNominalFormKey = (
 
 export const nounDetailFromSeed = (noun: NounSeed): Omit<NounDetailRecord, "vocabId"> => ({
 	gender: noun.gender,
-	declensionPattern:
-		noun.declensionPattern != null && isDeclensionPattern(noun.declensionPattern)
-			? noun.declensionPattern
-			: null,
+	declensionPattern: noun.declensionPattern,
 });
 
 export const pickNounNominalForms = (
