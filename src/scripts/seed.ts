@@ -11,6 +11,7 @@ import {
 } from "./seed-data";
 import {
 	BATCH_SIZE,
+	batchInsertAdjectiveDetails,
 	batchInsertNounDetails,
 	batchInsertVerbDetails,
 	batchUpsertNominalForms,
@@ -20,6 +21,7 @@ import {
 	type VerbDetailRecord,
 	type VocabWithTags,
 } from "./seed-pipeline";
+import type { NewAdjectiveDetails } from "../db.server/types";
 
 async function seed() {
 	console.log("Seeding database (additive mode with batching)...\n");
@@ -53,6 +55,7 @@ async function seed() {
 	const vocabTagLinks: NewVocabularyTag[] = [];
 	const tagDisplayOrderById = new Map<number, number>();
 	const allNounDetails: NounDetailRecord[] = [];
+	const allAdjectiveDetails: NewAdjectiveDetails[] = [];
 	const allNominalForms: NewNominalForm[] = [];
 
 	const ctx: SeedAccumulators = {
@@ -60,6 +63,7 @@ async function seed() {
 		vocabTagLinks,
 		tagDisplayOrderById,
 		allNounDetails,
+		allAdjectiveDetails,
 		allNominalForms,
 	};
 
@@ -75,6 +79,9 @@ async function seed() {
 
 	console.log(`\nInserting ${allNounDetails.length} noun details...`);
 	await batchInsertNounDetails(allNounDetails);
+
+	console.log(`\nInserting ${allAdjectiveDetails.length} adjective details...`);
+	await batchInsertAdjectiveDetails(allAdjectiveDetails);
 
 	console.log(`\nUpserting ${allNominalForms.length} nominal forms...`);
 	await batchUpsertNominalForms(allNominalForms);

@@ -1,4 +1,4 @@
-import { pickAdjectiveNominalForms, type VocabWithTags } from "../../seed-pipeline";
+import { pickAdjectiveDetails, pickAdjectiveNominalForms, type VocabWithTags } from "../../seed-pipeline";
 import { enrichAdjective, type AdjectiveSeedInput } from "./adjective-seed-enrichment";
 
 const COLORS_RAW: AdjectiveSeedInput[] = [
@@ -47,6 +47,7 @@ export const COLOR_ITEMS: VocabWithTags[] = COLORS.map((color) => ({
 	},
 	tags: ["color"],
 	...pickAdjectiveNominalForms(color),
+	...pickAdjectiveDetails(color),
 }));
 
 export const ADJECTIVE_ITEMS: VocabWithTags[] = ADJECTIVES.map((adj) => ({
@@ -57,4 +58,5 @@ export const ADJECTIVE_ITEMS: VocabWithTags[] = ADJECTIVES.map((adj) => ({
 	},
 	tags: [],
 	...pickAdjectiveNominalForms(adj),
+	...pickAdjectiveDetails(adj),
 }));

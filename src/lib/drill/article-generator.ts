@@ -8,36 +8,36 @@ const ARTICLE_DRILL_NOUNS: Array<{
 	pattern: NounDeclensionPattern;
 	english: string;
 }> = [
-	// Masculine -ος
-	{ lemma: "φίλος", pattern: "masc-os", english: "friend" },
-	{ lemma: "άνθρωπος", pattern: "masc-os", english: "person" },
-	{ lemma: "αδερφός", pattern: "masc-os", english: "brother" },
-	{ lemma: "δρόμος", pattern: "masc-os", english: "street" },
-	{ lemma: "κόσμος", pattern: "masc-os", english: "world" },
-	// Masculine -ας
-	{ lemma: "πατέρας", pattern: "masc-as", english: "father" },
-	{ lemma: "άντρας", pattern: "masc-as", english: "man" },
-	// Masculine -ης
-	{ lemma: "μαθητής", pattern: "masc-is", english: "student" },
-	// Masculine -ές
-	{ lemma: "καφές", pattern: "masc-es", english: "coffee" },
-	// Feminine -α
-	{ lemma: "μητέρα", pattern: "fem-a", english: "mother" },
-	{ lemma: "γυναίκα", pattern: "fem-a", english: "woman" },
-	{ lemma: "πόρτα", pattern: "fem-a", english: "door" },
-	{ lemma: "ώρα", pattern: "fem-a", english: "hour" },
-	{ lemma: "θάλασσα", pattern: "fem-a", english: "sea" },
-	// Feminine -η
-	{ lemma: "αδερφή", pattern: "fem-i", english: "sister" },
-	// Neuter -ο
-	{ lemma: "βιβλίο", pattern: "neut-o", english: "book" },
-	// Neuter -ι
-	{ lemma: "παιδί", pattern: "neut-i", english: "child" },
-	{ lemma: "σπίτι", pattern: "neut-i", english: "house" },
-	// Neuter -μα
-	{ lemma: "όνομα", pattern: "neut-ma", english: "name" },
-	{ lemma: "γράμμα", pattern: "neut-ma", english: "letter" },
-];
+		// Masculine -ος
+		{ lemma: "φίλος", pattern: "masc-os", english: "friend" },
+		{ lemma: "άνθρωπος", pattern: "masc-os", english: "person" },
+		{ lemma: "αδερφός", pattern: "masc-os", english: "brother" },
+		{ lemma: "δρόμος", pattern: "masc-os", english: "street" },
+		{ lemma: "κόσμος", pattern: "masc-os", english: "world" },
+		// Masculine -ας
+		{ lemma: "πατέρας", pattern: "masc-as", english: "father" },
+		{ lemma: "άντρας", pattern: "masc-as", english: "man" },
+		// Masculine -ης
+		{ lemma: "μαθητής", pattern: "masc-is", english: "student" },
+		// Masculine -ές
+		{ lemma: "καφές", pattern: "masc-es", english: "coffee" },
+		// Feminine -α
+		{ lemma: "μητέρα", pattern: "fem-a", english: "mother" },
+		{ lemma: "γυναίκα", pattern: "fem-a", english: "woman" },
+		{ lemma: "πόρτα", pattern: "fem-a", english: "door" },
+		{ lemma: "ώρα", pattern: "fem-a", english: "hour" },
+		{ lemma: "θάλασσα", pattern: "fem-a", english: "sea" },
+		// Feminine -η
+		{ lemma: "αδερφή", pattern: "fem-i", english: "sister" },
+		// Neuter -ο
+		{ lemma: "βιβλίο", pattern: "neut-o", english: "book" },
+		// Neuter -ι
+		{ lemma: "παιδί", pattern: "neut-i", english: "child" },
+		{ lemma: "σπίτι", pattern: "neut-i", english: "house" },
+		// Neuter -μα
+		{ lemma: "όνομα", pattern: "neut-ma", english: "name" },
+		{ lemma: "γράμμα", pattern: "neut-ma", english: "letter" },
+	];
 
 export const generateArticleQuestions = (): DrillQuestion[] => {
 	const questions: DrillQuestion[] = [];

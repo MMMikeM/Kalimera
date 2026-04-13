@@ -11,8 +11,9 @@ import {
 	type GrammaticalCase,
 	type GrammaticalNumber,
 } from "../db.server/enums";
-import { nominalForms, nounDetails, verbDetails, vocabulary } from "../db.server/schema";
+import { adjectiveDetails, nominalForms, nounDetails, verbDetails, vocabulary } from "../db.server/schema";
 import type {
+	NewAdjectiveDetails,
 	NewNounDetails,
 	NewNominalForm,
 	NewVocabulary,
@@ -41,6 +42,7 @@ export type VocabWithTags = {
 	verbDetail?: { conjugationFamily: string };
 	nounNominalForms?: NounNominalFormsSeed;
 	adjectiveNominalForms?: AdjectiveNominalFormsSeed;
+	adjectivePattern?: NewAdjectiveDetails["pattern"];
 };
 
 /** Shared mutable state while seeding one database pass. */
@@ -49,10 +51,11 @@ export type SeedAccumulators = {
 	vocabTagLinks: NewVocabularyTag[];
 	tagDisplayOrderById: Map<number, number>;
 	allNounDetails: NounDetailRecord[];
+	allAdjectiveDetails: NewAdjectiveDetails[];
 	allNominalForms: NewNominalForm[];
 };
 
-export const isNounDeclensionPattern = (value: unknown): value is NounDeclensionPattern =>
+export const isDeclensionPattern = (value: unknown): value is NounDeclensionPattern =>
 	typeof value === "string" && (nounDeclensionPatterns as readonly string[]).includes(value);
 
 const isGrammaticalCase = (value: string): value is GrammaticalCase =>
@@ -99,6 +102,10 @@ export const pickAdjectiveNominalForms = (
 	adj: AdjectiveSeed,
 ): Pick<VocabWithTags, "adjectiveNominalForms"> | Record<string, never> =>
 	adj.nominalForms != null ? { adjectiveNominalForms: adj.nominalForms } : {};
+
+export const pickAdjectiveDetails = (
+	adj: AdjectiveSeed,
+): Pick<VocabWithTags, "adjectivePattern"> => ({ adjectivePattern: adj.pattern });
 
 const rowsFromNounNominalForms = (
 	vocabId: number,
@@ -214,6 +221,21 @@ export async function batchInsertNounDetails(details: NounDetailRecord[]) {
 	}
 }
 
+export async function batchInsertAdjectiveDetails(details: NewAdjectiveDetails[]) {
+	if (details.length === 0) return;
+
+	for (let i = 0; i < details.length; i += BATCH_SIZE) {
+		const batch = details.slice(i, i + BATCH_SIZE);
+		await db
+			.insert(adjectiveDetails)
+			.values(batch)
+			.onConflictDoUpdate({
+				target: adjectiveDetails.vocabId,
+				set: { pattern: sql`excluded.pattern` },
+			});
+	}
+}
+
 export async function batchUpsertNominalForms(rows: NewNominalForm[]) {
 	if (rows.length === 0) return;
 
@@ -288,6 +310,9 @@ async function processCategory(
 			ctx.allNominalForms.push(
 				...rowsFromAdjectiveNominalForms(vocabId, item.adjectiveNominalForms),
 			);
+		}
+		if (item.adjectivePattern) {
+			ctx.allAdjectiveDetails.push({ vocabId, pattern: item.adjectivePattern });
 		}
 	}
 

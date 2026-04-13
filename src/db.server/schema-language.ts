@@ -20,7 +20,6 @@ import {
 	string,
 } from "./columns";
 import {
-	adjectiveDeclensionPatterns,
 	nounDeclensionPatterns,
 	displaySections,
 	genders,
@@ -30,6 +29,7 @@ import {
 	personNumbers,
 	verbTenses,
 	wordTypes,
+	adjectiveDeclensionPatterns,
 } from "./enums";
 import type { VocabMetadata } from "./metadata";
 
@@ -56,6 +56,7 @@ export const nounDetails = sqliteTable("noun_details", {
 	gender: oneOf("gender", genders),
 	declensionPattern: oneOf("declension_pattern", nounDeclensionPatterns),
 });
+
 
 export const adjectiveDetails = sqliteTable("adjective_details", {
 	vocabId: cascadeFk("vocab_id", () => vocabulary.id).primaryKey(),

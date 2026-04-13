@@ -28,7 +28,7 @@ const DECLENSION_BY_LEMMA: Record<string, NounDeclensionPattern> = {
 	ψώνια: "neut-o",
 };
 
-export function inferNounDeclensionPattern(lemma: string, gender: Gender): NounDeclensionPattern {
+export function inferDeclensionPattern(lemma: string, gender: Gender): NounDeclensionPattern {
 	const override = DECLENSION_BY_LEMMA[lemma];
 	if (override) return override;
 
@@ -54,7 +54,7 @@ export function inferNounDeclensionPattern(lemma: string, gender: Gender): NounD
 	return "masc-os";
 }
 
-function coerceNounDeclensionPattern(
+function coerceDeclensionPattern(
 	value: string | undefined,
 	lemma: string,
 	gender: Gender,
@@ -71,7 +71,7 @@ function coerceNounDeclensionPattern(
 		);
 	}
 
-	return inferNounDeclensionPattern(lemma, gender);
+	return inferDeclensionPattern(lemma, gender);
 }
 
 function baselineNounForms(lemma: string, gender: Gender): NounNominalFormsSeed {
@@ -85,7 +85,7 @@ function baselineNounForms(lemma: string, gender: Gender): NounNominalFormsSeed 
 }
 
 export function enrichNoun(input: NounSeedInput): NounSeed {
-	const pattern = coerceNounDeclensionPattern(
+	const pattern = coerceDeclensionPattern(
 		input.declensionPattern,
 		input.lemma,
 		input.gender,
