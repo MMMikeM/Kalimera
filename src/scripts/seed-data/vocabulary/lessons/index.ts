@@ -4,6 +4,7 @@
 import { formatNounWithArticle } from "../../../../lib/greek-grammar";
 import {
 	nounDetailFromSeed,
+	pickAdjectiveDetails,
 	pickAdjectiveNominalForms,
 	pickNounNominalForms,
 	type VocabWithTags,
@@ -170,6 +171,7 @@ function buildLessonSeedCategories(): Array<{ name: string; items: VocabWithTags
 				},
 				tags: [lessonTag],
 				...pickAdjectiveNominalForms(adj),
+				...pickAdjectiveDetails(adj),
 			});
 		}
 

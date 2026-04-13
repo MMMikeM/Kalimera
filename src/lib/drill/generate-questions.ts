@@ -130,15 +130,15 @@ const generateNounQuestions = (): DrillQuestion[] => {
 		pattern: NounDeclensionPattern;
 		english: string;
 	}> = [
-		{ lemma: "φίλος", pattern: "masc-os", english: "friend" },
-		{ lemma: "καφές", pattern: "masc-es", english: "coffee" },
-		{ lemma: "γυναίκα", pattern: "fem-a", english: "woman" },
-		{ lemma: "παιδί", pattern: "neut-i", english: "child" },
-		{ lemma: "βιβλίο", pattern: "neut-o", english: "book" },
-		{ lemma: "σπίτι", pattern: "neut-i", english: "house" },
-		{ lemma: "πατέρας", pattern: "masc-as", english: "father" },
-		{ lemma: "μητέρα", pattern: "fem-a", english: "mother" },
-	];
+			{ lemma: "φίλος", pattern: "masc-os", english: "friend" },
+			{ lemma: "καφές", pattern: "masc-es", english: "coffee" },
+			{ lemma: "γυναίκα", pattern: "fem-a", english: "woman" },
+			{ lemma: "παιδί", pattern: "neut-i", english: "child" },
+			{ lemma: "βιβλίο", pattern: "neut-o", english: "book" },
+			{ lemma: "σπίτι", pattern: "neut-i", english: "house" },
+			{ lemma: "πατέρας", pattern: "masc-as", english: "father" },
+			{ lemma: "μητέρα", pattern: "fem-a", english: "mother" },
+		];
 
 	for (const noun of nouns) {
 		const forms = declineNoun(noun.lemma, noun.pattern);

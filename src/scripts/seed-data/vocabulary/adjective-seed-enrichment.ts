@@ -1,9 +1,11 @@
+import type { AdjectiveDeclensionPattern } from "../../../db.server/enums";
 import type { AdjectiveNominalFormsSeed, AdjectiveSeed } from "../../../types/seed";
 
-/** Lean adjective row; enrichment supplies nominal forms when omitted. */
+/** Lean adjective row; enrichment supplies pattern and nominal forms when omitted. */
 export type AdjectiveSeedInput = {
 	lemma: string;
 	english: string;
+	pattern?: AdjectiveDeclensionPattern;
 	nominalForms?: AdjectiveNominalFormsSeed;
 };
 
@@ -49,6 +51,27 @@ const CITED_ADJECTIVE_FORMS: Record<string, { m: string; f: string; n: string }>
 	πρώτος: { m: "πρώτος", f: "πρώτη", n: "πρώτο" },
 };
 
+const VOWELS = /[αειουάέίόύήώ]$/i;
+
+function inferAdjectivePattern(lemma: string): AdjectiveDeclensionPattern {
+	if (INDECLINABLE_ADJECTIVES.has(lemma)) return "indeclinable";
+	if (lemma.endsWith("ής") || lemma.endsWith("ης")) return "is-is-es";
+	if (lemma.endsWith("ύς") || lemma.endsWith("υς")) return "us-ia-u";
+
+	if (lemma.endsWith("ος") || lemma.endsWith("ός")) {
+		const cited = CITED_ADJECTIVE_FORMS[lemma];
+		if (cited) {
+			const f = cited.f;
+			if (f.endsWith("α") || f.endsWith("ά") || f.endsWith("ια")) return "os-ia-o";
+		}
+		const stem = lemma.slice(0, -2);
+		if (VOWELS.test(stem)) return "os-ia-o";
+		return "os-i-o";
+	}
+
+	return "os-i-o";
+}
+
 function inferAdjectiveNominalForms(lemma: string): AdjectiveNominalFormsSeed {
 	if (INDECLINABLE_ADJECTIVES.has(lemma)) {
 		return triForms(lemma, lemma, lemma);
@@ -70,10 +93,11 @@ function inferAdjectiveNominalForms(lemma: string): AdjectiveNominalFormsSeed {
 		};
 	}
 
-	// Typical -ος / -ή / -ό adjectives not in the table (best-effort)
+	// Typical -ος adjectives not in the table (best-effort)
 	if (lemma.endsWith("ος") || lemma.endsWith("ός")) {
 		const stem = lemma.slice(0, -2);
-		return triForms(lemma, `${stem}ή`, `${stem}ό`);
+		const fem = inferAdjectivePattern(lemma) === "os-ia-o" ? `${stem}α` : `${stem}ή`;
+		return triForms(lemma, fem, `${stem}ό`);
 	}
 
 	return {
@@ -85,6 +109,7 @@ export function enrichAdjective(input: AdjectiveSeedInput): AdjectiveSeed {
 	return {
 		lemma: input.lemma,
 		english: input.english,
+		pattern: input.pattern ?? inferAdjectivePattern(input.lemma),
 		nominalForms: input.nominalForms ?? inferAdjectiveNominalForms(input.lemma),
 	};
 }
