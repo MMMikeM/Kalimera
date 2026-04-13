@@ -1,4 +1,5 @@
 import type {
+	adjectiveDetails,
 	milestonesAchieved,
 	nominalForms,
 	nounDetails,
@@ -37,6 +38,7 @@ export type MilestoneAchieved = typeof milestonesAchieved.$inferSelect;
 export type NewUser = typeof users.$inferInsert;
 export type NewVocabulary = typeof vocabulary.$inferInsert;
 export type NewNounDetails = typeof nounDetails.$inferInsert;
+export type NewAdjectiveDetails = typeof adjectiveDetails.$inferInsert;
 export type NewNominalForm = typeof nominalForms.$inferInsert;
 export type NewTag = typeof tags.$inferInsert;
 export type NewVocabularyTag = typeof vocabularyTags.$inferInsert;

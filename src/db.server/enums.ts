@@ -70,6 +70,16 @@ export const nounDeclensionPatterns = [
 ] as const;
 export type NounDeclensionPattern = (typeof nounDeclensionPatterns)[number];
 
+// Declension patterns for Greek adjectives
+export const adjectiveDeclensionPatterns = [
+	"us-ia-u",
+	"os-i-o", // καλός/καλή/καλό
+	"os-ia-o", // ωραίος/ωραία/ωραίο
+	"is-is-es", // διεθνής/διεθνής/διεθνές
+	"indeclinable", // μπλε, καφέ
+] as const;
+export type AdjectiveDeclensionPattern = (typeof adjectiveDeclensionPatterns)[number];
+
 // Auth challenge types for WebAuthn flow
 export const challengeTypes = ["registration", "authentication"] as const;
 export type ChallengeType = (typeof challengeTypes)[number];
