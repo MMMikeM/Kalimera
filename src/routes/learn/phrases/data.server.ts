@@ -1,23 +1,21 @@
-import {
-	fetchPhrases,
-	fetchReference,
-	fetchVerbsBySection,
-} from "@/db.server/queries/vocabulary-sections";
+import { getVocabBySlug } from "@/db.server/queries/vocabulary-sections";
 import type { Vocabulary } from "@/db.server/types";
-import { groupBySlug } from "@/lib/group-by-slug";
 
 export type PhraseItem = Vocabulary;
 
 export async function getPhrasesData() {
-	const [phraseRows, referenceRows, verbRows] = await Promise.all([
-		fetchPhrases(),
-		fetchReference(),
-		fetchVerbsBySection(),
+	const [phraseTags, referenceTags, verbTags] = await Promise.all([
+		getVocabBySlug("phrases", ["phrase"]),
+		getVocabBySlug("reference", ["noun", "adverb", "adjective"]),
+		getVocabBySlug("verbs", ["verb"]),
 	]);
 
-	const phrases = groupBySlug(phraseRows);
-	const reference = groupBySlug(referenceRows);
-	const verbs = groupBySlug(verbRows);
+	const toSlugMap = (tags: typeof phraseTags) =>
+		Object.fromEntries(tags.map(t => [t.slug, t.vocabularyTags.map(vt => vt.vocabulary).filter(v => v !== null)]));
+
+	const phrases = toSlugMap(phraseTags);
+	const reference = toSlugMap(referenceTags);
+	const verbs = toSlugMap(verbTags);
 
 	return {
 		survival: {
