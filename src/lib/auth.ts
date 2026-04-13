@@ -29,17 +29,15 @@ type WebAuthnConfig = {
 };
 
 export const createWebAuthnFromRequest = (request: Request) => {
-	const url = new URL(request.url);
+	const { hostname, origin } = new URL(request.url);
 	return createWebAuthn({
 		rpName: "Greek Learning",
-		rpID: url.hostname,
-		origin: url.origin,
+		rpID: hostname,
+		origin: origin,
 	});
 };
 
-export const createWebAuthn = (config: WebAuthnConfig) => {
-	const { rpName, rpID, origin } = config;
-
+export const createWebAuthn = ({ rpName, rpID, origin }: WebAuthnConfig) => {
 	return {
 		generateRegistrationOptions: async (userId: number, userName: string) => {
 			const existingCredentials = await findPasskeysByUserId(userId);
@@ -88,27 +86,32 @@ export const createWebAuthn = (config: WebAuthnConfig) => {
 				throw new Error("Registration verification failed");
 			}
 
-			const { credential, credentialDeviceType, credentialBackedUp } =
-				verification.registrationInfo;
+			const {
+				credential: { publicKey, counter },
+			} = verification.registrationInfo;
+
+			const deviceType = verification.registrationInfo.credentialDeviceType;
+			const backedUp = verification.registrationInfo.credentialBackedUp;
+			const credentialId = verification.registrationInfo.credential.id;
 
 			await createPasskey({
 				userId,
-				credentialId: credential.id,
-				publicKey: isoBase64URL.fromBuffer(credential.publicKey),
-				counter: credential.counter,
+				credentialId,
+				deviceType,
+				backedUp,
+				publicKey: isoBase64URL.fromBuffer(publicKey),
+				counter: counter,
 				transports: (response.response.transports as AuthenticatorTransport[]) ?? null,
-				deviceType: credentialDeviceType,
-				backedUp: credentialBackedUp,
-				name: credentialDeviceType === "singleDevice" ? "Security Key" : "Passkey",
+				name: deviceType === "singleDevice" ? "Security Key" : "Passkey",
 			});
 
 			await deleteChallenge(expectedChallenge);
 
 			return {
 				verified: true,
-				credentialId: credential.id,
-				deviceType: credentialDeviceType,
-				backedUp: credentialBackedUp,
+				credentialId,
+				deviceType,
+				backedUp,
 			};
 		},
 
