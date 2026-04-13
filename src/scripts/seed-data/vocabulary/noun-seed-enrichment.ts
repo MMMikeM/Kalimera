@@ -1,5 +1,5 @@
-import type { DeclensionPattern } from "../../../db.server/enums";
-import { declensionPatterns } from "../../../db.server/enums";
+import type { NounDeclensionPattern } from "../../../db.server/enums";
+import { nounDeclensionPatterns } from "../../../db.server/enums";
 import {
 	getArticle,
 	type Case,
@@ -16,19 +16,19 @@ export type NounSeedInput = {
 	gender: Gender;
 	english: string;
 	metadata?: Record<string, unknown>;
-	declensionPattern?: DeclensionPattern;
+	declensionPattern?: NounDeclensionPattern;
 	/** Merged over inferred nominative singular baseline. */
 	nominalForms?: Partial<Record<CaseNumberKey, NominalFormCellSeed>>;
 };
 
-const DECLENSION_BY_LEMMA: Record<string, DeclensionPattern> = {
+const DECLENSION_BY_LEMMA: Record<string, NounDeclensionPattern> = {
 	// Pluralia / irregular citation forms
 	διακοπές: "fem-a",
 	ρούχα: "neut-o",
 	ψώνια: "neut-o",
 };
 
-export function inferDeclensionPattern(lemma: string, gender: Gender): DeclensionPattern {
+export function inferDeclensionPattern(lemma: string, gender: Gender): NounDeclensionPattern {
 	const override = DECLENSION_BY_LEMMA[lemma];
 	if (override) return override;
 
@@ -59,10 +59,10 @@ function coerceDeclensionPattern(
 	lemma: string,
 	gender: Gender,
 	english: string,
-): DeclensionPattern {
-	const allowed = declensionPatterns as readonly string[];
+): NounDeclensionPattern {
+	const allowed = nounDeclensionPatterns as readonly string[];
 	if (value != null && allowed.includes(value)) {
-		return value as DeclensionPattern;
+		return value as NounDeclensionPattern;
 	}
 
 	if (value != null) {
