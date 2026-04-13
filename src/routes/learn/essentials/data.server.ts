@@ -1,17 +1,11 @@
 import { hasNumericValue, hasTimeRange } from "@/db.server/metadata";
-import { fetchReference } from "@/db.server/queries/vocabulary-sections";
+import { getVocabBySlug } from "@/db.server/queries/vocabulary-sections";
 
 export async function getEssentialsData() {
-	const rows = await fetchReference();
-
-	// Group by tag slug
-	const reference: Record<string, any[]> = {};
-	for (const row of rows) {
-		const slug = row.tags.slug;
-		const items = reference[slug] ?? [];
-		items.push(row.vocabulary);
-		reference[slug] = items;
-	}
+	const tags = await getVocabBySlug("reference", ["noun", "adverb", "adjective"]);
+	const reference = Object.fromEntries(
+		tags.map(t => [t.slug, t.vocabularyTags.map(vt => vt.vocabulary).filter(v => v !== null)])
+	);
 
 	return {
 		timesOfDay: (reference["time-of-day"] ?? []).map((t) => ({
