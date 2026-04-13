@@ -1,5 +1,6 @@
 export * from "./enums";
 export {
+	adjectiveDetails,
 	nominalForms,
 	nounDetails,
 	tags,
