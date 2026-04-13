@@ -5,11 +5,7 @@ import type { NavTab } from "@/components/NavTabs";
 import { NavTabs } from "@/components/NavTabs";
 
 import type { Route } from "./+types/layout";
-import { getPhrasesData } from "./data.server";
-
-export async function loader() {
-	return getPhrasesData();
-}
+export { loader } from "./loader.server";
 
 export function meta() {
 	return [

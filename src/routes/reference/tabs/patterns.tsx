@@ -6,7 +6,7 @@ import { QuickTest } from "@/components/QuickTest";
 import { TabHero } from "@/components/TabHero";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
-import type { PatternItem, PatternsData } from "../data.server";
+import type { PatternItem, PatternsData } from "../loader.server";
 
 const ParadigmCard = ({
 	title,

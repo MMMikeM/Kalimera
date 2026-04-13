@@ -4,11 +4,9 @@ import { ContentSection } from "@/components/ContentSection";
 import { MonoText } from "@/components/MonoText";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
-import { ExampleList } from "./ExampleList";
-
-import type { EssentialsLoaderData } from "../data.server";
-
+import type { EssentialsLoaderData } from "../loader.server";
 import { EssentialsBackLink } from "./EssentialsBackLink";
+import { ExampleList } from "./ExampleList";
 
 interface Props {
 	data: EssentialsLoaderData;

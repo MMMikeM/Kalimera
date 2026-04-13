@@ -1,7 +1,7 @@
 import { useOutletContext } from "react-router";
 
 import type { Route } from "./+types/$subtab";
-import type { EssentialsLoaderData } from "./data.server";
+import type { EssentialsLoaderData } from "./loader.server";
 import { ColoursSubtab } from "./subtabs/colours";
 import { FrequencySubtab } from "./subtabs/frequency";
 import { NumbersSubtab } from "./subtabs/numbers";
