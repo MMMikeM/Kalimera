@@ -6,7 +6,7 @@ export const LESSON_2024_08_05 = createLesson({
 		source: "Weekly lesson",
 	},
 
-	adverbs: [{ lemma: "μαζί", english: "together" }],
+	adverbs: [{ lemma: "μαζί", english: "together", cefrLevel: "A1" }],
 
 	phrases: [
 		{

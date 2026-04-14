@@ -7,26 +7,29 @@ export const LESSON_2024_07_01 = createLesson({
 	},
 
 	verbs: [
-		{ lemma: "παίρνω", english: "I take", conjugationFamily: "-ω" },
+		{ lemma: "παίρνω", english: "I take", conjugationFamily: "-ω", cefrLevel: "A1" },
 		{
 			lemma: "περνάω",
 			english: "I pass/cross/have fun",
 			conjugationFamily: "-άω/-ώ",
+			cefrLevel: "A1",
 		},
 		{
 			lemma: "ζεσταίνομαι",
 			english: "I feel warm/get hot",
 			conjugationFamily: "-ομαι",
+			cefrLevel: "A2",
 		},
 		{
 			lemma: "κλείνω",
 			english: "I close/turn off/book",
 			conjugationFamily: "-ω",
+			cefrLevel: "A1",
 		},
-		{ lemma: "φτάνω", english: "I arrive", conjugationFamily: "-ω" },
+		{ lemma: "φτάνω", english: "I arrive", conjugationFamily: "-ω", cefrLevel: "A1" },
 	],
 
-	adverbs: [{ lemma: "όμως", english: "though/however" }],
+	adverbs: [{ lemma: "όμως", english: "though/however", cefrLevel: "A2" }],
 
 	phrases: [
 		{

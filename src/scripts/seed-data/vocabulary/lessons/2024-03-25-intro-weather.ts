@@ -9,9 +9,9 @@ export const LESSON_2024_03_25 = createLesson({
 	nouns: [{ lemma: "δόντι", gender: "neuter", english: "tooth" }],
 
 	adjectives: [
-		{ lemma: "κρύος", english: "cold" },
-		{ lemma: "ζεστός", english: "warm/hot" },
-		{ lemma: "κρυωμένος", english: "having a cold" },
+		{ lemma: "κρύος", english: "cold", cefrLevel: "A1" },
+		{ lemma: "ζεστός", english: "warm/hot", cefrLevel: "A1" },
+		{ lemma: "κρυωμένος", english: "having a cold", cefrLevel: "A2" },
 	],
 
 	phrases: [

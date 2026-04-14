@@ -7,10 +7,10 @@ export const LESSON_2024_06_26 = createLesson({
 	},
 
 	verbs: [
-		{ lemma: "ψωνίζω", english: "I shop", conjugationFamily: "-ω" },
-		{ lemma: "κοιμάμαι", english: "I sleep", conjugationFamily: "-άμαι" },
-		{ lemma: "γίνομαι", english: "I become", conjugationFamily: "-ομαι" },
-		{ lemma: "λέω", english: "I say", conjugationFamily: "irregular" },
+		{ lemma: "ψωνίζω", english: "I shop", conjugationFamily: "-ω", cefrLevel: "A1" },
+		{ lemma: "κοιμάμαι", english: "I sleep", conjugationFamily: "-άμαι", cefrLevel: "A1" },
+		{ lemma: "γίνομαι", english: "I become", conjugationFamily: "-ομαι", cefrLevel: "A1" },
+		{ lemma: "λέω", english: "I say", conjugationFamily: "irregular", cefrLevel: "A1" },
 	],
 
 	nouns: [
@@ -20,8 +20,8 @@ export const LESSON_2024_06_26 = createLesson({
 	],
 
 	adverbs: [
-		{ lemma: "μέχρι", english: "until" },
-		{ lemma: "λοιπόν", english: "well/so" },
+		{ lemma: "μέχρι", english: "until", cefrLevel: "A1" },
+		{ lemma: "λοιπόν", english: "well/so", cefrLevel: "A1" },
 	],
 
 	phrases: [

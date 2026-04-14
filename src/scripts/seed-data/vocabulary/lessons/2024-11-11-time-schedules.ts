@@ -7,10 +7,10 @@ export const LESSON_2024_11_11 = createLesson({
 	},
 
 	verbs: [
-		{ lemma: "σχεδιάζω", english: "I plan/sketch", conjugationFamily: "-ω" },
-		{ lemma: "συναντώ", english: "I meet", conjugationFamily: "-άω/-ώ" },
-		{ lemma: "χρησιμοποιώ", english: "I use", conjugationFamily: "-άω/-ώ" },
-		{ lemma: "νομίζω", english: "I think (that)", conjugationFamily: "-ω" },
+		{ lemma: "σχεδιάζω", english: "I plan/sketch", conjugationFamily: "-ω", cefrLevel: "B1" },
+		{ lemma: "συναντώ", english: "I meet", conjugationFamily: "-άω/-ώ", cefrLevel: "A2" },
+		{ lemma: "χρησιμοποιώ", english: "I use", conjugationFamily: "-άω/-ώ", cefrLevel: "B1" },
+		{ lemma: "νομίζω", english: "I think (that)", conjugationFamily: "-ω", cefrLevel: "A1" },
 	],
 
 	nouns: [
@@ -35,15 +35,15 @@ export const LESSON_2024_11_11 = createLesson({
 	],
 
 	adjectives: [
-		{ lemma: "απασχολημένος", english: "busy" },
-		{ lemma: "ελεύθερος", english: "free/single" },
+		{ lemma: "απασχολημένος", english: "busy", cefrLevel: "A2" },
+		{ lemma: "ελεύθερος", english: "free/single", cefrLevel: "A1" },
 	],
 
 	adverbs: [
-		{ lemma: "αύριο", english: "tomorrow" },
-		{ lemma: "νωρίς", english: "early" },
-		{ lemma: "αργά", english: "late" },
-		{ lemma: "χωρίς", english: "without" },
+		{ lemma: "αύριο", english: "tomorrow", cefrLevel: "A1" },
+		{ lemma: "νωρίς", english: "early", cefrLevel: "A1" },
+		{ lemma: "αργά", english: "late", cefrLevel: "A1" },
+		{ lemma: "χωρίς", english: "without", cefrLevel: "A2" },
 	],
 
 	phrases: [

@@ -8,8 +8,8 @@ export const LESSON_2024_12_16 = createLesson({
 	},
 
 	verbs: [
-		{ lemma: "διαβάζω", english: "I read", conjugationFamily: "-ω" },
-		{ lemma: "οδηγώ", english: "I drive", conjugationFamily: "-άω/-ώ" },
+		{ lemma: "διαβάζω", english: "I read", conjugationFamily: "-ω", cefrLevel: "A1" },
+		{ lemma: "οδηγώ", english: "I drive", conjugationFamily: "-άω/-ώ", cefrLevel: "A1" },
 	],
 
 	nouns: [
@@ -47,19 +47,19 @@ export const LESSON_2024_12_16 = createLesson({
 	],
 
 	adjectives: [
-		{ lemma: "στενός", english: "tight/narrow" },
-		{ lemma: "ήσυχος", english: "quiet" },
-		{ lemma: "ψηλός", english: "tall/high" },
-		{ lemma: "κοντός", english: "short" },
-		{ lemma: "κακός", english: "bad" },
-		{ lemma: "δύσκολος", english: "difficult" },
-		{ lemma: "φιλικός", english: "friendly" },
-		{ lemma: "μοσχαρίσιος", english: "beef (adj)" },
+		{ lemma: "στενός", english: "tight/narrow", cefrLevel: "A2" },
+		{ lemma: "ήσυχος", english: "quiet", cefrLevel: "A2" },
+		{ lemma: "ψηλός", english: "tall/high", cefrLevel: "A1" },
+		{ lemma: "κοντός", english: "short", cefrLevel: "A2" },
+		{ lemma: "κακός", english: "bad", cefrLevel: "A1" },
+		{ lemma: "δύσκολος", english: "difficult", cefrLevel: "A2" },
+		{ lemma: "φιλικός", english: "friendly", cefrLevel: "A2" },
+		{ lemma: "μοσχαρίσιος", english: "beef (adj)", cefrLevel: "B1" },
 	],
 
 	adverbs: [
-		{ lemma: "πριν", english: "before" },
-		{ lemma: "μεταξύ", english: "between" },
+		{ lemma: "πριν", english: "before", cefrLevel: "A1" },
+		{ lemma: "μεταξύ", english: "between", cefrLevel: "A2" },
 	],
 
 	phrases: [

@@ -7,12 +7,12 @@ export const LESSON_2024_04_15 = createLesson({
 	},
 
 	verbs: [
-		{ lemma: "ανοίγω", english: "I open/turn on", conjugationFamily: "-ω" },
-		{ lemma: "αρχίζω", english: "I start/begin", conjugationFamily: "-ω" },
-		{ lemma: "τελειώνω", english: "I finish", conjugationFamily: "-ω" },
-		{ lemma: "εκπαιδεύω", english: "I train", conjugationFamily: "-ω" },
-		{ lemma: "μαθαίνω", english: "I learn/teach", conjugationFamily: "-ω" },
-		{ lemma: "μισώ", english: "I hate", conjugationFamily: "-άω/-ώ" },
+		{ lemma: "ανοίγω", english: "I open/turn on", conjugationFamily: "-ω", cefrLevel: "A1" },
+		{ lemma: "αρχίζω", english: "I start/begin", conjugationFamily: "-ω", cefrLevel: "A1" },
+		{ lemma: "τελειώνω", english: "I finish", conjugationFamily: "-ω", cefrLevel: "A1" },
+		{ lemma: "εκπαιδεύω", english: "I train", conjugationFamily: "-ω", cefrLevel: "B1" },
+		{ lemma: "μαθαίνω", english: "I learn/teach", conjugationFamily: "-ω", cefrLevel: "A1" },
+		{ lemma: "μισώ", english: "I hate", conjugationFamily: "-άω/-ώ", cefrLevel: "A1" },
 	],
 
 	nouns: [
@@ -29,7 +29,7 @@ export const LESSON_2024_04_15 = createLesson({
 		{ lemma: "ζώο", gender: "neuter", english: "animal" },
 	],
 
-	adjectives: [{ lemma: "καλύτερος", english: "better/best" }],
+	adjectives: [{ lemma: "καλύτερος", english: "better/best", cefrLevel: "A1" }],
 
 	phrases: [
 		{ text: "κατοικίδια ζώα", english: "domestic animals/pets", metadata: {} },

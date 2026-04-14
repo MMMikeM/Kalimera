@@ -7,11 +7,11 @@ export const LESSON_2024_05_06 = createLesson({
 	},
 
 	verbs: [
-		{ lemma: "ακούω", english: "I listen/hear", conjugationFamily: "-ω" },
-		{ lemma: "διαβάζω", english: "I read", conjugationFamily: "-ω" },
-		{ lemma: "παίζω", english: "I play", conjugationFamily: "-ω" },
-		{ lemma: "χορεύω", english: "I dance", conjugationFamily: "-ω" },
-		{ lemma: "μαγειρεύω", english: "I cook", conjugationFamily: "-ω" },
+		{ lemma: "ακούω", english: "I listen/hear", conjugationFamily: "-ω", cefrLevel: "A1" },
+		{ lemma: "διαβάζω", english: "I read", conjugationFamily: "-ω", cefrLevel: "A1" },
+		{ lemma: "παίζω", english: "I play", conjugationFamily: "-ω", cefrLevel: "A1" },
+		{ lemma: "χορεύω", english: "I dance", conjugationFamily: "-ω", cefrLevel: "A1" },
+		{ lemma: "μαγειρεύω", english: "I cook", conjugationFamily: "-ω", cefrLevel: "A1" },
 	],
 
 	nouns: [

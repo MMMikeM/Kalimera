@@ -7,9 +7,9 @@ export const LESSON_2024_12_30 = createLesson({
 	},
 
 	verbs: [
-		{ lemma: "μπαίνω", english: "I enter/get in", conjugationFamily: "-ω" },
-		{ lemma: "βγαίνω", english: "I exit/get out", conjugationFamily: "-ω" },
-		{ lemma: "παίζω", english: "I play", conjugationFamily: "-ω" },
+		{ lemma: "μπαίνω", english: "I enter/get in", conjugationFamily: "-ω", cefrLevel: "A1" },
+		{ lemma: "βγαίνω", english: "I exit/get out", conjugationFamily: "-ω", cefrLevel: "A1" },
+		{ lemma: "παίζω", english: "I play", conjugationFamily: "-ω", cefrLevel: "A1" },
 	],
 
 	nouns: [
@@ -49,20 +49,20 @@ export const LESSON_2024_12_30 = createLesson({
 
 	adjectives: [
 		// Descriptive adjectives for events (-ος/-η/-ο pattern)
-		{ lemma: "καταπληκτικός", english: "awesome/amazing" },
-		{ lemma: "βαρετός", english: "boring" },
-		{ lemma: "διασκεδαστικός", english: "fun/entertaining" },
-		{ lemma: "χαλαρωτικός", english: "relaxing" },
-		{ lemma: "αργός", english: "slow" },
-		{ lemma: "ποδοσφαιρικός", english: "football/soccer (adj)" },
+		{ lemma: "καταπληκτικός", english: "awesome/amazing", cefrLevel: "A2" },
+		{ lemma: "βαρετός", english: "boring", cefrLevel: "A2" },
+		{ lemma: "διασκεδαστικός", english: "fun/entertaining", cefrLevel: "A2" },
+		{ lemma: "χαλαρωτικός", english: "relaxing", cefrLevel: "B1" },
+		{ lemma: "αργός", english: "slow", cefrLevel: "A2" },
+		{ lemma: "ποδοσφαιρικός", english: "football/soccer (adj)", cefrLevel: "B1" },
 		// Different pattern: -ης/-ης/-ες
-		{ lemma: "θορυβώδης", english: "noisy" },
+		{ lemma: "θορυβώδης", english: "noisy", cefrLevel: "B1" },
 		// From error correction
-		{ lemma: "κόκκινος", english: "red" },
-		{ lemma: "νότιος", english: "south/southern" },
+		{ lemma: "κόκκινος", english: "red", cefrLevel: "A1" },
+		{ lemma: "νότιος", english: "south/southern", cefrLevel: "B1" },
 	],
 
-	adverbs: [{ lemma: "έξω", english: "outside/out" }],
+	adverbs: [{ lemma: "έξω", english: "outside/out", cefrLevel: "A1" }],
 
 	phrases: [
 		// Entertainment questions

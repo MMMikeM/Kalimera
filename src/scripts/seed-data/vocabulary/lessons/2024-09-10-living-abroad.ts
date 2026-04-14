@@ -7,9 +7,9 @@ export const LESSON_2024_09_10 = createLesson({
 	},
 
 	verbs: [
-		{ lemma: "υποφέρω", english: "I suffer", conjugationFamily: "-ω" },
-		{ lemma: "παιδεύομαι", english: "I struggle", conjugationFamily: "-ομαι" },
-		{ lemma: "προσπαθώ", english: "I try", conjugationFamily: "-άω/-ώ" },
+		{ lemma: "υποφέρω", english: "I suffer", conjugationFamily: "-ω", cefrLevel: "B2" },
+		{ lemma: "παιδεύομαι", english: "I struggle", conjugationFamily: "-ομαι", cefrLevel: "B1" },
+		{ lemma: "προσπαθώ", english: "I try", conjugationFamily: "-άω/-ώ", cefrLevel: "A2" },
 	],
 
 	nouns: [
@@ -23,10 +23,10 @@ export const LESSON_2024_09_10 = createLesson({
 	],
 
 	adjectives: [
-		{ lemma: "επικίνδυνος", english: "dangerous" },
-		{ lemma: "θορυβώδης", english: "noisy/loud" },
-		{ lemma: "φοβισμένος", english: "scared" },
-		{ lemma: "άνετος", english: "comfortable" },
+		{ lemma: "επικίνδυνος", english: "dangerous", cefrLevel: "A2" },
+		{ lemma: "θορυβώδης", english: "noisy/loud", cefrLevel: "B1" },
+		{ lemma: "φοβισμένος", english: "scared", cefrLevel: "A2" },
+		{ lemma: "άνετος", english: "comfortable", cefrLevel: "A2" },
 	],
 
 	phrases: [

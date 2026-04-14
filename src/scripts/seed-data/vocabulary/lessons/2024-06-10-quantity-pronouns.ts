@@ -8,7 +8,7 @@ export const LESSON_2024_06_10 = createLesson({
 
 	nouns: [{ lemma: "αφτί", gender: "neuter", english: "ear" }],
 
-	adverbs: [{ lemma: "πολύ", english: "very/a lot" }],
+	adverbs: [{ lemma: "πολύ", english: "very/a lot", cefrLevel: "A1" }],
 
 	phrases: [
 		{

@@ -7,15 +7,16 @@ export const LESSON_2023_12_31 = createLesson({
 	},
 
 	verbs: [
-		{ lemma: "απειλώ", english: "I threaten", conjugationFamily: "-άω/-ώ" },
-		{ lemma: "εμφανίζομαι", english: "I appear", conjugationFamily: "-ομαι" },
+		{ lemma: "απειλώ", english: "I threaten", conjugationFamily: "-άω/-ώ", cefrLevel: "B2" },
+		{ lemma: "εμφανίζομαι", english: "I appear", conjugationFamily: "-ομαι", cefrLevel: "B1" },
 		{
 			lemma: "μεταφέρω",
 			english: "I transfer/transport",
 			conjugationFamily: "-ω",
+			cefrLevel: "B1",
 		},
-		{ lemma: "ταΐζω", english: "I feed", conjugationFamily: "-ω" },
-		{ lemma: "εξουσιάζω", english: "I rule/dominate", conjugationFamily: "-ω" },
+		{ lemma: "ταΐζω", english: "I feed", conjugationFamily: "-ω", cefrLevel: "A2" },
+		{ lemma: "εξουσιάζω", english: "I rule/dominate", conjugationFamily: "-ω", cefrLevel: "B2" },
 	],
 
 	nouns: [
@@ -40,14 +41,14 @@ export const LESSON_2023_12_31 = createLesson({
 	],
 
 	adjectives: [
-		{ lemma: "ασφαλής", english: "safe" },
-		{ lemma: "αποτελεσματικός", english: "effective" },
-		{ lemma: "βαθύς", english: "deep" },
+		{ lemma: "ασφαλής", english: "safe", cefrLevel: "A2" },
+		{ lemma: "αποτελεσματικός", english: "effective", cefrLevel: "B1" },
+		{ lemma: "βαθύς", english: "deep", cefrLevel: "A2" },
 	],
 
 	adverbs: [
-		{ lemma: "μείον", english: "minus" },
-		{ lemma: "όπως ακριβώς", english: "exactly as" },
+		{ lemma: "μείον", english: "minus", cefrLevel: "A1" },
+		{ lemma: "όπως ακριβώς", english: "exactly as", cefrLevel: "B1" },
 	],
 
 	phrases: [
