@@ -1,10 +1,11 @@
-import type { AdjectiveDeclensionPattern } from "../../../db.server/enums";
+import type { AdjectiveDeclensionPattern, CefrLevel } from "../../../db.server/enums";
 import type { AdjectiveNominalFormsSeed, AdjectiveSeed } from "../../../types/seed";
 
 /** Lean adjective row; enrichment supplies pattern and nominal forms when omitted. */
 export type AdjectiveSeedInput = {
 	lemma: string;
 	english: string;
+	cefrLevel?: CefrLevel;
 	pattern?: AdjectiveDeclensionPattern;
 	nominalForms?: AdjectiveNominalFormsSeed;
 };
@@ -106,10 +107,12 @@ function inferAdjectiveNominalForms(lemma: string): AdjectiveNominalFormsSeed {
 }
 
 export function enrichAdjective(input: AdjectiveSeedInput): AdjectiveSeed {
-	return {
+	const out: AdjectiveSeed = {
 		lemma: input.lemma,
 		english: input.english,
 		pattern: input.pattern ?? inferAdjectivePattern(input.lemma),
 		nominalForms: input.nominalForms ?? inferAdjectiveNominalForms(input.lemma),
 	};
+	if (input.cefrLevel !== undefined) out.cefrLevel = input.cefrLevel;
+	return out;
 }

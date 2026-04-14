@@ -1,4 +1,4 @@
-import type { NounDeclensionPattern } from "../../../db.server/enums";
+import type { CefrLevel, NounDeclensionPattern } from "../../../db.server/enums";
 import { nounDeclensionPatterns } from "../../../db.server/enums";
 import {
 	getArticle,
@@ -15,6 +15,7 @@ export type NounSeedInput = {
 	lemma: string;
 	gender: Gender;
 	english: string;
+	cefrLevel?: CefrLevel;
 	metadata?: Record<string, unknown>;
 	declensionPattern?: NounDeclensionPattern;
 	/** Merged over inferred nominative singular baseline. */
@@ -103,9 +104,8 @@ export function enrichNoun(input: NounSeedInput): NounSeed {
 		declensionPattern: pattern,
 		nominalForms: merged,
 	};
-	if (input.metadata !== undefined) {
-		out.metadata = input.metadata;
-	}
+	if (input.cefrLevel !== undefined) out.cefrLevel = input.cefrLevel;
+	if (input.metadata !== undefined) out.metadata = input.metadata;
 	return out;
 }
 

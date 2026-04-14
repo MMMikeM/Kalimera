@@ -1,7 +1,7 @@
 // Seed-only input types - used during database seeding, not stored as-is
 // These define the shape of seed data before transformation to DB format
 
-import type { AdjectiveDeclensionPattern, NounDeclensionPattern, VerbTense } from "../db.server/enums";
+import type { AdjectiveDeclensionPattern, CefrLevel, NounDeclensionPattern, VerbTense } from "../db.server/enums";
 import type { Case, ConjugationFamily, Gender, GrammaticalNumber } from "../lib/greek-grammar";
 import type { Phrase } from "./phrase";
 
@@ -55,6 +55,7 @@ export interface VerbImperativeSeed {
 export interface FullVerbSeed {
 	lemma: string;
 	english: string;
+	cefrLevel?: CefrLevel;
 	conjugationFamily: ConjugationFamily;
 	isSuppletive?: boolean;
 	stems?: {
@@ -70,6 +71,7 @@ export interface NounSeed {
 	lemma: string;
 	gender: Gender;
 	english: string;
+	cefrLevel?: CefrLevel;
 	declensionPattern: NounDeclensionPattern;
 	nominalForms: NounNominalFormsSeed;
 	metadata?: Record<string, unknown>;
@@ -78,11 +80,13 @@ export interface NounSeed {
 export interface AdverbSeed {
 	lemma: string;
 	english: string;
+	cefrLevel?: CefrLevel;
 }
 
 export interface AdjectiveSeed {
 	lemma: string;
 	english: string;
+	cefrLevel?: CefrLevel;
 	pattern: AdjectiveDeclensionPattern;
 	nominalForms: AdjectiveNominalFormsSeed;
 }
