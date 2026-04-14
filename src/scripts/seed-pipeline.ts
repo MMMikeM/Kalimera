@@ -12,6 +12,7 @@ import {
 	type GrammaticalNumber,
 } from "../db.server/enums";
 import { adjectiveDetails, nominalForms, nounDetails, verbDetails, vocabulary } from "../db.server/schema";
+import { GREEK_FREQUENCY_LOOKUP } from "./seed-data/frequency-lookup";
 import type {
 	NewAdjectiveDetails,
 	NewNounDetails,
@@ -151,45 +152,39 @@ const rowsFromAdjectiveNominalForms = (
 	return out;
 };
 
+const enrichWithFrequencyRank = (item: NewVocabulary): NewVocabulary => {
+	if (item.frequencyRank != null) return item;
+	const rank = GREEK_FREQUENCY_LOOKUP[item.greekText];
+	return rank != null ? { ...item, frequencyRank: rank } : item;
+};
+
 export async function batchInsertVocab(items: NewVocabulary[]): Promise<Map<string, number>> {
 	const resultMap = new Map<string, number>();
 	if (items.length === 0) return resultMap;
 
-	let insertedCount = 0;
+	const enriched = items.map(enrichWithFrequencyRank);
 
-	for (let i = 0; i < items.length; i += BATCH_SIZE) {
-		const batch = items.slice(i, i + BATCH_SIZE);
+	for (let i = 0; i < enriched.length; i += BATCH_SIZE) {
+		const batch = enriched.slice(i, i + BATCH_SIZE);
 
-		const inserted = await db
+		const rows = await db
 			.insert(vocabulary)
 			.values(batch)
-			.onConflictDoNothing({ target: vocabulary.greekText })
+			.onConflictDoUpdate({
+				target: vocabulary.greekText,
+				set: {
+					frequencyRank: sql`excluded.frequency_rank`,
+					cefrLevel: sql`CASE WHEN excluded.cefr_level IS NOT NULL THEN excluded.cefr_level ELSE ${vocabulary.cefrLevel} END`,
+				},
+			})
 			.returning({ id: vocabulary.id, greekText: vocabulary.greekText });
 
-		for (const row of inserted) {
+		for (const row of rows) {
 			resultMap.set(row.greekText, row.id);
 		}
-		insertedCount += inserted.length;
 	}
 
-	const missingTexts = items.map((item) => item.greekText).filter((text) => !resultMap.has(text));
-
-	if (missingTexts.length > 0) {
-		for (let i = 0; i < missingTexts.length; i += BATCH_SIZE) {
-			const batch = missingTexts.slice(i, i + BATCH_SIZE);
-			const existing = await db.query.vocabulary.findMany({
-				where: { greekText: { in: batch } },
-				columns: { id: true, greekText: true },
-			});
-
-			for (const row of existing) {
-				resultMap.set(row.greekText, row.id);
-			}
-		}
-	}
-
-	const skippedCount = items.length - insertedCount;
-	console.log(`  → ${insertedCount} inserted, ${skippedCount} skipped`);
+	console.log(`  → ${resultMap.size} upserted (${enriched.filter((i) => i.frequencyRank != null).length} with frequency rank)`);
 
 	return resultMap;
 }
