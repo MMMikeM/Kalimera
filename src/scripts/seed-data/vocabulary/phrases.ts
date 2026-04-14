@@ -77,22 +77,22 @@ export const MONTHS: Phrase[] = [
 
 // Discourse fillers & connectors - words that connect natural speech
 export const DISCOURSE_FILLERS: Phrase[] = [
-	{ text: "φυσικά", english: "of course" },
-	{ text: "επίσης", english: "also" },
-	{ text: "γι' αυτό", english: "that's why/therefore" },
-	{ text: "αν", english: "if" },
-	{ text: "όταν", english: "when" },
-	{ text: "σιγά σιγά", english: "slowly/little by little" },
-	{ text: "μαζί", english: "together" },
+	{ text: "φυσικά", english: "of course", cefrLevel: "A1" },
+	{ text: "επίσης", english: "also", cefrLevel: "A1" },
+	{ text: "γι' αυτό", english: "that's why/therefore", cefrLevel: "A2" },
+	{ text: "αν", english: "if", cefrLevel: "A1" },
+	{ text: "όταν", english: "when", cefrLevel: "A1" },
+	{ text: "σιγά σιγά", english: "slowly/little by little", cefrLevel: "A2" },
+	{ text: "μαζί", english: "together", cefrLevel: "A1" },
 ];
 
 // Social phrases - common things to say
 export const SOCIAL_PHRASES: Phrase[] = [
-	{ text: "τι γίνεται;", english: "what's happening?" },
-	{ text: "τα λέμε", english: "see ya" },
-	{ text: "καλή όρεξη", english: "bon appetit/enjoy your meal" },
-	{ text: "κάτι", english: "something" },
-	{ text: "τα πάντα", english: "everything" },
+	{ text: "τι γίνεται;", english: "what's happening?", cefrLevel: "A1" },
+	{ text: "τα λέμε", english: "see ya", cefrLevel: "A1" },
+	{ text: "καλή όρεξη", english: "bon appetit/enjoy your meal", cefrLevel: "A1" },
+	{ text: "κάτι", english: "something", cefrLevel: "A1" },
+	{ text: "τα πάντα", english: "everything", cefrLevel: "A2" },
 ];
 
 // Question words - separate from expressions to avoid duplication
@@ -126,11 +126,11 @@ export const QUESTION_WORDS: Phrase[] = [
 export const USEFUL_EXPRESSIONS: Phrase[] = [...DISCOURSE_FILLERS, ...SOCIAL_PHRASES];
 
 export const COMMANDS: Phrase[] = [
-	{ text: "κάτσε κάτω", english: "sit down" },
-	{ text: "σήκω πάνω", english: "stand up" },
-	{ text: "έλα", english: "come" },
-	{ text: "πες το ξανά", english: "say it again" },
-	{ text: "περίμενε", english: "wait" },
+	{ text: "κάτσε κάτω", english: "sit down", cefrLevel: "A1" },
+	{ text: "σήκω πάνω", english: "stand up", cefrLevel: "A1" },
+	{ text: "έλα", english: "come", cefrLevel: "A1" },
+	{ text: "πες το ξανά", english: "say it again", cefrLevel: "A1" },
+	{ text: "περίμενε", english: "wait", cefrLevel: "A1" },
 ];
 
 // "Likes" construction - grammatically interesting (dative-like construction)
@@ -280,7 +280,7 @@ export const TIME_TELLING: Phrase[] = [
 ];
 
 function phraseVocabItems(
-	phrases: Array<{ text: string; english: string; metadata?: unknown }>,
+	phrases: Array<{ text: string; english: string; cefrLevel?: import("../../../db.server/enums").CefrLevel; metadata?: unknown }>,
 	tags: string[],
 ): VocabWithTags[] {
 	return phrases.map((phrase) => ({
@@ -288,6 +288,7 @@ function phraseVocabItems(
 			greekText: phrase.text,
 			englishTranslation: phrase.english,
 			wordType: "phrase" as const,
+			cefrLevel: phrase.cefrLevel ?? null,
 		},
 		tags,
 	}));
