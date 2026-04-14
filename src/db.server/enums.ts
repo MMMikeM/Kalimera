@@ -80,6 +80,10 @@ export const adjectiveDeclensionPatterns = [
 ] as const;
 export type AdjectiveDeclensionPattern = (typeof adjectiveDeclensionPatterns)[number];
 
+// CEFR proficiency levels — used alongside frequencyRank to derive drill priority
+export const cefrLevels = ["A1", "A2", "B1", "B2", "C1", "C2"] as const;
+export type CefrLevel = (typeof cefrLevels)[number];
+
 // Auth challenge types for WebAuthn flow
 export const challengeTypes = ["registration", "authentication"] as const;
 export type ChallengeType = (typeof challengeTypes)[number];

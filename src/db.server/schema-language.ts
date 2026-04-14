@@ -1,6 +1,5 @@
 import {
 	index,
-	integer,
 	primaryKey,
 	sqliteTable,
 	text,
@@ -21,6 +20,7 @@ import {
 } from "./columns";
 import {
 	nounDeclensionPatterns,
+	cefrLevels,
 	displaySections,
 	genders,
 	grammaticalCases,
@@ -40,13 +40,14 @@ export const vocabulary = sqliteTable(
 		greekText: string("greek_text"),
 		englishTranslation: string("english_translation"),
 		wordType: oneOf("word_type", wordTypes),
-		difficultyLevel: integer("difficulty_level").notNull().default(0),
+		cefrLevel: nullableOneOf("cefr_level", cefrLevels),
+		frequencyRank: nullableInt("frequency_rank"), // 1 = most frequent in spoken Greek
 		createdAt: createdAt(),
 		metadata: json<VocabMetadata>("metadata"), // Sparse, tag-specific data (timeRange, numericValue, etc.)
 	},
 	(table) => [
 		index("idx_vocabulary_word_type").on(table.wordType),
-		index("idx_vocabulary_difficulty").on(table.difficultyLevel),
+		index("idx_vocabulary_cefr").on(table.cefrLevel),
 		uniqueIndex("idx_vocabulary_greek_text").on(table.greekText),
 	],
 );
