@@ -43,7 +43,7 @@ export const getNewVocabularyItems = async (userId: number, limit = 20) => {
 				},
 			},
 		},
-		orderBy: { difficultyLevel: "asc" },
+		orderBy: { frequencyRank: "asc" },
 		limit,
 	});
 };
