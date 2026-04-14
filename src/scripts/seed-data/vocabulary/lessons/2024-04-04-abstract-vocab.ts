@@ -7,24 +7,27 @@ export const LESSON_2024_04_04 = createLesson({
 	},
 
 	verbs: [
-		{ lemma: "δημιουργώ", english: "I create", conjugationFamily: "-άω/-ώ" },
+		{ lemma: "δημιουργώ", english: "I create", conjugationFamily: "-άω/-ώ", cefrLevel: "B1" },
 		{
 			lemma: "ενισχύω",
 			english: "I boost/strengthen",
 			conjugationFamily: "-ω",
+			cefrLevel: "B2",
 		},
-		{ lemma: "απολαμβάνω", english: "I enjoy", conjugationFamily: "-ω" },
+		{ lemma: "απολαμβάνω", english: "I enjoy", conjugationFamily: "-ω", cefrLevel: "B1" },
 		{
 			lemma: "εξοικονομώ",
 			english: "I save (money)",
 			conjugationFamily: "-άω/-ώ",
+			cefrLevel: "B1",
 		},
-		{ lemma: "ξοδεύω", english: "I spend", conjugationFamily: "-ω" },
-		{ lemma: "επισκέπτομαι", english: "I visit", conjugationFamily: "-ομαι" },
+		{ lemma: "ξοδεύω", english: "I spend", conjugationFamily: "-ω", cefrLevel: "A2" },
+		{ lemma: "επισκέπτομαι", english: "I visit", conjugationFamily: "-ομαι", cefrLevel: "A2" },
 		{
 			lemma: "ταυτίζομαι",
 			english: "I relate/identify with",
 			conjugationFamily: "-ομαι",
+			cefrLevel: "B2",
 		},
 	],
 
@@ -37,12 +40,12 @@ export const LESSON_2024_04_04 = createLesson({
 	],
 
 	adjectives: [
-		{ lemma: "διασκεδαστικός", english: "fun/entertaining" },
-		{ lemma: "εθιστικός", english: "addictive" },
-		{ lemma: "πολυσύχναστος", english: "crowded" },
-		{ lemma: "αρνητικός", english: "negative" },
-		{ lemma: "θετικός", english: "positive" },
-		{ lemma: "ενδιαφέρον", english: "interesting" },
-		{ lemma: "προσεκτικός", english: "careful" },
+		{ lemma: "διασκεδαστικός", english: "fun/entertaining", cefrLevel: "A2" },
+		{ lemma: "εθιστικός", english: "addictive", cefrLevel: "B1" },
+		{ lemma: "πολυσύχναστος", english: "crowded", cefrLevel: "B1" },
+		{ lemma: "αρνητικός", english: "negative", cefrLevel: "A2" },
+		{ lemma: "θετικός", english: "positive", cefrLevel: "A2" },
+		{ lemma: "ενδιαφέρον", english: "interesting", cefrLevel: "A1" },
+		{ lemma: "προσεκτικός", english: "careful", cefrLevel: "A2" },
 	],
 });

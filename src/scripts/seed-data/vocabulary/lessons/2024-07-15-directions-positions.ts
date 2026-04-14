@@ -6,7 +6,7 @@ export const LESSON_2024_07_15 = createLesson({
 		source: "Weekly lesson - kahoot recap",
 	},
 
-	verbs: [{ lemma: "υπάρχω", english: "I exist / there is", conjugationFamily: "-ω" }],
+	verbs: [{ lemma: "υπάρχω", english: "I exist / there is", conjugationFamily: "-ω", cefrLevel: "A1" }],
 
 	nouns: [
 		{ lemma: "λουλούδι", gender: "neuter", english: "flower" },
@@ -15,20 +15,20 @@ export const LESSON_2024_07_15 = createLesson({
 	],
 
 	adverbs: [
-		{ lemma: "μέσα", english: "inside" },
-		{ lemma: "έξω", english: "outside" },
-		{ lemma: "κοντά", english: "close/near" },
-		{ lemma: "μακριά", english: "far away" },
-		{ lemma: "αριστερά", english: "left" },
-		{ lemma: "δεξιά", english: "right" },
-		{ lemma: "μπροστά", english: "in front" },
-		{ lemma: "πίσω", english: "behind/back" },
-		{ lemma: "δίπλα", english: "next to" },
-		{ lemma: "απέναντι", english: "across/opposite" },
-		{ lemma: "μήπως", english: "maybe/perhaps" },
+		{ lemma: "μέσα", english: "inside", cefrLevel: "A1" },
+		{ lemma: "έξω", english: "outside", cefrLevel: "A1" },
+		{ lemma: "κοντά", english: "close/near", cefrLevel: "A1" },
+		{ lemma: "μακριά", english: "far away", cefrLevel: "A2" },
+		{ lemma: "αριστερά", english: "left", cefrLevel: "A1" },
+		{ lemma: "δεξιά", english: "right", cefrLevel: "A1" },
+		{ lemma: "μπροστά", english: "in front", cefrLevel: "A2" },
+		{ lemma: "πίσω", english: "behind/back", cefrLevel: "A2" },
+		{ lemma: "δίπλα", english: "next to", cefrLevel: "A2" },
+		{ lemma: "απέναντι", english: "across/opposite", cefrLevel: "B1" },
+		{ lemma: "μήπως", english: "maybe/perhaps", cefrLevel: "A2" },
 	],
 
-	adjectives: [{ lemma: "καινούριος", english: "new" }],
+	adjectives: [{ lemma: "καινούριος", english: "new", cefrLevel: "A2" }],
 
 	phrases: [
 		// Position patterns with prepositions

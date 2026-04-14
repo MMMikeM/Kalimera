@@ -7,11 +7,11 @@ export const LESSON_2024_06_17 = createLesson({
 	},
 
 	verbs: [
-		{ lemma: "δίνω", english: "I give", conjugationFamily: "-ω" },
-		{ lemma: "φιλάω", english: "I kiss", conjugationFamily: "-άω/-ώ" },
-		{ lemma: "γελάω", english: "I laugh", conjugationFamily: "-άω/-ώ" },
-		{ lemma: "φωνάζω", english: "I yell/shout", conjugationFamily: "-ω" },
-		{ lemma: "αργώ", english: "I am late", conjugationFamily: "-άω/-ώ" },
+		{ lemma: "δίνω", english: "I give", conjugationFamily: "-ω", cefrLevel: "A1" },
+		{ lemma: "φιλάω", english: "I kiss", conjugationFamily: "-άω/-ώ", cefrLevel: "A1" },
+		{ lemma: "γελάω", english: "I laugh", conjugationFamily: "-άω/-ώ", cefrLevel: "A1" },
+		{ lemma: "φωνάζω", english: "I yell/shout", conjugationFamily: "-ω", cefrLevel: "A2" },
+		{ lemma: "αργώ", english: "I am late", conjugationFamily: "-άω/-ώ", cefrLevel: "A2" },
 	],
 
 	nouns: [
@@ -20,13 +20,13 @@ export const LESSON_2024_06_17 = createLesson({
 		{ lemma: "νούμερο", gender: "neuter", english: "number" },
 	],
 
-	adjectives: [{ lemma: "πρώτος", english: "first" }],
+	adjectives: [{ lemma: "πρώτος", english: "first", cefrLevel: "A1" }],
 
 	adverbs: [
-		{ lemma: "χτες", english: "yesterday" },
-		{ lemma: "ίσως", english: "maybe/perhaps" },
-		{ lemma: "πάντα", english: "always" },
-		{ lemma: "συνήθως", english: "usually" },
+		{ lemma: "χτες", english: "yesterday", cefrLevel: "A1" },
+		{ lemma: "ίσως", english: "maybe/perhaps", cefrLevel: "A2" },
+		{ lemma: "πάντα", english: "always", cefrLevel: "A1" },
+		{ lemma: "συνήθως", english: "usually", cefrLevel: "A2" },
 	],
 
 	phrases: [

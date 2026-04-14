@@ -6,7 +6,7 @@ export const LESSON_2024_10_15 = createLesson({
 		source: "Weekly lesson - job descriptions",
 	},
 
-	verbs: [{ lemma: "διδάσκω", english: "I teach", conjugationFamily: "-ω" }],
+	verbs: [{ lemma: "διδάσκω", english: "I teach", conjugationFamily: "-ω", cefrLevel: "A2" }],
 
 	nouns: [
 		{ lemma: "λογισμικό", gender: "neuter", english: "software" },

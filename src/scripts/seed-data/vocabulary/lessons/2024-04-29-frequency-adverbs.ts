@@ -7,35 +7,36 @@ export const LESSON_2024_04_29 = createLesson({
 	},
 
 	verbs: [
-		{ lemma: "μπορώ", english: "I can", conjugationFamily: "-άω/-ώ" },
-		{ lemma: "οδηγώ", english: "I drive", conjugationFamily: "-άω/-ώ" },
-		{ lemma: "τηλεφωνώ", english: "I phone/call", conjugationFamily: "-άω/-ώ" },
+		{ lemma: "μπορώ", english: "I can", conjugationFamily: "-άω/-ώ", cefrLevel: "A1" },
+		{ lemma: "οδηγώ", english: "I drive", conjugationFamily: "-άω/-ώ", cefrLevel: "A1" },
+		{ lemma: "τηλεφωνώ", english: "I phone/call", conjugationFamily: "-άω/-ώ", cefrLevel: "A1" },
 		{
 			lemma: "λυπάμαι",
 			english: "I feel sorry/am sad",
 			conjugationFamily: "-άμαι",
+			cefrLevel: "A2",
 		},
-		{ lemma: "ξυπνάω", english: "I wake up", conjugationFamily: "-άω/-ώ" },
+		{ lemma: "ξυπνάω", english: "I wake up", conjugationFamily: "-άω/-ώ", cefrLevel: "A1" },
 	],
 
 	nouns: [{ lemma: "πράγμα", gender: "neuter", english: "thing" }],
 
 	adjectives: [
-		{ lemma: "ζωηρός", english: "lively/full of life" },
-		{ lemma: "άτακτος", english: "naughty" },
-		{ lemma: "μικρός", english: "small/young" },
-		{ lemma: "μεγάλος", english: "big/old" },
+		{ lemma: "ζωηρός", english: "lively/full of life", cefrLevel: "B1" },
+		{ lemma: "άτακτος", english: "naughty", cefrLevel: "A2" },
+		{ lemma: "μικρός", english: "small/young", cefrLevel: "A1" },
+		{ lemma: "μεγάλος", english: "big/old", cefrLevel: "A1" },
 	],
 
 	adverbs: [
-		{ lemma: "σχεδόν ποτέ", english: "almost never" },
-		{ lemma: "καμιά φορά", english: "sometimes" },
-		{ lemma: "κάπου κάπου", english: "from time to time" },
-		{ lemma: "πότε πότε", english: "every now and then" },
-		{ lemma: "σχεδόν πάντα", english: "almost always" },
-		{ lemma: "πάρα πολύ", english: "very much" },
-		{ lemma: "επίσης", english: "also" },
-		{ lemma: "κάτι", english: "something" },
+		{ lemma: "σχεδόν ποτέ", english: "almost never", cefrLevel: "A2" },
+		{ lemma: "καμιά φορά", english: "sometimes", cefrLevel: "A2" },
+		{ lemma: "κάπου κάπου", english: "from time to time", cefrLevel: "B1" },
+		{ lemma: "πότε πότε", english: "occasionally", cefrLevel: "B1" },
+		{ lemma: "σχεδόν πάντα", english: "almost always", cefrLevel: "A2" },
+		{ lemma: "πάρα πολύ", english: "very much", cefrLevel: "A2" },
+		{ lemma: "επίσης", english: "also", cefrLevel: "A1" },
+		{ lemma: "κάτι", english: "something", cefrLevel: "A1" },
 	],
 
 	phrases: [

@@ -6,7 +6,7 @@ export const LESSON_2024_08_12 = createLesson({
 		source: "Weekly lesson",
 	},
 
-	verbs: [{ lemma: "ξεχνάω", english: "I forget", conjugationFamily: "-άω/-ώ" }],
+	verbs: [{ lemma: "ξεχνάω", english: "I forget", conjugationFamily: "-άω/-ώ", cefrLevel: "A2" }],
 
 	nouns: [{ lemma: "λαχανικά", gender: "neuter", english: "vegetables" }],
 

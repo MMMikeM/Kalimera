@@ -6,7 +6,7 @@ export const LESSON_2024_04_22 = createLesson({
 		source: "Weekly lesson - interrogatives, πιο comparatives",
 	},
 
-	verbs: [{ lemma: "ζηλεύω", english: "I am jealous", conjugationFamily: "-ω" }],
+	verbs: [{ lemma: "ζηλεύω", english: "I am jealous", conjugationFamily: "-ω", cefrLevel: "A2" }],
 
 	nouns: [
 		{ lemma: "φως", gender: "neuter", english: "light" },
@@ -14,8 +14,8 @@ export const LESSON_2024_04_22 = createLesson({
 	],
 
 	adverbs: [
-		{ lemma: "πριν", english: "before" },
-		{ lemma: "τώρα", english: "now" },
+		{ lemma: "πριν", english: "before", cefrLevel: "A1" },
+		{ lemma: "τώρα", english: "now", cefrLevel: "A1" },
 	],
 
 	phrases: [

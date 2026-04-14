@@ -8,11 +8,11 @@ export const LESSON_2024_12_02 = createLesson({
 
 	// Verbs for daily routines (first person forms as lemmas)
 	verbs: [
-		{ lemma: "ζω", english: "I live", conjugationFamily: "-ω" },
-		{ lemma: "σπουδάζω", english: "I study", conjugationFamily: "-ω" },
-		{ lemma: "ξεκουράζομαι", english: "I rest", conjugationFamily: "-ομαι" },
-		{ lemma: "βγαίνω", english: "I go out", conjugationFamily: "-ω" },
-		{ lemma: "υπάρχω", english: "I exist / there is", conjugationFamily: "-ω" },
+		{ lemma: "ζω", english: "I live", conjugationFamily: "-ω", cefrLevel: "A1" },
+		{ lemma: "σπουδάζω", english: "I study", conjugationFamily: "-ω", cefrLevel: "A1" },
+		{ lemma: "ξεκουράζομαι", english: "I rest", conjugationFamily: "-ομαι", cefrLevel: "A2" },
+		{ lemma: "βγαίνω", english: "I go out", conjugationFamily: "-ω", cefrLevel: "A1" },
+		{ lemma: "υπάρχω", english: "I exist / there is", conjugationFamily: "-ω", cefrLevel: "A1" },
 	],
 
 	// Family and routine nouns
@@ -36,16 +36,16 @@ export const LESSON_2024_12_02 = createLesson({
 
 	// Adjectives from the lesson
 	adjectives: [
-		{ lemma: "παντρεμένος", english: "married" },
-		{ lemma: "εθνικός", english: "national" },
+		{ lemma: "παντρεμένος", english: "married", cefrLevel: "A1" },
+		{ lemma: "εθνικός", english: "national", cefrLevel: "B1" },
 	],
 
 	// Frequency adverbs (critical for describing routines)
 	adverbs: [
-		{ lemma: "συχνά", english: "often" },
-		{ lemma: "σπάνια", english: "rarely" },
-		{ lemma: "πολλές φορές", english: "many times/often" },
-		{ lemma: "μερικές φορές", english: "sometimes" },
+		{ lemma: "συχνά", english: "often", cefrLevel: "A2" },
+		{ lemma: "σπάνια", english: "rarely", cefrLevel: "A2" },
+		{ lemma: "πολλές φορές", english: "many times/often", cefrLevel: "A2" },
+		{ lemma: "μερικές φορές", english: "sometimes", cefrLevel: "A2" },
 	],
 
 	// Routine phrases - patterns for describing daily life

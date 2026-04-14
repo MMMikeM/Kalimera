@@ -8,19 +8,21 @@ export const LESSON_2024_07_29 = createLesson({
 
 	// -μαι and -άμαι family verbs (deponent - passive form, active meaning)
 	verbs: [
-		{ lemma: "έρχομαι", english: "I come", conjugationFamily: "-ομαι" },
+		{ lemma: "έρχομαι", english: "I come", conjugationFamily: "-ομαι", cefrLevel: "A1" },
 		{
 			lemma: "φοβάμαι",
 			english: "I am scared/afraid",
 			conjugationFamily: "-άμαι",
+			cefrLevel: "A1",
 		},
-		{ lemma: "κάθομαι", english: "I sit", conjugationFamily: "-ομαι" },
-		{ lemma: "θυμάμαι", english: "I remember", conjugationFamily: "-άμαι" },
-		{ lemma: "διασκεδάζω", english: "I have fun", conjugationFamily: "-ω" },
+		{ lemma: "κάθομαι", english: "I sit", conjugationFamily: "-ομαι", cefrLevel: "A1" },
+		{ lemma: "θυμάμαι", english: "I remember", conjugationFamily: "-άμαι", cefrLevel: "A2" },
+		{ lemma: "διασκεδάζω", english: "I have fun", conjugationFamily: "-ω", cefrLevel: "A2" },
 		{
 			lemma: "καμπουριάζω",
 			english: "I hunch/slouch",
 			conjugationFamily: "-ω",
+			cefrLevel: "B1",
 		},
 	],
 

@@ -18,7 +18,7 @@ export const LESSON_2023_11_08 = createLesson({
 		{ lemma: "θέατρο", gender: "neuter", english: "theater" },
 	],
 
-	adverbs: [{ lemma: "κοντά", english: "close/near" }],
+	adverbs: [{ lemma: "κοντά", english: "close/near", cefrLevel: "A1" }],
 
 	grammarNotes: [
 		{

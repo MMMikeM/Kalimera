@@ -7,8 +7,8 @@ export const LESSON_2023_12_09 = createLesson({
 	},
 
 	adverbs: [
-		{ lemma: "σήμερα", english: "today" },
-		{ lemma: "εχθές", english: "yesterday" },
+		{ lemma: "σήμερα", english: "today", cefrLevel: "A1" },
+		{ lemma: "εχθές", english: "yesterday", cefrLevel: "A1" },
 	],
 
 	phrases: [

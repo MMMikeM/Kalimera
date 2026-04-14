@@ -11,6 +11,7 @@ export const LESSON_2024_07_08 = createLesson({
 			lemma: "νευριάζω",
 			english: "I get nervous/annoyed",
 			conjugationFamily: "-ω",
+			cefrLevel: "B1",
 		},
 	],
 
@@ -20,13 +21,13 @@ export const LESSON_2024_07_08 = createLesson({
 	],
 
 	adjectives: [
-		{ lemma: "δυνατός", english: "strong/loud" },
-		{ lemma: "ενθουσιασμένος", english: "enthusiastic/excited" },
+		{ lemma: "δυνατός", english: "strong/loud", cefrLevel: "A2" },
+		{ lemma: "ενθουσιασμένος", english: "enthusiastic/excited", cefrLevel: "B1" },
 	],
 
 	adverbs: [
-		{ lemma: "όταν", english: "when (conjunction)" },
-		{ lemma: "ποτέ", english: "never" },
+		{ lemma: "όταν", english: "when (conjunction)", cefrLevel: "A1" },
+		{ lemma: "ποτέ", english: "never", cefrLevel: "A1" },
 	],
 
 	phrases: [
