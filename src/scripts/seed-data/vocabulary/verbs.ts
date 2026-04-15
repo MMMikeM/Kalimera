@@ -39,6 +39,11 @@ export const VERBS: FullVerbSeed[] = [
 	{ lemma: "θυμάμαι", english: "I remember", cefrLevel: "A2", conjugationFamily: "-άμαι" },
 	{ lemma: "κοιμάμαι", english: "I sleep", cefrLevel: "A2", conjugationFamily: "-άμαι" },
 
+	{ lemma: "βρίσκω", english: "I find", cefrLevel: "A2", conjugationFamily: "-ω" },
+	{ lemma: "γράφω", english: "I write", cefrLevel: "A2", conjugationFamily: "-ω" },
+	{ lemma: "διαβάζω", english: "I read", cefrLevel: "A2", conjugationFamily: "-ω" },
+	{ lemma: "μαθαίνω", english: "I learn", cefrLevel: "A2", conjugationFamily: "-ω" },
+
 	// Irregular
 	{ lemma: "είμαι", english: "I am", cefrLevel: "A1", conjugationFamily: "irregular" },
 	{ lemma: "πάω", english: "I go", cefrLevel: "A1", conjugationFamily: "irregular" },
