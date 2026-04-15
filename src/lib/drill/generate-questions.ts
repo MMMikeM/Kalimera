@@ -12,6 +12,7 @@ export interface DrillQuestion {
 	timeLimit?: number;
 	hint?: string;
 	targetMs?: number; // future weak-spot targeting
+	vocabularyId?: number;
 }
 
 export type QuestionCategory = "pronouns" | "articles" | "verbs" | "nouns";

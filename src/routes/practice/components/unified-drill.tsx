@@ -18,6 +18,7 @@ export interface UnifiedQuestion {
 	correctGreek: string; // Greek answer: "Θέλω καφέ"
 	timeLimit?: number; // ms (default 5000)
 	hint?: string; // Shown after incorrect answer
+	vocabularyId?: number;
 }
 
 export interface UnifiedAttemptResult {
@@ -28,6 +29,7 @@ export interface UnifiedAttemptResult {
 	isCorrect: boolean;
 	timeTaken: number;
 	timedOut: boolean;
+	vocabularyId?: number;
 }
 
 type QuestionPhase = "ready" | "active" | "feedback";
@@ -255,6 +257,7 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 				isCorrect: result.isCorrect && !timedOut,
 				timeTaken,
 				timedOut,
+				vocabularyId: currentQuestion.vocabularyId,
 			};
 
 			dispatch({
