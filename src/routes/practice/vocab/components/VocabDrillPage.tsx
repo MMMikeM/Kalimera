@@ -80,6 +80,7 @@ export function VocabDrillPage({
 					isCorrect: attempt.isCorrect ? "on" : "",
 					timeTaken: attempt.timeTaken.toString(),
 					skillType: "production",
+					...(attempt.vocabularyId && { vocabularyId: attempt.vocabularyId.toString() }),
 					...(weakAreaType && { weakAreaType }),
 					...(weakAreaIdentifier && { weakAreaIdentifier }),
 				},
