@@ -4,7 +4,7 @@ import { useFetcher, useOutletContext, useSearchParams } from "react-router";
 
 import { Card } from "@/components/Card";
 import { Button } from "@/components/ui/button";
-import { generateQuestions, CATEGORY_CONFIG } from "@/lib/drill/generate-questions";
+import { generateQuestions, CATEGORY_CONFIG, type DrillQuestion } from "@/lib/drill/generate-questions";
 
 import UnifiedDrill, {
 	type SessionStats,
@@ -15,12 +15,16 @@ import type { PracticeLoaderData } from "../../layout";
 
 interface VocabDrillPageProps {
 	category: keyof typeof CATEGORY_CONFIG;
+	initialQuestions?: DrillQuestion[];
+	wordTypeFilter?: string;
 	weakAreaType?: string;
 	getWeakAreaIdentifier?: (attempt: UnifiedAttemptResult) => string | undefined;
 }
 
 export function VocabDrillPage({
 	category,
+	initialQuestions,
+	wordTypeFilter: _wordTypeFilter,
 	weakAreaType,
 	getWeakAreaIdentifier,
 }: VocabDrillPageProps) {
@@ -38,8 +42,12 @@ export function VocabDrillPage({
 
 	const questions = useMemo(() => {
 		if (reDrillQuestions) return reDrillQuestions;
+		if (initialQuestions) {
+			const shuffled = [...initialQuestions].sort(() => Math.random() - 0.5);
+			return shuffled.slice(0, drillSize);
+		}
 		return generateQuestions([category], drillSize);
-	}, [reDrillQuestions, drillSize, category]);
+	}, [reDrillQuestions, initialQuestions, drillSize, category]);
 
 	const startDbSession = useCallback(() => {
 		if (!userId) return;
