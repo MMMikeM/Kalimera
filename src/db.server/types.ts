@@ -7,6 +7,7 @@ import type {
 	practiceSessions,
 	pushSubscriptions,
 	tags,
+	userProgress,
 	users,
 	verbConjugations,
 	verbDetails,
@@ -33,6 +34,8 @@ export type WeakArea = typeof weakAreas.$inferSelect;
 export type VocabularySkill = typeof vocabularySkills.$inferSelect;
 export type PushSubscription = typeof pushSubscriptions.$inferSelect;
 export type MilestoneAchieved = typeof milestonesAchieved.$inferSelect;
+export type UserProgress = typeof userProgress.$inferSelect;
+export type NewUserProgress = typeof userProgress.$inferInsert;
 
 // Inferred insert types (what you provide when inserting)
 export type NewUser = typeof users.$inferInsert;

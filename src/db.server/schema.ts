@@ -21,6 +21,7 @@ export {
 	milestonesAchieved,
 	practiceAttempts,
 	practiceSessions,
+	userProgress,
 	vocabularySkills,
 	weakAreas,
 } from "./schema-practice";

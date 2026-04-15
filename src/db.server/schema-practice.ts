@@ -20,8 +20,9 @@ import {
 	oneOf,
 	pk,
 	string,
+	updatedAt,
 } from "./columns";
-import { areaTypes, sessionTypes, skillTypes } from "./enums";
+import { areaTypes, cefrLevels, sessionTypes, skillTypes } from "./enums";
 import { users } from "./schema-auth";
 import { vocabulary } from "./schema-language";
 
@@ -106,6 +107,16 @@ export const vocabularySkills = sqliteTable(
 		index("idx_vocabulary_skills_review").on(table.nextReviewAt),
 		index("idx_vocabulary_skills_user").on(table.userId),
 	],
+);
+
+export const userProgress = sqliteTable(
+	"user_progress",
+	{
+		userId: cascadeFk("user_id", () => users.id),
+		currentCefrLevel: oneOf("current_cefr_level", cefrLevels).default("A1"),
+		updatedAt: updatedAt(),
+	},
+	(t) => [primaryKey({ columns: [t.userId] })],
 );
 
 export const milestonesAchieved = sqliteTable(

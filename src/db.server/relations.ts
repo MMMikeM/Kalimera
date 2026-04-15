@@ -9,6 +9,10 @@ export const relations = defineRelations(schema, (r) => ({
 		weakAreas: r.many.weakAreas(),
 		vocabularySkills: r.many.vocabularySkills(),
 		milestonesAchieved: r.many.milestonesAchieved(),
+		userProgress: r.one.userProgress({
+			from: r.users.id,
+			to: r.userProgress.userId,
+		}),
 		passkeys: r.many.passkeys(),
 		authChallenges: r.many.authChallenges(),
 		pushSubscriptions: r.many.pushSubscriptions(),
@@ -108,6 +112,12 @@ export const relations = defineRelations(schema, (r) => ({
 		vocabulary: r.one.vocabulary({
 			from: r.vocabularySkills.vocabularyId,
 			to: r.vocabulary.id,
+		}),
+	},
+	userProgress: {
+		user: r.one.users({
+			from: r.userProgress.userId,
+			to: r.users.id,
 		}),
 	},
 	milestonesAchieved: {
