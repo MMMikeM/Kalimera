@@ -89,6 +89,7 @@ const startSessionSchema = zfd.formData({
 	),
 	category: zfd.text(z.string().optional()).optional(),
 	focusArea: zfd.text(z.string().optional()).optional(),
+	wordTypeFilter: zfd.text(z.string().optional()).optional(),
 });
 
 const recordAttemptSchema = zfd.formData({
@@ -127,7 +128,7 @@ export const actionHandlers = {
 			userId: data.userId,
 			sessionType: data.sessionType,
 			category: data.category ?? null,
-			wordTypeFilter: null,
+			wordTypeFilter: data.wordTypeFilter ?? null,
 			focusArea: data.focusArea ?? null,
 		};
 		const session = await startSession(row);

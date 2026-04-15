@@ -24,7 +24,7 @@ interface VocabDrillPageProps {
 export function VocabDrillPage({
 	category,
 	initialQuestions,
-	wordTypeFilter: _wordTypeFilter,
+	wordTypeFilter,
 	weakAreaType,
 	getWeakAreaIdentifier,
 }: VocabDrillPageProps) {
@@ -58,10 +58,11 @@ export function VocabDrillPage({
 				userId: userId.toString(),
 				sessionType: "case_drill",
 				category: "speed_drill",
+				...(wordTypeFilter && { wordTypeFilter }),
 			},
 			{ method: "post", action: "/practice" },
 		);
-	}, [userId, fetcher]);
+	}, [userId, fetcher, wordTypeFilter]);
 
 	const handleAttempt = useCallback(
 		(attempt: UnifiedAttemptResult) => {
