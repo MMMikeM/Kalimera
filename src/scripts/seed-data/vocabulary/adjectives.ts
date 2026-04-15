@@ -34,6 +34,10 @@ const ADJECTIVES_RAW: AdjectiveSeedInput[] = [
 	{ lemma: "λίγος", english: "few/little", cefrLevel: "A1" },
 	{ lemma: "οργανωμένος", english: "organized", cefrLevel: "B1" },
 	{ lemma: "απλός", english: "simple", cefrLevel: "A2" },
+	{ lemma: "δύσκολος", english: "difficult", cefrLevel: "A2" },
+	{ lemma: "εύκολος", english: "easy", cefrLevel: "A2" },
+	{ lemma: "ωραίος", english: "nice/beautiful", cefrLevel: "A2" },
+	{ lemma: "σίγουρος", english: "sure/certain", cefrLevel: "A2" },
 ];
 
 export const COLORS = COLORS_RAW.map(enrichAdjective);
