@@ -1,0 +1,70 @@
+# Noun Genders — Memory Drill
+
+## Purpose
+
+Drill English noun → Greek article + noun as a unit. Gender is not reliably derivable from form; it must be memorised per noun. Without gender automatic, article selection (τον/την/το) requires a conscious intermediate step that breaks production speed.
+
+Prompt: English word → type Greek article + noun (e.g. "house → το σπίτι")
+
+## Why this is distinct from the articles drill
+
+The articles paradigm drill teaches the FORMS of ο/η/το across cases. This drill teaches WHICH article applies to which noun. They are different skills. You need both: the form AND the assignment.
+
+## Core noun set
+
+### Masculine (ο)
+| English | Greek (nom sg) |
+|---------|----------------|
+| man | ο άντρας |
+| friend (m) | ο φίλος |
+| coffee | ο καφές |
+| road / street | ο δρόμος |
+| time / weather | ο καιρός |
+| father | ο πατέρας |
+| son | ο γιος |
+| dog | ο σκύλος |
+| month | ο μήνας |
+| world | ο κόσμος |
+| bread | ο άρτος / το ψωμί (neut — use as contrast item) |
+
+### Feminine (η)
+| English | Greek (nom sg) |
+|---------|----------------|
+| woman | η γυναίκα |
+| friend (f) | η φίλη |
+| sea | η θάλασσα |
+| door | η πόρτα |
+| city | η πόλη |
+| mother | η μητέρα |
+| daughter | η κόρη |
+| language | η γλώσσα |
+| night | η νύχτα |
+| family | η οικογένεια |
+
+### Neuter (το)
+| English | Greek (nom sg) |
+|---------|----------------|
+| house | το σπίτι |
+| child | το παιδί |
+| book | το βιβλίο |
+| car | το αυτοκίνητο |
+| water | το νερό |
+| name | το όνομα |
+| food | το φαγητό |
+| restaurant | το εστιατόριο |
+| hotel | το ξενοδοχείο |
+| morning | το πρωί |
+
+## Drill format
+
+**Forward**: English → type `article + noun` (e.g. "house" → "το σπίτι")
+**Gender selector**: Allow filtering by gender (drill only feminine, or only masculine vs neuter, etc.) — useful for targeted practice
+**Reverse**: Greek noun (no article) → type correct article, or select M/F/N
+
+## Notes
+
+- Accept both nominative article and noun (ο φίλος) in forward mode
+- Do NOT drill genitive or accusative forms here — that is the case-transform grammar drill
+- Neuter nouns in -ι and -ο are the most learnable as a pattern, but still worth drilling explicitly for the common set
+- Masculine -ος endings are common but not universal — don't let learner over-generalise
+- Include a few "traps": nouns that look like they should be one gender but aren't (ο καφές looks like it should be neuter but is masculine)
