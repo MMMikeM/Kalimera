@@ -23,6 +23,14 @@ import {
 } from "../drill-engine";
 import { GENDER_STYLE } from "./drill-constants";
 
+// TODO: DimensionalDrill refactor
+// This component implements a full ~300-line state machine directly against drill-engine primitives.
+// The right abstraction is DimensionalDrill<D extends string> — a generic component parameterised
+// over an arbitrary set of selector dimensions (e.g. case | gender | number). It would reduce
+// this file to ~50 lines of data + config.
+// Flat-list drills (no paradigm selectors) use SimpleListDrill instead.
+// See: memory/components/SimpleListDrill.tsx for the flat-list counterpart.
+
 type ArticleCase = "nominative" | "accusative" | "genitive";
 type Gender = "masculine" | "feminine" | "neuter";
 type Num = "singular" | "plural";
