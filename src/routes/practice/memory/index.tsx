@@ -32,6 +32,48 @@ const PARADIGMS = [
 		preview: "στον, στην, στο, στους…",
 		color: "terracotta" as const,
 	},
+	{
+		id: "chunks",
+		title: "Survival Phrases",
+		forms: 24,
+		preview: "Γεια σου, Ευχαριστώ, Θα ήθελα…",
+		color: "honey" as const,
+	},
+	{
+		id: "noun-genders",
+		title: "Noun Genders",
+		forms: 30,
+		preview: "ο φίλος, η θάλασσα, το σπίτι…",
+		color: "honey" as const,
+	},
+	{
+		id: "numbers",
+		title: "Numbers",
+		forms: 28,
+		preview: "ένα, δύο, δέκα, είκοσι, τριάντα…",
+		color: "terracotta" as const,
+	},
+	{
+		id: "days-of-week",
+		title: "Days & Time",
+		forms: 14,
+		preview: "Δευτέρα, Τρίτη, χτες, αύριο…",
+		color: "olive" as const,
+	},
+	{
+		id: "aorist-stems",
+		title: "Aorist Stems",
+		forms: 15,
+		preview: "τρώω → έφαγα, πίνω → ήπια…",
+		color: "terracotta" as const,
+	},
+	{
+		id: "imperatives",
+		title: "Imperatives",
+		forms: 15,
+		preview: "Έλα!, Πες!, Δώσε!, Φέρε!…",
+		color: "terracotta" as const,
+	},
 ];
 
 const COLOR_STYLES = {
