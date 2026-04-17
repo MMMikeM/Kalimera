@@ -1,0 +1,58 @@
+# Aorist Stems — Memory Drill
+
+## Purpose
+
+Drill present→aorist stem mapping for suppletive and irregular verbs. These forms cannot be derived from the present stem — they must be memorised cold.
+
+Prompt format: present tense (English gloss) → aorist sg1
+Example: "eat (τρώω) → ?" → "έφαγα"
+
+## Why this belongs in memory drills
+
+Regular aorist (-σα pattern: δουλεύω→δούλεψα) can be computed from the present stem and does not belong here. Suppletive and irregular stems are arbitrary mappings. The learning sequence explicitly flags these as "must be memorised."
+
+## Phase 2 core set (Phase 2 prerequisite)
+
+| Present | Aorist sg1 | Stem type |
+|---------|------------|-----------|
+| τρώω    | έφαγα      | suppletive |
+| πίνω    | ήπια       | suppletive |
+| βλέπω   | είδα       | suppletive |
+| πηγαίνω / πάω | πήγα | suppletive |
+| λέω     | είπα       | suppletive |
+| έρχομαι | ήρθα       | suppletive |
+| κάνω    | έκανα      | irregular -κα |
+| παίρνω  | πήρα       | irregular |
+| φεύγω   | έφυγα      | irregular |
+| βρίσκω  | βρήκα      | irregular |
+| δίνω    | έδωσα      | irregular |
+| μαθαίνω | έμαθα      | irregular |
+| γράφω   | έγραψα     | -ψα (predictable but worth drilling) |
+| διαβάζω | διάβασα    | -σα (predictable but worth drilling) |
+| αγοράζω | αγόρασα    | -σα (predictable but worth drilling) |
+
+## Drill modes
+
+**Forward**: Given English meaning + present form → produce aorist sg1
+  - "eat (τρώω) → ?"  → "έφαγα"
+
+**Reverse**: Given aorist sg1 → identify present / English meaning
+  - "ήπια → ?"  → "πίνω / drink"
+
+## Grouping suggestion
+
+Allow user to filter by stem type:
+- Suppletive only (hardest, highest priority)
+- Irregular -κα/-γα
+- All (full set)
+
+## Time limits
+
+Forward: 5 seconds (production under pressure)
+Reverse: 4 seconds (recognition, slightly easier)
+
+## Notes
+
+- Drill as complete aorist sg1 forms, not "stems" — the augment is part of what must be recalled
+- Do not mix regular -σα verbs into the suppletive-only filter
+- Future forms (θα φάω, θα πιω) share the same stem — once aorist is learned, future comes almost free; note this in the post-session summary
