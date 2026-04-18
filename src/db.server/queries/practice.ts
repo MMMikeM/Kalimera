@@ -27,6 +27,7 @@ export {
 	type PracticeAttemptInsert,
 	type RecordAttemptInput,
 } from "./practice-attempts";
+export { getDrillStats, type DrillStat } from "./drill-stats";
 
 import { db } from "../index";
 import type { Vocabulary } from "../types";

@@ -57,6 +57,7 @@ export const practiceAttempts = sqliteTable(
 		userId: cascadeFk("user_id", () => users.id),
 		sessionId: nullableFk("session_id", () => practiceSessions.id),
 		vocabularyId: nullableFk("vocabulary_id", () => vocabulary.id),
+		drillId: nullableString("drill_id"),
 		questionText: string("question_text"),
 		correctAnswer: string("correct_answer"),
 		userAnswer: nullableString("user_answer"),
@@ -68,6 +69,7 @@ export const practiceAttempts = sqliteTable(
 		index("idx_practice_attempts_user").on(table.userId),
 		index("idx_practice_attempts_session").on(table.sessionId),
 		index("idx_practice_attempts_vocab").on(table.vocabularyId),
+		index("idx_practice_attempts_drill").on(table.userId, table.drillId, table.attemptedAt),
 	],
 );
 
