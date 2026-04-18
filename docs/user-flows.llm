@@ -9,11 +9,11 @@ Greek learning app with SRS-based vocabulary practice and timed production drill
 /login               Sign in (password or passkey)
 /register            Create account
 /try                 Anonymous drill (conversion flow)
-/practice            Redirects to /practice/speed
-/practice/speed      Timed mixed drills (with ?focus= filters)
-/practice/memory     Memory drill hub (articles, pronouns, possessives, contractions)
-/practice/memory/*   Individual memory drills (timed paradigm recall)
-/practice/:tab       SRS drills (vocabulary, review)
+/practice            Drill browser (grouped: articles · pronouns · verbs · blocks)
+/practice/vocab/*    DB-driven production drills (articles, pronouns, verbs, nouns)
+/practice/memory/*   Paradigm recall drills (13 drills across 4 groups)
+/practice/review     Weakest drills (last 14 days) + SRS vocabulary review
+/practice/vocabulary New vocabulary learning (SRS intro tab)
 /learn               Learn landing page (section cards)
 /learn/conversations Themed dialogues
 /learn/phrases       Common expressions
