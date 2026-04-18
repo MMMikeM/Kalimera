@@ -106,10 +106,11 @@ docs/
 
 ```
 /                    Dashboard
-/practice/speed      Timed mixed production drills
-/practice/memory     Memory drill hub
-/practice/review     SRS review queue
-/practice/vocabulary New vocabulary learning
+/practice            Drill browser (grouped: articles · pronouns · verbs · blocks)
+/practice/vocab/*    DB-driven production drills (articles, pronouns, verbs, nouns)
+/practice/memory/*   Paradigm recall drills (articles, pronouns, possessives, contractions, noun-genders, numbers, days-of-week, aorist-stems, imperatives, chunks)
+/practice/review     Weakest drills + SRS vocabulary review
+/practice/vocabulary New vocabulary learning (SRS intro)
 /learn               Content browser hub
 /learn/conversations Themed dialogues
 /learn/phrases       Common expressions
