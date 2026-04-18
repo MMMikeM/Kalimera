@@ -97,7 +97,7 @@ Split from cases-pronouns. Cases explain the SYSTEM, pronouns show it in ACTION.
   - Emphatic - after prepositions
 - Double object pattern
 - Common phrases with pronouns (collapsible)
-- Practice CTA linking to /practice/speed?focus=pronouns
+- Practice CTA linking to /practice/pronouns/object
 </displays>
 <note>
 Split from cases-pronouns. Progressive disclosure - cases first, then pronouns.
@@ -121,7 +121,7 @@ Split from cases-pronouns. Progressive disclosure - cases first, then pronouns.
 - Noun paradigms by gender (carousel)
 - Movable nu rule (-ν)
 - Common agreement mistakes (collapsible)
-- Practice CTA linking to /practice/speed?focus=articles
+- Practice CTA linking to /practice/articles/context
 </displays>
 </tab>
 
@@ -142,7 +142,7 @@ Split from cases-pronouns. Progressive disclosure - cases first, then pronouns.
   - Neuter: -ο, -ι, -μα patterns
 - Vocative changes (collapsible)
 - Common noun mistakes (collapsible)
-- Practice CTA linking to /practice/speed?focus=nouns
+- Practice CTA linking to /practice/articles/noun-cases
 </displays>
 </tab>
 
@@ -163,7 +163,7 @@ Split from cases-pronouns. Progressive disclosure - cases first, then pronouns.
 - Common adjectives list
 - Other patterns (collapsible)
 - Common mistakes (collapsible)
-- Practice CTA linking to /practice/speed?focus=adjectives
+- Practice CTA linking to /practice
 </displays>
 </tab>
 
@@ -186,7 +186,7 @@ Split from cases-pronouns. Progressive disclosure - cases first, then pronouns.
 - Common mistakes
 - Other prepositions (collapsible)
 - Compound prepositions (collapsible)
-- Practice CTA linking to /practice/speed?focus=prepositions
+- Practice CTA linking to /practice
 </displays>
 </tab>
 
@@ -208,7 +208,7 @@ Split from cases-pronouns. Progressive disclosure - cases first, then pronouns.
   - Deponent -μαι (έρχομαι family)
 - Other irregular verbs
 - Cross-link to /learn/verbs for browsing
-- Practice CTA linking to /practice/speed?focus=verbs
+- Practice CTA linking to /practice/verbs/present
 </displays>
 <note>
 This explains the conjugation SYSTEM. Verb vocabulary browsing is at /learn/verbs.
