@@ -90,7 +90,7 @@ export const sendNotification = async (
 				body,
 				url: options.url,
 				userId: options.userId,
-				quickSessionUrl: "/practice/speed?size=quick",
+				quickSessionUrl: "/practice?size=quick",
 			} as PushPayload & { userId?: number; quickSessionUrl?: string },
 			vapid,
 			{ ttl: 86400 },

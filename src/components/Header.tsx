@@ -15,7 +15,7 @@ import {
 import { useVocabularySearch } from "@/lib/use-vocabulary-search";
 
 const NAV_ITEMS_AUTH = [
-	{ id: "practice", label: "Practice", path: "/practice/speed", primary: true },
+	{ id: "practice", label: "Practice", path: "/practice", primary: true },
 	{ id: "learn", label: "Learn", path: "/learn" },
 	{ id: "reference", label: "Reference", path: "/reference" },
 ];
