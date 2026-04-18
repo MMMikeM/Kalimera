@@ -1,4 +1,4 @@
-import { SimpleListDrill, type SimpleListItem } from "./components/SimpleListDrill";
+import { SimpleListDrill, type SimpleListItem } from "../../engines/simple-list-drill";
 
 const IMPERATIVES: SimpleListItem[] = [
 	// Tier A — 5 most frequent, drill first
@@ -28,6 +28,7 @@ const CATEGORIES = [
 export default function ImperativesDrill() {
 	return (
 		<SimpleListDrill
+			drillId="verbs-imperatives"
 			items={IMPERATIVES}
 			title="Imperatives"
 			subtitle="15 forms / timed"

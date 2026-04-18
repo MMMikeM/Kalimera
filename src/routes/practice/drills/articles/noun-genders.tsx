@@ -1,5 +1,5 @@
-import { GENDER_STYLE } from "./drill-constants";
-import { SimpleListDrill, type SimpleListItem } from "./components/SimpleListDrill";
+import { GENDER_STYLE } from "../../engines/drill-constants";
+import { SimpleListDrill, type SimpleListItem } from "../../engines/simple-list-drill";
 
 // Forward: "house" → type "to spiti"  (article + noun, matchPhonetic handles "to spiti" → "το σπίτι")
 // Reverse: show "σπίτι" (reverseGreek strips article) → select M / F / N
@@ -55,12 +55,14 @@ const DIMENSION_OPTIONS = [
 export default function NounGendersDrill() {
 	return (
 		<SimpleListDrill
+			drillId="articles-noun-genders"
 			items={NOUNS}
 			title="Noun Genders"
 			subtitle="30 nouns / timed"
 			colorTheme="honey"
 			forwardTimeLimit={5000}
-			forwardDesc="English → article + noun (e.g. to spiti)"
+			forwardDesc="English → article + noun (e.g. το σπίτι)"
+			reverseLabel="Greek → Gender"
 			reverseDesc="Greek noun → select gender"
 			categories={CATEGORIES}
 			reverseDimension={{

@@ -1,8 +1,8 @@
 import { getAuthSession } from "@/lib/auth-cookie";
 
-import type { Route } from "./+types/verbs";
-import type { UnifiedAttemptResult } from "../components/unified-drill";
-import { VocabDrillPage } from "./components/VocabDrillPage";
+import type { Route } from "./+types/present";
+import type { UnifiedAttemptResult } from "../../components/unified-drill";
+import { VocabDrillPage } from "../../engines/vocab-drill";
 import { getVerbDrillQuestions } from "./data.server";
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
@@ -21,6 +21,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 export default function VerbsDrill({ loaderData }: Route.ComponentProps) {
 	return (
 		<VocabDrillPage
+			drillId="verbs-present"
 			category="verbs"
 			initialQuestions={loaderData.questions.length > 0 ? loaderData.questions : undefined}
 			wordTypeFilter="verb"

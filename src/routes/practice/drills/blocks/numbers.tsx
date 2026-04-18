@@ -1,4 +1,4 @@
-import { SimpleListDrill, type SimpleListItem } from "./components/SimpleListDrill";
+import { SimpleListDrill, type SimpleListItem } from "../../engines/simple-list-drill";
 
 const NUMBERS: SimpleListItem[] = [
 	// 1–10
@@ -43,6 +43,7 @@ const CATEGORIES = [
 export default function NumbersDrill() {
 	return (
 		<SimpleListDrill
+			drillId="blocks-numbers"
 			items={NUMBERS}
 			title="Numbers"
 			subtitle="28 forms / timed"

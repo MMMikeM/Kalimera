@@ -1,4 +1,4 @@
-import { SimpleListDrill, type SimpleListItem } from "./components/SimpleListDrill";
+import { SimpleListDrill, type SimpleListItem } from "../../engines/simple-list-drill";
 
 // Forward: "eat (τρώω)" → type aorist sg1 in greeklish → "efaga"
 // Reverse: show "έφαγα" → recall "τρώω → έφαγα" (self-assess)
@@ -30,6 +30,7 @@ const CATEGORIES = [
 export default function AoristStemsDrill() {
 	return (
 		<SimpleListDrill
+			drillId="verbs-aorist-stems"
 			items={AORIST_STEMS}
 			title="Aorist Stems"
 			subtitle="15 forms / timed"

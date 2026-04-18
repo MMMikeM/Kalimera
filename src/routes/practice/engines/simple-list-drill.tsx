@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { matchPhonetic } from "@/lib/greek-transliteration";
 import { Button } from "@/components/ui/button";
 
+import { useLogDrillAttempt } from "../hooks";
 import {
 	type Attempt,
 	ConfigShell,
@@ -21,7 +22,7 @@ import {
 	useCountdown,
 	useFocusOnActive,
 	useForwardKeyboard,
-} from "../../drill-engine";
+} from "./drill-engine";
 
 // ─── Public types ──────────────────────────────────────────────────────────────
 
@@ -46,9 +47,11 @@ export interface SimpleListDrillProps {
 	items: SimpleListItem[];
 	title: string;
 	subtitle: string;
+	drillId: string;
 	colorTheme?: "honey" | "terracotta" | "olive";
 	forwardTimeLimit?: number;
 	forwardDesc?: string;
+	reverseLabel?: string;
 	reverseDesc?: string;
 	// Renders filter buttons in config screen above mode selection.
 	categories?: Array<{ id: string; label: string }>;
@@ -77,14 +80,17 @@ export const SimpleListDrill = ({
 	items,
 	title,
 	subtitle,
+	drillId,
 	colorTheme = "honey",
 	forwardTimeLimit = 5000,
 	forwardDesc = "English meaning → Greek form",
+	reverseLabel = "Greek → English",
 	reverseDesc,
 	categories,
 	reverseDimension,
 }: SimpleListDrillProps) => {
 	const theme = THEME[colorTheme];
+	const logAttempt = useLogDrillAttempt(drillId);
 
 	// Session state
 	const [phase, setPhase] = useState<Phase>("config");
@@ -130,8 +136,16 @@ export const SimpleListDrill = ({
 			setLastAttempt(attempt);
 			setAttempts((prev) => [...prev, attempt]);
 			setPhase("feedback");
+			logAttempt({
+				prompt: mode === "forward" ? currentForm.english : (currentForm.reverseGreek ?? currentForm.greek),
+				correctAnswer: mode === "forward" ? currentForm.greek : currentForm.english,
+				userAnswer: mode === "forward" ? inputValueRef.current : isCorrect ? "self:correct" : "self:wrong",
+				isCorrect,
+				timeTaken,
+				weakAreaIdentifier: currentForm.id,
+			});
 		},
-		[currentForm],
+		[currentForm, mode, logAttempt],
 	);
 
 	const handleTimeout = useCallback(() => {
@@ -227,7 +241,7 @@ export const SimpleListDrill = ({
 				onStart={startDrill}
 				forwardLabel="English → Greek"
 				forwardDesc={forwardDesc}
-				reverseLabel="Greek → ?"
+				reverseLabel={reverseLabel}
 				reverseDesc={selfAssessReverseDesc}
 			>
 				{categories && (

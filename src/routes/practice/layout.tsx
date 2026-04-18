@@ -1,4 +1,4 @@
-import { Brain, Clock, Lightbulb, Zap } from "lucide-react";
+import { Clock, Dumbbell } from "lucide-react";
 import { Outlet, useLocation } from "react-router";
 
 import type { NavTab } from "@/components/NavTabs";
@@ -9,6 +9,8 @@ import type { Route } from "./+types/layout";
 import {
 	type ActionIntent,
 	actionHandlers,
+	type DrillStat,
+	getDrillStats,
 	getItemsDueForReview,
 	getNewVocabularyItems,
 	getPracticeStats,
@@ -39,13 +41,15 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 	let newVocabItems: VocabItemWithSkill[] = [];
 	let stats: PracticeStats | null = null;
 	let userName: string | null = null;
+	let drillStats: DrillStat[] = [];
 
 	if (userId) {
-		const [user, reviews, newItems, practiceStats] = await Promise.all([
+		const [user, reviews, newItems, practiceStats, drills] = await Promise.all([
 			getUserById(userId),
 			getItemsDueForReview(userId, "recognition", limit),
 			getNewVocabularyItems(userId, 20),
 			getPracticeStats(userId),
+			getDrillStats(userId),
 		]);
 		userName = user?.displayName ?? null;
 		reviewItems = reviews.map((r) => ({
@@ -55,9 +59,10 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 		}));
 		newVocabItems = newItems;
 		stats = practiceStats;
+		drillStats = drills;
 	}
 
-	return { reviewItems, newVocabItems, stats, userId, userName };
+	return { reviewItems, newVocabItems, stats, userId, userName, drillStats };
 };
 
 export const action = async ({ request }: Route.ActionArgs) => {
@@ -85,22 +90,10 @@ export const UserRequiredMessage = () => (
 
 const PRACTICE_TABS: NavTab[] = [
 	{
-		id: "vocab",
-		label: "Vocabulary",
-		icon: <Zap size={16} />,
+		id: "practice",
+		label: "Practice",
+		icon: <Dumbbell size={16} />,
 		color: "terracotta",
-	},
-	{
-		id: "grammar",
-		label: "Grammar",
-		icon: <Lightbulb size={16} />,
-		color: "honey",
-	},
-	{
-		id: "memory",
-		label: "Memory",
-		icon: <Brain size={16} />,
-		color: "olive",
 	},
 	{ id: "review", label: "Review", icon: <Clock size={16} />, color: "ocean" },
 ];
@@ -110,16 +103,17 @@ export default function PracticeLayout({ loaderData }: Route.ComponentProps) {
 	const location = useLocation();
 
 	const pathSegments = location.pathname.split("/").filter(Boolean);
-	const activeTab = pathSegments[1] || "vocab";
+	const activeTab = pathSegments[1] === "review" ? "review" : "practice";
 
 	return (
 		<div className="space-y-6">
 			<NavTabs
+				className="mx-auto max-w-md"
 				tabs={PRACTICE_TABS.map((tab) =>
 					tab.id === "review" && stats?.dueCount ? { ...tab, badge: stats.dueCount } : tab,
 				)}
 				activeTab={activeTab}
-				buildUrl={(tabId) => `/practice/${tabId}`}
+				buildUrl={(tabId) => (tabId === "practice" ? "/practice" : `/practice/${tabId}`)}
 			/>
 
 			<Outlet context={loaderData} />

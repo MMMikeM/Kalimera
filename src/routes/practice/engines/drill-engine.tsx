@@ -133,7 +133,7 @@ export const SummaryScreen = <T extends DrillForm>({
 		.slice(0, 5);
 
 	return (
-		<div className="max-w-xs px-6 py-8">
+		<div className="mx-auto max-w-xs px-6 py-8">
 			<h2 className="mb-8 font-serif text-2xl text-navy-text">Done</h2>
 
 			<div className="mb-10 space-y-6">
@@ -362,7 +362,7 @@ export const ConfigShell = ({
 	reverseDesc: string;
 	children: React.ReactNode;
 }) => (
-	<div className="max-w-sm px-6 py-8">
+	<div className="mx-auto max-w-sm px-6 py-8">
 		<h2 className="mb-1 font-serif text-2xl text-navy-text">{title}</h2>
 		<p className="mb-6 text-sm text-muted-foreground">{subtitle}</p>
 
@@ -455,7 +455,7 @@ export const DrillShell = ({
 			</span>
 		</div>
 
-		<div className="flex max-w-sm flex-col gap-10 px-6 pt-4 pb-6">{children}</div>
+		<div className="mx-auto flex max-w-sm flex-col gap-10 px-6 pt-4 pb-6">{children}</div>
 	</div>
 );
 

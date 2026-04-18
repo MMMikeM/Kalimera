@@ -14,26 +14,26 @@ export default [
 	// Practice - core loop
 	route("practice", "routes/practice/layout.tsx", [
 		index("routes/practice/index.tsx"),
-		...prefix("vocab", [
-			index("routes/practice/vocab/index.tsx"),
-			route("pronouns", "routes/practice/vocab/pronouns.tsx"),
-			route("articles", "routes/practice/vocab/articles.tsx"),
-			route("verbs", "routes/practice/vocab/verbs.tsx"),
-			route("nouns", "routes/practice/vocab/nouns.tsx"),
+		...prefix("articles", [
+			route("context", "routes/practice/drills/articles/context.tsx"),
+			route("paradigm", "routes/practice/drills/articles/paradigm.tsx"),
+			route("contractions", "routes/practice/drills/articles/contractions.tsx"),
+			route("noun-cases", "routes/practice/drills/articles/noun-cases.tsx"),
+			route("noun-genders", "routes/practice/drills/articles/noun-genders.tsx"),
 		]),
-		...prefix("grammar", [index("routes/practice/grammar/index.tsx")]),
-		...prefix("memory", [
-			index("routes/practice/memory/index.tsx"),
-			route("articles", "routes/practice/memory/articles.tsx"),
-			route("pronouns", "routes/practice/memory/pronouns.tsx"),
-			route("possessives", "routes/practice/memory/possessives.tsx"),
-			route("contractions", "routes/practice/memory/contractions.tsx"),
-			route("chunks", "routes/practice/memory/chunks.tsx"),
-			route("noun-genders", "routes/practice/memory/noun-genders.tsx"),
-			route("numbers", "routes/practice/memory/numbers.tsx"),
-			route("days-of-week", "routes/practice/memory/days-of-week.tsx"),
-			route("aorist-stems", "routes/practice/memory/aorist-stems.tsx"),
-			route("imperatives", "routes/practice/memory/imperatives.tsx"),
+		...prefix("pronouns", [
+			route("object", "routes/practice/drills/pronouns/object.tsx"),
+			route("possessives", "routes/practice/drills/pronouns/possessives.tsx"),
+		]),
+		...prefix("verbs", [
+			route("present", "routes/practice/drills/verbs/present.tsx"),
+			route("aorist-stems", "routes/practice/drills/verbs/aorist-stems.tsx"),
+			route("imperatives", "routes/practice/drills/verbs/imperatives.tsx"),
+		]),
+		...prefix("blocks", [
+			route("chunks", "routes/practice/drills/blocks/chunks.tsx"),
+			route("numbers", "routes/practice/drills/blocks/numbers.tsx"),
+			route("days-of-week", "routes/practice/drills/blocks/days-of-week.tsx"),
 		]),
 		route(":tab", "routes/practice/$tab.tsx"),
 	]),
