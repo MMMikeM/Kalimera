@@ -10,11 +10,12 @@ import UnifiedDrill, {
 	type SessionStats,
 	type UnifiedAttemptResult,
 	type UnifiedQuestion,
-} from "../../components/unified-drill";
-import type { PracticeLoaderData } from "../../layout";
+} from "../components/unified-drill";
+import type { PracticeLoaderData } from "../layout";
 
 interface VocabDrillPageProps {
 	category: keyof typeof CATEGORY_CONFIG;
+	drillId: string;
 	initialQuestions?: DrillQuestion[];
 	wordTypeFilter?: string;
 	weakAreaType?: string;
@@ -23,6 +24,7 @@ interface VocabDrillPageProps {
 
 export function VocabDrillPage({
 	category,
+	drillId,
 	initialQuestions,
 	wordTypeFilter,
 	weakAreaType,
@@ -75,6 +77,7 @@ export function VocabDrillPage({
 					intent: "recordAttempt",
 					userId: userId.toString(),
 					sessionId: sessionIdRef.current?.toString() ?? "",
+					drillId,
 					questionText: attempt.prompt,
 					correctAnswer: attempt.correctGreek,
 					userAnswer: attempt.userAnswer,
@@ -88,7 +91,7 @@ export function VocabDrillPage({
 				{ method: "post", action: "/practice" },
 			);
 		},
-		[userId, fetcher, weakAreaType, getWeakAreaIdentifier],
+		[userId, fetcher, drillId, weakAreaType, getWeakAreaIdentifier],
 	);
 
 	const handleComplete = useCallback(

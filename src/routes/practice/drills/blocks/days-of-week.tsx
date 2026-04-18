@@ -1,4 +1,4 @@
-import { SimpleListDrill, type SimpleListItem } from "./components/SimpleListDrill";
+import { SimpleListDrill, type SimpleListItem } from "../../engines/simple-list-drill";
 
 const DAYS: SimpleListItem[] = [
 	// Days of the week
@@ -27,6 +27,7 @@ const CATEGORIES = [
 export default function DaysOfWeekDrill() {
 	return (
 		<SimpleListDrill
+			drillId="blocks-days-of-week"
 			items={DAYS}
 			title="Days & Time"
 			subtitle="14 forms / timed"

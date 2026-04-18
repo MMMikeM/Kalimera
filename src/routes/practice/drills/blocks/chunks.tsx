@@ -1,4 +1,4 @@
-import { SimpleListDrill, type SimpleListItem } from "./components/SimpleListDrill";
+import { SimpleListDrill, type SimpleListItem } from "../../engines/simple-list-drill";
 
 const CHUNKS: SimpleListItem[] = [
 	// Social ritual — drill first, most automatic in real conversation
@@ -39,6 +39,7 @@ const CATEGORIES = [
 export default function ChunksDrill() {
 	return (
 		<SimpleListDrill
+			drillId="blocks-chunks"
 			items={CHUNKS}
 			title="Survival Phrases"
 			subtitle="24 phrases / timed"

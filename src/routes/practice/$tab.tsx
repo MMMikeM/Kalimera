@@ -1,21 +1,14 @@
-import { redirect } from "react-router";
-
 import type { Route } from "./+types/$tab";
 import { ReviewTab } from "./tabs/review";
 import { VocabularyTab } from "./tabs/vocabulary";
 
 export { action } from "./layout";
 
-const LEGACY_TABS = ["pronouns", "articles", "verbs", "nouns"] as const;
 const VALID_TABS = ["vocabulary", "review"] as const;
 type TabId = (typeof VALID_TABS)[number];
 
 export function loader({ params }: Route.LoaderArgs) {
 	const tab = params.tab as string;
-
-	if (LEGACY_TABS.includes(tab as (typeof LEGACY_TABS)[number])) {
-		throw redirect("/practice/speed");
-	}
 
 	if (!VALID_TABS.includes(tab as TabId)) {
 		throw new Response("Not Found", { status: 404 });
