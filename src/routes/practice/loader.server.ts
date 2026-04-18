@@ -4,6 +4,8 @@ import { zfd } from "zod-form-data";
 import {
 	type CompleteSessionInput,
 	completeSession,
+	type DrillStat,
+	getDrillStats,
 	getItemsDueForReview,
 	getNewVocabularyItems,
 	getPracticeStats,
@@ -26,6 +28,7 @@ import type { AreaType, SkillType } from "@/db.server/schema";
 export {
 	completeSession,
 	getAllUsers,
+	getDrillStats,
 	getItemsDueForReview,
 	getNewVocabularyItems,
 	getPracticeStats,
@@ -35,6 +38,7 @@ export {
 	recordAttempt,
 	startSession,
 	type CompleteSessionInput,
+	type DrillStat,
 	type PracticeSessionInsert,
 	type PracticeStats,
 	type RecordAttemptInput,
@@ -107,6 +111,7 @@ const recordAttemptSchema = zfd.formData({
 		.default("recognition"),
 	weakAreaType: zfd.text(z.enum(["case", "gender", "verb_family"]).optional()).optional(),
 	weakAreaIdentifier: zfd.text(z.string().optional()).optional(),
+	drillId: zfd.text(z.string().optional()).optional(),
 });
 
 const completeSessionSchema = zfd.formData({
@@ -140,6 +145,7 @@ export const actionHandlers = {
 			userId: data.userId,
 			sessionId: data.sessionId,
 			vocabularyId: data.vocabularyId,
+			drillId: data.drillId,
 			questionText: data.questionText,
 			correctAnswer: data.correctAnswer,
 			userAnswer: data.userAnswer,
