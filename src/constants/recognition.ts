@@ -1,79 +1,82 @@
-// Quick case recognition patterns
-export const CASE_RECOGNITION = {
-	patterns: [
-		{
-			pattern: "Articles ending in -ν",
-			rule: "Usually accusative",
-			examples: ["τον", "την", "τους"],
-		},
-		{
-			pattern: "Same form nom/acc",
-			rule: "Neuter nouns",
-			examples: ["το σπίτι", "το παιδί", "το τραπέζι"],
-		},
-		{
-			pattern: "Articles του/της/των",
-			rule: "Always genitive",
-			examples: ["του πατέρα", "της μητέρας", "των παιδιών"],
-		},
-	],
-	quickSpotCheck: [
-		{
-			pattern: "Ends in -ν?",
-			meaning: "Probably accusative object",
-			examples: ["βλέπω τον καφέ", "αγοράζω την εφημερίδα"],
-		},
-		{
-			pattern: "After στο/στη/στον?",
-			meaning: "Going somewhere (accusative)",
-			examples: ["πηγαίνω στο σπίτι", "στη δουλειά"],
-		},
-		{
-			pattern: '"του/της + name"?',
-			meaning: "Belongs to them (genitive)",
-			examples: ["της Μαρίας", "του Νίκου"],
-		},
-		{
-			pattern: "After με/από/για?",
-			meaning: "These prepositions = accusative",
-			examples: ["με τον φίλο", "από το σπίτι"],
-		},
-		{
-			pattern: "Time expressions?",
-			meaning: "Usually accusative",
-			examples: ["τη Δευτέρα", "το πρωί"],
-		},
-	],
-	quickRules: [
-		{
-			question: "WHO does it?",
-			answer: "Nominative",
-			example: "ο Γιάννης τρέχει",
-			translation: "Giannis runs",
-			highlight: "ο Γιάννης",
-		},
-		{
-			question: "WHOM/WHAT do I [verb]?",
-			answer: "Accusative",
-			example: "βλέπω τον Γιάννη",
-			translation: "I see Giannis",
-			highlight: "τον Γιάννη",
-		},
-		{
-			question: "WHOSE is it?",
-			answer: "Genitive",
-			example: "το σπίτι του Γιάννη",
-			translation: "Giannis's house",
-			highlight: "του Γιάννη",
-		},
-	],
-	// Vocative is less common - kept separate for progressive disclosure
-	vocativeRule: {
-		question: "Calling someone?",
-		answer: "Vocative",
-		example: "Γιάννη! Έλα!",
-		translation: "Giannis! Come!",
-		highlight: "Γιάννη",
-		note: "Names/nouns change when calling someone directly",
+// Case recognition — trigger-based teaching, no English grammar prerequisite.
+// The learner recognises cases by article shape and trigger words, not by
+// asking "what is the subject?" — because that question presumes metalanguage
+// we can't assume they have.
+
+export type CaseName = "Nominative" | "Accusative" | "Genitive";
+
+export interface CaseRole {
+	role: "Doer" | "Target" | "Owner";
+	description: string;
+	caseName: CaseName;
+	example: string;
+	translation: string;
+	articles: string[];
+}
+
+export interface CaseTrigger {
+	pattern: string;
+	caseName: CaseName;
+	meaning: string;
+	examples: string[];
+}
+
+export const CASE_ROLES: CaseRole[] = [
+	{
+		role: "Doer",
+		description: "who's doing the action",
+		caseName: "Nominative",
+		example: "ο καφές είναι ζεστός",
+		translation: "the coffee is hot",
+		articles: ["ο", "η", "το", "οι", "τα"],
 	},
-};
+	{
+		role: "Target",
+		description: "what the action touches, or after a preposition",
+		caseName: "Accusative",
+		example: "θέλω τον καφέ",
+		translation: "I want the coffee",
+		articles: ["τον", "την", "το", "τους", "τις", "τα"],
+	},
+	{
+		role: "Owner",
+		description: "whose something is",
+		caseName: "Genitive",
+		example: "η μυρωδιά του καφέ",
+		translation: "the smell of the coffee",
+		articles: ["του", "της", "των"],
+	},
+];
+
+export const CASE_TRIGGERS: CaseTrigger[] = [
+	{
+		pattern: "After στο / στη / στον / σε",
+		caseName: "Accusative",
+		meaning: "going to, at somewhere",
+		examples: ["πηγαίνω στο σπίτι", "στη δουλειά"],
+	},
+	{
+		pattern: "After με / από / για",
+		caseName: "Accusative",
+		meaning: "with, from, for",
+		examples: ["με τον φίλο", "από το σπίτι"],
+	},
+	{
+		pattern: "Time expressions",
+		caseName: "Accusative",
+		meaning: "when something happens",
+		examples: ["τη Δευτέρα", "το πρωί"],
+	},
+	{
+		pattern: "Before μου / σου / του / της",
+		caseName: "Genitive",
+		meaning: "my, your, his, her",
+		examples: ["το σπίτι μου", "η αδερφή της"],
+	},
+	{
+		pattern: "After του / της + name",
+		caseName: "Genitive",
+		meaning: "belongs to someone",
+		examples: ["της Μαρίας", "του Νίκου"],
+	},
+];

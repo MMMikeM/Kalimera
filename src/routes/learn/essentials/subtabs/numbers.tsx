@@ -70,7 +70,7 @@ export function NumbersSubtab({ data }: Props) {
 			>
 				<div className="divide-y divide-stone-200/60">
 					{/* Header row */}
-					<div className="grid grid-cols-[1fr_1fr] gap-4 bg-ocean-100/50 px-3 py-2">
+					<div className="grid grid-cols-2 gap-4 bg-ocean-100/50 px-3 py-2">
 						<span className="text-xs font-medium tracking-wide text-ocean-text uppercase">
 							Units
 						</span>
@@ -81,7 +81,7 @@ export function NumbersSubtab({ data }: Props) {
 
 					{/* Zero special case */}
 					{zero && (
-						<div className="grid grid-cols-[1fr_1fr] gap-4 px-3 py-2.5">
+						<div className="grid grid-cols-2 gap-4 px-3 py-2.5">
 							<div>
 								<MonoText variant="greek">{zero.greekText}</MonoText>
 								<div className="text-xs text-stone-500">{zero.englishTranslation}</div>
@@ -96,7 +96,7 @@ export function NumbersSubtab({ data }: Props) {
 						const tenNum = numberByValue.get(ten);
 
 						return (
-							<div key={unit} className="grid grid-cols-[1fr_1fr] gap-4 px-3 py-2.5">
+							<div key={unit} className="grid grid-cols-2 gap-4 px-3 py-2.5">
 								{/* Unit column */}
 								<div>
 									{unitNum ? (
@@ -139,6 +139,7 @@ export function NumbersSubtab({ data }: Props) {
 					{teens.map((number) => (
 						<div
 							key={number.id}
+							// eslint-disable-next-line better-tailwindcss/no-restricted-classes -- 60/40 layout, no token fit
 							className="grid grid-cols-[3fr_2fr] items-center gap-x-3 px-3 py-2.5"
 						>
 							<MonoText variant="greek">{highlightTeenPattern(number.greekText)}</MonoText>
