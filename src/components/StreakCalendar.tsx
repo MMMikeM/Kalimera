@@ -17,7 +17,7 @@ import { useState } from "react";
 
 import { cn } from "@/lib/utils";
 
-export interface StreakCalendarProps {
+interface StreakCalendarProps {
 	practiceDates: string[];
 	freezeDates?: string[];
 	currentStreak: number;

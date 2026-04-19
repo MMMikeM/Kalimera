@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { Card } from "@/components/Card";
 import { cn } from "@/lib/utils";
 
-export interface NavigatorCardProps {
+interface NavigatorCardProps {
 	title: string;
 	subtitle?: ReactNode;
 	layout?: "grid" | "stack";
@@ -42,7 +42,7 @@ export const NavigatorCard = ({
 	</Card>
 );
 
-export interface NavigatorCellProps {
+interface NavigatorCellProps {
 	className?: string;
 	children: ReactNode;
 }

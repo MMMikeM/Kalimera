@@ -16,7 +16,7 @@ const paddingStyles = {
 	lg: "px-6 py-6",
 };
 
-export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
 	variant?: "default" | "bordered" | "shadow" | "elevated";
 	padding?: "none" | "sm" | "md" | "lg";
 	hover?: boolean;

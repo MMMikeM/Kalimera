@@ -5,7 +5,7 @@ import { db } from "../index";
 import { milestonesAchieved } from "../schema";
 
 const milestoneAchievedInsertSchema = createInsertSchema(milestonesAchieved);
-export type MilestoneAchievedInsert = z.infer<typeof milestoneAchievedInsertSchema>;
+type MilestoneAchievedInsert = z.infer<typeof milestoneAchievedInsertSchema>;
 
 export const getUserMilestones = async (userId: number) => {
 	return await db.query.milestonesAchieved.findMany({

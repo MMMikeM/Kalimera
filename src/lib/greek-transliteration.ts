@@ -105,11 +105,11 @@ export const greekToPhonetic = (greek: string): string => {
  * - Trim whitespace
  * - Collapse multiple spaces
  */
-export const normalizeInput = (input: string): string => {
+const normalizeInput = (input: string): string => {
 	return input.toLowerCase().trim().replace(/\s+/g, " ");
 };
 
-export interface PhoneticMatchResult {
+interface PhoneticMatchResult {
 	isCorrect: boolean;
 	userPhonetic: string;
 	correctPhonetic: string;

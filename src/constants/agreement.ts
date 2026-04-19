@@ -724,7 +724,7 @@ export const AGREEMENT_PARADIGMS: AgreementParadigm[] = [
 ];
 
 // Agreement mistakes - common errors learners make
-export interface AgreementMistake {
+interface AgreementMistake {
 	wrong: string;
 	correct: string;
 	explanation: string;

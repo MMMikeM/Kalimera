@@ -4,7 +4,7 @@
  */
 
 export {
-	applyVocabularySkillSideEffect,
+	
 	getItemsDueForReview,
 	getItemsDueTomorrow,
 	getPracticeStats,
@@ -13,18 +13,18 @@ export {
 export { getWeakAreas } from "./weak-areas";
 export {
 	completeSession,
-	getCompletedPracticeAtDatesForStreak,
+	
 	getLastPracticeDate,
 	startSession,
 	type CompleteSessionInput,
-	type CompleteSessionPatch,
+	
 	type PracticeSessionInsert,
 	type StartSessionInput,
 } from "./practice-sessions";
 export {
 	recordAttempt,
-	recordAttemptInputSchema,
-	type PracticeAttemptInsert,
+	
+	
 	type RecordAttemptInput,
 } from "./practice-attempts";
 export { getDrillStats, type DrillStat } from "./drill-stats";

@@ -6,7 +6,7 @@ type WeakAreaInsertCore = Pick<
 	"userId" | "areaType" | "areaIdentifier" | "mistakeCount" | "needsFocus"
 >;
 
-export type WeakAreaCommand =
+type WeakAreaCommand =
 	| { kind: "delete"; id: number }
 	| {
 			kind: "update";

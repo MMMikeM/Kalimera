@@ -279,7 +279,7 @@ export const ADJECTIVE_AGREEMENT_EXAMPLES: AgreementExample[] = [
 ];
 
 // Common adjective mistakes
-export interface AdjectiveMistake {
+interface AdjectiveMistake {
 	wrong: string;
 	correct: string;
 	explanation: string;

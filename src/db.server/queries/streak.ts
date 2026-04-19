@@ -4,7 +4,7 @@ import type { User } from "../types";
 
 const getHoursSince = (date: Date): number => differenceInHours(new Date(), date);
 
-export const STREAK_CONFIG = {
+const STREAK_CONFIG = {
 	DAYS_TO_EARN_FREEZE: 7,
 	MAX_FREEZES: 3,
 	RECOVERY_HOURS: 24,

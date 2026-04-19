@@ -3,9 +3,9 @@ import { tv, type VariantProps } from "tailwind-variants";
 
 import { cn } from "@/lib/utils";
 
-export type FreezeStatus = "available" | "recovering" | "none" | "just_used";
+type FreezeStatus = "available" | "recovering" | "none" | "just_used";
 
-export interface FreezeIndicatorProps {
+interface FreezeIndicatorProps {
 	freezeCount: number;
 	status: FreezeStatus;
 	hoursUntilRecovery?: number;
@@ -127,4 +127,4 @@ export const FreezeIndicator = ({
 	);
 };
 
-export type { VariantProps };
+;

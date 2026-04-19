@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { type GrammarScheme, SCHEME } from "@/constants/grammar-palette";
 import { cn } from "@/lib/utils";
 
-export interface CalloutProps {
+interface CalloutProps {
 	scheme: GrammarScheme;
 	title?: ReactNode;
 	icon?: ReactNode;

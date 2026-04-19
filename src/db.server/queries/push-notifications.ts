@@ -6,7 +6,7 @@ import { db } from "../index";
 import { notificationLogs, pushSubscriptions } from "../schema";
 
 const pushSubscriptionInsertSchema = createInsertSchema(pushSubscriptions);
-export type PushSubscriptionInsert = z.infer<typeof pushSubscriptionInsertSchema>;
+type PushSubscriptionInsert = z.infer<typeof pushSubscriptionInsertSchema>;
 
 const notificationLogInsertSchema = createInsertSchema(notificationLogs);
 type NotificationLogInsert = z.infer<typeof notificationLogInsertSchema>;
@@ -38,7 +38,7 @@ export const setTaperOfferPending = async (userId: number, pending: boolean) => 
 };
 export type TappedAction = "2min" | "body" | "snooze";
 
-export type UpsertPushSubscriptionInput = Pick<
+type UpsertPushSubscriptionInput = Pick<
 	PushSubscriptionInsert,
 	"userId" | "endpoint" | "p256dh" | "auth"
 >;
@@ -67,7 +67,7 @@ export const snoozePushSubscription = async (userId: number) => {
 		.where(eq(pushSubscriptions.userId, userId));
 };
 
-export type LogNotificationSentInput = Pick<NotificationLogInsert, "userId" | "type">;
+type LogNotificationSentInput = Pick<NotificationLogInsert, "userId" | "type">;
 
 export const logNotificationSent = async (data: LogNotificationSentInput) => {
 	await db.insert(notificationLogs).values({ ...data, sentAt: new Date() });

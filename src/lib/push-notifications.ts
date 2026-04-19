@@ -75,7 +75,7 @@ const utcCalendarDayIndex = (d: Date): number =>
 /**
  * Send a push notification to a specific subscription
  */
-export const sendNotification = async (
+const sendNotification = async (
 	subscription: PushSubscriptionData,
 	title: string,
 	body: string,
@@ -253,7 +253,7 @@ const STREAK_WARNING_COPY: NotificationCopy[] = [
 	},
 ];
 
-export const selectCopy = (
+const selectCopy = (
 	userId: number,
 	dueCount: number,
 	streak: number,

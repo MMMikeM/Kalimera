@@ -4,7 +4,7 @@ import { Card } from "@/components/Card";
 import { type GrammarScheme, SCHEME } from "@/constants/grammar-palette";
 import { cn } from "@/lib/utils";
 
-export interface TeachingCardProps {
+interface TeachingCardProps {
 	scheme: GrammarScheme;
 	eyebrow?: string;
 	title: ReactNode;

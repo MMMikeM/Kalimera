@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 
 import { MonoText } from "./MonoText";
 
-export interface ConversationHeroProps {
+interface ConversationHeroProps {
 	icon: React.ReactNode;
 	title: string;
 	greekPhrase: string;

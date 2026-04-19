@@ -1,7 +1,7 @@
-export type Group = "articles" | "pronouns" | "verbs" | "blocks";
-export type Mode = "type" | "paradigm" | "chunk";
+type Group = "articles" | "pronouns" | "verbs" | "blocks";
+type Mode = "type" | "paradigm" | "chunk";
 
-export interface Drill {
+interface Drill {
 	id: string;
 	href: string;
 	title: string;
