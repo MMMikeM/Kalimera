@@ -134,7 +134,7 @@ export function ColoursSubtab({ data }: Props) {
 			<ContentSection title="Modifiers" subtitle="Describing shades" colorScheme="honey">
 				<div className="divide-y divide-stone-200/60">
 					{MODIFIERS.map((mod) => (
-						<div key={mod.greek} className="grid grid-cols-[1fr_1fr] gap-x-3 px-3 py-2.5">
+						<div key={mod.greek} className="grid grid-cols-2 gap-x-3 px-3 py-2.5">
 							<MonoText variant="greek">{mod.greek}</MonoText>
 							<span className="text-sm text-stone-500">{mod.english}</span>
 						</div>
