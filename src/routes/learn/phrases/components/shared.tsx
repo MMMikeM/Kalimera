@@ -1,5 +1,3 @@
-import React from "react";
-
 import { type ContentColorScheme, ContentSection } from "@/components/ContentSection";
 import { MonoText } from "@/components/MonoText";
 import { cn } from "@/lib/utils";
@@ -28,7 +26,7 @@ export const PhraseItemDisplay: React.FC<{
 	variant?: "default" | "highlighted";
 	colorScheme?: ContentColorScheme;
 }> = ({ greek, english, variant = "default", colorScheme = "honey" }) => (
-	<div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] items-center gap-x-4 py-2.5 pl-3">
+	<div className="grid grid-cols-2 items-center gap-x-4 py-2.5 pl-3">
 		<MonoText
 			variant={variant}
 			size="md"
@@ -40,21 +38,13 @@ export const PhraseItemDisplay: React.FC<{
 	</div>
 );
 
-export const PhraseSection: React.FC<{
+const PhraseSection: React.FC<{
 	title: string;
 	colorScheme: ContentColorScheme;
 	children: React.ReactNode;
 }> = ({ title, colorScheme, children }) => (
 	<ContentSection title={title} colorScheme={colorScheme}>
-		<div className="divide-y divide-stone-200/60">
-			{React.Children.map(children, (child) =>
-				React.isValidElement(child)
-					? React.cloneElement(child as React.ReactElement<{ colorScheme?: ContentColorScheme }>, {
-							colorScheme,
-						})
-					: child,
-			)}
-		</div>
+		<div className="divide-y divide-stone-200/60">{children}</div>
 	</ContentSection>
 );
 
@@ -77,6 +67,7 @@ export function PhraseList({
 					key={phrase.id}
 					greek={phrase.greekText}
 					english={phrase.englishTranslation}
+					colorScheme={colorScheme}
 				/>
 			))}
 		</PhraseSection>
