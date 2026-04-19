@@ -12,12 +12,14 @@ import type React from "react";
 import { Link } from "react-router";
 
 import { Card } from "@/components/Card";
+import { Callout, NavigatorCard, NavigatorCell, TeachingCard } from "@/components/cards";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
 import { ContentSection } from "@/components/ContentSection";
 import { MonoText } from "@/components/MonoText";
 import { ParadigmTable } from "@/components/ParadigmTable";
 import { SectionHeading } from "@/components/SectionHeading";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { type GrammarScheme, SCHEME } from "@/constants/grammar-palette";
 import { IRREGULAR_VERBS, VERB_PATTERNS } from "@/constants/verbs";
 
 interface UsageExample {
@@ -86,13 +88,13 @@ const USAGE_EXAMPLES: Record<string, UsageExample[]> = {
 
 const UsageExamples: React.FC<{
 	examples: UsageExample[];
-	config: PatternConfig;
-}> = ({ examples, config }) => (
+	textClass: string;
+}> = ({ examples, textClass }) => (
 	<div className="space-y-3">
 		{examples.map((ex) => (
 			<div key={ex.greek} className="space-y-1">
 				<div className="flex items-baseline gap-2">
-					<MonoText className={`${config.textClass} text-base font-bold`}>{ex.verb}</MonoText>
+					<MonoText className={`${textClass} text-base font-bold`}>{ex.verb}</MonoText>
 					<span className="text-sm text-stone-500">{ex.formNote}</span>
 				</div>
 				<div className="border-l-2 border-stone-200 pl-2">
@@ -106,12 +108,12 @@ const UsageExamples: React.FC<{
 
 const SamePatternList: React.FC<{
 	verbs: Array<{ infinitive: string; meaning: string }>;
-	config: PatternConfig;
-}> = ({ verbs, config }) => (
+	textClass: string;
+}> = ({ verbs, textClass }) => (
 	<div className="divide-y divide-stone-100">
 		{verbs.map((v) => (
 			<div key={v.infinitive} className="flex items-baseline gap-2 py-2 first:pt-0 last:pb-0">
-				<MonoText className={`${config.textClass} font-semibold`}>{v.infinitive}</MonoText>
+				<MonoText className={`${textClass} font-semibold`}>{v.infinitive}</MonoText>
 				<span className="text-sm text-stone-600">({v.meaning})</span>
 				<span className="ml-auto text-xs text-stone-400">same endings</span>
 			</div>
@@ -119,177 +121,138 @@ const SamePatternList: React.FC<{
 	</div>
 );
 
-type PatternConfig = {
-	key: "active" | "contracted" | "deponent";
-	icon: React.ReactNode;
+type PatternKey = "active" | "contracted" | "deponent";
+
+// TODO(local-axis): verb-pattern family is a page-local axis (active /
+// contracted / deponent). Currently neutralised because reusing case-identity
+// colours (ocean / terracotta / olive) here would lie about the grammatical
+// value of the verb paradigm. Introduce a dedicated local-axis palette if the
+// signal loss turns out to hurt learners.
+interface PatternMeta {
 	ending: string;
-	bgClass: string;
-	borderClass: string;
-	textClass: string;
-	badgeBg: string;
-};
+	displayName: string;
+	scheme: GrammarScheme;
+}
 
-const PATTERN_CONFIGS: Record<string, PatternConfig> = {
-	active: {
-		key: "active",
-		icon: <Zap size={20} />,
-		ending: "-ω",
-		bgClass: "bg-ocean-100",
-		borderClass: "border-ocean-400",
-		textClass: "text-ocean-text",
-		badgeBg: "bg-ocean-300",
-	},
-	contracted: {
-		key: "contracted",
-		icon: <Sparkles size={20} />,
-		ending: "-άω/-ώ",
-		bgClass: "bg-terracotta-100",
-		borderClass: "border-terracotta-400",
-		textClass: "text-terracotta-text",
-		badgeBg: "bg-terracotta-200",
-	},
-	deponent: {
-		key: "deponent",
-		icon: <RefreshCw size={20} />,
-		ending: "-μαι",
-		bgClass: "bg-olive-100",
-		borderClass: "border-olive-400",
-		textClass: "text-olive-text",
-		badgeBg: "bg-olive-200",
-	},
-};
-
-const COLOR_SCHEME_MAP: Record<string, "ocean" | "terracotta" | "olive"> = {
-	active: "ocean",
-	contracted: "terracotta",
-	deponent: "olive",
+const PATTERN_META: Record<PatternKey, PatternMeta> = {
+	active: { ending: "-ω", displayName: "Active", scheme: "neutral" },
+	contracted: { ending: "-άω/-ώ", displayName: "Contracted", scheme: "neutral" },
+	deponent: { ending: "-μαι", displayName: "Deponent", scheme: "neutral" },
 };
 
 const PatternSection: React.FC<{
-	patternKey: "active" | "contracted" | "deponent";
+	patternKey: PatternKey;
 	pattern: (typeof VERB_PATTERNS)[keyof typeof VERB_PATTERNS];
 }> = ({ patternKey, pattern }) => {
-	const config = PATTERN_CONFIGS[patternKey];
-	if (!config) return null;
-
-	const colorScheme = COLOR_SCHEME_MAP[patternKey];
+	const meta = PATTERN_META[patternKey];
+	const style = SCHEME[meta.scheme];
 
 	return (
-		<Card
-			variant="bordered"
-			padding="lg"
-			className={`${config.bgClass} border-2 ${config.borderClass}`}
+		<TeachingCard
+			scheme={meta.scheme}
+			title={meta.displayName}
+			badge={<span className={`font-mono text-base ${style.text}`}>{meta.ending}</span>}
+			description={pattern.description}
 		>
-			{/* Simplified header - ending as primary anchor */}
-			<div className="mb-4 flex items-center gap-3">
-				<span className={`font-mono text-3xl font-bold ${config.textClass}`}>{config.ending}</span>
-				<div className="min-w-0 flex-1">
-					<h3 className="font-semibold text-stone-800">
-						{pattern.name.replace(` (${config.ending})`, "")}
-					</h3>
-					<p className="text-xs text-stone-600">{pattern.description}</p>
-				</div>
-			</div>
-
-			{/* Paradigm Table */}
-			<div className="mb-3 rounded-lg border border-stone-200 bg-white p-4 shadow-sm">
+			<div className="rounded-lg border border-stone-200 bg-white p-4 shadow-sm">
 				<ParadigmTable
 					stem={pattern.canonical.stem}
 					meaning={pattern.canonical.meaning}
 					infinitive={pattern.canonical.infinitive}
 					forms={pattern.canonical.forms}
-					endingClassName={`${config.textClass} font-bold`}
+					endingClassName={`${style.text} font-bold`}
 					showHeaders={true}
 					fadeStem={true}
 				/>
 			</div>
 
-			{/* Collapsible: Same pattern */}
-			<CollapsibleSection
-				title={`Same pattern (${pattern.samePattern.length})`}
-				colorScheme={colorScheme}
-				defaultOpen={false}
-				className="mb-2"
-			>
-				<SamePatternList verbs={pattern.samePattern} config={config} />
-			</CollapsibleSection>
+			<div className="mt-3">
+				<CollapsibleSection
+					title={`Same pattern (${pattern.samePattern.length})`}
+					colorScheme="stone"
+					defaultOpen={false}
+					className="mb-2"
+				>
+					<SamePatternList verbs={pattern.samePattern} textClass={style.text} />
+				</CollapsibleSection>
 
-			{/* Collapsible: In context */}
-			<CollapsibleSection title="See it in action" colorScheme={colorScheme} defaultOpen={false}>
-				<UsageExamples examples={USAGE_EXAMPLES[patternKey] ?? []} config={config} />
-			</CollapsibleSection>
-		</Card>
+				<CollapsibleSection
+					title="See it in action"
+					colorScheme="stone"
+					defaultOpen={false}
+				>
+					<UsageExamples examples={USAGE_EXAMPLES[patternKey] ?? []} textClass={style.text} />
+				</CollapsibleSection>
+			</div>
+		</TeachingCard>
 	);
 };
 
+interface PatternRow {
+	icon: React.ReactNode;
+	ending: string;
+	name: string;
+	examples: string[];
+	scheme: GrammarScheme;
+}
+
+// TODO(local-axis): see PatternMeta above.
+const PATTERN_ROWS: PatternRow[] = [
+	{ icon: <Zap size={18} />, ending: "-ω", name: "Active", examples: ["κάνω", "θέλω"], scheme: "neutral" },
+	{
+		icon: <Sparkles size={18} />,
+		ending: "-άω/-ώ",
+		name: "Contracted",
+		examples: ["μιλάω", "αγαπάω"],
+		scheme: "neutral",
+	},
+	{
+		icon: <RefreshCw size={18} />,
+		ending: "-μαι",
+		name: "Deponent",
+		examples: ["έρχομαι", "θυμάμαι"],
+		scheme: "neutral",
+	},
+];
+
 const PatternIdentifier: React.FC = () => (
-	<Card variant="bordered" padding="lg" className="border-2 border-stone-300 bg-honey-50 shadow-sm">
-		<div className="mb-4 flex items-center gap-3">
-			<div className="rounded-xl bg-honey-200 p-2.5">
-				<Lightbulb size={20} className="text-honey-text" />
-			</div>
-			<div>
-				<h3 className="text-lg font-bold text-stone-800">Which Pattern?</h3>
-				<p className="text-sm text-stone-600">
-					Look at the verb's dictionary form (1st person singular)
-				</p>
-			</div>
-		</div>
-		<div className="space-y-3">
-			<div className="flex items-center gap-3 rounded-xl border-2 border-ocean-400 bg-ocean-200 p-3 transition-colors hover:border-ocean-600 sm:gap-4">
-				<div className="shrink-0 rounded-lg bg-ocean-300 p-2">
-					<Zap size={18} className="text-ocean-text" />
-				</div>
-				<MonoText className="text-xl font-bold text-ocean-text">-ω</MonoText>
-				<span className="font-semibold text-stone-800">Active</span>
-				<div className="ml-auto hidden gap-2 sm:flex">
-					<span className="rounded-md border border-ocean-300 bg-white px-2 py-1 font-mono text-sm text-ocean-text">
-						κάνω
-					</span>
-					<span className="rounded-md border border-ocean-300 bg-white px-2 py-1 font-mono text-sm text-ocean-text">
-						θέλω
-					</span>
-				</div>
-			</div>
-			<div className="flex items-center gap-3 rounded-xl border-2 border-terracotta-400 bg-terracotta-200 p-3 transition-colors hover:border-terracotta-600 sm:gap-4">
-				<div className="shrink-0 rounded-lg bg-terracotta-300 p-2">
-					<Sparkles size={18} className="text-terracotta-text" />
-				</div>
-				<MonoText className="text-xl font-bold text-terracotta-text">-άω/-ώ</MonoText>
-				<span className="font-semibold text-stone-800">Contracted</span>
-				<div className="ml-auto hidden gap-2 sm:flex">
-					<span className="rounded-md border border-terracotta-400 bg-white px-2 py-1 font-mono text-sm text-terracotta-text">
-						μιλάω
-					</span>
-					<span className="rounded-md border border-terracotta-400 bg-white px-2 py-1 font-mono text-sm text-terracotta-text">
-						αγαπάω
-					</span>
-				</div>
-			</div>
-			<div className="flex items-center gap-3 rounded-xl border-2 border-olive-400 bg-olive-200 p-3 transition-colors hover:border-olive-600 sm:gap-4">
-				<div className="shrink-0 rounded-lg bg-olive-300 p-2">
-					<RefreshCw size={18} className="text-olive-text" />
-				</div>
-				<MonoText className="text-xl font-bold text-olive-text">-μαι</MonoText>
-				<span className="font-semibold text-stone-800">Deponent</span>
-				<div className="ml-auto hidden gap-2 sm:flex">
-					<span className="rounded-md border border-olive-400 bg-white px-2 py-1 font-mono text-sm text-olive-text">
-						έρχομαι
-					</span>
-					<span className="rounded-md border border-olive-400 bg-white px-2 py-1 font-mono text-sm text-olive-text">
-						θυμάμαι
-					</span>
-				</div>
-			</div>
-		</div>
-	</Card>
+	<NavigatorCard
+		title="Which Pattern?"
+		subtitle="Look at the verb's dictionary form (1st person singular)"
+	>
+		{PATTERN_ROWS.map((row) => {
+			const style = SCHEME[row.scheme];
+			return (
+				<NavigatorCell
+					key={row.ending}
+					className={`${style.bg} ${style.border} flex items-center gap-3 border-2 sm:gap-4`}
+				>
+					<div className={`shrink-0 rounded-lg p-2 ${style.badgeBg}`}>
+						<span className={style.text}>{row.icon}</span>
+					</div>
+					<MonoText className={`text-xl font-bold ${style.text}`}>{row.ending}</MonoText>
+					<span className="font-semibold text-stone-800">{row.name}</span>
+					<div className="ml-auto hidden gap-2 sm:flex">
+						{row.examples.map((ex) => (
+							<span
+								key={ex}
+								className={`rounded-md border ${style.border} bg-white px-2 py-1 font-mono text-sm ${style.text}`}
+							>
+								{ex}
+							</span>
+						))}
+					</div>
+				</NavigatorCell>
+			);
+		})}
+	</NavigatorCard>
 );
 
 const VoiceExplanation: React.FC = () => (
-	<Card variant="bordered" padding="lg" className="border-2 border-slate-300 bg-slate-50">
+	<Card variant="bordered" padding="lg" className="border-2 border-stone-300 bg-stone-50">
 		<div className="mb-4 flex items-center gap-3">
-			<div className="rounded-xl bg-slate-200 p-2.5">
-				<ArrowRightLeft size={20} className="text-slate-text" />
+			<div className="rounded-xl bg-stone-200 p-2.5">
+				<ArrowRightLeft size={20} className="text-stone-700" />
 			</div>
 			<div>
 				<h3 className="text-lg font-bold text-stone-800">Voice: Who Does the Action?</h3>
@@ -300,100 +263,83 @@ const VoiceExplanation: React.FC = () => (
 		</div>
 
 		<div className="space-y-4">
-			{/* Active voice */}
-			<div className="rounded-lg border border-ocean-200 bg-ocean-50 p-4">
-				<h4 className="mb-2 font-semibold text-ocean-text">Active: Subject DOES the action</h4>
-				<div className="space-y-2">
-					<div className="flex items-baseline gap-2">
-						<MonoText className="font-bold text-ocean-text">βλέπω τον φίλο</MonoText>
-						<span className="text-stone-600">=</span>
-						<span className="text-stone-700">I see the friend</span>
-					</div>
-					<p className="border-l-2 border-ocean-200 pl-2 text-sm text-stone-500 italic">
-						Action flows FROM me TO the friend
-					</p>
+			{/* TODO(local-axis): voice axis (active / passive) is page-local.
+			    Neutralised for now; same remedy as PatternMeta. */}
+			<Callout scheme="neutral" title="Active: Subject DOES the action">
+				<div className="flex items-baseline gap-2">
+					<MonoText className="font-bold text-stone-800">βλέπω τον φίλο</MonoText>
+					<span className="text-stone-600">=</span>
+					<span className="text-stone-700">I see the friend</span>
 				</div>
-			</div>
+				<p className="text-sm text-stone-500 italic">Action flows FROM me TO the friend</p>
+			</Callout>
 
-			{/* Passive voice */}
-			<div className="rounded-lg border border-terracotta-200 bg-terracotta-50 p-4">
-				<h4 className="mb-2 font-semibold text-terracotta-text">
-					Passive: Subject RECEIVES the action
-				</h4>
-				<div className="space-y-2">
-					<div className="flex items-baseline gap-2">
-						<MonoText className="font-bold text-terracotta-text">βλέπομαι από τον φίλο</MonoText>
-						<span className="text-stone-600">=</span>
-						<span className="text-stone-700">I am seen by the friend</span>
-					</div>
-					<p className="border-l-2 border-terracotta-200 pl-2 text-sm text-stone-500 italic">
-						Action flows TO me FROM the friend
-					</p>
+			<Callout scheme="neutral" title="Passive: Subject RECEIVES the action">
+				<div className="flex items-baseline gap-2">
+					<MonoText className="font-bold text-stone-800">βλέπομαι από τον φίλο</MonoText>
+					<span className="text-stone-600">=</span>
+					<span className="text-stone-700">I am seen by the friend</span>
 				</div>
-			</div>
+				<p className="text-sm text-stone-500 italic">Action flows TO me FROM the friend</p>
+			</Callout>
 
 			{/* The -μαι marker */}
 			<div className="rounded-lg border border-stone-200 bg-white p-4">
 				<p className="mb-3 text-sm text-stone-700">
-					The <MonoText className="font-bold text-terracotta-text">-μαι</MonoText> ending is the
+					The <MonoText className="font-bold text-stone-800">-μαι</MonoText> ending is the
 					passive marker:
 				</p>
 				<div className="grid gap-3 sm:grid-cols-2">
 					<div className="flex items-center gap-2 text-sm">
-						<MonoText className="font-semibold text-ocean-text">βλέπω</MonoText>
+						<MonoText className="font-semibold text-stone-800">βλέπω</MonoText>
 						<span className="text-stone-400">(I see)</span>
 						<ArrowRight size={14} className="text-stone-400" />
-						<MonoText className="font-semibold text-terracotta-text">βλέπομαι</MonoText>
+						<MonoText className="font-semibold text-stone-800">βλέπομαι</MonoText>
 						<span className="text-stone-400">(I am seen)</span>
 					</div>
 					<div className="flex items-center gap-2 text-sm">
-						<MonoText className="font-semibold text-ocean-text">ακούω</MonoText>
+						<MonoText className="font-semibold text-stone-800">ακούω</MonoText>
 						<span className="text-stone-400">(I hear)</span>
 						<ArrowRight size={14} className="text-stone-400" />
-						<MonoText className="font-semibold text-terracotta-text">ακούομαι</MonoText>
+						<MonoText className="font-semibold text-stone-800">ακούομαι</MonoText>
 						<span className="text-stone-400">(I am heard)</span>
 					</div>
 				</div>
 			</div>
 
-			{/* Deponent verbs */}
-			<div className="rounded-lg border border-olive-200 bg-olive-50 p-4">
-				<h4 className="mb-2 font-semibold text-olive-text">
-					Deponent: Passive form, active meaning
-				</h4>
-				<p className="mb-3 text-sm text-stone-600">
-					Some verbs ONLY exist in <MonoText className="font-bold text-olive-text">-μαι</MonoText>{" "}
+			<Callout
+				scheme="neutral"
+				title="Deponent: Passive form, active meaning"
+				footer="The endings follow passive patterns, but YOU are doing the action."
+			>
+				<p className="text-sm text-stone-600">
+					Some verbs ONLY exist in <MonoText className="font-bold text-stone-800">-μαι</MonoText>{" "}
 					form, but their meaning is active:
 				</p>
-				<div className="space-y-2">
-					<div className="flex items-baseline gap-2">
-						<MonoText className="font-bold text-olive-text">έρχομαι</MonoText>
-						<span className="text-stone-600">=</span>
-						<span className="text-stone-700">I come</span>
-						<span className="text-sm text-stone-400">(not "I am come-d")</span>
-					</div>
-					<div className="flex items-baseline gap-2">
-						<MonoText className="font-bold text-olive-text">θυμάμαι</MonoText>
-						<span className="text-stone-600">=</span>
-						<span className="text-stone-700">I remember</span>
-						<span className="text-sm text-stone-400">(not "I am remembered")</span>
-					</div>
-					<div className="flex items-baseline gap-2">
-						<MonoText className="font-bold text-olive-text">κοιμάμαι</MonoText>
-						<span className="text-stone-600">=</span>
-						<span className="text-stone-700">I sleep</span>
-						<span className="text-sm text-stone-400">(not "I am slept")</span>
-					</div>
+				<div className="flex items-baseline gap-2">
+					<MonoText className="font-bold text-stone-800">έρχομαι</MonoText>
+					<span className="text-stone-600">=</span>
+					<span className="text-stone-700">I come</span>
+					<span className="text-sm text-stone-400">(not "I am come-d")</span>
 				</div>
-				<p className="mt-3 border-t border-olive-200 pt-3 text-sm text-stone-500">
-					The endings follow passive patterns, but YOU are doing the action.
-				</p>
-			</div>
+				<div className="flex items-baseline gap-2">
+					<MonoText className="font-bold text-stone-800">θυμάμαι</MonoText>
+					<span className="text-stone-600">=</span>
+					<span className="text-stone-700">I remember</span>
+					<span className="text-sm text-stone-400">(not "I am remembered")</span>
+				</div>
+				<div className="flex items-baseline gap-2">
+					<MonoText className="font-bold text-stone-800">κοιμάμαι</MonoText>
+					<span className="text-stone-600">=</span>
+					<span className="text-stone-700">I sleep</span>
+					<span className="text-sm text-stone-400">(not "I am slept")</span>
+				</div>
+			</Callout>
 
 			{/* Etymology note */}
 			<div className="rounded-lg border border-stone-200 bg-stone-100 p-3">
-				<p className="text-sm text-slate-text">
-					<strong className="text-navy-text">Why "deponent"?</strong> From Latin <em>deponere</em>{" "}
+				<p className="text-sm text-stone-700">
+					<strong className="text-stone-800">Why "deponent"?</strong> From Latin <em>deponere</em>{" "}
 					(to put aside) — these verbs have "set aside" their active forms.
 				</p>
 			</div>
@@ -426,7 +372,7 @@ export const VerbsSection: React.FC = () => (
 						infinitive={eimai.infinitive}
 						meaning={eimai.meaning}
 						forms={eimai.forms}
-						formClassName="text-olive-text font-semibold"
+						formClassName="text-stone-800 font-semibold"
 					/>
 					{eimai.note && (
 						<p className="border-t border-stone-200 pt-2 text-sm text-stone-600 italic">
@@ -448,8 +394,8 @@ export const VerbsSection: React.FC = () => (
 
 		{/* Negation note */}
 		<div className="rounded-lg border border-stone-200 bg-stone-50 p-3">
-			<p className="text-sm text-slate-text">
-				<strong className="text-navy-text">Negation:</strong> Add{" "}
+			<p className="text-sm text-stone-700">
+				<strong className="text-stone-800">Negation:</strong> Add{" "}
 				<MonoText variant="greek" size="sm">
 					δεν
 				</MonoText>{" "}
@@ -516,16 +462,16 @@ export const VerbsSection: React.FC = () => (
 		)}
 
 		{/* Cross-link to vocabulary */}
-		<div className="flex items-center justify-between rounded-lg border border-olive-300 bg-olive-100 p-3">
+		<div className="flex items-center justify-between rounded-lg border border-stone-300 bg-stone-100 p-3">
 			<div className="flex items-center gap-2">
-				<BookOpen size={16} className="text-olive-text" />
+				<BookOpen size={16} className="text-stone-800" />
 				<span className="text-sm text-stone-700">
 					Browse all verbs organized by conjugation family
 				</span>
 			</div>
 			<Link
 				to="/learn/verbs"
-				className="inline-flex items-center gap-1.5 text-sm font-medium text-olive-text hover:underline"
+				className="inline-flex items-center gap-1.5 text-sm font-medium text-stone-800 hover:underline"
 			>
 				View vocabulary <ArrowRight size={14} />
 			</Link>

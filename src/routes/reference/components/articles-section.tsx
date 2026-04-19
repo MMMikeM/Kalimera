@@ -1,10 +1,8 @@
-import { ArrowRight } from "lucide-react";
 import type React from "react";
 import { Link } from "react-router";
 
-import { Card } from "@/components/Card";
+import { NextStepCard, TeachingCard } from "@/components/cards";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
-import { ContentSection } from "@/components/ContentSection";
 import { MonoText } from "@/components/MonoText";
 import { SectionHeading } from "@/components/SectionHeading";
 import { ARTICLE_AGREEMENT_QUICK_REF } from "@/constants/agreement";
@@ -12,108 +10,103 @@ import { ARTICLE_AGREEMENT_QUICK_REF } from "@/constants/agreement";
 import { CaseTableGrid } from "./CaseTable";
 
 const ArticleQuickLookup: React.FC = () => (
-	<Card variant="bordered" padding="md" className="bg-ocean-50/30">
+	<TeachingCard
+		scheme="neutral"
+		tone="full"
+		eyebrow="Quick lookup"
+		title="Article by gender and case"
+		description="The single most important table on this page."
+		footer={
+			<p className="text-xs text-stone-500">
+				Need to identify gender?{" "}
+				<Link to="/reference/nouns" className="text-stone-600 underline hover:text-stone-800">
+					Check noun endings →
+				</Link>
+			</p>
+		}
+	>
 		<CaseTableGrid data={ARTICLE_AGREEMENT_QUICK_REF} />
-		<p className="mt-3 text-xs text-stone-500">
-			Need to identify gender?{" "}
-			<Link to="/reference/nouns" className="text-olive-600 hover:underline">
-				Check noun endings →
-			</Link>
-		</p>
-	</Card>
+	</TeachingCard>
 );
 
 const PrepositionContractions: React.FC = () => (
-	<ContentSection title="σε + article contractions" colorScheme="ocean">
-		<div className="p-4">
-			<p className="mb-3 text-sm text-stone-600">
-				The preposition{" "}
-				<MonoText variant="greek" size="sm">
+	<TeachingCard
+		scheme="neutral"
+		tone="soft"
+		eyebrow="Contractions"
+		title={
+			<>
+				<MonoText variant="greek" size="lg">
 					σε
 				</MonoText>{" "}
-				(to/at/in) contracts with the article:
-			</p>
-			<div className="grid grid-cols-3 gap-2 text-sm">
-				<div className="rounded border bg-stone-50 p-2 text-center">
-					<div className="mb-1 text-xs text-stone-500">σε + τον</div>
-					<MonoText variant="greek">στον</MonoText>
+				+ article
+			</>
+		}
+		description="The preposition σε (to/at/in) fuses with the article."
+	>
+		<div className="grid grid-cols-3 gap-2 text-sm">
+			{[
+				["σε + τον", "στον"],
+				["σε + την", "στην"],
+				["σε + το", "στο"],
+				["σε + τους", "στους"],
+				["σε + τις", "στις"],
+				["σε + τα", "στα"],
+			].map(([from, to]) => (
+				<div key={from} className="rounded border border-stone-200 bg-white p-2 text-center">
+					<div className="mb-1 text-xs text-stone-500">{from}</div>
+					<MonoText variant="greek">{to}</MonoText>
 				</div>
-				<div className="rounded border bg-stone-50 p-2 text-center">
-					<div className="mb-1 text-xs text-stone-500">σε + την</div>
-					<MonoText variant="greek">στην</MonoText>
-				</div>
-				<div className="rounded border bg-stone-50 p-2 text-center">
-					<div className="mb-1 text-xs text-stone-500">σε + το</div>
-					<MonoText variant="greek">στο</MonoText>
-				</div>
-				<div className="rounded border bg-stone-50 p-2 text-center">
-					<div className="mb-1 text-xs text-stone-500">σε + τους</div>
-					<MonoText variant="greek">στους</MonoText>
-				</div>
-				<div className="rounded border bg-stone-50 p-2 text-center">
-					<div className="mb-1 text-xs text-stone-500">σε + τις</div>
-					<MonoText variant="greek">στις</MonoText>
-				</div>
-				<div className="rounded border bg-stone-50 p-2 text-center">
-					<div className="mb-1 text-xs text-stone-500">σε + τα</div>
-					<MonoText variant="greek">στα</MonoText>
-				</div>
-			</div>
+			))}
 		</div>
-	</ContentSection>
+	</TeachingCard>
 );
 
 const ArticleUsageDifferences: React.FC = () => (
-	<ContentSection title="When Greek uses articles differently" colorScheme="honey">
-		<div className="space-y-3 p-4">
-			<p className="text-sm text-stone-600">
-				Greek uses articles where English doesn't (and vice versa):
-			</p>
-			<div className="space-y-2">
-				<div className="rounded border bg-stone-50 p-2">
+	<TeachingCard
+		scheme="neutral"
+		tone="soft"
+		eyebrow="Usage"
+		title="When Greek uses articles differently"
+		description="Greek uses articles where English doesn't, and vice versa."
+	>
+		<div className="space-y-2">
+			{[
+				{ greek: "η αγάπη είναι τυφλή", note: "Abstract nouns need the article" },
+				{ greek: "είναι γιατρός", note: "Professions after είμαι: no article" },
+				{
+					greek: "ο φίλος μου",
+					note: "Possessives use definite article (not 'a friend of mine')",
+				},
+				{ greek: "η Ελλάδα", note: "Countries and proper nouns take the article" },
+			].map((row) => (
+				<div key={row.greek} className="rounded border border-stone-200 bg-white p-2">
 					<MonoText variant="greek" size="sm">
-						η αγάπη είναι τυφλή
+						{row.greek}
 					</MonoText>
-					<span className="ml-2 text-sm text-stone-500">Abstract nouns need the article</span>
+					<span className="ml-2 text-sm text-stone-500">{row.note}</span>
 				</div>
-				<div className="rounded border bg-stone-50 p-2">
-					<MonoText variant="greek" size="sm">
-						είναι γιατρός
-					</MonoText>
-					<span className="ml-2 text-sm text-stone-500">Professions after είμαι: no article</span>
-				</div>
-				<div className="rounded border bg-stone-50 p-2">
-					<MonoText variant="greek" size="sm">
-						ο φίλος μου
-					</MonoText>
-					<span className="ml-2 text-sm text-stone-500">
-						Possessives use definite article (not "a friend of mine")
-					</span>
-				</div>
-				<div className="rounded border bg-stone-50 p-2">
-					<MonoText variant="greek" size="sm">
-						η Ελλάδα
-					</MonoText>
-					<span className="ml-2 text-sm text-stone-500">
-						Countries and proper nouns take the article
-					</span>
-				</div>
-			</div>
+			))}
 		</div>
-	</ContentSection>
+	</TeachingCard>
 );
 
 const MovableNuQuickWin: React.FC = () => (
-	<ContentSection title="The -ν on τον/την" colorScheme="olive">
-		<div className="space-y-3 p-4">
+	<TeachingCard
+		scheme="neutral"
+		tone="soft"
+		eyebrow="Quick win"
+		title="The -ν on τον / την"
+		description="Always keep the -ν. Native speakers sometimes drop it, but keeping it is never wrong."
+	>
+		<div className="space-y-3">
 			<div className="bg-correct-100 border-correct-300 rounded-lg border p-3">
-				<div className="mb-1 text-sm font-medium text-correct">The simple rule</div>
 				<p className="text-sm text-stone-600">
-					Always keep the -ν on{" "}
+					Safe default:{" "}
 					<MonoText variant="greek" size="sm">
 						τον/την/στον/στην
 					</MonoText>
-					. Native speakers sometimes drop it, but keeping it is never wrong.
+					.
 				</p>
 			</div>
 			<CollapsibleSection title="When do natives drop it?" colorScheme="stone" defaultOpen={false}>
@@ -161,7 +154,7 @@ const MovableNuQuickWin: React.FC = () => (
 				</div>
 			</CollapsibleSection>
 		</div>
-	</ContentSection>
+	</TeachingCard>
 );
 
 export const ArticlesSection: React.FC = () => {
@@ -180,20 +173,12 @@ export const ArticlesSection: React.FC = () => {
 
 			<ArticleUsageDifferences />
 
-			<Card variant="bordered" padding="md" className="bg-stone-50">
-				<div className="flex items-center justify-between">
-					<div>
-						<div className="text-sm font-medium text-stone-700">How noun endings change</div>
-						<p className="text-xs text-stone-500">See declension patterns by gender</p>
-					</div>
-					<Link
-						to="/reference/nouns"
-						className="flex items-center gap-1 text-sm text-olive-600 hover:text-olive-700"
-					>
-						Nouns <ArrowRight size={14} />
-					</Link>
-				</div>
-			</Card>
+			<NextStepCard
+				to="/reference/nouns"
+				kicker="Next"
+				title="Nouns"
+				description="How noun endings change across gender and case"
+			/>
 		</section>
 	);
 };

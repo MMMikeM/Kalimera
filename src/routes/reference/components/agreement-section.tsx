@@ -2,9 +2,9 @@ import { ChevronLeft, ChevronRight, Lightbulb } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
 
+import { Callout, TeachingCard } from "@/components/cards";
 import { Card } from "@/components/Card";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
-import { ContentSection } from "@/components/ContentSection";
 import { MistakeComparison } from "@/components/MistakeComparison";
 import { MonoText } from "@/components/MonoText";
 import { SectionHeading } from "@/components/SectionHeading";
@@ -17,6 +17,7 @@ import {
 	ARTICLE_AGREEMENT_QUICK_REF,
 } from "@/constants/agreement";
 import { MOVABLE_NU_RULE } from "@/constants/articles";
+import { GENDER_SCHEME } from "@/constants/grammar-palette";
 import { GENDER_HINTS } from "@/constants/nouns";
 
 import { CaseTable } from "./CaseTable";
@@ -50,8 +51,11 @@ const AgreementParadigmTable: React.FC<{
 	const style = genderStyles[paradigm.gender];
 
 	return (
-		<Card variant="bordered" padding="md" className={`${style.bg} ${style.border}`}>
-			<div className="mb-3 flex items-center gap-2">
+		<TeachingCard
+			scheme={GENDER_SCHEME[paradigm.gender]}
+			tone="soft"
+			eyebrow="Pattern"
+			title={
 				<MonoText
 					variant={
 						paradigm.gender === "masculine"
@@ -65,20 +69,10 @@ const AgreementParadigmTable: React.FC<{
 				>
 					{paradigm.pattern}
 				</MonoText>
-				<span className={`text-sm ${style.text}`}>{paradigm.title}</span>
-				<span
-					className={`rounded px-2 py-0.5 text-xs ${
-						paradigm.frequency === "very common"
-							? "bg-olive-200 text-olive-text"
-							: paradigm.frequency === "common"
-								? "bg-honey-200 text-honey-text"
-								: "bg-stone-100 text-stone-600"
-					}`}
-				>
-					{paradigm.frequency}
-				</span>
-			</div>
-
+			}
+			badge={paradigm.frequency}
+			description={paradigm.title}
+		>
 			{paradigm.tip && <p className="mb-3 text-sm text-stone-600 italic">{paradigm.tip}</p>}
 
 			<div className="overflow-x-auto">
@@ -145,32 +139,28 @@ const AgreementParadigmTable: React.FC<{
 					</div>
 				</div>
 			)}
-		</Card>
+		</TeachingCard>
 	);
 };
 
 // Gender hints card - compact reference for spotting gender
 const GenderHintsCard: React.FC = () => (
-	<Card variant="bordered" padding="md">
-		<div className="mb-2 text-sm font-medium text-stone-700">Spot gender by ending:</div>
+	<TeachingCard
+		scheme="neutral"
+		tone="soft"
+		eyebrow="Spotting gender"
+		title="Spot gender by ending"
+	>
 		<div className="flex flex-wrap gap-x-6 gap-y-1 text-sm">
-			<div className="flex items-center gap-2">
-				<span className="h-2 w-2 rounded-full bg-gender-masculine" />
-				<span className="text-stone-600">Masculine:</span>
-				<span className="text-stone-800">{GENDER_HINTS.masculine.endings.join(", ")}</span>
-			</div>
-			<div className="flex items-center gap-2">
-				<span className="h-2 w-2 rounded-full bg-gender-feminine" />
-				<span className="text-stone-600">Feminine:</span>
-				<span className="text-stone-800">{GENDER_HINTS.feminine.endings.join(", ")}</span>
-			</div>
-			<div className="flex items-center gap-2">
-				<span className="h-2 w-2 rounded-full bg-gender-neuter" />
-				<span className="text-stone-600">Neuter:</span>
-				<span className="text-stone-800">{GENDER_HINTS.neuter.endings.join(", ")}</span>
-			</div>
+			{(["masculine", "feminine", "neuter"] as const).map((gender) => (
+				<div key={gender} className="flex items-center gap-2">
+					<span className={`h-2 w-2 rounded-full bg-gender-${gender}`} />
+					<span className="text-stone-600 capitalize">{gender}:</span>
+					<span className="text-stone-800">{GENDER_HINTS[gender].endings.join(", ")}</span>
+				</div>
+			))}
 		</div>
-	</Card>
+	</TeachingCard>
 );
 
 // Article quick lookup - now expanded by default
@@ -257,40 +247,33 @@ export const AgreementSection: React.FC = () => {
 				subtitle="How articles and nouns must match in gender, case, and number"
 			/>
 
-			<ContentSection title="When uncertain, use the -ν form" colorScheme="honey">
-				<div className="space-y-3 p-3">
-					<p className="text-sm text-stone-600">
-						You'll never be wrong if you keep the final ν on τον/την/στον/στην.
-					</p>
-					<div className="rounded-lg border border-stone-200 bg-stone-50 p-3">
-						<div className="mb-2 text-xs font-semibold tracking-wide text-honey-text uppercase">
-							The simple rule
-						</div>
-						<p className="mb-2 text-sm text-stone-600">
-							For{" "}
-							<MonoText variant="greek" size="sm">
-								τον/την
-							</MonoText>{" "}
-							and{" "}
-							<MonoText variant="greek" size="sm">
-								στον/στην
-							</MonoText>
-							, you can always include the -ν. Native speakers sometimes drop it, but keeping it is
-							never wrong.
-						</p>
-						<div className="text-sm text-stone-600">
-							<MonoText variant="greek" size="sm">
-								τον φίλο
-							</MonoText>{" "}
-							or{" "}
-							<MonoText variant="greek" size="sm">
-								τη φίλη
-							</MonoText>{" "}
-							— both correct!
-						</div>
-					</div>
-				</div>
-			</ContentSection>
+			<TeachingCard
+				scheme="neutral"
+				tone="soft"
+				eyebrow="Quick win"
+				title="When uncertain, use the -ν form"
+				description="Always keep the final ν on τον/την/στον/στην. Never wrong."
+			>
+				<p className="text-sm text-stone-600">
+					For{" "}
+					<MonoText variant="greek" size="sm">
+						τον/την
+					</MonoText>{" "}
+					and{" "}
+					<MonoText variant="greek" size="sm">
+						στον/στην
+					</MonoText>
+					, you can always include the -ν.{" "}
+					<MonoText variant="greek" size="sm">
+						τον φίλο
+					</MonoText>{" "}
+					or{" "}
+					<MonoText variant="greek" size="sm">
+						τη φίλη
+					</MonoText>{" "}
+					— both correct.
+				</p>
+			</TeachingCard>
 
 			{/* Gender hints - how to spot gender by ending */}
 			<GenderHintsCard />
@@ -298,15 +281,11 @@ export const AgreementSection: React.FC = () => {
 			{/* Article quick lookup - expanded by default */}
 			<ArticleQuickLookup />
 
-			<Alert variant="info">
-				<Lightbulb size={16} />
-				<AlertTitle>The Core Pattern</AlertTitle>
-				<AlertDescription>
-					In Greek, the article must <strong>agree</strong> with its noun in three ways: gender
-					(masculine/feminine/neuter), case (nominative/accusative/genitive), and number
-					(singular/plural). This is why "the" has so many forms!
-				</AlertDescription>
-			</Alert>
+			<Callout scheme="neutral" icon={<Lightbulb size={16} />} title="The core pattern">
+				In Greek, the article must <strong>agree</strong> with its noun in three ways: gender
+				(masculine/feminine/neuter), case (nominative/accusative/genitive), and number
+				(singular/plural). This is why "the" has so many forms.
+			</Callout>
 
 			<Card variant="bordered" padding="lg" className="bg-stone-50/50">
 				<Tabs defaultValue="masculine" className="w-full">
@@ -380,7 +359,7 @@ export const MovableNuSection: React.FC = () => (
 								<MonoText variant="success" size="lg" className="mb-1 block">
 									{example.text}
 								</MonoText>
-								<div className="text-sm text-olive-text italic">{example.reason}</div>
+								<div className="text-sm text-stone-600 italic">{example.reason}</div>
 							</div>
 						))}
 					</div>
@@ -396,7 +375,7 @@ export const MovableNuSection: React.FC = () => (
 								<MonoText variant="error" size="lg" className="mb-1 block">
 									{example.text}
 								</MonoText>
-								<div className="text-sm text-terracotta-text italic">{example.reason}</div>
+								<div className="text-sm text-stone-600 italic">{example.reason}</div>
 							</div>
 						))}
 					</div>

@@ -1,4 +1,4 @@
-import { Card } from "@/components/Card";
+import { NavigatorCard, NavigatorCell } from "@/components/cards";
 import { MonoText } from "@/components/MonoText";
 
 interface PronounOption {
@@ -47,111 +47,118 @@ const renderDescription = (text: string) => {
 };
 
 export const PronounDecisionGuide = () => (
-	<Card variant="bordered" padding="lg" className="border-honey-300 bg-honey-50">
-		<h3 className="mb-3 text-lg font-bold text-honey-text">Which "me/you" do I use?</h3>
-		<p className="mb-4 text-sm text-stone-600">
-			English "me" is one word. Greek splits it by <strong>function</strong>:
-		</p>
-
-		<div className="space-y-3">
-			{PRONOUN_OPTIONS.map((option) => (
-				<div key={option.label} className="rounded-lg border border-honey-300 bg-white p-3">
-					<div className="flex items-start gap-3">
-						<div className="w-20 shrink-0 text-sm font-bold text-honey-text">{option.label}</div>
-						<div className="flex-1">
-							<div className="mb-1 text-sm font-medium text-stone-800">
-								{renderDescription(option.description)}
-							</div>
-							<div className="space-y-0.5 text-sm text-stone-600">
-								{option.examples.map((ex) => (
-									<div key={ex.greek}>
-										<MonoText size="sm" variant="highlighted">
-											{ex.greek}
-										</MonoText>
-										<span className="text-stone-600"> = {ex.english}</span>
-									</div>
-								))}
-							</div>
+	<NavigatorCard
+		title={`Which "me/you" do I use?`}
+		subtitle={
+			<>
+				English "me" is one word. Greek splits it by <strong>function</strong>:
+			</>
+		}
+		layout="stack"
+		footer={
+			<>
+				{/* Cross-type comparison table */}
+				<div className="-mt-1 mb-4">
+					<p className="mb-2 text-xs text-stone-500">One English word → multiple Greek forms:</p>
+					<div className="overflow-x-auto">
+						<table className="w-full border-collapse text-sm">
+							<thead>
+								<tr className="border-b border-honey-300">
+									<th className="px-2 py-1.5 text-left text-xs font-medium text-stone-500">
+										English
+									</th>
+									<th className="px-2 py-1.5 text-left text-xs font-medium text-stone-500">
+										Object
+									</th>
+									<th className="px-2 py-1.5 text-left text-xs font-medium text-stone-500">
+										Possessive
+									</th>
+									<th className="px-2 py-1.5 text-left text-xs font-medium text-stone-500">
+										Emphatic
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td className="px-2 py-1.5 text-xs text-stone-600">me / my</td>
+									<td className="px-2 py-1.5">
+										<MonoText size="sm">με</MonoText>
+									</td>
+									<td className="px-2 py-1.5">
+										<MonoText size="sm">μου</MonoText>
+									</td>
+									<td className="px-2 py-1.5">
+										<MonoText size="sm">εμένα</MonoText>
+									</td>
+								</tr>
+								<tr>
+									<td className="px-2 py-1.5 text-xs text-stone-600">you / your</td>
+									<td className="px-2 py-1.5">
+										<MonoText size="sm">σε</MonoText>
+									</td>
+									<td className="px-2 py-1.5">
+										<MonoText size="sm">σου</MonoText>
+									</td>
+									<td className="px-2 py-1.5">
+										<MonoText size="sm">εσένα</MonoText>
+									</td>
+								</tr>
+								<tr>
+									<td className="px-2 py-1.5 text-xs text-stone-600">him / his</td>
+									<td className="px-2 py-1.5">
+										<MonoText size="sm">τον</MonoText>
+									</td>
+									<td className="px-2 py-1.5">
+										<MonoText size="sm">του</MonoText>
+									</td>
+									<td className="px-2 py-1.5">
+										<MonoText size="sm">αυτόν</MonoText>
+									</td>
+								</tr>
+								<tr>
+									<td className="px-2 py-1.5 text-xs text-stone-600">her</td>
+									<td className="px-2 py-1.5">
+										<MonoText size="sm">την</MonoText>
+									</td>
+									<td className="px-2 py-1.5">
+										<MonoText size="sm">της</MonoText>
+									</td>
+									<td className="px-2 py-1.5">
+										<MonoText size="sm">αυτήν</MonoText>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<strong>Quick test:</strong> Can you insert "to" before it? → Use{" "}
+				<MonoText size="sm">μου/σου</MonoText>. Is there a preposition before it? → Use{" "}
+				<MonoText size="sm">εμένα/εσένα</MonoText>. Otherwise → Use{" "}
+				<MonoText size="sm">με/σε</MonoText>.
+			</>
+		}
+	>
+		{PRONOUN_OPTIONS.map((option) => (
+			<NavigatorCell key={option.label}>
+				<div className="flex items-start gap-3">
+					<div className="w-20 shrink-0 text-sm font-bold text-honey-text">{option.label}</div>
+					<div className="flex-1">
+						<div className="mb-1 text-sm font-medium text-stone-800">
+							{renderDescription(option.description)}
+						</div>
+						<div className="space-y-0.5 text-sm text-stone-600">
+							{option.examples.map((ex) => (
+								<div key={ex.greek}>
+									<MonoText size="sm" variant="highlighted">
+										{ex.greek}
+									</MonoText>
+									<span className="text-stone-600"> = {ex.english}</span>
+								</div>
+							))}
 						</div>
 					</div>
 				</div>
-			))}
-		</div>
-
-		{/* Cross-type comparison table */}
-		<div className="mt-4 border-t border-honey-300 pt-3">
-			<p className="mb-2 text-xs text-stone-500">One English word → multiple Greek forms:</p>
-			<div className="overflow-x-auto">
-				<table className="w-full border-collapse text-sm">
-					<thead>
-						<tr className="border-b border-honey-300">
-							<th className="px-2 py-1.5 text-left text-xs font-medium text-stone-500">English</th>
-							<th className="px-2 py-1.5 text-left text-xs font-medium text-stone-500">Object</th>
-							<th className="px-2 py-1.5 text-left text-xs font-medium text-stone-500">
-								Possessive
-							</th>
-							<th className="px-2 py-1.5 text-left text-xs font-medium text-stone-500">Emphatic</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td className="px-2 py-1.5 text-xs text-stone-600">me / my</td>
-							<td className="px-2 py-1.5">
-								<MonoText size="sm">με</MonoText>
-							</td>
-							<td className="px-2 py-1.5">
-								<MonoText size="sm">μου</MonoText>
-							</td>
-							<td className="px-2 py-1.5">
-								<MonoText size="sm">εμένα</MonoText>
-							</td>
-						</tr>
-						<tr>
-							<td className="px-2 py-1.5 text-xs text-stone-600">you / your</td>
-							<td className="px-2 py-1.5">
-								<MonoText size="sm">σε</MonoText>
-							</td>
-							<td className="px-2 py-1.5">
-								<MonoText size="sm">σου</MonoText>
-							</td>
-							<td className="px-2 py-1.5">
-								<MonoText size="sm">εσένα</MonoText>
-							</td>
-						</tr>
-						<tr>
-							<td className="px-2 py-1.5 text-xs text-stone-600">him / his</td>
-							<td className="px-2 py-1.5">
-								<MonoText size="sm">τον</MonoText>
-							</td>
-							<td className="px-2 py-1.5">
-								<MonoText size="sm">του</MonoText>
-							</td>
-							<td className="px-2 py-1.5">
-								<MonoText size="sm">αυτόν</MonoText>
-							</td>
-						</tr>
-						<tr>
-							<td className="px-2 py-1.5 text-xs text-stone-600">her</td>
-							<td className="px-2 py-1.5">
-								<MonoText size="sm">την</MonoText>
-							</td>
-							<td className="px-2 py-1.5">
-								<MonoText size="sm">της</MonoText>
-							</td>
-							<td className="px-2 py-1.5">
-								<MonoText size="sm">αυτήν</MonoText>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-
-		<div className="mt-4 border-t border-honey-300 pt-3 text-sm text-honey-text">
-			<strong>Quick test:</strong> Can you insert "to" before it? → Use{" "}
-			<MonoText size="sm">μου/σου</MonoText>. Is there a preposition before it? → Use{" "}
-			<MonoText size="sm">εμένα/εσένα</MonoText>. Otherwise → Use{" "}
-			<MonoText size="sm">με/σε</MonoText>.
-		</div>
-	</Card>
+			</NavigatorCell>
+		))}
+	</NavigatorCard>
 );
