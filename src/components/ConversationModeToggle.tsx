@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 
 import type { ConversationMode } from "./DialogueExchange";
 
-export interface ConversationModeToggleProps {
+interface ConversationModeToggleProps {
 	mode: ConversationMode;
 	onModeChange: (mode: ConversationMode) => void;
 	className?: string;

@@ -18,7 +18,7 @@ const passkeyInsertSchema = createInsertSchema(passkeys, {
 	transports: z.array(z.enum(authenticatorTransports)).nullable().optional(),
 });
 
-export type PasskeyInsert = z.infer<typeof passkeyInsertSchema>;
+type PasskeyInsert = z.infer<typeof passkeyInsertSchema>;
 export const createPasskey = async (data: PasskeyInsert) => {
 	const [passkey] = await db.insert(passkeys).values(data).returning();
 	return passkey;

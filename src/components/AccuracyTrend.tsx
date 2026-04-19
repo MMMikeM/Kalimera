@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 
 import { cn } from "@/lib/utils";
 
-export interface AccuracyTrendProps {
+interface AccuracyTrendProps {
 	data: Array<{
 		date: string;
 		accuracy: number;

@@ -9,7 +9,7 @@ import { applyWeakAreaSideEffect } from "./weak-areas";
 
 const practiceAttemptInsertSchema = createInsertSchema(practiceAttempts);
 
-export type PracticeAttemptInsert = z.infer<typeof practiceAttemptInsertSchema>;
+type PracticeAttemptInsert = z.infer<typeof practiceAttemptInsertSchema>;
 
 export const recordAttemptInputSchema = practiceAttemptInsertSchema
 	.extend({

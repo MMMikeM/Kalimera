@@ -18,7 +18,7 @@ const sectionHeadingVariants = tv({
 	},
 });
 
-export interface SectionHeadingProps {
+interface SectionHeadingProps {
 	title: string;
 	subtitle?: string;
 	level?: "h2" | "h3" | "h4";

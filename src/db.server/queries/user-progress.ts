@@ -20,7 +20,7 @@ const MASTERY_THRESHOLDS: Partial<
 	B1: { maxAvgMs: 5000, minAccuracy: 0.8, minAttempts: 10 },
 };
 
-export const getUserProgress = async (userId: number) => {
+const getUserProgress = async (userId: number) => {
 	const row = await db.query.userProgress.findFirst({
 		where: { userId },
 	});
@@ -40,14 +40,14 @@ export const ensureUserProgress = async (userId: number) => {
 	return created;
 };
 
-export interface DrillVocabOptions {
+interface DrillVocabOptions {
 	userId: number;
 	currentCefrLevel: CefrLevel;
 	wordTypes: WordType[];
 	limit?: number;
 }
 
-export const getDrillVocab = async (opts: DrillVocabOptions) => {
+const getDrillVocab = async (opts: DrillVocabOptions) => {
 	const { currentCefrLevel, wordTypes, limit = 20 } = opts;
 	const nextLevel = NEXT_LEVEL[currentCefrLevel];
 	const cefrPool: CefrLevel[] = nextLevel ? [currentCefrLevel, nextLevel] : [currentCefrLevel];
@@ -65,7 +65,7 @@ export const getDrillVocab = async (opts: DrillVocabOptions) => {
 	});
 };
 
-export const getCefrMasteryStatus = async (userId: number, cefrLevel: CefrLevel) => {
+const getCefrMasteryStatus = async (userId: number, cefrLevel: CefrLevel) => {
 	const thresholds = MASTERY_THRESHOLDS[cefrLevel];
 	if (!thresholds) {
 		return { mastered: false, avgMs: 0, accuracy: 0, attempts: 0 };
@@ -101,7 +101,7 @@ export const getCefrMasteryStatus = async (userId: number, cefrLevel: CefrLevel)
 	return { mastered, avgMs, accuracy, attempts };
 };
 
-export const advanceUserCefrLevel = async (userId: number) => {
+const advanceUserCefrLevel = async (userId: number) => {
 	const progress = await getUserProgress(userId);
 	const current = (progress?.currentCefrLevel ?? "A1") as CefrLevel;
 	const next = NEXT_LEVEL[current];

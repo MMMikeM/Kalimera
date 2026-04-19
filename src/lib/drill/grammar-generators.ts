@@ -7,14 +7,14 @@ import { VERB_CONJUGATIONS } from "@/constants/verbs";
 
 import type { DrillQuestion } from "./generate-questions";
 
-export type GrammarExerciseType =
+type GrammarExerciseType =
 	| "article-sprint"
 	| "case-transform"
 	| "contextual-fill"
 	| "verb-person"
 	| "error-correction";
 
-export const GRAMMAR_EXERCISE_CONFIG: Record<
+const GRAMMAR_EXERCISE_CONFIG: Record<
 	GrammarExerciseType,
 	{
 		label: string;
@@ -57,7 +57,7 @@ export const GRAMMAR_EXERCISE_CONFIG: Record<
 
 type Gender = "masculine" | "feminine" | "neuter";
 
-export const generateArticleSprintQuestions = (): DrillQuestion[] => {
+const generateArticleSprintQuestions = (): DrillQuestion[] => {
 	const questions: DrillQuestion[] = [];
 
 	for (const paradigm of AGREEMENT_PARADIGMS) {
@@ -94,7 +94,7 @@ export const generateArticleSprintQuestions = (): DrillQuestion[] => {
 	return questions;
 };
 
-export const generateCaseTransformQuestions = (): DrillQuestion[] => {
+const generateCaseTransformQuestions = (): DrillQuestion[] => {
 	const questions: DrillQuestion[] = [];
 
 	for (const paradigm of AGREEMENT_PARADIGMS) {
@@ -165,7 +165,7 @@ const GENITIVE_CONTEXTS = [
 	{ pattern: "το όνομα", english: "name of" },
 ];
 
-export const generateContextualFillQuestions = (): DrillQuestion[] => {
+const generateContextualFillQuestions = (): DrillQuestion[] => {
 	const questions: DrillQuestion[] = [];
 
 	const accusativeNouns = [
@@ -231,7 +231,7 @@ const PERSON_MAP: Record<string, string> = {
 
 const TARGET_PERSONS = ["εσύ", "αυτός/ή/ό", "εμείς", "εσείς", "αυτοί/ές/ά"];
 
-export const generateVerbPersonQuestions = (): DrillQuestion[] => {
+const generateVerbPersonQuestions = (): DrillQuestion[] => {
 	const questions: DrillQuestion[] = [];
 
 	const verbKeys = ["echo", "thelo", "boro", "kano", "milao"] as const;
@@ -260,7 +260,7 @@ export const generateVerbPersonQuestions = (): DrillQuestion[] => {
 	return questions;
 };
 
-export const generateErrorCorrectionQuestions = (): DrillQuestion[] => {
+const generateErrorCorrectionQuestions = (): DrillQuestion[] => {
 	const questions: DrillQuestion[] = [];
 
 	for (const mistake of AGREEMENT_MISTAKES) {
@@ -284,6 +284,6 @@ const grammarGenerators: Record<GrammarExerciseType, () => DrillQuestion[]> = {
 	"error-correction": generateErrorCorrectionQuestions,
 };
 
-export const generateGrammarQuestions = (exerciseType: GrammarExerciseType): DrillQuestion[] => {
+const generateGrammarQuestions = (exerciseType: GrammarExerciseType): DrillQuestion[] => {
 	return grammarGenerators[exerciseType]();
 };

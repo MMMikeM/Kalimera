@@ -158,5 +158,5 @@ const NavTabs = ({ tabs, activeTab, buildUrl, className }: NavTabsProps) => {
 	);
 };
 
-export type { NavTabsProps, NavTab, TabColor };
-export { NavTabs, navTabsVariants, triggerStateVariants, badgeColorVariants };
+export type {  NavTab,  };
+export { NavTabs,    };

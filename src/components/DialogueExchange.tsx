@@ -16,7 +16,7 @@ export interface DialogueLine {
 	note?: string; // Optional context note
 }
 
-export type ColorScheme = "olive" | "terracotta" | "ocean" | "honey";
+type ColorScheme = "olive" | "terracotta" | "ocean" | "honey";
 
 const speakerBubbleStyles: Record<SpeakerRole, string> = {
 	you: "bg-cream-dark",
@@ -61,7 +61,7 @@ const RevealableText: React.FC<RevealableTextProps> = ({ text, isHidden, onRevea
 	);
 };
 
-export const DialogueExchange: React.FC<DialogueExchangeProps> = ({
+const DialogueExchange: React.FC<DialogueExchangeProps> = ({
 	lines,
 	colorScheme: _colorScheme,
 	mode = "read",
@@ -136,7 +136,7 @@ export const DialogueExchange: React.FC<DialogueExchangeProps> = ({
 
 export type Formality = "formal" | "informal" | "mixed";
 
-export interface DialogueScenarioProps {
+interface DialogueScenarioProps {
 	title: string;
 	description?: string;
 	dialogue: DialogueLine[];

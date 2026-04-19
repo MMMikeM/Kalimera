@@ -1,15 +1,15 @@
 import type { VerbVocabularyWithDetailsRow } from "@/db.server/queries/verbs";
 import { fetchVerbsWithVerbDetails } from "@/db.server/queries/verbs";
 
-export type VerbWithPattern = VerbVocabularyWithDetailsRow;
+type VerbWithPattern = VerbVocabularyWithDetailsRow;
 
-export interface VerbSubCategory {
+interface VerbSubCategory {
 	title: string;
 	pattern: string;
 	verbs: VerbWithPattern[];
 }
 
-export interface VerbCategory {
+interface VerbCategory {
 	id: string;
 	title: string;
 	verbs: VerbWithPattern[];

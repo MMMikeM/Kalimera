@@ -4,19 +4,19 @@ import { and, count, eq, gte, isNotNull, sql } from "drizzle-orm";
 import { db } from "../index";
 import { practiceAttempts, practiceSessions } from "../schema";
 
-export type PracticeDate = {
+type PracticeDate = {
 	date: string; // ISO date string (YYYY-MM-DD)
 	sessionCount: number;
 };
 
-export type AccuracyTrend = {
+type AccuracyTrend = {
 	date: string;
 	accuracy: number; // 0-100
 	totalAttempts: number;
 	correctAttempts: number;
 };
 
-export type TimeInvested = {
+type TimeInvested = {
 	totalMinutes: number;
 	sessionCount: number;
 };

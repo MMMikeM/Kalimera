@@ -10,11 +10,11 @@ import { tv } from "tailwind-variants";
  * - Stems faded to emphasize the changing parts
  * - Generous spacing for reduced cognitive load
  */
-export const paradigmTableVariants = tv({
+const paradigmTableVariants = tv({
 	base: "w-full border-collapse",
 });
 
-export const paradigmCellVariants = tv({
+const paradigmCellVariants = tv({
 	base: "p-2 text-center font-mono text-sm sm:p-3 sm:text-base",
 	variants: {
 		position: {
@@ -42,7 +42,7 @@ export type ParadigmForms = {
 	pl3: VerbForm | string;
 };
 
-export interface ParadigmTableProps {
+interface ParadigmTableProps {
 	stem?: string;
 	meaning: string;
 	infinitive?: string;

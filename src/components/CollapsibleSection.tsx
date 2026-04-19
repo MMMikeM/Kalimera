@@ -6,9 +6,9 @@ import { type ReactNode, useState } from "react";
 import { type ColorScheme, colorStyles } from "@/lib/colors";
 import { cn } from "@/lib/utils";
 
-export type CollapsibleColorScheme = ColorScheme;
+type CollapsibleColorScheme = ColorScheme;
 
-export interface CollapsibleSectionProps {
+interface CollapsibleSectionProps {
 	title: string;
 	subtitle?: string;
 	icon?: ReactNode;

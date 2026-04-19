@@ -4,7 +4,7 @@ import { Link } from "react-router";
 import { Card } from "@/components/Card";
 import { cn } from "@/lib/utils";
 
-export interface NextStepCardProps {
+interface NextStepCardProps {
 	to: string;
 	kicker: string;
 	title: string;

@@ -29,7 +29,7 @@ export type GrammarScheme =
 	| "decision"
 	| "neutral";
 
-export interface SchemeClasses {
+interface SchemeClasses {
 	bg: string;
 	bgSoft: string;
 	bgMuted: string;

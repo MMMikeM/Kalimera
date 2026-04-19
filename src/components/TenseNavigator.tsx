@@ -42,7 +42,7 @@ const colorStyles: Record<TenseColorScheme, { tab: string; activeTab: string; co
 	},
 };
 
-export interface TenseNavigatorProps {
+interface TenseNavigatorProps {
 	conjugations: Record<string, ParadigmForms>;
 	verbDetails?: {
 		presentStem?: string | null;

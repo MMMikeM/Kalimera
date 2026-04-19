@@ -1,21 +1,21 @@
-export interface VerbConjugation {
+interface VerbConjugation {
 	person: string;
 	form: string;
 	highlighted?: string;
 	english: string;
 }
 
-export interface VerbForm {
+interface VerbForm {
 	stem: string;
 	ending: string;
 }
 
-export interface UsageExample {
+interface UsageExample {
 	greek: string;
 	english: string;
 }
 
-export type VerbConjugationKey =
+type VerbConjugationKey =
 	| "kano"
 	| "milao"
 	| "erhomai"
@@ -28,7 +28,7 @@ export type VerbConjugationKey =
 	| "thelo"
 	| "boro";
 
-export interface VerbFamilyConfig {
+interface VerbFamilyConfig {
 	id: string;
 	displayName: string;
 	shortName: string;
@@ -95,7 +95,7 @@ export const VERB_FAMILIES: Record<string, VerbFamilyConfig> = {
 	},
 } as const;
 
-export interface VerbPattern {
+interface VerbPattern {
 	name: string;
 	description: string;
 	endings: {
@@ -123,7 +123,7 @@ export interface VerbPattern {
 	usage: UsageExample[];
 }
 
-export interface IrregularVerbForms {
+interface IrregularVerbForms {
 	sg1: string;
 	sg2: string;
 	sg3: string;
@@ -132,7 +132,7 @@ export interface IrregularVerbForms {
 	pl3: string;
 }
 
-export interface IrregularVerb {
+interface IrregularVerb {
 	infinitive: string;
 	meaning: string;
 	forms: IrregularVerbForms;

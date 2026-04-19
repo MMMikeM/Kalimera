@@ -1,6 +1,6 @@
 const AUTH_STORAGE_KEY = "greek-authenticated-user";
 
-export interface AuthUser {
+interface AuthUser {
 	userId: number;
 	username: string;
 }

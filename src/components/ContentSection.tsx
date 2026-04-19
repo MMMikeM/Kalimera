@@ -7,7 +7,7 @@ export type ContentColorScheme = ColorScheme;
 
 // ─── Section Header ─────────────────────────────────────────────────────────
 
-export interface ContentSectionProps {
+interface ContentSectionProps {
 	title: string;
 	subtitle?: string;
 	badge?: string;
@@ -57,13 +57,13 @@ export const ContentSection = ({
 
 // ─── Two Column List ────────────────────────────────────────────────────────
 
-export interface TwoColumnItem {
+interface TwoColumnItem {
 	id: string | number;
 	primary: string;
 	secondary: string;
 }
 
-export interface TwoColumnListProps<T extends TwoColumnItem> {
+interface TwoColumnListProps<T extends TwoColumnItem> {
 	items: T[];
 	/** Custom render for primary text */
 	renderPrimary?: (item: T) => ReactNode;
@@ -82,7 +82,7 @@ export const TwoColumnList = <T extends TwoColumnItem>({
 		{items.map((item) => (
 			<div
 				key={item.id}
-				className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] items-center gap-x-4 py-2.5 pl-3"
+				className="grid grid-cols-2 items-center gap-x-4 py-2.5 pl-3"
 			>
 				<span className="text-lg font-semibold text-stone-900">
 					{renderPrimary ? renderPrimary(item) : item.primary}

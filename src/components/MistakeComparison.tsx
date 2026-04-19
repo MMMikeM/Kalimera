@@ -3,13 +3,13 @@ import { AlertCircle, CheckCircle } from "lucide-react";
 import { Card } from "./Card";
 import { MonoText } from "./MonoText";
 
-export interface Mistake {
+interface Mistake {
 	wrong: string;
 	correct: string;
 	explanation: string;
 }
 
-export interface MistakeComparisonProps {
+interface MistakeComparisonProps {
 	mistakes: Mistake[];
 	title?: string;
 	layout?: "grid" | "list";

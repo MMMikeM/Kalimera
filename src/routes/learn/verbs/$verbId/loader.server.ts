@@ -12,7 +12,7 @@ type ParadigmForms = {
 	pl3: string;
 };
 
-export type VerbWithConjugations = {
+type VerbWithConjugations = {
 	id: number;
 	greekText: string;
 	englishTranslation: string;

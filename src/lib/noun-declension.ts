@@ -2,9 +2,9 @@ import { AGREEMENT_PARADIGMS } from "@/constants/agreement";
 import type { NounDeclensionPattern } from "@/db.server/enums";
 
 export type Case = "nominative" | "accusative" | "genitive";
-export type Number = "singular" | "plural";
+type Number = "singular" | "plural";
 
-export interface DeclinedForm {
+interface DeclinedForm {
 	case: Case;
 	number: Number;
 	article: string;

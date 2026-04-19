@@ -2,12 +2,12 @@ import { cn } from "@/lib/utils";
 
 import { MonoText } from "./MonoText";
 
-export interface ImperativeFormsData {
+interface ImperativeFormsData {
 	imperfective: { singular: string; plural: string } | null;
 	perfective: { singular: string; plural: string } | null;
 }
 
-export interface ImperativeTableProps {
+interface ImperativeTableProps {
 	imperatives: ImperativeFormsData;
 	className?: string;
 }

@@ -15,7 +15,7 @@ export const useCurrentUserId = (): number | null => {
 	return getCurrentUserId();
 };
 
-export interface LogAttemptInput {
+interface LogAttemptInput {
 	prompt: string;
 	correctAnswer: string;
 	userAnswer: string;

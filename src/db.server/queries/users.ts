@@ -6,7 +6,7 @@ import { db } from "../index";
 import { users } from "../schema";
 
 const userInsertSchema = createInsertSchema(users);
-export type UserInsert = z.infer<typeof userInsertSchema>;
+type UserInsert = z.infer<typeof userInsertSchema>;
 
 export const findUserByCode = async (code: string) => {
 	return await db.query.users.findFirst({ where: { code: code.toLowerCase() } });
@@ -42,7 +42,7 @@ export const createUser = async (data: Pick<UserInsert, "displayName" | "code">)
 	return newUser;
 };
 
-export type CreateUserWithPasswordInput = Pick<UserInsert, "displayName" | "passwordHash"> & {
+type CreateUserWithPasswordInput = Pick<UserInsert, "displayName" | "passwordHash"> & {
 	username: string;
 };
 

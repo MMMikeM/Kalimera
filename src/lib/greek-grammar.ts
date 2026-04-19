@@ -8,7 +8,7 @@ export type ConjugationFamily = "-ω" | "-άω/-ώ" | "-ομαι" | "-άμαι" 
 
 // Definite article lookup table
 // Usage: DEFINITE_ARTICLES[gender][number][case]
-export const DEFINITE_ARTICLES: Record<Gender, Record<GrammaticalNumber, Record<Case, string>>> = {
+const DEFINITE_ARTICLES: Record<Gender, Record<GrammaticalNumber, Record<Case, string>>> = {
 	masculine: {
 		singular: {
 			nominative: "ο",

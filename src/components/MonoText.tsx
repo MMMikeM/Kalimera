@@ -9,7 +9,7 @@ import { tv } from "tailwind-variants";
  * - Case colors use AAA-compliant text variants
  * - Greek text renders at 1.1x size for visual balance
  */
-export const monoTextVariants = tv({
+const monoTextVariants = tv({
 	base: "font-mono leading-relaxed tracking-wide",
 	variants: {
 		variant: {
@@ -94,7 +94,7 @@ export const monoTextVariants = tv({
 	},
 });
 
-export interface MonoTextProps extends React.HTMLAttributes<HTMLSpanElement> {
+interface MonoTextProps extends React.HTMLAttributes<HTMLSpanElement> {
 	variant?:
 		| "default"
 		| "muted"

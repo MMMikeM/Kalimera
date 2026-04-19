@@ -1,11 +1,11 @@
-export interface SRSInput {
+interface SRSInput {
 	quality: number; // 2 (hard/wrong), 4 (good), or 5 (easy)
 	easeFactor: number; // Current ease factor (default 2.3 for new items)
 	intervalDays: number; // Current interval in days
 	reviewCount: number; // Number of reviews so far
 }
 
-export interface SRSOutput {
+interface SRSOutput {
 	nextIntervalDays: number;
 	nextEaseFactor: number;
 	nextReviewAt: Date;
@@ -14,7 +14,7 @@ export interface SRSOutput {
 const MIN_EASE_FACTOR = 1.3;
 const INITIAL_EASE_FACTOR = 2.3;
 
-export const calculateSRS = (input: SRSInput): SRSOutput => {
+const calculateSRS = (input: SRSInput): SRSOutput => {
 	const { quality, easeFactor, intervalDays, reviewCount } = input;
 
 	// SM-2 ease factor adjustment: EF' = EF + (0.1 - (5 - q) * (0.08 + (5 - q) * 0.02))
@@ -54,14 +54,14 @@ export const calculateSRS = (input: SRSInput): SRSOutput => {
 // - incorrect = 2 (hard, need more practice)
 const FAST_RESPONSE_THRESHOLD_MS = 2000;
 
-export const qualityFromAttempt = (isCorrect: boolean, timeMs: number): number => {
+const qualityFromAttempt = (isCorrect: boolean, timeMs: number): number => {
 	if (!isCorrect) {
 		return 2;
 	}
 	return timeMs < FAST_RESPONSE_THRESHOLD_MS ? 5 : 4;
 };
 
-export const getInitialSRSValues = () => ({
+const getInitialSRSValues = () => ({
 	easeFactor: INITIAL_EASE_FACTOR,
 	intervalDays: 1,
 	reviewCount: 0,
@@ -69,13 +69,13 @@ export const getInitialSRSValues = () => ({
 });
 
 /** Row shape needed to compute the next SRS state (no DB). */
-export type ExistingVocabularySkillForSRS = {
+type ExistingVocabularySkillForSRS = {
 	easeFactor: number | null;
 	intervalDays: number | null;
 	reviewCount: number | null;
 };
 
-export type VocabularySkillAfterAttempt =
+type VocabularySkillAfterAttempt =
 	| {
 			op: "update";
 			set: {

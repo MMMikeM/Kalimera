@@ -37,7 +37,7 @@ export const createWebAuthnFromRequest = (request: Request) => {
 	});
 };
 
-export const createWebAuthn = ({ rpName, rpID, origin }: WebAuthnConfig) => {
+const createWebAuthn = ({ rpName, rpID, origin }: WebAuthnConfig) => {
 	return {
 		generateRegistrationOptions: async (userId: number, userName: string) => {
 			const existingCredentials = await findPasskeysByUserId(userId);

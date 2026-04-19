@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 
 import { MonoText } from "./MonoText";
 
-export interface StemInsightProps {
+interface StemInsightProps {
 	isSuppletive: boolean;
 	stems: {
 		present?: string | null;

@@ -15,10 +15,10 @@ import {
 
 export type Case = "nominative" | "accusative" | "genitive";
 export type Gender = "masculine" | "feminine" | "neuter";
-export type Num = "singular" | "plural";
-export type Person = "first" | "second" | "third";
+type Num = "singular" | "plural";
+type Person = "first" | "second" | "third";
 
-export interface ChipSpec {
+interface ChipSpec {
 	icon: LucideIcon;
 	label: string;
 	longLabel: string;

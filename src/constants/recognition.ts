@@ -5,7 +5,7 @@
 
 export type CaseName = "Nominative" | "Accusative" | "Genitive";
 
-export interface CaseRole {
+interface CaseRole {
 	role: "Doer" | "Target" | "Owner";
 	description: string;
 	caseName: CaseName;
@@ -14,7 +14,7 @@ export interface CaseRole {
 	articles: string[];
 }
 
-export interface CaseTrigger {
+interface CaseTrigger {
 	pattern: string;
 	caseName: CaseName;
 	meaning: string;

@@ -2,7 +2,7 @@ import { Search, X } from "lucide-react";
 import { forwardRef, type ReactNode } from "react";
 import { tv } from "tailwind-variants";
 
-export const searchInputVariants = tv({
+const searchInputVariants = tv({
 	base: "relative",
 	variants: {
 		size: {
@@ -16,7 +16,7 @@ export const searchInputVariants = tv({
 	},
 });
 
-export const searchInputFieldVariants = tv({
+const searchInputFieldVariants = tv({
 	base: "w-full rounded-lg border border-stone-300 bg-white text-stone-900 transition-colors placeholder:text-stone-600 focus:border-terracotta focus:ring-2 focus:ring-terracotta-300 focus:ring-offset-0 focus:outline-none",
 	variants: {
 		size: {
@@ -30,7 +30,7 @@ export const searchInputFieldVariants = tv({
 	},
 });
 
-export const searchInputIconVariants = tv({
+const searchInputIconVariants = tv({
 	base: "pointer-events-none absolute inset-y-0 flex items-center text-stone-600",
 	variants: {
 		size: {
@@ -44,7 +44,7 @@ export const searchInputIconVariants = tv({
 	},
 });
 
-export const clearButtonVariants = tv({
+const clearButtonVariants = tv({
 	base: "absolute inset-y-0 flex items-center text-stone-600 transition-colors hover:text-stone-600 focus:text-stone-600 focus:outline-none",
 	variants: {
 		size: {
@@ -58,7 +58,7 @@ export const clearButtonVariants = tv({
 	},
 });
 
-export interface SearchInputProps extends Omit<
+interface SearchInputProps extends Omit<
 	React.InputHTMLAttributes<HTMLInputElement>,
 	"size"
 > {

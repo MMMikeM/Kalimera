@@ -27,7 +27,7 @@ export type CategoryData = {
 
 type CategoryKey = "people" | "shopping" | "household" | "vehicles" | "summer";
 
-export type CategoriesMap = Record<CategoryKey, CategoryData>;
+type CategoriesMap = Record<CategoryKey, CategoryData>;
 
 export async function loader() {
 	const tags = await getVocabBySlug("nouns", ["noun"]);

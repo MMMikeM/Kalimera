@@ -26,12 +26,12 @@ type MaxLength<
 /** Title must be 30 characters or fewer */
 type ShortTitle<S extends string> = MaxLength<S, 30>;
 
-export type TabHeroColorScheme = Extract<
+type TabHeroColorScheme = Extract<
 	ColorScheme,
 	"ocean" | "terracotta" | "olive" | "honey" | "stone"
 >;
 
-export interface TabHeroProps<T extends string = string> {
+interface TabHeroProps<T extends string = string> {
 	title: ShortTitle<T> extends never ? `Title too long (max 30 chars): ${T}` : T;
 	children: ReactNode;
 	icon?: ReactNode;

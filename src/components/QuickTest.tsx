@@ -5,13 +5,13 @@ import { type ColorScheme, colorStyles } from "@/lib/colors";
 import { Card } from "./Card";
 import { MonoText } from "./MonoText";
 
-export interface QuickTestOption {
+interface QuickTestOption {
 	condition: string;
 	answer: ReactNode;
 	examples?: Array<{ greek: string; english: string }>;
 }
 
-export interface QuickTestProps {
+interface QuickTestProps {
 	title: string;
 	intro?: string;
 	options: QuickTestOption[];
