@@ -56,6 +56,7 @@ export function TimeSubtab({ data }: Props) {
 					{sortedTimes.map((time) => (
 						<div
 							key={time.id}
+							// eslint-disable-next-line better-tailwindcss/no-restricted-classes -- 60/40 layout, no token fit
 							className="grid grid-cols-[3fr_2fr] items-center gap-x-3 px-3 py-2.5"
 						>
 							<MonoText variant="greek">{time.greekText}</MonoText>
@@ -104,6 +105,7 @@ export function TimeSubtab({ data }: Props) {
 						{sortedDays.map((day) => (
 							<div
 								key={day.id}
+								// eslint-disable-next-line better-tailwindcss/no-restricted-classes -- 60/40 layout, no token fit
 								className="grid grid-cols-[3fr_2fr] items-center gap-x-3 px-3 py-2.5"
 							>
 								<MonoText variant="greek">{day.greekText}</MonoText>
@@ -156,6 +158,7 @@ export function TimeSubtab({ data }: Props) {
 						{sortedMonths.map((month) => (
 							<div
 								key={month.id}
+								// eslint-disable-next-line better-tailwindcss/no-restricted-classes -- 60/40 layout, no token fit
 								className="grid grid-cols-[3fr_2fr] items-center gap-x-3 px-3 py-2.5"
 							>
 								<MonoText variant="greek">{month.greekText}</MonoText>
