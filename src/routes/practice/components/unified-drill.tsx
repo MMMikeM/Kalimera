@@ -173,6 +173,7 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 	const questionStartTimeRef = useRef<number>(Date.now());
 	const inputRef = useRef<HTMLInputElement>(null);
 	const autoAdvanceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+	const advanceArmedRef = useRef(false);
 
 	// Focus input when question becomes active
 	useEffect(() => {
@@ -213,6 +214,12 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 		}
 	}, [state.isComplete, state.score, state.totalResponseTime, state.attempts, onComplete]);
 
+	// Reset advance-arm when entering a new feedback phase so the same
+	// Enter/Space that submitted cannot also skip past the feedback.
+	useEffect(() => {
+		if (state.phase === "feedback") advanceArmedRef.current = false;
+	}, [state.phase]);
+
 	// Keyboard handler for advancing
 	useEffect(() => {
 		const handleKeyDown = (e: KeyboardEvent) => {
@@ -220,6 +227,7 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 			if (
 				state.phase === "feedback" &&
 				!state.lastResult?.isCorrect &&
+				advanceArmedRef.current &&
 				(e.key === " " || e.key === "Enter")
 			) {
 				e.preventDefault();
@@ -232,8 +240,16 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 			}
 		};
 
+		const handleKeyUp = (e: KeyboardEvent) => {
+			if (e.key === " " || e.key === "Enter") advanceArmedRef.current = true;
+		};
+
 		window.addEventListener("keydown", handleKeyDown);
-		return () => window.removeEventListener("keydown", handleKeyDown);
+		window.addEventListener("keyup", handleKeyUp);
+		return () => {
+			window.removeEventListener("keydown", handleKeyDown);
+			window.removeEventListener("keyup", handleKeyUp);
+		};
 	}, [state.phase, state.lastResult?.isCorrect]);
 
 	const currentQuestion = state.questions[state.currentIndex];
@@ -349,6 +365,7 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 				<div className="mb-6 text-center">
 					<p className="mb-2 text-sm text-stone-500">Translate to Greek:</p>
 					<p
+						key={state.currentIndex}
 						className={`text-2xl font-semibold text-stone-800 transition-all duration-200 ${
 							state.phase === "ready" ? "blur-md select-none" : ""
 						}`}
