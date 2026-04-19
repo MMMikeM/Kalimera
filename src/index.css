@@ -1,20 +1,24 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* Dark mode intentionally disabled.
+ * @custom-variant gates `dark:` classes on a `.dark` ancestor we never apply,
+ * neutralising shadcn components that ship with dark: variants. */
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Mediterranean Color Palette for Greek Learning
+ * Mediterranean Colour Palette for Greek Learning
  *
- * Design principles (see /docs/design-guidelines.md):
+ * Design principles (see /docs/design-guidelines.md + visual-learning-design skill):
+ * - Base palette = brand + non-grammatical UI
+ * - Grammar role tokens (case, gender) = reserved scales; use wherever colour
+ *   asserts a grammatical value about adjacent Greek content
  * - Cool backgrounds for focus, warm accents for emphasis
- * - Maximum 3-4 colors per context
  * - AAA contrast (7:1) for extended reading
- * - Semantic colors for grammar concepts
  */
 
 @theme inline {
-	/* === CREAM - Background === */
+	/* === CREAM — Background === */
 	--color-cream-50: #faf8f5;
 	--color-cream-100: #f1ece3;
 	--color-cream-200: #e2d6c6;
@@ -29,7 +33,7 @@
 	--color-cream: var(--color-cream-50);
 	--color-cream-dark: var(--color-cream-100);
 
-	/* === TERRACOTTA - Primary Accent === */
+	/* === TERRACOTTA — Primary Accent === */
 	--color-terracotta-50: #fbf6f1;
 	--color-terracotta-100: #f6e9de;
 	--color-terracotta-200: #ebd1bd;
@@ -46,7 +50,7 @@
 	--color-terracotta-dark: var(--color-terracotta-700);
 	--color-terracotta-text: #5c2d14;
 
-	/* === SUNSET - Feminine Accent (dusty rose) === */
+	/* === SUNSET — Feminine Accent (dusty rose) === */
 	--color-sunset-50: #fdf5f7;
 	--color-sunset-100: #fceaef;
 	--color-sunset-200: #f9d4df;
@@ -63,7 +67,7 @@
 	--color-sunset-dark: var(--color-sunset-600);
 	--color-sunset-text: #6b2a45;
 
-	/* === OLIVE - Secondary (silvery olive leaf) === */
+	/* === OLIVE — Secondary (silvery olive leaf) === */
 	--color-olive-50: #f8f9f6;
 	--color-olive-100: #eef1ea;
 	--color-olive-200: #dce3d4;
@@ -80,7 +84,7 @@
 	--color-olive-dark: var(--color-olive-600);
 	--color-olive-text: #2a3622;
 
-	/* === OCEAN - Tertiary (formerly Aegean) === */
+	/* === OCEAN — Tertiary (formerly Aegean) === */
 	--color-ocean-50: #f2f7f9;
 	--color-ocean-100: #dfebee;
 	--color-ocean-200: #c2d8df;
@@ -97,7 +101,7 @@
 	--color-ocean-dark: var(--color-ocean-700);
 	--color-ocean-text: #14333f;
 
-	/* === HONEY - Accent === */
+	/* === HONEY — Accent === */
 	--color-honey-50: #faf7ec;
 	--color-honey-100: #f3ebce;
 	--color-honey-200: #e8d6a0;
@@ -114,7 +118,7 @@
 	--color-honey-dark: var(--color-honey-500);
 	--color-honey-text: #4a3508;
 
-	/* === NAVY - Scholarly/Headings === */
+	/* === NAVY — Scholarly/Headings === */
 	--color-navy-50: #f5f7fa;
 	--color-navy-100: #eaeef4;
 	--color-navy-200: #d0dae7;
@@ -131,7 +135,7 @@
 	--color-navy-dark: var(--color-navy-800);
 	--color-navy-text: #1a2838;
 
-	/* === SLATE - Secondary Accents === */
+	/* === SLATE — Secondary Accents === */
 	--color-slate-50: #f5f8f7;
 	--color-slate-100: #dfe8e5;
 	--color-slate-200: #bfd0cc;
@@ -151,25 +155,6 @@
 	/* Neutral */
 	--color-stone-warm: #78716c;
 
-	/* === GRAMMAR SEMANTIC COLORS === */
-
-	/* Cases - Based on grammatical function */
-	--color-case-nominative: var(--color-ocean);
-	--color-case-accusative: var(--color-terracotta);
-	--color-case-genitive: var(--color-olive);
-	--color-case-vocative: var(--color-honey);
-
-	/* Case text variants (AAA compliant) */
-	--color-case-nominative-text: var(--color-ocean-text);
-	--color-case-accusative-text: var(--color-terracotta-text);
-	--color-case-genitive-text: var(--color-olive-text);
-	--color-case-vocative-text: var(--color-honey-text);
-
-	/* Gender - Mapped to palette colours for consistency */
-	--color-gender-masculine: var(--color-navy-text); /* Navy family */
-	--color-gender-feminine: var(--color-sunset-text); /* Sunset family */
-	--color-gender-neuter: var(--color-slate-text); /* Slate family */
-
 	/* Learning feedback states */
 	--color-correct: #16a34a;
 	--color-correct-light: #dcfce7;
@@ -182,13 +167,14 @@
 	--font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
 	--font-sans: "DM Sans", system-ui, -apple-system, sans-serif;
 
-	/* === SPACING & RADIUS === */
+	/* === RADIUS === */
 	--radius-sm: calc(var(--radius) - 4px);
 	--radius-md: calc(var(--radius) - 2px);
 	--radius-lg: var(--radius);
 	--radius-xl: calc(var(--radius) + 4px);
 
-	/* === SHADCN THEME MAPPING === */
+	/* === SHADCN THEME MAPPING ===
+	 * Single source of truth. No dark-mode overrides. */
 	--color-background: var(--color-cream);
 	--color-foreground: #1c1917;
 	--color-card: #ffffff;
@@ -196,19 +182,19 @@
 	--color-popover: #ffffff;
 	--color-popover-foreground: #1c1917;
 	--color-primary: var(--color-terracotta);
-	--color-primary-foreground: #faf8f5;
+	--color-primary-foreground: var(--color-cream);
 	--color-secondary: #f5f5f4;
 	--color-secondary-foreground: #1c1917;
 	--color-muted: #f5f5f4;
-	--color-muted-foreground: #57534e; /* Darker for better contrast */
+	--color-muted-foreground: #57534e;
 	--color-accent: #f5f5f4;
 	--color-accent-foreground: #1c1917;
 	--color-destructive: var(--color-incorrect);
-	--color-border: #d6d3d1; /* Slightly darker for visibility */
+	--color-border: #d6d3d1;
 	--color-input: #d6d3d1;
 	--color-ring: var(--color-terracotta);
 
-	/* Chart colors */
+	/* Chart */
 	--color-chart-1: var(--color-terracotta);
 	--color-chart-2: var(--color-olive);
 	--color-chart-3: var(--color-ocean);
@@ -219,80 +205,126 @@
 	--color-sidebar: var(--color-cream);
 	--color-sidebar-foreground: #1c1917;
 	--color-sidebar-primary: var(--color-terracotta);
-	--color-sidebar-primary-foreground: #faf8f5;
+	--color-sidebar-primary-foreground: var(--color-cream);
 	--color-sidebar-accent: #f5f5f4;
 	--color-sidebar-accent-foreground: #1c1917;
 	--color-sidebar-border: #d6d3d1;
 	--color-sidebar-ring: var(--color-terracotta);
 }
 
-:root {
-	--radius: 0.625rem;
-	--background: #faf8f5;
-	--foreground: #1c1917;
-	--card: #ffffff;
-	--card-foreground: #1c1917;
-	--popover: #ffffff;
-	--popover-foreground: #1c1917;
-	--primary: #c4663f;
-	--primary-foreground: #faf8f5;
-	--secondary: #f5f5f4;
-	--secondary-foreground: #1c1917;
-	--muted: #f5f5f4;
-	--muted-foreground: #57534e;
-	--accent: #f5f5f4;
-	--accent-foreground: #1c1917;
-	--destructive: #dc2626;
-	--border: #d6d3d1;
-	--input: #d6d3d1;
-	--ring: #c4663f;
-	--chart-1: #c4663f;
-	--chart-2: #6b7b5c;
-	--chart-3: #4a7c8f;
-	--chart-4: #d4a853;
-	--chart-5: #78716c;
-	--sidebar: #faf8f5;
-	--sidebar-foreground: #1c1917;
-	--sidebar-primary: #c4663f;
-	--sidebar-primary-foreground: #faf8f5;
-	--sidebar-accent: #f5f5f4;
-	--sidebar-accent-foreground: #1c1917;
-	--sidebar-border: #d6d3d1;
-	--sidebar-ring: #c4663f;
+/* === GRAMMAR ROLE TOKENS ===
+ *
+ * Reserved role-keyed scales. Use these — NOT base palette — wherever colour
+ * claims a grammatical value about adjacent Greek content.
+ *
+ * Case taught on cases/nouns/articles/adjectives/pronouns (5 surfaces).
+ * Gender taught on nouns/articles/adjectives/agreement (4 surfaces).
+ *
+ * Rule: grammar colour as fill/background/border around Greek content
+ * asserts that content's grammatical value. If assertion false, DO NOT USE —
+ * reach for base palette or neutral stone instead.
+ *
+ * `static` keeps the full scale emitted even if a specific shade isn't yet
+ * referenced by a utility class — callers can reach these via var() in
+ * arbitrary CSS without tripping the JIT scanner.
+ */
+@theme static {
+	/* Case: Nominative → ocean */
+	--color-case-nominative-50: var(--color-ocean-50);
+	--color-case-nominative-100: var(--color-ocean-100);
+	--color-case-nominative-200: var(--color-ocean-200);
+	--color-case-nominative-300: var(--color-ocean-300);
+	--color-case-nominative-400: var(--color-ocean-400);
+	--color-case-nominative-500: var(--color-ocean-500);
+	--color-case-nominative-600: var(--color-ocean-600);
+	--color-case-nominative-700: var(--color-ocean-700);
+	--color-case-nominative-800: var(--color-ocean-800);
+	--color-case-nominative-900: var(--color-ocean-900);
+	--color-case-nominative-950: var(--color-ocean-950);
+	--color-case-nominative-text: var(--color-ocean-text);
+
+	/* Case: Accusative → terracotta */
+	--color-case-accusative-50: var(--color-terracotta-50);
+	--color-case-accusative-100: var(--color-terracotta-100);
+	--color-case-accusative-200: var(--color-terracotta-200);
+	--color-case-accusative-300: var(--color-terracotta-300);
+	--color-case-accusative-400: var(--color-terracotta-400);
+	--color-case-accusative-500: var(--color-terracotta-500);
+	--color-case-accusative-600: var(--color-terracotta-600);
+	--color-case-accusative-700: var(--color-terracotta-700);
+	--color-case-accusative-800: var(--color-terracotta-800);
+	--color-case-accusative-900: var(--color-terracotta-900);
+	--color-case-accusative-950: var(--color-terracotta-950);
+	--color-case-accusative-text: var(--color-terracotta-text);
+
+	/* Case: Genitive → olive */
+	--color-case-genitive-50: var(--color-olive-50);
+	--color-case-genitive-100: var(--color-olive-100);
+	--color-case-genitive-200: var(--color-olive-200);
+	--color-case-genitive-300: var(--color-olive-300);
+	--color-case-genitive-400: var(--color-olive-400);
+	--color-case-genitive-500: var(--color-olive-500);
+	--color-case-genitive-600: var(--color-olive-600);
+	--color-case-genitive-700: var(--color-olive-700);
+	--color-case-genitive-800: var(--color-olive-800);
+	--color-case-genitive-900: var(--color-olive-900);
+	--color-case-genitive-950: var(--color-olive-950);
+	--color-case-genitive-text: var(--color-olive-text);
+
+	/* Gender: Masculine → navy */
+	--color-gender-masculine-50: var(--color-navy-50);
+	--color-gender-masculine-100: var(--color-navy-100);
+	--color-gender-masculine-200: var(--color-navy-200);
+	--color-gender-masculine-300: var(--color-navy-300);
+	--color-gender-masculine-400: var(--color-navy-400);
+	--color-gender-masculine-500: var(--color-navy-500);
+	--color-gender-masculine-600: var(--color-navy-600);
+	--color-gender-masculine-700: var(--color-navy-700);
+	--color-gender-masculine-800: var(--color-navy-800);
+	--color-gender-masculine-900: var(--color-navy-900);
+	--color-gender-masculine-950: var(--color-navy-950);
+	--color-gender-masculine-text: var(--color-navy-text);
+
+	/* Gender: Feminine → sunset */
+	--color-gender-feminine-50: var(--color-sunset-50);
+	--color-gender-feminine-100: var(--color-sunset-100);
+	--color-gender-feminine-200: var(--color-sunset-200);
+	--color-gender-feminine-300: var(--color-sunset-300);
+	--color-gender-feminine-400: var(--color-sunset-400);
+	--color-gender-feminine-500: var(--color-sunset-500);
+	--color-gender-feminine-600: var(--color-sunset-600);
+	--color-gender-feminine-700: var(--color-sunset-700);
+	--color-gender-feminine-800: var(--color-sunset-800);
+	--color-gender-feminine-900: var(--color-sunset-900);
+	--color-gender-feminine-950: var(--color-sunset-950);
+	--color-gender-feminine-text: var(--color-sunset-text);
+
+	/* Gender: Neuter → slate */
+	--color-gender-neuter-50: var(--color-slate-50);
+	--color-gender-neuter-100: var(--color-slate-100);
+	--color-gender-neuter-200: var(--color-slate-200);
+	--color-gender-neuter-300: var(--color-slate-300);
+	--color-gender-neuter-400: var(--color-slate-400);
+	--color-gender-neuter-500: var(--color-slate-500);
+	--color-gender-neuter-600: var(--color-slate-600);
+	--color-gender-neuter-700: var(--color-slate-700);
+	--color-gender-neuter-800: var(--color-slate-800);
+	--color-gender-neuter-900: var(--color-slate-900);
+	--color-gender-neuter-950: var(--color-slate-950);
+	--color-gender-neuter-text: var(--color-slate-text);
+
+	/* Short aliases → AAA text variant. Default role colour = AAA text tone.
+	 * Use scale tokens (-100, -300, -700, …) for fills/borders/chips. */
+	--color-case-nominative: var(--color-case-nominative-text);
+	--color-case-accusative: var(--color-case-accusative-text);
+	--color-case-genitive: var(--color-case-genitive-text);
+	--color-gender-masculine: var(--color-gender-masculine-text);
+	--color-gender-feminine: var(--color-gender-feminine-text);
+	--color-gender-neuter: var(--color-gender-neuter-text);
 }
 
-.dark {
-	--background: #1c1917;
-	--foreground: #fafaf9;
-	--card: #292524;
-	--card-foreground: #fafaf9;
-	--popover: #292524;
-	--popover-foreground: #fafaf9;
-	--primary: #d4805e;
-	--primary-foreground: #1c1917;
-	--secondary: #292524;
-	--secondary-foreground: #fafaf9;
-	--muted: #292524;
-	--muted-foreground: #a8a29e;
-	--accent: #292524;
-	--accent-foreground: #fafaf9;
-	--destructive: #ef4444;
-	--border: rgba(250, 250, 249, 0.1);
-	--input: rgba(250, 250, 249, 0.15);
-	--ring: #78716c;
-	--chart-1: #d4805e;
-	--chart-2: #8a9a78;
-	--chart-3: #6a9caf;
-	--chart-4: #e4c073;
-	--chart-5: #a8a29e;
-	--sidebar: #292524;
-	--sidebar-foreground: #fafaf9;
-	--sidebar-primary: #d4805e;
-	--sidebar-primary-foreground: #1c1917;
-	--sidebar-accent: #292524;
-	--sidebar-accent-foreground: #fafaf9;
-	--sidebar-border: rgba(250, 250, 249, 0.1);
-	--sidebar-ring: #78716c;
+:root {
+	--radius: 0.625rem;
 }
 
 @layer base {
@@ -322,8 +354,6 @@
 
 	/* PWA App Shell */
 	.app-shell {
-		position: fixed;
-		inset: 0;
 		display: flex;
 		flex-direction: column;
 		overflow: hidden;
@@ -369,7 +399,7 @@
 }
 
 @layer components {
-	/* Greek text - render slightly larger for visual balance */
+	/* Greek text — render slightly larger for visual balance */
 	.greek-text {
 		@apply text-[1.1em] leading-relaxed;
 		letter-spacing: 0.01em;
