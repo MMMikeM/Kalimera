@@ -1,6 +1,6 @@
 # Routes
 
-React Router 7 framework mode. Loaders run server-side, components render client.
+React Router 7 framework mode. Loaders run server-side, components render on client.
 
 ## Structure
 
@@ -35,7 +35,7 @@ import { getPageData } from "./data.server";
 export const loader = async () => getPageData();
 ```
 
-**Actions:** Multi-intent pattern w/ zod-form-data
+**Actions:** Multi-intent pattern with zod-form-data
 
 ```typescript
 const intent = formData.get("intent") as string;
@@ -54,7 +54,7 @@ route("practice", "routes/practice/layout.tsx", [
 ]);
 ```
 
-- `route()` - Add URL segment
+- `route()` - Adds URL segment
 - `layout()` - Shared UI, no URL segment
 - `index()` - Default child at parent URL
 - `prefix()` - URL prefix only (use spread: `...prefix("api", [...])`)
@@ -63,7 +63,7 @@ route("practice", "routes/practice/layout.tsx", [
 
 **Use `react-router-specialist` agent for:**
 
-- Route config or restructuring
+- Route configuration or restructuring
 - Loader/action patterns
 - Revalidation strategies
 - Navigation hooks (useNavigate, useNavigation, useFetcher)
@@ -72,6 +72,6 @@ route("practice", "routes/practice/layout.tsx", [
 
 **Use `ui-designer` agent for:**
 
-- Component design, layouts
+- Component design and layouts
 - Visual consistency
 - Educational design patterns

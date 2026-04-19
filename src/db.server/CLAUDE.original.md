@@ -1,6 +1,6 @@
 # Database Layer
 
-Drizzle ORM + Turso (distributed SQLite). Every query pay 100-400ms network latency.
+Drizzle ORM with Turso (distributed SQLite). Every query pays 100-400ms network latency.
 
 ## Key Files
 
@@ -14,7 +14,7 @@ types.ts        # Derived types from schema
 ## Critical Rules
 
 1. **Never query in loops** - Batch fetch, then Map.groupBy
-2. **Use relations** - One query with `with:` beat multiple queries
+2. **Use relations** - One query with `with:` beats multiple queries
 3. **Guard empty arrays** - `if (ids.length === 0) return []`
 
 ## Quick Patterns
