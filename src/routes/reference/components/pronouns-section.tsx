@@ -1,6 +1,6 @@
+import { TeachingCard } from "@/components/cards";
 import { Card } from "@/components/Card";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
-import { ContentSection } from "@/components/ContentSection";
 import { MonoText } from "@/components/MonoText";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
@@ -77,91 +77,84 @@ export const PronounsSection: React.FC = () => {
 
 			{/* Primary pronouns - most used */}
 			<div className="grid gap-6 lg:grid-cols-2">
-				<ContentSection title="Nominative Pronouns" colorScheme="olive">
-					<div className="space-y-4 p-3">
-						<p className="text-sm text-stone-600">Subject pronouns: often dropped! (εγώ, εσύ...)</p>
-						<Alert variant="success">
-							<AlertTitle>Good news</AlertTitle>
-							<AlertDescription>
-								Verb endings already show person, so subject pronouns are usually optional. Use them
-								for emphasis.
-							</AlertDescription>
-						</Alert>
-						<PronounParadigmTable data={SUBJECT_PRONOUNS} colorClass="border-olive-400" />
+				<TeachingCard
+					scheme="case-nominative"
+					tone="soft"
+					eyebrow="Subject"
+					title="εγώ, εσύ…"
+					badge="Nominative"
+					description="Often dropped — verb endings already show person. Use for emphasis."
+				>
+					<div className="space-y-4">
+						<PronounParadigmTable data={SUBJECT_PRONOUNS} colorClass="border-case-nominative-300" />
 						<PronounExamplePills
 							examples={SUBJECT_PRONOUN_EXAMPLES}
-							borderColor="border-olive-300"
-							textColor="text-olive-text"
+							borderColor="border-case-nominative-300"
+							textColor="text-case-nominative-text"
 						/>
 					</div>
-				</ContentSection>
+				</TeachingCard>
 
-				<ContentSection title="Genitive Pronouns" colorScheme="terracotta" badge="Essential">
-					<div className="space-y-4 p-3">
-						<p className="text-sm text-stone-600">
-							Possessive pronouns: for "my/your/their" (μου, σου...)
-						</p>
-						<Alert variant="purple">
-							<AlertTitle>Word order</AlertTitle>
-							<AlertDescription>
-								Possessives go AFTER the noun: το σπίτι μου (the house my) = my house
-							</AlertDescription>
-						</Alert>
-						<PronounParadigmTable
-							data={POSSESSIVE_PRONOUNS}
-							colorClass="border-terracotta-400"
-							note="Neuter uses same form as masculine (του)"
-						/>
+				<TeachingCard
+					scheme="case-accusative"
+					tone="soft"
+					eyebrow="Object"
+					title="με, σε, τον…"
+					badge="Accusative"
+					description="Use these constantly. Go BEFORE the verb: σε βλέπω = I see you."
+				>
+					<div className="space-y-4">
+						<PronounParadigmTable data={OBJECT_PRONOUNS} colorClass="border-case-accusative-300" />
 						<PronounExamplePills
-							examples={POSSESSIVE_PRONOUN_EXAMPLES}
-							borderColor="border-terracotta-300"
-							textColor="text-terracotta-text"
+							examples={OBJECT_PRONOUN_EXAMPLES}
+							borderColor="border-case-accusative-300"
+							textColor="text-case-accusative-text"
 						/>
 					</div>
-				</ContentSection>
+				</TeachingCard>
 			</div>
 
 			{/* Secondary pronouns - less frequent */}
 			<div className="grid gap-6 lg:grid-cols-2">
-				<ContentSection title="Accusative Pronouns" colorScheme="ocean" badge="Essential">
-					<div className="space-y-4 p-3">
-						<p className="text-sm text-stone-600">
-							Object pronouns: use these constantly! (με, σε, τον...)
-						</p>
-						<Alert variant="info">
-							<AlertTitle>Word order</AlertTitle>
-							<AlertDescription>
-								Object pronouns go BEFORE the verb: σε βλέπω (you I-see) = I see you
-							</AlertDescription>
-						</Alert>
-						<PronounParadigmTable data={OBJECT_PRONOUNS} colorClass="border-ocean-300" />
+				<TeachingCard
+					scheme="case-genitive"
+					tone="soft"
+					eyebrow="Possessive"
+					title="μου, σου, του…"
+					badge="Genitive"
+					description="For 'my/your/their'. Go AFTER the noun: το σπίτι μου = my house."
+				>
+					<div className="space-y-4">
+						<PronounParadigmTable
+							data={POSSESSIVE_PRONOUNS}
+							colorClass="border-case-genitive-300"
+							note="Neuter uses same form as masculine (του)"
+						/>
 						<PronounExamplePills
-							examples={OBJECT_PRONOUN_EXAMPLES}
-							borderColor="border-ocean-300"
-							textColor="text-ocean-text"
+							examples={POSSESSIVE_PRONOUN_EXAMPLES}
+							borderColor="border-case-genitive-300"
+							textColor="text-case-genitive-text"
 						/>
 					</div>
-				</ContentSection>
+				</TeachingCard>
 
-				<ContentSection title="Emphatic Accusative" colorScheme="honey">
-					<div className="space-y-4 p-3">
-						<p className="text-sm text-stone-600">
-							Strong forms: after prepositions (εμένα, εσένα...)
-						</p>
-						<Alert variant="warning">
-							<AlertTitle>When to use</AlertTitle>
-							<AlertDescription>
-								Use these after prepositions (για, με, από, σε): για μένα = for me
-							</AlertDescription>
-						</Alert>
-						<PronounParadigmTable data={EMPHATIC_PRONOUNS} colorClass="border-honey-400" />
+				<TeachingCard
+					scheme="case-accusative"
+					tone="soft"
+					eyebrow="Emphatic object"
+					title="εμένα, εσένα…"
+					badge="Accusative (strong)"
+					description="Strong forms after prepositions (για, με, από, σε) or for emphasis: για μένα = for me."
+				>
+					<div className="space-y-4">
+						<PronounParadigmTable data={EMPHATIC_PRONOUNS} colorClass="border-case-accusative-300" />
 						<PronounExamplePills
 							examples={EMPHATIC_PRONOUN_EXAMPLES}
-							borderColor="border-honey-300"
-							textColor="text-honey-text"
+							borderColor="border-case-accusative-300"
+							textColor="text-case-accusative-text"
 						/>
 					</div>
-				</ContentSection>
+				</TeachingCard>
 			</div>
 
 			{/* Connection to cases - NOW it makes sense after seeing the pronouns */}
@@ -184,7 +177,7 @@ export const PronounsSection: React.FC = () => {
 
 			{/* Double object pattern - neutral styling */}
 			<Card variant="bordered" padding="md" className="border-stone-200 bg-white">
-				<h4 className="mb-1 font-bold text-navy-text">{PRONOUN_PATTERNS.doubleObject.title}</h4>
+				<h4 className="mb-1 font-bold text-stone-800">{PRONOUN_PATTERNS.doubleObject.title}</h4>
 				<p className="mb-4 text-sm text-stone-600">{PRONOUN_PATTERNS.doubleObject.explanation}</p>
 
 				{/* Visual contrast */}
@@ -227,7 +220,7 @@ export const PronounsSection: React.FC = () => {
 				<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
 					{Object.entries(phraseGroups).map(([category, phrases]) => (
 						<div key={category}>
-							<h4 className="mb-2 text-sm font-medium text-slate-text">
+							<h4 className="mb-2 text-sm font-medium text-stone-700">
 								{CATEGORY_LABELS[category] || category}
 							</h4>
 							<div className="space-y-1">
@@ -266,7 +259,7 @@ export const PronounsSection: React.FC = () => {
 
 					{/* The Pattern Table */}
 					<Card variant="bordered" padding="md" className="bg-white">
-						<h4 className="mb-3 font-bold text-navy-text">The κά-/πουθ-/παντ- Pattern</h4>
+						<h4 className="mb-3 font-bold text-stone-800">The κά-/πουθ-/παντ- Pattern</h4>
 						<div className="overflow-x-auto">
 							<table className="w-full text-sm">
 								<thead>
@@ -364,7 +357,7 @@ export const PronounsSection: React.FC = () => {
 					<div className="grid gap-6 md:grid-cols-2">
 						{/* Indefinite Pronouns */}
 						<div className="space-y-4">
-							<h4 className="font-bold text-navy-text">Indefinite Pronouns</h4>
+							<h4 className="font-bold text-stone-800">Indefinite Pronouns</h4>
 
 							{/* Core (invariable) */}
 							<div>
@@ -437,7 +430,7 @@ export const PronounsSection: React.FC = () => {
 
 						{/* Indefinite Adverbs */}
 						<div className="space-y-4">
-							<h4 className="font-bold text-navy-text">Indefinite Adverbs</h4>
+							<h4 className="font-bold text-stone-800">Indefinite Adverbs</h4>
 
 							<div className="overflow-x-auto">
 								<table className="w-full text-sm">

@@ -9,7 +9,7 @@ const sections: Section[] = [
 		description: "The framework for understanding Greek grammar",
 		icon: <Scale size={24} />,
 		href: "/reference/cases",
-		color: "bg-ocean-100 text-ocean-700 border-ocean-200",
+		color: "bg-stone-100 text-stone-700 border-stone-200",
 	},
 	{
 		id: "pronouns",
@@ -17,7 +17,7 @@ const sections: Section[] = [
 		description: "Cases in action - the words you'll use most",
 		icon: <Users size={24} />,
 		href: "/reference/pronouns",
-		color: "bg-ocean-100 text-ocean-700 border-ocean-200",
+		color: "bg-stone-100 text-stone-700 border-stone-200",
 	},
 	{
 		id: "articles",
@@ -25,7 +25,7 @@ const sections: Section[] = [
 		description: "The definite article and agreement rules",
 		icon: <FileText size={24} />,
 		href: "/reference/articles",
-		color: "bg-olive-100 text-olive-700 border-olive-200",
+		color: "bg-stone-100 text-stone-700 border-stone-200",
 	},
 	{
 		id: "nouns",
@@ -33,7 +33,7 @@ const sections: Section[] = [
 		description: "Noun declensions by gender and case",
 		icon: <FileText size={24} />,
 		href: "/reference/nouns",
-		color: "bg-olive-100 text-olive-700 border-olive-200",
+		color: "bg-stone-100 text-stone-700 border-stone-200",
 	},
 	{
 		id: "adjectives",
@@ -41,7 +41,7 @@ const sections: Section[] = [
 		description: "Agreement patterns that follow the noun",
 		icon: <Palette size={24} />,
 		href: "/reference/adjectives",
-		color: "bg-honey-100 text-honey-700 border-honey-200",
+		color: "bg-stone-100 text-stone-700 border-stone-200",
 	},
 	{
 		id: "prepositions",
@@ -49,7 +49,7 @@ const sections: Section[] = [
 		description: "Connecting words and their case requirements",
 		icon: <ArrowRightLeft size={24} />,
 		href: "/reference/prepositions",
-		color: "bg-terracotta-100 text-terracotta-700 border-terracotta-200",
+		color: "bg-stone-100 text-stone-700 border-stone-200",
 	},
 	{
 		id: "verbs",
@@ -57,7 +57,7 @@ const sections: Section[] = [
 		description: "Conjugation patterns and verb families",
 		icon: <Languages size={24} />,
 		href: "/reference/verbs",
-		color: "bg-ocean-100 text-ocean-700 border-ocean-200",
+		color: "bg-stone-100 text-stone-700 border-stone-200",
 	},
 	{
 		id: "patterns",
@@ -65,7 +65,7 @@ const sections: Section[] = [
 		description: "Greek-specific constructions like μου αρέσει",
 		icon: <Blocks size={24} />,
 		href: "/reference/patterns",
-		color: "bg-honey-100 text-honey-700 border-honey-200",
+		color: "bg-stone-100 text-stone-700 border-stone-200",
 	},
 ];
 

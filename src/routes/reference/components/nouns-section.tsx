@@ -1,13 +1,11 @@
-import { ArrowRight } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router";
 
-import { Card } from "@/components/Card";
+import { NextStepCard, TeachingCard } from "@/components/cards";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
-import { ContentSection } from "@/components/ContentSection";
 import { MonoText } from "@/components/MonoText";
 import { SectionHeading } from "@/components/SectionHeading";
 import { AGREEMENT_PARADIGMS, type AgreementParadigm } from "@/constants/agreement";
+import { GENDER_SCHEME } from "@/constants/grammar-palette";
 
 type Gender = "masculine" | "feminine" | "neuter";
 type Case = "Nom" | "Acc" | "Gen";
@@ -102,11 +100,24 @@ const nomEqualsAcc = (paradigm: AgreementParadigm) =>
 	getEnding(paradigm, "Nom") === getEnding(paradigm, "Acc");
 
 const CaseGuide = () => (
-	<ContentSection title="Which case should I use?" colorScheme="ocean">
-		<div className="space-y-3 p-4">
+	<TeachingCard
+		scheme="neutral"
+		tone="soft"
+		eyebrow="Concept"
+		title="Which case should I use?"
+		description="The job the noun does in the sentence decides its case."
+		footer={
+			<p className="text-sm text-stone-500">
+				All prepositions (σε, με, για, από…) take accusative.
+			</p>
+		}
+	>
+		<div className="space-y-3">
 			{CASE_QUESTIONS.map(({ case: c, question, greek, english }) => (
 				<div key={c} className="flex items-start gap-3">
-					<span className="shrink-0 rounded bg-stone-100 px-2 py-1 font-mono text-xs">{c}</span>
+					<span className="shrink-0 rounded bg-stone-200 px-2 py-1 font-mono text-xs text-stone-700">
+						{c}
+					</span>
 					<div>
 						<span className="text-sm font-medium">{question}</span>
 						<div className="text-sm text-stone-500">
@@ -118,16 +129,18 @@ const CaseGuide = () => (
 					</div>
 				</div>
 			))}
-			<p className="border-t border-stone-100 pt-2 text-sm text-stone-500">
-				All prepositions (σε, με, για, από...) take accusative.
-			</p>
 		</div>
-	</ContentSection>
+	</TeachingCard>
 );
 
 const GenderHints = () => (
-	<Card variant="bordered" padding="md" className="bg-stone-50/50">
-		<div className="mb-3 text-sm font-medium text-stone-700">Recognise gender by ending</div>
+	<TeachingCard
+		scheme="neutral"
+		tone="soft"
+		eyebrow="Spotting gender"
+		title="Recognise gender by ending"
+		description="The ending tells you the gender → the gender tells you how it declines."
+	>
 		<div className="grid grid-cols-3 gap-3 text-sm">
 			{(["masculine", "feminine", "neuter"] as const).map((gender) => (
 				<div key={gender} className="space-y-1">
@@ -140,10 +153,7 @@ const GenderHints = () => (
 				</div>
 			))}
 		</div>
-		<p className="mt-3 border-t border-stone-200 pt-2 text-xs text-stone-500">
-			The ending tells you the gender → the gender tells you how it declines
-		</p>
-	</Card>
+	</TeachingCard>
 );
 
 const ViewToggle = ({
@@ -179,7 +189,7 @@ const ParadigmTable = ({
 	showNomAccHighlight?: boolean;
 }) => (
 	<div className="-mx-4 overflow-x-auto px-4">
-		<table className="w-full min-w-[280px] text-sm">
+		<table className="w-full min-w-72 text-sm">
 			<thead>
 				<tr className="border-b border-stone-200">
 					<th className="w-12 py-2 pr-2 text-left text-xs font-medium text-stone-500">Case</th>
@@ -201,11 +211,11 @@ const ParadigmTable = ({
 							const highlight = showNomAccHighlight && caseType === "Acc" && nomEqualsAcc(p);
 							const value = mode === "endings" ? getEnding(p, caseType) : getFull(p, caseType);
 							return (
-								<td key={p.id} className={`px-2 py-2 ${highlight ? "bg-olive-50" : ""}`}>
+								<td key={p.id} className={`px-2 py-2 ${highlight ? "bg-honey-50" : ""}`}>
 									<MonoText size="sm" variant={p.gender} className={highlight ? "font-medium" : ""}>
 										{value}
 									</MonoText>
-									{highlight && <span className="ml-1 text-xs text-olive-600">★</span>}
+									{highlight && <span className="ml-1 text-xs text-honey-600">★</span>}
 								</td>
 							);
 						})}
@@ -221,29 +231,32 @@ const EssentialPatterns = () => {
 	const paradigms = getParadigms(ESSENTIAL_IDS);
 
 	return (
-		<Card variant="bordered" padding="md" className="bg-white">
-			<div className="space-y-3">
-				<div className="flex items-center justify-between">
-					<div className="text-sm font-medium text-stone-700">Essential patterns</div>
-					<ViewToggle mode={mode} onChange={setMode} />
-				</div>
-				<ParadigmTable paradigms={paradigms} mode={mode} showNomAccHighlight={true} />
-				<div className="border-t border-stone-200 pt-3">
+		<TeachingCard
+			scheme="neutral"
+			tone="full"
+			eyebrow="The core"
+			title="Essential patterns"
+			badge={<ViewToggle mode={mode} onChange={setMode} />}
+			description="One pattern per gender. 80% of nouns fit here."
+			footer={
+				<div>
 					<div className="flex items-start gap-2">
-						<span className="text-lg text-olive-600">★</span>
+						<span className="text-lg text-honey-600">★</span>
 						<div>
-							<div className="text-sm font-medium text-olive-700">
+							<div className="text-sm font-medium text-honey-700">
 								Feminine & neuter: Nominative = Accusative
 							</div>
-							<p className="text-sm text-stone-600">Only genitive changes. Less to memorise!</p>
+							<p className="text-sm text-stone-600">Only genitive changes. Less to memorise.</p>
 						</div>
 					</div>
 					<p className="mt-2 text-xs text-stone-500">
 						Masculine is the tricky one — it changes in every case.
 					</p>
 				</div>
-			</div>
-		</Card>
+			}
+		>
+			<ParadigmTable paradigms={paradigms} mode={mode} showNomAccHighlight={true} />
+		</TeachingCard>
 	);
 };
 
@@ -254,10 +267,14 @@ const GenderVariants = ({ gender }: { gender: Gender }) => {
 	const title = `${gender.charAt(0).toUpperCase()}${gender.slice(1)} variants`;
 
 	return (
-		<ContentSection title={title} colorScheme={gender}>
-			<div className="p-3">
-				<ParadigmTable paradigms={paradigms} mode="endings" />
-				<div className="mt-3 flex flex-wrap gap-x-3 gap-y-1 border-t border-stone-200 pt-2 text-xs text-stone-600">
+		<TeachingCard
+			scheme={GENDER_SCHEME[gender]}
+			tone="soft"
+			eyebrow="Variants"
+			title={title}
+			badge={GENDER_HINTS[gender].endings}
+			footer={
+				<div className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-stone-600">
 					{paradigms.map((p) => (
 						<span key={p.id}>
 							<MonoText size="sm" variant={gender}>
@@ -267,8 +284,10 @@ const GenderVariants = ({ gender }: { gender: Gender }) => {
 						</span>
 					))}
 				</div>
-			</div>
-		</ContentSection>
+			}
+		>
+			<ParadigmTable paradigms={paradigms} mode="endings" />
+		</TeachingCard>
 	);
 };
 
@@ -326,20 +345,12 @@ const VocativeSection = () => (
 );
 
 const ArticlesLink = () => (
-	<Card variant="bordered" padding="md" className="bg-stone-50">
-		<div className="flex items-center justify-between">
-			<div>
-				<div className="text-sm font-medium text-stone-700">Article forms by case</div>
-				<p className="text-xs text-stone-500">See the definite article paradigm</p>
-			</div>
-			<Link
-				to="/reference/articles"
-				className="flex items-center gap-1 text-sm text-olive-600 hover:text-olive-700"
-			>
-				Articles <ArrowRight size={14} />
-			</Link>
-		</div>
-	</Card>
+	<NextStepCard
+		to="/reference/articles"
+		kicker="Reference"
+		title="Articles"
+		description="The definite article paradigm across cases"
+	/>
 );
 
 export const NounsSection = () => (

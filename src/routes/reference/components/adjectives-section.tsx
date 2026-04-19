@@ -1,13 +1,11 @@
 import { Lightbulb } from "lucide-react";
 import type React from "react";
 
-import { Card } from "@/components/Card";
+import { Callout, TeachingCard } from "@/components/cards";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
-import { ContentSection } from "@/components/ContentSection";
 import { MistakeComparison } from "@/components/MistakeComparison";
 import { MonoText } from "@/components/MonoText";
 import { SectionHeading } from "@/components/SectionHeading";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
 	ADJECTIVE_AGREEMENT_EXAMPLES,
 	ADJECTIVE_ENDINGS_QUICK_REF,
@@ -22,12 +20,16 @@ import { CaseTableGrid } from "./CaseTable";
 
 // Adjective endings quick lookup table
 const AdjectiveEndingsTable: React.FC = () => (
-	<Card variant="bordered" padding="md" className="bg-stone-50/50">
-		<div className="mb-3 text-sm font-medium text-stone-700">
-			Standard adjective endings (-ος, -η, -ο pattern)
-		</div>
+	<TeachingCard
+		scheme="neutral"
+		tone="soft"
+		eyebrow="Endings"
+		title="Standard pattern"
+		badge="-ος / -η / -ο"
+		description="Quick lookup for the default adjective endings."
+	>
 		<CaseTableGrid data={ADJECTIVE_ENDINGS_QUICK_REF} />
-	</Card>
+	</TeachingCard>
 );
 
 const CaseExampleGroup: React.FC<{
@@ -67,43 +69,49 @@ const AgreementExamplesCard: React.FC = () => {
 	const accExamples = ADJECTIVE_AGREEMENT_EXAMPLES.filter((e) => e.case === "Acc");
 
 	return (
-		<Card variant="bordered" padding="md">
-			<div className="mb-3 text-sm font-medium text-stone-700">
-				Agreement in action: article + adjective + noun
-			</div>
+		<TeachingCard
+			scheme="neutral"
+			tone="soft"
+			eyebrow="Agreement"
+			title="Article + adjective + noun"
+			description="All three pieces copy the same gender, case, and number."
+		>
 			<div className="grid gap-6 md:grid-cols-2">
 				<CaseExampleGroup
-					label="Nominative (subject)"
-					labelClass="text-ocean-text"
+					label="Doer (Nominative)"
+					labelClass="text-case-nominative-text"
 					examples={nomExamples}
 				/>
 				<CaseExampleGroup
-					label="Accusative (object)"
-					labelClass="text-terracotta-text"
+					label="Target (Accusative)"
+					labelClass="text-case-accusative-text"
 					examples={accExamples}
 				/>
 			</div>
-		</Card>
+		</TeachingCard>
 	);
 };
 
 // Full paradigm display for a single adjective pattern
-const AdjectiveParadigmCard: React.FC<{ paradigm: AdjectiveParadigm }> = ({ paradigm }) => {
+const AdjectiveParadigmCard: React.FC<{ paradigm: AdjectiveParadigm; emphasis?: boolean }> = ({
+	paradigm,
+	emphasis = false,
+}) => {
 	const genderStyles = {
 		masculine: {
 			border: "border-gender-masculine-300",
-			bg: "bg-gender-masculine-50",
-			headerBg: "bg-gender-masculine-100",
+			bg: "bg-gender-masculine-100",
+			headerBg: "bg-gender-masculine-200",
 		},
 		feminine: {
 			border: "border-gender-feminine-300",
-			bg: "bg-gender-feminine-50",
-			headerBg: "bg-gender-feminine-100",
+			bg: "bg-gender-feminine-100",
+			headerBg: "bg-gender-feminine-200",
 		},
 		neuter: {
 			border: "border-gender-neuter-300",
-			bg: "bg-gender-neuter-50",
-			headerBg: "bg-gender-neuter-100",
+			bg: "bg-gender-neuter-100",
+			headerBg: "bg-gender-neuter-200",
 		},
 	};
 
@@ -153,52 +161,50 @@ const AdjectiveParadigmCard: React.FC<{ paradigm: AdjectiveParadigm }> = ({ para
 	};
 
 	return (
-		<Card variant="bordered" padding="md">
-			<div className="mb-3 flex items-center gap-3">
-				<MonoText variant="greek" size="lg" className="font-bold">
+		<TeachingCard
+			scheme="neutral"
+			tone={emphasis ? "full" : "soft"}
+			eyebrow="Pattern"
+			title={
+				<MonoText variant="greek" size={emphasis ? "xl" : "lg"} className="font-bold">
 					{paradigm.pattern}
 				</MonoText>
-				<span className="text-sm text-stone-600">{paradigm.title}</span>
-				<span
-					className={`rounded px-2 py-0.5 text-xs ${
-						paradigm.frequency === "very common"
-							? "bg-olive-200 text-olive-text"
-							: paradigm.frequency === "common"
-								? "bg-honey-200 text-honey-text"
-								: "bg-stone-100 text-stone-600"
-					}`}
-				>
-					{paradigm.frequency}
-				</span>
-			</div>
+			}
+			badge={paradigm.frequency}
+			description={paradigm.title}
+		>
+			<div className="space-y-4">
+				<div className="flex items-baseline gap-2 text-sm">
+					<span className="text-stone-600">Example:</span>
+					<MonoText variant="masculine">{paradigm.example.masculine}</MonoText>
+					<span className="text-stone-400">/</span>
+					<MonoText variant="feminine">{paradigm.example.feminine}</MonoText>
+					<span className="text-stone-400">/</span>
+					<MonoText variant="neuter">{paradigm.example.neuter}</MonoText>
+					<span className="text-stone-500">= {paradigm.example.english}</span>
+				</div>
 
-			<div className="mb-3 flex items-baseline gap-2 text-sm">
-				<span className="text-stone-600">Example:</span>
-				<MonoText variant="masculine">{paradigm.example.masculine}</MonoText>
-				<span className="text-stone-400">/</span>
-				<MonoText variant="feminine">{paradigm.example.feminine}</MonoText>
-				<span className="text-stone-400">/</span>
-				<MonoText variant="neuter">{paradigm.example.neuter}</MonoText>
-				<span className="text-stone-500">= {paradigm.example.english}</span>
-			</div>
+				{paradigm.tip && <p className="text-sm text-stone-600 italic">{paradigm.tip}</p>}
 
-			{paradigm.tip && <p className="mb-4 text-sm text-stone-600 italic">{paradigm.tip}</p>}
-
-			<div className="grid gap-3 md:grid-cols-3">
-				{renderGenderTable("masculine", paradigm.masculine)}
-				{renderGenderTable("feminine", paradigm.feminine)}
-				{renderGenderTable("neuter", paradigm.neuter)}
+				<div className="grid gap-3 md:grid-cols-3">
+					{renderGenderTable("masculine", paradigm.masculine)}
+					{renderGenderTable("feminine", paradigm.feminine)}
+					{renderGenderTable("neuter", paradigm.neuter)}
+				</div>
 			</div>
-		</Card>
+		</TeachingCard>
 	);
 };
 
 // Common adjectives quick list
 const CommonAdjectivesCard: React.FC = () => (
-	<Card variant="bordered" padding="md" className="bg-honey-50/30">
-		<div className="mb-3 text-sm font-medium text-honey-text">
-			High-frequency adjectives (all follow -ος/-η/-ο pattern)
-		</div>
+	<TeachingCard
+		scheme="neutral"
+		tone="soft"
+		eyebrow="Vocabulary"
+		title="High-frequency adjectives"
+		description="All follow the -ος / -η / -ο pattern."
+	>
 		<div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm sm:grid-cols-3 md:grid-cols-4">
 			{COMMON_ADJECTIVES.map((adj) => (
 				<div key={adj.greek} className="flex items-baseline gap-2">
@@ -207,7 +213,7 @@ const CommonAdjectivesCard: React.FC = () => (
 				</div>
 			))}
 		</div>
-	</Card>
+	</TeachingCard>
 );
 
 export const AdjectivesSection: React.FC = () => {
@@ -221,47 +227,34 @@ export const AdjectivesSection: React.FC = () => {
 				subtitle="Words that describe nouns. They must agree in gender, case, and number."
 			/>
 
-			<ContentSection title="Adjectives copy the noun" colorScheme="olive">
-				<div className="space-y-3 p-3">
-					<p className="text-sm text-stone-600">
-						Match the article's gender and case. The adjective ending follows the same pattern as
-						nouns.
-					</p>
-					<div className="rounded-lg border border-stone-200 bg-stone-50 p-3">
-						<div className="mb-2 text-xs font-semibold tracking-wide text-olive-text uppercase">
-							What this means
-						</div>
-						<p className="mb-2 text-sm text-stone-600">
-							Look at the article. The adjective uses the same gender, case, and number as the noun
-							it describes.
-						</p>
-						<div className="space-y-1">
-							<div>
-								<MonoText variant="masculine">ο καλός φίλος</MonoText>
-								<span className="ml-2 text-sm text-stone-600">(all masculine nominative)</span>
-							</div>
-							<div>
-								<MonoText variant="masculine">τον καλό φίλο</MonoText>
-								<span className="ml-2 text-sm text-stone-600">
-									(all masculine accusative, drop the -ς)
-								</span>
-							</div>
-						</div>
+			<TeachingCard
+				scheme="neutral"
+				tone="soft"
+				eyebrow="Concept"
+				title="Adjectives copy the noun"
+				description="Look at the article. The adjective uses the same gender, case, and number as the noun it describes."
+			>
+				<div className="space-y-1">
+					<div>
+						<MonoText variant="masculine">ο καλός φίλος</MonoText>
+						<span className="ml-2 text-sm text-stone-600">(all masculine nominative)</span>
+					</div>
+					<div>
+						<MonoText variant="masculine">τον καλό φίλο</MonoText>
+						<span className="ml-2 text-sm text-stone-600">
+							(all masculine accusative, drop the -ς)
+						</span>
 					</div>
 				</div>
-			</ContentSection>
+			</TeachingCard>
 
-			<Alert variant="info">
-				<Lightbulb size={16} />
-				<AlertTitle>Word Order</AlertTitle>
-				<AlertDescription>
-					Greek adjectives usually come <strong>before</strong> the noun:{" "}
-					<MonoText variant="greek" size="sm">
-						ο καλός φίλος
-					</MonoText>{" "}
-					(the good friend), not *ο φίλος καλός.
-				</AlertDescription>
-			</Alert>
+			<Callout scheme="neutral" icon={<Lightbulb size={16} />} title="Word order">
+				Greek adjectives usually come <strong>before</strong> the noun:{" "}
+				<MonoText variant="greek" size="sm">
+					ο καλός φίλος
+				</MonoText>{" "}
+				(the good friend), not *ο φίλος καλός.
+			</Callout>
 
 			{/* Quick reference endings table */}
 			<AdjectiveEndingsTable />
@@ -275,7 +268,7 @@ export const AdjectivesSection: React.FC = () => {
 					<div className="text-sm font-medium text-stone-700">
 						The most common pattern (covers ~80% of adjectives):
 					</div>
-					<AdjectiveParadigmCard paradigm={mainPattern} />
+					<AdjectiveParadigmCard paradigm={mainPattern} emphasis />
 				</div>
 			)}
 

@@ -1,7 +1,5 @@
-import { ArrowRight, Scale } from "lucide-react";
-import { Link } from "react-router";
+import { Scale } from "lucide-react";
 
-import { Card } from "@/components/Card";
 import { TabHero } from "@/components/TabHero";
 
 import { CasesSection } from "../components/cases-section";
@@ -11,30 +9,15 @@ export function CasesTab() {
 		<div className="space-y-8">
 			<TabHero
 				title="Foundation of Greek grammar"
-				greekPhrase="Ποιος; Τι; Ποιου;"
+				greekPhrase="ο καφές · τον καφέ · του καφέ"
 				colorScheme="ocean"
 				icon={<Scale size={18} />}
 			>
-				Cases show a word's role in a sentence. Master these three questions and word endings make
-				sense.
+				Cases show a word's role in a sentence. Spot them by the article, the trigger word, or the
+				job.
 			</TabHero>
 
 			<CasesSection />
-
-			<Card variant="bordered" padding="md" className="border-ocean-300 bg-ocean-50">
-				<Link to="/reference/pronouns" className="group flex items-center justify-between">
-					<div>
-						<h4 className="font-bold text-ocean-text">Continue to Pronouns</h4>
-						<p className="text-sm text-stone-600">
-							See cases in action with the words you'll use most
-						</p>
-					</div>
-					<ArrowRight
-						size={20}
-						className="text-ocean-text transition-transform group-hover:translate-x-1"
-					/>
-				</Link>
-			</Card>
 		</div>
 	);
 }

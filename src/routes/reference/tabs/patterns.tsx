@@ -1,10 +1,11 @@
 import { Blocks, Heart, UserCircle } from "lucide-react";
 
-import { Card } from "@/components/Card";
+import { TeachingCard } from "@/components/cards";
 import { MonoText } from "@/components/MonoText";
 import { QuickTest } from "@/components/QuickTest";
 import { TabHero } from "@/components/TabHero";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { type GrammarScheme, SCHEME } from "@/constants/grammar-palette";
 
 import type { PatternItem, PatternsData } from "../loader.server";
 
@@ -14,48 +15,32 @@ const ParadigmCard = ({
 	icon,
 	patternNote,
 	columns,
-	colorScheme,
+	scheme,
 }: {
 	title: string;
 	subtitle: string;
 	icon: React.ReactNode;
 	patternNote: string;
 	columns: { title: string; items: PatternItem[] }[];
-	colorScheme: "ocean" | "terracotta" | "olive";
+	scheme: GrammarScheme;
 }) => {
-	const colors = {
-		ocean: {
-			bg: "bg-ocean-50",
-			border: "border-ocean-300",
-			text: "text-ocean-text",
-			iconBg: "bg-ocean-200",
-		},
-		terracotta: {
-			bg: "bg-terracotta-50",
-			border: "border-terracotta-300",
-			text: "text-terracotta-text",
-			iconBg: "bg-terracotta-200",
-		},
-		olive: {
-			bg: "bg-olive-50",
-			border: "border-olive-300",
-			text: "text-olive-text",
-			iconBg: "bg-olive-200",
-		},
-	};
-	const c = colors[colorScheme];
+	const style = SCHEME[scheme];
 
 	return (
-		<Card variant="bordered" padding="lg" className={`${c.bg} ${c.border}`}>
-			<div className="mb-4 flex items-center gap-3">
-				<div className={`rounded-lg p-2 ${c.iconBg}`}>
-					<span className={c.text}>{icon}</span>
-				</div>
-				<div>
-					<h3 className={`text-lg font-bold ${c.text}`}>{title}</h3>
-					<p className="text-sm text-stone-600">{subtitle}</p>
-				</div>
-			</div>
+		<TeachingCard
+			scheme={scheme}
+			tone="soft"
+			eyebrow="Pattern"
+			title={
+				<span className="flex items-center gap-2">
+					<span className={`inline-flex items-center justify-center rounded-md p-1.5 ${style.badgeBg} ${style.text}`}>
+						{icon}
+					</span>
+					{title}
+				</span>
+			}
+			description={subtitle}
+		>
 			<Alert variant="info" className="mb-4">
 				<AlertDescription>
 					<strong>Pattern:</strong> {patternNote}
@@ -64,7 +49,7 @@ const ParadigmCard = ({
 			<div className="grid gap-6 md:grid-cols-2">
 				{columns.map((col) => (
 					<div key={col.title}>
-						<h5 className={`font-semibold ${c.text} mb-3`}>{col.title}</h5>
+						<h5 className={`font-semibold ${style.text} mb-3`}>{col.title}</h5>
 						<div className="space-y-2">
 							{col.items.map((item) => (
 								<div
@@ -81,7 +66,7 @@ const ParadigmCard = ({
 					</div>
 				))}
 			</div>
-		</Card>
+		</TeachingCard>
 	);
 };
 
@@ -105,7 +90,7 @@ export function PatternsTab({ data }: { data: PatternsData }) {
 				subtitle="μου αρέσει / αρέσουν"
 				icon={<Heart size={20} />}
 				patternNote="[Person] αρέσει (one thing) / αρέσουν (many things) - the thing liked is the subject!"
-				colorScheme="ocean"
+				scheme="neutral"
 				columns={[
 					{
 						title: "One thing (αρέσει)",
@@ -151,16 +136,20 @@ export function PatternsTab({ data }: { data: PatternsData }) {
 			/>
 
 			{nameConstruction.length > 0 && (
-				<Card variant="bordered" padding="lg" className="border-ocean-300 bg-ocean-50">
-					<div className="mb-4 flex items-center gap-3">
-						<div className="rounded-lg bg-ocean-200 p-2">
-							<UserCircle size={20} className="text-ocean-text" />
-						</div>
-						<div>
-							<h3 className="text-lg font-bold text-ocean-text">Name Construction</h3>
-							<p className="text-sm text-stone-600">με λένε = my name is (lit. "they call me")</p>
-						</div>
-					</div>
+				<TeachingCard
+					scheme="neutral"
+					tone="soft"
+					eyebrow="Pattern"
+					title={
+						<span className="flex items-center gap-2">
+							<span className="inline-flex items-center justify-center rounded-md bg-stone-200 p-1.5 text-stone-800">
+								<UserCircle size={20} />
+							</span>
+							Name Construction
+						</span>
+					}
+					description={`με λένε = my name is (lit. "they call me")`}
+				>
 					<Alert variant="info" className="mb-4">
 						<AlertDescription>
 							<strong>Pattern:</strong> [Pronoun] λένε + name - literally "they call me..."
@@ -179,7 +168,7 @@ export function PatternsTab({ data }: { data: PatternsData }) {
 							</div>
 						))}
 					</div>
-				</Card>
+				</TeachingCard>
 			)}
 		</div>
 	);
