@@ -1,13 +1,13 @@
 ---
 name: visual-memory-design
-description: Design visual properties — colour, spatial layout, typography, contrast, grouping, motion — so they support memory encoding and retrieval in a language learning app. Use whenever deciding how content should look on screen, how to lay out cards or drills, whether to use colour or weight to mark grammatical features, whether an animation or transition earns its place, how many items belong on a screen, whether a scaffold should be added or faded, or how to present content so it actually sticks rather than just looks engaging. Also use when reviewing an existing screen for memory-relevant issues, or when rejecting a commonly-cited design "best practice" that has failed to replicate (Sans Forgetica, disfluent fonts, warm-colours-aid-memory, 7±2 working memory, redundancy-strip-the-captions). Do NOT use for motivation design, gamification, general UI/UX polish, brand or visual identity work, or accessibility concerns unrelated to memory.
+description: Design visual properties — colour, spatial layout, typography, contrast, grouping, motion — so they support memory encoding and retrieval in a language learning app. Use whenever deciding how content should look on screen, how to lay out cards or drills, whether to use colour or weight to mark grammatical features, whether an animation or transition earns its place, how many items belong on a screen, or how to present content so it actually sticks rather than just looks engaging. Also use when reviewing an existing screen for memory-relevant issues, or when rejecting a commonly-cited design "best practice" that has failed to replicate (Sans Forgetica, disfluent fonts, warm-colours-aid-memory, 7±2 working memory). Do NOT use for motivation design, gamification, general UI/UX polish, brand or visual identity work, or accessibility concerns unrelated to memory.
 ---
 
 # Visual memory design
 
 Skill: design visual properties so language content encode + retrieve, not just engage.
 
-Assume primary user may have ADHD, temporal lobe epilepsy, or both. Where universal rule bend for these profiles, bend called out inline under relevant principle. Few memory supports ND-specific, not modifications — live in own section near end.
+Primary user has temporal lobe epilepsy (not drug-resistant) and likely ADHD. Baseline condition: poor memory consolidation — standard-interval spaced repetition + retrieval-on-first-exposure both underperform for this profile. Where a universal rule bends for TLE or ADHD, the bend is called out inline. A few memory supports are ND-specific rather than modifications and live in their own section near the end.
 
 ## The core frame
 
@@ -17,7 +17,7 @@ Three principles shape every decision:
 
 1. **Working memory tighter than folk psychology assume.** Realistic ceiling for new L2 content = 4 items per screen, not 7±2. For ADHD users, tighter — treat 3 as ceiling.
 2. **Salience zero-sum.** Every emphasised element compete with every other emphasised element for encoding resources. One focal point per screen = operational rule.
-3. **Scaffolds help novices, hurt experts.** Every visual aid — colour coding, signalling, worked examples, integrated captions — become noise as proficiency grow. Design fade path same time as scaffold. Non-negotiable for grammatical colour coding.
+3. **Scaffolds help novices, hurt experts.** Every visual aid — colour coding, signalling, worked examples, integrated captions — become noise as proficiency grow. Worth knowing. Deliberate fading out of scope for this project right now; revisit if real-world retrieval performance starts diverging from in-app performance.
 
 ## The levers that work
 
@@ -204,22 +204,7 @@ Less good: putting key at bottom of page (Prepositions currently do this for con
 
 **Per-page key, near top, always.**
 
-#### 5j. The fade protocol (critical, often skipped)
-
-Colour coding = scaffold. Without fade path, learners become dependent — perform worse when colour absent, = every real-world encounter with language. Build fade into schedule:
-
-- **Stage 1 (introduction):** Full colour coding on all instances.
-- **Stage 2 (consolidation):** Colour coding on new instances only; review items shown in neutral.
-- **Stage 3 (production):** Colour appears only on errors, as corrective signal.
-- **Stage 4 (mastery):** Colour absent by default; available on user demand.
-
-Not fading = not neutral — actively weaken learner.
-
-**Fade per-axis, not per-app.** User can be Stage 4 on case (cases fully internalised, colour fades across Cases + Pronouns) while still Stage 1 on verb conjugation patterns. Each axis has own maturity.
-
-Reference surfaces (lookup tables, paradigm references) can legitimately keep full colour indefinitely — not where learning happen, where user check work. Practice surfaces = where fade matter.
-
-#### 5k. ADHD adaptation within the colour system
+#### 5j. ADHD adaptation within the colour system
 
 **Commit harder, decorate less.** Do not invent additional palettes for ADHD mode. Use existing reserved tokens at heavier intensity variants on task-relevant features (target word, active morpheme, answer field), while stripping decorative colour — especially decorative non-reserved colour — from surrounding UI.
 
@@ -244,8 +229,6 @@ For any screen likely used by ADHD user, signalling intensity go up, not down. C
 
 **Only motion that reliably aid memory = procedural or kinematic.** Means:
 
-- Mouth + tongue position for pronunciation
-- Stroke order for non-Latin scripts
 - Morphological transformations shown as continuous change (infinitive → conjugated form animating across field)
 
 **Everywhere else, motion pay cognitive rent without producing memory gains.** Transitions, micro-interactions, UI polish motion, decorative animation — all attention-capture without encoding benefit.
@@ -254,19 +237,16 @@ For any screen likely used by ADHD user, signalling intensity go up, not down. C
 
 - Allow learner pacing (pause, replay, scrub)
 - Segment long sequences into discrete chunks
-- Don't stack procedural animation with voiceover narration + on-screen text all at once
 
 **ADHD note: zero decorative motion.** Treat non-procedural motion as actively harmful, not neutral. No ambient background motion, no interface transitions beyond bare minimum needed for affordance signalling.
 
-### 8. Multimodal rules — and where redundancy reverses
+### 8. Dual coding — concrete imagery on vocabulary
 
-**General rule:** Don't duplicate same information in multiple modalities simultaneously. Voiceover + identical on-screen text in user's L1 = redundant, measurably hurt low-prior-knowledge learners.
+Concrete imagery paired with an L2 word. Works as long as the image is distinctive and carries non-redundant semantic load. Generic icon next to word = decoration; meaningful referent = encoding infrastructure.
 
-**Critical exception for L2 content:** Target-language audio + target-language captions _not_ redundant — one of largest reliable multimedia effects in language learning. Always pair L2 audio with L2 text. Naive "strip captions" rule wrong here.
+**TLE note:** Payoff larger for this user profile. Abstract + function words are the hardest cases — always pair with a concrete image or contextual anchor. Treat concrete imagery as mandatory on vocabulary cards, not optional polish.
 
-**Other exception:** Concrete imagery paired with L2 word. Dual coding, works, as long as image distinctive + carry non-redundant semantic load. Generic icon next to word = decoration; meaningful referent = encoding infrastructure.
-
-**TLE note:** Dual-coding with concrete imagery standard practice, but for TLE users payoff larger. Abstract + function words = hardest cases — always pair with concrete image or contextual anchor.
+(Audio not planned for this project. If/when it lands, this section gains an L2-audio + L2-captions rule — never strip captions under L2 audio even though the "strip captions" rule holds for L1 audio.)
 
 ## ND-specific memory supports (additions, not modifications)
 
@@ -326,10 +306,6 @@ Group new vocabulary by theme, cognate family, semantic network. Random batches 
 
 Standard SRS apps often display streak or "remembered" counts in ways implying consolidation happening faster than actually is. 7-day streak might be 7-day streak of "re-encountered at interval too short to measure actual long-term retention." Don't inflate progress display — build schedule around realistic forgetting, UI around realistic retention. Otherwise user learn to trust metric quietly misleading them about what they'll remember next month.
 
-### Avoid method-of-loci with new spaces (TLE)
-
-Spatial map-building depend on most-compromised system. If any spatial-mnemonic metaphor offered, lean on **overlearned familiar environments** (user's home, commute) stored semantically, don't require new map construction. Prefer keyword-imagery mnemonics over spatial.
-
 ## What to build (prioritised)
 
 If designing new learning screen, work down list:
@@ -341,12 +317,11 @@ If designing new learning screen, work down list:
 5. **Four-item ceiling** for new content (three for ADHD); relax for review.
 6. **Global axes deployed via reserved tokens.** Case + gender get locked tokens; every page teaching those axes use those tokens identically. Intersection pages (case × gender) deploy both axes via row × column or background + text separation.
 7. **Per-page colour key near top** whenever axis deployed.
-8. **Planned fade protocol per axis.** Reference surfaces may hold full colour indefinitely; practice surfaces fade.
-9. **One focal point per screen.** Everything else quieter. For ADHD, much quieter, with higher signalling intensity on focal element.
-10. **L2 captions on L2 audio.** Concrete imagery on new vocabulary (mandatory for TLE).
-11. **Procedural animation** for pronunciation, script, morphology — nothing else move.
-12. **Short initial review intervals** (TLE) — first review at hours, not days.
-13. **Errorless first exposure + recognition modes** (TLE) — show everything before asking, accept recognition as progress.
+8. **One focal point per screen.** Everything else quieter. For ADHD, much quieter, with higher signalling intensity on focal element.
+9. **Concrete imagery on new vocabulary** (mandatory for TLE).
+10. **Procedural animation** for morphology only (infinitive → conjugated form) — nothing else move.
+11. **Short initial review intervals** (TLE) — first review at hours, not days.
+12. **Errorless first exposure + recognition modes** (TLE) — show everything before asking, accept recognition as progress.
 
 ## What to skip (anti-patterns with replication problems)
 
@@ -356,7 +331,6 @@ Sound good, cited in design blogs for years, but underlying research either fail
 - **"Warm colours / red boost memory via arousal".** Repeatedly failed replication.
 - **7±2 working memory.** Use Cowan's 4 for new content. Three for ADHD.
 - **Decorative motion "keeps attention".** Attention yes, encoding no.
-- **Strip captions under L2 audio.** Wrong for L2 — captions stay.
 - **"Larger = more memorable".** Metamemory illusion. Above legibility, size doesn't help.
 - **"Handwriting beats typing for notes".** Encoding-difference claim partly hold; performance claim doesn't replicate.
 - **Micro-interactions as mnemonics.** No peer-reviewed evidence.
@@ -365,17 +339,14 @@ Sound good, cited in design blogs for years, but underlying research either fail
 - **Using grammar colours as decoration around non-matching grammatical content.** Break entire colour system — colour becomes lie.
 - **Per-page colour keys at bottom of page.** User already confused before seeing them.
 - **Going neutral on intersection pages to avoid "complexity".** Waste investment in global tokens.
-- **Flashcard flows with retrieval on first exposure** for TLE users.
-- **Arbitrary-order vocabulary introduction** for TLE users.
-- **Method of loci with new constructed spaces** for TLE users.
-- **Progress metrics only counting free recall** for TLE users.
+- **Flashcard flows with retrieval on first exposure.** For TLE users, generate errors on weakly-encoded traces that then compete with correct form at retrieval.
+- **Arbitrary-order vocabulary introduction.** For TLE users, random batches of unrelated words defeat the semantic binding this profile already relies on.
+- **Progress metrics only counting free recall.** For TLE users, under-reports real knowledge — include recognition + cued-recall in progress view.
 
 ## Speculative moves worth experimenting with (not defaults)
 
 Plausible mechanisms but thin direct evidence for language app. Worth trying with measurement; not worth claiming as best practice:
 
-- **2D conceptual maps** arranging grammar on orthogonal axes (e.g., tense × formality). Biologically motivated by entorhinal grid-code research; not validated in UI.
-- **Spatial "map" metaphors for unit structure.** Capture fraction of method-of-loci benefit without requiring VR, but only if learner generate imagery — passive layouts don't trigger. For TLE users, only with overlearned familiar spaces.
 - **Scheduled novelty between encoding blocks** as ADHD feature — mechanism solid, product-scale validation thin.
 
 ## Before shipping any visual design decision, ask:
@@ -389,8 +360,7 @@ Plausible mechanisms but thin direct evidence for language app. Worth trying wit
 7. More than 4 new items in perceptual frame? (Three for ADHD.)
 8. If motion involved: is it procedural? If not, cut.
 9. For TLE: does first exposure demand retrieval, or show everything first?
-10. What's fade path for any scaffold on this screen?
-11. If answer to "why is this here" = "because looks nicer": decoration. Reconsider.
+10. If answer to "why is this here" = "because looks nicer": decoration. Reconsider.
 
 ## Fallback posture when evidence is thin
 
