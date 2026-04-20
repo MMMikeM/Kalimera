@@ -99,6 +99,16 @@ export const DRILLS: Drill[] = [
 		minutes: 10,
 	},
 	{
+		id: "verbs-conjugation-endings",
+		group: "verbs",
+		mode: "paradigm",
+		href: "/practice/verbs/conjugation-endings",
+		title: "Conjugation endings",
+		greek: "-ω · -εις · -ει · -ουμε · -ετε · -ουν",
+		english: "Person endings across 6 paradigms",
+		minutes: 8,
+	},
+	{
 		id: "verbs-aorist-stems",
 		group: "verbs",
 		mode: "paradigm",

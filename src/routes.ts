@@ -29,6 +29,7 @@ export default [
 			route("present", "routes/practice/drills/verbs/present.tsx"),
 			route("aorist-stems", "routes/practice/drills/verbs/aorist-stems.tsx"),
 			route("imperatives", "routes/practice/drills/verbs/imperatives.tsx"),
+			route("conjugation-endings", "routes/practice/drills/verbs/conjugation-endings.tsx"),
 		]),
 		...prefix("blocks", [
 			route("chunks", "routes/practice/drills/blocks/chunks.tsx"),
