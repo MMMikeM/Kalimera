@@ -1,24 +1,13 @@
-import {
-	AlertCircle,
-	ArrowRight,
-	ArrowRightLeft,
-	BookOpen,
-	Lightbulb,
-	RefreshCw,
-	Sparkles,
-	Zap,
-} from "lucide-react";
+import { AlertCircle, ArrowRight, BookOpen } from "lucide-react";
 import type React from "react";
 import { Link } from "react-router";
 
 import { Card } from "@/components/Card";
-import { Callout, NavigatorCard, NavigatorCell, TeachingCard } from "@/components/cards";
+import { NavigatorCard, NavigatorCell, TeachingCard } from "@/components/cards";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
-import { ContentSection } from "@/components/ContentSection";
 import { MonoText } from "@/components/MonoText";
 import { ParadigmTable } from "@/components/ParadigmTable";
 import { SectionHeading } from "@/components/SectionHeading";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { type GrammarScheme, SCHEME } from "@/constants/grammar-palette";
 import { IRREGULAR_VERBS, VERB_PATTERNS } from "@/constants/verbs";
 
@@ -123,17 +112,14 @@ const SamePatternList: React.FC<{
 
 type PatternKey = "active" | "contracted" | "deponent";
 
-// TODO(local-axis): verb-pattern family is a page-local axis (active /
-// contracted / deponent). Currently neutralised because reusing case-identity
-// colours (ocean / terracotta / olive) here would lie about the grammatical
-// value of the verb paradigm. Introduce a dedicated local-axis palette if the
-// signal loss turns out to hurt learners.
 interface PatternMeta {
 	ending: string;
 	displayName: string;
 	scheme: GrammarScheme;
 }
 
+// Verb pattern family is a page-local axis. Neutral avoids collision with global case
+// tokens (ocean=nominative, terracotta=accusative, olive=genitive).
 const PATTERN_META: Record<PatternKey, PatternMeta> = {
 	active: { ending: "-ω", displayName: "Active", scheme: "neutral" },
 	contracted: { ending: "-άω/-ώ", displayName: "Contracted", scheme: "neutral" },
@@ -153,6 +139,18 @@ const PatternSection: React.FC<{
 			title={meta.displayName}
 			badge={<span className={`font-mono text-base ${style.text}`}>{meta.ending}</span>}
 			description={pattern.description}
+			footer={
+				patternKey === "contracted" ? (
+					<p className="text-xs text-stone-500">
+						The{" "}
+						<MonoText size="sm" className="font-medium">
+							-ώ
+						</MonoText>{" "}
+						variant (μπορώ, οδηγώ) has different endings — shown in the high-frequency section
+						below.
+					</p>
+				) : undefined
+			}
 		>
 			<div className="rounded-lg border border-stone-200 bg-white p-4 shadow-sm">
 				<ParadigmTable
@@ -161,6 +159,7 @@ const PatternSection: React.FC<{
 					infinitive={pattern.canonical.infinitive}
 					forms={pattern.canonical.forms}
 					endingClassName={`${style.text} font-bold`}
+					scheme={meta.scheme}
 					fadeStem={true}
 				/>
 			</div>
@@ -188,35 +187,21 @@ const PatternSection: React.FC<{
 };
 
 interface PatternRow {
-	icon: React.ReactNode;
 	ending: string;
 	name: string;
 	examples: string[];
 	scheme: GrammarScheme;
 }
 
-// TODO(local-axis): see PatternMeta above.
 const PATTERN_ROWS: PatternRow[] = [
-	{ icon: <Zap size={18} />, ending: "-ω", name: "Active", examples: ["κάνω", "θέλω"], scheme: "neutral" },
-	{
-		icon: <Sparkles size={18} />,
-		ending: "-άω/-ώ",
-		name: "Contracted",
-		examples: ["μιλάω", "αγαπάω"],
-		scheme: "neutral",
-	},
-	{
-		icon: <RefreshCw size={18} />,
-		ending: "-μαι",
-		name: "Deponent",
-		examples: ["έρχομαι", "θυμάμαι"],
-		scheme: "neutral",
-	},
+	{ ending: "-ω", name: "Active", examples: ["κάνω", "θέλω", "βλέπω"], scheme: "neutral" },
+	{ ending: "-άω/-ώ", name: "Contracted", examples: ["μιλάω", "αγαπάω"], scheme: "neutral" },
+	{ ending: "-μαι", name: "Deponent", examples: ["έρχομαι", "θυμάμαι"], scheme: "neutral" },
 ];
 
 const PatternIdentifier: React.FC = () => (
 	<NavigatorCard
-		title="Which Pattern?"
+		title="Which pattern?"
 		subtitle="Look at the verb's dictionary form (1st person singular)"
 	>
 		{PATTERN_ROWS.map((row) => {
@@ -226,10 +211,7 @@ const PatternIdentifier: React.FC = () => (
 					key={row.ending}
 					className={`${style.bg} ${style.border} flex items-center gap-3 border-2 sm:gap-4`}
 				>
-					<div className={`shrink-0 rounded-lg p-2 ${style.badgeBg}`}>
-						<span className={style.text}>{row.icon}</span>
-					</div>
-					<MonoText className={`text-xl font-bold ${style.text}`}>{row.ending}</MonoText>
+					<MonoText className={`w-20 shrink-0 text-xl font-bold ${style.text}`}>{row.ending}</MonoText>
 					<span className="font-semibold text-stone-800">{row.name}</span>
 					<div className="ml-auto hidden gap-2 sm:flex">
 						{row.examples.map((ex) => (
@@ -247,106 +229,6 @@ const PatternIdentifier: React.FC = () => (
 	</NavigatorCard>
 );
 
-const VoiceExplanation: React.FC = () => (
-	<Card variant="bordered" padding="lg" className="border-2 border-stone-300 bg-stone-50">
-		<div className="mb-4 flex items-center gap-3">
-			<div className="rounded-xl bg-stone-200 p-2.5">
-				<ArrowRightLeft size={20} className="text-stone-700" />
-			</div>
-			<div>
-				<h3 className="text-lg font-bold text-stone-800">Voice: Who Does the Action?</h3>
-				<p className="text-sm text-stone-600">
-					Greek verbs show not just WHO (the endings) but also the DIRECTION of action
-				</p>
-			</div>
-		</div>
-
-		<div className="space-y-4">
-			{/* TODO(local-axis): voice axis (active / passive) is page-local.
-			    Neutralised for now; same remedy as PatternMeta. */}
-			<Callout scheme="neutral" title="Active: Subject DOES the action">
-				<div className="flex items-baseline gap-2">
-					<MonoText className="font-bold text-stone-800">βλέπω τον φίλο</MonoText>
-					<span className="text-stone-600">=</span>
-					<span className="text-stone-700">I see the friend</span>
-				</div>
-				<p className="text-sm text-stone-500 italic">Action flows FROM me TO the friend</p>
-			</Callout>
-
-			<Callout scheme="neutral" title="Passive: Subject RECEIVES the action">
-				<div className="flex items-baseline gap-2">
-					<MonoText className="font-bold text-stone-800">βλέπομαι από τον φίλο</MonoText>
-					<span className="text-stone-600">=</span>
-					<span className="text-stone-700">I am seen by the friend</span>
-				</div>
-				<p className="text-sm text-stone-500 italic">Action flows TO me FROM the friend</p>
-			</Callout>
-
-			{/* The -μαι marker */}
-			<div className="rounded-lg border border-stone-200 bg-white p-4">
-				<p className="mb-3 text-sm text-stone-700">
-					The <MonoText className="font-bold text-stone-800">-μαι</MonoText> ending is the
-					passive marker:
-				</p>
-				<div className="grid gap-3 sm:grid-cols-2">
-					<div className="flex items-center gap-2 text-sm">
-						<MonoText className="font-semibold text-stone-800">βλέπω</MonoText>
-						<span className="text-stone-400">(I see)</span>
-						<ArrowRight size={14} className="text-stone-400" />
-						<MonoText className="font-semibold text-stone-800">βλέπομαι</MonoText>
-						<span className="text-stone-400">(I am seen)</span>
-					</div>
-					<div className="flex items-center gap-2 text-sm">
-						<MonoText className="font-semibold text-stone-800">ακούω</MonoText>
-						<span className="text-stone-400">(I hear)</span>
-						<ArrowRight size={14} className="text-stone-400" />
-						<MonoText className="font-semibold text-stone-800">ακούομαι</MonoText>
-						<span className="text-stone-400">(I am heard)</span>
-					</div>
-				</div>
-			</div>
-
-			<Callout
-				scheme="neutral"
-				title="Deponent: Passive form, active meaning"
-				footer="The endings follow passive patterns, but YOU are doing the action."
-			>
-				<p className="text-sm text-stone-600">
-					Some verbs ONLY exist in <MonoText className="font-bold text-stone-800">-μαι</MonoText>{" "}
-					form, but their meaning is active:
-				</p>
-				<div className="flex items-baseline gap-2">
-					<MonoText className="font-bold text-stone-800">έρχομαι</MonoText>
-					<span className="text-stone-600">=</span>
-					<span className="text-stone-700">I come</span>
-					<span className="text-sm text-stone-400">(not "I am come-d")</span>
-				</div>
-				<div className="flex items-baseline gap-2">
-					<MonoText className="font-bold text-stone-800">θυμάμαι</MonoText>
-					<span className="text-stone-600">=</span>
-					<span className="text-stone-700">I remember</span>
-					<span className="text-sm text-stone-400">(not "I am remembered")</span>
-				</div>
-				<div className="flex items-baseline gap-2">
-					<MonoText className="font-bold text-stone-800">κοιμάμαι</MonoText>
-					<span className="text-stone-600">=</span>
-					<span className="text-stone-700">I sleep</span>
-					<span className="text-sm text-stone-400">(not "I am slept")</span>
-				</div>
-			</Callout>
-
-			{/* Etymology note */}
-			<div className="rounded-lg border border-stone-200 bg-stone-100 p-3">
-				<p className="text-sm text-stone-700">
-					<strong className="text-stone-800">Why "deponent"?</strong> From Latin <em>deponere</em>{" "}
-					(to put aside) — these verbs have "set aside" their active forms.
-				</p>
-			</div>
-		</div>
-	</Card>
-);
-
-// Find είμαι (to be) from irregular verbs for promotion
 const eimai = IRREGULAR_VERBS.find((v) => v.infinitive === "είμαι");
 const otherIrregulars = IRREGULAR_VERBS.filter((v) => v.infinitive !== "είμαι");
 
@@ -354,62 +236,48 @@ export const VerbsSection: React.FC = () => (
 	<section id="verbs" className="space-y-6">
 		<SectionHeading
 			title="Verb Conjugation"
-			subtitle="Greek verbs change their endings to show who is doing the action"
+			subtitle="Present tense — the ending shows who is doing the action"
 		/>
 
-		{/* Voice explanation - Active vs Passive vs Deponent */}
-		<VoiceExplanation />
-
-		{/* Essential First: είμαι (to be) - promoted from irregulars */}
+		{/* είμαι first — most common verb, doesn't fit the 3 patterns */}
 		{eimai && (
-			<ContentSection title="είμαι (to be)" colorScheme="olive">
-				<div className="space-y-3 p-3">
-					<p className="text-sm text-stone-600">
-						The most common Greek verb. Memorize it first. You'll use it in every conversation.
-					</p>
-					<ParadigmTable
-						infinitive={eimai.infinitive}
-						meaning={eimai.meaning}
-						forms={eimai.forms}
-						formClassName="text-stone-800 font-semibold"
-					/>
-					{eimai.note && (
-						<p className="border-t border-stone-200 pt-2 text-sm text-stone-600 italic">
-							{eimai.note}
-						</p>
-					)}
-				</div>
-			</ContentSection>
+			<TeachingCard
+				scheme="neutral"
+				eyebrow="Start here"
+				title="είμαι (to be)"
+				description="The most common Greek verb. Memorise it first — you'll use it in every conversation."
+				footer={
+					eimai.note ? (
+						<p className="text-xs text-stone-500 italic">{eimai.note}</p>
+					) : undefined
+				}
+			>
+				<ParadigmTable
+					infinitive={eimai.infinitive}
+					meaning={eimai.meaning}
+					forms={eimai.forms}
+					formClassName="text-stone-800 font-semibold"
+				/>
+			</TeachingCard>
 		)}
 
-		<Alert variant="info">
-			<Lightbulb size={16} />
-			<AlertTitle>The Power of Patterns</AlertTitle>
-			<AlertDescription>
-				Learn just <strong>3 ending patterns</strong> and you can conjugate thousands of verbs. The
-				endings tell you WHO is doing the action.
-			</AlertDescription>
-		</Alert>
-
-		{/* Negation note */}
-		<div className="rounded-lg border border-stone-200 bg-stone-50 p-3">
-			<p className="text-sm text-stone-700">
-				<strong className="text-stone-800">Negation:</strong> Add{" "}
-				<MonoText variant="greek" size="sm">
-					δεν
-				</MonoText>{" "}
-				before the verb:{" "}
-				<MonoText variant="greek" size="sm">
-					Δεν μιλάω
-				</MonoText>{" "}
-				(I don't speak)
-			</p>
-		</div>
-
-		{/* Pattern Identifier */}
+		{/* Pattern key — establish the 3 families before the tables */}
 		<PatternIdentifier />
 
-		{/* Pattern Families */}
+		{/* Negation — low salience, plain text */}
+		<p className="px-1 text-sm text-stone-600">
+			<strong className="text-stone-800">Negation:</strong> put{" "}
+			<MonoText variant="greek" size="sm">
+				δεν
+			</MonoText>{" "}
+			before any verb —{" "}
+			<MonoText variant="greek" size="sm">
+				Δεν μιλάω
+			</MonoText>{" "}
+			(I don't speak).
+		</p>
+
+		{/* Pattern families */}
 		<div className="space-y-6">
 			{VERB_PATTERNS.active && (
 				<PatternSection patternKey="active" pattern={VERB_PATTERNS.active} />
@@ -422,7 +290,7 @@ export const VerbsSection: React.FC = () => (
 			)}
 		</div>
 
-		{/* Other Irregular Verbs (excluding είμαι which is promoted above) */}
+		{/* Other high-frequency irregulars — all Tier 1, must memorise */}
 		{otherIrregulars.length > 0 && (
 			<Card variant="bordered" padding="lg" className="border-2 border-honey-300 bg-honey-50">
 				<div className="mb-4 flex items-start gap-3">
@@ -430,10 +298,10 @@ export const VerbsSection: React.FC = () => (
 						<AlertCircle size={20} className="text-honey-text" />
 					</div>
 					<div>
-						<h3 className="text-lg font-bold text-honey-text">Other Irregular Verbs</h3>
+						<h3 className="text-lg font-bold text-honey-text">Other high-frequency verbs</h3>
 						<p className="text-sm text-stone-600">
-							These common verbs don't follow patterns. You'll learn them naturally through frequent
-							exposure.
+							These don't follow the 3 patterns — you'll use all of them constantly. Memorise as
+							units.
 						</p>
 					</div>
 				</div>
@@ -465,7 +333,7 @@ export const VerbsSection: React.FC = () => (
 			<div className="flex items-center gap-2">
 				<BookOpen size={16} className="text-stone-800" />
 				<span className="text-sm text-stone-700">
-					Browse all verbs organized by conjugation family
+					Browse all verbs organised by conjugation family
 				</span>
 			</div>
 			<Link
@@ -476,7 +344,6 @@ export const VerbsSection: React.FC = () => (
 			</Link>
 		</div>
 
-		{/* Tense scope note */}
 		<p className="text-center text-sm text-stone-500 italic">
 			This section covers present tense only. Past and future tenses coming soon.
 		</p>
