@@ -169,6 +169,11 @@ export const VERB_PATTERNS: Record<string, VerbPattern> = {
 			{ infinitive: "θέλω", meaning: "want" },
 			{ infinitive: "έχω", meaning: "have" },
 			{ infinitive: "βλέπω", meaning: "see" },
+			{ infinitive: "δουλεύω", meaning: "work" },
+			{ infinitive: "μένω", meaning: "live/stay" },
+			{ infinitive: "ακούω", meaning: "hear" },
+			{ infinitive: "παίρνω", meaning: "take/get" },
+			{ infinitive: "ξέρω", meaning: "know" },
 		],
 		usage: [
 			{ greek: "Τι κάνεις;", english: "How are you? (lit: What do you do?)" },
@@ -178,7 +183,7 @@ export const VERB_PATTERNS: Record<string, VerbPattern> = {
 	},
 	contracted: {
 		name: "Contracted (-άω/-ώ)",
-		description: "The α contracts with endings. Two forms exist - both are correct.",
+		description: "Stress falls on the ending, not the stem. Both -άω and -ώ spellings are correct: μιλάω = μιλώ.",
 		endings: {
 			sg1: "-άω/-ώ",
 			sg2: "-άς",
@@ -213,7 +218,7 @@ export const VERB_PATTERNS: Record<string, VerbPattern> = {
 	deponent: {
 		name: "Deponent (-μαι)",
 		description:
-			"Look passive but have active meaning. Two sub-patterns exist: -ομαι and -άμαι (same vowel contraction as -ω/-άω).",
+			"These verbs end in -μαι but have active meaning. Two variants: -ομαι (έρχομαι) and -άμαι (θυμάμαι). Memorise as units.",
 		endings: {
 			sg1: "-ομαι",
 			sg2: "-εσαι",
@@ -237,6 +242,7 @@ export const VERB_PATTERNS: Record<string, VerbPattern> = {
 		},
 		samePattern: [
 			{ infinitive: "γίνομαι", meaning: "become" },
+			{ infinitive: "θυμάμαι", meaning: "remember" },
 			{ infinitive: "κάθομαι", meaning: "sit" },
 		],
 		usage: [
@@ -260,6 +266,19 @@ export const IRREGULAR_VERBS: IrregularVerb[] = [
 			pl3: "είναι",
 		},
 		note: "3rd person is the same for singular and plural",
+	},
+	{
+		infinitive: "μπορώ",
+		meaning: "can, be able to",
+		forms: {
+			sg1: "μπορώ",
+			sg2: "μπορείς",
+			sg3: "μπορεί",
+			pl1: "μπορούμε",
+			pl2: "μπορείτε",
+			pl3: "μπορούν",
+		},
+		note: "Always followed by να — Μπορώ να πάω; (Can I go?)",
 	},
 	{
 		infinitive: "λέω",
