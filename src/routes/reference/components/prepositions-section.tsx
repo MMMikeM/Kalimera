@@ -6,7 +6,7 @@ import { CollapsibleSection } from "@/components/CollapsibleSection";
 import { MistakeComparison } from "@/components/MistakeComparison";
 import { MonoText } from "@/components/MonoText";
 import { SectionHeading } from "@/components/SectionHeading";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { type GrammarScheme, SCHEME } from "@/constants/grammar-palette";
 import {
 	BIG_4_PREPOSITIONS,
 	COMPOUND_CONTRAST_PAIRS,
@@ -16,8 +16,15 @@ import {
 	SE_CONTRACTIONS,
 	TIME_EXPRESSIONS,
 } from "@/constants/prepositions";
+import { cn } from "@/lib/utils";
 
 import { PrepositionNavigator } from "./preposition-navigator";
+
+const CONTRACTION_GENDER_SCHEME: Record<string, GrammarScheme> = {
+	neuter: "gender-neuter",
+	feminine: "gender-feminine",
+	masculine: "gender-masculine",
+};
 
 export const PrepositionsSection: React.FC = () => (
 	<section id="prepositions" className="space-y-6">
@@ -35,8 +42,9 @@ export const PrepositionsSection: React.FC = () => (
 				<TeachingCard
 					key={prep.greek}
 					scheme="neutral"
-					tone="soft"
-					eyebrow="Big 4"
+	
+	
+					eyebrow={prep.role}
 					title={
 						<MonoText variant="greek" size="xl" className="font-bold">
 							{prep.greek}
@@ -68,7 +76,7 @@ export const PrepositionsSection: React.FC = () => (
 		{/* 3. The σε Story - Hero Element */}
 		<TeachingCard
 			scheme="neutral"
-			tone="full"
+
 			eyebrow="The σε story"
 			title="σε + article contraction"
 			description={SE_CONTRACTIONS.intro}
@@ -87,30 +95,39 @@ export const PrepositionsSection: React.FC = () => (
 				</Callout>
 			}
 		>
+
+
 			<div className="grid gap-3 sm:grid-cols-3">
-				{SE_CONTRACTIONS.formulas.map((f) => (
-					<div
-						key={f.formula}
-						className="rounded-xl border border-stone-300 bg-white p-3 text-center"
-					>
-						<div className="mb-1 text-lg font-bold text-stone-800">{f.formula}</div>
-						<div className="mb-2 text-xs text-stone-500">{f.gender}</div>
-						<div className="space-y-0.5">
-							{f.examples.slice(0, 2).map((ex) => (
-								<MonoText key={ex} variant="greek" size="sm" className="block text-stone-600">
-									{ex}
-								</MonoText>
-							))}
+				{SE_CONTRACTIONS.formulas.map((f) => {
+					const gScheme = CONTRACTION_GENDER_SCHEME[f.gender] ?? "neutral";
+					const style = SCHEME[gScheme];
+					return (
+						<div
+							key={f.formula}
+							className={cn(
+								"rounded-xl border-2 p-3 text-center",
+								style.bgSoft,
+								"bg-opacity-40",
+								style.borderSoft,
+							)}
+						>
+							<div className={cn("mb-2 text-lg font-bold", style.text)}>{f.formula}</div>
+							<div className="space-y-0.5">
+								{f.examples.slice(0, 2).map((ex) => (
+									<MonoText key={ex} variant="greek" size="sm" className="block text-stone-600">
+										{ex}
+									</MonoText>
+								))}
+							</div>
 						</div>
-					</div>
-				))}
+					);
+				})}
 			</div>
 		</TeachingCard>
 
 		{/* 4. Preposition + Pronouns */}
 		<TeachingCard
 			scheme="neutral"
-			tone="soft"
 			eyebrow="With pronouns"
 			title="Prepositions with pronouns"
 			description={PREPOSITION_PRONOUN_INFO.rule}
@@ -134,7 +151,6 @@ export const PrepositionsSection: React.FC = () => (
 		{/* 5. Time Expressions */}
 		<TeachingCard
 			scheme="neutral"
-			tone="soft"
 			eyebrow="Time"
 			title={
 				<span className="flex items-center gap-2">
@@ -176,7 +192,7 @@ export const PrepositionsSection: React.FC = () => (
 		<CollapsibleSection
 			title="More Prepositions"
 			subtitle="Less common but still useful"
-			colorScheme="ocean"
+			colorScheme="stone"
 			defaultOpen={false}
 		>
 			<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -204,51 +220,84 @@ export const PrepositionsSection: React.FC = () => (
 			defaultOpen={false}
 		>
 			<div className="space-y-4">
-				<Alert variant="info">
-					<AlertTitle>The Pattern</AlertTitle>
-					<AlertDescription>
-						Compound prepositions = <strong>position word</strong> +{" "}
-						<MonoText size="sm">σε</MonoText> or <MonoText size="sm">από</MonoText>. The{" "}
-						<MonoText size="sm">σε</MonoText> ones contract with articles (πάνω <strong>στο</strong>
-						), the <MonoText size="sm">από</MonoText> ones don't (κάτω <strong>από το</strong>).
-					</AlertDescription>
-				</Alert>
+				{/* Pattern explanation — two rows, no inline/block mixing */}
+				<div className="rounded-lg border border-stone-200 bg-white p-4 space-y-3">
+					<p className="text-xs font-semibold uppercase tracking-widest text-stone-400">
+						The pattern
+					</p>
+					<div className="space-y-2 text-sm">
+						<div className="flex items-center gap-2">
+							<span className="w-20 shrink-0 rounded bg-stone-200 px-2 py-0.5 text-center text-xs font-semibold text-stone-700">
+								+ σε
+							</span>
+							<span className="text-stone-600">contracts with article:</span>
+							<MonoText size="sm" className="font-semibold text-stone-800">
+								πάνω στο
+							</MonoText>
+						</div>
+						<div className="flex items-center gap-2">
+							<span className="w-20 shrink-0 rounded border border-stone-200 px-2 py-0.5 text-center text-xs text-stone-400">
+								+ από
+							</span>
+							<span className="text-stone-500">no change:</span>
+							<MonoText size="sm" className="text-stone-600">
+								κάτω από το
+							</MonoText>
+						</div>
+					</div>
+				</div>
 
-				{/* TODO(local-axis): contraction-behaviour (σε vs από) is a page-local
-				    axis. Previously signalled by olive/ocean fills — reusing case
-				    colours here asserts a false grammatical value. Neutralised for
-				    now; revisit with a dedicated local-axis palette. */}
-
-				{/* Contrast Pairs */}
-				<div className="space-y-3">
-					{COMPOUND_CONTRAST_PAIRS.map((pair) => (
-						<div key={pair.left.greek} className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-							<div className="rounded-lg border border-stone-300 bg-stone-100 p-3">
-								<div className="mb-1 flex items-baseline justify-between">
-									<MonoText variant="greek" size="md" className="font-semibold text-stone-800">
-										{pair.left.greek}
+				{/* Two-column split by contraction behaviour */}
+				{(() => {
+					const all = COMPOUND_CONTRAST_PAIRS.flatMap((pair) => [pair.left, pair.right]);
+					const contracts = all.filter((item) => item.usesσε);
+					const noChange = all.filter((item) => !item.usesσε);
+					const col = (items: typeof contracts, tinted: boolean) => (
+						<div className="space-y-2">
+							{items.map((item) => (
+								<div
+									key={item.greek}
+									className={cn(
+										"rounded-lg border p-3",
+										tinted
+											? "border-stone-300 bg-stone-100"
+											: "border-stone-200 bg-white",
+									)}
+								>
+									<div className="mb-1 flex items-baseline gap-2">
+										<MonoText
+											variant="greek"
+											size="md"
+											className="font-semibold text-stone-800"
+										>
+											{item.greek}
+										</MonoText>
+										<span className="text-sm text-stone-500">{item.english}</span>
+									</div>
+									<MonoText variant="greek" size="sm" className="block text-stone-500">
+										{item.example}
 									</MonoText>
-									<span className="text-sm text-stone-600">{pair.left.english}</span>
 								</div>
-								<MonoText variant="greek" size="sm" className="block text-stone-600">
-									{pair.left.example}
-								</MonoText>
+							))}
+						</div>
+					);
+					return (
+						<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+							<div className="space-y-2">
+								<p className="text-xs font-semibold uppercase tracking-widest text-stone-500">
+									σε — contracts
+								</p>
+								{col(contracts, true)}
 							</div>
-
-							<div className="rounded-lg border border-stone-300 bg-stone-100 p-3">
-								<div className="mb-1 flex items-baseline justify-between">
-									<MonoText variant="greek" size="md" className="font-semibold text-stone-800">
-										{pair.right.greek}
-									</MonoText>
-									<span className="text-sm text-stone-600">{pair.right.english}</span>
-								</div>
-								<MonoText variant="greek" size="sm" className="block text-stone-600">
-									{pair.right.example}
-								</MonoText>
+							<div className="space-y-2">
+								<p className="text-xs font-semibold uppercase tracking-widest text-stone-400">
+									από — no change
+								</p>
+								{col(noChange, false)}
 							</div>
 						</div>
-					))}
-				</div>
+					);
+				})()}
 			</div>
 		</CollapsibleSection>
 	</section>

@@ -36,17 +36,19 @@ export const PrepositionNavigator = () => (
 							<Icon size={18} />
 						</div>
 						<div className="min-w-0 flex-1">
-							<div className="mb-1 text-sm font-medium text-stone-700">{option.question}</div>
-							<div className="mb-2 font-bold text-honey-text">
-								→ <MonoText size="sm">{option.answer}</MonoText>
+							<div className="mb-2 text-sm text-stone-500">{option.question}</div>
+							<div className="mb-3">
+								<MonoText size="xl" className="font-bold text-honey-text">
+									{option.answer.replace(" → ", " / ")}
+								</MonoText>
 							</div>
-							<div className="space-y-0.5">
+							<div className="space-y-1">
 								{option.examples.map((ex) => (
 									<div key={ex.greek} className="text-sm">
-										<MonoText size="sm" variant="highlighted">
+										<MonoText size="sm" variant="greek" className="text-stone-700">
 											{ex.greek}
 										</MonoText>
-										<span className="ml-1 text-xs text-stone-500">{ex.english}</span>
+										<span className="ml-2 text-xs text-stone-400">{ex.english}</span>
 									</div>
 								))}
 							</div>

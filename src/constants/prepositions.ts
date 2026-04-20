@@ -7,6 +7,7 @@ export const BIG_4_PREPOSITIONS = [
 	{
 		greek: "σε",
 		english: "to / at / in",
+		role: "Location · Direction",
 		contracts: true,
 		colorScheme: "ocean" as const,
 		examples: [
@@ -17,6 +18,7 @@ export const BIG_4_PREPOSITIONS = [
 	{
 		greek: "από",
 		english: "from",
+		role: "Origin · Source",
 		contracts: false,
 		colorScheme: "terracotta" as const,
 		examples: [
@@ -27,6 +29,7 @@ export const BIG_4_PREPOSITIONS = [
 	{
 		greek: "με",
 		english: "with",
+		role: "Accompaniment",
 		contracts: false,
 		colorScheme: "olive" as const,
 		examples: [
@@ -37,6 +40,7 @@ export const BIG_4_PREPOSITIONS = [
 	{
 		greek: "για",
 		english: "for",
+		role: "Purpose · Recipient",
 		contracts: false,
 		colorScheme: "honey" as const,
 		examples: [
