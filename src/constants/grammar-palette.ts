@@ -29,6 +29,7 @@ export type GrammarScheme =
 	| "decision"
 	| "neutral";
 
+// TODO: this palette has grown complex — audit and simplify before extending further
 interface SchemeClasses {
 	bg: string;
 	bgSoft: string;

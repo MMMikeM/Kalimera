@@ -1,6 +1,7 @@
 import type React from "react";
 
 import { GrammarTable, type ColumnDef, type RowDef } from "@/components/GrammarTable";
+import type { GrammarScheme } from "@/constants/grammar-palette";
 
 export interface VerbForm {
 	stem: string;
@@ -21,6 +22,7 @@ interface ParadigmTableProps {
 	meaning: string;
 	infinitive?: string;
 	forms: ParadigmForms;
+	scheme?: GrammarScheme;
 	className?: string;
 	formClassName?: string;
 	endingClassName?: string;
@@ -28,9 +30,9 @@ interface ParadigmTableProps {
 }
 
 const PERSON_ROWS: RowDef[] = [
-	{ key: "1st", label: "1st", sublabel: "I/we" },
-	{ key: "2nd", label: "2nd", sublabel: "you/you" },
-	{ key: "3rd", label: "3rd", sublabel: "s/he/they" },
+	{ key: "1st", label: "1st" },
+	{ key: "2nd", label: "2nd" },
+	{ key: "3rd", label: "3rd" },
 ];
 
 const VERB_COLUMNS: ColumnDef[] = [
@@ -61,6 +63,7 @@ export const ParadigmTable: React.FC<ParadigmTableProps> = ({
 	meaning,
 	infinitive,
 	forms,
+	scheme,
 	className,
 	formClassName = "text-stone-800 font-semibold",
 	endingClassName = "text-terracotta font-bold",
@@ -89,7 +92,7 @@ export const ParadigmTable: React.FC<ParadigmTableProps> = ({
 				</span>
 				<span className="ml-2 text-sm text-stone-600 sm:text-base">({meaning})</span>
 			</div>
-			<GrammarTable columns={VERB_COLUMNS} rows={PERSON_ROWS} cells={cells} />
+			<GrammarTable columns={VERB_COLUMNS} rows={PERSON_ROWS} cells={cells} scheme={scheme} />
 		</div>
 	);
 };
