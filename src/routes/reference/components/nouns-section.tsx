@@ -2,10 +2,11 @@ import { useState } from "react";
 
 import { NextStepCard, TeachingCard } from "@/components/cards";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
+import { CASE_ROW_DEFS, GrammarTable, type ColumnDef } from "@/components/GrammarTable";
 import { MonoText } from "@/components/MonoText";
 import { SectionHeading } from "@/components/SectionHeading";
 import { AGREEMENT_PARADIGMS, type AgreementParadigm } from "@/constants/agreement";
-import { SCHEME } from "@/constants/grammar-palette";
+import { GENDER_SCHEME, SCHEME } from "@/constants/grammar-palette";
 
 type Gender = "masculine" | "feminine" | "neuter";
 type Case = "Nom" | "Acc" | "Gen";
@@ -102,7 +103,6 @@ const getFull = (paradigm: AgreementParadigm, caseType: Case) =>
 const CaseGuide = () => (
 	<TeachingCard
 		scheme="neutral"
-		tone="soft"
 		eyebrow="Concept"
 		title="Which case should I use?"
 		description="The job the noun does in the sentence decides its case."
@@ -143,7 +143,6 @@ const CaseGuide = () => (
 const GenderHints = () => (
 	<TeachingCard
 		scheme="neutral"
-		tone="soft"
 		eyebrow="Spotting gender"
 		title="Recognise gender by ending"
 		description="The ending tells you the gender → the gender tells you how it declines."
@@ -186,57 +185,37 @@ const ViewToggle = ({
 	</div>
 );
 
-const ParadigmTable = ({
+const NounEndingsTable = ({
 	paradigms,
 	mode = "endings",
 }: {
 	paradigms: AgreementParadigm[];
 	mode?: "endings" | "full";
-}) => (
-	<div className="-mx-4 overflow-x-auto px-4">
-		<table className="w-full min-w-72 text-sm">
-			<thead>
-				<tr className="border-b border-stone-200">
-					<th className="w-20 py-2 pr-2 text-left text-xs font-medium text-stone-500">Role</th>
-					{paradigms.map((p) => (
-						<th
-							key={p.id}
-							className={`px-2 py-2 text-left text-xs font-medium text-gender-${p.gender}`}
-						>
-							<MonoText size="sm">{p.pattern}</MonoText>
-						</th>
-					))}
-				</tr>
-			</thead>
-			<tbody>
-				{CASES.map((caseType) => {
-					const meta = CASE_META[caseType];
-					const style = SCHEME[meta.scheme];
-					return (
-						<tr key={caseType} className="border-b border-stone-100">
-							<td
-								className={`border-l-2 py-2 pr-2 pl-2 text-xs font-semibold ${style.bgSoft} ${style.border} ${style.text}`}
-							>
-								<span className="block leading-tight">{meta.handle}</span>
-								<span className="block text-[10px] font-normal opacity-70">{meta.greek}</span>
-							</td>
-							{paradigms.map((p) => {
-								const value = mode === "endings" ? getEnding(p, caseType) : getFull(p, caseType);
-								return (
-									<td key={p.id} className="px-2 py-2">
-										<MonoText size="sm" variant={p.gender}>
-											{value}
-										</MonoText>
-									</td>
-								);
-							})}
-						</tr>
-					);
-				})}
-			</tbody>
-		</table>
-	</div>
-);
+}) => {
+	const columns: ColumnDef[] = paradigms.map((p) => ({
+		key: p.id,
+		label: p.pattern,
+		scheme: GENDER_SCHEME[p.gender],
+	}));
+
+	const cells = CASE_ROW_DEFS.map((_row, ri) => {
+		const caseType = (["Nom", "Acc", "Gen"] as const)[ri]!;
+		return paradigms.map((p) => {
+			const value = mode === "endings" ? getEnding(p, caseType) : getFull(p, caseType);
+			return (
+				<MonoText size="sm" variant={p.gender}>
+					{value}
+				</MonoText>
+			);
+		});
+	});
+
+	return (
+		<div className="-mx-4 overflow-x-auto px-4">
+			<GrammarTable columns={columns} rows={CASE_ROW_DEFS} cells={cells} />
+		</div>
+	);
+};
 
 const EssentialPatterns = () => {
 	const [mode, setMode] = useState<"endings" | "full">("endings");
@@ -245,7 +224,6 @@ const EssentialPatterns = () => {
 	return (
 		<TeachingCard
 			scheme="neutral"
-			tone="full"
 			eyebrow="The core"
 			title="Essential patterns"
 			badge={<ViewToggle mode={mode} onChange={setMode} />}
@@ -261,7 +239,7 @@ const EssentialPatterns = () => {
 				</div>
 			}
 		>
-			<ParadigmTable paradigms={paradigms} mode={mode} />
+			<NounEndingsTable paradigms={paradigms} mode={mode} />
 		</TeachingCard>
 	);
 };
@@ -275,7 +253,6 @@ const GenderVariants = ({ gender }: { gender: Gender }) => {
 	return (
 		<TeachingCard
 			scheme="neutral"
-			tone="soft"
 			eyebrow="Variants"
 			title={<span className={`text-gender-${gender}-text`}>{title}</span>}
 			badge={GENDER_HINTS[gender].endings}
@@ -292,7 +269,7 @@ const GenderVariants = ({ gender }: { gender: Gender }) => {
 				</div>
 			}
 		>
-			<ParadigmTable paradigms={paradigms} mode="endings" />
+			<NounEndingsTable paradigms={paradigms} mode="endings" />
 		</TeachingCard>
 	);
 };

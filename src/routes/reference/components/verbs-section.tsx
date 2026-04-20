@@ -161,7 +161,6 @@ const PatternSection: React.FC<{
 					infinitive={pattern.canonical.infinitive}
 					forms={pattern.canonical.forms}
 					endingClassName={`${style.text} font-bold`}
-					showHeaders={true}
 					fadeStem={true}
 				/>
 			</div>
