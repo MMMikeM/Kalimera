@@ -141,14 +141,14 @@ const stripGreekArticle = (greek: string): string => {
  * matchPhonetic("to kalokeri", "το καλοκαίρι")
  * // { isCorrect: true, ... }
  */
-// Collapse spelling-faithful digraphs in the correct form to their phonetic
-// equivalents, so "i adelfes" is accepted when correct is "oi adelfes".
-// Only applied to the correct form — we don't want the reverse (user typing
-// "oi" when correct is "ι") to be accepted.
-const toPhoneticCanonical = (text: string): string => text.replace(/oi/g, "i");
+// Collapse spelling-faithful digraphs to their phonetic equivalents on BOTH
+// sides, so a learner can type either "kanis" (phonetic) or "kaneis"
+// (letter-faithful to κάνεις) and both match. Covers ει→i, αι→e, οι→i.
+const toPhoneticCanonical = (text: string): string =>
+	text.replace(/ei/g, "i").replace(/ai/g, "e").replace(/oi/g, "i");
 
 const phoneticEquals = (user: string, correct: string): boolean =>
-	user === correct || user === toPhoneticCanonical(correct);
+	user === correct || toPhoneticCanonical(user) === toPhoneticCanonical(correct);
 
 export const matchPhonetic = (userInput: string, correctGreek: string): PhoneticMatchResult => {
 	const userPhonetic = normalizeInput(userInput);
