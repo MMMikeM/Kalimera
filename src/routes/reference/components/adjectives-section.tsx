@@ -3,6 +3,8 @@ import type React from "react";
 
 import { Callout, TeachingCard } from "@/components/cards";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
+import { CASE_ROW_DEFS, GrammarTable, type ColumnDef } from "@/components/GrammarTable";
+import { GENDER_SCHEME } from "@/constants/grammar-palette";
 import { MistakeComparison } from "@/components/MistakeComparison";
 import { MonoText } from "@/components/MonoText";
 import { SectionHeading } from "@/components/SectionHeading";
@@ -22,7 +24,6 @@ import { CaseTableGrid } from "./CaseTable";
 const AdjectiveEndingsTable: React.FC = () => (
 	<TeachingCard
 		scheme="neutral"
-		tone="soft"
 		eyebrow="Endings"
 		title="Standard pattern"
 		badge="-ος / -η / -ο"
@@ -71,7 +72,6 @@ const AgreementExamplesCard: React.FC = () => {
 	return (
 		<TeachingCard
 			scheme="neutral"
-			tone="soft"
 			eyebrow="Agreement"
 			title="Article + adjective + noun"
 			description="All three pieces copy the same gender, case, and number."
@@ -98,21 +98,9 @@ const AdjectiveParadigmCard: React.FC<{ paradigm: AdjectiveParadigm; emphasis?: 
 	emphasis = false,
 }) => {
 	const genderStyles = {
-		masculine: {
-			border: "border-gender-masculine-300",
-			bg: "bg-gender-masculine-100",
-			headerBg: "bg-gender-masculine-200",
-		},
-		feminine: {
-			border: "border-gender-feminine-300",
-			bg: "bg-gender-feminine-100",
-			headerBg: "bg-gender-feminine-200",
-		},
-		neuter: {
-			border: "border-gender-neuter-300",
-			bg: "bg-gender-neuter-100",
-			headerBg: "bg-gender-neuter-200",
-		},
+		masculine: { border: "border-gender-masculine-300", bg: "bg-gender-masculine-100/40" },
+		feminine: { border: "border-gender-feminine-300", bg: "bg-gender-feminine-100/40" },
+		neuter: { border: "border-gender-neuter-300", bg: "bg-gender-neuter-100/40" },
 	};
 
 	const renderGenderTable = (
@@ -124,38 +112,31 @@ const AdjectiveParadigmCard: React.FC<{ paradigm: AdjectiveParadigm; emphasis?: 
 		const variant =
 			gender === "masculine" ? "masculine" : gender === "feminine" ? "feminine" : "neuter";
 
+		const columns: ColumnDef[] = [
+			{ key: "singular", label: "Singular" },
+			{ key: "plural", label: "Plural" },
+		];
+
+		const rows = CASE_ROW_DEFS.map((row) => ({ ...row, schemeVariant: "border" as const }));
+
+		const cells = rows.map((_row, ri) => {
+			const sg = forms.singular[ri];
+			const pl = forms.plural[ri];
+			return [
+				<MonoText variant={variant} size="sm">{sg?.form ?? "—"}</MonoText>,
+				<MonoText variant={variant} size="sm">{pl?.form ?? "—"}</MonoText>,
+			];
+		});
+
 		return (
 			<div className={`rounded-lg ${style.bg} ${style.border} border p-3`}>
 				<div className={`text-xs font-medium text-gender-${gender} mb-2`}>{genderLabel}</div>
-				<table className="w-full text-sm">
-					<thead>
-						<tr className={`${style.headerBg} border-b ${style.border}`}>
-							<th className="w-10 px-2 py-1 text-left text-xs font-medium text-stone-600" />
-							<th className="px-2 py-1 text-left text-xs font-medium text-stone-600">Sg</th>
-							<th className="px-2 py-1 text-left text-xs font-medium text-stone-600">Pl</th>
-						</tr>
-					</thead>
-					<tbody>
-						{forms.singular.map((sg, idx) => {
-							const pl = forms.plural[idx];
-							return (
-								<tr key={sg.case} className="border-b border-stone-100/50">
-									<td className="px-2 py-1 text-xs text-stone-500">{sg.case}</td>
-									<td className="px-2 py-1">
-										<MonoText variant={variant} size="sm">
-											{sg.form}
-										</MonoText>
-									</td>
-									<td className="px-2 py-1">
-										<MonoText variant={variant} size="sm">
-											{pl?.form}
-										</MonoText>
-									</td>
-								</tr>
-							);
-						})}
-					</tbody>
-				</table>
+				<GrammarTable
+					columns={columns}
+					rows={rows}
+					cells={cells}
+					scheme={GENDER_SCHEME[gender]}
+				/>
 			</div>
 		);
 	};
@@ -163,7 +144,6 @@ const AdjectiveParadigmCard: React.FC<{ paradigm: AdjectiveParadigm; emphasis?: 
 	return (
 		<TeachingCard
 			scheme="neutral"
-			tone={emphasis ? "full" : "soft"}
 			eyebrow="Pattern"
 			title={
 				<MonoText variant="greek" size={emphasis ? "xl" : "lg"} className="font-bold">
@@ -200,7 +180,6 @@ const AdjectiveParadigmCard: React.FC<{ paradigm: AdjectiveParadigm; emphasis?: 
 const CommonAdjectivesCard: React.FC = () => (
 	<TeachingCard
 		scheme="neutral"
-		tone="soft"
 		eyebrow="Vocabulary"
 		title="High-frequency adjectives"
 		description="All follow the -ος / -η / -ο pattern."
@@ -229,7 +208,6 @@ export const AdjectivesSection: React.FC = () => {
 
 			<TeachingCard
 				scheme="neutral"
-				tone="soft"
 				eyebrow="Concept"
 				title="Adjectives copy the noun"
 				description="Look at the article. The adjective uses the same gender, case, and number as the noun it describes."

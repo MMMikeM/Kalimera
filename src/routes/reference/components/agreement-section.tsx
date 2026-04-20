@@ -53,7 +53,7 @@ const AgreementParadigmTable: React.FC<{
 	return (
 		<TeachingCard
 			scheme={GENDER_SCHEME[paradigm.gender]}
-			tone="soft"
+
 			eyebrow="Pattern"
 			title={
 				<MonoText
@@ -147,7 +147,6 @@ const AgreementParadigmTable: React.FC<{
 const GenderHintsCard: React.FC = () => (
 	<TeachingCard
 		scheme="neutral"
-		tone="soft"
 		eyebrow="Spotting gender"
 		title="Spot gender by ending"
 	>
@@ -249,7 +248,6 @@ export const AgreementSection: React.FC = () => {
 
 			<TeachingCard
 				scheme="neutral"
-				tone="soft"
 				eyebrow="Quick win"
 				title="When uncertain, use the -ν form"
 				description="Always keep the final ν on τον/την/στον/στην. Never wrong."

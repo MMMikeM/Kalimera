@@ -54,7 +54,7 @@ const ParadigmLookup = ({
 		<LookupCard scheme={scheme} chip={caseName} eyebrow={role}>
 			<div className="space-y-4 px-5 pt-4 pb-4">
 				<p className="text-sm leading-relaxed text-stone-600">{rule}</p>
-				<PronounParadigmTable data={paradigm} note={note} />
+				<PronounParadigmTable data={paradigm} caseName={caseName} note={note} />
 				{examples ? (
 					<PronounExamplePills
 						examples={examples}
