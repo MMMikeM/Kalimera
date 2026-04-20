@@ -1,33 +1,16 @@
-import { ArrowLeft, Users } from "lucide-react";
-import { Link } from "react-router";
-
-import { Card } from "@/components/Card";
 import { PracticeCTA } from "@/components/PracticeCTA";
-import { TabHero } from "@/components/TabHero";
+import { ReferenceHero } from "@/components/ReferenceHero";
 
 import { PronounsSection } from "../components/pronouns-section";
 
 export function PronounsTab() {
 	return (
-		<div className="space-y-8">
-			<TabHero
-				title="Cases in action"
-				greekPhrase="με, σε, μου, σου"
-				colorScheme="ocean"
-				icon={<Users size={18} />}
-			>
-				Pronouns are where you'll use cases most. Master these forms and cases click into place.
-			</TabHero>
-
-			<Card variant="bordered" padding="md" className="border-stone-200 bg-stone-50">
-				<Link
-					to="/reference/cases"
-					className="flex items-center gap-2 text-stone-600 transition-colors hover:text-stone-800"
-				>
-					<ArrowLeft size={16} />
-					<span className="text-sm">Review the case system first</span>
-				</Link>
-			</Card>
+		<div className="space-y-10">
+			<ReferenceHero
+				eyebrow="Pronouns"
+				title="The words that carry half your sentences."
+				thesis='"Him, her, it, my, your" — in Greek these are one or two syllables that clip onto the verb or noun. Get them automatic and your speech doubles in speed.'
+			/>
 
 			<PronounsSection />
 

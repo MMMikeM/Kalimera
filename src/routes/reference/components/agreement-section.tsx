@@ -31,21 +31,21 @@ const AgreementParadigmTable: React.FC<{
 	const genderStyles = {
 		masculine: {
 			border: "border-gender-masculine-300",
-			bg: "bg-gender-masculine-50",
+			bg: "bg-gender-masculine-100",
 			headerBg: "bg-gender-masculine-100",
-			text: "text-gender-masculine",
+			text: "text-gender-masculine-text",
 		},
 		feminine: {
 			border: "border-gender-feminine-300",
-			bg: "bg-gender-feminine-50",
+			bg: "bg-gender-feminine-100",
 			headerBg: "bg-gender-feminine-100",
-			text: "text-gender-feminine",
+			text: "text-gender-feminine-text",
 		},
 		neuter: {
 			border: "border-gender-neuter-300",
-			bg: "bg-gender-neuter-50",
+			bg: "bg-gender-neuter-100",
 			headerBg: "bg-gender-neuter-100",
-			text: "text-gender-neuter",
+			text: "text-gender-neuter-text",
 		},
 	};
 	const style = genderStyles[paradigm.gender];
@@ -290,13 +290,13 @@ export const AgreementSection: React.FC = () => {
 			<Card variant="bordered" padding="lg" className="bg-stone-50/50">
 				<Tabs defaultValue="masculine" className="w-full">
 					<TabsList className="mb-4 h-auto flex-wrap gap-1">
-						<TabsTrigger value="masculine" className="text-gender-masculine">
+						<TabsTrigger value="masculine" className="text-gender-masculine-text">
 							Masculine ({masculineParadigms.length})
 						</TabsTrigger>
-						<TabsTrigger value="feminine" className="text-gender-feminine">
+						<TabsTrigger value="feminine" className="text-gender-feminine-text">
 							Feminine ({feminineParadigms.length})
 						</TabsTrigger>
-						<TabsTrigger value="neuter" className="text-gender-neuter">
+						<TabsTrigger value="neuter" className="text-gender-neuter-text">
 							Neuter ({neuterParadigms.length})
 						</TabsTrigger>
 					</TabsList>

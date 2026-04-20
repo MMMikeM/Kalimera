@@ -1,21 +1,16 @@
-import { BookText } from "lucide-react";
-
 import { PracticeCTA } from "@/components/PracticeCTA";
-import { TabHero } from "@/components/TabHero";
+import { ReferenceHero } from "@/components/ReferenceHero";
 
 import { NounsSection } from "../components/nouns-section";
 
 export function NounsTab() {
 	return (
 		<div className="space-y-12">
-			<TabHero
-				title="Nouns"
-				greekPhrase="φίλος → φίλο → φίλου"
-				colorScheme="olive"
-				icon={<BookText size={18} />}
-			>
-				Greek nouns change their endings to show case and number. Learn the patterns by gender.
-			</TabHero>
+			<ReferenceHero
+				eyebrow="Nouns"
+				title="Endings by gender."
+				thesis="Noun endings fall into three gender families. Learn the family, and you know how the word behaves."
+			/>
 			<NounsSection />
 			<PracticeCTA
 				title="Practice nouns"

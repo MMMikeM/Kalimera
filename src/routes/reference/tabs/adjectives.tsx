@@ -1,22 +1,16 @@
-import { Sparkles } from "lucide-react";
-
 import { PracticeCTA } from "@/components/PracticeCTA";
-import { TabHero } from "@/components/TabHero";
+import { ReferenceHero } from "@/components/ReferenceHero";
 
 import { AdjectivesSection } from "../components/adjectives-section";
 
 export function AdjectivesTab() {
 	return (
-		<div className="space-y-8">
-			<TabHero
-				title="Words that describe"
-				greekPhrase="ο καλός, η καλή, το καλό"
-				colorScheme="honey"
-				icon={<Sparkles size={18} />}
-			>
-				Adjectives agree with their noun in gender, case, and number. Once you know noun patterns,
-				adjectives follow the same rules.
-			</TabHero>
+		<div className="space-y-10">
+			<ReferenceHero
+				eyebrow="Adjectives"
+				title="The noun's grammar, copied."
+				thesis="Adjectives match their noun in gender, case, and number. You're not learning new rules — you're reusing noun and article patterns."
+			/>
 			<AdjectivesSection />
 			<PracticeCTA
 				title="Practice adjectives"

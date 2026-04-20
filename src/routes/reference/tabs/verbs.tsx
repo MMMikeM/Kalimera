@@ -1,22 +1,16 @@
-import { Zap } from "lucide-react";
-
 import { PracticeCTA } from "@/components/PracticeCTA";
-import { TabHero } from "@/components/TabHero";
+import { ReferenceHero } from "@/components/ReferenceHero";
 
 import { VerbsSection } from "../components/verbs-section";
 
 export function VerbsTab() {
 	return (
-		<div className="space-y-8">
-			<TabHero
-				title="Verb conjugation patterns"
-				greekPhrase="κάνω, κάνεις, κάνει..."
-				colorScheme="ocean"
-				icon={<Zap size={18} />}
-			>
-				Greek verb endings show who's doing the action, so you often don't need separate pronouns.
-				Learn three patterns and conjugate thousands of verbs.
-			</TabHero>
+		<div className="space-y-10">
+			<ReferenceHero
+				eyebrow="Verbs"
+				title="Three patterns, thousands of verbs."
+				thesis="Greek verb endings show who's doing the action, so pronouns often disappear. Learn three ending families, and you can conjugate most verbs you meet."
+			/>
 			<VerbsSection />
 			<PracticeCTA
 				title="Practice verbs"
