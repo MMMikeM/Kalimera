@@ -1,32 +1,6 @@
 import type React from "react";
-import { tv } from "tailwind-variants";
 
-/**
- * ParadigmTable - Displays verb conjugation patterns
- *
- * Design principles:
- * - Structure reveals patterns (rows = person, columns = number)
- * - Endings highlighted with terracotta (primary accent)
- * - Stems faded to emphasize the changing parts
- * - Generous spacing for reduced cognitive load
- */
-const paradigmTableVariants = tv({
-	base: "w-full border-collapse",
-});
-
-const paradigmCellVariants = tv({
-	base: "p-2 text-center font-mono text-sm sm:p-3 sm:text-base",
-	variants: {
-		position: {
-			topLeft: "border-b border-stone-200",
-			topRight: "border-b border-stone-200",
-			middleLeft: "border-b border-stone-200",
-			middleRight: "border-b border-stone-200",
-			bottomLeft: "",
-			bottomRight: "",
-		},
-	},
-});
+import { GrammarTable, type ColumnDef, type RowDef } from "@/components/GrammarTable";
 
 export interface VerbForm {
 	stem: string;
@@ -50,38 +24,27 @@ interface ParadigmTableProps {
 	className?: string;
 	formClassName?: string;
 	endingClassName?: string;
-	showHeaders?: boolean;
 	fadeStem?: boolean;
-	/** Compact mode: two-column layout with inline pronouns, no person labels */
-	compact?: boolean;
 }
 
-const PERSON_LABELS = ["1st", "2nd", "3rd"];
-const PERSON_HINTS = [
-	["I", "we"],
-	["you", "you"],
-	["s/he", "they"],
+const PERSON_ROWS: RowDef[] = [
+	{ key: "1st", label: "1st", sublabel: "I/we" },
+	{ key: "2nd", label: "2nd", sublabel: "you/you" },
+	{ key: "3rd", label: "3rd", sublabel: "s/he/they" },
 ];
 
-const COMPACT_PRONOUNS = {
-	sg: ["I", "you", "s/he"],
-	pl: ["we", "you (pl)", "they"],
-};
+const VERB_COLUMNS: ColumnDef[] = [
+	{ key: "singular", label: "Singular" },
+	{ key: "plural", label: "Plural" },
+];
 
-const FormCell: React.FC<{
+const VerbCell: React.FC<{
 	form: VerbForm | string;
-	position: "topLeft" | "topRight" | "middleLeft" | "middleRight" | "bottomLeft" | "bottomRight";
-	formClassName?: string;
-	endingClassName?: string;
-	fadeStem?: boolean;
-}> = ({
-	form,
-	position,
-	formClassName = "text-stone-800 font-semibold",
-	endingClassName = "text-terracotta font-bold",
-	fadeStem = true,
-}) => (
-	<td className={paradigmCellVariants({ position })}>
+	fadeStem: boolean;
+	formClassName: string;
+	endingClassName: string;
+}> = ({ form, fadeStem, formClassName, endingClassName }) => (
+	<span className="font-mono text-sm sm:text-base">
 		{typeof form === "string" ? (
 			<span className={formClassName}>{form}</span>
 		) : (
@@ -90,39 +53,7 @@ const FormCell: React.FC<{
 				<span className={endingClassName}>{form.ending}</span>
 			</>
 		)}
-	</td>
-);
-
-const CompactFormRow: React.FC<{
-	form: VerbForm | string;
-	pronoun: string;
-	formClassName?: string;
-	endingClassName?: string;
-	fadeStem?: boolean;
-	isLast?: boolean;
-}> = ({
-	form,
-	pronoun,
-	formClassName = "text-stone-800 font-semibold",
-	endingClassName = "text-terracotta font-bold",
-	fadeStem = true,
-	isLast = false,
-}) => (
-	<div
-		className={`flex items-center justify-between px-1 py-2 ${!isLast ? "border-b border-stone-200" : ""}`}
-	>
-		<span className="font-mono text-base">
-			{typeof form === "string" ? (
-				<span className={formClassName}>{form}</span>
-			) : (
-				<>
-					<span className={fadeStem ? "text-stone-600" : "text-stone-700"}>{form.stem}</span>
-					<span className={endingClassName}>{form.ending}</span>
-				</>
-			)}
-		</span>
-		<span className="text-sm text-stone-500">{pronoun}</span>
-	</div>
+	</span>
 );
 
 export const ParadigmTable: React.FC<ParadigmTableProps> = ({
@@ -131,76 +62,24 @@ export const ParadigmTable: React.FC<ParadigmTableProps> = ({
 	infinitive,
 	forms,
 	className,
-	formClassName,
-	endingClassName,
-	showHeaders = true,
+	formClassName = "text-stone-800 font-semibold",
+	endingClassName = "text-terracotta font-bold",
 	fadeStem = true,
-	compact = false,
 }) => {
-	const formRows = [
-		{
-			sg: forms.sg1,
-			pl: forms.pl1,
-			positions: ["topLeft", "topRight"] as const,
-		},
-		{
-			sg: forms.sg2,
-			pl: forms.pl2,
-			positions: ["middleLeft", "middleRight"] as const,
-		},
-		{
-			sg: forms.sg3,
-			pl: forms.pl3,
-			positions: ["bottomLeft", "bottomRight"] as const,
-		},
-	];
-
-	const singularForms = [forms.sg1, forms.sg2, forms.sg3];
-	const pluralForms = [forms.pl1, forms.pl2, forms.pl3];
-
-	if (compact) {
-		return (
-			<div className={className}>
-				<div className="mb-3">
-					<span className="font-mono text-lg font-semibold text-stone-800">
-						{infinitive || (stem ? `${stem}-` : "")}
-					</span>
-					<span className="ml-2 text-sm text-stone-600">({meaning})</span>
-				</div>
-
-				<div className="grid grid-cols-2 gap-3">
-					<div>
-						<div className="mb-1 px-1 text-xs text-stone-500">Singular</div>
-						{singularForms.map((form, idx) => (
-							<CompactFormRow
-								key={COMPACT_PRONOUNS.sg[idx]}
-								form={form}
-								pronoun={COMPACT_PRONOUNS.sg[idx] ?? ""}
-								formClassName={formClassName}
-								endingClassName={endingClassName}
-								fadeStem={fadeStem}
-								isLast={idx === 2}
-							/>
-						))}
-					</div>
-					<div>
-						<div className="mb-1 px-1 text-xs text-stone-500">Plural</div>
-						{pluralForms.map((form, idx) => (
-							<CompactFormRow
-								key={COMPACT_PRONOUNS.pl[idx]}
-								form={form}
-								pronoun={COMPACT_PRONOUNS.pl[idx] ?? ""}
-								formClassName={formClassName}
-								endingClassName={endingClassName}
-								fadeStem={fadeStem}
-								isLast={idx === 2}
-							/>
-						))}
-					</div>
-				</div>
-			</div>
-		);
-	}
+	const cells = [
+		[forms.sg1, forms.pl1],
+		[forms.sg2, forms.pl2],
+		[forms.sg3, forms.pl3],
+	].map((row) =>
+		row.map((form) => (
+			<VerbCell
+				form={form}
+				fadeStem={fadeStem}
+				formClassName={formClassName}
+				endingClassName={endingClassName}
+			/>
+		)),
+	);
 
 	return (
 		<div className={className}>
@@ -210,45 +89,7 @@ export const ParadigmTable: React.FC<ParadigmTableProps> = ({
 				</span>
 				<span className="ml-2 text-sm text-stone-600 sm:text-base">({meaning})</span>
 			</div>
-			<table className={paradigmTableVariants()}>
-				{showHeaders && (
-					<thead>
-						<tr>
-							<th className="w-12 sm:w-14" />
-							<th className="pb-2 text-xs font-normal text-stone-500">Singular</th>
-							<th className="pb-2 text-xs font-normal text-stone-500">Plural</th>
-						</tr>
-					</thead>
-				)}
-				<tbody>
-					{formRows.map((row, idx) => (
-						<tr key={PERSON_LABELS[idx]}>
-							{showHeaders && (
-								<td className="pr-3 text-right align-middle text-xs text-stone-600">
-									<div>{PERSON_LABELS[idx]}</div>
-									<div className="text-[10px] text-stone-500">
-										{PERSON_HINTS[idx]?.[0]}/{PERSON_HINTS[idx]?.[1]}
-									</div>
-								</td>
-							)}
-							<FormCell
-								form={row.sg}
-								position={row.positions[0]}
-								formClassName={formClassName}
-								endingClassName={endingClassName}
-								fadeStem={fadeStem}
-							/>
-							<FormCell
-								form={row.pl}
-								position={row.positions[1]}
-								formClassName={formClassName}
-								endingClassName={endingClassName}
-								fadeStem={fadeStem}
-							/>
-						</tr>
-					))}
-				</tbody>
-			</table>
+			<GrammarTable columns={VERB_COLUMNS} rows={PERSON_ROWS} cells={cells} />
 		</div>
 	);
 };
