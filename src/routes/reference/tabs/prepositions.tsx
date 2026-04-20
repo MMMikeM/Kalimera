@@ -1,22 +1,16 @@
-import { MapPin } from "lucide-react";
-
 import { PracticeCTA } from "@/components/PracticeCTA";
-import { TabHero } from "@/components/TabHero";
+import { ReferenceHero } from "@/components/ReferenceHero";
 
 import { PrepositionsSection } from "../components/prepositions-section";
 
 export function PrepositionsTab() {
 	return (
-		<div className="space-y-8">
-			<TabHero
-				title="Connect words and ideas"
-				greekPhrase="σε, από, για, με"
-				colorScheme="terracotta"
-				icon={<MapPin size={18} />}
-			>
-				Prepositions show relationships: location, direction, purpose. The big four (σε, από, για,
-				με) cover most situations.
-			</TabHero>
+		<div className="space-y-10">
+			<ReferenceHero
+				eyebrow="Prepositions"
+				title="Little words, big relationships."
+				thesis="Four prepositions handle most of what you'll need to say. Their job is to tell you where, how, and in what direction."
+			/>
 			<PrepositionsSection />
 			<PracticeCTA
 				title="Practice prepositions"

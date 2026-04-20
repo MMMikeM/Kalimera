@@ -5,7 +5,7 @@ import { CollapsibleSection } from "@/components/CollapsibleSection";
 import { MonoText } from "@/components/MonoText";
 import { SectionHeading } from "@/components/SectionHeading";
 import { AGREEMENT_PARADIGMS, type AgreementParadigm } from "@/constants/agreement";
-import { GENDER_SCHEME } from "@/constants/grammar-palette";
+import { SCHEME } from "@/constants/grammar-palette";
 
 type Gender = "masculine" | "feminine" | "neuter";
 type Case = "Nom" | "Acc" | "Gen";
@@ -22,8 +22,14 @@ const ESSENTIAL_IDS = ["masc-os", "fem-a", "neut-o"] as const;
 
 const GENDER_HINTS: Record<Gender, { endings: string; hint: string }> = {
 	masculine: { endings: "-ος, -ας, -ης, -ές", hint: "Male people, -ος words" },
-	feminine: { endings: "-α, -η, -ση/-ξη", hint: "Female people, abstract -η" },
+	feminine: { endings: "-α, -η, -ση/-ξη", hint: "Female people, αγάπη / ζωή" },
 	neuter: { endings: "-ο, -ι, -μα", hint: "Diminutives, result nouns" },
+};
+
+const CASE_META: Record<Case, { handle: string; greek: string; scheme: "case-nominative" | "case-accusative" | "case-genitive" }> = {
+	Nom: { handle: "Doer", greek: "Nominative", scheme: "case-nominative" },
+	Acc: { handle: "Target", greek: "Accusative", scheme: "case-accusative" },
+	Gen: { handle: "Owner", greek: "Genitive", scheme: "case-genitive" },
 };
 
 const CASE_QUESTIONS: Array<{
@@ -52,37 +58,34 @@ const CASE_QUESTIONS: Array<{
 	},
 ];
 
-const DECISION_GUIDES = [
+const SAME_NOUN_COMPARISONS: Array<{
+	lemma: string;
+	forms: Record<Case, { greek: string; english: string }>;
+}> = [
 	{
-		question: "Should I use ο or τον?",
-		explanation: ["doing", "receiving"],
-		examples: [
-			{ label: "Doing", greek: "ο φίλος μιλάει" },
-			{ label: "Receiving", greek: "βλέπω τον φίλο" },
-		],
+		lemma: "φίλος",
+		forms: {
+			Nom: { greek: "ο φίλος μιλάει", english: "the friend speaks" },
+			Acc: { greek: "βλέπω τον φίλο", english: "I see the friend" },
+			Gen: { greek: "το σπίτι του φίλου", english: "the friend's house" },
+		},
 	},
 	{
-		question: "Should I use τον or του?",
-		explanation: ["receiving action", "possession"],
-		examples: [
-			{ label: "Action", greek: "θέλω τον καφέ" },
-			{ label: "Possession", greek: "το σπίτι του φίλου" },
-		],
+		lemma: "γυναίκα",
+		forms: {
+			Nom: { greek: "η γυναίκα γελάει", english: "the woman laughs" },
+			Acc: { greek: "ξέρω τη γυναίκα", english: "I know the woman" },
+			Gen: { greek: "το παιδί της γυναίκας", english: "the woman's child" },
+		},
 	},
 	{
-		question: "Should I use το or τα?",
-		explanation: ["one thing", "many"],
-		examples: [
-			{ label: "One", greek: "το βιβλίο" },
-			{ label: "Many", greek: "τα βιβλία" },
-		],
+		lemma: "βιβλίο",
+		forms: {
+			Nom: { greek: "το βιβλίο πέφτει", english: "the book falls" },
+			Acc: { greek: "διαβάζω το βιβλίο", english: "I read the book" },
+			Gen: { greek: "ο τίτλος του βιβλίου", english: "the title of the book" },
+		},
 	},
-];
-
-const VOCATIVE_CHANGES = [
-	{ pattern: "-ος → -ε", example: "φίλε!" },
-	{ pattern: "-ας → -α", example: "πατέρα!" },
-	{ pattern: "-ης → -η", example: "μαθητή!" },
 ];
 
 const getParadigms = (ids: readonly string[]): AgreementParadigm[] =>
@@ -95,9 +98,6 @@ const getEnding = (paradigm: AgreementParadigm, caseType: Case) =>
 
 const getFull = (paradigm: AgreementParadigm, caseType: Case) =>
 	paradigm.forms.find((f) => f.case === caseType)?.full ?? "—";
-
-const nomEqualsAcc = (paradigm: AgreementParadigm) =>
-	getEnding(paradigm, "Nom") === getEnding(paradigm, "Acc");
 
 const CaseGuide = () => (
 	<TeachingCard
@@ -113,22 +113,29 @@ const CaseGuide = () => (
 		}
 	>
 		<div className="space-y-3">
-			{CASE_QUESTIONS.map(({ case: c, question, greek, english }) => (
-				<div key={c} className="flex items-start gap-3">
-					<span className="shrink-0 rounded bg-stone-200 px-2 py-1 font-mono text-xs text-stone-700">
-						{c}
-					</span>
-					<div>
-						<span className="text-sm font-medium">{question}</span>
-						<div className="text-sm text-stone-500">
-							<MonoText variant="greek" size="sm">
-								{greek}
-							</MonoText>{" "}
-							({english})
+			{CASE_QUESTIONS.map(({ case: c, question, greek, english }) => {
+				const meta = CASE_META[c];
+				const style = SCHEME[meta.scheme];
+				return (
+					<div key={c} className="flex items-start gap-3">
+						<span
+							className={`shrink-0 rounded px-2 py-1 text-xs font-semibold ${style.bgSoft} ${style.text}`}
+						>
+							<span className="block leading-tight">{meta.handle}</span>
+							<span className="block text-[10px] font-normal opacity-70">{meta.greek}</span>
+						</span>
+						<div>
+							<span className="text-sm font-medium">{question}</span>
+							<div className="text-sm text-stone-500">
+								<MonoText variant="greek" size="sm">
+									{greek}
+								</MonoText>{" "}
+								({english})
+							</div>
 						</div>
 					</div>
-				</div>
-			))}
+				);
+			})}
 		</div>
 	</TeachingCard>
 );
@@ -182,17 +189,15 @@ const ViewToggle = ({
 const ParadigmTable = ({
 	paradigms,
 	mode = "endings",
-	showNomAccHighlight = false,
 }: {
 	paradigms: AgreementParadigm[];
 	mode?: "endings" | "full";
-	showNomAccHighlight?: boolean;
 }) => (
 	<div className="-mx-4 overflow-x-auto px-4">
 		<table className="w-full min-w-72 text-sm">
 			<thead>
 				<tr className="border-b border-stone-200">
-					<th className="w-12 py-2 pr-2 text-left text-xs font-medium text-stone-500">Case</th>
+					<th className="w-20 py-2 pr-2 text-left text-xs font-medium text-stone-500">Role</th>
 					{paradigms.map((p) => (
 						<th
 							key={p.id}
@@ -204,23 +209,30 @@ const ParadigmTable = ({
 				</tr>
 			</thead>
 			<tbody>
-				{CASES.map((caseType) => (
-					<tr key={caseType} className="border-b border-stone-100">
-						<td className="py-2 pr-2 text-xs text-stone-500">{caseType}</td>
-						{paradigms.map((p) => {
-							const highlight = showNomAccHighlight && caseType === "Acc" && nomEqualsAcc(p);
-							const value = mode === "endings" ? getEnding(p, caseType) : getFull(p, caseType);
-							return (
-								<td key={p.id} className={`px-2 py-2 ${highlight ? "bg-honey-50" : ""}`}>
-									<MonoText size="sm" variant={p.gender} className={highlight ? "font-medium" : ""}>
-										{value}
-									</MonoText>
-									{highlight && <span className="ml-1 text-xs text-honey-600">★</span>}
-								</td>
-							);
-						})}
-					</tr>
-				))}
+				{CASES.map((caseType) => {
+					const meta = CASE_META[caseType];
+					const style = SCHEME[meta.scheme];
+					return (
+						<tr key={caseType} className="border-b border-stone-100">
+							<td
+								className={`border-l-2 py-2 pr-2 pl-2 text-xs font-semibold ${style.bgSoft} ${style.border} ${style.text}`}
+							>
+								<span className="block leading-tight">{meta.handle}</span>
+								<span className="block text-[10px] font-normal opacity-70">{meta.greek}</span>
+							</td>
+							{paradigms.map((p) => {
+								const value = mode === "endings" ? getEnding(p, caseType) : getFull(p, caseType);
+								return (
+									<td key={p.id} className="px-2 py-2">
+										<MonoText size="sm" variant={p.gender}>
+											{value}
+										</MonoText>
+									</td>
+								);
+							})}
+						</tr>
+					);
+				})}
 			</tbody>
 		</table>
 	</div>
@@ -239,23 +251,17 @@ const EssentialPatterns = () => {
 			badge={<ViewToggle mode={mode} onChange={setMode} />}
 			description="One pattern per gender. 80% of nouns fit here."
 			footer={
-				<div>
-					<div className="flex items-start gap-2">
-						<span className="text-lg text-honey-600">★</span>
-						<div>
-							<div className="text-sm font-medium text-honey-700">
-								Feminine & neuter: Nominative = Accusative
-							</div>
-							<p className="text-sm text-stone-600">Only genitive changes. Less to memorise.</p>
-						</div>
-					</div>
-					<p className="mt-2 text-xs text-stone-500">
-						Masculine is the tricky one — it changes in every case.
+				<div className="space-y-1">
+					<p className="text-sm font-medium text-stone-700">
+						Feminine & neuter: Doer = Target. Only Owner changes.
+					</p>
+					<p className="text-sm text-stone-600">
+						Masculine is the tricky one — it changes in every row.
 					</p>
 				</div>
 			}
 		>
-			<ParadigmTable paradigms={paradigms} mode={mode} showNomAccHighlight={true} />
+			<ParadigmTable paradigms={paradigms} mode={mode} />
 		</TeachingCard>
 	);
 };
@@ -268,10 +274,10 @@ const GenderVariants = ({ gender }: { gender: Gender }) => {
 
 	return (
 		<TeachingCard
-			scheme={GENDER_SCHEME[gender]}
+			scheme="neutral"
 			tone="soft"
 			eyebrow="Variants"
-			title={title}
+			title={<span className={`text-gender-${gender}-text`}>{title}</span>}
 			badge={GENDER_HINTS[gender].endings}
 			footer={
 				<div className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-stone-600">
@@ -292,53 +298,36 @@ const GenderVariants = ({ gender }: { gender: Gender }) => {
 };
 
 const DecisionGuide = () => (
-	<CollapsibleSection title="When you're unsure" colorScheme="honey" defaultOpen={false}>
-		<div className="space-y-3 p-4">
-			{DECISION_GUIDES.map(({ question, explanation, examples }) => (
-				<div key={question} className="rounded-lg bg-stone-50 p-3">
-					<div className="mb-1 text-sm font-medium text-stone-700">"{question}"</div>
-					<p className="text-sm text-stone-600">
-						Is it <strong>{explanation[0]}</strong> or <strong>{explanation[1]}</strong>?
-					</p>
-					<div className="mt-2 space-y-1 text-sm">
-						{examples.map(({ label, greek }) => (
-							<div key={label} className="flex items-center gap-2">
-								<span className="text-stone-400">{label}:</span>
-								<MonoText variant="greek" size="sm">
-									{greek}
-								</MonoText>
-							</div>
-						))}
+	<CollapsibleSection title="Same noun, different role" colorScheme="honey" defaultOpen={false}>
+		<div className="space-y-4 p-4">
+			{SAME_NOUN_COMPARISONS.map(({ lemma, forms }) => (
+				<div key={lemma} className="rounded-lg bg-stone-50 p-3">
+					<div className="mb-2 font-mono text-xs text-stone-500">{lemma}</div>
+					<div className="space-y-1.5">
+						{CASES.map((c) => {
+							const meta = CASE_META[c];
+							const style = SCHEME[meta.scheme];
+							const form = forms[c];
+							return (
+								<div key={c} className="flex items-center gap-2 text-sm">
+									<span
+										className={`shrink-0 rounded px-2 py-0.5 text-xs font-medium ${style.bgSoft} ${style.text}`}
+									>
+										{meta.handle}
+									</span>
+									<MonoText variant="greek" size="sm">
+										{form.greek}
+									</MonoText>
+									<span className="text-xs text-stone-500">({form.english})</span>
+								</div>
+							);
+						})}
 					</div>
 				</div>
 			))}
-		</div>
-	</CollapsibleSection>
-);
-
-const VocativeSection = () => (
-	<CollapsibleSection title="Vocative (direct address)" colorScheme="stone" defaultOpen={false}>
-		<div className="space-y-4 p-4">
-			<p className="text-sm text-stone-600">
-				When calling someone directly, masculine nouns change. Feminine and neuter stay the same.
-			</p>
-			<div className="grid grid-cols-2 gap-4 text-sm">
-				<div>
-					<div className="mb-2 font-medium text-gender-masculine">Masculine changes</div>
-					<div className="space-y-1">
-						{VOCATIVE_CHANGES.map(({ pattern, example }) => (
-							<div key={pattern}>
-								<MonoText size="sm">{pattern}</MonoText>{" "}
-								<span className="text-stone-500">{example}</span>
-							</div>
-						))}
-					</div>
-				</div>
-				<div>
-					<div className="mb-2 font-medium text-stone-600">Fem & Neut</div>
-					<p className="text-stone-500">Same as nominative</p>
-					<div className="mt-1 text-stone-500">γυναίκα! παιδί!</div>
-				</div>
+			<div className="rounded-lg border border-honey-200 bg-honey-50 p-3 text-sm text-stone-700">
+				<span className="font-medium text-honey-700">Shortcut:</span> after σε, με, για, από, σαν
+				→ always Target (accusative).
 			</div>
 		</div>
 	</CollapsibleSection>
@@ -353,17 +342,24 @@ const ArticlesLink = () => (
 	/>
 );
 
+const MorePatterns = () => (
+	<CollapsibleSection title="More patterns" colorScheme="stone" defaultOpen={false}>
+		<div className="space-y-4 p-4">
+			<GenderVariants gender="masculine" />
+			<GenderVariants gender="feminine" />
+			<GenderVariants gender="neuter" />
+		</div>
+	</CollapsibleSection>
+);
+
 export const NounsSection = () => (
 	<section id="nouns" className="space-y-6">
 		<SectionHeading title="How Noun Endings Change" subtitle="Patterns by gender and case" />
 		<CaseGuide />
 		<GenderHints />
 		<EssentialPatterns />
-		<GenderVariants gender="masculine" />
-		<GenderVariants gender="feminine" />
-		<GenderVariants gender="neuter" />
 		<DecisionGuide />
-		<VocativeSection />
+		<MorePatterns />
 		<ArticlesLink />
 	</section>
 );

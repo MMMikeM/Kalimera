@@ -1,9 +1,9 @@
-import { Blocks, Heart, UserCircle } from "lucide-react";
+import { Heart, UserCircle } from "lucide-react";
 
 import { TeachingCard } from "@/components/cards";
 import { MonoText } from "@/components/MonoText";
 import { QuickTest } from "@/components/QuickTest";
-import { TabHero } from "@/components/TabHero";
+import { ReferenceHero } from "@/components/ReferenceHero";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { type GrammarScheme, SCHEME } from "@/constants/grammar-palette";
 
@@ -75,15 +75,11 @@ export function PatternsTab({ data }: { data: PatternsData }) {
 
 	return (
 		<div className="space-y-6">
-			<TabHero
-				title="Greek sentence patterns"
-				greekPhrase="Μου αρέσει..."
-				colorScheme="honey"
-				icon={<Blocks size={18} />}
-			>
-				Some Greek constructions work differently than English. Learn these patterns and you'll
-				understand why "I like coffee" becomes "Coffee pleases me."
-			</TabHero>
+			<ReferenceHero
+				eyebrow="Patterns"
+				title="Constructions that don't translate."
+				thesis="Some Greek sentences don't map to English word-for-word. These patterns are the shortcuts — learn the shape, not the literal translation."
+			/>
 
 			<ParadigmCard
 				title="Likes Construction"

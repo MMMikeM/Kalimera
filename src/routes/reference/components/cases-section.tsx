@@ -1,7 +1,7 @@
 import type React from "react";
 
 import { Card } from "@/components/Card";
-import { NextStepCard, TeachingCard } from "@/components/cards";
+import { LookupCard, NextStepCard, TeachingCard } from "@/components/cards";
 import { MonoText } from "@/components/MonoText";
 import { CASE_SCHEME, SCHEME } from "@/constants/grammar-palette";
 import { CASE_ROLES, CASE_TRIGGERS } from "@/constants/recognition";
@@ -26,19 +26,8 @@ export const CasesSection: React.FC = () => {
 
 	return (
 		<section id="cases" className="space-y-16">
-			<p className="max-w-3xl leading-relaxed text-stone-700">
-				In English, word order shows meaning: <em>"The dog bit the man"</em> vs{" "}
-				<em>"The man bit the dog."</em> In Greek, word <strong>endings</strong> show meaning, so
-				word order is flexible. These different endings are called <strong>cases</strong>.
-			</p>
-
-			{/* BAND 1 — CONCEPT */}
+			{/* BAND 1 — CONCEPT (cards lead) */}
 			<div className="space-y-6">
-				<BandHeading
-					kicker="Concept"
-					title="One word, three roles"
-					lede="The word for “coffee” shifts its ending depending on what it's doing in the sentence. Focus on the plain-English job first — the grammar label comes second."
-				/>
 				<div className="grid gap-4 md:grid-cols-3 md:items-stretch">
 					{CASE_ROLES.map((role) => {
 						const scheme = CASE_SCHEME[role.caseName];
@@ -50,11 +39,12 @@ export const CasesSection: React.FC = () => {
 								title={role.role}
 								badge={role.caseName}
 								description={role.description}
+								contentLayout="tight"
 							>
 								<MonoText
 									variant="greek"
-									size="lg"
-									className={`block text-xl leading-snug ${style.text}`}
+									size="2xl"
+									className={`block leading-snug ${style.text}`}
 								>
 									{role.example}
 								</MonoText>
@@ -63,6 +53,22 @@ export const CasesSection: React.FC = () => {
 						);
 					})}
 				</div>
+				<Card variant="bordered" padding="md" className="border-stone-200 bg-stone-50/60">
+					<p className="text-sm leading-relaxed text-stone-700">
+						<strong className="text-stone-800">Word order is flexible in Greek</strong> because the
+						ending carries the job.{" "}
+						<em>"Ο σκύλος δάγκωσε τον άντρα"</em> and{" "}
+						<em>"Τον άντρα δάγκωσε ο σκύλος"</em> both mean the dog bit the man — the{" "}
+						<MonoText variant="greek" size="sm" className="inline">
+							-ς
+						</MonoText>{" "}
+						and{" "}
+						<MonoText variant="greek" size="sm" className="inline">
+							-ν
+						</MonoText>{" "}
+						do the work English word order does.
+					</p>
+				</Card>
 				<Card variant="bordered" padding="md" className="border-stone-200 bg-stone-50/60">
 					<p className="text-sm text-stone-700">
 						<strong className="text-stone-800">Start with Doer and Target.</strong> They cover most
@@ -124,23 +130,16 @@ export const CasesSection: React.FC = () => {
 					{/* eslint-disable-next-line better-tailwindcss/no-restricted-classes -- 60/40 layout, no token fit */}
 					<div className="grid gap-4 lg:grid-cols-[3fr_2fr]">
 						{triggersByCase.map((group) => {
-							const style = SCHEME[CASE_SCHEME[group.caseName]];
+							const scheme = CASE_SCHEME[group.caseName];
+							const style = SCHEME[scheme];
 							return (
-								<div
+								<LookupCard
 									key={group.caseName}
-									className={`rounded-lg border ${style.borderSoft} ${style.bgSoft} overflow-hidden`}
+									scheme={scheme}
+									chip={group.caseName}
+									eyebrow={`${group.role} triggers`}
 								>
-									<div className="flex items-baseline gap-3 px-5 pt-4 pb-3">
-										<span
-											className={`rounded-full px-3 py-0.5 text-xs font-semibold tracking-wider uppercase ${style.badgeBg} ${style.text}`}
-										>
-											{group.caseName}
-										</span>
-										<span className="text-xs font-semibold tracking-wider text-stone-500 uppercase">
-											{group.role} triggers
-										</span>
-									</div>
-									<ul className={`divide-y ${style.borderSoft} border-t ${style.borderSoft}`}>
+									<ul className={`divide-y ${style.borderSoft}`}>
 										{group.triggers.map((trigger) => (
 											<li key={trigger.pattern} className="px-5 py-3">
 												<div className="font-semibold text-stone-800">{trigger.pattern}</div>
@@ -160,7 +159,7 @@ export const CasesSection: React.FC = () => {
 											</li>
 										))}
 									</ul>
-								</div>
+								</LookupCard>
 							);
 						})}
 					</div>
