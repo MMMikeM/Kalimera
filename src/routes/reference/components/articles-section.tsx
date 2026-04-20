@@ -47,7 +47,6 @@ export const ArticlesSection: React.FC = () => {
 			{/* BAND 1 — CONCEPT (the intersection table is the king) */}
 			<TeachingCard
 				scheme="neutral"
-				tone="full"
 				eyebrow="The table"
 				title="One article, six slots."
 				description="The definite article changes along two axes: gender (M · F · N) across the columns, case (Nom · Acc · Gen) down the rows. Read the article and you read the noun's grammar off it."

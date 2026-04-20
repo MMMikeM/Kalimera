@@ -39,7 +39,7 @@ export const CasesSection: React.FC = () => {
 								title={role.role}
 								badge={role.caseName}
 								description={role.description}
-								contentLayout="tight"
+	
 							>
 								<MonoText
 									variant="greek"

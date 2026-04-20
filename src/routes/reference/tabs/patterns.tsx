@@ -29,7 +29,7 @@ const ParadigmCard = ({
 	return (
 		<TeachingCard
 			scheme={scheme}
-			tone="soft"
+
 			eyebrow="Pattern"
 			title={
 				<span className="flex items-center gap-2">
@@ -134,7 +134,6 @@ export function PatternsTab({ data }: { data: PatternsData }) {
 			{nameConstruction.length > 0 && (
 				<TeachingCard
 					scheme="neutral"
-					tone="soft"
 					eyebrow="Pattern"
 					title={
 						<span className="flex items-center gap-2">
