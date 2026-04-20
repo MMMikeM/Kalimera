@@ -19,149 +19,149 @@
 
 @theme inline {
 	/* === CREAM — Background === */
-	--color-cream-50: #faf8f5;
-	--color-cream-100: #f1ece3;
-	--color-cream-200: #e2d6c6;
-	--color-cream-300: #cfbba2;
-	--color-cream-400: #bb9b7c;
-	--color-cream-500: #ad8462;
-	--color-cream-600: #a07256;
-	--color-cream-700: #855d49;
-	--color-cream-800: #6d4d3f;
-	--color-cream-900: #594035;
-	--color-cream-950: #2f201b;
+	--color-cream-50: oklch(0.98 0 78);
+	--color-cream-100: oklch(0.94 0.01 82);
+	--color-cream-200: oklch(0.88 0.03 75);
+	--color-cream-300: oklch(0.8 0.04 73);
+	--color-cream-400: oklch(0.71 0.06 66);
+	--color-cream-500: oklch(0.65 0.07 61);
+	--color-cream-600: oklch(0.59 0.07 52);
+	--color-cream-700: oklch(0.52 0.06 48);
+	--color-cream-800: oklch(0.45 0.05 45);
+	--color-cream-900: oklch(0.4 0.04 45);
+	--color-cream-950: oklch(0.26 0.03 39);
 	--color-cream: var(--color-cream-50);
 	--color-cream-dark: var(--color-cream-100);
 
 	/* === TERRACOTTA — Primary Accent === */
-	--color-terracotta-50: #fbf6f1;
-	--color-terracotta-100: #f6e9de;
-	--color-terracotta-200: #ebd1bd;
-	--color-terracotta-300: #dfb092;
-	--color-terracotta-400: #d18a66;
-	--color-terracotta-500: #c4663f;
-	--color-terracotta-600: #b9593d;
-	--color-terracotta-700: #9a4634;
-	--color-terracotta-800: #7c3a30;
-	--color-terracotta-900: #653129;
-	--color-terracotta-950: #361814;
+	--color-terracotta-50: oklch(0.98 0.01 49);
+	--color-terracotta-100: oklch(0.94 0.01 44);
+	--color-terracotta-200: oklch(0.88 0.03 42);
+	--color-terracotta-300: oklch(0.79 0.05 42);
+	--color-terracotta-400: oklch(0.7 0.1 47);
+	--color-terracotta-500: oklch(0.61 0.13 42);
+	--color-terracotta-600: oklch(0.58 0.13 37);
+	--color-terracotta-700: oklch(0.5 0.12 34);
+	--color-terracotta-800: oklch(0.43 0.09 30);
+	--color-terracotta-900: oklch(0.38 0.08 30);
+	--color-terracotta-950: oklch(0.25 0.05 29);
 	--color-terracotta: var(--color-terracotta-500);
 	--color-terracotta-light: var(--color-terracotta-400);
 	--color-terracotta-dark: var(--color-terracotta-700);
-	--color-terracotta-text: #5c2d14;
+	--color-terracotta-text: oklch(0.31 0.05 40);
 
 	/* === SUNSET — Feminine Accent (dusty rose) === */
-	--color-sunset-50: #fdf5f7;
-	--color-sunset-100: #fceaef;
-	--color-sunset-200: #f9d4df;
-	--color-sunset-300: #f0acbf;
-	--color-sunset-400: #b6557e;
-	--color-sunset-500: #a34a6f;
-	--color-sunset-600: #8c3d5d;
-	--color-sunset-700: #75324d;
-	--color-sunset-800: #622c42;
-	--color-sunset-900: #53283a;
-	--color-sunset-950: #30121d;
+	--color-sunset-50: oklch(0.97 0.01 355);
+	--color-sunset-100: oklch(0.94 0.01 357);
+	--color-sunset-200: oklch(0.88 0.03 357);
+	--color-sunset-300: oklch(0.79 0.05 357);
+	--color-sunset-400: oklch(0.58 0.13 355);
+	--color-sunset-500: oklch(0.53 0.12 356);
+	--color-sunset-600: oklch(0.47 0.11 357);
+	--color-sunset-700: oklch(0.42 0.1 357);
+	--color-sunset-800: oklch(0.37 0.08 356);
+	--color-sunset-900: oklch(0.34 0.07 355);
+	--color-sunset-950: oklch(0.23 0.05 359);
 	--color-sunset: var(--color-sunset-400);
 	--color-sunset-light: var(--color-sunset-300);
 	--color-sunset-dark: var(--color-sunset-600);
-	--color-sunset-text: #6b2a45;
+	--color-sunset-text: oklch(0.31 0.05 358);
 
 	/* === OLIVE — Secondary (silvery olive leaf) === */
-	--color-olive-50: #f8f9f6;
-	--color-olive-100: #eef1ea;
-	--color-olive-200: #dce3d4;
-	--color-olive-300: #c2ccb5;
-	--color-olive-400: #8a9a78;
-	--color-olive-500: #748863;
-	--color-olive-600: #5c6d4e;
-	--color-olive-700: #495640;
-	--color-olive-800: #3c4636;
-	--color-olive-900: #333a2e;
-	--color-olive-950: #1a1f17;
+	--color-olive-50: oklch(0.98 0.01 132);
+	--color-olive-100: oklch(0.94 0.01 132);
+	--color-olive-200: oklch(0.88 0.03 131);
+	--color-olive-300: oklch(0.79 0.05 131);
+	--color-olive-400: oklch(0.66 0.05 128);
+	--color-olive-500: oklch(0.6 0.06 131);
+	--color-olive-600: oklch(0.51 0.05 131);
+	--color-olive-700: oklch(0.43 0.04 133);
+	--color-olive-800: oklch(0.38 0.03 134);
+	--color-olive-900: oklch(0.34 0.02 132);
+	--color-olive-950: oklch(0.23 0.02 134);
 	--color-olive: var(--color-olive-400);
 	--color-olive-light: var(--color-olive-300);
 	--color-olive-dark: var(--color-olive-600);
-	--color-olive-text: #2a3622;
+	--color-olive-text: oklch(0.31 0.05 131);
 
 	/* === OCEAN — Tertiary (formerly Aegean) === */
-	--color-ocean-50: #f2f7f9;
-	--color-ocean-100: #dfebee;
-	--color-ocean-200: #c2d8df;
-	--color-ocean-300: #97bdc9;
-	--color-ocean-400: #6698aa;
-	--color-ocean-500: #4a7c8f;
-	--color-ocean-600: #40667a;
-	--color-ocean-700: #395565;
-	--color-ocean-800: #354955;
-	--color-ocean-900: #303f49;
-	--color-ocean-950: #1c2730;
+	--color-ocean-50: oklch(0.98 0.01 229);
+	--color-ocean-100: oklch(0.94 0.01 225);
+	--color-ocean-200: oklch(0.88 0.03 224);
+	--color-ocean-300: oklch(0.79 0.05 225);
+	--color-ocean-400: oklch(0.65 0.06 223);
+	--color-ocean-500: oklch(0.56 0.06 224);
+	--color-ocean-600: oklch(0.49 0.05 232);
+	--color-ocean-700: oklch(0.43 0.04 234);
+	--color-ocean-800: oklch(0.39 0.03 235);
+	--color-ocean-900: oklch(0.36 0.03 238);
+	--color-ocean-950: oklch(0.27 0.02 243);
 	--color-ocean: var(--color-ocean-500);
 	--color-ocean-light: var(--color-ocean-400);
 	--color-ocean-dark: var(--color-ocean-700);
-	--color-ocean-text: #14333f;
+	--color-ocean-text: oklch(0.31 0.05 223);
 
 	/* === HONEY — Accent === */
-	--color-honey-50: #faf7ec;
-	--color-honey-100: #f3ebce;
-	--color-honey-200: #e8d6a0;
-	--color-honey-300: #dbb969;
-	--color-honey-400: #d4a853;
-	--color-honey-500: #c08932;
-	--color-honey-600: #a56c29;
-	--color-honey-700: #845024;
-	--color-honey-800: #6f4124;
-	--color-honey-900: #5f3824;
-	--color-honey-950: #371c11;
+	--color-honey-50: oklch(0.98 0.01 94);
+	--color-honey-100: oklch(0.94 0.04 94);
+	--color-honey-200: oklch(0.88 0.07 92);
+	--color-honey-300: oklch(0.8 0.11 87);
+	--color-honey-400: oklch(0.76 0.12 82);
+	--color-honey-500: oklch(0.67 0.12 75);
+	--color-honey-600: oklch(0.58 0.11 67);
+	--color-honey-700: oklch(0.48 0.09 58);
+	--color-honey-800: oklch(0.42 0.08 52);
+	--color-honey-900: oklch(0.38 0.06 47);
+	--color-honey-950: oklch(0.26 0.05 43);
 	--color-honey: var(--color-honey-400);
 	--color-honey-light: var(--color-honey-300);
 	--color-honey-dark: var(--color-honey-500);
-	--color-honey-text: #4a3508;
+	--color-honey-text: oklch(0.34 0.07 81);
 
 	/* === NAVY — Scholarly/Headings === */
-	--color-navy-50: #f5f7fa;
-	--color-navy-100: #eaeef4;
-	--color-navy-200: #d0dae7;
-	--color-navy-300: #a6b9d3;
-	--color-navy-400: #7695ba;
-	--color-navy-500: #5578a2;
-	--color-navy-600: #426087;
-	--color-navy-700: #3b5478;
-	--color-navy-800: #30435c;
-	--color-navy-900: #2c3a4e;
-	--color-navy-950: #1d2634;
+	--color-navy-50: oklch(0.97 0.01 261);
+	--color-navy-100: oklch(0.94 0.01 251);
+	--color-navy-200: oklch(0.88 0.03 256);
+	--color-navy-300: oklch(0.79 0.05 254);
+	--color-navy-400: oklch(0.66 0.07 253);
+	--color-navy-500: oklch(0.56 0.08 254);
+	--color-navy-600: oklch(0.48 0.07 255);
+	--color-navy-700: oklch(0.44 0.07 257);
+	--color-navy-800: oklch(0.38 0.05 256);
+	--color-navy-900: oklch(0.34 0.04 257);
+	--color-navy-950: oklch(0.27 0.03 259);
 	--color-navy: var(--color-navy-700);
 	--color-navy-light: var(--color-navy-500);
 	--color-navy-dark: var(--color-navy-800);
-	--color-navy-text: #1a2838;
+	--color-navy-text: oklch(0.31 0.05 255);
 
 	/* === SLATE — Secondary Accents === */
-	--color-slate-50: #f5f8f7;
-	--color-slate-100: #dfe8e5;
-	--color-slate-200: #bfd0cc;
-	--color-slate-300: #98b0ab;
-	--color-slate-400: #66817c;
-	--color-slate-500: #57756f;
-	--color-slate-600: #455c59;
-	--color-slate-700: #394c49;
-	--color-slate-800: #313e3c;
-	--color-slate-900: #2b3634;
-	--color-slate-950: #161d1d;
+	--color-slate-50: oklch(0.98 0.01 177);
+	--color-slate-100: oklch(0.94 0.01 181);
+	--color-slate-200: oklch(0.88 0.03 181);
+	--color-slate-300: oklch(0.79 0.05 182);
+	--color-slate-400: oklch(0.58 0.03 183);
+	--color-slate-500: oklch(0.54 0.04 181);
+	--color-slate-600: oklch(0.46 0.03 186);
+	--color-slate-700: oklch(0.4 0.02 184);
+	--color-slate-800: oklch(0.35 0.02 185);
+	--color-slate-900: oklch(0.32 0.01 183);
+	--color-slate-950: oklch(0.22 0.01 196);
 	--color-slate: var(--color-slate-400);
 	--color-slate-light: var(--color-slate-300);
 	--color-slate-dark: var(--color-slate-600);
-	--color-slate-text: #1a2d2a;
+	--color-slate-text: oklch(0.31 0.05 182);
 
 	/* Neutral */
-	--color-stone-warm: #78716c;
+	--color-stone-warm: oklch(0.55 0.01 58);
 
 	/* Learning feedback states */
-	--color-correct: #16a34a;
-	--color-correct-light: #dcfce7;
-	--color-incorrect: #dc2626;
-	--color-incorrect-light: #fee2e2;
+	--color-correct: oklch(0.63 0.17 149);
+	--color-correct-light: oklch(0.96 0.04 157);
+	--color-incorrect: oklch(0.58 0.21 27);
+	--color-incorrect-light: oklch(0.94 0.03 18);
 	--color-hint: var(--color-honey);
-	--color-hint-light: #fef3c7;
+	--color-hint-light: oklch(0.96 0.06 96);
 
 	/* === TYPOGRAPHY === */
 	--font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
@@ -176,22 +176,22 @@
 	/* === SHADCN THEME MAPPING ===
 	 * Single source of truth. No dark-mode overrides. */
 	--color-background: var(--color-cream);
-	--color-foreground: #1c1917;
-	--color-card: #ffffff;
-	--color-card-foreground: #1c1917;
-	--color-popover: #ffffff;
-	--color-popover-foreground: #1c1917;
+	--color-foreground: oklch(0.22 0.01 56);
+	--color-card: oklch(1 0 90);
+	--color-card-foreground: oklch(0.22 0.01 56);
+	--color-popover: oklch(1 0 90);
+	--color-popover-foreground: oklch(0.22 0.01 56);
 	--color-primary: var(--color-terracotta);
 	--color-primary-foreground: var(--color-cream);
-	--color-secondary: #f5f5f4;
-	--color-secondary-foreground: #1c1917;
-	--color-muted: #f5f5f4;
-	--color-muted-foreground: #57534e;
-	--color-accent: #f5f5f4;
-	--color-accent-foreground: #1c1917;
+	--color-secondary: oklch(0.97 0 106);
+	--color-secondary-foreground: oklch(0.22 0.01 56);
+	--color-muted: oklch(0.97 0 106);
+	--color-muted-foreground: oklch(0.44 0.01 74);
+	--color-accent: oklch(0.97 0 106);
+	--color-accent-foreground: oklch(0.22 0.01 56);
 	--color-destructive: var(--color-incorrect);
-	--color-border: #d6d3d1;
-	--color-input: #d6d3d1;
+	--color-border: oklch(0.87 0 56);
+	--color-input: oklch(0.87 0 56);
 	--color-ring: var(--color-terracotta);
 
 	/* Chart */
@@ -203,12 +203,12 @@
 
 	/* Sidebar */
 	--color-sidebar: var(--color-cream);
-	--color-sidebar-foreground: #1c1917;
+	--color-sidebar-foreground: oklch(0.22 0.01 56);
 	--color-sidebar-primary: var(--color-terracotta);
 	--color-sidebar-primary-foreground: var(--color-cream);
-	--color-sidebar-accent: #f5f5f4;
-	--color-sidebar-accent-foreground: #1c1917;
-	--color-sidebar-border: #d6d3d1;
+	--color-sidebar-accent: oklch(0.97 0 106);
+	--color-sidebar-accent-foreground: oklch(0.22 0.01 56);
+	--color-sidebar-border: oklch(0.87 0 56);
 	--color-sidebar-ring: var(--color-terracotta);
 }
 
@@ -229,89 +229,83 @@
  * arbitrary CSS without tripping the JIT scanner.
  */
 @theme static {
-	/* Case: Nominative → ocean */
-	--color-case-nominative-50: var(--color-ocean-50);
-	--color-case-nominative-100: var(--color-ocean-100);
-	--color-case-nominative-200: var(--color-ocean-200);
-	--color-case-nominative-300: var(--color-ocean-300);
-	--color-case-nominative-400: var(--color-ocean-400);
-	--color-case-nominative-500: var(--color-ocean-500);
-	--color-case-nominative-600: var(--color-ocean-600);
-	--color-case-nominative-700: var(--color-ocean-700);
-	--color-case-nominative-800: var(--color-ocean-800);
-	--color-case-nominative-900: var(--color-ocean-900);
-	--color-case-nominative-950: var(--color-ocean-950);
-	--color-case-nominative-text: var(--color-ocean-text);
+	/* Case: Nominative. -50 intentionally omitted — too soft to carry signal; -100 is the minimum visible tint. */
+	--color-case-nominative-100: oklch(0.94 0.02 223);
+	--color-case-nominative-200: oklch(0.91 0.03 223);
+	--color-case-nominative-300: oklch(0.88 0.05 223);
+	--color-case-nominative-400: oklch(0.82 0.07 223);
+	--color-case-nominative-500: oklch(0.82 0.07 223);
+	--color-case-nominative-600: oklch(0.82 0.08 223);
+	--color-case-nominative-700: oklch(0.57 0.07 223);
+	--color-case-nominative-800: oklch(0.47 0.06 223);
+	--color-case-nominative-900: oklch(0.41 0.05 223);
+	--color-case-nominative-950: oklch(0.37 0.04 223);
+	--color-case-nominative-text: oklch(0.34 0.06 223);
 
-	/* Case: Accusative → terracotta */
-	--color-case-accusative-50: var(--color-terracotta-50);
-	--color-case-accusative-100: var(--color-terracotta-100);
-	--color-case-accusative-200: var(--color-terracotta-200);
-	--color-case-accusative-300: var(--color-terracotta-300);
-	--color-case-accusative-400: var(--color-terracotta-400);
-	--color-case-accusative-500: var(--color-terracotta-500);
-	--color-case-accusative-600: var(--color-terracotta-600);
-	--color-case-accusative-700: var(--color-terracotta-700);
-	--color-case-accusative-800: var(--color-terracotta-800);
-	--color-case-accusative-900: var(--color-terracotta-900);
-	--color-case-accusative-950: var(--color-terracotta-950);
-	--color-case-accusative-text: var(--color-terracotta-text);
+	/* Case: Accusative */
+	--color-case-accusative-100: oklch(0.94 0.02 60);
+	--color-case-accusative-200: oklch(0.91 0.03 60);
+	--color-case-accusative-300: oklch(0.88 0.05 60);
+	--color-case-accusative-400: oklch(0.82 0.07 60);
+	--color-case-accusative-500: oklch(0.82 0.07 60);
+	--color-case-accusative-600: oklch(0.82 0.08 60);
+	--color-case-accusative-700: oklch(0.58 0.07 60);
+	--color-case-accusative-800: oklch(0.48 0.06 60);
+	--color-case-accusative-900: oklch(0.42 0.05 60);
+	--color-case-accusative-950: oklch(0.38 0.04 60);
+	--color-case-accusative-text: oklch(0.35 0.08 60);
 
-	/* Case: Genitive → olive */
-	--color-case-genitive-50: var(--color-olive-50);
-	--color-case-genitive-100: var(--color-olive-100);
-	--color-case-genitive-200: var(--color-olive-200);
-	--color-case-genitive-300: var(--color-olive-300);
-	--color-case-genitive-400: var(--color-olive-400);
-	--color-case-genitive-500: var(--color-olive-500);
-	--color-case-genitive-600: var(--color-olive-600);
-	--color-case-genitive-700: var(--color-olive-700);
-	--color-case-genitive-800: var(--color-olive-800);
-	--color-case-genitive-900: var(--color-olive-900);
-	--color-case-genitive-950: var(--color-olive-950);
-	--color-case-genitive-text: var(--color-olive-text);
+	/* Case: Genitive */
+	--color-case-genitive-100: oklch(0.94 0.02 127);
+	--color-case-genitive-200: oklch(0.91 0.03 127);
+	--color-case-genitive-300: oklch(0.87 0.05 127);
+	--color-case-genitive-400: oklch(0.82 0.07 127);
+	--color-case-genitive-500: oklch(0.82 0.07 127);
+	--color-case-genitive-600: oklch(0.82 0.08 127);
+	--color-case-genitive-700: oklch(0.57 0.07 127);
+	--color-case-genitive-800: oklch(0.47 0.06 127);
+	--color-case-genitive-900: oklch(0.41 0.05 127);
+	--color-case-genitive-950: oklch(0.38 0.04 127);
+	--color-case-genitive-text: oklch(0.34 0.09 127);
 
-	/* Gender: Masculine → navy */
-	--color-gender-masculine-50: var(--color-navy-50);
-	--color-gender-masculine-100: var(--color-navy-100);
-	--color-gender-masculine-200: var(--color-navy-200);
-	--color-gender-masculine-300: var(--color-navy-300);
-	--color-gender-masculine-400: var(--color-navy-400);
-	--color-gender-masculine-500: var(--color-navy-500);
-	--color-gender-masculine-600: var(--color-navy-600);
-	--color-gender-masculine-700: var(--color-navy-700);
-	--color-gender-masculine-800: var(--color-navy-800);
-	--color-gender-masculine-900: var(--color-navy-900);
-	--color-gender-masculine-950: var(--color-navy-950);
-	--color-gender-masculine-text: var(--color-navy-text);
+	/* Gender: Masculine */
+	--color-gender-masculine-100: oklch(0.94 0.03 268);
+	--color-gender-masculine-200: oklch(0.91 0.04 268);
+	--color-gender-masculine-300: oklch(0.88 0.06 268);
+	--color-gender-masculine-400: oklch(0.82 0.09 268);
+	--color-gender-masculine-500: oklch(0.82 0.09 268);
+	--color-gender-masculine-600: oklch(0.82 0.09 268);
+	--color-gender-masculine-700: oklch(0.58 0.16 268);
+	--color-gender-masculine-800: oklch(0.48 0.13 268);
+	--color-gender-masculine-900: oklch(0.42 0.11 268);
+	--color-gender-masculine-950: oklch(0.38 0.09 268);
+	--color-gender-masculine-text: oklch(0.47 0.12 268);
 
-	/* Gender: Feminine → sunset */
-	--color-gender-feminine-50: var(--color-sunset-50);
-	--color-gender-feminine-100: var(--color-sunset-100);
-	--color-gender-feminine-200: var(--color-sunset-200);
-	--color-gender-feminine-300: var(--color-sunset-300);
-	--color-gender-feminine-400: var(--color-sunset-400);
-	--color-gender-feminine-500: var(--color-sunset-500);
-	--color-gender-feminine-600: var(--color-sunset-600);
-	--color-gender-feminine-700: var(--color-sunset-700);
-	--color-gender-feminine-800: var(--color-sunset-800);
-	--color-gender-feminine-900: var(--color-sunset-900);
-	--color-gender-feminine-950: var(--color-sunset-950);
-	--color-gender-feminine-text: var(--color-sunset-text);
+	/* Gender: Feminine */
+	--color-gender-feminine-100: oklch(0.94 0.03 2);
+	--color-gender-feminine-200: oklch(0.91 0.05 2);
+	--color-gender-feminine-300: oklch(0.89 0.06 2);
+	--color-gender-feminine-400: oklch(0.82 0.11 2);
+	--color-gender-feminine-500: oklch(0.82 0.11 2);
+	--color-gender-feminine-600: oklch(0.82 0.11 2);
+	--color-gender-feminine-700: oklch(0.59 0.16 2);
+	--color-gender-feminine-800: oklch(0.49 0.13 2);
+	--color-gender-feminine-900: oklch(0.43 0.11 2);
+	--color-gender-feminine-950: oklch(0.39 0.09 2);
+	--color-gender-feminine-text: oklch(0.49 0.18 2);
 
-	/* Gender: Neuter → slate */
-	--color-gender-neuter-50: var(--color-slate-50);
-	--color-gender-neuter-100: var(--color-slate-100);
-	--color-gender-neuter-200: var(--color-slate-200);
-	--color-gender-neuter-300: var(--color-slate-300);
-	--color-gender-neuter-400: var(--color-slate-400);
-	--color-gender-neuter-500: var(--color-slate-500);
-	--color-gender-neuter-600: var(--color-slate-600);
-	--color-gender-neuter-700: var(--color-slate-700);
-	--color-gender-neuter-800: var(--color-slate-800);
-	--color-gender-neuter-900: var(--color-slate-900);
-	--color-gender-neuter-950: var(--color-slate-950);
-	--color-gender-neuter-text: var(--color-slate-text);
+	/* Gender: Neuter */
+	--color-gender-neuter-100: oklch(0.93 0.06 171);
+	--color-gender-neuter-200: oklch(0.9 0.08 171);
+	--color-gender-neuter-300: oklch(0.87 0.1 171);
+	--color-gender-neuter-400: oklch(0.82 0.15 171);
+	--color-gender-neuter-500: oklch(0.82 0.16 171);
+	--color-gender-neuter-600: oklch(0.82 0.16 171);
+	--color-gender-neuter-700: oklch(0.56 0.11 171);
+	--color-gender-neuter-800: oklch(0.47 0.09 171);
+	--color-gender-neuter-900: oklch(0.41 0.08 171);
+	--color-gender-neuter-950: oklch(0.37 0.07 171);
+	--color-gender-neuter-text: oklch(0.51 0.1 171);
 
 	/* Short aliases → AAA text variant. Default role colour = AAA text tone.
 	 * Use scale tokens (-100, -300, -700, …) for fills/borders/chips. */
