@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
 
+import { greekToPhonetic } from "@/lib/greek-transliteration";
 import { Button } from "@/components/ui/button";
 
 export type DrillMode = "forward" | "reverse";
@@ -14,6 +15,9 @@ export interface DrillForm {
 	greek: string;
 	greeklish: string;
 	label: string;
+	// When set, feedback shows the full form alongside the bare answer
+	// (e.g. the conjugated verb that carries an ending).
+	acceptAlso?: string;
 }
 
 export interface Attempt<T extends DrillForm> {
@@ -21,6 +25,7 @@ export interface Attempt<T extends DrillForm> {
 	isCorrect: boolean;
 	timeTaken: number;
 	timedOut: boolean;
+	userInput?: string;
 }
 
 export const shuffle = <T,>(arr: T[]): T[] => {
@@ -153,17 +158,57 @@ export const SummaryScreen = <T extends DrillForm>({
 						These caught you — that's where lasting learning happens.
 					</p>
 					<div className="space-y-2">
-						{mistakes.map((a) => (
-							<div
-								key={a.form.id}
-								className="flex items-baseline gap-3 rounded-lg border bg-white p-3"
-							>
-								<span lang="el" className="greek-text w-10 text-lg text-foreground">
-									{a.form.greek}
-								</span>
-								<span className="text-xs text-muted-foreground">{a.form.label}</span>
-							</div>
-						))}
+						{mistakes.map((a) => {
+							const fullGreek = a.form.acceptAlso;
+							return (
+								<div
+									key={a.form.id}
+									className="rounded-lg border bg-white p-3"
+								>
+									{fullGreek ? (
+										<div className="space-y-0.5">
+											<div className="flex items-baseline gap-2">
+												<span lang="el" className="greek-text text-lg text-foreground">
+													{fullGreek}
+												</span>
+												<span className="font-mono text-xs text-muted-foreground">
+													/{greekToPhonetic(fullGreek)}/
+												</span>
+											</div>
+											<div className="flex items-baseline gap-2">
+												<span className="text-xs uppercase tracking-widest text-muted-foreground">
+													ending
+												</span>
+												<span lang="el" className="greek-text text-sm text-foreground">
+													{a.form.greek}
+												</span>
+												<span className="font-mono text-xs text-muted-foreground">
+													/{a.form.greeklish}/
+												</span>
+											</div>
+										</div>
+									) : (
+										<div className="flex items-baseline gap-2">
+											<span lang="el" className="greek-text text-lg text-foreground">
+												{a.form.greek}
+											</span>
+											<span className="font-mono text-xs text-muted-foreground">
+												/{a.form.greeklish}/
+											</span>
+											<span className="text-xs text-muted-foreground">{a.form.label}</span>
+										</div>
+									)}
+									{a.userInput !== undefined && (
+										<p className="mt-1 text-xs text-muted-foreground">
+											you typed:{" "}
+											<span className="font-mono text-incorrect">
+												{a.userInput.trim() === "" ? "—" : a.userInput}
+											</span>
+										</p>
+									)}
+								</div>
+							);
+						})}
 					</div>
 				</div>
 			)}
@@ -317,23 +362,40 @@ export const FeedbackDisplay = <T extends DrillForm>({
 	lastAttempt,
 }: {
 	lastAttempt: Attempt<T>;
-}) => (
-	<div className="mt-5">
-		<p
-			className={`text-sm font-medium ${lastAttempt.isCorrect ? "text-correct" : "text-incorrect"}`}
-		>
-			{lastAttempt.isCorrect ? "Correct" : lastAttempt.timedOut ? "Time's up" : "Incorrect"}
-		</p>
-		<div className="mt-1 flex items-baseline gap-2">
-			<span lang="el" className="greek-text text-2xl text-foreground">
-				{lastAttempt.form.greek}
-			</span>
-			<span className="font-sans text-sm text-muted-foreground">
-				/{lastAttempt.form.greeklish}/
-			</span>
+}) => {
+	const { form } = lastAttempt;
+	const fullForm = form.acceptAlso;
+	return (
+		<div className="mt-5">
+			<p
+				className={`text-sm font-medium ${lastAttempt.isCorrect ? "text-correct" : "text-incorrect"}`}
+			>
+				{lastAttempt.isCorrect ? "Correct" : lastAttempt.timedOut ? "Time's up" : "Incorrect"}
+			</p>
+			{fullForm && (
+				<div className="mt-1 flex items-baseline gap-2">
+					<span lang="el" className="greek-text text-2xl text-foreground">
+						{fullForm}
+					</span>
+					<span className="font-sans text-sm text-muted-foreground">
+						/{greekToPhonetic(fullForm)}/
+					</span>
+				</div>
+			)}
+			<div className={`${fullForm ? "mt-1" : "mt-1"} flex items-baseline gap-2`}>
+				<span className="text-xs uppercase tracking-widest text-muted-foreground">
+					{fullForm ? "ending" : ""}
+				</span>
+				<span lang="el" className="greek-text text-2xl text-foreground">
+					{form.greek}
+				</span>
+				<span className="font-sans text-sm text-muted-foreground">
+					/{form.greeklish}/
+				</span>
+			</div>
 		</div>
-	</div>
-);
+	);
+};
 
 export const ConfigShell = ({
 	title,

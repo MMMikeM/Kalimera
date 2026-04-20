@@ -34,6 +34,16 @@ export interface SimpleListItem extends DrillForm {
 	reverseGreek?: string;
 	// For reverseDimension mode: which option id this item maps to.
 	dimension?: string;
+	// Optional context line shown above english in forward mode (e.g. tense + family).
+	// Lets a prompt split its dimensions into a scannable hierarchy instead of
+	// one dense sentence.
+	context?: string;
+	// Optional detail line shown below english in forward mode (e.g. grammatical
+	// label paired with a plain-English pronoun).
+	detail?: string;
+	// Optional alternate Greek form also accepted as a correct forward answer
+	// (e.g. the full conjugated form when `greek` is a bare ending).
+	acceptAlso?: string;
 }
 
 interface SelectorOption {
@@ -55,6 +65,9 @@ export interface SimpleListDrillProps {
 	reverseDesc?: string;
 	// Renders filter buttons in config screen above mode selection.
 	categories?: Array<{ id: string; label: string }>;
+	// Optional speed selector rendered in config screen. When provided, the
+	// selected entry's `timeLimit` overrides `forwardTimeLimit` for the session.
+	speeds?: Array<{ id: string; label: string; timeLimit: number }>;
 	// When provided, reverse mode uses selector buttons instead of self-assess.
 	reverseDimension?: {
 		options: SelectorOption[];
@@ -87,6 +100,7 @@ export const SimpleListDrill = ({
 	reverseLabel = "Greek → English",
 	reverseDesc,
 	categories,
+	speeds,
 	reverseDimension,
 }: SimpleListDrillProps) => {
 	const theme = THEME[colorTheme];
@@ -97,6 +111,11 @@ export const SimpleListDrill = ({
 	const [mode, setMode] = useState<DrillMode>("forward");
 	const [sessionSize, setSessionSize] = useState<SessionSize>(10);
 	const [activeCategory, setActiveCategory] = useState<string | null>(null);
+	const [activeSpeedId, setActiveSpeedId] = useState<string | null>(
+		speeds && speeds[0] ? speeds[0].id : null,
+	);
+	const activeSpeed = speeds?.find((s) => s.id === activeSpeedId);
+	const effectiveTimeLimit = activeSpeed?.timeLimit ?? forwardTimeLimit;
 	const [deck, setDeck] = useState<SimpleListItem[]>([]);
 	const [cardIndex, setCardIndex] = useState(0);
 
@@ -132,7 +151,13 @@ export const SimpleListDrill = ({
 	const recordAttempt = useCallback(
 		(isCorrect: boolean, timeTaken: number, timedOut = false) => {
 			if (!currentForm) return;
-			const attempt: Attempt<SimpleListItem> = { form: currentForm, isCorrect, timeTaken, timedOut };
+			const attempt: Attempt<SimpleListItem> = {
+				form: currentForm,
+				isCorrect,
+				timeTaken,
+				timedOut,
+				userInput: mode === "forward" ? inputValueRef.current : undefined,
+			};
 			setLastAttempt(attempt);
 			setAttempts((prev) => [...prev, attempt]);
 			setPhase("feedback");
@@ -150,14 +175,18 @@ export const SimpleListDrill = ({
 
 	const handleTimeout = useCallback(() => {
 		if (phase !== "active") return;
-		recordAttempt(false, forwardTimeLimit, true);
-	}, [phase, recordAttempt, forwardTimeLimit]);
+		recordAttempt(false, effectiveTimeLimit, true);
+	}, [phase, recordAttempt, effectiveTimeLimit]);
 
 	const handleForwardSubmit = useCallback(() => {
 		if (phase !== "active" || !currentForm) return;
 		const timeTaken = performance.now() - activeStartedAt.current;
-		const isCorrect = matchPhonetic(inputValueRef.current, currentForm.greek).isCorrect;
-		recordAttempt(isCorrect, timeTaken);
+		const primary = matchPhonetic(inputValueRef.current, currentForm.greek).isCorrect;
+		const alternate =
+			!primary && currentForm.acceptAlso
+				? matchPhonetic(inputValueRef.current, currentForm.acceptAlso).isCorrect
+				: false;
+		recordAttempt(primary || alternate, timeTaken);
 	}, [phase, currentForm, recordAttempt]);
 
 	const handleReveal = useCallback(() => {
@@ -192,7 +221,7 @@ export const SimpleListDrill = ({
 	// ── Hooks ──────────────────────────────────────────────────────────────────
 
 	const { progress } = useCountdown(
-		forwardTimeLimit,
+		effectiveTimeLimit,
 		phase === "active" && mode === "forward",
 		handleTimeout,
 	);
@@ -272,6 +301,27 @@ export const SimpleListDrill = ({
 						</div>
 					</fieldset>
 				)}
+
+				{speeds && (
+					<fieldset className="mb-8">
+						<legend className="mb-3 text-xs tracking-widest text-muted-foreground uppercase">
+							Speed
+						</legend>
+						<div className="flex flex-wrap gap-2">
+							{speeds.map((spd) => (
+								<SelectorButton
+									key={spd.id}
+									label={spd.label}
+									selected={activeSpeedId === spd.id}
+									disabled={false}
+									onClick={() => setActiveSpeedId(spd.id)}
+									selectedBg={theme.selectorBg}
+									selectedText={theme.selectorText}
+								/>
+							))}
+						</div>
+					</fieldset>
+				)}
 			</ConfigShell>
 		);
 	}
@@ -294,10 +344,18 @@ export const SimpleListDrill = ({
 			{mode === "forward" && (
 				<>
 					<div>
-						<p className="mb-1 text-xs text-muted-foreground uppercase tracking-widest">
+						<p className="mb-3 text-xs text-muted-foreground uppercase tracking-widest">
 							{title}
 						</p>
+						{currentForm?.context && (
+							<p lang="el" className="greek-text mb-4 text-3xl font-semibold text-stone-800">
+								{currentForm.context}
+							</p>
+						)}
 						<p className="text-3xl font-medium text-foreground">{currentForm?.english}</p>
+						{currentForm?.detail && (
+							<p className="mt-1 text-xl text-stone-600">{currentForm.detail}</p>
+						)}
 					</div>
 
 					<ForwardInput
