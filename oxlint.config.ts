@@ -6,6 +6,10 @@ const DB_IMPORT_MESSAGE =
 const ARBITRARY_VALUE_PATTERN = "-\\[([^\\[\\]]*?)\\](?!:)";
 const REFERENCE_BASE_PALETTE_PATTERN =
 	"^(bg|text|border|ring|fill|decoration|outline|from|to|via)-(ocean|terracotta|olive|sunset|navy|slate)-\\d";
+// Role tokens without a step suffix are broken — `text-case-nominative` has no
+// CSS variable. Role tokens MUST have an explicit step (`-50`..`-950`) or `-text`.
+const ROLE_TOKEN_MISSING_STEP_PATTERN =
+	"^(bg|text|border|ring|fill|decoration|outline|from|to|via)-(case-(nominative|accusative|genitive)|gender-(masculine|feminine|neuter))$";
 
 export default defineConfig({
 	plugins: ["eslint", "typescript", "unicorn", "oxc", "react", "import", "jsx-a11y"],
@@ -24,6 +28,11 @@ export default defineConfig({
 						pattern: ARBITRARY_VALUE_PATTERN,
 						message:
 							"Arbitrary-value utility escapes the design system. Prefer a token; add an eslint-disable comment with a reason if truly necessary.",
+					},
+					{
+						pattern: ROLE_TOKEN_MISSING_STEP_PATTERN,
+						message:
+							"Grammar role token is missing a step suffix — use e.g. `text-gender-masculine-text` or consume SCHEME[scheme].text. Bare `text-gender-masculine` has no CSS variable and renders unstyled.",
 					},
 				],
 			},
@@ -112,6 +121,11 @@ export default defineConfig({
 								pattern: REFERENCE_BASE_PALETTE_PATTERN,
 								message:
 									"Base-palette grammar colour under /reference/ — use role tokens (bg-case-*, bg-gender-*) or a neutral/decision scheme (stone/honey).",
+							},
+							{
+								pattern: ROLE_TOKEN_MISSING_STEP_PATTERN,
+								message:
+									"Grammar role token is missing a step suffix — use e.g. `text-gender-masculine-text` or consume SCHEME[scheme].text. Bare `text-gender-masculine` has no CSS variable and renders unstyled.",
 							},
 						],
 					},
