@@ -119,7 +119,7 @@ const CaseGuide = () => (
 				return (
 					<div key={c} className="flex items-start gap-3">
 						<span
-							className={`shrink-0 rounded px-2 py-1 text-xs font-semibold ${style.bgSoft} ${style.text}`}
+							className={`shrink-0 rounded px-2 py-1 text-xs font-semibold ${style.bg} ${style.text}`}
 						>
 							<span className="block leading-tight">{meta.handle}</span>
 							<span className="block text-[10px] font-normal opacity-70">{meta.greek}</span>
@@ -151,8 +151,8 @@ const GenderHints = () => (
 			{(["masculine", "feminine", "neuter"] as const).map((gender) => (
 				<div key={gender} className="space-y-1">
 					<div className="flex items-center gap-1.5">
-						<span className={`h-2.5 w-2.5 rounded-full bg-gender-${gender}`} />
-						<span className={`font-medium text-gender-${gender} capitalize`}>{gender}</span>
+						<span className={`h-2.5 w-2.5 rounded-full ${SCHEME[GENDER_SCHEME[gender]].badgeBg}`} />
+						<span className={`font-medium capitalize ${SCHEME[GENDER_SCHEME[gender]].text}`}>{gender}</span>
 					</div>
 					<div className="text-xs text-stone-600">{GENDER_HINTS[gender].endings}</div>
 					<div className="text-xs text-stone-500">{GENDER_HINTS[gender].hint}</div>
@@ -252,9 +252,9 @@ const GenderVariants = ({ gender }: { gender: Gender }) => {
 
 	return (
 		<TeachingCard
-			scheme="neutral"
+			scheme={GENDER_SCHEME[gender]}
 			eyebrow="Variants"
-			title={<span className={`text-gender-${gender}-text`}>{title}</span>}
+			title={title}
 			badge={GENDER_HINTS[gender].endings}
 			footer={
 				<div className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-stone-600">
@@ -288,7 +288,7 @@ const DecisionGuide = () => (
 							return (
 								<div key={c} className="flex items-center gap-2 text-sm">
 									<span
-										className={`shrink-0 rounded px-2 py-0.5 text-xs font-medium ${style.bgSoft} ${style.text}`}
+										className={`shrink-0 rounded px-2 py-0.5 text-xs font-medium ${style.bg} ${style.text}`}
 									>
 										{meta.handle}
 									</span>

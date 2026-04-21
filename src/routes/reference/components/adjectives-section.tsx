@@ -4,7 +4,7 @@ import type React from "react";
 import { Callout, TeachingCard } from "@/components/cards";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
 import { CASE_ROW_DEFS, GrammarTable, type ColumnDef } from "@/components/GrammarTable";
-import { GENDER_SCHEME } from "@/constants/grammar-palette";
+import { GENDER_SCHEME, SCHEME } from "@/constants/grammar-palette";
 import { MistakeComparison } from "@/components/MistakeComparison";
 import { MonoText } from "@/components/MonoText";
 import { SectionHeading } from "@/components/SectionHeading";
@@ -130,7 +130,7 @@ const AdjectiveParadigmCard: React.FC<{ paradigm: AdjectiveParadigm; emphasis?: 
 
 		return (
 			<div className={`rounded-lg ${style.bg} ${style.border} border p-3`}>
-				<div className={`text-xs font-medium text-gender-${gender} mb-2`}>{genderLabel}</div>
+				<div className={`text-xs font-medium mb-2 ${SCHEME[GENDER_SCHEME[gender]].text}`}>{genderLabel}</div>
 				<GrammarTable
 					columns={columns}
 					rows={rows}
