@@ -97,20 +97,58 @@ export const SE_CONTRACTIONS = {
 		{
 			formula: "σε + το = στο",
 			gender: "neuter",
-			examples: ["στο σπίτι (at home)", "στο κέντρο (downtown)", "στο γραφείο (at the office)"],
+			number: "singular",
+			examples: [
+				{ greek: "στο σπίτι", english: "at home" },
+				{ greek: "στο κέντρο", english: "downtown" },
+				{ greek: "στο γραφείο", english: "at the office" },
+			],
 		},
 		{
 			formula: "σε + τη(ν) = στη(ν)",
 			gender: "feminine",
-			examples: ["στη δουλειά (at work)", "στην Ελλάδα (in Greece)", "στη θάλασσα (at the sea)"],
+			number: "singular",
+			examples: [
+				{ greek: "στη δουλειά", english: "at work" },
+				{ greek: "στην Ελλάδα", english: "in Greece" },
+				{ greek: "στη θάλασσα", english: "at the sea" },
+			],
 		},
 		{
 			formula: "σε + τον = στον",
 			gender: "masculine",
+			number: "singular",
 			examples: [
-				"στον κήπο (in the garden)",
-				"στον δρόμο (on the road)",
-				"στον σταθμό (at the station)",
+				{ greek: "στον κήπο", english: "in the garden" },
+				{ greek: "στον δρόμο", english: "on the road" },
+				{ greek: "στον σταθμό", english: "at the station" },
+			],
+		},
+		{
+			formula: "σε + τα = στα",
+			gender: "neuter",
+			number: "plural",
+			examples: [
+				{ greek: "στα παιδιά", english: "to the children" },
+				{ greek: "στα σπίτια", english: "at the houses" },
+			],
+		},
+		{
+			formula: "σε + τις = στις",
+			gender: "feminine",
+			number: "plural",
+			examples: [
+				{ greek: "στις πέντε", english: "at five" },
+				{ greek: "στις πόλεις", english: "in the cities" },
+			],
+		},
+		{
+			formula: "σε + τους = στους",
+			gender: "masculine",
+			number: "plural",
+			examples: [
+				{ greek: "στους φίλους", english: "to the friends" },
+				{ greek: "στους δρόμους", english: "on the roads" },
 			],
 		},
 	],
@@ -194,11 +232,11 @@ export const TIME_EXPRESSIONS = {
 
 // Other simple prepositions (less common)
 export const OTHER_PREPOSITIONS = [
-	{ greek: "προς", english: "toward", example: "προς τον σταθμό" },
-	{ greek: "μέχρι", english: "until / up to", example: "μέχρι τις πέντε" },
-	{ greek: "πριν", english: "before", example: "πριν το φαγητό" },
-	{ greek: "μετά", english: "after", example: "μετά τη δουλειά" },
-	{ greek: "χωρίς", english: "without", example: "χωρίς ζάχαρη" },
+	{ greek: "μετά", english: "after", example: "μετά τη δουλειά", exampleEnglish: "after work" },
+	{ greek: "πριν", english: "before", example: "πριν το φαγητό", exampleEnglish: "before the meal" },
+	{ greek: "μέχρι", english: "until / up to", example: "μέχρι τις πέντε", exampleEnglish: "until five" },
+	{ greek: "χωρίς", english: "without", example: "χωρίς ζάχαρη", exampleEnglish: "without sugar" },
+	{ greek: "προς", english: "toward", example: "προς τον σταθμό", exampleEnglish: "toward the station" },
 ];
 
 // Contrast pairs for compound prepositions
