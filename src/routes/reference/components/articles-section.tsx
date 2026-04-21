@@ -32,14 +32,6 @@ const USAGE_NOTES: Array<{ greek: string; note: string; gender: Gender | null }>
 	{ greek: "η Ελλάδα", note: "Countries and proper nouns take the article", gender: "feminine" },
 ];
 
-const SE_CONTRACTIONS: Array<{ from: string; to: string; gender: Gender }> = [
-	{ from: "σε + τον", to: "στον", gender: "masculine" },
-	{ from: "σε + την", to: "στην", gender: "feminine" },
-	{ from: "σε + το", to: "στο", gender: "neuter" },
-	{ from: "σε + τους", to: "στους", gender: "masculine" },
-	{ from: "σε + τις", to: "στις", gender: "feminine" },
-	{ from: "σε + τα", to: "στα", gender: "neuter" },
-];
 
 export const ArticlesSection: React.FC = () => {
 	return (
@@ -49,7 +41,7 @@ export const ArticlesSection: React.FC = () => {
 				scheme="neutral"
 				eyebrow="The table"
 				title="One article, six slots."
-				description="The definite article changes along two axes: gender (M · F · N) across the columns, case (Nom · Acc · Gen) down the rows. Read the article and you read the noun's grammar off it."
+				description="The definite article changes along two axes: gender (M · F · N) across the columns, case (Nom · Acc · Gen) down the rows. Reading Greek: the article tells you the case. Writing Greek: pick the case first, then find the column for the noun's gender."
 			>
 				<CaseTableGrid data={ARTICLE_AGREEMENT_QUICK_REF} />
 			</TeachingCard>
@@ -58,61 +50,29 @@ export const ArticlesSection: React.FC = () => {
 			<div className="space-y-6">
 				<BandHeading
 					kicker="Related"
-					title="Contractions and usage"
-					lede="Two small patterns you'll hit constantly once you can read the table above."
+					title="Usage notes"
+					lede="Where Greek article usage differs from English. The preposition σε fuses with these article forms (στο, στη, στον…) — see Prepositions for the full breakdown."
 				/>
+				
 
-				<div className="grid gap-4 lg:grid-cols-2">
-					<LookupCard scheme="neutral" chip="Contractions" eyebrow="σε + article">
-						<div className="space-y-3 px-5 pt-4 pb-4">
-							<div className="flex flex-wrap items-center gap-2">
-								<span className="rounded-full bg-case-accusative-200 px-2.5 py-0.5 text-xs font-semibold tracking-wider text-case-accusative-text uppercase">
-									Accusative only
-								</span>
-								<span className="text-xs text-stone-500">gender varies</span>
-							</div>
-							<p className="text-sm text-stone-600">
-								The preposition <MonoText size="sm">σε</MonoText> (to / at / in) fuses with the
-								following article.
-							</p>
-							<div className="grid grid-cols-3 gap-2 text-sm">
-								{SE_CONTRACTIONS.map(({ from, to, gender }) => {
-									const style = SCHEME[GENDER_SCHEME[gender]];
-									return (
-										<div
-											key={from}
-											className="rounded border border-stone-200 bg-white p-2 text-center"
-										>
-											<div className="mb-1 text-xs text-stone-500">{from}</div>
-											<MonoText variant="greek" className={style.text}>
-												{to}
-											</MonoText>
-										</div>
-									);
-								})}
-							</div>
-						</div>
-					</LookupCard>
-
-					<LookupCard scheme="neutral" chip="Usage" eyebrow="When Greek differs from English">
-						<div className="space-y-2 px-5 pt-4 pb-4">
-							{USAGE_NOTES.map((row) => {
-								const style = row.gender ? SCHEME[GENDER_SCHEME[row.gender]] : null;
-								return (
-									<div
-										key={row.greek}
-										className="rounded border border-stone-200 bg-white p-2"
-									>
-										<MonoText variant="greek" size="sm" className={style?.text}>
-											{row.greek}
-										</MonoText>
-										<span className="ml-2 text-sm text-stone-500">{row.note}</span>
-									</div>
-								);
-							})}
-						</div>
-					</LookupCard>
-				</div>
+				<LookupCard scheme="neutral" chip="Usage" eyebrow="When Greek differs from English">
+					<div className="space-y-2 px-5 pt-4 pb-4">
+						{USAGE_NOTES.map((row) => {
+							const style = row.gender ? SCHEME[GENDER_SCHEME[row.gender]] : null;
+							return (
+								<div
+									key={row.greek}
+									className="rounded border border-stone-200 bg-white p-2"
+								>
+									<MonoText variant="greek" size="sm" className={style?.text}>
+										{row.greek}
+									</MonoText>
+									<span className="ml-2 text-sm text-stone-500">{row.note}</span>
+								</div>
+							);
+						})}
+					</div>
+				</LookupCard>
 
 				<Callout scheme="neutral" title="The -ν on τον / την">
 					<p className="leading-relaxed text-stone-700">

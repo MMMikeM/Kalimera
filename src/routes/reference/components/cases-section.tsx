@@ -75,6 +75,14 @@ export const CasesSection: React.FC = () => {
 						of what you'll hear and say. Owner comes up with possession and a few prepositions.
 					</p>
 				</Card>
+				<Card variant="bordered" padding="md" className="border-stone-200 bg-stone-50/60">
+					<p className="text-sm leading-relaxed text-stone-700">
+						<strong className="text-stone-800">After είναι, both sides stay nominative.</strong>{" "}
+						Linking verbs (είναι, γίνομαι) identify rather than act —{" "}
+						<em>η Χρυσάνθη είναι η μητέρα</em> keeps both nouns as Doer. Nothing is being acted
+						on, so accusative never applies.
+					</p>
+				</Card>
 			</div>
 
 			{/* BAND 2 — REFERENCE (lookup tables) */}
@@ -139,7 +147,7 @@ export const CasesSection: React.FC = () => {
 									chip={group.caseName}
 									eyebrow={`${group.role} triggers`}
 								>
-									<ul className={`divide-y ${style.borderSoft}`}>
+									<ul className={`divide-y ${style.border}`}>
 										{group.triggers.map((trigger) => (
 											<li key={trigger.pattern} className="px-5 py-3">
 												<div className="font-semibold text-stone-800">{trigger.pattern}</div>

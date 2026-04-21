@@ -24,7 +24,7 @@ interface CaseTrigger {
 export const CASE_ROLES: CaseRole[] = [
 	{
 		role: "Doer",
-		description: "who's doing the action",
+		description: "who's doing the action — or what's being named after είναι",
 		caseName: "Nominative",
 		example: "ο καφές είναι ζεστός",
 		translation: "the coffee is hot",
