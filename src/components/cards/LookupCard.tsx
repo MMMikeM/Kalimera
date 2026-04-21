@@ -27,8 +27,8 @@ export const LookupCard = ({ scheme, chip, eyebrow, children, className }: Looku
 		<div
 			className={cn(
 				"flex h-full flex-col overflow-hidden rounded-lg border",
-				style.borderSoft,
-				style.bgSoft,
+				style.border,
+				style.bg,
 				className,
 			)}
 		>
@@ -48,7 +48,7 @@ export const LookupCard = ({ scheme, chip, eyebrow, children, className }: Looku
 					</span>
 				) : null}
 			</div>
-			<div className={cn("flex-1 border-t", style.borderSoft)}>{children}</div>
+			<div className={cn("flex-1 border-t", style.border)}>{children}</div>
 		</div>
 	);
 };

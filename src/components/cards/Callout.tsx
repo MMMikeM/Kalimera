@@ -25,8 +25,8 @@ export const Callout = ({
 		<div
 			className={cn(
 				"rounded-lg border p-4",
-				style.bgSoft,
-				style.borderSoft,
+				style.bg,
+				style.border,
 				className,
 			)}
 		>
@@ -38,7 +38,7 @@ export const Callout = ({
 			) : null}
 			<div className="space-y-2 text-sm">{children}</div>
 			{footer ? (
-				<div className={cn("mt-3 border-t pt-3 text-sm text-stone-500", style.borderSoft)}>
+				<div className={cn("mt-3 border-t pt-3 text-sm text-stone-500", style.border)}>
 					{footer}
 				</div>
 			) : null}

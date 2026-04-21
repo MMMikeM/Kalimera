@@ -60,7 +60,7 @@ export const GrammarTable: React.FC<GrammarTableProps> = ({
 }) => {
 	const { root, headerRow, colHeader, bodyRow, rowHeader, rowLabel, rowSublabel, cell } =
 		grammarTable();
-	const borderColor = scheme ? SCHEME[scheme].borderSoft : "border-stone-200";
+	const borderColor = scheme ? SCHEME[scheme].border : "border-stone-200";
 
 	return (
 		<table className={root({ class: className })}>
@@ -90,7 +90,7 @@ export const GrammarTable: React.FC<GrammarTableProps> = ({
 											? cn("border-transparent", style.text)
 											: row.schemeVariant === "border"
 												? cn("border-l-2", style.border, style.text)
-												: cn(style.bgSoft, style.border, style.text)
+												: cn(style.bg, style.border, style.text)
 										: "border-transparent text-stone-500 font-normal",
 								})}
 							>
