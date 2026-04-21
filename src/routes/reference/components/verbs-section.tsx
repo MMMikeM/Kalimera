@@ -9,6 +9,7 @@ import { MonoText } from "@/components/MonoText";
 import { ParadigmTable } from "@/components/ParadigmTable";
 import { SectionHeading } from "@/components/SectionHeading";
 import { type GrammarScheme, SCHEME } from "@/constants/grammar-palette";
+import { cn } from "@/lib/utils";
 import { IRREGULAR_VERBS, VERB_PATTERNS } from "@/constants/verbs";
 
 interface UsageExample {
@@ -118,12 +119,10 @@ interface PatternMeta {
 	scheme: GrammarScheme;
 }
 
-// Verb pattern family is a page-local axis. Neutral avoids collision with global case
-// tokens (ocean=nominative, terracotta=accusative, olive=genitive).
 const PATTERN_META: Record<PatternKey, PatternMeta> = {
-	active: { ending: "-ω", displayName: "Active", scheme: "neutral" },
-	contracted: { ending: "-άω/-ώ", displayName: "Contracted", scheme: "neutral" },
-	deponent: { ending: "-μαι", displayName: "Deponent", scheme: "neutral" },
+	active: { ending: "-ω", displayName: "Active", scheme: "verb-active" },
+	contracted: { ending: "-άω/-ώ", displayName: "Contracted", scheme: "verb-contracted" },
+	deponent: { ending: "-μαι", displayName: "Deponent", scheme: "verb-deponent" },
 };
 
 const PatternSection: React.FC<{
@@ -194,9 +193,9 @@ interface PatternRow {
 }
 
 const PATTERN_ROWS: PatternRow[] = [
-	{ ending: "-ω", name: "Active", examples: ["κάνω", "θέλω", "βλέπω"], scheme: "neutral" },
-	{ ending: "-άω/-ώ", name: "Contracted", examples: ["μιλάω", "αγαπάω"], scheme: "neutral" },
-	{ ending: "-μαι", name: "Deponent", examples: ["έρχομαι", "θυμάμαι"], scheme: "neutral" },
+	{ ending: "-ω", name: "Active", examples: ["κάνω", "θέλω", "βλέπω"], scheme: "verb-active" },
+	{ ending: "-άω/-ώ", name: "Contracted", examples: ["μιλάω", "αγαπάω"], scheme: "verb-contracted" },
+	{ ending: "-μαι", name: "Deponent", examples: ["έρχομαι", "θυμάμαι"], scheme: "verb-deponent" },
 ];
 
 const PatternIdentifier: React.FC = () => (
@@ -209,7 +208,7 @@ const PatternIdentifier: React.FC = () => (
 			return (
 				<NavigatorCell
 					key={row.ending}
-					className={`${style.bg} ${style.border} flex items-center gap-3 border-2 sm:gap-4`}
+					className={cn(style.bg, style.border, "flex items-center gap-3 border-2 sm:gap-4")}
 				>
 					<MonoText className={`w-20 shrink-0 text-xl font-bold ${style.text}`}>{row.ending}</MonoText>
 					<span className="font-semibold text-stone-800">{row.name}</span>
@@ -217,7 +216,7 @@ const PatternIdentifier: React.FC = () => (
 						{row.examples.map((ex) => (
 							<span
 								key={ex}
-								className={`rounded-md border ${style.border} bg-white px-2 py-1 font-mono text-sm ${style.text}`}
+								className={cn("rounded-md border bg-white px-2 py-1 font-mono text-sm", style.border, style.text)}
 							>
 								{ex}
 							</span>

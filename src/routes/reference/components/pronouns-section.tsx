@@ -58,7 +58,7 @@ const ParadigmLookup = ({
 				{examples ? (
 					<PronounExamplePills
 						examples={examples}
-						borderColor={style.borderSoft}
+						borderColor={style.border}
 						textColor={style.text}
 					/>
 				) : null}
