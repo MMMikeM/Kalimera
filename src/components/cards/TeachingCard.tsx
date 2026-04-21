@@ -45,7 +45,7 @@ export const TeachingCard = ({
 		<Card
 			variant="bordered"
 			padding="lg"
-			className={cn("flex h-full flex-col border-2", style.bgSoft, style.borderSoft, className)}
+			className={cn("flex h-full flex-col border-2", style.bg, style.border, className)}
 		>
 			{eyebrow ? (
 				<div className={eyebrowSlot({ class: style.text })}>{eyebrow}</div>
