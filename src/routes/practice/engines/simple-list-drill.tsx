@@ -16,7 +16,7 @@ import {
 	useCountdown,
 	useForwardKeyboard,
 } from "./drill-engine";
-import { type DrillLogData, type SpeedOption, useDrillEngine } from "./use-drill-engine";
+import { type SpeedOption, useDrillEngine } from "./use-drill-engine";
 
 // ─── Public types ──────────────────────────────────────────────────────────────
 

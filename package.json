@@ -10,7 +10,7 @@
 		"fmt": "oxfmt",
 		"fmt:check": "oxfmt --check",
 		"lint": "oxlint",
-		"lint:fix": "oxlint --fix",
+		"lint:fix": "oxlint --fix --fix-suggestions --fix-dangerously",
 		"lint:ls": "ls-lint",
 		"lint:unused": "knip",
 		"duplicates": "jscpd",

@@ -118,11 +118,7 @@ export const SUBJECT_PRONOUNS: PronounParadigm[] = [
 	},
 ];
 
-const SUBJECT_PRONOUN_EXAMPLES = [
-	{ greek: "(εγώ) μιλάω", english: "I speak", note: "pronoun optional" },
-	{ greek: "αυτός μιλάει", english: "he speaks", note: "for emphasis/clarity" },
-	{ greek: "(εμείς) μιλάμε", english: "we speak", note: "pronoun optional" },
-];
+
 
 // Emphatic/Strong pronouns - used after prepositions
 export const EMPHATIC_PRONOUNS: PronounParadigm[] = [

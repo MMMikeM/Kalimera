@@ -1,4 +1,4 @@
-import { AlertCircle, ArrowRight, BookOpen, Clock } from "lucide-react";
+import { AlertCircle, ArrowRight, BookOpen } from "lucide-react";
 import type React from "react";
 import { Link } from "react-router";
 
