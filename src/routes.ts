@@ -27,7 +27,11 @@ export default [
 		]),
 		...prefix("verbs", [
 			route("present", "routes/practice/drills/verbs/present.tsx"),
+			route("aorist-conjugation", "routes/practice/drills/verbs/aorist-conjugation.tsx"),
 			route("aorist-stems", "routes/practice/drills/verbs/aorist-stems.tsx"),
+			route("aorist-consonants", "routes/practice/drills/verbs/aorist-consonants.tsx"),
+			route("aorist-augment", "routes/practice/drills/verbs/aorist-augment.tsx"),
+			route("aorist-deponent", "routes/practice/drills/verbs/aorist-deponent.tsx"),
 			route("imperatives", "routes/practice/drills/verbs/imperatives.tsx"),
 			route("conjugation-endings", "routes/practice/drills/verbs/conjugation-endings.tsx"),
 		]),
