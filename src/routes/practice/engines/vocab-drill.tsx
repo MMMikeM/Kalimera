@@ -2,6 +2,8 @@ import { RotateCcw, Zap } from "lucide-react";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { useFetcher, useOutletContext, useSearchParams } from "react-router";
 
+import { SPEEDS } from "../drill-speeds";
+
 import { Card } from "@/components/Card";
 import { Button } from "@/components/ui/button";
 import { generateQuestions, CATEGORY_CONFIG, type DrillQuestion } from "@/lib/drill/generate-questions";
@@ -39,17 +41,21 @@ export function VocabDrillPage({
 	const [searchParams] = useSearchParams();
 	const initialDrillSize = searchParams.get("size") === "quick" ? 10 : 15;
 	const [drillSize, setDrillSize] = useState(initialDrillSize);
+	const [activeSpeedId, setActiveSpeedId] = useState(SPEEDS[1].id);
+	const activeSpeed = SPEEDS.find((s) => s.id === activeSpeedId) ?? SPEEDS[1];
 	const [reDrillQuestions, setReDrillQuestions] = useState<UnifiedQuestion[] | null>(null);
 	const isReDrillRef = useRef(false);
 
 	const questions = useMemo(() => {
-		if (reDrillQuestions) return reDrillQuestions;
+		const applySpeed = <T extends { timeLimit: number }>(qs: T[]) =>
+			qs.map((q) => ({ ...q, timeLimit: activeSpeed.timeLimit }));
+		if (reDrillQuestions) return applySpeed(reDrillQuestions);
 		if (initialQuestions) {
 			const shuffled = [...initialQuestions].sort(() => Math.random() - 0.5);
-			return shuffled.slice(0, drillSize);
+			return applySpeed(shuffled.slice(0, drillSize));
 		}
-		return generateQuestions([category], drillSize);
-	}, [reDrillQuestions, initialQuestions, drillSize, category]);
+		return applySpeed(generateQuestions([category], drillSize));
+	}, [reDrillQuestions, initialQuestions, drillSize, category, activeSpeed]);
 
 	const startDbSession = useCallback(() => {
 		if (!userId) return;
@@ -164,6 +170,24 @@ export function VocabDrillPage({
 									onClick={() => setDrillSize(size)}
 								>
 									{size}
+								</Button>
+							))}
+						</div>
+					</fieldset>
+
+					<fieldset className="mb-8">
+						<legend className="mb-3 text-xs tracking-widest text-muted-foreground uppercase">
+							Speed
+						</legend>
+						<div className="flex gap-2">
+							{SPEEDS.map((spd) => (
+								<Button
+									key={spd.id}
+									variant={activeSpeedId === spd.id ? "primary" : "outline"}
+									size="sm"
+									onClick={() => setActiveSpeedId(spd.id)}
+								>
+									{spd.label}
 								</Button>
 							))}
 						</div>
