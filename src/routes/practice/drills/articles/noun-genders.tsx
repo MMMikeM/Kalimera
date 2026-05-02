@@ -1,3 +1,4 @@
+import { SPEEDS } from "../../drill-speeds";
 import { GENDER_STYLE } from "../../engines/drill-constants";
 import { SimpleListDrill, type SimpleListItem } from "../../engines/simple-list-drill";
 
@@ -60,7 +61,7 @@ export default function NounGendersDrill() {
 			title="Noun Genders"
 			subtitle="30 nouns / timed"
 			colorTheme="honey"
-			forwardTimeLimit={5000}
+			speeds={SPEEDS}
 			forwardDesc="English → article + noun (e.g. το σπίτι)"
 			reverseLabel="Greek → Gender"
 			reverseDesc="Greek noun → select gender"

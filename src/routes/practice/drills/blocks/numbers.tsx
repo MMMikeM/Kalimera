@@ -1,3 +1,4 @@
+import { SPEEDS } from "../../drill-speeds";
 import { SimpleListDrill, type SimpleListItem } from "../../engines/simple-list-drill";
 
 const NUMBERS: SimpleListItem[] = [
@@ -48,7 +49,7 @@ export default function NumbersDrill() {
 			title="Numbers"
 			subtitle="28 forms / timed"
 			colorTheme="terracotta"
-			forwardTimeLimit={3500}
+			speeds={SPEEDS}
 			forwardDesc="Digit → Greek word"
 			reverseDesc="Greek word → digit (self-assess)"
 			categories={CATEGORIES}

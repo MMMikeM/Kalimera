@@ -1,3 +1,4 @@
+import { SPEEDS } from "../../drill-speeds";
 import { SimpleListDrill, type SimpleListItem } from "../../engines/simple-list-drill";
 
 const IMPERATIVES: SimpleListItem[] = [
@@ -33,7 +34,7 @@ export default function ImperativesDrill() {
 			title="Imperatives"
 			subtitle="15 forms / timed"
 			colorTheme="terracotta"
-			forwardTimeLimit={4000}
+			speeds={SPEEDS}
 			forwardDesc="English command → Greek imperative"
 			reverseDesc="Greek imperative → English (self-assess)"
 			categories={CATEGORIES}

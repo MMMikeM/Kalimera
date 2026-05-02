@@ -1,3 +1,4 @@
+import { SPEEDS } from "../../drill-speeds";
 import { SimpleListDrill, type SimpleListItem } from "../../engines/simple-list-drill";
 
 // Context line carries tense + family; english is just the pronoun.
@@ -77,11 +78,6 @@ const ENDINGS: SimpleListItem[] = [
 	{ id: "g2i-pl3", greek: "ούσαν",  greeklish: "ousan",  english: PRONOUNS.pl3.pronoun, detail: PRONOUNS.pl3.grammatical, context: G2_IMP, label: "μιλούσαν",  category: "g2-imperfect" },
 ].map<SimpleListItem>((item) => ({ ...item, acceptAlso: item.label }));
 
-const SPEEDS = [
-	{ id: "fast", label: "Fast · 3s", timeLimit: 3000 },
-	{ id: "medium", label: "Medium · 5s", timeLimit: 5000 },
-	{ id: "relaxed", label: "Relaxed · 8s", timeLimit: 8000 },
-];
 
 export default function ConjugationEndingsDrill() {
 	return (

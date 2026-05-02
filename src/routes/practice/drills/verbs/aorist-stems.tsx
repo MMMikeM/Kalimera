@@ -1,3 +1,4 @@
+import { SPEEDS } from "../../drill-speeds";
 import { SimpleListDrill, type SimpleListItem } from "../../engines/simple-list-drill";
 
 // Forward: "eat (τρώω)" → type aorist sg1 in greeklish → "efaga"
@@ -35,7 +36,7 @@ export default function AoristStemsDrill() {
 			title="Aorist Stems"
 			subtitle="15 forms / timed"
 			colorTheme="terracotta"
-			forwardTimeLimit={5000}
+			speeds={SPEEDS}
 			forwardDesc="Present (English) → aorist sg1"
 			reverseDesc="Aorist form → present verb (self-assess)"
 			categories={CATEGORIES}
