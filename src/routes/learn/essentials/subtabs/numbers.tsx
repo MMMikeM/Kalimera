@@ -2,7 +2,7 @@ import { ContentSection } from "@/components/ContentSection";
 import { MonoText } from "@/components/MonoText";
 
 import type { EssentialsLoaderData } from "../loader.server";
-import { EssentialsBackLink } from "./EssentialsBackLink";
+import { EssentialsBackLink } from "./essentials-back-link";
 
 interface Props {
 	data: EssentialsLoaderData;

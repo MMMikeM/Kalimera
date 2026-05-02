@@ -5,8 +5,8 @@ import { MonoText } from "@/components/MonoText";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 import type { EssentialsLoaderData } from "../loader.server";
-import { EssentialsBackLink } from "./EssentialsBackLink";
-import { ExampleList } from "./ExampleList";
+import { EssentialsBackLink } from "./essentials-back-link";
+import { ExampleList } from "./example-list";
 
 interface Props {
 	data: EssentialsLoaderData;

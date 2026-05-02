@@ -4,12 +4,12 @@ import { validateTab } from "@/lib/validate-tab";
 
 import type { Route } from "./+types/$tab";
 import type { PhrasesLoaderData } from "./components/shared";
-import { ConnectorsTab } from "./tabs/ConnectorsTab";
-import { OpinionsTab } from "./tabs/OpinionsTab";
-import { RequestsTab } from "./tabs/RequestsTab";
-import { ResponsesTab } from "./tabs/ResponsesTab";
-import { SurvivalTab } from "./tabs/SurvivalTab";
-import { TimeTab } from "./tabs/TimeTab";
+import { ConnectorsTab } from "./tabs/connectors-tab";
+import { OpinionsTab } from "./tabs/opinions-tab";
+import { RequestsTab } from "./tabs/requests-tab";
+import { ResponsesTab } from "./tabs/responses-tab";
+import { SurvivalTab } from "./tabs/survival-tab";
+import { TimeTab } from "./tabs/time-tab";
 
 const VALID_TABS = ["survival", "responses", "requests", "opinions", "connectors", "time"] as const;
 

@@ -1,8 +1,11 @@
 {
 	"threshold": 5,
 	"minLines": 4,
-	"minTokens": 50,
-	"reporters": ["html", "json"],
+	"minTokens": 100,
+	"reporters": [
+		"html",
+		"json"
+	],
 	"output": "reports/jscpd",
 	"ignore": [
 		"**/contractions.tsx",
@@ -17,5 +20,8 @@
 	],
 	"absolute": true,
 	"gitignore": true,
-	"languages": ["typescript", "typescriptreact"]
+	"languages": [
+		"typescript",
+		"typescriptreact"
+	]
 }

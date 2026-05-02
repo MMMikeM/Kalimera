@@ -1,4 +1,4 @@
-import { PracticeCTA } from "@/components/PracticeCTA";
+import { PracticeCTA } from "@/components/PracticeCta";
 import { ReferenceHero } from "@/components/ReferenceHero";
 
 import { ArticlesSection } from "../components/articles-section";

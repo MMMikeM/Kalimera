@@ -20,7 +20,7 @@ import { MOVABLE_NU_RULE } from "@/constants/articles";
 import { GENDER_SCHEME } from "@/constants/grammar-palette";
 import { GENDER_HINTS } from "@/constants/nouns";
 
-import { CaseTable } from "./CaseTable";
+import { CaseTable } from "./case-table";
 
 // Reusable paradigm table for agreement patterns (streamlined - removed Article column)
 const AgreementParadigmTable: React.FC<{
