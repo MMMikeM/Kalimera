@@ -3,46 +3,30 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { matchPhonetic } from "@/lib/greek-transliteration";
 import { Button } from "@/components/ui/button";
 
-import { useLogDrillAttempt } from "../hooks";
+import { SPEEDS } from "../drill-speeds";
 import {
-	type Attempt,
 	ConfigShell,
 	type DrillForm,
-	type DrillMode,
 	DrillShell,
 	FeedbackDisplay,
 	ForwardInput,
-	type Phase,
 	ReverseFeedback,
 	SelectorButton,
-	type SessionSize,
 	SummaryScreen,
-	buildDeck,
-	useAutoAdvance,
 	useCountdown,
-	useFocusOnActive,
 	useForwardKeyboard,
 } from "./drill-engine";
+import { type DrillLogData, type SpeedOption, useDrillEngine } from "./use-drill-engine";
 
 // ─── Public types ──────────────────────────────────────────────────────────────
 
 export interface SimpleListItem extends DrillForm {
 	english: string;
 	category?: string;
-	// What to display in reverse mode — defaults to greek.
-	// Use when greek includes an article that would give the answer away (e.g. noun genders).
 	reverseGreek?: string;
-	// For reverseDimension mode: which option id this item maps to.
 	dimension?: string;
-	// Optional context line shown above english in forward mode (e.g. tense + family).
-	// Lets a prompt split its dimensions into a scannable hierarchy instead of
-	// one dense sentence.
 	context?: string;
-	// Optional detail line shown below english in forward mode (e.g. grammatical
-	// label paired with a plain-English pronoun).
 	detail?: string;
-	// Optional alternate Greek form also accepted as a correct forward answer
-	// (e.g. the full conjugated form when `greek` is a bare ending).
 	acceptAlso?: string;
 }
 
@@ -59,16 +43,11 @@ export interface SimpleListDrillProps {
 	subtitle: string;
 	drillId: string;
 	colorTheme?: "honey" | "terracotta" | "olive";
-	forwardTimeLimit?: number;
 	forwardDesc?: string;
 	reverseLabel?: string;
 	reverseDesc?: string;
-	// Renders filter buttons in config screen above mode selection.
 	categories?: Array<{ id: string; label: string }>;
-	// Optional speed selector rendered in config screen. When provided, the
-	// selected entry's `timeLimit` overrides `forwardTimeLimit` for the session.
-	speeds?: Array<{ id: string; label: string; timeLimit: number }>;
-	// When provided, reverse mode uses selector buttons instead of self-assess.
+	speeds?: Array<SpeedOption>;
 	reverseDimension?: {
 		options: SelectorOption[];
 		getCorrectId: (item: SimpleListItem) => string;
@@ -95,88 +74,69 @@ export const SimpleListDrill = ({
 	subtitle,
 	drillId,
 	colorTheme = "honey",
-	forwardTimeLimit = 5000,
 	forwardDesc = "English meaning → Greek form",
 	reverseLabel = "Greek → English",
 	reverseDesc,
 	categories,
-	speeds,
+	speeds: speedsProp,
 	reverseDimension,
 }: SimpleListDrillProps) => {
 	const theme = THEME[colorTheme];
-	const logAttempt = useLogDrillAttempt(drillId);
+	const speeds = speedsProp ?? SPEEDS;
 
-	// Session state
-	const [phase, setPhase] = useState<Phase>("config");
-	const [mode, setMode] = useState<DrillMode>("forward");
-	const [sessionSize, setSessionSize] = useState<SessionSize>(10);
-	const [activeCategory, setActiveCategory] = useState<string | null>(null);
-	const [activeSpeedId, setActiveSpeedId] = useState<string | null>(
-		speeds && speeds[0] ? speeds[0].id : null,
-	);
-	const activeSpeed = speeds?.find((s) => s.id === activeSpeedId);
-	const effectiveTimeLimit = activeSpeed?.timeLimit ?? forwardTimeLimit;
-	const [deck, setDeck] = useState<SimpleListItem[]>([]);
-	const [cardIndex, setCardIndex] = useState(0);
+	const engine = useDrillEngine({ items, drillId, speeds, categories, defaultSessionSize: 10 });
+	const {
+		phase, setPhase,
+		mode, setMode,
+		sessionSize, setSessionSize,
+		activeCategory, setActiveCategory,
+		activeSpeedId, setActiveSpeedId,
+		effectiveTimeLimit,
+		cardIndex, currentForm,
+		attempts, lastAttempt,
+		input, setInput,
+		inputRef, inputValueRef,
+		resetSelectorsRef,
+		startDrill, recordAttempt,
+	} = engine;
 
-	// Forward input
-	const [input, setInput] = useState("");
-	const inputValueRef = useRef("");
-	const inputRef = useRef<HTMLInputElement | null>(null);
-
-	// Attempt tracking
-	const [attempts, setAttempts] = useState<Attempt<SimpleListItem>[]>([]);
-	const [lastAttempt, setLastAttempt] = useState<Attempt<SimpleListItem> | null>(null);
-
-	// Reverse: dimension selector
+	// Per-card state
 	const [selDimension, setSelDimension] = useState<string | null>(null);
-
-	// Reverse: self-assess reveal
 	const [revealedAnswer, setRevealedAnswer] = useState(false);
-
 	const activeStartedAt = useRef(0);
 
-	const currentForm = deck[cardIndex];
+	// Register per-card reset with the engine
+	resetSelectorsRef.current = useCallback(() => {
+		setSelDimension(null);
+		setRevealedAnswer(false);
+	}, []);
 
-	// Reset per-card state when entering active phase
 	useEffect(() => {
 		if (phase === "active") {
-			setRevealedAnswer(false);
 			activeStartedAt.current = performance.now();
 		}
 	}, [phase, cardIndex]);
 
 	// ── Callbacks ──────────────────────────────────────────────────────────────
 
-	const recordAttempt = useCallback(
-		(isCorrect: boolean, timeTaken: number, timedOut = false) => {
-			if (!currentForm) return;
-			const attempt: Attempt<SimpleListItem> = {
-				form: currentForm,
-				isCorrect,
-				timeTaken,
-				timedOut,
-				userInput: mode === "forward" ? inputValueRef.current : undefined,
-			};
-			setLastAttempt(attempt);
-			setAttempts((prev) => [...prev, attempt]);
-			setPhase("feedback");
-			logAttempt({
-				prompt: mode === "forward" ? currentForm.english : (currentForm.reverseGreek ?? currentForm.greek),
-				correctAnswer: mode === "forward" ? currentForm.greek : currentForm.english,
-				userAnswer: mode === "forward" ? inputValueRef.current : isCorrect ? "self:correct" : "self:wrong",
-				isCorrect,
-				timeTaken,
-				weakAreaIdentifier: currentForm.id,
-			});
-		},
-		[currentForm, mode, logAttempt],
-	);
-
 	const handleTimeout = useCallback(() => {
-		if (phase !== "active") return;
-		recordAttempt(false, effectiveTimeLimit, true);
-	}, [phase, recordAttempt, effectiveTimeLimit]);
+		if (phase !== "active" || !currentForm) return;
+		const logData =
+			mode === "forward"
+				? {
+						prompt: currentForm.english,
+						correctAnswer: currentForm.greek,
+						userAnswer: "",
+						weakAreaIdentifier: currentForm.id,
+					}
+				: {
+						prompt: currentForm.reverseGreek ?? currentForm.greek,
+						correctAnswer: currentForm.english,
+						userAnswer: "",
+						weakAreaIdentifier: currentForm.id,
+					};
+		recordAttempt(false, effectiveTimeLimit, logData, true);
+	}, [phase, mode, currentForm, effectiveTimeLimit, recordAttempt]);
 
 	const handleForwardSubmit = useCallback(() => {
 		if (phase !== "active" || !currentForm) return;
@@ -186,76 +146,53 @@ export const SimpleListDrill = ({
 			!primary && currentForm.acceptAlso
 				? matchPhonetic(inputValueRef.current, currentForm.acceptAlso).isCorrect
 				: false;
-		recordAttempt(primary || alternate, timeTaken);
-	}, [phase, currentForm, recordAttempt]);
+		recordAttempt(primary || alternate, timeTaken, {
+			prompt: currentForm.english,
+			correctAnswer: currentForm.greek,
+			userAnswer: inputValueRef.current,
+			weakAreaIdentifier: currentForm.id,
+		});
+	}, [phase, currentForm, inputValueRef, recordAttempt]);
 
-	const handleReveal = useCallback(() => {
-		setRevealedAnswer(true);
-	}, []);
+	const handleReveal = useCallback(() => setRevealedAnswer(true), []);
 
 	const handleSelfAssess = useCallback(
 		(isCorrect: boolean) => {
+			if (!currentForm) return;
 			const timeTaken = performance.now() - activeStartedAt.current;
-			recordAttempt(isCorrect, timeTaken);
+			recordAttempt(isCorrect, timeTaken, {
+				prompt: currentForm.reverseGreek ?? currentForm.greek,
+				correctAnswer: currentForm.english,
+				userAnswer: isCorrect ? "self:correct" : "self:wrong",
+				weakAreaIdentifier: currentForm.id,
+			});
 		},
-		[recordAttempt],
+		[currentForm, recordAttempt],
 	);
-
-	const resetSelectors = useCallback(() => {
-		setSelDimension(null);
-	}, []);
-
-	const startDrill = useCallback(() => {
-		const source = activeCategory ? items.filter((i) => i.category === activeCategory) : items;
-		setDeck(buildDeck(source, sessionSize));
-		setCardIndex(0);
-		setInput("");
-		inputValueRef.current = "";
-		setAttempts([]);
-		setLastAttempt(null);
-		setSelDimension(null);
-		setRevealedAnswer(false);
-		setPhase("active");
-	}, [items, activeCategory, sessionSize]);
 
 	// ── Hooks ──────────────────────────────────────────────────────────────────
 
-	const { progress } = useCountdown(
-		effectiveTimeLimit,
-		phase === "active" && mode === "forward",
-		handleTimeout,
-	);
-
-	useAutoAdvance({
-		phase,
-		lastAttempt,
-		cardIndex,
-		sessionSize,
-		mode,
-		setPhase,
-		setCardIndex,
-		setInput,
-		inputValueRef,
-		resetSelectors,
-		inputRef,
-	});
+	const { progress } = useCountdown(effectiveTimeLimit, phase === "active", handleTimeout);
 
 	useForwardKeyboard({ phase, mode, onSubmit: handleForwardSubmit });
-	useFocusOnActive({ phase, mode, inputRef });
 
-	// Auto-submit when dimension selected (reverseDimension mode)
+	// Auto-submit when dimension selected
 	useEffect(() => {
 		if (mode !== "reverse" || phase !== "active" || !reverseDimension || !selDimension || !currentForm)
 			return;
 		const timeTaken = performance.now() - activeStartedAt.current;
 		const isCorrect = reverseDimension.getCorrectId(currentForm) === selDimension;
-		recordAttempt(isCorrect, timeTaken);
+		recordAttempt(isCorrect, timeTaken, {
+			prompt: currentForm.reverseGreek ?? currentForm.greek,
+			correctAnswer: reverseDimension.getCorrectId(currentForm),
+			userAnswer: selDimension,
+			weakAreaIdentifier: currentForm.id,
+		});
 	}, [selDimension, mode, phase, reverseDimension, currentForm, recordAttempt]);
 
 	// ── Render ─────────────────────────────────────────────────────────────────
 
-	const selfAssessReverseDesc =
-		reverseDesc ?? "Greek form → recall meaning (self-assess)";
+	const selfAssessReverseDesc = reverseDesc ?? "Greek form → recall meaning (self-assess)";
 	const hasDimension = !!reverseDimension;
 
 	if (phase === "config") {
@@ -302,32 +239,30 @@ export const SimpleListDrill = ({
 					</fieldset>
 				)}
 
-				{speeds && (
-					<fieldset className="mb-8">
-						<legend className="mb-3 text-xs tracking-widest text-muted-foreground uppercase">
-							Speed
-						</legend>
-						<div className="flex flex-wrap gap-2">
-							{speeds.map((spd) => (
-								<SelectorButton
-									key={spd.id}
-									label={spd.label}
-									selected={activeSpeedId === spd.id}
-									disabled={false}
-									onClick={() => setActiveSpeedId(spd.id)}
-									selectedBg={theme.selectorBg}
-									selectedText={theme.selectorText}
-								/>
-							))}
-						</div>
-					</fieldset>
-				)}
+				<fieldset className="mb-8">
+					<legend className="mb-3 text-xs tracking-widest text-muted-foreground uppercase">
+						Speed
+					</legend>
+					<div className="flex flex-wrap gap-2">
+						{speeds.map((spd) => (
+							<SelectorButton
+								key={spd.id}
+								label={spd.label}
+								selected={activeSpeedId === spd.id}
+								disabled={false}
+								onClick={() => setActiveSpeedId(spd.id)}
+								selectedBg={theme.selectorBg}
+								selectedText={theme.selectorText}
+							/>
+						))}
+					</div>
+				</fieldset>
 			</ConfigShell>
 		);
 	}
 
 	if (phase === "complete") {
-		return <SummaryScreen attempts={attempts} total={sessionSize} onAgain={startDrill} />;
+		return <SummaryScreen attempts={attempts} total={sessionSize} onAgain={() => setPhase("config")} />;
 	}
 
 	const displayGreek =
@@ -335,7 +270,7 @@ export const SimpleListDrill = ({
 
 	return (
 		<DrillShell
-			progress={mode === "forward" ? progress : 1}
+			progress={progress}
 			barColor={theme.bar}
 			cardIndex={cardIndex}
 			sessionSize={sessionSize}
@@ -370,7 +305,7 @@ export const SimpleListDrill = ({
 				</>
 			)}
 
-			{/* ── Reverse mode: self-assess ── */}
+			{/* ── Reverse: self-assess ── */}
 			{mode === "reverse" && !hasDimension && (
 				<>
 					<div>
@@ -380,11 +315,7 @@ export const SimpleListDrill = ({
 					</div>
 
 					{phase === "active" && !revealedAnswer && (
-						<Button
-							variant="outline"
-							onClick={handleReveal}
-							className="w-full"
-						>
+						<Button variant="outline" onClick={handleReveal} className="w-full">
 							Show answer
 						</Button>
 					)}
@@ -424,7 +355,7 @@ export const SimpleListDrill = ({
 				</>
 			)}
 
-			{/* ── Reverse mode: dimension selector ── */}
+			{/* ── Reverse: dimension selector ── */}
 			{mode === "reverse" && hasDimension && reverseDimension && (
 				<>
 					<div>

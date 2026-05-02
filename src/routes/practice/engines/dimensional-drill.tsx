@@ -2,26 +2,21 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { matchPhonetic } from "@/lib/greek-transliteration";
 
-import { useLogDrillAttempt } from "../hooks";
+import { SPEEDS } from "../drill-speeds";
 import {
-	type Attempt,
 	ConfigShell,
 	type DrillForm,
-	type DrillMode,
 	DrillShell,
 	FeedbackDisplay,
 	ForwardInput,
-	type Phase,
 	ReverseFeedback,
 	SelectorButton,
 	type SessionSize,
 	SummaryScreen,
-	buildDeck,
-	useAutoAdvance,
 	useCountdown,
-	useFocusOnActive,
 	useForwardKeyboard,
 } from "./drill-engine";
+import { type SpeedOption, useDrillEngine } from "./use-drill-engine";
 
 type DimValues<K extends string> = Record<K, string>;
 type Selected<K extends string> = Partial<Record<K, string>>;
@@ -31,9 +26,7 @@ export interface DimensionSpec<K extends string> {
 	values: readonly string[];
 	label?: (v: string) => string;
 	selectorStyle: (v: string) => { bg: string; text: string };
-	/** Show this selector row conditionally on current selections. Default: always. */
 	shown?: (selected: Selected<K>) => boolean;
-	/** Required for correctness scoring. Default: true if `shown` returns true. */
 	required?: (selected: Selected<K>) => boolean;
 }
 
@@ -52,6 +45,7 @@ export interface DimensionalDrillProps<K extends string> {
 	barColorBase: string | ((form: DrillForm & DimValues<K>) => string);
 	renderForwardPrompt: (form: DrillForm & DimValues<K>) => React.ReactNode;
 	defaultSessionSize?: SessionSize;
+	speeds?: Array<SpeedOption>;
 }
 
 export function DimensionalDrill<K extends string>({
@@ -68,27 +62,51 @@ export function DimensionalDrill<K extends string>({
 	dimensions,
 	barColorBase,
 	renderForwardPrompt,
-	defaultSessionSize = 20,
+	defaultSessionSize = 10,
+	speeds: speedsProp,
 }: DimensionalDrillProps<K>) {
 	type Form = DrillForm & DimValues<K>;
 
-	const logAttempt = useLogDrillAttempt(drillId);
-	const [phase, setPhase] = useState<Phase>("config");
-	const [mode, setMode] = useState<DrillMode>("forward");
-	const [sessionSize, setSessionSize] = useState<SessionSize>(defaultSessionSize);
-	const [deck, setDeck] = useState<Form[]>([]);
-	const [cardIndex, setCardIndex] = useState(0);
-	const [input, setInput] = useState("");
-	const [attempts, setAttempts] = useState<Attempt<Form>[]>([]);
-	const [lastAttempt, setLastAttempt] = useState<Attempt<Form> | null>(null);
-	const [selected, setSelected] = useState<Selected<K>>({});
+	const speeds = speedsProp ?? SPEEDS;
 
-	const inputRef = useRef<HTMLInputElement>(null);
-	const inputValueRef = useRef("");
-	const isActive = phase === "active";
-	const [timerMs, setTimerMs] = useState(mode === "forward" ? 4000 : 6000);
-	const MAX_TIMER_MS = mode === "forward" ? 5000 : 8000;
-	const currentForm = (deck[cardIndex] ?? forms[0]) as Form;
+	const engine = useDrillEngine({
+		items: forms,
+		drillId,
+		speeds,
+		defaultSessionSize,
+	});
+	const {
+		phase, setPhase,
+		mode, setMode,
+		sessionSize, setSessionSize,
+		activeSpeedId, setActiveSpeedId,
+		effectiveTimeLimit,
+		cardIndex, currentForm,
+		attempts, lastAttempt,
+		input, setInput,
+		inputRef, inputValueRef,
+		resetSelectorsRef,
+		startDrill, recordAttempt,
+	} = engine;
+
+	const activeForm = currentForm as Form | undefined;
+
+	// Per-card state
+	const [selected, setSelected] = useState<Selected<K>>({});
+	const activeStartedAt = useRef(0);
+
+	// Register per-card reset with the engine
+	resetSelectorsRef.current = useCallback(() => {
+		setSelected({});
+	}, []);
+
+	useEffect(() => {
+		if (phase === "active") {
+			activeStartedAt.current = performance.now();
+		}
+	}, [phase, cardIndex]);
+
+	// ── Helpers ────────────────────────────────────────────────────────────────
 
 	const isRequired = useCallback(
 		(spec: DimensionSpec<K>, sel: Selected<K>) => {
@@ -109,114 +127,73 @@ export function DimensionalDrill<K extends string>({
 		[dimensions, isRequired],
 	);
 
-	const recordAttempt = useCallback(
-		(isCorrect: boolean, timeTaken: number, timedOut = false) => {
-			const attempt: Attempt<Form> = {
-				form: currentForm,
-				isCorrect,
-				timeTaken,
-				timedOut,
-			};
-			setLastAttempt(attempt);
-			setAttempts((prev) => [...prev, attempt]);
-			setPhase("feedback");
-			logAttempt({
-				prompt: mode === "forward" ? (currentForm.label ?? currentForm.id) : currentForm.greek,
-				correctAnswer: mode === "forward" ? currentForm.greek : (currentForm.label ?? currentForm.id),
-				userAnswer: mode === "forward" ? inputValueRef.current : Object.values(selected).join(","),
-				isCorrect,
-				timeTaken,
-				weakAreaIdentifier: currentForm.id,
-			});
-		},
-		[currentForm, mode, selected, logAttempt],
-	);
+	// ── Callbacks ──────────────────────────────────────────────────────────────
 
 	const handleTimeout = useCallback(() => {
-		if (phase !== "active") return;
-		const currentInput = inputValueRef.current.trim();
-		if (mode === "forward" && currentInput) {
-			if (matchPhonetic(currentInput, currentForm.greek).isCorrect) {
-				recordAttempt(true, timerMs, true);
-				return;
-			}
-		}
-		setTimerMs((prev) => Math.min(prev + 500, MAX_TIMER_MS));
-		recordAttempt(false, timerMs, true);
-	}, [phase, mode, currentForm, timerMs, MAX_TIMER_MS, recordAttempt]);
-
-	const { progress, startedAt } = useCountdown(timerMs, isActive, handleTimeout);
+		if (phase !== "active" || !activeForm) return;
+		const logData =
+			mode === "forward"
+				? {
+						prompt: activeForm.label ?? activeForm.id,
+						correctAnswer: activeForm.greek,
+						userAnswer: inputValueRef.current,
+						weakAreaIdentifier: activeForm.id,
+					}
+				: {
+						prompt: activeForm.greek,
+						correctAnswer: activeForm.label ?? activeForm.id,
+						userAnswer: "",
+						weakAreaIdentifier: activeForm.id,
+					};
+		recordAttempt(false, effectiveTimeLimit, logData, true);
+	}, [phase, mode, activeForm, effectiveTimeLimit, inputValueRef, recordAttempt]);
 
 	const handleForwardSubmit = useCallback(() => {
-		if (phase !== "active") return;
-		const timeTaken = Math.min(performance.now() - startedAt.current, timerMs);
-		const isCorrect = matchPhonetic(input.trim(), currentForm.greek).isCorrect;
-		recordAttempt(isCorrect, timeTaken);
-	}, [phase, input, currentForm, startedAt, timerMs, recordAttempt]);
+		if (phase !== "active" || !activeForm) return;
+		const timeTaken = performance.now() - activeStartedAt.current;
+		const isCorrect = matchPhonetic(input.trim(), activeForm.greek).isCorrect;
+		recordAttempt(isCorrect, timeTaken, {
+			prompt: activeForm.label ?? activeForm.id,
+			correctAnswer: activeForm.greek,
+			userAnswer: input.trim(),
+			weakAreaIdentifier: activeForm.id,
+		});
+	}, [phase, activeForm, input, recordAttempt]);
 
 	const handleReverseSubmit = useCallback(() => {
-		if (phase !== "active") return;
+		if (phase !== "active" || !activeForm) return;
 		if (!allRequiredSelected(selected)) return;
-		const timeTaken = performance.now() - startedAt.current;
+		const timeTaken = performance.now() - activeStartedAt.current;
 		let isCorrect = true;
 		for (const d of dimensions) {
 			if (!isRequired(d, selected)) continue;
-			if (selected[d.key] !== currentForm[d.key]) {
+			if (selected[d.key] !== activeForm[d.key]) {
 				isCorrect = false;
 				break;
 			}
 		}
-		recordAttempt(isCorrect, timeTaken);
-	}, [
-		phase,
-		selected,
-		currentForm,
-		startedAt,
-		recordAttempt,
-		allRequiredSelected,
-		dimensions,
-		isRequired,
-	]);
+		recordAttempt(isCorrect, timeTaken, {
+			prompt: activeForm.greek,
+			correctAnswer: activeForm.label ?? activeForm.id,
+			userAnswer: Object.values(selected).join(","),
+			weakAreaIdentifier: activeForm.id,
+		});
+	}, [phase, activeForm, selected, allRequiredSelected, dimensions, isRequired, recordAttempt]);
 
-	const resetSelectors = useCallback(() => {
-		setSelected({});
-	}, []);
+	// ── Hooks ──────────────────────────────────────────────────────────────────
 
+	const { progress } = useCountdown(effectiveTimeLimit, phase === "active", handleTimeout);
+
+	useForwardKeyboard({ phase, mode, onSubmit: handleForwardSubmit });
+
+	// Auto-submit reverse when all dimensions selected
 	useEffect(() => {
 		if (mode !== "reverse" || phase !== "active") return;
 		if (!allRequiredSelected(selected)) return;
 		handleReverseSubmit();
 	}, [selected, mode, phase, handleReverseSubmit, allRequiredSelected]);
 
-	useAutoAdvance({
-		phase,
-		lastAttempt,
-		cardIndex,
-		sessionSize,
-		mode,
-		setPhase,
-		setCardIndex,
-		setInput,
-		inputValueRef,
-		resetSelectors,
-		inputRef,
-	});
-
-	useFocusOnActive({ phase, mode, inputRef });
-	useForwardKeyboard({ phase, mode, onSubmit: handleForwardSubmit });
-
-	const startDrill = useCallback(() => {
-		setDeck(buildDeck(forms, sessionSize));
-		setCardIndex(0);
-		setInput("");
-		inputValueRef.current = "";
-		setAttempts([]);
-		setLastAttempt(null);
-		resetSelectors();
-		setTimerMs(mode === "forward" ? 4000 : 6000);
-		setPhase("active");
-		setTimeout(() => inputRef.current?.focus(), 30);
-	}, [mode, sessionSize, forms, resetSelectors]);
+	// ── Render ─────────────────────────────────────────────────────────────────
 
 	if (phase === "config") {
 		return (
@@ -235,6 +212,25 @@ export function DimensionalDrill<K extends string>({
 			>
 				<div className="mb-8">{paradigm}</div>
 				{note ? <div className="mb-8 text-xs text-muted-foreground">{note}</div> : null}
+
+				<fieldset className="mb-8">
+					<legend className="mb-3 text-xs tracking-widest text-muted-foreground uppercase">
+						Speed
+					</legend>
+					<div className="flex flex-wrap gap-2">
+						{speeds.map((spd) => (
+							<SelectorButton
+								key={spd.id}
+								label={spd.label}
+								selected={activeSpeedId === spd.id}
+								disabled={false}
+								onClick={() => setActiveSpeedId(spd.id)}
+								selectedBg="bg-terracotta-100"
+								selectedText="text-terracotta-text"
+							/>
+						))}
+					</div>
+				</fieldset>
 			</ConfigShell>
 		);
 	}
@@ -246,9 +242,13 @@ export function DimensionalDrill<K extends string>({
 	}
 
 	const resolvedBase =
-		typeof barColorBase === "function" ? barColorBase(currentForm) : barColorBase;
+		typeof barColorBase === "function" && activeForm ? barColorBase(activeForm) : (barColorBase as string);
 	const barColor =
-		phase === "feedback" ? (lastAttempt?.isCorrect ? "bg-correct" : "bg-incorrect") : resolvedBase;
+		phase === "feedback"
+			? lastAttempt?.isCorrect
+				? "bg-correct"
+				: "bg-incorrect"
+			: resolvedBase;
 
 	return (
 		<DrillShell
@@ -259,8 +259,7 @@ export function DimensionalDrill<K extends string>({
 		>
 			{mode === "forward" ? (
 				<>
-					<div>{renderForwardPrompt(currentForm)}</div>
-
+					<div>{activeForm && renderForwardPrompt(activeForm)}</div>
 					<div>
 						<ForwardInput
 							input={input}
@@ -276,7 +275,7 @@ export function DimensionalDrill<K extends string>({
 				<>
 					<div className="pt-2">
 						<p lang="el" className="greek-text font-sans text-8xl leading-none text-foreground">
-							{currentForm.greek}
+							{activeForm?.greek}
 						</p>
 					</div>
 
