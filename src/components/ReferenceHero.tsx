@@ -4,7 +4,7 @@ import { MonoText } from "@/components/MonoText";
 import { type GrammarScheme, SCHEME } from "@/constants/grammar-palette";
 import { cn } from "@/lib/utils";
 
-export interface ReferenceHeroDemoItem {
+interface ReferenceHeroDemoItem {
 	greek: string;
 	label: string;
 	/** Grammar scheme driving colour on the Greek form + label. Omit for neutral. */

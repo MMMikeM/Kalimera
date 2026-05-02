@@ -3,7 +3,7 @@
 // =============================================================================
 
 // The Big 4 - highest frequency prepositions (90%+ of usage)
-export const BIG_4_PREPOSITIONS = [
+const BIG_4_PREPOSITIONS = [
 	{
 		greek: "σε",
 		english: "to / at / in",
