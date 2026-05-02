@@ -22,7 +22,7 @@ export const DRILLS: Drill[] = [
 		title: "Articles in context",
 		greek: "ο φίλος · τον φίλο · του φίλου",
 		english: "Type the right article + noun, by case",
-		minutes: 8,
+		minutes: 2,
 	},
 	{
 		id: "articles-paradigm",
@@ -32,7 +32,7 @@ export const DRILLS: Drill[] = [
 		title: "Article paradigm",
 		greek: "ο, η, το, τον, την, του, της…",
 		english: "All 18 forms — recall the grid",
-		minutes: 6,
+		minutes: 1,
 	},
 	{
 		id: "articles-contractions",
@@ -42,7 +42,7 @@ export const DRILLS: Drill[] = [
 		title: "Contractions (σε)",
 		greek: "στον · στην · στο · στους",
 		english: "σε + article fusions",
-		minutes: 5,
+		minutes: 1,
 	},
 	{
 		id: "articles-noun-cases",
@@ -52,7 +52,7 @@ export const DRILLS: Drill[] = [
 		title: "Noun cases",
 		greek: "λόγος → λόγο, λόγου",
 		english: "Accusative & genitive endings",
-		minutes: 8,
+		minutes: 2,
 	},
 	{
 		id: "articles-noun-genders",
@@ -62,7 +62,7 @@ export const DRILLS: Drill[] = [
 		title: "Noun genders",
 		greek: "ο φίλος · η θάλασσα · το σπίτι",
 		english: "Assign gender to common nouns",
-		minutes: 6,
+		minutes: 1,
 	},
 
 	// Pronouns
@@ -74,7 +74,7 @@ export const DRILLS: Drill[] = [
 		title: "Object pronouns",
 		greek: "με, σε, τον, την, μας, σας…",
 		english: "Direct-object clitics",
-		minutes: 6,
+		minutes: 1,
 	},
 	{
 		id: "pronouns-possessives",
@@ -84,7 +84,7 @@ export const DRILLS: Drill[] = [
 		title: "Possessives",
 		greek: "μου, σου, του, της, μας…",
 		english: "Possession enclitics",
-		minutes: 5,
+		minutes: 1,
 	},
 
 	// Verbs
@@ -96,7 +96,7 @@ export const DRILLS: Drill[] = [
 		title: "Present-tense verbs",
 		greek: "λύω · θέλω · μπορώ",
 		english: "Conjugate everyday verbs",
-		minutes: 10,
+		minutes: 2,
 	},
 	{
 		id: "verbs-conjugation-endings",
@@ -106,7 +106,7 @@ export const DRILLS: Drill[] = [
 		title: "Conjugation endings",
 		greek: "-ω · -εις · -ει · -ουμε · -ετε · -ουν",
 		english: "Person endings across 6 paradigms",
-		minutes: 8,
+		minutes: 1,
 	},
 	{
 		id: "verbs-aorist-stems",
@@ -116,7 +116,47 @@ export const DRILLS: Drill[] = [
 		title: "Aorist stems",
 		greek: "τρώω → έφαγα · πίνω → ήπια",
 		english: "Irregular past-tense roots",
-		minutes: 8,
+		minutes: 1,
+	},
+	{
+		id: "verbs-aorist-conjugation",
+		group: "verbs",
+		mode: "type",
+		href: "/practice/verbs/aorist-conjugation",
+		title: "Aorist conjugation",
+		greek: "έκανα · έκανες · έκανε · κάναμε",
+		english: "All 6 persons — past tense",
+		minutes: 2,
+	},
+	{
+		id: "verbs-aorist-deponent",
+		group: "verbs",
+		mode: "paradigm",
+		href: "/practice/verbs/aorist-deponent",
+		title: "Aorist: -μαι verbs",
+		greek: "θυμήθηκα · έγινα · ήρθα",
+		english: "-θηκα, active-style, and suppletive",
+		minutes: 1,
+	},
+	{
+		id: "verbs-aorist-consonants",
+		group: "verbs",
+		mode: "paradigm",
+		href: "/practice/verbs/aorist-consonants",
+		title: "Aorist: consonant rules",
+		greek: "γράφω → έγραψα · ψάχνω → έψαξα",
+		english: "φ→ψ · χ→ξ · ζ→σ — predict the suffix",
+		minutes: 1,
+	},
+	{
+		id: "verbs-aorist-augment",
+		group: "verbs",
+		mode: "paradigm",
+		href: "/practice/verbs/aorist-augment",
+		title: "Aorist: the augment",
+		greek: "γράφω → έγραψα · δουλεύω → δούλεψα",
+		english: "When does ε- appear?",
+		minutes: 1,
 	},
 	{
 		id: "verbs-imperatives",
@@ -126,7 +166,7 @@ export const DRILLS: Drill[] = [
 		title: "Imperatives",
 		greek: "Έλα! · Πες! · Δώσε! · Φέρε!",
 		english: "Common command forms",
-		minutes: 5,
+		minutes: 1,
 	},
 
 	// Building blocks
@@ -138,7 +178,7 @@ export const DRILLS: Drill[] = [
 		title: "Survival phrases",
 		greek: "Γεια σου · Ευχαριστώ · Θα ήθελα",
 		english: "Whole phrases, no decomposition",
-		minutes: 6,
+		minutes: 1,
 	},
 	{
 		id: "blocks-numbers",
@@ -148,7 +188,7 @@ export const DRILLS: Drill[] = [
 		title: "Numbers",
 		greek: "ένα, δύο, δέκα, είκοσι, τριάντα…",
 		english: "1–100",
-		minutes: 5,
+		minutes: 1,
 	},
 	{
 		id: "blocks-days-of-week",
@@ -158,7 +198,7 @@ export const DRILLS: Drill[] = [
 		title: "Days & time",
 		greek: "Δευτέρα · Τρίτη · χτες · αύριο",
 		english: "Days, yesterday, tomorrow",
-		minutes: 4,
+		minutes: 1,
 	},
 ];
 
