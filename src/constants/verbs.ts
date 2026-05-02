@@ -320,7 +320,7 @@ export const IRREGULAR_VERBS: IrregularVerb[] = [
 	},
 ];
 
-export interface IrregularAoristStem {
+interface IrregularAoristStem {
 	present: string;
 	aoristSg1: string;
 	english: string;
