@@ -1,10 +1,4 @@
-import {
-	index,
-	primaryKey,
-	sqliteTable,
-	text,
-	uniqueIndex,
-} from "drizzle-orm/sqlite-core";
+import { index, primaryKey, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
 
 import {
 	cascadeFk,
@@ -57,7 +51,6 @@ export const nounDetails = sqliteTable("noun_details", {
 	gender: oneOf("gender", genders),
 	declensionPattern: oneOf("declension_pattern", nounDeclensionPatterns),
 });
-
 
 export const adjectiveDetails = sqliteTable("adjective_details", {
 	vocabId: cascadeFk("vocab_id", () => vocabulary.id).primaryKey(),

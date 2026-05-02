@@ -52,10 +52,7 @@ export {
 	nullableString,
 	oneOf,
 	nullableOneOf,
-	
 	nullableInt,
-	
-	
 	bool,
 	nullableBool,
 	timestamp,

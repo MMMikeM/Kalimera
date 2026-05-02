@@ -4,7 +4,10 @@ import { getVocabBySlug } from "@/db.server/queries/vocabulary-sections";
 export async function loader() {
 	const tags = await getVocabBySlug("reference", ["noun", "adverb", "adjective"]);
 	const reference = Object.fromEntries(
-		tags.map(t => [t.slug, t.vocabularyTags.map(vt => vt.vocabulary).filter(v => v !== null)])
+		tags.map((t) => [
+			t.slug,
+			t.vocabularyTags.map((vt) => vt.vocabulary).filter((v) => v !== null),
+		]),
 	);
 
 	return {

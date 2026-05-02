@@ -5,7 +5,8 @@ import { loginWithCredentials } from "./login";
 const base = process.env.BASE_URL || "http://localhost:5173";
 const route = process.argv[2] || "/practice/memory/articles";
 const out = process.argv[3] || "screenshots/memory/drill-active.png";
-const viewport = process.argv[4] === "mobile" ? { width: 375, height: 812 } : { width: 1280, height: 720 };
+const viewport =
+	process.argv[4] === "mobile" ? { width: 375, height: 812 } : { width: 1280, height: 720 };
 
 const run = async () => {
 	const b = await chromium.launch();

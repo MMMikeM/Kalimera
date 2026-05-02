@@ -1,8 +1,8 @@
 import type React from "react";
 import { tv } from "tailwind-variants";
 
-import { cn } from "@/lib/utils";
 import { SCHEME, type GrammarScheme } from "@/constants/grammar-palette";
+import { cn } from "@/lib/utils";
 
 export interface ColumnDef {
 	key: string;
@@ -28,11 +28,11 @@ interface GrammarTableProps {
 
 const grammarTable = tv({
 	slots: {
-		root: "w-full text-sm border-collapse",
+		root: "w-full border-collapse text-sm",
 		headerRow: "border-b",
 		colHeader: "px-2 py-2 text-left text-xs font-medium text-stone-500",
 		bodyRow: "border-b",
-		rowHeader: "w-20 border-l-2 py-2 pl-2 pr-2 text-xs font-semibold",
+		rowHeader: "w-20 border-l-2 py-2 pr-2 pl-2 text-xs font-semibold",
 		rowLabel: "block leading-tight",
 		rowSublabel: "block text-[10px] font-normal opacity-70",
 		cell: "px-2 py-2",

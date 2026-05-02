@@ -8,12 +8,12 @@ Synthesised from three analysis reports (curriculum, motivation, drill effective
 
 The drill pool is always two levels: the level you're actively working on, plus the level above it.
 
-| Stage | Drill pool |
-|-------|-----------|
-| Starting out | A1 only |
-| A1 mastered | A1 + A2 |
-| A2 mastered | A2 + B1 |
-| B1 mastered | B1 + B2 |
+| Stage        | Drill pool |
+| ------------ | ---------- |
+| Starting out | A1 only    |
+| A1 mastered  | A1 + A2    |
+| A2 mastered  | A2 + B1    |
+| B1 mastered  | B1 + B2    |
 
 When a level is mastered it leaves active rotation. It doesn't disappear — `vocabularySkills` SRS handles spacing of those items — but it's no longer part of the primary drill pool.
 
@@ -42,14 +42,18 @@ Add a single field to the user profile (or a new small table if you prefer to ke
 
 ```typescript
 // Option A: column on users table
-currentCefrLevel: oneOf("current_cefr_level", cefrLevels).default("A1")
+currentCefrLevel: oneOf("current_cefr_level", cefrLevels).default("A1");
 
 // Option B: separate table
-export const userProgress = sqliteTable("user_progress", {
-  userId: cascadeFk("user_id", () => users.id),
-  currentCefrLevel: oneOf("current_cefr_level", cefrLevels).notNull().default("A1"),
-  updatedAt: createdAt("updated_at"),
-}, (t) => [primaryKey({ columns: [t.userId] })]);
+export const userProgress = sqliteTable(
+	"user_progress",
+	{
+		userId: cascadeFk("user_id", () => users.id),
+		currentCefrLevel: oneOf("current_cefr_level", cefrLevels).notNull().default("A1"),
+		updatedAt: createdAt("updated_at"),
+	},
+	(t) => [primaryKey({ columns: [t.userId] })],
+);
 ```
 
 Option B is cleaner — keeps progress state out of auth tables.
@@ -99,10 +103,10 @@ Query logic:
 Mastery thresholds (consistent with drill effectiveness research):
 
 | Level | Max avg response | Min accuracy | Min attempts |
-|-------|-----------------|--------------|-------------|
-| A1 | 2,500ms | 90% | 15 |
-| A2 | 4,000ms | 85% | 15 |
-| B1 | 5,000ms | 80% | 10 |
+| ----- | ---------------- | ------------ | ------------ |
+| A1    | 2,500ms          | 90%          | 15           |
+| A2    | 4,000ms          | 85%          | 15           |
+| B1    | 5,000ms          | 80%          | 10           |
 
 A query that joins `practiceAttempts → vocabulary` and aggregates by `cefrLevel`:
 
@@ -157,15 +161,15 @@ on session complete:
 
 ## Existing infrastructure this builds on
 
-| Need | Existing asset |
-|------|---------------|
-| CEFR field on vocabulary | `vocabulary.cefrLevel` |
-| Frequency ranking | `vocabulary.frequencyRank` |
-| Per-attempt timing | `practiceAttempts.timeTaken` |
-| Per-attempt correctness | `practiceAttempts.isCorrect` |
-| Vocabulary → attempt join | `practiceAttempts.vocabularyId` |
-| Weak area tracking | `weakAreas` + `applyWeakAreaSideEffect` |
-| Item-level SRS (mastered items) | `vocabularySkills` |
+| Need                            | Existing asset                          |
+| ------------------------------- | --------------------------------------- |
+| CEFR field on vocabulary        | `vocabulary.cefrLevel`                  |
+| Frequency ranking               | `vocabulary.frequencyRank`              |
+| Per-attempt timing              | `practiceAttempts.timeTaken`            |
+| Per-attempt correctness         | `practiceAttempts.isCorrect`            |
+| Vocabulary → attempt join       | `practiceAttempts.vocabularyId`         |
+| Weak area tracking              | `weakAreas` + `applyWeakAreaSideEffect` |
+| Item-level SRS (mastered items) | `vocabularySkills`                      |
 
 ---
 

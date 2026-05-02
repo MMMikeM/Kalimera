@@ -8,7 +8,12 @@ export const LESSON_2025_05_01 = createLesson({
 	},
 
 	nouns: [
-		{ lemma: "μπαρίστα", gender: "feminine", english: "barista (ο/η μπαρίστα — common gender)", cefrLevel: "A2" },
+		{
+			lemma: "μπαρίστα",
+			gender: "feminine",
+			english: "barista (ο/η μπαρίστα — common gender)",
+			cefrLevel: "A2",
+		},
 		{
 			lemma: "υπεύθυνος",
 			gender: "masculine",
@@ -62,20 +67,19 @@ export const LESSON_2025_05_01 = createLesson({
 		{ lemma: "καφετέρια", gender: "feminine", english: "café/coffee shop", cefrLevel: "A1" },
 	],
 
-	adjectives: [
-		{ lemma: "μόνος", english: "alone/by oneself", cefrLevel: "A1" },
-	],
+	adjectives: [{ lemma: "μόνος", english: "alone/by oneself", cefrLevel: "A1" }],
 
-	adverbs: [
-		{ lemma: "επίσης", english: "also/as well", cefrLevel: "A1" },
-	],
+	adverbs: [{ lemma: "επίσης", english: "also/as well", cefrLevel: "A1" }],
 
 	phrases: [
 		// μόνος + possessive pattern
 		{
 			text: "Δουλεύω μόνος μου",
 			english: "I work by myself (male speaker)",
-			metadata: { pattern: "μόνος/μόνη + possessive pronoun", usage: "doing something alone — male" },
+			metadata: {
+				pattern: "μόνος/μόνη + possessive pronoun",
+				usage: "doing something alone — male",
+			},
 		},
 		{
 			text: "Δουλεύει μόνη της",

@@ -12,21 +12,22 @@
 
 ## File Map
 
-| Action | File | Responsibility |
-|--------|------|----------------|
-| **Create** | `src/components/GrammarTable.tsx` | Primitive: tv() slots, RowDef/ColumnDef types, shared constants |
-| **Modify** | `src/routes/reference/components/CaseTable.tsx` | Thin wrapper: case×gender data → GrammarTable |
-| **Modify** | `src/routes/reference/components/pronoun-paradigm-table.tsx` | Thin wrapper: pronoun data → GrammarTable (drop `colorClass` prop) |
-| **Modify** | `src/routes/reference/components/pronouns-section.tsx` | Remove `colorClass` prop from call site |
-| **Modify** | `src/routes/reference/components/nouns-section.tsx` | Rename local `ParadigmTable` → `NounEndingsTable`, rebuild on GrammarTable |
-| **Modify** | `src/components/ParadigmTable.tsx` | Rebuild on GrammarTable, extract `VerbCell`, drop `compact`/`showHeaders` |
-| **Modify** | `src/routes/reference/components/verbs-section.tsx` | Remove `showHeaders={true}` from call site |
+| Action     | File                                                         | Responsibility                                                             |
+| ---------- | ------------------------------------------------------------ | -------------------------------------------------------------------------- |
+| **Create** | `src/components/GrammarTable.tsx`                            | Primitive: tv() slots, RowDef/ColumnDef types, shared constants            |
+| **Modify** | `src/routes/reference/components/CaseTable.tsx`              | Thin wrapper: case×gender data → GrammarTable                              |
+| **Modify** | `src/routes/reference/components/pronoun-paradigm-table.tsx` | Thin wrapper: pronoun data → GrammarTable (drop `colorClass` prop)         |
+| **Modify** | `src/routes/reference/components/pronouns-section.tsx`       | Remove `colorClass` prop from call site                                    |
+| **Modify** | `src/routes/reference/components/nouns-section.tsx`          | Rename local `ParadigmTable` → `NounEndingsTable`, rebuild on GrammarTable |
+| **Modify** | `src/components/ParadigmTable.tsx`                           | Rebuild on GrammarTable, extract `VerbCell`, drop `compact`/`showHeaders`  |
+| **Modify** | `src/routes/reference/components/verbs-section.tsx`          | Remove `showHeaders={true}` from call site                                 |
 
 ---
 
 ## Task 1: Create GrammarTable primitive
 
 **Files:**
+
 - Create: `src/components/GrammarTable.tsx`
 
 - [ ] **Step 1: Create the file**
@@ -152,6 +153,7 @@ git commit -m "feat(components): add GrammarTable primitive with tv() slots"
 ## Task 2: Rebuild CaseTable on GrammarTable
 
 **Files:**
+
 - Modify: `src/routes/reference/components/CaseTable.tsx`
 
 External API unchanged (`CaseTable`, `CaseTableGrid`, `GenderData` type). Consumers (`adjectives-section.tsx`, `articles-section.tsx`) require no changes.
@@ -222,6 +224,7 @@ git commit -m "refactor(reference): rebuild CaseTable on GrammarTable primitive"
 ## Task 3: Rebuild PronounParadigmTable on GrammarTable
 
 **Files:**
+
 - Modify: `src/routes/reference/components/pronoun-paradigm-table.tsx`
 - Modify: `src/routes/reference/components/pronouns-section.tsx` (remove `colorClass` prop)
 
@@ -309,6 +312,7 @@ git commit -m "refactor(reference): rebuild PronounParadigmTable on GrammarTable
 ## Task 4: Rebuild NounEndingsTable in nouns-section
 
 **Files:**
+
 - Modify: `src/routes/reference/components/nouns-section.tsx`
 
 The local `const ParadigmTable` (which shadows the global one) is renamed `NounEndingsTable` and rebuilt on `GrammarTable`. `CASE_META` stays — it's still used by `CaseGuide` and `DecisionGuide`. Only the table component changes.
@@ -365,6 +369,7 @@ const NounEndingsTable = ({
 Two call sites in the same file:
 
 Around line 264:
+
 ```tsx
 // Before
 <ParadigmTable paradigms={paradigms} mode={mode} />
@@ -373,6 +378,7 @@ Around line 264:
 ```
 
 Around line 295:
+
 ```tsx
 // Before
 <ParadigmTable paradigms={paradigms} mode="endings" />
@@ -400,6 +406,7 @@ git commit -m "refactor(reference): rename local ParadigmTable to NounEndingsTab
 ## Task 5: Rebuild ParadigmTable (verbs) on GrammarTable
 
 **Files:**
+
 - Modify: `src/components/ParadigmTable.tsx`
 - Modify: `src/routes/reference/components/verbs-section.tsx` (remove `showHeaders={true}`)
 
@@ -564,13 +571,13 @@ make dev
 
 Open browser and verify all five table types render correctly:
 
-| Route | What to check |
-|-------|--------------|
-| `/reference/articles` | CaseTableGrid — NOM/ACC/GEN rows with coloured left borders, M/F/N columns |
-| `/reference/adjectives` | CaseTableGrid (same component, different data) |
-| `/reference/pronouns` | PronounParadigmTable — person rows, highlighted Greek cells |
-| `/reference/nouns` | NounEndingsTable — Doer/Target/Owner rows, pattern columns coloured by gender |
-| `/reference/verbs` | ParadigmTable — 1st/2nd/3rd rows, stem+ending split cells |
+| Route                   | What to check                                                                 |
+| ----------------------- | ----------------------------------------------------------------------------- |
+| `/reference/articles`   | CaseTableGrid — NOM/ACC/GEN rows with coloured left borders, M/F/N columns    |
+| `/reference/adjectives` | CaseTableGrid (same component, different data)                                |
+| `/reference/pronouns`   | PronounParadigmTable — person rows, highlighted Greek cells                   |
+| `/reference/nouns`      | NounEndingsTable — Doer/Target/Owner rows, pattern columns coloured by gender |
+| `/reference/verbs`      | ParadigmTable — 1st/2nd/3rd rows, stem+ending split cells                     |
 
 - [ ] **Step 3: Final typecheck**
 

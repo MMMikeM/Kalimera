@@ -4,8 +4,8 @@ import { Callout, LookupCard, NextStepCard, TeachingCard } from "@/components/ca
 import { CollapsibleSection } from "@/components/CollapsibleSection";
 import { MonoText } from "@/components/MonoText";
 import { ARTICLE_AGREEMENT_QUICK_REF } from "@/constants/agreement";
-import type { Gender } from "@/db.server/enums";
 import { GENDER_SCHEME, SCHEME } from "@/constants/grammar-palette";
+import type { Gender } from "@/db.server/enums";
 
 import { BandHeading } from "./BandHeading";
 import { CaseTableGrid } from "./case-table";
@@ -20,7 +20,6 @@ const USAGE_NOTES: Array<{ greek: string; note: string; gender: Gender | null }>
 	},
 	{ greek: "η Ελλάδα", note: "Countries and proper nouns take the article", gender: "feminine" },
 ];
-
 
 export const ArticlesSection: React.FC = () => {
 	return (
@@ -42,17 +41,13 @@ export const ArticlesSection: React.FC = () => {
 					title="Usage notes"
 					lede="Where Greek article usage differs from English. The preposition σε fuses with these article forms (στο, στη, στον…) — see Prepositions for the full breakdown."
 				/>
-				
 
 				<LookupCard scheme="neutral" chip="Usage" eyebrow="When Greek differs from English">
 					<div className="space-y-2 px-5 pt-4 pb-4">
 						{USAGE_NOTES.map((row) => {
 							const style = row.gender ? SCHEME[GENDER_SCHEME[row.gender]] : null;
 							return (
-								<div
-									key={row.greek}
-									className="rounded border border-stone-200 bg-white p-2"
-								>
+								<div key={row.greek} className="rounded border border-stone-200 bg-white p-2">
 									<MonoText variant="greek" size="sm" className={style?.text}>
 										{row.greek}
 									</MonoText>
@@ -66,8 +61,7 @@ export const ArticlesSection: React.FC = () => {
 				<Callout scheme="neutral" title="The -ν on τον / την">
 					<p className="leading-relaxed text-stone-700">
 						Always keep the <MonoText size="sm">-ν</MonoText>. Native speakers sometimes drop it,
-						but keeping it is never wrong.{" "}
-						<strong className="text-stone-800">Safe default:</strong>{" "}
+						but keeping it is never wrong. <strong className="text-stone-800">Safe default:</strong>{" "}
 						<MonoText size="sm">τον / την / στον / στην</MonoText>.
 					</p>
 					<CollapsibleSection

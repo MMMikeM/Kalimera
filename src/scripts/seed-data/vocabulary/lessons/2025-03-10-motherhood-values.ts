@@ -10,7 +10,12 @@ export const LESSON_2025_03_10 = createLesson({
 	verbs: [
 		{ lemma: "υπερβάλλω", english: "I exaggerate", conjugationFamily: "-ω", cefrLevel: "B1" },
 		{ lemma: "επιτρέπω", english: "I allow/permit", conjugationFamily: "-ω", cefrLevel: "B1" },
-		{ lemma: "ερευνώ", english: "I research/investigate", conjugationFamily: "-άω/-ώ", cefrLevel: "B1" },
+		{
+			lemma: "ερευνώ",
+			english: "I research/investigate",
+			conjugationFamily: "-άω/-ώ",
+			cefrLevel: "B1",
+		},
 		{ lemma: "λύνω", english: "I solve/resolve", conjugationFamily: "-ω", cefrLevel: "A2" },
 	],
 
@@ -55,7 +60,10 @@ export const LESSON_2025_03_10 = createLesson({
 		{
 			text: "μείνε ψύχραιμος/η/ο",
 			english: "stay calm / keep your composure",
-			metadata: { pattern: "μείνε (imperative of μένω) + adjective", usage: "telling someone to stay calm" },
+			metadata: {
+				pattern: "μείνε (imperative of μένω) + adjective",
+				usage: "telling someone to stay calm",
+			},
 		},
 	],
 });

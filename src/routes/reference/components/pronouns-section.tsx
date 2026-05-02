@@ -148,8 +148,8 @@ export const PronounsSection: React.FC = () => {
 							One English "me", three Greek forms.
 						</h3>
 						<p className="max-w-2xl text-sm text-stone-600">
-							English packs every job into one word. Greek picks a different form depending on
-							what the pronoun is doing — which is where case shows up.
+							English packs every job into one word. Greek picks a different form depending on what
+							the pronoun is doing — which is where case shows up.
 						</p>
 					</div>
 					<ul className="mt-5 space-y-3">
@@ -162,11 +162,7 @@ export const PronounsSection: React.FC = () => {
 									// eslint-disable-next-line better-tailwindcss/no-restricted-classes -- fixed form column
 									className="grid items-baseline gap-x-5 gap-y-1 sm:grid-cols-[6rem_1fr_auto]"
 								>
-									<MonoText
-										variant="greek"
-										size="2xl"
-										className={`leading-none ${style.text}`}
-									>
+									<MonoText variant="greek" size="2xl" className={`leading-none ${style.text}`}>
 										{item.greek}
 									</MonoText>
 									<div className="text-sm text-stone-700">
@@ -417,7 +413,9 @@ export const PronounsSection: React.FC = () => {
 					<div className="mb-4 space-y-1 rounded-lg border border-stone-200 bg-stone-50 p-3 text-sm">
 						<div className="flex items-center gap-2">
 							<span className="w-16 text-stone-600">English:</span>
-							<span className="text-stone-700">{PRONOUN_PATTERNS.doubleObject.contrast.english}</span>
+							<span className="text-stone-700">
+								{PRONOUN_PATTERNS.doubleObject.contrast.english}
+							</span>
 						</div>
 						<div className="flex items-center gap-2">
 							<span className="w-16 text-stone-600">Greek:</span>

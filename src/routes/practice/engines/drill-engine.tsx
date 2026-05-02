@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
 
-import { greekToPhonetic } from "@/lib/greek-transliteration";
 import { Button } from "@/components/ui/button";
+import { greekToPhonetic } from "@/lib/greek-transliteration";
 
 export type DrillMode = "forward" | "reverse";
 export type Phase = "config" | "active" | "feedback" | "complete";
@@ -161,10 +161,7 @@ export const SummaryScreen = <T extends DrillForm>({
 						{mistakes.map((a) => {
 							const fullGreek = a.form.acceptAlso;
 							return (
-								<div
-									key={a.form.id}
-									className="rounded-lg border bg-white p-3"
-								>
+								<div key={a.form.id} className="rounded-lg border bg-white p-3">
 									{fullGreek ? (
 										<div className="space-y-0.5">
 											<div className="flex items-baseline gap-2">
@@ -176,7 +173,7 @@ export const SummaryScreen = <T extends DrillForm>({
 												</span>
 											</div>
 											<div className="flex items-baseline gap-2">
-												<span className="text-xs uppercase tracking-widest text-muted-foreground">
+												<span className="text-xs tracking-widest text-muted-foreground uppercase">
 													ending
 												</span>
 												<span lang="el" className="greek-text text-sm text-foreground">
@@ -383,15 +380,13 @@ export const FeedbackDisplay = <T extends DrillForm>({
 				</div>
 			)}
 			<div className={`${fullForm ? "mt-1" : "mt-1"} flex items-baseline gap-2`}>
-				<span className="text-xs uppercase tracking-widest text-muted-foreground">
+				<span className="text-xs tracking-widest text-muted-foreground uppercase">
 					{fullForm ? "ending" : ""}
 				</span>
 				<span lang="el" className="greek-text text-2xl text-foreground">
 					{form.greek}
 				</span>
-				<span className="font-sans text-sm text-muted-foreground">
-					/{form.greeklish}/
-				</span>
+				<span className="font-sans text-sm text-muted-foreground">/{form.greeklish}/</span>
 			</div>
 		</div>
 	);

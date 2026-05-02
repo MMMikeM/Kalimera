@@ -1,7 +1,7 @@
 import { and, avg, count, eq, isNotNull, sql } from "drizzle-orm";
 
-import { db } from "../index";
 import { type CefrLevel, type WordType } from "../enums";
+import { db } from "../index";
 import { practiceAttempts, userProgress, vocabulary } from "../schema";
 
 const NEXT_LEVEL: Partial<Record<CefrLevel, CefrLevel>> = {
@@ -31,10 +31,7 @@ export const ensureUserProgress = async (userId: number) => {
 	const existing = await getUserProgress(userId);
 	if (existing) return existing;
 
-	const rows = await db
-		.insert(userProgress)
-		.values({ userId, currentCefrLevel: "A1" })
-		.returning();
+	const rows = await db.insert(userProgress).values({ userId, currentCefrLevel: "A1" }).returning();
 	const created = rows[0];
 	if (!created) throw new Error(`Failed to create user progress for userId ${userId}`);
 	return created;

@@ -233,10 +233,25 @@ export const TIME_EXPRESSIONS = {
 // Other simple prepositions (less common)
 export const OTHER_PREPOSITIONS = [
 	{ greek: "μετά", english: "after", example: "μετά τη δουλειά", exampleEnglish: "after work" },
-	{ greek: "πριν", english: "before", example: "πριν το φαγητό", exampleEnglish: "before the meal" },
-	{ greek: "μέχρι", english: "until / up to", example: "μέχρι τις πέντε", exampleEnglish: "until five" },
+	{
+		greek: "πριν",
+		english: "before",
+		example: "πριν το φαγητό",
+		exampleEnglish: "before the meal",
+	},
+	{
+		greek: "μέχρι",
+		english: "until / up to",
+		example: "μέχρι τις πέντε",
+		exampleEnglish: "until five",
+	},
 	{ greek: "χωρίς", english: "without", example: "χωρίς ζάχαρη", exampleEnglish: "without sugar" },
-	{ greek: "προς", english: "toward", example: "προς τον σταθμό", exampleEnglish: "toward the station" },
+	{
+		greek: "προς",
+		english: "toward",
+		example: "προς τον σταθμό",
+		exampleEnglish: "toward the station",
+	},
 ];
 
 // Contrast pairs for compound prepositions

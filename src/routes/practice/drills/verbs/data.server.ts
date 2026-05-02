@@ -1,5 +1,5 @@
-import { db } from "@/db.server/index";
 import type { CefrLevel } from "@/db.server/enums";
+import { db } from "@/db.server/index";
 import { ensureUserProgress } from "@/db.server/queries/user-progress";
 import type { DrillQuestion } from "@/lib/drill/generate-questions";
 
@@ -63,8 +63,7 @@ const getVerbConjugationQuestions = async (
 		const stem = vocab.englishTranslation.replace(/^I /, "");
 		for (const conj of vocab.verbConjugations) {
 			const personLabel = PERSON_LABELS[conj.person] ?? conj.person;
-			const prompt =
-				conj.person === "sg1" ? vocab.englishTranslation : `${personLabel} ${stem}`;
+			const prompt = conj.person === "sg1" ? vocab.englishTranslation : `${personLabel} ${stem}`;
 			questions.push({
 				id: `${idPrefix}${vocab.id}-${conj.person}`,
 				prompt,

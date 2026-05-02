@@ -22,8 +22,8 @@ export const PrepositionNavigator = () => (
 		layout="grid"
 		footer={
 			<>
-				<strong>Remember:</strong> σε is the most common and contracts with articles (σε + το = στο).
-				The others stay unchanged.
+				<strong>Remember:</strong> σε is the most common and contracts with articles (σε + το =
+				στο). The others stay unchanged.
 			</>
 		}
 	>

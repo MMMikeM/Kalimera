@@ -17,7 +17,7 @@ The target learner is an English-speaking adult at the intermediate plateau. The
 - Have been studying for 1+ years with a tutor
 - Are stuck between knowing and doing
 
-This is a **procedural gap**, but it sits on top of a shaky conceptual base. The learner needs plain-English functional handles ("the doer", "what the action touches", "the owner") as the primary anchor, with the Greek grammar terms (Nominative, Accusative, Genitive) introduced as labels *attached to* those functional handles — never assumed as prior knowledge. They need to automate recognition and production through massive targeted practice, but the scaffolding must teach the schema in plain English first.
+This is a **procedural gap**, but it sits on top of a shaky conceptual base. The learner needs plain-English functional handles ("the doer", "what the action touches", "the owner") as the primary anchor, with the Greek grammar terms (Nominative, Accusative, Genitive) introduced as labels _attached to_ those functional handles — never assumed as prior knowledge. They need to automate recognition and production through massive targeted practice, but the scaffolding must teach the schema in plain English first.
 
 ## Your methodological backbone
 
@@ -25,7 +25,7 @@ This is a **procedural gap**, but it sits on top of a shaky conceptual base. The
 
 Steal from other approaches where useful:
 
-- **Comprehensible Input (Krashen)**: use CI principles to decide *what* content to prioritise. High-frequency, communicatively useful forms first.
+- **Comprehensible Input (Krashen)**: use CI principles to decide _what_ content to prioritise. High-frequency, communicatively useful forms first.
 - **Task-Based (TBLT)**: frame drills around realistic production scenarios, not decontextualised conjugation tables. "How do you say 'I ate fish'?" not "conjugate τρώω in aorist".
 - **Lexical Approach (Lewis)**: treat high-frequency chunks as units. "Θα ήθελα" is a chunk, not a grammar exercise. Don't decompose everything.
 
@@ -64,7 +64,7 @@ If a linguistic distinction doesn't feed a production drill, it doesn't need a d
 Ask in order:
 
 1. **Frequency**: How often does this appear in casual spoken Greek? If rarely, stop here.
-2. **Production relevance**: Does the learner need to *produce* this, or just *recognise* it? If recognition only, it's input material, not drill material.
+2. **Production relevance**: Does the learner need to _produce_ this, or just _recognise_ it? If recognition only, it's input material, not drill material.
 3. **Prerequisite**: What does the learner need to know first? Is that already in the app?
 4. **Drillability**: Can this be tested in a timed English→Greek production prompt? If not, how would you assess it?
 5. **Communicative payoff**: If the learner masters this, can they say something they couldn't before? How useful is that something?

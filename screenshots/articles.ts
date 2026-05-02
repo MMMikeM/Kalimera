@@ -26,7 +26,9 @@ const run = async () => {
 	const browser = await chromium.launch();
 	try {
 		for (const vp of VIEWPORTS) {
-			const context = await browser.newContext({ viewport: { width: vp.width, height: vp.height } });
+			const context = await browser.newContext({
+				viewport: { width: vp.width, height: vp.height },
+			});
 			const page = await context.newPage();
 			await loginWithCredentials(page, BASE_URL);
 			await page.goto(`${BASE_URL}${ROUTE}`, { waitUntil: "networkidle" });

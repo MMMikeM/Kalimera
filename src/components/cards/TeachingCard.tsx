@@ -39,7 +39,15 @@ export const TeachingCard = ({
 	children,
 }: TeachingCardProps) => {
 	const style = SCHEME[scheme];
-	const { eyebrow: eyebrowSlot, titleRow, title: titleSlot, badge: badgeSlot, description: descSlot, content, footer: footerSlot } = teachingCard();
+	const {
+		eyebrow: eyebrowSlot,
+		titleRow,
+		title: titleSlot,
+		badge: badgeSlot,
+		description: descSlot,
+		content,
+		footer: footerSlot,
+	} = teachingCard();
 
 	return (
 		<Card
@@ -47,9 +55,7 @@ export const TeachingCard = ({
 			padding="lg"
 			className={cn("flex h-full flex-col border-2", style.bg, style.border, className)}
 		>
-			{eyebrow ? (
-				<div className={eyebrowSlot({ class: style.text })}>{eyebrow}</div>
-			) : null}
+			{eyebrow ? <div className={eyebrowSlot({ class: style.text })}>{eyebrow}</div> : null}
 
 			<div className={titleRow()}>
 				<h3 className={titleSlot({ class: style.text })}>{title}</h3>

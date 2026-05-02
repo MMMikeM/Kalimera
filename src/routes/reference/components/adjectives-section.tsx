@@ -4,7 +4,6 @@ import type React from "react";
 import { Callout, TeachingCard } from "@/components/cards";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
 import { CASE_ROW_DEFS, GrammarTable, type ColumnDef } from "@/components/GrammarTable";
-import { GENDER_SCHEME, SCHEME } from "@/constants/grammar-palette";
 import { MistakeComparison } from "@/components/MistakeComparison";
 import { MonoText } from "@/components/MonoText";
 import { SectionHeading } from "@/components/SectionHeading";
@@ -17,6 +16,7 @@ import {
 	type AgreementExample,
 	COMMON_ADJECTIVES,
 } from "@/constants/adjectives";
+import { GENDER_SCHEME, SCHEME } from "@/constants/grammar-palette";
 
 import { CaseTableGrid } from "./case-table";
 
@@ -123,20 +123,21 @@ const AdjectiveParadigmCard: React.FC<{ paradigm: AdjectiveParadigm; emphasis?: 
 			const sg = forms.singular[ri];
 			const pl = forms.plural[ri];
 			return [
-				<MonoText variant={variant} size="sm">{sg?.form ?? "—"}</MonoText>,
-				<MonoText variant={variant} size="sm">{pl?.form ?? "—"}</MonoText>,
+				<MonoText variant={variant} size="sm">
+					{sg?.form ?? "—"}
+				</MonoText>,
+				<MonoText variant={variant} size="sm">
+					{pl?.form ?? "—"}
+				</MonoText>,
 			];
 		});
 
 		return (
 			<div className={`rounded-lg ${style.bg} ${style.border} border p-3`}>
-				<div className={`text-xs font-medium mb-2 ${SCHEME[GENDER_SCHEME[gender]].text}`}>{genderLabel}</div>
-				<GrammarTable
-					columns={columns}
-					rows={rows}
-					cells={cells}
-					scheme={GENDER_SCHEME[gender]}
-				/>
+				<div className={`mb-2 text-xs font-medium ${SCHEME[GENDER_SCHEME[gender]].text}`}>
+					{genderLabel}
+				</div>
+				<GrammarTable columns={columns} rows={rows} cells={cells} scheme={GENDER_SCHEME[gender]} />
 			</div>
 		);
 	};
@@ -234,14 +235,20 @@ export const AdjectivesSection: React.FC = () => {
 				(the good friend), not *ο φίλος καλός.
 			</Callout>
 
-			<Callout scheme="neutral" icon={<Lightbulb size={16} />} title="Adjective follows its own noun">
+			<Callout
+				scheme="neutral"
+				icon={<Lightbulb size={16} />}
+				title="Adjective follows its own noun"
+			>
 				<p className="text-stone-700">
-					When a genitive is nearby, the adjective still agrees with the noun it{" "}
-					<em>describes</em> — not the nearest word.
+					When a genitive is nearby, the adjective still agrees with the noun it <em>describes</em>{" "}
+					— not the nearest word.
 				</p>
 				<div className="mt-2 space-y-1 text-sm">
 					<div>
-						<MonoText variant="neuter" size="sm">το μεγάλο αυτοκίνητο του γιατρού</MonoText>
+						<MonoText variant="neuter" size="sm">
+							το μεγάλο αυτοκίνητο του γιατρού
+						</MonoText>
 						<span className="ml-2 text-stone-500">the doctor's big car</span>
 					</div>
 					<p className="text-xs text-stone-500">

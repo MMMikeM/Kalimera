@@ -1,4 +1,3 @@
-import { type DrillForm } from "../../engines/drill-engine";
 import {
 	CASE_CHIP,
 	type Gender as ChipGender,
@@ -7,8 +6,9 @@ import {
 	NUMBER_CHIP,
 } from "../../engines/chip-specs";
 import { DimensionalDrill, type DimensionSpec } from "../../engines/dimensional-drill";
-import { ForwardPromptCard } from "../../engines/forward-prompt-card";
 import { GENDER_STYLE } from "../../engines/drill-constants";
+import { type DrillForm } from "../../engines/drill-engine";
+import { ForwardPromptCard } from "../../engines/forward-prompt-card";
 
 type Gender = "masculine" | "feminine" | "neuter";
 type Num = "singular" | "plural";
@@ -20,12 +20,54 @@ interface Contraction extends DrillForm, Record<DimKey, string> {
 }
 
 const CONTRACTIONS: Contraction[] = [
-	{ id: "m-sg", gender: "masculine", number: "singular", greek: "στον", greeklish: "ston", label: "masculine / singular" },
-	{ id: "f-sg", gender: "feminine", number: "singular", greek: "στην", greeklish: "stin", label: "feminine / singular" },
-	{ id: "n-sg", gender: "neuter", number: "singular", greek: "στο", greeklish: "sto", label: "neuter / singular" },
-	{ id: "m-pl", gender: "masculine", number: "plural", greek: "στους", greeklish: "stous", label: "masculine / plural" },
-	{ id: "f-pl", gender: "feminine", number: "plural", greek: "στις", greeklish: "stis", label: "feminine / plural" },
-	{ id: "n-pl", gender: "neuter", number: "plural", greek: "στα", greeklish: "sta", label: "neuter / plural" },
+	{
+		id: "m-sg",
+		gender: "masculine",
+		number: "singular",
+		greek: "στον",
+		greeklish: "ston",
+		label: "masculine / singular",
+	},
+	{
+		id: "f-sg",
+		gender: "feminine",
+		number: "singular",
+		greek: "στην",
+		greeklish: "stin",
+		label: "feminine / singular",
+	},
+	{
+		id: "n-sg",
+		gender: "neuter",
+		number: "singular",
+		greek: "στο",
+		greeklish: "sto",
+		label: "neuter / singular",
+	},
+	{
+		id: "m-pl",
+		gender: "masculine",
+		number: "plural",
+		greek: "στους",
+		greeklish: "stous",
+		label: "masculine / plural",
+	},
+	{
+		id: "f-pl",
+		gender: "feminine",
+		number: "plural",
+		greek: "στις",
+		greeklish: "stis",
+		label: "feminine / plural",
+	},
+	{
+		id: "n-pl",
+		gender: "neuter",
+		number: "plural",
+		greek: "στα",
+		greeklish: "sta",
+		label: "neuter / plural",
+	},
 ];
 
 const PARADIGM_ROWS: { label: string; forms: [string, string] }[] = [
@@ -40,8 +82,12 @@ const Paradigm = () => (
 			<thead>
 				<tr>
 					<th className="py-1 pr-4 text-left text-xs font-normal text-muted-foreground" />
-					<th className="px-3 py-1 text-center text-xs font-medium text-muted-foreground">Singular</th>
-					<th className="px-3 py-1 text-center text-xs font-medium text-muted-foreground">Plural</th>
+					<th className="px-3 py-1 text-center text-xs font-medium text-muted-foreground">
+						Singular
+					</th>
+					<th className="px-3 py-1 text-center text-xs font-medium text-muted-foreground">
+						Plural
+					</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -89,7 +135,10 @@ export default function ContractionsDrill() {
 			paradigm={<Paradigm />}
 			note={
 				<>
-					<span lang="el" className="greek-text">σε</span> + definite article (always accusative)
+					<span lang="el" className="greek-text">
+						σε
+					</span>{" "}
+					+ definite article (always accusative)
 				</>
 			}
 			forwardDesc="e.g. feminine / singular → στην"

@@ -3,6 +3,7 @@ import { sql } from "drizzle-orm";
 import { db } from "../db.server";
 import { tags, vocabularyTags } from "../db.server/schema";
 import type { NewNominalForm, NewVocabularyTag } from "../db.server/types";
+import type { NewAdjectiveDetails } from "../db.server/types";
 import {
 	CONTENT_TAGS,
 	LESSON_SEED_CATEGORIES,
@@ -21,7 +22,6 @@ import {
 	type VerbDetailRecord,
 	type VocabWithTags,
 } from "./seed-pipeline";
-import type { NewAdjectiveDetails } from "../db.server/types";
 
 async function seed() {
 	console.log("Seeding database (additive mode with batching)...\n");

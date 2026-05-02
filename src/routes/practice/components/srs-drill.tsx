@@ -2,8 +2,8 @@ import type React from "react";
 import { useCallback, useMemo } from "react";
 import { useFetcher } from "react-router";
 
-import type { VocabItemWithSkill } from "../loader.server";
 import { useCurrentUserId } from "../hooks";
+import type { VocabItemWithSkill } from "../loader.server";
 import UnifiedDrill, { type UnifiedAttemptResult, type UnifiedQuestion } from "./unified-drill";
 
 export type SrsDrillVariant = "vocabulary" | "review";

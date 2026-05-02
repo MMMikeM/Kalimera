@@ -80,10 +80,7 @@ export const TwoColumnList = <T extends TwoColumnItem>({
 }: TwoColumnListProps<T>) => (
 	<div className={cn("divide-y divide-stone-200/60", className)}>
 		{items.map((item) => (
-			<div
-				key={item.id}
-				className="grid grid-cols-2 items-center gap-x-4 py-2.5 pl-3"
-			>
+			<div key={item.id} className="grid grid-cols-2 items-center gap-x-4 py-2.5 pl-3">
 				<span className="text-lg font-semibold text-stone-900">
 					{renderPrimary ? renderPrimary(item) : item.primary}
 				</span>

@@ -1,4 +1,8 @@
-import { pickAdjectiveDetails, pickAdjectiveNominalForms, type VocabWithTags } from "../../seed-pipeline";
+import {
+	pickAdjectiveDetails,
+	pickAdjectiveNominalForms,
+	type VocabWithTags,
+} from "../../seed-pipeline";
 import { enrichAdjective, type AdjectiveSeedInput } from "./adjective-seed-enrichment";
 
 const COLORS_RAW: AdjectiveSeedInput[] = [

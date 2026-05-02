@@ -169,17 +169,20 @@ This touches autonomy directly. SDT says autonomy supports intrinsic motivation.
 **Implementation:**
 
 #### Weeks 1-5: No Choice
+
 - The app manages the mix. Content flows from A1 through early A2 at a learner-calibrated pace.
 - Reasoning: The learner doesn't yet know what they need. Their tutor is driving the curriculum externally. The app mirrors that (deliberate, scaffolded progression).
 - Autonomy is preserved elsewhere: choice of session length, choice of which drill type, choice of when to practise.
 
 #### Week 6+: Choose If You Want
+
 - Offer a low-key toggle: "Drill mix: Automatic (recommended) / A1 only / A2 focus / Mixed by my choice"
 - If the learner selects "A1 only," the app obliges. Speed drilling becomes safe; they can't fail at harder material.
 - If they select "A2 focus," the app weights new material higher.
 - Let them change this weekly or even daily.
 
 **What NOT to do:**
+
 - **Don't gate this behind a level unlock.** Autonomy means they can downshift at any time ("Give me A1 this week, I'm swamped").
 - **Don't penalise downshifting.** If they choose A1-only after doing mixed drills, don't show "You've regressed" or lost progress. Frame it as "Focused practice on foundational forms."
 - **Don't highlight the "optimal" choice with buttons.** If you offer mixed drilling and focused drilling as options, make them visually equal. No "Recommended" label on mixed.

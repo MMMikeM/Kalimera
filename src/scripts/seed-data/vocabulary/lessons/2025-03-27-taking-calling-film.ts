@@ -11,17 +11,11 @@ export const LESSON_2025_03_27 = createLesson({
 		{ lemma: "παίρνω", english: "I take/get/receive", conjugationFamily: "-ω", cefrLevel: "A1" },
 	],
 
-	nouns: [
-		{ lemma: "ταινία", gender: "feminine", english: "film/movie", cefrLevel: "A1" },
-	],
+	nouns: [{ lemma: "ταινία", gender: "feminine", english: "film/movie", cefrLevel: "A1" }],
 
-	adjectives: [
-		{ lemma: "κουρασμένος", english: "tired", cefrLevel: "A1" },
-	],
+	adjectives: [{ lemma: "κουρασμένος", english: "tired", cefrLevel: "A1" }],
 
-	adverbs: [
-		{ lemma: "πουθενά", english: "nowhere / anywhere (in negative)", cefrLevel: "A2" },
-	],
+	adverbs: [{ lemma: "πουθενά", english: "nowhere / anywhere (in negative)", cefrLevel: "A2" }],
 
 	phrases: [
 		{

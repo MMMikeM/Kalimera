@@ -6,7 +6,9 @@ export const LESSON_2024_07_15 = createLesson({
 		source: "Weekly lesson - kahoot recap",
 	},
 
-	verbs: [{ lemma: "υπάρχω", english: "I exist / there is", conjugationFamily: "-ω", cefrLevel: "A1" }],
+	verbs: [
+		{ lemma: "υπάρχω", english: "I exist / there is", conjugationFamily: "-ω", cefrLevel: "A1" },
+	],
 
 	nouns: [
 		{ lemma: "λουλούδι", gender: "neuter", english: "flower" },

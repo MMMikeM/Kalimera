@@ -2,8 +2,8 @@ import { ChevronLeft, ChevronRight, Lightbulb } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
 
-import { Callout, TeachingCard } from "@/components/cards";
 import { Card } from "@/components/Card";
+import { Callout, TeachingCard } from "@/components/cards";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
 import { MistakeComparison } from "@/components/MistakeComparison";
 import { MonoText } from "@/components/MonoText";
@@ -53,7 +53,6 @@ const AgreementParadigmTable: React.FC<{
 	return (
 		<TeachingCard
 			scheme={GENDER_SCHEME[paradigm.gender]}
-
 			eyebrow="Pattern"
 			title={
 				<MonoText
@@ -145,11 +144,7 @@ const AgreementParadigmTable: React.FC<{
 
 // Gender hints card - compact reference for spotting gender
 const GenderHintsCard: React.FC = () => (
-	<TeachingCard
-		scheme="neutral"
-		eyebrow="Spotting gender"
-		title="Spot gender by ending"
-	>
+	<TeachingCard scheme="neutral" eyebrow="Spotting gender" title="Spot gender by ending">
 		<div className="flex flex-wrap gap-x-6 gap-y-1 text-sm">
 			{(["masculine", "feminine", "neuter"] as const).map((gender) => (
 				<div key={gender} className="flex items-center gap-2">

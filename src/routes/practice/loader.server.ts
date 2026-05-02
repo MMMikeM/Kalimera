@@ -26,26 +26,14 @@ import type { AreaType, SkillType } from "@/db.server/schema";
 
 // Re-export queries and types for route consumers
 export {
-	
-	
 	getDrillStats,
 	getItemsDueForReview,
 	getNewVocabularyItems,
 	getPracticeStats,
 	getUserById,
-	
-	
-	
-	
-	
 	type DrillStat,
-	
 	type PracticeStats,
-	
-	
 	type VocabItemWithSkill,
-	
-	
 };
 
 // ═══════════════════════════════════════════════════════════════════════════════

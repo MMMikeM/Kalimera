@@ -1,7 +1,12 @@
 // Seed-only input types - used during database seeding, not stored as-is
 // These define the shape of seed data before transformation to DB format
 
-import type { AdjectiveDeclensionPattern, CefrLevel, NounDeclensionPattern, VerbTense } from "../db.server/enums";
+import type {
+	AdjectiveDeclensionPattern,
+	CefrLevel,
+	NounDeclensionPattern,
+	VerbTense,
+} from "../db.server/enums";
 import type { Case, ConjugationFamily, Gender, GrammaticalNumber } from "../lib/greek-grammar";
 import type { Phrase } from "./phrase";
 

@@ -28,11 +28,26 @@ export const LESSON_2025_01_16 = createLesson({
 		{ lemma: "κατοικία", gender: "feminine", english: "residence/dwelling", cefrLevel: "A2" },
 		{ lemma: "χρώμα", gender: "neuter", english: "colour", cefrLevel: "A1" },
 		{ lemma: "μάτι", gender: "neuter", english: "eye", cefrLevel: "A1" },
-		{ lemma: "μαλλί", gender: "neuter", english: "hair (μαλλιά = plural, more common)", cefrLevel: "A1" },
+		{
+			lemma: "μαλλί",
+			gender: "neuter",
+			english: "hair (μαλλιά = plural, more common)",
+			cefrLevel: "A1",
+		},
 		{ lemma: "ύψος", gender: "neuter", english: "height", cefrLevel: "A2" },
 		{ lemma: "ντύσιμο", gender: "neuter", english: "clothing/outfit", cefrLevel: "A2" },
-		{ lemma: "κόσμημα", gender: "neuter", english: "piece of jewellery (κοσμήματα = jewellery)", cefrLevel: "B1" },
-		{ lemma: "χιλιάδα", gender: "feminine", english: "thousand (χιλιάδες = thousands)", cefrLevel: "A2" },
+		{
+			lemma: "κόσμημα",
+			gender: "neuter",
+			english: "piece of jewellery (κοσμήματα = jewellery)",
+			cefrLevel: "B1",
+		},
+		{
+			lemma: "χιλιάδα",
+			gender: "feminine",
+			english: "thousand (χιλιάδες = thousands)",
+			cefrLevel: "A2",
+		},
 	],
 
 	adjectives: [
@@ -115,7 +130,10 @@ export const LESSON_2025_01_16 = createLesson({
 		{
 			text: "είμαι χαρούμενος που είναι Παρασκευή",
 			english: "I am happy that it is Friday",
-			metadata: { pattern: "χαρούμενος που + clause", usage: "expressing happiness about something" },
+			metadata: {
+				pattern: "χαρούμενος που + clause",
+				usage: "expressing happiness about something",
+			},
 		},
 		// Form-filling phrases
 		{

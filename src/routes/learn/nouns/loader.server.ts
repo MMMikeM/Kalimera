@@ -32,7 +32,10 @@ type CategoriesMap = Record<CategoryKey, CategoryData>;
 export async function loader() {
 	const tags = await getVocabBySlug("nouns", ["noun"]);
 	const bySlug = Object.fromEntries(
-		tags.map(t => [t.slug, t.vocabularyTags.map(vt => vt.vocabulary).filter(v => v !== null)])
+		tags.map((t) => [
+			t.slug,
+			t.vocabularyTags.map((vt) => vt.vocabulary).filter((v) => v !== null),
+		]),
 	);
 
 	const buildCategory = (title: string, tagKey: string): CategoryData => {

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { matchPhonetic } from "@/lib/greek-transliteration";
 import { Button } from "@/components/ui/button";
+import { matchPhonetic } from "@/lib/greek-transliteration";
 
 import { SPEEDS } from "../drill-speeds";
 import {
@@ -86,18 +86,28 @@ export const SimpleListDrill = ({
 
 	const engine = useDrillEngine({ items, drillId, speeds, categories, defaultSessionSize: 10 });
 	const {
-		phase, setPhase,
-		mode, setMode,
-		sessionSize, setSessionSize,
-		activeCategory, setActiveCategory,
-		activeSpeedId, setActiveSpeedId,
+		phase,
+		setPhase,
+		mode,
+		setMode,
+		sessionSize,
+		setSessionSize,
+		activeCategory,
+		setActiveCategory,
+		activeSpeedId,
+		setActiveSpeedId,
 		effectiveTimeLimit,
-		cardIndex, currentForm,
-		attempts, lastAttempt,
-		input, setInput,
-		inputRef, inputValueRef,
+		cardIndex,
+		currentForm,
+		attempts,
+		lastAttempt,
+		input,
+		setInput,
+		inputRef,
+		inputValueRef,
 		resetSelectorsRef,
-		startDrill, recordAttempt,
+		startDrill,
+		recordAttempt,
 	} = engine;
 
 	// Per-card state
@@ -178,7 +188,13 @@ export const SimpleListDrill = ({
 
 	// Auto-submit when dimension selected
 	useEffect(() => {
-		if (mode !== "reverse" || phase !== "active" || !reverseDimension || !selDimension || !currentForm)
+		if (
+			mode !== "reverse" ||
+			phase !== "active" ||
+			!reverseDimension ||
+			!selDimension ||
+			!currentForm
+		)
 			return;
 		const timeTaken = performance.now() - activeStartedAt.current;
 		const isCorrect = reverseDimension.getCorrectId(currentForm) === selDimension;
@@ -262,7 +278,9 @@ export const SimpleListDrill = ({
 	}
 
 	if (phase === "complete") {
-		return <SummaryScreen attempts={attempts} total={sessionSize} onAgain={() => setPhase("config")} />;
+		return (
+			<SummaryScreen attempts={attempts} total={sessionSize} onAgain={() => setPhase("config")} />
+		);
 	}
 
 	const displayGreek =
@@ -279,9 +297,7 @@ export const SimpleListDrill = ({
 			{mode === "forward" && (
 				<>
 					<div>
-						<p className="mb-3 text-xs text-muted-foreground uppercase tracking-widest">
-							{title}
-						</p>
+						<p className="mb-3 text-xs tracking-widest text-muted-foreground uppercase">{title}</p>
 						{currentForm?.context && (
 							<p lang="el" className="greek-text mb-4 text-3xl font-semibold text-stone-800">
 								{currentForm.context}
@@ -378,9 +394,7 @@ export const SimpleListDrill = ({
 						))}
 					</div>
 
-					{phase === "feedback" && lastAttempt && (
-						<ReverseFeedback lastAttempt={lastAttempt} />
-					)}
+					{phase === "feedback" && lastAttempt && <ReverseFeedback lastAttempt={lastAttempt} />}
 				</>
 			)}
 		</DrillShell>
