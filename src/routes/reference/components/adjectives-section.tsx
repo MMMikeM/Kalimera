@@ -18,7 +18,7 @@ import {
 	COMMON_ADJECTIVES,
 } from "@/constants/adjectives";
 
-import { CaseTableGrid } from "./CaseTable";
+import { CaseTableGrid } from "./case-table";
 
 // Adjective endings quick lookup table
 const AdjectiveEndingsTable: React.FC = () => (

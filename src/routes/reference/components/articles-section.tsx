@@ -8,7 +8,7 @@ import type { Gender } from "@/db.server/enums";
 import { GENDER_SCHEME, SCHEME } from "@/constants/grammar-palette";
 
 import { BandHeading } from "./BandHeading";
-import { CaseTableGrid } from "./CaseTable";
+import { CaseTableGrid } from "./case-table";
 
 const USAGE_NOTES: Array<{ greek: string; note: string; gender: Gender | null }> = [
 	{ greek: "η αγάπη είναι τυφλή", note: "Abstract nouns need the article", gender: "feminine" },
