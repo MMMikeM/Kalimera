@@ -1,6 +1,6 @@
 ---
 description: Create lesson data from raw lesson notes
-allowed-tools: Read, Write, Edit, Bash(pnpm tsc:*)
+allowed-tools: Read, Write, Edit, Bash(pnpm typecheck)
 ---
 
 Create a Greek lesson data file from these raw lesson notes:
