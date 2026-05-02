@@ -7,6 +7,7 @@ import { MonoText } from "@/components/MonoText";
 import { Button } from "@/components/ui/button";
 import { greekToPhonetic } from "@/lib/greek-transliteration";
 
+import { MEDIUM_SPEED_MS } from "../drill-speeds";
 import type { SessionStats, UnifiedQuestion } from "./unified-drill";
 
 interface DrillSummaryProps {
@@ -145,7 +146,7 @@ const DrillSummary: React.FC<DrillSummaryProps> = ({ stats, onRestart, onDrillMi
 										id: a.questionId,
 										prompt: a.prompt,
 										correctGreek: a.correctGreek,
-										timeLimit: 5000,
+										timeLimit: MEDIUM_SPEED_MS,
 									}));
 								onDrillMistakes(missedQuestions);
 							}}

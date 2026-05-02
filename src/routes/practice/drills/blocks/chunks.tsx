@@ -1,3 +1,4 @@
+import { SPEEDS } from "../../drill-speeds";
 import { SimpleListDrill, type SimpleListItem } from "../../engines/simple-list-drill";
 
 const CHUNKS: SimpleListItem[] = [
@@ -44,7 +45,7 @@ export default function ChunksDrill() {
 			title="Survival Phrases"
 			subtitle="24 phrases / timed"
 			colorTheme="honey"
-			forwardTimeLimit={5000}
+			speeds={SPEEDS}
 			forwardDesc="English prompt → Greek phrase"
 			reverseDesc="Greek phrase → English (self-assess)"
 			categories={CATEGORIES}

@@ -1,5 +1,6 @@
 import type { NounDeclensionPattern } from "@/db.server/enums";
 import { declineNoun } from "@/lib/noun-declension";
+import { MEDIUM_SPEED_MS } from "@/routes/practice/drill-speeds";
 
 import type { DrillQuestion } from "./generate-questions";
 
@@ -59,8 +60,8 @@ export const generateArticleQuestions = (): DrillQuestion[] => {
 					id: `art-c-${noun.lemma}-${caseType}-${number}`,
 					prompt: `${baseForm.full} → ${caseType} ${number}`,
 					correctGreek: form.full,
-					timeLimit: 5000,
-					targetMs: 5000,
+					timeLimit: MEDIUM_SPEED_MS,
+					targetMs: MEDIUM_SPEED_MS,
 				});
 			}
 		}
@@ -74,8 +75,8 @@ export const generateArticleQuestions = (): DrillQuestion[] => {
 					id: `art-a-${noun.lemma}-${caseType}-${number}`,
 					prompt: `the ${noun.english} (${caseType} ${number})`,
 					correctGreek: form.full,
-					timeLimit: 5000,
-					targetMs: 5000,
+					timeLimit: MEDIUM_SPEED_MS,
+					targetMs: MEDIUM_SPEED_MS,
 				});
 			}
 		}

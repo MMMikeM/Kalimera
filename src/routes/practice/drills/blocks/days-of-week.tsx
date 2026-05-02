@@ -1,3 +1,4 @@
+import { SPEEDS } from "../../drill-speeds";
 import { SimpleListDrill, type SimpleListItem } from "../../engines/simple-list-drill";
 
 const DAYS: SimpleListItem[] = [
@@ -32,7 +33,7 @@ export default function DaysOfWeekDrill() {
 			title="Days & Time"
 			subtitle="14 forms / timed"
 			colorTheme="olive"
-			forwardTimeLimit={4000}
+			speeds={SPEEDS}
 			forwardDesc="English → Greek"
 			reverseDesc="Greek → English (self-assess)"
 			categories={CATEGORIES}
