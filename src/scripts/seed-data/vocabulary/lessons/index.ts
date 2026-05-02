@@ -1,8 +1,10 @@
-import { createRequire } from "node:module";
 import { readdirSync } from "node:fs";
+import { createRequire } from "node:module";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+
 import type { Lesson } from "@/types/lesson-seed";
+
 import { formatNounWithArticle } from "../../../../lib/greek-grammar";
 import {
 	nounDetailFromSeed,
@@ -18,16 +20,16 @@ const _require = createRequire(import.meta.url);
 const _dir = dirname(fileURLToPath(import.meta.url));
 
 const lessonFiles = readdirSync(_dir)
-	.filter(f => /^\d{4}-\d{2}-\d{2}.*\.ts$/.test(f))
+	.filter((f) => /^\d{4}-\d{2}-\d{2}.*\.ts$/.test(f))
 	.sort();
 
 export const LESSONS: Record<string, Lesson> = Object.fromEntries(
-	lessonFiles.map(f => {
+	lessonFiles.map((f) => {
 		const date = f.slice(0, 10);
 		const exportName = `LESSON_${date.replace(/-/g, "_")}`;
 		const mod = _require(join(_dir, f));
 		return [date, mod[exportName] as Lesson];
-	})
+	}),
 );
 
 function buildLessonSeedCategories(): Array<{ name: string; items: VocabWithTags[] }> {

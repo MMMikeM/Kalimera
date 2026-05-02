@@ -22,7 +22,12 @@ export const LESSON_2025_04_10 = createLesson({
 		{ lemma: "γιος", gender: "masculine", english: "son", cefrLevel: "A1" },
 		{ lemma: "κόρη", gender: "feminine", english: "daughter", cefrLevel: "A1" },
 		{ lemma: "παιδί", gender: "neuter", english: "child (παιδιά = children)", cefrLevel: "A1" },
-		{ lemma: "αδελφός", gender: "masculine", english: "brother (αδέλφια = siblings)", cefrLevel: "A1" },
+		{
+			lemma: "αδελφός",
+			gender: "masculine",
+			english: "brother (αδέλφια = siblings)",
+			cefrLevel: "A1",
+		},
 		{ lemma: "αδελφή", gender: "feminine", english: "sister", cefrLevel: "A1" },
 	],
 
@@ -42,7 +47,10 @@ export const LESSON_2025_04_10 = createLesson({
 		{
 			text: "Η Χρυσάνθη είναι η γυναίκα του",
 			english: "Chrysanthi is his wife",
-			metadata: { pattern: "name + είναι + ο/η + noun + possessive", usage: "family relationships" },
+			metadata: {
+				pattern: "name + είναι + ο/η + noun + possessive",
+				usage: "family relationships",
+			},
 		},
 		{
 			text: "Έχουν ένα παιδί και ένα σκύλο",
@@ -73,13 +81,19 @@ export const LESSON_2025_04_10 = createLesson({
 		{
 			text: "πώς το λένε στα ελληνικά;",
 			english: "What do you call it in Greek?",
-			metadata: { pattern: "πώς το λένε στα + language", usage: "asking for a word in another language" },
+			metadata: {
+				pattern: "πώς το λένε στα + language",
+				usage: "asking for a word in another language",
+			},
 		},
 		// Identity questions
 		{
 			text: "ποιος είναι αυτός;",
 			english: "Who is he?",
-			metadata: { pattern: "ποιος/ποια/ποιο + είναι + αυτός/ή/ό;", usage: "asking identity — masculine" },
+			metadata: {
+				pattern: "ποιος/ποια/ποιο + είναι + αυτός/ή/ό;",
+				usage: "asking identity — masculine",
+			},
 		},
 		{
 			text: "ποια είναι αυτή;",

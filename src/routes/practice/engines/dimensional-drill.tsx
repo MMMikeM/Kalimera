@@ -76,17 +76,26 @@ export function DimensionalDrill<K extends string>({
 		defaultSessionSize,
 	});
 	const {
-		phase, setPhase,
-		mode, setMode,
-		sessionSize, setSessionSize,
-		activeSpeedId, setActiveSpeedId,
+		phase,
+		setPhase,
+		mode,
+		setMode,
+		sessionSize,
+		setSessionSize,
+		activeSpeedId,
+		setActiveSpeedId,
 		effectiveTimeLimit,
-		cardIndex, currentForm,
-		attempts, lastAttempt,
-		input, setInput,
-		inputRef, inputValueRef,
+		cardIndex,
+		currentForm,
+		attempts,
+		lastAttempt,
+		input,
+		setInput,
+		inputRef,
+		inputValueRef,
 		resetSelectorsRef,
-		startDrill, recordAttempt,
+		startDrill,
+		recordAttempt,
 	} = engine;
 
 	const activeForm = currentForm as Form | undefined;
@@ -108,14 +117,11 @@ export function DimensionalDrill<K extends string>({
 
 	// ── Helpers ────────────────────────────────────────────────────────────────
 
-	const isRequired = useCallback(
-		(spec: DimensionSpec<K>, sel: Selected<K>) => {
-			if (spec.required) return spec.required(sel);
-			if (spec.shown) return spec.shown(sel);
-			return true;
-		},
-		[],
-	);
+	const isRequired = useCallback((spec: DimensionSpec<K>, sel: Selected<K>) => {
+		if (spec.required) return spec.required(sel);
+		if (spec.shown) return spec.shown(sel);
+		return true;
+	}, []);
 
 	const allRequiredSelected = useCallback(
 		(sel: Selected<K>) => {
@@ -242,13 +248,11 @@ export function DimensionalDrill<K extends string>({
 	}
 
 	const resolvedBase =
-		typeof barColorBase === "function" && activeForm ? barColorBase(activeForm) : (barColorBase as string);
+		typeof barColorBase === "function" && activeForm
+			? barColorBase(activeForm)
+			: (barColorBase as string);
 	const barColor =
-		phase === "feedback"
-			? lastAttempt?.isCorrect
-				? "bg-correct"
-				: "bg-incorrect"
-			: resolvedBase;
+		phase === "feedback" ? (lastAttempt?.isCorrect ? "bg-correct" : "bg-incorrect") : resolvedBase;
 
 	return (
 		<DrillShell

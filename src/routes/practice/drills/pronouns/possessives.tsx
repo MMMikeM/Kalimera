@@ -1,4 +1,3 @@
-import { type DrillForm } from "../../engines/drill-engine";
 import {
 	type Gender as ChipGender,
 	GENDER_CHIP,
@@ -7,8 +6,9 @@ import {
 	PERSON_CHIP,
 } from "../../engines/chip-specs";
 import { DimensionalDrill, type DimensionSpec } from "../../engines/dimensional-drill";
-import { ForwardPromptCard } from "../../engines/forward-prompt-card";
 import { GENDER_STYLE, PERSON_LABELS } from "../../engines/drill-constants";
+import { type DrillForm } from "../../engines/drill-engine";
+import { ForwardPromptCard } from "../../engines/forward-prompt-card";
 
 type Person = "first" | "second" | "third";
 type Gender = "masculine" | "feminine" | "neuter";
@@ -33,14 +33,78 @@ const ENGLISH: Record<string, string> = {
 };
 
 const POSSESSIVES: Possessive[] = [
-	{ id: "1sg", person: "first", number: "singular", gender: "", greek: "μου", greeklish: "mou", label: "my / 1st singular" },
-	{ id: "2sg", person: "second", number: "singular", gender: "", greek: "σου", greeklish: "sou", label: "your / 2nd singular" },
-	{ id: "3sg-m", person: "third", number: "singular", gender: "masculine", greek: "του", greeklish: "tou", label: "his / 3rd singular" },
-	{ id: "3sg-f", person: "third", number: "singular", gender: "feminine", greek: "της", greeklish: "tis", label: "her / 3rd singular" },
-	{ id: "3sg-n", person: "third", number: "singular", gender: "neuter", greek: "του", greeklish: "tou", label: "its / 3rd singular" },
-	{ id: "1pl", person: "first", number: "plural", gender: "", greek: "μας", greeklish: "mas", label: "our / 1st plural" },
-	{ id: "2pl", person: "second", number: "plural", gender: "", greek: "σας", greeklish: "sas", label: "your / 2nd plural" },
-	{ id: "3pl", person: "third", number: "plural", gender: "", greek: "τους", greeklish: "tous", label: "their / 3rd plural" },
+	{
+		id: "1sg",
+		person: "first",
+		number: "singular",
+		gender: "",
+		greek: "μου",
+		greeklish: "mou",
+		label: "my / 1st singular",
+	},
+	{
+		id: "2sg",
+		person: "second",
+		number: "singular",
+		gender: "",
+		greek: "σου",
+		greeklish: "sou",
+		label: "your / 2nd singular",
+	},
+	{
+		id: "3sg-m",
+		person: "third",
+		number: "singular",
+		gender: "masculine",
+		greek: "του",
+		greeklish: "tou",
+		label: "his / 3rd singular",
+	},
+	{
+		id: "3sg-f",
+		person: "third",
+		number: "singular",
+		gender: "feminine",
+		greek: "της",
+		greeklish: "tis",
+		label: "her / 3rd singular",
+	},
+	{
+		id: "3sg-n",
+		person: "third",
+		number: "singular",
+		gender: "neuter",
+		greek: "του",
+		greeklish: "tou",
+		label: "its / 3rd singular",
+	},
+	{
+		id: "1pl",
+		person: "first",
+		number: "plural",
+		gender: "",
+		greek: "μας",
+		greeklish: "mas",
+		label: "our / 1st plural",
+	},
+	{
+		id: "2pl",
+		person: "second",
+		number: "plural",
+		gender: "",
+		greek: "σας",
+		greeklish: "sas",
+		label: "your / 2nd plural",
+	},
+	{
+		id: "3pl",
+		person: "third",
+		number: "plural",
+		gender: "",
+		greek: "τους",
+		greeklish: "tous",
+		label: "their / 3rd plural",
+	},
 ];
 
 const PARADIGM_ROWS: { label: string; forms: [string, string] }[] = [
@@ -57,8 +121,12 @@ const Paradigm = () => (
 			<thead>
 				<tr>
 					<th className="py-1 pr-4 text-left text-xs font-normal text-muted-foreground" />
-					<th className="px-3 py-1 text-center text-xs font-medium text-muted-foreground">Singular</th>
-					<th className="px-3 py-1 text-center text-xs font-medium text-muted-foreground">Plural</th>
+					<th className="px-3 py-1 text-center text-xs font-medium text-muted-foreground">
+						Singular
+					</th>
+					<th className="px-3 py-1 text-center text-xs font-medium text-muted-foreground">
+						Plural
+					</th>
 				</tr>
 			</thead>
 			<tbody>

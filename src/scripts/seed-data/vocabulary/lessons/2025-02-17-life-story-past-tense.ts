@@ -11,7 +11,12 @@ export const LESSON_2025_02_17 = createLesson({
 		{ lemma: "γεννιέμαι", english: "I am born", conjugationFamily: "-ομαι", cefrLevel: "A2" },
 		{ lemma: "μεγαλώνω", english: "I grow up/grow", conjugationFamily: "-ω", cefrLevel: "A2" },
 		{ lemma: "παίζω", english: "I play", conjugationFamily: "-ω", cefrLevel: "A1" },
-		{ lemma: "σπουδάζω", english: "I study (at university)", conjugationFamily: "-ω", cefrLevel: "A2" },
+		{
+			lemma: "σπουδάζω",
+			english: "I study (at university)",
+			conjugationFamily: "-ω",
+			cefrLevel: "A2",
+		},
 		{ lemma: "αποτυγχάνω", english: "I fail", conjugationFamily: "-ω", cefrLevel: "B1" },
 		{ lemma: "αλλάζω", english: "I change", conjugationFamily: "-ω", cefrLevel: "A2" },
 		{ lemma: "αρχίζω", english: "I begin/start", conjugationFamily: "-ω", cefrLevel: "A2" },
@@ -34,9 +39,7 @@ export const LESSON_2025_02_17 = createLesson({
 		{ lemma: "δουλειά", gender: "feminine", english: "work/job", cefrLevel: "A1" },
 	],
 
-	adjectives: [
-		{ lemma: "λευκός", english: "white/Caucasian", cefrLevel: "A1" },
-	],
+	adjectives: [{ lemma: "λευκός", english: "white/Caucasian", cefrLevel: "A1" }],
 
 	adverbs: [
 		{ lemma: "εκεί", english: "there", cefrLevel: "A1" },
@@ -105,7 +108,10 @@ export const LESSON_2025_02_17 = createLesson({
 		{
 			text: "έψαξα για δουλειά για δύο χρόνια",
 			english: "I searched for work for two years",
-			metadata: { pattern: "έψαξα για + object + για + duration", usage: "duration of past activity" },
+			metadata: {
+				pattern: "έψαξα για + object + για + duration",
+				usage: "duration of past activity",
+			},
 		},
 		{
 			text: "βρήκα μετά από δύο χρόνια",
@@ -115,7 +121,10 @@ export const LESSON_2025_02_17 = createLesson({
 		{
 			text: "αν είσαι λευκός, είναι δύσκολο να βρίσκεις δουλειά",
 			english: "if you are white, it is difficult to find work",
-			metadata: { pattern: "αν + present, είναι δύσκολο να + present", usage: "conditional statement" },
+			metadata: {
+				pattern: "αν + present, είναι δύσκολο να + present",
+				usage: "conditional statement",
+			},
 		},
 		{
 			text: "δε θέλω να λέω",

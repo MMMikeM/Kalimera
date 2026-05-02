@@ -28,19 +28,14 @@ export default function PracticeHome() {
 										>
 											<div className="min-w-0 flex-1">
 												<div className="mb-0.5 flex items-baseline gap-2">
-													<span className="text-sm font-medium text-foreground">
-														{d.title}
-													</span>
+													<span className="text-sm font-medium text-foreground">{d.title}</span>
 													<span
 														className={`rounded border px-1.5 py-px text-[10px] tracking-wide uppercase ${mode.tone}`}
 													>
 														{mode.label}
 													</span>
 												</div>
-												<p
-													lang="el"
-													className="greek-text truncate text-xs text-muted-foreground"
-												>
+												<p lang="el" className="greek-text truncate text-xs text-muted-foreground">
 													{d.greek}
 												</p>
 											</div>

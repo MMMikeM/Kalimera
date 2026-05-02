@@ -4,7 +4,6 @@
  */
 
 export {
-	
 	getItemsDueForReview,
 	getItemsDueTomorrow,
 	getPracticeStats,
@@ -13,20 +12,13 @@ export {
 export { getWeakAreas } from "./weak-areas";
 export {
 	completeSession,
-	
 	getLastPracticeDate,
 	startSession,
 	type CompleteSessionInput,
-	
 	type PracticeSessionInsert,
 	type StartSessionInput,
 } from "./practice-sessions";
-export {
-	recordAttempt,
-	
-	
-	type RecordAttemptInput,
-} from "./practice-attempts";
+export { recordAttempt, type RecordAttemptInput } from "./practice-attempts";
 export { getDrillStats, type DrillStat } from "./drill-stats";
 
 import { db } from "../index";

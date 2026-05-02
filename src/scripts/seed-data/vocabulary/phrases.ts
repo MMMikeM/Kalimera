@@ -280,7 +280,12 @@ export const TIME_TELLING: Phrase[] = [
 ];
 
 function phraseVocabItems(
-	phrases: Array<{ text: string; english: string; cefrLevel?: import("../../../db.server/enums").CefrLevel; metadata?: unknown }>,
+	phrases: Array<{
+		text: string;
+		english: string;
+		cefrLevel?: import("../../../db.server/enums").CefrLevel;
+		metadata?: unknown;
+	}>,
 	tags: string[],
 ): VocabWithTags[] {
 	return phrases.map((phrase) => ({

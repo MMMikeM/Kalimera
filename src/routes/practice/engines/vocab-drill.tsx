@@ -2,17 +2,20 @@ import { RotateCcw, Zap } from "lucide-react";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { useFetcher, useOutletContext, useSearchParams } from "react-router";
 
-import { SPEEDS } from "../drill-speeds";
-
 import { Card } from "@/components/Card";
 import { Button } from "@/components/ui/button";
-import { generateQuestions, CATEGORY_CONFIG, type DrillQuestion } from "@/lib/drill/generate-questions";
+import {
+	generateQuestions,
+	CATEGORY_CONFIG,
+	type DrillQuestion,
+} from "@/lib/drill/generate-questions";
 
 import UnifiedDrill, {
 	type SessionStats,
 	type UnifiedAttemptResult,
 	type UnifiedQuestion,
 } from "../components/unified-drill";
+import { SPEEDS } from "../drill-speeds";
 import type { PracticeLoaderData } from "../layout";
 
 interface VocabDrillPageProps {

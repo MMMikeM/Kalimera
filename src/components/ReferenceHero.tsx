@@ -28,37 +28,37 @@ export const ReferenceHero = ({ eyebrow, title, thesis, demo }: ReferenceHeroPro
 		</div>
 
 		{demo && demo.length > 0 ? (
-		<div className="flex flex-wrap items-start gap-x-5 gap-y-4 pt-1">
-			{demo.map((item, i) => {
-				const style = item.scheme ? SCHEME[item.scheme] : null;
-				return (
-					<Fragment key={`${item.greek}-${item.label}`}>
-						{i > 0 ? (
-							<span className="pt-1 text-stone-300" aria-hidden="true">
-								·
-							</span>
-						) : null}
-						<div className="flex flex-col items-start gap-1">
-							<MonoText
-								variant="greek"
-								size="2xl"
-								className={cn("leading-none", style ? style.text : "text-stone-800")}
-							>
-								{item.greek}
-							</MonoText>
-							<span
-								className={cn(
-									"text-xs font-medium tracking-wide",
-									style ? style.text : "text-stone-500",
-								)}
-							>
-								{item.label}
-							</span>
-						</div>
-					</Fragment>
-				);
-			})}
-		</div>
+			<div className="flex flex-wrap items-start gap-x-5 gap-y-4 pt-1">
+				{demo.map((item, i) => {
+					const style = item.scheme ? SCHEME[item.scheme] : null;
+					return (
+						<Fragment key={`${item.greek}-${item.label}`}>
+							{i > 0 ? (
+								<span className="pt-1 text-stone-300" aria-hidden="true">
+									·
+								</span>
+							) : null}
+							<div className="flex flex-col items-start gap-1">
+								<MonoText
+									variant="greek"
+									size="2xl"
+									className={cn("leading-none", style ? style.text : "text-stone-800")}
+								>
+									{item.greek}
+								</MonoText>
+								<span
+									className={cn(
+										"text-xs font-medium tracking-wide",
+										style ? style.text : "text-stone-500",
+									)}
+								>
+									{item.label}
+								</span>
+							</div>
+						</Fragment>
+					);
+				})}
+			</div>
 		) : null}
 	</header>
 );

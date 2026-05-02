@@ -202,9 +202,7 @@ export const DRILLS: Drill[] = [
 	},
 ];
 
-export const DRILL_BY_ID: Record<string, Drill> = Object.fromEntries(
-	DRILLS.map((d) => [d.id, d]),
-);
+export const DRILL_BY_ID: Record<string, Drill> = Object.fromEntries(DRILLS.map((d) => [d.id, d]));
 
 export const GROUP_META: Record<Group, { label: string }> = {
 	articles: { label: "Articles & noun forms" },

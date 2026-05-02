@@ -1,4 +1,3 @@
-import { type DrillForm } from "../../engines/drill-engine";
 import {
 	type Gender as ChipGender,
 	GENDER_CHIP,
@@ -7,8 +6,9 @@ import {
 	PERSON_CHIP,
 } from "../../engines/chip-specs";
 import { DimensionalDrill, type DimensionSpec } from "../../engines/dimensional-drill";
-import { ForwardPromptCard } from "../../engines/forward-prompt-card";
 import { GENDER_STYLE, PERSON_LABELS } from "../../engines/drill-constants";
+import { type DrillForm } from "../../engines/drill-engine";
+import { ForwardPromptCard } from "../../engines/forward-prompt-card";
 
 type Person = "first" | "second" | "third";
 type Gender = "masculine" | "feminine" | "neuter";
@@ -35,16 +35,96 @@ const ENGLISH: Record<string, string> = {
 };
 
 const PRONOUNS: ObjectPronoun[] = [
-	{ id: "1sg", person: "first", number: "singular", gender: "", greek: "με", greeklish: "me", label: "me / 1st singular" },
-	{ id: "2sg", person: "second", number: "singular", gender: "", greek: "σε", greeklish: "se", label: "you / 2nd singular" },
-	{ id: "3sg-m", person: "third", number: "singular", gender: "masculine", greek: "τον", greeklish: "ton", label: "him / 3rd singular" },
-	{ id: "3sg-f", person: "third", number: "singular", gender: "feminine", greek: "την", greeklish: "tin", label: "her / 3rd singular" },
-	{ id: "3sg-n", person: "third", number: "singular", gender: "neuter", greek: "το", greeklish: "to", label: "it / 3rd singular" },
-	{ id: "1pl", person: "first", number: "plural", gender: "", greek: "μας", greeklish: "mas", label: "us / 1st plural" },
-	{ id: "2pl", person: "second", number: "plural", gender: "", greek: "σας", greeklish: "sas", label: "you / 2nd plural" },
-	{ id: "3pl-m", person: "third", number: "plural", gender: "masculine", greek: "τους", greeklish: "tous", label: "them (m) / 3rd plural" },
-	{ id: "3pl-f", person: "third", number: "plural", gender: "feminine", greek: "τις", greeklish: "tis", label: "them (f) / 3rd plural" },
-	{ id: "3pl-n", person: "third", number: "plural", gender: "neuter", greek: "τα", greeklish: "ta", label: "them (n) / 3rd plural" },
+	{
+		id: "1sg",
+		person: "first",
+		number: "singular",
+		gender: "",
+		greek: "με",
+		greeklish: "me",
+		label: "me / 1st singular",
+	},
+	{
+		id: "2sg",
+		person: "second",
+		number: "singular",
+		gender: "",
+		greek: "σε",
+		greeklish: "se",
+		label: "you / 2nd singular",
+	},
+	{
+		id: "3sg-m",
+		person: "third",
+		number: "singular",
+		gender: "masculine",
+		greek: "τον",
+		greeklish: "ton",
+		label: "him / 3rd singular",
+	},
+	{
+		id: "3sg-f",
+		person: "third",
+		number: "singular",
+		gender: "feminine",
+		greek: "την",
+		greeklish: "tin",
+		label: "her / 3rd singular",
+	},
+	{
+		id: "3sg-n",
+		person: "third",
+		number: "singular",
+		gender: "neuter",
+		greek: "το",
+		greeklish: "to",
+		label: "it / 3rd singular",
+	},
+	{
+		id: "1pl",
+		person: "first",
+		number: "plural",
+		gender: "",
+		greek: "μας",
+		greeklish: "mas",
+		label: "us / 1st plural",
+	},
+	{
+		id: "2pl",
+		person: "second",
+		number: "plural",
+		gender: "",
+		greek: "σας",
+		greeklish: "sas",
+		label: "you / 2nd plural",
+	},
+	{
+		id: "3pl-m",
+		person: "third",
+		number: "plural",
+		gender: "masculine",
+		greek: "τους",
+		greeklish: "tous",
+		label: "them (m) / 3rd plural",
+	},
+	{
+		id: "3pl-f",
+		person: "third",
+		number: "plural",
+		gender: "feminine",
+		greek: "τις",
+		greeklish: "tis",
+		label: "them (f) / 3rd plural",
+	},
+	{
+		id: "3pl-n",
+		person: "third",
+		number: "plural",
+		gender: "neuter",
+		greek: "τα",
+		greeklish: "ta",
+		label: "them (n) / 3rd plural",
+	},
 ];
 
 const PARADIGM_ROWS: { label: string; forms: [string, string] }[] = [
@@ -61,8 +141,12 @@ const Paradigm = () => (
 			<thead>
 				<tr>
 					<th className="py-1 pr-4 text-left text-xs font-normal text-muted-foreground" />
-					<th className="px-3 py-1 text-center text-xs font-medium text-muted-foreground">Singular</th>
-					<th className="px-3 py-1 text-center text-xs font-medium text-muted-foreground">Plural</th>
+					<th className="px-3 py-1 text-center text-xs font-medium text-muted-foreground">
+						Singular
+					</th>
+					<th className="px-3 py-1 text-center text-xs font-medium text-muted-foreground">
+						Plural
+					</th>
 				</tr>
 			</thead>
 			<tbody>

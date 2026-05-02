@@ -183,7 +183,8 @@ export const VERB_PATTERNS: Record<string, VerbPattern> = {
 	},
 	contracted: {
 		name: "Contracted (-άω/-ώ)",
-		description: "Stress falls on the ending, not the stem. Both -άω and -ώ spellings are correct: μιλάω = μιλώ.",
+		description:
+			"Stress falls on the ending, not the stem. Both -άω and -ώ spellings are correct: μιλάω = μιλώ.",
 		endings: {
 			sg1: "-άω/-ώ",
 			sg2: "-άς",

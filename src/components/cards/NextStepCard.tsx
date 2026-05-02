@@ -32,9 +32,7 @@ export const NextStepCard = ({
 		>
 			<Link to={to} className="group flex items-center justify-between gap-3">
 				<div>
-					<div
-						className={cn("text-xs font-semibold tracking-wider uppercase", emphasisKicker)}
-					>
+					<div className={cn("text-xs font-semibold tracking-wider uppercase", emphasisKicker)}>
 						{kicker}
 					</div>
 					<div className={cn("mt-0.5 font-semibold", emphasisText)}>{title}</div>

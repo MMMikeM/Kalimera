@@ -34,20 +34,20 @@ const SeCard: React.FC = () => {
 	return (
 		<div className="rounded-xl border-2 border-navy-300 bg-navy-100 px-8 py-8">
 			{/* Header */}
-			<div className="mb-1 text-xs font-semibold tracking-widest uppercase text-navy-text">
+			<div className="mb-1 text-xs font-semibold tracking-widest text-navy-text uppercase">
 				The σε story
 			</div>
-			<h3 className="font-serif text-3xl text-navy-text mb-2">σε + article contraction</h3>
-			<p className="text-sm text-stone-600 mb-8 max-w-md">{SE_CONTRACTIONS.intro}</p>
+			<h3 className="mb-2 font-serif text-3xl text-navy-text">σε + article contraction</h3>
+			<p className="mb-8 max-w-md text-sm text-stone-600">{SE_CONTRACTIONS.intro}</p>
 
 			{/* All 6 forms — singular then plural */}
-			<div className="space-y-3 mb-6">
+			<div className="mb-6 space-y-3">
 				{[
 					{ label: "Singular", forms: singular },
 					{ label: "Plural", forms: plural },
 				].map(({ label, forms }) => (
 					<div key={label}>
-						<p className="text-xs font-semibold tracking-widest text-stone-400 uppercase mb-2">
+						<p className="mb-2 text-xs font-semibold tracking-widest text-stone-400 uppercase">
 							{label}
 						</p>
 						<div className="grid grid-cols-3 gap-3">
@@ -55,8 +55,11 @@ const SeCard: React.FC = () => {
 								const [from, to] = f.formula.split(" = ");
 								const gStyle = SCHEME[CONTRACTION_GENDER_SCHEME[f.gender] ?? "neutral"];
 								return (
-									<div key={f.formula} className="rounded-lg border border-navy-200 bg-white py-4 text-center">
-										<div className="text-xs text-stone-400 mb-2">{from}</div>
+									<div
+										key={f.formula}
+										className="rounded-lg border border-navy-200 bg-white py-4 text-center"
+									>
+										<div className="mb-2 text-xs text-stone-400">{from}</div>
 										<span className={cn("font-serif text-3xl font-bold", gStyle.text)}>{to}</span>
 									</div>
 								);
@@ -67,20 +70,22 @@ const SeCard: React.FC = () => {
 			</div>
 
 			{/* Examples */}
-			<div className="border-t border-navy-200 pt-5 space-y-1.5 mb-5">
-				{singular.flatMap((f) => f.examples.slice(0, 1)).map((ex) => (
-					<div key={ex.greek} className="flex items-baseline gap-3 text-sm">
-						<MonoText size="sm" variant="greek" className="font-medium text-stone-800">
-							{ex.greek}
-						</MonoText>
-						<span className="text-stone-500">{ex.english}</span>
-					</div>
-				))}
+			<div className="mb-5 space-y-1.5 border-t border-navy-200 pt-5">
+				{singular
+					.flatMap((f) => f.examples.slice(0, 1))
+					.map((ex) => (
+						<div key={ex.greek} className="flex items-baseline gap-3 text-sm">
+							<MonoText size="sm" variant="greek" className="font-medium text-stone-800">
+								{ex.greek}
+							</MonoText>
+							<span className="text-stone-500">{ex.english}</span>
+						</div>
+					))}
 			</div>
 
 			{/* When σε stays σε */}
 			<div className="rounded-lg border border-navy-200 bg-white p-4">
-				<p className="text-xs font-semibold text-navy-text mb-1.5">
+				<p className="mb-1.5 text-xs font-semibold text-navy-text">
 					{SE_CONTRACTIONS.noArticle.title}
 				</p>
 				<p className="text-sm text-stone-600">
@@ -118,15 +123,30 @@ export const PrepositionsSection: React.FC = () => (
 			<div className="mb-1 text-xs font-semibold tracking-widest text-stone-400 uppercase">
 				No contraction
 			</div>
-			<h3 className="font-serif text-2xl text-stone-900 mb-1">The rest</h3>
-			<p className="text-sm text-stone-500 mb-5">
+			<h3 className="mb-1 font-serif text-2xl text-stone-900">The rest</h3>
+			<p className="mb-5 text-sm text-stone-500">
 				Use accusative forms on what follows. Nothing transforms.
 			</p>
 			<div className="space-y-3">
 				{[
-					{ greek: "με", english: "with", example: "Καφέ με γάλα", exampleEnglish: "coffee with milk" },
-					{ greek: "για", english: "for", example: "Αυτό είναι για σένα", exampleEnglish: "this is for you" },
-					{ greek: "από", english: "from", example: "Είμαι από την Αθήνα", exampleEnglish: "I'm from Athens" },
+					{
+						greek: "με",
+						english: "with",
+						example: "Καφέ με γάλα",
+						exampleEnglish: "coffee with milk",
+					},
+					{
+						greek: "για",
+						english: "for",
+						example: "Αυτό είναι για σένα",
+						exampleEnglish: "this is for you",
+					},
+					{
+						greek: "από",
+						english: "from",
+						example: "Είμαι από την Αθήνα",
+						exampleEnglish: "I'm from Athens",
+					},
 					...OTHER_PREPOSITIONS.map((p) => ({
 						greek: p.greek,
 						english: p.english,
@@ -153,7 +173,7 @@ export const PrepositionsSection: React.FC = () => (
 			<div className="mb-1 text-xs font-semibold tracking-widest text-stone-400 uppercase">
 				Time
 			</div>
-			<h3 className="font-serif text-xl text-stone-900 mb-4">Time expressions</h3>
+			<h3 className="mb-4 font-serif text-xl text-stone-900">Time expressions</h3>
 			<div className="grid gap-6 sm:grid-cols-3">
 				{TIME_EXPRESSIONS.patterns.map((p) => (
 					<div key={p.pattern}>
@@ -179,8 +199,8 @@ export const PrepositionsSection: React.FC = () => (
 			<div className="mb-1 text-xs font-semibold tracking-widest text-stone-400 uppercase">
 				With pronouns
 			</div>
-			<h3 className="font-serif text-xl text-stone-900 mb-1">Prepositions with pronouns</h3>
-			<p className="text-sm text-stone-500 mb-4">
+			<h3 className="mb-1 font-serif text-xl text-stone-900">Prepositions with pronouns</h3>
+			<p className="mb-4 text-sm text-stone-500">
 				Weak forms (με, σε) go before verbs only. After a preposition, use the long emphatic forms.
 			</p>
 			<div className="flex flex-wrap gap-2">
@@ -221,8 +241,8 @@ export const PrepositionsSection: React.FC = () => (
 			defaultOpen={false}
 		>
 			<div className="space-y-4">
-				<div className="rounded-lg border border-stone-200 bg-white p-4 space-y-3">
-					<p className="text-xs font-semibold uppercase tracking-widest text-stone-400">
+				<div className="space-y-3 rounded-lg border border-stone-200 bg-white p-4">
+					<p className="text-xs font-semibold tracking-widest text-stone-400 uppercase">
 						The pattern
 					</p>
 					<div className="space-y-2 text-sm">
@@ -279,13 +299,13 @@ export const PrepositionsSection: React.FC = () => (
 					return (
 						<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
 							<div className="space-y-2">
-								<p className="text-xs font-semibold uppercase tracking-widest text-case-accusative-text">
+								<p className="text-xs font-semibold tracking-widest text-case-accusative-text uppercase">
 									σε — contracts
 								</p>
 								{col(contracts, true)}
 							</div>
 							<div className="space-y-2">
-								<p className="text-xs font-semibold uppercase tracking-widest text-stone-400">
+								<p className="text-xs font-semibold tracking-widest text-stone-400 uppercase">
 									από — no change
 								</p>
 								{col(noChange, false)}

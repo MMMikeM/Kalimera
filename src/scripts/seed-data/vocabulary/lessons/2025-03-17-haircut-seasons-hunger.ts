@@ -8,7 +8,12 @@ export const LESSON_2025_03_17 = createLesson({
 	},
 
 	verbs: [
-		{ lemma: "κουρεύομαι", english: "I get a haircut", conjugationFamily: "-ομαι", cefrLevel: "A2" },
+		{
+			lemma: "κουρεύομαι",
+			english: "I get a haircut",
+			conjugationFamily: "-ομαι",
+			cefrLevel: "A2",
+		},
 		{ lemma: "κόβω", english: "I cut", conjugationFamily: "-ω", cefrLevel: "A1" },
 		{ lemma: "πεινάω", english: "I am hungry", conjugationFamily: "-άω/-ώ", cefrLevel: "A1" },
 	],
@@ -23,7 +28,12 @@ export const LESSON_2025_03_17 = createLesson({
 		{ lemma: "άνοιξη", gender: "feminine", english: "spring", cefrLevel: "A1" },
 		{ lemma: "καλοκαίρι", gender: "neuter", english: "summer", cefrLevel: "A1" },
 		{ lemma: "φθινόπωρο", gender: "neuter", english: "autumn", cefrLevel: "A1" },
-		{ lemma: "λουλούδι", gender: "neuter", english: "flower (λουλούδια = flowers)", cefrLevel: "A1" },
+		{
+			lemma: "λουλούδι",
+			gender: "neuter",
+			english: "flower (λουλούδια = flowers)",
+			cefrLevel: "A1",
+		},
 	],
 
 	phrases: [

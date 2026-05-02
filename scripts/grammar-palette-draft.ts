@@ -109,7 +109,12 @@ function gammaEncode(c: number): number {
 
 function inGamut(rgb: { r: number; g: number; b: number }, eps = 0.0001) {
 	return (
-		rgb.r >= -eps && rgb.r <= 1 + eps && rgb.g >= -eps && rgb.g <= 1 + eps && rgb.b >= -eps && rgb.b <= 1 + eps
+		rgb.r >= -eps &&
+		rgb.r <= 1 + eps &&
+		rgb.g >= -eps &&
+		rgb.g <= 1 + eps &&
+		rgb.b >= -eps &&
+		rgb.b <= 1 + eps
 	);
 }
 
@@ -155,7 +160,15 @@ function contrast(hex: string, bg = "#ffffff"): number {
 }
 
 // --- Generate tokens ---
-type Row = { slot: string; step: string; hex: string; oklch: string; L: number; C: number; h: number };
+type Row = {
+	slot: string;
+	step: string;
+	hex: string;
+	oklch: string;
+	L: number;
+	C: number;
+	h: number;
+};
 
 const fmt = (n: number, d: number) => Number(n.toFixed(d)).toString();
 
@@ -295,9 +308,7 @@ BG_LEVELS["honey-50"] = toHex(honey50Rgb);
 console.log("slot".padEnd(22), Object.keys(BG_LEVELS).join("   "));
 for (const slot of Object.keys(HUES)) {
 	const textHex = rows.find((r) => r.slot === slot && r.step === "text")?.hex ?? "#000";
-	const parts = Object.values(BG_LEVELS).map((bg) =>
-		contrast(textHex, bg).toFixed(2).padStart(5),
-	);
+	const parts = Object.values(BG_LEVELS).map((bg) => contrast(textHex, bg).toFixed(2).padStart(5));
 	console.log(slot.padEnd(22), parts.join("      "));
 }
 
@@ -309,7 +320,9 @@ const spreadReport = (slots: string[], label: string) => {
 			return contrast(textHex, bg);
 		});
 		const spread = Math.max(...ratios) - Math.min(...ratios);
-		console.log(`  ${name.padEnd(10)} spread=${spread.toFixed(2)}  range=[${Math.min(...ratios).toFixed(2)}..${Math.max(...ratios).toFixed(2)}]`);
+		console.log(
+			`  ${name.padEnd(10)} spread=${spread.toFixed(2)}  range=[${Math.min(...ratios).toFixed(2)}..${Math.max(...ratios).toFixed(2)}]`,
+		);
 	}
 };
 spreadReport(["case-nominative", "case-accusative", "case-genitive"], "CASES");
@@ -320,7 +333,8 @@ spreadReport(["gender-masculine", "gender-feminine", "gender-neuter"], "GENDERS"
 console.log("\n=== Contrast of -text against surfaces (WCAG 4.5 for body, 3.0 for UI) ===");
 console.log("slot".padEnd(22), "white", "bg-100", "bg-200", "bg-300");
 for (const slot of Object.keys(HUES)) {
-	const hexFor = (step: string) => rows.find((r) => r.slot === slot && r.step === step)?.hex ?? "#fff";
+	const hexFor = (step: string) =>
+		rows.find((r) => r.slot === slot && r.step === step)?.hex ?? "#fff";
 	const text = hexFor("text");
 	const c = (bg: string) => contrast(text, bg).toFixed(2);
 	console.log(
@@ -371,7 +385,8 @@ css = css.replace(HEX_TOKEN_RE, (_m, prefix: string, hex: string, suffix: string
 });
 
 // 3. Re-round existing oklch() literals to current precision targets.
-const OKLCH_TOKEN_RE = /(--color-[a-z0-9-]+:\s*)oklch\(\s*([0-9.]+)\s+([0-9.]+)\s+([0-9.]+)\s*\)(\s*;)/g;
+const OKLCH_TOKEN_RE =
+	/(--color-[a-z0-9-]+:\s*)oklch\(\s*([0-9.]+)\s+([0-9.]+)\s+([0-9.]+)\s*\)(\s*;)/g;
 css = css.replace(
 	OKLCH_TOKEN_RE,
 	(_m, prefix: string, l: string, c: string, h: string, suffix: string) =>

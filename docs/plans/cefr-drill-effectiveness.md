@@ -8,7 +8,7 @@
 
 ## Executive Summary
 
-CEFR levels are a 🟡 **partial tool** for drill design. They provide legitimate sequencing signals when combined with **response time data** and **error tracking**, but blocking practice by CEFR level alone violates interleaving research and reduces the variation needed for durable retrieval. 
+CEFR levels are a 🟡 **partial tool** for drill design. They provide legitimate sequencing signals when combined with **response time data** and **error tracking**, but blocking practice by CEFR level alone violates interleaving research and reduces the variation needed for durable retrieval.
 
 **Verdict:** Use CEFR as a _difficulty weighting_ in adaptive algorithms, not as hard curriculum gates. Interleave across levels within sessions. Separate speed targets by level but don't lock learners into "master A1 first" workflows.
 
@@ -21,11 +21,13 @@ CEFR levels are a 🟡 **partial tool** for drill design. They provide legitimat
 CEFR levels (A1/A2/B1) are an externally-imposed classification system that group vocabulary by perceived difficulty for learners of that language. For production drills, this creates a tension:
 
 **What CEFR does well:**
+
 - **Provides a learning progression signal.** A1 words (είμαι, έχω, θέλω) are foundational; A2 words add structural variety; B1 words require faster retrieval under pressure.
 - **Aligns with communicative expectations.** A1 enables basic conversation; A2 enables simple narratives; B1 enables sustained discourse.
 - **Enables adaptive filtering.** A learner stuck on speed can focus on A1/A2 to build automaticity in high-frequency forms before tackling B1 complexity.
 
 **What CEFR fails to signal:**
+
 - **Morphological complexity.** "dog" and "cat" (both A1 in English learning) have identical inflectional patterns; "friend" (A2) and "woman" (A1) have different declension patterns. CEFR doesn't encode _form complexity_, only vocabulary frequency.
 - **Form-specific demands.** A1 noun might be easy lemma but hard case (nominative vs accusative); A2 verb might require rapid conjugation retrieval under time pressure. CEFR classifies the word, not the retrieval task.
 - **Individual learner gaps.** The user might know all A1 vocabulary but struggle with A1 case declensions in real time. A blanket A1 session doesn't target the actual gap.
@@ -71,12 +73,14 @@ From anti-patterns reference:
 ### What This Means for CEFR-Based Sessions
 
 **Blocked Approach (A1-only until "mastered"):**
+
 - Session 1-10: A1 nouns, A1 verbs, A1 articles only
 - Clear progress to user, easy to gamify
 - **Result:** Forms become automatized in isolation but fail to transfer when mixed with A2/B1 (interference effect)
 - **Speed doesn't improve in conversation** where forms are interleaved with unfamiliar material
 
 **Interleaved Approach (mix levels in every session):**
+
 - Every session mixes A1, A2, B1 (by weighting, not equally)
 - Harder initially (lower accuracy, more errors)
 - Errors are useful (Serfaty & Serrano): "emotionally salient errors aid memory"
@@ -89,7 +93,7 @@ The user **already has knowledge** (knows rules, can apply with time). They don'
 **Session Design (Example 15-minute drill):**
 
 1. **Warm-up (2 min):** 2-3 A1 forms they're fast at (confidence building)
-2. **Mixed focus (10 min):** 
+2. **Mixed focus (10 min):**
    - 60% A1 production drills (2-3 sec)
    - 25% A2 production drills (3-4 sec)
    - 15% B1 production drills (4-5 sec)
@@ -97,12 +101,14 @@ The user **already has knowledge** (knows rules, can apply with time). They don'
 3. **Closing (3 min):** 1-2 challenging B1 forms with feedback
 
 **Why this works:**
+
 - A1 drills remain fast and build confidence
 - A2/B1 introduce retrieval difficulty without blocking A1
 - Interleaving forces the brain to distinguish contexts
 - Errors on A2/B1 signal where proceduralization is incomplete
 
 **Mastery Criterion (not CEFR progression):**
+
 - A1 level: < 2.5 sec average + > 90% accuracy
 - A2 level: < 4 sec average + > 85% accuracy
 - B1 level: < 5 sec average + > 80% accuracy
@@ -112,6 +118,7 @@ Once A1 items hit mastery across 3+ sessions, they remain in drills but at lower
 ### Flag: Avoid the "Learning Path" Illusion
 
 🔴 **Do NOT build a visible "path" like:**
+
 - "A1 Nouns (5/5 complete) → A1 Verbs (2/7) → A1 Articles (0/6)"
 - "Unlock A2 once A1 complete"
 - Progress bars per CEFR level
@@ -159,7 +166,7 @@ GROUP BY v.cefr_level;
 Define "mastery" per CEFR level:
 
 | Level | Target Speed | Min Accuracy | Min Samples |
-|-------|--------------|--------------|-------------|
+| ----- | ------------ | ------------ | ----------- |
 | A1    | < 2.5 sec    | 90%          | 15 attempts |
 | A2    | < 4 sec      | 85%          | 15 attempts |
 | B1    | < 5 sec      | 80%          | 10 attempts |
@@ -172,29 +179,27 @@ When a level hits mastery thresholds _consistently_ (across 2+ sessions), mark i
 // Pseudocode: next session weight calculation
 
 const getMixWeights = (cefrStats: CefrLevelStats[]): Record<CefrLevel, number> => {
-  const weights = { A1: 0.6, A2: 0.3, B1: 0.1 }; // default
-  
-  for (const stat of cefrStats) {
-    const isMastered = 
-      stat.avgResponseTime < targetSpeed[stat.cefrLevel] &&
-      stat.accuracyRate > minAccuracy[stat.cefrLevel] &&
-      stat.sampleCount >= minSamples[stat.cefrLevel];
-    
-    if (isMastered) {
-      // Drop proficient level to maintenance weight
-      weights[stat.cefrLevel] *= 0.5;
-      // Reallocate to struggling levels
-    } else if (stat.avgResponseTime > targetSpeed[stat.cefrLevel] * 1.5) {
-      // User is slow; increase weight for this level
-      weights[stat.cefrLevel] *= 1.3;
-    }
-  }
-  
-  // Normalize to 1.0
-  const total = Object.values(weights).reduce((a, b) => a + b, 0);
-  return Object.fromEntries(
-    Object.entries(weights).map(([k, v]) => [k, v / total])
-  );
+	const weights = { A1: 0.6, A2: 0.3, B1: 0.1 }; // default
+
+	for (const stat of cefrStats) {
+		const isMastered =
+			stat.avgResponseTime < targetSpeed[stat.cefrLevel] &&
+			stat.accuracyRate > minAccuracy[stat.cefrLevel] &&
+			stat.sampleCount >= minSamples[stat.cefrLevel];
+
+		if (isMastered) {
+			// Drop proficient level to maintenance weight
+			weights[stat.cefrLevel] *= 0.5;
+			// Reallocate to struggling levels
+		} else if (stat.avgResponseTime > targetSpeed[stat.cefrLevel] * 1.5) {
+			// User is slow; increase weight for this level
+			weights[stat.cefrLevel] *= 1.3;
+		}
+	}
+
+	// Normalize to 1.0
+	const total = Object.values(weights).reduce((a, b) => a + b, 0);
+	return Object.fromEntries(Object.entries(weights).map(([k, v]) => [k, v / total]));
 };
 ```
 
@@ -242,15 +247,16 @@ All drills are **English → Greek production**, **timed**, **no hints**, **erro
 **What:** Present tense of είμαι under time pressure  
 **Why:** Copula is essential; must be instant
 
-| Prompt            | Expected Response | Timer |
-|-------------------|-------------------|-------|
-| I am              | είμαι             | 2 sec |
-| You (sg) are      | είσαι             | 2 sec |
-| She is            | είναι             | 2 sec |
-| We are            | είμαστε           | 2 sec |
-| They are          | είναι             | 2 sec |
+| Prompt       | Expected Response | Timer |
+| ------------ | ----------------- | ----- |
+| I am         | είμαι             | 2 sec |
+| You (sg) are | είσαι             | 2 sec |
+| She is       | είναι             | 2 sec |
+| We are       | είμαστε           | 2 sec |
+| They are     | είναι             | 2 sec |
 
 **Progression:**
+
 - Weeks 1-2: Present only, 2 sec timer
 - Week 3+: Mix with embedded use (see drill A1.3)
 
@@ -263,13 +269,13 @@ All drills are **English → Greek production**, **timed**, **no hints**, **erro
 **What:** Present tense, first 5 core verbs (είμαι, έχω, θέλω, πηγαίνω, βλέπω)  
 **Why:** Verb forms must be automatic for any sentence production
 
-| Prompt              | Expected Response |
-|---------------------|-------------------|
-| they (έχω)          | έχουν             |
-| I (θέλω)            | θέλω              |
-| she (πηγαίνω)       | πηγαίνει          |
-| we (βλέπω)          | βλέπουμε          |
-| you sg (έχω)        | έχεις             |
+| Prompt        | Expected Response |
+| ------------- | ----------------- |
+| they (έχω)    | έχουν             |
+| I (θέλω)      | θέλω              |
+| she (πηγαίνω) | πηγαίνει          |
+| we (βλέπω)    | βλέπουμε          |
+| you sg (έχω)  | έχεις             |
 
 **Timer:** 2-3 sec (faster for high-frequency words)
 
@@ -284,14 +290,14 @@ All drills are **English → Greek production**, **timed**, **no hints**, **erro
 **What:** Produce article + definite form for nominative/accusative  
 **Why:** Articles are constant friction; must become instant
 
-| Prompt                         | Expected Response |
-|--------------------------------|-------------------|
-| the child (nominative)         | το παιδί          |
-| the child (accusative)         | το παιδί          |
-| the friend (nominative, masc)  | ο φίλος           |
-| the friend (accusative, masc)  | τον φίλο          |
-| the woman (nominative, fem)    | η γυναίκα         |
-| the woman (accusative, fem)    | την γυναίκα       |
+| Prompt                        | Expected Response |
+| ----------------------------- | ----------------- |
+| the child (nominative)        | το παιδί          |
+| the child (accusative)        | το παιδί          |
+| the friend (nominative, masc) | ο φίλος           |
+| the friend (accusative, masc) | τον φίλο          |
+| the woman (nominative, fem)   | η γυναίκα         |
+| the woman (accusative, fem)   | την γυναίκα       |
 
 **Timer:** 2-3 sec
 
@@ -304,13 +310,13 @@ All drills are **English → Greek production**, **timed**, **no hints**, **erro
 **What:** Full sentence English → Greek, using high-frequency verbs + nouns  
 **Why:** Integrates verb + noun + article under time pressure (real speaking)
 
-| Prompt                   | Expected Response           |
-|--------------------------|---------------------------|
-| I have the book          | Έχω το βιβλίο              |
-| She sees the child       | Βλέπει το παιδί            |
-| We want coffee           | Θέλουμε καφέ               |
-| They go to school        | Πηγαίνουν στο σχολείο      |
-| You have the friend (sg) | Έχεις τον φίλο             |
+| Prompt                   | Expected Response     |
+| ------------------------ | --------------------- |
+| I have the book          | Έχω το βιβλίο         |
+| She sees the child       | Βλέπει το παιδί       |
+| We want coffee           | Θέλουμε καφέ          |
+| They go to school        | Πηγαίνουν στο σχολείο |
+| You have the friend (sg) | Έχεις τον φίλο        |
 
 **Timer:** 4-5 sec (longer: multiple retrievals)
 
@@ -330,13 +336,13 @@ Adjectives: καλός (good), μεγάλος (big), ωραίος (beautiful)
 **What:** Transform nominative NP to genitive (possession, origin)  
 **Why:** Genitive is structurally complex; more forms to retrieve; slows learners
 
-| Prompt                      | Expected Response |
-|-----------------------------|-------------------|
+| Prompt                       | Expected Response |
+| ---------------------------- | ----------------- |
 | the friend's (of the friend) | του φίλου         |
-| the woman's (of the woman)  | της γυναίκας      |
-| the child's (of the child)  | του παιδιού       |
-| the city's (of the city)    | της πόλης         |
-| the name's (of the name)    | του ονόματος      |
+| the woman's (of the woman)   | της γυναίκας      |
+| the child's (of the child)   | του παιδιού       |
+| the city's (of the city)     | της πόλης         |
+| the name's (of the name)     | του ονόματος      |
 
 **Timer:** 3-4 sec
 
@@ -349,10 +355,10 @@ Adjectives: καλός (good), μεγάλος (big), ωραίος (beautiful)
 **What:** Produce verb phrase with correct case-marked object  
 **Why:** Combines verb retrieval + case selection; higher complexity
 
-| Prompt                    | Expected Response         |
-|---------------------------|---------------------------|
-| I give (to the woman)     | Δίνω στη γυναίκα          |
-| She loves (the life)      | Αγαπάει τη ζωή            |
+| Prompt                    | Expected Response            |
+| ------------------------- | ---------------------------- |
+| I give (to the woman)     | Δίνω στη γυναίκα             |
+| She loves (the life)      | Αγαπάει τη ζωή               |
 | They take (of the friend) | Παίρνουν του φίλου... [+obj] |
 
 **Timer:** 4-5 sec
@@ -366,11 +372,11 @@ Adjectives: καλός (good), μεγάλος (big), ωραίος (beautiful)
 **What:** Produce adjective-noun agreement in required case  
 **Why:** Adjective forms vary by gender/number/case; high cognitive load
 
-| Prompt                                | Expected Response   |
-|---------------------------------------|---------------------|
-| big (masculine accusative): the man   | τον μεγάλο άνθρωπο  |
-| beautiful (feminine nominative): life | η ωραία ζωή         |
-| good (neuter accusative): name        | το καλό όνομα       |
+| Prompt                                | Expected Response  |
+| ------------------------------------- | ------------------ |
+| big (masculine accusative): the man   | τον μεγάλο άνθρωπο |
+| beautiful (feminine nominative): life | η ωραία ζωή        |
+| good (neuter accusative): name        | το καλό όνομα      |
 
 **Timer:** 4-5 sec
 
@@ -383,12 +389,12 @@ Adjectives: καλός (good), μεγάλος (big), ωραίος (beautiful)
 **What:** Produce preposition + correct case form  
 **Why:** Each preposition has case constraints; must be automatic
 
-| Prompt                   | Expected Response |
-|--------------------------|-------------------|
-| to (στο) + the school    | στο σχολείο       |
-| from (από) + the city    | από την πόλη      |
-| with (με) + the woman    | με τη γυναίκα     |
-| in (σε) + the house      | στο σπίτι         |
+| Prompt                | Expected Response |
+| --------------------- | ----------------- |
+| to (στο) + the school | στο σχολείο       |
+| from (από) + the city | από την πόλη      |
+| with (με) + the woman | με τη γυναίκα     |
+| in (σε) + the house   | στο σπίτι         |
 
 **Timer:** 3-4 sec
 
@@ -408,9 +414,9 @@ Adjectives: δύσκολος (difficult), σημαντικός (important), ισ
 **What:** English → Greek for sentence with multiple case requirements  
 **Why:** B1 requires handling multiple form retrievals simultaneously
 
-| Prompt                                      | Expected Response                      |
-|---------------------------------------------|----------------------------------------|
-| The trip to the city is difficult          | Το ταξίδι στην πόλη είναι δύσκολο      |
+| Prompt                                     | Expected Response                     |
+| ------------------------------------------ | ------------------------------------- |
+| The trip to the city is difficult          | Το ταξίδι στην πόλη είναι δύσκολο     |
 | He uses the woman's kitchen                | Χρησιμοποιεί την κουζίνα της γυναίκας |
 | They recognize the historical significance | Αναγνωρίζουν τη σημαντική ιστορία...  |
 
@@ -425,11 +431,11 @@ Adjectives: δύσκολος (difficult), σημαντικός (important), ισ
 **What:** Conjugate verb in specified tense (present, aorist, future)  
 **Why:** Tense switching requires rapid morphological access
 
-| Prompt              | Expected Response |
-|---------------------|-------------------|
-| they use (present)  | χρησιμοποιούν     |
-| they used (aorist)  | χρησιμοποίησαν    |
-| they will use       | θα χρησιμοποιήσουν |
+| Prompt             | Expected Response  |
+| ------------------ | ------------------ |
+| they use (present) | χρησιμοποιούν      |
+| they used (aorist) | χρησιμοποίησαν     |
+| they will use      | θα χρησιμοποιήσουν |
 
 **Timer:** 4-5 sec
 
@@ -442,9 +448,9 @@ Adjectives: δύσκολος (difficult), σημαντικός (important), ισ
 **What:** Produce opinion phrase with case-correct objects  
 **Why:** B1 involves expressing agreement/disagreement with structured morphology
 
-| Prompt                                        | Expected Response                        |
-|-----------------------------------------------|------------------------------------------|
-| I disagree with the man's opinion            | Διαφωνώ με τη γνώμη του άνδρα            |
+| Prompt                                      | Expected Response                         |
+| ------------------------------------------- | ----------------------------------------- |
+| I disagree with the man's opinion           | Διαφωνώ με τη γνώμη του άνδρα             |
 | The difficulty of this problem is important | Η δυσκολία αυτού του προβλήματος είναι... |
 
 **Timer:** 6-7 sec
@@ -458,11 +464,11 @@ Adjectives: δύσκολος (difficult), σημαντικός (important), ισ
 **What:** Produce common fixed phrases (verbal collocations, formulaic sequences)  
 **Why:** B1 learners gain fluency through lexical chunks, not individual morpheme retrieval
 
-| Prompt                       | Expected Response              |
-|------------------------------|--------------------------------|
-| What's your name?            | Ποιό είναι το όνομά σας;       |
-| I don't have time            | Δεν έχω χρόνο                  |
-| That's not a big deal        | Δεν είναι μεγάλο πρόβλημα      |
+| Prompt                | Expected Response         |
+| --------------------- | ------------------------- |
+| What's your name?     | Ποιό είναι το όνομά σας;  |
+| I don't have time     | Δεν έχω χρόνο             |
+| That's not a big deal | Δεν είναι μεγάλο πρόβλημα |
 
 **Timer:** 3-4 sec (faster because rote-learned chunks)
 
@@ -502,6 +508,7 @@ Adjectives: δύσκολος (difficult), σημαντικός (important), ισ
 **Problem:** CEFR classifies _vocabulary frequency_, not _inflectional load_.
 
 **Example:**
+
 - "dog" and "school" are both A1 frequency
 - In Greek, κύνος (dog) follows masc-os pattern (ο κύνος → τον κύνο → του κύνου)
 - But σχολείο (school) follows neut-o pattern (το σχολείο → το σχολείο → του σχολείου)
@@ -509,15 +516,17 @@ Adjectives: δύσκολος (difficult), σημαντικός (important), ισ
 - But retrieval demands are different (3 distinct forms vs. 1 distinct nominative-oblique form)
 
 **Fix:** Track not just CEFR level but also:
+
 - **declension_pattern** (already in schema: `noun_declension_patterns`)
 - **conjugation_family** (already in schema: `verb_details.conjugation_family`)
 - **Form count:** How many distinct inflected forms exist for this item?
 
 **Query addition:**
+
 ```typescript
 // When selecting drills, also track:
-SELECT 
-  v.id, 
+SELECT
+  v.id,
   v.cefr_level,
   nd.declension_pattern,
   vd.conjugation_family,
@@ -539,6 +548,7 @@ This lets the drill engine balance **frequency + morphological complexity**.
 **Problem:** CEFR provides no signal about _which specific forms_ a learner struggles with.
 
 **Example:**
+
 - User might know all A1 noun lemmas but struggle with nominative vs. accusative distinction under time pressure
 - CEFR says "A1 nouns are learned"
 - Drills based on CEFR alone won't target the gap
@@ -562,17 +572,17 @@ export const weakAreas = sqliteTable("weak_areas", {
 // Pseudocode: prioritize content matching user's weak areas
 
 const getSessionContent = (userId: string, cefrWeights: Record<CefrLevel, number>) => {
-  const weakAreas = await getWeakAreas(userId);
-  
-  // If user has weak area "accusative", prioritize accusative drills
-  // If user has weak area "perfective-aorist", prioritize aorist verbs
-  
-  const candidates = await getVocabByMixedCriteria({
-    cefrWeights, // from adaptive algorithm
-    weakAreaFilters: weakAreas.filter(a => a.needsFocus),
-  });
-  
-  return candidates;
+	const weakAreas = await getWeakAreas(userId);
+
+	// If user has weak area "accusative", prioritize accusative drills
+	// If user has weak area "perfective-aorist", prioritize aorist verbs
+
+	const candidates = await getVocabByMixedCriteria({
+		cefrWeights, // from adaptive algorithm
+		weakAreaFilters: weakAreas.filter((a) => a.needsFocus),
+	});
+
+	return candidates;
 };
 ```
 
@@ -583,6 +593,7 @@ const getSessionContent = (userId: string, cefrWeights: Record<CefrLevel, number
 **Problem:** CEFR treats "know a word" as binary. But retrieval is context-dependent.
 
 **Example:**
+
 - User might produce "ο φίλος" (the friend) instantly in a sentence
 - But in a standalone case transformation drill ("nominative → accusative"), takes 5 seconds
 - Same word; different retrieval contexts require different drill exposure
@@ -591,7 +602,7 @@ const getSessionContent = (userId: string, cefrWeights: Record<CefrLevel, number
 
 ```typescript
 // Add to practiceAttempts queries:
-SELECT 
+SELECT
   v.greek_text,
   pa.question_text, // e.g., "article for masculine accusative"
   AVG(pa.time_taken) as avg_time,
@@ -613,6 +624,7 @@ This shows: "φίλος is fast in full sentences (2.1 sec) but slow in case iso
 **Problem:** CEFR groups A1, A2, B1 but doesn't rank within the level. Some A1 words appear 50x more often than others.
 
 **Example:**
+
 - κι/και (and) appears ~500x per million words in Greek corpora
 - φαγητό (food) appears ~5x per million
 - Both are A1
@@ -633,6 +645,7 @@ LIMIT 10;
 **Problem:** Some learners know (explicitly) why a form is correct but can't retrieve it fast. Others don't understand the rule at all.
 
 **Example:**
+
 - User can explain: "Accusative changes ο→τον because it's direct object"
 - But in a 2-second drill, freezes up
 - vs. User doesn't understand accusative function at all
@@ -644,11 +657,11 @@ LIMIT 10;
 ```typescript
 // Extended weak areas schema (future)
 const weakAreas = {
-  ...existing,
-  gapType: oneOf("declarative_gap" | "procedural_gap" | "mixed"),
-  // "declarative": user explained it wrong
-  // "procedural": user knows it but slow
-  // "mixed": both
+	...existing,
+	gapType: oneOf("declarative_gap" | "procedural_gap" | "mixed"),
+	// "declarative": user explained it wrong
+	// "procedural": user knows it but slow
+	// "mixed": both
 };
 ```
 
@@ -736,15 +749,15 @@ If gap type is "procedural," skip explanation; more drills.
 ```typescript
 // In getVocabByMixedCriteria:
 const formCounts = await db.query.nominalForms.findMany({
-  where: { vocabId: inList(candidateIds) },
-  groupBy: "vocabId"
-  // count distinct forms per vocab
+	where: { vocabId: inList(candidateIds) },
+	groupBy: "vocabId",
+	// count distinct forms per vocab
 });
 
 // Mix high-complexity (more forms) with low-complexity for variety
 candidateIds.sort((a, b) => {
-  const complexityDiff = formCounts[a] - formCounts[b];
-  // Interleave: pick from alternating complexity levels
+	const complexityDiff = formCounts[a] - formCounts[b];
+	// Interleave: pick from alternating complexity levels
 });
 ```
 
@@ -754,15 +767,15 @@ candidateIds.sort((a, b) => {
 
 ## Summary Table: CEFR Signals by Use Case
 
-| Use Case | CEFR Signal | Confidence | What To Do |
-|----------|------------|-----------|-----------|
-| Session pool filtering | Good | 🟢 High | Use as primary weighting; mix levels |
-| Blocking/sequencing | Poor | 🔴 Low | Avoid; use as soft guide only |
-| Adaptive difficulty | Good | 🟢 High | Pair with response time for triggers |
-| Targeting weak forms | Partial | 🟡 Medium | Couple with weak area tracking |
-| Morphological complexity | Poor | 🔴 Low | Add form count as secondary signal |
-| Form-specific drilling | N/A | 🔴 N/A | Track form + context, not just vocab |
-| Learner gap diagnosis | N/A | 🔴 N/A | Use error patterns + response time |
+| Use Case                 | CEFR Signal | Confidence | What To Do                           |
+| ------------------------ | ----------- | ---------- | ------------------------------------ |
+| Session pool filtering   | Good        | 🟢 High    | Use as primary weighting; mix levels |
+| Blocking/sequencing      | Poor        | 🔴 Low     | Avoid; use as soft guide only        |
+| Adaptive difficulty      | Good        | 🟢 High    | Pair with response time for triggers |
+| Targeting weak forms     | Partial     | 🟡 Medium  | Couple with weak area tracking       |
+| Morphological complexity | Poor        | 🔴 Low     | Add form count as secondary signal   |
+| Form-specific drilling   | N/A         | 🔴 N/A     | Track form + context, not just vocab |
+| Learner gap diagnosis    | N/A         | 🔴 N/A     | Use error patterns + response time   |
 
 ---
 
@@ -781,4 +794,3 @@ For this learner (adult, knows rules, stuck on speed):
 - ❌ Don't assume CEFR classification predicts learner-specific retrieval speed
 
 **The signal you actually need:** Response time + accuracy per form per context. CEFR is context-free; real learning is context-rich. Use CEFR to structure the initial pool; use performance data to keep the learner in the zone of proximal challenge.
-

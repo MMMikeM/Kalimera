@@ -58,10 +58,7 @@ const clearButtonVariants = tv({
 	},
 });
 
-interface SearchInputProps extends Omit<
-	React.InputHTMLAttributes<HTMLInputElement>,
-	"size"
-> {
+interface SearchInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size"> {
 	size?: "sm" | "md" | "lg";
 	icon?: ReactNode;
 	containerClassName?: string;

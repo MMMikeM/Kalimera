@@ -11,7 +11,12 @@ export async function loader() {
 	]);
 
 	const toSlugMap = (tags: typeof phraseTags) =>
-		Object.fromEntries(tags.map(t => [t.slug, t.vocabularyTags.map(vt => vt.vocabulary).filter(v => v !== null)]));
+		Object.fromEntries(
+			tags.map((t) => [
+				t.slug,
+				t.vocabularyTags.map((vt) => vt.vocabulary).filter((v) => v !== null),
+			]),
+		);
 
 	const phrases = toSlugMap(phraseTags);
 	const reference = toSlugMap(referenceTags);

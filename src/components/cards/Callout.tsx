@@ -12,24 +12,10 @@ interface CalloutProps {
 	children: ReactNode;
 }
 
-export const Callout = ({
-	scheme,
-	title,
-	icon,
-	footer,
-	className,
-	children,
-}: CalloutProps) => {
+export const Callout = ({ scheme, title, icon, footer, className, children }: CalloutProps) => {
 	const style = SCHEME[scheme];
 	return (
-		<div
-			className={cn(
-				"rounded-lg border p-4",
-				style.bg,
-				style.border,
-				className,
-			)}
-		>
+		<div className={cn("rounded-lg border p-4", style.bg, style.border, className)}>
 			{title ? (
 				<h4 className={cn("mb-2 flex items-center gap-2 font-semibold", style.text)}>
 					{icon}

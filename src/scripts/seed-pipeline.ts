@@ -11,8 +11,13 @@ import {
 	type GrammaticalCase,
 	type GrammaticalNumber,
 } from "../db.server/enums";
-import { adjectiveDetails, nominalForms, nounDetails, verbDetails, vocabulary } from "../db.server/schema";
-import { GREEK_FREQUENCY_LOOKUP } from "./seed-data/frequency-lookup";
+import {
+	adjectiveDetails,
+	nominalForms,
+	nounDetails,
+	verbDetails,
+	vocabulary,
+} from "../db.server/schema";
 import type {
 	NewAdjectiveDetails,
 	NewNounDetails,
@@ -26,6 +31,7 @@ import type {
 	NounNominalFormsSeed,
 	NounSeed,
 } from "../types/seed";
+import { GREEK_FREQUENCY_LOOKUP } from "./seed-data/frequency-lookup";
 
 export const BATCH_SIZE = 100;
 
@@ -184,7 +190,9 @@ export async function batchInsertVocab(items: NewVocabulary[]): Promise<Map<stri
 		}
 	}
 
-	console.log(`  → ${resultMap.size} upserted (${enriched.filter((i) => i.frequencyRank != null).length} with frequency rank)`);
+	console.log(
+		`  → ${resultMap.size} upserted (${enriched.filter((i) => i.frequencyRank != null).length} with frequency rank)`,
+	);
 
 	return resultMap;
 }

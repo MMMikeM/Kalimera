@@ -9,8 +9,14 @@ import { MonoText } from "@/components/MonoText";
 import { ParadigmTable } from "@/components/ParadigmTable";
 import { SectionHeading } from "@/components/SectionHeading";
 import { type GrammarScheme, SCHEME } from "@/constants/grammar-palette";
+import {
+	AORIST_FORMATION_PATTERNS,
+	IRREGULAR_AORIST_STEMS,
+	IRREGULAR_VERBS,
+	PAST_TENSE_PATTERNS,
+	VERB_PATTERNS,
+} from "@/constants/verbs";
 import { cn } from "@/lib/utils";
-import { AORIST_FORMATION_PATTERNS, IRREGULAR_AORIST_STEMS, IRREGULAR_VERBS, PAST_TENSE_PATTERNS, VERB_PATTERNS } from "@/constants/verbs";
 
 interface UsageExample {
 	greek: string;
@@ -173,11 +179,7 @@ const PatternSection: React.FC<{
 					<SamePatternList verbs={pattern.samePattern} textClass={style.text} />
 				</CollapsibleSection>
 
-				<CollapsibleSection
-					title="See it in action"
-					colorScheme="stone"
-					defaultOpen={false}
-				>
+				<CollapsibleSection title="See it in action" colorScheme="stone" defaultOpen={false}>
 					<UsageExamples examples={USAGE_EXAMPLES[patternKey] ?? []} textClass={style.text} />
 				</CollapsibleSection>
 			</div>
@@ -194,7 +196,12 @@ interface PatternRow {
 
 const PATTERN_ROWS: PatternRow[] = [
 	{ ending: "-ω", name: "Active", examples: ["κάνω", "θέλω", "βλέπω"], scheme: "verb-active" },
-	{ ending: "-άω/-ώ", name: "Contracted", examples: ["μιλάω", "αγαπάω"], scheme: "verb-contracted" },
+	{
+		ending: "-άω/-ώ",
+		name: "Contracted",
+		examples: ["μιλάω", "αγαπάω"],
+		scheme: "verb-contracted",
+	},
 	{ ending: "-μαι", name: "Deponent", examples: ["έρχομαι", "θυμάμαι"], scheme: "verb-deponent" },
 ];
 
@@ -210,13 +217,19 @@ const PatternIdentifier: React.FC = () => (
 					key={row.ending}
 					className={cn(style.bg, style.border, "flex items-center gap-3 border-2 sm:gap-4")}
 				>
-					<MonoText className={`w-20 shrink-0 text-xl font-bold ${style.text}`}>{row.ending}</MonoText>
+					<MonoText className={`w-20 shrink-0 text-xl font-bold ${style.text}`}>
+						{row.ending}
+					</MonoText>
 					<span className="font-semibold text-stone-800">{row.name}</span>
 					<div className="ml-auto hidden gap-2 sm:flex">
 						{row.examples.map((ex) => (
 							<span
 								key={ex}
-								className={cn("rounded-md border bg-white px-2 py-1 font-mono text-sm", style.border, style.text)}
+								className={cn(
+									"rounded-md border bg-white px-2 py-1 font-mono text-sm",
+									style.border,
+									style.text,
+								)}
 							>
 								{ex}
 							</span>
@@ -259,10 +272,10 @@ const CONSONANT_RULES = [
 	},
 ] as const;
 
-const AoristExamples: React.FC<{ examples: readonly { greek: string; english: string }[]; scheme: GrammarScheme }> = ({
-	examples,
-	scheme,
-}) => (
+const AoristExamples: React.FC<{
+	examples: readonly { greek: string; english: string }[];
+	scheme: GrammarScheme;
+}> = ({ examples, scheme }) => (
 	<div className="mt-3 space-y-2 border-t border-stone-100 pt-3">
 		{examples.map((ex) => (
 			<div key={ex.greek} className="flex flex-col gap-0.5">
@@ -339,9 +352,11 @@ const PastTenseSection: React.FC = () => {
 					title="The augment"
 					description="Aorist stress falls on the 3rd syllable from the end. If the stem is too short, add ε- to create that syllable."
 				>
-					<div className="grid gap-px rounded-lg overflow-hidden bg-stone-200 sm:grid-cols-2">
+					<div className="grid gap-px overflow-hidden rounded-lg bg-stone-200 sm:grid-cols-2">
 						<div className="bg-stone-50 px-4 py-3">
-							<p className="mb-2 text-xs font-semibold tracking-wide text-stone-400 uppercase">Short verb → needs ε-</p>
+							<p className="mb-2 text-xs font-semibold tracking-wide text-stone-400 uppercase">
+								Short verb → needs ε-
+							</p>
 							<div className="flex items-center gap-2">
 								<MonoText className="text-base text-stone-500">γράφω</MonoText>
 								<span className="text-stone-300">→</span>
@@ -354,7 +369,9 @@ const PastTenseSection: React.FC = () => {
 							<p className="mt-1 text-xs text-stone-400">γρά·φω = 2 syllables → add ε-</p>
 						</div>
 						<div className="bg-stone-50 px-4 py-3">
-							<p className="mb-2 text-xs font-semibold tracking-wide text-stone-400 uppercase">Long verb → stress shifts</p>
+							<p className="mb-2 text-xs font-semibold tracking-wide text-stone-400 uppercase">
+								Long verb → stress shifts
+							</p>
 							<div className="flex items-center gap-2">
 								<MonoText className="text-base text-stone-500">δουλεύω</MonoText>
 								<span className="text-stone-300">→</span>
@@ -377,22 +394,32 @@ const PastTenseSection: React.FC = () => {
 				>
 					<div className="divide-y divide-stone-100 overflow-hidden rounded-lg border border-stone-200 bg-white">
 						{CONSONANT_RULES.map((rule) => (
-							<div key={rule.note} className="grid grid-cols-[1fr_auto_1fr] items-center gap-4 px-4 py-3">
+							<div
+								key={rule.note}
+								className="grid grid-cols-[1fr_auto_1fr] items-center gap-4 px-4 py-3"
+							>
 								<div className="flex flex-wrap gap-1.5">
 									{rule.stems.map((s) => (
-										<span key={s} className="rounded bg-stone-100 px-1.5 py-0.5 font-mono text-sm font-semibold text-stone-700">
+										<span
+											key={s}
+											className="rounded bg-stone-100 px-1.5 py-0.5 font-mono text-sm font-semibold text-stone-700"
+										>
 											{s}
 										</span>
 									))}
 								</div>
 								<div className="flex items-center gap-1.5 text-stone-400">
 									<span className="text-xs">+σ →</span>
-									<span className={`font-mono text-xl font-bold ${activeStyle.text}`}>{rule.result}</span>
+									<span className={`font-mono text-xl font-bold ${activeStyle.text}`}>
+										{rule.result}
+									</span>
 								</div>
 								<div className="text-right">
 									<MonoText className="text-sm text-stone-500">{rule.examplePresent}</MonoText>
 									<span className="mx-1 text-xs text-stone-300">→</span>
-									<MonoText className={`text-sm font-bold ${activeStyle.text}`}>{rule.examplePast}</MonoText>
+									<MonoText className={`text-sm font-bold ${activeStyle.text}`}>
+										{rule.examplePast}
+									</MonoText>
 								</div>
 							</div>
 						))}
@@ -474,7 +501,8 @@ const PastTenseSection: React.FC = () => {
 					<div>
 						<h3 className="text-lg font-bold text-honey-text">Stems that break the rules</h3>
 						<p className="text-sm text-stone-600">
-							These aorist stems cannot be predicted — the rules above don't apply. Memorise them as units.
+							These aorist stems cannot be predicted — the rules above don't apply. Memorise them as
+							units.
 						</p>
 					</div>
 				</div>
@@ -482,11 +510,16 @@ const PastTenseSection: React.FC = () => {
 					{(["suppletive", "irregular"] as const).map((cat) => (
 						<div key={cat}>
 							<p className="mb-1 text-xs font-semibold tracking-wide text-stone-500 uppercase">
-								{cat === "suppletive" ? "Suppletive — completely different stem" : "Irregular — follows rules loosely"}
+								{cat === "suppletive"
+									? "Suppletive — completely different stem"
+									: "Irregular — follows rules loosely"}
 							</p>
 							<div className="divide-y divide-honey-100 rounded-lg border border-honey-200 bg-white">
 								{IRREGULAR_AORIST_STEMS.filter((s) => s.category === cat).map((s) => (
-									<div key={s.present} className="grid grid-cols-[1fr_auto_1fr_auto] items-baseline gap-2 px-3 py-2">
+									<div
+										key={s.present}
+										className="grid grid-cols-[1fr_auto_1fr_auto] items-baseline gap-2 px-3 py-2"
+									>
 										<MonoText className="font-semibold text-stone-600">{s.present}</MonoText>
 										<span className="text-honey-300">→</span>
 										<MonoText className="font-bold text-honey-text">{s.aoristSg1}</MonoText>
@@ -560,9 +593,7 @@ export const VerbsSection: React.FC = () => (
 				title="είμαι (to be)"
 				description="The most common Greek verb. Memorise it first — you'll use it in every conversation."
 				footer={
-					eimai.note ? (
-						<p className="text-xs text-stone-500 italic">{eimai.note}</p>
-					) : undefined
+					eimai.note ? <p className="text-xs text-stone-500 italic">{eimai.note}</p> : undefined
 				}
 			>
 				<ParadigmTable

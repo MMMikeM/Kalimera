@@ -66,12 +66,18 @@ export const LESSON_2025_03_12 = createLesson({
 		{
 			text: "Δεν του αρέσει να κάνει μπάνιο",
 			english: "He doesn't like having a bath",
-			metadata: { pattern: "δεν + indirect pronoun + αρέσει να + verb", usage: "expressing dislikes" },
+			metadata: {
+				pattern: "δεν + indirect pronoun + αρέσει να + verb",
+				usage: "expressing dislikes",
+			},
 		},
 		{
 			text: "τον ξυπνάω και τον ταΐζω",
 			english: "I wake him up and feed him",
-			metadata: { pattern: "τον + verb (direct object pronoun for masculine)", usage: "baby care routine" },
+			metadata: {
+				pattern: "τον + verb (direct object pronoun for masculine)",
+				usage: "baby care routine",
+			},
 		},
 		{
 			text: "Στα μεσάνυχτα ξύπνησα το μωρό και το τάϊσα",

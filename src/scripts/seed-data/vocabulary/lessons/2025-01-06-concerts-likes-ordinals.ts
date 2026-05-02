@@ -8,9 +8,19 @@ export const LESSON_2025_01_06 = createLesson({
 	},
 
 	verbs: [
-		{ lemma: "βγάζω", english: "I take (photos)/take out", conjugationFamily: "-ω", cefrLevel: "A2" },
+		{
+			lemma: "βγάζω",
+			english: "I take (photos)/take out",
+			conjugationFamily: "-ω",
+			cefrLevel: "A2",
+		},
 		{ lemma: "χορεύω", english: "I dance", conjugationFamily: "-ω", cefrLevel: "A1" },
-		{ lemma: "αρέσω", english: "to please (μου αρέσει = I like)", conjugationFamily: "-ω", cefrLevel: "A1" },
+		{
+			lemma: "αρέσω",
+			english: "to please (μου αρέσει = I like)",
+			conjugationFamily: "-ω",
+			cefrLevel: "A1",
+		},
 	],
 
 	nouns: [

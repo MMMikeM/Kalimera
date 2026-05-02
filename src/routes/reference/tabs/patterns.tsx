@@ -29,11 +29,12 @@ const ParadigmCard = ({
 	return (
 		<TeachingCard
 			scheme={scheme}
-
 			eyebrow="Pattern"
 			title={
 				<span className="flex items-center gap-2">
-					<span className={`inline-flex items-center justify-center rounded-md p-1.5 ${style.badgeBg} ${style.text}`}>
+					<span
+						className={`inline-flex items-center justify-center rounded-md p-1.5 ${style.badgeBg} ${style.text}`}
+					>
 						{icon}
 					</span>
 					{title}

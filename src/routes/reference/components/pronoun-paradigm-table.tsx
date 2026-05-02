@@ -1,8 +1,8 @@
 import { GrammarTable, type ColumnDef, type RowDef } from "@/components/GrammarTable";
 import { MonoText } from "@/components/MonoText";
 import { CASE_SCHEME } from "@/constants/grammar-palette";
-import type { CaseName } from "@/constants/recognition";
 import type { PronounForm, PronounParadigm } from "@/constants/pronouns";
+import type { CaseName } from "@/constants/recognition";
 
 const PRONOUN_COLUMNS: ColumnDef[] = [
 	{ key: "singular", label: "Singular" },

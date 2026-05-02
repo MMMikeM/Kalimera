@@ -27,7 +27,10 @@ const GENDER_HINTS: Record<Gender, { endings: string; hint: string }> = {
 	neuter: { endings: "-ο, -ι, -μα", hint: "Diminutives, result nouns" },
 };
 
-const CASE_META: Record<Case, { handle: string; greek: string; scheme: "case-nominative" | "case-accusative" | "case-genitive" }> = {
+const CASE_META: Record<
+	Case,
+	{ handle: string; greek: string; scheme: "case-nominative" | "case-accusative" | "case-genitive" }
+> = {
 	Nom: { handle: "Doer", greek: "Nominative", scheme: "case-nominative" },
 	Acc: { handle: "Target", greek: "Accusative", scheme: "case-accusative" },
 	Gen: { handle: "Owner", greek: "Genitive", scheme: "case-genitive" },
@@ -152,7 +155,9 @@ const GenderHints = () => (
 				<div key={gender} className="space-y-1">
 					<div className="flex items-center gap-1.5">
 						<span className={`h-2.5 w-2.5 rounded-full ${SCHEME[GENDER_SCHEME[gender]].badgeBg}`} />
-						<span className={`font-medium capitalize ${SCHEME[GENDER_SCHEME[gender]].text}`}>{gender}</span>
+						<span className={`font-medium capitalize ${SCHEME[GENDER_SCHEME[gender]].text}`}>
+							{gender}
+						</span>
 					</div>
 					<div className="text-xs text-stone-600">{GENDER_HINTS[gender].endings}</div>
 					<div className="text-xs text-stone-500">{GENDER_HINTS[gender].hint}</div>
@@ -303,8 +308,8 @@ const DecisionGuide = () => (
 				</div>
 			))}
 			<div className="rounded-lg border border-honey-200 bg-honey-50 p-3 text-sm text-stone-700">
-				<span className="font-medium text-honey-700">Shortcut:</span> after σε, με, για, από, σαν
-				→ always Target (accusative).
+				<span className="font-medium text-honey-700">Shortcut:</span> after σε, με, για, από, σαν →
+				always Target (accusative).
 			</div>
 		</div>
 	</CollapsibleSection>

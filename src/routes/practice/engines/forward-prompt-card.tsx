@@ -31,7 +31,7 @@ export const ForwardPromptCard = ({ facets, caption, gloss }: ForwardPromptCardP
 						aria-label={f.ariaLabel ?? f.label}
 					>
 						<Icon size={32} strokeWidth={1.5} aria-hidden className="shrink-0" />
-						<span className="font-serif text-[2.75rem] leading-none lowercase tracking-tight">
+						<span className="font-serif text-[2.75rem] leading-none tracking-tight lowercase">
 							{f.label}
 						</span>
 					</li>
@@ -39,7 +39,7 @@ export const ForwardPromptCard = ({ facets, caption, gloss }: ForwardPromptCardP
 			})}
 		</ul>
 		{gloss ? (
-			<p className="mt-4 font-serif text-base italic text-muted-foreground">{gloss}</p>
+			<p className="mt-4 font-serif text-base text-muted-foreground italic">{gloss}</p>
 		) : null}
 	</div>
 );

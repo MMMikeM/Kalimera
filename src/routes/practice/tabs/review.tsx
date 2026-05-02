@@ -29,9 +29,7 @@ export function ReviewTab() {
 			<section>
 				<header className="mb-3 flex items-baseline justify-between border-b border-border pb-2">
 					<h3 className="font-serif text-lg font-semibold text-navy-text">Weakest drills</h3>
-					<span className="text-xs text-muted-foreground tabular-nums">
-						last 14 days
-					</span>
+					<span className="text-xs text-muted-foreground tabular-nums">last 14 days</span>
 				</header>
 				{weakDrills.length === 0 ? (
 					<p className="py-4 text-sm text-muted-foreground">

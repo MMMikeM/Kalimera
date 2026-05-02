@@ -5,8 +5,7 @@ import { chromium } from "playwright";
 
 import { loginWithCredentials } from "./login";
 
-const BASE_URL =
-	process.env.BASE_URL || "https://greek-learning.mikem-tba.workers.dev";
+const BASE_URL = process.env.BASE_URL || "https://greek-learning.mikem-tba.workers.dev";
 const OUTPUT_DIR = join(process.cwd(), "screenshots", "memory");
 const VIEWPORT = { width: 1280, height: 720 };
 
@@ -34,9 +33,7 @@ const run = async () => {
 	await loginWithCredentials(page, BASE_URL);
 
 	for (const slug of ROUTES) {
-		const route = slug
-			? `/practice/memory/${slug}`
-			: "/practice/memory";
+		const route = slug ? `/practice/memory/${slug}` : "/practice/memory";
 		const name = slug || "index";
 		const url = `${BASE_URL}${route}`;
 		const filename = join(OUTPUT_DIR, `${name}.png`);

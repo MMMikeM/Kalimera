@@ -158,5 +158,5 @@ const NavTabs = ({ tabs, activeTab, buildUrl, className }: NavTabsProps) => {
 	);
 };
 
-export type {  NavTab,  };
-export { NavTabs,    };
+export type { NavTab };
+export { NavTabs };

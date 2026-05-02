@@ -29,13 +29,8 @@ export const CasesSection: React.FC = () => {
 								title={role.role}
 								badge={role.caseName}
 								description={role.description}
-	
 							>
-								<MonoText
-									variant="greek"
-									size="2xl"
-									className={`block leading-snug ${style.text}`}
-								>
+								<MonoText variant="greek" size="2xl" className={`block leading-snug ${style.text}`}>
 									{role.example}
 								</MonoText>
 								<p className="mt-1 text-xs text-stone-500 italic">{role.translation}</p>
@@ -46,8 +41,7 @@ export const CasesSection: React.FC = () => {
 				<Card variant="bordered" padding="md" className="border-stone-200 bg-stone-50/60">
 					<p className="text-sm leading-relaxed text-stone-700">
 						<strong className="text-stone-800">Word order is flexible in Greek</strong> because the
-						ending carries the job.{" "}
-						<em>"Ο σκύλος δάγκωσε τον άντρα"</em> and{" "}
+						ending carries the job. <em>"Ο σκύλος δάγκωσε τον άντρα"</em> and{" "}
 						<em>"Τον άντρα δάγκωσε ο σκύλος"</em> both mean the dog bit the man — the{" "}
 						<MonoText variant="greek" size="sm" className="inline">
 							-ς
@@ -69,8 +63,8 @@ export const CasesSection: React.FC = () => {
 					<p className="text-sm leading-relaxed text-stone-700">
 						<strong className="text-stone-800">After είναι, both sides stay nominative.</strong>{" "}
 						Linking verbs (είναι, γίνομαι) identify rather than act —{" "}
-						<em>η Χρυσάνθη είναι η μητέρα</em> keeps both nouns as Doer. Nothing is being acted
-						on, so accusative never applies.
+						<em>η Χρυσάνθη είναι η μητέρα</em> keeps both nouns as Doer. Nothing is being acted on,
+						so accusative never applies.
 					</p>
 				</Card>
 			</div>
