@@ -2,26 +2,20 @@ import { z } from "zod";
 import { zfd } from "zod-form-data";
 
 import {
-	type CompleteSessionInput,
 	completeSession,
 	type DrillStat,
 	getDrillStats,
 	getItemsDueForReview,
 	getNewVocabularyItems,
 	getPracticeStats,
-	getVocabularyProgress,
-	getWeakAreas,
 	type PracticeSessionInsert,
 	type PracticeStats,
-	type RecordAttemptInput,
 	recordAttempt,
-	type StartSessionInput,
 	startSession,
 	type VocabItemWithSkill,
-	type VocabularyProgress,
 	type WeakAreaInfo,
 } from "@/db.server/queries/practice";
-import { createUser, getAllUsers, getUserById } from "@/db.server/queries/users";
+import { createUser, getUserById } from "@/db.server/queries/users";
 import type { AreaType, SkillType } from "@/db.server/schema";
 
 // Re-export queries and types for route consumers

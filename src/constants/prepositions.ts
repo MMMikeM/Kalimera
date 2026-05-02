@@ -3,52 +3,7 @@
 // =============================================================================
 
 // The Big 4 - highest frequency prepositions (90%+ of usage)
-const BIG_4_PREPOSITIONS = [
-	{
-		greek: "σε",
-		english: "to / at / in",
-		role: "Location · Direction",
-		contracts: true,
-		colorScheme: "ocean" as const,
-		examples: [
-			{ greek: "Πάω στο σπίτι", english: "I'm going home" },
-			{ greek: "Είμαι στη δουλειά", english: "I'm at work" },
-		],
-	},
-	{
-		greek: "από",
-		english: "from",
-		role: "Origin · Source",
-		contracts: false,
-		colorScheme: "terracotta" as const,
-		examples: [
-			{ greek: "Είμαι από την Αθήνα", english: "I'm from Athens" },
-			{ greek: "Έρχομαι από το σπίτι", english: "I'm coming from home" },
-		],
-	},
-	{
-		greek: "με",
-		english: "with",
-		role: "Accompaniment",
-		contracts: false,
-		colorScheme: "olive" as const,
-		examples: [
-			{ greek: "Καφέ με γάλα", english: "Coffee with milk" },
-			{ greek: "Πάω με τον φίλο μου", english: "I'm going with my friend" },
-		],
-	},
-	{
-		greek: "για",
-		english: "for",
-		role: "Purpose · Recipient",
-		contracts: false,
-		colorScheme: "honey" as const,
-		examples: [
-			{ greek: "Αυτό είναι για σένα", english: "This is for you" },
-			{ greek: "Δουλεύω για την εταιρεία", english: "I work for the company" },
-		],
-	},
-];
+
 
 // Navigator options - for the decision guide
 export const PREPOSITION_NAVIGATOR_OPTIONS = [
