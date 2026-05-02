@@ -234,6 +234,22 @@ export const AdjectivesSection: React.FC = () => {
 				(the good friend), not *ο φίλος καλός.
 			</Callout>
 
+			<Callout scheme="neutral" icon={<Lightbulb size={16} />} title="Adjective follows its own noun">
+				<p className="text-stone-700">
+					When a genitive is nearby, the adjective still agrees with the noun it{" "}
+					<em>describes</em> — not the nearest word.
+				</p>
+				<div className="mt-2 space-y-1 text-sm">
+					<div>
+						<MonoText variant="neuter" size="sm">το μεγάλο αυτοκίνητο του γιατρού</MonoText>
+						<span className="ml-2 text-stone-500">the doctor's big car</span>
+					</div>
+					<p className="text-xs text-stone-500">
+						μεγάλο is neuter nominative — agreeing with αυτοκίνητο, not with γιατρού.
+					</p>
+				</div>
+			</Callout>
+
 			{/* Quick reference endings table */}
 			<AdjectiveEndingsTable />
 

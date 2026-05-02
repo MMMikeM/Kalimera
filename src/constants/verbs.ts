@@ -320,6 +320,190 @@ export const IRREGULAR_VERBS: IrregularVerb[] = [
 	},
 ];
 
+export interface IrregularAoristStem {
+	present: string;
+	aoristSg1: string;
+	english: string;
+	category: "suppletive" | "irregular";
+}
+
+export const IRREGULAR_AORIST_STEMS: IrregularAoristStem[] = [
+	{ present: "τρώω", aoristSg1: "έφαγα", english: "eat", category: "suppletive" },
+	{ present: "πίνω", aoristSg1: "ήπια", english: "drink", category: "suppletive" },
+	{ present: "βλέπω", aoristSg1: "είδα", english: "see", category: "suppletive" },
+	{ present: "πηγαίνω / πάω", aoristSg1: "πήγα", english: "go", category: "suppletive" },
+	{ present: "λέω", aoristSg1: "είπα", english: "say", category: "suppletive" },
+	{ present: "έρχομαι", aoristSg1: "ήρθα", english: "come", category: "suppletive" },
+	{ present: "κάνω", aoristSg1: "έκανα", english: "do / make", category: "irregular" },
+	{ present: "παίρνω", aoristSg1: "πήρα", english: "take / get", category: "irregular" },
+	{ present: "φεύγω", aoristSg1: "έφυγα", english: "leave", category: "irregular" },
+	{ present: "βρίσκω", aoristSg1: "βρήκα", english: "find", category: "irregular" },
+	{ present: "δίνω", aoristSg1: "έδωσα", english: "give", category: "irregular" },
+	{ present: "μαθαίνω", aoristSg1: "έμαθα", english: "learn", category: "irregular" },
+];
+
+export const AORIST_FORMATION_PATTERNS = {
+	sa: {
+		label: "-σα",
+		description: "Default: stem ends in vowel, ν, or ρ — add σ directly.",
+		canonical: {
+			infinitive: "ακούω",
+			meaning: "hear",
+			forms: {
+				sg1: { stem: "άκουσ", ending: "α" },
+				sg2: { stem: "άκουσ", ending: "ες" },
+				sg3: { stem: "άκουσ", ending: "ε" },
+				pl1: { stem: "ακούσ", ending: "αμε" },
+				pl2: { stem: "ακούσ", ending: "ατε" },
+				pl3: { stem: "άκουσ", ending: "αν" },
+			},
+			examples: [
+				{ greek: "Δεν άκουσα τίποτα.", english: "I didn't hear anything." },
+				{ greek: "Άκουσες τα νέα;", english: "Did you hear the news?" },
+			],
+		},
+	},
+	psa: {
+		label: "-ψα",
+		description: "Stem ends in π, β, or φ — that consonant merges with σ to give ψ.",
+		canonical: {
+			infinitive: "δουλεύω",
+			meaning: "work",
+			forms: {
+				sg1: { stem: "δούλεψ", ending: "α" },
+				sg2: { stem: "δούλεψ", ending: "ες" },
+				sg3: { stem: "δούλεψ", ending: "ε" },
+				pl1: { stem: "δουλέψ", ending: "αμε" },
+				pl2: { stem: "δουλέψ", ending: "ατε" },
+				pl3: { stem: "δούλεψ", ending: "αν" },
+			},
+			examples: [
+				{ greek: "Δούλεψα όλη μέρα.", english: "I worked all day." },
+				{ greek: "Δουλέψαμε μαζί.", english: "We worked together." },
+			],
+		},
+	},
+	ksa: {
+		label: "-ξα",
+		description: "Stem ends in κ, γ, or χ — that consonant merges with σ to give ξ.",
+		canonical: {
+			infinitive: "ψάχνω",
+			meaning: "search / look for",
+			forms: {
+				sg1: { stem: "έψαξ", ending: "α" },
+				sg2: { stem: "έψαξ", ending: "ες" },
+				sg3: { stem: "έψαξ", ending: "ε" },
+				pl1: { stem: "ψάξ", ending: "αμε" },
+				pl2: { stem: "ψάξ", ending: "ατε" },
+				pl3: { stem: "έψαξ", ending: "αν" },
+			},
+			examples: [
+				{ greek: "Έψαξα παντού.", english: "I looked everywhere." },
+				{ greek: "Τι έψαχνες;", english: "What were you looking for?" },
+			],
+		},
+	},
+	thika: {
+		label: "-θηκα",
+		description: "Most -μαι deponent verbs: insert -θηκ- before endings.",
+		canonical: {
+			infinitive: "θυμάμαι",
+			meaning: "remember",
+			forms: {
+				sg1: { stem: "θυμήθηκ", ending: "α" },
+				sg2: { stem: "θυμήθηκ", ending: "ες" },
+				sg3: { stem: "θυμήθηκ", ending: "ε" },
+				pl1: { stem: "θυμηθήκ", ending: "αμε" },
+				pl2: { stem: "θυμηθήκ", ending: "ατε" },
+				pl3: { stem: "θυμήθηκ", ending: "αν" },
+			},
+			examples: [
+				{ greek: "Θυμήθηκα την ώρα.", english: "I remembered the time." },
+				{ greek: "Δεν θυμήθηκες;", english: "You didn't remember?" },
+				{ greek: "Κάθισε εδώ.", english: "She sat down here. (κάθομαι → κάθισα)" },
+			],
+		},
+	},
+} as const;
+
+export const PAST_TENSE_PATTERNS = {
+	aorist_deponent: {
+		description: "Suppletive stem + same endings as -ω aorist.",
+		canonical: {
+			infinitive: "έρχομαι",
+			meaning: "come",
+			forms: {
+				sg1: { stem: "ήρθ", ending: "α" },
+				sg2: { stem: "ήρθ", ending: "ες" },
+				sg3: { stem: "ήρθ", ending: "ε" },
+				pl1: { stem: "ήρθ", ending: "αμε" },
+				pl2: { stem: "ήρθ", ending: "ατε" },
+				pl3: { stem: "ήρθ", ending: "αν" },
+			},
+		},
+	},
+	aorist_active: {
+		description: "Completed action. Stem shifts — endings stay the same.",
+		canonical: {
+			infinitive: "κάνω",
+			meaning: "do / make",
+			forms: {
+				sg1: { stem: "έκαν", ending: "α" },
+				sg2: { stem: "έκαν", ending: "ες" },
+				sg3: { stem: "έκαν", ending: "ε" },
+				pl1: { stem: "κάν", ending: "αμε" },
+				pl2: { stem: "κάν", ending: "ατε" },
+				pl3: { stem: "έκαν", ending: "αν" },
+			},
+		},
+	},
+	aorist_contracted: {
+		description: "Insert -ησ- between stem and endings.",
+		canonical: {
+			infinitive: "μιλάω",
+			meaning: "speak",
+			forms: {
+				sg1: { stem: "μίλησ", ending: "α" },
+				sg2: { stem: "μίλησ", ending: "ες" },
+				sg3: { stem: "μίλησ", ending: "ε" },
+				pl1: { stem: "μιλήσ", ending: "αμε" },
+				pl2: { stem: "μιλήσ", ending: "ατε" },
+				pl3: { stem: "μίλησ", ending: "αν" },
+			},
+		},
+	},
+	past_continuous_active: {
+		description: "Keep the present stem — same endings as the aorist.",
+		canonical: {
+			infinitive: "δουλεύω",
+			meaning: "work",
+			forms: {
+				sg1: { stem: "δούλευ", ending: "α" },
+				sg2: { stem: "δούλευ", ending: "ες" },
+				sg3: { stem: "δούλευ", ending: "ε" },
+				pl1: { stem: "δουλεύ", ending: "αμε" },
+				pl2: { stem: "δουλεύ", ending: "ατε" },
+				pl3: { stem: "δούλευ", ending: "αν" },
+			},
+		},
+	},
+	past_continuous_contracted: {
+		description: "Ongoing or repeated past action. Insert -ούσ- between stem and endings.",
+		canonical: {
+			infinitive: "μιλάω",
+			meaning: "speak",
+			forms: {
+				sg1: { stem: "μιλούσ", ending: "α" },
+				sg2: { stem: "μιλούσ", ending: "ες" },
+				sg3: { stem: "μιλούσ", ending: "ε" },
+				pl1: { stem: "μιλούσ", ending: "αμε" },
+				pl2: { stem: "μιλούσ", ending: "ατε" },
+				pl3: { stem: "μιλούσ", ending: "αν" },
+			},
+		},
+	},
+} as const;
+
 // VERB_CONJUGATIONS - Data structure expected by components
 export const VERB_CONJUGATIONS: Record<string, VerbConjugation[]> = {
 	kano: [

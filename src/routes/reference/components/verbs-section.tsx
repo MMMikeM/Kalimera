@@ -1,4 +1,4 @@
-import { AlertCircle, ArrowRight, BookOpen } from "lucide-react";
+import { AlertCircle, ArrowRight, BookOpen, Clock } from "lucide-react";
 import type React from "react";
 import { Link } from "react-router";
 
@@ -10,7 +10,7 @@ import { ParadigmTable } from "@/components/ParadigmTable";
 import { SectionHeading } from "@/components/SectionHeading";
 import { type GrammarScheme, SCHEME } from "@/constants/grammar-palette";
 import { cn } from "@/lib/utils";
-import { IRREGULAR_VERBS, VERB_PATTERNS } from "@/constants/verbs";
+import { AORIST_FORMATION_PATTERNS, IRREGULAR_AORIST_STEMS, IRREGULAR_VERBS, PAST_TENSE_PATTERNS, VERB_PATTERNS } from "@/constants/verbs";
 
 interface UsageExample {
 	greek: string;
@@ -228,6 +228,320 @@ const PatternIdentifier: React.FC = () => (
 	</NavigatorCard>
 );
 
+const CONSONANT_RULES = [
+	{
+		stems: ["π", "β", "φ"],
+		result: "ψ",
+		examplePresent: "γράφω",
+		examplePast: "έγραψα",
+		note: "labials",
+	},
+	{
+		stems: ["κ", "γ", "χ"],
+		result: "ξ",
+		examplePresent: "ψάχνω",
+		examplePast: "έψαξα",
+		note: "velars",
+	},
+	{
+		stems: ["τ", "δ", "θ", "ζ"],
+		result: "σ",
+		examplePresent: "αρχίζω",
+		examplePast: "άρχισα",
+		note: "dentals",
+	},
+	{
+		stems: ["vowel", "ν", "ρ"],
+		result: "σ",
+		examplePresent: "ακούω",
+		examplePast: "άκουσα",
+		note: "default",
+	},
+] as const;
+
+const AoristExamples: React.FC<{ examples: readonly { greek: string; english: string }[]; scheme: GrammarScheme }> = ({
+	examples,
+	scheme,
+}) => (
+	<div className="mt-3 space-y-2 border-t border-stone-100 pt-3">
+		{examples.map((ex) => (
+			<div key={ex.greek} className="flex flex-col gap-0.5">
+				<MonoText className="text-sm text-stone-800">{ex.greek}</MonoText>
+				<p className="text-xs text-stone-500">{ex.english}</p>
+			</div>
+		))}
+	</div>
+);
+
+const AoristPatternCard: React.FC<{
+	pattern: (typeof AORIST_FORMATION_PATTERNS)[keyof typeof AORIST_FORMATION_PATTERNS];
+	scheme: GrammarScheme;
+}> = ({ pattern, scheme }) => {
+	const style = SCHEME[scheme];
+	return (
+		<TeachingCard
+			scheme={scheme}
+			title={`Aorist ${pattern.label}`}
+			badge={<span className={`font-mono text-base ${style.text}`}>{pattern.label}</span>}
+			description={pattern.description}
+		>
+			<div className="rounded-lg border border-stone-200 bg-white p-4 shadow-sm">
+				<ParadigmTable
+					infinitive={pattern.canonical.infinitive}
+					meaning={pattern.canonical.meaning}
+					forms={pattern.canonical.forms}
+					endingClassName={`${style.text} font-bold`}
+					scheme={scheme}
+					fadeStem={true}
+				/>
+			</div>
+			<AoristExamples examples={pattern.canonical.examples} scheme={scheme} />
+		</TeachingCard>
+	);
+};
+
+const PastTenseSection: React.FC = () => {
+	const activeStyle = SCHEME["verb-active"];
+	const contractedStyle = SCHEME["verb-contracted"];
+	const deponentStyle = SCHEME["verb-deponent"];
+
+	return (
+		<section id="past-tense" className="space-y-6">
+			<SectionHeading
+				title="Past Tense"
+				subtitle="Two past tenses — αόριστος (completed) and παρατατικός (ongoing)"
+			/>
+
+			{/* Two tenses compared */}
+			<div className="grid gap-3 sm:grid-cols-2">
+				<div className="rounded-lg border-2 border-navy-200 bg-navy-50 p-4">
+					<p className="mb-0.5 font-mono text-base font-bold text-navy-text">Αόριστος</p>
+					<p className="mb-2 text-xs text-stone-500">Simple past — completed action</p>
+					<MonoText className="text-sm text-stone-800">Έφαγα χθες.</MonoText>
+					<p className="text-xs text-stone-500">I ate yesterday.</p>
+				</div>
+				<div className="rounded-lg border-2 border-slate-200 bg-slate-50 p-4">
+					<p className="mb-0.5 font-mono text-base font-bold text-slate-text">Παρατατικός</p>
+					<p className="mb-2 text-xs text-stone-500">Continuous past — ongoing or repeated</p>
+					<MonoText className="text-sm text-stone-800">Έτρωγα κάθε μέρα.</MonoText>
+					<p className="text-xs text-stone-500">I used to eat every day.</p>
+				</div>
+			</div>
+
+			{/* ── FORMING THE AORIST ─────────────────────── */}
+			<div className="space-y-6 pt-2">
+				<h3 className="mb-4 px-1 text-base font-bold text-stone-800">Forming the aorist</h3>
+
+				{/* Augment rule */}
+				<TeachingCard
+					scheme="neutral"
+					eyebrow="Rule 1"
+					title="The augment"
+					description="Aorist stress falls on the 3rd syllable from the end. If the stem is too short, add ε- to create that syllable."
+				>
+					<div className="grid gap-px rounded-lg overflow-hidden bg-stone-200 sm:grid-cols-2">
+						<div className="bg-stone-50 px-4 py-3">
+							<p className="mb-2 text-xs font-semibold tracking-wide text-stone-400 uppercase">Short verb → needs ε-</p>
+							<div className="flex items-center gap-2">
+								<MonoText className="text-base text-stone-500">γράφω</MonoText>
+								<span className="text-stone-300">→</span>
+								<div className="flex items-baseline gap-0">
+									<span className={`font-mono text-lg font-bold ${activeStyle.text}`}>ε</span>
+									<MonoText className="text-lg font-bold text-stone-800">γραψ</MonoText>
+									<span className={`font-mono text-lg font-bold ${activeStyle.text}`}>α</span>
+								</div>
+							</div>
+							<p className="mt-1 text-xs text-stone-400">γρά·φω = 2 syllables → add ε-</p>
+						</div>
+						<div className="bg-stone-50 px-4 py-3">
+							<p className="mb-2 text-xs font-semibold tracking-wide text-stone-400 uppercase">Long verb → stress shifts</p>
+							<div className="flex items-center gap-2">
+								<MonoText className="text-base text-stone-500">δουλεύω</MonoText>
+								<span className="text-stone-300">→</span>
+								<div className="flex items-baseline gap-0">
+									<MonoText className="text-lg font-bold text-stone-800">δούλεψ</MonoText>
+									<span className={`font-mono text-lg font-bold ${activeStyle.text}`}>α</span>
+								</div>
+							</div>
+							<p className="mt-1 text-xs text-stone-400">δου·λεύ·ω = 3 syllables → no ε-</p>
+						</div>
+					</div>
+				</TeachingCard>
+
+				{/* Consonant collision table */}
+				<TeachingCard
+					scheme="neutral"
+					eyebrow="Rule 2"
+					title="Consonant collision"
+					description="When the stem's final consonant meets σ, they merge. Vowel stems just add σ directly."
+				>
+					<div className="divide-y divide-stone-100 overflow-hidden rounded-lg border border-stone-200 bg-white">
+						{CONSONANT_RULES.map((rule) => (
+							<div key={rule.note} className="grid grid-cols-[1fr_auto_1fr] items-center gap-4 px-4 py-3">
+								<div className="flex flex-wrap gap-1.5">
+									{rule.stems.map((s) => (
+										<span key={s} className="rounded bg-stone-100 px-1.5 py-0.5 font-mono text-sm font-semibold text-stone-700">
+											{s}
+										</span>
+									))}
+								</div>
+								<div className="flex items-center gap-1.5 text-stone-400">
+									<span className="text-xs">+σ →</span>
+									<span className={`font-mono text-xl font-bold ${activeStyle.text}`}>{rule.result}</span>
+								</div>
+								<div className="text-right">
+									<MonoText className="text-sm text-stone-500">{rule.examplePresent}</MonoText>
+									<span className="mx-1 text-xs text-stone-300">→</span>
+									<MonoText className={`text-sm font-bold ${activeStyle.text}`}>{rule.examplePast}</MonoText>
+								</div>
+							</div>
+						))}
+					</div>
+				</TeachingCard>
+			</div>
+
+			{/* Aorist paradigms — all patterns */}
+			<AoristPatternCard pattern={AORIST_FORMATION_PATTERNS.sa} scheme="verb-active" />
+			<AoristPatternCard pattern={AORIST_FORMATION_PATTERNS.psa} scheme="verb-active" />
+			<AoristPatternCard pattern={AORIST_FORMATION_PATTERNS.ksa} scheme="verb-active" />
+
+			{/* -άω aorist (-ησα) */}
+			<TeachingCard
+				scheme="verb-contracted"
+				title="Aorist: -άω verbs"
+				badge={<span className={`font-mono text-base ${contractedStyle.text}`}>-ησα</span>}
+				description={PAST_TENSE_PATTERNS.aorist_contracted.description}
+			>
+				<div className="rounded-lg border border-stone-200 bg-white p-4 shadow-sm">
+					<ParadigmTable
+						infinitive={PAST_TENSE_PATTERNS.aorist_contracted.canonical.infinitive}
+						meaning={PAST_TENSE_PATTERNS.aorist_contracted.canonical.meaning}
+						forms={PAST_TENSE_PATTERNS.aorist_contracted.canonical.forms}
+						endingClassName={`${contractedStyle.text} font-bold`}
+						scheme="verb-contracted"
+						fadeStem={true}
+					/>
+				</div>
+				<AoristExamples
+					examples={[
+						{ greek: "Μίλησα μαζί του χθες.", english: "I spoke with him yesterday." },
+						{ greek: "Μιλήσαμε για ώρες.", english: "We talked for hours." },
+					]}
+					scheme="verb-contracted"
+				/>
+			</TeachingCard>
+
+			{/* -θηκα aorist */}
+			<AoristPatternCard pattern={AORIST_FORMATION_PATTERNS.thika} scheme="verb-deponent" />
+
+			{/* Suppletive (έρχομαι) */}
+			<TeachingCard
+				scheme="verb-deponent"
+				title="Aorist: suppletive verbs"
+				badge={<span className={`font-mono text-base ${deponentStyle.text}`}>new stem</span>}
+				description="Stem changes completely — endings are identical to regular aorist."
+			>
+				<div className="rounded-lg border border-stone-200 bg-white p-4 shadow-sm">
+					<ParadigmTable
+						infinitive={PAST_TENSE_PATTERNS.aorist_deponent.canonical.infinitive}
+						meaning={PAST_TENSE_PATTERNS.aorist_deponent.canonical.meaning}
+						forms={PAST_TENSE_PATTERNS.aorist_deponent.canonical.forms}
+						endingClassName={`${deponentStyle.text} font-bold`}
+						scheme="verb-deponent"
+						fadeStem={true}
+					/>
+				</div>
+				<AoristExamples
+					examples={[
+						{ greek: "Ήρθα νωρίς.", english: "I arrived early." },
+						{ greek: "Πότε ήρθες;", english: "When did you arrive?" },
+						{ greek: "Ήρθαμε μαζί.", english: "We came together." },
+					]}
+					scheme="verb-deponent"
+				/>
+				<p className="mt-3 px-1 text-xs text-stone-500">
+					Find the aorist stem (listed below), then add the same{" "}
+					<MonoText size="sm">-α -ες -ε -αμε -ατε -αν</MonoText>.
+				</p>
+			</TeachingCard>
+
+			{/* Stems that break the rules */}
+			<Card variant="bordered" padding="lg" className="border-2 border-honey-300 bg-honey-50">
+				<div className="mb-4 flex items-start gap-3">
+					<div className="rounded-xl bg-honey-200 p-2.5">
+						<AlertCircle size={20} className="text-honey-text" />
+					</div>
+					<div>
+						<h3 className="text-lg font-bold text-honey-text">Stems that break the rules</h3>
+						<p className="text-sm text-stone-600">
+							These aorist stems cannot be predicted — the rules above don't apply. Memorise them as units.
+						</p>
+					</div>
+				</div>
+				<div className="space-y-3">
+					{(["suppletive", "irregular"] as const).map((cat) => (
+						<div key={cat}>
+							<p className="mb-1 text-xs font-semibold tracking-wide text-stone-500 uppercase">
+								{cat === "suppletive" ? "Suppletive — completely different stem" : "Irregular — follows rules loosely"}
+							</p>
+							<div className="divide-y divide-honey-100 rounded-lg border border-honey-200 bg-white">
+								{IRREGULAR_AORIST_STEMS.filter((s) => s.category === cat).map((s) => (
+									<div key={s.present} className="grid grid-cols-[1fr_auto_1fr_auto] items-baseline gap-2 px-3 py-2">
+										<MonoText className="font-semibold text-stone-600">{s.present}</MonoText>
+										<span className="text-honey-300">→</span>
+										<MonoText className="font-bold text-honey-text">{s.aoristSg1}</MonoText>
+										<span className="text-right text-xs text-stone-400">{s.english}</span>
+									</div>
+								))}
+							</div>
+						</div>
+					))}
+				</div>
+			</Card>
+
+			{/* ── CONTINUOUS PAST (secondary) ───────────────── */}
+			<CollapsibleSection
+				title="Continuous past (παρατατικός)"
+				colorScheme="stone"
+				defaultOpen={false}
+			>
+				<div className="space-y-4">
+					<div className="rounded-lg border border-stone-200 bg-white p-4">
+						<p className="mb-3 text-sm text-stone-600">
+							Use the <strong>present stem</strong> with the same -α -ες -ε -αμε -ατε -αν endings.
+							For -άω verbs, insert <MonoText size="sm">-ούσ-</MonoText> instead.
+						</p>
+						<div className="grid gap-4 sm:grid-cols-2">
+							<div>
+								<p className="mb-2 text-xs font-semibold text-stone-500">-ω verbs (δουλεύω)</p>
+								<ParadigmTable
+									infinitive={PAST_TENSE_PATTERNS.past_continuous_active.canonical.infinitive}
+									meaning={PAST_TENSE_PATTERNS.past_continuous_active.canonical.meaning}
+									forms={PAST_TENSE_PATTERNS.past_continuous_active.canonical.forms}
+									endingClassName={`${activeStyle.text} font-bold`}
+									scheme="verb-active"
+									fadeStem={true}
+								/>
+							</div>
+							<div>
+								<p className="mb-2 text-xs font-semibold text-stone-500">-άω verbs (μιλάω)</p>
+								<ParadigmTable
+									infinitive={PAST_TENSE_PATTERNS.past_continuous_contracted.canonical.infinitive}
+									meaning={PAST_TENSE_PATTERNS.past_continuous_contracted.canonical.meaning}
+									forms={PAST_TENSE_PATTERNS.past_continuous_contracted.canonical.forms}
+									endingClassName={`${contractedStyle.text} font-bold`}
+									scheme="verb-contracted"
+									fadeStem={true}
+								/>
+							</div>
+						</div>
+					</div>
+				</div>
+			</CollapsibleSection>
+		</section>
+	);
+};
+
 const eimai = IRREGULAR_VERBS.find((v) => v.infinitive === "είμαι");
 const otherIrregulars = IRREGULAR_VERBS.filter((v) => v.infinitive !== "είμαι");
 
@@ -343,8 +657,6 @@ export const VerbsSection: React.FC = () => (
 			</Link>
 		</div>
 
-		<p className="text-center text-sm text-stone-500 italic">
-			This section covers present tense only. Past and future tenses coming soon.
-		</p>
+		<PastTenseSection />
 	</section>
 );

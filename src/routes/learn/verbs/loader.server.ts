@@ -35,6 +35,7 @@ function groupVerbsByPattern(verbs: VerbWithPattern[]): VerbCategory[] {
 				groups[pattern] = {
 					id: `verb-${pattern.toLowerCase().replace(/\s+/g, "-")}`,
 					title: pattern,
+					verbs: [],
 				};
 			}
 			groups[pattern]?.verbs.push(verb);

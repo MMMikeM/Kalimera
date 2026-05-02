@@ -19,7 +19,7 @@ const GENDER_PATTERNS: Record<Gender, readonly string[]> = {
 	neuter: ["neut-o", "neut-i", "neut-ma"],
 };
 
-const ESSENTIAL_IDS = ["masc-os", "fem-a", "neut-o"] as const;
+const ESSENTIAL_IDS = ["masc-os", "fem-a", "neut-o", "neut-i"] as const;
 
 const GENDER_HINTS: Record<Gender, { endings: string; hint: string }> = {
 	masculine: { endings: "-ος, -ας, -ης, -ές", hint: "Male people, -ος words" },
@@ -227,7 +227,7 @@ const EssentialPatterns = () => {
 			eyebrow="The core"
 			title="Essential patterns"
 			badge={<ViewToggle mode={mode} onChange={setMode} />}
-			description="One pattern per gender. 80% of nouns fit here."
+			description="The patterns you'll encounter most. Learn these first."
 			footer={
 				<div className="space-y-1">
 					<p className="text-sm font-medium text-stone-700">
