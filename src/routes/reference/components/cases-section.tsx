@@ -6,17 +6,7 @@ import { MonoText } from "@/components/MonoText";
 import { CASE_SCHEME, SCHEME } from "@/constants/grammar-palette";
 import { CASE_ROLES, CASE_TRIGGERS } from "@/constants/recognition";
 
-const BandHeading: React.FC<{ kicker: string; title: string; lede?: string }> = ({
-	kicker,
-	title,
-	lede,
-}) => (
-	<div className="space-y-1">
-		<div className="text-xs font-semibold tracking-widest text-stone-500 uppercase">{kicker}</div>
-		<h3 className="font-serif text-2xl text-stone-900">{title}</h3>
-		{lede ? <p className="max-w-2xl text-sm text-stone-600">{lede}</p> : null}
-	</div>
-);
+import { BandHeading } from "./BandHeading";
 
 export const CasesSection: React.FC = () => {
 	const triggersByCase = CASE_ROLES.map((role) => ({

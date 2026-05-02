@@ -29,9 +29,12 @@ const shuffle = <T>(arr: T[]): T[] => {
 	return a;
 };
 
-export const getAoristDrillQuestions = async (
+const getVerbConjugationQuestions = async (
 	userId: number,
 	limit: number,
+	tense: "present" | "aorist",
+	idPrefix: string,
+	timeLimit: number,
 ): Promise<DrillQuestion[]> => {
 	const progress = await ensureUserProgress(userId);
 	const currentCefrLevel = progress.currentCefrLevel as CefrLevel;
@@ -45,7 +48,7 @@ export const getAoristDrillQuestions = async (
 		},
 		with: {
 			verbConjugations: {
-				where: { tense: "aorist" },
+				where: { tense },
 			},
 		},
 		orderBy: {
@@ -63,10 +66,10 @@ export const getAoristDrillQuestions = async (
 			const prompt =
 				conj.person === "sg1" ? vocab.englishTranslation : `${personLabel} ${stem}`;
 			questions.push({
-				id: `db-verb-aorist-${vocab.id}-${conj.person}`,
+				id: `${idPrefix}${vocab.id}-${conj.person}`,
 				prompt,
 				correctGreek: conj.form,
-				timeLimit: 4500,
+				timeLimit,
 				vocabularyId: vocab.id,
 			});
 		}
@@ -75,48 +78,8 @@ export const getAoristDrillQuestions = async (
 	return shuffle(questions).slice(0, limit);
 };
 
-export const getVerbDrillQuestions = async (
-	userId: number,
-	limit: number,
-): Promise<DrillQuestion[]> => {
-	const progress = await ensureUserProgress(userId);
-	const currentCefrLevel = progress.currentCefrLevel as CefrLevel;
-	const nextLevel = NEXT_LEVEL[currentCefrLevel];
-	const cefrPool: CefrLevel[] = nextLevel ? [currentCefrLevel, nextLevel] : [currentCefrLevel];
+export const getAoristDrillQuestions = (userId: number, limit: number) =>
+	getVerbConjugationQuestions(userId, limit, "aorist", "db-verb-aorist-", 4500);
 
-	const vocabRows = await db.query.vocabulary.findMany({
-		where: {
-			cefrLevel: { in: cefrPool },
-			wordType: { in: ["verb"] },
-		},
-		with: {
-			verbConjugations: {
-				where: { tense: "present" },
-			},
-		},
-		orderBy: {
-			cefrLevel: "asc",
-			frequencyRank: "asc",
-		},
-		limit: limit * 3,
-	});
-
-	const questions: DrillQuestion[] = [];
-	for (const vocab of vocabRows) {
-		const stem = vocab.englishTranslation.replace(/^I /, "");
-		for (const conj of vocab.verbConjugations) {
-			const personLabel = PERSON_LABELS[conj.person] ?? conj.person;
-			const prompt =
-				conj.person === "sg1" ? vocab.englishTranslation : `${personLabel} ${stem}`;
-			questions.push({
-				id: `db-verb-${vocab.id}-${conj.person}`,
-				prompt,
-				correctGreek: conj.form,
-				timeLimit: 3500,
-				vocabularyId: vocab.id,
-			});
-		}
-	}
-
-	return shuffle(questions).slice(0, limit);
-};
+export const getVerbDrillQuestions = (userId: number, limit: number) =>
+	getVerbConjugationQuestions(userId, limit, "present", "db-verb-", 3500);
