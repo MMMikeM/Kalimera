@@ -47,7 +47,7 @@ export interface SimpleListDrillProps {
 	reverseLabel?: string;
 	reverseDesc?: string;
 	categories?: Array<{ id: string; label: string }>;
-	speeds?: Array<SpeedOption>;
+	speeds?: ReadonlyArray<SpeedOption>;
 	reverseDimension?: {
 		options: SelectorOption[];
 		getCorrectId: (item: SimpleListItem) => string;

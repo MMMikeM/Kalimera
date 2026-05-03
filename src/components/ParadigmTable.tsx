@@ -69,14 +69,17 @@ export const ParadigmTable: React.FC<ParadigmTableProps> = ({
 	endingClassName = "text-terracotta font-bold",
 	fadeStem = true,
 }) => {
-	const cells = [
-		[forms.sg1, forms.pl1],
-		[forms.sg2, forms.pl2],
-		[forms.sg3, forms.pl3],
-	].map((row) =>
-		row.map((form) => (
+	const cells = (
+		[
+			["sg1", "pl1"],
+			["sg2", "pl2"],
+			["sg3", "pl3"],
+		] as const
+	).map((row) =>
+		row.map((person) => (
 			<VerbCell
-				form={form}
+				key={person}
+				form={forms[person]}
 				fadeStem={fadeStem}
 				formClassName={formClassName}
 				endingClassName={endingClassName}

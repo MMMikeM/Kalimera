@@ -4,4 +4,6 @@ export const SPEEDS = [
 	{ id: "relaxed", label: "Relaxed · 8s", timeLimit: 8000 },
 ] as const;
 
+export type SpeedId = (typeof SPEEDS)[number]["id"];
+
 export const MEDIUM_SPEED_MS = 6000;

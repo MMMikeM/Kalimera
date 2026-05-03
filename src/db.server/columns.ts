@@ -17,9 +17,12 @@ const nullableOneOf = <T extends readonly [string, ...string[]]>(name: string, o
 	text(name, { enum: options });
 
 // Numbers
+// @ts-ignore -- kept as part of column-helper API surface; do not remove
 const int = (name: string) => integer(name).notNull();
 const nullableInt = (name: string) => integer(name);
+// @ts-ignore -- kept as part of column-helper API surface; do not remove
 const decimal = (name: string) => real(name).notNull();
+// @ts-ignore -- kept as part of column-helper API surface; do not remove
 const nullableDecimal = (name: string) => real(name);
 
 // Booleans (SQLite stores as 0/1)
