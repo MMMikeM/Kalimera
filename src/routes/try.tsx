@@ -6,8 +6,10 @@ import { Link } from "react-router";
 import { Card } from "@/components/Card";
 import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
+import { greekToPhonetic } from "@/lib/greek-transliteration";
 
-import UnifiedDrill, { type SessionStats } from "./practice/components/unified-drill";
+import { type SimpleListItem, SimpleListDrill } from "./practice/engines/simple-list-drill";
+import type { SessionStats } from "./practice/engines/use-drill-engine";
 
 export function meta() {
 	return [
@@ -19,26 +21,24 @@ export function meta() {
 	];
 }
 
-const TRY_QUESTIONS = [
-	{ id: "try-1", prompt: "me (object)", correctGreek: "με", timeLimit: 4000 },
-	{
-		id: "try-2",
-		prompt: "you (object, singular)",
-		correctGreek: "σε",
-		timeLimit: 4000,
-	},
-	{ id: "try-3", prompt: "him", correctGreek: "τον", timeLimit: 4000 },
-	{ id: "try-4", prompt: "her", correctGreek: "την", timeLimit: 4000 },
-	{ id: "try-5", prompt: "my", correctGreek: "μου", timeLimit: 4000 },
-	{
-		id: "try-6",
-		prompt: "your (singular)",
-		correctGreek: "σου",
-		timeLimit: 4000,
-	},
-	{ id: "try-7", prompt: "I want", correctGreek: "θέλω", timeLimit: 4500 },
-	{ id: "try-8", prompt: "I have", correctGreek: "έχω", timeLimit: 4500 },
+const TRY_QUESTIONS: Array<{ id: string; prompt: string; correctGreek: string }> = [
+	{ id: "try-1", prompt: "me (object)", correctGreek: "με" },
+	{ id: "try-2", prompt: "you (object, singular)", correctGreek: "σε" },
+	{ id: "try-3", prompt: "him", correctGreek: "τον" },
+	{ id: "try-4", prompt: "her", correctGreek: "την" },
+	{ id: "try-5", prompt: "my", correctGreek: "μου" },
+	{ id: "try-6", prompt: "your (singular)", correctGreek: "σου" },
+	{ id: "try-7", prompt: "I want", correctGreek: "θέλω" },
+	{ id: "try-8", prompt: "I have", correctGreek: "έχω" },
 ];
+
+const TRY_ITEMS: SimpleListItem[] = TRY_QUESTIONS.map((q) => ({
+	id: q.id,
+	greek: q.correctGreek,
+	greeklish: greekToPhonetic(q.correctGreek),
+	label: q.prompt,
+	english: q.prompt,
+}));
 
 const TryShell: React.FC<{ children: React.ReactNode; innerPy?: string }> = ({
 	children,
@@ -87,7 +87,7 @@ const TryDrillIntro = ({ onStart }: { onStart: () => void }) => (
 	</TryShell>
 );
 
-const TryDrillComplete = ({ stats }: { stats: SessionStats }) => {
+const TryDrillComplete = ({ stats }: { stats: SessionStats<SimpleListItem> }) => {
 	const percentage = Math.round((stats.correct / stats.total) * 100);
 	const getMessage = () => {
 		if (percentage >= 80) return { emoji: "🎉", text: "Excellent! You've got solid foundations." };
@@ -154,7 +154,7 @@ const TryDrillComplete = ({ stats }: { stats: SessionStats }) => {
 
 export default function TryDrillRoute() {
 	const [started, setStarted] = useState(false);
-	const [completedStats, setCompletedStats] = useState<SessionStats | null>(null);
+	const [completedStats, setCompletedStats] = useState<SessionStats<SimpleListItem> | null>(null);
 
 	if (completedStats) {
 		return <TryDrillComplete stats={completedStats} />;
@@ -166,10 +166,13 @@ export default function TryDrillRoute() {
 
 	return (
 		<TryShell innerPy="py-8">
-			<UnifiedDrill
+			<SimpleListDrill
+				items={TRY_ITEMS}
 				title="Try Drill"
-				questions={TRY_QUESTIONS}
-				onComplete={(stats) => setCompletedStats(stats)}
+				subtitle="8 quick rounds"
+				drillId="try"
+				autoStart
+				onComplete={setCompletedStats}
 			/>
 		</TryShell>
 	);
