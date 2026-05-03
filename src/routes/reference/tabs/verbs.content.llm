@@ -216,9 +216,129 @@ The endings tell you WHO is doing the action.
 
 ---
 
+## Past Tense
+
+Greek has two past tenses. Both use the same endings; only the stem changes.
+
+### Aorist vs Imperfect
+
+| Tense     | Think of it as | Example  | English                          |
+|-----------|----------------|----------|----------------------------------|
+| Aorist    | snapshot       | έγραψα   | I wrote (one completed action)   |
+| Imperfect | video          | έγραφα   | I was writing / used to write    |
+
+### Past Endings (shared)
+
+| Person | Singular | Plural |
+|--------|----------|--------|
+| 1st    | -α       | -αμε   |
+| 2nd    | -ες      | -ατε   |
+| 3rd    | -ε       | -αν    |
+
+Worked on κάνω: έκανα · έκανες · έκανε · κάναμε · κάνατε · έκαναν
+
+### Aorist Stem Fusion
+
+<decision-guide name="aorist-fusion">
+<question>Aorist adds σ to the stem. That σ fuses with the stem's final consonant:</question>
+
+| Stem ends in       | + σ → | Examples                              |
+|--------------------|-------|---------------------------------------|
+| π / β / φ / ευ     | ψ     | γράφω → έγραψα, κόβω → έκοψα          |
+| κ / γ / χ / ζ*     | ξ     | ανοίγω → άνοιξα, αλλάζω → άλλαξα      |
+| vowel / ζ*         | σ     | ακούω → άκουσα, διαβάζω → διάβασα     |
+
+</decision-guide>
+
+**Notes:**
+- ζ is ambiguous — most -ίζω / -άζω verbs take σ (αγοράζω → αγόρασα), but a few take ξ (αλλάζω → άλλαξα). Memorise per verb.
+- -νω verbs don't follow a clean rule — ν drops or mutates unpredictably. They live in the "irregular stems" material.
+
+### The έ- Prefix
+
+Short verbs add an **έ-** so the stress can land two syllables from the end — but it drops when the ending is long enough to carry its own stress:
+
+| With έ-                   | Without έ-        |
+|---------------------------|-------------------|
+| έγραψα · έγραψες · έγραψε | γράψαμε · γράψατε |
+
+Same for imperfect: έγραφα vs γράφαμε.
+
+### Deponent Aorist (-μαι verbs)
+
+Deponent verbs (those ending -μαι) form the aorist with a **-θηκα** marker — no stem fusion, no σ:
+
+| -μαι → -θηκα              | Variants                    |
+|----------------------------|------------------------------|
+| λυπάμαι → λυπήθηκα         | χρειάζομαι → χρειά**στ**ηκα (-ζομαι drops ζ)  |
+| θυμάμαι → θυμήθηκα         | σκέφτομαι → σκέ**φτ**ηκα (-φτομαι)           |
+| φοβάμαι → φοβήθηκα         | χαίρομαι → χάρ**ηκα** (loses -θ-)            |
+
+### Group 2 Aorist (-άω / -ώ verbs)
+
+Contracted verbs form the aorist with a -ησα or -εσα marker — no stem fusion:
+
+| -άω → -ησα            | -ώ → -εσα             |
+|------------------------|------------------------|
+| μιλάω → μίλησα         | μπορώ → μπόρεσα        |
+| ρωτάω → ρώτησα         | οδηγώ → οδήγησα*       |
+| αγαπάω → αγάπησα       |                        |
+
+*Some -ώ verbs actually take -ησα — memorise per verb.
+
+### Group 1 Imperfect
+
+For -ω verbs, the imperfect uses the present stem + past endings (no σ fusion):
+
+<paradigm name="g1-imperfect" color="neutral">
+<verb>γράφω</verb>
+<meaning>write (was writing / used to write)</meaning>
+
+| Person | Singular  | Plural    |
+|--------|-----------|-----------|
+| 1st    | έγραφα    | γράφαμε   |
+| 2nd    | έγραφες   | γράφατε   |
+| 3rd    | έγραφε    | έγραφαν   |
+
+</paradigm>
+
+### Group 2 Imperfect
+
+Contracted verbs (μιλάω, αγαπάω) insert -ούσα- before the endings:
+
+<paradigm name="g2-imperfect" color="neutral">
+<verb>μιλάω</verb>
+<meaning>was speaking / used to speak</meaning>
+
+| Person | Singular    | Plural        |
+|--------|-------------|---------------|
+| 1st    | μιλούσα     | μιλούσαμε     |
+| 2nd    | μιλούσες    | μιλούσατε     |
+| 3rd    | μιλούσε     | μιλούσαν      |
+
+</paradigm>
+
+### είμαι · Past (irregular)
+
+<paradigm name="eimai-past" color="olive">
+<verb>είμαι</verb>
+<meaning>was / were</meaning>
+<note>Only an imperfect past exists; no aorist (being is a state, not a completed act)</note>
+<note>3rd person is the same for singular and plural</note>
+
+| Person | Singular  | Plural     |
+|--------|-----------|------------|
+| 1st    | ήμουν     | ήμασταν    |
+| 2nd    | ήσουν     | ήσασταν    |
+| 3rd    | ήταν      | ήταν       |
+
+</paradigm>
+
+---
+
 ## Scope Note
 
-This section covers present tense only. Past and future tenses coming soon.
+Future tense coming soon.
 
 ---
 

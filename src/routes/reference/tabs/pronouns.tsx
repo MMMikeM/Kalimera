@@ -16,8 +16,10 @@ export function PronounsTab() {
 
 			<PracticeCTA
 				title="Practice pronouns"
-				description="Build fluency with timed retrieval drills on Greek pronouns."
+				description="Forms, possessives, and where weak pronouns sit in real sentences."
 				topic="pronouns"
+				drillHref="/practice#pronouns"
+				ctaLabel="Open pronoun drills"
 			/>
 		</div>
 	);

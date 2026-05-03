@@ -440,6 +440,67 @@ export const PronounsSection: React.FC = () => {
 					</div>
 				</Card>
 			</CollapsibleSection>
+
+			{/* CLITIC PLACEMENT — where weak object pronouns sit */}
+			<div id="clitic-placement" className="space-y-4">
+				<div className="space-y-1">
+					<div className="text-xs font-semibold tracking-widest text-stone-500 uppercase">
+						Where they sit
+					</div>
+					<h3 className="font-serif text-2xl text-stone-900">Weak pronouns hug the verb.</h3>
+					<p className="max-w-2xl text-sm text-stone-600">
+						English puts object pronouns after the verb (I see <em>him</em>). Greek puts them
+						before — except in commands. Four rules cover almost everything.
+					</p>
+				</div>
+
+				<div className="grid gap-3 sm:grid-cols-2">
+					<Card variant="bordered" padding="md" className="border-terracotta-200 bg-terracotta-50">
+						<p className="mb-1 text-xs font-semibold text-terracotta-text">
+							1. Default — before the verb
+						</p>
+						<MonoText variant="greek" size="lg" className="text-stone-900">
+							Με βλέπει.
+						</MonoText>
+						<p className="mt-1 text-xs text-stone-500">He sees me.</p>
+					</Card>
+
+					<Card variant="bordered" padding="md" className="border-terracotta-200 bg-terracotta-50">
+						<p className="mb-1 text-xs font-semibold text-terracotta-text">
+							2. Imperative — after the verb
+						</p>
+						<MonoText variant="greek" size="lg" className="text-stone-900">
+							Δες με!
+						</MonoText>
+						<p className="mt-1 text-xs text-stone-500">Look at me!</p>
+					</Card>
+
+					<Card variant="bordered" padding="md" className="border-terracotta-200 bg-terracotta-50">
+						<p className="mb-1 text-xs font-semibold text-terracotta-text">3. After θα or να</p>
+						<MonoText variant="greek" size="lg" className="text-stone-900">
+							Θα με δει.
+						</MonoText>
+						<p className="mt-1 text-xs text-stone-500">He will see me.</p>
+						<MonoText variant="greek" size="sm" className="mt-2 text-stone-800">
+							Θέλω να με δεις.
+						</MonoText>
+						<p className="text-xs text-stone-500">I want you to see me.</p>
+					</Card>
+
+					<Card variant="bordered" padding="md" className="border-terracotta-200 bg-terracotta-50">
+						<p className="mb-1 text-xs font-semibold text-terracotta-text">4. After δεν</p>
+						<MonoText variant="greek" size="lg" className="text-stone-900">
+							Δεν με βλέπει.
+						</MonoText>
+						<p className="mt-1 text-xs text-stone-500">He doesn't see me.</p>
+					</Card>
+				</div>
+
+				<p className="text-sm text-stone-600">
+					Rule of thumb: the pronoun sits next to the verb. Whatever signals tense or mood (θα,
+					να, δεν) goes outside, the pronoun goes inside. Imperatives are the one exception.
+				</p>
+			</div>
 		</section>
 	);
 };

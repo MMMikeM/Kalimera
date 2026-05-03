@@ -575,6 +575,95 @@ const PastTenseSection: React.FC = () => {
 	);
 };
 
+const FutureTenseSection: React.FC = () => (
+	<section id="future-tense" className="space-y-4">
+		<SectionHeading
+			title="Future Tense"
+			subtitle="θα + the same stem you use after να"
+		/>
+
+		<TeachingCard
+			scheme="neutral"
+			eyebrow="The rule"
+			title="θα + subjunctive"
+			description="Drop the past prefix from the aorist (έγραψα → γράψω) and prepend θα. Endings stay regular present-tense endings."
+		>
+			<div className="grid gap-3 sm:grid-cols-2">
+				<div className="rounded-lg border border-honey-200 bg-honey-50 p-4">
+					<p className="mb-2 text-xs font-semibold text-honey-text">Regular</p>
+					<MonoText className="text-sm text-stone-800">γράφω → έγραψα → θα γράψω</MonoText>
+					<p className="mt-1 text-xs text-stone-500">I write → I wrote → I will write</p>
+				</div>
+				<div className="rounded-lg border border-honey-200 bg-honey-50 p-4">
+					<p className="mb-2 text-xs font-semibold text-honey-text">Suppletive</p>
+					<MonoText className="text-sm text-stone-800">τρώω → έφαγα → θα φάω</MonoText>
+					<p className="mt-1 text-xs text-stone-500">I eat → I ate → I will eat</p>
+				</div>
+			</div>
+			<p className="mt-4 text-sm text-stone-600">
+				Negation:{" "}
+				<MonoText variant="greek" size="sm">
+					δεν θα φάω
+				</MonoText>{" "}
+				(I won't eat). δεν always sits before θα.
+			</p>
+		</TeachingCard>
+	</section>
+);
+
+const NaConstructionsSection: React.FC = () => (
+	<section id="na-constructions" className="space-y-4">
+		<SectionHeading
+			title="να-constructions"
+			subtitle="Modal verb + να + subjunctive — how Greek joins two verbs"
+		/>
+
+		<TeachingCard
+			scheme="neutral"
+			eyebrow="The rule"
+			title="Modal + να + verb"
+			description="Where English uses an infinitive (I want to eat), Greek uses να + a conjugated verb in the same form as the future minus θα."
+		>
+			<div className="space-y-2">
+				<div className="rounded-lg border border-honey-200 bg-honey-50 p-3">
+					<MonoText className="text-sm text-stone-800">Θέλω να φάω.</MonoText>
+					<p className="text-xs text-stone-500">I want to eat.</p>
+				</div>
+				<div className="rounded-lg border border-honey-200 bg-honey-50 p-3">
+					<MonoText className="text-sm text-stone-800">Πρέπει να πάω.</MonoText>
+					<p className="text-xs text-stone-500">I have to go.</p>
+				</div>
+				<div className="rounded-lg border border-honey-200 bg-honey-50 p-3">
+					<MonoText className="text-sm text-stone-800">Μπορώ να έρθω.</MonoText>
+					<p className="text-xs text-stone-500">I can come.</p>
+				</div>
+				<div className="rounded-lg border border-honey-200 bg-honey-50 p-3">
+					<MonoText className="text-sm text-stone-800">Ξέρω να μαγειρεύω.</MonoText>
+					<p className="text-xs text-stone-500">I know how to cook.</p>
+				</div>
+			</div>
+			<p className="mt-4 text-sm text-stone-600">
+				Both verbs conjugate to match the subject:{" "}
+				<MonoText variant="greek" size="sm">
+					Θέλει να φάει
+				</MonoText>{" "}
+				(she wants to eat).
+			</p>
+			<p className="mt-2 text-sm text-stone-600">
+				Negation: put{" "}
+				<MonoText variant="greek" size="sm">
+					δεν
+				</MonoText>{" "}
+				before the modal —{" "}
+				<MonoText variant="greek" size="sm">
+					δεν θέλω να φάω
+				</MonoText>
+				.
+			</p>
+		</TeachingCard>
+	</section>
+);
+
 const eimai = IRREGULAR_VERBS.find((v) => v.infinitive === "είμαι");
 const otherIrregulars = IRREGULAR_VERBS.filter((v) => v.infinitive !== "είμαι");
 
@@ -689,5 +778,9 @@ export const VerbsSection: React.FC = () => (
 		</div>
 
 		<PastTenseSection />
+
+		<FutureTenseSection />
+
+		<NaConstructionsSection />
 	</section>
 );
