@@ -1,5 +1,5 @@
-import type { VerbConjugationGraphRow } from "@/db.server/queries/verbs";
-import { fetchVerbWithConjugationRelations } from "@/db.server/queries/verbs";
+import type { VerbConjugationGraphRow } from "@/db.server/queries/vocabulary";
+import { fetchVerbWithConjugationRelations } from "@/db.server/queries/vocabulary";
 
 import type { Route } from "./+types/route";
 

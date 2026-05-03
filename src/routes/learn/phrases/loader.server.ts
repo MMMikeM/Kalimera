@@ -1,4 +1,4 @@
-import { getVocabBySlug } from "@/db.server/queries/vocabulary-sections";
+import { getVocabBySlug } from "@/db.server/queries/vocabulary";
 import type { Vocabulary } from "@/db.server/types";
 
 export type PhraseItem = Vocabulary;
