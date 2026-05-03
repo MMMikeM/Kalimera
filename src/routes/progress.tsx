@@ -9,7 +9,7 @@ import {
 	getPracticeDatesForCalendar,
 	getTimeInvested,
 } from "@/db.server/queries/analytics/progress";
-import { getCompletedPracticeAtDatesForStreak } from "@/db.server/queries/practice-sessions";
+import { listCompletedPracticeSessionsForStreak } from "@/db.server/queries/practice-sessions";
 import { getSkillStats } from "@/db.server/queries/vocabulary-skills";
 import { getAuthSession } from "@/lib/auth-cookie";
 import { streakLengthFromCompletedSessionDates } from "@/lib/practice-streak";
@@ -38,13 +38,15 @@ export async function loader({ request }: Route.LoaderArgs) {
 		};
 	}
 
-	const [stats, calendarDates, accuracyTrends, timeInvested, completedDates] = await Promise.all([
-		getSkillStats(userId),
-		getPracticeDatesForCalendar(userId, 3),
-		getAccuracyTrends(userId, 30),
-		getTimeInvested(userId),
-		getCompletedPracticeAtDatesForStreak(userId),
-	]);
+	const [stats, calendarDates, accuracyTrends, timeInvested, completedSessions] =
+		await Promise.all([
+			getSkillStats(userId),
+			getPracticeDatesForCalendar(userId, 3),
+			getAccuracyTrends(userId, 30),
+			getTimeInvested(userId),
+			listCompletedPracticeSessionsForStreak(userId),
+		]);
+	const completedDates = completedSessions.map((s) => s.completedAt!);
 
 	const accuracyData = accuracyTrends.map((d) => ({
 		date: d.date,

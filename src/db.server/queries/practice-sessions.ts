@@ -40,21 +40,17 @@ export const getLastPracticeDate = async (userId: number): Promise<Date | null> 
 };
 
 /**
- * Completed session timestamps for streak calculation (up to 365 rows, newest first in DB order).
+ * Completed session rows for streak calculation (up to 365, newest first).
+ * `completedAt` is non-null per the where clause.
  */
-export async function getCompletedPracticeAtDatesForStreak(userId: number): Promise<Date[]> {
-	const sessions = await db.query.practiceSessions.findMany({
+export const listCompletedPracticeSessionsForStreak = async (userId: number) => {
+	return await db.query.practiceSessions.findMany({
 		where: { userId, NOT: { completedAt: { isNull: true } } },
 		orderBy: { completedAt: "desc" },
 		limit: 365,
 		columns: { completedAt: true },
 	});
-
-	return sessions
-		.map((s) => s.completedAt)
-		.filter((d): d is NonNullable<typeof d> => d != null)
-		.map((d) => new Date(d));
-}
+};
 
 export const getUserIdsPracticedInRange = async (
 	userIds: number[],
