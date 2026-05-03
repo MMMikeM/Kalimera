@@ -10,6 +10,7 @@ import {
 	LESSON_TAGS,
 	VOCAB_SEED_CATEGORIES,
 } from "./seed-data";
+import { seedVerbConjugations } from "./seed-verb-conjugations";
 import {
 	BATCH_SIZE,
 	batchInsertAdjectiveDetails,
@@ -114,7 +115,11 @@ async function seed() {
 		console.log(`Processed ${linksArray.length} vocabulary-tag associations.`);
 	}
 
-	console.log("\nSeeding complete.");
+	console.log("\nVocabulary seed complete.\n");
+
+	await seedVerbConjugations();
+
+	console.log("\nAll seeding complete.");
 	process.exit(0);
 }
 

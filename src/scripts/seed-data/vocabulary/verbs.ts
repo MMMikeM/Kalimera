@@ -49,6 +49,21 @@ export const VERBS: FullVerbSeed[] = [
 	{ lemma: "πάω", english: "I go", cefrLevel: "A1", conjugationFamily: "irregular" },
 	{ lemma: "λέω", english: "I say", cefrLevel: "A1", conjugationFamily: "irregular" },
 	{ lemma: "τρώω", english: "I eat", cefrLevel: "A1", conjugationFamily: "irregular" },
+
+	// High-frequency core (top-110 freq corpus, previously unseeded)
+	{ lemma: "ξέρω", english: "I know", cefrLevel: "A1", conjugationFamily: "-ω" },
+	{ lemma: "μπορώ", english: "I can", cefrLevel: "A1", conjugationFamily: "-άω/-ώ" },
+	{ lemma: "ευχαριστώ", english: "I thank", cefrLevel: "A1", conjugationFamily: "-άω/-ώ" },
+	{ lemma: "παρακαλώ", english: "I ask / please", cefrLevel: "A1", conjugationFamily: "-άω/-ώ" },
+	{ lemma: "νομίζω", english: "I think (opinion)", cefrLevel: "A1", conjugationFamily: "-ω" },
+
+	// High-frequency deponents (-μαι family)
+	{ lemma: "λυπάμαι", english: "I'm sorry", cefrLevel: "A1", conjugationFamily: "-άμαι" },
+	{ lemma: "χρειάζομαι", english: "I need", cefrLevel: "A2", conjugationFamily: "-ομαι" },
+	{ lemma: "χαίρομαι", english: "I'm glad", cefrLevel: "A2", conjugationFamily: "-ομαι" },
+	{ lemma: "φοβάμαι", english: "I'm afraid", cefrLevel: "A2", conjugationFamily: "-άμαι" },
+	{ lemma: "σκέφτομαι", english: "I think", cefrLevel: "A2", conjugationFamily: "-ομαι" },
+	{ lemma: "υπόσχομαι", english: "I promise", cefrLevel: "B1", conjugationFamily: "-ομαι" },
 ];
 
 // Transport-related verbs (third person forms for describing schedules)

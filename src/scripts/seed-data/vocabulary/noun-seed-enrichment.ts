@@ -6,6 +6,7 @@ import {
 	type Gender,
 	type GrammaticalNumber,
 } from "../../../lib/greek-grammar";
+import { declineNoun } from "../../../lib/noun-declension";
 import type { NominalFormCellSeed, NounNominalFormsSeed, NounSeed } from "../../../types/seed";
 
 type CaseNumberKey = `${Case}_${GrammaticalNumber}`;
@@ -85,6 +86,20 @@ function baselineNounForms(lemma: string, gender: Gender): NounNominalFormsSeed 
 	};
 }
 
+/** Run runtime declension to populate nominative + accusative + genitive (sg + pl). Vocative skipped. */
+function declineToFormsSeed(
+	lemma: string,
+	pattern: NounDeclensionPattern,
+): NounNominalFormsSeed {
+	const declined = declineNoun(lemma, pattern);
+	const seed: Partial<Record<CaseNumberKey, NominalFormCellSeed>> = {};
+	for (const f of declined) {
+		const key = `${f.case}_${f.number}` as CaseNumberKey;
+		seed[key] = { form: f.noun, article: f.article || null };
+	}
+	return seed as NounNominalFormsSeed;
+}
+
 export function enrichNoun(input: NounSeedInput): NounSeed {
 	const pattern = coerceDeclensionPattern(
 		input.declensionPattern,
@@ -93,9 +108,15 @@ export function enrichNoun(input: NounSeedInput): NounSeed {
 		input.english,
 	);
 	const base = baselineNounForms(input.lemma, input.gender);
+	let declined: NounNominalFormsSeed;
+	try {
+		declined = declineToFormsSeed(input.lemma, pattern);
+	} catch {
+		declined = base;
+	}
 	const merged: NounNominalFormsSeed = input.nominalForms
-		? { ...base, ...input.nominalForms }
-		: base;
+		? { ...base, ...declined, ...input.nominalForms }
+		: { ...base, ...declined };
 
 	const out: NounSeed = {
 		lemma: input.lemma,

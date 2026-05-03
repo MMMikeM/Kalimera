@@ -47,14 +47,34 @@ const getStemFromLemma = (lemma: string, pattern: NounDeclensionPattern): string
 	}
 };
 
-const applyEnding = (stem: string, ending: string): string => {
-	// Handle special cases where endings have specific formatting rules
-	if (ending === "—") {
-		return stem; // Vocative with no article
-	}
+const TONOS_CHARS = /[άέήίόύώΐΰ]/;
+const TONOS_MAP: Record<string, string> = {
+	"ά": "α", // ά → α
+	"έ": "ε", // έ → ε
+	"ή": "η", // ή → η
+	"ί": "ι", // ί → ι
+	"ό": "ο", // ό → ο
+	"ύ": "υ", // ύ → υ
+	"ώ": "ω", // ώ → ω
+	"ΐ": "ϊ", // ΐ → ϊ
+	"ΰ": "ϋ", // ΰ → ϋ
+};
+const stripTonos = (s: string): string => s.replace(/[άέήίόύώΐΰ]/g, (m) => TONOS_MAP[m] ?? m);
 
-	// Remove leading dash from ending if present
+/** Greek allows only one tonos per word. When stem and suffix both carry stress,
+ * one must drop. Genitive forms typically shift stress to the suffix; other
+ * forms keep stress on the stem. This is a pragmatic approximation — full
+ * stress-shift rules per paradigm are out of scope. */
+const applyEnding = (stem: string, ending: string, isGenitive = false): string => {
+	if (ending === "—") return stem;
 	const cleanEnding = ending.startsWith("-") ? ending.slice(1) : ending;
+
+	const stemHasTonos = TONOS_CHARS.test(stem);
+	const endingHasTonos = TONOS_CHARS.test(cleanEnding);
+
+	if (stemHasTonos && endingHasTonos) {
+		return isGenitive ? stripTonos(stem) + cleanEnding : stem + stripTonos(cleanEnding);
+	}
 	return stem + cleanEnding;
 };
 
@@ -91,7 +111,7 @@ const _declineNounForms = (
 		if (!grammaticalCase) continue;
 
 		const article = mapArticleForAccusative(form.article);
-		const noun = applyEnding(stem, form.ending);
+		const noun = applyEnding(stem, form.ending, grammaticalCase === "genitive");
 
 		forms.push({
 			case: grammaticalCase,
