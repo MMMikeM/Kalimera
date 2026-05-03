@@ -1,7 +1,7 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { MEDIUM_SPEED_MS } from "../drill-speeds";
-import { useLogDrillAttempt } from "../hooks";
+import { type LogAttemptInput, useLogDrillAttempt } from "../hooks";
 import {
 	type Attempt,
 	type DrillForm,
@@ -18,7 +18,6 @@ interface DrillLogData {
 	correctAnswer: string;
 	userAnswer: string;
 	weakAreaIdentifier?: string;
-	vocabularyId?: number;
 }
 
 export interface SpeedOption {
@@ -27,18 +26,34 @@ export interface SpeedOption {
 	timeLimit: number;
 }
 
+export interface SessionStats<T extends DrillForm> {
+	total: number;
+	correct: number;
+	attempts: Attempt<T>[];
+}
+
 export const useDrillEngine = <T extends DrillForm>({
 	items,
 	drillId,
 	speeds,
 	defaultSessionSize = 10,
+	autoStart = false,
+	logAttemptFn: logAttemptFnOverride,
+	onComplete,
 }: {
 	items: T[];
 	drillId: string;
 	speeds?: ReadonlyArray<SpeedOption>;
 	defaultSessionSize?: SessionSize;
+	/** Skip the config phase, build the deck, and jump straight to "active" on mount. */
+	autoStart?: boolean;
+	/** Override the default per-attempt logger (e.g. route through useDrillSession). */
+	logAttemptFn?: (input: LogAttemptInput) => void;
+	/** Called once when the drill enters the "complete" phase. */
+	onComplete?: (stats: SessionStats<T>) => void;
 }) => {
-	const logAttemptFn = useLogDrillAttempt(drillId);
+	const defaultLogAttemptFn = useLogDrillAttempt(drillId);
+	const logAttemptFn = logAttemptFnOverride ?? defaultLogAttemptFn;
 
 	const [phase, setPhase] = useState<Phase>("config");
 	const [mode, setMode] = useState<DrillMode>("forward");
@@ -72,7 +87,12 @@ export const useDrillEngine = <T extends DrillForm>({
 		setLastAttempt(attempt);
 		setAttempts((prev) => [...prev, attempt]);
 		setPhase("feedback");
-		logAttemptFn({ ...logData, isCorrect, timeTaken });
+		logAttemptFn({
+			...logData,
+			isCorrect,
+			timeTaken,
+			vocabularyId: currentForm.vocabularyId,
+		});
 	};
 
 	const startDrill = () => {
@@ -87,6 +107,22 @@ export const useDrillEngine = <T extends DrillForm>({
 		setLastAttempt(null);
 		setPhase("active");
 	};
+
+	const startedRef = useRef(false);
+	useEffect(() => {
+		if (autoStart && !startedRef.current && items.length > 0) {
+			startedRef.current = true;
+			startDrill();
+		}
+	});
+
+	useEffect(() => {
+		if (phase !== "complete" || !onComplete) return;
+		const correct = attempts.filter((a) => a.isCorrect).length;
+		onComplete({ total: attempts.length, correct, attempts });
+		// Run once per transition to "complete".
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [phase]);
 
 	const advance = useAutoAdvance({
 		phase,

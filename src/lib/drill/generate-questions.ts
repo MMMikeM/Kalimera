@@ -13,6 +13,8 @@ export interface DrillQuestion {
 	hint?: string;
 	targetMs?: number; // future weak-spot targeting
 	vocabularyId?: number;
+	/** Tag set by the question builder for weak-area aggregation (e.g. verb id, case slug). */
+	weakAreaIdentifier?: string;
 }
 
 type QuestionCategory = "pronouns" | "articles" | "verbs" | "nouns";

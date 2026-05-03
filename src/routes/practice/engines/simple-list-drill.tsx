@@ -4,8 +4,10 @@ import { Button } from "@/components/ui/button";
 import { matchPhonetic } from "@/lib/greek-transliteration";
 
 import { SPEEDS } from "../drill-speeds";
+import type { LogAttemptInput } from "../hooks";
 import {
 	ConfigShell,
+	type Attempt,
 	type DrillForm,
 	DrillShell,
 	FeedbackDisplay,
@@ -16,7 +18,7 @@ import {
 	useCountdown,
 	useForwardKeyboard,
 } from "./drill-engine";
-import { type SpeedOption, useDrillEngine } from "./use-drill-engine";
+import { type SessionStats, type SpeedOption, useDrillEngine } from "./use-drill-engine";
 
 // ─── Public types ──────────────────────────────────────────────────────────────
 
@@ -54,6 +56,14 @@ export interface SimpleListDrillProps {
 	};
 	referenceHref?: string;
 	referenceLabel?: string;
+	/** Skip the config screen and start drilling on mount. */
+	autoStart?: boolean;
+	/** Override the default per-attempt logger (e.g. route through useDrillSession). */
+	logAttemptFn?: (input: LogAttemptInput) => void;
+	/** Called once when the drill enters the "complete" phase. */
+	onComplete?: (stats: SessionStats<SimpleListItem>) => void;
+	/** When provided, SummaryScreen renders a "Drill mistakes" button. */
+	onRetryMistakes?: (mistakes: Attempt<SimpleListItem>[]) => void;
 }
 
 // ─── Theme ─────────────────────────────────────────────────────────────────────
@@ -85,11 +95,23 @@ export const SimpleListDrill = ({
 	reverseDimension,
 	referenceHref,
 	referenceLabel,
+	autoStart,
+	logAttemptFn,
+	onComplete,
+	onRetryMistakes,
 }: SimpleListDrillProps) => {
 	const theme = THEME[colorTheme];
 	const speeds = speedsProp ?? SPEEDS;
 
-	const engine = useDrillEngine({ items, drillId, speeds, defaultSessionSize: 10 });
+	const engine = useDrillEngine({
+		items,
+		drillId,
+		speeds,
+		defaultSessionSize: 10,
+		autoStart,
+		logAttemptFn,
+		onComplete,
+	});
 	const {
 		phase,
 		setPhase,
@@ -138,13 +160,13 @@ export const SimpleListDrill = ({
 						prompt: currentForm.english,
 						correctAnswer: currentForm.greek,
 						userAnswer: "",
-						weakAreaIdentifier: currentForm.id,
+						weakAreaIdentifier: currentForm.weakAreaIdentifier ?? currentForm.id,
 					}
 				: {
 						prompt: currentForm.reverseGreek ?? currentForm.greek,
 						correctAnswer: currentForm.english,
 						userAnswer: "",
-						weakAreaIdentifier: currentForm.id,
+						weakAreaIdentifier: currentForm.weakAreaIdentifier ?? currentForm.id,
 					};
 		recordAttempt(false, effectiveTimeLimit, logData, true);
 	};
@@ -161,7 +183,7 @@ export const SimpleListDrill = ({
 			prompt: currentForm.english,
 			correctAnswer: currentForm.greek,
 			userAnswer: inputValueRef.current,
-			weakAreaIdentifier: currentForm.id,
+			weakAreaIdentifier: currentForm.weakAreaIdentifier ?? currentForm.id,
 		});
 	};
 
@@ -174,7 +196,7 @@ export const SimpleListDrill = ({
 			prompt: currentForm.reverseGreek ?? currentForm.greek,
 			correctAnswer: currentForm.english,
 			userAnswer: isCorrect ? "self:correct" : "self:wrong",
-			weakAreaIdentifier: currentForm.id,
+			weakAreaIdentifier: currentForm.weakAreaIdentifier ?? currentForm.id,
 		});
 	};
 
@@ -200,7 +222,7 @@ export const SimpleListDrill = ({
 			prompt: currentForm.reverseGreek ?? currentForm.greek,
 			correctAnswer: reverseDimension.getCorrectId(currentForm),
 			userAnswer: selDimension,
-			weakAreaIdentifier: currentForm.id,
+			weakAreaIdentifier: currentForm.weakAreaIdentifier ?? currentForm.id,
 		});
 	}, [selDimension, mode, phase, reverseDimension, currentForm, recordAttempt]);
 
@@ -279,7 +301,12 @@ export const SimpleListDrill = ({
 
 	if (phase === "complete") {
 		return (
-			<SummaryScreen attempts={attempts} total={sessionSize} onAgain={() => setPhase("config")} />
+			<SummaryScreen
+				attempts={attempts}
+				total={sessionSize}
+				onAgain={() => setPhase("config")}
+				onRetryMistakes={onRetryMistakes}
+			/>
 		);
 	}
 
