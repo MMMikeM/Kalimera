@@ -55,6 +55,14 @@ export default defineConfig({
 			},
 		},
 		{
+			// shadcn-ui primitives ship with arbitrary-value utilities baked in
+			// (transition-[color,box-shadow], has-[>svg], ring-[3px]). Don't fight them.
+			files: ["src/components/ui/**/*.{ts,tsx}", "src/components/NavTabs.tsx"],
+			rules: {
+				"better-tailwindcss/no-restricted-classes": "off",
+			},
+		},
+		{
 			files: ["**/*.{ts,tsx}"],
 			rules: {
 				"no-restricted-imports": [
