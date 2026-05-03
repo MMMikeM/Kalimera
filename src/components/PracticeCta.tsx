@@ -8,12 +8,16 @@ interface PracticeCTAProps {
 	title?: string;
 	description?: string;
 	topic?: string;
+	drillHref?: string;
+	ctaLabel?: string;
 }
 
 export const PracticeCTA = ({
 	title = "Ready to practice?",
 	description = "Turn knowledge into fluency with timed retrieval drills.",
 	topic: _topic,
+	drillHref = "/register",
+	ctaLabel = "Try a Drill",
 }: PracticeCTAProps) => {
 	return (
 		<Card className="border-terracotta/20 bg-terracotta/5">
@@ -25,8 +29,8 @@ export const PracticeCTA = ({
 					<h3 className="mb-1 font-medium text-stone-800">{title}</h3>
 					<p className="text-sm text-stone-600">{description}</p>
 				</div>
-				<Link to="/register" className="flex-shrink-0">
-					<Button variant="primary">Try a Drill</Button>
+				<Link to={drillHref} className="flex-shrink-0">
+					<Button variant="primary">{ctaLabel}</Button>
 				</Link>
 			</div>
 		</Card>

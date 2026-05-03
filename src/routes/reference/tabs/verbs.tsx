@@ -16,6 +16,8 @@ export function VerbsTab() {
 				title="Practice verbs"
 				description="Build fluency with timed retrieval drills on Greek verb conjugation."
 				topic="verbs"
+				drillHref="/practice#verbs"
+				ctaLabel="Open verb drills"
 			/>
 		</div>
 	);
