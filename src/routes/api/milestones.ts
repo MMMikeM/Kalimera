@@ -1,4 +1,4 @@
-import { getUserMilestones, recordMilestone } from "@/db.server/queries/milestones";
+import { getUserMilestones, recordMilestone } from "@/db.server/queries/milestones-achieved";
 
 import type { Route } from "./+types/milestones";
 

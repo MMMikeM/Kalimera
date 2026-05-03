@@ -5,21 +5,18 @@ import { Link, useFetcher } from "react-router";
 
 import { FreezeIndicator } from "@/components/FreezeIndicator";
 import {
-	getItemsDueTomorrow,
-	getLastPracticeDate,
-	getPracticeStats,
-} from "@/db.server/queries/practice";
-import {
 	getPushSubscriptionByUserId,
 	setNotificationMode,
-} from "@/db.server/queries/push-notifications";
+} from "@/db.server/queries/notifications/push-subscriptions";
 import {
-	calculateDaysUntilNextFreeze,
-	type FreezeStatus,
-	getFreezeStatus,
-} from "@/db.server/queries/streak";
+	getCompletedPracticeAtDatesForStreak,
+	getLastPracticeDate,
+} from "@/db.server/queries/practice-sessions";
 import { getUserById } from "@/db.server/queries/users";
+import { getItemsDueTomorrow, getSkillStats } from "@/db.server/queries/vocabulary-skills";
 import { getAuthSession } from "@/lib/auth-cookie";
+import { streakLengthFromCompletedSessionDates } from "@/lib/practice-streak";
+import { calculateDaysUntilNextFreeze, type FreezeStatus, getFreezeStatus } from "@/lib/streak";
 
 import type { Route } from "./+types/home";
 
@@ -72,11 +69,12 @@ export async function loader({ request }: Route.LoaderArgs) {
 		};
 	}
 
-	const [rawStats, user, itemsDueTomorrow, lastPracticeDate] = await Promise.all([
-		getPracticeStats(userId),
+	const [rawStats, user, itemsDueTomorrow, lastPracticeDate, completedDates] = await Promise.all([
+		getSkillStats(userId),
 		getUserById(userId),
 		getItemsDueTomorrow(userId),
 		getLastPracticeDate(userId),
+		getCompletedPracticeAtDatesForStreak(userId),
 	]);
 
 	const daysSinceLastPractice = lastPracticeDate
@@ -84,7 +82,7 @@ export async function loader({ request }: Route.LoaderArgs) {
 		: null;
 
 	const stats: Stats = {
-		streak: rawStats.streak,
+		streak: streakLengthFromCompletedSessionDates(completedDates),
 		itemsMastered: Number(rawStats.itemsMastered),
 		dueCount: Number(rawStats.dueCount),
 		totalLearned: Number(rawStats.totalLearned),
