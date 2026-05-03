@@ -39,7 +39,7 @@ interface SelectorOption {
 	selectorText: string;
 }
 
-export interface SimpleListDrillProps {
+interface SimpleListDrillProps {
 	items: SimpleListItem[];
 	title: string;
 	subtitle: string;

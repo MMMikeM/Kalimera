@@ -5,7 +5,7 @@ import { MonoText } from "@/components/MonoText";
 import { GENDER_SCHEME, SCHEME } from "@/constants/grammar-palette";
 import type { Gender } from "@/db.server/enums";
 
-export interface GenderData {
+interface GenderData {
 	masculine: { nom: string; acc: string; gen: string };
 	feminine: { nom: string; acc: string; gen: string };
 	neuter: { nom: string; acc: string; gen: string };
@@ -14,7 +14,7 @@ export interface GenderData {
 const GENDERS: Gender[] = ["masculine", "feminine", "neuter"];
 const CASES = ["nom", "acc", "gen"] as const;
 
-export const CaseTable: React.FC<{ label: string; data: GenderData }> = ({ label, data }) => {
+const CaseTable: React.FC<{ label: string; data: GenderData }> = ({ label, data }) => {
 	const cells = CASES.map((c) =>
 		GENDERS.map((g) => (
 			<MonoText

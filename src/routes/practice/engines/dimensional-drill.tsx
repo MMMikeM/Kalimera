@@ -30,7 +30,7 @@ export interface DimensionSpec<K extends string> {
 	required?: (selected: Selected<K>) => boolean;
 }
 
-export interface DimensionalDrillProps<K extends string> {
+interface DimensionalDrillProps<K extends string> {
 	title: string;
 	subtitle: string;
 	drillId: string;

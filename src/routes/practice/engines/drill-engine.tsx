@@ -33,7 +33,7 @@ export interface Attempt<T extends DrillForm> {
 	userInput?: string;
 }
 
-export const shuffle = <T,>(arr: T[]): T[] => {
+const shuffle = <T,>(arr: T[]): T[] => {
 	const a = [...arr];
 	for (let i = a.length - 1; i > 0; i--) {
 		const j = Math.floor(Math.random() * (i + 1));
@@ -234,11 +234,7 @@ export const SummaryScreen = <T extends DrillForm>({
 
 			<div className="mb-3 space-y-2">
 				{onRetryMistakes && allMistakes.length > 0 && (
-					<Button
-						onClick={() => onRetryMistakes(allMistakes)}
-						variant="outline"
-						className="w-full"
-					>
+					<Button onClick={() => onRetryMistakes(allMistakes)} variant="outline" className="w-full">
 						Drill mistakes ({allMistakes.length})
 					</Button>
 				)}

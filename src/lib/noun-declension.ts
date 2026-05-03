@@ -1,7 +1,7 @@
 import { AGREEMENT_PARADIGMS } from "@/constants/agreement";
 import type { NounDeclensionPattern } from "@/db.server/enums";
 
-export type Case = "nominative" | "accusative" | "genitive";
+type Case = "nominative" | "accusative" | "genitive";
 type Number = "singular" | "plural";
 
 interface DeclinedForm {
@@ -136,14 +136,4 @@ export const declineNoun = (lemma: string, pattern: NounDeclensionPattern): Decl
 	const pluralForms = declineNounPlural(lemma, pattern);
 
 	return [...singularForms, ...pluralForms];
-};
-
-export const getNounForm = (
-	lemma: string,
-	pattern: NounDeclensionPattern,
-	grammaticalCase: Case,
-	number: Number,
-): DeclinedForm | undefined => {
-	const allForms = declineNoun(lemma, pattern);
-	return allForms.find((form) => form.case === grammaticalCase && form.number === number);
 };

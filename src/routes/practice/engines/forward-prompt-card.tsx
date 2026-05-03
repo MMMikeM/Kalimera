@@ -1,6 +1,6 @@
 import type { LucideIcon } from "lucide-react";
 
-export interface PromptFacet {
+interface PromptFacet {
 	icon: LucideIcon;
 	label: string;
 	colorText: string;
