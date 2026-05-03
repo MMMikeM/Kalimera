@@ -118,8 +118,6 @@ export const SUBJECT_PRONOUNS: PronounParadigm[] = [
 	},
 ];
 
-
-
 // Emphatic/Strong pronouns - used after prepositions
 export const EMPHATIC_PRONOUNS: PronounParadigm[] = [
 	{

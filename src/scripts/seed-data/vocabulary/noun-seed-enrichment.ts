@@ -87,10 +87,7 @@ function baselineNounForms(lemma: string, gender: Gender): NounNominalFormsSeed 
 }
 
 /** Run runtime declension to populate nominative + accusative + genitive (sg + pl). Vocative skipped. */
-function declineToFormsSeed(
-	lemma: string,
-	pattern: NounDeclensionPattern,
-): NounNominalFormsSeed {
+function declineToFormsSeed(lemma: string, pattern: NounDeclensionPattern): NounNominalFormsSeed {
 	const declined = declineNoun(lemma, pattern);
 	const seed: Partial<Record<CaseNumberKey, NominalFormCellSeed>> = {};
 	for (const f of declined) {

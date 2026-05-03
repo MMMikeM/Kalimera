@@ -49,15 +49,15 @@ const getStemFromLemma = (lemma: string, pattern: NounDeclensionPattern): string
 
 const TONOS_CHARS = /[άέήίόύώΐΰ]/;
 const TONOS_MAP: Record<string, string> = {
-	"ά": "α", // ά → α
-	"έ": "ε", // έ → ε
-	"ή": "η", // ή → η
-	"ί": "ι", // ί → ι
-	"ό": "ο", // ό → ο
-	"ύ": "υ", // ύ → υ
-	"ώ": "ω", // ώ → ω
-	"ΐ": "ϊ", // ΐ → ϊ
-	"ΰ": "ϋ", // ΰ → ϋ
+	ά: "α", // ά → α
+	έ: "ε", // έ → ε
+	ή: "η", // ή → η
+	ί: "ι", // ί → ι
+	ό: "ο", // ό → ο
+	ύ: "υ", // ύ → υ
+	ώ: "ω", // ώ → ω
+	ΐ: "ϊ", // ΐ → ϊ
+	ΰ: "ϋ", // ΰ → ϋ
 };
 const stripTonos = (s: string): string => s.replace(/[άέήίόύώΐΰ]/g, (m) => TONOS_MAP[m] ?? m);
 

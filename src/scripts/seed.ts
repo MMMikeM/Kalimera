@@ -10,7 +10,6 @@ import {
 	LESSON_TAGS,
 	VOCAB_SEED_CATEGORIES,
 } from "./seed-data";
-import { seedVerbConjugations } from "./seed-verb-conjugations";
 import {
 	BATCH_SIZE,
 	batchInsertAdjectiveDetails,
@@ -23,6 +22,7 @@ import {
 	type VerbDetailRecord,
 	type VocabWithTags,
 } from "./seed-pipeline";
+import { seedVerbConjugations } from "./seed-verb-conjugations";
 
 async function seed() {
 	console.log("Seeding database (additive mode with batching)...\n");
