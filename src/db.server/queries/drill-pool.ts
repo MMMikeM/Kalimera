@@ -1,8 +1,5 @@
-import { and, desc, eq, inArray } from "drizzle-orm";
-
 import type { CefrLevel, WordType } from "../enums";
 import { db } from "../index";
-import { practiceAttempts } from "../schema";
 
 const DEFAULT_POOL_SIZE = 10;
 const ATTEMPT_WINDOW = 4;
@@ -16,7 +13,7 @@ const NEXT_LEVEL: Partial<Record<CefrLevel, CefrLevel>> = {
 	C1: "C2",
 };
 
-export interface DrillPoolOptions {
+interface DrillPoolOptions {
 	userId: number;
 	drillId: string;
 	wordType: WordType | WordType[];
@@ -24,7 +21,7 @@ export interface DrillPoolOptions {
 	poolSize?: number;
 }
 
-export interface DrillPoolResult {
+interface DrillPoolResult {
 	vocabularyIds: number[];
 	masteredIds: Set<number>;
 }
@@ -41,7 +38,7 @@ export interface DrillPoolResult {
  * ever sees sg1 four times can theoretically master a verb. Acceptable for v1 —
  * shuffle distribution makes this unlikely in practice.
  */
-export const getDrillVocabPool = async (opts: DrillPoolOptions): Promise<DrillPoolResult> => {
+const getDrillVocabPool = async (opts: DrillPoolOptions): Promise<DrillPoolResult> => {
 	const poolSize = opts.poolSize ?? DEFAULT_POOL_SIZE;
 	const wordTypes = Array.isArray(opts.wordType) ? opts.wordType : [opts.wordType];
 
@@ -61,21 +58,15 @@ export const getDrillVocabPool = async (opts: DrillPoolOptions): Promise<DrillPo
 
 	const candidateIds = candidates.map((c) => c.id);
 
-	const attempts = await db
-		.select({
-			vocabularyId: practiceAttempts.vocabularyId,
-			isCorrect: practiceAttempts.isCorrect,
-			attemptedAt: practiceAttempts.attemptedAt,
-		})
-		.from(practiceAttempts)
-		.where(
-			and(
-				eq(practiceAttempts.userId, opts.userId),
-				eq(practiceAttempts.drillId, opts.drillId),
-				inArray(practiceAttempts.vocabularyId, candidateIds),
-			),
-		)
-		.orderBy(desc(practiceAttempts.attemptedAt));
+	const attempts = await db.query.practiceAttempts.findMany({
+		where: {
+			userId: opts.userId,
+			drillId: opts.drillId,
+			vocabularyId: { in: candidateIds },
+		},
+		columns: { vocabularyId: true, isCorrect: true, attemptedAt: true },
+		orderBy: { attemptedAt: "desc" },
+	});
 
 	const recentByVocab = new Map<number, boolean[]>();
 	for (const a of attempts) {
@@ -127,7 +118,10 @@ export const getDrillVocabPoolWithFallback = async (
 	}
 
 	if (lastResult.masteredIds.size > 0) {
-		const mastered = Array.from(lastResult.masteredIds).slice(0, opts.poolSize ?? DEFAULT_POOL_SIZE);
+		const mastered = Array.from(lastResult.masteredIds).slice(
+			0,
+			opts.poolSize ?? DEFAULT_POOL_SIZE,
+		);
 		return { vocabularyIds: mastered, masteredIds: lastResult.masteredIds };
 	}
 

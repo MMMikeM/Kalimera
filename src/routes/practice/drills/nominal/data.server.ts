@@ -1,5 +1,5 @@
 import type { CefrLevel } from "@/db.server/enums";
-import { getDrillVocabPoolWithFallback } from "@/db.server/queries/drill-vocab-pool";
+import { getDrillVocabPoolWithFallback } from "@/db.server/queries/drill-pool";
 import { getNominalFormsForDrill } from "@/db.server/queries/nominal-forms";
 import { ensureUserProgress } from "@/db.server/queries/user-progress";
 import type { DrillQuestion } from "@/lib/drill/generate-questions";
