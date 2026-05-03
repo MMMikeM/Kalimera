@@ -1,6 +1,6 @@
 import type { CefrLevel } from "@/db.server/enums";
 import { getDrillVocabPoolWithFallback } from "@/db.server/queries/drill-pool";
-import { getNominalFormsForDrill } from "@/db.server/queries/nominal-forms";
+import { getVocabularyWithNominalForms } from "@/db.server/queries/nominal-forms";
 import { ensureUserProgress } from "@/db.server/queries/user-progress";
 import type { DrillQuestion } from "@/lib/drill/generate-questions";
 
@@ -10,6 +10,17 @@ const NEXT_LEVEL: Partial<Record<CefrLevel, CefrLevel>> = {
 	B1: "B2",
 	B2: "C1",
 	C1: "C2",
+};
+
+const CASE_LABEL: Record<string, string> = {
+	nominative: "Doer",
+	accusative: "Target",
+	genitive: "Owner",
+};
+
+const NUMBER_LABEL: Record<string, string> = {
+	singular: "sg",
+	plural: "pl",
 };
 
 const shuffle = <T>(arr: T[]): T[] => {
@@ -44,19 +55,24 @@ export const getNominalReviewQuestions = async (
 
 	if (pool.vocabularyIds.length === 0) return [];
 
-	const forms = await getNominalFormsForDrill(wordType, pool.vocabularyIds);
+	const rows = await getVocabularyWithNominalForms(wordType, pool.vocabularyIds);
 
-	const questions: DrillQuestion[] = forms.map((f) => {
-		const genderHint = f.gender ? `, ${f.gender.charAt(0)}` : "";
-		const promptHint = `(${f.caseHint}, ${f.numberHint}${genderHint})`;
-		return {
-			id: `nominal-${wordType}-${f.vocabId}-${f.caseHint}-${f.numberHint}-${f.gender ?? "x"}`,
-			prompt: `${f.english} ${promptHint}`,
-			correctGreek: f.greekFull,
-			timeLimit: 5000,
-			vocabularyId: f.vocabId,
-		};
-	});
+	const questions: DrillQuestion[] = [];
+	for (const vocab of rows) {
+		for (const form of vocab.nominalForms) {
+			const caseHint = CASE_LABEL[form.grammaticalCase] ?? form.grammaticalCase;
+			const numberHint = NUMBER_LABEL[form.number] ?? form.number;
+			const genderHint = form.gender ? `, ${form.gender.charAt(0)}` : "";
+			const greekFull = form.article ? `${form.article} ${form.form}` : form.form;
+			questions.push({
+				id: `nominal-${wordType}-${vocab.id}-${caseHint}-${numberHint}-${form.gender ?? "x"}`,
+				prompt: `${vocab.englishTranslation} (${caseHint}, ${numberHint}${genderHint})`,
+				correctGreek: greekFull,
+				timeLimit: 5000,
+				vocabularyId: vocab.id,
+			});
+		}
+	}
 
 	return shuffle(questions).slice(0, limit);
 };
