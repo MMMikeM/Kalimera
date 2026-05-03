@@ -2,15 +2,20 @@
 
 **Makefile first.** Check Makefile before run any command.
 
-**Database via Makefile only** — direct `pnpm` skip `.env`, hit local not Turso.
+**Database setup (this repo):** `.env` holds **production** Turso credentials (no separate `.env.prod` exists). The `prod-db-*` Makefile targets fail (`.env.prod: No such file`).
 
 ```bash
-# Local (Docker libsql :8080)
-make db-push | db-seed | db-setup | db-studio
+# Production (Turso) — `.env` is auto-loaded by drizzle-kit
+make db-push | db-seed | db-setup | db-studio   # ← these hit PROD
 
-# Production (Turso)
-make prod-db-push | prod-db-seed | prod-db-setup | prod-db-studio
+# Local (Docker libsql :8080) — rename `.env` so drizzle falls back to localhost
+docker compose up -d libsql                     # one-time
+mv .env .env.bak && make db-push && make db-seed; mv .env.bak .env
+
+# DO NOT use `make prod-db-*` — they require a `.env.prod` that doesn't exist.
 ```
+
+The seeders (vocab + verb conjugations) are **idempotent additive upserts**. Re-running against prod is safe — only adds/updates rows, never deletes.
 
 **Git:** `git mv` rename/move (keep history), `git rm` delete. Never commit without approval.
 
