@@ -1,5 +1,4 @@
 import type React from "react";
-import { useCallback, useMemo } from "react";
 import { useFetcher } from "react-router";
 
 import { useCurrentUserId } from "../hooks";
@@ -65,41 +64,34 @@ const SrsDrill: React.FC<SrsDrillProps> = ({
 	const fetcher = useFetcher();
 	const theme = EMPTY_STATE_THEME[themeColor];
 
-	const questions = useMemo(
-		(): UnifiedQuestion[] =>
-			items.map((item) => ({
-				id: `${config.idPrefix}-${item.id}`,
-				prompt: item.englishTranslation,
-				correctGreek: item.greekText,
-				timeLimit: 6000,
-			})),
-		[items, config.idPrefix],
-	);
+	const questions: UnifiedQuestion[] = items.map((item) => ({
+		id: `${config.idPrefix}-${item.id}`,
+		prompt: item.englishTranslation,
+		correctGreek: item.greekText,
+		timeLimit: 6000,
+	}));
 
-	const handleAttempt = useCallback(
-		(result: UnifiedAttemptResult) => {
-			if (!userId) return;
+	const handleAttempt = (result: UnifiedAttemptResult) => {
+		if (!userId) return;
 
-			const match = result.questionId.match(new RegExp(`${config.idPrefix}-(\\d+)`));
-			const vocabularyId = match?.[1] ? parseInt(match[1], 10) : undefined;
+		const match = result.questionId.match(new RegExp(`${config.idPrefix}-(\\d+)`));
+		const vocabularyId = match?.[1] ? parseInt(match[1], 10) : undefined;
 
-			fetcher.submit(
-				{
-					intent: "recordAttempt",
-					userId: userId.toString(),
-					vocabularyId: vocabularyId?.toString() || "",
-					questionText: result.prompt,
-					correctAnswer: result.correctGreek,
-					userAnswer: result.userAnswer,
-					isCorrect: result.isCorrect ? "on" : "",
-					timeTaken: result.timeTaken.toString(),
-					skillType: "production",
-				},
-				{ method: "post", action: "/practice" },
-			);
-		},
-		[userId, fetcher, config.idPrefix],
-	);
+		fetcher.submit(
+			{
+				intent: "recordAttempt",
+				userId: userId.toString(),
+				vocabularyId: vocabularyId?.toString() || "",
+				questionText: result.prompt,
+				correctAnswer: result.correctGreek,
+				userAnswer: result.userAnswer,
+				isCorrect: result.isCorrect ? "on" : "",
+				timeTaken: result.timeTaken.toString(),
+				skillType: "production",
+			},
+			{ method: "post", action: "/practice" },
+		);
+	};
 
 	if (items.length === 0) {
 		return (

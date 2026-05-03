@@ -38,14 +38,15 @@ export async function loader({ request }: Route.LoaderArgs) {
 		};
 	}
 
-	const [stats, calendarDates, accuracyTrends, timeInvested, completedSessions] =
-		await Promise.all([
+	const [stats, calendarDates, accuracyTrends, timeInvested, completedSessions] = await Promise.all(
+		[
 			getSkillStats(userId),
 			getPracticeDatesForCalendar(userId, 3),
 			getAccuracyTrends(userId, 30),
 			getTimeInvested(userId),
 			listCompletedPracticeSessionsForStreak(userId),
-		]);
+		],
+	);
 	const completedDates = completedSessions.map((s) => s.completedAt!);
 
 	const accuracyData = accuracyTrends.map((d) => ({

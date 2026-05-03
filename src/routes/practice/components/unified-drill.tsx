@@ -1,6 +1,6 @@
 import { CheckCircle, ChevronRight, Keyboard, XCircle } from "lucide-react";
 import type React from "react";
-import { useCallback, useEffect, useReducer, useRef } from "react";
+import { useEffect, useReducer, useRef } from "react";
 
 import { Card } from "@/components/Card";
 import CountdownTimer from "@/components/CountdownTimer";
@@ -170,7 +170,7 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 		initialUnifiedState(questions),
 	);
 
-	const questionStartTimeRef = useRef<number>(Date.now());
+	const questionStartTimeRef = useRef<number>(0);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const autoAdvanceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 	const advanceArmedRef = useRef(false);
@@ -258,38 +258,35 @@ const UnifiedDrill: React.FC<UnifiedDrillProps> = ({
 		dispatch({ type: "START_QUESTION" });
 	};
 
-	const handleProductionSubmit = useCallback(
-		(timedOut = false) => {
-			if (!currentQuestion || state.phase !== "active") return;
+	const handleProductionSubmit = (timedOut = false) => {
+		if (!currentQuestion || state.phase !== "active") return;
 
-			const timeTaken = Date.now() - questionStartTimeRef.current;
-			const result = matchPhonetic(state.userInput, currentQuestion.correctGreek);
+		const timeTaken = Date.now() - questionStartTimeRef.current;
+		const result = matchPhonetic(state.userInput, currentQuestion.correctGreek);
 
-			const attempt: UnifiedAttemptResult = {
-				questionId: currentQuestion.id,
-				prompt: currentQuestion.prompt,
-				correctGreek: currentQuestion.correctGreek,
-				userAnswer: result.userPhonetic,
-				isCorrect: result.isCorrect && !timedOut,
-				timeTaken,
-				timedOut,
-				vocabularyId: currentQuestion.vocabularyId,
-			};
+		const attempt: UnifiedAttemptResult = {
+			questionId: currentQuestion.id,
+			prompt: currentQuestion.prompt,
+			correctGreek: currentQuestion.correctGreek,
+			userAnswer: result.userPhonetic,
+			isCorrect: result.isCorrect && !timedOut,
+			timeTaken,
+			timedOut,
+			vocabularyId: currentQuestion.vocabularyId,
+		};
 
-			dispatch({
-				type: "SUBMIT_ANSWER",
-				attempt,
-				correctPhonetic: result.correctPhonetic,
-			});
+		dispatch({
+			type: "SUBMIT_ANSWER",
+			attempt,
+			correctPhonetic: result.correctPhonetic,
+		});
 
-			onAttempt?.(attempt);
-		},
-		[currentQuestion, state.phase, state.userInput, onAttempt],
-	);
+		onAttempt?.(attempt);
+	};
 
-	const handleTimeout = useCallback(() => {
+	const handleTimeout = () => {
 		handleProductionSubmit(true);
-	}, [handleProductionSubmit]);
+	};
 
 	const handleKeyDown = (e: React.KeyboardEvent) => {
 		if (e.key === "Enter" && state.phase === "active") {

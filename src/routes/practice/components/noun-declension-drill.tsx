@@ -1,5 +1,4 @@
 import type React from "react";
-import { useMemo } from "react";
 
 import type { NounDeclensionPattern } from "@/db.server/enums";
 import { type Case, getNounForm } from "@/lib/noun-declension";
@@ -66,10 +65,7 @@ interface NounDeclensionDrillProps {
 }
 
 const NounDeclensionDrill: React.FC<NounDeclensionDrillProps> = ({ questionCount = 8 }) => {
-	const questions = useMemo(
-		() => generateQuestions(Math.min(questionCount, PRACTICE_NOUNS.length)),
-		[questionCount],
-	);
+	const questions = generateQuestions(Math.min(questionCount, PRACTICE_NOUNS.length));
 
 	if (questions.length === 0) {
 		return (

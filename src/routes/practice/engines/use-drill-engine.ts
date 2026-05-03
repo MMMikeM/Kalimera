@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 import { MEDIUM_SPEED_MS } from "../drill-speeds";
 import { useLogDrillAttempt } from "../hooks";
@@ -59,27 +59,23 @@ export const useDrillEngine = <T extends DrillForm>({
 	const [attempts, setAttempts] = useState<Attempt<T>[]>([]);
 	const [lastAttempt, setLastAttempt] = useState<Attempt<T> | null>(null);
 
-	// Engines register their per-card reset here
-	const resetSelectorsRef = useRef<(() => void) | null>(null);
-	const resetSelectors = useCallback(() => {
-		resetSelectorsRef.current?.();
-	}, []);
-
 	const currentForm = deck[cardIndex];
 
-	const recordAttempt = useCallback(
-		(isCorrect: boolean, timeTaken: number, logData: DrillLogData, timedOut = false) => {
-			if (!currentForm) return;
-			const attempt: Attempt<T> = { form: currentForm, isCorrect, timeTaken, timedOut };
-			setLastAttempt(attempt);
-			setAttempts((prev) => [...prev, attempt]);
-			setPhase("feedback");
-			logAttemptFn({ ...logData, isCorrect, timeTaken });
-		},
-		[currentForm, logAttemptFn],
-	);
+	const recordAttempt = (
+		isCorrect: boolean,
+		timeTaken: number,
+		logData: DrillLogData,
+		timedOut = false,
+	) => {
+		if (!currentForm) return;
+		const attempt: Attempt<T> = { form: currentForm, isCorrect, timeTaken, timedOut };
+		setLastAttempt(attempt);
+		setAttempts((prev) => [...prev, attempt]);
+		setPhase("feedback");
+		logAttemptFn({ ...logData, isCorrect, timeTaken });
+	};
 
-	const startDrill = useCallback(() => {
+	const startDrill = () => {
 		const source = activeCategory
 			? items.filter((i) => (i as T & { category?: string }).category === activeCategory)
 			: items;
@@ -89,11 +85,10 @@ export const useDrillEngine = <T extends DrillForm>({
 		inputValueRef.current = "";
 		setAttempts([]);
 		setLastAttempt(null);
-		resetSelectors();
 		setPhase("active");
-	}, [items, activeCategory, sessionSize, resetSelectors]);
+	};
 
-	useAutoAdvance({
+	const advance = useAutoAdvance({
 		phase,
 		lastAttempt,
 		cardIndex,
@@ -103,7 +98,6 @@ export const useDrillEngine = <T extends DrillForm>({
 		setCardIndex,
 		setInput,
 		inputValueRef,
-		resetSelectors,
 		inputRef,
 	});
 
@@ -129,8 +123,8 @@ export const useDrillEngine = <T extends DrillForm>({
 		setInput,
 		inputRef,
 		inputValueRef,
-		resetSelectorsRef,
 		startDrill,
 		recordAttempt,
+		advance,
 	};
 };

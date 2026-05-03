@@ -1,6 +1,6 @@
 import { createFuzzySearch } from "@mmmike/mikrofuzz";
 import { Search } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 import { MonoText } from "@/components/MonoText";
 import { SearchInput } from "@/components/SearchInput";
@@ -39,27 +39,19 @@ export default function SearchRoute({ loaderData }: Route.ComponentProps) {
 
 	const [searchTerm, setSearchTerm] = useState("");
 
-	// Create fuzzy search function - memoized to avoid recreating on every render
-	const fuzzySearch = useMemo(
-		() =>
-			createFuzzySearch(allWords, {
-				getText: (item) => {
-					const row = item as VocabularySearchGraphRow;
-					return [
-						row.greekText,
-						row.englishTranslation,
-						...row.vocabularyTags.flatMap((vt) => (vt.tag?.name ? [vt.tag.name] : [])),
-					];
-				},
-			}),
-		[allWords],
-	);
+	const fuzzySearch = createFuzzySearch(allWords, {
+		getText: (item) => {
+			const row = item as VocabularySearchGraphRow;
+			return [
+				row.greekText,
+				row.englishTranslation,
+				...row.vocabularyTags.flatMap((vt) => (vt.tag?.name ? [vt.tag.name] : [])),
+			];
+		},
+	});
 
-	// Perform fuzzy search and extract items (already sorted by score)
-	const searchResults = useMemo(() => {
-		if (searchTerm.length === 0) return [];
-		return fuzzySearch(searchTerm).map((result) => result.item);
-	}, [fuzzySearch, searchTerm]);
+	const searchResults =
+		searchTerm.length === 0 ? [] : fuzzySearch(searchTerm).map((result) => result.item);
 
 	return (
 		<div className="space-y-6">

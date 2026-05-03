@@ -1,5 +1,5 @@
 import { RotateCcw, Zap } from "lucide-react";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useFetcher, useOutletContext, useSearchParams } from "react-router";
 
 import { Card } from "@/components/Card";
@@ -49,19 +49,24 @@ export function VocabDrillPage({
 	const [reDrillQuestions, setReDrillQuestions] = useState<UnifiedQuestion[] | null>(null);
 	const isReDrillRef = useRef(false);
 
-	const questions = useMemo(() => {
-		const applySpeed = <T,>(qs: T[]) => qs.map((q) => ({ ...q, timeLimit: activeSpeed.timeLimit }));
-		if (reDrillQuestions) return applySpeed(reDrillQuestions);
-		if (initialQuestions) {
-			const shuffled = [...initialQuestions].sort(() => Math.random() - 0.5);
-			return applySpeed(shuffled.slice(0, drillSize));
+	const [shuffledInitial, setShuffledInitial] = useState<UnifiedQuestion[] | null>(null);
+	useEffect(() => {
+		if (!initialQuestions) {
+			setShuffledInitial(null);
+			return;
 		}
-		return applySpeed(generateQuestions([category], drillSize));
-	}, [reDrillQuestions, initialQuestions, drillSize, category, activeSpeed]);
+		setShuffledInitial([...initialQuestions].sort(() => Math.random() - 0.5));
+	}, [initialQuestions]);
 
-	const startDbSession = useCallback(() => {
+	const applySpeed = <T,>(qs: T[]) => qs.map((q) => ({ ...q, timeLimit: activeSpeed.timeLimit }));
+	const questions = reDrillQuestions
+		? applySpeed(reDrillQuestions)
+		: shuffledInitial
+			? applySpeed(shuffledInitial.slice(0, drillSize))
+			: applySpeed(generateQuestions([category], drillSize));
+
+	const startDbSession = () => {
 		if (!userId) return;
-
 		fetcher.submit(
 			{
 				intent: "startSession",
@@ -72,62 +77,56 @@ export function VocabDrillPage({
 			},
 			{ method: "post", action: "/practice" },
 		);
-	}, [userId, fetcher, wordTypeFilter]);
+	};
 
-	const handleAttempt = useCallback(
-		(attempt: UnifiedAttemptResult) => {
-			if (!userId || isReDrillRef.current) return;
+	const handleAttempt = (attempt: UnifiedAttemptResult) => {
+		if (!userId || isReDrillRef.current) return;
 
-			const weakAreaIdentifier = getWeakAreaIdentifier?.(attempt);
+		const weakAreaIdentifier = getWeakAreaIdentifier?.(attempt);
 
-			fetcher.submit(
-				{
-					intent: "recordAttempt",
-					userId: userId.toString(),
-					sessionId: sessionIdRef.current?.toString() ?? "",
-					drillId,
-					questionText: attempt.prompt,
-					correctAnswer: attempt.correctGreek,
-					userAnswer: attempt.userAnswer,
-					isCorrect: attempt.isCorrect ? "on" : "",
-					timeTaken: attempt.timeTaken.toString(),
-					skillType: "production",
-					...(attempt.vocabularyId && { vocabularyId: attempt.vocabularyId.toString() }),
-					...(weakAreaType && { weakAreaType }),
-					...(weakAreaIdentifier && { weakAreaIdentifier }),
-				},
-				{ method: "post", action: "/practice" },
-			);
-		},
-		[userId, fetcher, drillId, weakAreaType, getWeakAreaIdentifier],
-	);
+		fetcher.submit(
+			{
+				intent: "recordAttempt",
+				userId: userId.toString(),
+				sessionId: sessionIdRef.current?.toString() ?? "",
+				drillId,
+				questionText: attempt.prompt,
+				correctAnswer: attempt.correctGreek,
+				userAnswer: attempt.userAnswer,
+				isCorrect: attempt.isCorrect ? "on" : "",
+				timeTaken: attempt.timeTaken.toString(),
+				skillType: "production",
+				...(attempt.vocabularyId && { vocabularyId: attempt.vocabularyId.toString() }),
+				...(weakAreaType && { weakAreaType }),
+				...(weakAreaIdentifier && { weakAreaIdentifier }),
+			},
+			{ method: "post", action: "/practice" },
+		);
+	};
 
-	const handleComplete = useCallback(
-		(statsData: SessionStats) => {
-			setLastStats(statsData);
+	const handleComplete = (statsData: SessionStats) => {
+		setLastStats(statsData);
 
-			if (!userId || !sessionIdRef.current || isReDrillRef.current) return;
+		if (!userId || !sessionIdRef.current || isReDrillRef.current) return;
 
-			fetcher.submit(
-				{
-					intent: "completeSession",
-					sessionId: sessionIdRef.current.toString(),
-					totalQuestions: statsData.total.toString(),
-					correctAnswers: statsData.correct.toString(),
-				},
-				{ method: "post", action: "/practice" },
-			);
-		},
-		[userId, fetcher],
-	);
+		fetcher.submit(
+			{
+				intent: "completeSession",
+				sessionId: sessionIdRef.current.toString(),
+				totalQuestions: statsData.total.toString(),
+				correctAnswers: statsData.correct.toString(),
+			},
+			{ method: "post", action: "/practice" },
+		);
+	};
 
-	const handleDrillMistakes = useCallback((missedQuestions: UnifiedQuestion[]) => {
+	const handleDrillMistakes = (missedQuestions: UnifiedQuestion[]) => {
 		isReDrillRef.current = true;
 		setReDrillQuestions(missedQuestions);
 		setSessionCount((c) => c + 1);
 		setLastStats(null);
 		sessionIdRef.current = null;
-	}, []);
+	};
 
 	const handleNewSession = () => {
 		setReDrillQuestions(null);
@@ -137,9 +136,13 @@ export function VocabDrillPage({
 		sessionIdRef.current = null;
 	};
 
-	if (fetcher.data?.success && fetcher.data?.session?.id && !sessionIdRef.current) {
-		sessionIdRef.current = fetcher.data.session.id;
-	}
+	const fetchedSessionId =
+		fetcher.data?.success && fetcher.data?.session?.id ? fetcher.data.session.id : null;
+	useEffect(() => {
+		if (fetchedSessionId && !sessionIdRef.current) {
+			sessionIdRef.current = fetchedSessionId;
+		}
+	}, [fetchedSessionId]);
 
 	const categoryConfig = CATEGORY_CONFIG[category];
 
