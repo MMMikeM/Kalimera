@@ -11,8 +11,9 @@ const config: KnipConfig = {
 	project: ["src/**/*.{ts,tsx}", "service-worker/**/*.ts", "scripts/**/*.ts"],
 	ignore: [
 		"src/routes/**/+types/**",
-		"src/db/migrations/**",
-		"src/db/columns.ts",
+		"src/db.server/migrations/**",
+		"src/db.server/columns.ts",
+		"src/types/lesson-builder.ts",
 		"src/components/ui/**",
 		"src/scripts/seed-data/**",
 	],
