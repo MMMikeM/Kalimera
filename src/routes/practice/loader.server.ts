@@ -1,32 +1,37 @@
 import { z } from "zod";
 import { zfd } from "zod-form-data";
 
+import { type DrillStat, getDrillStats } from "@/db.server/queries/analytics/drill-stats";
+import { recordAttempt } from "@/db.server/queries/practice-attempts";
 import {
 	completeSession,
-	type DrillStat,
-	getDrillStats,
-	getItemsDueForReview,
-	getNewVocabularyItems,
-	getPracticeStats,
+	getCompletedPracticeAtDatesForStreak,
 	type PracticeSessionInsert,
-	type PracticeStats,
-	recordAttempt,
 	startSession,
-	type VocabItemWithSkill,
-	type WeakAreaInfo,
-} from "@/db.server/queries/practice";
+} from "@/db.server/queries/practice-sessions";
 import { createUser, getUserById } from "@/db.server/queries/users";
+import { getNewVocabularyItems, type VocabItemWithSkill } from "@/db.server/queries/vocabulary";
+import { getItemsDueForReview, getSkillStats } from "@/db.server/queries/vocabulary-skills";
 import type { AreaType, SkillType } from "@/db.server/schema";
+import { streakLengthFromCompletedSessionDates } from "@/lib/practice-streak";
+
+export type PracticeStats = Awaited<ReturnType<typeof getSkillStats>> & { streak: number };
+
+export const getPracticeStats = async (userId: number): Promise<PracticeStats> => {
+	const [skill, completedDates] = await Promise.all([
+		getSkillStats(userId),
+		getCompletedPracticeAtDatesForStreak(userId),
+	]);
+	return { ...skill, streak: streakLengthFromCompletedSessionDates(completedDates) };
+};
 
 // Re-export queries and types for route consumers
 export {
 	getDrillStats,
 	getItemsDueForReview,
 	getNewVocabularyItems,
-	getPracticeStats,
 	getUserById,
 	type DrillStat,
-	type PracticeStats,
 	type VocabItemWithSkill,
 };
 

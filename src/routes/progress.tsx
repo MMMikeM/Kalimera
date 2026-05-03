@@ -4,13 +4,15 @@ import { Link } from "react-router";
 import { AccuracyTrend } from "@/components/AccuracyTrend";
 import { Card } from "@/components/Card";
 import { StreakCalendar } from "@/components/StreakCalendar";
-import { getPracticeStats } from "@/db.server/queries/practice";
 import {
 	getAccuracyTrends,
 	getPracticeDatesForCalendar,
 	getTimeInvested,
-} from "@/db.server/queries/progress";
+} from "@/db.server/queries/analytics/progress";
+import { getCompletedPracticeAtDatesForStreak } from "@/db.server/queries/practice-sessions";
+import { getSkillStats } from "@/db.server/queries/vocabulary-skills";
 import { getAuthSession } from "@/lib/auth-cookie";
+import { streakLengthFromCompletedSessionDates } from "@/lib/practice-streak";
 
 import type { Route } from "./+types/progress";
 
@@ -36,11 +38,12 @@ export async function loader({ request }: Route.LoaderArgs) {
 		};
 	}
 
-	const [stats, calendarDates, accuracyTrends, timeInvested] = await Promise.all([
-		getPracticeStats(userId),
+	const [stats, calendarDates, accuracyTrends, timeInvested, completedDates] = await Promise.all([
+		getSkillStats(userId),
 		getPracticeDatesForCalendar(userId, 3),
 		getAccuracyTrends(userId, 30),
 		getTimeInvested(userId),
+		getCompletedPracticeAtDatesForStreak(userId),
 	]);
 
 	const accuracyData = accuracyTrends.map((d) => ({
@@ -50,7 +53,7 @@ export async function loader({ request }: Route.LoaderArgs) {
 
 	return {
 		userId,
-		currentStreak: stats.streak,
+		currentStreak: streakLengthFromCompletedSessionDates(completedDates),
 		practiceDates: calendarDates.map((d) => d.date),
 		accuracyData,
 		timeInvested,
