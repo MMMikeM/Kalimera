@@ -1,5 +1,5 @@
 import { SPEEDS } from "../../drill-speeds";
-import { GENDER_STYLE } from "../../engines/drill-constants";
+import { GENDER_DIMENSION_OPTIONS } from "../../engines/drill-constants";
 import { SimpleListDrill, type SimpleListItem } from "../../engines/simple-list-drill";
 
 // Adjective three-form agreement in Owner (genitive singular).
@@ -124,12 +124,6 @@ const CATEGORIES = [
 	{ id: "neuter", label: "Neuter (-ου)" },
 ];
 
-const DIMENSION_OPTIONS = [
-	{ id: "masculine", label: "Masculine", ...GENDER_STYLE.masculine },
-	{ id: "feminine", label: "Feminine", ...GENDER_STYLE.feminine },
-	{ id: "neuter", label: "Neuter", ...GENDER_STYLE.neuter },
-];
-
 export default function AdjectiveAgreementOwnerDrill() {
 	return (
 		<SimpleListDrill
@@ -144,7 +138,7 @@ export default function AdjectiveAgreementOwnerDrill() {
 			reverseDesc="Adjective form → select gender"
 			categories={CATEGORIES}
 			reverseDimension={{
-				options: DIMENSION_OPTIONS,
+				options: GENDER_DIMENSION_OPTIONS,
 				getCorrectId: (item) => item.dimension ?? "",
 			}}
 		/>

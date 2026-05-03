@@ -1,5 +1,5 @@
 import { SPEEDS } from "../../drill-speeds";
-import { GENDER_STYLE } from "../../engines/drill-constants";
+import { GENDER_DIMENSION_OPTIONS } from "../../engines/drill-constants";
 import { SimpleListDrill, type SimpleListItem } from "../../engines/simple-list-drill";
 
 // Forward: "of the friend" → type "tou filou" (matchPhonetic → του φίλου)
@@ -170,12 +170,6 @@ const CATEGORIES = [
 	{ id: "neuter", label: "Neuter (του)" },
 ];
 
-const DIMENSION_OPTIONS = [
-	{ id: "masculine", label: "Masculine", ...GENDER_STYLE.masculine },
-	{ id: "feminine", label: "Feminine", ...GENDER_STYLE.feminine },
-	{ id: "neuter", label: "Neuter", ...GENDER_STYLE.neuter },
-];
-
 export default function NounOwnerDrill() {
 	return (
 		<SimpleListDrill
@@ -190,7 +184,7 @@ export default function NounOwnerDrill() {
 			reverseDesc="Phrase → select gender"
 			categories={CATEGORIES}
 			reverseDimension={{
-				options: DIMENSION_OPTIONS,
+				options: GENDER_DIMENSION_OPTIONS,
 				getCorrectId: (item) => item.dimension ?? "",
 			}}
 		/>

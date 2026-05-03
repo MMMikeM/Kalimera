@@ -2,15 +2,9 @@ import type { CefrLevel } from "@/db.server/enums";
 import { getDrillVocabPoolWithFallback } from "@/db.server/queries/drill-pool";
 import { ensureUserProgress } from "@/db.server/queries/user-progress";
 import { getVerbsWithConjugationsForTense } from "@/db.server/queries/vocabulary";
+import { adjacentCefrPool } from "@/lib/cefr";
 import type { DrillQuestion } from "@/lib/drill/generate-questions";
-
-const NEXT_LEVEL: Partial<Record<CefrLevel, CefrLevel>> = {
-	A1: "A2",
-	A2: "B1",
-	B1: "B2",
-	B2: "C1",
-	C1: "C2",
-};
+import { shuffle } from "@/lib/shuffle";
 
 const PERSON_LABELS: Record<string, string> = {
 	sg1: "I",
@@ -30,15 +24,6 @@ const FUTURE_LABELS: Record<string, string> = {
 	pl3: "they will",
 };
 
-const shuffle = <T>(arr: T[]): T[] => {
-	const a = [...arr];
-	for (let i = a.length - 1; i > 0; i--) {
-		const j = Math.floor(Math.random() * (i + 1));
-		[a[i], a[j]] = [a[j] as T, a[i] as T];
-	}
-	return a;
-};
-
 const getVerbConjugationQuestions = async (
 	userId: number,
 	limit: number,
@@ -49,14 +34,12 @@ const getVerbConjugationQuestions = async (
 ): Promise<DrillQuestion[]> => {
 	const progress = await ensureUserProgress(userId);
 	const currentCefrLevel = progress.currentCefrLevel as CefrLevel;
-	const nextLevel = NEXT_LEVEL[currentCefrLevel];
-	const cefrPool: CefrLevel[] = nextLevel ? [currentCefrLevel, nextLevel] : [currentCefrLevel];
 
 	const pool = await getDrillVocabPoolWithFallback({
 		userId,
 		drillId,
 		wordType: "verb",
-		cefrPool,
+		cefrPool: adjacentCefrPool(currentCefrLevel),
 	});
 
 	if (pool.vocabularyIds.length === 0) return [];

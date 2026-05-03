@@ -1,4 +1,5 @@
 import { SPEEDS } from "../../drill-speeds";
+import { PERSON_DIMENSION_OPTIONS } from "../../engines/drill-constants";
 import { SimpleListDrill, type SimpleListItem } from "../../engines/simple-list-drill";
 
 // είμαι present (irregular). Doesn't follow -ω paradigm.
@@ -62,15 +63,6 @@ const FORMS: SimpleListItem[] = [
 	},
 ];
 
-const DIMENSION_OPTIONS = [
-	{ id: "sg1", label: "I", selectorBg: "bg-stone-100", selectorText: "text-stone-800" },
-	{ id: "sg2", label: "you", selectorBg: "bg-stone-100", selectorText: "text-stone-800" },
-	{ id: "sg3", label: "he / she", selectorBg: "bg-stone-100", selectorText: "text-stone-800" },
-	{ id: "pl1", label: "we", selectorBg: "bg-stone-100", selectorText: "text-stone-800" },
-	{ id: "pl2", label: "you all", selectorBg: "bg-stone-100", selectorText: "text-stone-800" },
-	{ id: "pl3", label: "they", selectorBg: "bg-stone-100", selectorText: "text-stone-800" },
-];
-
 export default function EimaiPresentDrill() {
 	return (
 		<SimpleListDrill
@@ -83,7 +75,7 @@ export default function EimaiPresentDrill() {
 			reverseLabel="Greek → person"
 			reverseDesc="Present form → select person"
 			reverseDimension={{
-				options: DIMENSION_OPTIONS,
+				options: PERSON_DIMENSION_OPTIONS,
 				getCorrectId: (item) => item.dimension ?? "",
 			}}
 			speeds={SPEEDS}

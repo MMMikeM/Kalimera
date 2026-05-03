@@ -1,4 +1,5 @@
 import { SPEEDS } from "../../drill-speeds";
+import { PERSON_DIMENSION_OPTIONS } from "../../engines/drill-constants";
 import { SimpleListDrill, type SimpleListItem } from "../../engines/simple-list-drill";
 
 // Irregular present-tense verbs (excluding είμαι, which has its own drill).
@@ -120,15 +121,6 @@ const FORMS: SimpleListItem[] = VERBS.flatMap((v) =>
 
 const CATEGORIES = VERBS.map((v) => ({ id: v.id, label: v.categoryLabel }));
 
-const DIMENSION_OPTIONS = [
-	{ id: "sg1", label: "I", selectorBg: "bg-stone-100", selectorText: "text-stone-800" },
-	{ id: "sg2", label: "you", selectorBg: "bg-stone-100", selectorText: "text-stone-800" },
-	{ id: "sg3", label: "he / she", selectorBg: "bg-stone-100", selectorText: "text-stone-800" },
-	{ id: "pl1", label: "we", selectorBg: "bg-stone-100", selectorText: "text-stone-800" },
-	{ id: "pl2", label: "you all", selectorBg: "bg-stone-100", selectorText: "text-stone-800" },
-	{ id: "pl3", label: "they", selectorBg: "bg-stone-100", selectorText: "text-stone-800" },
-];
-
 export default function PresentIrregularDrill() {
 	return (
 		<SimpleListDrill
@@ -142,7 +134,7 @@ export default function PresentIrregularDrill() {
 			reverseDesc="Present form → select person"
 			categories={CATEGORIES}
 			reverseDimension={{
-				options: DIMENSION_OPTIONS,
+				options: PERSON_DIMENSION_OPTIONS,
 				getCorrectId: (item) => item.dimension ?? "",
 			}}
 			speeds={SPEEDS}

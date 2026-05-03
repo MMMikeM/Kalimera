@@ -1,17 +1,11 @@
+import { NEXT_LEVEL } from "@/lib/cefr";
+
 import type { CefrLevel, WordType } from "../enums";
 import { db } from "../index";
 
 const DEFAULT_POOL_SIZE = 10;
 const ATTEMPT_WINDOW = 4;
 const MASTERY_THRESHOLD = 3;
-
-const NEXT_LEVEL: Partial<Record<CefrLevel, CefrLevel>> = {
-	A1: "A2",
-	A2: "B1",
-	B1: "B2",
-	B2: "C1",
-	C1: "C2",
-};
 
 interface DrillPoolOptions {
 	userId: number;
