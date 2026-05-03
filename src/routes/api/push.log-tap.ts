@@ -1,4 +1,7 @@
-import { logNotificationTap, type TappedAction } from "@/db.server/queries/push-notifications";
+import {
+	logNotificationTap,
+	type TappedAction,
+} from "@/db.server/queries/notifications/notification-logs";
 
 import type { Route } from "./+types/push.log-tap";
 import { withPushPost } from "./with-push-post";

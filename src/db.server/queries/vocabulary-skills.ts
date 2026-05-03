@@ -1,12 +1,10 @@
 import { endOfTomorrow } from "date-fns";
-import { and, count, eq, gt, lte, sql } from "drizzle-orm";
+import { and, count, eq, gt, inArray, isNotNull, lt, lte, sql } from "drizzle-orm";
 
-import { streakLengthFromCompletedSessionDates } from "@/lib/practice-streak";
 import { vocabularySkillStateAfterAttempt } from "@/lib/srs";
 
 import { db } from "../index";
-import { type SkillType, vocabulary, vocabularySkills } from "../schema";
-import { getCompletedPracticeAtDatesForStreak } from "./practice-sessions";
+import { type SkillType, vocabularySkills } from "../schema";
 import type { DbTransaction } from "./transaction-client";
 
 export const getItemsDueForReview = async (
@@ -28,7 +26,7 @@ export const getItemsDueForReview = async (
 	});
 };
 
-export const getPracticeStats = async (userId: number, skillType: SkillType = "recognition") => {
+export const getSkillStats = async (userId: number, skillType: SkillType = "recognition") => {
 	const now = new Date();
 	const masteredThresholdDays = 21;
 
@@ -42,20 +40,44 @@ export const getPracticeStats = async (userId: number, skillType: SkillType = "r
 		.from(vocabularySkills)
 		.where(and(eq(vocabularySkills.userId, userId), eq(vocabularySkills.skillType, skillType)));
 
-	const streak = streakLengthFromCompletedSessionDates(
-		await getCompletedPracticeAtDatesForStreak(userId),
-	);
-
 	const totalLearned = skillStats?.learned || 0;
 	const totalVocab = skillStats?.total || 0;
 
 	return {
-		streak,
 		itemsMastered: skillStats?.mastered || 0,
 		dueCount: skillStats?.due || 0,
 		totalLearned,
 		newAvailable: totalVocab - totalLearned,
 	};
+};
+
+/**
+ * Due `vocabulary_skills` rows aggregated per user. Uses the select builder because
+ * `db.query.*.findMany` cannot express `GROUP BY user_id` + `COUNT(*)`.
+ */
+const dueVocabularyCountRows = async (now: Date, userIds?: number[]) => {
+	const base = and(
+		isNotNull(vocabularySkills.nextReviewAt),
+		lt(vocabularySkills.nextReviewAt, now),
+	);
+	const where = userIds === undefined ? base : and(base, inArray(vocabularySkills.userId, userIds));
+
+	return await db
+		.select({
+			userId: vocabularySkills.userId,
+			dueCount: count().as("due_count"),
+		})
+		.from(vocabularySkills)
+		.where(where)
+		.groupBy(vocabularySkills.userId);
+};
+
+export const getDueVocabularyCountByUserId = async (now: Date) =>
+	new Map((await dueVocabularyCountRows(now)).map((r) => [r.userId, r.dueCount]));
+
+export const getDueVocabularyCountForUserIds = async (now: Date, userIds: number[]) => {
+	if (userIds.length === 0) return new Map<number, number>();
+	return new Map((await dueVocabularyCountRows(now, userIds)).map((r) => [r.userId, r.dueCount]));
 };
 
 export const getItemsDueTomorrow = async (userId: number, skillType: SkillType = "recognition") => {
@@ -71,15 +93,6 @@ export const getItemsDueTomorrow = async (userId: number, skillType: SkillType =
 			lte(vocabularySkills.nextReviewAt, tomorrowEnd),
 		),
 	);
-};
-
-export const getVocabularyProgress = async (userId: number) => {
-	const [total, learned] = await Promise.all([
-		db.$count(vocabulary),
-		db.$count(vocabularySkills, eq(vocabularySkills.userId, userId)),
-	]);
-
-	return { total, learned };
 };
 
 type VocabularySkillSideEffectInput = {

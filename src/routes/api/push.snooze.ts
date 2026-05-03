@@ -1,4 +1,4 @@
-import { snoozePushSubscription } from "@/db.server/queries/push-notifications";
+import { snoozePushSubscription } from "@/db.server/queries/notifications/push-subscriptions";
 
 import type { Route } from "./+types/push.snooze";
 import { withPushPost } from "./with-push-post";

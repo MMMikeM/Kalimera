@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { and, eq, gte, inArray, lt } from "drizzle-orm";
 
 import { db } from "../index";
 import { practiceSessions } from "../schema";
@@ -6,9 +6,9 @@ import type { NewPracticeSession, PracticeSession } from "../types";
 
 export type PracticeSessionInsert = NewPracticeSession;
 
-export type CompleteSessionPatch = Pick<PracticeSession, "totalQuestions" | "correctAnswers">;
-
-export type CompleteSessionInput = CompleteSessionPatch & { sessionId: number };
+type CompleteSessionInput = Pick<PracticeSession, "totalQuestions" | "correctAnswers"> & {
+	sessionId: number;
+};
 
 export const startSession = async (data: PracticeSessionInsert) => {
 	const [session] = await db.insert(practiceSessions).values(data).returning();
@@ -55,3 +55,37 @@ export async function getCompletedPracticeAtDatesForStreak(userId: number): Prom
 		.filter((d): d is NonNullable<typeof d> => d != null)
 		.map((d) => new Date(d));
 }
+
+export const getUserIdsPracticedInRange = async (
+	userIds: number[],
+	rangeStart: Date,
+	rangeEnd: Date,
+) => {
+	if (userIds.length === 0) return new Set<number>();
+
+	const rows = await db
+		.selectDistinct({ userId: practiceSessions.userId })
+		.from(practiceSessions)
+		.where(
+			and(
+				inArray(practiceSessions.userId, userIds),
+				gte(practiceSessions.startedAt, rangeStart),
+				lt(practiceSessions.startedAt, rangeEnd),
+			),
+		);
+
+	return new Set(rows.map((r) => r.userId));
+};
+
+export const listPracticeSessionsSinceForUsers = async (userIds: number[], since: Date) => {
+	if (userIds.length === 0) return [];
+
+	return await db.query.practiceSessions.findMany({
+		where: {
+			userId: { in: userIds },
+			startedAt: { gte: since },
+		},
+		columns: { userId: true, startedAt: true },
+		orderBy: { startedAt: "desc" },
+	});
+};

@@ -1,6 +1,7 @@
 /**
  * Push notification orchestration (VAPID send + copy). Database access lives in
- * `@/db.server/queries/push-cron` and `@/db.server/queries/push-notifications`.
+ * `@/db.server/queries/notifications/*` plus per-table reads in
+ * `practice-sessions.ts` and `vocabulary-skills.ts`.
  */
 import {
 	type PushPayload,
@@ -11,21 +12,25 @@ import {
 import { endOfDay, format, parseISO, startOfDay, subDays } from "date-fns";
 
 import {
+	logNotificationSent,
+	userQualifiesForNotificationTaper,
+} from "@/db.server/queries/notifications/notification-logs";
+import {
 	deletePushSubscriptionsByEndpoints,
-	getDueVocabularyCountByUserId,
-	getDueVocabularyCountForUserIds,
+	getPushSubscriptionByUserId,
 	getPushSubscriptionsForUserIds,
+	listPushSubscriptionsForCron,
+	type PushSubscriptionCronRow,
+	setTaperOfferPending,
+} from "@/db.server/queries/notifications/push-subscriptions";
+import {
 	getUserIdsPracticedInRange,
 	listPracticeSessionsSinceForUsers,
-	listPushSubscriptionsForCron,
-	userQualifiesForNotificationTaper,
-	type PushSubscriptionCronRow,
-} from "@/db.server/queries/push-cron";
+} from "@/db.server/queries/practice-sessions";
 import {
-	getPushSubscriptionByUserId,
-	logNotificationSent,
-	setTaperOfferPending,
-} from "@/db.server/queries/push-notifications";
+	getDueVocabularyCountByUserId,
+	getDueVocabularyCountForUserIds,
+} from "@/db.server/queries/vocabulary-skills";
 import { streakLengthFromCompletedSessionDates } from "@/lib/practice-streak";
 
 interface NotificationResult {

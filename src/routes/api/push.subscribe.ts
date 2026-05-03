@@ -1,4 +1,4 @@
-import { upsertPushSubscription } from "@/db.server/queries/push-notifications";
+import { upsertPushSubscription } from "@/db.server/queries/notifications/push-subscriptions";
 
 import type { Route } from "./+types/push.subscribe";
 import { withPushPost } from "./with-push-post";
