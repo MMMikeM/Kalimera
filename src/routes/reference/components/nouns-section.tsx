@@ -125,7 +125,7 @@ const CaseGuide = () => (
 							className={`shrink-0 rounded px-2 py-1 text-xs font-semibold ${style.bg} ${style.text}`}
 						>
 							<span className="block leading-tight">{meta.handle}</span>
-							<span className="block text-[10px] font-normal opacity-70">{meta.greek}</span>
+							<span className="block text-xs font-normal opacity-70">{meta.greek}</span>
 						</span>
 						<div>
 							<span className="text-sm font-medium">{question}</span>
@@ -208,7 +208,7 @@ const NounEndingsTable = ({
 		return paradigms.map((p) => {
 			const value = mode === "endings" ? getEnding(p, caseType) : getFull(p, caseType);
 			return (
-				<MonoText size="sm" variant={p.gender}>
+				<MonoText key={p.id} size="sm" variant={p.gender}>
 					{value}
 				</MonoText>
 			);

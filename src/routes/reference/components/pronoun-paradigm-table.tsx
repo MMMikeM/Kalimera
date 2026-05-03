@@ -49,8 +49,8 @@ export const PronounParadigmTable = ({ data, caseName, note }: PronounParadigmTa
 	}));
 
 	const cells = data.map((row) => [
-		<PronounCell form={row.singular} variant={variant} />,
-		<PronounCell form={row.plural} variant={variant} />,
+		<PronounCell key={`${row.person}-sg`} form={row.singular} variant={variant} />,
+		<PronounCell key={`${row.person}-pl`} form={row.plural} variant={variant} />,
 	]);
 
 	return (
