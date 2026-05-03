@@ -18,6 +18,7 @@ export interface DrillLogData {
 	correctAnswer: string;
 	userAnswer: string;
 	weakAreaIdentifier?: string;
+	vocabularyId?: number;
 }
 
 export interface SpeedOption {

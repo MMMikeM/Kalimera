@@ -1,5 +1,6 @@
 import type { CefrLevel } from "@/db.server/enums";
 import { db } from "@/db.server/index";
+import { getDrillVocabPoolWithFallback } from "@/db.server/queries/drill-vocab-pool";
 import { ensureUserProgress } from "@/db.server/queries/user-progress";
 import type { DrillQuestion } from "@/lib/drill/generate-questions";
 
@@ -20,6 +21,15 @@ const PERSON_LABELS: Record<string, string> = {
 	pl3: "they",
 };
 
+const FUTURE_LABELS: Record<string, string> = {
+	sg1: "I will",
+	sg2: "you will",
+	sg3: "he/she will",
+	pl1: "we will",
+	pl2: "you all will",
+	pl3: "they will",
+};
+
 const shuffle = <T>(arr: T[]): T[] => {
 	const a = [...arr];
 	for (let i = a.length - 1; i > 0; i--) {
@@ -32,19 +42,28 @@ const shuffle = <T>(arr: T[]): T[] => {
 const getVerbConjugationQuestions = async (
 	userId: number,
 	limit: number,
-	tense: "present" | "aorist",
+	tense: "present" | "aorist" | "future",
 	idPrefix: string,
 	timeLimit: number,
+	drillId: string,
 ): Promise<DrillQuestion[]> => {
 	const progress = await ensureUserProgress(userId);
 	const currentCefrLevel = progress.currentCefrLevel as CefrLevel;
 	const nextLevel = NEXT_LEVEL[currentCefrLevel];
 	const cefrPool: CefrLevel[] = nextLevel ? [currentCefrLevel, nextLevel] : [currentCefrLevel];
 
+	const pool = await getDrillVocabPoolWithFallback({
+		userId,
+		drillId,
+		wordType: "verb",
+		cefrPool,
+	});
+
+	if (pool.vocabularyIds.length === 0) return [];
+
 	const vocabRows = await db.query.vocabulary.findMany({
 		where: {
-			cefrLevel: { in: cefrPool },
-			wordType: { in: ["verb"] },
+			id: { in: pool.vocabularyIds },
 		},
 		with: {
 			verbConjugations: {
@@ -55,15 +74,20 @@ const getVerbConjugationQuestions = async (
 			cefrLevel: "asc",
 			frequencyRank: "asc",
 		},
-		limit: limit * 3,
 	});
 
+	const labels = tense === "future" ? FUTURE_LABELS : PERSON_LABELS;
 	const questions: DrillQuestion[] = [];
 	for (const vocab of vocabRows) {
 		const stem = vocab.englishTranslation.replace(/^I /, "");
 		for (const conj of vocab.verbConjugations) {
-			const personLabel = PERSON_LABELS[conj.person] ?? conj.person;
-			const prompt = conj.person === "sg1" ? vocab.englishTranslation : `${personLabel} ${stem}`;
+			const personLabel = labels[conj.person] ?? conj.person;
+			const prompt =
+				tense === "future"
+					? `${personLabel} ${stem}`
+					: conj.person === "sg1"
+						? vocab.englishTranslation
+						: `${personLabel} ${stem}`;
 			questions.push({
 				id: `${idPrefix}${vocab.id}-${conj.person}`,
 				prompt,
@@ -78,7 +102,24 @@ const getVerbConjugationQuestions = async (
 };
 
 export const getAoristDrillQuestions = (userId: number, limit: number) =>
-	getVerbConjugationQuestions(userId, limit, "aorist", "db-verb-aorist-", 4500);
+	getVerbConjugationQuestions(
+		userId,
+		limit,
+		"aorist",
+		"db-verb-aorist-",
+		4500,
+		"verbs-aorist-conjugation",
+	);
 
 export const getVerbDrillQuestions = (userId: number, limit: number) =>
-	getVerbConjugationQuestions(userId, limit, "present", "db-verb-", 3500);
+	getVerbConjugationQuestions(userId, limit, "present", "db-verb-", 3500, "verbs-present");
+
+export const getFutureDrillQuestions = (userId: number, limit: number) =>
+	getVerbConjugationQuestions(
+		userId,
+		limit,
+		"future",
+		"db-verb-future-",
+		4500,
+		"verbs-future-conjugation",
+	);
