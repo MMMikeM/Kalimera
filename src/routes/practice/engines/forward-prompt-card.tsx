@@ -15,9 +15,9 @@ interface ForwardPromptCardProps {
 }
 
 export const ForwardPromptCard = ({ facets, caption, gloss }: ForwardPromptCardProps) => (
-	<div className="mx-auto flex w-full max-w-[18rem] flex-col">
+	<div className="mx-auto flex w-full max-w-72 flex-col">
 		{caption ? (
-			<p className="mb-3 text-[10px] font-medium tracking-[0.24em] text-muted-foreground uppercase">
+			<p className="mb-3 text-xs font-medium tracking-widest text-muted-foreground uppercase">
 				{caption}
 			</p>
 		) : null}
@@ -31,7 +31,7 @@ export const ForwardPromptCard = ({ facets, caption, gloss }: ForwardPromptCardP
 						aria-label={f.ariaLabel ?? f.label}
 					>
 						<Icon size={32} strokeWidth={1.5} aria-hidden className="shrink-0" />
-						<span className="font-serif text-[2.75rem] leading-none tracking-tight lowercase">
+						<span className="font-serif text-5xl leading-none tracking-tight lowercase">
 							{f.label}
 						</span>
 					</li>

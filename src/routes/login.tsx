@@ -164,7 +164,7 @@ export default function LoginRoute({ actionData }: Route.ComponentProps) {
 		const isSubmitting = passwordSetupForm.formState.isSubmitting;
 
 		return (
-			<div className="flex min-h-[60vh] flex-col items-center justify-center space-y-8 px-4">
+			<div className="flex min-h-page flex-col items-center justify-center space-y-8 px-4">
 				<div className="space-y-2 text-center">
 					<h1 className="font-serif text-3xl text-terracotta">Set Up Your Password</h1>
 					<p className="text-stone-600">
@@ -229,7 +229,7 @@ export default function LoginRoute({ actionData }: Route.ComponentProps) {
 	const isSubmitting = loginForm.formState.isSubmitting;
 
 	return (
-		<div className="flex min-h-[60vh] flex-col items-center justify-center space-y-8 px-4">
+		<div className="flex min-h-page flex-col items-center justify-center space-y-8 px-4">
 			<div className="space-y-2 text-center">
 				<h1 className="font-serif text-3xl text-terracotta">Welcome Back</h1>
 				<p className="text-stone-600">Sign in to continue learning Greek</p>

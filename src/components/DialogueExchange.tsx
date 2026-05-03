@@ -99,7 +99,7 @@ const DialogueExchange: React.FC<DialogueExchangeProps> = ({
 				>
 					<div
 						className={cn(
-							"max-w-[85%] p-3 rounded-lg",
+							"max-w-bubble p-3 rounded-lg",
 							speakerBubbleStyles[line.speaker],
 							line.speaker === "you" ? "rounded-br-none" : "rounded-bl-none",
 						)}

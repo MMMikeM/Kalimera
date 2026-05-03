@@ -12,10 +12,10 @@ interface GrammarChipProps {
 }
 
 const SIZE_CLASSES: Record<ChipSize, { text: string; icon: number; gap: string }> = {
-	sm: { text: "text-[10px] tracking-[0.18em]", icon: 12, gap: "gap-1" },
+	sm: { text: "text-xs tracking-widest", icon: 12, gap: "gap-1" },
 	md: { text: "text-xs tracking-[0.2em]", icon: 16, gap: "gap-1.5" },
 	lg: {
-		text: "text-4xl tracking-[0.12em] font-serif normal-case leading-none",
+		text: "text-4xl tracking-widest font-serif normal-case leading-none",
 		icon: 40,
 		gap: "gap-4",
 	},

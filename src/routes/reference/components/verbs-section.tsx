@@ -274,8 +274,7 @@ const CONSONANT_RULES = [
 
 const AoristExamples: React.FC<{
 	examples: readonly { greek: string; english: string }[];
-	scheme: GrammarScheme;
-}> = ({ examples, scheme }) => (
+}> = ({ examples }) => (
 	<div className="mt-3 space-y-2 border-t border-stone-100 pt-3">
 		{examples.map((ex) => (
 			<div key={ex.greek} className="flex flex-col gap-0.5">
@@ -308,7 +307,7 @@ const AoristPatternCard: React.FC<{
 					fadeStem={true}
 				/>
 			</div>
-			<AoristExamples examples={pattern.canonical.examples} scheme={scheme} />
+			<AoristExamples examples={pattern.canonical.examples} />
 		</TeachingCard>
 	);
 };
@@ -394,10 +393,7 @@ const PastTenseSection: React.FC = () => {
 				>
 					<div className="divide-y divide-stone-100 overflow-hidden rounded-lg border border-stone-200 bg-white">
 						{CONSONANT_RULES.map((rule) => (
-							<div
-								key={rule.note}
-								className="grid grid-cols-[1fr_auto_1fr] items-center gap-4 px-4 py-3"
-							>
+							<div key={rule.note} className="grid grid-rule items-center gap-4 px-4 py-3">
 								<div className="flex flex-wrap gap-1.5">
 									{rule.stems.map((s) => (
 										<span
@@ -454,7 +450,6 @@ const PastTenseSection: React.FC = () => {
 						{ greek: "Μίλησα μαζί του χθες.", english: "I spoke with him yesterday." },
 						{ greek: "Μιλήσαμε για ώρες.", english: "We talked for hours." },
 					]}
-					scheme="verb-contracted"
 				/>
 			</TeachingCard>
 
@@ -484,7 +479,6 @@ const PastTenseSection: React.FC = () => {
 						{ greek: "Πότε ήρθες;", english: "When did you arrive?" },
 						{ greek: "Ήρθαμε μαζί.", english: "We came together." },
 					]}
-					scheme="verb-deponent"
 				/>
 				<p className="mt-3 px-1 text-xs text-stone-500">
 					Find the aorist stem (listed below), then add the same{" "}
@@ -518,7 +512,7 @@ const PastTenseSection: React.FC = () => {
 								{IRREGULAR_AORIST_STEMS.filter((s) => s.category === cat).map((s) => (
 									<div
 										key={s.present}
-										className="grid grid-cols-[1fr_auto_1fr_auto] items-baseline gap-2 px-3 py-2"
+										className="grid grid-rule-suffix items-baseline gap-2 px-3 py-2"
 									>
 										<MonoText className="font-semibold text-stone-600">{s.present}</MonoText>
 										<span className="text-honey-300">→</span>
@@ -577,10 +571,7 @@ const PastTenseSection: React.FC = () => {
 
 const FutureTenseSection: React.FC = () => (
 	<section id="future-tense" className="space-y-4">
-		<SectionHeading
-			title="Future Tense"
-			subtitle="θα + the same stem you use after να"
-		/>
+		<SectionHeading title="Future Tense" subtitle="θα + the same stem you use after να" />
 
 		<TeachingCard
 			scheme="neutral"

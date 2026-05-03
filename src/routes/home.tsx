@@ -158,7 +158,7 @@ const PracticeCTA = ({
 		<div className="space-y-3">
 			<Link
 				to="/practice"
-				className="block rounded-2xl border-2 border-honey-400 bg-linear-to-br from-honey-100 to-honey-200 p-6 shadow-md transition-all hover:scale-[1.01] hover:shadow-lg"
+				className="block rounded-2xl border-2 border-honey-400 bg-linear-to-br from-honey-100 to-honey-200 p-6 shadow-md transition-all hover:scale-101 hover:shadow-lg"
 			>
 				<div className="flex items-center justify-between">
 					<div>
@@ -505,7 +505,7 @@ export default function DashboardRoute({ loaderData }: Route.ComponentProps) {
 
 	if (!userId) {
 		return (
-			<div className="flex min-h-[50vh] items-center justify-center">
+			<div className="flex min-h-page items-center justify-center">
 				<span className="font-serif text-2xl text-terracotta">καλημέρα</span>
 			</div>
 		);

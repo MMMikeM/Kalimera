@@ -35,7 +35,7 @@ export const SearchResults = ({ results, searchTerm, compact = false }: SearchRe
 						key={result.id}
 						className="flex items-center gap-2 rounded px-1 py-2 transition-colors hover:bg-stone-50"
 					>
-						<MonoText variant="greek" size="sm" className="max-w-[180px] truncate font-medium">
+						<MonoText variant="greek" size="sm" className="max-w-44 truncate font-medium">
 							{result.greekText}
 						</MonoText>
 						<span className="text-stone-300">—</span>

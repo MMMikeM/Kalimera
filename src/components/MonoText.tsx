@@ -20,14 +20,14 @@ const monoTextVariants = tv({
 			// Semantic variants (AAA compliant text colors)
 			primary: "font-semibold text-terracotta-text",
 			secondary: "font-medium text-ocean-text",
-			success: "font-medium text-[var(--color-correct)]",
+			success: "font-medium text-correct",
 			warning: "font-medium text-honey-text",
-			error: "font-medium text-[var(--color-incorrect)]",
+			error: "font-medium text-incorrect",
 
 			// Gender variants - using semantic colors (AAA compliant)
-			masculine: "font-semibold text-[var(--color-gender-masculine)]",
-			feminine: "font-semibold text-[var(--color-gender-feminine)]",
-			neuter: "font-semibold text-[var(--color-gender-neuter)]",
+			masculine: "font-semibold text-gender-masculine",
+			feminine: "font-semibold text-gender-feminine",
+			neuter: "font-semibold text-gender-neuter",
 
 			// Case variants - using AAA compliant text colors
 			nominative: "font-semibold text-ocean-text",
@@ -73,18 +73,18 @@ const monoTextVariants = tv({
 		{
 			variant: "highlighted",
 			size: "md",
-			class: "text-[1.1rem]",
+			class: "text-lg",
 		},
 		// Greek text should be slightly larger for visual balance
 		{
 			variant: "greek",
 			size: "md",
-			class: "text-[1.1rem]",
+			class: "text-lg",
 		},
 		{
 			variant: "greek",
 			size: "lg",
-			class: "text-[1.25rem]",
+			class: "text-xl",
 		},
 	],
 	defaultVariants: {

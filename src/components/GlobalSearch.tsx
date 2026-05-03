@@ -39,7 +39,7 @@ export const GlobalSearch = ({ children }: GlobalSearchProps) => {
 				{children({ isActive: isOpen })}
 			</PopoverTrigger>
 			<PopoverPositioner align="end" sideOffset={8}>
-				<PopoverContent className="flex max-h-[70vh] w-[min(420px,calc(100vw-1rem))] flex-col overflow-hidden rounded-xl border-stone-200 bg-cream p-0 shadow-lg">
+				<PopoverContent className="flex max-h-page w-popover-clamp flex-col overflow-hidden rounded-xl border-stone-200 bg-cream p-0 shadow-lg">
 					<SearchContent />
 				</PopoverContent>
 			</PopoverPositioner>
@@ -76,7 +76,7 @@ const SearchContent = () => {
 					icon={<Search size={16} />}
 				/>
 			</div>
-			<div className="max-h-[50vh] min-h-0 flex-1 overflow-y-auto bg-cream-dark p-3">
+			<div className="max-h-page min-h-0 flex-1 overflow-y-auto bg-cream-dark p-3">
 				{isLoading ? (
 					<div className="py-8 text-center text-sm text-stone-400">Loading...</div>
 				) : showEmptyState ? (
@@ -105,7 +105,7 @@ const SearchEmptyState = ({ onQuickSearch }: SearchEmptyStateProps) => (
 					key={item.greek}
 					type="button"
 					onClick={() => onQuickSearch(item.greek)}
-					className="flex min-h-[52px] flex-col items-start rounded-lg border border-stone-200 bg-cream-50 p-3 text-left transition-colors hover:border-terracotta-300 hover:bg-cream-100"
+					className="flex min-h-13 flex-col items-start rounded-lg border border-stone-200 bg-cream-50 p-3 text-left transition-colors hover:border-terracotta-300 hover:bg-cream-100"
 				>
 					<span className="greek-text text-base font-medium text-stone-900">{item.greek}</span>
 					<span className="text-xs text-stone-500">{item.english}</span>

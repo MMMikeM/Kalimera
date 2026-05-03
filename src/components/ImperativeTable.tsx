@@ -54,11 +54,11 @@ export const ImperativeTable = ({ imperatives, className }: ImperativeTableProps
 						</th>
 						<th className="border-b border-stone-200 p-2 text-center text-xs font-normal text-stone-600">
 							Singular
-							<div className="text-[10px] text-stone-400">(you - one person)</div>
+							<div className="text-xs text-stone-400">(you - one person)</div>
 						</th>
 						<th className="border-b border-stone-200 p-2 text-center text-xs font-normal text-stone-600">
 							Plural
-							<div className="text-[10px] text-stone-400">(you - group)</div>
+							<div className="text-xs text-stone-400">(you - group)</div>
 						</th>
 					</tr>
 				</thead>

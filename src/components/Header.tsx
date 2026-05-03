@@ -75,8 +75,8 @@ export const Header = ({ isAuthenticated, currentSection = "", onLogout }: Heade
 							className="w-full rounded-full border border-transparent bg-stone-100 py-2 pr-4 pl-10 text-sm transition-all placeholder:text-stone-500 focus:border-stone-300 focus:bg-white focus:ring-2 focus:ring-terracotta-300 focus:outline-none"
 						/>
 						{isSearchOpen && searchTerm.length > 0 && (
-							<div className="absolute top-full right-0 left-0 z-50 mt-2 max-h-[60vh] overflow-hidden rounded-md border bg-popover p-0 text-popover-foreground shadow-md">
-								<div className="max-h-[60vh] overflow-y-auto p-3">
+							<div className="absolute top-full right-0 left-0 z-50 mt-2 max-h-page overflow-hidden rounded-md border bg-popover p-0 text-popover-foreground shadow-md">
+								<div className="max-h-page overflow-y-auto p-3">
 									{isLoading ? (
 										<div className="py-4 text-center text-sm text-stone-400">Loading...</div>
 									) : (
