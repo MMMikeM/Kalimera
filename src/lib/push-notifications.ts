@@ -27,10 +27,7 @@ import {
 	getUserIdsPracticedInRange,
 	listPracticeSessionsSinceForUsers,
 } from "@/db.server/queries/practice-sessions";
-import {
-	getDueVocabularyCountByUserId,
-	getDueVocabularyCountForUserIds,
-} from "@/db.server/queries/vocabulary-skills";
+import { listDueVocabularyCountsByUser } from "@/db.server/queries/vocabulary-skills";
 import { streakLengthFromCompletedSessionDates } from "@/lib/practice-streak";
 
 interface NotificationResult {
@@ -185,7 +182,8 @@ export const sendReviewDueNotifications = async (
 	};
 
 	const now = new Date();
-	const dueByUser = await getDueVocabularyCountByUserId(now);
+	const dueRows = await listDueVocabularyCountsByUser(now);
+	const dueByUser = new Map(dueRows.map((r) => [r.userId, r.dueCount]));
 	const userIds = [...dueByUser.keys()];
 
 	if (userIds.length === 0) {
@@ -309,7 +307,8 @@ export const sendStreakWarningNotifications = async (
 	}
 
 	const streakUserIds = streakCandidates.map((s) => s.userId);
-	const dueByUser = await getDueVocabularyCountForUserIds(now, streakUserIds);
+	const dueRows = await listDueVocabularyCountsByUser(now, streakUserIds);
+	const dueByUser = new Map(dueRows.map((r) => [r.userId, r.dueCount]));
 	const sessionRows = await listPracticeSessionsSinceForUsers(streakUserIds, subDays(now, 45));
 	const datesByUser = distinctPracticeDaysDesc(sessionRows, 30);
 
