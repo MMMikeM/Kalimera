@@ -46,86 +46,16 @@ const AORIST_STEMS: SimpleListItem[] = [
 		category: "suppletive",
 	},
 	// Irregular — derivable but non-obvious, drill for speed
-	{
-		id: "erchomai",
-		greek: "ήρθα",
-		greeklish: "irtha",
-		english: "come (έρχομαι)",
-		label: "έρχομαι → ήρθα",
-		category: "irregular",
-	},
-	{
-		id: "kano",
-		greek: "έκανα",
-		greeklish: "ekana",
-		english: "do / make (κάνω)",
-		label: "κάνω → έκανα",
-		category: "irregular",
-	},
-	{
-		id: "perno",
-		greek: "πήρα",
-		greeklish: "pira",
-		english: "take / get (παίρνω)",
-		label: "παίρνω → πήρα",
-		category: "irregular",
-	},
-	{
-		id: "fevgo",
-		greek: "έφυγα",
-		greeklish: "efiga",
-		english: "leave (φεύγω)",
-		label: "φεύγω → έφυγα",
-		category: "irregular",
-	},
-	{
-		id: "vrisko",
-		greek: "βρήκα",
-		greeklish: "vrika",
-		english: "find (βρίσκω)",
-		label: "βρίσκω → βρήκα",
-		category: "irregular",
-	},
-	{
-		id: "dino",
-		greek: "έδωσα",
-		greeklish: "edosa",
-		english: "give (δίνω)",
-		label: "δίνω → έδωσα",
-		category: "irregular",
-	},
-	{
-		id: "mathaino",
-		greek: "έμαθα",
-		greeklish: "ematha",
-		english: "learn (μαθαίνω)",
-		label: "μαθαίνω → έμαθα",
-		category: "irregular",
-	},
-	{
-		id: "grapho",
-		greek: "έγραψα",
-		greeklish: "egrapsa",
-		english: "write (γράφω)",
-		label: "γράφω → έγραψα",
-		category: "irregular",
-	},
-	{
-		id: "diavazo",
-		greek: "διάβασα",
-		greeklish: "diavasa",
-		english: "read (διαβάζω)",
-		label: "διαβάζω → διάβασα",
-		category: "irregular",
-	},
-	{
-		id: "agorazo",
-		greek: "αγόρασα",
-		greeklish: "agorasa",
-		english: "buy (αγοράζω)",
-		label: "αγοράζω → αγόρασα",
-		category: "irregular",
-	},
+	{ id: "erchomai", greek: "ήρθα", greeklish: "irtha", english: "come (έρχομαι)", label: "έρχομαι → ήρθα", category: "irregular" },
+	{ id: "kano", greek: "έκανα", greeklish: "ekana", english: "do / make (κάνω)", label: "κάνω → έκανα", category: "irregular" },
+	{ id: "perno", greek: "πήρα", greeklish: "pira", english: "take / get (παίρνω)", label: "παίρνω → πήρα", category: "irregular" },
+	{ id: "fevgo", greek: "έφυγα", greeklish: "efiga", english: "leave (φεύγω)", label: "φεύγω → έφυγα", category: "irregular" },
+	{ id: "vrisko", greek: "βρήκα", greeklish: "vrika", english: "find (βρίσκω)", label: "βρίσκω → βρήκα", category: "irregular" },
+	{ id: "dino", greek: "έδωσα", greeklish: "edosa", english: "give (δίνω)", label: "δίνω → έδωσα", category: "irregular" },
+	{ id: "mathaino", greek: "έμαθα", greeklish: "ematha", english: "learn (μαθαίνω)", label: "μαθαίνω → έμαθα", category: "irregular" },
+	{ id: "meno", greek: "έμεινα", greeklish: "emeina", english: "stay / live (μένω)", label: "μένω → έμεινα", category: "irregular" },
+	{ id: "katalavaino", greek: "κατάλαβα", greeklish: "katalava", english: "understand (καταλαβαίνω)", label: "καταλαβαίνω → κατάλαβα", category: "irregular" },
+	{ id: "stelno", greek: "έστειλα", greeklish: "esteila", english: "send (στέλνω)", label: "στέλνω → έστειλα", category: "irregular" },
 ];
 
 const CATEGORIES = [
@@ -139,7 +69,7 @@ export default function AoristStemsDrill() {
 			drillId="verbs-aorist-stems"
 			items={AORIST_STEMS}
 			title="Aorist Stems"
-			subtitle="15 forms / timed"
+			subtitle="15 irregular stems / timed"
 			colorTheme="terracotta"
 			speeds={SPEEDS}
 			forwardDesc="Present (English) → aorist sg1"

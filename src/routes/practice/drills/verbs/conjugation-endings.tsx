@@ -1,4 +1,3 @@
-import { SPEEDS } from "../../drill-speeds";
 import { SimpleListDrill, type SimpleListItem } from "../../engines/simple-list-drill";
 
 // Context line carries tense + family; english is just the pronoun.
@@ -25,7 +24,8 @@ const G1_PRES = "κάνω · present";
 const G2A_PRES = "μιλάω · present";
 const G2B_PRES = "μπορώ · present";
 const DEP_PRES = "έρχομαι · present";
-const PAST = "κάνω · past";
+const AORIST = "κάνω · aorist";
+const G1_IMP = "γράφω · imperfect";
 const G2_IMP = "μιλάω · imperfect";
 
 const ENDINGS: SimpleListItem[] = [
@@ -277,66 +277,130 @@ const ENDINGS: SimpleListItem[] = [
 		category: "deponent-present",
 	},
 
-	// ── past endings (aorist + group1 imperfect) — έγραψα ──
+	// ── aorist (simple past) — έκανα ──
 	{
-		id: "past-sg1",
+		id: "aor-sg1",
 		greek: "α",
 		greeklish: "a",
 		english: PRONOUNS.sg1.pronoun,
 		detail: PRONOUNS.sg1.grammatical,
-		context: PAST,
+		context: AORIST,
 		label: "έκανα",
-		category: "past",
+		category: "aorist",
 	},
 	{
-		id: "past-sg2",
+		id: "aor-sg2",
 		greek: "ες",
 		greeklish: "es",
 		english: PRONOUNS.sg2.pronoun,
 		detail: PRONOUNS.sg2.grammatical,
-		context: PAST,
+		context: AORIST,
 		label: "έκανες",
-		category: "past",
+		category: "aorist",
 	},
 	{
-		id: "past-sg3",
+		id: "aor-sg3",
 		greek: "ε",
 		greeklish: "e",
 		english: PRONOUNS.sg3.pronoun,
 		detail: PRONOUNS.sg3.grammatical,
-		context: PAST,
+		context: AORIST,
 		label: "έκανε",
-		category: "past",
+		category: "aorist",
 	},
 	{
-		id: "past-pl1",
+		id: "aor-pl1",
 		greek: "αμε",
 		greeklish: "ame",
 		english: PRONOUNS.pl1.pronoun,
 		detail: PRONOUNS.pl1.grammatical,
-		context: PAST,
+		context: AORIST,
 		label: "κάναμε",
-		category: "past",
+		category: "aorist",
 	},
 	{
-		id: "past-pl2",
+		id: "aor-pl2",
 		greek: "ατε",
 		greeklish: "ate",
 		english: PRONOUNS.pl2.pronoun,
 		detail: PRONOUNS.pl2.grammatical,
-		context: PAST,
+		context: AORIST,
 		label: "κάνατε",
-		category: "past",
+		category: "aorist",
 	},
 	{
-		id: "past-pl3",
+		id: "aor-pl3",
 		greek: "αν",
 		greeklish: "an",
 		english: PRONOUNS.pl3.pronoun,
 		detail: PRONOUNS.pl3.grammatical,
-		context: PAST,
+		context: AORIST,
 		label: "έκαναν",
-		category: "past",
+		category: "aorist",
+	},
+
+	// ── group1 imperfect (ongoing past) — έγραφα ──
+	// Same endings as aorist but built on present stem (γράφ- not γραψ-).
+	// Using γράφω as anchor to avoid κάνω collision (κάνω imperfect = έκανα, same as aorist).
+	{
+		id: "g1i-sg1",
+		greek: "α",
+		greeklish: "a",
+		english: PRONOUNS.sg1.pronoun,
+		detail: PRONOUNS.sg1.grammatical,
+		context: G1_IMP,
+		label: "έγραφα",
+		category: "g1-imperfect",
+	},
+	{
+		id: "g1i-sg2",
+		greek: "ες",
+		greeklish: "es",
+		english: PRONOUNS.sg2.pronoun,
+		detail: PRONOUNS.sg2.grammatical,
+		context: G1_IMP,
+		label: "έγραφες",
+		category: "g1-imperfect",
+	},
+	{
+		id: "g1i-sg3",
+		greek: "ε",
+		greeklish: "e",
+		english: PRONOUNS.sg3.pronoun,
+		detail: PRONOUNS.sg3.grammatical,
+		context: G1_IMP,
+		label: "έγραφε",
+		category: "g1-imperfect",
+	},
+	{
+		id: "g1i-pl1",
+		greek: "αμε",
+		greeklish: "ame",
+		english: PRONOUNS.pl1.pronoun,
+		detail: PRONOUNS.pl1.grammatical,
+		context: G1_IMP,
+		label: "γράφαμε",
+		category: "g1-imperfect",
+	},
+	{
+		id: "g1i-pl2",
+		greek: "ατε",
+		greeklish: "ate",
+		english: PRONOUNS.pl2.pronoun,
+		detail: PRONOUNS.pl2.grammatical,
+		context: G1_IMP,
+		label: "γράφατε",
+		category: "g1-imperfect",
+	},
+	{
+		id: "g1i-pl3",
+		greek: "αν",
+		greeklish: "an",
+		english: PRONOUNS.pl3.pronoun,
+		detail: PRONOUNS.pl3.grammatical,
+		context: G1_IMP,
+		label: "έγραφαν",
+		category: "g1-imperfect",
 	},
 
 	// ── group2 imperfect — μιλούσα ──
@@ -402,16 +466,33 @@ const ENDINGS: SimpleListItem[] = [
 	},
 ].map<SimpleListItem>((item) => ({ ...item, acceptAlso: item.label }));
 
+const CATEGORIES = [
+	{ id: "g1-present", label: "Present · κάνω" },
+	{ id: "g2a-present", label: "Present · μιλάω" },
+	{ id: "g2b-present", label: "Present · μπορώ" },
+	{ id: "deponent-present", label: "Present · έρχομαι" },
+	{ id: "aorist", label: "Aorist · έκανα" },
+	{ id: "g1-imperfect", label: "Imperfect · έγραφα" },
+	{ id: "g2-imperfect", label: "Imperfect · μιλούσα" },
+];
+
+const SPEEDS = [
+	{ id: "fast", label: "Fast · 4s", timeLimit: 4000 },
+	{ id: "medium", label: "Medium · 6s", timeLimit: 6000 },
+	{ id: "relaxed", label: "Relaxed · 8s", timeLimit: 8000 },
+];
+
 export default function ConjugationEndingsDrill() {
 	return (
 		<SimpleListDrill
 			drillId="verbs-conjugation-endings"
 			items={ENDINGS}
 			title="Conjugation endings"
-			subtitle="36 forms / timed"
+			subtitle="42 forms / timed"
 			colorTheme="olive"
 			forwardDesc="Pronoun + paradigm → ending"
 			reverseDesc="Ending → pronoun (self-assess)"
+			categories={CATEGORIES}
 			speeds={SPEEDS}
 		/>
 	);
