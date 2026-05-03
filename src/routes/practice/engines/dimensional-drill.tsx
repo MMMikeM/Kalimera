@@ -45,7 +45,7 @@ export interface DimensionalDrillProps<K extends string> {
 	barColorBase: string | ((form: DrillForm & DimValues<K>) => string);
 	renderForwardPrompt: (form: DrillForm & DimValues<K>) => React.ReactNode;
 	defaultSessionSize?: SessionSize;
-	speeds?: Array<SpeedOption>;
+	speeds?: ReadonlyArray<SpeedOption>;
 }
 
 export function DimensionalDrill<K extends string>({

@@ -15,7 +15,7 @@ import UnifiedDrill, {
 	type UnifiedAttemptResult,
 	type UnifiedQuestion,
 } from "../components/unified-drill";
-import { SPEEDS } from "../drill-speeds";
+import { SPEEDS, type SpeedId } from "../drill-speeds";
 import type { PracticeLoaderData } from "../layout";
 
 interface VocabDrillPageProps {
@@ -44,14 +44,13 @@ export function VocabDrillPage({
 	const [searchParams] = useSearchParams();
 	const initialDrillSize = searchParams.get("size") === "quick" ? 10 : 15;
 	const [drillSize, setDrillSize] = useState(initialDrillSize);
-	const [activeSpeedId, setActiveSpeedId] = useState(SPEEDS[1].id);
+	const [activeSpeedId, setActiveSpeedId] = useState<SpeedId>(SPEEDS[1].id);
 	const activeSpeed = SPEEDS.find((s) => s.id === activeSpeedId) ?? SPEEDS[1];
 	const [reDrillQuestions, setReDrillQuestions] = useState<UnifiedQuestion[] | null>(null);
 	const isReDrillRef = useRef(false);
 
 	const questions = useMemo(() => {
-		const applySpeed = <T extends { timeLimit: number }>(qs: T[]) =>
-			qs.map((q) => ({ ...q, timeLimit: activeSpeed.timeLimit }));
+		const applySpeed = <T,>(qs: T[]) => qs.map((q) => ({ ...q, timeLimit: activeSpeed.timeLimit }));
 		if (reDrillQuestions) return applySpeed(reDrillQuestions);
 		if (initialQuestions) {
 			const shuffled = [...initialQuestions].sort(() => Math.random() - 0.5);
