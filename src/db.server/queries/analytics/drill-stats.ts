@@ -1,7 +1,7 @@
 import { and, eq, gte, isNotNull, sql } from "drizzle-orm";
 
-import { db } from "../index";
-import { practiceAttempts } from "../schema";
+import { db } from "../../index";
+import { practiceAttempts } from "../../schema";
 
 export interface DrillStat {
 	drillId: string;

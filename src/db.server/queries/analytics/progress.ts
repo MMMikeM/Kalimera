@@ -1,8 +1,8 @@
 import { subDays, subMonths } from "date-fns";
 import { and, count, eq, gte, isNotNull, sql } from "drizzle-orm";
 
-import { db } from "../index";
-import { practiceAttempts, practiceSessions } from "../schema";
+import { db } from "../../index";
+import { practiceAttempts, practiceSessions } from "../../schema";
 
 type PracticeDate = {
 	date: string; // ISO date string (YYYY-MM-DD)
