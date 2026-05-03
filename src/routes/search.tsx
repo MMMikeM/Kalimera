@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import {
 	fetchVocabularyRowsForSearch,
 	type VocabularySearchGraphRow,
-} from "@/db.server/queries/vocabulary-search";
+} from "@/db.server/queries/vocabulary";
 import { cn } from "@/lib/utils";
 
 import type { Route } from "./+types/search";

@@ -1,5 +1,5 @@
-import type { VerbVocabularyWithDetailsRow } from "@/db.server/queries/verbs";
-import { fetchVerbsWithVerbDetails } from "@/db.server/queries/verbs";
+import type { VerbVocabularyWithDetailsRow } from "@/db.server/queries/vocabulary";
+import { fetchVerbsWithVerbDetails } from "@/db.server/queries/vocabulary";
 
 type VerbWithPattern = VerbVocabularyWithDetailsRow;
 

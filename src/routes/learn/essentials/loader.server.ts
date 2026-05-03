@@ -1,5 +1,5 @@
 import { hasNumericValue, hasTimeRange } from "@/db.server/metadata";
-import { getVocabBySlug } from "@/db.server/queries/vocabulary-sections";
+import { getVocabBySlug } from "@/db.server/queries/vocabulary";
 
 export async function loader() {
 	const tags = await getVocabBySlug("reference", ["noun", "adverb", "adjective"]);
