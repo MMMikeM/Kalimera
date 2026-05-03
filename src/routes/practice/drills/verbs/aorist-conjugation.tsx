@@ -1,6 +1,5 @@
 import { getAuthSession } from "@/lib/auth-cookie";
 
-import type { UnifiedAttemptResult } from "../../components/unified-drill";
 import { VocabDrillPage } from "../../engines/vocab-drill";
 import type { Route } from "./+types/aorist-conjugation";
 import { getAoristDrillQuestions } from "./data.server";
@@ -26,9 +25,6 @@ export default function AoristConjugationDrill({ loaderData }: Route.ComponentPr
 			initialQuestions={loaderData.questions.length > 0 ? loaderData.questions : undefined}
 			wordTypeFilter="verb"
 			weakAreaType="verb_family"
-			getWeakAreaIdentifier={(attempt: UnifiedAttemptResult) =>
-				attempt.questionId.includes("verb-aorist-") ? attempt.questionId.split("-")[3] : undefined
-			}
 		/>
 	);
 }

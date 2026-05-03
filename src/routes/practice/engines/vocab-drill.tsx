@@ -1,6 +1,6 @@
 import { RotateCcw, Zap } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import { useFetcher, useOutletContext, useSearchParams } from "react-router";
+import { useEffect, useState } from "react";
+import { useOutletContext, useSearchParams } from "react-router";
 
 import { Card } from "@/components/Card";
 import { Button } from "@/components/ui/button";
@@ -9,14 +9,14 @@ import {
 	CATEGORY_CONFIG,
 	type DrillQuestion,
 } from "@/lib/drill/generate-questions";
+import { greekToPhonetic } from "@/lib/greek-transliteration";
 
-import UnifiedDrill, {
-	type SessionStats,
-	type UnifiedAttemptResult,
-	type UnifiedQuestion,
-} from "../components/unified-drill";
 import { SPEEDS, type SpeedId } from "../drill-speeds";
+import type { LogAttemptInput } from "../hooks";
 import type { PracticeLoaderData } from "../layout";
+import type { Attempt } from "./drill-engine";
+import { type SimpleListItem, SimpleListDrill } from "./simple-list-drill";
+import { useDrillSession } from "./use-drill-session";
 
 interface VocabDrillPageProps {
 	category: keyof typeof CATEGORY_CONFIG;
@@ -24,8 +24,17 @@ interface VocabDrillPageProps {
 	initialQuestions?: DrillQuestion[];
 	wordTypeFilter?: string;
 	weakAreaType?: string;
-	getWeakAreaIdentifier?: (attempt: UnifiedAttemptResult) => string | undefined;
 }
+
+const toSimpleListItem = (q: DrillQuestion): SimpleListItem => ({
+	id: q.id,
+	greek: q.correctGreek,
+	greeklish: greekToPhonetic(q.correctGreek),
+	label: q.prompt,
+	english: q.prompt,
+	vocabularyId: q.vocabularyId,
+	weakAreaIdentifier: q.weakAreaIdentifier,
+});
 
 export function VocabDrillPage({
 	category,
@@ -33,116 +42,63 @@ export function VocabDrillPage({
 	initialQuestions,
 	wordTypeFilter,
 	weakAreaType,
-	getWeakAreaIdentifier,
 }: VocabDrillPageProps) {
 	const { userId, stats } = useOutletContext<PracticeLoaderData>();
-	const fetcher = useFetcher();
-	const sessionIdRef = useRef<number | null>(null);
+	const session = useDrillSession({
+		userId,
+		drillId,
+		sessionType: "case_drill",
+		category: "speed_drill",
+		wordTypeFilter,
+	});
 
 	const [sessionCount, setSessionCount] = useState(0);
-	const [lastStats, setLastStats] = useState<SessionStats | null>(null);
+	const [lastStats, setLastStats] = useState<{ total: number; correct: number } | null>(null);
 	const [searchParams] = useSearchParams();
 	const initialDrillSize = searchParams.get("size") === "quick" ? 10 : 15;
 	const [drillSize, setDrillSize] = useState(initialDrillSize);
 	const [activeSpeedId, setActiveSpeedId] = useState<SpeedId>(SPEEDS[1].id);
 	const activeSpeed = SPEEDS.find((s) => s.id === activeSpeedId) ?? SPEEDS[1];
-	const [reDrillQuestions, setReDrillQuestions] = useState<UnifiedQuestion[] | null>(null);
-	const isReDrillRef = useRef(false);
+	const [reDrillItems, setReDrillItems] = useState<SimpleListItem[] | null>(null);
 
-	const [shuffledInitial, setShuffledInitial] = useState<UnifiedQuestion[] | null>(null);
+	const [shuffledInitial, setShuffledInitial] = useState<SimpleListItem[] | null>(null);
 	useEffect(() => {
 		if (!initialQuestions) {
 			setShuffledInitial(null);
 			return;
 		}
-		setShuffledInitial([...initialQuestions].sort(() => Math.random() - 0.5));
+		const items = initialQuestions.map(toSimpleListItem);
+		setShuffledInitial([...items].sort(() => Math.random() - 0.5));
 	}, [initialQuestions]);
 
-	const applySpeed = <T,>(qs: T[]) => qs.map((q) => ({ ...q, timeLimit: activeSpeed.timeLimit }));
-	const questions = reDrillQuestions
-		? applySpeed(reDrillQuestions)
+	const baseItems = reDrillItems
+		? reDrillItems
 		: shuffledInitial
-			? applySpeed(shuffledInitial.slice(0, drillSize))
-			: applySpeed(generateQuestions([category], drillSize));
+			? shuffledInitial.slice(0, drillSize)
+			: generateQuestions([category], drillSize).map(toSimpleListItem);
 
-	const startDbSession = () => {
-		if (!userId) return;
-		fetcher.submit(
-			{
-				intent: "startSession",
-				userId: userId.toString(),
-				sessionType: "case_drill",
-				category: "speed_drill",
-				...(wordTypeFilter && { wordTypeFilter }),
-			},
-			{ method: "post", action: "/practice" },
-		);
+	const wrappedLog = (input: LogAttemptInput) => {
+		session.recordAttempt({ ...input, weakAreaType });
 	};
 
-	const handleAttempt = (attempt: UnifiedAttemptResult) => {
-		if (!userId || isReDrillRef.current) return;
-
-		const weakAreaIdentifier = getWeakAreaIdentifier?.(attempt);
-
-		fetcher.submit(
-			{
-				intent: "recordAttempt",
-				userId: userId.toString(),
-				sessionId: sessionIdRef.current?.toString() ?? "",
-				drillId,
-				questionText: attempt.prompt,
-				correctAnswer: attempt.correctGreek,
-				userAnswer: attempt.userAnswer,
-				isCorrect: attempt.isCorrect ? "on" : "",
-				timeTaken: attempt.timeTaken.toString(),
-				skillType: "production",
-				...(attempt.vocabularyId && { vocabularyId: attempt.vocabularyId.toString() }),
-				...(weakAreaType && { weakAreaType }),
-				...(weakAreaIdentifier && { weakAreaIdentifier }),
-			},
-			{ method: "post", action: "/practice" },
-		);
+	const handleComplete = ({ total, correct }: { total: number; correct: number }) => {
+		setLastStats({ total, correct });
+		session.completeSession({ totalQuestions: total, correctAnswers: correct });
 	};
 
-	const handleComplete = (statsData: SessionStats) => {
-		setLastStats(statsData);
-
-		if (!userId || !sessionIdRef.current || isReDrillRef.current) return;
-
-		fetcher.submit(
-			{
-				intent: "completeSession",
-				sessionId: sessionIdRef.current.toString(),
-				totalQuestions: statsData.total.toString(),
-				correctAnswers: statsData.correct.toString(),
-			},
-			{ method: "post", action: "/practice" },
-		);
-	};
-
-	const handleDrillMistakes = (missedQuestions: UnifiedQuestion[]) => {
-		isReDrillRef.current = true;
-		setReDrillQuestions(missedQuestions);
+	const handleRetryMistakes = (mistakes: Attempt<SimpleListItem>[]) => {
+		session.markReDrill();
+		setReDrillItems(mistakes.map((m) => m.form));
 		setSessionCount((c) => c + 1);
 		setLastStats(null);
-		sessionIdRef.current = null;
 	};
 
 	const handleNewSession = () => {
-		setReDrillQuestions(null);
-		isReDrillRef.current = false;
+		setReDrillItems(null);
+		session.resetSession();
 		setSessionCount((c) => c + 1);
 		setLastStats(null);
-		sessionIdRef.current = null;
 	};
-
-	const fetchedSessionId =
-		fetcher.data?.success && fetcher.data?.session?.id ? fetcher.data.session.id : null;
-	useEffect(() => {
-		if (fetchedSessionId && !sessionIdRef.current) {
-			sessionIdRef.current = fetchedSessionId;
-		}
-	}, [fetchedSessionId]);
 
 	const categoryConfig = CATEGORY_CONFIG[category];
 
@@ -202,7 +158,7 @@ export function VocabDrillPage({
 						size="lg"
 						onClick={() => {
 							setSessionCount(1);
-							startDbSession();
+							session.startDbSession();
 						}}
 						className="w-full"
 					>
@@ -212,15 +168,15 @@ export function VocabDrillPage({
 					<div className="mt-6 space-y-1 text-xs text-muted-foreground">
 						<p>
 							<kbd className="rounded border border-border bg-muted px-1.5 py-0.5 text-muted-foreground">
-								Space
+								Enter
 							</kbd>{" "}
-							to start each question
+							to submit answer
 						</p>
 						<p>
 							<kbd className="rounded border border-border bg-muted px-1.5 py-0.5 text-muted-foreground">
 								Enter
 							</kbd>{" "}
-							to submit answer
+							or tap to advance after a wrong answer
 						</p>
 						<p>Auto-advance on correct answers</p>
 					</div>
@@ -231,16 +187,18 @@ export function VocabDrillPage({
 
 	return (
 		<div className="mx-auto max-w-xl">
-			<UnifiedDrill
+			<SimpleListDrill
 				key={sessionCount}
+				items={baseItems}
 				title={`${categoryConfig.label} Drill #${sessionCount}`}
-				questions={questions}
-				onAttempt={handleAttempt}
+				subtitle={`${stats?.streak ? `${stats.streak}-day streak` : "Rapid-fire production"}`}
+				drillId={drillId}
+				colorTheme="terracotta"
+				speeds={[activeSpeed]}
+				autoStart
+				logAttemptFn={wrappedLog}
 				onComplete={handleComplete}
-				userId={userId}
-				sessionCount={sessionCount}
-				streakDays={stats?.streak}
-				onDrillMistakes={handleDrillMistakes}
+				onRetryMistakes={handleRetryMistakes}
 			/>
 
 			{lastStats && (
