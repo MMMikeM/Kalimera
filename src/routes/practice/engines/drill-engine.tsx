@@ -3,6 +3,7 @@ import { Link } from "react-router";
 
 import { Button } from "@/components/ui/button";
 import { greekToPhonetic } from "@/lib/greek-transliteration";
+import { shuffle } from "@/lib/shuffle";
 
 export type DrillMode = "forward" | "reverse";
 export type Phase = "config" | "active" | "feedback" | "complete";
@@ -32,17 +33,6 @@ export interface Attempt<T extends DrillForm> {
 	timedOut: boolean;
 	userInput?: string;
 }
-
-const shuffle = <T,>(arr: T[]): T[] => {
-	const a = [...arr];
-	for (let i = a.length - 1; i > 0; i--) {
-		const j = Math.floor(Math.random() * (i + 1));
-		const tmp = a[i] as T;
-		a[i] = a[j] as T;
-		a[j] = tmp;
-	}
-	return a;
-};
 
 export const buildDeck = <T,>(forms: T[], size: SessionSize): T[] => {
 	const first = shuffle([...forms]);

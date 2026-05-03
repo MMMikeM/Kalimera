@@ -1,5 +1,5 @@
 import { SPEEDS } from "../../drill-speeds";
-import { GENDER_STYLE } from "../../engines/drill-constants";
+import { GENDER_CATEGORIES, GENDER_DIMENSION_OPTIONS } from "../../engines/drill-constants";
 import { SimpleListDrill, type SimpleListItem } from "../../engines/simple-list-drill";
 
 // Owner (genitive) noun phrase capstone — article + adjective + noun in genitive form.
@@ -150,18 +150,6 @@ export const PHRASES: SimpleListItem[] = [
 	},
 ];
 
-const CATEGORIES = [
-	{ id: "masculine", label: "Masculine" },
-	{ id: "feminine", label: "Feminine" },
-	{ id: "neuter", label: "Neuter" },
-];
-
-const DIMENSION_OPTIONS = [
-	{ id: "masculine", label: "Masculine", ...GENDER_STYLE.masculine },
-	{ id: "feminine", label: "Feminine", ...GENDER_STYLE.feminine },
-	{ id: "neuter", label: "Neuter", ...GENDER_STYLE.neuter },
-];
-
 export default function PhraseOwnerDrill() {
 	return (
 		<SimpleListDrill
@@ -174,9 +162,9 @@ export default function PhraseOwnerDrill() {
 			forwardDesc="English → article + adjective + noun (Owner form)"
 			reverseLabel="Greek → gender"
 			reverseDesc="Phrase → select gender"
-			categories={CATEGORIES}
+			categories={GENDER_CATEGORIES}
 			reverseDimension={{
-				options: DIMENSION_OPTIONS,
+				options: GENDER_DIMENSION_OPTIONS,
 				getCorrectId: (item) => item.dimension ?? "",
 			}}
 		/>

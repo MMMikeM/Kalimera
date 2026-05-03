@@ -10,6 +10,7 @@ import {
 	type DrillQuestion,
 } from "@/lib/drill/generate-questions";
 import { greekToPhonetic } from "@/lib/greek-transliteration";
+import { shuffle } from "@/lib/shuffle";
 
 import { SPEEDS, type SpeedId } from "../drill-speeds";
 import type { LogAttemptInput } from "../hooks";
@@ -67,8 +68,7 @@ export function VocabDrillPage({
 			setShuffledInitial(null);
 			return;
 		}
-		const items = initialQuestions.map(toSimpleListItem);
-		setShuffledInitial([...items].sort(() => Math.random() - 0.5));
+		setShuffledInitial(shuffle(initialQuestions.map(toSimpleListItem)));
 	}, [initialQuestions]);
 
 	const baseItems = reDrillItems
