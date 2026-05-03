@@ -48,15 +48,11 @@ export default function PracticeIndex() {
 							className="flex items-baseline justify-between gap-4 py-5 transition-colors hover:bg-muted/50"
 						>
 							<div className="min-w-0 flex-1">
-								<h3 className="mb-1 font-serif text-xl font-semibold text-navy-text">
-									{s.label}
-								</h3>
+								<h3 className="mb-1 font-serif text-xl font-semibold text-navy-text">{s.label}</h3>
 								<p className="text-sm text-muted-foreground">{s.thesis}</p>
 							</div>
 							<div className="flex shrink-0 items-baseline gap-3">
-								<span className="text-xs text-muted-foreground tabular-nums">
-									{s.count} drills
-								</span>
+								<span className="text-xs text-muted-foreground tabular-nums">{s.count} drills</span>
 								<ArrowRight size={16} className="text-muted-foreground" />
 							</div>
 						</Link>
