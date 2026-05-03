@@ -22,6 +22,7 @@ interface LogAttemptInput {
 	isCorrect: boolean;
 	timeTaken: number;
 	weakAreaIdentifier?: string;
+	vocabularyId?: number;
 }
 
 export const useLogDrillAttempt = (drillId: string) => {
@@ -44,6 +45,7 @@ export const useLogDrillAttempt = (drillId: string) => {
 					timeTaken: Math.round(input.timeTaken).toString(),
 					skillType: "production",
 					...(input.weakAreaIdentifier && { weakAreaIdentifier: input.weakAreaIdentifier }),
+					...(input.vocabularyId != null && { vocabularyId: input.vocabularyId.toString() }),
 				},
 				{ method: "post", action: "/practice" },
 			);
