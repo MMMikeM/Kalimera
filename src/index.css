@@ -173,6 +173,18 @@
 	--radius-lg: var(--radius);
 	--radius-xl: calc(var(--radius) + 4px);
 
+	/* === SPACING TOKENS === */
+	/* Viewport-anchored layout size (use with h-/min-h-/max-h-) */
+	--spacing-page: 60vh;
+	/* Popover that fits on phones */
+	--spacing-popover-clamp: min(420px, calc(100vw - 1rem));
+	/* Chat-bubble max width */
+	--spacing-bubble: 85%;
+
+	/* === FONT-SIZE TOKENS === */
+	--text-chart-axis: 8px;
+	--text-chart-axis--line-height: 1;
+
 	/* === SHADCN THEME MAPPING ===
 	 * Single source of truth. No dark-mode overrides. */
 	--color-background: var(--color-cream);
@@ -398,4 +410,12 @@
 		@apply text-[1.1em] leading-relaxed;
 		letter-spacing: 0.01em;
 	}
+}
+
+/* Reference-table grid templates (no theme namespace for grid-template-columns) */
+@utility grid-rule {
+	grid-template-columns: 1fr auto 1fr;
+}
+@utility grid-rule-suffix {
+	grid-template-columns: 1fr auto 1fr auto;
 }

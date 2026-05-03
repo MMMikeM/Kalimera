@@ -20,7 +20,7 @@ interface ReferenceHeroProps {
 
 export const ReferenceHero = ({ eyebrow, title, thesis, demo }: ReferenceHeroProps) => (
 	<header className="space-y-5">
-		<p className="text-xs font-semibold tracking-[0.22em] text-stone-500 uppercase">{eyebrow}</p>
+		<p className="text-xs font-semibold tracking-widest text-stone-500 uppercase">{eyebrow}</p>
 
 		<div className="space-y-3">
 			<h1 className="font-serif text-4xl leading-tight text-stone-900 sm:text-5xl">{title}</h1>

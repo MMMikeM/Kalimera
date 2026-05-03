@@ -111,10 +111,7 @@ export const AccuracyTrend = ({ data, className }: AccuracyTrendProps) => {
 	if (data.length === 0) {
 		return (
 			<div
-				className={cn(
-					"flex items-center justify-center h-[180px] text-stone-400 text-sm",
-					className,
-				)}
+				className={cn("flex items-center justify-center h-48 text-stone-400 text-sm", className)}
 			>
 				No accuracy data yet
 			</div>
@@ -141,7 +138,7 @@ export const AccuracyTrend = ({ data, className }: AccuracyTrendProps) => {
 					{yTicks.map((tick) => (
 						<g key={tick} transform={`translate(0, ${yScale(tick)})`}>
 							<line x1={0} x2={chartWidth} stroke="var(--color-stone-200)" strokeDasharray="2,2" />
-							<text x={-8} y={4} textAnchor="end" className="fill-stone-400 text-[8px]">
+							<text x={-8} y={4} textAnchor="end" className="fill-stone-400 text-chart-axis">
 								{formatPercent(tick)}
 							</text>
 						</g>
@@ -149,7 +146,7 @@ export const AccuracyTrend = ({ data, className }: AccuracyTrendProps) => {
 
 					{xTicks.map((date) => (
 						<g key={date} transform={`translate(${xScale(date)}, ${chartHeight})`}>
-							<text y={16} textAnchor="middle" className="fill-stone-400 text-[7px]">
+							<text y={16} textAnchor="middle" className="fill-stone-400 text-chart-axis">
 								{formatDate(date)}
 							</text>
 						</g>
@@ -201,7 +198,7 @@ export const AccuracyTrend = ({ data, className }: AccuracyTrendProps) => {
 						<span className="font-semibold">{formatPercent(hoveredPoint.accuracy)}</span>
 						<span className="ml-1 text-stone-400">(7-day avg)</span>
 					</div>
-					<div className="text-[10px] text-stone-500">
+					<div className="text-xs text-stone-500">
 						Daily: {formatPercent(hoveredPoint.rawAccuracy)}
 					</div>
 				</div>

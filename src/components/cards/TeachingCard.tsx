@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 const teachingCard = tv({
 	slots: {
-		eyebrow: "mb-2 text-xs font-semibold tracking-[0.18em] uppercase",
+		eyebrow: "mb-2 text-xs font-semibold tracking-widest uppercase",
 		titleRow: "flex flex-wrap items-baseline gap-x-3 gap-y-1",
 		title: "font-serif text-3xl leading-none",
 		badge: "rounded-full px-2.5 py-1 text-xs font-semibold",

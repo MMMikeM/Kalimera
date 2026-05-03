@@ -74,7 +74,7 @@ export default function ProgressPage({ loaderData }: Route.ComponentProps) {
 
 	if (!userId) {
 		return (
-			<div className="flex min-h-[50vh] items-center justify-center">
+			<div className="flex min-h-page items-center justify-center">
 				<span className="font-serif text-2xl text-terracotta">καλημέρα</span>
 			</div>
 		);

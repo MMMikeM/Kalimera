@@ -34,7 +34,7 @@ const grammarTable = tv({
 		bodyRow: "border-b",
 		rowHeader: "w-20 border-l-2 py-2 pr-2 pl-2 text-xs font-semibold",
 		rowLabel: "block leading-tight",
-		rowSublabel: "block text-[10px] font-normal opacity-70",
+		rowSublabel: "block text-xs font-normal opacity-70",
 		cell: "px-2 py-2",
 	},
 });

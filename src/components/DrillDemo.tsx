@@ -70,7 +70,7 @@ export const DrillDemo = () => {
 					<div className="relative">
 						{/* Input display */}
 						<div
-							className={`flex min-h-[48px] items-center rounded-lg border-2 px-4 py-3 font-mono text-lg ${showSuccess ? "border-olive-400 bg-olive-50" : "border-stone-200 bg-white"} transition-colors duration-200`}
+							className={`flex min-h-12 items-center rounded-lg border-2 px-4 py-3 font-mono text-lg ${showSuccess ? "border-olive-400 bg-olive-50" : "border-stone-200 bg-white"} transition-colors duration-200`}
 						>
 							<AnimatePresence mode="wait">
 								<motion.span

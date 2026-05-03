@@ -95,7 +95,7 @@ export const TenseNavigator = ({
 						<TabsTrigger
 							key={tense}
 							value={tense}
-							className={cn("flex-1 min-w-[100px] px-3 py-2 text-sm", styles.tab)}
+							className={cn("flex-1 min-w-25 px-3 py-2 text-sm", styles.tab)}
 						>
 							<span className="flex flex-col items-center gap-0.5">
 								<span className="font-mono text-xs">{config.greek}</span>

@@ -128,7 +128,7 @@ export default function RegisterRoute({ actionData }: Route.ComponentProps) {
 	// Post-registration: passkey setup screen
 	if (registeredUser) {
 		return (
-			<div className="flex min-h-[60vh] flex-col items-center justify-center space-y-8">
+			<div className="flex min-h-page flex-col items-center justify-center space-y-8">
 				<div className="space-y-2 text-center">
 					<div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
 						<Check size={32} className="text-green-600" />
@@ -193,7 +193,7 @@ export default function RegisterRoute({ actionData }: Route.ComponentProps) {
 	}
 
 	return (
-		<div className="flex min-h-[60vh] flex-col items-center justify-center space-y-8">
+		<div className="flex min-h-page flex-col items-center justify-center space-y-8">
 			<div className="space-y-2 text-center">
 				<h1 className="font-serif text-3xl text-terracotta">Create Account</h1>
 				<p className="text-stone-600">Start your Greek learning journey</p>
