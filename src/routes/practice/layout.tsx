@@ -1,8 +1,5 @@
-import { Clock, Dumbbell } from "lucide-react";
-import { Outlet, useLocation } from "react-router";
+import { Outlet } from "react-router";
 
-import type { NavTab } from "@/components/NavTabs";
-import { NavTabs } from "@/components/NavTabs";
 import { getAuthSession } from "@/lib/auth-cookie";
 
 import type { Route } from "./+types/layout";
@@ -88,35 +85,6 @@ export const UserRequiredMessage = () => (
 	</div>
 );
 
-const PRACTICE_TABS: NavTab[] = [
-	{
-		id: "practice",
-		label: "Practice",
-		icon: <Dumbbell size={16} />,
-		color: "terracotta",
-	},
-	{ id: "review", label: "Review", icon: <Clock size={16} />, color: "ocean" },
-];
-
 export default function PracticeLayout({ loaderData }: Route.ComponentProps) {
-	const { stats } = loaderData;
-	const location = useLocation();
-
-	const pathSegments = location.pathname.split("/").filter(Boolean);
-	const activeTab = pathSegments[1] === "review" ? "review" : "practice";
-
-	return (
-		<div className="space-y-6">
-			<NavTabs
-				className="mx-auto max-w-md"
-				tabs={PRACTICE_TABS.map((tab) =>
-					tab.id === "review" && stats?.dueCount ? { ...tab, badge: stats.dueCount } : tab,
-				)}
-				activeTab={activeTab}
-				buildUrl={(tabId) => (tabId === "practice" ? "/practice" : `/practice/${tabId}`)}
-			/>
-
-			<Outlet context={loaderData} />
-		</div>
-	);
+	return <Outlet context={loaderData} />;
 }

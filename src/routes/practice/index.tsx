@@ -1,55 +1,68 @@
+import { ArrowRight } from "lucide-react";
 import { Link } from "react-router";
 
-import { DRILLS, GROUP_META, GROUP_ORDER, MODE_META } from "./drills";
+import { DRILLS, GROUP_META } from "./drills";
 
-export default function PracticeHome() {
+interface Section {
+	href: string;
+	label: string;
+	thesis: string;
+	count: number;
+}
+
+const SECTIONS: Section[] = [
+	{
+		href: "/practice/cases",
+		label: GROUP_META.nominal.label,
+		thesis: "Articles, nouns, adjectives — Doer / Target / Owner.",
+		count: DRILLS.filter((d) => d.group === "nominal").length,
+	},
+	{
+		href: "/practice/pronouns",
+		label: GROUP_META.pronouns.label,
+		thesis: "Object forms, possessives, where they sit.",
+		count: DRILLS.filter((d) => d.group === "pronouns").length,
+	},
+	{
+		href: "/practice/verbs",
+		label: GROUP_META.verbs.label,
+		thesis: "Present, past, future, να, commands.",
+		count: DRILLS.filter((d) => d.group === "verbs").length,
+	},
+	{
+		href: "/practice/blocks",
+		label: GROUP_META.blocks.label,
+		thesis: "Survival phrases, numbers, days.",
+		count: DRILLS.filter((d) => d.group === "blocks").length,
+	},
+];
+
+export default function PracticeIndex() {
 	return (
-		<div className="mx-auto max-w-2xl space-y-12">
-			{GROUP_ORDER.map((group) => {
-				const meta = GROUP_META[group];
-				const drills = DRILLS.filter((d) => d.group === group);
-
-				return (
-					<section key={group}>
-						<header className="mb-3 flex items-baseline justify-between border-b border-border pb-2">
-							<h3 className="font-serif text-lg font-semibold text-navy-text">{meta.label}</h3>
-							<span className="text-xs text-muted-foreground tabular-nums">
-								{drills.length} drills
-							</span>
-						</header>
-						<ul className="divide-y divide-border">
-							{drills.map((d) => {
-								const mode = MODE_META[d.mode];
-								return (
-									<li key={d.id}>
-										<Link
-											to={d.href}
-											className="flex items-baseline justify-between gap-3 py-3 transition-colors hover:bg-muted/50"
-										>
-											<div className="min-w-0 flex-1">
-												<div className="mb-0.5 flex items-baseline gap-2">
-													<span className="text-sm font-medium text-foreground">{d.title}</span>
-													<span
-														className={`rounded border px-1.5 py-px text-[10px] tracking-wide uppercase ${mode.tone}`}
-													>
-														{mode.label}
-													</span>
-												</div>
-												<p lang="el" className="greek-text truncate text-xs text-muted-foreground">
-													{d.greek}
-												</p>
-											</div>
-											<span className="shrink-0 text-xs text-muted-foreground tabular-nums">
-												{d.minutes} min
-											</span>
-										</Link>
-									</li>
-								);
-							})}
-						</ul>
-					</section>
-				);
-			})}
+		<div className="mx-auto max-w-2xl">
+			<ul className="divide-y divide-border">
+				{SECTIONS.map((s) => (
+					<li key={s.href}>
+						<Link
+							to={s.href}
+							className="flex items-baseline justify-between gap-4 py-5 transition-colors hover:bg-muted/50"
+						>
+							<div className="min-w-0 flex-1">
+								<h3 className="mb-1 font-serif text-xl font-semibold text-navy-text">
+									{s.label}
+								</h3>
+								<p className="text-sm text-muted-foreground">{s.thesis}</p>
+							</div>
+							<div className="flex shrink-0 items-baseline gap-3">
+								<span className="text-xs text-muted-foreground tabular-nums">
+									{s.count} drills
+								</span>
+								<ArrowRight size={16} className="text-muted-foreground" />
+							</div>
+						</Link>
+					</li>
+				))}
+			</ul>
 		</div>
 	);
 }

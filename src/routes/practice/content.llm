@@ -1,0 +1,125 @@
+# Practice Section Content
+
+Timed retrieval drills organised by grammatical structure. The practice surface is the production-skill engine of the app — Skill Acquisition Theory (DeKeyser) procedural-fluency training. Drills push learners from explicit knowledge → procedural skill → automatisation.
+
+## Route Structure
+
+```
+/practice                                       Section landing — drill registry
+/practice/articles/{paradigm,context,…}         Article paradigm + per-case article drills
+/practice/articles/noun-{genders,target,owner}  Per-case noun drills
+/practice/adjectives/{agreement,…-target,…-owner}  Per-case adjective agreement drills
+/practice/nominal/{phrase-doer,phrase-target,phrase-owner}  Phrase-builder capstones
+/practice/nominal/{all-nouns,all-adjectives}    DB-driven cross-case review drills
+/practice/pronouns/{object,possessives}         Pronoun paradigms
+/practice/verbs/{present,conjugation-endings,…} Verb drills
+/practice/blocks/{chunks,numbers,days-of-week}  Building blocks
+```
+
+## Landing Page
+
+<route path="/practice">
+<purpose>Drill registry hub — surfaces every drill grouped by word class + case-phase</purpose>
+<file>src/routes/practice/index.tsx</file>
+<source-of-truth>src/routes/practice/drills.ts — DRILLS array, GROUP_META, GROUP_ORDER</source-of-truth>
+<displays>
+- Four top-level sections rendered in `GROUP_ORDER`:
+  - **Articles, nouns & adjectives** (group: nominal)
+  - **Pronouns** (group: pronouns)
+  - **Verbs** (group: verbs)
+  - **Building blocks** (group: blocks)
+- Each section's drills can be tagged with a `phase` field. Consecutive drills sharing a phase render under a phase sub-header.
+- Phase headers carry colour accent + left border via `PHASE_TINT`:
+  - **Doer** → ocean (nominative)
+  - **Target** → terracotta (accusative)
+  - **Owner** → olive (genitive)
+  - **Present** / **Past** / **Commands** → no tint (verbs)
+  - **Review** → muted neutral (cross-case mixed drills)
+- Drills without a phase render as ungrouped rows.
+</displays>
+</route>
+
+## Section: Articles, nouns & adjectives
+
+Case is the primary axis. Each case-phase contains four drill types: Article → Noun → Adjective → Phrase. A Review tier at the end mixes cases.
+
+```
+DOER (ocean)
+  Article (Doer)         → ο · η · το · οι · τα           hand-curated, 6 forms
+  Noun (Doer)            → ο φίλος · η μέρα · το σπίτι     hand-curated, 30 nouns
+  Adjective agreement    → καλός · καλή · καλό            hand-curated, 30 forms
+  Doer phrase            → ο καλός φίλος                  hand-curated capstone
+
+TARGET (terracotta)
+  Article (Target)       → τον · τη · το · τους · τις · τα
+  Noun (Target)          → τον φίλο · τη μέρα · το σπίτι
+  Adjective (Target)     → καλό · καλή · καλό
+  Target phrase          → τον καλό φίλο                  capstone
+
+OWNER (olive)
+  Article (Owner)        → του · της · του · των
+  Noun (Owner)           → του φίλου · της μέρας · του σπιτιού
+  Adjective (Owner)      → καλού · καλής · καλού
+  Owner phrase           → του καλού φίλου                capstone
+
+REVIEW (neutral)
+  All articles           → existing 18-form DimensionalDrill
+  All nouns              → DB-driven, queries vocabulary + nominal_forms
+  All adjectives         → DB-driven, queries vocabulary + nominal_forms
+  All article + noun     → server-driven mixed-case article+noun pairs
+```
+
+<engine-notes>
+- Hand-curated drills use `SimpleListDrill` engine with `colorTheme` matching the case (ocean/terracotta/olive).
+- Phrase capstones use `SimpleListDrill` with multi-word Greek strings; `matchPhonetic` accepts whitespace-separated input.
+- DB-driven review drills (`all-nouns`, `all-adjectives`) have route-level loaders that query `nominal_forms` via `getNominalFormsForDrill`, build `DrillQuestion[]`, pass to `VocabDrillPage` via `initialQuestions` prop.
+</engine-notes>
+
+## Section: Pronouns
+
+Function-word grids — kept separate from Nominal section because the cognitive task is paradigm recall, not case morphology applied to semantic content.
+
+- Object pronouns: με, σε, τον, την, μας, σας…
+- Possessives: μου, σου, του, της, μας…
+
+Both use `DimensionalDrill` engine.
+
+## Section: Verbs
+
+Tense as primary axis. Phase headers: Present / Past / Commands.
+
+```
+PRESENT
+  Basic verbs · Conjugations · Irregular verbs · είμαι · present
+
+PAST
+  Conjugations · Irregular verbs · είμαι · past · Past ↔ present
+
+COMMANDS
+  Imperatives
+```
+
+Past-tense conjugation drill is server-driven (queries verb_conjugations). Other verb drills are hand-curated SimpleListDrill content.
+
+## Section: Building blocks
+
+Heterogeneous grab-bag. Currently no phase structure.
+
+- Survival phrases · Numbers · Days & time
+
+## Educational principle
+
+Each phase mirrors the production-skill operation a learner performs at speed:
+- Bare form (Article) — function-word retrieval
+- Single-class application (Noun, Adjective) — morphology
+- Phrase integration (Phrase capstone) — full noun-phrase production
+
+Asymmetric content reflects honest priority. Owner has fewer drills than Doer because Owner forms appear less in casual speech. Don't symmetrise where frequency disagrees.
+
+## Data sources
+
+- **Hand-curated drill content**: lives inside each drill file's `tsx` (e.g. `articles/article-doer.tsx`).
+- **Vocabulary + cases**: seeded into `vocabulary` + `nominal_forms` via `src/scripts/seed.ts`. Enrichment in `noun-seed-enrichment.ts` calls `declineNoun` to populate all (case × number) cells; `adjective-seed-enrichment.ts` calls `declineAdjective` for (case × number × gender) cells.
+- **Verb conjugations**: seeded inside the same `seed.ts` pipeline (calls `seedVerbConjugations()` at the end).
+
+See `src/db.server/CLAUDE.md` for query patterns.
