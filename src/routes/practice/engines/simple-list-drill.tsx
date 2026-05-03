@@ -42,7 +42,7 @@ export interface SimpleListDrillProps {
 	title: string;
 	subtitle: string;
 	drillId: string;
-	colorTheme?: "honey" | "terracotta" | "olive";
+	colorTheme?: "honey" | "terracotta" | "olive" | "ocean";
 	forwardDesc?: string;
 	reverseLabel?: string;
 	reverseDesc?: string;
@@ -52,6 +52,8 @@ export interface SimpleListDrillProps {
 		options: SelectorOption[];
 		getCorrectId: (item: SimpleListItem) => string;
 	};
+	referenceHref?: string;
+	referenceLabel?: string;
 }
 
 // ─── Theme ─────────────────────────────────────────────────────────────────────
@@ -64,6 +66,7 @@ const THEME = {
 		selectorText: "text-terracotta-text",
 	},
 	olive: { bar: "bg-olive", selectorBg: "bg-olive-100", selectorText: "text-olive-text" },
+	ocean: { bar: "bg-ocean", selectorBg: "bg-ocean-100", selectorText: "text-ocean-text" },
 } as const;
 
 // ─── Component ─────────────────────────────────────────────────────────────────
@@ -80,6 +83,8 @@ export const SimpleListDrill = ({
 	categories,
 	speeds: speedsProp,
 	reverseDimension,
+	referenceHref,
+	referenceLabel,
 }: SimpleListDrillProps) => {
 	const theme = THEME[colorTheme];
 	const speeds = speedsProp ?? SPEEDS;
@@ -216,6 +221,8 @@ export const SimpleListDrill = ({
 			<ConfigShell
 				title={title}
 				subtitle={subtitle}
+				referenceHref={referenceHref}
+				referenceLabel={referenceLabel}
 				mode={mode}
 				onModeChange={setMode}
 				sessionSize={sessionSize}

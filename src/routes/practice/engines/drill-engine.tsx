@@ -404,6 +404,8 @@ export const ConfigShell = ({
 	forwardDesc,
 	reverseLabel,
 	reverseDesc,
+	referenceHref,
+	referenceLabel,
 	children,
 }: {
 	title: string;
@@ -417,11 +419,22 @@ export const ConfigShell = ({
 	forwardDesc: string;
 	reverseLabel: string;
 	reverseDesc: string;
+	referenceHref?: string;
+	referenceLabel?: string;
 	children: React.ReactNode;
 }) => (
 	<div className="mx-auto max-w-sm px-6 py-8">
 		<h2 className="mb-1 font-serif text-2xl text-navy-text">{title}</h2>
-		<p className="mb-6 text-sm text-muted-foreground">{subtitle}</p>
+		<p className="mb-2 text-sm text-muted-foreground">{subtitle}</p>
+		{referenceHref && (
+			<a
+				href={referenceHref}
+				className="mb-6 inline-block text-xs text-muted-foreground underline-offset-2 hover:text-foreground hover:underline"
+			>
+				{referenceLabel ?? "Reference →"}
+			</a>
+		)}
+		{!referenceHref && <div className="mb-4" />}
 
 		{children}
 
