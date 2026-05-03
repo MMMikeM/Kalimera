@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
 
 import { Button } from "@/components/ui/button";
@@ -51,7 +51,9 @@ export const useCountdown = (durationMs: number, isRunning: boolean, onTimeout: 
 	const rafRef = useRef<number | null>(null);
 	const startRef = useRef<number>(0);
 	const onTimeoutRef = useRef(onTimeout);
-	onTimeoutRef.current = onTimeout;
+	useEffect(() => {
+		onTimeoutRef.current = onTimeout;
+	}, [onTimeout]);
 
 	useEffect(() => {
 		if (!isRunning) {
@@ -235,7 +237,6 @@ export const useAutoAdvance = <T extends DrillForm>({
 	setCardIndex,
 	setInput,
 	inputValueRef,
-	resetSelectors,
 	inputRef,
 }: {
 	phase: Phase;
@@ -247,41 +248,46 @@ export const useAutoAdvance = <T extends DrillForm>({
 	setCardIndex: (i: number) => void;
 	setInput: (s: string) => void;
 	inputValueRef: React.MutableRefObject<string>;
-	resetSelectors: () => void;
 	inputRef: React.RefObject<HTMLInputElement | null>;
 }) => {
+	const advance = useCallback(() => {
+		const next = cardIndex + 1;
+		if (next >= sessionSize) {
+			setPhase("complete");
+			return;
+		}
+		setCardIndex(next);
+		setInput("");
+		inputValueRef.current = "";
+		setPhase("active");
+		if (mode === "forward") {
+			setTimeout(() => inputRef.current?.focus(), 30);
+		}
+	}, [cardIndex, sessionSize, setPhase, setCardIndex, setInput, inputValueRef, mode, inputRef]);
+
 	useEffect(() => {
 		if (phase !== "feedback") return;
-		const delay = lastAttempt?.isCorrect ? 1200 : 2000;
-		const t = setTimeout(() => {
-			const next = cardIndex + 1;
-			if (next >= sessionSize) {
-				setPhase("complete");
-			} else {
-				setCardIndex(next);
-				setInput("");
-				inputValueRef.current = "";
-				resetSelectors();
-				setPhase("active");
-				if (mode === "forward") {
-					setTimeout(() => inputRef.current?.focus(), 30);
-				}
-			}
-		}, delay);
+		// Auto-advance only on correct. Wrong answer waits for user (Enter/Space/tap)
+		// so the learner can read the correct form.
+		if (!lastAttempt?.isCorrect) return;
+		const t = setTimeout(advance, 1200);
 		return () => clearTimeout(t);
-	}, [
-		phase,
-		lastAttempt,
-		cardIndex,
-		mode,
-		sessionSize,
-		setPhase,
-		setCardIndex,
-		setInput,
-		inputValueRef,
-		resetSelectors,
-		inputRef,
-	]);
+	}, [phase, lastAttempt, advance]);
+
+	useEffect(() => {
+		if (phase !== "feedback") return;
+		if (lastAttempt?.isCorrect) return;
+		const handler = (e: KeyboardEvent) => {
+			if (e.key === "Enter" || e.key === " ") {
+				e.preventDefault();
+				advance();
+			}
+		};
+		window.addEventListener("keydown", handler);
+		return () => window.removeEventListener("keydown", handler);
+	}, [phase, lastAttempt, advance]);
+
+	return advance;
 };
 
 export const useForwardKeyboard = ({
@@ -357,13 +363,16 @@ export const ForwardInput = ({
 
 export const FeedbackDisplay = <T extends DrillForm>({
 	lastAttempt,
+	onContinue,
 }: {
 	lastAttempt: Attempt<T>;
+	onContinue?: () => void;
 }) => {
 	const { form } = lastAttempt;
 	const fullForm = form.acceptAlso;
-	return (
-		<div className="mt-5">
+	const showContinue = !lastAttempt.isCorrect && onContinue;
+	const inner = (
+		<>
 			<p
 				className={`text-sm font-medium ${lastAttempt.isCorrect ? "text-correct" : "text-incorrect"}`}
 			>
@@ -388,8 +397,24 @@ export const FeedbackDisplay = <T extends DrillForm>({
 				</span>
 				<span className="font-sans text-sm text-muted-foreground">/{form.greeklish}/</span>
 			</div>
-		</div>
+			{showContinue && (
+				<p className="mt-3 text-xs text-stone-500">Press Enter or tap to continue</p>
+			)}
+		</>
 	);
+
+	if (showContinue) {
+		return (
+			<button
+				type="button"
+				className="mt-5 block w-full cursor-pointer text-left"
+				onClick={onContinue}
+			>
+				{inner}
+			</button>
+		);
+	}
+	return <div className="mt-5">{inner}</div>;
 };
 
 export const ConfigShell = ({
@@ -531,17 +556,38 @@ export const DrillShell = ({
 
 export const ReverseFeedback = <T extends DrillForm>({
 	lastAttempt,
+	onContinue,
 }: {
 	lastAttempt: Attempt<T>;
-}) => (
-	<div className="pt-4">
-		<p
-			className={`text-sm font-medium ${lastAttempt.isCorrect ? "text-correct" : "text-incorrect"}`}
-		>
-			{lastAttempt.isCorrect ? "Correct" : lastAttempt.timedOut ? "Time's up" : "Incorrect"}
-		</p>
-		{!lastAttempt.isCorrect && (
-			<p className="mt-1 text-sm text-muted-foreground">{lastAttempt.form.label}</p>
-		)}
-	</div>
-);
+	onContinue?: () => void;
+}) => {
+	const showContinue = !lastAttempt.isCorrect && onContinue;
+	const inner = (
+		<>
+			<p
+				className={`text-sm font-medium ${lastAttempt.isCorrect ? "text-correct" : "text-incorrect"}`}
+			>
+				{lastAttempt.isCorrect ? "Correct" : lastAttempt.timedOut ? "Time's up" : "Incorrect"}
+			</p>
+			{!lastAttempt.isCorrect && (
+				<p className="mt-1 text-sm text-muted-foreground">{lastAttempt.form.label}</p>
+			)}
+			{showContinue && (
+				<p className="mt-3 text-xs text-stone-500">Press Enter or tap to continue</p>
+			)}
+		</>
+	);
+
+	if (showContinue) {
+		return (
+			<button
+				type="button"
+				className="block w-full cursor-pointer pt-4 text-left"
+				onClick={onContinue}
+			>
+				{inner}
+			</button>
+		);
+	}
+	return <div className="pt-4">{inner}</div>;
+};

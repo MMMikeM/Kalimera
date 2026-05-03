@@ -93,9 +93,9 @@ export function DimensionalDrill<K extends string>({
 		setInput,
 		inputRef,
 		inputValueRef,
-		resetSelectorsRef,
 		startDrill,
 		recordAttempt,
+		advance,
 	} = engine;
 
 	const activeForm = currentForm as Form | undefined;
@@ -104,24 +104,20 @@ export function DimensionalDrill<K extends string>({
 	const [selected, setSelected] = useState<Selected<K>>({});
 	const activeStartedAt = useRef(0);
 
-	// Register per-card reset with the engine
-	resetSelectorsRef.current = useCallback(() => {
-		setSelected({});
-	}, []);
-
 	useEffect(() => {
 		if (phase === "active") {
+			setSelected({});
 			activeStartedAt.current = performance.now();
 		}
 	}, [phase, cardIndex]);
 
 	// ── Helpers ────────────────────────────────────────────────────────────────
 
-	const isRequired = useCallback((spec: DimensionSpec<K>, sel: Selected<K>) => {
+	const isRequired = (spec: DimensionSpec<K>, sel: Selected<K>) => {
 		if (spec.required) return spec.required(sel);
 		if (spec.shown) return spec.shown(sel);
 		return true;
-	}, []);
+	};
 
 	const allRequiredSelected = useCallback(
 		(sel: Selected<K>) => {
@@ -130,12 +126,12 @@ export function DimensionalDrill<K extends string>({
 			}
 			return true;
 		},
-		[dimensions, isRequired],
+		[dimensions],
 	);
 
 	// ── Callbacks ──────────────────────────────────────────────────────────────
 
-	const handleTimeout = useCallback(() => {
+	const handleTimeout = () => {
 		if (phase !== "active" || !activeForm) return;
 		const logData =
 			mode === "forward"
@@ -152,9 +148,9 @@ export function DimensionalDrill<K extends string>({
 						weakAreaIdentifier: activeForm.id,
 					};
 		recordAttempt(false, effectiveTimeLimit, logData, true);
-	}, [phase, mode, activeForm, effectiveTimeLimit, inputValueRef, recordAttempt]);
+	};
 
-	const handleForwardSubmit = useCallback(() => {
+	const handleForwardSubmit = () => {
 		if (phase !== "active" || !activeForm) return;
 		const timeTaken = performance.now() - activeStartedAt.current;
 		const isCorrect = matchPhonetic(input.trim(), activeForm.greek).isCorrect;
@@ -164,7 +160,7 @@ export function DimensionalDrill<K extends string>({
 			userAnswer: input.trim(),
 			weakAreaIdentifier: activeForm.id,
 		});
-	}, [phase, activeForm, input, recordAttempt]);
+	};
 
 	const handleReverseSubmit = useCallback(() => {
 		if (phase !== "active" || !activeForm) return;
@@ -184,7 +180,7 @@ export function DimensionalDrill<K extends string>({
 			userAnswer: Object.values(selected).join(","),
 			weakAreaIdentifier: activeForm.id,
 		});
-	}, [phase, activeForm, selected, allRequiredSelected, dimensions, isRequired, recordAttempt]);
+	}, [phase, activeForm, allRequiredSelected, selected, dimensions, recordAttempt]);
 
 	// ── Hooks ──────────────────────────────────────────────────────────────────
 
@@ -272,7 +268,9 @@ export function DimensionalDrill<K extends string>({
 							inputRef={inputRef}
 							phase={phase}
 						/>
-						{phase === "feedback" && lastAttempt && <FeedbackDisplay lastAttempt={lastAttempt} />}
+						{phase === "feedback" && lastAttempt && (
+							<FeedbackDisplay lastAttempt={lastAttempt} onContinue={advance} />
+						)}
 					</div>
 				</>
 			) : (
@@ -309,7 +307,9 @@ export function DimensionalDrill<K extends string>({
 							);
 						})}
 
-						{phase === "feedback" && lastAttempt && <ReverseFeedback lastAttempt={lastAttempt} />}
+						{phase === "feedback" && lastAttempt && (
+							<ReverseFeedback lastAttempt={lastAttempt} onContinue={advance} />
+						)}
 					</div>
 				</>
 			)}

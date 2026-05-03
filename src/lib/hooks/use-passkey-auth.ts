@@ -1,6 +1,6 @@
 import type { PublicKeyCredentialRequestOptionsJSON } from "@simplewebauthn/browser";
 import { startAuthentication } from "@simplewebauthn/browser";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 
 import { setStoredAuth } from "../auth-storage";
 
@@ -20,9 +20,9 @@ export function usePasskeyAuth(options: UsePasskeyAuthOptions = {}): UsePasskeyA
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 
-	const clearError = useCallback(() => setError(null), []);
+	const clearError = () => setError(null);
 
-	const authenticate = useCallback(async () => {
+	const authenticate = async () => {
 		setError(null);
 		setIsLoading(true);
 
@@ -86,7 +86,7 @@ export function usePasskeyAuth(options: UsePasskeyAuthOptions = {}): UsePasskeyA
 		} finally {
 			setIsLoading(false);
 		}
-	}, [options]);
+	};
 
 	return { authenticate, isLoading, error, clearError };
 }

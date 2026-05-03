@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { matchPhonetic } from "@/lib/greek-transliteration";
@@ -110,9 +110,9 @@ export const SimpleListDrill = ({
 		setInput,
 		inputRef,
 		inputValueRef,
-		resetSelectorsRef,
 		startDrill,
 		recordAttempt,
+		advance,
 	} = engine;
 
 	// Per-card state
@@ -120,21 +120,17 @@ export const SimpleListDrill = ({
 	const [revealedAnswer, setRevealedAnswer] = useState(false);
 	const activeStartedAt = useRef(0);
 
-	// Register per-card reset with the engine
-	resetSelectorsRef.current = useCallback(() => {
-		setSelDimension(null);
-		setRevealedAnswer(false);
-	}, []);
-
 	useEffect(() => {
 		if (phase === "active") {
+			setSelDimension(null);
+			setRevealedAnswer(false);
 			activeStartedAt.current = performance.now();
 		}
 	}, [phase, cardIndex]);
 
 	// ── Callbacks ──────────────────────────────────────────────────────────────
 
-	const handleTimeout = useCallback(() => {
+	const handleTimeout = () => {
 		if (phase !== "active" || !currentForm) return;
 		const logData =
 			mode === "forward"
@@ -151,9 +147,9 @@ export const SimpleListDrill = ({
 						weakAreaIdentifier: currentForm.id,
 					};
 		recordAttempt(false, effectiveTimeLimit, logData, true);
-	}, [phase, mode, currentForm, effectiveTimeLimit, recordAttempt]);
+	};
 
-	const handleForwardSubmit = useCallback(() => {
+	const handleForwardSubmit = () => {
 		if (phase !== "active" || !currentForm) return;
 		const timeTaken = performance.now() - activeStartedAt.current;
 		const primary = matchPhonetic(inputValueRef.current, currentForm.greek).isCorrect;
@@ -167,23 +163,20 @@ export const SimpleListDrill = ({
 			userAnswer: inputValueRef.current,
 			weakAreaIdentifier: currentForm.id,
 		});
-	}, [phase, currentForm, inputValueRef, recordAttempt]);
+	};
 
-	const handleReveal = useCallback(() => setRevealedAnswer(true), []);
+	const handleReveal = () => setRevealedAnswer(true);
 
-	const handleSelfAssess = useCallback(
-		(isCorrect: boolean) => {
-			if (!currentForm) return;
-			const timeTaken = performance.now() - activeStartedAt.current;
-			recordAttempt(isCorrect, timeTaken, {
-				prompt: currentForm.reverseGreek ?? currentForm.greek,
-				correctAnswer: currentForm.english,
-				userAnswer: isCorrect ? "self:correct" : "self:wrong",
-				weakAreaIdentifier: currentForm.id,
-			});
-		},
-		[currentForm, recordAttempt],
-	);
+	const handleSelfAssess = (isCorrect: boolean) => {
+		if (!currentForm) return;
+		const timeTaken = performance.now() - activeStartedAt.current;
+		recordAttempt(isCorrect, timeTaken, {
+			prompt: currentForm.reverseGreek ?? currentForm.greek,
+			correctAnswer: currentForm.english,
+			userAnswer: isCorrect ? "self:correct" : "self:wrong",
+			weakAreaIdentifier: currentForm.id,
+		});
+	};
 
 	// ── Hooks ──────────────────────────────────────────────────────────────────
 
@@ -324,7 +317,9 @@ export const SimpleListDrill = ({
 						phase={phase}
 					/>
 
-					{phase === "feedback" && lastAttempt && <FeedbackDisplay lastAttempt={lastAttempt} />}
+					{phase === "feedback" && lastAttempt && (
+						<FeedbackDisplay lastAttempt={lastAttempt} onContinue={advance} />
+					)}
 				</>
 			)}
 
@@ -401,7 +396,9 @@ export const SimpleListDrill = ({
 						))}
 					</div>
 
-					{phase === "feedback" && lastAttempt && <ReverseFeedback lastAttempt={lastAttempt} />}
+					{phase === "feedback" && lastAttempt && (
+						<ReverseFeedback lastAttempt={lastAttempt} onContinue={advance} />
+					)}
 				</>
 			)}
 		</DrillShell>
