@@ -3,6 +3,8 @@ import type { KnipConfig } from "knip";
 const config: KnipConfig = {
 	entry: [
 		"src/routes/**/*.tsx",
+		"!src/routes/**/components/**",
+		"!src/routes/**/engines/**",
 		"src/scripts/*.ts",
 		"src/entry.worker.ts",
 		"service-worker/sw.ts",
@@ -22,6 +24,10 @@ const config: KnipConfig = {
 		"@react-router/cloudflare",
 		"@react-router/node",
 		"tw-animate-css",
+		// Used by vite-plugin-babel via string refs in vite.config.ts; knip
+		// doesn't follow that indirection.
+		"@babel/preset-typescript",
+		"babel-plugin-react-compiler",
 	],
 	ignoreExportsUsedInFile: false,
 };
