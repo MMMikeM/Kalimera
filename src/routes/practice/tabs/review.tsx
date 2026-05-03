@@ -1,6 +1,8 @@
 import { Link, useOutletContext } from "react-router";
 
-import SrsDrill from "../components/srs-drill";
+import { greekToPhonetic } from "@/lib/greek-transliteration";
+
+import { type SimpleListItem, SimpleListDrill } from "../engines/simple-list-drill";
 import { DRILL_BY_ID } from "../drills";
 import type { PracticeLoaderData } from "../layout";
 import { UserRequiredMessage } from "../layout";
@@ -72,12 +74,34 @@ export function ReviewTab() {
 						<p className="text-xs text-muted-foreground">{stats.dueCount} items due</p>
 					) : null}
 				</header>
-				<SrsDrill
-					variant="review"
-					items={reviewItems}
-					streakDays={stats?.streak}
-					themeColor="ocean"
-				/>
+				{reviewItems.length === 0 ? (
+					<div className="rounded-xl border border-ocean-300 bg-ocean-100 py-12 text-center">
+						<div className="mb-4 text-5xl">?</div>
+						<h3 className="mb-2 text-xl font-semibold text-ocean-text">All caught up!</h3>
+						<p className="text-ocean-text">
+							No items due for review right now. Great work!
+						</p>
+						<p className="mt-2 text-sm text-stone-600">Check back later for new reviews.</p>
+					</div>
+				) : (
+					<div className="mx-auto max-w-xl">
+						<SimpleListDrill
+							items={reviewItems.map<SimpleListItem>((v) => ({
+								id: `review-${v.id}`,
+								greek: v.greekText,
+								greeklish: greekToPhonetic(v.greekText),
+								label: v.englishTranslation,
+								english: v.englishTranslation,
+								vocabularyId: v.id,
+							}))}
+							title={`Review (${reviewItems.length} due)`}
+							subtitle="Spaced repetition keeps it sharp"
+							drillId="srs-review"
+							colorTheme="ocean"
+							autoStart
+						/>
+					</div>
+				)}
 			</section>
 		</div>
 	);

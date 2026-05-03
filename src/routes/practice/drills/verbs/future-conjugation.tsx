@@ -1,6 +1,5 @@
 import { getAuthSession } from "@/lib/auth-cookie";
 
-import type { UnifiedAttemptResult } from "../../components/unified-drill";
 import { VocabDrillPage } from "../../engines/vocab-drill";
 import type { Route } from "./+types/future-conjugation";
 import { getFutureDrillQuestions } from "./data.server";
@@ -26,9 +25,6 @@ export default function FutureConjugationDrill({ loaderData }: Route.ComponentPr
 			initialQuestions={loaderData.questions.length > 0 ? loaderData.questions : undefined}
 			wordTypeFilter="verb"
 			weakAreaType="verb_family"
-			getWeakAreaIdentifier={(attempt: UnifiedAttemptResult) =>
-				attempt.questionId.includes("verb-future-") ? attempt.questionId.split("-")[3] : undefined
-			}
 		/>
 	);
 }

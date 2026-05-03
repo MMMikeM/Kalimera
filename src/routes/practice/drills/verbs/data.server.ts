@@ -81,6 +81,7 @@ const getVerbConjugationQuestions = async (
 				correctGreek: conj.form,
 				timeLimit,
 				vocabularyId: vocab.id,
+				weakAreaIdentifier: String(vocab.id),
 			});
 		}
 	}
