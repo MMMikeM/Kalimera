@@ -2,16 +2,8 @@ import { eq } from "drizzle-orm";
 
 import { planWeakAreaCommand } from "@/lib/weak-area";
 
-import { db } from "../index";
 import { type AreaType, weakAreas } from "../schema";
 import type { DbTransaction } from "./transaction-client";
-
-export const getWeakAreas = async (userId: number) => {
-	return await db.query.weakAreas.findMany({
-		where: { userId, needsFocus: true },
-		orderBy: { mistakeCount: "desc" },
-	});
-};
 
 /** Update mistake counts / focus inside an existing transaction. */
 export const applyWeakAreaSideEffect = async (

@@ -7,7 +7,7 @@ import {
 } from "@/constants/adjective-agreement";
 import type { AdjectiveDeclensionPattern } from "@/db.server/enums";
 
-export interface DeclinedAdjectiveForm {
+interface DeclinedAdjectiveForm {
 	case: Case;
 	number: Num;
 	gender: Gender;
@@ -40,14 +40,3 @@ export const declineAdjective = (
 	}
 	return forms;
 };
-
-export const getAdjectiveForm = (
-	lemma: string,
-	pattern: AdjectiveDeclensionPattern,
-	c: Case,
-	n: Num,
-	g: Gender,
-): DeclinedAdjectiveForm | undefined =>
-	declineAdjective(lemma, pattern).find(
-		(f) => f.case === c && f.number === n && f.gender === g,
-	);

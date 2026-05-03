@@ -13,7 +13,7 @@ import {
 	useFocusOnActive,
 } from "./drill-engine";
 
-export interface DrillLogData {
+interface DrillLogData {
 	prompt: string;
 	correctAnswer: string;
 	userAnswer: string;
@@ -31,13 +31,11 @@ export const useDrillEngine = <T extends DrillForm>({
 	items,
 	drillId,
 	speeds,
-	categories,
 	defaultSessionSize = 10,
 }: {
 	items: T[];
 	drillId: string;
 	speeds?: ReadonlyArray<SpeedOption>;
-	categories?: Array<{ id: string; label: string }>;
 	defaultSessionSize?: SessionSize;
 }) => {
 	const logAttemptFn = useLogDrillAttempt(drillId);

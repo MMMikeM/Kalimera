@@ -89,7 +89,7 @@ export const SimpleListDrill = ({
 	const theme = THEME[colorTheme];
 	const speeds = speedsProp ?? SPEEDS;
 
-	const engine = useDrillEngine({ items, drillId, speeds, categories, defaultSessionSize: 10 });
+	const engine = useDrillEngine({ items, drillId, speeds, defaultSessionSize: 10 });
 	const {
 		phase,
 		setPhase,

@@ -14,8 +14,8 @@ import type { Phrase } from "./phrase";
 import type { FullVerbSeed, AdverbSeed } from "./seed";
 
 export type Lesson = {
-	meta: Record<PropertyKey, any>;
-	grammarNotes?: Record<PropertyKey, any>[];
+	meta: Record<PropertyKey, unknown>;
+	grammarNotes?: Record<PropertyKey, unknown>[];
 	verbs?: FullVerbSeed[];
 	nouns?: NounSeedInput[];
 	adverbs?: AdverbSeed[];

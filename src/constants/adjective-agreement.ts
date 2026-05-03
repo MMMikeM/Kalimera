@@ -11,9 +11,9 @@ export type Case = "nominative" | "accusative" | "genitive";
 export type Num = "singular" | "plural";
 export type Gender = "masculine" | "feminine" | "neuter";
 
-export type GenderTriple = Record<Gender, string>;
-export type CaseSuffix = Record<Num, GenderTriple>;
-export type SuffixTable = Record<Case, CaseSuffix>;
+type GenderTriple = Record<Gender, string>;
+type CaseSuffix = Record<Num, GenderTriple>;
+type SuffixTable = Record<Case, CaseSuffix>;
 
 interface AdjectiveParadigm {
 	id: AdjectiveDeclensionPattern;

@@ -9,9 +9,7 @@ import { applyWeakAreaSideEffect } from "./weak-areas";
 
 const practiceAttemptInsertSchema = createInsertSchema(practiceAttempts);
 
-type PracticeAttemptInsert = z.infer<typeof practiceAttemptInsertSchema>;
-
-export const recordAttemptInputSchema = practiceAttemptInsertSchema
+const recordAttemptInputSchema = practiceAttemptInsertSchema
 	.extend({
 		skillType: z.enum(skillTypes),
 		weakAreaType: z.enum(areaTypes).optional(),
@@ -29,7 +27,7 @@ export const recordAttemptInputSchema = practiceAttemptInsertSchema
 		},
 	);
 
-export type RecordAttemptInput = z.infer<typeof recordAttemptInputSchema>;
+type RecordAttemptInput = z.infer<typeof recordAttemptInputSchema>;
 
 export const recordAttempt = async (input: RecordAttemptInput) => {
 	const { skillType, weakAreaType, weakAreaIdentifier, ...attemptInsert } = input;
