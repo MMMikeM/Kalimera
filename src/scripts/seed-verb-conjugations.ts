@@ -13,7 +13,7 @@ import { FULL_VERB_CONJUGATIONS } from "./seed-data/vocabulary/verb-conjugations
 
 const BATCH_SIZE = 100;
 
-async function seedVerbConjugations() {
+export async function seedVerbConjugations() {
 	console.log("Seeding verb conjugations (idempotent mode)...\n");
 
 	let updatedVerbDetails = 0;
@@ -146,12 +146,15 @@ async function seedVerbConjugations() {
 	if (skippedVerbs > 0) {
 		console.log(`Verbs skipped (not in vocabulary): ${skippedVerbs}`);
 	}
-	console.log("\nSeeding complete.");
-
-	process.exit(0);
+	console.log("\nVerb-conjugations seed complete.");
 }
 
-seedVerbConjugations().catch((err) => {
-	console.error("Seeding failed:", err);
-	process.exit(1);
-});
+// Standalone runner — only exits if invoked directly via `tsx`.
+if (import.meta.url === `file://${process.argv[1]}`) {
+	seedVerbConjugations()
+		.then(() => process.exit(0))
+		.catch((err) => {
+			console.error("Seeding failed:", err);
+			process.exit(1);
+		});
+}

@@ -1,4 +1,6 @@
 import type { AdjectiveDeclensionPattern, CefrLevel } from "../../../db.server/enums";
+import { declineAdjective } from "../../../lib/adjective-declension";
+import { getArticle } from "../../../lib/greek-grammar";
 import type { AdjectiveNominalFormsSeed, AdjectiveSeed } from "../../../types/seed";
 
 /** Lean adjective row; enrichment supplies pattern and nominal forms when omitted. */
@@ -110,12 +112,45 @@ function inferAdjectiveNominalForms(lemma: string): AdjectiveNominalFormsSeed {
 	};
 }
 
+/** Run runtime declension to populate full (case × number × gender) grid. */
+function declineToFormsSeed(
+	lemma: string,
+	pattern: AdjectiveDeclensionPattern,
+): AdjectiveNominalFormsSeed {
+	const declined = declineAdjective(lemma, pattern);
+	const seed: Record<string, { form: string; article: string | null }> = {};
+	for (const f of declined) {
+		const key = `${f.case}_${f.number}_${f.gender}`;
+		const article = getArticle(f.gender, f.number, f.case) || null;
+		seed[key] = { form: f.form, article };
+	}
+	return seed as AdjectiveNominalFormsSeed;
+}
+
 export function enrichAdjective(input: AdjectiveSeedInput): AdjectiveSeed {
+	const pattern = input.pattern ?? inferAdjectivePattern(input.lemma);
+
+	// Citation triple takes precedence (correct nominative-singular forms).
+	// Decline the lemma to fill all oblique cells. Override map wins last.
+	const baseline = inferAdjectiveNominalForms(input.lemma);
+	let declined: AdjectiveNominalFormsSeed;
+	try {
+		declined = declineToFormsSeed(input.lemma, pattern);
+	} catch {
+		declined = baseline;
+	}
+	// Merge order: declined (full grid) → baseline citation triple → input override.
+	// Cast through unknown — AdjectiveNominalFormsSeed is a complex union literal type
+	// that TS struggles to infer through spread syntax.
+	const mergedRaw: Record<string, unknown> = { ...declined, ...baseline };
+	if (input.nominalForms) Object.assign(mergedRaw, input.nominalForms);
+	const merged = mergedRaw as unknown as AdjectiveNominalFormsSeed;
+
 	const out: AdjectiveSeed = {
 		lemma: input.lemma,
 		english: input.english,
-		pattern: input.pattern ?? inferAdjectivePattern(input.lemma),
-		nominalForms: input.nominalForms ?? inferAdjectiveNominalForms(input.lemma),
+		pattern,
+		nominalForms: merged,
 	};
 	if (input.cefrLevel !== undefined) out.cefrLevel = input.cefrLevel;
 	return out;
