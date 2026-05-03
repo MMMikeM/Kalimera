@@ -13,7 +13,3 @@ export const getVocabularyWithNominalForms = async (
 		limit: 200,
 	});
 };
-
-export type VocabularyWithNominalForms = Awaited<
-	ReturnType<typeof getVocabularyWithNominalForms>
->[number];

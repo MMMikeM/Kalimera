@@ -20,7 +20,7 @@ const textColors: Record<ContentColorScheme, string> = {
 	stone: "text-stone-800",
 };
 
-export const PhraseItemDisplay: React.FC<{
+const PhraseItemDisplay: React.FC<{
 	greek: string;
 	english: string;
 	variant?: "default" | "highlighted";
