@@ -18,6 +18,11 @@ export interface DrillForm {
 	// When set, feedback shows the full form alongside the bare answer
 	// (e.g. the conjugated verb that carries an ending).
 	acceptAlso?: string;
+	// Persisted attempts link to this vocabulary row for SRS skill tracking.
+	vocabularyId?: number;
+	// Tag set by the question source for weak-area aggregation; falls back to
+	// `id` when unset.
+	weakAreaIdentifier?: string;
 }
 
 export interface Attempt<T extends DrillForm> {
@@ -118,26 +123,36 @@ export const SummaryScreen = <T extends DrillForm>({
 	attempts,
 	total,
 	onAgain,
+	onRetryMistakes,
 }: {
 	attempts: Attempt<T>[];
 	total: number;
 	onAgain: () => void;
+	onRetryMistakes?: (mistakes: Attempt<T>[]) => void;
 }) => {
 	const correct = attempts.filter((a) => a.isCorrect).length;
 	const avgTime = attempts.reduce((s, a) => s + a.timeTaken, 0) / attempts.length;
 	const accuracy = Math.round((correct / total) * 100);
 
-	// Find incorrect attempts
-	const incorrectByForm = new Map<string, Attempt<T>>();
+	// Aggregate incorrect attempts per form. Keep the slowest as representative,
+	// count repeats so the UI can flag forms that tripped the learner up multiple times.
+	const incorrectByForm = new Map<string, { attempt: Attempt<T>; count: number }>();
 	for (const a of attempts) {
 		if (!a.isCorrect) {
 			const existing = incorrectByForm.get(a.form.id);
-			if (!existing || a.timeTaken > existing.timeTaken) incorrectByForm.set(a.form.id, a);
+			if (!existing) {
+				incorrectByForm.set(a.form.id, { attempt: a, count: 1 });
+			} else {
+				existing.count += 1;
+				if (a.timeTaken > existing.attempt.timeTaken) existing.attempt = a;
+			}
 		}
 	}
-	const mistakes = [...incorrectByForm.values()]
-		.sort((a, b) => b.timeTaken - a.timeTaken)
-		.slice(0, 5);
+	const mistakeEntries = [...incorrectByForm.values()].sort(
+		(a, b) => b.attempt.timeTaken - a.attempt.timeTaken,
+	);
+	const mistakes = mistakeEntries.slice(0, 5);
+	const allMistakes = mistakeEntries.map((m) => m.attempt);
 
 	return (
 		<div className="mx-auto max-w-xs px-6 py-8">
@@ -160,7 +175,7 @@ export const SummaryScreen = <T extends DrillForm>({
 						These caught you — that's where lasting learning happens.
 					</p>
 					<div className="space-y-2">
-						{mistakes.map((a) => {
+						{mistakes.map(({ attempt: a, count }) => {
 							const fullGreek = a.form.acceptAlso;
 							return (
 								<div key={a.form.id} className="rounded-lg border bg-white p-3">
@@ -203,6 +218,11 @@ export const SummaryScreen = <T extends DrillForm>({
 											<span className="font-mono text-incorrect">
 												{a.userInput.trim() === "" ? "—" : a.userInput}
 											</span>
+											{count > 1 && (
+												<span className="ml-2 rounded bg-incorrect/10 px-1.5 py-0.5 text-incorrect">
+													×{count}
+												</span>
+											)}
 										</p>
 									)}
 								</div>
@@ -212,7 +232,16 @@ export const SummaryScreen = <T extends DrillForm>({
 				</div>
 			)}
 
-			<div className="mb-4">
+			<div className="mb-3 space-y-2">
+				{onRetryMistakes && allMistakes.length > 0 && (
+					<Button
+						onClick={() => onRetryMistakes(allMistakes)}
+						variant="outline"
+						className="w-full"
+					>
+						Drill mistakes ({allMistakes.length})
+					</Button>
+				)}
 				<Button onClick={onAgain} className="w-full">
 					Practice again
 				</Button>

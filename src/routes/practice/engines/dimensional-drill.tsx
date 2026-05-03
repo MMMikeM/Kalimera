@@ -139,13 +139,13 @@ export function DimensionalDrill<K extends string>({
 						prompt: activeForm.label ?? activeForm.id,
 						correctAnswer: activeForm.greek,
 						userAnswer: inputValueRef.current,
-						weakAreaIdentifier: activeForm.id,
+						weakAreaIdentifier: activeForm.weakAreaIdentifier ?? activeForm.id,
 					}
 				: {
 						prompt: activeForm.greek,
 						correctAnswer: activeForm.label ?? activeForm.id,
 						userAnswer: "",
-						weakAreaIdentifier: activeForm.id,
+						weakAreaIdentifier: activeForm.weakAreaIdentifier ?? activeForm.id,
 					};
 		recordAttempt(false, effectiveTimeLimit, logData, true);
 	};
@@ -158,7 +158,7 @@ export function DimensionalDrill<K extends string>({
 			prompt: activeForm.label ?? activeForm.id,
 			correctAnswer: activeForm.greek,
 			userAnswer: input.trim(),
-			weakAreaIdentifier: activeForm.id,
+			weakAreaIdentifier: activeForm.weakAreaIdentifier ?? activeForm.id,
 		});
 	};
 
@@ -178,7 +178,7 @@ export function DimensionalDrill<K extends string>({
 			prompt: activeForm.greek,
 			correctAnswer: activeForm.label ?? activeForm.id,
 			userAnswer: Object.values(selected).join(","),
-			weakAreaIdentifier: activeForm.id,
+			weakAreaIdentifier: activeForm.weakAreaIdentifier ?? activeForm.id,
 		});
 	}, [phase, activeForm, allRequiredSelected, selected, dimensions, recordAttempt]);
 
