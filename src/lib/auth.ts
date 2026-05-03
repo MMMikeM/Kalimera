@@ -13,13 +13,15 @@ import { isoBase64URL } from "@simplewebauthn/server/helpers";
 
 import {
 	createChallenge,
-	createPasskey,
 	deleteChallenge,
 	findChallenge,
+} from "@/db.server/queries/auth-challenges";
+import {
+	createPasskey,
 	findPasskeyByCredentialId,
 	findPasskeysByUserId,
 	updatePasskeyCounter,
-} from "@/db.server/queries/auth";
+} from "@/db.server/queries/passkeys";
 import type { AuthenticatorTransport } from "@/db.server/schema";
 
 type WebAuthnConfig = {

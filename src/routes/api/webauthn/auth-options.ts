@@ -1,4 +1,4 @@
-import { userHasPasskey } from "@/db.server/queries/auth";
+import { userHasPasskey } from "@/db.server/queries/passkeys";
 import { findUserByUsername } from "@/db.server/queries/users";
 import { createWebAuthnFromRequest } from "@/lib/auth";
 
