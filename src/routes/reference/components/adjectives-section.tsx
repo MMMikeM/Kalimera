@@ -119,14 +119,14 @@ const AdjectiveParadigmCard: React.FC<{ paradigm: AdjectiveParadigm; emphasis?: 
 
 		const rows = CASE_ROW_DEFS.map((row) => ({ ...row, schemeVariant: "border" as const }));
 
-		const cells = rows.map((_row, ri) => {
+		const cells = rows.map((row, ri) => {
 			const sg = forms.singular[ri];
 			const pl = forms.plural[ri];
 			return [
-				<MonoText variant={variant} size="sm">
+				<MonoText key={`${row.key}-sg`} variant={variant} size="sm">
 					{sg?.form ?? "—"}
 				</MonoText>,
-				<MonoText variant={variant} size="sm">
+				<MonoText key={`${row.key}-pl`} variant={variant} size="sm">
 					{pl?.form ?? "—"}
 				</MonoText>,
 			];

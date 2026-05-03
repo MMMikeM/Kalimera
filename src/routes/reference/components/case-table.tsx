@@ -17,7 +17,11 @@ const CASES = ["nom", "acc", "gen"] as const;
 export const CaseTable: React.FC<{ label: string; data: GenderData }> = ({ label, data }) => {
 	const cells = CASES.map((c) =>
 		GENDERS.map((g) => (
-			<MonoText size="sm" className={`font-semibold ${SCHEME[GENDER_SCHEME[g]].text}`}>
+			<MonoText
+				key={`${c}-${g}`}
+				size="sm"
+				className={`font-semibold ${SCHEME[GENDER_SCHEME[g]].text}`}
+			>
 				{data[g][c]}
 			</MonoText>
 		)),

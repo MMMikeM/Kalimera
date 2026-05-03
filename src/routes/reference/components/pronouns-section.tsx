@@ -24,14 +24,14 @@ import { PronounParadigmTable } from "./pronoun-paradigm-table";
 
 const ParadigmLookup = ({
 	caseName,
-	role,
+	handle,
 	rule,
 	paradigm,
 	examples,
 	note,
 }: {
 	caseName: "Nominative" | "Accusative" | "Genitive";
-	role: string;
+	handle: string;
 	rule: string;
 	paradigm: PronounParadigm[];
 	examples?: Array<{ greek: string; english: string }>;
@@ -40,7 +40,7 @@ const ParadigmLookup = ({
 	const scheme = CASE_SCHEME[caseName];
 	const style = SCHEME[scheme];
 	return (
-		<LookupCard scheme={scheme} chip={caseName} eyebrow={role}>
+		<LookupCard scheme={scheme} chip={caseName} eyebrow={handle}>
 			<div className="space-y-4 px-5 pt-4 pb-4">
 				<p className="text-sm leading-relaxed text-stone-600">{rule}</p>
 				<PronounParadigmTable data={paradigm} caseName={caseName} note={note} />
@@ -174,7 +174,7 @@ export const PronounsSection: React.FC = () => {
 										<span className="ml-1 text-stone-500 italic">({item.translation})</span>
 									</div>
 									<span
-										className={`justify-self-start rounded-full px-2.5 py-1 text-xs font-semibold tracking-[0.12em] uppercase sm:justify-self-end ${style.badgeBg} ${style.text}`}
+										className={`justify-self-start rounded-full px-2.5 py-1 text-xs font-semibold tracking-widest uppercase sm:justify-self-end ${style.badgeBg} ${style.text}`}
 									>
 										{item.role}
 									</span>
@@ -204,14 +204,14 @@ export const PronounsSection: React.FC = () => {
 				<div className="grid gap-6 lg:grid-cols-2">
 					<ParadigmLookup
 						caseName="Accusative"
-						role="Target"
+						handle="Target"
 						rule="Goes BEFORE the verb — σε βλέπω = I see you."
 						paradigm={OBJECT_PRONOUNS}
 						examples={OBJECT_PRONOUN_EXAMPLES}
 					/>
 					<ParadigmLookup
 						caseName="Genitive"
-						role="Owner"
+						handle="Owner"
 						rule="Goes AFTER the noun — το σπίτι μου = my house."
 						paradigm={POSSESSIVE_PRONOUNS}
 						examples={POSSESSIVE_PRONOUN_EXAMPLES}
@@ -222,7 +222,7 @@ export const PronounsSection: React.FC = () => {
 				{/* Tier 2: Subject (demoted) */}
 				<ParadigmLookup
 					caseName="Nominative"
-					role="Doer"
+					handle="Doer"
 					rule="Usually dropped — the verb ending already shows who. Use only for emphasis or contrast."
 					paradigm={SUBJECT_PRONOUNS}
 				/>
@@ -449,8 +449,8 @@ export const PronounsSection: React.FC = () => {
 					</div>
 					<h3 className="font-serif text-2xl text-stone-900">Weak pronouns hug the verb.</h3>
 					<p className="max-w-2xl text-sm text-stone-600">
-						English puts object pronouns after the verb (I see <em>him</em>). Greek puts them
-						before — except in commands. Four rules cover almost everything.
+						English puts object pronouns after the verb (I see <em>him</em>). Greek puts them before
+						— except in commands. Four rules cover almost everything.
 					</p>
 				</div>
 
@@ -497,8 +497,8 @@ export const PronounsSection: React.FC = () => {
 				</div>
 
 				<p className="text-sm text-stone-600">
-					Rule of thumb: the pronoun sits next to the verb. Whatever signals tense or mood (θα,
-					να, δεν) goes outside, the pronoun goes inside. Imperatives are the one exception.
+					Rule of thumb: the pronoun sits next to the verb. Whatever signals tense or mood (θα, να,
+					δεν) goes outside, the pronoun goes inside. Imperatives are the one exception.
 				</p>
 			</div>
 		</section>
