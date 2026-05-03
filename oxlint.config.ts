@@ -10,13 +10,21 @@ const ARBITRARY_VALUE_PATTERN = "-\\[([^\\[\\]]*?)\\](?!:)";
 
 export default defineConfig({
 	plugins: ["eslint", "typescript", "unicorn", "oxc", "react", "import", "jsx-a11y"],
-	jsPlugins: ["eslint-plugin-better-tailwindcss"],
+	jsPlugins: [
+		"eslint-plugin-better-tailwindcss",
+		{ name: "react-compiler", specifier: "eslint-plugin-react-hooks" },
+	],
 	categories: { correctness: "error" },
 	ignorePatterns: ["dist/**"],
 	rules: {
 		"@typescript-eslint/no-explicit-any": ["error"],
 		"no-unused-vars": ["error"],
 		"no-unsafe-optional-chaining": ["error"],
+		"react-compiler/preserve-manual-memoization": "error",
+		"react-compiler/purity": "error",
+		"react-compiler/immutability": "error",
+		"react-compiler/set-state-in-render": "error",
+		"react-compiler/refs": "error",
 		"better-tailwindcss/no-restricted-classes": [
 			"warn",
 			{
