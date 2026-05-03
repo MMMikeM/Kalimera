@@ -1,7 +1,7 @@
 import type { CefrLevel } from "@/db.server/enums";
-import { db } from "@/db.server/index";
-import { getDrillVocabPoolWithFallback } from "@/db.server/queries/drill-vocab-pool";
+import { getDrillVocabPoolWithFallback } from "@/db.server/queries/drill-pool";
 import { ensureUserProgress } from "@/db.server/queries/user-progress";
+import { getVerbsWithConjugationsForTense } from "@/db.server/queries/vocabulary";
 import type { DrillQuestion } from "@/lib/drill/generate-questions";
 
 const NEXT_LEVEL: Partial<Record<CefrLevel, CefrLevel>> = {
@@ -61,20 +61,7 @@ const getVerbConjugationQuestions = async (
 
 	if (pool.vocabularyIds.length === 0) return [];
 
-	const vocabRows = await db.query.vocabulary.findMany({
-		where: {
-			id: { in: pool.vocabularyIds },
-		},
-		with: {
-			verbConjugations: {
-				where: { tense },
-			},
-		},
-		orderBy: {
-			cefrLevel: "asc",
-			frequencyRank: "asc",
-		},
-	});
+	const vocabRows = await getVerbsWithConjugationsForTense(pool.vocabularyIds, tense);
 
 	const labels = tense === "future" ? FUTURE_LABELS : PERSON_LABELS;
 	const questions: DrillQuestion[] = [];
