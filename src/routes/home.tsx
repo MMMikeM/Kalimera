@@ -9,8 +9,8 @@ import {
 	setNotificationMode,
 } from "@/db.server/queries/notifications/push-subscriptions";
 import {
-	getCompletedPracticeAtDatesForStreak,
 	getLastPracticeDate,
+	listCompletedPracticeSessionsForStreak,
 } from "@/db.server/queries/practice-sessions";
 import { getUserById } from "@/db.server/queries/users";
 import { getItemsDueTomorrow, getSkillStats } from "@/db.server/queries/vocabulary-skills";
@@ -69,13 +69,16 @@ export async function loader({ request }: Route.LoaderArgs) {
 		};
 	}
 
-	const [rawStats, user, itemsDueTomorrow, lastPracticeDate, completedDates] = await Promise.all([
-		getSkillStats(userId),
-		getUserById(userId),
-		getItemsDueTomorrow(userId),
-		getLastPracticeDate(userId),
-		getCompletedPracticeAtDatesForStreak(userId),
-	]);
+	const [rawStats, user, itemsDueTomorrow, lastPracticeDate, completedSessions] = await Promise.all(
+		[
+			getSkillStats(userId),
+			getUserById(userId),
+			getItemsDueTomorrow(userId),
+			getLastPracticeDate(userId),
+			listCompletedPracticeSessionsForStreak(userId),
+		],
+	);
+	const completedDates = completedSessions.map((s) => s.completedAt!);
 
 	const daysSinceLastPractice = lastPracticeDate
 		? differenceInDays(new Date(), lastPracticeDate)

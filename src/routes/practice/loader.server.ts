@@ -5,7 +5,7 @@ import { type DrillStat, getDrillStats } from "@/db.server/queries/analytics/dri
 import { recordAttempt } from "@/db.server/queries/practice-attempts";
 import {
 	completeSession,
-	getCompletedPracticeAtDatesForStreak,
+	listCompletedPracticeSessionsForStreak,
 	type PracticeSessionInsert,
 	startSession,
 } from "@/db.server/queries/practice-sessions";
@@ -18,10 +18,11 @@ import { streakLengthFromCompletedSessionDates } from "@/lib/practice-streak";
 export type PracticeStats = Awaited<ReturnType<typeof getSkillStats>> & { streak: number };
 
 export const getPracticeStats = async (userId: number): Promise<PracticeStats> => {
-	const [skill, completedDates] = await Promise.all([
+	const [skill, completedSessions] = await Promise.all([
 		getSkillStats(userId),
-		getCompletedPracticeAtDatesForStreak(userId),
+		listCompletedPracticeSessionsForStreak(userId),
 	]);
+	const completedDates = completedSessions.map((s) => s.completedAt!);
 	return { ...skill, streak: streakLengthFromCompletedSessionDates(completedDates) };
 };
 
