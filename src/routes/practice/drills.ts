@@ -273,7 +273,7 @@ export const DRILLS: Drill[] = [
 		href: "/practice/verbs/eimai-present",
 		title: "είμαι · present",
 		greek: "είμαι · είσαι · είναι · είμαστε",
-		english: "Present forms of \"to be\" (irregular)",
+		english: 'Present forms of "to be" (irregular)',
 		minutes: 1,
 		phase: "Present",
 	},
@@ -306,7 +306,7 @@ export const DRILLS: Drill[] = [
 		href: "/practice/verbs/eimai-past",
 		title: "είμαι · past",
 		greek: "ήμουν · ήσουν · ήταν · ήμασταν",
-		english: "Past forms of \"to be\" (irregular)",
+		english: 'Past forms of "to be" (irregular)',
 		minutes: 1,
 		phase: "Past",
 	},
@@ -396,5 +396,3 @@ export const GROUP_META: Record<Group, { label: string }> = {
 	verbs: { label: "Verbs" },
 	blocks: { label: "Building blocks" },
 };
-
-export const GROUP_ORDER: Group[] = ["nominal", "pronouns", "verbs", "blocks"];

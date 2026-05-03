@@ -22,10 +22,6 @@ export const getUserById = async (userId: number) => {
 	return await db.query.users.findFirst({ where: { id: userId } });
 };
 
-export const getAllUsers = async () => {
-	return await db.query.users.findMany({ orderBy: { displayName: "asc" } });
-};
-
 export const createUser = async (data: Pick<UserInsert, "displayName" | "code">) => {
 	const normalizedCode = data.code.toLowerCase();
 
