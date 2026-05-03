@@ -54,8 +54,10 @@ export const getSkillStats = async (userId: number, skillType: SkillType = "reco
 /**
  * Due `vocabulary_skills` rows aggregated per user. Uses the select builder because
  * `db.query.*.findMany` cannot express `GROUP BY user_id` + `COUNT(*)`.
+ * Pass `userIds` to filter; empty array returns []. Omit to count all users.
  */
-const dueVocabularyCountRows = async (now: Date, userIds?: number[]) => {
+export const listDueVocabularyCountsByUser = async (now: Date, userIds?: number[]) => {
+	if (userIds && userIds.length === 0) return [];
 	const base = and(
 		isNotNull(vocabularySkills.nextReviewAt),
 		lt(vocabularySkills.nextReviewAt, now),
@@ -70,14 +72,6 @@ const dueVocabularyCountRows = async (now: Date, userIds?: number[]) => {
 		.from(vocabularySkills)
 		.where(where)
 		.groupBy(vocabularySkills.userId);
-};
-
-export const getDueVocabularyCountByUserId = async (now: Date) =>
-	new Map((await dueVocabularyCountRows(now)).map((r) => [r.userId, r.dueCount]));
-
-export const getDueVocabularyCountForUserIds = async (now: Date, userIds: number[]) => {
-	if (userIds.length === 0) return new Map<number, number>();
-	return new Map((await dueVocabularyCountRows(now, userIds)).map((r) => [r.userId, r.dueCount]));
 };
 
 export const getItemsDueTomorrow = async (userId: number, skillType: SkillType = "recognition") => {
