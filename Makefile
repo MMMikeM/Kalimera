@@ -19,9 +19,6 @@ db-push:
 db-seed:
 	pnpm db:seed
 
-db-seed-conjugations:
-	pnpm tsx src/scripts/seed-verb-conjugations.ts
-
 db-setup: db-push db-seed
 
 db-studio:
@@ -35,9 +32,6 @@ prod-db-push:
 
 prod-db-seed:
 	set -a && . ./.env.prod && set +a && pnpm db:seed
-
-prod-db-seed-conjugations:
-	set -a && . ./.env.prod && set +a && pnpm tsx src/scripts/seed-verb-conjugations.ts
 
 prod-db-setup: prod-db-push prod-db-seed
 
@@ -86,15 +80,13 @@ help:
 	@echo ""
 	@echo "Local Database (Docker):"
 	@echo "  db-push              - Push schema to local database"
-	@echo "  db-seed              - Seed local database"
-	@echo "  db-seed-conjugations - Seed verb conjugations (local)"
+	@echo "  db-seed              - Seed local database (vocab + verb conjugations)"
 	@echo "  db-setup             - Push schema and seed locally"
 	@echo "  db-studio            - Open Drizzle Studio (local)"
 	@echo ""
 	@echo "Production Database (Turso):"
 	@echo "  prod-db-push              - Push schema to production"
-	@echo "  prod-db-seed              - Seed production database"
-	@echo "  prod-db-seed-conjugations - Seed verb conjugations (production)"
+	@echo "  prod-db-seed              - Seed production database (vocab + verb conjugations)"
 	@echo "  prod-db-setup             - Push schema and seed production"
 	@echo "  prod-db-studio            - Open Drizzle Studio (production)"
 	@echo ""
