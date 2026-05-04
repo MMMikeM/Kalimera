@@ -21,17 +21,17 @@ const DIGRAPH_MAP: [RegExp, string][] = [
 	[/υι/gi, "i"],
 
 	// αυ/ευ - voiced before vowels/voiced consonants, unvoiced otherwise
-	// Simplified: use 'av'/'ev' as default (most common in speech)
-	[/αύ/gi, "av"],
+	// Simplified: 'av'/'ev' as default (most common in speech)
+	// Note: accented variants (αύ/εύ) are already stripped before this map runs
 	[/αυ/gi, "av"],
-	[/εύ/gi, "ev"],
 	[/ευ/gi, "ev"],
 
 	// Consonant clusters
 	[/γγ/gi, "ng"],
-	[/γκ/gi, "g"], // word-initial typically 'g', medial 'ng' - simplified to 'g'
-	[/μπ/gi, "b"], // word-initial typically 'b', medial 'mb' - simplified to 'b'
-	[/ντ/gi, "d"], // word-initial typically 'd', medial 'nd' - simplified to 'd'
+	// γκ, μπ, ντ: word-initial vs medial handled in greekToPhonetic before this map
+	[/γκ/gi, "ng"], // medial only (word-initial already replaced)
+	[/μπ/gi, "mb"], // medial only
+	[/ντ/gi, "nd"], // medial only
 	[/τσ/gi, "ts"],
 	[/τζ/gi, "dz"],
 
@@ -73,6 +73,14 @@ const SINGLE_LETTER_MAP: Record<string, string> = {
 	ψ: "ps",
 };
 
+// Word-initial γκ/μπ/ντ are realised as g/b/d; medial as ng/mb/nd.
+// Replace word-initial first so the DIGRAPH_MAP catches only medial instances.
+const applyWordInitialClusters = (text: string): string =>
+	text
+		.replace(/(^|[\s])γκ/gi, "$1g")
+		.replace(/(^|[\s])μπ/gi, "$1b")
+		.replace(/(^|[\s])ντ/gi, "$1d");
+
 /**
  * Convert Greek text to Latin phonetic representation.
  *
@@ -80,12 +88,15 @@ const SINGLE_LETTER_MAP: Record<string, string> = {
  * greekToPhonetic("Θέλω καφέ") // "thelo kafe"
  * greekToPhonetic("ευχαριστώ") // "efcharisto"
  * greekToPhonetic("μπύρα") // "bira"
+ * greekToPhonetic("ο άντρας") // "o andras"
  */
 export const greekToPhonetic = (greek: string): string => {
 	// Lowercase and strip diacritics
 	let result = stripGreekDiacritics(greek.toLowerCase());
 
-	// Apply digraph replacements first (order matters)
+	// Word-initial clusters first, then medial via DIGRAPH_MAP
+	result = applyWordInitialClusters(result);
+
 	for (const [pattern, replacement] of DIGRAPH_MAP) {
 		result = result.replace(pattern, replacement);
 	}
@@ -141,11 +152,17 @@ const stripGreekArticle = (greek: string): string => {
  * matchPhonetic("to kalokeri", "το καλοκαίρι")
  * // { isCorrect: true, ... }
  */
-// Collapse spelling-faithful digraphs to their phonetic equivalents on BOTH
-// sides, so a learner can type either "kanis" (phonetic) or "kaneis"
-// (letter-faithful to κάνεις) and both match. Covers ει→i, αι→e, οι→i.
+// Collapse variant spellings on both sides so either form accepts.
+// ει→i, αι→e, οι→i: user can type letter-faithful ("kaneis") or phonetic ("kanis").
+// nd→d, mb→b, ng→g: user can type simplified cluster ("adras") or accurate ("andras").
 const toPhoneticCanonical = (text: string): string =>
-	text.replace(/ei/g, "i").replace(/ai/g, "e").replace(/oi/g, "i");
+	text
+		.replace(/ei/g, "i")
+		.replace(/ai/g, "e")
+		.replace(/oi/g, "i")
+		.replace(/nd/g, "d")
+		.replace(/mb/g, "b")
+		.replace(/ng/g, "g");
 
 const phoneticEquals = (user: string, correct: string): boolean =>
 	user === correct || toPhoneticCanonical(user) === toPhoneticCanonical(correct);
