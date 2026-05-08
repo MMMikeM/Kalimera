@@ -1,4 +1,6 @@
 import { eq, inArray } from "drizzle-orm";
+
+import { endOfDayUTC, toEpochSeconds, today } from "@/lib/time";
 import { createInsertSchema } from "drizzle-orm/zod";
 import type z from "zod/v4";
 
@@ -59,12 +61,9 @@ export const deletePushSubscription = async (endpoint: string) => {
 };
 
 export const snoozePushSubscription = async (userId: number) => {
-	const endOfToday = new Date();
-	endOfToday.setUTCHours(23, 59, 59, 999);
-
 	await db
 		.update(pushSubscriptions)
-		.set({ snoozedUntil: endOfToday })
+		.set({ snoozedUntil: toEpochSeconds(endOfDayUTC(today())) })
 		.where(eq(pushSubscriptions.userId, userId));
 };
 

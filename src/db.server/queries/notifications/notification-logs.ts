@@ -1,7 +1,8 @@
-import { startOfDay, subDays } from "date-fns";
 import { and, eq, gte, lt } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-orm/zod";
 import type z from "zod/v4";
+
+import { fromEpochSeconds, nowInstant, toEpochSeconds, toInstant, toPlainDate, today } from "@/lib/time";
 
 import { db } from "../../index";
 import { notificationLogs, practiceSessions } from "../../schema";
@@ -14,7 +15,7 @@ export type TappedAction = "2min" | "body" | "snooze";
 type LogNotificationSentInput = Pick<NotificationLogInsert, "userId" | "type">;
 
 export const logNotificationSent = async (data: LogNotificationSentInput) => {
-	await db.insert(notificationLogs).values({ ...data, sentAt: new Date() });
+	await db.insert(notificationLogs).values({ ...data, sentAt: toEpochSeconds(nowInstant()) });
 };
 
 export const logNotificationTap = async (userId: number, tappedAction: TappedAction) => {
@@ -28,7 +29,7 @@ export const logNotificationTap = async (userId: number, tappedAction: TappedAct
 		if (recentLog) {
 			await tx
 				.update(notificationLogs)
-				.set({ tappedAction, tappedAt: new Date() })
+				.set({ tappedAction, tappedAt: toEpochSeconds(nowInstant()) })
 				.where(eq(notificationLogs.id, recentLog.id));
 		}
 	});
@@ -36,14 +37,13 @@ export const logNotificationTap = async (userId: number, tappedAction: TappedAct
 
 /**
  * Whether the user has been ignoring notifications by practising before
- * them on >=5 of the last 7 sent days. Cross-table read (notificationLogs +
- * practiceSessions) — lives here because it's "do they earn a taper" logic.
+ * them on >=5 of the last 7 sent days.
  */
 export const userQualifiesForNotificationTaper = async (
 	userId: number,
 	notificationHourUtc: number,
 ) => {
-	const sevenDaysAgo = subDays(new Date(), 7);
+	const sevenDaysAgo = toEpochSeconds(toInstant(today().subtract({ days: 7 })));
 
 	const recentSends = await db.query.notificationLogs.findMany({
 		where: { userId, sentAt: { gte: sevenDaysAgo } },
@@ -58,9 +58,11 @@ export const userQualifiesForNotificationTaper = async (
 	for (const send of recentSends) {
 		if (!send.sentAt) continue;
 
-		const sendDay = startOfDay(send.sentAt);
-		const notificationTime = new Date(sendDay);
-		notificationTime.setUTCHours(notificationHourUtc, 0, 0, 0);
+		const sentInstant = fromEpochSeconds(send.sentAt);
+		const sendDay = toEpochSeconds(toInstant(toPlainDate(sentInstant)));
+		const notificationTime = toEpochSeconds(
+			toPlainDate(sentInstant).toZonedDateTime("UTC").with({ hour: notificationHourUtc }).toInstant(),
+		);
 
 		const practicedBeforeCount = await db.$count(
 			practiceSessions,

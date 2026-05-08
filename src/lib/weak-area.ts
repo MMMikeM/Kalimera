@@ -1,3 +1,6 @@
+
+import { Temporal } from "@js-temporal/polyfill";
+
 import type { AreaType } from "@/db.server/schema";
 import { weakAreas } from "@/db.server/schema";
 
@@ -11,7 +14,7 @@ type WeakAreaCommand =
 	| {
 			kind: "update";
 			id: number;
-			set: { mistakeCount: number; needsFocus: boolean; lastMistakeAt?: Date };
+			set: { mistakeCount: number; needsFocus: boolean; lastMistakeAt?: Temporal.Instant };
 	  }
 	| { kind: "insert"; values: WeakAreaInsertCore };
 
@@ -24,7 +27,7 @@ export const planWeakAreaCommand = (
 	areaType: AreaType,
 	areaIdentifier: string,
 	isCorrect: boolean,
-	now: Date,
+	now: Temporal.Instant,
 ): WeakAreaCommand | null => {
 	if (isCorrect) {
 		if (!existing) return null;

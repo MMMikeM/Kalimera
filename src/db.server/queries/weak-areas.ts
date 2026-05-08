@@ -1,5 +1,6 @@
 import { eq } from "drizzle-orm";
 
+import { nowInstant, toEpochSeconds } from "@/lib/time";
 import { planWeakAreaCommand } from "@/lib/weak-area";
 
 import { type AreaType, weakAreas } from "../schema";
@@ -17,7 +18,7 @@ export const applyWeakAreaSideEffect = async (
 		columns: { id: true, mistakeCount: true },
 	});
 
-	const now = new Date();
+	const now = nowInstant();
 	const cmd = planWeakAreaCommand(
 		existingArea ?? undefined,
 		userId,
@@ -31,7 +32,11 @@ export const applyWeakAreaSideEffect = async (
 	if (cmd.kind === "delete") {
 		await tx.delete(weakAreas).where(eq(weakAreas.id, cmd.id));
 	} else if (cmd.kind === "update") {
-		await tx.update(weakAreas).set(cmd.set).where(eq(weakAreas.id, cmd.id));
+		const { lastMistakeAt, ...rest } = cmd.set;
+		await tx
+			.update(weakAreas)
+			.set({ ...rest, ...(lastMistakeAt != null ? { lastMistakeAt: toEpochSeconds(lastMistakeAt) } : {}) })
+			.where(eq(weakAreas.id, cmd.id));
 	} else {
 		await tx.insert(weakAreas).values(cmd.values);
 	}

@@ -14,6 +14,7 @@ import { getNewVocabularyItems, type VocabItemWithSkill } from "@/db.server/quer
 import { getItemsDueForReview, getSkillStats } from "@/db.server/queries/vocabulary-skills";
 import type { AreaType, SkillType } from "@/db.server/schema";
 import { streakLengthFromCompletedSessionDates } from "@/lib/practice-streak";
+import { fromEpochSeconds } from "@/lib/time";
 
 export type PracticeStats = Awaited<ReturnType<typeof getSkillStats>> & { streak: number };
 
@@ -22,7 +23,7 @@ export const getPracticeStats = async (userId: number): Promise<PracticeStats> =
 		getSkillStats(userId),
 		listCompletedPracticeSessionsForStreak(userId),
 	]);
-	const completedDates = completedSessions.map((s) => s.completedAt!);
+	const completedDates = completedSessions.map((s) => fromEpochSeconds(s.completedAt!));
 	return { ...skill, streak: streakLengthFromCompletedSessionDates(completedDates) };
 };
 

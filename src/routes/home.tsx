@@ -1,5 +1,6 @@
-import { differenceInDays, getDate, getDay } from "date-fns";
 import { ArrowRight, Calendar, Check, ChevronDown, ChevronUp, Play, Sparkles } from "lucide-react";
+
+import { diffInDays, fromEpochSeconds, mondayBasedDayOfWeek, toPlainDate, today } from "@/lib/time";
 import { useState } from "react";
 import { Link, useFetcher } from "react-router";
 
@@ -78,10 +79,13 @@ export async function loader({ request }: Route.LoaderArgs) {
 			listCompletedPracticeSessionsForStreak(userId),
 		],
 	);
-	const completedDates = completedSessions.map((s) => s.completedAt!);
+	const completedDates = completedSessions.flatMap((s) =>
+		s.completedAt ? [fromEpochSeconds(s.completedAt)] : [],
+	);
 
+	const todayDate = today();
 	const daysSinceLastPractice = lastPracticeDate
-		? differenceInDays(new Date(), lastPracticeDate)
+		? diffInDays(todayDate, toPlainDate(lastPracticeDate))
 		: null;
 
 	const stats: Stats = {
@@ -93,9 +97,7 @@ export async function loader({ request }: Route.LoaderArgs) {
 	};
 
 	// Get week practice data
-	const today = new Date();
-	const dayOfWeek = getDay(today);
-	const mondayOffset = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+	const mondayOffset = mondayBasedDayOfWeek(todayDate);
 
 	// TODO: Query actual practice history for the week
 	// For now, mock based on streak
@@ -356,7 +358,7 @@ const DailyPhrase = () => {
 	const [revealed, setRevealed] = useState(false);
 	const [showGrammar, setShowGrammar] = useState(false);
 
-	const dayIndex = getDate(new Date()) % DAILY_PHRASES.length;
+	const dayIndex = today().day % DAILY_PHRASES.length;
 	const phrase = DAILY_PHRASES[dayIndex] ?? DAILY_PHRASES[0];
 
 	return (
@@ -415,8 +417,7 @@ const WeekStreak = ({
 	weekData: { practiced: boolean }[];
 	todayPracticed: boolean;
 }) => {
-	const todayDayOfWeek = getDay(new Date());
-	const mondayOffset = todayDayOfWeek === 0 ? 6 : todayDayOfWeek - 1;
+	const mondayOffset = mondayBasedDayOfWeek(today());
 
 	return (
 		<div className="rounded-2xl border border-stone-200 bg-white p-5">

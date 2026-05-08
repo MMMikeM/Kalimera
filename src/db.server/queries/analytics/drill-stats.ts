@@ -1,4 +1,7 @@
+import { Temporal } from "@js-temporal/polyfill";
 import { and, eq, gte, isNotNull, sql } from "drizzle-orm";
+
+import { fromEpochSeconds, nowInstant, toEpochSeconds } from "@/lib/time";
 
 import { db } from "../../index";
 import { practiceAttempts } from "../../schema";
@@ -9,13 +12,13 @@ export interface DrillStat {
 	correct: number;
 	accuracy: number;
 	avgTimeMs: number | null;
-	lastAttemptAt: Date | null;
+	lastAttemptAt: Temporal.Instant | null;
 }
 
 const WINDOW_DAYS = 14;
 
 export const getDrillStats = async (userId: number): Promise<DrillStat[]> => {
-	const since = new Date(Date.now() - WINDOW_DAYS * 86_400_000);
+	const since = toEpochSeconds(nowInstant().subtract({ hours: WINDOW_DAYS * 24 }));
 
 	const rows = await db
 		.select({
@@ -43,6 +46,6 @@ export const getDrillStats = async (userId: number): Promise<DrillStat[]> => {
 			correct: Number(r.correct),
 			accuracy: r.attempts > 0 ? Number(r.correct) / Number(r.attempts) : 0,
 			avgTimeMs: r.avgTimeMs == null ? null : Number(r.avgTimeMs),
-			lastAttemptAt: r.lastAttemptAt == null ? null : new Date(Number(r.lastAttemptAt) * 1000),
+			lastAttemptAt: r.lastAttemptAt == null ? null : fromEpochSeconds(Number(r.lastAttemptAt)),
 		}));
 };

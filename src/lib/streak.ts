@@ -1,8 +1,6 @@
-import { differenceInHours } from "date-fns";
+import { diffInHours, fromEpochSeconds, nowInstant } from "@/lib/time";
 
 import type { User } from "@/db.server/types";
-
-const getHoursSince = (date: Date): number => differenceInHours(new Date(), date);
 
 const STREAK_CONFIG = {
 	DAYS_TO_EARN_FREEZE: 7,
@@ -28,7 +26,7 @@ export const getFreezeStatus = (user: User): FreezeStatus => {
 		return { status: "available", freezeCount };
 	}
 
-	const hoursSinceLastUse = getHoursSince(lastFreezeUsedAt);
+	const hoursSinceLastUse = diffInHours(nowInstant(), fromEpochSeconds(lastFreezeUsedAt));
 
 	if (hoursSinceLastUse < STREAK_CONFIG.RECOVERY_HOURS) {
 		return {
