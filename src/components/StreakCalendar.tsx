@@ -1,20 +1,13 @@
-import {
-	addMonths,
-	eachDayOfInterval,
-	endOfMonth,
-	format,
-	getDate,
-	getDay,
-	isAfter,
-	isSameDay,
-	parseISO,
-	startOfDay,
-	startOfMonth,
-	subDays,
-} from "date-fns";
+import { Temporal } from "@js-temporal/polyfill";
 import { ChevronLeft, ChevronRight, Snowflake } from "lucide-react";
 import { useState } from "react";
 
+import {
+	eachDayOfMonth,
+	formatMonthYear,
+	mondayBasedDayOfWeek,
+	today,
+} from "@/lib/time";
 import { cn } from "@/lib/utils";
 
 interface StreakCalendarProps {
@@ -26,33 +19,24 @@ interface StreakCalendarProps {
 
 const DAYS_OF_WEEK = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
-const formatMonthYear = (date: Date) => format(date, "MMMM yyyy");
+const getMonthDays = (viewDate: Temporal.PlainDate) => {
+	const firstDay = viewDate.with({ day: 1 });
+	const lastDay = viewDate.with({ day: viewDate.daysInMonth });
+	const days: Array<{ date: Temporal.PlainDate; isCurrentMonth: boolean }> = [];
 
-const getMonthDays = (year: number, month: number) => {
-	const monthDate = new Date(year, month, 1);
-	const firstDay = startOfMonth(monthDate);
-	const lastDay = endOfMonth(monthDate);
-	const days: Array<{ date: Date; isCurrentMonth: boolean }> = [];
-
-	const startDayOfWeek = getDay(firstDay);
-	const mondayOffset = startDayOfWeek === 0 ? 6 : startDayOfWeek - 1;
-
+	// Monday-based offset: Mon=0 … Sun=6
+	const mondayOffset = mondayBasedDayOfWeek(firstDay);
 	for (let i = mondayOffset - 1; i >= 0; i--) {
-		days.push({ date: subDays(firstDay, i + 1), isCurrentMonth: false });
+		days.push({ date: firstDay.subtract({ days: i + 1 }), isCurrentMonth: false });
 	}
 
-	const currentMonthDays = eachDayOfInterval({ start: firstDay, end: lastDay });
-	for (const date of currentMonthDays) {
+	for (const date of eachDayOfMonth(viewDate)) {
 		days.push({ date, isCurrentMonth: true });
 	}
 
 	const remainingDays = 42 - days.length;
-	const nextMonthStart = addMonths(firstDay, 1);
 	for (let i = 0; i < remainingDays; i++) {
-		days.push({
-			date: new Date(nextMonthStart.getFullYear(), nextMonthStart.getMonth(), i + 1),
-			isCurrentMonth: false,
-		});
+		days.push({ date: lastDay.add({ days: i + 1 }), isCurrentMonth: false });
 	}
 
 	return days;
@@ -63,28 +47,28 @@ const getStreakDates = (currentStreak: number, practiceDates: string[]) => {
 
 	const sortedDates = [...practiceDates].sort().reverse();
 	const streakSet = new Set<string>();
-	const today = startOfDay(new Date());
+	const todayDate = today();
 
 	const firstDate = sortedDates[0];
 	if (!firstDate) return streakSet;
 
-	let checkDate = today;
-	const mostRecentPractice = startOfDay(parseISO(firstDate));
+	let checkDate = todayDate;
+	const mostRecentPractice = Temporal.PlainDate.from(firstDate);
 
-	if (!isSameDay(mostRecentPractice, today)) {
-		const yesterday = subDays(today, 1);
-		if (!isSameDay(mostRecentPractice, yesterday)) {
+	if (Temporal.PlainDate.compare(mostRecentPractice, todayDate) !== 0) {
+		const yesterday = todayDate.subtract({ days: 1 });
+		if (Temporal.PlainDate.compare(mostRecentPractice, yesterday) !== 0) {
 			return streakSet;
 		}
 		checkDate = yesterday;
 	}
 
 	for (let i = 0; i < currentStreak; i++) {
-		const dateStr = format(checkDate, "yyyy-MM-dd");
+		const dateStr = checkDate.toString();
 		if (practiceDates.includes(dateStr)) {
 			streakSet.add(dateStr);
 		}
-		checkDate = subDays(checkDate, 1);
+		checkDate = checkDate.subtract({ days: 1 });
 	}
 
 	return streakSet;
@@ -96,29 +80,27 @@ export const StreakCalendar = ({
 	currentStreak,
 	className,
 }: StreakCalendarProps) => {
-	const [viewDate, setViewDate] = useState(() => new Date());
-	const today = startOfDay(new Date());
+	const [viewDate, setViewDate] = useState<Temporal.PlainDate>(() => today());
+	const todayDate = today();
 
 	const practiceSet = new Set(practiceDates);
 	const freezeSet = new Set(freezeDates);
 	const streakDates = getStreakDates(currentStreak, practiceDates);
 
-	const year = viewDate.getFullYear();
-	const month = viewDate.getMonth();
-	const days = getMonthDays(year, month);
+	const days = getMonthDays(viewDate);
 
 	const navigateMonth = (delta: number) => {
-		setViewDate((prev) => addMonths(prev, delta));
+		setViewDate((prev) => prev.add({ months: delta }));
 	};
 
-	const goToToday = () => setViewDate(new Date());
+	const goToToday = () => setViewDate(today());
 
-	const isToday = (date: Date) => isSameDay(date, today);
-	const isFuture = (date: Date) => isAfter(date, today);
+	const isToday = (date: Temporal.PlainDate) => Temporal.PlainDate.compare(date, todayDate) === 0;
+	const isFuture = (date: Temporal.PlainDate) => Temporal.PlainDate.compare(date, todayDate) > 0;
 
-	const getDayStatus = (date: Date, isCurrentMonth: boolean) => {
+	const getDayStatus = (date: Temporal.PlainDate, isCurrentMonth: boolean) => {
 		if (!isCurrentMonth || isFuture(date)) return "inactive";
-		const dateStr = format(date, "yyyy-MM-dd");
+		const dateStr = date.toString();
 		if (freezeSet.has(dateStr)) return "freeze";
 		if (streakDates.has(dateStr)) return "streak";
 		if (practiceSet.has(dateStr)) return "practiced";
@@ -164,9 +146,9 @@ export const StreakCalendar = ({
 			</div>
 
 			<div className="grid grid-cols-7 gap-1">
-				{days.map(({ date, isCurrentMonth }, _idx) => {
+				{days.map(({ date, isCurrentMonth }) => {
 					const status = getDayStatus(date, isCurrentMonth);
-					const dateStr = format(date, "yyyy-MM-dd");
+					const dateStr = date.toString();
 
 					return (
 						<div
@@ -182,11 +164,7 @@ export const StreakCalendar = ({
 								isToday(date) && isCurrentMonth && "ring-2 ring-terracotta ring-offset-1",
 							)}
 						>
-							{status === "freeze" ? (
-								<Snowflake className="size-4 text-ocean-400" />
-							) : (
-								getDate(date)
-							)}
+							{status === "freeze" ? <Snowflake className="size-4 text-ocean-400" /> : date.day}
 							{(status === "practiced" || status === "streak") && (
 								<span
 									className={cn(
