@@ -1,14 +1,15 @@
 import { SPEEDS } from "../../drill-speeds";
-import { GENDER_CATEGORIES, GENDER_DIMENSION_OPTIONS } from "../../engines/drill-constants";
+import { GENDER_DIMENSION_OPTIONS, GENDER_PLURAL_CATEGORIES } from "../../engines/drill-constants";
 import { SimpleListDrill, type SimpleListItem } from "../../engines/simple-list-drill";
 
 // Doer (nominative) noun phrase capstone — article + adjective + noun.
-// Forward: "the good friend (m)" → type "o kalos filos" (matchPhonetic → ο καλός φίλος)
-// Reverse: show "η μεγάλη πόλη" → tap gender chip
-// Pure noun phrases — no verb. Tests article/adjective/noun integration in Doer form.
+// Singular: ο/η/το + adj(sg) + noun(sg)
+// Plural:   οι/οι/τα + adj(pl) + noun(pl)
+// Forward: "the good friend (m)" → type "o kalos filos"
+// Reverse: show Greek phrase → tap gender chip
 
 export const PHRASES: SimpleListItem[] = [
-	// Masculine (ο + -ος adjective + masculine noun)
+	// ── Singular masculine ──────────────────────────────────────────────────────
 	{
 		id: "kalos-filos",
 		greek: "ο καλός φίλος",
@@ -55,7 +56,7 @@ export const PHRASES: SimpleListItem[] = [
 		dimension: "masculine",
 	},
 
-	// Feminine (η + -η/-α adjective + feminine noun)
+	// ── Singular feminine ───────────────────────────────────────────────────────
 	{
 		id: "kali-mera",
 		greek: "η καλή μέρα",
@@ -102,7 +103,7 @@ export const PHRASES: SimpleListItem[] = [
 		dimension: "feminine",
 	},
 
-	// Neuter (το + -ο adjective + neuter noun)
+	// ── Singular neuter ─────────────────────────────────────────────────────────
 	{
 		id: "kalo-spiti",
 		greek: "το καλό σπίτι",
@@ -148,6 +149,147 @@ export const PHRASES: SimpleListItem[] = [
 		category: "neuter",
 		dimension: "neuter",
 	},
+
+	// ── Plural masculine ────────────────────────────────────────────────────────
+	{
+		id: "kaloi-filoi",
+		greek: "οι καλοί φίλοι",
+		greeklish: "i kaloi filoi",
+		english: "the good friends (m, pl)",
+		label: "οι καλοί φίλοι",
+		category: "plural",
+		dimension: "masculine",
+	},
+	{
+		id: "megaloi-dromoi",
+		greek: "οι μεγάλοι δρόμοι",
+		greeklish: "i megaloi dromoi",
+		english: "the big roads (pl)",
+		label: "οι μεγάλοι δρόμοι",
+		category: "plural",
+		dimension: "masculine",
+	},
+	{
+		id: "neoi-daskaloi",
+		greek: "οι νέοι δάσκαλοι",
+		greeklish: "i neoi daskaloi",
+		english: "the new teachers (m, pl)",
+		label: "οι νέοι δάσκαλοι",
+		category: "plural",
+		dimension: "masculine",
+	},
+	{
+		id: "mikroi-skyloi",
+		greek: "οι μικροί σκύλοι",
+		greeklish: "i mikroi skyloi",
+		english: "the small dogs (pl)",
+		label: "οι μικροί σκύλοι",
+		category: "plural",
+		dimension: "masculine",
+	},
+	{
+		id: "omorfoi-anthropoi",
+		greek: "οι όμορφοι άνθρωποι",
+		greeklish: "i omorfoi anthropoi",
+		english: "the handsome people (pl)",
+		label: "οι όμορφοι άνθρωποι",
+		category: "plural",
+		dimension: "masculine",
+	},
+
+	// ── Plural feminine ─────────────────────────────────────────────────────────
+	{
+		id: "kales-meres",
+		greek: "οι καλές μέρες",
+		greeklish: "i kales meres",
+		english: "the good days (pl)",
+		label: "οι καλές μέρες",
+		category: "plural",
+		dimension: "feminine",
+	},
+	{
+		id: "megales-poleis",
+		greek: "οι μεγάλες πόλεις",
+		greeklish: "i megales poleis",
+		english: "the big cities (pl)",
+		label: "οι μεγάλες πόλεις",
+		category: "plural",
+		dimension: "feminine",
+	},
+	{
+		id: "nees-tainies",
+		greek: "οι νέες ταινίες",
+		greeklish: "i nees tainies",
+		english: "the new films (pl)",
+		label: "οι νέες ταινίες",
+		category: "plural",
+		dimension: "feminine",
+	},
+	{
+		id: "mikres-gates",
+		greek: "οι μικρές γάτες",
+		greeklish: "i mikres gates",
+		english: "the small cats (pl)",
+		label: "οι μικρές γάτες",
+		category: "plural",
+		dimension: "feminine",
+	},
+	{
+		id: "zestes-soupes",
+		greek: "οι ζεστές σούπες",
+		greeklish: "i zestes soupes",
+		english: "the hot soups (pl)",
+		label: "οι ζεστές σούπες",
+		category: "plural",
+		dimension: "feminine",
+	},
+
+	// ── Plural neuter ───────────────────────────────────────────────────────────
+	{
+		id: "kala-spitia",
+		greek: "τα καλά σπίτια",
+		greeklish: "ta kala spitia",
+		english: "the good houses (pl)",
+		label: "τα καλά σπίτια",
+		category: "plural",
+		dimension: "neuter",
+	},
+	{
+		id: "megala-provlimata",
+		greek: "τα μεγάλα προβλήματα",
+		greeklish: "ta megala provlimata",
+		english: "the big problems (pl)",
+		label: "τα μεγάλα προβλήματα",
+		category: "plural",
+		dimension: "neuter",
+	},
+	{
+		id: "nea-aftokinita",
+		greek: "τα νέα αυτοκίνητα",
+		greeklish: "ta nea aftokinita",
+		english: "the new cars (pl)",
+		label: "τα νέα αυτοκίνητα",
+		category: "plural",
+		dimension: "neuter",
+	},
+	{
+		id: "mikra-paidia",
+		greek: "τα μικρά παιδιά",
+		greeklish: "ta mikra paidia",
+		english: "the small children (pl)",
+		label: "τα μικρά παιδιά",
+		category: "plural",
+		dimension: "neuter",
+	},
+	{
+		id: "krya-nera",
+		greek: "τα κρύα νερά",
+		greeklish: "ta krya nera",
+		english: "the cold waters (pl)",
+		label: "τα κρύα νερά",
+		category: "plural",
+		dimension: "neuter",
+	},
 ];
 
 export default function PhraseDoerDrill() {
@@ -156,13 +298,13 @@ export default function PhraseDoerDrill() {
 			drillId="nominal-phrase-doer"
 			items={PHRASES}
 			title="Doer phrase"
-			subtitle="15 noun phrases / timed"
+			subtitle="30 noun phrases / timed"
 			colorTheme="ocean"
 			speeds={SPEEDS}
 			forwardDesc="English → article + adjective + noun (Doer form)"
 			reverseLabel="Greek → gender"
 			reverseDesc="Phrase → select gender"
-			categories={GENDER_CATEGORIES}
+			categories={GENDER_PLURAL_CATEGORIES}
 			reverseDimension={{
 				options: GENDER_DIMENSION_OPTIONS,
 				getCorrectId: (item) => item.dimension ?? "",

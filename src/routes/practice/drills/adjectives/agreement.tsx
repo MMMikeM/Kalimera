@@ -2,9 +2,11 @@ import { SPEEDS } from "../../drill-speeds";
 import { GENDER_DIMENSION_OPTIONS } from "../../engines/drill-constants";
 import { SimpleListDrill, type SimpleListItem } from "../../engines/simple-list-drill";
 
-// Adjective three-form agreement (Doer / nominative singular).
-// Forward: "good (m)" → type "kalos" (matchPhonetic → καλός)
-// Reverse: show "καλή" → tap masculine / feminine / neuter chip
+// Adjective three-form agreement (Doer / nominative).
+// Singular: m -ος · f -η/-α · n -ο
+// Plural:   m -οι · f -ες · n -α
+// Forward: "good (m)" → type "kalos" / "good (m, pl)" → type "kaloi"
+// Reverse: show Greek form → tap gender chip
 
 interface AdjGroup {
 	id: string;
@@ -12,6 +14,9 @@ interface AdjGroup {
 	masculine: { greek: string; greeklish: string };
 	feminine: { greek: string; greeklish: string };
 	neuter: { greek: string; greeklish: string };
+	pluralMasc: { greek: string; greeklish: string };
+	pluralFem: { greek: string; greeklish: string };
+	pluralNeut: { greek: string; greeklish: string };
 }
 
 const ADJECTIVES: AdjGroup[] = [
@@ -21,6 +26,9 @@ const ADJECTIVES: AdjGroup[] = [
 		masculine: { greek: "καλός", greeklish: "kalos" },
 		feminine: { greek: "καλή", greeklish: "kali" },
 		neuter: { greek: "καλό", greeklish: "kalo" },
+		pluralMasc: { greek: "καλοί", greeklish: "kaloi" },
+		pluralFem: { greek: "καλές", greeklish: "kales" },
+		pluralNeut: { greek: "καλά", greeklish: "kala" },
 	},
 	{
 		id: "megalos",
@@ -28,6 +36,9 @@ const ADJECTIVES: AdjGroup[] = [
 		masculine: { greek: "μεγάλος", greeklish: "megalos" },
 		feminine: { greek: "μεγάλη", greeklish: "megali" },
 		neuter: { greek: "μεγάλο", greeklish: "megalo" },
+		pluralMasc: { greek: "μεγάλοι", greeklish: "megaloi" },
+		pluralFem: { greek: "μεγάλες", greeklish: "megales" },
+		pluralNeut: { greek: "μεγάλα", greeklish: "megala" },
 	},
 	{
 		id: "mikros",
@@ -35,6 +46,9 @@ const ADJECTIVES: AdjGroup[] = [
 		masculine: { greek: "μικρός", greeklish: "mikros" },
 		feminine: { greek: "μικρή", greeklish: "mikri" },
 		neuter: { greek: "μικρό", greeklish: "mikro" },
+		pluralMasc: { greek: "μικροί", greeklish: "mikroi" },
+		pluralFem: { greek: "μικρές", greeklish: "mikres" },
+		pluralNeut: { greek: "μικρά", greeklish: "mikra" },
 	},
 	{
 		id: "neos",
@@ -42,6 +56,9 @@ const ADJECTIVES: AdjGroup[] = [
 		masculine: { greek: "νέος", greeklish: "neos" },
 		feminine: { greek: "νέα", greeklish: "nea" },
 		neuter: { greek: "νέο", greeklish: "neo" },
+		pluralMasc: { greek: "νέοι", greeklish: "neoi" },
+		pluralFem: { greek: "νέες", greeklish: "nees" },
+		pluralNeut: { greek: "νέα", greeklish: "nea" },
 	},
 	{
 		id: "palios",
@@ -49,6 +66,9 @@ const ADJECTIVES: AdjGroup[] = [
 		masculine: { greek: "παλιός", greeklish: "palios" },
 		feminine: { greek: "παλιά", greeklish: "palia" },
 		neuter: { greek: "παλιό", greeklish: "palio" },
+		pluralMasc: { greek: "παλιοί", greeklish: "palioi" },
+		pluralFem: { greek: "παλιές", greeklish: "palies" },
+		pluralNeut: { greek: "παλιά", greeklish: "palia" },
 	},
 	{
 		id: "omorfos",
@@ -56,6 +76,9 @@ const ADJECTIVES: AdjGroup[] = [
 		masculine: { greek: "όμορφος", greeklish: "omorfos" },
 		feminine: { greek: "όμορφη", greeklish: "omorfi" },
 		neuter: { greek: "όμορφο", greeklish: "omorfo" },
+		pluralMasc: { greek: "όμορφοι", greeklish: "omorfoi" },
+		pluralFem: { greek: "όμορφες", greeklish: "omorhes" },
+		pluralNeut: { greek: "όμορφα", greeklish: "omorfa" },
 	},
 	{
 		id: "zestos",
@@ -63,6 +86,9 @@ const ADJECTIVES: AdjGroup[] = [
 		masculine: { greek: "ζεστός", greeklish: "zestos" },
 		feminine: { greek: "ζεστή", greeklish: "zesti" },
 		neuter: { greek: "ζεστό", greeklish: "zesto" },
+		pluralMasc: { greek: "ζεστοί", greeklish: "zestoi" },
+		pluralFem: { greek: "ζεστές", greeklish: "zestes" },
+		pluralNeut: { greek: "ζεστά", greeklish: "zesta" },
 	},
 	{
 		id: "kryos",
@@ -70,6 +96,9 @@ const ADJECTIVES: AdjGroup[] = [
 		masculine: { greek: "κρύος", greeklish: "kryos" },
 		feminine: { greek: "κρύα", greeklish: "krya" },
 		neuter: { greek: "κρύο", greeklish: "kryo" },
+		pluralMasc: { greek: "κρύοι", greeklish: "kryoi" },
+		pluralFem: { greek: "κρύες", greeklish: "kryes" },
+		pluralNeut: { greek: "κρύα", greeklish: "krya" },
 	},
 	{
 		id: "efkolos",
@@ -77,6 +106,9 @@ const ADJECTIVES: AdjGroup[] = [
 		masculine: { greek: "εύκολος", greeklish: "efkolos" },
 		feminine: { greek: "εύκολη", greeklish: "efkoli" },
 		neuter: { greek: "εύκολο", greeklish: "efkolo" },
+		pluralMasc: { greek: "εύκολοι", greeklish: "efkoloi" },
+		pluralFem: { greek: "εύκολες", greeklish: "efkoles" },
+		pluralNeut: { greek: "εύκολα", greeklish: "efkola" },
 	},
 	{
 		id: "dyskolos",
@@ -84,6 +116,9 @@ const ADJECTIVES: AdjGroup[] = [
 		masculine: { greek: "δύσκολος", greeklish: "dyskolos" },
 		feminine: { greek: "δύσκολη", greeklish: "dyskoli" },
 		neuter: { greek: "δύσκολο", greeklish: "dyskolo" },
+		pluralMasc: { greek: "δύσκολοι", greeklish: "dyskoloi" },
+		pluralFem: { greek: "δύσκολες", greeklish: "dyskoles" },
+		pluralNeut: { greek: "δύσκολα", greeklish: "dyskola" },
 	},
 ];
 
@@ -115,12 +150,40 @@ const ITEMS: SimpleListItem[] = ADJECTIVES.flatMap((adj) => [
 		category: "neuter",
 		dimension: "neuter",
 	},
+	{
+		id: `${adj.id}-pl-m`,
+		greek: adj.pluralMasc.greek,
+		greeklish: adj.pluralMasc.greeklish,
+		english: `${adj.english} (m, pl)`,
+		label: "plural m",
+		category: "plural",
+		dimension: "masculine",
+	},
+	{
+		id: `${adj.id}-pl-f`,
+		greek: adj.pluralFem.greek,
+		greeklish: adj.pluralFem.greeklish,
+		english: `${adj.english} (f, pl)`,
+		label: "plural f",
+		category: "plural",
+		dimension: "feminine",
+	},
+	{
+		id: `${adj.id}-pl-n`,
+		greek: adj.pluralNeut.greek,
+		greeklish: adj.pluralNeut.greeklish,
+		english: `${adj.english} (n, pl)`,
+		label: "plural n",
+		category: "plural",
+		dimension: "neuter",
+	},
 ]);
 
 const CATEGORIES = [
 	{ id: "masculine", label: "Masculine (-ος)" },
 	{ id: "feminine", label: "Feminine (-η/-α)" },
 	{ id: "neuter", label: "Neuter (-ο)" },
+	{ id: "plural", label: "Plural (-οι/-ες/-α)" },
 ];
 
 export default function AdjectiveAgreementDrill() {
@@ -129,7 +192,7 @@ export default function AdjectiveAgreementDrill() {
 			drillId="adjectives-agreement"
 			items={ITEMS}
 			title="Adjective agreement"
-			subtitle="30 forms / timed"
+			subtitle="60 forms / timed"
 			colorTheme="ocean"
 			speeds={SPEEDS}
 			forwardDesc="English + gender → adjective form"

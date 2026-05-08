@@ -14,6 +14,14 @@ export const GENDER_CATEGORIES = [
 	{ id: "neuter", label: "Neuter" },
 ];
 
+/** Shared CATEGORIES list for drills covering singular (by gender) + plural. */
+export const GENDER_PLURAL_CATEGORIES = [
+	{ id: "masculine", label: "Masculine (sg)" },
+	{ id: "feminine", label: "Feminine (sg)" },
+	{ id: "neuter", label: "Neuter (sg)" },
+	{ id: "plural", label: "Plural" },
+];
+
 /** Shared DIMENSION_OPTIONS for reverse-mode gender selectors. */
 export const GENDER_DIMENSION_OPTIONS = [
 	{ id: "masculine", label: "Masculine", ...GENDER_STYLE.masculine },
