@@ -9,7 +9,7 @@ export const getVocabularyWithNominalForms = async (
 
 	return await db.query.vocabulary.findMany({
 		where: vocabIds ? { wordType, id: { in: vocabIds } } : { wordType },
-		with: { nominalForms: true },
+		with: { nominalForms: true, nounDetails: true },
 		limit: 200,
 	});
 };
