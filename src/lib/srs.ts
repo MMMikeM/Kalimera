@@ -1,14 +1,19 @@
+import { Temporal } from "@js-temporal/polyfill";
+
+import { nowInstant, toInstant, today } from "@/lib/time";
+
+
 interface SRSInput {
 	quality: number; // 2 (hard/wrong), 4 (good), or 5 (easy)
-	easeFactor: number; // Current ease factor (default 2.3 for new items)
-	intervalDays: number; // Current interval in days
-	reviewCount: number; // Number of reviews so far
+	easeFactor: number;
+	intervalDays: number;
+	reviewCount: number;
 }
 
 interface SRSOutput {
 	nextIntervalDays: number;
 	nextEaseFactor: number;
-	nextReviewAt: Date;
+	nextReviewAt: Temporal.Instant;
 }
 
 const MIN_EASE_FACTOR = 1.3;
@@ -24,40 +29,29 @@ const calculateSRS = (input: SRSInput): SRSOutput => {
 	let newInterval: number;
 
 	if (quality < 3) {
-		// Failed: reset to 1 day
 		newInterval = 1;
 	} else if (reviewCount === 0) {
-		// First successful review
 		newInterval = 1;
 	} else if (reviewCount === 1) {
-		// Second successful review
 		newInterval = 6;
 	} else {
-		// Subsequent reviews: interval * ease factor
 		newInterval = Math.round(intervalDays * newEaseFactor);
 	}
-
-	const nextReviewAt = new Date();
-	nextReviewAt.setDate(nextReviewAt.getDate() + newInterval);
-	nextReviewAt.setHours(0, 0, 0, 0);
 
 	return {
 		nextIntervalDays: newInterval,
 		nextEaseFactor: newEaseFactor,
-		nextReviewAt,
+		nextReviewAt: toInstant(today().add({ days: newInterval })),
 	};
 };
 
-// Time-based quality rating from the plan:
-// - <2s correct = 5 (easy, knew it immediately)
-// - >=2s correct = 4 (good, had to think)
-// - incorrect = 2 (hard, need more practice)
+// - <2s correct = 5 (easy)
+// - >=2s correct = 4 (good)
+// - incorrect = 2 (hard)
 const FAST_RESPONSE_THRESHOLD_MS = 2000;
 
 const qualityFromAttempt = (isCorrect: boolean, timeMs: number): number => {
-	if (!isCorrect) {
-		return 2;
-	}
+	if (!isCorrect) return 2;
 	return timeMs < FAST_RESPONSE_THRESHOLD_MS ? 5 : 4;
 };
 
@@ -65,10 +59,9 @@ const getInitialSRSValues = () => ({
 	easeFactor: INITIAL_EASE_FACTOR,
 	intervalDays: 1,
 	reviewCount: 0,
-	nextReviewAt: new Date(),
+	nextReviewAt: toInstant(today()),
 });
 
-/** Row shape needed to compute the next SRS state (no DB). */
 type ExistingVocabularySkillForSRS = {
 	easeFactor: number | null;
 	intervalDays: number | null;
@@ -81,9 +74,9 @@ type VocabularySkillAfterAttempt =
 			set: {
 				easeFactor: number;
 				intervalDays: number;
-				nextReviewAt: Date;
+				nextReviewAt: Temporal.Instant;
 				reviewCount: number;
-				lastReviewedAt: Date;
+				lastReviewedAt: Temporal.Instant;
 			};
 	  }
 	| {
@@ -91,9 +84,9 @@ type VocabularySkillAfterAttempt =
 			values: {
 				easeFactor: number;
 				intervalDays: number;
-				nextReviewAt: Date;
+				nextReviewAt: Temporal.Instant;
 				reviewCount: number;
-				lastReviewedAt: Date;
+				lastReviewedAt: Temporal.Instant;
 			};
 	  };
 
@@ -105,7 +98,7 @@ export const vocabularySkillStateAfterAttempt = (
 	existing: ExistingVocabularySkillForSRS | null | undefined,
 	isCorrect: boolean,
 	timeTakenMs: number,
-	now: Date = new Date(),
+	now: Temporal.Instant = nowInstant(),
 ): VocabularySkillAfterAttempt => {
 	const quality = qualityFromAttempt(isCorrect, timeTakenMs);
 

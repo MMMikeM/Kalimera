@@ -1,5 +1,6 @@
-import { endOfTomorrow } from "date-fns";
 import { and, count, eq, gt, inArray, isNotNull, lt, lte, sql } from "drizzle-orm";
+
+import { endOfTomorrowUTC, nowInstant, toEpochSeconds } from "@/lib/time";
 
 import { vocabularySkillStateAfterAttempt } from "@/lib/srs";
 
@@ -12,13 +13,11 @@ export const getItemsDueForReview = async (
 	skillType: SkillType = "recognition",
 	limit = 20,
 ) => {
-	const now = new Date();
-
 	return await db.query.vocabularySkills.findMany({
 		where: {
 			userId,
 			skillType,
-			nextReviewAt: { lte: now },
+			nextReviewAt: { lte: toEpochSeconds(nowInstant()) },
 		},
 		orderBy: { nextReviewAt: "asc" },
 		limit,
@@ -27,13 +26,13 @@ export const getItemsDueForReview = async (
 };
 
 export const getSkillStats = async (userId: number, skillType: SkillType = "recognition") => {
-	const now = new Date();
+	const nowSec = toEpochSeconds(nowInstant());
 	const masteredThresholdDays = 21;
 
 	const [skillStats] = await db
 		.select({
 			mastered: sql<number>`COUNT(CASE WHEN ${vocabularySkills.intervalDays} >= ${masteredThresholdDays} THEN 1 END)`,
-			due: sql<number>`COUNT(CASE WHEN ${vocabularySkills.nextReviewAt} <= ${now} THEN 1 END)`,
+			due: sql<number>`COUNT(CASE WHEN ${vocabularySkills.nextReviewAt} <= ${nowSec} THEN 1 END)`,
 			learned: count(),
 			total: sql<number>`(SELECT COUNT(*) FROM vocabulary)`,
 		})
@@ -56,12 +55,9 @@ export const getSkillStats = async (userId: number, skillType: SkillType = "reco
  * `db.query.*.findMany` cannot express `GROUP BY user_id` + `COUNT(*)`.
  * Pass `userIds` to filter; empty array returns []. Omit to count all users.
  */
-export const listDueVocabularyCountsByUser = async (now: Date, userIds?: number[]) => {
+export const listDueVocabularyCountsByUser = async (now: number, userIds?: number[]) => {
 	if (userIds && userIds.length === 0) return [];
-	const base = and(
-		isNotNull(vocabularySkills.nextReviewAt),
-		lt(vocabularySkills.nextReviewAt, now),
-	);
+	const base = and(isNotNull(vocabularySkills.nextReviewAt), lt(vocabularySkills.nextReviewAt, now));
 	const where = userIds === undefined ? base : and(base, inArray(vocabularySkills.userId, userIds));
 
 	return await db
@@ -75,16 +71,13 @@ export const listDueVocabularyCountsByUser = async (now: Date, userIds?: number[
 };
 
 export const getItemsDueTomorrow = async (userId: number, skillType: SkillType = "recognition") => {
-	const now = new Date();
-	const tomorrowEnd = endOfTomorrow();
-
 	return await db.$count(
 		vocabularySkills,
 		and(
 			eq(vocabularySkills.userId, userId),
 			eq(vocabularySkills.skillType, skillType),
-			gt(vocabularySkills.nextReviewAt, now),
-			lte(vocabularySkills.nextReviewAt, tomorrowEnd),
+			gt(vocabularySkills.nextReviewAt, toEpochSeconds(nowInstant())),
+			lte(vocabularySkills.nextReviewAt, toEpochSeconds(endOfTomorrowUTC())),
 		),
 	);
 };
@@ -109,13 +102,16 @@ export const applyVocabularySkillSideEffect = async (
 		columns: { easeFactor: true, intervalDays: true, reviewCount: true },
 	});
 
-	const now = new Date();
-	const mutation = vocabularySkillStateAfterAttempt(existingSkill, isCorrect, timeTaken, now);
+	const mutation = vocabularySkillStateAfterAttempt(existingSkill, isCorrect, timeTaken);
 
 	if (mutation.op === "update") {
 		await tx
 			.update(vocabularySkills)
-			.set(mutation.set)
+			.set({
+				...mutation.set,
+				nextReviewAt: toEpochSeconds(mutation.set.nextReviewAt),
+				lastReviewedAt: toEpochSeconds(mutation.set.lastReviewedAt),
+			})
 			.where(
 				and(
 					eq(vocabularySkills.userId, userId),
@@ -129,6 +125,8 @@ export const applyVocabularySkillSideEffect = async (
 			vocabularyId,
 			skillType,
 			...mutation.values,
+			nextReviewAt: toEpochSeconds(mutation.values.nextReviewAt),
+			lastReviewedAt: toEpochSeconds(mutation.values.lastReviewedAt),
 		});
 	}
 };

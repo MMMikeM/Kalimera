@@ -13,6 +13,7 @@ import { listCompletedPracticeSessionsForStreak } from "@/db.server/queries/prac
 import { getSkillStats } from "@/db.server/queries/vocabulary-skills";
 import { getAuthSession } from "@/lib/auth-cookie";
 import { streakLengthFromCompletedSessionDates } from "@/lib/practice-streak";
+import { fromEpochSeconds } from "@/lib/time";
 
 import type { Route } from "./+types/progress";
 
@@ -47,7 +48,7 @@ export async function loader({ request }: Route.LoaderArgs) {
 			listCompletedPracticeSessionsForStreak(userId),
 		],
 	);
-	const completedDates = completedSessions.map((s) => s.completedAt!);
+	const completedDates = completedSessions.map((s) => fromEpochSeconds(s.completedAt!));
 
 	const accuracyData = accuracyTrends.map((d) => ({
 		date: d.date,

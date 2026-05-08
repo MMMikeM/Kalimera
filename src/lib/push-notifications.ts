@@ -3,13 +3,13 @@
  * `@/db.server/queries/notifications/*` plus per-table reads in
  * `practice-sessions.ts` and `vocabulary-skills.ts`.
  */
+import { Temporal } from "@js-temporal/polyfill";
 import {
 	type PushPayload,
 	type PushSubscriptionData,
 	sendPushNotification,
 	type VapidConfig,
 } from "@mmmike/web-push/send";
-import { endOfDay, format, parseISO, startOfDay, subDays } from "date-fns";
 
 import {
 	logNotificationSent,
@@ -29,6 +29,17 @@ import {
 } from "@/db.server/queries/practice-sessions";
 import { listDueVocabularyCountsByUser } from "@/db.server/queries/vocabulary-skills";
 import { streakLengthFromCompletedSessionDates } from "@/lib/practice-streak";
+import {
+	endOfDayUTC,
+	fromEpochSeconds,
+	nowInstant,
+	parsePlainDate,
+	startOfDayUTC,
+	toEpochSeconds,
+	toInstant,
+	toPlainDate,
+	today,
+} from "@/lib/time";
 
 interface NotificationResult {
 	sent: number;
@@ -43,14 +54,14 @@ const toPushPayload = (sub: PushSubscriptionCronRow): PushSubscriptionData => ({
 
 /** Distinct local calendar days per user, most recent first (max `maxDays` entries each). */
 const distinctPracticeDaysDesc = (
-	rows: { userId: number; startedAt: Date }[],
+	rows: { userId: number; startedAt: number }[],
 	maxDays: number,
 ): Map<number, string[]> => {
 	const byUser = new Map<number, string[]>();
 	const seen = new Map<number, Set<string>>();
 
 	for (const row of rows) {
-		const day = format(row.startedAt, "yyyy-MM-dd");
+		const day = toPlainDate(fromEpochSeconds(row.startedAt)).toString();
 		let daysSeen = seen.get(row.userId);
 		if (!daysSeen) {
 			daysSeen = new Set();
@@ -71,8 +82,7 @@ const distinctPracticeDaysDesc = (
 	return byUser;
 };
 
-const utcCalendarDayIndex = (d: Date): number =>
-	Math.floor(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()) / 86_400_000);
+const utcCalendarDayIndex = (): number => Math.floor(nowInstant().epochMilliseconds / 86_400_000);
 
 /**
  * Send a push notification to a specific subscription
@@ -132,7 +142,7 @@ export const sendPracticeReminders = async (vapid: VapidConfig): Promise<Notific
 		invalidSubscriptions: [],
 	};
 
-	const now = new Date();
+	const now = nowInstant();
 	const subscriptions = await listPushSubscriptionsForCron();
 
 	if (subscriptions.length === 0) {
@@ -143,7 +153,7 @@ export const sendPracticeReminders = async (vapid: VapidConfig): Promise<Notific
 	for (const sub of subscriptions) {
 		if (!sub.userId) continue;
 
-		if (sub.snoozedUntil && sub.snoozedUntil > now) {
+		if (sub.snoozedUntil && Temporal.Instant.compare(fromEpochSeconds(sub.snoozedUntil), now) > 0) {
 			continue;
 		}
 
@@ -181,8 +191,8 @@ export const sendReviewDueNotifications = async (
 		invalidSubscriptions: [],
 	};
 
-	const now = new Date();
-	const dueRows = await listDueVocabularyCountsByUser(now);
+	const now = nowInstant();
+	const dueRows = await listDueVocabularyCountsByUser(toEpochSeconds(now));
 	const dueByUser = new Map(dueRows.map((r) => [r.userId, r.dueCount]));
 	const userIds = [...dueByUser.keys()];
 
@@ -196,7 +206,7 @@ export const sendReviewDueNotifications = async (
 	for (const sub of subscriptions) {
 		if (!sub.userId) continue;
 
-		if (sub.snoozedUntil && sub.snoozedUntil > now) {
+		if (sub.snoozedUntil && Temporal.Instant.compare(fromEpochSeconds(sub.snoozedUntil), now) > 0) {
 			continue;
 		}
 
@@ -261,7 +271,7 @@ const selectCopy = (
 	dueCount: number,
 	streak: number,
 ): { title: string; body: string } => {
-	const dayIndex = utcCalendarDayIndex(new Date());
+	const dayIndex = utcCalendarDayIndex();
 	const copy = STREAK_WARNING_COPY[(userId + dayIndex) % STREAK_WARNING_COPY.length];
 	if (!copy) return { title: "Your Greek is waiting.", body: "Quick review?" };
 	return { title: copy.title, body: copy.body(dueCount, streak) };
@@ -280,7 +290,7 @@ export const sendStreakWarningNotifications = async (
 		invalidSubscriptions: [],
 	};
 
-	const now = new Date();
+	const now = nowInstant();
 
 	const subscriptions = await listPushSubscriptionsForCron();
 	if (subscriptions.length === 0) {
@@ -289,7 +299,7 @@ export const sendStreakWarningNotifications = async (
 	}
 
 	const activeSubs = subscriptions.filter(
-		(s) => s.userId && (!s.snoozedUntil || s.snoozedUntil <= now),
+		(s) => s.userId && (!s.snoozedUntil || Temporal.Instant.compare(fromEpochSeconds(s.snoozedUntil), now) <= 0),
 	) as (PushSubscriptionCronRow & { userId: number })[];
 
 	if (activeSubs.length === 0) {
@@ -297,9 +307,12 @@ export const sendStreakWarningNotifications = async (
 	}
 
 	const candidateIds = activeSubs.map((s) => s.userId);
-	const todayStart = startOfDay(now);
-	const todayEnd = endOfDay(now);
-	const practicedToday = await getUserIdsPracticedInRange(candidateIds, todayStart, todayEnd);
+	const todayDate = today();
+	const practicedToday = await getUserIdsPracticedInRange(
+		candidateIds,
+		toEpochSeconds(startOfDayUTC(todayDate)),
+		toEpochSeconds(endOfDayUTC(todayDate)),
+	);
 
 	const streakCandidates = activeSubs.filter((s) => !practicedToday.has(s.userId));
 	if (streakCandidates.length === 0) {
@@ -307,9 +320,12 @@ export const sendStreakWarningNotifications = async (
 	}
 
 	const streakUserIds = streakCandidates.map((s) => s.userId);
-	const dueRows = await listDueVocabularyCountsByUser(now, streakUserIds);
+	const dueRows = await listDueVocabularyCountsByUser(toEpochSeconds(now), streakUserIds);
 	const dueByUser = new Map(dueRows.map((r) => [r.userId, r.dueCount]));
-	const sessionRows = await listPracticeSessionsSinceForUsers(streakUserIds, subDays(now, 45));
+	const sessionRows = await listPracticeSessionsSinceForUsers(
+		streakUserIds,
+		toEpochSeconds(toInstant(todayDate.subtract({ days: 45 }))),
+	);
 	const datesByUser = distinctPracticeDaysDesc(sessionRows, 30);
 
 	for (const sub of streakCandidates) {
@@ -317,7 +333,7 @@ export const sendStreakWarningNotifications = async (
 		if (dates.length === 0) continue;
 
 		const streak = streakLengthFromCompletedSessionDates(
-			dates.map((d) => parseISO(d)),
+			dates.map((d) => toInstant(parsePlainDate(d))),
 			now,
 		);
 		if (streak === 0) continue;

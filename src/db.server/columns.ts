@@ -2,6 +2,8 @@ import { sql } from "drizzle-orm";
 import type { AnySQLiteColumn, SQLiteColumn } from "drizzle-orm/sqlite-core";
 import { integer, real, text } from "drizzle-orm/sqlite-core";
 
+import { nowInstant, toEpochSeconds } from "@/lib/time";
+
 // Primary key
 const pk = (name = "id") => integer(name).primaryKey({ autoIncrement: true });
 
@@ -29,11 +31,12 @@ const nullableDecimal = (name: string) => real(name);
 const bool = (name: string) => integer(name, { mode: "boolean" }).notNull();
 const nullableBool = (name: string) => integer(name, { mode: "boolean" });
 
-// Timestamps
-const timestamp = (name: string) => integer(name, { mode: "timestamp" }).notNull();
-const nullableTimestamp = (name: string) => integer(name, { mode: "timestamp" });
+// Timestamps stored as Unix epoch seconds (INTEGER). Convert to Temporal.Instant at call sites.
+const timestamp = (name: string) => integer(name).notNull();
+const nullableTimestamp = (name: string) => integer(name);
 const createdAt = (name = "created_at") => timestamp(name).default(sql`(unixepoch())`);
-const updatedAt = (name = "updated_at") => nullableTimestamp(name).$onUpdate(() => new Date());
+const updatedAt = (name = "updated_at") =>
+	nullableTimestamp(name).$onUpdate(() => toEpochSeconds(nowInstant()));
 
 // JSON
 const json = <T>(name: string) => text(name, { mode: "json" }).$type<T>();

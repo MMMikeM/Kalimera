@@ -1,5 +1,6 @@
-import { subDays, subMonths } from "date-fns";
 import { and, count, eq, gte, isNotNull, sql } from "drizzle-orm";
+
+import { toEpochSeconds, toInstant, today } from "@/lib/time";
 
 import { db } from "../../index";
 import { practiceAttempts, practiceSessions } from "../../schema";
@@ -25,7 +26,7 @@ export const getPracticeDatesForCalendar = async (
 	userId: number,
 	months: number,
 ): Promise<PracticeDate[]> => {
-	const cutoff = subMonths(new Date(), months);
+	const cutoff = toEpochSeconds(toInstant(today().subtract({ months })));
 
 	const results = await db
 		.select({
@@ -50,7 +51,7 @@ export const getPracticeDatesForCalendar = async (
 };
 
 export const getAccuracyTrends = async (userId: number, days: number): Promise<AccuracyTrend[]> => {
-	const cutoff = subDays(new Date(), days);
+	const cutoff = toEpochSeconds(toInstant(today().subtract({ days })));
 
 	const results = await db
 		.select({

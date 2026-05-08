@@ -9,11 +9,13 @@ export async function loader() {
 		getVocabBySlug("verbs", ["verb"]),
 	]);
 
-	const toSlugMap = (tags: typeof phraseTags) =>
+	const toSlugMap = (tags: typeof phraseTags): Record<string, Vocabulary[]> =>
 		Object.fromEntries(
 			tags.map((t) => [
 				t.slug,
-				t.vocabularyTags.map((vt) => vt.vocabulary).filter((v): v is Vocabulary => v !== null),
+				t.vocabularyTags
+					.map((vt) => vt.vocabulary)
+					.filter((v): v is Vocabulary => v !== null),
 			]),
 		);
 

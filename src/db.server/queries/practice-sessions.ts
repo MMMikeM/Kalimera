@@ -1,4 +1,7 @@
+import { Temporal } from "@js-temporal/polyfill";
 import { and, eq, gte, inArray, lt } from "drizzle-orm";
+
+import { fromEpochSeconds, nowInstant, toEpochSeconds } from "@/lib/time";
 
 import { db } from "../index";
 import { practiceSessions } from "../schema";
@@ -21,7 +24,7 @@ export const completeSession = async (input: CompleteSessionInput) => {
 		.update(practiceSessions)
 		.set({
 			...patch,
-			completedAt: new Date(),
+			completedAt: toEpochSeconds(nowInstant()),
 		})
 		.where(eq(practiceSessions.id, sessionId))
 		.returning();
@@ -29,14 +32,14 @@ export const completeSession = async (input: CompleteSessionInput) => {
 	return session;
 };
 
-export const getLastPracticeDate = async (userId: number): Promise<Date | null> => {
+export const getLastPracticeDate = async (userId: number): Promise<Temporal.Instant | null> => {
 	const result = await db.query.practiceSessions.findFirst({
 		where: { userId, NOT: { completedAt: { isNull: true } } },
 		orderBy: { completedAt: "desc" },
 		columns: { completedAt: true },
 	});
 
-	return result?.completedAt ? new Date(result.completedAt) : null;
+	return result?.completedAt != null ? fromEpochSeconds(result.completedAt) : null;
 };
 
 /**
@@ -54,8 +57,8 @@ export const listCompletedPracticeSessionsForStreak = async (userId: number) => 
 
 export const getUserIdsPracticedInRange = async (
 	userIds: number[],
-	rangeStart: Date,
-	rangeEnd: Date,
+	rangeStart: number,
+	rangeEnd: number,
 ) => {
 	if (userIds.length === 0) return new Set<number>();
 
@@ -73,7 +76,7 @@ export const getUserIdsPracticedInRange = async (
 	return new Set(rows.map((r) => r.userId));
 };
 
-export const listPracticeSessionsSinceForUsers = async (userIds: number[], since: Date) => {
+export const listPracticeSessionsSinceForUsers = async (userIds: number[], since: number) => {
 	if (userIds.length === 0) return [];
 
 	return await db.query.practiceSessions.findMany({
