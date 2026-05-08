@@ -29,6 +29,7 @@ import {
 import { clearAuthCookie, getAuthSession } from "@/lib/auth-cookie";
 
 import type { Route } from "./+types/root";
+import { today } from "./lib/time";
 
 const AUTH_STORAGE_KEY = "greek-authenticated-user";
 
@@ -341,7 +342,7 @@ export function ErrorBoundary() {
 				stack: errorStack,
 				url: typeof window !== "undefined" ? window.location.href : undefined,
 				userAgent: typeof navigator !== "undefined" ? navigator.userAgent : undefined,
-				timestamp: new Date().toISOString(),
+				timestamp: today(),
 			}),
 		}).catch(() => {
 			// Silently fail - don't create more errors while handling an error

@@ -34,8 +34,7 @@ const REFERENCE_TABS: NavTab[] = [
 	{ id: "patterns", label: "Patterns", color: "honey" },
 ];
 
-export async function loader({ params }: Route.LoaderArgs) {
-	const tab = params.tab as string;
+export async function loader({ params: { tab } }: Route.LoaderArgs) {
 	if (!VALID_TABS.includes(tab as TabId)) {
 		throw new Response("Not Found", { status: 404 });
 	}
