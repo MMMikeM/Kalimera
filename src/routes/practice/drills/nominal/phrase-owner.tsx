@@ -1,14 +1,15 @@
 import { SPEEDS } from "../../drill-speeds";
-import { GENDER_CATEGORIES, GENDER_DIMENSION_OPTIONS } from "../../engines/drill-constants";
+import { GENDER_DIMENSION_OPTIONS, GENDER_PLURAL_CATEGORIES } from "../../engines/drill-constants";
 import { SimpleListDrill, type SimpleListItem } from "../../engines/simple-list-drill";
 
-// Owner (genitive) noun phrase capstone — article + adjective + noun in genitive form.
-// Forward: "of the good friend" → type "tou kalou filou"
-// Reverse: show "της μεγάλης πόλης" → tap gender chip
-// Pure noun phrases. Tests article/adjective/noun integration in Owner form.
+// Owner (genitive) noun phrase capstone — article + adjective + noun.
+// Singular: του/της/του + adj(sg, gen) + noun(sg, gen)
+// Plural:   των + adj(-ων) + noun(pl, gen)  — article identical across genders; noun endings differ
+// Forward: "of the good friend (m)" → type "tou kalou filou"
+// Reverse: show Greek phrase → tap gender chip
 
 export const PHRASES: SimpleListItem[] = [
-	// Masculine owner: του + -ου + -ου
+	// ── Singular masculine ──────────────────────────────────────────────────────
 	{
 		id: "kalou-filou",
 		greek: "του καλού φίλου",
@@ -55,7 +56,7 @@ export const PHRASES: SimpleListItem[] = [
 		dimension: "masculine",
 	},
 
-	// Feminine owner: της + -ης/-ας + -ης/-ας
+	// ── Singular feminine ───────────────────────────────────────────────────────
 	{
 		id: "kalis-meras",
 		greek: "της καλής μέρας",
@@ -102,7 +103,7 @@ export const PHRASES: SimpleListItem[] = [
 		dimension: "feminine",
 	},
 
-	// Neuter owner: του + -ου + (varied: -ου, -ιού, -ος → -ους etc)
+	// ── Singular neuter ─────────────────────────────────────────────────────────
 	{
 		id: "kalou-spitiou",
 		greek: "του καλού σπιτιού",
@@ -148,6 +149,147 @@ export const PHRASES: SimpleListItem[] = [
 		category: "neuter",
 		dimension: "neuter",
 	},
+
+	// ── Plural masculine ────────────────────────────────────────────────────────
+	{
+		id: "kalon-filon",
+		greek: "των καλών φίλων",
+		greeklish: "ton kalon filon",
+		english: "of the good friends (m, pl)",
+		label: "των καλών φίλων",
+		category: "plural",
+		dimension: "masculine",
+	},
+	{
+		id: "megalon-dromon",
+		greek: "των μεγάλων δρόμων",
+		greeklish: "ton megalon dromon",
+		english: "of the big roads (pl)",
+		label: "των μεγάλων δρόμων",
+		category: "plural",
+		dimension: "masculine",
+	},
+	{
+		id: "neon-daskalon",
+		greek: "των νέων δασκάλων",
+		greeklish: "ton neon daskalon",
+		english: "of the new teachers (m, pl)",
+		label: "των νέων δασκάλων",
+		category: "plural",
+		dimension: "masculine",
+	},
+	{
+		id: "mikron-skylaon",
+		greek: "των μικρών σκύλων",
+		greeklish: "ton mikron skylon",
+		english: "of the small dogs (pl)",
+		label: "των μικρών σκύλων",
+		category: "plural",
+		dimension: "masculine",
+	},
+	{
+		id: "omorfon-anthropon",
+		greek: "των όμορφων ανθρώπων",
+		greeklish: "ton omorfon anthropon",
+		english: "of the handsome people (pl)",
+		label: "των όμορφων ανθρώπων",
+		category: "plural",
+		dimension: "masculine",
+	},
+
+	// ── Plural feminine ─────────────────────────────────────────────────────────
+	{
+		id: "kalon-meron",
+		greek: "των καλών μερών",
+		greeklish: "ton kalon meron",
+		english: "of the good days (pl)",
+		label: "των καλών μερών",
+		category: "plural",
+		dimension: "feminine",
+	},
+	{
+		id: "megalon-poleon",
+		greek: "των μεγάλων πόλεων",
+		greeklish: "ton megalon poleon",
+		english: "of the big cities (pl)",
+		label: "των μεγάλων πόλεων",
+		category: "plural",
+		dimension: "feminine",
+	},
+	{
+		id: "neon-tainion",
+		greek: "των νέων ταινιών",
+		greeklish: "ton neon tainion",
+		english: "of the new films (pl)",
+		label: "των νέων ταινιών",
+		category: "plural",
+		dimension: "feminine",
+	},
+	{
+		id: "mikron-gaton",
+		greek: "των μικρών γατών",
+		greeklish: "ton mikron gaton",
+		english: "of the small cats (pl)",
+		label: "των μικρών γατών",
+		category: "plural",
+		dimension: "feminine",
+	},
+	{
+		id: "zeston-soupon",
+		greek: "των ζεστών σουπών",
+		greeklish: "ton zeston soupon",
+		english: "of the hot soups (pl)",
+		label: "των ζεστών σουπών",
+		category: "plural",
+		dimension: "feminine",
+	},
+
+	// ── Plural neuter ───────────────────────────────────────────────────────────
+	{
+		id: "kalon-spition",
+		greek: "των καλών σπιτιών",
+		greeklish: "ton kalon spition",
+		english: "of the good houses (pl)",
+		label: "των καλών σπιτιών",
+		category: "plural",
+		dimension: "neuter",
+	},
+	{
+		id: "megalon-provlimaton",
+		greek: "των μεγάλων προβλημάτων",
+		greeklish: "ton megalon provlimaton",
+		english: "of the big problems (pl)",
+		label: "των μεγάλων προβλημάτων",
+		category: "plural",
+		dimension: "neuter",
+	},
+	{
+		id: "neon-aftokiniton",
+		greek: "των νέων αυτοκινήτων",
+		greeklish: "ton neon aftokiniton",
+		english: "of the new cars (pl)",
+		label: "των νέων αυτοκινήτων",
+		category: "plural",
+		dimension: "neuter",
+	},
+	{
+		id: "mikron-paidion",
+		greek: "των μικρών παιδιών",
+		greeklish: "ton mikron paidion",
+		english: "of the small children (pl)",
+		label: "των μικρών παιδιών",
+		category: "plural",
+		dimension: "neuter",
+	},
+	{
+		id: "kryon-neron",
+		greek: "των κρύων νερών",
+		greeklish: "ton kryon neron",
+		english: "of the cold waters (pl)",
+		label: "των κρύων νερών",
+		category: "plural",
+		dimension: "neuter",
+	},
 ];
 
 export default function PhraseOwnerDrill() {
@@ -156,13 +298,13 @@ export default function PhraseOwnerDrill() {
 			drillId="nominal-phrase-owner"
 			items={PHRASES}
 			title="Owner phrase"
-			subtitle="15 noun phrases / timed"
+			subtitle="30 noun phrases / timed"
 			colorTheme="olive"
 			speeds={SPEEDS}
 			forwardDesc="English → article + adjective + noun (Owner form)"
 			reverseLabel="Greek → gender"
 			reverseDesc="Phrase → select gender"
-			categories={GENDER_CATEGORIES}
+			categories={GENDER_PLURAL_CATEGORIES}
 			reverseDimension={{
 				options: GENDER_DIMENSION_OPTIONS,
 				getCorrectId: (item) => item.dimension ?? "",

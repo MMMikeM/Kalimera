@@ -2,10 +2,11 @@ import { SPEEDS } from "../../drill-speeds";
 import { GENDER_DIMENSION_OPTIONS } from "../../engines/drill-constants";
 import { SimpleListDrill, type SimpleListItem } from "../../engines/simple-list-drill";
 
-// Adjective three-form agreement in Target (accusative singular).
-// m -ος → -ο · f -η/-α unchanged · n -ο unchanged
-// Forward: "good (m, target)" → type "kalo"
-// Reverse: show "καλή" → tap masculine / feminine / neuter chip
+// Adjective three-form agreement in Target (accusative).
+// Singular: m -ο · f -η/-α · n -ο
+// Plural:   m -ους · f -ες · n -α
+// Forward: "good (m, target)" → type "kalo" / "good (m, pl, target)" → type "kalous"
+// Reverse: show Greek form → tap gender chip
 
 interface AdjGroup {
 	id: string;
@@ -13,6 +14,9 @@ interface AdjGroup {
 	masculine: { greek: string; greeklish: string };
 	feminine: { greek: string; greeklish: string };
 	neuter: { greek: string; greeklish: string };
+	pluralMasc: { greek: string; greeklish: string };
+	pluralFem: { greek: string; greeklish: string };
+	pluralNeut: { greek: string; greeklish: string };
 }
 
 const ADJECTIVES: AdjGroup[] = [
@@ -22,6 +26,9 @@ const ADJECTIVES: AdjGroup[] = [
 		masculine: { greek: "καλό", greeklish: "kalo" },
 		feminine: { greek: "καλή", greeklish: "kali" },
 		neuter: { greek: "καλό", greeklish: "kalo" },
+		pluralMasc: { greek: "καλούς", greeklish: "kalous" },
+		pluralFem: { greek: "καλές", greeklish: "kales" },
+		pluralNeut: { greek: "καλά", greeklish: "kala" },
 	},
 	{
 		id: "megalo",
@@ -29,6 +36,9 @@ const ADJECTIVES: AdjGroup[] = [
 		masculine: { greek: "μεγάλο", greeklish: "megalo" },
 		feminine: { greek: "μεγάλη", greeklish: "megali" },
 		neuter: { greek: "μεγάλο", greeklish: "megalo" },
+		pluralMasc: { greek: "μεγάλους", greeklish: "megalous" },
+		pluralFem: { greek: "μεγάλες", greeklish: "megales" },
+		pluralNeut: { greek: "μεγάλα", greeklish: "megala" },
 	},
 	{
 		id: "mikro",
@@ -36,6 +46,9 @@ const ADJECTIVES: AdjGroup[] = [
 		masculine: { greek: "μικρό", greeklish: "mikro" },
 		feminine: { greek: "μικρή", greeklish: "mikri" },
 		neuter: { greek: "μικρό", greeklish: "mikro" },
+		pluralMasc: { greek: "μικρούς", greeklish: "mikrous" },
+		pluralFem: { greek: "μικρές", greeklish: "mikres" },
+		pluralNeut: { greek: "μικρά", greeklish: "mikra" },
 	},
 	{
 		id: "neo",
@@ -43,6 +56,9 @@ const ADJECTIVES: AdjGroup[] = [
 		masculine: { greek: "νέο", greeklish: "neo" },
 		feminine: { greek: "νέα", greeklish: "nea" },
 		neuter: { greek: "νέο", greeklish: "neo" },
+		pluralMasc: { greek: "νέους", greeklish: "neous" },
+		pluralFem: { greek: "νέες", greeklish: "nees" },
+		pluralNeut: { greek: "νέα", greeklish: "nea" },
 	},
 	{
 		id: "palio",
@@ -50,6 +66,9 @@ const ADJECTIVES: AdjGroup[] = [
 		masculine: { greek: "παλιό", greeklish: "palio" },
 		feminine: { greek: "παλιά", greeklish: "palia" },
 		neuter: { greek: "παλιό", greeklish: "palio" },
+		pluralMasc: { greek: "παλιούς", greeklish: "palious" },
+		pluralFem: { greek: "παλιές", greeklish: "palies" },
+		pluralNeut: { greek: "παλιά", greeklish: "palia" },
 	},
 	{
 		id: "omorfo",
@@ -57,6 +76,9 @@ const ADJECTIVES: AdjGroup[] = [
 		masculine: { greek: "όμορφο", greeklish: "omorfo" },
 		feminine: { greek: "όμορφη", greeklish: "omorfi" },
 		neuter: { greek: "όμορφο", greeklish: "omorfo" },
+		pluralMasc: { greek: "όμορφους", greeklish: "omorfous" },
+		pluralFem: { greek: "όμορφες", greeklish: "omorhes" },
+		pluralNeut: { greek: "όμορφα", greeklish: "omorfa" },
 	},
 	{
 		id: "zesto",
@@ -64,6 +86,9 @@ const ADJECTIVES: AdjGroup[] = [
 		masculine: { greek: "ζεστό", greeklish: "zesto" },
 		feminine: { greek: "ζεστή", greeklish: "zesti" },
 		neuter: { greek: "ζεστό", greeklish: "zesto" },
+		pluralMasc: { greek: "ζεστούς", greeklish: "zestous" },
+		pluralFem: { greek: "ζεστές", greeklish: "zestes" },
+		pluralNeut: { greek: "ζεστά", greeklish: "zesta" },
 	},
 	{
 		id: "kryo",
@@ -71,6 +96,9 @@ const ADJECTIVES: AdjGroup[] = [
 		masculine: { greek: "κρύο", greeklish: "kryo" },
 		feminine: { greek: "κρύα", greeklish: "krya" },
 		neuter: { greek: "κρύο", greeklish: "kryo" },
+		pluralMasc: { greek: "κρύους", greeklish: "kryous" },
+		pluralFem: { greek: "κρύες", greeklish: "kryes" },
+		pluralNeut: { greek: "κρύα", greeklish: "krya" },
 	},
 	{
 		id: "efkolo",
@@ -78,6 +106,9 @@ const ADJECTIVES: AdjGroup[] = [
 		masculine: { greek: "εύκολο", greeklish: "efkolo" },
 		feminine: { greek: "εύκολη", greeklish: "efkoli" },
 		neuter: { greek: "εύκολο", greeklish: "efkolo" },
+		pluralMasc: { greek: "εύκολους", greeklish: "efkolous" },
+		pluralFem: { greek: "εύκολες", greeklish: "efkoles" },
+		pluralNeut: { greek: "εύκολα", greeklish: "efkola" },
 	},
 	{
 		id: "dyskolo",
@@ -85,6 +116,9 @@ const ADJECTIVES: AdjGroup[] = [
 		masculine: { greek: "δύσκολο", greeklish: "dyskolo" },
 		feminine: { greek: "δύσκολη", greeklish: "dyskoli" },
 		neuter: { greek: "δύσκολο", greeklish: "dyskolo" },
+		pluralMasc: { greek: "δύσκολους", greeklish: "dyskolous" },
+		pluralFem: { greek: "δύσκολες", greeklish: "dyskoles" },
+		pluralNeut: { greek: "δύσκολα", greeklish: "dyskola" },
 	},
 ];
 
@@ -116,12 +150,40 @@ const ITEMS: SimpleListItem[] = ADJECTIVES.flatMap((adj) => [
 		category: "neuter",
 		dimension: "neuter",
 	},
+	{
+		id: `${adj.id}-pl-m`,
+		greek: adj.pluralMasc.greek,
+		greeklish: adj.pluralMasc.greeklish,
+		english: `${adj.english} (m, pl, target)`,
+		label: "plural m",
+		category: "plural",
+		dimension: "masculine",
+	},
+	{
+		id: `${adj.id}-pl-f`,
+		greek: adj.pluralFem.greek,
+		greeklish: adj.pluralFem.greeklish,
+		english: `${adj.english} (f, pl, target)`,
+		label: "plural f",
+		category: "plural",
+		dimension: "feminine",
+	},
+	{
+		id: `${adj.id}-pl-n`,
+		greek: adj.pluralNeut.greek,
+		greeklish: adj.pluralNeut.greeklish,
+		english: `${adj.english} (n, pl, target)`,
+		label: "plural n",
+		category: "plural",
+		dimension: "neuter",
+	},
 ]);
 
 const CATEGORIES = [
 	{ id: "masculine", label: "Masculine (-ο)" },
 	{ id: "feminine", label: "Feminine (-η/-α)" },
 	{ id: "neuter", label: "Neuter (-ο)" },
+	{ id: "plural", label: "Plural (-ους/-ες/-α)" },
 ];
 
 export default function AdjectiveAgreementTargetDrill() {
@@ -130,7 +192,7 @@ export default function AdjectiveAgreementTargetDrill() {
 			drillId="adjectives-agreement-target"
 			items={ITEMS}
 			title="Adjective agreement (Target)"
-			subtitle="30 forms / timed"
+			subtitle="60 forms / timed"
 			colorTheme="terracotta"
 			speeds={SPEEDS}
 			forwardDesc="English + gender → adjective form (Target)"
