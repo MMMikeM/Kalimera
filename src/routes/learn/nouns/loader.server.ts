@@ -34,9 +34,7 @@ export async function loader() {
 	const bySlug: Record<string, Vocabulary[]> = Object.fromEntries(
 		tags.map((t) => [
 			t.slug,
-			t.vocabularyTags
-				.map((vt) => vt.vocabulary)
-				.filter((v): v is Vocabulary => v !== null),
+			t.vocabularyTags.map((vt) => vt.vocabulary).filter((v): v is Vocabulary => v !== null),
 		]),
 	);
 

@@ -65,12 +65,32 @@ export const eachDayOfMonth = (d: Temporal.PlainDate): Temporal.PlainDate[] => {
 // --- Formatting ----------------------------------------------------------
 
 const MONTH_SHORT = [
-	"Jan", "Feb", "Mar", "Apr", "May", "Jun",
-	"Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+	"Jan",
+	"Feb",
+	"Mar",
+	"Apr",
+	"May",
+	"Jun",
+	"Jul",
+	"Aug",
+	"Sep",
+	"Oct",
+	"Nov",
+	"Dec",
 ];
 const MONTH_LONG = [
-	"January", "February", "March", "April", "May", "June",
-	"July", "August", "September", "October", "November", "December",
+	"January",
+	"February",
+	"March",
+	"April",
+	"May",
+	"June",
+	"July",
+	"August",
+	"September",
+	"October",
+	"November",
+	"December",
 ];
 
 /** YYYY-MM-DD */

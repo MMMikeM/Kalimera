@@ -1,4 +1,3 @@
-
 import { Temporal } from "@js-temporal/polyfill";
 
 import type { AreaType } from "@/db.server/schema";

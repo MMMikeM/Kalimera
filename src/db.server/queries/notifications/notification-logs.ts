@@ -2,7 +2,14 @@ import { and, eq, gte, lt } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-orm/zod";
 import type z from "zod/v4";
 
-import { fromEpochSeconds, nowInstant, toEpochSeconds, toInstant, toPlainDate, today } from "@/lib/time";
+import {
+	fromEpochSeconds,
+	nowInstant,
+	toEpochSeconds,
+	toInstant,
+	toPlainDate,
+	today,
+} from "@/lib/time";
 
 import { db } from "../../index";
 import { notificationLogs, practiceSessions } from "../../schema";
@@ -61,7 +68,10 @@ export const userQualifiesForNotificationTaper = async (
 		const sentInstant = fromEpochSeconds(send.sentAt);
 		const sendDay = toEpochSeconds(toInstant(toPlainDate(sentInstant)));
 		const notificationTime = toEpochSeconds(
-			toPlainDate(sentInstant).toZonedDateTime("UTC").with({ hour: notificationHourUtc }).toInstant(),
+			toPlainDate(sentInstant)
+				.toZonedDateTime("UTC")
+				.with({ hour: notificationHourUtc })
+				.toInstant(),
 		);
 
 		const practicedBeforeCount = await db.$count(
