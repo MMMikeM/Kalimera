@@ -49,17 +49,38 @@ const getStemFromLemma = (lemma: string, pattern: NounDeclensionPattern): string
 
 const TONOS_CHARS = /[άέήίόύώΐΰ]/;
 const TONOS_MAP: Record<string, string> = {
-	ά: "α", // ά → α
-	έ: "ε", // έ → ε
-	ή: "η", // ή → η
-	ί: "ι", // ί → ι
-	ό: "ο", // ό → ο
-	ύ: "υ", // ύ → υ
-	ώ: "ω", // ώ → ω
-	ΐ: "ϊ", // ΐ → ϊ
-	ΰ: "ϋ", // ΰ → ϋ
+	ά: "α",
+	ε: "ε",
+	έ: "ε",
+	η: "η",
+	ή: "η",
+	ί: "ι",
+	ό: "ο",
+	ύ: "υ",
+	ώ: "ω",
+	ΐ: "ϊ",
+	ΰ: "ϋ",
+};
+const ADD_TONOS_MAP: Record<string, string> = {
+	α: "ά",
+	ε: "έ",
+	η: "ή",
+	ι: "ί",
+	ο: "ό",
+	υ: "ύ",
+	ω: "ώ",
 };
 const stripTonos = (s: string): string => s.replace(/[άέήίόύώΐΰ]/g, (m) => TONOS_MAP[m] ?? m);
+
+/** Add accent to the last vowel of a string (for oxytone forms where stem has no tonos). */
+const addTonosToLastVowel = (s: string): string => {
+	for (let i = s.length - 1; i >= 0; i--) {
+		const ch = s[i];
+		const accented = ch ? ADD_TONOS_MAP[ch] : undefined;
+		if (accented) return s.slice(0, i) + accented + s.slice(i + 1);
+	}
+	return s;
+};
 
 /** Greek allows only one tonos per word. When stem and suffix both carry stress,
  * one must drop. Genitive forms typically shift stress to the suffix; other
@@ -72,17 +93,27 @@ const applyEnding = (stem: string, ending: string, isGenitive = false): string =
 	const stemHasTonos = TONOS_CHARS.test(stem);
 	const endingHasTonos = TONOS_CHARS.test(cleanEnding);
 
+	let result: string;
 	if (stemHasTonos && endingHasTonos) {
-		return isGenitive ? stripTonos(stem) + cleanEnding : stem + stripTonos(cleanEnding);
+		result = isGenitive ? stripTonos(stem) + cleanEnding : stem + stripTonos(cleanEnding);
+	} else {
+		result = stem + cleanEnding;
 	}
-	return stem + cleanEnding;
+
+	// Oxytone nouns: stem has no accent because it was on the stripped ending.
+	// Every Greek word must carry exactly one tonos — restore it on the last vowel.
+	if (!TONOS_CHARS.test(result) && result.length > 1) {
+		return addTonosToLastVowel(result);
+	}
+	return result;
 };
 
-const mapArticleForAccusative = (article: string): string => {
-	// Handle special case for feminine accusative τη(ν)
-	// Remove the parenthetical notation for display
+const GREEK_VOWEL_START = /^[αεηιοουωάέήίόύώ]/;
+
+/** Feminine accusative article: τη before consonants, την before vowels. */
+const mapArticleForAccusative = (article: string, noun: string): string => {
 	if (article === "τη(ν)") {
-		return "τη";
+		return GREEK_VOWEL_START.test(noun) ? "την" : "τη";
 	}
 	return article;
 };
@@ -110,8 +141,8 @@ const _declineNounForms = (
 
 		if (!grammaticalCase) continue;
 
-		const article = mapArticleForAccusative(form.article);
 		const noun = applyEnding(stem, form.ending, grammaticalCase === "genitive");
+		const article = mapArticleForAccusative(form.article, noun);
 
 		forms.push({
 			case: grammaticalCase,
