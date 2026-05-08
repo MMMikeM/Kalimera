@@ -1,6 +1,4 @@
 import { ArrowRight, Calendar, Check, ChevronDown, ChevronUp, Play, Sparkles } from "lucide-react";
-
-import { diffInDays, fromEpochSeconds, mondayBasedDayOfWeek, toPlainDate, today } from "@/lib/time";
 import { useState } from "react";
 import { Link, useFetcher } from "react-router";
 
@@ -18,6 +16,7 @@ import { getItemsDueTomorrow, getSkillStats } from "@/db.server/queries/vocabula
 import { getAuthSession } from "@/lib/auth-cookie";
 import { streakLengthFromCompletedSessionDates } from "@/lib/practice-streak";
 import { calculateDaysUntilNextFreeze, type FreezeStatus, getFreezeStatus } from "@/lib/streak";
+import { diffInDays, fromEpochSeconds, mondayBasedDayOfWeek, toPlainDate, today } from "@/lib/time";
 
 import type { Route } from "./+types/home";
 

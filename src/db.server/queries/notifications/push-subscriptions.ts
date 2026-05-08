@@ -1,8 +1,8 @@
 import { eq, inArray } from "drizzle-orm";
-
-import { endOfDayUTC, toEpochSeconds, today } from "@/lib/time";
 import { createInsertSchema } from "drizzle-orm/zod";
 import type z from "zod/v4";
+
+import { endOfDayUTC, toEpochSeconds, today } from "@/lib/time";
 
 import { db } from "../../index";
 import { pushSubscriptions } from "../../schema";

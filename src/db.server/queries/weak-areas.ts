@@ -35,7 +35,10 @@ export const applyWeakAreaSideEffect = async (
 		const { lastMistakeAt, ...rest } = cmd.set;
 		await tx
 			.update(weakAreas)
-			.set({ ...rest, ...(lastMistakeAt != null ? { lastMistakeAt: toEpochSeconds(lastMistakeAt) } : {}) })
+			.set({
+				...rest,
+				...(lastMistakeAt != null ? { lastMistakeAt: toEpochSeconds(lastMistakeAt) } : {}),
+			})
 			.where(eq(weakAreas.id, cmd.id));
 	} else {
 		await tx.insert(weakAreas).values(cmd.values);

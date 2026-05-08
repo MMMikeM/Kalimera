@@ -2,7 +2,6 @@ import { Temporal } from "@js-temporal/polyfill";
 
 import { diffInDays, nowInstant, parsePlainDate, toPlainDate } from "@/lib/time";
 
-
 /**
  * Consecutive local calendar days with at least one completed practice session,
  * counting only if the most recent practice day is today or yesterday (relative to `now`).

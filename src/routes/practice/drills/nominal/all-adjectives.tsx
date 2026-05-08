@@ -8,7 +8,12 @@ export const loader = async ({ request, context }: Route.LoaderArgs) => {
 	const userId = context.get(userIdContext);
 	const url = new URL(request.url);
 	const limit = url.searchParams.get("size") === "quick" ? 10 : 15;
-	const questions = await getNominalReviewQuestions(userId, "adjective", "nominal-all-adjectives", limit * 3);
+	const questions = await getNominalReviewQuestions(
+		userId,
+		"adjective",
+		"nominal-all-adjectives",
+		limit * 3,
+	);
 	return { questions };
 };
 

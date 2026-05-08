@@ -1,8 +1,7 @@
 import { and, count, eq, gt, inArray, isNotNull, lt, lte, sql } from "drizzle-orm";
 
-import { endOfTomorrowUTC, nowInstant, toEpochSeconds } from "@/lib/time";
-
 import { vocabularySkillStateAfterAttempt } from "@/lib/srs";
+import { endOfTomorrowUTC, nowInstant, toEpochSeconds } from "@/lib/time";
 
 import { db } from "../index";
 import { type SkillType, vocabularySkills } from "../schema";
@@ -57,7 +56,10 @@ export const getSkillStats = async (userId: number, skillType: SkillType = "reco
  */
 export const listDueVocabularyCountsByUser = async (now: number, userIds?: number[]) => {
 	if (userIds && userIds.length === 0) return [];
-	const base = and(isNotNull(vocabularySkills.nextReviewAt), lt(vocabularySkills.nextReviewAt, now));
+	const base = and(
+		isNotNull(vocabularySkills.nextReviewAt),
+		lt(vocabularySkills.nextReviewAt, now),
+	);
 	const where = userIds === undefined ? base : and(base, inArray(vocabularySkills.userId, userIds));
 
 	return await db

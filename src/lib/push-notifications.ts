@@ -299,7 +299,9 @@ export const sendStreakWarningNotifications = async (
 	}
 
 	const activeSubs = subscriptions.filter(
-		(s) => s.userId && (!s.snoozedUntil || Temporal.Instant.compare(fromEpochSeconds(s.snoozedUntil), now) <= 0),
+		(s) =>
+			s.userId &&
+			(!s.snoozedUntil || Temporal.Instant.compare(fromEpochSeconds(s.snoozedUntil), now) <= 0),
 	) as (PushSubscriptionCronRow & { userId: number })[];
 
 	if (activeSubs.length === 0) {
