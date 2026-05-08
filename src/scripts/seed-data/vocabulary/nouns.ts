@@ -78,6 +78,13 @@ const NOUNS_RAW = {
 	],
 
 	shopping: [
+		{
+			lemma: "καφές",
+			gender: "masculine",
+			english: "coffee",
+			cefrLevel: "A1",
+			declensionPattern: "masc-es",
+		},
 		{ lemma: "χυμός", gender: "masculine", english: "juice", cefrLevel: "A2" },
 		{ lemma: "ντομάτα", gender: "feminine", english: "tomato", cefrLevel: "A2" },
 		{ lemma: "αγγούρι", gender: "neuter", english: "cucumber", cefrLevel: "A2" },
@@ -93,11 +100,12 @@ const NOUNS_RAW = {
 		{ lemma: "ντουλάπα", gender: "feminine", english: "wardrobe/closet", cefrLevel: "B1" },
 		{ lemma: "ρούχα", gender: "neuter", english: "clothes", cefrLevel: "A2" },
 		{ lemma: "παντελόνι", gender: "neuter", english: "pants/trousers", cefrLevel: "A2" },
-		{ lemma: "μπλουζάκι", gender: "neuter", english: "t-shirt", cefrLevel: "A2" },
+		{ lemma: "μπλούζα", gender: "feminine", english: "top/blouse", cefrLevel: "A2" },
 	],
 
 	household: [
 		{ lemma: "σπίτι", gender: "neuter", english: "house/home", cefrLevel: "A1" },
+		{ lemma: "βιβλίο", gender: "neuter", english: "book", cefrLevel: "A1" },
 		{ lemma: "γραφείο", gender: "neuter", english: "office/desk", cefrLevel: "A2" },
 		{ lemma: "αυτοκίνητο", gender: "neuter", english: "car", cefrLevel: "A1" },
 		{ lemma: "κλειδί", gender: "neuter", english: "key", cefrLevel: "A2" },
@@ -110,6 +118,7 @@ const NOUNS_RAW = {
 		{ lemma: "γυναίκα", gender: "feminine", english: "woman/wife", cefrLevel: "A1" },
 		{ lemma: "άντρας", gender: "masculine", english: "man/husband", cefrLevel: "A1" },
 		{ lemma: "παιδί", gender: "neuter", english: "child", cefrLevel: "A1" },
+		{ lemma: "οικογένεια", gender: "feminine", english: "family", cefrLevel: "A1" },
 		{ lemma: "σκύλος", gender: "masculine", english: "dog", cefrLevel: "A2" },
 		{
 			lemma: "φίλος",
@@ -146,6 +155,7 @@ const NOUNS_RAW = {
 	],
 
 	nature: [
+		{ lemma: "καιρός", gender: "masculine", english: "weather / time", cefrLevel: "A1" },
 		{ lemma: "κύμα", gender: "neuter", english: "wave", cefrLevel: "B1" },
 		{ lemma: "λουλούδι", gender: "neuter", english: "flower", cefrLevel: "A2" },
 		{ lemma: "ποταμός", gender: "masculine", english: "river", cefrLevel: "A2" },

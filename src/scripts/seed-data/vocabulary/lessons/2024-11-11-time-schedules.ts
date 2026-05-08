@@ -27,7 +27,7 @@ export const LESSON_2024_11_11 = createLesson({
 		{ lemma: "αγώνας", gender: "masculine", english: "match/game" },
 		// People
 		{ lemma: "οδοντίατρος", gender: "masculine", english: "dentist" },
-		{ lemma: "ιατρός", gender: "masculine", english: "doctor (formal)" },
+		{ lemma: "γιατρός", gender: "masculine", english: "doctor" },
 		{ lemma: "πελάτης", gender: "masculine", english: "client" },
 		{ lemma: "ομάδα", gender: "feminine", english: "team" },
 		// Other
