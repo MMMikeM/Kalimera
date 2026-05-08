@@ -158,9 +158,38 @@ const rowsFromAdjectiveNominalForms = (
 	return out;
 };
 
+// Nouns whose nominative lemma doesn't appear in the corpus — map to their most common surface form.
+const NOUN_CORPUS_ALIASES: Record<string, string> = {
+	χιλιάδες: "χιλιάδες",
+	γονέας: "γονείς",
+	λαιμός: "λαιμό",
+	μαθηματικός: "μαθηματικά",
+	μήνας: "μήνα",
+	νοσοκόμος: "νοσοκόμα",
+	ουρανός: "ουρανό",
+	πίνακας: "πίνακα",
+	σεβασμός: "σεβασμό",
+	τοίχος: "τοίχους",
+	υπολογιστής: "υπολογιστή",
+	φούρνος: "φούρνο",
+	χειμώνας: "χειμώνα",
+	χυμός: "χυμό",
+	δόντι: "δόντια",
+	λουλούδι: "λουλούδια",
+	ρούχο: "ρούχα",
+};
+
 const enrichWithFrequencyRank = (item: NewVocabulary): NewVocabulary => {
 	if (item.frequencyRank != null) return item;
-	const rank = GREEK_FREQUENCY_LOOKUP[item.greekText];
+	// Nouns store greekText as "ο φίλος" — strip leading article for lookup
+	// Lowercase: proper nouns (countries, days) are capitalised in DB but lowercase in lookup
+	const bare =
+		item.wordType === "noun" ? item.greekText.split(" ").slice(1).join(" ") : item.greekText;
+	const alias = NOUN_CORPUS_ALIASES[bare];
+	const rank =
+		GREEK_FREQUENCY_LOOKUP[bare] ??
+		GREEK_FREQUENCY_LOOKUP[bare.toLowerCase()] ??
+		(alias ? GREEK_FREQUENCY_LOOKUP[alias] : undefined);
 	return rank != null ? { ...item, frequencyRank: rank } : item;
 };
 
