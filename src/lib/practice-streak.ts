@@ -1,28 +1,32 @@
-import { differenceInDays, format, parseISO, subDays } from "date-fns";
+import { Temporal } from "@js-temporal/polyfill";
+
+import { diffInDays, nowInstant, parsePlainDate, toPlainDate } from "@/lib/time";
+
 
 /**
  * Consecutive local calendar days with at least one completed practice session,
  * counting only if the most recent practice day is today or yesterday (relative to `now`).
  */
 export function streakLengthFromCompletedSessionDates(
-	completedAts: Date[],
-	now: Date = new Date(),
+	completedAts: Temporal.Instant[],
+	now: Temporal.Instant = nowInstant(),
 ): number {
 	if (completedAts.length === 0) return 0;
 
+	const nowDate = toPlainDate(now);
 	const uniqueDates = new Set<string>();
 	for (const at of completedAts) {
-		uniqueDates.add(format(at, "yyyy-MM-dd"));
+		uniqueDates.add(toPlainDate(at).toString());
 	}
 
 	const sortedDates = Array.from(uniqueDates).sort().reverse();
 	if (sortedDates.length === 0) return 0;
 
-	const today = format(now, "yyyy-MM-dd");
-	const yesterday = format(subDays(now, 1), "yyyy-MM-dd");
+	const todayStr = nowDate.toString();
+	const yesterdayStr = nowDate.subtract({ days: 1 }).toString();
 	const firstDate = sortedDates[0];
 
-	if (!firstDate || (firstDate !== today && firstDate !== yesterday)) {
+	if (!firstDate || (firstDate !== todayStr && firstDate !== yesterdayStr)) {
 		return 0;
 	}
 
@@ -32,11 +36,8 @@ export function streakLengthFromCompletedSessionDates(
 		const currDateStr = sortedDates[i];
 		if (!prevDateStr || !currDateStr) break;
 
-		const prevDate = parseISO(prevDateStr);
-		const currDate = parseISO(currDateStr);
-		const diffDays = differenceInDays(prevDate, currDate);
-
-		if (diffDays === 1) {
+		const diff = diffInDays(parsePlainDate(prevDateStr), parsePlainDate(currDateStr));
+		if (diff === 1) {
 			streak++;
 		} else {
 			break;

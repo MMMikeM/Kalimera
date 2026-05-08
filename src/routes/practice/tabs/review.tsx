@@ -5,18 +5,13 @@ import { greekToPhonetic } from "@/lib/greek-transliteration";
 import { DRILL_BY_ID } from "../drills";
 import { type SimpleListItem, SimpleListDrill } from "../engines/simple-list-drill";
 import type { PracticeLoaderData } from "../layout";
-import { UserRequiredMessage } from "../layout";
 
 const MIN_ATTEMPTS = 5;
 const WEAK_THRESHOLD = 0.85;
 
 export function ReviewTab() {
 	const context = useOutletContext<PracticeLoaderData>();
-	const { reviewItems, userId, stats, drillStats } = context;
-
-	if (!userId) {
-		return <UserRequiredMessage />;
-	}
+	const { reviewItems, stats, drillStats } = context;
 
 	const weakDrills = drillStats
 		.filter((s) => s.attempts >= MIN_ATTEMPTS && s.accuracy < WEAK_THRESHOLD)

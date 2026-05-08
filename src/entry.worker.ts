@@ -1,26 +1,8 @@
 /// <reference types="@cloudflare/workers-types" />
-import { createRequestHandler } from "react-router";
+import { createRequestHandler, RouterContextProvider } from "react-router";
 
-import { createDb, runWithDb, type DbClient } from "./db.server";
-
-type CloudflareEnv = {
-	TURSO_DATABASE_URL: string;
-	TURSO_AUTH_TOKEN?: string;
-	// Push notification VAPID keys
-	VAPID_PUBLIC_KEY?: string;
-	VAPID_PRIVATE_KEY?: string;
-	VAPID_SUBJECT?: string;
-};
-
-declare module "react-router" {
-	interface AppLoadContext {
-		db: DbClient;
-		cloudflare: {
-			env: CloudflareEnv;
-			ctx: ExecutionContext;
-		};
-	}
-}
+import { cloudflareContext, type CloudflareEnv } from "./lib/cloudflare-context";
+import { createDb, runWithDb } from "./db.server";
 
 const requestHandler = createRequestHandler(
 	() => import("virtual:react-router/server-build"),
@@ -30,12 +12,9 @@ const requestHandler = createRequestHandler(
 export default {
 	async fetch(request: Request, env: CloudflareEnv, ctx: ExecutionContext): Promise<Response> {
 		const db = createDb(env);
-		return runWithDb(db, () =>
-			requestHandler(request, {
-				db,
-				cloudflare: { env, ctx },
-			}),
-		);
+		const context = new RouterContextProvider();
+		context.set(cloudflareContext, { env, ctx });
+		return runWithDb(db, () => requestHandler(request, context));
 	},
 
 	async scheduled(
@@ -59,11 +38,9 @@ export default {
 		}
 
 		await runWithDb(db, async () => {
-			// Determine which cron triggered based on the schedule
-			// "0 9 * * *" = Daily at 9am UTC (practice reminder)
-			// "0 */6 * * *" = Every 6 hours (review due)
-			// "0 20 * * *" = Daily at 8pm UTC (streak warning)
-			const hour = new Date(event.scheduledTime).getUTCHours();
+			const hour = Temporal.Instant.fromEpochMilliseconds(event.scheduledTime).toZonedDateTimeISO(
+				"UTC",
+			).hour;
 			const isNineAm = hour === 9;
 
 			if (isNineAm && event.cron === "0 9 * * *") {
