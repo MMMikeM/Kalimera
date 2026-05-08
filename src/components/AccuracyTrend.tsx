@@ -1,6 +1,6 @@
-import { format, parseISO } from "date-fns";
 import { useState } from "react";
 
+import { formatDayMonth, parsePlainDate } from "@/lib/time";
 import { cn } from "@/lib/utils";
 
 interface AccuracyTrendProps {
@@ -14,7 +14,7 @@ interface AccuracyTrendProps {
 const CHART_HEIGHT = 180;
 const CHART_PADDING = { top: 20, right: 20, bottom: 40, left: 45 };
 
-const formatDate = (dateStr: string) => format(parseISO(dateStr), "d MMM");
+const formatDate = (dateStr: string) => formatDayMonth(parsePlainDate(dateStr));
 
 const formatPercent = (value: number) => `${Math.round(value * 100)}%`;
 
