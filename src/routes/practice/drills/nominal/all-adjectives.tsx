@@ -1,24 +1,14 @@
-import { getAuthSession } from "@/lib/auth-cookie";
-import type { DrillQuestion } from "@/lib/drill/generate-questions";
+import { userIdContext } from "@/lib/auth-context";
 
 import { VocabDrillPage } from "../../engines/vocab-drill";
 import type { Route } from "./+types/all-adjectives";
 import { getNominalReviewQuestions } from "./data.server";
 
-export const loader = async ({ request }: Route.LoaderArgs) => {
-	const auth = getAuthSession(request);
-	const userId = auth?.userId ?? null;
-
-	if (!userId) return { questions: [] as DrillQuestion[] };
-
+export const loader = async ({ request, context }: Route.LoaderArgs) => {
+	const userId = context.get(userIdContext);
 	const url = new URL(request.url);
 	const limit = url.searchParams.get("size") === "quick" ? 10 : 15;
-	const questions: DrillQuestion[] = await getNominalReviewQuestions(
-		userId,
-		"adjective",
-		"nominal-all-adjectives",
-		limit * 3,
-	);
+	const questions = await getNominalReviewQuestions(userId, "adjective", "nominal-all-adjectives", limit * 3);
 	return { questions };
 };
 

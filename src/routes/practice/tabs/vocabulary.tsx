@@ -4,15 +4,10 @@ import { greekToPhonetic } from "@/lib/greek-transliteration";
 
 import { type SimpleListItem, SimpleListDrill } from "../engines/simple-list-drill";
 import type { PracticeLoaderData } from "../layout";
-import { UserRequiredMessage } from "../layout";
 
 export function VocabularyTab() {
 	const context = useOutletContext<PracticeLoaderData>();
-	const { newVocabItems, userId } = context;
-
-	if (!userId) {
-		return <UserRequiredMessage />;
-	}
+	const { newVocabItems } = context;
 
 	if (newVocabItems.length === 0) {
 		return (

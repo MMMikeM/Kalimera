@@ -1,19 +1,17 @@
-import { Outlet } from "react-router";
+import { Outlet, redirect } from "react-router";
 
+import { userIdContext } from "@/lib/auth-context";
 import { getAuthSession } from "@/lib/auth-cookie";
 
 import type { Route } from "./+types/layout";
 import {
 	type ActionIntent,
 	actionHandlers,
-	type DrillStat,
 	getDrillStats,
 	getItemsDueForReview,
 	getNewVocabularyItems,
 	getPracticeStats,
 	getUserById,
-	type PracticeStats,
-	type VocabItemWithSkill,
 } from "./loader.server";
 
 export function meta() {
@@ -26,40 +24,40 @@ export function meta() {
 	];
 }
 
-export const loader = async ({ request }: Route.LoaderArgs) => {
+export const middleware: Route.MiddlewareFunction = async ({ request, context }, next) => {
 	const auth = getAuthSession(request);
-	const userId = auth?.userId ?? null;
+	if (!auth?.userId) throw redirect("/");
+	context.set(userIdContext, auth.userId);
+	return next();
+};
+
+export const loader = async ({ request, context }: Route.LoaderArgs) => {
+	const userId = context.get(userIdContext);
 
 	const url = new URL(request.url);
 	const limitParam = url.searchParams.get("limit");
 	const limit = limitParam ? Math.min(Math.max(parseInt(limitParam, 10), 1), 100) : 20;
 
-	let reviewItems: VocabItemWithSkill[] = [];
-	let newVocabItems: VocabItemWithSkill[] = [];
-	let stats: PracticeStats | null = null;
-	let userName: string | null = null;
-	let drillStats: DrillStat[] = [];
+	const [user, reviews, newItems, practiceStats, drills] = await Promise.all([
+		getUserById(userId),
+		getItemsDueForReview(userId, "recognition", limit),
+		getNewVocabularyItems(userId, 20),
+		getPracticeStats(userId),
+		getDrillStats(userId),
+	]);
 
-	if (userId) {
-		const [user, reviews, newItems, practiceStats, drills] = await Promise.all([
-			getUserById(userId),
-			getItemsDueForReview(userId, "recognition", limit),
-			getNewVocabularyItems(userId, 20),
-			getPracticeStats(userId),
-			getDrillStats(userId),
-		]);
-		userName = user?.displayName ?? null;
-		reviewItems = reviews.map((r) => ({
+	return {
+		reviewItems: reviews.map((r) => ({
 			id: r.vocabularyId,
 			greekText: r.vocabulary?.greekText ?? "",
 			englishTranslation: r.vocabulary?.englishTranslation ?? "",
-		}));
-		newVocabItems = newItems;
-		stats = practiceStats;
-		drillStats = drills;
-	}
-
-	return { reviewItems, newVocabItems, stats, userId, userName, drillStats };
+		})),
+		newVocabItems: newItems,
+		stats: practiceStats,
+		userId,
+		userName: user?.displayName ?? null,
+		drillStats: drills,
+	};
 };
 
 export const action = async ({ request }: Route.ActionArgs) => {
