@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { matchPhonetic } from "@/lib/greek-transliteration";
@@ -206,25 +206,21 @@ export const SimpleListDrill = ({
 
 	useForwardKeyboard({ phase, mode, onSubmit: handleForwardSubmit });
 
-	// Auto-submit when dimension selected
-	useEffect(() => {
-		if (
-			mode !== "reverse" ||
-			phase !== "active" ||
-			!reverseDimension ||
-			!selDimension ||
-			!currentForm
-		)
-			return;
-		const timeTaken = performance.now() - activeStartedAt.current;
-		const isCorrect = reverseDimension.getCorrectId(currentForm) === selDimension;
-		recordAttempt(isCorrect, timeTaken, {
-			prompt: currentForm.reverseGreek ?? currentForm.greek,
-			correctAnswer: reverseDimension.getCorrectId(currentForm),
-			userAnswer: selDimension,
-			weakAreaIdentifier: currentForm.weakAreaIdentifier ?? currentForm.id,
-		});
-	}, [selDimension, mode, phase, reverseDimension, currentForm, recordAttempt]);
+	const handleDimensionSelect = useCallback(
+		(id: string) => {
+			if (phase !== "active" || !currentForm || !reverseDimension) return;
+			setSelDimension(id);
+			const timeTaken = performance.now() - activeStartedAt.current;
+			const isCorrect = reverseDimension.getCorrectId(currentForm) === id;
+			recordAttempt(isCorrect, timeTaken, {
+				prompt: currentForm.reverseGreek ?? currentForm.greek,
+				correctAnswer: reverseDimension.getCorrectId(currentForm),
+				userAnswer: id,
+				weakAreaIdentifier: currentForm.weakAreaIdentifier ?? currentForm.id,
+			});
+		},
+		[phase, currentForm, reverseDimension, recordAttempt],
+	);
 
 	// ── Render ─────────────────────────────────────────────────────────────────
 
@@ -416,7 +412,7 @@ export const SimpleListDrill = ({
 								label={opt.label}
 								selected={selDimension === opt.id}
 								disabled={phase !== "active"}
-								onClick={() => setSelDimension(opt.id)}
+								onClick={() => handleDimensionSelect(opt.id)}
 								selectedBg={opt.selectorBg}
 								selectedText={opt.selectorText}
 							/>
