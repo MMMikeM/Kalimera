@@ -24,12 +24,14 @@ export function meta() {
 	];
 }
 
-export const middleware: Route.MiddlewareFunction = async ({ request, context }, next) => {
-	const auth = getAuthSession(request);
-	if (!auth?.userId) throw redirect("/");
-	context.set(userIdContext, auth.userId);
-	return next();
-};
+export const middleware: Route.MiddlewareFunction[] = [
+	async ({ request, context }, next) => {
+		const auth = getAuthSession(request);
+		if (!auth?.userId) throw redirect("/");
+		context.set(userIdContext, auth.userId);
+		return next();
+	},
+];
 
 export const loader = async ({ request, context }: Route.LoaderArgs) => {
 	const userId = context.get(userIdContext);
