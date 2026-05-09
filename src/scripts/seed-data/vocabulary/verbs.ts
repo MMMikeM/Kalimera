@@ -31,6 +31,7 @@ export const VERBS: FullVerbSeed[] = [
 		conjugationFamily: "-άω/-ώ",
 	},
 	{ lemma: "φοράω", english: "I wear", cefrLevel: "A2", conjugationFamily: "-άω/-ώ" },
+	{ lemma: "αγαπάω", english: "I love", cefrLevel: "A2", conjugationFamily: "-άω/-ώ" },
 
 	// -ομαι family (deponent/passive)
 	{ lemma: "έρχομαι", english: "I come", cefrLevel: "A1", conjugationFamily: "-ομαι" },
@@ -43,6 +44,10 @@ export const VERBS: FullVerbSeed[] = [
 	{ lemma: "γράφω", english: "I write", cefrLevel: "A2", conjugationFamily: "-ω" },
 	{ lemma: "διαβάζω", english: "I read", cefrLevel: "A2", conjugationFamily: "-ω" },
 	{ lemma: "μαθαίνω", english: "I learn", cefrLevel: "A2", conjugationFamily: "-ω" },
+	{ lemma: "ακούω", english: "I hear/listen", cefrLevel: "A2", conjugationFamily: "-ω" },
+	{ lemma: "νιώθω", english: "I feel", cefrLevel: "A2", conjugationFamily: "-ω" },
+	{ lemma: "πίνω", english: "I drink", cefrLevel: "A2", conjugationFamily: "-ω" },
+	{ lemma: "πεθαίνω", english: "I die", cefrLevel: "B1", conjugationFamily: "-ω" },
 
 	// Irregular
 	{ lemma: "είμαι", english: "I am", cefrLevel: "A1", conjugationFamily: "irregular" },

@@ -1927,4 +1927,58 @@ export const FULL_VERB_CONJUGATIONS: FullVerbSeed[] = [
 			},
 		],
 	},
+	{
+		lemma: "νιώθω",
+		english: "I feel",
+		conjugationFamily: "-ω",
+		conjugations: [
+			{
+				tense: "present",
+				forms: { sg1: "νιώθω", sg2: "νιώθεις", sg3: "νιώθει", pl1: "νιώθουμε", pl2: "νιώθετε", pl3: "νιώθουν" },
+			},
+			{
+				tense: "aorist",
+				forms: { sg1: "ένιωσα", sg2: "ένιωσες", sg3: "ένιωσε", pl1: "νιώσαμε", pl2: "νιώσατε", pl3: "ένιωσαν" },
+			},
+			{
+				tense: "future",
+				forms: { sg1: "θα νιώσω", sg2: "θα νιώσεις", sg3: "θα νιώσει", pl1: "θα νιώσουμε", pl2: "θα νιώσετε", pl3: "θα νιώσουν" },
+			},
+			{
+				tense: "past_continuous",
+				forms: { sg1: "ένιωθα", sg2: "ένιωθες", sg3: "ένιωθε", pl1: "νιώθαμε", pl2: "νιώθατε", pl3: "ένιωθαν" },
+			},
+		],
+		imperatives: {
+			imperfective: { singular: "νιώθε", plural: "νιώθετε" },
+			perfective: { singular: "νιώσε", plural: "νιώστε" },
+		},
+	},
+	{
+		lemma: "πεθαίνω",
+		english: "I die",
+		conjugationFamily: "-ω",
+		conjugations: [
+			{
+				tense: "present",
+				forms: { sg1: "πεθαίνω", sg2: "πεθαίνεις", sg3: "πεθαίνει", pl1: "πεθαίνουμε", pl2: "πεθαίνετε", pl3: "πεθαίνουν" },
+			},
+			{
+				tense: "aorist",
+				forms: { sg1: "πέθανα", sg2: "πέθανες", sg3: "πέθανε", pl1: "πεθάναμε", pl2: "πεθάνατε", pl3: "πέθαναν" },
+			},
+			{
+				tense: "future",
+				forms: { sg1: "θα πεθάνω", sg2: "θα πεθάνεις", sg3: "θα πεθάνει", pl1: "θα πεθάνουμε", pl2: "θα πεθάνετε", pl3: "θα πεθάνουν" },
+			},
+			{
+				tense: "past_continuous",
+				forms: { sg1: "πέθαινα", sg2: "πέθαινες", sg3: "πέθαινε", pl1: "πεθαίναμε", pl2: "πεθαίνατε", pl3: "πέθαιναν" },
+			},
+		],
+		imperatives: {
+			imperfective: { singular: "πέθαινε", plural: "πεθαίνετε" },
+			perfective: { singular: "πέθανε", plural: "πεθάνετε" },
+		},
+	},
 ];
