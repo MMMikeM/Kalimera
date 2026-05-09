@@ -46,11 +46,11 @@ const SINGLE_LETTER_MAP: Record<string, string> = {
 	// Vowels
 	α: "a",
 	ε: "e",
-	η: "i",
+	η: "h",
 	ι: "i",
 	ο: "o",
 	υ: "i",
-	ω: "o",
+	ω: "w",
 
 	// Consonants
 	β: "v",
@@ -155,14 +155,26 @@ const stripGreekArticle = (greek: string): string => {
 // Collapse variant spellings on both sides so either form accepts.
 // ει→i, αι→e, οι→i: user can type letter-faithful ("kaneis") or phonetic ("kanis").
 // nd→d, mb→b, ng→g: user can type simplified cluster ("adras") or accurate ("andras").
+// η→h, ω→w (Greek Greeklish convention): protect "th"/"ch"/"ph" before normalising h→i,
+// so θ ("th") is not collapsed. w→o accepts old-style "o" for ω.
 const toPhoneticCanonical = (text: string): string =>
 	text
 		.replace(/ei/g, "i")
 		.replace(/ai/g, "e")
+		.replace(/w/g, "o") // ω (as w) → o BEFORE oi→i, so "prwi"→"proi"→"pri" and "proi"→"pri" both match
 		.replace(/oi/g, "i")
 		.replace(/nd/g, "d")
 		.replace(/mb/g, "b")
-		.replace(/ng/g, "g");
+		.replace(/ng/g, "g")
+		.replace(/ev/g, "ef") // ευ → ef/ev both accepted (voicing context varies)
+		.replace(/th/g, "\x00") // protect θ digraph before h→i
+		.replace(/ch/g, "\x01") // protect χ digraph
+		.replace(/ph/g, "\x02") // protect φ digraph
+		.replace(/h/g, "i") // η (as h) → canonical i; old "i" stays "i"
+		.replace(/\x00/g, "th") // restore θ
+		.replace(/\x01/g, "x") // χ canonical = x (accepts both "ch" and "x")
+		.replace(/\x02/g, "ph") // restore φ
+		.replace(/x/g, "x"); // x already canonical — noop but documents intent
 
 const phoneticEquals = (user: string, correct: string): boolean =>
 	user === correct || toPhoneticCanonical(user) === toPhoneticCanonical(correct);
