@@ -83,7 +83,7 @@ export const useDrillEngine = <T extends DrillForm>({
 		timedOut = false,
 	) => {
 		if (!currentForm) return;
-		const attempt: Attempt<T> = { form: currentForm, isCorrect, timeTaken, timedOut };
+		const attempt: Attempt<T> = { form: currentForm, isCorrect, timeTaken, timedOut, userInput: logData.userAnswer };
 		setLastAttempt(attempt);
 		setAttempts((prev) => [...prev, attempt]);
 		setPhase("feedback");

@@ -141,7 +141,7 @@ export const SummaryScreen = <T extends DrillForm>({
 	const mistakeEntries = [...incorrectByForm.values()].sort(
 		(a, b) => b.attempt.timeTaken - a.attempt.timeTaken,
 	);
-	const mistakes = mistakeEntries.slice(0, 5);
+	const mistakes = mistakeEntries;
 	const allMistakes = mistakeEntries.map((m) => m.attempt);
 
 	return (
@@ -462,8 +462,12 @@ export const ConfigShell = ({
 	referenceHref?: string;
 	referenceLabel?: string;
 	children: React.ReactNode;
-}) => (
+}) => {
+	return (
 	<div className="mx-auto max-w-sm px-6 py-8">
+		<Link to=".." className="mb-6 inline-block text-xs text-stone-400 hover:text-stone-600">
+			← back
+		</Link>
 		<h2 className="mb-1 font-serif text-2xl text-navy-text">{title}</h2>
 		<p className="mb-2 text-sm text-muted-foreground">{subtitle}</p>
 		{referenceHref && (
@@ -534,7 +538,8 @@ export const ConfigShell = ({
 			Begin
 		</Button>
 	</div>
-);
+	);
+};
 
 export const DrillShell = ({
 	progress,
@@ -548,26 +553,31 @@ export const DrillShell = ({
 	cardIndex: number;
 	sessionSize: SessionSize;
 	children: React.ReactNode;
-}) => (
-	<div className="flex flex-col">
-		<div className="h-1 overflow-hidden bg-stone-200">
-			<div
-				className={`h-full transition-colors duration-200 ${barColor}`}
-				style={{ width: `${progress * 100}%` }}
-			/>
-		</div>
+}) => {
+	return (
+		<div className="flex flex-col">
+			<div className="h-1 overflow-hidden bg-stone-200">
+				<div
+					className={`h-full transition-colors duration-200 ${barColor}`}
+					style={{ width: `${progress * 100}%` }}
+				/>
+			</div>
 
-		<div className="flex justify-end px-4 pt-2">
-			<span className="text-xs text-stone-400 tabular-nums">
-				{cardIndex + 1}
-				<span className="mx-0.5 text-stone-300">/</span>
-				{sessionSize}
-			</span>
-		</div>
+			<div className="flex items-center justify-between px-4 pt-2">
+				<Link to=".." className="text-xs text-stone-300 hover:text-stone-500">
+					←
+				</Link>
+				<span className="text-xs text-stone-400 tabular-nums">
+					{cardIndex + 1}
+					<span className="mx-0.5 text-stone-300">/</span>
+					{sessionSize}
+				</span>
+			</div>
 
-		<div className="mx-auto flex max-w-sm flex-col gap-10 px-6 pt-4 pb-6">{children}</div>
-	</div>
-);
+			<div className="mx-auto flex max-w-sm flex-col gap-10 px-6 pt-4 pb-6">{children}</div>
+		</div>
+	);
+};
 
 export const ReverseFeedback = <T extends DrillForm>({
 	lastAttempt,
