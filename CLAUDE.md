@@ -37,6 +37,10 @@ Default **page routes** (loader + action + component) with `<Form>` and `useFetc
 
 **Resource routes** (no component) only for: webhooks, polling endpoints, background jobs.
 
+**`prefix()` is URL namespacing only** — it does not create a parent route. If `..` should land on `/practice/cases`, then `cases` must be an actual `route()` parent with drills as children, not a `prefix("cases", [...])`. Flat prefix routes are siblings of `practice`, not children of `cases`.
+
+**Colocate data with its owner** — don't create a central registry file that combines unrelated data from multiple modules. Each route/component owns its own data; a combined view (e.g. `drill-lookup.ts`) is derived from the owners, not the primary source. A god file that knows about cases, pronouns, verbs, AND blocks is the wrong abstraction.
+
 ---
 
 ## LLM Context Files
@@ -50,6 +54,20 @@ Default **page routes** (loader + action + component) with `<Form>` and `useFetc
 | `src/routes/learn/phrases/content.llm`       | Phrase tabs                                            |
 | `src/routes/learn/conversations/content.llm` | Conversation tabs                                      |
 | `src/routes/learn/essentials/content.llm`    | Essentials subtabs                                     |
+
+---
+
+## Case Terminology
+
+Two vocabularies in use — both correct, different contexts:
+
+| Grammatical term | Learner label | Colour | Route segment |
+|---|---|---|---|
+| Nominative | Doer | ocean | `nominative-*` |
+| Accusative | Target | terracotta | `accusative-*` |
+| Genitive | Owner | olive | `genitive-*` |
+
+**Routes use grammatical terms** (`practice/cases/accusative-noun`). **UI uses learner labels** ("Target", "Doer", "Owner") — never assume the learner knows "accusative". Verb conjugations use **uncontracted forms** (αγαπάω, μιλάω) not contracted (αγαπώ, μιλώ).
 
 ---
 
