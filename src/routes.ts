@@ -17,7 +17,6 @@ export default [
 		route("cases", "routes/practice/groups/cases.tsx"),
 		...prefix("articles", [
 			route("paradigm", "routes/practice/drills/articles/paradigm.tsx"),
-			route("contractions", "routes/practice/drills/articles/contractions.tsx"),
 			route("noun-genders", "routes/practice/drills/articles/noun-genders.tsx"),
 			route("noun-target", "routes/practice/drills/articles/noun-target.tsx"),
 			route("noun-owner", "routes/practice/drills/articles/noun-owner.tsx"),
