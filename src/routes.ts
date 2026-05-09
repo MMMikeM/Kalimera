@@ -14,37 +14,34 @@ export default [
 	// Practice - core loop
 	route("practice", "routes/practice/layout.tsx", [
 		index("routes/practice/index.tsx"),
-		route("cases", "routes/practice/groups/cases.tsx"),
-		...prefix("articles", [
-			route("paradigm", "routes/practice/drills/articles/paradigm.tsx"),
-			route("noun-genders", "routes/practice/drills/articles/noun-genders.tsx"),
-			route("noun-target", "routes/practice/drills/articles/noun-target.tsx"),
-			route("noun-owner", "routes/practice/drills/articles/noun-owner.tsx"),
-			route("article-doer", "routes/practice/drills/articles/article-doer.tsx"),
-			route("article-target", "routes/practice/drills/articles/article-target.tsx"),
-			route("article-owner", "routes/practice/drills/articles/article-owner.tsx"),
-		]),
-		route("pronouns", "routes/practice/groups/pronouns.tsx"),
-		...prefix("pronouns", [
-			route("object", "routes/practice/drills/pronouns/object.tsx"),
-			route("possessives", "routes/practice/drills/pronouns/possessives.tsx"),
-			route("placement", "routes/practice/drills/pronouns/placement.tsx"),
-		]),
-		...prefix("adjectives", [
-			route("agreement", "routes/practice/drills/adjectives/agreement.tsx"),
-			route("agreement-target", "routes/practice/drills/adjectives/agreement-target.tsx"),
-			route("agreement-owner", "routes/practice/drills/adjectives/agreement-owner.tsx"),
-		]),
-		...prefix("nominal", [
-			route("phrase-doer", "routes/practice/drills/nominal/phrase-doer.tsx"),
-			route("phrase-target", "routes/practice/drills/nominal/phrase-target.tsx"),
-			route("phrase-owner", "routes/practice/drills/nominal/phrase-owner.tsx"),
+		route("cases", "routes/practice/groups/cases.tsx", [
+			// Doer (nominative)
+			route("nominative-article", "routes/practice/drills/articles/article-doer.tsx"),
+			route("nominative-noun", "routes/practice/drills/articles/noun-genders.tsx"),
+			route("nominative-adjective", "routes/practice/drills/adjectives/agreement.tsx"),
+			route("nominative-phrase", "routes/practice/drills/nominal/phrase-doer.tsx"),
+			// Target (accusative)
+			route("accusative-article", "routes/practice/drills/articles/article-target.tsx"),
+			route("accusative-noun", "routes/practice/drills/articles/noun-target.tsx"),
+			route("accusative-adjective", "routes/practice/drills/adjectives/agreement-target.tsx"),
+			route("accusative-phrase", "routes/practice/drills/nominal/phrase-target.tsx"),
+			// Owner (genitive)
+			route("genitive-article", "routes/practice/drills/articles/article-owner.tsx"),
+			route("genitive-noun", "routes/practice/drills/articles/noun-owner.tsx"),
+			route("genitive-adjective", "routes/practice/drills/adjectives/agreement-owner.tsx"),
+			route("genitive-phrase", "routes/practice/drills/nominal/phrase-owner.tsx"),
+			// Review (cross-case)
+			route("all-articles", "routes/practice/drills/articles/paradigm.tsx"),
 			route("all-nouns", "routes/practice/drills/nominal/all-nouns.tsx"),
 			route("all-adjectives", "routes/practice/drills/nominal/all-adjectives.tsx"),
 			route("all-phrases", "routes/practice/drills/nominal/all-phrases.tsx"),
 		]),
-		route("verbs", "routes/practice/groups/verbs.tsx"),
-		...prefix("verbs", [
+		route("pronouns", "routes/practice/groups/pronouns.tsx", [
+			route("object", "routes/practice/drills/pronouns/object.tsx"),
+			route("possessives", "routes/practice/drills/pronouns/possessives.tsx"),
+			route("placement", "routes/practice/drills/pronouns/placement.tsx"),
+		]),
+		route("verbs", "routes/practice/groups/verbs.tsx", [
 			route("present", "routes/practice/drills/verbs/present.tsx"),
 			route("present-irregular", "routes/practice/drills/verbs/present-irregular.tsx"),
 			route("eimai-present", "routes/practice/drills/verbs/eimai-present.tsx"),
@@ -57,8 +54,7 @@ export default [
 			route("conjugation-endings", "routes/practice/drills/verbs/conjugation-endings.tsx"),
 			route("eimai-past", "routes/practice/drills/verbs/eimai-past.tsx"),
 		]),
-		route("blocks", "routes/practice/groups/blocks.tsx"),
-		...prefix("blocks", [
+		route("blocks", "routes/practice/groups/blocks.tsx", [
 			route("chunks", "routes/practice/drills/blocks/chunks.tsx"),
 			route("numbers", "routes/practice/drills/blocks/numbers.tsx"),
 			route("days-of-week", "routes/practice/drills/blocks/days-of-week.tsx"),

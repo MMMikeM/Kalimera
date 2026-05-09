@@ -1,6 +1,13 @@
 import { Link } from "react-router";
 
-import { type Drill, DRILLS, GROUP_META } from "./drills";
+export interface Drill {
+	id: string;
+	href: string;
+	title: string;
+	greek: string;
+	minutes: number;
+	phase?: string;
+}
 
 const PHASE_TINT: Record<string, string> = {
 	Doer: "text-ocean-600 border-ocean/50",
@@ -10,15 +17,14 @@ const PHASE_TINT: Record<string, string> = {
 };
 
 export function GroupSection({
-	group,
+	title,
 	subtitle,
+	drills,
 }: {
-	group: keyof typeof GROUP_META;
+	title: string;
 	subtitle?: string;
+	drills: Drill[];
 }) {
-	const meta = GROUP_META[group];
-	const drills = DRILLS.filter((d) => d.group === group);
-
 	const phases: { phase: string | null; drills: Drill[] }[] = [];
 	for (const drill of drills) {
 		const key = drill.phase ?? null;
@@ -29,8 +35,11 @@ export function GroupSection({
 
 	return (
 		<section>
+			<Link to=".." className="mb-4 inline-block text-xs text-stone-400 hover:text-stone-600">
+				← back
+			</Link>
 			<header className="mb-6">
-				<h3 className="font-serif text-2xl font-semibold text-navy-text">{meta.label}</h3>
+				<h3 className="font-serif text-2xl font-semibold text-navy-text">{title}</h3>
 				{subtitle && <p className="mt-1 text-sm text-muted-foreground">{subtitle}</p>}
 			</header>
 			<div className="space-y-8">
