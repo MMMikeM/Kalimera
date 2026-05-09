@@ -2,7 +2,7 @@ import { Link, useOutletContext } from "react-router";
 
 import { greekToPhonetic } from "@/lib/greek-transliteration";
 
-import { DRILL_BY_ID } from "../drills";
+import { DRILL_BY_ID } from "../drill-lookup";
 import { type SimpleListItem, SimpleListDrill } from "../engines/simple-list-drill";
 import type { PracticeLoaderData } from "../layout";
 
