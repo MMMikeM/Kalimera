@@ -1,3 +1,5 @@
+import { sql } from "drizzle-orm";
+
 import { NEXT_LEVEL } from "@/lib/cefr";
 
 import type { CefrLevel, WordType } from "../enums";
@@ -42,7 +44,8 @@ const getDrillVocabPool = async (opts: DrillPoolOptions): Promise<DrillPoolResul
 			cefrLevel: { in: opts.cefrPool },
 		},
 		columns: { id: true },
-		orderBy: { cefrLevel: "asc", frequencyRank: "asc" },
+		orderBy: (t) =>
+			sql`${t.cefrLevel} asc, CASE WHEN ${t.frequencyRank} IS NULL THEN 999999 ELSE ${t.frequencyRank} END asc`,
 		limit: poolSize * 4,
 	});
 
