@@ -31,7 +31,13 @@ import type {
 	NounNominalFormsSeed,
 	NounSeed,
 } from "../types/seed";
-import { GREEK_FREQUENCY_LOOKUP } from "./seed-data/frequency-lookup";
+import { createRequire } from "module";
+
+const _require = createRequire(import.meta.url);
+const GREEK_FREQUENCY_LOOKUP = _require("./seed-data/frequency-lookup.json") as Record<
+	string,
+	number
+>;
 
 export const BATCH_SIZE = 100;
 
@@ -179,17 +185,17 @@ const NOUN_CORPUS_ALIASES: Record<string, string> = {
 	ρούχο: "ρούχα",
 };
 
+const normalize = (s: string) => s.normalize("NFC").toLowerCase();
+
 const enrichWithFrequencyRank = (item: NewVocabulary): NewVocabulary => {
 	if (item.frequencyRank != null) return item;
 	// Nouns store greekText as "ο φίλος" — strip leading article for lookup
-	// Lowercase: proper nouns (countries, days) are capitalised in DB but lowercase in lookup
 	const bare =
 		item.wordType === "noun" ? item.greekText.split(" ").slice(1).join(" ") : item.greekText;
 	const alias = NOUN_CORPUS_ALIASES[bare];
 	const rank =
-		GREEK_FREQUENCY_LOOKUP[bare] ??
-		GREEK_FREQUENCY_LOOKUP[bare.toLowerCase()] ??
-		(alias ? GREEK_FREQUENCY_LOOKUP[alias] : undefined);
+		GREEK_FREQUENCY_LOOKUP[normalize(bare)] ??
+		(alias ? GREEK_FREQUENCY_LOOKUP[normalize(alias)] : undefined);
 	return rank != null ? { ...item, frequencyRank: rank } : item;
 };
 
