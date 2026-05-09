@@ -190,6 +190,61 @@ const NOUNS_RAW = {
 	body: [{ lemma: "λαιμός", gender: "masculine", english: "neck", cefrLevel: "B1" }],
 
 	objects: [{ lemma: "πίνακας", gender: "masculine", english: "board/painting", cefrLevel: "B1" }],
+
+	essential: [
+		// A1
+		{ lemma: "ζωή", gender: "feminine", english: "life", cefrLevel: "A1" },
+		{ lemma: "πράγμα", gender: "neuter", english: "thing", cefrLevel: "A1" },
+		{ lemma: "όνομα", gender: "neuter", english: "name", cefrLevel: "A1" },
+		{ lemma: "χέρι", gender: "neuter", english: "hand", cefrLevel: "A1" },
+		{ lemma: "κεφάλι", gender: "neuter", english: "head", cefrLevel: "A1" },
+		{ lemma: "κορίτσι", gender: "neuter", english: "girl", cefrLevel: "A1" },
+		{ lemma: "τηλέφωνο", gender: "neuter", english: "phone", cefrLevel: "A1" },
+		{ lemma: "φαγητό", gender: "neuter", english: "food", cefrLevel: "A1" },
+		{ lemma: "λεφτά", gender: "neuter", english: "money", cefrLevel: "A1", nominalForms: {
+			nominative_plural: { form: "λεφτά", article: "τα" },
+			genitive_plural: { form: "λεφτών", article: "των" },
+			accusative_plural: { form: "λεφτά", article: "τα" },
+		}},
+		{ lemma: "πόλη", gender: "feminine", english: "city", cefrLevel: "A1" },
+		{ lemma: "μωρό", gender: "neuter", english: "baby", cefrLevel: "A1" },
+		// A2
+		{ lemma: "φορά", gender: "feminine", english: "time/occasion", cefrLevel: "A2" },
+		{ lemma: "στιγμή", gender: "feminine", english: "moment", cefrLevel: "A2" },
+		{ lemma: "μέρος", gender: "neuter", english: "place/part", cefrLevel: "A2", nominalForms: {
+			nominative_singular: { form: "μέρος", article: "το" },
+			genitive_singular: { form: "μέρους", article: "του" },
+			accusative_singular: { form: "μέρος", article: "το" },
+			nominative_plural: { form: "μέρη", article: "τα" },
+			genitive_plural: { form: "μερών", article: "των" },
+			accusative_plural: { form: "μέρη", article: "τα" },
+		}},
+		{ lemma: "ιδέα", gender: "feminine", english: "idea", cefrLevel: "A2" },
+		{ lemma: "χαρά", gender: "feminine", english: "joy", cefrLevel: "A2" },
+		{ lemma: "τέλος", gender: "neuter", english: "end", cefrLevel: "A2", nominalForms: {
+			nominative_singular: { form: "τέλος", article: "το" },
+			genitive_singular: { form: "τέλους", article: "του" },
+			accusative_singular: { form: "τέλος", article: "το" },
+			nominative_plural: { form: "τέλη", article: "τα" },
+			genitive_plural: { form: "τελών", article: "των" },
+			accusative_plural: { form: "τέλη", article: "τα" },
+		}},
+		{ lemma: "βοήθεια", gender: "feminine", english: "help", cefrLevel: "A2" },
+		{ lemma: "ιστορία", gender: "feminine", english: "story/history", cefrLevel: "A2" },
+		{ lemma: "αγάπη", gender: "feminine", english: "love", cefrLevel: "A2" },
+		{ lemma: "κόσμος", gender: "masculine", english: "world/people", cefrLevel: "A2" },
+		{ lemma: "δωμάτιο", gender: "neuter", english: "room", cefrLevel: "A2" },
+		{ lemma: "καρδιά", gender: "feminine", english: "heart", cefrLevel: "A2" },
+		// B1
+		{ lemma: "θέση", gender: "feminine", english: "seat/position", cefrLevel: "B1" },
+		{ lemma: "τρόπος", gender: "masculine", english: "way/manner", cefrLevel: "B1" },
+		{ lemma: "θέμα", gender: "neuter", english: "topic/issue", cefrLevel: "B1" },
+		{ lemma: "ευκαιρία", gender: "feminine", english: "opportunity", cefrLevel: "B1" },
+		{ lemma: "λόγος", gender: "masculine", english: "reason", cefrLevel: "B1" },
+		{ lemma: "σχέση", gender: "feminine", english: "relationship", cefrLevel: "B1" },
+		{ lemma: "αρχή", gender: "feminine", english: "beginning", cefrLevel: "B1" },
+		{ lemma: "κατάσταση", gender: "feminine", english: "situation", cefrLevel: "B1" },
+	],
 } as const satisfies Record<string, readonly NounSeedInput[]>;
 
 export const NOUNS = enrichNounsRecord(NOUNS_RAW);
@@ -204,6 +259,7 @@ const themeTagMap: Record<string, string> = {
 	household: "household",
 	people: "people",
 	nature: "nature",
+	essential: "essential",
 };
 
 export const NOUN_ITEMS: VocabWithTags[] = [];
