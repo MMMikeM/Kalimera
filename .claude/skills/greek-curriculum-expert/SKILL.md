@@ -1,6 +1,6 @@
 ---
 name: greek-curriculum-expert
-description: Greek language curriculum consultant for a production-focused learning app targeting intermediate plateau learners. Use this skill whenever deciding what Greek content to add, model, or prioritise next; when evaluating whether a data model captures the right linguistic distinctions; when planning learning sequence or lesson content; when asking "should I model X?", "do learners need Y at this level?", "what order should I teach Z?", or "what can I skip?". Also use when the user asks about Greek grammar, morphology, or structure in the context of app development or curriculum design. Trigger on questions about frequency, communicative payoff, prerequisite chains, what to cut, what to drill, and how to sequence Greek language content. If the user is working on Greek seed data, schema design for Greek linguistic structures, or drill generation logic, this skill is relevant.
+description: Greek curriculum consultant — what to teach, skip, sequence, and model for intermediate learners.
 ---
 
 # Greek Curriculum Expert

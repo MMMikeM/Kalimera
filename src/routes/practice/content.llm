@@ -46,21 +46,21 @@ Case is the primary axis. Each case-phase contains four drill types: Article →
 ```
 DOER (ocean)
   Article (Doer)         → ο · η · το · οι · τα           hand-curated, 6 forms
-  Noun (Doer)            → ο φίλος · η μέρα · το σπίτι     hand-curated, 30 nouns
-  Adjective agreement    → καλός · καλή · καλό            hand-curated, 30 forms
-  Doer phrase            → ο καλός φίλος                  hand-curated capstone
+  Noun (Doer)            → ο φίλος · η μέρα · το σπίτι     DB-driven (SRS pool, nominative sg)
+  Adjective agreement    → καλός · καλή · καλό            hand-curated, 60 forms (sg + pl)
+  Doer phrase            → ο καλός φίλος                  hand-curated capstone, 30 items (sg + pl)
 
 TARGET (terracotta)
   Article (Target)       → τον · τη · το · τους · τις · τα
-  Noun (Target)          → τον φίλο · τη μέρα · το σπίτι
-  Adjective (Target)     → καλό · καλή · καλό
-  Target phrase          → τον καλό φίλο                  capstone
+  Noun (Target)          → τον φίλο · τη μέρα · το σπίτι   DB-driven (SRS pool, accusative sg)
+  Adjective (Target)     → καλό · καλή · καλό             hand-curated, 60 forms (sg + pl)
+  Target phrase          → τον καλό φίλο                  capstone, 30 items (sg + pl)
 
 OWNER (olive)
   Article (Owner)        → του · της · του · των
-  Noun (Owner)           → του φίλου · της μέρας · του σπιτιού
-  Adjective (Owner)      → καλού · καλής · καλού
-  Owner phrase           → του καλού φίλου                capstone
+  Noun (Owner)           → του φίλου · της μέρας · του σπιτιού  DB-driven (SRS pool, genitive sg)
+  Adjective (Owner)      → καλού · καλής · καλού          hand-curated, 40 forms (sg + pl; pl all genders share -ων)
+  Owner phrase           → του καλού φίλου                capstone, 30 items (sg + pl)
 
 REVIEW (neutral)
   All articles           → existing 18-form DimensionalDrill
@@ -72,6 +72,7 @@ REVIEW (neutral)
 <engine-notes>
 - Hand-curated drills use `SimpleListDrill` engine with `colorTheme` matching the case (ocean/terracotta/olive).
 - Phrase capstones use `SimpleListDrill` with multi-word Greek strings; `matchPhonetic` accepts whitespace-separated input.
+- DB-driven per-case noun drills (`noun-genders`, `noun-target`, `noun-owner`) use `getNounDrillItems()` in `drills/articles/data.server.ts` — SRS pool via `getDrillVocabPoolWithFallback` + `adjacentCefrPool`, queries `nominal_forms` for the relevant case singular. Cold-start users fall back to CEFR-band vocabulary.
 - DB-driven review drills (`all-nouns`, `all-adjectives`) have route-level loaders that query `nominal_forms` via `getNominalFormsForDrill`, build `DrillQuestion[]`, pass to `VocabDrillPage` via `initialQuestions` prop.
 </engine-notes>
 

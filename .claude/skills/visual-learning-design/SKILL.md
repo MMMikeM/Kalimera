@@ -1,6 +1,6 @@
 ---
 name: visual-memory-design
-description: Design visual properties — colour, spatial layout, typography, contrast, grouping, motion — so they support memory encoding and retrieval in a language learning app. Use whenever deciding how content should look on screen, how to lay out cards or drills, whether to use colour or weight to mark grammatical features, whether an animation or transition earns its place, how many items belong on a screen, or how to present content so it actually sticks rather than just looks engaging. Also use when reviewing an existing screen for memory-relevant issues, or when rejecting a commonly-cited design "best practice" that has failed to replicate (Sans Forgetica, disfluent fonts, warm-colours-aid-memory, 7±2 working memory). Do NOT use for motivation design, gamification, general UI/UX polish, brand or visual identity work, or accessibility concerns unrelated to memory.
+description: Design visual properties (colour, layout, typography) to support memory encoding in language learning.
 ---
 
 # Visual memory design

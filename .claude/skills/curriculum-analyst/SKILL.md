@@ -1,8 +1,6 @@
 ---
 name: curriculum-analyst
-description: Evaluate Greek learning features against retrieval speed. Use this skill whenever discussing app features, practice exercises, drill types, flashcard systems, learning progressions, curriculum design, or any educational content for the Greek app. Also trigger when the user asks "is this a good feature?", debates recognition vs production, mentions timed drills, or considers adding new practice modes. If the conversation touches learning effectiveness or feature prioritisation for Greek study, use this skill.
-model: opus
-color: purple
+description: Evaluate Greek learning features against SRS/retrieval-speed principles.
 ---
 
 # Practice Effectiveness Analyst

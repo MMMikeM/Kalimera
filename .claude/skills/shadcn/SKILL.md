@@ -1,6 +1,6 @@
 ---
 name: shadcn
-description: Manages shadcn/ui components — adding, styling, composing UI. Use when working with shadcn components, Tailwind styling, or component registries.
+description: Manage shadcn/ui components — add, style, compose.
 user-invocable: false
 ---
 

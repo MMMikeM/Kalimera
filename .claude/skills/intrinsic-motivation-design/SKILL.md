@@ -1,6 +1,6 @@
 ---
 name: intrinsic-motivation-design
-description: >
+description: Design motivation systems that build intrinsic engagement, not extrinsic dependence.
   Design feedback, completion moments, reward systems, and engagement mechanics that
   build intrinsic motivation instead of creating dependence on extrinsic rewards. Use
   whenever the user is designing how an app responds to task completion, building habit

@@ -1,7 +1,6 @@
 ---
 name: drizzle
-description: Set up or modify Drizzle ORM schema, migrations, and queries for this project. Use when working with database schema, relations, migrations, or converting raw SQL to Drizzle. This project uses Drizzle v1 beta with Turso/libSQL. IMPORTANT — invoke this skill BEFORE writing ANY Drizzle code, even simple queries or schema changes. This includes adding columns, writing findFirst/findMany calls, creating new repos, defining relations, or writing any db.query/db.insert/db.update/db.delete code. The v1 API has non-obvious differences from v0 that cause type errors if you guess. Read the skill first, write code second.
-argument-hint: "[task description]"
+description: Drizzle v1 ORM for this project — schema, migrations, queries. Read BEFORE writing any Drizzle code; v1 API differs from v0.
 ---
 
 # Drizzle ORM Skill

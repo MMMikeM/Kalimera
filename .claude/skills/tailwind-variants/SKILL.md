@@ -1,7 +1,6 @@
 ---
 name: tailwind-variants
-description: Style components with tailwind-variants (tv). Use when creating component variants, slots, compound styles, or replacing CVA/clsx/tailwind-merge patterns.
-argument-hint: "[task description]"
+description: Style with tailwind-variants (tv) — variants, slots, compound styles.
 ---
 
 # Tailwind Variants Skill
