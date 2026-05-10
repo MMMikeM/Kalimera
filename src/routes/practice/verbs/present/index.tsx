@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { VocabDrillPage } from "../../components/engines/vocab-drill";
 import { getVerbDrillQuestionsFn } from "../loader";
 
-export const Route = createFileRoute("/practice/verbs/present/present")({
+export const Route = createFileRoute("/practice/verbs/present/")({
 	loader: async () => {
 		const questions = await getVerbDrillQuestionsFn({ data: { limit: 30 } });
 		return { questions };
@@ -18,8 +18,6 @@ function VerbsDrill() {
 			drillId="verbs-present"
 			category="verbs"
 			initialQuestions={questions.length > 0 ? questions : undefined}
-			wordTypeFilter="verb"
-			weakAreaType="verb_family"
 		/>
 	);
 }

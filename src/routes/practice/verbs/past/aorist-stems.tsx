@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { SPEEDS } from "../../components/drill-speeds";
-import { SimpleListDrill, type SimpleListItem } from "../../components/engines/simple-list-drill";
+import type { SimpleListItem } from "../../components/engines/deck";
+import { Drill } from "../../components/engines/drill";
 
 // Forward: "eat (τρώω)" → type aorist sg1 in greeklish → "efaga"
 // Reverse: show "έφαγα" → recall "τρώω → έφαγα" (self-assess)
@@ -141,13 +141,12 @@ export const Route = createFileRoute("/practice/verbs/past/aorist-stems")({
 
 function AoristStemsDrill() {
 	return (
-		<SimpleListDrill
+		<Drill
 			drillId="verbs-aorist-stems"
 			items={AORIST_STEMS}
 			title="Aorist Stems"
 			subtitle="15 irregular stems / timed"
 			colorTheme="terracotta"
-			speeds={SPEEDS}
 			forwardDesc="Present (English) → aorist sg1"
 			reverseDesc="Aorist form → present verb (self-assess)"
 			categories={CATEGORIES}

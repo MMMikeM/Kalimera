@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { SPEEDS } from "../../components/drill-speeds";
-import { SimpleListDrill, type SimpleListItem } from "../../components/engines/simple-list-drill";
+import type { SimpleListItem } from "../../components/engines/deck";
+import { Drill } from "../../components/engines/drill";
 
 // Articles in Doer (nominative): ο · η · το · οι · οι · τα
 // Forward: "the (m, sg)" → type "o" (matchPhonetic → ο)
@@ -69,13 +69,13 @@ export const Route = createFileRoute("/practice/cases/nominative/article")({
 
 function ArticleDoerDrill() {
 	return (
-		<SimpleListDrill
+		<Drill
+			backTo={"/practice/cases/"}
 			drillId="articles-article-doer"
 			items={FORMS}
 			title="Article (Doer)"
 			subtitle="6 forms / timed"
 			colorTheme="ocean"
-			speeds={SPEEDS}
 			forwardDesc="Gender + number → article (Doer)"
 			reverseDesc="Article → recall gender + number (self-assess)"
 			categories={CATEGORIES}

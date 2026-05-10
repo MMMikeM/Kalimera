@@ -1,9 +1,0 @@
-services:
-  libsql:
-    image: ghcr.io/tursodatabase/libsql-server:latest
-    container_name: greek_libsql
-    ports:
-      - "8080:8080"
-    volumes:
-      - ./data/libsql:/var/lib/sqld
-    restart: unless-stopped

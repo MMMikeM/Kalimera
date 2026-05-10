@@ -61,11 +61,11 @@ Default **page routes** (loader + action + component) with `<Form>` and `useFetc
 
 Two vocabularies in use — both correct, different contexts:
 
-| Grammatical term | Learner label | Colour | Route segment |
-|---|---|---|---|
-| Nominative | Doer | ocean | `nominative-*` |
-| Accusative | Target | terracotta | `accusative-*` |
-| Genitive | Owner | olive | `genitive-*` |
+| Grammatical term | Learner label | Colour     | Route segment  |
+| ---------------- | ------------- | ---------- | -------------- |
+| Nominative       | Doer          | ocean      | `nominative-*` |
+| Accusative       | Target        | terracotta | `accusative-*` |
+| Genitive         | Owner         | olive      | `genitive-*`   |
 
 **Routes use grammatical terms** (`practice/cases/accusative-noun`). **UI uses learner labels** ("Target", "Doer", "Owner") — never assume the learner knows "accusative". Verb conjugations use **uncontracted forms** (αγαπάω, μιλάω) not contracted (αγαπώ, μιλώ).
 

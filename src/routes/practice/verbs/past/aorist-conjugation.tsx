@@ -18,8 +18,6 @@ function AoristConjugationDrill() {
 			drillId="verbs-aorist-conjugation"
 			category="verbs"
 			initialQuestions={questions.length > 0 ? questions : undefined}
-			wordTypeFilter="verb"
-			weakAreaType="verb_family"
 		/>
 	);
 }

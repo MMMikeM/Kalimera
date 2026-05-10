@@ -18,8 +18,6 @@ function FutureConjugationDrill() {
 			drillId="verbs-future-conjugation"
 			category="verbs"
 			initialQuestions={questions.length > 0 ? questions : undefined}
-			wordTypeFilter="verb"
-			weakAreaType="verb_family"
 		/>
 	);
 }

@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { SPEEDS } from "../components/drill-speeds";
-import { SimpleListDrill, type SimpleListItem } from "../components/engines/simple-list-drill";
+import type { SimpleListItem } from "../components/engines/deck";
+import { Drill } from "../components/engines/drill";
 
 const CHUNKS: SimpleListItem[] = [
 	// Social ritual — drill first, most automatic in real conversation
@@ -213,13 +213,12 @@ export const Route = createFileRoute("/practice/blocks/chunks")({
 
 function ChunksDrill() {
 	return (
-		<SimpleListDrill
+		<Drill
 			drillId="blocks-chunks"
 			items={CHUNKS}
 			title="Survival Phrases"
 			subtitle="24 phrases / timed"
 			colorTheme="honey"
-			speeds={SPEEDS}
 			forwardDesc="English prompt → Greek phrase"
 			reverseDesc="Greek phrase → English (self-assess)"
 			categories={CATEGORIES}

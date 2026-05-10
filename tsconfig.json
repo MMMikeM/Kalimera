@@ -13,9 +13,9 @@
 		"moduleDetection": "force",
 		"noEmit": true,
 		"jsx": "react-jsx",
-
-		/* React Router type generation */
-		"rootDirs": ["."],
+		"isolatedModules": true,
+    "resolveJsonModule": true,
+		"esModuleInterop": true,
 
 		/* Path aliases for shadcn */
 		"paths": {
@@ -35,5 +35,5 @@
 		"noUncheckedIndexedAccess": true,
 		"forceConsistentCasingInFileNames": true
 	},
-	"include": [".react-router/types/**/*", "react-router.config.ts", "src", "vite.config.ts"]
+	"include": ["vite.config.ts", "**/*.ts", "**/*.tsx"],
 }

@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { SPEEDS } from "../components/drill-speeds";
-import { SimpleListDrill, type SimpleListItem } from "../components/engines/simple-list-drill";
+import type { SimpleListItem } from "../components/engines/deck";
+import { Drill } from "../components/engines/drill";
 
 // Modal + να + subjunctive verb. Highest-payoff sentence construction in casual Greek.
 // Slots: θέλω να, πρέπει να, μπορώ να, ξέρω να (skip πάω να + bare να — chunk territory).
@@ -230,13 +230,12 @@ export const Route = createFileRoute("/practice/verbs/na-constructions")({
 
 function NaConstructionsDrill() {
 	return (
-		<SimpleListDrill
+		<Drill
 			drillId="verbs-na-constructions"
 			items={ITEMS}
 			title="να-constructions"
 			subtitle="25 modal + subjunctive sentences / timed"
 			colorTheme="honey"
-			speeds={SPEEDS}
 			forwardDesc="English → modal + να + verb"
 			reverseDesc="Greek → English (self-assess)"
 			categories={CATEGORIES}

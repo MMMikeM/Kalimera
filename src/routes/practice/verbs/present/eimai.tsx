@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { SPEEDS } from "../../components/drill-speeds";
+import type { SimpleListItem } from "../../components/engines/deck";
+import { Drill } from "../../components/engines/drill";
 import { PERSON_DIMENSION_OPTIONS } from "../../components/engines/drill-constants";
-import { SimpleListDrill, type SimpleListItem } from "../../components/engines/simple-list-drill";
 
 // είμαι present (irregular). Doesn't follow -ω paradigm.
 // Forward: "I am" → type "eimai" (matchPhonetic → είμαι)
@@ -65,13 +65,13 @@ const FORMS: SimpleListItem[] = [
 	},
 ];
 
-export const Route = createFileRoute("/practice/verbs/present/eimai-present")({
+export const Route = createFileRoute("/practice/verbs/present/eimai")({
 	component: EimaiPresentDrill,
 });
 
 function EimaiPresentDrill() {
 	return (
-		<SimpleListDrill
+		<Drill
 			drillId="verbs-eimai-present"
 			items={FORMS}
 			title="είμαι · present"
@@ -80,11 +80,11 @@ function EimaiPresentDrill() {
 			forwardDesc="English → Greek present form of είμαι"
 			reverseLabel="Greek → person"
 			reverseDesc="Present form → select person"
-			reverseDimension={{
+			reverse={{
+				kind: "single-select",
 				options: PERSON_DIMENSION_OPTIONS,
-				getCorrectId: (item) => item.dimension ?? "",
+				getCorrectId: (item) => String(item.dimension ?? ""),
 			}}
-			speeds={SPEEDS}
 		/>
 	);
 }

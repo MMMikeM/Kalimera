@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { SPEEDS } from "../../components/drill-speeds";
+import type { SimpleListItem } from "../../components/engines/deck";
+import { Drill } from "../../components/engines/drill";
 import { PERSON_DIMENSION_OPTIONS } from "../../components/engines/drill-constants";
-import { SimpleListDrill, type SimpleListItem } from "../../components/engines/simple-list-drill";
 
 // είμαι past (imperfect — irregular). No aorist form exists for είμαι.
 // Forward: "I was" → type "imoun" (matchPhonetic → ήμουν)
@@ -65,13 +65,13 @@ const FORMS: SimpleListItem[] = [
 	},
 ];
 
-export const Route = createFileRoute("/practice/verbs/past/eimai-past")({
+export const Route = createFileRoute("/practice/verbs/past/eimai")({
 	component: EimaiPastDrill,
 });
 
 function EimaiPastDrill() {
 	return (
-		<SimpleListDrill
+		<Drill
 			drillId="verbs-eimai-past"
 			items={FORMS}
 			title="είμαι · past"
@@ -80,11 +80,11 @@ function EimaiPastDrill() {
 			forwardDesc="English → Greek past form of είμαι"
 			reverseLabel="Greek → person"
 			reverseDesc="Past form → select person"
-			reverseDimension={{
+			reverse={{
+				kind: "single-select",
 				options: PERSON_DIMENSION_OPTIONS,
-				getCorrectId: (item) => item.dimension ?? "",
+				getCorrectId: (item) => String(item.dimension ?? ""),
 			}}
-			speeds={SPEEDS}
 		/>
 	);
 }

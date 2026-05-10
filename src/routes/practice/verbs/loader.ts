@@ -8,7 +8,7 @@ import { getVerbsWithConjugationsForTense } from "@/db.server/queries/vocabulary
 import { adjacentCefrPool } from "@/lib/cefr";
 import type { DrillQuestion } from "@/lib/drill/generate-questions";
 import { shuffle } from "@/lib/shuffle";
-import { authMiddleware } from "@/middleware";
+import { requireAuth } from "@/lib/auth-session.server";
 
 const PERSON_LABELS: Record<string, string> = {
 	sg1: "I",
@@ -103,20 +103,22 @@ async function getFutureDrillQuestionsImpl(userId: number, limit: number) {
 }
 
 export const getVerbDrillQuestionsFn = createServerFn({ method: "GET" })
-	.middleware([authMiddleware])
 	.inputValidator(z.object({ limit: z.number() }))
-	.handler(async ({ data, context }) => getVerbDrillQuestionsImpl(context.auth.userId, data.limit));
+	.handler(async ({ data }) => {
+		const { userId } = requireAuth();
+		return getVerbDrillQuestionsImpl(userId, data.limit);
+	});
 
 export const getAoristDrillQuestionsFn = createServerFn({ method: "GET" })
-	.middleware([authMiddleware])
 	.inputValidator(z.object({ limit: z.number() }))
-	.handler(async ({ data, context }) =>
-		getAoristDrillQuestionsImpl(context.auth.userId, data.limit),
-	);
+	.handler(async ({ data }) => {
+		const { userId } = requireAuth();
+		return getAoristDrillQuestionsImpl(userId, data.limit);
+	});
 
 export const getFutureDrillQuestionsFn = createServerFn({ method: "GET" })
-	.middleware([authMiddleware])
 	.inputValidator(z.object({ limit: z.number() }))
-	.handler(async ({ data, context }) =>
-		getFutureDrillQuestionsImpl(context.auth.userId, data.limit),
-	);
+	.handler(async ({ data }) => {
+		const { userId } = requireAuth();
+		return getFutureDrillQuestionsImpl(userId, data.limit);
+	});

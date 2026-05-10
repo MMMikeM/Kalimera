@@ -9,9 +9,9 @@ import {
 	HERO_TEXT,
 	NUMBER_CHIP,
 } from "../../components/engines/chip-specs";
-import { type DimensionSpec, DimensionalDrill } from "../../components/engines/dimensional-drill";
+import type { DrillForm } from "../../components/engines/deck";
+import { Drill, type DimensionSpec } from "../../components/engines/drill";
 import { GENDER_STYLE } from "../../components/engines/drill-constants";
-import { type DrillForm } from "../../components/engines/drill-engine";
 import { ForwardPromptCard } from "../../components/engines/forward-prompt-card";
 
 type ArticleCase = "nominative" | "accusative" | "genitive";
@@ -192,7 +192,6 @@ const ARTICLES: Article[] = [
 ];
 
 const caseText = (c: ArticleCase) => CASE_CHIP[c].colorText;
-const caseBar = (c: ArticleCase) => CASE_BAR[c].bar;
 const caseBg = (c: ArticleCase) => CASE_BAR[c].bg;
 
 const PARADIGM_ROWS: {
@@ -268,37 +267,38 @@ export const Route = createFileRoute("/practice/cases/review/articles")({
 
 function ArticlesDrill() {
 	return (
-		<DimensionalDrill<DimKey>
+		<Drill<DimKey>
 			drillId="articles-paradigm"
 			title="Definite Articles"
 			subtitle="18 forms / timed"
-			paradigm={<Paradigm />}
+			colorTheme="ocean"
 			forwardDesc="e.g. masculine / singular / accusative → τον"
 			reverseDesc="e.g. τον → masculine / singular / accusative"
-			forms={ARTICLES}
-			dimensions={DIMENSIONS}
-			barColorBase={(form) => caseBar(form.case as ArticleCase)}
-			renderForwardPrompt={(form) => {
-				const gender = GENDER_CHIP[form.gender as ChipGender];
-				const number = NUMBER_CHIP[form.number as keyof typeof NUMBER_CHIP];
-				const caseSpec = CASE_CHIP[form.case as Case];
+			items={ARTICLES}
+			reverse={{ kind: "multi-select", dimensions: DIMENSIONS }}
+			configExtras={<Paradigm />}
+			forwardPrompt={(form) => {
+				const f = form as (typeof ARTICLES)[number];
+				const gender = GENDER_CHIP[f.gender as ChipGender];
+				const number = NUMBER_CHIP[f.number as keyof typeof NUMBER_CHIP];
+				const caseSpec = CASE_CHIP[f.case as Case];
 				return (
 					<ForwardPromptCard
 						facets={[
 							{
 								icon: gender.icon,
 								label: gender.longLabel,
-								colorText: HERO_TEXT.gender[form.gender as ChipGender],
+								colorText: HERO_TEXT.gender[f.gender as ChipGender],
 							},
 							{
 								icon: number.icon,
 								label: number.longLabel,
-								colorText: HERO_TEXT.number[form.number as keyof typeof HERO_TEXT.number],
+								colorText: HERO_TEXT.number[f.number as keyof typeof HERO_TEXT.number],
 							},
 							{
 								icon: caseSpec.icon,
 								label: caseSpec.longLabel,
-								colorText: HERO_TEXT.case[form.case as Case],
+								colorText: HERO_TEXT.case[f.case as Case],
 							},
 						]}
 					/>

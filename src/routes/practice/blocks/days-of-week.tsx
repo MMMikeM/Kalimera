@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { SPEEDS } from "../components/drill-speeds";
-import { SimpleListDrill, type SimpleListItem } from "../components/engines/simple-list-drill";
+import type { SimpleListItem } from "../components/engines/deck";
+import { Drill } from "../components/engines/drill";
 
 const DAYS: SimpleListItem[] = [
 	// Days of the week
@@ -131,13 +131,12 @@ export const Route = createFileRoute("/practice/blocks/days-of-week")({
 
 function DaysOfWeekDrill() {
 	return (
-		<SimpleListDrill
+		<Drill
 			drillId="blocks-days-of-week"
 			items={DAYS}
 			title="Days & Time"
 			subtitle="14 forms / timed"
 			colorTheme="olive"
-			speeds={SPEEDS}
 			forwardDesc="English → Greek"
 			reverseDesc="Greek → English (self-assess)"
 			categories={CATEGORIES}

@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { SPEEDS } from "../components/drill-speeds";
-import { SimpleListDrill, type SimpleListItem } from "../components/engines/simple-list-drill";
+import type { SimpleListItem } from "../components/engines/deck";
+import { Drill } from "../components/engines/drill";
 
 // Where weak object pronouns sit. Tests 4 placement contexts:
 //   1. Pre-verb (default declarative)
@@ -192,13 +192,12 @@ export const Route = createFileRoute("/practice/pronouns/placement")({
 
 function CliticPlacementDrill() {
 	return (
-		<SimpleListDrill
+		<Drill
 			drillId="pronouns-placement"
 			items={ITEMS}
 			title="Pronoun placement"
 			subtitle="20 sentences / timed"
 			colorTheme="terracotta"
-			speeds={SPEEDS}
 			forwardDesc="English → Greek with pronoun in correct position"
 			reverseDesc="Greek → English (self-assess)"
 			categories={CATEGORIES}
