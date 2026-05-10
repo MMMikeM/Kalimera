@@ -1,5 +1,3 @@
-import "@tanstack/react-start/server-only";
-
 const _hashValue = async (salt: string, password: string): Promise<string> => {
 	const data = new TextEncoder().encode(salt + password);
 	const hashBuffer = await crypto.subtle.digest("SHA-256", data);

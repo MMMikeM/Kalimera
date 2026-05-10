@@ -9,7 +9,7 @@ import { getNewVocabularyItems } from "@/db.server/queries/vocabulary";
 import { getItemsDueForReview, getSkillStats } from "@/db.server/queries/vocabulary-skills";
 import { streakLengthFromCompletedSessionDates } from "@/lib/practice-streak";
 import { fromEpochSeconds, toEpochSeconds } from "@/lib/time";
-import { authMiddleware } from "@/middleware";
+import { requireAuth } from "@/lib/auth-session.server";
 
 type PracticeStats = Awaited<ReturnType<typeof getSkillStats>> & { streak: number };
 export type PracticeData = {
@@ -39,10 +39,9 @@ const getPracticeStats = async (userId: number): Promise<PracticeStats> => {
 };
 
 export const getPracticeDataFn = createServerFn({ method: "GET" })
-	.middleware([authMiddleware])
 	.inputValidator(z.object({ limit: z.number().default(20) }))
-	.handler(async ({ data, context }) => {
-		const userId = context.auth.userId;
+	.handler(async ({ data }) => {
+		const { userId } = requireAuth();
 		const limit = data.limit;
 		const [user, reviews, newItems, practiceStats, drills] = await Promise.all([
 			getUserById(userId),

@@ -20,7 +20,7 @@ import {
 	PopoverPositioner,
 	PopoverTrigger,
 } from "@/components/ui/popover";
-import type { AuthSession } from "@/lib/auth-cookie";
+import type { AuthSession } from "@/lib/auth-cookie.server";
 import { getServerAuthFn, logoutFn } from "@/lib/auth.functions";
 import type { RouterContext } from "@/router";
 

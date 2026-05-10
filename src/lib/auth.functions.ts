@@ -1,9 +1,9 @@
+import "@tanstack/react-start/server-only";
 import { redirect } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 
 import {
 	createUserWithPassword,
-	findUserByCode,
 	findUserByUsername,
 	getUserPasswordHash,
 	setUserPassword,
@@ -19,7 +19,6 @@ export const loginFn = createServerFn({ method: "POST" })
 		const { username: identifier, password } = data;
 
 		let user = await findUserByUsername(identifier);
-		if (!user) user = await findUserByCode(identifier);
 		if (!user) return { success: false as const, error: "User not found" };
 
 		const passwordHash = await getUserPasswordHash(user.id);

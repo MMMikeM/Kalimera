@@ -9,12 +9,11 @@ import { listCompletedPracticeSessionsForStreak } from "@/db.server/queries/prac
 import { getSkillStats } from "@/db.server/queries/vocabulary-skills";
 import { streakLengthFromCompletedSessionDates } from "@/lib/practice-streak";
 import { fromEpochSeconds } from "@/lib/time";
-import { authMiddleware } from "@/middleware";
+import { requireAuth } from "@/lib/auth-session.server";
 
 export const getProgressDataFn = createServerFn({ method: "GET" })
-	.middleware([authMiddleware])
-	.handler(async ({ context }) => {
-		const userId = context.auth.userId;
+	.handler(async () => {
+		const { userId } = requireAuth();
 
 		const [stats, calendarDates, accuracyTrends, timeInvested, completedSessions] =
 			await Promise.all([

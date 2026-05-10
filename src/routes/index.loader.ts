@@ -10,7 +10,7 @@ import { getItemsDueTomorrow, getSkillStats } from "@/db.server/queries/vocabula
 import { streakLengthFromCompletedSessionDates } from "@/lib/practice-streak";
 import { calculateDaysUntilNextFreeze, getFreezeStatus } from "@/lib/streak";
 import { diffInDays, fromEpochSeconds, mondayBasedDayOfWeek, toPlainDate, today } from "@/lib/time";
-import { authMiddleware } from "@/middleware";
+import { requireAuth } from "@/lib/auth-session.server";
 
 type Stats = {
 	streak: number;
@@ -21,9 +21,8 @@ type Stats = {
 };
 
 export const getDashboardDataFn = createServerFn({ method: "GET" })
-	.middleware([authMiddleware])
-	.handler(async ({ context }) => {
-		const userId = context.auth.userId;
+	.handler(async () => {
+		const { userId } = requireAuth();
 
 		const [rawStats, user, itemsDueTomorrow, lastPracticeDate, completedSessions] =
 			await Promise.all([
