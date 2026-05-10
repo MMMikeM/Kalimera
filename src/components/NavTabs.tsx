@@ -1,6 +1,6 @@
+import { Link } from "@tanstack/react-router";
 import { motion, useMotionValue, useScroll, useTransform } from "motion/react";
 import { type ReactNode, useEffect, useRef } from "react";
-import { Link } from "react-router";
 import { tv } from "tailwind-variants";
 
 const navTabsVariants = tv({

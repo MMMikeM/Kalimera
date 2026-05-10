@@ -1,131 +1,65 @@
-import {
-	isValidationErrorResponse,
-	parseFormData,
-	useForm,
-	validationError,
-} from "@rvf/react-router";
+import { Link, createFileRoute, useRouter } from "@tanstack/react-router";
 import { AlertCircle, ArrowRight, Check, KeyRound, UserPlus } from "lucide-react";
-import { useEffect, useState } from "react";
-import { Link } from "react-router";
+import { useState } from "react";
 
 import { Card } from "@/components/Card";
 import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/ui/form-field";
-import { createUserWithPassword, findUserByUsername } from "@/db.server/queries/users";
-import { createAuthCookie } from "@/lib/auth-cookie";
 import { setStoredAuth } from "@/lib/auth-storage";
+import { registerFn } from "@/lib/auth.functions";
 import { usePasskeyRegistration } from "@/lib/hooks/use-passkey-registration";
-import { hashPassword } from "@/lib/password";
-import { registerSchema, registerValidator } from "@/lib/validators/auth";
 
-import type { Route } from "./+types/register";
+export const Route = createFileRoute("/register")({
+	component: RegisterRoute,
+});
 
-export function meta() {
-	return [
-		{ title: "Register - Greek Learning" },
-		{
-			name: "description",
-			content: "Create an account to track your Greek learning progress",
-		},
-	];
-}
-
-export const loader = async () => {
-	return {};
-};
-
-type ActionSuccess = { success: true; userId: number; username: string };
-type ActionError = { success: false; error: string };
-
-export const action = async ({ request }: Route.ActionArgs) => {
-	const formData = await request.formData();
-
-	const result = await parseFormData(formData, registerSchema);
-	if (result.error) return validationError(result.error, result.submittedData);
-
-	const { username, displayName, password } = result.data;
-
-	const existingUser = await findUserByUsername(username);
-	if (existingUser) {
-		return validationError({
-			fieldErrors: { username: "Username already taken" },
-		});
-	}
-
-	try {
-		const passwordHash = await hashPassword(password);
-		const newUser = await createUserWithPassword({ username, displayName, passwordHash });
-
-		if (!newUser) {
-			return {
-				success: false,
-				error: "Failed to create account",
-			} satisfies ActionError;
-		}
-
-		const finalUsername = newUser.username ?? username;
-		const cookie = createAuthCookie({
-			userId: newUser.id,
-			username: finalUsername,
-		});
-
-		// Return success data with cookie set - component will show passkey setup screen
-		return Response.json(
-			{
-				success: true,
-				userId: newUser.id,
-				username: finalUsername,
-			} satisfies ActionSuccess,
-			{ headers: { "Set-Cookie": cookie } },
-		);
-	} catch (error) {
-		console.error("Registration error:", error);
-		const message = error instanceof Error ? error.message : "Failed to create account";
-		return { success: false, error: message } satisfies ActionError;
-	}
-};
-
-export default function RegisterRoute({ actionData }: Route.ComponentProps) {
-	// Post-registration state (user created, now offering passkey setup)
-	const [registeredUser, setRegisteredUser] = useState<{
-		userId: number;
-		username: string;
-	} | null>(null);
-
-	const form = useForm({
-		validator: registerValidator,
-		method: "post",
-	});
+function RegisterRoute() {
+	const router = useRouter();
+	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [error, setError] = useState<string | null>(null);
+	const [registeredUser, setRegisteredUser] = useState<{ userId: number; username: string } | null>(
+		null,
+	);
 
 	const passkey = usePasskeyRegistration({
 		userId: registeredUser?.userId ?? 0,
 		username: registeredUser?.username ?? "",
 	});
 
-	const isSubmitting = form.formState.isSubmitting;
-
-	// Skip validation error responses - RVF handles those automatically
-	const businessData = actionData && !isValidationErrorResponse(actionData) ? actionData : null;
-
-	useEffect(() => {
-		if (businessData?.success && "userId" in businessData && "username" in businessData) {
-			setRegisteredUser({
-				userId: businessData.userId as number,
-				username: businessData.username as string,
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		setIsSubmitting(true);
+		setError(null);
+		const fd = new FormData(e.currentTarget);
+		try {
+			const result = await registerFn({
+				data: {
+					username: fd.get("username") as string,
+					displayName: fd.get("displayName") as string,
+					password: fd.get("password") as string,
+					confirmPassword: fd.get("confirmPassword") as string,
+				},
 			});
-		}
-	}, [businessData]);
-
-	const handleComplete = () => {
-		if (registeredUser) {
-			// Keep localStorage in sync for backward compatibility during migration
-			setStoredAuth(registeredUser);
-			// Cookie is already set by the action, just navigate
-			window.location.href = "/";
+			if (result.success) {
+				setRegisteredUser({ userId: result.userId, username: result.username });
+			} else {
+				setError(result.error);
+			}
+		} catch (err) {
+			if (err && typeof err === "object" && "to" in err) throw err;
+			setError("Something went wrong. Please try again.");
+		} finally {
+			setIsSubmitting(false);
 		}
 	};
 
-	// Post-registration: passkey setup screen
+	const handleComplete = () => {
+		if (registeredUser) {
+			setStoredAuth(registeredUser);
+			router.invalidate().then(() => router.navigate({ to: "/" }));
+		}
+	};
+
 	if (registeredUser) {
 		return (
 			<div className="flex min-h-page flex-col items-center justify-center space-y-8">
@@ -200,41 +134,38 @@ export default function RegisterRoute({ actionData }: Route.ComponentProps) {
 			</div>
 
 			<Card className="w-full max-w-md p-6">
-				<form {...form.getFormProps()} className="space-y-4">
+				<form onSubmit={handleSubmit} className="space-y-4">
 					<FormField
-						scope={form.scope("username")}
+						name="username"
 						label="Username"
 						placeholder="Choose a username"
 						autoComplete="username"
 					/>
-
 					<FormField
-						scope={form.scope("displayName")}
+						name="displayName"
 						label="Display Name"
 						placeholder="How should we call you?"
 						autoComplete="name"
 					/>
-
 					<FormField
-						scope={form.scope("password")}
+						name="password"
 						label="Password"
 						type="password"
 						placeholder="At least 6 characters"
 						autoComplete="new-password"
 					/>
-
 					<FormField
-						scope={form.scope("confirmPassword")}
+						name="confirmPassword"
 						label="Confirm Password"
 						type="password"
 						placeholder="Re-enter your password"
 						autoComplete="new-password"
 					/>
 
-					{businessData && "error" in businessData && (
+					{error && (
 						<div className="flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
 							<AlertCircle size={16} />
-							{businessData.error}
+							{error}
 						</div>
 					)}
 

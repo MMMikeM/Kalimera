@@ -3,7 +3,7 @@ import type React from "react";
 
 import { Callout, TeachingCard } from "@/components/cards";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
-import { CASE_ROW_DEFS, GrammarTable, type ColumnDef } from "@/components/GrammarTable";
+import { CASE_ROW_DEFS, type ColumnDef, GrammarTable } from "@/components/GrammarTable";
 import { MistakeComparison } from "@/components/MistakeComparison";
 import { MonoText } from "@/components/MonoText";
 import { SectionHeading } from "@/components/SectionHeading";

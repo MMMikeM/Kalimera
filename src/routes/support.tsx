@@ -1,9 +1,14 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { ArrowLeft, Coffee, Heart } from "lucide-react";
-import { Link } from "react-router";
 
 import { Card } from "@/components/Card";
 
-export default function SupportPage() {
+export const Route = createFileRoute("/support")({
+	component: SupportPage,
+});
+
+function SupportPage() {
 	return (
 		<div className="mx-auto max-w-2xl py-8">
 			<Link

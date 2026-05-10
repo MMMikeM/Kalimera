@@ -1,7 +1,7 @@
 import { ContentSection } from "@/components/ContentSection";
 import { MonoText } from "@/components/MonoText";
 
-import type { EssentialsLoaderData } from "../loader.server";
+import type { EssentialsLoaderData } from "../$subtab";
 import { EssentialsBackLink } from "./essentials-back-link";
 
 interface Props {

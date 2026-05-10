@@ -13,17 +13,17 @@ import {
 	string,
 } from "./columns";
 import {
-	nounDeclensionPatterns,
+	adjectiveDeclensionPatterns,
 	cefrLevels,
 	displaySections,
 	genders,
 	grammaticalCases,
 	grammaticalNumbers,
 	imperativeAspects,
+	nounDeclensionPatterns,
 	personNumbers,
 	verbTenses,
 	wordTypes,
-	adjectiveDeclensionPatterns,
 } from "./enums";
 import type { VocabMetadata } from "./metadata";
 

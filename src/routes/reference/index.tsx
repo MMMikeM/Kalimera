@@ -1,6 +1,7 @@
+import { createFileRoute } from "@tanstack/react-router";
 import { ArrowRightLeft, Blocks, FileText, Languages, Palette, Scale, Users } from "lucide-react";
 
-import { SectionCard, type Section } from "@/components/SectionCard";
+import { type Section, SectionCard } from "@/components/SectionCard";
 
 const sections: Section[] = [
 	{
@@ -69,7 +70,11 @@ const sections: Section[] = [
 	},
 ];
 
-export default function ReferenceIndex() {
+export const Route = createFileRoute("/reference/")({
+	component: ReferenceIndex,
+});
+
+function ReferenceIndex() {
 	return (
 		<div className="space-y-6">
 			<div>

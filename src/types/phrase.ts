@@ -2,10 +2,11 @@
 // Used in conversations.tsx and seed-data
 
 import type { CefrLevel } from "../db.server/enums";
+import type { JsonValue } from "../db.server/metadata";
 
 export interface Phrase {
 	text: string;
 	english: string;
 	cefrLevel?: CefrLevel;
-	metadata?: Record<string, unknown>;
+	metadata?: Record<string, JsonValue>;
 }

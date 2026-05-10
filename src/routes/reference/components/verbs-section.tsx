@@ -1,6 +1,6 @@
+import { Link } from "@tanstack/react-router";
 import { AlertCircle, ArrowRight, BookOpen } from "lucide-react";
 import type React from "react";
-import { Link } from "react-router";
 
 import { Card } from "@/components/Card";
 import { NavigatorCard, NavigatorCell, TeachingCard } from "@/components/cards";

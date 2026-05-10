@@ -2,8 +2,8 @@ import {
 	ADJECTIVE_PARADIGMS,
 	type Case,
 	type Gender,
-	isStemStressed,
 	type Num,
+	isStemStressed,
 } from "@/constants/adjective-agreement";
 import type { AdjectiveDeclensionPattern } from "@/db.server/enums";
 

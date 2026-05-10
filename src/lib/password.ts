@@ -1,7 +1,4 @@
-/**
- * Simple password hashing using SHA-256 + UUID salt.
- * Works on Cloudflare Workers (Web Crypto API).
- */
+import "@tanstack/react-start/server-only";
 
 const _hashValue = async (salt: string, password: string): Promise<string> => {
 	const data = new TextEncoder().encode(salt + password);

@@ -1,6 +1,5 @@
 import { createFuzzySearch } from "@mmmike/mikrofuzz";
 import { useEffect, useState } from "react";
-import { useFetcher } from "react-router";
 
 import type { VocabularySearchGraphRow } from "@/db.server/queries/vocabulary";
 
@@ -12,17 +11,19 @@ interface UseVocabularySearchOptions {
 
 export const useVocabularySearch = (options: UseVocabularySearchOptions = {}) => {
 	const { enabled = true } = options;
-	const fetcher = useFetcher<{ vocabulary: VocabularySearchGraphRow[] }>();
+	const [vocabulary, setVocabulary] = useState<VocabularySearchGraphRow[]>(EMPTY_VOCABULARY);
+	const [isLoading, setIsLoading] = useState(false);
 	const [searchTerm, setSearchTerm] = useState("");
 
 	useEffect(() => {
-		if (enabled && fetcher.state === "idle" && !fetcher.data) {
-			fetcher.load("/search");
-		}
-	}, [enabled, fetcher]);
-
-	const vocabulary = fetcher.data?.vocabulary ?? EMPTY_VOCABULARY;
-	const isLoading = fetcher.state === "loading" || (!fetcher.data && enabled);
+		if (!enabled || vocabulary.length > 0) return;
+		setIsLoading(true);
+		fetch("/search")
+			.then((r) => r.json() as Promise<{ vocabulary: VocabularySearchGraphRow[] }>)
+			.then(({ vocabulary: v }) => setVocabulary(v ?? EMPTY_VOCABULARY))
+			.catch(() => {})
+			.finally(() => setIsLoading(false));
+	}, [enabled, vocabulary.length]);
 
 	const fuzzySearch = createFuzzySearch<VocabularySearchGraphRow>(vocabulary, {
 		getText: (item) => {
@@ -42,11 +43,5 @@ export const useVocabularySearch = (options: UseVocabularySearchOptions = {}) =>
 					.sort((a, b) => a.score - b.score)
 					.map((result) => result.item);
 
-	return {
-		searchTerm,
-		setSearchTerm,
-		results,
-		isLoading,
-		vocabulary,
-	};
+	return { searchTerm, setSearchTerm, results, isLoading, vocabulary };
 };

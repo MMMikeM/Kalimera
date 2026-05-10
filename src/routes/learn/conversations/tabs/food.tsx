@@ -3,7 +3,11 @@ import { Utensils } from "lucide-react";
 import { ConversationHero } from "@/components/ConversationHero";
 import type { DialogueLine } from "@/components/DialogueExchange";
 
-import { LearningTips, ScenarioCard, useConversationContext } from "../layout";
+import {
+	LearningTips,
+	ScenarioCard,
+	useConversationContext,
+} from "../components/conversation-shell";
 
 const OFFERING_FOOD: DialogueLine[] = [
 	{ speaker: "host", greek: "Θέλεις κάτι;", english: "Do you want something?" },

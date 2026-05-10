@@ -1,77 +1,96 @@
 # Routes
 
-React Router 7 framework mode. Loaders run server-side, components render client.
+TanStack Start (TanStack Router + SSR). File-based routing — Vite plugin auto-discovers routes. Route tree generated at `src/routeTree.gen.ts`.
 
 ## Structure
 
 ```
 routes/example/
-├── layout.tsx          # Shared UI + Outlet
+├── route.tsx           # Layout route with loader + beforeLoad
 ├── index.tsx           # Default child route
 ├── $tab.tsx            # Dynamic routes
-├── data.server.ts      # Queries and action handlers
+├── loader.server.ts    # Server-only queries + server functions
 └── components/         # Route-specific components
 ```
 
 ## Key Patterns
 
-**Types:** Import from generated path, not parent
+**Route file:**
 
 ```typescript
-import type { Route } from "./+types/layout"; // for layout.tsx
-import type { Route } from "./+types/$tab"; // for $tab.tsx
+import { createFileRoute } from "@tanstack/react-router";
+
+export const Route = createFileRoute("/example")({
+  loader: async ({ context }) => {
+    return await getData(context.userId);
+  },
+  component: function ExamplePage() {
+    const data = Route.useLoaderData();
+    return <div>{data.title}</div>;
+  },
+});
 ```
 
-**Data:** All server logic in `data.server.ts`
+**Server functions** (mutations from client):
 
 ```typescript
-// data.server.ts
-export async function getPageData() {
-	return db.query.vocabulary.findMany({ with: { tags: true } });
-}
+import { createServerFn } from "@tanstack/react-start";
 
-// layout.tsx
-import { getPageData } from "./data.server";
-export const loader = async () => getPageData();
+export const doThingFn = createServerFn({ method: "POST" })
+	.inputValidator(z.object({ id: z.number() }))
+	.handler(async ({ data }) => {
+		return await db.doThing(data.id);
+	});
+
+// In component:
+await doThingFn({ data: { id: 42 } });
 ```
 
-**Actions:** Multi-intent pattern w/ zod-form-data
+**API routes** (HTTP endpoints with `server.handlers`):
 
 ```typescript
-const intent = formData.get("intent") as string;
-return actionHandlers[intent](formData);
+// Side-effect import required
+import "@tanstack/react-start";
+import { createFileRoute } from "@tanstack/react-router";
+
+export const Route = createFileRoute("/api/thing")({
+	server: {
+		handlers: {
+			GET: async ({ request }) => Response.json({ ok: true }),
+			POST: async ({ request }) => {
+				const body = await request.json();
+				return Response.json({ received: body });
+			},
+		},
+	},
+});
 ```
 
-**Forms:** `useFetcher` for in-place mutations, `<Form>` for navigation
-
-## Route Configuration
+**Auth context** — available on all routes via `Route.useRouteContext()`:
 
 ```typescript
-// routes.ts
-route("practice", "routes/practice/layout.tsx", [
-	index("routes/practice/index.tsx"),
-	route(":tab", "routes/practice/$tab.tsx"),
-]);
+const { auth } = Route.useRouteContext();
+// auth: { userId: number; username: string } | null
 ```
 
-- `route()` - Add URL segment
-- `layout()` - Shared UI, no URL segment
-- `index()` - Default child at parent URL
-- `prefix()` - URL prefix only (use spread: `...prefix("api", [...])`)
+**Auth guard** (copy from practice/route.tsx):
 
-## When to Defer
+```typescript
+beforeLoad: async () => {
+  const request = getRequest();
+  const auth = getAuthSession(request);
+  if (!auth?.userId) throw redirect({ to: "/" });
+  return { userId: auth.userId };
+},
+```
 
-**Use `react-router-specialist` agent for:**
+## Co-located non-route files
 
-- Route config or restructuring
-- Loader/action patterns
-- Revalidation strategies
-- Navigation hooks (useNavigate, useNavigation, useFetcher)
-- Meta/headers/handle exports
-- Type generation issues
+Files not discovered as routes (configured via `routeFileIgnorePattern` in `vite.config.ts`):
 
-**Use `ui-designer` agent for:**
+- `*.server.ts` — server-only queries
+- `tabs/`, `subtabs/`, `components/`, `engines/` directories
+- `hooks.ts`, `drill-lookup.ts`, `group-section.tsx`
+- `*.content.llm` content files
 
-- Component design, layouts
-- Visual consistency
-- Educational design patterns
+To exclude a new co-located file, prefix with `-` or extend the ignore pattern.

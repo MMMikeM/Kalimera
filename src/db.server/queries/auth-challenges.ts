@@ -3,7 +3,7 @@ import { eq } from "drizzle-orm";
 import { nowInstant, toEpochSeconds } from "@/lib/time";
 
 import { db } from "../index";
-import { authChallenges, type ChallengeType } from "../schema";
+import { type ChallengeType, authChallenges } from "../schema";
 
 const CHALLENGE_TTL_MS = 5 * 60 * 1000;
 

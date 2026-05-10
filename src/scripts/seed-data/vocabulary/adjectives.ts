@@ -1,9 +1,9 @@
 import {
+	type VocabWithTags,
 	pickAdjectiveDetails,
 	pickAdjectiveNominalForms,
-	type VocabWithTags,
 } from "../../seed-pipeline";
-import { enrichAdjective, type AdjectiveSeedInput } from "./adjective-seed-enrichment";
+import { type AdjectiveSeedInput, enrichAdjective } from "./adjective-seed-enrichment";
 
 const COLORS_RAW: AdjectiveSeedInput[] = [
 	{ lemma: "άσπρο", english: "white", cefrLevel: "A2" },

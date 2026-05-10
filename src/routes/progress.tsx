@@ -1,69 +1,29 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { ArrowLeft, Calendar, Clock, Target, TrendingUp } from "lucide-react";
-import { Link } from "react-router";
 
 import { AccuracyTrend } from "@/components/AccuracyTrend";
 import { Card } from "@/components/Card";
 import { StreakCalendar } from "@/components/StreakCalendar";
-import {
-	getAccuracyTrends,
-	getPracticeDatesForCalendar,
-	getTimeInvested,
-} from "@/db.server/queries/analytics/progress";
-import { listCompletedPracticeSessionsForStreak } from "@/db.server/queries/practice-sessions";
-import { getSkillStats } from "@/db.server/queries/vocabulary-skills";
-import { getAuthSession } from "@/lib/auth-cookie";
-import { streakLengthFromCompletedSessionDates } from "@/lib/practice-streak";
-import { fromEpochSeconds } from "@/lib/time";
 
-import type { Route } from "./+types/progress";
+import { getProgressDataFn } from "./progress.loader";
 
-export function meta() {
-	return [
-		{ title: "Progress - Kalimera" },
-		{ name: "description", content: "Track your Greek learning progress" },
-	];
-}
-
-export async function loader({ request }: Route.LoaderArgs) {
-	const auth = getAuthSession(request);
-	const userId = auth?.userId ?? null;
-
-	if (!userId) {
-		return {
-			userId: null,
-			currentStreak: 0,
-			practiceDates: [] as string[],
-			accuracyData: [] as Array<{ date: string; accuracy: number }>,
-			timeInvested: { totalMinutes: 0, sessionCount: 0 },
-			masteredCount: 0,
-		};
-	}
-
-	const [stats, calendarDates, accuracyTrends, timeInvested, completedSessions] = await Promise.all(
-		[
-			getSkillStats(userId),
-			getPracticeDatesForCalendar(userId, 3),
-			getAccuracyTrends(userId, 30),
-			getTimeInvested(userId),
-			listCompletedPracticeSessionsForStreak(userId),
-		],
-	);
-	const completedDates = completedSessions.map((s) => fromEpochSeconds(s.completedAt!));
-
-	const accuracyData = accuracyTrends.map((d) => ({
-		date: d.date,
-		accuracy: d.accuracy / 100,
-	}));
-
-	return {
-		userId,
-		currentStreak: streakLengthFromCompletedSessionDates(completedDates),
-		practiceDates: calendarDates.map((d) => d.date),
-		accuracyData,
-		timeInvested,
-		masteredCount: Number(stats.itemsMastered),
-	};
-}
+export const Route = createFileRoute("/progress")({
+	loader: async ({ context }) => {
+		if (!context.auth?.userId) {
+			return {
+				userId: null,
+				currentStreak: 0,
+				practiceDates: [] as string[],
+				accuracyData: [] as Array<{ date: string; accuracy: number }>,
+				timeInvested: { totalMinutes: 0, sessionCount: 0 },
+				masteredCount: 0,
+			};
+		}
+		return getProgressDataFn();
+	},
+	component: ProgressPage,
+});
 
 const formatMinutes = (minutes: number): string => {
 	if (minutes < 60) return `${minutes} min`;
@@ -72,9 +32,9 @@ const formatMinutes = (minutes: number): string => {
 	return mins > 0 ? `${hours}h ${mins}m` : `${hours}h`;
 };
 
-export default function ProgressPage({ loaderData }: Route.ComponentProps) {
+function ProgressPage() {
 	const { userId, currentStreak, practiceDates, accuracyData, timeInvested, masteredCount } =
-		loaderData;
+		Route.useLoaderData();
 
 	if (!userId) {
 		return (

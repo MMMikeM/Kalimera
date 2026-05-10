@@ -6,15 +6,15 @@ import { CollapsibleSection } from "@/components/CollapsibleSection";
 import { MonoText } from "@/components/MonoText";
 import { CASE_SCHEME, SCHEME } from "@/constants/grammar-palette";
 import {
-	EMPHATIC_PRONOUN_EXAMPLES,
 	EMPHATIC_PRONOUNS,
-	OBJECT_PRONOUN_EXAMPLES,
+	EMPHATIC_PRONOUN_EXAMPLES,
 	OBJECT_PRONOUNS,
-	POSSESSIVE_PRONOUN_EXAMPLES,
+	OBJECT_PRONOUN_EXAMPLES,
 	POSSESSIVE_PRONOUNS,
-	type PronounParadigm,
+	POSSESSIVE_PRONOUN_EXAMPLES,
 	PRONOUN_PATTERNS,
 	PRONOUN_PHRASES,
+	type PronounParadigm,
 	SUBJECT_PRONOUNS,
 } from "@/constants/pronouns";
 

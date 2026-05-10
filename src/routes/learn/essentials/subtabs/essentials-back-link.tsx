@@ -1,5 +1,5 @@
+import { Link } from "@tanstack/react-router";
 import { ChevronLeft } from "lucide-react";
-import { Link } from "react-router";
 
 export function EssentialsBackLink() {
 	return (

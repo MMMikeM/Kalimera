@@ -7,7 +7,7 @@ import { ReferenceHero } from "@/components/ReferenceHero";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { type GrammarScheme, SCHEME } from "@/constants/grammar-palette";
 
-import type { PatternItem, PatternsData } from "../loader.server";
+import type { PatternItem, PatternsData } from "../$tab";
 
 const ParadigmCard = ({
 	title,

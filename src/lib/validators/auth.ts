@@ -1,15 +1,10 @@
-import { withZod } from "@rvf/zod";
 import { z } from "zod";
 
-// Login form - just needs identifier, password optional for legacy code flow
 export const loginSchema = z.object({
 	username: z.string().min(1, "Please enter username"),
 	password: z.string().optional(),
 });
 
-export const loginValidator = withZod(loginSchema);
-
-// Password setup for existing users migrating to password auth
 export const passwordSetupSchema = z
 	.object({
 		newPassword: z.string().min(4, "Password must be at least 4 characters"),
@@ -22,9 +17,6 @@ export const passwordSetupSchema = z
 		path: ["confirmPassword"],
 	});
 
-export const passwordSetupValidator = withZod(passwordSetupSchema);
-
-// Registration form
 export const registerSchema = z
 	.object({
 		username: z
@@ -42,5 +34,3 @@ export const registerSchema = z
 		message: "Passwords do not match",
 		path: ["confirmPassword"],
 	});
-
-export const registerValidator = withZod(registerSchema);

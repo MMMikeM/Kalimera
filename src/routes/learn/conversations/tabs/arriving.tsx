@@ -3,7 +3,11 @@ import { DoorOpen } from "lucide-react";
 import { ConversationHero } from "@/components/ConversationHero";
 import type { DialogueLine } from "@/components/DialogueExchange";
 
-import { LearningTips, ScenarioCard, useConversationContext } from "../layout";
+import {
+	LearningTips,
+	ScenarioCard,
+	useConversationContext,
+} from "../components/conversation-shell";
 
 const CASUAL_GREETING: DialogueLine[] = [
 	{ speaker: "friend", greek: "Γεια σου!", english: "Hi!" },

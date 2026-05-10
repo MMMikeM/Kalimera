@@ -1,14 +1,31 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import { Link } from "react-router";
 
 const SECTIONS = [
-	{ href: "/practice/cases", label: "The case system", thesis: "Articles, nouns, adjectives — Doer / Target / Owner." },
-	{ href: "/practice/pronouns", label: "Pronouns", thesis: "Object forms, possessives, where they sit." },
+	{
+		href: "/practice/cases",
+		label: "The case system",
+		thesis: "Articles, nouns, adjectives — Doer / Target / Owner.",
+	},
+	{
+		href: "/practice/pronouns",
+		label: "Pronouns",
+		thesis: "Object forms, possessives, where they sit.",
+	},
 	{ href: "/practice/verbs", label: "Verbs", thesis: "Present, past, future, να, commands." },
-	{ href: "/practice/blocks", label: "Building blocks", thesis: "Survival phrases, numbers, days." },
+	{
+		href: "/practice/blocks",
+		label: "Building blocks",
+		thesis: "Survival phrases, numbers, days.",
+	},
 ];
 
-export default function PracticeIndex() {
+export const Route = createFileRoute("/practice/")({
+	component: PracticeIndex,
+});
+
+function PracticeIndex() {
 	return (
 		<div className="mx-auto max-w-2xl">
 			<ul className="divide-y divide-border">

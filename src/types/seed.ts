@@ -7,6 +7,7 @@ import type {
 	NounDeclensionPattern,
 	VerbTense,
 } from "../db.server/enums";
+import type { JsonValue } from "../db.server/metadata";
 import type { Case, ConjugationFamily, Gender, GrammaticalNumber } from "../lib/greek-grammar";
 import type { Phrase } from "./phrase";
 
@@ -79,7 +80,7 @@ export interface NounSeed {
 	cefrLevel?: CefrLevel;
 	declensionPattern: NounDeclensionPattern;
 	nominalForms: NounNominalFormsSeed;
-	metadata?: Record<string, unknown>;
+	metadata?: Record<string, JsonValue>;
 }
 
 export interface AdverbSeed {

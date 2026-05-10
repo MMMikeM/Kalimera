@@ -1,7 +1,10 @@
-import { type NavTab, NavTabs } from "@/components/NavTabs";
+import { createFileRoute } from "@tanstack/react-router";
+import { createServerFn } from "@tanstack/react-start";
 
-import type { Route } from "./+types/$tab";
-import { loader as loadPatterns } from "./loader.server";
+import { type NavTab, NavTabs } from "@/components/NavTabs";
+import { getVocabBySlug } from "@/db.server/queries/vocabulary";
+import type { Vocabulary } from "@/db.server/types";
+
 import { AdjectivesTab } from "./tabs/adjectives";
 import { CasesTab } from "./tabs/cases";
 import { NounsTab } from "./tabs/nouns";
@@ -11,6 +14,35 @@ import { PrepositionsTab } from "./tabs/prepositions";
 import { PronounsTab } from "./tabs/pronouns";
 import { VerbsTab } from "./tabs/verbs";
 
+export type PatternItem = Vocabulary;
+
+const loadPatterns = createServerFn().handler(async () => {
+	const [phraseTags, verbTags] = await Promise.all([
+		getVocabBySlug("phrases", ["phrase"]),
+		getVocabBySlug("verbs", ["verb"]),
+	]);
+
+	const toSlugMap = (tags: typeof phraseTags): Record<string, Vocabulary[]> =>
+		Object.fromEntries(
+			tags.map((t) => [
+				t.slug,
+				t.vocabularyTags.map((vt) => vt.vocabulary).filter((v): v is Vocabulary => v !== null),
+			]),
+		);
+
+	const phrases = toSlugMap(phraseTags);
+	const verbs = toSlugMap(verbTags);
+
+	return {
+		likesConstruction: {
+			singular: verbs["likes-singular"] ?? [],
+			plural: verbs["likes-plural"] ?? [],
+		},
+		nameConstruction: phrases["name-construction"] ?? [],
+	};
+});
+
+export type PatternsData = Awaited<ReturnType<typeof loadPatterns>>;
 const VALID_TABS = [
 	"cases",
 	"pronouns",
@@ -34,19 +66,22 @@ const REFERENCE_TABS: NavTab[] = [
 	{ id: "patterns", label: "Patterns", color: "honey" },
 ];
 
-export async function loader({ params: { tab } }: Route.LoaderArgs) {
-	if (!VALID_TABS.includes(tab as TabId)) {
-		throw new Response("Not Found", { status: 404 });
-	}
+export const Route = createFileRoute("/reference/$tab")({
+	loader: async ({ params: { tab } }) => {
+		if (!VALID_TABS.includes(tab as TabId)) {
+			throw new Response("Not Found", { status: 404 });
+		}
 
-	// Only load patterns data when on patterns tab
-	const patterns = tab === "patterns" ? await loadPatterns() : null;
+		// Only load patterns data when on patterns tab
+		const patterns = tab === "patterns" ? await loadPatterns() : null;
 
-	return { tab: tab as TabId, patterns };
-}
+		return { tab: tab as TabId, patterns };
+	},
+	component: TabRoute,
+});
 
-export default function TabRoute({ loaderData }: Route.ComponentProps) {
-	const { tab, patterns } = loaderData;
+function TabRoute() {
+	const { tab, patterns } = Route.useLoaderData();
 
 	const renderTab = () => {
 		switch (tab) {

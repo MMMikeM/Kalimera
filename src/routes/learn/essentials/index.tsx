@@ -1,5 +1,6 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { BookOpen, ChevronLeft, Hash, MapPin, Palette, Sun, TrendingUp } from "lucide-react";
-import { Link } from "react-router";
 
 import { Card } from "@/components/Card";
 import { TabHero } from "@/components/TabHero";
@@ -56,7 +57,11 @@ const ICON_CLASSES = {
 	terracotta: "bg-terracotta-200 text-terracotta-text",
 } as const;
 
-export default function EssentialsIndex() {
+export const Route = createFileRoute("/learn/essentials/")({
+	component: EssentialsIndex,
+});
+
+function EssentialsIndex() {
 	return (
 		<div className="space-y-6">
 			<Link
@@ -81,7 +86,12 @@ export default function EssentialsIndex() {
 				{TOOLKIT_SECTIONS.map((section) => {
 					const Icon = section.icon;
 					return (
-						<Link key={section.id} to={`/learn/essentials/${section.id}`} className="block">
+						<Link
+							key={section.id}
+							to="/learn/essentials/$subtab"
+							params={{ subtab: section.id }}
+							className="block"
+						>
 							<Card
 								variant="bordered"
 								padding="md"

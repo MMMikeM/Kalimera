@@ -1,6 +1,7 @@
 import { AsyncLocalStorage } from "node:async_hooks";
 
 import { type Client, createClient } from "@libsql/client/web";
+import { createServerOnlyFn } from "@tanstack/react-start";
 import { drizzle } from "drizzle-orm/libsql/web";
 
 import { relations } from "./relations";
@@ -31,7 +32,7 @@ export const createDb = (env: {
 };
 
 // Get db from async context, falling back to process.env for local dev/scripts
-const getDb = (): DbClient => {
+const getDb = createServerOnlyFn((): DbClient => {
 	const contextDb = dbStorage.getStore();
 	if (contextDb) return contextDb;
 
@@ -42,7 +43,7 @@ const getDb = (): DbClient => {
 		authToken: process.env.TURSO_AUTH_TOKEN,
 	});
 	return createTypedDb(client);
-};
+});
 
 // Proxy that lazily resolves to the correct db instance
 // The explicit handler typing ensures db.query is properly typed
