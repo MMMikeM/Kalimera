@@ -1,16 +1,8 @@
 import { Link } from "@tanstack/react-router";
 
-import type { FileRoutesByFullPath } from "@/routeTree.gen";
-
 import type { Drill } from "./group-section";
 
-export const DrillButton = ({
-	from,
-	to,
-	greek,
-	title,
-	minutes,
-}: Drill & { from: keyof FileRoutesByFullPath }) => (
+export const DrillButton = ({ from, to, greek, title, minutes }: Drill) => (
 	<li>
 		<Link
 			from={from}

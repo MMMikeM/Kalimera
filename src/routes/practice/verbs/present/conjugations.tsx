@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { SimpleListDrill, type SimpleListItem } from "../components/engines/simple-list-drill";
+import type { SimpleListItem } from "../../components/engines/deck";
+import { Drill } from "../../components/engines/drill";
 
 // Context line carries tense + family; english is just the pronoun.
 // Splits the three dimensions into a scannable visual hierarchy:
@@ -473,19 +474,13 @@ const CATEGORIES = [
 	{ id: "g2-imperfect", label: "Imperfect · μιλούσα" },
 ];
 
-const SPEEDS = [
-	{ id: "fast", label: "Fast · 4s", timeLimit: 4000 },
-	{ id: "medium", label: "Medium · 6s", timeLimit: 6000 },
-	{ id: "relaxed", label: "Relaxed · 8s", timeLimit: 8000 },
-];
-
-export const Route = createFileRoute("/practice/verbs/conjugation-endings")({
+export const Route = createFileRoute("/practice/verbs/present/conjugations")({
 	component: ConjugationEndingsDrill,
 });
 
 function ConjugationEndingsDrill() {
 	return (
-		<SimpleListDrill
+		<Drill
 			drillId="verbs-conjugation-endings"
 			items={ENDINGS}
 			title="Conjugation endings"
@@ -494,7 +489,6 @@ function ConjugationEndingsDrill() {
 			forwardDesc="Pronoun + paradigm → ending"
 			reverseDesc="Ending → pronoun (self-assess)"
 			categories={CATEGORIES}
-			speeds={SPEEDS}
 		/>
 	);
 }

@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { SPEEDS } from "../../components/drill-speeds";
-import { SimpleListDrill, type SimpleListItem } from "../../components/engines/simple-list-drill";
+import type { SimpleListItem } from "../../components/engines/deck";
+import { Drill } from "../../components/engines/drill";
 
 // Teaches the regular aorist fusion rules:
 //   π/β/φ/ευ + σ → ψ   (γράφω → έγραψα)
@@ -270,7 +270,7 @@ export const Route = createFileRoute("/practice/verbs/past/aorist-formation")({
 
 function AoristFormationDrill() {
 	return (
-		<SimpleListDrill
+		<Drill
 			drillId="verbs-aorist-formation"
 			items={ITEMS}
 			title="Aorist formation"
@@ -279,7 +279,6 @@ function AoristFormationDrill() {
 			forwardDesc="Present (English) → aorist sg1"
 			reverseDesc="Aorist form → present verb (self-assess)"
 			categories={CATEGORIES}
-			speeds={SPEEDS}
 		/>
 	);
 }

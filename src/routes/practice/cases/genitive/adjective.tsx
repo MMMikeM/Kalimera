@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { SPEEDS } from "../../components/drill-speeds";
+import type { SimpleListItem } from "../../components/engines/deck";
+import { Drill } from "../../components/engines/drill";
 import { GENDER_DIMENSION_OPTIONS } from "../../components/engines/drill-constants";
-import { SimpleListDrill, type SimpleListItem } from "../../components/engines/simple-list-drill";
 
 // Adjective three-form agreement in Owner (genitive).
 // Singular: m -ου · f -ης/-ας · n -ου
@@ -154,20 +154,21 @@ export const Route = createFileRoute("/practice/cases/genitive/adjective")({
 
 function AdjectiveAgreementOwnerDrill() {
 	return (
-		<SimpleListDrill
+		<Drill
+			backTo={"/practice/cases/"}
 			drillId="adjectives-agreement-owner"
 			items={ITEMS}
 			title="Adjective agreement (Owner)"
 			subtitle="40 forms / timed"
 			colorTheme="olive"
-			speeds={SPEEDS}
 			forwardDesc="English + gender → adjective form (Owner)"
 			reverseLabel="Greek → gender"
 			reverseDesc="Adjective form → select gender"
 			categories={CATEGORIES}
-			reverseDimension={{
+			reverse={{
+				kind: "single-select",
 				options: GENDER_DIMENSION_OPTIONS,
-				getCorrectId: (item) => item.dimension ?? "",
+				getCorrectId: (item) => String(item.dimension ?? ""),
 			}}
 		/>
 	);

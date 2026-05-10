@@ -1,9 +1,12 @@
 import { Link } from "@tanstack/react-router";
 import type React from "react";
 
+import type { FileRoutesByFullPath, FileRoutesByTo } from "@/routeTree.gen";
+
 export interface Drill {
 	id: string;
-	to: `${"." | ".."}/${string}`;
+	to: keyof FileRoutesByTo;
+	from?: keyof FileRoutesByFullPath;
 	title: string;
 	greek: string;
 	minutes: number;

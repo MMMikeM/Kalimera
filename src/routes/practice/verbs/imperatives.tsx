@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { SPEEDS } from "../components/drill-speeds";
-import { SimpleListDrill, type SimpleListItem } from "../components/engines/simple-list-drill";
+import type { SimpleListItem } from "../components/engines/deck";
+import { Drill } from "../components/engines/drill";
 
 const IMPERATIVES: SimpleListItem[] = [
 	// Tier A — 5 most frequent, drill first
@@ -139,13 +139,12 @@ export const Route = createFileRoute("/practice/verbs/imperatives")({
 
 function ImperativesDrill() {
 	return (
-		<SimpleListDrill
+		<Drill
 			drillId="verbs-imperatives"
 			items={IMPERATIVES}
 			title="Imperatives"
 			subtitle="15 forms / timed"
 			colorTheme="terracotta"
-			speeds={SPEEDS}
 			forwardDesc="English command → Greek imperative"
 			reverseDesc="Greek imperative → English (self-assess)"
 			categories={CATEGORIES}

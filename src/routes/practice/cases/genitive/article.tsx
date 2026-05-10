@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { SPEEDS } from "../../components/drill-speeds";
-import { SimpleListDrill, type SimpleListItem } from "../../components/engines/simple-list-drill";
+import type { SimpleListItem } from "../../components/engines/deck";
+import { Drill } from "../../components/engines/drill";
 
 // Articles in Owner (genitive): του · της · του · των · των · των
 // Forward: "of the (m, sg)" → type "tou" (matchPhonetic → του)
@@ -69,13 +69,13 @@ export const Route = createFileRoute("/practice/cases/genitive/article")({
 
 function ArticleOwnerDrill() {
 	return (
-		<SimpleListDrill
+		<Drill
+			backTo={"/practice/cases/"}
 			drillId="articles-article-owner"
 			items={FORMS}
 			title="Article (Owner)"
 			subtitle="6 forms / timed"
 			colorTheme="olive"
-			speeds={SPEEDS}
 			forwardDesc="Gender + number → article (Owner)"
 			reverseDesc="Article → recall gender + number (self-assess)"
 			categories={CATEGORIES}

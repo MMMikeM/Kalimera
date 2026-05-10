@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { SPEEDS } from "../../components/drill-speeds";
-import { SimpleListDrill, type SimpleListItem } from "../../components/engines/simple-list-drill";
+import type { SimpleListItem } from "../../components/engines/deck";
+import { Drill } from "../../components/engines/drill";
 import { PHRASES as TARGET } from "../accusative/phrase";
 import { PHRASES as OWNER } from "../genitive/phrase";
 import { PHRASES as DOER } from "../nominative/phrase";
@@ -58,20 +58,20 @@ export const Route = createFileRoute("/practice/cases/review/phrases")({
 
 function AllPhrasesDrill() {
 	return (
-		<SimpleListDrill
+		<Drill
 			drillId="nominal-all-phrases"
 			items={ITEMS}
 			title="All phrases"
 			subtitle="45 noun phrases / mixed case / timed"
 			colorTheme="honey"
-			speeds={SPEEDS}
 			forwardDesc="English → article + adjective + noun (any case)"
 			reverseLabel="Greek → case"
 			reverseDesc="Phrase → select case"
 			categories={CATEGORIES}
-			reverseDimension={{
+			reverse={{
+				kind: "single-select",
 				options: DIMENSION_OPTIONS,
-				getCorrectId: (item) => item.dimension ?? "",
+				getCorrectId: (item) => String(item.dimension ?? ""),
 			}}
 		/>
 	);

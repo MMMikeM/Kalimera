@@ -20,7 +20,6 @@ function AllAdjectivesDrill() {
 			drillId="nominal-all-adjectives"
 			category="nouns"
 			initialQuestions={questions.length > 0 ? questions : undefined}
-			wordTypeFilter="adjective"
 		/>
 	);
 }

@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { SPEEDS } from "../components/drill-speeds";
-import { SimpleListDrill, type SimpleListItem } from "../components/engines/simple-list-drill";
+import type { SimpleListItem } from "../components/engines/deck";
+import { Drill } from "../components/engines/drill";
 
 const NUMBERS: SimpleListItem[] = [
 	// 1–10
@@ -182,13 +182,12 @@ export const Route = createFileRoute("/practice/blocks/numbers")({
 
 function NumbersDrill() {
 	return (
-		<SimpleListDrill
+		<Drill
 			drillId="blocks-numbers"
 			items={NUMBERS}
 			title="Numbers"
 			subtitle="28 forms / timed"
 			colorTheme="terracotta"
-			speeds={SPEEDS}
 			forwardDesc="Digit → Greek word"
 			reverseDesc="Greek word → digit (self-assess)"
 			categories={CATEGORIES}

@@ -8,7 +8,7 @@ import { ensureUserProgress } from "@/db.server/queries/user-progress";
 import { adjacentCefrPool } from "@/lib/cefr";
 import type { DrillQuestion } from "@/lib/drill/generate-questions";
 import { shuffle } from "@/lib/shuffle";
-import { authMiddleware } from "@/middleware";
+import { requireAuth } from "@/lib/auth-session.server";
 
 const CASE_LABEL: Record<string, string> = {
 	nominative: "Doer",
@@ -65,7 +65,6 @@ async function getNominalReviewQuestionsImpl(
 }
 
 export const getNominalReviewQuestionsFn = createServerFn({ method: "GET" })
-	.middleware([authMiddleware])
 	.inputValidator(
 		z.object({
 			wordType: z.enum(["noun", "adjective"]),
@@ -73,6 +72,7 @@ export const getNominalReviewQuestionsFn = createServerFn({ method: "GET" })
 			limit: z.number(),
 		}),
 	)
-	.handler(async ({ data, context }) =>
-		getNominalReviewQuestionsImpl(context.auth.userId, data.wordType, data.drillId, data.limit),
-	);
+	.handler(async ({ data }) => {
+		const { userId } = requireAuth();
+		return getNominalReviewQuestionsImpl(userId, data.wordType, data.drillId, data.limit);
+	});

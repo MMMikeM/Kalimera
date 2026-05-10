@@ -8,17 +8,15 @@ import {
 	startSession,
 } from "@/db.server/queries/practice-sessions";
 import type { AreaType, SkillType } from "@/db.server/schema";
-import { authMiddleware } from "@/middleware";
+import { requireAuth } from "@/lib/auth-session.server";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // SERVER FUNCTIONS — SRS lifecycle
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export const startSessionFn = createServerFn({ method: "POST" })
-	.middleware([authMiddleware])
 	.inputValidator(
 		z.object({
-			userId: z.number(),
 			sessionType: z.enum(["vocab_quiz", "case_drill", "conjugation_drill", "weak_area_focus"]),
 			category: z.string().optional(),
 			focusArea: z.string().optional(),
@@ -26,8 +24,9 @@ export const startSessionFn = createServerFn({ method: "POST" })
 		}),
 	)
 	.handler(async ({ data }) => {
+		const { userId } = requireAuth();
 		const row: PracticeSessionInsert = {
-			userId: data.userId,
+			userId,
 			sessionType: data.sessionType,
 			category: data.category ?? null,
 			wordTypeFilter: data.wordTypeFilter ?? null,
@@ -38,10 +37,8 @@ export const startSessionFn = createServerFn({ method: "POST" })
 	});
 
 export const recordAttemptFn = createServerFn({ method: "POST" })
-	.middleware([authMiddleware])
 	.inputValidator(
 		z.object({
-			userId: z.number(),
 			sessionId: z.number().optional(),
 			vocabularyId: z.number().optional(),
 			questionText: z.string(),
@@ -56,8 +53,9 @@ export const recordAttemptFn = createServerFn({ method: "POST" })
 		}),
 	)
 	.handler(async ({ data }) => {
+		const { userId } = requireAuth();
 		const attempt = await recordAttempt({
-			userId: data.userId,
+			userId,
 			sessionId: data.sessionId,
 			vocabularyId: data.vocabularyId,
 			drillId: data.drillId,
@@ -74,7 +72,6 @@ export const recordAttemptFn = createServerFn({ method: "POST" })
 	});
 
 export const completeSessionFn = createServerFn({ method: "POST" })
-	.middleware([authMiddleware])
 	.inputValidator(
 		z.object({
 			sessionId: z.number(),
@@ -83,6 +80,7 @@ export const completeSessionFn = createServerFn({ method: "POST" })
 		}),
 	)
 	.handler(async ({ data }) => {
+		requireAuth();
 		const session = await completeSession(data);
 		return { success: true, session };
 	});

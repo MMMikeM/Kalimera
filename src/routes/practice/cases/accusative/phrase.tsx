@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { SPEEDS } from "../../components/drill-speeds";
+import type { SimpleListItem } from "../../components/engines/deck";
+import { Drill } from "../../components/engines/drill";
 import {
 	GENDER_DIMENSION_OPTIONS,
 	GENDER_PLURAL_CATEGORIES,
 } from "../../components/engines/drill-constants";
-import { SimpleListDrill, type SimpleListItem } from "../../components/engines/simple-list-drill";
 
 // Target (accusative) noun phrase capstone — article + adjective + noun.
 // Singular: τον/τη(ν)/το + adj(sg, acc) + noun(sg, acc)
@@ -303,20 +303,21 @@ export const Route = createFileRoute("/practice/cases/accusative/phrase")({
 
 function PhraseTargetDrill() {
 	return (
-		<SimpleListDrill
+		<Drill
+			backTo={"/practice/cases/"}
 			drillId="nominal-phrase-target"
 			items={PHRASES}
 			title="Target phrase"
 			subtitle="30 noun phrases / timed"
 			colorTheme="terracotta"
-			speeds={SPEEDS}
 			forwardDesc="English → article + adjective + noun (Target form)"
 			reverseLabel="Greek → gender"
 			reverseDesc="Phrase → select gender"
 			categories={GENDER_PLURAL_CATEGORIES}
-			reverseDimension={{
+			reverse={{
+				kind: "single-select",
 				options: GENDER_DIMENSION_OPTIONS,
-				getCorrectId: (item) => item.dimension ?? "",
+				getCorrectId: (item) => String(item.dimension ?? ""),
 			}}
 		/>
 	);

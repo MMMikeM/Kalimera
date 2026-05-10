@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { SPEEDS } from "../../components/drill-speeds";
+import type { SimpleListItem } from "../../components/engines/deck";
+import { Drill } from "../../components/engines/drill";
 import { GENDER_DIMENSION_OPTIONS } from "../../components/engines/drill-constants";
-import { SimpleListDrill, type SimpleListItem } from "../../components/engines/simple-list-drill";
 
 // Adjective three-form agreement in Target (accusative).
 // Singular: m -ο · f -η/-α · n -ο
@@ -194,20 +194,21 @@ export const Route = createFileRoute("/practice/cases/accusative/adjective")({
 
 function AdjectiveAgreementTargetDrill() {
 	return (
-		<SimpleListDrill
+		<Drill
+			backTo={"/practice/cases/"}
 			drillId="adjectives-agreement-target"
 			items={ITEMS}
 			title="Adjective agreement (Target)"
 			subtitle="60 forms / timed"
 			colorTheme="terracotta"
-			speeds={SPEEDS}
 			forwardDesc="English + gender → adjective form (Target)"
 			reverseLabel="Greek → gender"
 			reverseDesc="Adjective form → select gender"
 			categories={CATEGORIES}
-			reverseDimension={{
+			reverse={{
+				kind: "single-select",
 				options: GENDER_DIMENSION_OPTIONS,
-				getCorrectId: (item) => item.dimension ?? "",
+				getCorrectId: (item) => String(item.dimension ?? ""),
 			}}
 		/>
 	);

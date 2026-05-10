@@ -7,9 +7,9 @@ import { getVocabularyWithNominalForms } from "@/db.server/queries/nominal-forms
 import { ensureUserProgress } from "@/db.server/queries/user-progress";
 import { adjacentCefrPool } from "@/lib/cefr";
 import { greekToPhonetic } from "@/lib/greek-transliteration";
-import { authMiddleware } from "@/middleware";
+import { requireAuth } from "@/lib/auth-session.server";
 
-import type { SimpleListItem } from "../components/engines/simple-list-drill";
+import type { SimpleListItem } from "../components/engines/deck";
 
 /** Build SimpleListItem[] for a single case drill (nominative / accusative / genitive).
  *  Pool is SRS-aware: nouns the user has been exposed to in their CEFR band. */
@@ -59,7 +59,6 @@ async function getNounDrillItemsImpl(
 }
 
 export const getNounDrillItemsFn = createServerFn({ method: "GET" })
-	.middleware([authMiddleware])
 	.inputValidator(
 		z.object({
 			grammaticalCase: z.enum(["nominative", "accusative", "genitive"]),
@@ -67,8 +66,9 @@ export const getNounDrillItemsFn = createServerFn({ method: "GET" })
 			stripArticleForReverse: z.boolean().optional(),
 		}),
 	)
-	.handler(async ({ data, context }) =>
-		getNounDrillItemsImpl(context.auth.userId, data.grammaticalCase, data.drillId, {
+	.handler(async ({ data }) => {
+		const { userId } = requireAuth();
+		return getNounDrillItemsImpl(userId, data.grammaticalCase, data.drillId, {
 			stripArticleForReverse: data.stripArticleForReverse,
-		}),
-	);
+		});
+	});

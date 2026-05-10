@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { SPEEDS } from "../../components/drill-speeds";
+import type { SimpleListItem } from "../../components/engines/deck";
+import { Drill } from "../../components/engines/drill";
 import { PERSON_DIMENSION_OPTIONS } from "../../components/engines/drill-constants";
-import { SimpleListDrill, type SimpleListItem } from "../../components/engines/simple-list-drill";
 
 // Irregular present-tense verbs (excluding είμαι, which has its own drill).
 // These verbs break the regular -ω/-εις/-ει paradigm in stem or endings.
@@ -123,13 +123,13 @@ const FORMS: SimpleListItem[] = VERBS.flatMap((v) =>
 
 const CATEGORIES = VERBS.map((v) => ({ id: v.id, label: v.categoryLabel }));
 
-export const Route = createFileRoute("/practice/verbs/present/present-irregular")({
+export const Route = createFileRoute("/practice/verbs/present/irregular")({
 	component: PresentIrregularDrill,
 });
 
 function PresentIrregularDrill() {
 	return (
-		<SimpleListDrill
+		<Drill
 			drillId="verbs-present-irregular"
 			items={FORMS}
 			title="Irregular verbs · present"
@@ -139,11 +139,11 @@ function PresentIrregularDrill() {
 			reverseLabel="Greek → person"
 			reverseDesc="Present form → select person"
 			categories={CATEGORIES}
-			reverseDimension={{
+			reverse={{
+				kind: "single-select",
 				options: PERSON_DIMENSION_OPTIONS,
-				getCorrectId: (item) => item.dimension ?? "",
+				getCorrectId: (item) => String(item.dimension ?? ""),
 			}}
-			speeds={SPEEDS}
 		/>
 	);
 }

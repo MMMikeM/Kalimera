@@ -1,8 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { SPEEDS } from "../../components/drill-speeds";
+import { Drill } from "../../components/engines/drill";
 import { GENDER_DIMENSION_OPTIONS } from "../../components/engines/drill-constants";
-import { SimpleListDrill } from "../../components/engines/simple-list-drill";
 import { getNounDrillItemsFn } from "../loader";
 
 // Forward: "the friend (target)" → type "ton filo" (τον φίλο)
@@ -26,20 +25,21 @@ const CATEGORIES = [
 function NounTargetDrill() {
 	const { items } = Route.useLoaderData();
 	return (
-		<SimpleListDrill
+		<Drill
+			backTo={"/practice/cases/"}
 			drillId="nominal-noun-target"
 			items={items}
 			title="Noun (Target)"
 			subtitle={`${items.length} nouns / timed`}
 			colorTheme="terracotta"
-			speeds={SPEEDS}
 			forwardDesc="English → article + noun (Target form)"
 			reverseLabel="Greek → gender"
 			reverseDesc="Phrase → select gender"
 			categories={CATEGORIES}
-			reverseDimension={{
+			reverse={{
+				kind: "single-select",
 				options: GENDER_DIMENSION_OPTIONS,
-				getCorrectId: (item) => item.dimension ?? "",
+				getCorrectId: (item) => String(item.dimension ?? ""),
 			}}
 		/>
 	);

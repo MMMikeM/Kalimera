@@ -7,9 +7,9 @@ import {
 	NUMBER_CHIP,
 	PERSON_CHIP,
 } from "../components/engines/chip-specs";
-import { type DimensionSpec, DimensionalDrill } from "../components/engines/dimensional-drill";
+import type { DrillForm } from "../components/engines/deck";
+import { Drill, type DimensionSpec } from "../components/engines/drill";
 import { GENDER_STYLE, PERSON_LABELS } from "../components/engines/drill-constants";
-import { type DrillForm } from "../components/engines/drill-engine";
 import { ForwardPromptCard } from "../components/engines/forward-prompt-card";
 
 type Person = "first" | "second" | "third";
@@ -181,22 +181,23 @@ export const Route = createFileRoute("/practice/pronouns/possessives")({
 
 function PossessivesDrill() {
 	return (
-		<DimensionalDrill<DimKey>
+		<Drill<DimKey>
 			drillId="pronouns-possessives"
 			title="Possessive Pronouns"
 			subtitle="8 forms / timed"
-			paradigm={<Paradigm />}
+			colorTheme="olive"
 			forwardDesc="e.g. my → μου"
 			reverseDesc="e.g. μου → 1st / singular"
-			forms={POSSESSIVES}
-			dimensions={DIMENSIONS}
-			barColorBase="bg-olive"
+			items={POSSESSIVES}
+			reverse={{ kind: "multi-select", dimensions: DIMENSIONS }}
+			configExtras={<Paradigm />}
 			defaultSessionSize={10}
-			renderForwardPrompt={(form) => {
-				const english = ENGLISH[form.id] ?? "";
-				const person = PERSON_CHIP[form.person as Person];
-				const number = NUMBER_CHIP[form.number as keyof typeof NUMBER_CHIP];
-				const gender = form.gender ? GENDER_CHIP[form.gender as ChipGender] : null;
+			forwardPrompt={(form) => {
+				const f = form as (typeof POSSESSIVES)[number];
+				const english = ENGLISH[f.id] ?? "";
+				const person = PERSON_CHIP[f.person as Person];
+				const number = NUMBER_CHIP[f.number as keyof typeof NUMBER_CHIP];
+				const gender = f.gender ? GENDER_CHIP[f.gender as ChipGender] : null;
 				const facets = [
 					{
 						icon: person.icon,
@@ -206,14 +207,14 @@ function PossessivesDrill() {
 					{
 						icon: number.icon,
 						label: number.longLabel,
-						colorText: HERO_TEXT.number[form.number as keyof typeof HERO_TEXT.number],
+						colorText: HERO_TEXT.number[f.number as keyof typeof HERO_TEXT.number],
 					},
 				];
-				if (gender && form.gender) {
+				if (gender && f.gender) {
 					facets.push({
 						icon: gender.icon,
 						label: gender.longLabel,
-						colorText: HERO_TEXT.gender[form.gender as ChipGender],
+						colorText: HERO_TEXT.gender[f.gender as ChipGender],
 					});
 				}
 				return <ForwardPromptCard facets={facets} gloss={`"${english}"`} />;
