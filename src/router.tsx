@@ -1,6 +1,6 @@
 import { createRouter } from "@tanstack/react-router";
 
-import type { AuthSession } from "./lib/auth-cookie";
+import type { AuthSession } from "./lib/auth-cookie.server";
 import { routeTree } from "./routeTree.gen";
 
 export interface RouterContext {

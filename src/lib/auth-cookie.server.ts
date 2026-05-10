@@ -1,3 +1,5 @@
+import { getRequestHeader } from "@tanstack/react-start/server";
+
 const AUTH_COOKIE_NAME = "auth";
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 30; // 30 days
 
@@ -10,8 +12,8 @@ export interface AuthSession {
  * Parse auth session from request cookies.
  * Returns null if no valid auth cookie exists.
  */
-export function getAuthSession(request: Request): AuthSession | null {
-	const cookieHeader = request.headers.get("Cookie");
+export function getAuthSession(): AuthSession | null {
+	const cookieHeader = getRequestHeader("cookie");
 	if (!cookieHeader) return null;
 
 	const cookies = parseCookies(cookieHeader);

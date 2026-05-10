@@ -9,11 +9,9 @@ import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { greekToPhonetic } from "@/lib/greek-transliteration";
 
-import {
-	SimpleListDrill,
-	type SimpleListItem,
-} from "./practice/components/engines/simple-list-drill";
-import type { SessionStats } from "./practice/components/engines/use-drill-engine";
+import type { DrillForm, SimpleListItem } from "./practice/components/engines/deck";
+import { Drill } from "./practice/components/engines/drill";
+import type { SessionStats } from "./practice/components/engines/drill-store";
 
 export const Route = createFileRoute("/try")({
 	component: TryDrillRoute,
@@ -85,7 +83,7 @@ const TryDrillIntro = ({ onStart }: { onStart: () => void }) => (
 	</TryShell>
 );
 
-const TryDrillComplete = ({ stats }: { stats: SessionStats<SimpleListItem> }) => {
+const TryDrillComplete = ({ stats }: { stats: SessionStats<DrillForm> }) => {
 	const percentage = Math.round((stats.correct / stats.total) * 100);
 	const getMessage = () => {
 		if (percentage >= 80) return { emoji: "🎉", text: "Excellent! You've got solid foundations." };
@@ -152,7 +150,7 @@ const TryDrillComplete = ({ stats }: { stats: SessionStats<SimpleListItem> }) =>
 
 function TryDrillRoute() {
 	const [started, setStarted] = useState(false);
-	const [completedStats, setCompletedStats] = useState<SessionStats<SimpleListItem> | null>(null);
+	const [completedStats, setCompletedStats] = useState<SessionStats<DrillForm> | null>(null);
 
 	if (completedStats) {
 		return <TryDrillComplete stats={completedStats} />;
@@ -164,7 +162,7 @@ function TryDrillRoute() {
 
 	return (
 		<TryShell innerPy="py-8">
-			<SimpleListDrill
+			<Drill
 				items={TRY_ITEMS}
 				title="Try Drill"
 				subtitle="8 quick rounds"

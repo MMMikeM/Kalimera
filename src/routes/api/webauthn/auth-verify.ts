@@ -5,7 +5,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { getUserById } from "@/db.server/queries/users";
 import { createWebAuthnFromRequest } from "@/lib/auth";
-import { createAuthCookie } from "@/lib/auth-cookie";
+import { createAuthCookie } from "@/lib/auth-cookie.server";
 
 interface AuthVerifyBody {
 	response: AuthenticationResponseJSON;

@@ -1,9 +1,17 @@
-import { deleteCookie, getRequest, setCookie } from "@tanstack/react-start/server";
+import { redirect } from "@tanstack/react-router";
+import { deleteCookie, setCookie } from "@tanstack/react-start/server";
 
-import { getAuthSession } from "./auth-cookie";
+import type { AuthSession } from "./auth-cookie.server";
+import { getAuthSession } from "./auth-cookie.server";
 
 const AUTH_COOKIE = "auth";
 const AUTH_MAX_AGE = 60 * 60 * 24 * 30;
+
+export function requireAuth(): AuthSession {
+	const auth = getAuthSession();
+	if (!auth) throw redirect({ to: "/" });
+	return auth;
+}
 
 export function setSessionCookie(userId: number, username: string) {
 	setCookie(AUTH_COOKIE, JSON.stringify({ userId, username }), {
@@ -20,5 +28,5 @@ export function clearSessionCookie() {
 }
 
 export function getServerSession() {
-	return getAuthSession(getRequest());
+	return getAuthSession();
 }
