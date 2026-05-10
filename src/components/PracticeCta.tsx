@@ -1,5 +1,5 @@
+import { Link } from "@tanstack/react-router";
 import { Zap } from "lucide-react";
-import { Link } from "react-router";
 
 import { Card } from "@/components/Card";
 import { Button } from "@/components/ui/button";

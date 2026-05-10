@@ -1,7 +1,7 @@
 import type React from "react";
 import { tv } from "tailwind-variants";
 
-import { SCHEME, type GrammarScheme } from "@/constants/grammar-palette";
+import { type GrammarScheme, SCHEME } from "@/constants/grammar-palette";
 import { cn } from "@/lib/utils";
 
 export interface ColumnDef {

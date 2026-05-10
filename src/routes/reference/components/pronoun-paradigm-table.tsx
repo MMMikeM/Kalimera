@@ -1,4 +1,4 @@
-import { GrammarTable, type ColumnDef, type RowDef } from "@/components/GrammarTable";
+import { type ColumnDef, GrammarTable, type RowDef } from "@/components/GrammarTable";
 import { MonoText } from "@/components/MonoText";
 import { CASE_SCHEME } from "@/constants/grammar-palette";
 import type { PronounForm, PronounParadigm } from "@/constants/pronouns";

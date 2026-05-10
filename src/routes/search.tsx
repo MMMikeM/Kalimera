@@ -1,4 +1,5 @@
 import { createFuzzySearch } from "@mmmike/mikrofuzz";
+import { createFileRoute } from "@tanstack/react-router";
 import { Search } from "lucide-react";
 import { useState } from "react";
 
@@ -6,36 +7,19 @@ import { MonoText } from "@/components/MonoText";
 import { SearchInput } from "@/components/SearchInput";
 import { TabHero } from "@/components/TabHero";
 import { Badge } from "@/components/ui/badge";
-import {
-	fetchVocabularyRowsForSearch,
-	type VocabularySearchGraphRow,
-} from "@/db.server/queries/vocabulary";
 import { cn } from "@/lib/utils";
 
-import type { Route } from "./+types/search";
+import { getSearchVocabularyFn } from "./search.loader";
 
-export async function loader() {
-	try {
-		const vocabulary = await fetchVocabularyRowsForSearch();
-		return { vocabulary };
-	} catch (error) {
-		console.error("Database error:", error);
-		return { vocabulary: [] as VocabularySearchGraphRow[] };
-	}
-}
+type VocabularySearchGraphRow = Awaited<ReturnType<typeof getSearchVocabularyFn>>[number];
 
-export function meta() {
-	return [
-		{ title: "Quick Search - Greek Conjugation Reference" },
-		{
-			name: "description",
-			content: "Search Greek vocabulary and grammar patterns",
-		},
-	];
-}
+export const Route = createFileRoute("/search")({
+	loader: () => getSearchVocabularyFn().then((vocabulary) => ({ vocabulary })),
+	component: SearchRoute,
+});
 
-export default function SearchRoute({ loaderData }: Route.ComponentProps) {
-	const allWords = loaderData.vocabulary;
+function SearchRoute() {
+	const { vocabulary: allWords } = Route.useLoaderData();
 
 	const [searchTerm, setSearchTerm] = useState("");
 

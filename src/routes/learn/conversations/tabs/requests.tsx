@@ -3,7 +3,11 @@ import { Hand } from "lucide-react";
 import { ConversationHero } from "@/components/ConversationHero";
 import type { DialogueLine } from "@/components/DialogueExchange";
 
-import { LearningTips, ScenarioCard, useConversationContext } from "../layout";
+import {
+	LearningTips,
+	ScenarioCard,
+	useConversationContext,
+} from "../components/conversation-shell";
 
 const INTRODUCTIONS: DialogueLine[] = [
 	{ speaker: "stranger", greek: "Πώς σε λένε;", english: "What's your name?" },

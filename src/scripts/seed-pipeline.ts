@@ -1,15 +1,17 @@
+import { createRequire } from "module";
+
 import { sql } from "drizzle-orm";
 
 import { db } from "../db.server";
 import {
-	nounDeclensionPatterns,
-	genders,
-	grammaticalCases,
-	grammaticalNumbers,
-	type NounDeclensionPattern,
 	type Gender,
 	type GrammaticalCase,
 	type GrammaticalNumber,
+	type NounDeclensionPattern,
+	genders,
+	grammaticalCases,
+	grammaticalNumbers,
+	nounDeclensionPatterns,
 } from "../db.server/enums";
 import {
 	adjectiveDetails,
@@ -20,8 +22,8 @@ import {
 } from "../db.server/schema";
 import type {
 	NewAdjectiveDetails,
-	NewNounDetails,
 	NewNominalForm,
+	NewNounDetails,
 	NewVocabulary,
 	NewVocabularyTag,
 } from "../db.server/types";
@@ -31,7 +33,6 @@ import type {
 	NounNominalFormsSeed,
 	NounSeed,
 } from "../types/seed";
-import { createRequire } from "module";
 
 const _require = createRequire(import.meta.url);
 const GREEK_FREQUENCY_LOOKUP = _require("./seed-data/frequency-lookup.json") as Record<

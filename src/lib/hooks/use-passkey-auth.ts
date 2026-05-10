@@ -1,5 +1,6 @@
 import type { PublicKeyCredentialRequestOptionsJSON } from "@simplewebauthn/browser";
 import { startAuthentication } from "@simplewebauthn/browser";
+import { useRouter } from "@tanstack/react-router";
 import { useState } from "react";
 
 import { setStoredAuth } from "../auth-storage";
@@ -17,6 +18,7 @@ interface UsePasskeyAuthReturn {
 }
 
 export function usePasskeyAuth(options: UsePasskeyAuthOptions = {}): UsePasskeyAuthReturn {
+	const router = useRouter();
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 
@@ -72,8 +74,9 @@ export function usePasskeyAuth(options: UsePasskeyAuthOptions = {}): UsePasskeyA
 					userId: result.userId,
 					username: result.username || "user",
 				});
-				// Cookie is set by the API response, do a full page reload to pick it up
-				window.location.href = "/";
+				// Cookie set by API response; invalidate router context to pick it up
+				await router.invalidate();
+				router.navigate({ to: "/" });
 			}
 		} catch (err) {
 			const message = err instanceof Error ? err.message : "Passkey authentication failed";

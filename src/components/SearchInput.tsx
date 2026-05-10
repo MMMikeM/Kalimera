@@ -1,5 +1,5 @@
 import { Search, X } from "lucide-react";
-import { forwardRef, type ReactNode } from "react";
+import { type ReactNode, forwardRef } from "react";
 import { tv } from "tailwind-variants";
 
 const searchInputVariants = tv({

@@ -1,25 +1,23 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { ArrowRight, UserPlus, Zap } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
-import { Link } from "react-router";
 
 import { Card } from "@/components/Card";
 import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { greekToPhonetic } from "@/lib/greek-transliteration";
 
-import { type SimpleListItem, SimpleListDrill } from "./practice/engines/simple-list-drill";
-import type { SessionStats } from "./practice/engines/use-drill-engine";
+import {
+	SimpleListDrill,
+	type SimpleListItem,
+} from "./practice/components/engines/simple-list-drill";
+import type { SessionStats } from "./practice/components/engines/use-drill-engine";
 
-export function meta() {
-	return [
-		{ title: "Try Greek Drills - Kalimera" },
-		{
-			name: "description",
-			content: "Experience timed Greek production drills - no signup required",
-		},
-	];
-}
+export const Route = createFileRoute("/try")({
+	component: TryDrillRoute,
+});
 
 const TRY_QUESTIONS: Array<{ id: string; prompt: string; correctGreek: string }> = [
 	{ id: "try-1", prompt: "me (object)", correctGreek: "με" },
@@ -122,7 +120,7 @@ const TryDrillComplete = ({ stats }: { stats: SessionStats<SimpleListItem> }) =>
 					</div>
 
 					<div className="space-y-3">
-						<Link to="/register?from=try" className="block">
+						<Link to="/register" search={{ from: "try" }} className="block">
 							<Button size="lg" className="w-full gap-2">
 								<UserPlus size={20} />
 								Create Free Account
@@ -152,7 +150,7 @@ const TryDrillComplete = ({ stats }: { stats: SessionStats<SimpleListItem> }) =>
 	);
 };
 
-export default function TryDrillRoute() {
+function TryDrillRoute() {
 	const [started, setStarted] = useState(false);
 	const [completedStats, setCompletedStats] = useState<SessionStats<SimpleListItem> | null>(null);
 

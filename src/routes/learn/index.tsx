@@ -1,6 +1,7 @@
+import { createFileRoute } from "@tanstack/react-router";
 import { Boxes, Hash, Languages, MessageCircle, Quote } from "lucide-react";
 
-import { SectionCard, type Section } from "@/components/SectionCard";
+import { type Section, SectionCard } from "@/components/SectionCard";
 
 const communicationSections: Section[] = [
 	{
@@ -48,7 +49,11 @@ const wordsSections: Section[] = [
 	},
 ];
 
-export default function LearnIndex() {
+export const Route = createFileRoute("/learn/")({
+	component: LearnIndex,
+});
+
+function LearnIndex() {
 	return (
 		<div className="space-y-6">
 			<div>

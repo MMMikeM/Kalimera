@@ -1,5 +1,5 @@
+import { Link } from "@tanstack/react-router";
 import type React from "react";
-import { Link } from "react-router";
 
 export interface Section {
 	id: string;

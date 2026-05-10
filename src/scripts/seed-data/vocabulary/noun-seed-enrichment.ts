@@ -1,10 +1,11 @@
 import type { CefrLevel, NounDeclensionPattern } from "../../../db.server/enums";
 import { nounDeclensionPatterns } from "../../../db.server/enums";
+import type { JsonValue } from "../../../db.server/metadata";
 import {
-	getArticle,
 	type Case,
 	type Gender,
 	type GrammaticalNumber,
+	getArticle,
 } from "../../../lib/greek-grammar";
 import { declineNoun } from "../../../lib/noun-declension";
 import type { NominalFormCellSeed, NounNominalFormsSeed, NounSeed } from "../../../types/seed";
@@ -17,7 +18,7 @@ export type NounSeedInput = {
 	gender: Gender;
 	english: string;
 	cefrLevel?: CefrLevel;
-	metadata?: Record<string, unknown>;
+	metadata?: Record<string, JsonValue>;
 	declensionPattern?: NounDeclensionPattern;
 	/** Merged over inferred nominative singular baseline. */
 	nominalForms?: Partial<Record<CaseNumberKey, NominalFormCellSeed>>;

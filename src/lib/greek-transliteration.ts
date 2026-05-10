@@ -167,13 +167,13 @@ const toPhoneticCanonical = (text: string): string =>
 		.replace(/mb/g, "b")
 		.replace(/ng/g, "g")
 		.replace(/ev/g, "ef") // ευ → ef/ev both accepted (voicing context varies)
-		.replace(/th/g, "\x00") // protect θ digraph before h→i
-		.replace(/ch/g, "\x01") // protect χ digraph
-		.replace(/ph/g, "\x02") // protect φ digraph
+		.replace(/th/g, "") // protect θ digraph before h→i
+		.replace(/ch/g, "") // protect χ digraph
+		.replace(/ph/g, "") // protect φ digraph
 		.replace(/h/g, "i") // η (as h) → canonical i; old "i" stays "i"
-		.replace(/\x00/g, "th") // restore θ
-		.replace(/\x01/g, "x") // χ canonical = x (accepts both "ch" and "x")
-		.replace(/\x02/g, "ph") // restore φ
+		.replace(//g, "th") // restore θ
+		.replace(//g, "x") // χ canonical = x (accepts both "ch" and "x")
+		.replace(//g, "ph") // restore φ
 		.replace(/x/g, "x"); // x already canonical — noop but documents intent
 
 const phoneticEquals = (user: string, correct: string): boolean =>

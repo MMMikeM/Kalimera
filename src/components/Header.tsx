@@ -1,6 +1,6 @@
+import { Link } from "@tanstack/react-router";
 import { BarChart3, ChevronDown, Info, LogOut, Search } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router";
 
 import { SearchResults } from "@/components/SearchResults";
 import { Button } from "@/components/ui/button";

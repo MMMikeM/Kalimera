@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { NextStepCard, TeachingCard } from "@/components/cards";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
-import { CASE_ROW_DEFS, GrammarTable, type ColumnDef } from "@/components/GrammarTable";
+import { CASE_ROW_DEFS, type ColumnDef, GrammarTable } from "@/components/GrammarTable";
 import { MonoText } from "@/components/MonoText";
 import { SectionHeading } from "@/components/SectionHeading";
 import { AGREEMENT_PARADIGMS, type AgreementParadigm } from "@/constants/agreement";

@@ -7,8 +7,8 @@ import { Temporal } from "@js-temporal/polyfill";
 import {
 	type PushPayload,
 	type PushSubscriptionData,
-	sendPushNotification,
 	type VapidConfig,
+	sendPushNotification,
 } from "@mmmike/web-push/send";
 
 import {
@@ -16,11 +16,11 @@ import {
 	userQualifiesForNotificationTaper,
 } from "@/db.server/queries/notifications/notification-logs";
 import {
+	type PushSubscriptionCronRow,
 	deletePushSubscriptionsByEndpoints,
 	getPushSubscriptionByUserId,
 	getPushSubscriptionsForUserIds,
 	listPushSubscriptionsForCron,
-	type PushSubscriptionCronRow,
 	setTaperOfferPending,
 } from "@/db.server/queries/notifications/push-subscriptions";
 import {

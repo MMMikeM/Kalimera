@@ -1,13 +1,13 @@
-import { useOutletContext } from "react-router";
+import { getRouteApi } from "@tanstack/react-router";
 
 import { greekToPhonetic } from "@/lib/greek-transliteration";
 
-import { type SimpleListItem, SimpleListDrill } from "../engines/simple-list-drill";
-import type { PracticeLoaderData } from "../layout";
+import { SimpleListDrill, type SimpleListItem } from "../components/engines/simple-list-drill";
+
+const practiceRoute = getRouteApi("/practice/_layout");
 
 export function VocabularyTab() {
-	const context = useOutletContext<PracticeLoaderData>();
-	const { newVocabItems } = context;
+	const { newVocabItems } = practiceRoute.useLoaderData();
 
 	if (newVocabItems.length === 0) {
 		return (

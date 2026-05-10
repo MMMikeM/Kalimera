@@ -2,7 +2,7 @@ import { type ContentColorScheme, ContentSection } from "@/components/ContentSec
 import { MonoText } from "@/components/MonoText";
 import { cn } from "@/lib/utils";
 
-import type { PhraseItem, PhrasesLoaderData } from "../loader.server";
+import type { PhraseItem, PhrasesLoaderData } from "../$tab";
 
 export type { PhraseItem, PhrasesLoaderData };
 

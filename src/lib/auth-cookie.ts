@@ -1,7 +1,7 @@
 const AUTH_COOKIE_NAME = "auth";
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 30; // 30 days
 
-interface AuthSession {
+export interface AuthSession {
 	userId: number;
 	username: string;
 }

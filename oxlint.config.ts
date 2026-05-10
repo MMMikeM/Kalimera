@@ -15,8 +15,9 @@ export default defineConfig({
 		{ name: "react-compiler", specifier: "eslint-plugin-react-hooks" },
 	],
 	categories: { correctness: "error" },
-	ignorePatterns: ["dist/**"],
+	ignorePatterns: ["dist/**", ".claude/**"],
 	rules: {
+		"import/first": "warn",
 		"@typescript-eslint/no-explicit-any": ["error"],
 		"no-unused-vars": ["error"],
 		"no-unsafe-optional-chaining": ["error"],

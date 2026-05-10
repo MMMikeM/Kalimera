@@ -12,15 +12,15 @@ import {
 } from "./seed-data";
 import {
 	BATCH_SIZE,
+	type NounDetailRecord,
+	type SeedAccumulators,
+	type VerbDetailRecord,
+	type VocabWithTags,
 	batchInsertAdjectiveDetails,
 	batchInsertNounDetails,
 	batchInsertVerbDetails,
 	batchUpsertNominalForms,
 	runSeedCategory,
-	type NounDetailRecord,
-	type SeedAccumulators,
-	type VerbDetailRecord,
-	type VocabWithTags,
 } from "./seed-pipeline";
 import { seedVerbConjugations } from "./seed-verb-conjugations";
 

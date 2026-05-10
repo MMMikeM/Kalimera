@@ -1,17 +1,17 @@
-import { Link, useOutletContext } from "react-router";
+import { Link, getRouteApi } from "@tanstack/react-router";
 
 import { greekToPhonetic } from "@/lib/greek-transliteration";
 
-import { DRILL_BY_ID } from "../drill-lookup";
-import { type SimpleListItem, SimpleListDrill } from "../engines/simple-list-drill";
-import type { PracticeLoaderData } from "../layout";
+import { DRILL_BY_ID } from "../components/drill-lookup";
+import { SimpleListDrill, type SimpleListItem } from "../components/engines/simple-list-drill";
 
 const MIN_ATTEMPTS = 5;
 const WEAK_THRESHOLD = 0.85;
 
+const practiceRoute = getRouteApi("/practice/_layout");
+
 export function ReviewTab() {
-	const context = useOutletContext<PracticeLoaderData>();
-	const { reviewItems, stats, drillStats } = context;
+	const { reviewItems, stats, drillStats } = practiceRoute.useLoaderData();
 
 	const weakDrills = drillStats
 		.filter((s) => s.attempts >= MIN_ATTEMPTS && s.accuracy < WEAK_THRESHOLD)
@@ -39,7 +39,7 @@ export function ReviewTab() {
 							return (
 								<li key={drill.id}>
 									<Link
-										to={drill.href}
+										to={"."}
 										className="flex items-baseline justify-between gap-3 py-3 transition-colors hover:bg-muted/50"
 									>
 										<div className="min-w-0 flex-1">

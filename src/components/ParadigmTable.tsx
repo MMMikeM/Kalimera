@@ -1,6 +1,6 @@
 import type React from "react";
 
-import { GrammarTable, type ColumnDef, type RowDef } from "@/components/GrammarTable";
+import { type ColumnDef, GrammarTable, type RowDef } from "@/components/GrammarTable";
 import type { GrammarScheme } from "@/constants/grammar-palette";
 
 export interface VerbForm {

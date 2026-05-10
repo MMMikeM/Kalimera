@@ -1,194 +1,109 @@
-import {
-	isValidationErrorResponse,
-	parseFormData,
-	useForm,
-	validationError,
-} from "@rvf/react-router";
+import { createFileRoute } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { KeyRound, Loader2, LogIn } from "lucide-react";
-import { useEffect } from "react";
-import { Link, redirect } from "react-router";
+import { useState } from "react";
 
 import { Card } from "@/components/Card";
 import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/ui/form-field";
-import {
-	findUserByCode,
-	findUserByUsername,
-	getUserPasswordHash,
-	setUserPassword,
-} from "@/db.server/queries/users";
-import { createAuthCookie } from "@/lib/auth-cookie";
+import { loginFn, setupPasswordFn } from "@/lib/auth.functions";
 import { usePasskeyAuth } from "@/lib/hooks/use-passkey-auth";
-import { hashPassword, verifyPassword } from "@/lib/password";
-import {
-	loginSchema,
-	loginValidator,
-	passwordSetupSchema,
-	passwordSetupValidator,
-} from "@/lib/validators/auth";
 
-import type { Route } from "./+types/login";
+export const Route = createFileRoute("/login")({
+	component: LoginRoute,
+});
 
-export function meta() {
-	return [
-		{ title: "Login - Greek Learning" },
-		{
-			name: "description",
-			content: "Sign in to track your Greek learning progress",
-		},
-	];
-}
-
-export const loader = async () => {
-	return {};
-};
-
-type ActionError = { success: false; error: string };
-type ActionNeedsPasswordSetup = {
-	success: false;
-	needsPasswordSetup: true;
-	userId: number;
-	userCode: string;
-	displayName: string | null;
-};
-
-function createAuthRedirect(userId: number, username: string) {
-	const cookie = createAuthCookie({ userId, username });
-	return redirect("/", {
-		headers: { "Set-Cookie": cookie },
-	});
-}
-
-export const action = async ({ request }: Route.ActionArgs) => {
-	const formData = await request.formData();
-	const intent = formData.get("intent") as string;
-
-	// Handle password setup for existing users
-	if (intent === "setup-password") {
-		const result = await parseFormData(formData, passwordSetupSchema);
-		if (result.error) return validationError(result.error, result.submittedData);
-
-		const { newPassword, userId, username } = result.data;
-		const hash = await hashPassword(newPassword);
-		await setUserPassword(Number(userId), hash, username);
-
-		return createAuthRedirect(Number(userId), username.toLowerCase());
-	}
-
-	// Login flow
-	const result = await parseFormData(formData, loginSchema);
-	if (result.error) return validationError(result.error, result.submittedData);
-
-	const { username: identifier, password } = result.data;
-
-	// Try to find user by username first, then by code (for legacy users)
-	let user = await findUserByUsername(identifier);
-	if (!user) {
-		user = await findUserByCode(identifier);
-	}
-
-	if (!user) {
-		return { success: false, error: "User not found" } satisfies ActionError;
-	}
-
-	const passwordHash = await getUserPasswordHash(user.id);
-
-	// User exists but has no password - needs to set one up
-	if (!passwordHash) {
-		return {
-			success: false,
-			needsPasswordSetup: true,
-			userId: user.id,
-			userCode: user.code,
-			displayName: user.displayName,
-		} satisfies ActionNeedsPasswordSetup;
-	}
-
-	// Normal login flow
-	if (!password) {
-		return {
-			success: false,
-			error: "Please enter your password",
-		} satisfies ActionError;
-	}
-
-	const isValid = await verifyPassword(passwordHash, password);
-	if (!isValid) {
-		return { success: false, error: "Invalid password" } satisfies ActionError;
-	}
-
-	return createAuthRedirect(user.id, user.username || user.code);
-};
-
-export default function LoginRoute({ actionData }: Route.ComponentProps) {
-	const loginForm = useForm({
-		validator: loginValidator,
-		method: "post",
-	});
-
-	const passwordSetupForm = useForm({
-		validator: passwordSetupValidator,
-		method: "post",
-		defaultValues: {
-			userId: "",
-			username: "",
-			newPassword: "",
-			confirmPassword: "",
-		},
-	});
+function LoginRoute() {
+	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [error, setError] = useState<string | null>(null);
+	const [needsPasswordSetup, setNeedsPasswordSetup] = useState<{
+		userId: number;
+		userCode: string;
+		displayName: string | null;
+	} | null>(null);
 
 	const passkey = usePasskeyAuth({
-		getUsername: () => loginForm.value("username") || undefined,
+		getUsername: () => {
+			const el = document.querySelector<HTMLInputElement>('input[name="username"]');
+			return el?.value || undefined;
+		},
 	});
 
-	// Skip validation error responses - RVF handles those automatically
-	const businessData = actionData && !isValidationErrorResponse(actionData) ? actionData : null;
-
-	const error =
-		(businessData && "error" in businessData ? businessData.error : null) || passkey.error;
-
-	const needsPasswordSetup = businessData && "needsPasswordSetup" in businessData;
-
-	// Update password setup form defaults when we get needsPasswordSetup response
-	useEffect(() => {
-		if (needsPasswordSetup && businessData && "userId" in businessData) {
-			passwordSetupForm.setValue("userId", String(businessData.userId));
-			if ("userCode" in businessData && businessData.userCode) {
-				passwordSetupForm.setValue("username", businessData.userCode);
+	const handleLoginSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		setIsSubmitting(true);
+		setError(null);
+		const fd = new FormData(e.currentTarget);
+		try {
+			const result = await loginFn({
+				data: {
+					username: fd.get("username") as string,
+					password: (fd.get("password") as string) || undefined,
+				},
+			});
+			// loginFn throws redirect on success — only reach here on error/needsSetup
+			if ("needsPasswordSetup" in result && result.needsPasswordSetup) {
+				setNeedsPasswordSetup({
+					userId: result.userId,
+					userCode: result.userCode,
+					displayName: result.displayName,
+				});
+			} else if (!result.success) {
+				setError(result.error);
 			}
+		} catch (err) {
+			// redirect throws are handled by TanStack Router, re-throw them
+			if (err && typeof err === "object" && "to" in err) throw err;
+			setError("Something went wrong. Please try again.");
+		} finally {
+			setIsSubmitting(false);
 		}
-	}, [needsPasswordSetup, businessData, passwordSetupForm]);
+	};
 
-	// Password setup form for existing users
-	if (needsPasswordSetup && businessData && "userId" in businessData) {
-		const isSubmitting = passwordSetupForm.formState.isSubmitting;
+	const handlePasswordSetupSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		setIsSubmitting(true);
+		setError(null);
+		const fd = new FormData(e.currentTarget);
+		try {
+			await setupPasswordFn({
+				data: {
+					newPassword: fd.get("newPassword") as string,
+					confirmPassword: fd.get("confirmPassword") as string,
+					userId: fd.get("userId") as string,
+					username: fd.get("username") as string,
+				},
+			});
+		} catch (err) {
+			if (err && typeof err === "object" && "to" in err) throw err;
+			setError("Something went wrong. Please try again.");
+		} finally {
+			setIsSubmitting(false);
+		}
+	};
 
+	const displayError = error || passkey.error;
+
+	if (needsPasswordSetup) {
 		return (
 			<div className="flex min-h-page flex-col items-center justify-center space-y-8 px-4">
 				<div className="space-y-2 text-center">
 					<h1 className="font-serif text-3xl text-terracotta">Set Up Your Password</h1>
 					<p className="text-stone-600">
 						Welcome back
-						{"displayName" in businessData && businessData.displayName
-							? `, ${businessData.displayName}`
-							: ""}
-						! Please create a password for your account.
+						{needsPasswordSetup.displayName ? `, ${needsPasswordSetup.displayName}` : ""}! Please
+						create a password for your account.
 					</p>
 				</div>
 
 				<Card className="w-full max-w-sm p-6">
-					<form {...passwordSetupForm.getFormProps()} className="space-y-6">
-						<input type="hidden" name="intent" value="setup-password" />
-						<input type="hidden" name="userId" value={businessData.userId} />
-						<input
-							type="hidden"
-							name="username"
-							value={"userCode" in businessData ? businessData.userCode : ""}
-						/>
+					<form onSubmit={handlePasswordSetupSubmit} className="space-y-6">
+						<input type="hidden" name="userId" value={needsPasswordSetup.userId} />
+						<input type="hidden" name="username" value={needsPasswordSetup.userCode} />
 
 						<div className="space-y-4">
 							<FormField
-								scope={passwordSetupForm.scope("newPassword")}
+								name="newPassword"
 								label="New Password"
 								type="password"
 								autoComplete="new-password"
@@ -196,7 +111,7 @@ export default function LoginRoute({ actionData }: Route.ComponentProps) {
 								disabled={isSubmitting}
 							/>
 							<FormField
-								scope={passwordSetupForm.scope("confirmPassword")}
+								name="confirmPassword"
 								label="Confirm Password"
 								type="password"
 								autoComplete="new-password"
@@ -205,7 +120,7 @@ export default function LoginRoute({ actionData }: Route.ComponentProps) {
 							/>
 						</div>
 
-						{error && <p className="text-center text-sm text-red-600">{error}</p>}
+						{displayError && <p className="text-center text-sm text-red-600">{displayError}</p>}
 
 						<Button type="submit" variant="primary" className="w-full" disabled={isSubmitting}>
 							{isSubmitting ? (
@@ -226,8 +141,6 @@ export default function LoginRoute({ actionData }: Route.ComponentProps) {
 		);
 	}
 
-	const isSubmitting = loginForm.formState.isSubmitting;
-
 	return (
 		<div className="flex min-h-page flex-col items-center justify-center space-y-8 px-4">
 			<div className="space-y-2 text-center">
@@ -236,10 +149,10 @@ export default function LoginRoute({ actionData }: Route.ComponentProps) {
 			</div>
 
 			<Card className="w-full max-w-sm p-6">
-				<form {...loginForm.getFormProps()} className="space-y-6">
+				<form onSubmit={handleLoginSubmit} className="space-y-6">
 					<div className="space-y-4">
 						<FormField
-							scope={loginForm.scope("username")}
+							name="username"
 							label="Username"
 							autoComplete="username"
 							autoCapitalize="none"
@@ -250,7 +163,7 @@ export default function LoginRoute({ actionData }: Route.ComponentProps) {
 
 						<div className="space-y-2">
 							<FormField
-								scope={loginForm.scope("password")}
+								name="password"
 								label="Password"
 								type="password"
 								autoComplete="current-password"
@@ -265,7 +178,7 @@ export default function LoginRoute({ actionData }: Route.ComponentProps) {
 						</div>
 					</div>
 
-					{error && <p className="text-center text-sm text-red-600">{error}</p>}
+					{displayError && <p className="text-center text-sm text-red-600">{displayError}</p>}
 
 					<div className="space-y-3">
 						<Button

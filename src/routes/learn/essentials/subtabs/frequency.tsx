@@ -4,7 +4,7 @@ import { ContentSection } from "@/components/ContentSection";
 import { MonoText } from "@/components/MonoText";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
-import type { EssentialsLoaderData } from "../loader.server";
+import type { EssentialsLoaderData } from "../$subtab";
 import { EssentialsBackLink } from "./essentials-back-link";
 import { ExampleList } from "./example-list";
 
