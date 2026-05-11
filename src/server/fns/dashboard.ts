@@ -3,7 +3,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { streakLengthFromCompletedSessionDates } from "@/lib/practice-streak";
 import { calculateDaysUntilNextFreeze, getFreezeStatus } from "@/lib/streak";
 import { diffInDays, fromEpochSeconds, mondayBasedDayOfWeek, toPlainDate, today } from "@/lib/time";
-import { requireAuth } from "@/server/auth-session";
+import { requireAuth } from "@/server/auth/auth-session";
 import { getPushSubscriptionByUserId } from "@/server/db/queries/notifications/push-subscriptions";
 import {
 	getLastPracticeDate,

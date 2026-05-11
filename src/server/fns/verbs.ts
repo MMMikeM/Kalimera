@@ -4,7 +4,7 @@ import { z } from "zod";
 import { adjacentCefrPool } from "@/lib/cefr";
 import type { DrillQuestion } from "@/lib/drill/generate-questions";
 import { shuffle } from "@/lib/shuffle";
-import { requireAuth } from "@/server/auth-session";
+import { requireAuth } from "@/server/auth/auth-session";
 import type { CefrLevel } from "@/server/db/enums";
 import { getDrillVocabPoolWithFallback } from "@/server/db/queries/drill-pool";
 import { ensureUserProgress } from "@/server/db/queries/user-progress";

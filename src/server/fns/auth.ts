@@ -2,14 +2,14 @@ import { redirect } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 
 import { loginSchema, passwordSetupSchema, registerSchema } from "@/lib/validators/auth";
-import { clearSessionCookie, getServerSession, setSessionCookie } from "@/server/auth-session";
+import { clearSessionCookie, getServerSession, setSessionCookie } from "@/server/auth/auth-session";
+import { verifyPassword, hashPassword } from "@/server/auth/password";
 import {
 	createUserWithPassword,
 	findUserByUsername,
 	getUserPasswordHash,
 	setUserPassword,
 } from "@/server/db/queries/users";
-import { verifyPassword, hashPassword } from "@/server/password";
 
 export const loginFn = createServerFn({ method: "POST" })
 	.inputValidator(loginSchema)
