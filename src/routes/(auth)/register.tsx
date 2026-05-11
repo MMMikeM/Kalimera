@@ -9,7 +9,7 @@ import { setStoredAuth } from "@/lib/auth-storage";
 import { usePasskeyRegistration } from "@/lib/hooks/use-passkey-registration";
 import { registerFn } from "@/server/fns/auth";
 
-export const Route = createFileRoute("/_auth/register")({
+export const Route = createFileRoute("/(auth)/register")({
 	component: RegisterRoute,
 });
 
