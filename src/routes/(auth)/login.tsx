@@ -9,7 +9,7 @@ import { FormField } from "@/components/ui/form-field";
 import { usePasskeyAuth } from "@/lib/hooks/use-passkey-auth";
 import { loginFn, setupPasswordFn } from "@/server/fns/auth";
 
-export const Route = createFileRoute("/_auth/login")({
+export const Route = createFileRoute("/(auth)/login")({
 	component: LoginRoute,
 });
 
