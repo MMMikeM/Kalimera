@@ -38,7 +38,7 @@ type FullAdjectiveNominalFormsSeed = Record<
 /** Keys: `${case}_${number}_${gender}` e.g. `nominative_singular_masculine`. */
 export type AdjectiveNominalFormsSeed = AtLeastOne<FullAdjectiveNominalFormsSeed>;
 
-export interface VerbConjugationFormsSeed {
+interface VerbConjugationFormsSeed {
 	sg1: string;
 	sg2: string;
 	sg3: string;
@@ -47,13 +47,13 @@ export interface VerbConjugationFormsSeed {
 	pl3: string;
 }
 
-export interface VerbConjugationSeed {
+interface VerbConjugationSeed {
 	tense: VerbTense;
 	forms: VerbConjugationFormsSeed;
 	stems?: Partial<VerbConjugationFormsSeed>;
 }
 
-export interface VerbImperativeSeed {
+interface VerbImperativeSeed {
 	imperfective?: { singular: string; plural: string };
 	perfective?: { singular: string; plural: string };
 }

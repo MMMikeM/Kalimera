@@ -1,7 +1,7 @@
 import { and, count, eq, gt, inArray, isNotNull, lt, lte, sql } from "drizzle-orm";
 
-import { vocabularySkillStateAfterAttempt } from "@/lib/srs";
 import { endOfTomorrowUTC, nowInstant, toEpochSeconds } from "@/lib/time";
+import { vocabularySkillStateAfterAttempt } from "@/server/srs";
 
 import { db } from "../index";
 import { type SkillType, vocabularySkills } from "../schema";
@@ -54,23 +54,23 @@ export const getSkillStats = async (userId: number, skillType: SkillType = "reco
  * `db.query.*.findMany` cannot express `GROUP BY user_id` + `COUNT(*)`.
  * Pass `userIds` to filter; empty array returns []. Omit to count all users.
  */
-export const listDueVocabularyCountsByUser = async (now: number, userIds?: number[]) => {
-	if (userIds && userIds.length === 0) return [];
-	const base = and(
-		isNotNull(vocabularySkills.nextReviewAt),
-		lt(vocabularySkills.nextReviewAt, now),
-	);
-	const where = userIds === undefined ? base : and(base, inArray(vocabularySkills.userId, userIds));
+// export const listDueVocabularyCountsByUser = async (now: number, userIds?: number[]) => {
+// 	if (userIds && userIds.length === 0) return [];
+// 	const base = and(
+// 		isNotNull(vocabularySkills.nextReviewAt),
+// 		lt(vocabularySkills.nextReviewAt, now),
+// 	);
+// 	const where = userIds === undefined ? base : and(base, inArray(vocabularySkills.userId, userIds));
 
-	return await db
-		.select({
-			userId: vocabularySkills.userId,
-			dueCount: count().as("due_count"),
-		})
-		.from(vocabularySkills)
-		.where(where)
-		.groupBy(vocabularySkills.userId);
-};
+// 	return await db
+// 		.select({
+// 			userId: vocabularySkills.userId,
+// 			dueCount: count().as("due_count"),
+// 		})
+// 		.from(vocabularySkills)
+// 		.where(where)
+// 		.groupBy(vocabularySkills.userId);
+// };
 
 export const getItemsDueTomorrow = async (userId: number, skillType: SkillType = "recognition") => {
 	return await db.$count(

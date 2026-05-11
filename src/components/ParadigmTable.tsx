@@ -3,7 +3,7 @@ import type React from "react";
 import { type ColumnDef, GrammarTable, type RowDef } from "@/components/GrammarTable";
 import type { GrammarScheme } from "@/constants/grammar-palette";
 
-export interface VerbForm {
+interface VerbForm {
 	stem: string;
 	ending: string;
 }

@@ -8,10 +8,6 @@ import { users } from "../schema";
 const userInsertSchema = createInsertSchema(users);
 type UserInsert = z.infer<typeof userInsertSchema>;
 
-export const findUserByCode = async (code: string) => {
-	return await db.query.users.findFirst({ where: { code: code.toLowerCase() } });
-};
-
 export const findUserByUsername = async (username: string) => {
 	return await db.query.users.findFirst({
 		where: { username: username.toLowerCase() },
@@ -24,11 +20,6 @@ export const getUserById = async (userId: number) => {
 
 export const createUser = async (data: Pick<UserInsert, "displayName" | "code">) => {
 	const normalizedCode = data.code.toLowerCase();
-
-	const existing = await findUserByCode(normalizedCode);
-	if (existing) {
-		throw new Error("A user with this code already exists");
-	}
 
 	const [newUser] = await db
 		.insert(users)

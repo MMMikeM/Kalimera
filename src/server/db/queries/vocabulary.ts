@@ -1,8 +1,5 @@
 import { db } from "../index";
 import { type WordType } from "../schema";
-import type { Vocabulary } from "../types";
-
-export type VocabItemWithSkill = Pick<Vocabulary, "id" | "greekText" | "englishTranslation">;
 
 /** Vocabulary the user has not started practising (no `vocabulary_skills` row for this user). */
 export const getNewVocabularyItems = async (userId: number, limit = 20) => {

@@ -1,7 +1,8 @@
 import { createContext, useContext, useMemo } from "react";
 import { useStore } from "zustand";
 
-import { completeSessionFn, recordAttemptFn, startSessionFn } from "../srs-loader";
+import { startSessionFn, recordAttemptFn, completeSessionFn } from "@/server/fns";
+
 import {
 	createDrillStore,
 	type DrillSessionCallbacks,
@@ -10,7 +11,7 @@ import {
 	type DrillStoreConfig,
 } from "./drill-store";
 
-export const DrillStoreContext = createContext<DrillStore | null>(null);
+const DrillStoreContext = createContext<DrillStore | null>(null);
 
 export const useDrillContext = (): DrillStore => {
 	const store = useContext(DrillStoreContext);

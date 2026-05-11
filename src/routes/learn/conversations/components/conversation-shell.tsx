@@ -36,7 +36,7 @@ export interface LearningTipsProps {
 	};
 }
 
-export interface LearningTip {
+interface LearningTip {
 	title: string;
 	items: string[];
 }
