@@ -1,6 +1,6 @@
-import type { AdjectiveDeclensionPattern, CefrLevel } from "../../../db.server/enums";
 import { declineAdjective } from "../../../lib/adjective-declension";
 import { getArticle } from "../../../lib/greek-grammar";
+import type { AdjectiveDeclensionPattern, CefrLevel } from "../../../server/db/enums";
 import type { AdjectiveNominalFormsSeed, AdjectiveSeed } from "../../../types/seed";
 
 /** Lean adjective row; enrichment supplies pattern and nominal forms when omitted. */

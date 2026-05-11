@@ -1,14 +1,14 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
-import type { CefrLevel } from "@/db.server/enums";
-import { getDrillVocabPoolWithFallback } from "@/db.server/queries/drill-pool";
-import { ensureUserProgress } from "@/db.server/queries/user-progress";
-import { getVerbsWithConjugationsForTense } from "@/db.server/queries/vocabulary";
 import { adjacentCefrPool } from "@/lib/cefr";
 import type { DrillQuestion } from "@/lib/drill/generate-questions";
 import { shuffle } from "@/lib/shuffle";
-import { requireAuth } from "@/lib/auth-session.server";
+import { requireAuth } from "@/server/auth-session";
+import type { CefrLevel } from "@/server/db/enums";
+import { getDrillVocabPoolWithFallback } from "@/server/db/queries/drill-pool";
+import { ensureUserProgress } from "@/server/db/queries/user-progress";
+import { getVerbsWithConjugationsForTense } from "@/server/db/queries/vocabulary";
 
 const PERSON_LABELS: Record<string, string> = {
 	sg1: "I",
@@ -106,19 +106,19 @@ export const getVerbDrillQuestionsFn = createServerFn({ method: "GET" })
 	.inputValidator(z.object({ limit: z.number() }))
 	.handler(async ({ data }) => {
 		const { userId } = requireAuth();
-		return getVerbDrillQuestionsImpl(userId, data.limit);
+		return await getVerbDrillQuestionsImpl(userId, data.limit);
 	});
 
 export const getAoristDrillQuestionsFn = createServerFn({ method: "GET" })
 	.inputValidator(z.object({ limit: z.number() }))
 	.handler(async ({ data }) => {
 		const { userId } = requireAuth();
-		return getAoristDrillQuestionsImpl(userId, data.limit);
+		return await getAoristDrillQuestionsImpl(userId, data.limit);
 	});
 
 export const getFutureDrillQuestionsFn = createServerFn({ method: "GET" })
 	.inputValidator(z.object({ limit: z.number() }))
 	.handler(async ({ data }) => {
 		const { userId } = requireAuth();
-		return getFutureDrillQuestionsImpl(userId, data.limit);
+		return await getFutureDrillQuestionsImpl(userId, data.limit);
 	});

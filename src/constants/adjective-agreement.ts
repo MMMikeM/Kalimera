@@ -5,7 +5,7 @@
 // At runtime we detect whether the stem retains any tonos char; if yes, use the
 // unstressed variant; else use the stressed variant. Single tonos per word.
 
-import type { AdjectiveDeclensionPattern } from "@/db.server/enums";
+import type { AdjectiveDeclensionPattern } from "@/server/db/enums";
 
 export type Case = "nominative" | "accusative" | "genitive";
 export type Num = "singular" | "plural";

@@ -1,14 +1,14 @@
 // Seed-only input types - used during database seeding, not stored as-is
 // These define the shape of seed data before transformation to DB format
 
+import type { Case, ConjugationFamily, Gender, GrammaticalNumber } from "../lib/greek-grammar";
 import type {
 	AdjectiveDeclensionPattern,
 	CefrLevel,
 	NounDeclensionPattern,
 	VerbTense,
-} from "../db.server/enums";
-import type { JsonValue } from "../db.server/metadata";
-import type { Case, ConjugationFamily, Gender, GrammaticalNumber } from "../lib/greek-grammar";
+} from "../server/db/enums";
+import type { JsonValue } from "../server/db/metadata";
 import type { Phrase } from "./phrase";
 
 /** Surface form and optional definite article (omit or null for bare / unknown). */

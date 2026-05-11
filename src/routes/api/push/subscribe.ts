@@ -2,7 +2,7 @@
 import "@tanstack/react-start";
 import { createFileRoute } from "@tanstack/react-router";
 
-import { upsertPushSubscription } from "@/db.server/queries/notifications/push-subscriptions";
+import { upsertPushSubscription } from "@/server/db/queries/notifications/push-subscriptions";
 
 import { withPushPost } from "../with-push-post";
 

@@ -1,14 +1,14 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
-import { recordAttempt } from "@/db.server/queries/practice-attempts";
+import { requireAuth } from "@/server/auth-session";
+import { recordAttempt } from "@/server/db/queries/practice-attempts";
 import {
 	type PracticeSessionInsert,
 	completeSession,
 	startSession,
-} from "@/db.server/queries/practice-sessions";
-import type { AreaType, SkillType } from "@/db.server/schema";
-import { requireAuth } from "@/lib/auth-session.server";
+} from "@/server/db/queries/practice-sessions";
+import type { AreaType, SkillType } from "@/server/db/schema";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // SERVER FUNCTIONS — SRS lifecycle

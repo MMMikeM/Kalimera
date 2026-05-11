@@ -3,9 +3,9 @@ import "@tanstack/react-start";
 import type { AuthenticationResponseJSON } from "@simplewebauthn/server";
 import { createFileRoute } from "@tanstack/react-router";
 
-import { getUserById } from "@/db.server/queries/users";
 import { createWebAuthnFromRequest } from "@/lib/auth";
-import { createAuthCookie } from "@/lib/auth-cookie.server";
+import { createAuthCookie } from "@/server/auth-cookie";
+import { getUserById } from "@/server/db/queries/users";
 
 interface AuthVerifyBody {
 	response: AuthenticationResponseJSON;

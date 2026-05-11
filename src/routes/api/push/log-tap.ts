@@ -5,7 +5,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import {
 	type TappedAction,
 	logNotificationTap,
-} from "@/db.server/queries/notifications/notification-logs";
+} from "@/server/db/queries/notifications/notification-logs";
 
 import { withPushPost } from "../with-push-post";
 

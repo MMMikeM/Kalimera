@@ -1,8 +1,7 @@
 import { redirect } from "@tanstack/react-router";
 import { deleteCookie, setCookie } from "@tanstack/react-start/server";
 
-import type { AuthSession } from "./auth-cookie.server";
-import { getAuthSession } from "./auth-cookie.server";
+import { getAuthSession, type AuthSession } from "./auth-cookie";
 
 const AUTH_COOKIE = "auth";
 const AUTH_MAX_AGE = 60 * 60 * 24 * 30;

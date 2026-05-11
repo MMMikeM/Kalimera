@@ -2,7 +2,7 @@
 import "@tanstack/react-start";
 import { createFileRoute } from "@tanstack/react-router";
 
-import { getUserMilestones, recordMilestone } from "@/db.server/queries/milestones-achieved";
+import { getUserMilestones, recordMilestone } from "@/server/db/queries/milestones-achieved";
 
 interface RecordMilestoneBody {
 	userId: number;

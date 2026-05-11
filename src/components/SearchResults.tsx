@@ -1,8 +1,8 @@
 import { SearchX } from "lucide-react";
 
 import { MonoText } from "@/components/MonoText";
-import type { VocabularySearchGraphRow } from "@/db.server/queries/vocabulary";
 import { cn } from "@/lib/utils";
+import type { VocabularySearchGraphRow } from "@/server/db/queries/vocabulary";
 
 import { Badge } from "./ui/badge";
 

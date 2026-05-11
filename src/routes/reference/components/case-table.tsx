@@ -3,7 +3,7 @@ import type React from "react";
 import { CASE_ROW_DEFS, GENDER_COLUMN_DEFS, GrammarTable } from "@/components/GrammarTable";
 import { MonoText } from "@/components/MonoText";
 import { GENDER_SCHEME, SCHEME } from "@/constants/grammar-palette";
-import type { Gender } from "@/db.server/enums";
+import type { Gender } from "@/server/db/enums";
 
 interface GenderData {
 	masculine: { nom: string; acc: string; gen: string };

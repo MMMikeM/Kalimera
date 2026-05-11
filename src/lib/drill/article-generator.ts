@@ -1,6 +1,6 @@
-import type { NounDeclensionPattern } from "@/db.server/enums";
 import { declineNoun } from "@/lib/noun-declension";
 import { MEDIUM_SPEED_MS } from "@/routes/practice/components/drill-speeds";
+import type { NounDeclensionPattern } from "@/server/db/enums";
 
 import type { DrillQuestion } from "./generate-questions";
 

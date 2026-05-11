@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { getNounDrillItemsFn } from "@/server/fns";
+
 import { Drill } from "../../components/engines/drill";
 import { GENDER_DIMENSION_OPTIONS } from "../../components/engines/drill-constants";
-import { getNounDrillItemsFn } from "../loader";
 
 // Forward: "the friend (target)" → type "ton filo" (τον φίλο)
 // Reverse: show "τον φίλο" → tap masculine / feminine / neuter chip

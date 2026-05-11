@@ -1,7 +1,7 @@
 import { defineConfig } from "oxlint";
 
 const DB_IMPORT_MESSAGE =
-	"The db instance may only be imported inside src/db.server/queries/ or scripts (src/scripts/**, scripts/**). Add a query helper for application code.";
+	"The db instance may only be imported inside src/server/db/queries/ or scripts (src/scripts/**, scripts/**). Add a query helper for application code.";
 
 const ARBITRARY_VALUE_PATTERN = "-\\[([^\\[\\]]*?)\\](?!:)";
 
@@ -52,7 +52,7 @@ export default defineConfig({
 		{
 			// Reusable column-builder helpers; some are kept as a stable API surface
 			// even when not currently used by schema.ts. Don't flag them as unused.
-			files: ["src/db.server/columns.ts"],
+			files: ["src/server/db/columns.ts"],
 			rules: {
 				"no-unused-vars": "off",
 			},
@@ -79,22 +79,22 @@ export default defineConfig({
 					{
 						paths: [
 							{
-								name: "@/db.server/index",
+								name: "@/server/db/index",
 								importNames: ["db"],
 								message: DB_IMPORT_MESSAGE,
 							},
 							{
-								name: "@/db.server",
+								name: "@/server/db",
 								importNames: ["db"],
 								message: DB_IMPORT_MESSAGE,
 							},
 							{
-								name: "../db.server",
+								name: "../server/db",
 								importNames: ["db"],
 								message: DB_IMPORT_MESSAGE,
 							},
 							{
-								name: "./db.server",
+								name: "./server/db",
 								importNames: ["db"],
 								message: DB_IMPORT_MESSAGE,
 							},
@@ -116,7 +116,7 @@ export default defineConfig({
 			},
 		},
 		{
-			files: ["src/db.server/queries/**/*.ts", "src/scripts/**/*.ts", "scripts/**/*.ts"],
+			files: ["src/server/db/queries/**/*.ts", "src/scripts/**/*.ts", "scripts/**/*.ts"],
 			rules: {
 				"no-restricted-imports": "off",
 			},

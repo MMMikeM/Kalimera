@@ -2,8 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 
 import { type NavTab, NavTabs } from "@/components/NavTabs";
-import { getVocabBySlug } from "@/db.server/queries/vocabulary";
-import type { Vocabulary } from "@/db.server/types";
+import { getVocabBySlug } from "@/server/db/queries/vocabulary";
+import type { Vocabulary } from "@/server/db/types";
 
 import { AdjectivesTab } from "./tabs/adjectives";
 import { CasesTab } from "./tabs/cases";

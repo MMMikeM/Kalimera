@@ -1,14 +1,14 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
-import type { CefrLevel } from "@/db.server/enums";
-import { getDrillVocabPoolWithFallback } from "@/db.server/queries/drill-pool";
-import { getVocabularyWithNominalForms } from "@/db.server/queries/nominal-forms";
-import { ensureUserProgress } from "@/db.server/queries/user-progress";
 import { adjacentCefrPool } from "@/lib/cefr";
 import type { DrillQuestion } from "@/lib/drill/generate-questions";
 import { shuffle } from "@/lib/shuffle";
-import { requireAuth } from "@/lib/auth-session.server";
+import { requireAuth } from "@/server/auth-session";
+import type { CefrLevel } from "@/server/db/enums";
+import { getDrillVocabPoolWithFallback } from "@/server/db/queries/drill-pool";
+import { getVocabularyWithNominalForms } from "@/server/db/queries/nominal-forms";
+import { ensureUserProgress } from "@/server/db/queries/user-progress";
 
 const CASE_LABEL: Record<string, string> = {
 	nominative: "Doer",
@@ -74,5 +74,5 @@ export const getNominalReviewQuestionsFn = createServerFn({ method: "GET" })
 	)
 	.handler(async ({ data }) => {
 		const { userId } = requireAuth();
-		return getNominalReviewQuestionsImpl(userId, data.wordType, data.drillId, data.limit);
+		return await getNominalReviewQuestionsImpl(userId, data.wordType, data.drillId, data.limit);
 	});

@@ -14,10 +14,8 @@ export default defineConfig({
 		tailwindcss(),
 		nitro(),
 		tanstackStart({
-			importProtection: {
-				server: {
-					specifiers: [/\/server\//],
-				},
+			serverFns: {
+				base: "xyz",
 			},
 			router: {
 				routeFileIgnorePattern:

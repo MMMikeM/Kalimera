@@ -1,14 +1,14 @@
 import { sql } from "drizzle-orm";
 
-import { db } from "../db.server";
+import { db } from "../server/db";
 import type {
 	GrammaticalNumber,
 	ImperativeAspect,
 	PersonNumber,
 	VerbTense,
-} from "../db.server/enums";
-import { verbConjugations, verbDetails, verbImperatives } from "../db.server/schema";
-import type { NewVerbConjugation, NewVerbImperative } from "../db.server/types";
+} from "../server/db/enums";
+import { verbConjugations, verbDetails, verbImperatives } from "../server/db/schema";
+import type { NewVerbConjugation, NewVerbImperative } from "../server/db/types";
 import { FULL_VERB_CONJUGATIONS } from "./seed-data/vocabulary/verb-conjugations";
 
 const BATCH_SIZE = 100;

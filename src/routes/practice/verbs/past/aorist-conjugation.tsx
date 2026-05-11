@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { getAoristDrillQuestionsFn } from "@/server/fns";
+
 import { VocabDrillPage } from "../../components/engines/vocab-drill";
-import { getAoristDrillQuestionsFn } from "../loader";
 
 export const Route = createFileRoute("/practice/verbs/past/aorist-conjugation")({
 	loader: async () => {

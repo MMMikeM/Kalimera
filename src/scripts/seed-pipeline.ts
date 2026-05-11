@@ -2,7 +2,7 @@ import { createRequire } from "module";
 
 import { sql } from "drizzle-orm";
 
-import { db } from "../db.server";
+import { db } from "../server/db";
 import {
 	type Gender,
 	type GrammaticalCase,
@@ -12,21 +12,21 @@ import {
 	grammaticalCases,
 	grammaticalNumbers,
 	nounDeclensionPatterns,
-} from "../db.server/enums";
+} from "../server/db/enums";
 import {
 	adjectiveDetails,
 	nominalForms,
 	nounDetails,
 	verbDetails,
 	vocabulary,
-} from "../db.server/schema";
+} from "../server/db/schema";
 import type {
 	NewAdjectiveDetails,
 	NewNominalForm,
 	NewNounDetails,
 	NewVocabulary,
 	NewVocabularyTag,
-} from "../db.server/types";
+} from "../server/db/types";
 import type {
 	AdjectiveNominalFormsSeed,
 	AdjectiveSeed,

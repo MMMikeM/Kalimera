@@ -1,7 +1,7 @@
 import { OBJECT_PRONOUNS, POSSESSIVE_PRONOUNS } from "@/constants/pronouns";
 import { VERB_CONJUGATIONS } from "@/constants/verbs";
-import type { NounDeclensionPattern } from "@/db.server/enums";
 import { declineNoun } from "@/lib/noun-declension";
+import type { NounDeclensionPattern } from "@/server/db/enums";
 
 import { generateArticleQuestions } from "./article-generator";
 

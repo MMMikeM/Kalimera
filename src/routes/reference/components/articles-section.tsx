@@ -5,7 +5,7 @@ import { CollapsibleSection } from "@/components/CollapsibleSection";
 import { MonoText } from "@/components/MonoText";
 import { ARTICLE_AGREEMENT_QUICK_REF } from "@/constants/agreement";
 import { GENDER_SCHEME, SCHEME } from "@/constants/grammar-palette";
-import type { Gender } from "@/db.server/enums";
+import type { Gender } from "@/server/db/enums";
 
 import { BandHeading } from "./BandHeading";
 import { CaseTableGrid } from "./case-table";

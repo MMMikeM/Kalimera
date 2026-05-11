@@ -12,10 +12,10 @@ import {
 	VERB_FAMILIES,
 	VERB_PATTERNS,
 } from "@/constants/verbs";
-import type { VerbVocabularyWithDetailsRow } from "@/db.server/queries/vocabulary";
-import { fetchVerbsWithVerbDetails } from "@/db.server/queries/vocabulary";
 import { type ColorScheme, colorStyles } from "@/lib/colors";
 import { cn } from "@/lib/utils";
+import type { VerbVocabularyWithDetailsRow } from "@/server/db/queries/vocabulary";
+import { fetchVerbsWithVerbDetails } from "@/server/db/queries/vocabulary";
 
 type VerbWithPattern = VerbVocabularyWithDetailsRow;
 

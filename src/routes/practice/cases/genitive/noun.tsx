@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Drill } from "lucide-react";
 
-import { Drill } from "../../components/engines/drill";
+import { getNounDrillItemsFn } from "@/server/fns";
+
 import { GENDER_DIMENSION_OPTIONS } from "../../components/engines/drill-constants";
-import { getNounDrillItemsFn } from "../loader";
 
 // Forward: "of the friend" → type "tou filou" (του φίλου)
 // Reverse: show "του φίλου" → tap masculine / feminine / neuter chip
