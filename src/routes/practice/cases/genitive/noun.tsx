@@ -14,6 +14,7 @@ export const Route = createFileRoute("/practice/cases/genitive/noun")({
 			data: { grammaticalCase: "genitive", drillId: "nominal-noun-owner" },
 		}),
 	}),
+	staleTime: 0,
 	component: NounOwnerDrill,
 });
 

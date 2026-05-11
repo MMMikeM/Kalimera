@@ -9,6 +9,7 @@ export const Route = createFileRoute("/practice/verbs/future-conjugation")({
 		const questions = await getFutureDrillQuestionsFn({ data: { limit: 30 } });
 		return { questions };
 	},
+	staleTime: 0,
 	component: FutureConjugationDrill,
 });
 

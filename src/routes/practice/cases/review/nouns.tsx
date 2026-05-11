@@ -11,6 +11,7 @@ export const Route = createFileRoute("/practice/cases/review/nouns")({
 		});
 		return { questions };
 	},
+	staleTime: 0,
 	component: AllNounsDrill,
 });
 

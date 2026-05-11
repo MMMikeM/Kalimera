@@ -14,6 +14,7 @@ export const Route = createFileRoute("/practice/cases/accusative/noun")({
 			data: { grammaticalCase: "accusative", drillId: "nominal-noun-target" },
 		}),
 	}),
+	staleTime: 0,
 	component: NounTargetDrill,
 });
 

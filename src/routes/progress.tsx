@@ -21,6 +21,7 @@ export const Route = createFileRoute("/progress")({
 		}
 		return getProgressDataFn();
 	},
+	staleTime: 30_000,
 	component: ProgressPage,
 });
 
