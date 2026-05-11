@@ -2,7 +2,7 @@ import { redirect } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 
 import { loginSchema, passwordSetupSchema, registerSchema } from "@/lib/validators/auth";
-import { clearSessionCookie, getServerSession, setSessionCookie } from "@/server/auth/auth-session";
+import { clearSessionCookie, getServerSession, setSessionCookie } from "@/server/auth/session";
 import { verifyPassword, hashPassword } from "@/server/auth/password";
 import {
 	createUserWithPassword,
