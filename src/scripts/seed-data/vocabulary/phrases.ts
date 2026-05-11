@@ -283,7 +283,7 @@ function phraseVocabItems(
 	phrases: Array<{
 		text: string;
 		english: string;
-		cefrLevel?: import("../../../server/db/enums").CefrLevel;
+		cefrLevel?: import("@/server/db/enums").CefrLevel;
 		metadata?: unknown;
 	}>,
 	tags: string[],

@@ -5,9 +5,9 @@ import {
 	getArticle,
 } from "../../../lib/greek-grammar";
 import { declineNoun } from "../../../lib/noun-declension";
-import type { CefrLevel, NounDeclensionPattern } from "../../../server/db/enums";
-import { nounDeclensionPatterns } from "../../../server/db/enums";
-import type { JsonValue } from "../../../server/db/metadata";
+import type { CefrLevel, NounDeclensionPattern } from "@/server/db/enums";
+import { nounDeclensionPatterns } from "@/server/db/enums";
+import type { JsonValue } from "@/server/db/metadata";
 import type { NominalFormCellSeed, NounNominalFormsSeed, NounSeed } from "../../../types/seed";
 
 type CaseNumberKey = `${Case}_${GrammaticalNumber}`;
