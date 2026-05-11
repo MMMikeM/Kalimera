@@ -76,5 +76,3 @@ export const getDashboardDataFn = createServerFn({ method: "GET" }).handler(asyn
 		taperOfferPending: pushSub?.taperOfferPending ?? false,
 	};
 });
-
-export type DashboardData = Awaited<ReturnType<typeof getDashboardDataFn>>;

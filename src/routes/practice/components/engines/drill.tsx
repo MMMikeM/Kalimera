@@ -27,7 +27,7 @@ const THEME = {
 	ocean: { bar: "bg-ocean", selectorBg: "bg-ocean-100", selectorText: "text-ocean-text" },
 } as const;
 
-export type ColorTheme = keyof typeof THEME;
+type ColorTheme = keyof typeof THEME;
 
 // ─── Reverse strategy ─────────────────────────────────────────────────────────
 
@@ -48,7 +48,7 @@ interface MultiSelectStrategy<K extends string> {
 
 export type { DimensionSpec };
 
-export type ReverseStrategy<K extends string = string> =
+type ReverseStrategy<K extends string = string> =
 	| SelfAssessStrategy
 	| SingleSelectStrategy
 	| MultiSelectStrategy<K>;

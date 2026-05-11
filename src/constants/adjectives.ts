@@ -1,13 +1,13 @@
 // Adjective Paradigms
 // Shows how adjectives must agree with nouns in gender, case, and number
 
-export interface AdjectiveForm {
+interface AdjectiveForm {
 	case: "Nom" | "Acc" | "Gen";
 	form: string;
 	english: string;
 }
 
-export interface AdjectiveGenderForms {
+interface AdjectiveGenderForms {
 	singular: AdjectiveForm[];
 	plural: AdjectiveForm[];
 }

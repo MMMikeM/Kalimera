@@ -1,7 +1,7 @@
 // Article-Noun Agreement Paradigms
 // Shows how articles and noun endings must match in gender, case, and number
 
-export interface AgreementPattern {
+interface AgreementPattern {
 	case: "Nom" | "Acc" | "Gen" | "Voc";
 	article: string;
 	ending: string;
