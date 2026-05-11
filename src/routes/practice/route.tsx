@@ -2,7 +2,7 @@ import { Outlet, createFileRoute, redirect } from "@tanstack/react-router";
 
 import { getPracticeDataFn } from "@/server/fns";
 
-export const Route = createFileRoute("/practice/_layout")({
+export const Route = createFileRoute("/practice")({
 	beforeLoad: async ({ context }) => {
 		if (!context.auth?.userId) throw redirect({ to: "/" });
 	},
@@ -12,5 +12,6 @@ export const Route = createFileRoute("/practice/_layout")({
 		const pracData = await getPracticeDataFn({ data: { limit } });
 		return pracData;
 	},
+	staleTime: 0,
 	component: () => <Outlet />,
 });
