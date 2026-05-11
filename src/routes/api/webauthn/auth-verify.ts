@@ -3,8 +3,8 @@ import "@tanstack/react-start";
 import type { AuthenticationResponseJSON } from "@simplewebauthn/server";
 import { createFileRoute } from "@tanstack/react-router";
 
-import { createWebAuthnFromRequest } from "@/server/auth/auth";
-import { createAuthCookie } from "@/server/auth/auth-cookie";
+import { createWebAuthnFromRequest } from "@/server/auth";
+import { createAuthCookie } from "@/server/auth/cookie";
 import { getUserById } from "@/server/db/queries/users";
 
 interface AuthVerifyBody {

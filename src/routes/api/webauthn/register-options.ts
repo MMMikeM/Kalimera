@@ -2,7 +2,7 @@
 import "@tanstack/react-start";
 import { createFileRoute } from "@tanstack/react-router";
 
-import { createWebAuthnFromRequest } from "@/server/auth/auth";
+import { createWebAuthnFromRequest } from "@/server/auth";
 
 interface RegisterOptionsBody {
 	userId: number;

@@ -2,7 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 
 import { streakLengthFromCompletedSessionDates } from "@/lib/practice-streak";
 import { fromEpochSeconds } from "@/lib/time";
-import { requireAuth } from "@/server/auth/auth-session";
+import { requireAuth } from "@/server/auth/session";
 import {
 	getAccuracyTrends,
 	getPracticeDatesForCalendar,

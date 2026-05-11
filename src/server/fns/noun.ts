@@ -3,7 +3,7 @@ import { z } from "zod";
 
 import { adjacentCefrPool } from "@/lib/cefr";
 import { greekToPhonetic } from "@/lib/greek-transliteration";
-import { requireAuth } from "@/server/auth/auth-session";
+import { requireAuth } from "@/server/auth/session";
 import type { CefrLevel } from "@/server/db/enums";
 import { getDrillVocabPoolWithFallback } from "@/server/db/queries/drill-pool";
 import { getVocabularyWithNominalForms } from "@/server/db/queries/nominal-forms";

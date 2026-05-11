@@ -3,7 +3,7 @@ import { z } from "zod";
 
 import { streakLengthFromCompletedSessionDates } from "@/lib/practice-streak";
 import { fromEpochSeconds, toEpochSeconds } from "@/lib/time";
-import { requireAuth } from "@/server/auth/auth-session";
+import { requireAuth } from "@/server/auth/session";
 import { getDrillStats } from "@/server/db/queries/analytics/drill-stats";
 import { listCompletedPracticeSessionsForStreak } from "@/server/db/queries/practice-sessions";
 import { getUserById } from "@/server/db/queries/users";

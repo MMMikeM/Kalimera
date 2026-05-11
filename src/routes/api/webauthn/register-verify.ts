@@ -3,7 +3,7 @@ import "@tanstack/react-start";
 import type { RegistrationResponseJSON } from "@simplewebauthn/server";
 import { createFileRoute } from "@tanstack/react-router";
 
-import { createWebAuthnFromRequest } from "@/server/auth/auth";
+import { createWebAuthnFromRequest } from "@/server/auth";
 
 interface RegisterVerifyBody {
 	userId: number;

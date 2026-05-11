@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
-import { requireAuth } from "@/server/auth/auth-session";
+import { requireAuth } from "@/server/auth/session";
 import { recordAttempt } from "@/server/db/queries/practice-attempts";
 import {
 	type PracticeSessionInsert,
