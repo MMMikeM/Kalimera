@@ -9,6 +9,7 @@ export const Route = createFileRoute("/practice/verbs/present/")({
 		const questions = await getVerbDrillQuestionsFn({ data: { limit: 30 } });
 		return { questions };
 	},
+	staleTime: 0,
 	component: VerbsDrill,
 });
 

@@ -9,6 +9,7 @@ export const Route = createFileRoute("/practice/verbs/past/aorist-conjugation")(
 		const questions = await getAoristDrillQuestionsFn({ data: { limit: 30 } });
 		return { questions };
 	},
+	staleTime: 0,
 	component: AoristConjugationDrill,
 });
 

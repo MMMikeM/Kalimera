@@ -18,6 +18,7 @@ export const Route = createFileRoute("/practice/cases/nominative/noun")({
 			},
 		}),
 	}),
+	staleTime: 0,
 	component: NounGendersDrill,
 });
 
