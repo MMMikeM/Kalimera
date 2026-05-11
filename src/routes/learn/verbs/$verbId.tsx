@@ -11,8 +11,8 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { StemInsight } from "@/components/StemInsight";
 import { TenseNavigator } from "@/components/TenseNavigator";
 import { Badge } from "@/components/ui/badge";
-import type { VerbConjugationGraphRow } from "@/db.server/queries/vocabulary";
-import { fetchVerbWithConjugationRelations } from "@/db.server/queries/vocabulary";
+import type { VerbConjugationGraphRow } from "@/server/db/queries/vocabulary";
+import { fetchVerbWithConjugationRelations } from "@/server/db/queries/vocabulary";
 
 type ParadigmForms = {
 	sg1: string;

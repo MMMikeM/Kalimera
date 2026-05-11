@@ -1,4 +1,4 @@
-import type { CefrLevel } from "@/db.server/enums";
+import type { CefrLevel } from "@/server/db/enums";
 
 /** Adjacent-up CEFR mapping. C2 has no next level. */
 export const NEXT_LEVEL: Partial<Record<CefrLevel, CefrLevel>> = {

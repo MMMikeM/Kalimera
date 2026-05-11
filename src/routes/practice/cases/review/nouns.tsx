@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { getNominalReviewQuestionsFn } from "@/server/fns";
+
 import { VocabDrillPage } from "../../components/engines/vocab-drill";
-import { getNominalReviewQuestionsFn } from "./loader";
 
 export const Route = createFileRoute("/practice/cases/review/nouns")({
 	loader: async () => {

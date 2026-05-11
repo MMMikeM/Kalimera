@@ -15,14 +15,14 @@ import {
 	createChallenge,
 	deleteChallenge,
 	findChallenge,
-} from "@/db.server/queries/auth-challenges";
+} from "@/server/db/queries/auth-challenges";
 import {
 	createPasskey,
 	findPasskeyByCredentialId,
 	findPasskeysByUserId,
 	updatePasskeyCounter,
-} from "@/db.server/queries/passkeys";
-import type { AuthenticatorTransport } from "@/db.server/schema";
+} from "@/server/db/queries/passkeys";
+import type { AuthenticatorTransport } from "@/server/db/schema";
 
 type WebAuthnConfig = {
 	rpName: string;

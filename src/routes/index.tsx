@@ -5,8 +5,7 @@ import { useState } from "react";
 
 import { FreezeIndicator } from "@/components/FreezeIndicator";
 import { mondayBasedDayOfWeek, today } from "@/lib/time";
-
-import { getDashboardDataFn } from "./index.loader";
+import { getDashboardDataFn } from "@/server/fns";
 
 const UNAUTHENTICATED_DASHBOARD = {
 	userId: null as null,

@@ -7,6 +7,7 @@ import {
 	useNavigate,
 	useRouterState,
 } from "@tanstack/react-router";
+import { TanStackRouterDevtoolsInProd } from "@tanstack/react-router-devtools";
 import { BarChart3, BookOpen, FileText, Home, Info, LogOut, Search, User, Zap } from "lucide-react";
 /// <reference types="vite/client" />
 import { useState } from "react";
@@ -20,9 +21,9 @@ import {
 	PopoverPositioner,
 	PopoverTrigger,
 } from "@/components/ui/popover";
-import type { AuthSession } from "@/lib/auth-cookie.server";
-import { getServerAuthFn, logoutFn } from "@/lib/auth.functions";
-import type { RouterContext } from "@/router";
+import { type RouterContext } from "@/router";
+import type { AuthSession } from "@/server/auth-cookie";
+import { getServerAuthFn, logoutFn } from "@/server/fns/auth";
 
 import "@/index.css";
 
@@ -63,7 +64,13 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 			},
 		],
 	}),
-	component: RootComponent,
+	component: () => (
+		<>
+			<TanStackRouterDevtoolsInProd />
+
+			<RootComponent />
+		</>
+	),
 	errorComponent: ErrorBoundary,
 	notFoundComponent: () => <p>notfound</p>,
 });
@@ -86,7 +93,6 @@ function RootBody() {
 	const routerState = useRouterState();
 	const pathname = routerState.location.pathname;
 	const currentSection = pathname.split("/")[1] || "home";
-	const isAuthPage = pathname === "/login" || pathname === "/register";
 	const isPublicRoute = PUBLIC_ROUTES.some((r) => pathname.startsWith(r));
 
 	const { auth } = Route.useRouteContext();
@@ -95,23 +101,6 @@ function RootBody() {
 	const handleLogout = async () => {
 		await logoutFn();
 	};
-
-	if (isAuthPage) {
-		return (
-			<div className="app-shell bg-cream">
-				<main className="app-main">
-					<div className="mx-auto max-w-6xl px-6 md:px-8">
-						<header className="pt-8 pb-6">
-							<div className="flex items-center justify-center">
-								<span className="font-serif text-2xl text-terracotta">καλημέρα</span>
-							</div>
-						</header>
-						<Outlet />
-					</div>
-				</main>
-			</div>
-		);
-	}
 
 	if (!isAuthenticated && !isPublicRoute) {
 		return <LandingPage />;

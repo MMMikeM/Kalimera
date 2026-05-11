@@ -6,9 +6,9 @@ import type React from "react";
 
 import type { NavTab } from "@/components/NavTabs";
 import { NavTabs } from "@/components/NavTabs";
-import { getVocabBySlug } from "@/db.server/queries/vocabulary";
-import type { Vocabulary } from "@/db.server/types";
 import { validateTab } from "@/lib/validate-tab";
+import { getVocabBySlug } from "@/server/db/queries/vocabulary";
+import type { Vocabulary } from "@/server/db/types";
 
 import { ConnectorsTab } from "./tabs/connectors-tab";
 import { OpinionsTab } from "./tabs/opinions-tab";

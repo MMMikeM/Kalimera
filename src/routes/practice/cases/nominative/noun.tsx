@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { getNounDrillItemsFn } from "@/server/fns";
+
 import { Drill } from "../../components/engines/drill";
 import { GENDER_STYLE } from "../../components/engines/drill-constants";
-import { getNounDrillItemsFn } from "../loader";
 
 // Forward: "house" → type "to spiti"  (article + noun)
 // Reverse: show "σπίτι" (reverseGreek strips article) → select M / F / N

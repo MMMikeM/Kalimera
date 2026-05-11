@@ -7,8 +7,8 @@ import type React from "react";
 import { ContentSection } from "@/components/ContentSection";
 import { MonoText } from "@/components/MonoText";
 import { TabHero } from "@/components/TabHero";
-import { getVocabBySlug } from "@/db.server/queries/vocabulary";
-import type { Vocabulary } from "@/db.server/types";
+import { getVocabBySlug } from "@/server/db/queries/vocabulary";
+import type { Vocabulary } from "@/server/db/types";
 
 type Gender = "masculine" | "feminine" | "neuter";
 

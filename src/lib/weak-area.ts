@@ -1,7 +1,7 @@
 import { Temporal } from "@js-temporal/polyfill";
 
-import type { AreaType } from "@/db.server/schema";
-import { weakAreas } from "@/db.server/schema";
+import type { AreaType } from "@/server/db/schema";
+import { weakAreas } from "@/server/db/schema";
 
 type WeakAreaInsertCore = Pick<
 	typeof weakAreas.$inferInsert,

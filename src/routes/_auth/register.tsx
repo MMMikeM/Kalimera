@@ -6,10 +6,10 @@ import { Card } from "@/components/Card";
 import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/ui/form-field";
 import { setStoredAuth } from "@/lib/auth-storage";
-import { registerFn } from "@/lib/auth.functions";
 import { usePasskeyRegistration } from "@/lib/hooks/use-passkey-registration";
+import { registerFn } from "@/server/fns/auth";
 
-export const Route = createFileRoute("/register")({
+export const Route = createFileRoute("/_auth/register")({
 	component: RegisterRoute,
 });
 

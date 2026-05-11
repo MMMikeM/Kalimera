@@ -5,8 +5,7 @@ import { ArrowLeft, Calendar, Clock, Target, TrendingUp } from "lucide-react";
 import { AccuracyTrend } from "@/components/AccuracyTrend";
 import { Card } from "@/components/Card";
 import { StreakCalendar } from "@/components/StreakCalendar";
-
-import { getProgressDataFn } from "./progress.loader";
+import { getProgressDataFn } from "@/server/fns";
 
 export const Route = createFileRoute("/progress")({
 	loader: async ({ context }) => {

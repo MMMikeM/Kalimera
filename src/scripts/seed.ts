@@ -1,9 +1,9 @@
 import { sql } from "drizzle-orm";
 
-import { db } from "../db.server";
-import { tags, vocabularyTags } from "../db.server/schema";
-import type { NewNominalForm, NewVocabularyTag } from "../db.server/types";
-import type { NewAdjectiveDetails } from "../db.server/types";
+import { db } from "../server/db";
+import { tags, vocabularyTags } from "../server/db/schema";
+import type { NewNominalForm, NewVocabularyTag } from "../server/db/types";
+import type { NewAdjectiveDetails } from "../server/db/types";
 import {
 	CONTENT_TAGS,
 	LESSON_SEED_CATEGORIES,

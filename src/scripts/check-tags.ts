@@ -1,4 +1,4 @@
-import { db } from "../db.server";
+import { db } from "../server/db";
 
 async function main() {
 	const tagCounts = await db.query.tags.findMany({

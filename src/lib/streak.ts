@@ -1,5 +1,5 @@
-import type { User } from "@/db.server/types";
 import { diffInHours, fromEpochSeconds, nowInstant } from "@/lib/time";
+import type { User } from "@/server/db/types";
 
 const STREAK_CONFIG = {
 	DAYS_TO_EARN_FREEZE: 7,

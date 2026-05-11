@@ -2,9 +2,9 @@
 import "@tanstack/react-start";
 import { createFileRoute } from "@tanstack/react-router";
 
-import { userHasPasskey } from "@/db.server/queries/passkeys";
-import { findUserByUsername } from "@/db.server/queries/users";
 import { createWebAuthnFromRequest } from "@/lib/auth";
+import { userHasPasskey } from "@/server/db/queries/passkeys";
+import { findUserByUsername } from "@/server/db/queries/users";
 
 interface AuthOptionsBody {
 	username?: string;

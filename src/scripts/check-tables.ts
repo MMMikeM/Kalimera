@@ -1,5 +1,5 @@
-import { db } from "../db.server";
-import { tags, vocabulary, vocabularyTags } from "../db.server/schema";
+import { db } from "../server/db";
+import { tags, vocabulary, vocabularyTags } from "../server/db/schema";
 
 async function main() {
 	const [vocabCount, tagsCount, vtCount] = await Promise.all([

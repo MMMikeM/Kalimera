@@ -12,9 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as TryRouteImport } from './routes/try'
 import { Route as SupportRouteImport } from './routes/support'
 import { Route as SearchRouteImport } from './routes/search'
-import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ProgressRouteImport } from './routes/progress'
-import { Route as LoginRouteImport } from './routes/login'
+import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ReferenceIndexRouteImport } from './routes/reference/index'
 import { Route as PracticeIndexRouteImport } from './routes/practice/index'
@@ -25,6 +24,8 @@ import { Route as LearnVerbsRouteImport } from './routes/learn/verbs'
 import { Route as LearnNounsRouteImport } from './routes/learn/nouns'
 import { Route as ApiMilestonesRouteImport } from './routes/api/milestones'
 import { Route as ApiErrorsRouteImport } from './routes/api/errors'
+import { Route as AuthRegisterRouteImport } from './routes/_auth/register'
+import { Route as AuthLoginRouteImport } from './routes/_auth/login'
 import { Route as PracticeVerbsIndexRouteImport } from './routes/practice/verbs/index'
 import { Route as PracticePronounsIndexRouteImport } from './routes/practice/pronouns/index'
 import { Route as PracticeCasesIndexRouteImport } from './routes/practice/cases/index'
@@ -94,19 +95,13 @@ const SearchRoute = SearchRouteImport.update({
   path: '/search',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RegisterRoute = RegisterRouteImport.update({
-  id: '/register',
-  path: '/register',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ProgressRoute = ProgressRouteImport.update({
   id: '/progress',
   path: '/progress',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
+const AuthRoute = AuthRouteImport.update({
+  id: '/_auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -158,6 +153,16 @@ const ApiErrorsRoute = ApiErrorsRouteImport.update({
   id: '/api/errors',
   path: '/api/errors',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRegisterRoute = AuthRegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthLoginRoute = AuthLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AuthRoute,
 } as any)
 const PracticeVerbsIndexRoute = PracticeVerbsIndexRouteImport.update({
   id: '/practice/verbs/',
@@ -458,12 +463,12 @@ const PracticeCasesAccusativeAdjectiveRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/login': typeof LoginRoute
   '/progress': typeof ProgressRoute
-  '/register': typeof RegisterRoute
   '/search': typeof SearchRoute
   '/support': typeof SupportRoute
   '/try': typeof TryRoute
+  '/login': typeof AuthLoginRoute
+  '/register': typeof AuthRegisterRoute
   '/api/errors': typeof ApiErrorsRoute
   '/api/milestones': typeof ApiMilestonesRoute
   '/learn/nouns': typeof LearnNounsRoute
@@ -529,12 +534,12 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/login': typeof LoginRoute
   '/progress': typeof ProgressRoute
-  '/register': typeof RegisterRoute
   '/search': typeof SearchRoute
   '/support': typeof SupportRoute
   '/try': typeof TryRoute
+  '/login': typeof AuthLoginRoute
+  '/register': typeof AuthRegisterRoute
   '/api/errors': typeof ApiErrorsRoute
   '/api/milestones': typeof ApiMilestonesRoute
   '/learn/nouns': typeof LearnNounsRoute
@@ -600,12 +605,13 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/login': typeof LoginRoute
+  '/_auth': typeof AuthRouteWithChildren
   '/progress': typeof ProgressRoute
-  '/register': typeof RegisterRoute
   '/search': typeof SearchRoute
   '/support': typeof SupportRoute
   '/try': typeof TryRoute
+  '/_auth/login': typeof AuthLoginRoute
+  '/_auth/register': typeof AuthRegisterRoute
   '/api/errors': typeof ApiErrorsRoute
   '/api/milestones': typeof ApiMilestonesRoute
   '/learn/nouns': typeof LearnNounsRoute
@@ -673,12 +679,12 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/login'
     | '/progress'
-    | '/register'
     | '/search'
     | '/support'
     | '/try'
+    | '/login'
+    | '/register'
     | '/api/errors'
     | '/api/milestones'
     | '/learn/nouns'
@@ -744,12 +750,12 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/login'
     | '/progress'
-    | '/register'
     | '/search'
     | '/support'
     | '/try'
+    | '/login'
+    | '/register'
     | '/api/errors'
     | '/api/milestones'
     | '/learn/nouns'
@@ -814,12 +820,13 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
-    | '/login'
+    | '/_auth'
     | '/progress'
-    | '/register'
     | '/search'
     | '/support'
     | '/try'
+    | '/_auth/login'
+    | '/_auth/register'
     | '/api/errors'
     | '/api/milestones'
     | '/learn/nouns'
@@ -886,9 +893,8 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  LoginRoute: typeof LoginRoute
+  AuthRoute: typeof AuthRouteWithChildren
   ProgressRoute: typeof ProgressRoute
-  RegisterRoute: typeof RegisterRoute
   SearchRoute: typeof SearchRoute
   SupportRoute: typeof SupportRoute
   TryRoute: typeof TryRoute
@@ -978,13 +984,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SearchRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/register': {
-      id: '/register'
-      path: '/register'
-      fullPath: '/register'
-      preLoaderRoute: typeof RegisterRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/progress': {
       id: '/progress'
       path: '/progress'
@@ -992,11 +991,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProgressRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -1068,6 +1067,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/api/errors'
       preLoaderRoute: typeof ApiErrorsRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_auth/register': {
+      id: '/_auth/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof AuthRegisterRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/login': {
+      id: '/_auth/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof AuthLoginRouteImport
+      parentRoute: typeof AuthRoute
     }
     '/practice/verbs/': {
       id: '/practice/verbs/'
@@ -1443,6 +1456,18 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AuthRouteChildren {
+  AuthLoginRoute: typeof AuthLoginRoute
+  AuthRegisterRoute: typeof AuthRegisterRoute
+}
+
+const AuthRouteChildren: AuthRouteChildren = {
+  AuthLoginRoute: AuthLoginRoute,
+  AuthRegisterRoute: AuthRegisterRoute,
+}
+
+const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
+
 interface LearnVerbsRouteChildren {
   LearnVerbsVerbIdRoute: typeof LearnVerbsVerbIdRoute
 }
@@ -1457,9 +1482,8 @@ const LearnVerbsRouteWithChildren = LearnVerbsRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  LoginRoute: LoginRoute,
+  AuthRoute: AuthRouteWithChildren,
   ProgressRoute: ProgressRoute,
-  RegisterRoute: RegisterRoute,
   SearchRoute: SearchRoute,
   SupportRoute: SupportRoute,
   TryRoute: TryRoute,

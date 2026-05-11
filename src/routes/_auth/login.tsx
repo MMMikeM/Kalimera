@@ -6,10 +6,10 @@ import { useState } from "react";
 import { Card } from "@/components/Card";
 import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/ui/form-field";
-import { loginFn, setupPasswordFn } from "@/lib/auth.functions";
 import { usePasskeyAuth } from "@/lib/hooks/use-passkey-auth";
+import { loginFn, setupPasswordFn } from "@/server/fns/auth";
 
-export const Route = createFileRoute("/login")({
+export const Route = createFileRoute("/_auth/login")({
 	component: LoginRoute,
 });
 

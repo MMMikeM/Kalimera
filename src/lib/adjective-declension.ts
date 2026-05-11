@@ -5,7 +5,7 @@ import {
 	type Num,
 	isStemStressed,
 } from "@/constants/adjective-agreement";
-import type { AdjectiveDeclensionPattern } from "@/db.server/enums";
+import type { AdjectiveDeclensionPattern } from "@/server/db/enums";
 
 interface DeclinedAdjectiveForm {
 	case: Case;

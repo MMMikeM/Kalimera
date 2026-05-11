@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 
-import { hasNumericValue, hasTimeRange } from "@/db.server/metadata";
-import { getVocabBySlug } from "@/db.server/queries/vocabulary";
+import { hasNumericValue, hasTimeRange } from "@/server/db/metadata";
+import { getVocabBySlug } from "@/server/db/queries/vocabulary";
 
 import { ColoursSubtab } from "./subtabs/colours";
 import { FrequencySubtab } from "./subtabs/frequency";

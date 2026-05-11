@@ -1,4 +1,4 @@
-import type { Gender } from "@/db.server/enums";
+import type { Gender } from "@/server/db/enums";
 
 import type { CaseName } from "./recognition";
 

@@ -1,17 +1,15 @@
-import "@tanstack/react-start/server-only";
 import { redirect } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 
+import { loginSchema, passwordSetupSchema, registerSchema } from "@/lib/validators/auth";
+import { clearSessionCookie, getServerSession, setSessionCookie } from "@/server/auth-session";
 import {
 	createUserWithPassword,
 	findUserByUsername,
 	getUserPasswordHash,
 	setUserPassword,
-} from "@/db.server/queries/users";
-
-import { clearSessionCookie, getServerSession, setSessionCookie } from "./auth-session.server";
-import { hashPassword, verifyPassword } from "./password";
-import { loginSchema, passwordSetupSchema, registerSchema } from "./validators/auth";
+} from "@/server/db/queries/users";
+import { verifyPassword, hashPassword } from "@/server/password";
 
 export const loginFn = createServerFn({ method: "POST" })
 	.inputValidator(loginSchema)
@@ -74,6 +72,4 @@ export const logoutFn = createServerFn({ method: "POST" }).handler(async () => {
 	throw redirect({ to: "/" });
 });
 
-export const getServerAuthFn = createServerFn().handler(() => {
-	return getServerSession();
-});
+export const getServerAuthFn = createServerFn().handler(() => getServerSession());

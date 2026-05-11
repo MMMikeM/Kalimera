@@ -2,7 +2,7 @@
 import "@tanstack/react-start";
 import { createFileRoute } from "@tanstack/react-router";
 
-import { deletePushSubscription } from "@/db.server/queries/notifications/push-subscriptions";
+import { deletePushSubscription } from "@/server/db/queries/notifications/push-subscriptions";
 
 export const Route = createFileRoute("/api/push/unsubscribe")({
 	server: {

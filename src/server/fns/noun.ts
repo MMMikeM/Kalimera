@@ -1,15 +1,15 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
-import type { CefrLevel } from "@/db.server/enums";
-import { getDrillVocabPoolWithFallback } from "@/db.server/queries/drill-pool";
-import { getVocabularyWithNominalForms } from "@/db.server/queries/nominal-forms";
-import { ensureUserProgress } from "@/db.server/queries/user-progress";
 import { adjacentCefrPool } from "@/lib/cefr";
 import { greekToPhonetic } from "@/lib/greek-transliteration";
-import { requireAuth } from "@/lib/auth-session.server";
+import { requireAuth } from "@/server/auth-session";
+import type { CefrLevel } from "@/server/db/enums";
+import { getDrillVocabPoolWithFallback } from "@/server/db/queries/drill-pool";
+import { getVocabularyWithNominalForms } from "@/server/db/queries/nominal-forms";
+import { ensureUserProgress } from "@/server/db/queries/user-progress";
 
-import type { SimpleListItem } from "../components/engines/deck";
+import type { SimpleListItem } from "../../routes/practice/components/engines/deck";
 
 /** Build SimpleListItem[] for a single case drill (nominative / accusative / genitive).
  *  Pool is SRS-aware: nouns the user has been exposed to in their CEFR band. */
@@ -68,7 +68,7 @@ export const getNounDrillItemsFn = createServerFn({ method: "GET" })
 	)
 	.handler(async ({ data }) => {
 		const { userId } = requireAuth();
-		return getNounDrillItemsImpl(userId, data.grammaticalCase, data.drillId, {
+		return await getNounDrillItemsImpl(userId, data.grammaticalCase, data.drillId, {
 			stripArticleForReverse: data.stripArticleForReverse,
 		});
 	});

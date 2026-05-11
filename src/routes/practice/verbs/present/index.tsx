@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { getVerbDrillQuestionsFn } from "@/server/fns";
+
 import { VocabDrillPage } from "../../components/engines/vocab-drill";
-import { getVerbDrillQuestionsFn } from "../loader";
 
 export const Route = createFileRoute("/practice/verbs/present/")({
 	loader: async () => {
