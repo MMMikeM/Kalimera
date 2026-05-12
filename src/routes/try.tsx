@@ -1,11 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, UserPlus, Zap } from "lucide-react";
-import type React from "react";
 import { useState } from "react";
 
 import { Card } from "@/components/Card";
-import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { greekToPhonetic } from "@/lib/greek-transliteration";
 
@@ -36,22 +34,9 @@ const TRY_ITEMS: SimpleListItem[] = TRY_QUESTIONS.map((q) => ({
 	english: q.prompt,
 }));
 
-const TryShell: React.FC<{ children: React.ReactNode; innerPy?: string }> = ({
-	children,
-	innerPy = "py-12",
-}) => (
-	<div className="app-shell bg-cream">
-		<main className="app-main">
-			<div className="mx-auto max-w-6xl px-6 md:px-8">
-				<Header isAuthenticated={false} />
-			</div>
-			<div className={`mx-auto max-w-xl px-6 ${innerPy}`}>{children}</div>
-		</main>
-	</div>
-);
+
 
 const TryDrillIntro = ({ onStart }: { onStart: () => void }) => (
-	<TryShell>
 		<Card variant="bordered" padding="lg" className="text-center">
 			<div className="py-8">
 				<div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-terracotta-100">
@@ -80,7 +65,6 @@ const TryDrillIntro = ({ onStart }: { onStart: () => void }) => (
 				</div>
 			</div>
 		</Card>
-	</TryShell>
 );
 
 const TryDrillComplete = ({ stats }: { stats: SessionStats<DrillForm> }) => {
@@ -100,7 +84,7 @@ const TryDrillComplete = ({ stats }: { stats: SessionStats<DrillForm> }) => {
 	const { emoji, text } = getMessage();
 
 	return (
-		<TryShell>
+		<>
 			<Card variant="bordered" padding="lg" className="text-center">
 				<div className="py-8">
 					<p className="mb-4 text-5xl">{emoji}</p>
@@ -144,7 +128,7 @@ const TryDrillComplete = ({ stats }: { stats: SessionStats<DrillForm> }) => {
 					<ArrowRight size={14} />
 				</Link>
 			</div>
-		</TryShell>
+		</>
 	);
 };
 
@@ -161,7 +145,6 @@ function TryDrillRoute() {
 	}
 
 	return (
-		<TryShell innerPy="py-8">
 			<Drill
 				items={TRY_ITEMS}
 				title="Try Drill"
@@ -170,6 +153,5 @@ function TryDrillRoute() {
 				autoStart
 				onComplete={setCompletedStats}
 			/>
-		</TryShell>
 	);
 }
