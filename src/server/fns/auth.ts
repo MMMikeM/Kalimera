@@ -1,4 +1,3 @@
-import { redirect } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 
 import { loginSchema, passwordSetupSchema, registerSchema } from "@/lib/validators/auth";
@@ -37,7 +36,7 @@ export const loginFn = createServerFn({ method: "POST" })
 		if (!isValid) return { success: false as const, error: "Invalid password" };
 
 		setSessionCookie(user.id, user.username || user.code);
-		throw redirect({ to: "/" });
+		return { success: true as const };
 	});
 
 export const setupPasswordFn = createServerFn({ method: "POST" })
@@ -47,7 +46,7 @@ export const setupPasswordFn = createServerFn({ method: "POST" })
 		const hash = await hashPassword(newPassword);
 		await setUserPassword(Number(userId), hash, username);
 		setSessionCookie(Number(userId), username.toLowerCase());
-		throw redirect({ to: "/" });
+		return { success: true as const };
 	});
 
 export const registerFn = createServerFn({ method: "POST" })
@@ -69,7 +68,7 @@ export const registerFn = createServerFn({ method: "POST" })
 
 export const logoutFn = createServerFn({ method: "POST" }).handler(async () => {
 	clearSessionCookie();
-	throw redirect({ to: "/" });
+	return { success: true as const };
 });
 
 export const getServerAuthFn = createServerFn().handler(() => getServerSession());

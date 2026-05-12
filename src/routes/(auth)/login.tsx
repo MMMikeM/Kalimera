@@ -1,5 +1,4 @@
-import { createFileRoute, isRedirect } from "@tanstack/react-router";
-import { Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { KeyRound, Loader2, LogIn } from "lucide-react";
 import { useState } from "react";
 
@@ -14,6 +13,7 @@ export const Route = createFileRoute("/(auth)/login")({
 });
 
 function LoginRoute() {
+	const router = useRouter();
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 	const [needsPasswordSetup, setNeedsPasswordSetup] = useState<{
@@ -41,19 +41,20 @@ function LoginRoute() {
 					password: (fd.get("password") as string) || undefined,
 				},
 			});
-			// loginFn throws redirect on success — only reach here on error/needsSetup
-			if ("needsPasswordSetup" in result && result.needsPasswordSetup) {
+			if (result.success) {
+				await router.invalidate();
+				router.navigate({ to: "/" });
+				return;
+			} else if ("needsPasswordSetup" in result && result.needsPasswordSetup) {
 				setNeedsPasswordSetup({
 					userId: result.userId,
 					userCode: result.userCode,
 					displayName: result.displayName,
 				});
-			} else if (!result.success) {
+			} else {
 				setError(result.error);
 			}
-		} catch (err) {
-			// redirect throws are handled by TanStack Router, re-throw them
-			if (isRedirect(err)) throw err;
+		} catch {
 			setError("Something went wrong. Please try again.");
 		} finally {
 			setIsSubmitting(false);
@@ -74,8 +75,9 @@ function LoginRoute() {
 					username: fd.get("username") as string,
 				},
 			});
-		} catch (err) {
-			if (isRedirect(err)) throw err;
+			await router.invalidate();
+			router.navigate({ to: "/" });
+		} catch {
 			setError("Something went wrong. Please try again.");
 		} finally {
 			setIsSubmitting(false);
