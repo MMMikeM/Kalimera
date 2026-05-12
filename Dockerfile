@@ -1,6 +1,6 @@
 FROM node:26-alpine AS base
 RUN apk add --no-cache ca-certificates
-RUN corepack enable
+RUN npm install -g pnpm@11.0.9
 
 FROM base AS deps
 WORKDIR /app
