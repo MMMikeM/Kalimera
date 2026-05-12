@@ -1,0 +1,17 @@
+node_modules
+.output
+.wrangler
+.react-router
+.tanstack
+dist
+build
+.env
+.env.prod
+.env.local
+*.db
+*.sqlite
+reports
+screenshots
+e2e
+*.log
+.DS_Store
