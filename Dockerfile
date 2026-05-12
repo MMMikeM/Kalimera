@@ -12,7 +12,7 @@ FROM deps AS build
 COPY . .
 RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store \
     pnpm install --frozen-lockfile
-RUN NITRO_PRESET=node-server pnpm build
+RUN NITRO_PRESET=node-server pnpm build && cp dist/sw.js .output/public/sw.js
 
 FROM node:26-alpine AS runner
 RUN apk add --no-cache tini
