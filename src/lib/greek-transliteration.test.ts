@@ -133,6 +133,16 @@ describe("matchPhonetic — article optional", () => {
 	});
 });
 
+describe("matchPhonetic — τη article (accusative feminine)", () => {
+	it("accepts ti for τη", () => {
+		expect(matchPhonetic("ti", "τη").isCorrect).toBe(true);
+	});
+
+	it("accepts th for τη", () => {
+		expect(matchPhonetic("th", "τη").isCorrect).toBe(true);
+	});
+});
+
 describe("matchPhonetic — cluster variants", () => {
 	it("accepts andras or adras for άντρας", () => {
 		expect(matchPhonetic("andras", "άντρας").isCorrect).toBe(true);

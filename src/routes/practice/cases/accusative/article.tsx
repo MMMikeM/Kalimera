@@ -18,10 +18,11 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "f-sg",
 		greek: "τη",
-		greeklish: "ti",
+		greeklish: "ti(n)",
 		english: "the (f, sg, target)",
 		label: "the (f, sg, target)",
 		category: "singular",
+		acceptAlso: "την",
 	},
 	{
 		id: "n-sg",

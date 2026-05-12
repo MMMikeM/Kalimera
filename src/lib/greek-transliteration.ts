@@ -155,8 +155,9 @@ const stripGreekArticle = (greek: string): string => {
 // Collapse variant spellings on both sides so either form accepts.
 // ει→i, αι→e, οι→i: user can type letter-faithful ("kaneis") or phonetic ("kanis").
 // nd→d, mb→b, ng→g: user can type simplified cluster ("adras") or accurate ("andras").
-// η→h, ω→w (Greek Greeklish convention): protect "th"/"ch"/"ph" before normalising h→i,
-// so θ ("th") is not collapsed. w→o accepts old-style "o" for ω.
+// η→h, ω→w (Greek Greeklish convention): protect "ch"/"ph" before normalising h→i.
+// "th" is NOT protected — τη→"th" and θ→"th" both canonicalise to "ti", so typing
+// "ti" or "th" is accepted for either. w→o accepts old-style "o" for ω.
 const toPhoneticCanonical = (text: string): string =>
 	text
 		.replace(/ei/g, "i")
@@ -167,11 +168,9 @@ const toPhoneticCanonical = (text: string): string =>
 		.replace(/mb/g, "b")
 		.replace(/ng/g, "g")
 		.replace(/ev/g, "ef") // ευ → ef/ev both accepted (voicing context varies)
-		.replace(/th/g, "") // protect θ digraph before h→i
 		.replace(/ch/g, "") // protect χ digraph
 		.replace(/ph/g, "") // protect φ digraph
-		.replace(/h/g, "i") // η (as h) → canonical i; old "i" stays "i"
-		.replace(//g, "th") // restore θ
+		.replace(/h/g, "i") // η (as h) → canonical i; also collapses "th" → "ti" so τη accepts both
 		.replace(//g, "x") // χ canonical = x (accepts both "ch" and "x")
 		.replace(//g, "ph") // restore φ
 		.replace(/x/g, "x"); // x already canonical — noop but documents intent
