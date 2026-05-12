@@ -10,11 +10,7 @@ const config: KnipConfig = {
 		"scripts/*.ts",
 	],
 	project: ["src/**/*.{ts,tsx}", "service-worker/**/*.ts", "scripts/**/*.ts"],
-	ignore: [
-		"src/types/lesson-builder.ts",
-		"src/components/ui/**",
-		"src/scripts/seed-data/**",
-	],
+	ignore: ["src/types/lesson-builder.ts", "src/components/ui/**", "src/scripts/seed-data/**"],
 	ignoreDependencies: [
 		"@vitejs/plugin-react",
 		"tw-animate-css",

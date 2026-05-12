@@ -99,7 +99,12 @@ export interface DrillState {
 	setActiveSpeedId: (id: string) => void;
 	setInput: (s: string) => void;
 	startDrill: () => void;
-	recordAttempt: (isCorrect: boolean, timeTaken: number, log: LogPayload, timedOut?: boolean) => void;
+	recordAttempt: (
+		isCorrect: boolean,
+		timeTaken: number,
+		log: LogPayload,
+		timedOut?: boolean,
+	) => void;
 	advance: () => void;
 	resetToConfig: () => void;
 	retryMistakes: (mistakes: Attempt<DrillForm>[]) => void;
@@ -176,7 +181,16 @@ export const createDrillStore = ({
 		setInput: (input) => set({ input }),
 
 		startDrill: () => {
-			const { allItems, activeCategory, sessionSize, sessionType, dbCategory, wordTypeFilter, userId, sessionCallbacks } = get();
+			const {
+				allItems,
+				activeCategory,
+				sessionSize,
+				sessionType,
+				dbCategory,
+				wordTypeFilter,
+				userId,
+				sessionCallbacks,
+			} = get();
 			const source = activeCategory
 				? allItems.filter(
 						(i) => (i as DrillForm & { category?: string }).category === activeCategory,
@@ -197,7 +211,9 @@ export const createDrillStore = ({
 			if (userId && sessionCallbacks) {
 				sessionCallbacks
 					.startSession({ userId, sessionType, category: dbCategory, wordTypeFilter })
-					.then((id) => { if (id) set({ sessionId: id }); })
+					.then((id) => {
+						if (id) set({ sessionId: id });
+					})
 					.catch(() => {});
 			}
 		},
@@ -240,7 +256,8 @@ export const createDrillStore = ({
 		},
 
 		advance: () => {
-			const { cardIndex, sessionSize, sessionId, userId, isReDrill, onComplete, sessionCallbacks } = get();
+			const { cardIndex, sessionSize, sessionId, userId, isReDrill, onComplete, sessionCallbacks } =
+				get();
 			const next = cardIndex + 1;
 			if (next >= sessionSize) {
 				set({ phase: "complete" });

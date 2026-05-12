@@ -67,7 +67,7 @@ export function DrillProvider({
 	// eslint-disable-next-line react-hooks/exhaustive-deps -- store created once per mount; config is mount-time stable
 	const store = useMemo(
 		() => createDrillStore({ ...config, sessionCallbacks: SESSION_CALLBACKS }),
-		[],
+		[config],
 	);
 
 	return <DrillStoreContext.Provider value={store}>{children}</DrillStoreContext.Provider>;

@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { LandingPage } from "@/components/LandingPage";
 import { FreezeIndicator } from "@/components/FreezeIndicator";
+import { LandingPage } from "@/components/LandingPage";
 import { getDashboardDataFn } from "@/server/fns";
 
 import { AllCaughtUpCTA } from "./components/AllCaughtUpCTA";

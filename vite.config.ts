@@ -2,6 +2,8 @@ import tailwindcss from "@tailwindcss/vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import { nitro } from "nitro/vite";
 import { defineConfig } from "vite";
+import { VitePWA } from "vite-plugin-pwa";
+
 
 const SERVER_FN_BASE = "/_serverFn/";
 
@@ -23,6 +25,20 @@ export default defineConfig({
 		tanstackStart({
 			router: {
 				routeFileIgnorePattern: "(tabs|components)",
+			},
+		}),
+		VitePWA({
+			strategies: "injectManifest",
+			srcDir: "service-worker",
+			filename: "sw.ts",
+			registerType: "prompt",
+			includeAssets: ["favicon.svg", "apple-touch-icon.png", "icons/*.png"],
+			manifest: false,
+			injectManifest: {
+				globPatterns: ["**/*.{js,css,html,ico,png,svg,woff2}"],
+			},
+			devOptions: {
+				enabled: false,
 			},
 		}),
 	],

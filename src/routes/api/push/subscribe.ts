@@ -3,7 +3,6 @@ import "@tanstack/react-start";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { upsertPushSubscription } from "@/server/db/queries/notifications/push-subscriptions";
-
 import { withPushPost } from "@/server/with-push-post";
 
 export const Route = createFileRoute("/api/push/subscribe")({

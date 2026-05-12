@@ -1,4 +1,4 @@
-import { and, count, eq, gt, inArray, isNotNull, lt, lte, sql } from "drizzle-orm";
+import { and, count, eq, gt, isNotNull, lte, sql } from "drizzle-orm";
 
 import { endOfTomorrowUTC, nowInstant, toEpochSeconds } from "@/lib/time";
 import { vocabularySkillStateAfterAttempt } from "@/server/srs";

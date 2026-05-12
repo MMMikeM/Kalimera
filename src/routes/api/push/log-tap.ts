@@ -6,7 +6,6 @@ import {
 	type TappedAction,
 	logNotificationTap,
 } from "@/server/db/queries/notifications/notification-logs";
-
 import { withPushPost } from "@/server/with-push-post";
 
 const VALID_TAPPED_ACTIONS: TappedAction[] = ["2min", "body", "snooze"];
@@ -24,7 +23,7 @@ export const Route = createFileRoute("/api/push/log-tap")({
 					async (userId, body) => {
 						const tappedAction =
 							typeof body?.tappedAction === "string" &&
-								VALID_TAPPED_ACTIONS.includes(body.tappedAction as TappedAction)
+							VALID_TAPPED_ACTIONS.includes(body.tappedAction as TappedAction)
 								? (body.tappedAction as TappedAction)
 								: null;
 						if (!tappedAction) {

@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, isRedirect } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 import { KeyRound, Loader2, LogIn } from "lucide-react";
 import { useState } from "react";
@@ -53,7 +53,7 @@ function LoginRoute() {
 			}
 		} catch (err) {
 			// redirect throws are handled by TanStack Router, re-throw them
-			if (err && typeof err === "object" && "to" in err) throw err;
+			if (isRedirect(err)) throw err;
 			setError("Something went wrong. Please try again.");
 		} finally {
 			setIsSubmitting(false);
@@ -75,7 +75,7 @@ function LoginRoute() {
 				},
 			});
 		} catch (err) {
-			if (err && typeof err === "object" && "to" in err) throw err;
+			if (isRedirect(err)) throw err;
 			setError("Something went wrong. Please try again.");
 		} finally {
 			setIsSubmitting(false);
@@ -170,11 +170,6 @@ function LoginRoute() {
 								placeholder="Enter your password"
 								disabled={isSubmitting || passkey.isLoading}
 							/>
-							<div className="mt-3 rounded-lg border border-ocean-300 bg-ocean-100 p-3">
-								<p className="text-sm font-medium text-ocean-800">
-									Existing user? Enter your code without a password to set one up.
-								</p>
-							</div>
 						</div>
 					</div>
 
