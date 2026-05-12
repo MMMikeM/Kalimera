@@ -3,6 +3,7 @@ import {
 	Outlet,
 	Scripts,
 	createRootRouteWithContext,
+	useRouter,
 	useRouterState,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsInProd } from "@tanstack/react-router-devtools";
@@ -75,11 +76,14 @@ function RootBody() {
 	const pathname = routerState.location.pathname;
 	const currentSection = pathname.split("/")[1] || "home";
 
+	const router = useRouter();
 	const { auth } = Route.useRouteContext();
 	const isAuthenticated = auth !== null;
 
 	const handleLogout = async () => {
 		await logoutFn();
+		await router.invalidate();
+		router.navigate({ to: "/" });
 	};
 
 	const isAuthRoute = pathname.startsWith("/login") || pathname.startsWith("/register");
