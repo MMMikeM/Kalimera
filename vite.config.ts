@@ -1,3 +1,5 @@
+import { cpSync, mkdirSync } from "node:fs";
+import { resolve } from "node:path";
 import tailwindcss from "@tailwindcss/vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import { nitro } from "nitro/vite";
@@ -12,6 +14,15 @@ export default defineConfig({
 		tsconfigPaths: true,
 	},
 	plugins: [
+		{
+			name: "copy-sw-to-output",
+			closeBundle() {
+				if (this.environment?.name !== "client") return;
+				const dest = resolve(".output/public");
+				mkdirSync(dest, { recursive: true });
+				cpSync(resolve("dist/sw.js"), resolve(dest, "sw.js"));
+			},
+		},
 		{
 			name: "replace-tss-server-fn-base",
 			transform(code, _id) {
