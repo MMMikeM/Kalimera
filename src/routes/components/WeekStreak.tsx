@@ -1,4 +1,5 @@
 import { Check } from "lucide-react";
+
 import { mondayBasedDayOfWeek, today } from "@/lib/time";
 
 const DAYS = ["M", "T", "W", "T", "F", "S", "S"];

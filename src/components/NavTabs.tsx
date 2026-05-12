@@ -6,7 +6,7 @@ import { tv } from "tailwind-variants";
 const navTabsVariants = tv({
 	slots: {
 		root: "flex w-full flex-col gap-2",
-		list: "scrollbar-none flex h-auto w-full items-center gap-1 overflow-x-auto rounded-lg bg-muted p-1 text-muted-foreground",
+		list: "flex h-auto w-full scrollbar-none items-center gap-1 overflow-x-auto rounded-lg bg-muted p-1 text-muted-foreground",
 		trigger:
 			"relative flex h-[calc(100%-1px)] min-w-max flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-3 py-1.5 text-sm font-medium whitespace-nowrap transition-[color,box-shadow] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
 		badge:

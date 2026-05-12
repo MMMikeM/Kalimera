@@ -14,7 +14,7 @@
 		"noEmit": true,
 		"jsx": "react-jsx",
 		"isolatedModules": true,
-    "resolveJsonModule": true,
+		"resolveJsonModule": true,
 		"esModuleInterop": true,
 
 		/* Path aliases for shadcn */
@@ -35,5 +35,5 @@
 		"noUncheckedIndexedAccess": true,
 		"forceConsistentCasingInFileNames": true
 	},
-	"include": ["vite.config.ts", "**/*.ts", "**/*.tsx"],
+	"include": ["vite.config.ts", "**/*.ts", "**/*.tsx"]
 }

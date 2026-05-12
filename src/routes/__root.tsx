@@ -8,9 +8,9 @@ import {
 import { TanStackRouterDevtoolsInProd } from "@tanstack/react-router-devtools";
 /// <reference types="vite/client" />
 
+import { Header } from "@/components/Header";
 import { MobileHeader } from "@/components/MobileHeader";
 import { MobileNav } from "@/components/MobileNav";
-import { Header } from "@/components/Header";
 import { type RouterContext } from "@/router";
 import type { AuthSession } from "@/server/auth/cookie";
 import { getServerAuthFn, logoutFn } from "@/server/fns/auth";
@@ -82,25 +82,29 @@ function RootBody() {
 		await logoutFn();
 	};
 
-	if (pathname.startsWith("/login") || pathname.startsWith("/register")) {
-		return <Outlet />;
-	}
+	const isAuthRoute = pathname.startsWith("/login") || pathname.startsWith("/register");
 
 	return (
 		<div className="app-shell bg-cream">
 			<main className="app-main">
 				<div className="mx-auto max-w-6xl px-6 md:px-8">
-					<MobileHeader isAuthenticated={isAuthenticated} onLogout={handleLogout} />
-					<div className="hidden md:block">
-						<Header
-							isAuthenticated={isAuthenticated}
-							currentSection={currentSection}
-							onLogout={handleLogout}
-						/>
-					</div>
-					<div className="pb-24 md:pb-12">
+					{isAuthRoute ? (
 						<Outlet />
-					</div>
+					) : (
+						<>
+							<MobileHeader isAuthenticated={isAuthenticated} onLogout={handleLogout} />
+							<div className="hidden md:block">
+								<Header
+									isAuthenticated={isAuthenticated}
+									currentSection={currentSection}
+									onLogout={handleLogout}
+								/>
+							</div>
+							<div className="pb-24 md:pb-12">
+								<Outlet />
+							</div>
+						</>
+					)}
 					<footer className="mt-12 hidden border-t border-stone-200 py-12 md:block">
 						<div className="flex items-center justify-between text-sm text-stone-600">
 							<p>Patterns over memorisation. Once you see the structure, the language clicks.</p>
