@@ -1,4 +1,4 @@
-import { cpSync, mkdirSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync } from "node:fs";
 import { resolve } from "node:path";
 import tailwindcss from "@tailwindcss/vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
@@ -15,15 +15,6 @@ export default defineConfig({
 	},
 	plugins: [
 		{
-			name: "copy-sw-to-output",
-			closeBundle() {
-				if (this.environment?.name !== "client") return;
-				const dest = resolve(".output/public");
-				mkdirSync(dest, { recursive: true });
-				cpSync(resolve("dist/sw.js"), resolve(dest, "sw.js"));
-			},
-		},
-		{
 			name: "replace-tss-server-fn-base",
 			transform(code, _id) {
 				if (code.includes("process.env.TSS_SERVER_FN_BASE")) {
@@ -38,6 +29,17 @@ export default defineConfig({
 				routeFileIgnorePattern: "(tabs|components)",
 			},
 		}),
+		{
+			name: "copy-sw-to-output",
+			enforce: "post",
+			closeBundle() {
+				const src = resolve("dist/sw.js");
+				if (!existsSync(src)) return;
+				const dest = resolve(".output/public");
+				mkdirSync(dest, { recursive: true });
+				cpSync(src, resolve(dest, "sw.js"));
+			},
+		},
 		VitePWA({
 			strategies: "injectManifest",
 			srcDir: "service-worker",
