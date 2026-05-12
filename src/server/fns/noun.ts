@@ -48,7 +48,7 @@ async function getNounDrillItemsImpl(
 			greek: greekFull,
 			greeklish: greekToPhonetic(greekFull),
 			english: vocab.englishTranslation,
-			label: gender,
+			label: vocab.englishTranslation,
 			category: gender,
 			dimension: gender,
 			reverseGreek: stripArticleForReverse ? form.form : greekFull,

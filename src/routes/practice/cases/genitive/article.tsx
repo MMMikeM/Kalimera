@@ -13,7 +13,7 @@ const FORMS: SimpleListItem[] = [
 		greek: "του",
 		greeklish: "tou",
 		english: "of the (m, sg)",
-		label: "του",
+		label: "of the (m, sg)",
 		category: "singular",
 	},
 	{
@@ -21,7 +21,7 @@ const FORMS: SimpleListItem[] = [
 		greek: "της",
 		greeklish: "tis",
 		english: "of the (f, sg)",
-		label: "της",
+		label: "of the (f, sg)",
 		category: "singular",
 	},
 	{
@@ -29,7 +29,7 @@ const FORMS: SimpleListItem[] = [
 		greek: "του",
 		greeklish: "tou",
 		english: "of the (n, sg)",
-		label: "του",
+		label: "of the (n, sg)",
 		category: "singular",
 	},
 	{
@@ -37,7 +37,7 @@ const FORMS: SimpleListItem[] = [
 		greek: "των",
 		greeklish: "ton",
 		english: "of the (m, pl)",
-		label: "των",
+		label: "of the (m, pl)",
 		category: "plural",
 	},
 	{
@@ -45,7 +45,7 @@ const FORMS: SimpleListItem[] = [
 		greek: "των",
 		greeklish: "ton",
 		english: "of the (f, pl)",
-		label: "των",
+		label: "of the (f, pl)",
 		category: "plural",
 	},
 	{
@@ -53,7 +53,7 @@ const FORMS: SimpleListItem[] = [
 		greek: "των",
 		greeklish: "ton",
 		english: "of the (n, pl)",
-		label: "των",
+		label: "of the (n, pl)",
 		category: "plural",
 	},
 ];
