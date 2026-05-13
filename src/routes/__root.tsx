@@ -8,6 +8,7 @@ import {
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsInProd } from "@tanstack/react-router-devtools";
 /// <reference types="vite/client" />
+import { useRegisterSW } from "virtual:pwa-register/react";
 
 import { Header } from "@/components/Header";
 import { MobileHeader } from "@/components/MobileHeader";
@@ -72,6 +73,7 @@ function RootComponent() {
 }
 
 function RootBody() {
+	useRegisterSW();
 	const routerState = useRouterState();
 	const pathname = routerState.location.pathname;
 	const currentSection = pathname.split("/")[1] || "home";
