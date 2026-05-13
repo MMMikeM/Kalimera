@@ -272,7 +272,7 @@ export const ForwardInput = ({
 				value={input}
 				onChange={(e) => { if (phase === "active") setInput(e.target.value); }}
 				placeholder="greeklish..."
-				autoComplete="off"
+				autoComplete="new-password"
 				autoCorrect="off"
 				autoCapitalize="off"
 				spellCheck={false}
