@@ -267,28 +267,24 @@ export const ForwardInput = ({
 	const phase = useDrillStore((s) => s.phase);
 
 	return (
-		<div>
+		<form
+			autoComplete="off"
+			onSubmit={(e) => { e.preventDefault(); onSubmit(); }}
+		>
 			<input
 				ref={inputRef}
 				type="text"
 				value={input}
 				onChange={(e) => { if (phase === "active") setInput(e.target.value); }}
-				onKeyDown={(e) => {
-					if (e.key === "Enter" && phase === "active") {
-						e.preventDefault(); // blocks IME keyboard dismissal on Android
-						onSubmit();
-					}
-				}}
-				enterKeyHint="send"
 				placeholder="greeklish..."
-				autoComplete="new-password"
+				autoComplete="off"
 				autoCorrect="off"
 				autoCapitalize="off"
 				spellCheck={false}
 				className={`w-full border-b-2 bg-transparent pb-2 text-3xl text-foreground caret-terracotta transition-colors outline-none placeholder:text-stone-300 focus:border-terracotta border-stone-200 ${phase !== "active" ? "opacity-50" : ""}`}
 			/>
 			{phase === "active" && <p className="mt-2 text-xs text-stone-400">enter to check</p>}
-		</div>
+		</form>
 	);
 };
 
