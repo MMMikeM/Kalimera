@@ -3,7 +3,7 @@ import { BookOpen, FileText, Home, Zap } from "lucide-react";
 
 const MOBILE_NAV_ITEMS = [
 	{ id: "home", label: "Home", path: "/", icon: Home },
-	{ id: "practice", label: "Practice", path: "/practice/vocab", icon: Zap },
+	{ id: "practice", label: "Practice", path: "/practice", icon: Zap },
 	{ id: "learn", label: "Learn", path: "/learn", icon: BookOpen },
 	{ id: "reference", label: "Reference", path: "/reference", icon: FileText },
 ];

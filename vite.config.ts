@@ -44,7 +44,7 @@ export default defineConfig({
 			strategies: "injectManifest",
 			srcDir: "service-worker",
 			filename: "sw.ts",
-			registerType: "prompt",
+			registerType: "autoUpdate",
 			includeAssets: ["favicon.svg", "apple-touch-icon.png", "icons/*.png"],
 			manifest: false,
 			injectManifest: {
