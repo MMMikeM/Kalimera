@@ -267,17 +267,14 @@ export const ForwardInput = ({
 	const phase = useDrillStore((s) => s.phase);
 
 	return (
-		<form
-			autoComplete="off"
-			onSubmit={(e) => { e.preventDefault(); onSubmit(); }}
-		>
+		<form onSubmit={(e) => { e.preventDefault(); onSubmit(); }}>
 			<input
 				ref={inputRef}
 				type="text"
 				value={input}
 				onChange={(e) => { if (phase === "active") setInput(e.target.value); }}
 				placeholder="greeklish..."
-				autoComplete="off"
+				autoComplete="one-time-code"
 				autoCorrect="off"
 				autoCapitalize="off"
 				spellCheck={false}
