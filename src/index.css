@@ -360,6 +360,8 @@
 
 	/* PWA App Shell */
 	.app-shell {
+		position: fixed;
+		inset: 0;
 		display: flex;
 		flex-direction: column;
 		overflow: hidden;
