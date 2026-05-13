@@ -74,6 +74,7 @@ function RootComponent() {
 
 function RootBody() {
 	useRegisterSW();
+
 	const routerState = useRouterState();
 	const pathname = routerState.location.pathname;
 	const currentSection = pathname.split("/")[1] || "home";
