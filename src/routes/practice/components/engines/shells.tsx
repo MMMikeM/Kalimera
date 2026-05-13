@@ -271,13 +271,13 @@ export const ForwardInput = ({
 				type="text"
 				value={input}
 				onChange={(e) => setInput(e.target.value)}
-				disabled={phase !== "active"}
+				readOnly={phase !== "active"}
 				placeholder="greeklish..."
 				autoComplete="off"
 				autoCorrect="off"
 				autoCapitalize="off"
 				spellCheck={false}
-				className="w-full border-b-2 border-stone-200 bg-transparent pb-2 text-3xl text-foreground caret-terracotta transition-colors outline-none placeholder:text-stone-300 focus:border-terracotta disabled:opacity-50"
+				className={`w-full border-b-2 bg-transparent pb-2 text-3xl text-foreground caret-terracotta transition-colors outline-none placeholder:text-stone-300 focus:border-terracotta ${phase !== "active" ? "border-stone-200 opacity-50" : "border-stone-200"}`}
 			/>
 			{phase === "active" && <p className="mt-2 text-xs text-stone-400">enter to check</p>}
 		</div>
