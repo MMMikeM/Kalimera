@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { matchPhonetic } from "@/lib/greek-transliteration";
 
 import { type DrillForm, type SessionSize } from "./deck";
-import { useCountdown } from "./drill-hooks";
+import { useCountdown, useForwardKeyboard } from "./drill-hooks";
 import { DrillProvider, useDrillContext, useDrillStore } from "./drill-provider";
 import { type SpeedOption, type SessionStats } from "./drill-store";
 import { type DimensionSpec, MultiSelectReverse } from "./reverse/multi-select";
@@ -187,6 +187,7 @@ function DrillInner<K extends string>({
 		);
 	};
 
+	useForwardKeyboard({ phase, mode, onSubmit: handleForwardSubmit });
 
 	const effectiveTimeLimit = store.getState().getEffectiveTimeLimit();
 	const { progress } = useCountdown(effectiveTimeLimit, phase === "active", handleTimeout);
