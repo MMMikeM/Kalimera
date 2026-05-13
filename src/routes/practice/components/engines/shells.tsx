@@ -270,14 +270,13 @@ export const ForwardInput = ({
 				ref={inputRef}
 				type="text"
 				value={input}
-				onChange={(e) => setInput(e.target.value)}
-				readOnly={phase !== "active"}
+				onChange={(e) => { if (phase === "active") setInput(e.target.value); }}
 				placeholder="greeklish..."
 				autoComplete="off"
 				autoCorrect="off"
 				autoCapitalize="off"
 				spellCheck={false}
-				className={`w-full border-b-2 bg-transparent pb-2 text-3xl text-foreground caret-terracotta transition-colors outline-none placeholder:text-stone-300 focus:border-terracotta ${phase !== "active" ? "border-stone-200 opacity-50" : "border-stone-200"}`}
+				className={`w-full border-b-2 bg-transparent pb-2 text-3xl text-foreground caret-terracotta transition-colors outline-none placeholder:text-stone-300 focus:border-terracotta border-stone-200 ${phase !== "active" ? "opacity-50" : ""}`}
 			/>
 			{phase === "active" && <p className="mt-2 text-xs text-stone-400">enter to check</p>}
 		</div>
@@ -334,6 +333,7 @@ export const FeedbackDisplay = () => {
 			<button
 				type="button"
 				className="mt-5 block w-full cursor-pointer text-left"
+				onPointerDown={(e) => e.preventDefault()}
 				onClick={advance}
 			>
 				{inner}
