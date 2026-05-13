@@ -257,8 +257,10 @@ export const DrillShell = ({
 
 export const ForwardInput = ({
 	inputRef,
+	onSubmit,
 }: {
 	inputRef: React.RefObject<HTMLInputElement | null>;
+	onSubmit: () => void;
 }) => {
 	const input = useDrillStore((s) => s.input);
 	const setInput = useDrillStore((s) => s.setInput);
@@ -271,6 +273,13 @@ export const ForwardInput = ({
 				type="text"
 				value={input}
 				onChange={(e) => { if (phase === "active") setInput(e.target.value); }}
+				onKeyDown={(e) => {
+					if (e.key === "Enter" && phase === "active") {
+						e.preventDefault(); // blocks IME keyboard dismissal on Android
+						onSubmit();
+					}
+				}}
+				enterKeyHint="send"
 				placeholder="greeklish..."
 				autoComplete="new-password"
 				autoCorrect="off"
