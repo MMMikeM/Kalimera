@@ -121,6 +121,40 @@ export const userProgress = sqliteTable(
 	(t) => [primaryKey({ columns: [t.userId] })],
 );
 
+export const vocabDailyResults = sqliteTable(
+	"vocab_daily_results",
+	{
+		id: pk(),
+		userId: cascadeFk("user_id", () => users.id),
+		vocabId: cascadeFk("vocab_id", () => vocabulary.id),
+		drillId: string("drill_id"),
+		practicedDate: string("practiced_date"), // YYYY-MM-DD UTC
+		correctFirstTry: bool("correct_first_try"),
+		createdAt: createdAt(),
+	},
+	(t) => [
+		uniqueIndex("idx_vocab_daily_unique").on(t.userId, t.vocabId, t.drillId, t.practicedDate),
+		index("idx_vocab_daily_user_drill").on(t.userId, t.drillId),
+	],
+);
+
+export const vocabMastery = sqliteTable(
+	"vocab_mastery",
+	{
+		id: pk(),
+		userId: cascadeFk("user_id", () => users.id),
+		vocabId: cascadeFk("vocab_id", () => vocabulary.id),
+		drillId: string("drill_id"),
+		tier: integer("tier").notNull().default(1),
+		masteredAt: nullableTimestamp("mastered_at"),
+		nextReviewAt: nullableTimestamp("next_review_at"),
+	},
+	(t) => [
+		uniqueIndex("idx_vocab_mastery_unique").on(t.userId, t.vocabId, t.drillId),
+		index("idx_vocab_mastery_review").on(t.userId, t.drillId, t.nextReviewAt),
+	],
+);
+
 export const milestonesAchieved = sqliteTable(
 	"milestones_achieved",
 	{

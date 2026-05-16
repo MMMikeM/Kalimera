@@ -12,6 +12,8 @@ import type {
 	verbConjugations,
 	verbDetails,
 	verbImperatives,
+	vocabDailyResults,
+	vocabMastery,
 	vocabulary,
 	vocabularySkills,
 	vocabularyTags,
@@ -54,3 +56,7 @@ export type NewWeakArea = typeof weakAreas.$inferInsert;
 export type NewVocabularySkill = typeof vocabularySkills.$inferInsert;
 export type NewPushSubscription = typeof pushSubscriptions.$inferInsert;
 export type NewMilestoneAchieved = typeof milestonesAchieved.$inferInsert;
+export type VocabDailyResult = typeof vocabDailyResults.$inferSelect;
+export type NewVocabDailyResult = typeof vocabDailyResults.$inferInsert;
+export type VocabMastery = typeof vocabMastery.$inferSelect;
+export type NewVocabMastery = typeof vocabMastery.$inferInsert;

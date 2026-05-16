@@ -8,6 +8,8 @@ export const relations = defineRelations(schema, (r) => ({
 		practiceAttempts: r.many.practiceAttempts(),
 		weakAreas: r.many.weakAreas(),
 		vocabularySkills: r.many.vocabularySkills(),
+		vocabDailyResults: r.many.vocabDailyResults(),
+		vocabMastery: r.many.vocabMastery(),
 		milestonesAchieved: r.many.milestonesAchieved(),
 		userProgress: r.one.userProgress({
 			from: r.users.id,
@@ -33,6 +35,8 @@ export const relations = defineRelations(schema, (r) => ({
 		vocabularyTags: r.many.vocabularyTags(),
 		vocabularySkills: r.many.vocabularySkills(),
 		practiceAttempts: r.many.practiceAttempts(),
+		vocabDailyResults: r.many.vocabDailyResults(),
+		vocabMastery: r.many.vocabMastery(),
 	},
 	nounDetails: {
 		vocabulary: r.one.vocabulary({
@@ -124,6 +128,26 @@ export const relations = defineRelations(schema, (r) => ({
 		user: r.one.users({
 			from: r.milestonesAchieved.userId,
 			to: r.users.id,
+		}),
+	},
+	vocabDailyResults: {
+		user: r.one.users({
+			from: r.vocabDailyResults.userId,
+			to: r.users.id,
+		}),
+		vocabulary: r.one.vocabulary({
+			from: r.vocabDailyResults.vocabId,
+			to: r.vocabulary.id,
+		}),
+	},
+	vocabMastery: {
+		user: r.one.users({
+			from: r.vocabMastery.userId,
+			to: r.users.id,
+		}),
+		vocabulary: r.one.vocabulary({
+			from: r.vocabMastery.vocabId,
+			to: r.vocabulary.id,
 		}),
 	},
 	passkeys: {
