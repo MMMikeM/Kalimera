@@ -171,7 +171,8 @@ const toPhoneticCanonical = (text: string): string =>
 		.replace(/ev/g, "ef") // ευ → ef/ev both accepted (voicing context varies)
 		.replace(//g, "x") // χ canonical = x (accepts both "ch" and "x")
 		.replace(//g, "ph") // restore φ
-		.replace(/x/g, "x"); // x already canonical — noop but documents intent
+		.replace(/x/g, "x") // x already canonical — noop but documents intent
+		.replace(/d/g, "ti"); // δ (voiced "th") ≈ θ: canonical both as "ti" — "doulia"≡"thoulia"
 
 const phoneticEquals = (user: string, correct: string): boolean =>
 	user === correct || toPhoneticCanonical(user) === toPhoneticCanonical(correct);
