@@ -163,12 +163,12 @@ const toPhoneticCanonical = (text: string): string =>
 	text
 		.replace(/ei/g, "i")
 		.replace(/ai/g, "e")
-		.replace(/w/g, "o") // ω (as w) → o BEFORE oi→i, so "prwi"→"proi"→"pri" and "proi"→"pri" both match
+		.replace(/w/g, "o") // ω (as w) → o
+		.replace(/ch/g, "") // protect χ digraph before h→i fires
+		.replace(/ph/g, "") // protect φ digraph before h→i fires
+		.replace(/h/g, "i") // η (as h) → i BEFORE oi→i: "zwh"→"zoh"→"zoi"→"zi" matches "zoi"→"zoi"→"zi"
 		.replace(/oi/g, "i")
 		.replace(/ev/g, "ef") // ευ → ef/ev both accepted (voicing context varies)
-		.replace(/ch/g, "") // protect χ digraph
-		.replace(/ph/g, "") // protect φ digraph
-		.replace(/h/g, "i") // η (as h) → canonical i; also collapses "th" → "ti" so τη accepts both
 		.replace(//g, "x") // χ canonical = x (accepts both "ch" and "x")
 		.replace(//g, "ph") // restore φ
 		.replace(/x/g, "x"); // x already canonical — noop but documents intent
