@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Drill } from "lucide-react";
 
 import { getNounDrillItemsFn } from "@/server/fns";
 
+import { Drill } from "../../components/engines/drill";
 import { GENDER_DIMENSION_OPTIONS } from "../../components/engines/drill-constants";
 
 // Forward: "of the friend" → type "tou filou" (του φίλου)

@@ -74,5 +74,7 @@ export const getNominalReviewQuestionsFn = createServerFn({ method: "GET" })
 	)
 	.handler(async ({ data }) => {
 		const { userId } = requireAuth();
-		return await getNominalReviewQuestionsImpl(userId, data.wordType, data.drillId, data.limit);
+		return shuffle(
+			await getNominalReviewQuestionsImpl(userId, data.wordType, data.drillId, data.limit),
+		);
 	});
