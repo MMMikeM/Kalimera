@@ -220,6 +220,10 @@ describe("matchPhonetic — cluster variants", () => {
 		expect(matchPhonetic("agelos", "Άγγελος").isCorrect).toBe(false);
 	});
 
+	it("should", () => {
+		expect(matchPhonetic("h thoulia", "η δουλειά").isCorrect).toBe(true);
+	});
+
 	it("rejects clearly wrong input", () => {
 		expect(matchPhonetic("banana", "η μέρα").isCorrect).toBe(false);
 		expect(matchPhonetic("spiti", "το σπίτι").isCorrect).toBe(true);
