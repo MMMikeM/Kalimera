@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { useDrillStore } from "../drill-provider";
+import { drillActions, useDrillStore } from "../drill-store";
 import { ReverseFeedback, SelectorButton } from "../shells";
 
 type Selected<K extends string> = Partial<Record<K, string>>;
@@ -22,7 +22,7 @@ export function MultiSelectReverse<K extends string>({ dimensions }: MultiSelect
 	const phase = useDrillStore((s) => s.phase);
 	const cardIndex = useDrillStore((s) => s.cardIndex);
 	const deck = useDrillStore((s) => s.deck);
-	const recordAttempt = useDrillStore((s) => s.recordAttempt);
+	const { recordAttempt } = drillActions;
 	const currentForm = deck[cardIndex] as (typeof deck)[number] & Record<K, string>;
 
 	const [selected, setSelected] = useState<Selected<K>>({});

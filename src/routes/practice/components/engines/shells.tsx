@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { greekToPhonetic } from "@/lib/greek-transliteration";
 
 import { SESSION_SIZES } from "./deck";
-import { useDrillStore } from "./drill-provider";
+import { drillActions, useDrillStore } from "./drill-store";
 
 // ─── SelectorButton ────────────────────────────────────────────────────────────
 
@@ -73,11 +73,7 @@ export const ConfigShell = ({
 	const activeSpeedId = useDrillStore((s) => s.activeSpeedId);
 	const speeds = useDrillStore((s) => s.speeds);
 	const activeCategory = useDrillStore((s) => s.activeCategory);
-	const setMode = useDrillStore((s) => s.setMode);
-	const setSessionSize = useDrillStore((s) => s.setSessionSize);
-	const setActiveSpeedId = useDrillStore((s) => s.setActiveSpeedId);
-	const setActiveCategory = useDrillStore((s) => s.setActiveCategory);
-	const startDrill = useDrillStore((s) => s.startDrill);
+	const { setMode, setSessionSize, setActiveSpeedId, setActiveCategory, startDrill } = drillActions;
 
 	return (
 		<div className="mx-auto max-w-sm px-6 py-8">
@@ -263,8 +259,8 @@ export const ForwardInput = ({
 	onSubmit: () => void;
 }) => {
 	const input = useDrillStore((s) => s.input);
-	const setInput = useDrillStore((s) => s.setInput);
 	const phase = useDrillStore((s) => s.phase);
+	const { setInput } = drillActions;
 
 	return (
 		<form
@@ -297,8 +293,8 @@ export const ForwardInput = ({
 
 export const FeedbackDisplay = () => {
 	const lastAttempt = useDrillStore((s) => s.lastAttempt);
-	const advance = useDrillStore((s) => s.advance);
 	const phase = useDrillStore((s) => s.phase);
+	const { advance } = drillActions;
 
 	if (phase !== "feedback" || !lastAttempt) return null;
 
@@ -357,8 +353,8 @@ export const FeedbackDisplay = () => {
 
 export const ReverseFeedback = () => {
 	const lastAttempt = useDrillStore((s) => s.lastAttempt);
-	const advance = useDrillStore((s) => s.advance);
 	const phase = useDrillStore((s) => s.phase);
+	const { advance } = drillActions;
 
 	if (phase !== "feedback" || !lastAttempt) return null;
 
@@ -399,8 +395,7 @@ export const ReverseFeedback = () => {
 export const SummaryScreen = () => {
 	const attempts = useDrillStore((s) => s.attempts);
 	const sessionSize = useDrillStore((s) => s.sessionSize);
-	const resetToConfig = useDrillStore((s) => s.resetToConfig);
-	const retryMistakes = useDrillStore((s) => s.retryMistakes);
+	const { resetToConfig, retryMistakes } = drillActions;
 
 	const correct = attempts.filter((a) => a.isCorrect).length;
 	const avgTime = attempts.reduce((s, a) => s + a.timeTaken, 0) / attempts.length;

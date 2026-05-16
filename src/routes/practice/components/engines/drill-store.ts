@@ -1,4 +1,4 @@
-import { createStore } from "zustand/vanilla";
+import { create } from "zustand";
 
 import { MEDIUM_SPEED_MS, SPEEDS } from "../drill-speeds";
 import {
@@ -32,15 +32,13 @@ interface LogPayload {
 	vocabularyId?: number;
 }
 
-// Session lifecycle callbacks — injected by DrillProvider from srs-loader
-// Keeps server fn imports out of this file (prevents node:async_hooks leaking to client)
 export interface DrillSessionCallbacks {
 	startSession: (params: {
 		userId: number;
 		sessionType: string;
 		category?: string;
 		wordTypeFilter?: string;
-	}) => Promise<number | null>; // returns sessionId
+	}) => Promise<number | null>;
 	recordAttempt: (params: {
 		userId: number;
 		sessionId?: number;
@@ -62,58 +60,6 @@ export interface DrillSessionCallbacks {
 	}) => void;
 }
 
-export interface DrillState {
-	// immutable config
-	drillId: string;
-	allItems: DrillForm[];
-	speeds: readonly SpeedOption[];
-	sessionType: string;
-	dbCategory?: string;
-	wordTypeFilter?: string;
-	userId: number;
-	onComplete?: (stats: SessionStats<DrillForm>) => void;
-	sessionCallbacks?: DrillSessionCallbacks;
-
-	// ui
-	phase: Phase;
-	mode: DrillMode;
-	sessionSize: SessionSize;
-	activeCategory: string | null;
-	activeSpeedId: string;
-
-	// deck
-	deck: DrillForm[];
-	cardIndex: number;
-	input: string;
-	attempts: Attempt<DrillForm>[];
-	lastAttempt: Attempt<DrillForm> | null;
-
-	// db session
-	sessionId: number | null;
-	isReDrill: boolean;
-
-	// actions
-	setMode: (m: DrillMode) => void;
-	setSessionSize: (n: SessionSize) => void;
-	setActiveCategory: (id: string | null) => void;
-	setActiveSpeedId: (id: string) => void;
-	setInput: (s: string) => void;
-	startDrill: () => void;
-	recordAttempt: (
-		isCorrect: boolean,
-		timeTaken: number,
-		log: LogPayload,
-		timedOut?: boolean,
-	) => void;
-	advance: () => void;
-	resetToConfig: () => void;
-	retryMistakes: (mistakes: Attempt<DrillForm>[]) => void;
-
-	// derived (read via getState, not subscribed)
-	getCurrentForm: () => DrillForm | undefined;
-	getEffectiveTimeLimit: () => number;
-}
-
 export interface DrillStoreConfig {
 	drillId: string;
 	items: DrillForm[];
@@ -127,183 +73,248 @@ export interface DrillStoreConfig {
 	sessionCallbacks?: DrillSessionCallbacks;
 }
 
-export const createDrillStore = ({
-	drillId,
-	items,
-	speeds = SPEEDS,
-	sessionType = "case_drill",
-	dbCategory,
-	wordTypeFilter,
-	userId,
-	defaultSessionSize = 10,
-	onComplete,
-	sessionCallbacks,
-}: DrillStoreConfig) =>
-	createStore<DrillState>()((set, get) => ({
-		drillId,
-		allItems: items,
-		speeds,
-		sessionType,
-		dbCategory,
-		wordTypeFilter,
-		userId,
-		onComplete,
-		sessionCallbacks,
+// ─── Pure state ───────────────────────────────────────────────────────────────
 
-		phase: "config",
-		mode: "forward",
-		sessionSize: defaultSessionSize,
-		activeCategory: null,
-		activeSpeedId: speeds[1]?.id ?? speeds[0]?.id ?? "",
+interface DrillState {
+	drillId: string;
+	allItems: DrillForm[];
+	speeds: readonly SpeedOption[];
+	sessionType: string;
+	dbCategory?: string;
+	wordTypeFilter?: string;
+	userId: number;
+	onComplete?: (stats: SessionStats<DrillForm>) => void;
+	sessionCallbacks?: DrillSessionCallbacks;
 
-		deck: [],
-		cardIndex: 0,
-		input: "",
-		attempts: [],
-		lastAttempt: null,
-		sessionId: null,
-		isReDrill: false,
+	phase: Phase;
+	mode: DrillMode;
+	sessionSize: SessionSize;
+	activeCategory: string | null;
+	activeSpeedId: string;
 
-		getCurrentForm: () => {
-			const { deck, cardIndex } = get();
-			return deck[cardIndex];
-		},
+	deck: DrillForm[];
+	cardIndex: number;
+	input: string;
+	attempts: Attempt<DrillForm>[];
+	lastAttempt: Attempt<DrillForm> | null;
 
-		getEffectiveTimeLimit: () => {
-			const { speeds, activeSpeedId } = get();
-			return speeds.find((s) => s.id === activeSpeedId)?.timeLimit ?? MEDIUM_SPEED_MS;
-		},
+	sessionId: number | null;
+	isReDrill: boolean;
+}
 
-		setMode: (mode) => set({ mode }),
-		setSessionSize: (sessionSize) => set({ sessionSize }),
-		setActiveCategory: (activeCategory) => set({ activeCategory }),
-		setActiveSpeedId: (activeSpeedId) => set({ activeSpeedId }),
-		setInput: (input) => set({ input }),
+const drillStore = create<DrillState>()(() => ({
+	drillId: "",
+	allItems: [],
+	speeds: SPEEDS,
+	sessionType: "case_drill",
+	dbCategory: undefined,
+	wordTypeFilter: undefined,
+	userId: 0,
+	onComplete: undefined,
+	sessionCallbacks: undefined,
 
-		startDrill: () => {
-			const {
-				allItems,
-				activeCategory,
-				sessionSize,
-				sessionType,
-				dbCategory,
-				wordTypeFilter,
+	phase: "config",
+	mode: "forward",
+	sessionSize: 10,
+	activeCategory: null,
+	activeSpeedId: SPEEDS[1]?.id ?? SPEEDS[0]?.id ?? "",
+
+	deck: [],
+	cardIndex: 0,
+	input: "",
+	attempts: [],
+	lastAttempt: null,
+	sessionId: null,
+	isReDrill: false,
+}));
+
+export const useDrillStore = drillStore;
+
+// ─── Actions ──────────────────────────────────────────────────────────────────
+
+type DrillActions = {
+	initialize: (config: DrillStoreConfig) => void;
+	getCurrentForm: () => DrillForm | undefined;
+	getEffectiveTimeLimit: () => number;
+	setMode: (mode: DrillMode) => void;
+	setSessionSize: (sessionSize: SessionSize) => void;
+	setActiveCategory: (activeCategory: string | null) => void;
+	setActiveSpeedId: (activeSpeedId: string) => void;
+	setInput: (input: string) => void;
+	startDrill: () => void;
+	recordAttempt: (
+		isCorrect: boolean,
+		timeTaken: number,
+		log: LogPayload,
+		timedOut?: boolean,
+	) => void;
+	advance: () => void;
+	resetToConfig: () => void;
+	retryMistakes: (mistakes: Attempt<DrillForm>[]) => void;
+};
+
+const s = () => drillStore.getState();
+const set = drillStore.setState;
+
+export const drillActions: DrillActions = {
+	initialize: (config) => {
+		const speeds = config.speeds ?? SPEEDS;
+		set({
+			drillId: config.drillId,
+			allItems: config.items,
+			speeds,
+			sessionType: config.sessionType ?? "case_drill",
+			dbCategory: config.dbCategory,
+			wordTypeFilter: config.wordTypeFilter,
+			userId: config.userId,
+			onComplete: config.onComplete,
+			sessionCallbacks: config.sessionCallbacks,
+			sessionSize: config.defaultSessionSize ?? 10,
+			phase: "config",
+			mode: "forward",
+			activeCategory: null,
+			activeSpeedId: speeds[1]?.id ?? speeds[0]?.id ?? "",
+			deck: [],
+			cardIndex: 0,
+			input: "",
+			attempts: [],
+			lastAttempt: null,
+			sessionId: null,
+			isReDrill: false,
+		});
+	},
+	getCurrentForm: () => {
+		const { deck, cardIndex } = s();
+		return deck[cardIndex];
+	},
+	getEffectiveTimeLimit: () => {
+		const { speeds, activeSpeedId } = s();
+		return speeds.find((sp) => sp.id === activeSpeedId)?.timeLimit ?? MEDIUM_SPEED_MS;
+	},
+	setMode: (mode) => set({ mode }),
+	setSessionSize: (sessionSize) => set({ sessionSize }),
+	setActiveCategory: (activeCategory) => set({ activeCategory }),
+	setActiveSpeedId: (activeSpeedId) => set({ activeSpeedId }),
+	setInput: (input) => set({ input }),
+	startDrill: () => {
+		const {
+			allItems,
+			activeCategory,
+			sessionSize,
+			sessionType,
+			dbCategory,
+			wordTypeFilter,
+			userId,
+			sessionCallbacks,
+		} = s();
+		const source = activeCategory
+			? allItems.filter((i) => (i as DrillForm & { category?: string }).category === activeCategory)
+			: allItems;
+		set({
+			deck: buildDeck(source, sessionSize),
+			cardIndex: 0,
+			input: "",
+			attempts: [],
+			lastAttempt: null,
+			phase: "active",
+			sessionId: null,
+			isReDrill: false,
+		});
+		if (userId && sessionCallbacks) {
+			sessionCallbacks
+				.startSession({ userId, sessionType, category: dbCategory, wordTypeFilter })
+				.then((id) => {
+					if (id) set({ sessionId: id });
+				})
+				.catch(() => {});
+		}
+	},
+	recordAttempt: (isCorrect, timeTaken, log, timedOut = false) => {
+		const { deck, cardIndex, userId, drillId, sessionId, isReDrill, sessionCallbacks } = s();
+		const currentForm = deck[cardIndex];
+		if (!currentForm) return;
+		const attempt: Attempt<DrillForm> = {
+			form: currentForm,
+			isCorrect,
+			timeTaken,
+			timedOut,
+			userInput: log.userAnswer,
+		};
+		drillStore.setState((prev) => ({
+			lastAttempt: attempt,
+			attempts: [...prev.attempts, attempt],
+			phase: "feedback",
+		}));
+		if (userId && !isReDrill && sessionCallbacks) {
+			sessionCallbacks.recordAttempt({
 				userId,
-				sessionCallbacks,
-			} = get();
-			const source = activeCategory
-				? allItems.filter(
-						(i) => (i as DrillForm & { category?: string }).category === activeCategory,
-					)
-				: allItems;
-			const deck = buildDeck(source, sessionSize);
-			set({
-				deck,
-				cardIndex: 0,
-				input: "",
-				attempts: [],
-				lastAttempt: null,
-				phase: "active",
-				sessionId: null,
-				isReDrill: false,
-			});
-
-			if (userId && sessionCallbacks) {
-				sessionCallbacks
-					.startSession({ userId, sessionType, category: dbCategory, wordTypeFilter })
-					.then((id) => {
-						if (id) set({ sessionId: id });
-					})
-					.catch(() => {});
-			}
-		},
-
-		recordAttempt: (isCorrect, timeTaken, log, timedOut = false) => {
-			const { getCurrentForm, userId, drillId, sessionId, isReDrill, sessionCallbacks } = get();
-			const currentForm = getCurrentForm();
-			if (!currentForm) return;
-
-			const attempt: Attempt<DrillForm> = {
-				form: currentForm,
+				sessionId: sessionId ?? undefined,
+				drillId,
+				prompt: log.prompt,
+				correctAnswer: log.correctAnswer,
+				userAnswer: log.userAnswer,
 				isCorrect,
-				timeTaken,
-				timedOut,
-				userInput: log.userAnswer,
-			};
-			set((s) => ({
-				lastAttempt: attempt,
-				attempts: [...s.attempts, attempt],
-				phase: "feedback",
-				// Keep user's typed answer visible during feedback; cleared on advance
-			}));
+				timeTaken: Math.round(timeTaken),
+				skillType: (log.skillType ?? "production") as "recognition" | "production",
+				vocabularyId: log.vocabularyId,
+				weakAreaType: log.weakAreaType as "case" | "gender" | "verb_family" | undefined,
+				weakAreaIdentifier: log.weakAreaIdentifier,
+			});
+		}
+	},
 
-			if (userId && !isReDrill && sessionCallbacks) {
-				sessionCallbacks.recordAttempt({
-					userId,
-					sessionId: sessionId ?? undefined,
-					drillId,
-					prompt: log.prompt,
-					correctAnswer: log.correctAnswer,
-					userAnswer: log.userAnswer,
-					isCorrect,
-					timeTaken: Math.round(timeTaken),
-					skillType: (log.skillType ?? "production") as "recognition" | "production",
-					vocabularyId: log.vocabularyId,
-					weakAreaType: log.weakAreaType as "case" | "gender" | "verb_family" | undefined,
-					weakAreaIdentifier: log.weakAreaIdentifier,
+	advance: () => {
+		const {
+			cardIndex,
+			sessionSize,
+			sessionId,
+			userId,
+			isReDrill,
+			onComplete,
+			sessionCallbacks,
+			attempts,
+		} = s();
+		const next = cardIndex + 1;
+		if (next >= sessionSize) {
+			set({ phase: "complete" });
+			if (!isReDrill && sessionId && userId && sessionCallbacks) {
+				sessionCallbacks.completeSession({
+					sessionId,
+					totalQuestions: attempts.length,
+					correctAnswers: attempts.filter((a) => a.isCorrect).length,
 				});
 			}
-		},
-
-		advance: () => {
-			const { cardIndex, sessionSize, sessionId, userId, isReDrill, onComplete, sessionCallbacks } =
-				get();
-			const next = cardIndex + 1;
-			if (next >= sessionSize) {
-				set({ phase: "complete" });
-				const atts = get().attempts;
-				if (!isReDrill && sessionId && userId && sessionCallbacks) {
-					sessionCallbacks.completeSession({
-						sessionId,
-						totalQuestions: atts.length,
-						correctAnswers: atts.filter((a) => a.isCorrect).length,
-					});
-				}
-				onComplete?.({
-					total: atts.length,
-					correct: atts.filter((a) => a.isCorrect).length,
-					attempts: atts,
-				});
-				return;
-			}
-			set({ cardIndex: next, input: "", phase: "active" });
-		},
-
-		resetToConfig: () => {
-			set({
-				phase: "config",
-				deck: [],
-				cardIndex: 0,
-				input: "",
-				attempts: [],
-				lastAttempt: null,
-				sessionId: null,
-				isReDrill: false,
+			onComplete?.({
+				total: attempts.length,
+				correct: attempts.filter((a) => a.isCorrect).length,
+				attempts,
 			});
-		},
+			return;
+		}
+		set({ cardIndex: next, input: "", phase: "active" });
+	},
 
-		retryMistakes: (mistakes) => {
-			set({
-				deck: mistakes.map((m) => m.form),
-				cardIndex: 0,
-				input: "",
-				attempts: [],
-				lastAttempt: null,
-				phase: "active",
-				isReDrill: true,
-				sessionId: null,
-			});
-		},
-	}));
+	resetToConfig: () =>
+		set({
+			phase: "config",
+			deck: [],
+			cardIndex: 0,
+			input: "",
+			attempts: [],
+			lastAttempt: null,
+			sessionId: null,
+			isReDrill: false,
+		}),
 
-export type DrillStore = ReturnType<typeof createDrillStore>;
+	retryMistakes: (mistakes) =>
+		set({
+			deck: mistakes.map((m) => m.form),
+			cardIndex: 0,
+			input: "",
+			attempts: [],
+			lastAttempt: null,
+			phase: "active",
+			isReDrill: true,
+			sessionId: null,
+		}),
+};

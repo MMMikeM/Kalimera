@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { useDrillStore } from "../drill-provider";
+import { drillActions, useDrillStore } from "../drill-store";
 import { ReverseFeedback, SelectorButton } from "../shells";
 
 interface SelectOption {
@@ -19,7 +19,7 @@ export function SingleSelectReverse({ options, getCorrectId }: SingleSelectRever
 	const phase = useDrillStore((s) => s.phase);
 	const cardIndex = useDrillStore((s) => s.cardIndex);
 	const deck = useDrillStore((s) => s.deck);
-	const recordAttempt = useDrillStore((s) => s.recordAttempt);
+	const { recordAttempt } = drillActions;
 	const currentForm = deck[cardIndex];
 
 	const [selected, setSelected] = useState<string | null>(null);

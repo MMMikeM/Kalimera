@@ -53,6 +53,7 @@ async function getNounDrillItemsImpl(
 			category: gender,
 			dimension: gender,
 			reverseGreek: stripArticleForReverse ? form.form : greekFull,
+			vocabularyId: vocab.id,
 		});
 	}
 

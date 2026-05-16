@@ -1,18 +1,52 @@
 import { getRouteApi } from "@tanstack/react-router";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { matchPhonetic } from "@/lib/greek-transliteration";
+import { startSessionFn, recordAttemptFn, completeSessionFn } from "@/server/fns";
 
 import { type DrillForm, type SessionSize } from "./deck";
 import { useCountdown, useForwardKeyboard } from "./drill-hooks";
-import { DrillProvider, useDrillContext, useDrillStore } from "./drill-provider";
-import { type SpeedOption, type SessionStats } from "./drill-store";
+import {
+	type DrillSessionCallbacks,
+	type DrillStoreConfig,
+	type SessionStats,
+	type SpeedOption,
+	drillActions,
+	useDrillStore,
+} from "./drill-store";
 import { type DimensionSpec, MultiSelectReverse } from "./reverse/multi-select";
 import { SelfAssessReverse } from "./reverse/self-assess";
 import { SingleSelectReverse } from "./reverse/single-select";
 import { ConfigShell, DrillShell, FeedbackDisplay, ForwardInput, SummaryScreen } from "./shells";
 
 const rootRoute = getRouteApi("__root__");
+
+// ─── Session callbacks ──────────────────────────────────────────────────────────
+
+const SESSION_CALLBACKS: DrillSessionCallbacks = {
+	startSession: async ({ sessionType, category, wordTypeFilter }) => {
+		const json = await startSessionFn({
+			data: {
+				sessionType: sessionType as Parameters<typeof startSessionFn>[0]["data"]["sessionType"],
+				category,
+				wordTypeFilter,
+			},
+		});
+		return json?.session?.id ?? null;
+	},
+	// oxlint-disable-next-line no-unused-vars
+	recordAttempt: ({ userId, ...params }) => {
+		recordAttemptFn({
+			data: {
+				questionText: params.prompt,
+				...params,
+			},
+		}).catch(() => {});
+	},
+	completeSession: (params) => {
+		completeSessionFn({ data: params }).catch(() => {});
+	},
+};
 
 // ─── Theme ─────────────────────────────────────────────────────────────────────
 
@@ -101,7 +135,6 @@ function DrillInner<K extends string>({
 	DrillProps<K>,
 	"drillId" | "items" | "defaultSessionSize" | "speeds" | "sessionType" | "onComplete"
 >) {
-	const store = useDrillContext();
 	const theme = THEME[colorTheme];
 
 	const phase = useDrillStore((s) => s.phase);
@@ -109,8 +142,7 @@ function DrillInner<K extends string>({
 	const cardIndex = useDrillStore((s) => s.cardIndex);
 	const deck = useDrillStore((s) => s.deck);
 	const lastAttempt = useDrillStore((s) => s.lastAttempt);
-	const advance = useDrillStore((s) => s.advance);
-	const startDrill = useDrillStore((s) => s.startDrill);
+	const { advance, startDrill } = drillActions;
 
 	const currentForm = deck[cardIndex];
 	const inputRef = useRef<HTMLInputElement | null>(null);
@@ -122,7 +154,7 @@ function DrillInner<K extends string>({
 
 	// Auto-start
 	useEffect(() => {
-		if (autoStart && deck.length === 0 && store.getState().allItems.length > 0) startDrill();
+		if (autoStart && deck.length === 0 && useDrillStore.getState().allItems.length > 0) startDrill();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -153,14 +185,14 @@ function DrillInner<K extends string>({
 	}, [phase, cardIndex]);
 
 	const handleForwardSubmit = () => {
-		const { deck, cardIndex, input, recordAttempt } = store.getState();
+		const { deck, cardIndex, input, phase } = useDrillStore.getState();
 		const form = deck[cardIndex];
-		if (!form || store.getState().phase !== "active") return;
+		if (!form || phase !== "active") return;
 		const timeTaken = performance.now() - activeStartedAt.current;
 		const primary = matchPhonetic(input.trim(), form.greek).isCorrect;
 		const alternate =
 			!primary && form.acceptAlso ? matchPhonetic(input.trim(), form.acceptAlso).isCorrect : false;
-		recordAttempt(primary || alternate, timeTaken, {
+		drillActions.recordAttempt(primary || alternate, timeTaken, {
 			prompt: form.label,
 			correctAnswer: form.greek,
 			userAnswer: input.trim(),
@@ -169,27 +201,24 @@ function DrillInner<K extends string>({
 	};
 
 	const handleTimeout = () => {
-		const { deck, cardIndex, mode, recordAttempt, getEffectiveTimeLimit } = store.getState();
+		const { deck, cardIndex, mode, phase } = useDrillStore.getState();
 		const form = deck[cardIndex];
-		if (!form || store.getState().phase !== "active") return;
+		if (!form || phase !== "active") return;
 		const logData =
 			mode === "forward"
 				? { prompt: form.label, correctAnswer: form.greek, userAnswer: "" }
 				: { prompt: form.greek, correctAnswer: form.label, userAnswer: "" };
-		recordAttempt(
+		drillActions.recordAttempt(
 			false,
-			getEffectiveTimeLimit(),
-			{
-				...logData,
-				weakAreaIdentifier: form.weakAreaIdentifier ?? form.id,
-			},
+			drillActions.getEffectiveTimeLimit(),
+			{ ...logData, weakAreaIdentifier: form.weakAreaIdentifier ?? form.id },
 			true,
 		);
 	};
 
 	useForwardKeyboard({ phase, mode, onSubmit: handleForwardSubmit });
 
-	const effectiveTimeLimit = store.getState().getEffectiveTimeLimit();
+	const effectiveTimeLimit = drillActions.getEffectiveTimeLimit();
 	const { progress } = useCountdown(effectiveTimeLimit, phase === "active", handleTimeout);
 
 	const barColor =
@@ -282,19 +311,20 @@ function DrillInner<K extends string>({
 export function Drill<K extends string = string>(props: DrillProps<K>) {
 	const { auth } = rootRoute.useRouteContext();
 
-	return (
-		<DrillProvider
-			config={{
-				drillId: props.drillId,
-				items: props.items,
-				speeds: props.speeds,
-				sessionType: props.sessionType,
-				userId: auth?.userId ?? 0,
-				defaultSessionSize: props.defaultSessionSize,
-				onComplete: props.onComplete,
-			}}
-		>
-			<DrillInner {...props} />
-		</DrillProvider>
-	);
+	// Initialize store once per mount with this drill's config
+	useState(() => {
+		const config: DrillStoreConfig = {
+			drillId: props.drillId,
+			items: props.items,
+			speeds: props.speeds,
+			sessionType: props.sessionType,
+			userId: auth?.userId ?? 0,
+			defaultSessionSize: props.defaultSessionSize,
+			onComplete: props.onComplete,
+			sessionCallbacks: SESSION_CALLBACKS,
+		};
+		drillActions.initialize(config);
+	});
+
+	return <DrillInner {...props} />;
 }
