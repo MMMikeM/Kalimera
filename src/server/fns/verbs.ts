@@ -106,19 +106,19 @@ export const getVerbDrillQuestionsFn = createServerFn({ method: "GET" })
 	.inputValidator(z.object({ limit: z.number() }))
 	.handler(async ({ data }) => {
 		const { userId } = requireAuth();
-		return await getVerbDrillQuestionsImpl(userId, data.limit);
+		return shuffle(await getVerbDrillQuestionsImpl(userId, data.limit));
 	});
 
 export const getAoristDrillQuestionsFn = createServerFn({ method: "GET" })
 	.inputValidator(z.object({ limit: z.number() }))
 	.handler(async ({ data }) => {
 		const { userId } = requireAuth();
-		return await getAoristDrillQuestionsImpl(userId, data.limit);
+		return shuffle(await getAoristDrillQuestionsImpl(userId, data.limit));
 	});
 
 export const getFutureDrillQuestionsFn = createServerFn({ method: "GET" })
 	.inputValidator(z.object({ limit: z.number() }))
 	.handler(async ({ data }) => {
 		const { userId } = requireAuth();
-		return await getFutureDrillQuestionsImpl(userId, data.limit);
+		return shuffle(await getFutureDrillQuestionsImpl(userId, data.limit));
 	});

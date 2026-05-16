@@ -3,6 +3,7 @@ import { z } from "zod";
 
 import { adjacentCefrPool } from "@/lib/cefr";
 import { greekToPhonetic } from "@/lib/greek-transliteration";
+import { shuffle } from "@/lib/shuffle";
 import { requireAuth } from "@/server/auth/session";
 import type { CefrLevel } from "@/server/db/enums";
 import { getDrillVocabPoolWithFallback } from "@/server/db/queries/drill-pool";
@@ -68,7 +69,10 @@ export const getNounDrillItemsFn = createServerFn({ method: "GET" })
 	)
 	.handler(async ({ data }) => {
 		const { userId } = requireAuth();
-		return await getNounDrillItemsImpl(userId, data.grammaticalCase, data.drillId, {
-			stripArticleForReverse: data.stripArticleForReverse,
-		});
+
+		return shuffle(
+			await getNounDrillItemsImpl(userId, data.grammaticalCase, data.drillId, {
+				stripArticleForReverse: data.stripArticleForReverse,
+			}),
+		);
 	});
