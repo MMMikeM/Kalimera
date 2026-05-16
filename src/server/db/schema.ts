@@ -22,6 +22,8 @@ export {
 	practiceAttempts,
 	practiceSessions,
 	userProgress,
+	vocabDailyResults,
+	vocabMastery,
 	vocabularySkills,
 	weakAreas,
 } from "./schema-practice";

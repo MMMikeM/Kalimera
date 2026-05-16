@@ -3,10 +3,9 @@ import { z } from "zod";
 
 import { adjacentCefrPool } from "@/lib/cefr";
 import type { DrillQuestion } from "@/lib/drill/generate-questions";
-import { shuffle } from "@/lib/shuffle";
 import { requireAuth } from "@/server/auth/session";
 import type { CefrLevel } from "@/server/db/enums";
-import { getDrillVocabPoolWithFallback } from "@/server/db/queries/drill-pool";
+import { getDrillVocabPool } from "@/server/db/queries/drill-pool";
 import { getVocabularyWithNominalForms } from "@/server/db/queries/nominal-forms";
 import { ensureUserProgress } from "@/server/db/queries/user-progress";
 
@@ -28,21 +27,23 @@ async function getNominalReviewQuestionsImpl(
 	userId: number,
 	wordType: "noun" | "adjective",
 	drillId: string,
-	limit: number,
+	_limit: number,
 ): Promise<DrillQuestion[]> {
 	const progress = await ensureUserProgress(userId);
 	const currentCefrLevel = progress.currentCefrLevel as CefrLevel;
 
-	const pool = await getDrillVocabPoolWithFallback({
+	const pool = await getDrillVocabPool({
 		userId,
 		drillId,
 		wordType,
 		cefrPool: adjacentCefrPool(currentCefrLevel),
 	});
 
-	if (pool.vocabularyIds.length === 0) return [];
+	if (pool.length === 0) return [];
 
-	const rows = await getVocabularyWithNominalForms(wordType, pool.vocabularyIds);
+	const rows = await getVocabularyWithNominalForms(wordType, pool);
+	const idOrder = new Map(pool.map((id, i) => [id, i]));
+	rows.sort((a, b) => (idOrder.get(a.id) ?? 999) - (idOrder.get(b.id) ?? 999));
 
 	const questions: DrillQuestion[] = [];
 	for (const vocab of rows) {
@@ -61,7 +62,7 @@ async function getNominalReviewQuestionsImpl(
 		}
 	}
 
-	return shuffle(questions).slice(0, limit);
+	return questions;
 }
 
 export const getNominalReviewQuestionsFn = createServerFn({ method: "GET" })
@@ -74,7 +75,5 @@ export const getNominalReviewQuestionsFn = createServerFn({ method: "GET" })
 	)
 	.handler(async ({ data }) => {
 		const { userId } = requireAuth();
-		return shuffle(
-			await getNominalReviewQuestionsImpl(userId, data.wordType, data.drillId, data.limit),
-		);
+		return getNominalReviewQuestionsImpl(userId, data.wordType, data.drillId, data.limit);
 	});

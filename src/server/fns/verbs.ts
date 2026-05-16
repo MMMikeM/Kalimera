@@ -3,10 +3,9 @@ import { z } from "zod";
 
 import { adjacentCefrPool } from "@/lib/cefr";
 import type { DrillQuestion } from "@/lib/drill/generate-questions";
-import { shuffle } from "@/lib/shuffle";
 import { requireAuth } from "@/server/auth/session";
 import type { CefrLevel } from "@/server/db/enums";
-import { getDrillVocabPoolWithFallback } from "@/server/db/queries/drill-pool";
+import { getDrillVocabPool } from "@/server/db/queries/drill-pool";
 import { ensureUserProgress } from "@/server/db/queries/user-progress";
 import { getVerbsWithConjugationsForTense } from "@/server/db/queries/vocabulary";
 
@@ -30,7 +29,7 @@ const FUTURE_LABELS: Record<string, string> = {
 
 const getVerbConjugationQuestions = async (
 	userId: number,
-	limit: number,
+	_limit: number,
 	tense: "present" | "aorist" | "future",
 	idPrefix: string,
 	timeLimit: number,
@@ -39,16 +38,18 @@ const getVerbConjugationQuestions = async (
 	const progress = await ensureUserProgress(userId);
 	const currentCefrLevel = progress.currentCefrLevel as CefrLevel;
 
-	const pool = await getDrillVocabPoolWithFallback({
+	const pool = await getDrillVocabPool({
 		userId,
 		drillId,
 		wordType: "verb",
 		cefrPool: adjacentCefrPool(currentCefrLevel),
 	});
 
-	if (pool.vocabularyIds.length === 0) return [];
+	if (pool.length === 0) return [];
 
-	const vocabRows = await getVerbsWithConjugationsForTense(pool.vocabularyIds, tense);
+	const allVerbRows = await getVerbsWithConjugationsForTense(pool, tense);
+	const idOrder = new Map(pool.map((id, i) => [id, i]));
+	const vocabRows = allVerbRows.sort((a, b) => (idOrder.get(a.id) ?? 999) - (idOrder.get(b.id) ?? 999));
 
 	const labels = tense === "future" ? FUTURE_LABELS : PERSON_LABELS;
 	const questions: DrillQuestion[] = [];
@@ -73,7 +74,7 @@ const getVerbConjugationQuestions = async (
 		}
 	}
 
-	return shuffle(questions).slice(0, limit);
+	return questions;
 };
 
 async function getVerbDrillQuestionsImpl(userId: number, limit: number) {
@@ -106,19 +107,19 @@ export const getVerbDrillQuestionsFn = createServerFn({ method: "GET" })
 	.inputValidator(z.object({ limit: z.number() }))
 	.handler(async ({ data }) => {
 		const { userId } = requireAuth();
-		return shuffle(await getVerbDrillQuestionsImpl(userId, data.limit));
+		return getVerbDrillQuestionsImpl(userId, data.limit);
 	});
 
 export const getAoristDrillQuestionsFn = createServerFn({ method: "GET" })
 	.inputValidator(z.object({ limit: z.number() }))
 	.handler(async ({ data }) => {
 		const { userId } = requireAuth();
-		return shuffle(await getAoristDrillQuestionsImpl(userId, data.limit));
+		return getAoristDrillQuestionsImpl(userId, data.limit);
 	});
 
 export const getFutureDrillQuestionsFn = createServerFn({ method: "GET" })
 	.inputValidator(z.object({ limit: z.number() }))
 	.handler(async ({ data }) => {
 		const { userId } = requireAuth();
-		return shuffle(await getFutureDrillQuestionsImpl(userId, data.limit));
+		return getFutureDrillQuestionsImpl(userId, data.limit);
 	});

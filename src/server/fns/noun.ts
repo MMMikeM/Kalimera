@@ -3,10 +3,9 @@ import { z } from "zod";
 
 import { adjacentCefrPool } from "@/lib/cefr";
 import { greekToPhonetic } from "@/lib/greek-transliteration";
-import { shuffle } from "@/lib/shuffle";
 import { requireAuth } from "@/server/auth/session";
 import type { CefrLevel } from "@/server/db/enums";
-import { getDrillVocabPoolWithFallback } from "@/server/db/queries/drill-pool";
+import { getDrillVocabPool } from "@/server/db/queries/drill-pool";
 import { getVocabularyWithNominalForms } from "@/server/db/queries/nominal-forms";
 import { ensureUserProgress } from "@/server/db/queries/user-progress";
 
@@ -23,19 +22,21 @@ async function getNounDrillItemsImpl(
 	const progress = await ensureUserProgress(userId);
 	const currentCefrLevel = progress.currentCefrLevel as CefrLevel;
 
-	const pool = await getDrillVocabPoolWithFallback({
+	const pool = await getDrillVocabPool({
 		userId,
 		drillId,
 		wordType: "noun",
 		cefrPool: adjacentCefrPool(currentCefrLevel),
 	});
 
-	if (pool.vocabularyIds.length === 0) return [];
+	if (pool.length === 0) return [];
 
-	const rows = await getVocabularyWithNominalForms("noun", pool.vocabularyIds);
+	const rows = await getVocabularyWithNominalForms("noun", pool);
 
+	// Preserve priority order from pool
+	const idOrder = new Map(pool.map((id, i) => [id, i]));
 	const items: SimpleListItem[] = [];
-	for (const vocab of rows) {
+	for (const vocab of rows.sort((a, b) => (idOrder.get(a.id) ?? 999) - (idOrder.get(b.id) ?? 999))) {
 		const form = vocab.nominalForms.find(
 			(f) => f.grammaticalCase === grammaticalCase && f.number === "singular",
 		);
@@ -71,9 +72,7 @@ export const getNounDrillItemsFn = createServerFn({ method: "GET" })
 	.handler(async ({ data }) => {
 		const { userId } = requireAuth();
 
-		return shuffle(
-			await getNounDrillItemsImpl(userId, data.grammaticalCase, data.drillId, {
-				stripArticleForReverse: data.stripArticleForReverse,
-			}),
-		);
+		return getNounDrillItemsImpl(userId, data.grammaticalCase, data.drillId, {
+			stripArticleForReverse: data.stripArticleForReverse,
+		});
 	});

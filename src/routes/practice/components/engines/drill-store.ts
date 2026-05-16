@@ -100,6 +100,10 @@ interface DrillState {
 
 	sessionId: number | null;
 	isReDrill: boolean;
+
+	// Remediation tracking
+	firstPresented: Record<string, boolean>; // wordId → presented at least once this session
+	remediationCounts: Record<string, number>; // wordId → times re-inserted
 }
 
 const drillStore = create<DrillState>()(() => ({
@@ -126,6 +130,8 @@ const drillStore = create<DrillState>()(() => ({
 	lastAttempt: null,
 	sessionId: null,
 	isReDrill: false,
+	firstPresented: {},
+	remediationCounts: {},
 }));
 
 export const useDrillStore = drillStore;
@@ -181,6 +187,8 @@ export const drillActions: DrillActions = {
 			lastAttempt: null,
 			sessionId: null,
 			isReDrill: false,
+			firstPresented: {},
+			remediationCounts: {},
 		});
 	},
 	getCurrentForm: () => {
@@ -219,6 +227,8 @@ export const drillActions: DrillActions = {
 			phase: "active",
 			sessionId: null,
 			isReDrill: false,
+			firstPresented: {},
+			remediationCounts: {},
 		});
 		if (userId && sessionCallbacks) {
 			sessionCallbacks
@@ -230,7 +240,7 @@ export const drillActions: DrillActions = {
 		}
 	},
 	recordAttempt: (isCorrect, timeTaken, log, timedOut = false) => {
-		const { deck, cardIndex, userId, drillId, sessionId, isReDrill, sessionCallbacks } = s();
+		const { deck, cardIndex, sessionSize, userId, drillId, sessionId, isReDrill, sessionCallbacks, firstPresented, remediationCounts } = s();
 		const currentForm = deck[cardIndex];
 		if (!currentForm) return;
 		const attempt: Attempt<DrillForm> = {
@@ -240,11 +250,31 @@ export const drillActions: DrillActions = {
 			timedOut,
 			userInput: log.userAnswer,
 		};
-		drillStore.setState((prev) => ({
-			lastAttempt: attempt,
-			attempts: [...prev.attempts, attempt],
-			phase: "feedback",
-		}));
+
+		// Remediation: on wrong answer, re-insert within session (max 3 times per word)
+		const isFirstTry = !firstPresented[currentForm.id];
+		const remCount = remediationCounts[currentForm.id] ?? 0;
+		if (!isCorrect && remCount < 3) {
+			const insertAt = Math.min(cardIndex + 5, sessionSize - 1);
+			const newDeck = [...deck];
+			newDeck.splice(insertAt, 0, currentForm);
+			drillStore.setState((prev) => ({
+				deck: newDeck,
+				firstPresented: { ...prev.firstPresented, [currentForm.id]: true },
+				remediationCounts: { ...prev.remediationCounts, [currentForm.id]: remCount + 1 },
+				lastAttempt: attempt,
+				attempts: [...prev.attempts, attempt],
+				phase: "feedback",
+			}));
+		} else {
+			drillStore.setState((prev) => ({
+				firstPresented: { ...prev.firstPresented, [currentForm.id]: true },
+				lastAttempt: attempt,
+				attempts: [...prev.attempts, attempt],
+				phase: "feedback",
+			}));
+		}
+		void isFirstTry; // tracked in firstPresented above
 		if (userId && !isReDrill && sessionCallbacks) {
 			sessionCallbacks.recordAttempt({
 				userId,
@@ -304,6 +334,8 @@ export const drillActions: DrillActions = {
 			lastAttempt: null,
 			sessionId: null,
 			isReDrill: false,
+			firstPresented: {},
+			remediationCounts: {},
 		}),
 
 	retryMistakes: (mistakes) =>

@@ -1,5 +1,3 @@
-import { shuffle } from "@/lib/shuffle";
-
 export type DrillMode = "forward" | "reverse";
 export type Phase = "config" | "active" | "feedback" | "complete";
 
@@ -34,9 +32,4 @@ export interface SimpleListItem extends DrillForm {
 	detail?: string;
 }
 
-export const buildDeck = <T>(forms: T[], size: SessionSize): T[] => {
-	const first = shuffle([...forms]);
-	if (size <= forms.length) return first.slice(0, size);
-	const second = shuffle([...forms]).slice(0, size - forms.length);
-	return [...first, ...second];
-};
+export const buildDeck = <T>(forms: T[], size: SessionSize): T[] => forms.slice(0, size);
