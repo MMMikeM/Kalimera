@@ -2,14 +2,14 @@ import { useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 
-import { useDrillStore } from "../drill-provider";
+import { drillActions, useDrillStore } from "../drill-store";
 import { ReverseFeedback } from "../shells";
 
 export function SelfAssessReverse() {
 	const phase = useDrillStore((s) => s.phase);
 	const cardIndex = useDrillStore((s) => s.cardIndex);
 	const deck = useDrillStore((s) => s.deck);
-	const recordAttempt = useDrillStore((s) => s.recordAttempt);
+	const { recordAttempt } = drillActions;
 	const currentForm = deck[cardIndex];
 
 	const [revealedAnswer, setRevealedAnswer] = useState(false);
