@@ -7,6 +7,18 @@ describe("greekToPhonetic", () => {
 		expect(greekToPhonetic("η")).toBe("h");
 	});
 
+	it("maps γυ → yi (γυναίκα)", () => {
+		expect(greekToPhonetic("γυναίκα")).toBe("yinaika");
+	});
+
+	it("maps η γυναίκα → h yinaika", () => {
+		expect(greekToPhonetic("η γυναίκα")).toBe("h yinaika");
+	});
+
+	it("maps αι → ai", () => {
+		expect(greekToPhonetic("αι")).toBe("ai");
+	});
+
 	it("maps ω → w", () => {
 		expect(greekToPhonetic("ω")).toBe("w");
 	});
@@ -16,7 +28,7 @@ describe("greekToPhonetic", () => {
 	});
 
 	it("maps ωραίος correctly", () => {
-		expect(greekToPhonetic("ωραίος")).toBe("wreos");
+		expect(greekToPhonetic("ωραίος")).toBe("wraios");
 	});
 
 	it("maps πρωί correctly", () => {
@@ -39,8 +51,8 @@ describe("greekToPhonetic", () => {
 		expect(greekToPhonetic("ειρήνη")).toBe("irhnh");
 	});
 
-	it("handles diphthongs: αι → e", () => {
-		expect(greekToPhonetic("και")).toBe("ke");
+	it("handles diphthongs: αι → ai", () => {
+		expect(greekToPhonetic("και")).toBe("kai");
 	});
 
 	it("handles μπ → b word-initially", () => {
@@ -58,6 +70,7 @@ describe("greekToPhonetic", () => {
 	});
 
 	it("accepts ef/ev interchangeably for ευ", () => {
+		expect(matchPhonetic("efxaristo", "ευχαριστώ").isCorrect).toBe(true);
 		expect(matchPhonetic("efxaristw", "ευχαριστώ").isCorrect).toBe(true);
 		expect(matchPhonetic("evcharistw", "ευχαριστώ").isCorrect).toBe(true);
 	});
@@ -121,6 +134,20 @@ describe("matchPhonetic — old spellings still accepted (backwards compat)", ()
 	});
 });
 
+describe("matchPhonetic — γυναίκα variants", () => {
+	it("accepts h yinaika for η γυναίκα", () => {
+		expect(matchPhonetic("h yinaika", "η γυναίκα").isCorrect).toBe(true);
+	});
+
+	it("accepts i yinaika for η γυναίκα (η as i)", () => {
+		expect(matchPhonetic("i yinaika", "η γυναίκα").isCorrect).toBe(true);
+	});
+
+	it("accepts yinaika without article", () => {
+		expect(matchPhonetic("yinaika", "η γυναίκα").isCorrect).toBe(true);
+	});
+});
+
 describe("matchPhonetic — article optional", () => {
 	it("accepts answer without article for noun", () => {
 		expect(matchPhonetic("spiti", "το σπίτι").isCorrect).toBe(true);
@@ -144,9 +171,39 @@ describe("matchPhonetic — τη article (accusative feminine)", () => {
 });
 
 describe("matchPhonetic — cluster variants", () => {
-	it("accepts andras or adras for άντρας", () => {
+	// medial ντ → nd required; word-initial ντ → d (no nasal)
+	it("accepts andras for άντρας", () => {
 		expect(matchPhonetic("andras", "άντρας").isCorrect).toBe(true);
-		expect(matchPhonetic("adras", "άντρας").isCorrect).toBe(true);
+	});
+
+	it("rejects adras for άντρας (medial ντ requires nd)", () => {
+		expect(matchPhonetic("adras", "άντρας").isCorrect).toBe(false);
+	});
+
+	it("accepts pende for πέντε", () => {
+		expect(matchPhonetic("pende", "πέντε").isCorrect).toBe(true);
+	});
+
+	it("rejects pede for πέντε (medial ντ requires nd)", () => {
+		expect(matchPhonetic("pede", "πέντε").isCorrect).toBe(false);
+	});
+
+	// medial μπ → mb required; word-initial μπ → b
+	it("accepts lambada for λαμπάδα", () => {
+		expect(matchPhonetic("lambada", "λαμπάδα").isCorrect).toBe(true);
+	});
+
+	it("rejects labada for λαμπάδα (medial μπ requires mb)", () => {
+		expect(matchPhonetic("labada", "λαμπάδα").isCorrect).toBe(false);
+	});
+
+	// medial γγ/γκ → ng required
+	it("accepts angelos for Άγγελος", () => {
+		expect(matchPhonetic("angelos", "Άγγελος").isCorrect).toBe(true);
+	});
+
+	it("rejects agelos for Άγγελος (γγ requires ng)", () => {
+		expect(matchPhonetic("agelos", "Άγγελος").isCorrect).toBe(false);
 	});
 
 	it("rejects clearly wrong input", () => {

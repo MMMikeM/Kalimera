@@ -15,7 +15,7 @@ const stripGreekDiacritics = (text: string): string => {
 const DIGRAPH_MAP: [RegExp, string][] = [
 	// Vowel combinations first
 	[/ου/gi, "ou"],
-	[/αι/gi, "e"],
+	[/αι/gi, "ai"],
 	[/ει/gi, "i"],
 	[/οι/gi, "oi"],
 	[/υι/gi, "i"],
@@ -35,7 +35,8 @@ const DIGRAPH_MAP: [RegExp, string][] = [
 	[/τσ/gi, "ts"],
 	[/τζ/gi, "dz"],
 
-	// γ before ι/ε sounds like 'y'
+	// γ before ι/υ/ε sounds like 'y'
+	[/γυ/gi, "yi"],
 	[/γι/gi, "yi"],
 	[/γη/gi, "yi"],
 	[/γε/gi, "ye"],
@@ -164,9 +165,6 @@ const toPhoneticCanonical = (text: string): string =>
 		.replace(/ai/g, "e")
 		.replace(/w/g, "o") // ω (as w) → o BEFORE oi→i, so "prwi"→"proi"→"pri" and "proi"→"pri" both match
 		.replace(/oi/g, "i")
-		.replace(/nd/g, "d")
-		.replace(/mb/g, "b")
-		.replace(/ng/g, "g")
 		.replace(/ev/g, "ef") // ευ → ef/ev both accepted (voicing context varies)
 		.replace(/ch/g, "") // protect χ digraph
 		.replace(/ph/g, "") // protect φ digraph

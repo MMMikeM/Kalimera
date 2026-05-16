@@ -113,8 +113,6 @@ function buildLessonSeedCategories(): Array<{ name: string; items: VocabWithTags
 	return categories;
 }
 
-export const LESSON_SEED_CATEGORIES = buildLessonSeedCategories();
-
 export const LESSONS: Record<string, Lesson> = Object.fromEntries(
 	lessonFiles.map((f) => {
 		const date = f.slice(0, 10);
@@ -123,3 +121,5 @@ export const LESSONS: Record<string, Lesson> = Object.fromEntries(
 		return [date, mod[exportName] as Lesson];
 	}),
 );
+
+export const LESSON_SEED_CATEGORIES = buildLessonSeedCategories();

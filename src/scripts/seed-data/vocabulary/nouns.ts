@@ -278,6 +278,8 @@ const themeTagMap: Record<string, string> = {
 	essential: "essential",
 };
 
+export const NOUNS = enrichNounsRecord(NOUNS_RAW);
+
 export const NOUN_ITEMS: VocabWithTags[] = [];
 for (const [theme, nouns] of Object.entries(NOUNS)) {
 	for (const noun of nouns) {
@@ -299,5 +301,3 @@ for (const [theme, nouns] of Object.entries(NOUNS)) {
 		});
 	}
 }
-
-export const NOUNS = enrichNounsRecord(NOUNS_RAW);

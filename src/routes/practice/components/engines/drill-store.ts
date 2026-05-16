@@ -234,7 +234,7 @@ export const createDrillStore = ({
 				lastAttempt: attempt,
 				attempts: [...s.attempts, attempt],
 				phase: "feedback",
-				// Keep user's typed answer visible during feedback; cleared on advance
+				input: "",
 			}));
 
 			if (userId && !isReDrill && sessionCallbacks) {
