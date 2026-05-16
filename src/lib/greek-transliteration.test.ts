@@ -170,6 +170,20 @@ describe("matchPhonetic — τη article (accusative feminine)", () => {
 	});
 });
 
+describe("matchPhonetic — ω+η ambiguity (zoi vs zwh)", () => {
+	it("accepts h zoi for η ζωή (ω→o, η→i)", () => {
+		expect(matchPhonetic("h zoi", "η ζωή").isCorrect).toBe(true);
+	});
+
+	it("accepts zoi for ζωή without article", () => {
+		expect(matchPhonetic("zoi", "ζωή").isCorrect).toBe(true);
+	});
+
+	it("accepts h zwh for η ζωή (canonical form)", () => {
+		expect(matchPhonetic("h zwh", "η ζωή").isCorrect).toBe(true);
+	});
+});
+
 describe("matchPhonetic — cluster variants", () => {
 	// medial ντ → nd required; word-initial ντ → d (no nasal)
 	it("accepts andras for άντρας", () => {
