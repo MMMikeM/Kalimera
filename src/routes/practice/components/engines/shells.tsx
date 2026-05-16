@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import type React from "react";
 
 import { Button } from "@/components/ui/button";
 import { greekToPhonetic } from "@/lib/greek-transliteration";
@@ -39,13 +40,29 @@ export const SelectorButton = ({
 
 // ─── ConfigShell ───────────────────────────────────────────────────────────────
 
+export interface ConfigShellProps {
+	title: string;
+	subtitle: string;
+	forwardLabel?: string;
+	forwardDesc?: string;
+	reverseLabel?: string;
+	reverseDesc?: string;
+	referenceHref?: string;
+	referenceLabel?: string;
+	backTo?: string;
+	categories?: Array<{ id: string; label: string }>;
+	selectorBg: string;
+	selectorText: string;
+	children: React.ReactNode;
+}
+
 export const ConfigShell = ({
 	title,
 	subtitle,
 	forwardLabel = "English → Greek",
-	forwardDesc,
+	forwardDesc = "English meaning → Greek form",
 	reverseLabel = "Greek → English",
-	reverseDesc,
+	reverseDesc = "Greek form → recall meaning",
 	referenceHref,
 	referenceLabel,
 	backTo,
@@ -53,21 +70,7 @@ export const ConfigShell = ({
 	selectorBg,
 	selectorText,
 	children,
-}: {
-	title: string;
-	subtitle: string;
-	forwardLabel?: string;
-	forwardDesc: string;
-	reverseLabel?: string;
-	reverseDesc: string;
-	referenceHref?: string;
-	referenceLabel?: string;
-	backTo?: string;
-	categories?: Array<{ id: string; label: string }>;
-	selectorBg: string;
-	selectorText: string;
-	children?: React.ReactNode;
-}) => {
+}: ConfigShellProps) => {
 	const mode = useDrillStore((s) => s.mode);
 	const sessionSize = useDrillStore((s) => s.sessionSize);
 	const activeSpeedId = useDrillStore((s) => s.activeSpeedId);
