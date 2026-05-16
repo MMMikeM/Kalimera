@@ -34,37 +34,35 @@ const TRY_ITEMS: SimpleListItem[] = TRY_QUESTIONS.map((q) => ({
 	english: q.prompt,
 }));
 
-
-
 const TryDrillIntro = ({ onStart }: { onStart: () => void }) => (
-		<Card variant="bordered" padding="lg" className="text-center">
-			<div className="py-8">
-				<div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-terracotta-100">
-					<Zap size={32} className="text-terracotta" />
-				</div>
-				<h1 className="mb-2 text-2xl font-bold">Try a Speed Drill</h1>
-				<p className="mb-6 text-stone-600">
-					8 questions. Type Greek with your normal keyboard. We understand phonetic spelling. Let's
-					see what you've got.
-				</p>
-
-				<Button size="lg" onClick={onStart} className="gap-2">
-					<Zap size={20} />
-					Start Drill
-				</Button>
-
-				<div className="mt-6 space-y-1 text-xs text-stone-400">
-					<p>
-						<kbd className="rounded bg-stone-100 px-1.5 py-0.5 text-stone-600">Space</kbd> to start
-						each question
-					</p>
-					<p>
-						<kbd className="rounded bg-stone-100 px-1.5 py-0.5 text-stone-600">Enter</kbd> to submit
-						answer
-					</p>
-				</div>
+	<Card variant="bordered" padding="lg" className="text-center">
+		<div className="py-8">
+			<div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-terracotta-100">
+				<Zap size={32} className="text-terracotta" />
 			</div>
-		</Card>
+			<h1 className="mb-2 text-2xl font-bold">Try a Speed Drill</h1>
+			<p className="mb-6 text-stone-600">
+				8 questions. Type Greek with your normal keyboard. We understand phonetic spelling. Let's
+				see what you've got.
+			</p>
+
+			<Button size="lg" onClick={onStart} className="gap-2">
+				<Zap size={20} />
+				Start Drill
+			</Button>
+
+			<div className="mt-6 space-y-1 text-xs text-stone-400">
+				<p>
+					<kbd className="rounded bg-stone-100 px-1.5 py-0.5 text-stone-600">Space</kbd> to start
+					each question
+				</p>
+				<p>
+					<kbd className="rounded bg-stone-100 px-1.5 py-0.5 text-stone-600">Enter</kbd> to submit
+					answer
+				</p>
+			</div>
+		</div>
+	</Card>
 );
 
 const TryDrillComplete = ({ stats }: { stats: SessionStats<DrillForm> }) => {
@@ -145,13 +143,13 @@ function TryDrillRoute() {
 	}
 
 	return (
-			<Drill
-				items={TRY_ITEMS}
-				title="Try Drill"
-				subtitle="8 quick rounds"
-				drillId="try"
-				autoStart
-				onComplete={setCompletedStats}
-			/>
+		<Drill
+			items={TRY_ITEMS}
+			title="Try Drill"
+			subtitle="8 quick rounds"
+			drillId="try"
+			autoStart
+			onComplete={setCompletedStats}
+		/>
 	);
 }

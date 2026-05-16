@@ -1,5 +1,5 @@
 import { Temporal } from "@js-temporal/polyfill";
-import { eq, inArray } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 
 import { fromEpochSeconds, nowInstant, toEpochSeconds } from "@/lib/time";
 

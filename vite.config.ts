@@ -1,11 +1,11 @@
 import { cpSync, existsSync, mkdirSync } from "node:fs";
 import { resolve } from "node:path";
+
 import tailwindcss from "@tailwindcss/vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import { nitro } from "nitro/vite";
 import { defineConfig } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
-
 
 const SERVER_FN_BASE = "/_serverFn/";
 

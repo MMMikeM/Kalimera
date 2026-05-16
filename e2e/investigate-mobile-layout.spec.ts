@@ -4,6 +4,7 @@
  * Results written to e2e/screenshots/layout-report.json
  */
 import { writeFileSync } from "node:fs";
+
 import { expect, test } from "@playwright/test";
 
 // Fake auth cookie — matches createAuthCookie() format (plain JSON, no signing)
@@ -59,12 +60,27 @@ test("practice index mobile layout — screenshot + measurements", async ({ page
 	// Computed styles
 	report["app-shell_computed"] = await shell.evaluate((el) => {
 		const s = window.getComputedStyle(el);
-		return { position: s.position, height: s.height, minHeight: s.minHeight, display: s.display, flexDirection: s.flexDirection, justifyContent: s.justifyContent, overflow: s.overflow };
+		return {
+			position: s.position,
+			height: s.height,
+			minHeight: s.minHeight,
+			display: s.display,
+			flexDirection: s.flexDirection,
+			justifyContent: s.justifyContent,
+			overflow: s.overflow,
+		};
 	});
 
 	report["app-main_computed"] = await main.evaluate((el) => {
 		const s = window.getComputedStyle(el);
-		return { position: s.position, height: s.height, minHeight: s.minHeight, flex: s.flex, overflowY: s.overflowY, scrollTop: (el as HTMLElement).scrollTop };
+		return {
+			position: s.position,
+			height: s.height,
+			minHeight: s.minHeight,
+			flex: s.flex,
+			overflowY: s.overflowY,
+			scrollTop: (el as HTMLElement).scrollTop,
+		};
 	});
 
 	// MobileNav
