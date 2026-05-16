@@ -17,7 +17,14 @@ import {
 import { type DimensionSpec, MultiSelectReverse } from "./reverse/multi-select";
 import { SelfAssessReverse } from "./reverse/self-assess";
 import { SingleSelectReverse } from "./reverse/single-select";
-import { ConfigShell, DrillShell, FeedbackDisplay, ForwardInput, SummaryScreen } from "./shells";
+import {
+	ConfigShell,
+	DrillShell,
+	FeedbackDisplay,
+	ForwardInput,
+	SummaryScreen,
+	type ConfigShellProps,
+} from "./shells";
 
 const rootRoute = getRouteApi("__root__");
 
@@ -89,20 +96,13 @@ type ReverseStrategy<K extends string = string> =
 
 // ─── Props ─────────────────────────────────────────────────────────────────────
 
-export interface DrillProps<K extends string = string> {
+export interface DrillProps<K extends string = string> extends Omit<
+	ConfigShellProps,
+	"selectorBg" | "selectorText" | "children"
+> {
 	drillId: string;
 	items: DrillForm[];
-	title: string;
-	subtitle: string;
 	colorTheme?: ColorTheme;
-	forwardLabel?: string;
-	forwardDesc?: string;
-	reverseLabel?: string;
-	reverseDesc?: string;
-	referenceHref?: string;
-	referenceLabel?: string;
-	backTo?: string;
-	categories?: Array<{ id: string; label: string }>;
 	reverse?: ReverseStrategy<K>;
 	forwardPrompt?: (form: DrillForm) => React.ReactNode;
 	configExtras?: React.ReactNode;
@@ -115,26 +115,20 @@ export interface DrillProps<K extends string = string> {
 
 // ─── Inner drill (reads from store) ───────────────────────────────────────────
 
-function DrillInner<K extends string>({
-	title,
-	subtitle,
-	colorTheme = "terracotta",
-	forwardLabel,
-	forwardDesc = "English meaning → Greek form",
-	reverseLabel,
-	reverseDesc = "Greek form → recall meaning",
-	referenceHref,
-	referenceLabel,
-	backTo,
-	categories,
-	reverse = { kind: "self-assess" },
-	forwardPrompt,
-	configExtras,
-	autoStart,
-}: Omit<
-	DrillProps<K>,
-	"drillId" | "items" | "defaultSessionSize" | "speeds" | "sessionType" | "onComplete"
->) {
+function DrillInner<K extends string>(
+	props: Omit<
+		DrillProps<K>,
+		"drillId" | "items" | "defaultSessionSize" | "speeds" | "sessionType" | "onComplete"
+	>,
+) {
+	const {
+		colorTheme = "terracotta",
+		reverse = { kind: "self-assess" },
+		forwardPrompt,
+		configExtras,
+		autoStart,
+		...rest
+	} = props;
 	const theme = THEME[colorTheme];
 
 	const phase = useDrillStore((s) => s.phase);
@@ -154,7 +148,8 @@ function DrillInner<K extends string>({
 
 	// Auto-start
 	useEffect(() => {
-		if (autoStart && deck.length === 0 && useDrillStore.getState().allItems.length > 0) startDrill();
+		if (autoStart && deck.length === 0 && useDrillStore.getState().allItems.length > 0)
+			startDrill();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -228,20 +223,7 @@ function DrillInner<K extends string>({
 
 	if (phase === "config") {
 		return (
-			<ConfigShell
-				title={title}
-				subtitle={subtitle}
-				forwardLabel={forwardLabel}
-				forwardDesc={forwardDesc}
-				reverseLabel={reverseLabel}
-				reverseDesc={reverseDesc}
-				referenceHref={referenceHref}
-				referenceLabel={referenceLabel}
-				backTo={backTo}
-				categories={categories}
-				selectorBg={theme.selectorBg}
-				selectorText={theme.selectorText}
-			>
+			<ConfigShell {...rest} selectorBg={theme.selectorBg} selectorText={theme.selectorText}>
 				{configExtras}
 			</ConfigShell>
 		);
@@ -256,7 +238,7 @@ function DrillInner<K extends string>({
 	// ── Active / Feedback ─────────────────────────────────────────────────────
 
 	return (
-		<DrillShell progress={progress} barColor={barColor} backTo={backTo}>
+		<DrillShell progress={progress} barColor={barColor} backTo={props.backTo}>
 			{mode === "forward" ? (
 				<>
 					<div>
@@ -265,7 +247,7 @@ function DrillInner<K extends string>({
 						) : (
 							<>
 								<p className="mb-3 text-xs tracking-widest text-muted-foreground uppercase">
-									{title}
+									{props.title}
 								</p>
 								{currentForm && (
 									<>
