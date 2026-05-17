@@ -5,12 +5,12 @@
 	"reporters": ["html", "json"],
 	"output": "reports/jscpd",
 	"ignore": [
+		"**/.claude/**",
 		"**/contractions.tsx",
 		"**/drizzle/**",
 		"**/node_modules/**",
 		"**/dist/**",
 		"**/build/**",
-		"**/.wrangler/**",
 		"**/coverage/**",
 		"**/reports/**",
 		"**/*.d.ts"

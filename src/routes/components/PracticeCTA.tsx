@@ -1,57 +1,73 @@
 import { Link } from "@tanstack/react-router";
-import { Calendar, Play } from "lucide-react";
+import { ChevronRight, Play } from "lucide-react";
 
-const QUICK_REVIEW_THRESHOLD = 15;
-const QUICK_REVIEW_COUNT = 5;
+import { DRILL_REGISTRY } from "@/constants/drills";
+import type { DrillRust } from "@/server/db/queries/practice-attempts";
 
-export const PracticeCTA = ({
-	dueCount,
-	itemsDueTomorrow,
-}: {
-	dueCount: number;
-	itemsDueTomorrow: number;
-}) => {
-	const estimatedMinutes = Math.max(1, Math.ceil(dueCount * 0.25));
-	const showQuickOption = dueCount > QUICK_REVIEW_THRESHOLD;
+const MAX_SHOWN = 3;
+
+const rustLabel = (score: number) => {
+	if (score >= 8) return "Very rusty";
+	if (score >= 4) return "Rusty";
+	return "A bit rusty";
+};
+
+const rustColor = (score: number) => {
+	if (score >= 8) return "text-incorrect";
+	if (score >= 4) return "text-honey-text";
+	return "text-stone-500";
+};
+
+export const PracticeCTA = ({ rustyDrills }: { rustyDrills: DrillRust[] }) => {
+	const known = rustyDrills.filter((d) => DRILL_REGISTRY[d.drillId]);
+	const shown = known.slice(0, MAX_SHOWN);
+	const hasMore = known.length > MAX_SHOWN;
 
 	return (
 		<div className="space-y-3">
-			<Link
-				to="/practice"
-				className="block rounded-2xl border-2 border-honey-400 bg-linear-to-br from-honey-100 to-honey-200 p-6 shadow-md transition-all hover:scale-101 hover:shadow-lg"
-			>
-				<div className="flex items-center justify-between">
-					<div>
-						<p className="text-3xl font-bold text-honey-text">{dueCount} items due</p>
-						<p className="mt-1 text-stone-600">~{estimatedMinutes} min</p>
-					</div>
-					<div className="flex h-14 w-14 items-center justify-center rounded-full bg-honey-400 text-white shadow-sm">
-						<Play className="ml-0.5 h-6 w-6" />
+			<div className="rounded-2xl border-2 border-honey-400 bg-linear-to-br from-honey-100 to-honey-200 p-5 shadow-md">
+				<div className="mb-4 flex items-center justify-between">
+					<p className="font-serif text-xl text-honey-text">
+						{known.length} {known.length === 1 ? "drill" : "drills"} to review
+					</p>
+					<div className="flex h-10 w-10 items-center justify-center rounded-full bg-honey-400 text-white shadow-sm">
+						<Play className="ml-0.5 h-4 w-4" />
 					</div>
 				</div>
-				<div className="mt-4 rounded-xl bg-white/60 py-3 text-center font-semibold text-honey-text">
-					Start Practice
-				</div>
-				{itemsDueTomorrow > 0 && (
-					<div className="mt-3 flex items-center justify-center gap-2 text-sm text-stone-500">
-						<Calendar className="h-4 w-4" />
-						<span>
-							Tomorrow: {itemsDueTomorrow} {itemsDueTomorrow === 1 ? "item" : "items"}
-						</span>
-					</div>
-				)}
-			</Link>
 
-			{showQuickOption && (
-				<Link
-					to="/practice"
-					className="block rounded-xl border border-stone-200 bg-stone-50 p-4 text-center transition-colors hover:bg-stone-100"
-				>
-					<span className="text-stone-600">Short on time? </span>
-					<span className="font-medium text-stone-800">Just {QUICK_REVIEW_COUNT} items</span>
-					<span className="text-stone-500"> (~1 min)</span>
-				</Link>
-			)}
+				<div className="space-y-2">
+					{shown.map((drill) => {
+						const meta = DRILL_REGISTRY[drill.drillId]!;
+						return (
+							<Link
+								key={drill.drillId}
+								to={meta.route}
+								className="flex items-center justify-between rounded-xl bg-white/70 px-4 py-3 transition-colors hover:bg-white/90"
+							>
+								<div>
+									<p className="text-sm font-medium text-stone-800">{meta.label}</p>
+									<p className={`text-xs ${rustColor(drill.rustScore)}`}>
+										{rustLabel(drill.rustScore)}
+										{drill.daysSince >= 1
+											? ` · ${Math.floor(drill.daysSince)}d ago`
+											: " · today"}
+									</p>
+								</div>
+								<ChevronRight className="h-4 w-4 text-stone-400" />
+							</Link>
+						);
+					})}
+				</div>
+
+				{hasMore && (
+					<Link
+						to="/practice/review"
+						className="mt-3 block rounded-xl bg-honey-300/50 py-2.5 text-center text-sm font-medium text-honey-text transition-colors hover:bg-honey-300/70"
+					>
+						View all {known.length} drills →
+					</Link>
+				)}
+			</div>
 		</div>
 	);
 };

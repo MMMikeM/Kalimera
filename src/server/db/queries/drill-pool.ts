@@ -20,14 +20,15 @@ export type DrillPool = Record<DrillBucket, number[]>;
 /**
  * Priority-ordered vocab pool for SRS-lite drills.
  *
- * Buckets (high → low priority):
- *   tier1/2/3 — returned from Learnt (next_review_at expired), most fragile first
- *   inProgress — has practice history, not yet Tier 1; wrong-last-day sorted first
- *   new        — never practiced in this drill
+ * Buckets (high → low priority) — keyed on lexical SM-2 state (vocab_reviews):
+ *   tier1  — SM-2 due, short interval (≤3 days)  → most fragile, just past due
+ *   tier2  — SM-2 due, medium interval (≤7 days)
+ *   tier3  — SM-2 due, long interval (>7 days)    → well-known, needs refresh
+ *   inProgress — has vocab_reviews row but not yet due (actively learning)
+ *   new        — never encountered in any drill
  *
- * Excluded: words where next_review_at > now (still Learnt, awaiting review).
- *
- * Returns vocabulary IDs in priority order. Caller decides how many to use.
+ * Excluded: words where nextReviewAt > now AND intervalDays > 1 (still fresh).
+ * inProgress words fill the deck as lower-priority material.
  */
 export const getDrillVocabPool = async ({
 	cefrPool,
@@ -43,9 +44,9 @@ export const getDrillVocabPool = async ({
 		where: { wordType: { in: wordTypes }, cefrLevel: { in: cefrPool } },
 		columns: { id: true, cefrLevel: true, frequencyRank: true },
 		with: {
-			vocabMastery: {
-				where: { userId, drillId },
-				columns: { nextReviewAt: true, tier: true },
+			vocabReviews: {
+				where: { userId },
+				columns: { nextReviewAt: true, intervalDays: true, lastReviewedAt: true },
 			},
 			vocabDailyResults: {
 				where: { userId, drillId },
@@ -60,25 +61,26 @@ export const getDrillVocabPool = async ({
 
 	type Candidate = (typeof candidates)[number];
 	const buckets: Record<DrillBucket, Candidate[]> = {
-		tier1: [], // returned from Tier 1 mastery (3-day interval) — most fragile
-		tier2: [], // returned from Tier 2 mastery (6-day interval)
-		tier3: [], // returned from Tier 3 mastery (9-day interval)
-		inProgress: [], // has practice history, not yet Tier 1
-		new: [], // never practiced in this drill
+		tier1: [],
+		tier2: [],
+		tier3: [],
+		inProgress: [],
+		new: [],
 	};
 
-	for (const c of candidates) {
-		const mastery = c.vocabMastery[0];
-		if (mastery?.nextReviewAt != null && mastery.nextReviewAt > now) continue; // still Learnt
-		if (mastery?.nextReviewAt != null) {
-			const key = `tier${Math.min(mastery.tier, 3)}` as "tier1" | "tier2" | "tier3";
-			buckets[key].push(c);
-		} else if (c.vocabDailyResults.length === 0) {
-			buckets.new.push(c);
-		} else {
-			buckets.inProgress.push(c);
-		}
-	}
+	const matchBucket = (review?: {
+		nextReviewAt: number | null;
+		intervalDays: number | null;
+	}): DrillBucket => {
+		if (!review) return "new";
+		const { intervalDays, nextReviewAt } = review;
+		if (!nextReviewAt || nextReviewAt <= now || !intervalDays) return "inProgress";
+		if (intervalDays <= 3) return "tier1";
+		if (intervalDays <= 7) return "tier2";
+		return "tier3";
+	};
+
+	candidates.forEach((c) => buckets[matchBucket(c.vocabReviews[0])].push(c));
 
 	const sortByLastWrongThenCefrThenFrequency = (a: Candidate, b: Candidate) => {
 		const aWrong = a.vocabDailyResults[0]?.correctFirstTry === false ? 0 : 1;

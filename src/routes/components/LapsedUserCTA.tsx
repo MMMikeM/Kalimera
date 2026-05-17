@@ -1,18 +1,17 @@
 import { Link } from "@tanstack/react-router";
 
 export const LAPSED_DAYS_THRESHOLD = 7;
-export const LAPSED_QUEUE_THRESHOLD = 15;
-const QUICK_REVIEW_COUNT = 5;
+export const LAPSED_QUEUE_THRESHOLD = 5;
 
 export type LapsedUserCTAProps = {
-	dueCount: number;
+	rustyDrillCount: number;
 	daysSinceLastPractice: number;
 	streak: number;
 	wasProtectedByFreeze: boolean;
 };
 
 export const LapsedUserCTA = ({
-	dueCount,
+	rustyDrillCount,
 	daysSinceLastPractice,
 	streak,
 	wasProtectedByFreeze,
@@ -48,15 +47,14 @@ export const LapsedUserCTA = ({
 			<p className="mt-1 font-medium text-stone-700">{emphasis}</p>
 
 			<Link
-				to="/practice"
-				search={{ limit: QUICK_REVIEW_COUNT }}
+				to="/practice/review"
 				className="mt-5 block rounded-xl bg-ocean py-3 text-center font-semibold text-white transition-colors hover:bg-ocean-dark"
 			>
-				Start with just {QUICK_REVIEW_COUNT} items
+				See what needs practice
 			</Link>
 
 			<p className="mt-3 text-center text-sm text-stone-500">
-				{dueCount} items total (~{Math.ceil(dueCount * 0.25)} min)
+				{rustyDrillCount} {rustyDrillCount === 1 ? "drill" : "drills"} to review
 			</p>
 		</div>
 	);

@@ -1,74 +1,74 @@
 {
-  "app-shell": {
-    "x": 0,
-    "y": 0,
-    "width": 390,
-    "height": 844
-  },
-  "app-main": {
-    "x": 0,
-    "y": 0,
-    "width": 390,
-    "height": 844
-  },
-  "header (MobileHeader)": {
-    "x": 24,
-    "y": 0,
-    "width": 342,
-    "height": 60
-  },
-  "children_of_max-w-6xl": [
-    {
-      "i": 0,
-      "tag": "header",
-      "cls": "flex items-center justify-between px-1 py-3 md:hidden",
-      "box": {
-        "x": 24,
-        "y": 0,
-        "width": 342,
-        "height": 60
-      }
-    },
-    {
-      "i": 1,
-      "tag": "div",
-      "cls": "hidden md:block",
-      "box": null
-    },
-    {
-      "i": 2,
-      "tag": "div",
-      "cls": "pb-24 md:pb-12",
-      "box": {
-        "x": 24,
-        "y": 60,
-        "width": 342,
-        "height": 487
-      }
-    },
-    {
-      "i": 3,
-      "tag": "footer",
-      "cls": "mt-12 hidden border-t border-stone-200 py-12 md:block",
-      "box": null
-    }
-  ],
-  "app-shell_computed": {
-    "position": "fixed",
-    "height": "844px",
-    "minHeight": "0px",
-    "display": "flex",
-    "flexDirection": "column",
-    "justifyContent": "normal",
-    "overflow": "hidden"
-  },
-  "app-main_computed": {
-    "position": "static",
-    "height": "844px",
-    "minHeight": "auto",
-    "flex": "1 1 0%",
-    "overflowY": "auto",
-    "scrollTop": 0
-  },
-  "MobileNav": "NOT FOUND"
+	"app-shell": {
+		"x": 0,
+		"y": 0,
+		"width": 390,
+		"height": 844
+	},
+	"app-main": {
+		"x": 0,
+		"y": 0,
+		"width": 390,
+		"height": 844
+	},
+	"header (MobileHeader)": {
+		"x": 24,
+		"y": 0,
+		"width": 342,
+		"height": 60
+	},
+	"children_of_max-w-6xl": [
+		{
+			"i": 0,
+			"tag": "header",
+			"cls": "flex items-center justify-between px-1 py-3 md:hidden",
+			"box": {
+				"x": 24,
+				"y": 0,
+				"width": 342,
+				"height": 60
+			}
+		},
+		{
+			"i": 1,
+			"tag": "div",
+			"cls": "hidden md:block",
+			"box": null
+		},
+		{
+			"i": 2,
+			"tag": "div",
+			"cls": "pb-24 md:pb-12",
+			"box": {
+				"x": 24,
+				"y": 60,
+				"width": 342,
+				"height": 487
+			}
+		},
+		{
+			"i": 3,
+			"tag": "footer",
+			"cls": "mt-12 hidden border-t border-stone-200 py-12 md:block",
+			"box": null
+		}
+	],
+	"app-shell_computed": {
+		"position": "fixed",
+		"height": "844px",
+		"minHeight": "0px",
+		"display": "flex",
+		"flexDirection": "column",
+		"justifyContent": "normal",
+		"overflow": "hidden"
+	},
+	"app-main_computed": {
+		"position": "static",
+		"height": "844px",
+		"minHeight": "auto",
+		"flex": "1 1 0%",
+		"overflowY": "auto",
+		"scrollTop": 0
+	},
+	"MobileNav": "NOT FOUND"
 }
