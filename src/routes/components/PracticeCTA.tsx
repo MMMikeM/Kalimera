@@ -48,9 +48,7 @@ export const PracticeCTA = ({ rustyDrills }: { rustyDrills: DrillRust[] }) => {
 									<p className="text-sm font-medium text-stone-800">{meta.label}</p>
 									<p className={`text-xs ${rustColor(drill.rustScore)}`}>
 										{rustLabel(drill.rustScore)}
-										{drill.daysSince >= 1
-											? ` · ${Math.floor(drill.daysSince)}d ago`
-											: " · today"}
+										{drill.daysSince >= 1 ? ` · ${Math.floor(drill.daysSince)}d ago` : " · today"}
 									</p>
 								</div>
 								<ChevronRight className="h-4 w-4 text-stone-400" />

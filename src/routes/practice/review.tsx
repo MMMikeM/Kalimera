@@ -2,11 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { ChevronRight } from "lucide-react";
 
-import {
-	DRILL_CATEGORY_LABELS,
-	DRILL_REGISTRY,
-	type DrillCategory,
-} from "@/constants/drills";
+import { DRILL_CATEGORY_LABELS, DRILL_REGISTRY, type DrillCategory } from "@/constants/drills";
 import { requireAuth } from "@/server/auth/session";
 import { getSchemaRust } from "@/server/db/queries/practice-attempts";
 
@@ -82,7 +78,7 @@ function ReviewPage() {
 												to={meta.route}
 												className="flex items-center gap-4 rounded-xl border border-stone-200 bg-white px-4 py-3 transition-colors hover:border-stone-300 hover:bg-stone-50"
 											>
-												<div className="flex-1 min-w-0">
+												<div className="min-w-0 flex-1">
 													<p className="text-sm font-medium text-stone-800">{meta.label}</p>
 													<div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-stone-100">
 														<div

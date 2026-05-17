@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { ParadigmTable } from "../../components/ParadigmTable";
 import type { SimpleListItem } from "../../components/engines/deck";
 import { Drill } from "../../components/engines/drill";
+import { ParadigmTable } from "../../components/ParadigmTable";
 
 // Articles in Target (accusative): τον · τη(ν) · το · τους · τις · τα
 // Forward: "the (m, sg, target)" → type "ton" (matchPhonetic → τον)

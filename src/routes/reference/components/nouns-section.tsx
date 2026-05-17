@@ -98,10 +98,10 @@ const getParadigms = (ids: readonly string[]): AgreementParadigm[] =>
 		.filter((p): p is AgreementParadigm => p !== undefined);
 
 const getEnding = (paradigm: AgreementParadigm, caseType: Case) =>
-	paradigm.forms.find((f) => f.case === caseType)?.ending ?? "—";
+	paradigm.forms.find((f) => f.case.toLowerCase() === caseType.toLowerCase())?.ending ?? "—";
 
 const getFull = (paradigm: AgreementParadigm, caseType: Case) =>
-	paradigm.forms.find((f) => f.case === caseType)?.full ?? "—";
+	paradigm.forms.find((f) => f.case.toLowerCase() === caseType.toLowerCase())?.full ?? "—";
 
 const CaseGuide = () => (
 	<TeachingCard

@@ -1,6 +1,8 @@
 import { AGREEMENT_PARADIGMS } from "@/constants/agreement";
 import type { NounDeclensionPattern } from "@/server/db/enums";
 
+import { typedKeys } from "./object";
+
 type Case = "nominative" | "accusative" | "genitive";
 type Number = "singular" | "plural";
 
@@ -13,9 +15,9 @@ interface DeclinedForm {
 }
 
 const CASE_MAP = {
-	nominative: "Nom",
-	accusative: "Acc",
-	genitive: "Gen",
+	nominative: "nom",
+	accusative: "acc",
+	genitive: "gen",
 } as const;
 
 const getStemFromLemma = (lemma: string, pattern: NounDeclensionPattern): string => {
@@ -135,9 +137,7 @@ const _declineNounForms = (
 	const forms: DeclinedForm[] = [];
 
 	for (const form of getForms(paradigm)) {
-		const grammaticalCase = Object.keys(CASE_MAP).find(
-			(key) => CASE_MAP[key as Case] === form.case,
-		) as Case | undefined;
+		const grammaticalCase = typedKeys(CASE_MAP).find((key) => CASE_MAP[key] === form.case);
 
 		if (!grammaticalCase) continue;
 

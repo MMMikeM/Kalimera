@@ -7,13 +7,6 @@ export const GENDER_STYLE: Record<Gender, { selectorBg: string; selectorText: st
 	neuter: { selectorBg: "bg-slate-100", selectorText: "text-slate-text" },
 };
 
-/** Shared CATEGORIES list for drills filtering by gender (no case suffix). */
-export const GENDER_CATEGORIES = [
-	{ id: "masculine", label: "Masculine" },
-	{ id: "feminine", label: "Feminine" },
-	{ id: "neuter", label: "Neuter" },
-];
-
 /** Shared CATEGORIES list for drills covering singular (by gender) + plural. */
 export const GENDER_PLURAL_CATEGORIES = [
 	{ id: "masculine", label: "Masculine (sg)" },
