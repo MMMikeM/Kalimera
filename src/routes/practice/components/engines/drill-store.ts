@@ -62,7 +62,7 @@ interface DrillState {
 
 	phase: Phase;
 	mode: DrillMode;
-	sessionSize: number;
+	sessionSize: 10 | 20 | 30 | number;
 	activeCategory: string | null;
 	activeSpeedId: SpeedId;
 
@@ -111,7 +111,7 @@ type DrillActions = {
 	getCurrentForm: () => DrillForm | undefined;
 	getEffectiveTimeLimit: () => number;
 	setMode: (mode: DrillMode) => void;
-	setSessionSize: (sessionSize: SessionSize) => void;
+	setSessionSize: (sessionSize: SessionSize | number) => void;
 	setActiveCategory: (activeCategory: string | null) => void;
 	setActiveSpeedId: (activeSpeedId: SpeedId) => void;
 	setInput: (input: string) => void;

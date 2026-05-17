@@ -51,7 +51,6 @@ export const recordAttemptFn = createServerFn({ method: "POST" })
 		return { success: true, attempt };
 	});
 
-
 export const completeSessionFn = createServerFn({ method: "POST" })
 	.inputValidator(
 		z.object({

@@ -35,8 +35,6 @@ export interface SimpleListItem extends DrillForm {
 	detail?: string;
 }
 
-export const buildDeck = <T>(forms: T[], size: SessionSize): T[] => forms.slice(0, size);
-
 // Slots per 10-card batch, in draw order. Cascade to next priority when a bucket empties.
 const BATCH_SLOTS: DrillBucket[] = [
 	"inProgress",
@@ -56,7 +54,7 @@ const BATCH_SLOTS: DrillBucket[] = [
  * Every 10 cards follows the BATCH_SLOTS pattern; exhausted buckets cascade downward.
  * New words are introduced twice (slots ~5 apart) to boost initial retention.
  */
-export const buildWeightedDeck = (forms: DrillForm[], size: SessionSize): DrillForm[] => {
+export const buildWeightedDeck = (forms: DrillForm[], size: SessionSize | number): DrillForm[] => {
 	const buckets: Record<DrillBucket, DrillForm[]> = {
 		tier1: [],
 		tier2: [],

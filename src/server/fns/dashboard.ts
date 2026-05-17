@@ -5,12 +5,12 @@ import { calculateDaysUntilNextFreeze, getFreezeStatus } from "@/lib/streak";
 import { diffInDays, fromEpochSeconds, mondayBasedDayOfWeek, toPlainDate, today } from "@/lib/time";
 import { requireAuth } from "@/server/auth/session";
 import { getPushSubscriptionByUserId } from "@/server/db/queries/notifications/push-subscriptions";
+import { getSchemaRust, RUST_THRESHOLD_VALUE } from "@/server/db/queries/practice-attempts";
 import {
 	getLastPracticeDate,
 	listCompletedPracticeSessionsForStreak,
 } from "@/server/db/queries/practice-sessions";
 import { getUserById } from "@/server/db/queries/users";
-import { getSchemaRust, RUST_THRESHOLD_VALUE } from "@/server/db/queries/practice-attempts";
 import { getReviewStats } from "@/server/db/queries/vocab-reviews";
 
 type Stats = {

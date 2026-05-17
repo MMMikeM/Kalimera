@@ -1,6 +1,6 @@
-import { and, count, eq, gt, inArray, isNotNull, lt, lte, sql } from "drizzle-orm";
+import { and, count, eq, inArray, isNotNull, lt, sql } from "drizzle-orm";
 
-import { endOfTomorrowUTC, nowInstant, toEpochSeconds } from "@/lib/time";
+import { nowInstant, toEpochSeconds } from "@/lib/time";
 import { reviewStateAfterAttempt } from "@/server/srs";
 
 import { db } from "../index";
@@ -37,11 +37,6 @@ export const getReviewStats = async (userId: number) => {
 	};
 };
 
-/**
- * Due `vocabulary_reviews` rows aggregated per user. Uses the select builder because
- * `db.query.*.findMany` cannot express `GROUP BY user_id` + `COUNT(*)`.
- * Pass `userIds` to filter; empty array returns []. Omit to count all users.
- */
 /** Due review counts per user for push-notification targeting. */
 export const listDueVocabularyCountsByUser = async (now: number, userIds?: number[]) => {
 	if (userIds && userIds.length === 0) return [];
@@ -56,17 +51,6 @@ export const listDueVocabularyCountsByUser = async (now: number, userIds?: numbe
 		.from(vocabReviews)
 		.where(where)
 		.groupBy(vocabReviews.userId);
-};
-
-export const getItemsDueTomorrow = async (userId: number) => {
-	return await db.$count(
-		vocabReviews,
-		and(
-			eq(vocabReviews.userId, userId),
-			gt(vocabReviews.nextReviewAt, toEpochSeconds(nowInstant())),
-			lte(vocabReviews.nextReviewAt, toEpochSeconds(endOfTomorrowUTC())),
-		),
-	);
 };
 
 type ReviewStateInput = {

@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { ParadigmTable } from "../../components/ParadigmTable";
 import type { SimpleListItem } from "../../components/engines/deck";
 import { Drill } from "../../components/engines/drill";
+import { ParadigmTable } from "../../components/ParadigmTable";
 
 // Articles in Owner (genitive): του · της · του · των · των · των
 // Forward: "of the (m, sg)" → type "tou" (matchPhonetic → του)

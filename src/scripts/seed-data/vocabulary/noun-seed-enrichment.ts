@@ -41,8 +41,12 @@ export function inferDeclensionPattern(lemma: string, gender: Gender): NounDecle
 	if (gender === "neuter") {
 		if (low.endsWith("μα")) return "neut-ma";
 		if (
-			low.endsWith("ι") || low.endsWith("ί") || low.endsWith("ϊ") || low.endsWith("ΐ") ||
-			low.endsWith("υ") || low.endsWith("ύ")
+			low.endsWith("ι") ||
+			low.endsWith("ί") ||
+			low.endsWith("ϊ") ||
+			low.endsWith("ΐ") ||
+			low.endsWith("υ") ||
+			low.endsWith("ύ")
 		)
 			return "neut-i";
 		return "neut-o";
