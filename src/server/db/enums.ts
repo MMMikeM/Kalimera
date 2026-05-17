@@ -18,23 +18,6 @@ export type Gender = (typeof genders)[number];
 export const grammaticalCases = ["nominative", "genitive", "accusative", "vocative"] as const;
 export type GrammaticalCase = (typeof grammaticalCases)[number];
 
-// Session types enum values
-export const sessionTypes = [
-	"vocab_quiz",
-	"case_drill",
-	"conjugation_drill",
-	"weak_area_focus",
-] as const;
-export type SessionType = (typeof sessionTypes)[number];
-
-// Skill types enum values
-export const skillTypes = ["recognition", "production"] as const;
-export type SkillType = (typeof skillTypes)[number];
-
-// Area types enum values
-export const areaTypes = ["case", "gender", "verb_family"] as const;
-export type AreaType = (typeof areaTypes)[number];
-
 // Display sections for UI organization (tag_sections lookup table)
 export const displaySections = ["nouns", "verbs", "phrases", "reference"] as const;
 export type DisplaySection = (typeof displaySections)[number];

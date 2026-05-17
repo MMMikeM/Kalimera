@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { ParadigmTable } from "../../components/ParadigmTable";
 import type { SimpleListItem } from "../../components/engines/deck";
 import { Drill } from "../../components/engines/drill";
 
@@ -58,14 +59,14 @@ const FORMS: SimpleListItem[] = [
 	},
 ];
 
-const CATEGORIES = [
-	{ id: "singular", label: "Singular" },
-	{ id: "plural", label: "Plural" },
-];
-
 export const Route = createFileRoute("/practice/cases/nominative/article")({
 	component: ArticleDoerDrill,
 });
+
+const PARADIGM_ROWS = [
+	{ label: "Nom sg", forms: ["ο", "η", "το"] as [string, string, string] },
+	{ label: "Nom pl", forms: ["οι", "οι", "τα"] as [string, string, string] },
+];
 
 function ArticleDoerDrill() {
 	return (
@@ -74,11 +75,11 @@ function ArticleDoerDrill() {
 			drillId="articles-article-doer"
 			items={FORMS}
 			title="Article (Doer)"
-			subtitle="6 forms / timed"
+			subtitle="Nominative articles"
 			colorTheme="ocean"
 			forwardDesc="Gender + number → article (Doer)"
 			reverseDesc="Article → recall gender + number (self-assess)"
-			categories={CATEGORIES}
+			configExtras={<ParadigmTable rows={PARADIGM_ROWS} />}
 		/>
 	);
 }

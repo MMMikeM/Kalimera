@@ -9,7 +9,7 @@ export const presentDrills: Drill[] = [
 	// Present
 	{
 		id: "verbs-present",
-		to: "./present",
+		to: "/practice/verbs/present",
 		title: "Basic verbs",
 		greek: "λύω · θέλω · μπορώ",
 		minutes: 2,
@@ -81,7 +81,7 @@ const otherDrills: Drill[] = [
 	// να-form
 	{
 		id: "verbs-na-constructions",
-		to: "./na-constructions",
+		to: "/practice/verbs/na-constructions",
 		title: "να-constructions",
 		greek: "θέλω να φάω · πρέπει να πάω · μπορώ να έρθω",
 		minutes: 2,
@@ -89,7 +89,7 @@ const otherDrills: Drill[] = [
 	// Commands
 	{
 		id: "verbs-imperatives",
-		to: "./imperatives",
+		to: "/practice/verbs/imperatives",
 		title: "Imperatives",
 		greek: "Έλα! · Πες! · Δώσε! · Φέρε!",
 		minutes: 1,

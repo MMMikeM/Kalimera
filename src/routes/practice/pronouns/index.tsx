@@ -7,21 +7,21 @@ import type { Drill } from "../components/group-section";
 const drills: Drill[] = [
 	{
 		id: "pronouns-object",
-		to: "./object",
+		to: "/practice/pronouns/object",
 		title: "Object pronouns",
 		greek: "με, σε, τον, την, μας, σας…",
 		minutes: 1,
 	},
 	{
 		id: "pronouns-placement",
-		to: "./placement",
+		to: "/practice/pronouns/placement",
 		title: "Placement",
 		greek: "Με βλέπει · Δες με! · Θα με δει",
 		minutes: 2,
 	},
 	{
 		id: "pronouns-possessives",
-		to: "./possessives",
+		to: "/practice/pronouns/possessives",
 		title: "Possessives",
 		greek: "μου, σου, του, της, μας…",
 		minutes: 1,

@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { ParadigmTable } from "../../components/ParadigmTable";
 import type { SimpleListItem } from "../../components/engines/deck";
 import { Drill } from "../../components/engines/drill";
 
@@ -58,9 +59,9 @@ const FORMS: SimpleListItem[] = [
 	},
 ];
 
-const CATEGORIES = [
-	{ id: "singular", label: "Singular" },
-	{ id: "plural", label: "Plural" },
+const PARADIGM_ROWS = [
+	{ label: "Acc sg", forms: ["τον", "τη(ν)", "το"] as [string, string, string] },
+	{ label: "Acc pl", forms: ["τους", "τις", "τα"] as [string, string, string] },
 ];
 
 export const Route = createFileRoute("/practice/cases/accusative/article")({
@@ -74,11 +75,11 @@ function ArticleTargetDrill() {
 			drillId="articles-article-target"
 			items={FORMS}
 			title="Article (Target)"
-			subtitle="6 forms / timed"
+			subtitle="Accusative articles"
 			colorTheme="terracotta"
 			forwardDesc="Gender + number → article (Target)"
 			reverseDesc="Article → recall gender + number (self-assess)"
-			categories={CATEGORIES}
+			configExtras={<ParadigmTable rows={PARADIGM_ROWS} />}
 		/>
 	);
 }

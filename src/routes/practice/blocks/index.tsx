@@ -7,21 +7,21 @@ import type { Drill } from "../components/group-section";
 export const drills: Drill[] = [
 	{
 		id: "blocks-chunks",
-		to: "./chunks",
+		to: "/practice/blocks/chunks",
 		title: "Survival phrases",
 		greek: "Γεια σου · Ευχαριστώ · Θα ήθελα",
 		minutes: 1,
 	},
 	{
 		id: "blocks-numbers",
-		to: "./numbers",
+		to: "/practice/blocks/numbers",
 		title: "Numbers",
 		greek: "ένα, δύο, δέκα, είκοσι, τριάντα…",
 		minutes: 1,
 	},
 	{
 		id: "blocks-days-of-week",
-		to: "./days-of-week",
+		to: "/practice/blocks/days-of-week",
 		title: "Days & time",
 		greek: "Δευτέρα · Τρίτη · χτες · αύριο",
 		minutes: 1,

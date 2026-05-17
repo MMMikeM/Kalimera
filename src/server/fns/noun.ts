@@ -3,13 +3,12 @@ import { z } from "zod";
 
 import { adjacentCefrPool } from "@/lib/cefr";
 import { greekToPhonetic } from "@/lib/greek-transliteration";
+import { typedEntries } from "@/lib/object";
+import type { DrillBucket, SimpleListItem } from "@/routes/practice/components/engines/deck";
 import { requireAuth } from "@/server/auth/session";
-import type { CefrLevel } from "@/server/db/enums";
 import { getDrillVocabPool } from "@/server/db/queries/drill-pool";
 import { getVocabularyWithNominalForms } from "@/server/db/queries/nominal-forms";
 import { ensureUserProgress } from "@/server/db/queries/user-progress";
-
-import type { SimpleListItem } from "../../routes/practice/components/engines/deck";
 
 /** Build SimpleListItem[] for a single case drill (nominative / accusative / genitive).
  *  Pool is SRS-aware: nouns the user has been exposed to in their CEFR band. */
@@ -19,24 +18,28 @@ async function getNounDrillItemsImpl(
 	drillId: string,
 	{ stripArticleForReverse = false } = {},
 ): Promise<SimpleListItem[]> {
-	const progress = await ensureUserProgress(userId);
-	const currentCefrLevel = progress.currentCefrLevel as CefrLevel;
+	const { currentCefrLevel } = await ensureUserProgress(userId);
 
 	const pool = await getDrillVocabPool({
 		userId,
 		drillId,
-		wordType: "noun",
+		wordTypes: ["noun"],
 		cefrPool: adjacentCefrPool(currentCefrLevel),
+		limit: 50,
 	});
 
-	if (pool.length === 0) return [];
+	// Build flat id list and reverse-lookup for bucket tagging
+	const entries = typedEntries(pool);
+	const allIds = entries.flatMap(([, ids]) => ids);
 
-	const rows = await getVocabularyWithNominalForms("noun", pool);
+	const bucketMap = new Map<number, DrillBucket>();
+	for (const [bucket, ids] of entries) {
+		for (const id of ids) bucketMap.set(id, bucket);
+	}
 
-	// Preserve priority order from pool
-	const idOrder = new Map(pool.map((id, i) => [id, i]));
+	const rows = await getVocabularyWithNominalForms("noun", allIds);
 	const items: SimpleListItem[] = [];
-	for (const vocab of rows.sort((a, b) => (idOrder.get(a.id) ?? 999) - (idOrder.get(b.id) ?? 999))) {
+	for (const vocab of rows) {
 		const form = vocab.nominalForms.find(
 			(f) => f.grammaticalCase === grammaticalCase && f.number === "singular",
 		);
@@ -54,7 +57,8 @@ async function getNounDrillItemsImpl(
 			category: gender,
 			dimension: gender,
 			reverseGreek: stripArticleForReverse ? form.form : greekFull,
-			vocabularyId: vocab.id,
+			vocabId: vocab.id,
+			bucket: bucketMap.get(vocab.id),
 		});
 	}
 
@@ -71,7 +75,6 @@ export const getNounDrillItemsFn = createServerFn({ method: "GET" })
 	)
 	.handler(async ({ data }) => {
 		const { userId } = requireAuth();
-
 		return getNounDrillItemsImpl(userId, data.grammaticalCase, data.drillId, {
 			stripArticleForReverse: data.stripArticleForReverse,
 		});

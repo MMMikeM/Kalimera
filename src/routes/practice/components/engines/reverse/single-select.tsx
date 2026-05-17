@@ -43,7 +43,6 @@ export function SingleSelectReverse({ options, getCorrectId }: SingleSelectRever
 				prompt: currentForm.greek,
 				correctAnswer: correctId,
 				userAnswer: id,
-				weakAreaIdentifier: currentForm.weakAreaIdentifier ?? currentForm.id,
 			});
 		},
 		[phase, currentForm, getCorrectId, recordAttempt],

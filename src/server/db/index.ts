@@ -13,7 +13,8 @@ const getDb = createServerOnlyFn(() => {
 		authToken: process.env.TURSO_AUTH_TOKEN,
 	});
 
-	return drizzle({ client, relations });
+	return drizzle({ client, relations, logger: false });
 });
 
 export const db = getDb();
+export const { transaction } = db;

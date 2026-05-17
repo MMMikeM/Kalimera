@@ -1,8 +1,10 @@
 import { OBJECT_PRONOUNS, POSSESSIVE_PRONOUNS } from "@/constants/pronouns";
 import { VERB_CONJUGATIONS } from "@/constants/verbs";
+import type { DrillBucket } from "@/lib/drill/types";
 import { declineNoun } from "@/lib/noun-declension";
 import type { NounDeclensionPattern } from "@/server/db/enums";
 
+import { typedKeys } from "../object";
 import { generateArticleQuestions } from "./article-generator";
 
 export interface DrillQuestion {
@@ -11,10 +13,9 @@ export interface DrillQuestion {
 	correctGreek: string;
 	timeLimit?: number;
 	hint?: string;
-	targetMs?: number; // future weak-spot targeting
-	vocabularyId?: number;
-	/** Tag set by the question builder for weak-area aggregation (e.g. verb id, case slug). */
-	weakAreaIdentifier?: string;
+	targetMs?: number;
+	vocabId?: number;
+	bucket?: DrillBucket;
 }
 
 type QuestionCategory = "pronouns" | "articles" | "verbs" | "nouns";
@@ -187,7 +188,7 @@ export const generateQuestions = (
 	categories: QuestionCategory[] | "all",
 	count?: number,
 ): DrillQuestion[] => {
-	const cats = categories === "all" ? (Object.keys(generators) as QuestionCategory[]) : categories;
+	const cats = categories === "all" ? typedKeys(generators) : categories;
 
 	const all = cats.flatMap((c) => generators[c]());
 	const shuffled = shuffleArray(all);

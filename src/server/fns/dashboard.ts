@@ -10,7 +10,7 @@ import {
 	listCompletedPracticeSessionsForStreak,
 } from "@/server/db/queries/practice-sessions";
 import { getUserById } from "@/server/db/queries/users";
-import { getItemsDueTomorrow, getSkillStats } from "@/server/db/queries/vocabulary-skills";
+import { getItemsDueTomorrow, getReviewStats } from "@/server/db/queries/vocab-reviews";
 
 type Stats = {
 	streak: number;
@@ -25,7 +25,7 @@ export const getDashboardDataFn = createServerFn({ method: "GET" }).handler(asyn
 
 	const [rawStats, user, itemsDueTomorrow, lastPracticeDate, completedSessions] = await Promise.all(
 		[
-			getSkillStats(userId),
+			getReviewStats(userId),
 			getUserById(userId),
 			getItemsDueTomorrow(userId),
 			getLastPracticeDate(userId),

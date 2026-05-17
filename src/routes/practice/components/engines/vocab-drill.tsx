@@ -22,8 +22,8 @@ const toForm = (q: DrillQuestion): DrillForm => ({
 	greek: q.correctGreek,
 	greeklish: greekToPhonetic(q.correctGreek),
 	label: q.prompt,
-	vocabularyId: q.vocabularyId,
-	weakAreaIdentifier: q.weakAreaIdentifier,
+	vocabId: q.vocabId,
+	bucket: q.bucket,
 });
 
 export function VocabDrillPage({ category, drillId, initialQuestions }: VocabDrillPageProps) {
@@ -41,10 +41,9 @@ export function VocabDrillPage({ category, drillId, initialQuestions }: VocabDri
 			title={`${categoryConfig.label} drill`}
 			subtitle="Rapid-fire production"
 			colorTheme="terracotta"
-			defaultSessionSize={20}
+			sessionSize={20}
 			forwardDesc="English meaning → Greek"
 			reverseDesc="Greek → recall meaning (self-assess)"
-			sessionType="case_drill"
 		/>
 	);
 }

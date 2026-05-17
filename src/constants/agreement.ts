@@ -1,8 +1,11 @@
 // Article-Noun Agreement Paradigms
 // Shows how articles and noun endings must match in gender, case, and number
 
+export type Case = "nom" | "acc" | "gen" | "voc";
+type Gender = "masculine" | "feminine" | "neuter";
+
 interface AgreementPattern {
-	case: "Nom" | "Acc" | "Gen" | "Voc";
+	case: Case;
 	article: string;
 	ending: string;
 	full: string;
@@ -11,7 +14,7 @@ interface AgreementPattern {
 
 export interface AgreementParadigm {
 	id: string;
-	gender: "masculine" | "feminine" | "neuter";
+	gender: Gender;
 	pattern: string;
 	title: string;
 	example: string;
@@ -34,28 +37,28 @@ export const AGREEMENT_PARADIGMS: AgreementParadigm[] = [
 		frequency: "very common",
 		forms: [
 			{
-				case: "Nom",
+				case: "nom",
 				article: "ο",
 				ending: "-ος",
 				full: "ο φίλος",
 				english: "the friend",
 			},
 			{
-				case: "Acc",
+				case: "acc",
 				article: "τον",
 				ending: "-ο",
 				full: "τον φίλο",
 				english: "the friend (object)",
 			},
 			{
-				case: "Gen",
+				case: "gen",
 				article: "του",
 				ending: "-ου",
 				full: "του φίλου",
 				english: "of the friend",
 			},
 			{
-				case: "Voc",
+				case: "voc",
 				article: "—",
 				ending: "-ε",
 				full: "φίλε!",
@@ -64,28 +67,28 @@ export const AGREEMENT_PARADIGMS: AgreementParadigm[] = [
 		],
 		pluralForms: [
 			{
-				case: "Nom",
+				case: "nom",
 				article: "οι",
 				ending: "-οι",
 				full: "οι φίλοι",
 				english: "the friends",
 			},
 			{
-				case: "Acc",
+				case: "acc",
 				article: "τους",
 				ending: "-ους",
 				full: "τους φίλους",
 				english: "the friends (object)",
 			},
 			{
-				case: "Gen",
+				case: "gen",
 				article: "των",
 				ending: "-ων",
 				full: "των φίλων",
 				english: "of the friends",
 			},
 			{
-				case: "Voc",
+				case: "voc",
 				article: "—",
 				ending: "-οι",
 				full: "φίλοι!",
@@ -103,28 +106,28 @@ export const AGREEMENT_PARADIGMS: AgreementParadigm[] = [
 		tip: "Many family words: πατέρας, άντρας, παππούς",
 		forms: [
 			{
-				case: "Nom",
+				case: "nom",
 				article: "ο",
 				ending: "-ας",
 				full: "ο πατέρας",
 				english: "the father",
 			},
 			{
-				case: "Acc",
+				case: "acc",
 				article: "τον",
 				ending: "-α",
 				full: "τον πατέρα",
 				english: "the father (object)",
 			},
 			{
-				case: "Gen",
+				case: "gen",
 				article: "του",
 				ending: "-α",
 				full: "του πατέρα",
 				english: "of the father",
 			},
 			{
-				case: "Voc",
+				case: "voc",
 				article: "—",
 				ending: "-α",
 				full: "πατέρα!",
@@ -133,28 +136,28 @@ export const AGREEMENT_PARADIGMS: AgreementParadigm[] = [
 		],
 		pluralForms: [
 			{
-				case: "Nom",
+				case: "nom",
 				article: "οι",
 				ending: "-ες",
 				full: "οι πατέρες",
 				english: "the fathers",
 			},
 			{
-				case: "Acc",
+				case: "acc",
 				article: "τους",
 				ending: "-ες",
 				full: "τους πατέρες",
 				english: "the fathers (object)",
 			},
 			{
-				case: "Gen",
+				case: "gen",
 				article: "των",
 				ending: "-ων",
 				full: "των πατέρων",
 				english: "of the fathers",
 			},
 			{
-				case: "Voc",
+				case: "voc",
 				article: "—",
 				ending: "-ες",
 				full: "πατέρες!",
@@ -171,28 +174,28 @@ export const AGREEMENT_PARADIGMS: AgreementParadigm[] = [
 		frequency: "common",
 		forms: [
 			{
-				case: "Nom",
+				case: "nom",
 				article: "ο",
 				ending: "-ης",
 				full: "ο μαθητής",
 				english: "the student",
 			},
 			{
-				case: "Acc",
+				case: "acc",
 				article: "τον",
 				ending: "-ή",
 				full: "τον μαθητή",
 				english: "the student (object)",
 			},
 			{
-				case: "Gen",
+				case: "gen",
 				article: "του",
 				ending: "-ή",
 				full: "του μαθητή",
 				english: "of the student",
 			},
 			{
-				case: "Voc",
+				case: "voc",
 				article: "—",
 				ending: "-ή",
 				full: "μαθητή!",
@@ -201,28 +204,28 @@ export const AGREEMENT_PARADIGMS: AgreementParadigm[] = [
 		],
 		pluralForms: [
 			{
-				case: "Nom",
+				case: "nom",
 				article: "οι",
 				ending: "-ές",
 				full: "οι μαθητές",
 				english: "the students",
 			},
 			{
-				case: "Acc",
+				case: "acc",
 				article: "τους",
 				ending: "-ές",
 				full: "τους μαθητές",
 				english: "the students (object)",
 			},
 			{
-				case: "Gen",
+				case: "gen",
 				article: "των",
 				ending: "-ών",
 				full: "των μαθητών",
 				english: "of the students",
 			},
 			{
-				case: "Voc",
+				case: "voc",
 				article: "—",
 				ending: "-ές",
 				full: "μαθητές!",
@@ -240,28 +243,28 @@ export const AGREEMENT_PARADIGMS: AgreementParadigm[] = [
 		tip: "Often borrowed words: καφές, καναπές",
 		forms: [
 			{
-				case: "Nom",
+				case: "nom",
 				article: "ο",
 				ending: "-ές",
 				full: "ο καφές",
 				english: "the coffee",
 			},
 			{
-				case: "Acc",
+				case: "acc",
 				article: "τον",
 				ending: "-έ",
 				full: "τον καφέ",
 				english: "the coffee (object)",
 			},
 			{
-				case: "Gen",
+				case: "gen",
 				article: "του",
 				ending: "-έ",
 				full: "του καφέ",
 				english: "of the coffee",
 			},
 			{
-				case: "Voc",
+				case: "voc",
 				article: "—",
 				ending: "-έ",
 				full: "καφέ!",
@@ -270,28 +273,28 @@ export const AGREEMENT_PARADIGMS: AgreementParadigm[] = [
 		],
 		pluralForms: [
 			{
-				case: "Nom",
+				case: "nom",
 				article: "οι",
 				ending: "-έδες",
 				full: "οι καφέδες",
 				english: "the coffees",
 			},
 			{
-				case: "Acc",
+				case: "acc",
 				article: "τους",
 				ending: "-έδες",
 				full: "τους καφέδες",
 				english: "the coffees (object)",
 			},
 			{
-				case: "Gen",
+				case: "gen",
 				article: "των",
 				ending: "-έδων",
 				full: "των καφέδων",
 				english: "of the coffees",
 			},
 			{
-				case: "Voc",
+				case: "voc",
 				article: "—",
 				ending: "-έδες",
 				full: "καφέδες!",
@@ -313,28 +316,28 @@ export const AGREEMENT_PARADIGMS: AgreementParadigm[] = [
 		tip: "Vocative = Nominative for feminine nouns",
 		forms: [
 			{
-				case: "Nom",
+				case: "nom",
 				article: "η",
 				ending: "-α",
 				full: "η γυναίκα",
 				english: "the woman",
 			},
 			{
-				case: "Acc",
+				case: "acc",
 				article: "τη(ν)",
 				ending: "-α",
 				full: "τη γυναίκα",
 				english: "the woman (object)",
 			},
 			{
-				case: "Gen",
+				case: "gen",
 				article: "της",
 				ending: "-ας",
 				full: "της γυναίκας",
 				english: "of the woman",
 			},
 			{
-				case: "Voc",
+				case: "voc",
 				article: "—",
 				ending: "-α",
 				full: "γυναίκα!",
@@ -343,28 +346,28 @@ export const AGREEMENT_PARADIGMS: AgreementParadigm[] = [
 		],
 		pluralForms: [
 			{
-				case: "Nom",
+				case: "nom",
 				article: "οι",
 				ending: "-ες",
 				full: "οι γυναίκες",
 				english: "the women",
 			},
 			{
-				case: "Acc",
+				case: "acc",
 				article: "τις",
 				ending: "-ες",
 				full: "τις γυναίκες",
 				english: "the women (object)",
 			},
 			{
-				case: "Gen",
+				case: "gen",
 				article: "των",
 				ending: "-ων",
 				full: "των γυναικών",
 				english: "of the women",
 			},
 			{
-				case: "Voc",
+				case: "voc",
 				article: "—",
 				ending: "-ες",
 				full: "γυναίκες!",
@@ -382,28 +385,28 @@ export const AGREEMENT_PARADIGMS: AgreementParadigm[] = [
 		tip: "Vocative = Nominative for feminine nouns",
 		forms: [
 			{
-				case: "Nom",
+				case: "nom",
 				article: "η",
 				ending: "-η",
 				full: "η ζωή",
 				english: "the life",
 			},
 			{
-				case: "Acc",
+				case: "acc",
 				article: "τη(ν)",
 				ending: "-η",
 				full: "τη ζωή",
 				english: "the life (object)",
 			},
 			{
-				case: "Gen",
+				case: "gen",
 				article: "της",
 				ending: "-ης",
 				full: "της ζωής",
 				english: "of the life",
 			},
 			{
-				case: "Voc",
+				case: "voc",
 				article: "—",
 				ending: "-η",
 				full: "ζωή!",
@@ -412,28 +415,28 @@ export const AGREEMENT_PARADIGMS: AgreementParadigm[] = [
 		],
 		pluralForms: [
 			{
-				case: "Nom",
+				case: "nom",
 				article: "οι",
 				ending: "-ές",
 				full: "οι ζωές",
 				english: "the lives",
 			},
 			{
-				case: "Acc",
+				case: "acc",
 				article: "τις",
 				ending: "-ές",
 				full: "τις ζωές",
 				english: "the lives (object)",
 			},
 			{
-				case: "Gen",
+				case: "gen",
 				article: "των",
 				ending: "-ών",
 				full: "των ζωών",
 				english: "of the lives",
 			},
 			{
-				case: "Voc",
+				case: "voc",
 				article: "—",
 				ending: "-ές",
 				full: "ζωές!",
@@ -451,28 +454,28 @@ export const AGREEMENT_PARADIGMS: AgreementParadigm[] = [
 		tip: "Action nouns (like English -tion)",
 		forms: [
 			{
-				case: "Nom",
+				case: "nom",
 				article: "η",
 				ending: "-ση",
 				full: "η ερώτηση",
 				english: "the question",
 			},
 			{
-				case: "Acc",
+				case: "acc",
 				article: "τη(ν)",
 				ending: "-ση",
 				full: "την ερώτηση",
 				english: "the question (object)",
 			},
 			{
-				case: "Gen",
+				case: "gen",
 				article: "της",
 				ending: "-σης",
 				full: "της ερώτησης",
 				english: "of the question",
 			},
 			{
-				case: "Voc",
+				case: "voc",
 				article: "—",
 				ending: "-ση",
 				full: "ερώτηση!",
@@ -481,28 +484,28 @@ export const AGREEMENT_PARADIGMS: AgreementParadigm[] = [
 		],
 		pluralForms: [
 			{
-				case: "Nom",
+				case: "nom",
 				article: "οι",
 				ending: "-σεις",
 				full: "οι ερωτήσεις",
 				english: "the questions",
 			},
 			{
-				case: "Acc",
+				case: "acc",
 				article: "τις",
 				ending: "-σεις",
 				full: "τις ερωτήσεις",
 				english: "the questions (object)",
 			},
 			{
-				case: "Gen",
+				case: "gen",
 				article: "των",
 				ending: "-σεων",
 				full: "των ερωτήσεων",
 				english: "of the questions",
 			},
 			{
-				case: "Voc",
+				case: "voc",
 				article: "—",
 				ending: "-σεις",
 				full: "ερωτήσεις!",
@@ -524,28 +527,28 @@ export const AGREEMENT_PARADIGMS: AgreementParadigm[] = [
 		tip: "Nom = Acc = Voc (neuter simplification!)",
 		forms: [
 			{
-				case: "Nom",
+				case: "nom",
 				article: "το",
 				ending: "-ο",
 				full: "το βιβλίο",
 				english: "the book",
 			},
 			{
-				case: "Acc",
+				case: "acc",
 				article: "το",
 				ending: "-ο",
 				full: "το βιβλίο",
 				english: "the book (object)",
 			},
 			{
-				case: "Gen",
+				case: "gen",
 				article: "του",
 				ending: "-ου",
 				full: "του βιβλίου",
 				english: "of the book",
 			},
 			{
-				case: "Voc",
+				case: "voc",
 				article: "—",
 				ending: "-ο",
 				full: "βιβλίο!",
@@ -554,28 +557,28 @@ export const AGREEMENT_PARADIGMS: AgreementParadigm[] = [
 		],
 		pluralForms: [
 			{
-				case: "Nom",
+				case: "nom",
 				article: "τα",
 				ending: "-α",
 				full: "τα βιβλία",
 				english: "the books",
 			},
 			{
-				case: "Acc",
+				case: "acc",
 				article: "τα",
 				ending: "-α",
 				full: "τα βιβλία",
 				english: "the books (object)",
 			},
 			{
-				case: "Gen",
+				case: "gen",
 				article: "των",
 				ending: "-ων",
 				full: "των βιβλίων",
 				english: "of the books",
 			},
 			{
-				case: "Voc",
+				case: "voc",
 				article: "—",
 				ending: "-α",
 				full: "βιβλία!",
@@ -593,28 +596,28 @@ export const AGREEMENT_PARADIGMS: AgreementParadigm[] = [
 		tip: "Nom = Acc = Voc (neuter simplification!)",
 		forms: [
 			{
-				case: "Nom",
+				case: "nom",
 				article: "το",
 				ending: "-ί",
 				full: "το παιδί",
 				english: "the child",
 			},
 			{
-				case: "Acc",
+				case: "acc",
 				article: "το",
 				ending: "-ί",
 				full: "το παιδί",
 				english: "the child (object)",
 			},
 			{
-				case: "Gen",
+				case: "gen",
 				article: "του",
 				ending: "-ιού",
 				full: "του παιδιού",
 				english: "of the child",
 			},
 			{
-				case: "Voc",
+				case: "voc",
 				article: "—",
 				ending: "-ί",
 				full: "παιδί!",
@@ -623,28 +626,28 @@ export const AGREEMENT_PARADIGMS: AgreementParadigm[] = [
 		],
 		pluralForms: [
 			{
-				case: "Nom",
+				case: "nom",
 				article: "τα",
 				ending: "-ιά",
 				full: "τα παιδιά",
 				english: "the children",
 			},
 			{
-				case: "Acc",
+				case: "acc",
 				article: "τα",
 				ending: "-ιά",
 				full: "τα παιδιά",
 				english: "the children (object)",
 			},
 			{
-				case: "Gen",
+				case: "gen",
 				article: "των",
 				ending: "-ιών",
 				full: "των παιδιών",
 				english: "of the children",
 			},
 			{
-				case: "Voc",
+				case: "voc",
 				article: "—",
 				ending: "-ιά",
 				full: "παιδιά!",
@@ -662,28 +665,28 @@ export const AGREEMENT_PARADIGMS: AgreementParadigm[] = [
 		tip: "Ancient Greek pattern, Nom = Acc = Voc",
 		forms: [
 			{
-				case: "Nom",
+				case: "nom",
 				article: "το",
 				ending: "-μα",
 				full: "το όνομα",
 				english: "the name",
 			},
 			{
-				case: "Acc",
+				case: "acc",
 				article: "το",
 				ending: "-μα",
 				full: "το όνομα",
 				english: "the name (object)",
 			},
 			{
-				case: "Gen",
+				case: "gen",
 				article: "του",
 				ending: "-ματος",
 				full: "του ονόματος",
 				english: "of the name",
 			},
 			{
-				case: "Voc",
+				case: "voc",
 				article: "—",
 				ending: "-μα",
 				full: "όνομα!",
@@ -692,28 +695,28 @@ export const AGREEMENT_PARADIGMS: AgreementParadigm[] = [
 		],
 		pluralForms: [
 			{
-				case: "Nom",
+				case: "nom",
 				article: "τα",
 				ending: "-ματα",
 				full: "τα ονόματα",
 				english: "the names",
 			},
 			{
-				case: "Acc",
+				case: "acc",
 				article: "τα",
 				ending: "-ματα",
 				full: "τα ονόματα",
 				english: "the names (object)",
 			},
 			{
-				case: "Gen",
+				case: "gen",
 				article: "των",
 				ending: "-μάτων",
 				full: "των ονομάτων",
 				english: "of the names",
 			},
 			{
-				case: "Voc",
+				case: "voc",
 				article: "—",
 				ending: "-ματα",
 				full: "ονόματα!",
@@ -736,4 +739,4 @@ export const ARTICLE_AGREEMENT_QUICK_REF = {
 		feminine: { nom: "οι", acc: "τις", gen: "των", voc: "—" },
 		neuter: { nom: "τα", acc: "τα", gen: "των", voc: "—" },
 	},
-};
+} as const satisfies Record<"singular" | "plural", Record<Gender, Record<Case, string>>>;
