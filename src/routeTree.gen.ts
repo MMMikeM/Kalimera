@@ -19,6 +19,7 @@ import { Route as ReferenceIndexRouteImport } from './routes/reference/index'
 import { Route as PracticeIndexRouteImport } from './routes/practice/index'
 import { Route as LearnIndexRouteImport } from './routes/learn/index'
 import { Route as ReferenceTabRouteImport } from './routes/reference/$tab'
+import { Route as PracticeReviewRouteImport } from './routes/practice/review'
 import { Route as LearnVerbsRouteImport } from './routes/learn/verbs'
 import { Route as LearnNounsRouteImport } from './routes/learn/nouns'
 import { Route as ApiErrorsRouteImport } from './routes/api/errors'
@@ -127,6 +128,11 @@ const ReferenceTabRoute = ReferenceTabRouteImport.update({
   id: '/reference/$tab',
   path: '/reference/$tab',
   getParentRoute: () => rootRouteImport,
+} as any)
+const PracticeReviewRoute = PracticeReviewRouteImport.update({
+  id: '/review',
+  path: '/review',
+  getParentRoute: () => PracticeRouteRoute,
 } as any)
 const LearnVerbsRoute = LearnVerbsRouteImport.update({
   id: '/learn/verbs',
@@ -462,6 +468,7 @@ export interface FileRoutesByFullPath {
   '/api/errors': typeof ApiErrorsRoute
   '/learn/nouns': typeof LearnNounsRoute
   '/learn/verbs': typeof LearnVerbsRouteWithChildren
+  '/practice/review': typeof PracticeReviewRoute
   '/reference/$tab': typeof ReferenceTabRoute
   '/learn/': typeof LearnIndexRoute
   '/practice/': typeof PracticeIndexRoute
@@ -531,6 +538,7 @@ export interface FileRoutesByTo {
   '/api/errors': typeof ApiErrorsRoute
   '/learn/nouns': typeof LearnNounsRoute
   '/learn/verbs': typeof LearnVerbsRouteWithChildren
+  '/practice/review': typeof PracticeReviewRoute
   '/reference/$tab': typeof ReferenceTabRoute
   '/learn': typeof LearnIndexRoute
   '/practice': typeof PracticeIndexRoute
@@ -602,6 +610,7 @@ export interface FileRoutesById {
   '/api/errors': typeof ApiErrorsRoute
   '/learn/nouns': typeof LearnNounsRoute
   '/learn/verbs': typeof LearnVerbsRouteWithChildren
+  '/practice/review': typeof PracticeReviewRoute
   '/reference/$tab': typeof ReferenceTabRoute
   '/learn/': typeof LearnIndexRoute
   '/practice/': typeof PracticeIndexRoute
@@ -674,6 +683,7 @@ export interface FileRouteTypes {
     | '/api/errors'
     | '/learn/nouns'
     | '/learn/verbs'
+    | '/practice/review'
     | '/reference/$tab'
     | '/learn/'
     | '/practice/'
@@ -743,6 +753,7 @@ export interface FileRouteTypes {
     | '/api/errors'
     | '/learn/nouns'
     | '/learn/verbs'
+    | '/practice/review'
     | '/reference/$tab'
     | '/learn'
     | '/practice'
@@ -813,6 +824,7 @@ export interface FileRouteTypes {
     | '/api/errors'
     | '/learn/nouns'
     | '/learn/verbs'
+    | '/practice/review'
     | '/reference/$tab'
     | '/learn/'
     | '/practice/'
@@ -975,6 +987,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/reference/$tab'
       preLoaderRoute: typeof ReferenceTabRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/practice/review': {
+      id: '/practice/review'
+      path: '/review'
+      fullPath: '/practice/review'
+      preLoaderRoute: typeof PracticeReviewRouteImport
+      parentRoute: typeof PracticeRouteRoute
     }
     '/learn/verbs': {
       id: '/learn/verbs'
@@ -1386,6 +1405,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface PracticeRouteRouteChildren {
+  PracticeReviewRoute: typeof PracticeReviewRoute
   PracticeIndexRoute: typeof PracticeIndexRoute
   PracticeBlocksChunksRoute: typeof PracticeBlocksChunksRoute
   PracticeBlocksDaysOfWeekRoute: typeof PracticeBlocksDaysOfWeekRoute
@@ -1427,6 +1447,7 @@ interface PracticeRouteRouteChildren {
 }
 
 const PracticeRouteRouteChildren: PracticeRouteRouteChildren = {
+  PracticeReviewRoute: PracticeReviewRoute,
   PracticeIndexRoute: PracticeIndexRoute,
   PracticeBlocksChunksRoute: PracticeBlocksChunksRoute,
   PracticeBlocksDaysOfWeekRoute: PracticeBlocksDaysOfWeekRoute,

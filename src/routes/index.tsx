@@ -43,15 +43,16 @@ function DashboardRoute() {
 		todayPracticed,
 		freezeStatus,
 		daysUntilNextFreeze,
-		itemsDueTomorrow,
 		daysSinceLastPractice,
 		taperOfferPending,
+		rustyDrills,
+		rustyDrillCount,
 	} = data;
 
 	const isLapsedUser =
 		daysSinceLastPractice !== null &&
 		daysSinceLastPractice >= LAPSED_DAYS_THRESHOLD &&
-		stats.dueCount >= LAPSED_QUEUE_THRESHOLD;
+		rustyDrillCount >= LAPSED_QUEUE_THRESHOLD;
 
 	const wasProtectedByFreeze = freezeStatus.status === "just_used";
 
@@ -59,22 +60,20 @@ function DashboardRoute() {
 		if (stats.totalLearned === 0) {
 			return <FirstTimeUserCTA />;
 		}
-		if (stats.dueCount === 0) {
-			return (
-				<AllCaughtUpCTA newAvailable={stats.newAvailable} itemsDueTomorrow={itemsDueTomorrow} />
-			);
+		if (rustyDrillCount === 0) {
+			return <AllCaughtUpCTA newAvailable={stats.newAvailable} />;
 		}
 		if (isLapsedUser) {
 			return (
 				<LapsedUserCTA
-					dueCount={stats.dueCount}
+					rustyDrillCount={rustyDrillCount}
 					daysSinceLastPractice={daysSinceLastPractice}
 					streak={stats.streak}
 					wasProtectedByFreeze={wasProtectedByFreeze}
 				/>
 			);
 		}
-		return <PracticeCTA dueCount={stats.dueCount} itemsDueTomorrow={itemsDueTomorrow} />;
+		return <PracticeCTA rustyDrills={rustyDrills} />;
 	};
 
 	return (

@@ -9,11 +9,7 @@ import {
 	completeSession,
 	startSession,
 } from "@/server/db/queries/practice-sessions";
-import {
-	insertDailyResults,
-	listRecentDailyResultsByDrill,
-} from "@/server/db/queries/vocab-daily-results";
-import { listMasteryForVocabs, upsertMastery } from "@/server/db/queries/vocab-mastery";
+import { insertDailyResults } from "@/server/db/queries/vocab-daily-results";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // SERVER FUNCTIONS — SRS lifecycle
@@ -55,9 +51,6 @@ export const recordAttemptFn = createServerFn({ method: "POST" })
 		return { success: true, attempt };
 	});
 
-const MASTERY_WINDOWS = [4, 7, 10, 10] as const;
-const MASTERY_THRESHOLDS = [3, 6, 9, 9] as const;
-const MASTERY_INTERVAL_DAYS = [3, 6, 9, 9] as const;
 
 export const completeSessionFn = createServerFn({ method: "POST" })
 	.inputValidator(
@@ -99,49 +92,6 @@ export const completeSessionFn = createServerFn({ method: "POST" })
 					correctFirstTry,
 				})),
 			);
-		});
-
-		const practicedIds = [...firstTryByVocab.keys()];
-		const drillId = [...firstTryByVocab.values()][0]?.drillId ?? "";
-
-		const [allDailyRows, masteryRows] = await Promise.all([
-			listRecentDailyResultsByDrill(userId, drillId, practicedIds),
-			listMasteryForVocabs(userId, drillId, practicedIds),
-		]);
-
-		const dailyByVocab = new Map<number, typeof allDailyRows>();
-		for (const row of allDailyRows) {
-			const list = dailyByVocab.get(row.vocabId) ?? [];
-			list.push(row);
-			dailyByVocab.set(row.vocabId, list);
-		}
-		const masteryByVocab = new Map(masteryRows.map((m) => [m.vocabId, m]));
-		const now = Math.floor(Date.now() / 1000);
-
-		await transaction(async (tx) => {
-			for (const vocabId of practicedIds) {
-				const currentMastery = masteryByVocab.get(vocabId);
-				const currentTier = currentMastery?.tier ?? 0;
-				const tierIdx = Math.min(currentTier, 3) as 0 | 1 | 2 | 3;
-				const window = MASTERY_WINDOWS[tierIdx]!;
-				const threshold = MASTERY_THRESHOLDS[tierIdx]!;
-				const intervalDays = MASTERY_INTERVAL_DAYS[tierIdx]!;
-
-				const rows = (dailyByVocab.get(vocabId) ?? []).slice(0, window);
-				if (rows.length < window) continue;
-				const correctCount = rows.filter((r) => r.correctFirstTry).length;
-				if (correctCount < threshold) continue;
-
-				const newTier = Math.min(currentTier + 1, 3);
-				await upsertMastery(tx, {
-					userId,
-					vocabId,
-					drillId,
-					tier: newTier,
-					masteredAt: now,
-					nextReviewAt: now + intervalDays * 86400,
-				});
-			}
 		});
 
 		return { success: true, session };
