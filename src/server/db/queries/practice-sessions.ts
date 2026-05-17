@@ -1,5 +1,5 @@
 import { Temporal } from "@js-temporal/polyfill";
-import { eq } from "drizzle-orm";
+import { and, eq, gte, inArray, lt } from "drizzle-orm";
 
 import { fromEpochSeconds, nowInstant, toEpochSeconds } from "@/lib/time";
 
@@ -55,36 +55,36 @@ export const listCompletedPracticeSessionsForStreak = async (userId: number) => 
 	});
 };
 
-// export const getUserIdsPracticedInRange = async (
-// 	userIds: number[],
-// 	rangeStart: number,
-// 	rangeEnd: number,
-// ) => {
-// 	if (userIds.length === 0) return new Set<number>();
+export const getUserIdsPracticedInRange = async (
+	userIds: number[],
+	rangeStart: number,
+	rangeEnd: number,
+) => {
+	if (userIds.length === 0) return new Set<number>();
 
-// 	const rows = await db
-// 		.selectDistinct({ userId: practiceSessions.userId })
-// 		.from(practiceSessions)
-// 		.where(
-// 			and(
-// 				inArray(practiceSessions.userId, userIds),
-// 				gte(practiceSessions.startedAt, rangeStart),
-// 				lt(practiceSessions.startedAt, rangeEnd),
-// 			),
-// 		);
+	const rows = await db
+		.selectDistinct({ userId: practiceSessions.userId })
+		.from(practiceSessions)
+		.where(
+			and(
+				inArray(practiceSessions.userId, userIds),
+				gte(practiceSessions.startedAt, rangeStart),
+				lt(practiceSessions.startedAt, rangeEnd),
+			),
+		);
 
-// 	return new Set(rows.map((r) => r.userId));
-// };
+	return new Set(rows.map((r) => r.userId));
+};
 
-// export const listPracticeSessionsSinceForUsers = async (userIds: number[], since: number) => {
-// 	if (userIds.length === 0) return [];
+export const listPracticeSessionsSinceForUsers = async (userIds: number[], since: number) => {
+	if (userIds.length === 0) return [];
 
-// 	return await db.query.practiceSessions.findMany({
-// 		where: {
-// 			userId: { in: userIds },
-// 			startedAt: { gte: since },
-// 		},
-// 		columns: { userId: true, startedAt: true },
-// 		orderBy: { startedAt: "desc" },
-// 	});
-// };
+	return await db.query.practiceSessions.findMany({
+		where: {
+			userId: { in: userIds },
+			startedAt: { gte: since },
+		},
+		columns: { userId: true, startedAt: true },
+		orderBy: { startedAt: "desc" },
+	});
+};

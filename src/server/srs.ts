@@ -61,13 +61,13 @@ const getInitialSRSValues = () => ({
 	nextReviewAt: toInstant(today()),
 });
 
-type ExistingVocabularySkillForSRS = {
+type ExistingReviewForSRS = {
 	easeFactor: number | null;
 	intervalDays: number | null;
 	reviewCount: number | null;
 };
 
-type VocabularySkillAfterAttempt =
+type ReviewStateAfterAttempt =
 	| {
 			op: "update";
 			set: {
@@ -90,15 +90,15 @@ type VocabularySkillAfterAttempt =
 	  };
 
 /**
- * SM-2 style next state for a vocabulary skill after one graded attempt.
+ * SM-2 next state for a vocabulary review row after one graded attempt.
  * DAL should only persist `set` / `values`; all scheduling maths stays here.
  */
-export const vocabularySkillStateAfterAttempt = (
-	existing: ExistingVocabularySkillForSRS | null | undefined,
+export const reviewStateAfterAttempt = (
+	existing: ExistingReviewForSRS | null | undefined,
 	isCorrect: boolean,
 	timeTakenMs: number,
 	now: Temporal.Instant = nowInstant(),
-): VocabularySkillAfterAttempt => {
+): ReviewStateAfterAttempt => {
 	const quality = qualityFromAttempt(isCorrect, timeTakenMs);
 
 	if (existing) {

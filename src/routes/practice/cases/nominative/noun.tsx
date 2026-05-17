@@ -22,12 +22,6 @@ export const Route = createFileRoute("/practice/cases/nominative/noun")({
 	component: NounGendersDrill,
 });
 
-const CATEGORIES = [
-	{ id: "masculine", label: "Masculine (ο)" },
-	{ id: "feminine", label: "Feminine (η)" },
-	{ id: "neuter", label: "Neuter (το)" },
-];
-
 const DIMENSION_OPTIONS = [
 	{ id: "masculine", label: "Masculine (ο)", ...GENDER_STYLE.masculine },
 	{ id: "feminine", label: "Feminine (η)", ...GENDER_STYLE.feminine },
@@ -36,18 +30,18 @@ const DIMENSION_OPTIONS = [
 
 function NounGendersDrill() {
 	const { items } = Route.useLoaderData();
+	console.log({ items });
 	return (
 		<Drill
 			backTo={"/practice/cases/"}
-			drillId="articles-noun-genders"
+			drillId="nominative-nouns"
 			items={items}
-			title="Noun Genders"
-			subtitle={`${items.length} nouns / timed`}
+			title="Nominative Nouns"
+			subtitle={`Basic noun vocabulary practice`}
 			colorTheme="honey"
 			forwardDesc="English → article + noun (e.g. το σπίτι)"
 			reverseLabel="Greek → Gender"
 			reverseDesc="Greek noun → select gender"
-			categories={CATEGORIES}
 			reverse={{
 				kind: "single-select",
 				options: DIMENSION_OPTIONS,

@@ -1,7 +1,7 @@
 /**
  * Push notification orchestration (VAPID send + copy). Database access lives in
  * `@/db.server/queries/notifications/*` plus per-table reads in
- * `practice-sessions.ts` and `vocabulary-skills.ts`.
+ * `practice-sessions.ts` and `vocab-reviews.ts`.
  */
 import { Temporal } from "@js-temporal/polyfill";
 import {
@@ -39,7 +39,7 @@ import {
 	getUserIdsPracticedInRange,
 	listPracticeSessionsSinceForUsers,
 } from "@/server/db/queries/practice-sessions";
-import { listDueVocabularyCountsByUser } from "@/server/db/queries/vocabulary-skills";
+import { listDueVocabularyCountsByUser } from "@/server/db/queries/vocab-reviews";
 
 interface NotificationResult {
 	sent: number;

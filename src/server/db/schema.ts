@@ -18,14 +18,12 @@ export {
 	users,
 } from "./schema-auth";
 export {
-	milestonesAchieved,
 	practiceAttempts,
 	practiceSessions,
 	userProgress,
 	vocabDailyResults,
 	vocabMastery,
-	vocabularySkills,
-	weakAreas,
+	vocabReviews,
 } from "./schema-practice";
 
 // Types are exported from ./types.ts

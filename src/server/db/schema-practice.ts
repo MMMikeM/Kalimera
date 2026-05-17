@@ -1,11 +1,4 @@
-import {
-	index,
-	integer,
-	primaryKey,
-	real,
-	sqliteTable,
-	uniqueIndex,
-} from "drizzle-orm/sqlite-core";
+import { index, integer, primaryKey, real, sqliteTable } from "drizzle-orm/sqlite-core";
 
 import {
 	bool,
@@ -13,8 +6,6 @@ import {
 	createdAt,
 	nullableBool,
 	nullableFk,
-	nullableInt,
-	nullableOneOf,
 	nullableString,
 	nullableTimestamp,
 	oneOf,
@@ -22,11 +13,11 @@ import {
 	string,
 	updatedAt,
 } from "./columns";
-import { areaTypes, cefrLevels, sessionTypes, skillTypes } from "./enums";
+import { cefrLevels } from "./enums";
 import { users } from "./schema-auth";
 import { vocabulary } from "./schema-language";
 
-// Domain-specific: SRS (Spaced Repetition System) - used in vocabularySkills
+// Domain-specific: SRS (Spaced Repetition System) - used in vocabularyReviews
 const intervalDays = integer("interval_days").default(1);
 const reviewCount = integer("review_count").default(0);
 
@@ -35,19 +26,12 @@ export const practiceSessions = sqliteTable(
 	{
 		id: pk(),
 		userId: cascadeFk("user_id", () => users.id),
-		sessionType: nullableOneOf("session_type", sessionTypes),
-		category: nullableString("category"),
-		wordTypeFilter: nullableString("word_type_filter"),
-		totalQuestions: nullableInt("total_questions"),
-		correctAnswers: nullableInt("correct_answers"),
-		focusArea: nullableString("focus_area"),
+		totalQuestions: integer("total_questions").notNull().default(0),
+		correctAnswers: integer("correct_answers").notNull().default(0),
 		startedAt: createdAt("started_at"),
 		completedAt: nullableTimestamp("completed_at"),
 	},
-	(table) => [
-		index("idx_practice_sessions_user").on(table.userId),
-		index("idx_practice_sessions_user_completed").on(table.userId, table.completedAt),
-	],
+	(table) => [index("idx_practice_sessions_user_completed").on(table.userId, table.completedAt)],
 );
 
 export const practiceAttempts = sqliteTable(
@@ -56,58 +40,37 @@ export const practiceAttempts = sqliteTable(
 		id: pk(),
 		userId: cascadeFk("user_id", () => users.id),
 		sessionId: nullableFk("session_id", () => practiceSessions.id),
-		vocabularyId: nullableFk("vocabulary_id", () => vocabulary.id),
+		vocabId: nullableFk("vocab_id", () => vocabulary.id),
 		drillId: nullableString("drill_id"),
 		questionText: string("question_text"),
 		correctAnswer: string("correct_answer"),
 		userAnswer: nullableString("user_answer"),
 		isCorrect: nullableBool("is_correct"),
-		timeTaken: nullableInt("time_taken"),
+		timeTaken: integer("time_taken"),
 		attemptedAt: createdAt("attempted_at"),
 	},
 	(table) => [
-		index("idx_practice_attempts_user").on(table.userId),
 		index("idx_practice_attempts_session").on(table.sessionId),
-		index("idx_practice_attempts_vocab").on(table.vocabularyId),
+		index("idx_practice_attempts_vocab").on(table.vocabId),
 		index("idx_practice_attempts_drill").on(table.userId, table.drillId, table.attemptedAt),
 	],
 );
 
-export const weakAreas = sqliteTable(
-	"weak_areas",
-	{
-		id: pk(),
-		userId: cascadeFk("user_id", () => users.id),
-		areaType: oneOf("area_type", areaTypes),
-		areaIdentifier: string("area_identifier"),
-		mistakeCount: integer("mistake_count").notNull().default(1),
-		lastMistakeAt: createdAt("last_mistake_at"),
-		needsFocus: bool("needs_focus").default(true),
-	},
-	(table) => [
-		index("idx_weak_areas_user").on(table.userId),
-		uniqueIndex("idx_weak_areas_user_area").on(table.userId, table.areaType, table.areaIdentifier),
-	],
-);
-
-export const vocabularySkills = sqliteTable(
-	"vocabulary_skills",
+/** SM-2 review schedule per (user, vocab). Powers dashboard due-count and push notifications. */
+export const vocabReviews = sqliteTable(
+	"vocabulary_reviews",
 	{
 		userId: cascadeFk("user_id", () => users.id),
-		vocabularyId: cascadeFk("vocabulary_id", () => vocabulary.id),
-		skillType: oneOf("skill_type", skillTypes),
+		vocabId: cascadeFk("vocab_id", () => vocabulary.id),
 		nextReviewAt: nullableTimestamp("next_review_at"),
 		intervalDays: intervalDays,
-		easeFactor: real("ease_factor").default(2.3), // Start at 2.3 for new learners
+		easeFactor: real("ease_factor").default(2.3),
 		reviewCount: reviewCount,
 		lastReviewedAt: nullableTimestamp("last_reviewed_at"),
 	},
 	(table) => [
-		primaryKey({
-			columns: [table.userId, table.vocabularyId, table.skillType],
-		}),
-		index("idx_vocabulary_skills_review").on(table.nextReviewAt),
-		index("idx_vocabulary_skills_user").on(table.userId),
+		primaryKey({ columns: [table.userId, table.vocabId] }),
+		index("idx_vocabulary_reviews_user_review").on(table.userId, table.nextReviewAt),
 	],
 );
 
@@ -124,7 +87,6 @@ export const userProgress = sqliteTable(
 export const vocabDailyResults = sqliteTable(
 	"vocab_daily_results",
 	{
-		id: pk(),
 		userId: cascadeFk("user_id", () => users.id),
 		vocabId: cascadeFk("vocab_id", () => vocabulary.id),
 		drillId: string("drill_id"),
@@ -133,15 +95,15 @@ export const vocabDailyResults = sqliteTable(
 		createdAt: createdAt(),
 	},
 	(t) => [
-		uniqueIndex("idx_vocab_daily_unique").on(t.userId, t.vocabId, t.drillId, t.practicedDate),
+		primaryKey({ columns: [t.userId, t.vocabId, t.drillId, t.practicedDate] }),
 		index("idx_vocab_daily_user_drill").on(t.userId, t.drillId),
 	],
 );
 
+/** Per-drill tier mastery schedule. Powers getDrillVocabPool bucket assignment. */
 export const vocabMastery = sqliteTable(
 	"vocab_mastery",
 	{
-		id: pk(),
 		userId: cascadeFk("user_id", () => users.id),
 		vocabId: cascadeFk("vocab_id", () => vocabulary.id),
 		drillId: string("drill_id"),
@@ -150,19 +112,7 @@ export const vocabMastery = sqliteTable(
 		nextReviewAt: nullableTimestamp("next_review_at"),
 	},
 	(t) => [
-		uniqueIndex("idx_vocab_mastery_unique").on(t.userId, t.vocabId, t.drillId),
+		primaryKey({ columns: [t.userId, t.vocabId, t.drillId] }),
 		index("idx_vocab_mastery_review").on(t.userId, t.drillId, t.nextReviewAt),
 	],
-);
-
-export const milestonesAchieved = sqliteTable(
-	"milestones_achieved",
-	{
-		id: pk(),
-		userId: cascadeFk("user_id", () => users.id),
-		milestone: integer("milestone").notNull(), // 7, 30, 100
-		achievedAt: createdAt("achieved_at"),
-		streakAtAchievement: integer("streak_at_achievement").notNull(),
-	},
-	(table) => [uniqueIndex("idx_milestones_user_milestone").on(table.userId, table.milestone)],
 );

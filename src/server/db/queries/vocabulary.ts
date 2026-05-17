@@ -1,12 +1,12 @@
 import { db } from "../index";
 import { type WordType } from "../schema";
 
-/** Vocabulary the user has not started practising (no `vocabulary_skills` row for this user). */
+/** Vocabulary the user has not started practising (no `vocabulary_reviews` row for this user). */
 export const getNewVocabularyItems = async (userId: number, limit = 20) => {
 	return await db.query.vocabulary.findMany({
 		where: {
 			NOT: {
-				vocabularySkills: {
+				vocabReviews: {
 					userId,
 				},
 			},

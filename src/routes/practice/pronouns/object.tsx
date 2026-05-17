@@ -211,7 +211,7 @@ function PronounsDrill() {
 			items={PRONOUNS}
 			reverse={{ kind: "multi-select", dimensions: DIMENSIONS }}
 			configExtras={<Paradigm />}
-			defaultSessionSize={10}
+			sessionSize={10}
 			forwardPrompt={(form) => {
 				const f = form as (typeof PRONOUNS)[number];
 				const english = ENGLISH[f.id] ?? "";

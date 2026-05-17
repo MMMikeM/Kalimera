@@ -4,6 +4,7 @@ import type React from "react";
 import { Button } from "@/components/ui/button";
 import { greekToPhonetic } from "@/lib/greek-transliteration";
 
+import { SPEEDS } from "../drill-speeds";
 import { SESSION_SIZES } from "./deck";
 import { drillActions, useDrillStore } from "./drill-store";
 
@@ -74,7 +75,7 @@ export const ConfigShell = ({
 	const mode = useDrillStore((s) => s.mode);
 	const sessionSize = useDrillStore((s) => s.sessionSize);
 	const activeSpeedId = useDrillStore((s) => s.activeSpeedId);
-	const speeds = useDrillStore((s) => s.speeds);
+
 	const activeCategory = useDrillStore((s) => s.activeCategory);
 	const { setMode, setSessionSize, setActiveSpeedId, setActiveCategory, startDrill } = drillActions;
 
@@ -189,7 +190,7 @@ export const ConfigShell = ({
 					Speed
 				</legend>
 				<div className="flex flex-wrap gap-2">
-					{speeds.map((spd) => (
+					{SPEEDS.map((spd) => (
 						<SelectorButton
 							key={spd.id}
 							label={spd.label}
@@ -228,6 +229,13 @@ export const DrillShell = ({
 }) => {
 	const cardIndex = useDrillStore((s) => s.cardIndex);
 	const sessionSize = useDrillStore((s) => s.sessionSize);
+	const deck = useDrillStore((s) => s.deck);
+	const remediationCounts = useDrillStore((s) => s.remediationCounts);
+	const firstPresented = useDrillStore((s) => s.firstPresented);
+
+	const currentForm = deck[cardIndex];
+	const remCount = currentForm ? (remediationCounts[currentForm.id] ?? 0) : 0;
+	const isRemediation = remCount > 0 && currentForm && firstPresented[currentForm.id];
 
 	return (
 		<div className="flex flex-col">
@@ -247,6 +255,18 @@ export const DrillShell = ({
 					{sessionSize}
 				</span>
 			</div>
+			{currentForm && (
+				<div className="flex gap-2 px-4 pt-1">
+					<span className="rounded bg-stone-100 px-1.5 py-0.5 font-mono text-[10px] text-stone-400">
+						{currentForm.bucket ?? "—"}
+					</span>
+					{isRemediation && (
+						<span className="rounded bg-amber-100 px-1.5 py-0.5 font-mono text-[10px] text-amber-600">
+							remediation ×{remCount}
+						</span>
+					)}
+				</div>
+			)}
 			<div className="mx-auto flex max-w-sm flex-col gap-10 px-6 pt-4 pb-6">{children}</div>
 		</div>
 	);

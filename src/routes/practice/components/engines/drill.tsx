@@ -10,7 +10,6 @@ import {
 	type DrillSessionCallbacks,
 	type DrillStoreConfig,
 	type SessionStats,
-	type SpeedOption,
 	drillActions,
 	useDrillStore,
 } from "./drill-store";
@@ -31,14 +30,8 @@ const rootRoute = getRouteApi("__root__");
 // ─── Session callbacks ──────────────────────────────────────────────────────────
 
 const SESSION_CALLBACKS: DrillSessionCallbacks = {
-	startSession: async ({ sessionType, category, wordTypeFilter }) => {
-		const json = await startSessionFn({
-			data: {
-				sessionType: sessionType as Parameters<typeof startSessionFn>[0]["data"]["sessionType"],
-				category,
-				wordTypeFilter,
-			},
-		});
+	startSession: async () => {
+		const json = await startSessionFn();
 		return json?.session?.id ?? null;
 	},
 	// oxlint-disable-next-line no-unused-vars
@@ -107,19 +100,14 @@ export interface DrillProps<K extends string = string> extends Omit<
 	forwardPrompt?: (form: DrillForm) => React.ReactNode;
 	configExtras?: React.ReactNode;
 	autoStart?: boolean;
-	defaultSessionSize?: SessionSize;
-	speeds?: ReadonlyArray<SpeedOption>;
-	sessionType?: string;
+	sessionSize?: SessionSize;
 	onComplete?: (stats: SessionStats<DrillForm>) => void;
 }
 
 // ─── Inner drill (reads from store) ───────────────────────────────────────────
 
 function DrillInner<K extends string>(
-	props: Omit<
-		DrillProps<K>,
-		"drillId" | "items" | "defaultSessionSize" | "speeds" | "sessionType" | "onComplete"
-	>,
+	props: Omit<DrillProps<K>, "drillId" | "items" | "sessionSize" | "onComplete">,
 ) {
 	const {
 		colorTheme = "terracotta",
@@ -148,8 +136,7 @@ function DrillInner<K extends string>(
 
 	// Auto-start
 	useEffect(() => {
-		if (autoStart && deck.length === 0 && useDrillStore.getState().allItems.length > 0)
-			startDrill();
+		if (autoStart && deck.length === 0 && useDrillStore.getState().items.length > 0) startDrill();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -191,7 +178,6 @@ function DrillInner<K extends string>(
 			prompt: form.label,
 			correctAnswer: form.greek,
 			userAnswer: input.trim(),
-			weakAreaIdentifier: form.weakAreaIdentifier ?? form.id,
 		});
 	};
 
@@ -203,12 +189,7 @@ function DrillInner<K extends string>(
 			mode === "forward"
 				? { prompt: form.label, correctAnswer: form.greek, userAnswer: "" }
 				: { prompt: form.greek, correctAnswer: form.label, userAnswer: "" };
-		drillActions.recordAttempt(
-			false,
-			drillActions.getEffectiveTimeLimit(),
-			{ ...logData, weakAreaIdentifier: form.weakAreaIdentifier ?? form.id },
-			true,
-		);
+		drillActions.recordAttempt(false, drillActions.getEffectiveTimeLimit(), logData, true);
 	};
 
 	useForwardKeyboard({ phase, mode, onSubmit: handleForwardSubmit });
@@ -298,10 +279,8 @@ export function Drill<K extends string = string>(props: DrillProps<K>) {
 		const config: DrillStoreConfig = {
 			drillId: props.drillId,
 			items: props.items,
-			speeds: props.speeds,
-			sessionType: props.sessionType,
 			userId: auth?.userId ?? 0,
-			defaultSessionSize: props.defaultSessionSize,
+			sessionSize: props.sessionSize,
 			onComplete: props.onComplete,
 			sessionCallbacks: SESSION_CALLBACKS,
 		};

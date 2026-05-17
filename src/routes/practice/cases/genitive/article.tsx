@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { ParadigmTable } from "../../components/ParadigmTable";
 import type { SimpleListItem } from "../../components/engines/deck";
 import { Drill } from "../../components/engines/drill";
 
@@ -58,9 +59,9 @@ const FORMS: SimpleListItem[] = [
 	},
 ];
 
-const CATEGORIES = [
-	{ id: "singular", label: "Singular" },
-	{ id: "plural", label: "Plural" },
+const PARADIGM_ROWS = [
+	{ label: "Gen sg", forms: ["του", "της", "του"] as [string, string, string] },
+	{ label: "Gen pl", forms: ["των", "των", "των"] as [string, string, string] },
 ];
 
 export const Route = createFileRoute("/practice/cases/genitive/article")({
@@ -74,11 +75,11 @@ function ArticleOwnerDrill() {
 			drillId="articles-article-owner"
 			items={FORMS}
 			title="Article (Owner)"
-			subtitle="6 forms / timed"
+			subtitle="Genitive articles"
 			colorTheme="olive"
 			forwardDesc="Gender + number → article (Owner)"
 			reverseDesc="Article → recall gender + number (self-assess)"
-			categories={CATEGORIES}
+			configExtras={<ParadigmTable rows={PARADIGM_ROWS} />}
 		/>
 	);
 }

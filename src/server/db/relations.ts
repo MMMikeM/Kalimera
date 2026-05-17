@@ -6,11 +6,9 @@ export const relations = defineRelations(schema, (r) => ({
 	users: {
 		practiceSessions: r.many.practiceSessions(),
 		practiceAttempts: r.many.practiceAttempts(),
-		weakAreas: r.many.weakAreas(),
-		vocabularySkills: r.many.vocabularySkills(),
+		vocabReviews: r.many.vocabReviews(),
 		vocabDailyResults: r.many.vocabDailyResults(),
 		vocabMastery: r.many.vocabMastery(),
-		milestonesAchieved: r.many.milestonesAchieved(),
 		userProgress: r.one.userProgress({
 			from: r.users.id,
 			to: r.userProgress.userId,
@@ -33,7 +31,7 @@ export const relations = defineRelations(schema, (r) => ({
 		verbConjugations: r.many.verbConjugations(),
 		verbImperatives: r.many.verbImperatives(),
 		vocabularyTags: r.many.vocabularyTags(),
-		vocabularySkills: r.many.vocabularySkills(),
+		vocabReviews: r.many.vocabReviews(),
 		practiceAttempts: r.many.practiceAttempts(),
 		vocabDailyResults: r.many.vocabDailyResults(),
 		vocabMastery: r.many.vocabMastery(),
@@ -98,35 +96,23 @@ export const relations = defineRelations(schema, (r) => ({
 			to: r.practiceSessions.id,
 		}),
 		vocabulary: r.one.vocabulary({
-			from: r.practiceAttempts.vocabularyId,
+			from: r.practiceAttempts.vocabId,
 			to: r.vocabulary.id,
 		}),
 	},
-	weakAreas: {
+	vocabReviews: {
 		user: r.one.users({
-			from: r.weakAreas.userId,
-			to: r.users.id,
-		}),
-	},
-	vocabularySkills: {
-		user: r.one.users({
-			from: r.vocabularySkills.userId,
+			from: r.vocabReviews.userId,
 			to: r.users.id,
 		}),
 		vocabulary: r.one.vocabulary({
-			from: r.vocabularySkills.vocabularyId,
+			from: r.vocabReviews.vocabId,
 			to: r.vocabulary.id,
 		}),
 	},
 	userProgress: {
 		user: r.one.users({
 			from: r.userProgress.userId,
-			to: r.users.id,
-		}),
-	},
-	milestonesAchieved: {
-		user: r.one.users({
-			from: r.milestonesAchieved.userId,
 			to: r.users.id,
 		}),
 	},

@@ -3,12 +3,16 @@ import { z } from "zod";
 
 import { adjacentCefrPool } from "@/lib/cefr";
 import type { DrillQuestion } from "@/lib/drill/generate-questions";
+import type { DrillBucket } from "@/lib/drill/types";
+import { typedEntries } from "@/lib/object";
 import { requireAuth } from "@/server/auth/session";
-import type { CefrLevel } from "@/server/db/enums";
 import { getDrillVocabPool } from "@/server/db/queries/drill-pool";
 import { ensureUserProgress } from "@/server/db/queries/user-progress";
 import { getVerbsWithConjugationsForTense } from "@/server/db/queries/vocabulary";
 
+// TODO: view concern — prompt strings should be assembled client-side from
+// structured data (person, tense, stem). DrillQuestion.prompt is currently a
+// pre-built string, so this lives here until that interface is refactored.
 const PERSON_LABELS: Record<string, string> = {
 	sg1: "I",
 	sg2: "you",
@@ -29,27 +33,31 @@ const FUTURE_LABELS: Record<string, string> = {
 
 const getVerbConjugationQuestions = async (
 	userId: number,
-	_limit: number,
+	limit: number,
 	tense: "present" | "aorist" | "future",
 	idPrefix: string,
 	timeLimit: number,
 	drillId: string,
 ): Promise<DrillQuestion[]> => {
-	const progress = await ensureUserProgress(userId);
-	const currentCefrLevel = progress.currentCefrLevel as CefrLevel;
+	const { currentCefrLevel } = await ensureUserProgress(userId);
 
 	const pool = await getDrillVocabPool({
 		userId,
 		drillId,
-		wordType: "verb",
+		wordTypes: ["verb"],
 		cefrPool: adjacentCefrPool(currentCefrLevel),
+		limit,
 	});
 
-	if (pool.length === 0) return [];
+	const entries = typedEntries(pool);
+	const allIds = entries.flatMap(([, ids]) => ids);
 
-	const allVerbRows = await getVerbsWithConjugationsForTense(pool, tense);
-	const idOrder = new Map(pool.map((id, i) => [id, i]));
-	const vocabRows = allVerbRows.sort((a, b) => (idOrder.get(a.id) ?? 999) - (idOrder.get(b.id) ?? 999));
+	const bucketMap = new Map<number, DrillBucket>();
+	for (const [bucket, ids] of entries) {
+		for (const id of ids) bucketMap.set(id, bucket);
+	}
+
+	const vocabRows = await getVerbsWithConjugationsForTense(allIds, tense);
 
 	const labels = tense === "future" ? FUTURE_LABELS : PERSON_LABELS;
 	const questions: DrillQuestion[] = [];
@@ -68,8 +76,8 @@ const getVerbConjugationQuestions = async (
 				prompt,
 				correctGreek: conj.form,
 				timeLimit,
-				vocabularyId: vocab.id,
-				weakAreaIdentifier: String(vocab.id),
+				vocabId: vocab.id,
+				bucket: bucketMap.get(vocab.id),
 			});
 		}
 	}

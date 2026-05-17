@@ -7,6 +7,7 @@ import type React from "react";
 import { ContentSection } from "@/components/ContentSection";
 import { MonoText } from "@/components/MonoText";
 import { TabHero } from "@/components/TabHero";
+import { typedEntries } from "@/lib/object";
 import { getVocabBySlug } from "@/server/db/queries/vocabulary";
 import type { Vocabulary } from "@/server/db/types";
 
@@ -320,7 +321,7 @@ function NounsRefactorPage() {
 			</div>
 
 			<div className="space-y-4">
-				{Object.entries(categories).map(([cName, cData]) => (
+				{typedEntries(categories).map(([cName, cData]) => (
 					<CategorySection categoryKey={cName} category={cData} key={cName} />
 				))}
 			</div>

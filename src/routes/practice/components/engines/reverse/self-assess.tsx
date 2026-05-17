@@ -29,7 +29,6 @@ export function SelfAssessReverse() {
 			prompt: currentForm.greek,
 			correctAnswer: currentForm.label,
 			userAnswer: isCorrect ? "self:correct" : "self:wrong",
-			weakAreaIdentifier: currentForm.weakAreaIdentifier ?? currentForm.id,
 		});
 	};
 

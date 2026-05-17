@@ -3,8 +3,9 @@ import { z } from "zod";
 
 import { adjacentCefrPool } from "@/lib/cefr";
 import type { DrillQuestion } from "@/lib/drill/generate-questions";
+import type { DrillBucket } from "@/lib/drill/types";
+import { typedEntries } from "@/lib/object";
 import { requireAuth } from "@/server/auth/session";
-import type { CefrLevel } from "@/server/db/enums";
 import { getDrillVocabPool } from "@/server/db/queries/drill-pool";
 import { getVocabularyWithNominalForms } from "@/server/db/queries/nominal-forms";
 import { ensureUserProgress } from "@/server/db/queries/user-progress";
@@ -27,23 +28,27 @@ async function getNominalReviewQuestionsImpl(
 	userId: number,
 	wordType: "noun" | "adjective",
 	drillId: string,
-	_limit: number,
+	limit: number,
 ): Promise<DrillQuestion[]> {
-	const progress = await ensureUserProgress(userId);
-	const currentCefrLevel = progress.currentCefrLevel as CefrLevel;
+	const { currentCefrLevel } = await ensureUserProgress(userId);
 
 	const pool = await getDrillVocabPool({
 		userId,
 		drillId,
-		wordType,
+		wordTypes: [wordType],
 		cefrPool: adjacentCefrPool(currentCefrLevel),
+		limit,
 	});
 
-	if (pool.length === 0) return [];
+	const entries = typedEntries(pool);
+	const allIds = entries.flatMap(([, ids]) => ids);
 
-	const rows = await getVocabularyWithNominalForms(wordType, pool);
-	const idOrder = new Map(pool.map((id, i) => [id, i]));
-	rows.sort((a, b) => (idOrder.get(a.id) ?? 999) - (idOrder.get(b.id) ?? 999));
+	const bucketMap = new Map<number, DrillBucket>();
+	for (const [bucket, ids] of entries) {
+		for (const id of ids) bucketMap.set(id, bucket);
+	}
+
+	const rows = await getVocabularyWithNominalForms(wordType, allIds);
 
 	const questions: DrillQuestion[] = [];
 	for (const vocab of rows) {
@@ -57,7 +62,8 @@ async function getNominalReviewQuestionsImpl(
 				prompt: `${vocab.englishTranslation} (${caseHint}, ${numberHint}${genderHint})`,
 				correctGreek: greekFull,
 				timeLimit: 5000,
-				vocabularyId: vocab.id,
+				vocabId: vocab.id,
+				bucket: bucketMap.get(vocab.id),
 			});
 		}
 	}

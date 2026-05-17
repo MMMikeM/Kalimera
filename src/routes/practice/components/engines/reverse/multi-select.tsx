@@ -69,7 +69,6 @@ export function MultiSelectReverse<K extends string>({ dimensions }: MultiSelect
 				prompt: currentForm.greek,
 				correctAnswer: currentForm.label,
 				userAnswer: Object.values(sel).join(","),
-				weakAreaIdentifier: currentForm.weakAreaIdentifier ?? currentForm.id,
 			});
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps

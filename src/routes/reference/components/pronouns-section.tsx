@@ -17,6 +17,7 @@ import {
 	type PronounParadigm,
 	SUBJECT_PRONOUNS,
 } from "@/constants/pronouns";
+import { typedEntries } from "@/lib/object";
 
 import { BandHeading } from "./BandHeading";
 import { PronounDecisionGuide } from "./pronoun-decision-guide";
@@ -339,7 +340,7 @@ export const PronounsSection: React.FC = () => {
 				/>
 				<Card variant="bordered" padding="lg" className="border-stone-200 bg-white">
 					<div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-						{Object.entries(phraseGroups).map(([category, phrases]) => (
+						{typedEntries(phraseGroups).map(([category, phrases]) => (
 							<div key={category}>
 								<h4 className="mb-2 text-xs font-semibold tracking-wide text-stone-500 uppercase">
 									{CATEGORY_LABELS[category] || category}

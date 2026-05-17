@@ -191,7 +191,7 @@ function PossessivesDrill() {
 			items={POSSESSIVES}
 			reverse={{ kind: "multi-select", dimensions: DIMENSIONS }}
 			configExtras={<Paradigm />}
-			defaultSessionSize={10}
+			sessionSize={10}
 			forwardPrompt={(form) => {
 				const f = form as (typeof POSSESSIVES)[number];
 				const english = ENGLISH[f.id] ?? "";

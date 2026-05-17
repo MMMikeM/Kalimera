@@ -9,14 +9,14 @@ import {
 	getTimeInvested,
 } from "@/server/db/queries/analytics/progress";
 import { listCompletedPracticeSessionsForStreak } from "@/server/db/queries/practice-sessions";
-import { getSkillStats } from "@/server/db/queries/vocabulary-skills";
+import { getReviewStats } from "@/server/db/queries/vocab-reviews";
 
 export const getProgressDataFn = createServerFn({ method: "GET" }).handler(async () => {
 	const { userId } = requireAuth();
 
 	const [stats, calendarDates, accuracyTrends, timeInvested, completedSessions] = await Promise.all(
 		[
-			getSkillStats(userId),
+			getReviewStats(userId),
 			getPracticeDatesForCalendar(userId, 3),
 			getAccuracyTrends(userId, 30),
 			getTimeInvested(userId),
