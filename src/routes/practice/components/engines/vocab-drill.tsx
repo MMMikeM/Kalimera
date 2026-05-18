@@ -6,7 +6,6 @@ import {
 	generateQuestions,
 } from "@/lib/drill/generate-questions";
 import { greekToPhonetic } from "@/lib/greek-transliteration";
-import { shuffle } from "@/lib/shuffle";
 
 import type { DrillForm } from "./deck";
 import { Drill } from "./drill";
@@ -29,7 +28,7 @@ const toForm = (q: DrillQuestion): DrillForm => ({
 export function VocabDrillPage({ category, drillId, initialQuestions }: VocabDrillPageProps) {
 	const items = useMemo(() => {
 		const source = initialQuestions?.length ? initialQuestions : generateQuestions([category], 30);
-		return shuffle([...source]).map(toForm);
+		return source.map(toForm);
 	}, [category, initialQuestions]);
 
 	const categoryConfig = CATEGORY_CONFIG[category];

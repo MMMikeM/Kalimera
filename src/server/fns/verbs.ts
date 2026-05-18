@@ -6,6 +6,7 @@ import type { DrillQuestion } from "@/lib/drill/generate-questions";
 import type { DrillBucket } from "@/lib/drill/types";
 import { typedEntries } from "@/lib/object";
 import { requireAuth } from "@/server/auth/session";
+import type { PersonNumber } from "@/server/db/enums";
 import { getDrillVocabPool } from "@/server/db/queries/drill-pool";
 import { ensureUserProgress } from "@/server/db/queries/user-progress";
 import { getVerbsWithConjugationsForTense } from "@/server/db/queries/vocabulary";
@@ -34,10 +35,11 @@ const FUTURE_LABELS: Record<string, string> = {
 const getVerbConjugationQuestions = async (
 	userId: number,
 	limit: number,
-	tense: "present" | "aorist" | "future",
+	tense: "present" | "aorist" | "past_continuous" | "future",
 	idPrefix: string,
 	timeLimit: number,
 	drillId: string,
+	persons?: PersonNumber[],
 ): Promise<DrillQuestion[]> => {
 	const { currentCefrLevel } = await ensureUserProgress(userId);
 
@@ -63,7 +65,10 @@ const getVerbConjugationQuestions = async (
 	const questions: DrillQuestion[] = [];
 	for (const vocab of vocabRows) {
 		const stem = vocab.englishTranslation.replace(/^I /, "");
-		for (const conj of vocab.verbConjugations) {
+		const conjForms = persons
+			? vocab.verbConjugations.filter((c) => persons.includes(c.person))
+			: vocab.verbConjugations;
+		for (const conj of conjForms) {
 			const personLabel = labels[conj.person] ?? conj.person;
 			const prompt =
 				tense === "future"
@@ -89,6 +94,18 @@ async function getVerbDrillQuestionsImpl(userId: number, limit: number) {
 	return getVerbConjugationQuestions(userId, limit, "present", "db-verb-", 3500, "verbs-present");
 }
 
+async function getPresentSg1QuestionsImpl(userId: number, limit: number) {
+	return getVerbConjugationQuestions(
+		userId,
+		limit,
+		"present",
+		"db-verb-sg1-",
+		3000,
+		"verbs-vocabulary-sg1",
+		["sg1"],
+	);
+}
+
 async function getAoristDrillQuestionsImpl(userId: number, limit: number) {
 	return getVerbConjugationQuestions(
 		userId,
@@ -97,6 +114,18 @@ async function getAoristDrillQuestionsImpl(userId: number, limit: number) {
 		"db-verb-aorist-",
 		4500,
 		"verbs-aorist-conjugation",
+	);
+}
+
+async function getAoristSg1QuestionsImpl(userId: number, limit: number) {
+	return getVerbConjugationQuestions(
+		userId,
+		limit,
+		"aorist",
+		"db-verb-aor-sg1-",
+		4000,
+		"verbs-aorist-sg1",
+		["sg1"],
 	);
 }
 
@@ -118,11 +147,25 @@ export const getVerbDrillQuestionsFn = createServerFn({ method: "GET" })
 		return getVerbDrillQuestionsImpl(userId, data.limit);
 	});
 
+export const getPresentSg1QuestionsFn = createServerFn({ method: "GET" })
+	.inputValidator(z.object({ limit: z.number() }))
+	.handler(async ({ data }) => {
+		const { userId } = requireAuth();
+		return getPresentSg1QuestionsImpl(userId, data.limit);
+	});
+
 export const getAoristDrillQuestionsFn = createServerFn({ method: "GET" })
 	.inputValidator(z.object({ limit: z.number() }))
 	.handler(async ({ data }) => {
 		const { userId } = requireAuth();
 		return getAoristDrillQuestionsImpl(userId, data.limit);
+	});
+
+export const getAoristSg1QuestionsFn = createServerFn({ method: "GET" })
+	.inputValidator(z.object({ limit: z.number() }))
+	.handler(async ({ data }) => {
+		const { userId } = requireAuth();
+		return getAoristSg1QuestionsImpl(userId, data.limit);
 	});
 
 export const getFutureDrillQuestionsFn = createServerFn({ method: "GET" })

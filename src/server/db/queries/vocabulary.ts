@@ -87,7 +87,7 @@ export type VerbConjugationGraphRow = NonNullable<
 
 export const getVerbsWithConjugationsForTense = async (
 	vocabIds: number[],
-	tense: "present" | "aorist" | "future",
+	tense: "present" | "aorist" | "past_continuous" | "future",
 ) => {
 	if (vocabIds.length === 0) return [];
 	return await db.query.vocabulary.findMany({
