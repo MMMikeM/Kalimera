@@ -68,19 +68,28 @@ export const getDrillVocabPool = async ({
 		new: [],
 	};
 
+	// Words with interval > this threshold AND not yet due are excluded from the pool.
+	// They're well-known — only re-enter when SM-2 schedules them due.
+	const GRADUATED_INTERVAL_DAYS = 7;
+
 	const matchBucket = (review?: {
 		nextReviewAt: number | null;
 		intervalDays: number | null;
-	}): DrillBucket => {
+	}): DrillBucket | null => {
 		if (!review) return "new";
 		const { intervalDays, nextReviewAt } = review;
-		if (!nextReviewAt || nextReviewAt <= now || !intervalDays) return "inProgress";
+		const isDue = !nextReviewAt || nextReviewAt <= now;
+		if (!isDue && (intervalDays ?? 0) >= GRADUATED_INTERVAL_DAYS) return null; // graduated — exclude
+		if (isDue || !intervalDays) return "inProgress";
 		if (intervalDays <= 3) return "tier1";
 		if (intervalDays <= 7) return "tier2";
 		return "tier3";
 	};
 
-	candidates.forEach((c) => buckets[matchBucket(c.vocabReviews[0])].push(c));
+	for (const c of candidates) {
+		const bucket = matchBucket(c.vocabReviews[0]);
+		if (bucket) buckets[bucket].push(c);
+	}
 
 	const sortByLastWrongThenCefrThenFrequency = (a: Candidate, b: Candidate) => {
 		const aWrong = a.vocabDailyResults[0]?.correctFirstTry === false ? 0 : 1;
