@@ -57,8 +57,8 @@ export const practiceAttempts = sqliteTable(
 );
 
 /** SM-2 review schedule per (user, vocab). Powers dashboard due-count and push notifications. */
-export const vocabReviews = sqliteTable(
-	"vocabulary_reviews",
+export const vocabProgress = sqliteTable(
+	"vocabulary_progress",
 	{
 		userId: cascadeFk("user_id", () => users.id),
 		vocabId: cascadeFk("vocab_id", () => vocabulary.id),
@@ -70,7 +70,7 @@ export const vocabReviews = sqliteTable(
 	},
 	(table) => [
 		primaryKey({ columns: [table.userId, table.vocabId] }),
-		index("idx_vocabulary_reviews_user_review").on(table.userId, table.nextReviewAt),
+		index("idx_vocabulary_progress_user_review").on(table.userId, table.nextReviewAt),
 	],
 );
 
@@ -84,8 +84,8 @@ export const userProgress = sqliteTable(
 	(t) => [primaryKey({ columns: [t.userId] })],
 );
 
-export const vocabDailyResults = sqliteTable(
-	"vocab_daily_results",
+export const drillDailyResults = sqliteTable(
+	"drill_daily_results",
 	{
 		userId: cascadeFk("user_id", () => users.id),
 		vocabId: cascadeFk("vocab_id", () => vocabulary.id),
@@ -96,13 +96,13 @@ export const vocabDailyResults = sqliteTable(
 	},
 	(t) => [
 		primaryKey({ columns: [t.userId, t.vocabId, t.drillId, t.practicedDate] }),
-		index("idx_vocab_daily_user_drill").on(t.userId, t.drillId),
+		index("idx_drill_daily_user_drill").on(t.userId, t.drillId),
 	],
 );
 
 /** Per-drill tier mastery schedule. Powers getDrillVocabPool bucket assignment. */
-export const vocabMastery = sqliteTable(
-	"vocab_mastery",
+export const drillProgress = sqliteTable(
+	"drill_progress",
 	{
 		userId: cascadeFk("user_id", () => users.id),
 		vocabId: cascadeFk("vocab_id", () => vocabulary.id),
@@ -113,6 +113,6 @@ export const vocabMastery = sqliteTable(
 	},
 	(t) => [
 		primaryKey({ columns: [t.userId, t.vocabId, t.drillId] }),
-		index("idx_vocab_mastery_review").on(t.userId, t.drillId, t.nextReviewAt),
+		index("idx_drill_progress_review").on(t.userId, t.drillId, t.nextReviewAt),
 	],
 );

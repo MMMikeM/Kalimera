@@ -17,18 +17,31 @@ interface DrillPoolOptions {
 
 export type DrillPool = Record<DrillBucket, number[]>;
 
+/** Length-normalised ms/char + offset. Comparable across short (πάω) and long (Καταλαβαίνουν) words. */
+const slowness = (ms: number, answer: string) => 1 + ms / Math.max(answer.length, 3);
+
+const median = (nums: number[]): number => {
+	if (nums.length === 0) return 0;
+	const sorted = [...nums].sort((a, b) => a - b);
+	const mid = Math.floor(sorted.length / 2);
+	return sorted.length % 2 === 0 ? (sorted[mid - 1]! + sorted[mid]!) / 2 : sorted[mid]!;
+};
+
 /**
- * Priority-ordered vocab pool for SRS-lite drills.
+ * Priority-ordered vocab pool for SRS drills with two-layer separation:
  *
- * Buckets (high → low priority) — keyed on lexical SM-2 state (vocab_reviews):
- *   tier1  — SM-2 due, short interval (≤3 days)  → most fragile, just past due
- *   tier2  — SM-2 due, medium interval (≤7 days)
- *   tier3  — SM-2 due, long interval (>7 days)    → well-known, needs refresh
- *   inProgress — has vocab_reviews row but not yet due (actively learning)
- *   new        — never encountered in any drill
+ *   drillProgress  (user, vocab, drillId) — schema mastery: "can I produce this in THIS drill?"
+ *   vocabProgress  (user, vocab)          — lexical mastery: "do I know this word?"
  *
- * Excluded: words where nextReviewAt > now AND intervalDays > 1 (still fresh).
- * inProgress words fill the deck as lower-priority material.
+ * Buckets (high → low priority):
+ *   tier1      — mastery due, wrong last day           → actively failing, surface first
+ *   tier2      — mastery due, drillProgress tier ≤ 1   → recent schema learning
+ *   tier3      — mastery due, drillProgress tier ≥ 2   → established, scheduled refresh
+ *   inProgress — no mastery for this drill, lexically known → bootstrap cross-drill transfer
+ *   new        — no mastery, no lexical history        → truly new
+ *
+ * Excluded: drillProgress exists AND nextReviewAt > now.
+ * tier2/tier3 sorted slowest-per-char first within bucket (automatisation signal).
  */
 export const getDrillVocabPool = async ({
 	cefrPool,
@@ -44,14 +57,24 @@ export const getDrillVocabPool = async ({
 		where: { wordType: { in: wordTypes }, cefrLevel: { in: cefrPool } },
 		columns: { id: true, cefrLevel: true, frequencyRank: true },
 		with: {
-			vocabReviews: {
-				where: { userId },
-				columns: { nextReviewAt: true, intervalDays: true, lastReviewedAt: true },
+			drillProgress: {
+				where: { userId, drillId },
+				columns: { nextReviewAt: true, tier: true },
 			},
-			vocabDailyResults: {
+			vocabProgress: {
+				where: { userId },
+				columns: { vocabId: true },
+			},
+			drillDailyResults: {
 				where: { userId, drillId },
 				columns: { practicedDate: true, correctFirstTry: true },
 				orderBy: { practicedDate: "desc" },
+			},
+			practiceAttempts: {
+				where: { userId, drillId },
+				columns: { timeTaken: true, correctAnswer: true },
+				orderBy: { attemptedAt: "desc" },
+				limit: 5,
 			},
 		},
 		orderBy: (t) =>
@@ -68,50 +91,55 @@ export const getDrillVocabPool = async ({
 		new: [],
 	};
 
-	// Words with interval > this threshold AND not yet due are excluded from the pool.
-	// They're well-known — only re-enter when SM-2 schedules them due.
-	const GRADUATED_INTERVAL_DAYS = 7;
-
-	const matchBucket = (review?: {
-		nextReviewAt: number | null;
-		intervalDays: number | null;
-	}): DrillBucket | null => {
-		if (!review) return "new";
-		const { intervalDays, nextReviewAt } = review;
-		const isDue = !nextReviewAt || nextReviewAt <= now;
-		if (!isDue && (intervalDays ?? 0) >= GRADUATED_INTERVAL_DAYS) return null; // graduated — exclude
-		if (isDue || !intervalDays) return "inProgress";
-		if (intervalDays <= 3) return "tier1";
-		if (intervalDays <= 7) return "tier2";
-		return "tier3";
+	const matchBucket = (c: Candidate): DrillBucket | null => {
+		const mastery = c.drillProgress[0];
+		if (mastery) {
+			const isDue = !mastery.nextReviewAt || mastery.nextReviewAt <= now;
+			if (!isDue) return null; // schema mastered for this drill, not due — exclude
+			const wasWrongLastDay = c.drillDailyResults[0]?.correctFirstTry === false;
+			if (wasWrongLastDay) return "tier1";
+			return (mastery.tier ?? 0) <= 1 ? "tier2" : "tier3";
+		}
+		return c.vocabProgress.length > 0 ? "inProgress" : "new";
 	};
 
 	for (const c of candidates) {
-		const bucket = matchBucket(c.vocabReviews[0]);
+		const bucket = matchBucket(c);
 		if (bucket) buckets[bucket].push(c);
 	}
 
-	const sortByLastWrongThenCefrThenFrequency = (a: Candidate, b: Candidate) => {
-		const aWrong = a.vocabDailyResults[0]?.correctFirstTry === false ? 0 : 1;
-		const bWrong = b.vocabDailyResults[0]?.correctFirstTry === false ? 0 : 1;
-		if (aWrong !== bWrong) return aWrong - bWrong;
+	const medianSlowness = (c: Candidate): number =>
+		median(c.practiceAttempts.map((a) => slowness(a.timeTaken ?? 0, a.correctAnswer)));
+
+	// tier2/tier3: slowest-per-char first (surface automation gaps), then CEFR, then frequency
+	const sortSlow = (a: Candidate, b: Candidate) => {
+		const diff = medianSlowness(b) - medianSlowness(a);
+		if (diff !== 0) return diff;
 		const aPrimary = a.cefrLevel === primaryCefr ? 0 : 1;
 		const bPrimary = b.cefrLevel === primaryCefr ? 0 : 1;
 		if (aPrimary !== bPrimary) return aPrimary - bPrimary;
 		return (a.frequencyRank ?? 999999) - (b.frequencyRank ?? 999999);
 	};
 
-	const processBucket = (bucket: Candidate[]) =>
+	// inProgress/new/tier1: no per-drill RT signal yet — CEFR + frequency only
+	const sortCefrFreq = (a: Candidate, b: Candidate) => {
+		const aPrimary = a.cefrLevel === primaryCefr ? 0 : 1;
+		const bPrimary = b.cefrLevel === primaryCefr ? 0 : 1;
+		if (aPrimary !== bPrimary) return aPrimary - bPrimary;
+		return (a.frequencyRank ?? 999999) - (b.frequencyRank ?? 999999);
+	};
+
+	const processBucket = (bucket: Candidate[], sortFn: typeof sortCefrFreq) =>
 		shuffle(bucket)
-			.toSorted(sortByLastWrongThenCefrThenFrequency)
+			.toSorted(sortFn)
 			.slice(0, limit)
 			.map((c) => c.id);
 
 	return {
-		tier1: processBucket(buckets.tier1),
-		tier2: processBucket(buckets.tier2),
-		tier3: processBucket(buckets.tier3),
-		inProgress: processBucket(buckets.inProgress),
-		new: processBucket(buckets.new),
+		tier1: processBucket(buckets.tier1, sortCefrFreq),
+		tier2: processBucket(buckets.tier2, sortSlow),
+		tier3: processBucket(buckets.tier3, sortSlow),
+		inProgress: processBucket(buckets.inProgress, sortCefrFreq),
+		new: processBucket(buckets.new, sortCefrFreq),
 	};
 };

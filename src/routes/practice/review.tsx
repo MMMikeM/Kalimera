@@ -4,7 +4,7 @@ import { ChevronRight } from "lucide-react";
 
 import { DRILL_CATEGORY_LABELS, DRILL_REGISTRY, type DrillCategory } from "@/constants/drills";
 import { requireAuth } from "@/server/auth/session";
-import { getSchemaRust } from "@/server/db/queries/practice-attempts";
+import { getSchemaRust } from "@/server/db/queries/analytics/drill-stats";
 
 const getReviewDrillsFn = createServerFn({ method: "GET" }).handler(async () => {
 	const { userId } = requireAuth();

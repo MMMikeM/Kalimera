@@ -6,7 +6,7 @@ export const getNewVocabularyItems = async (userId: number, limit = 20) => {
 	return await db.query.vocabulary.findMany({
 		where: {
 			NOT: {
-				vocabReviews: {
+				vocabProgress: {
 					userId,
 				},
 			},

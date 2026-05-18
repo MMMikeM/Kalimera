@@ -4,8 +4,8 @@ import { streakLengthFromCompletedSessionDates } from "@/lib/practice-streak";
 import { calculateDaysUntilNextFreeze, getFreezeStatus } from "@/lib/streak";
 import { diffInDays, fromEpochSeconds, mondayBasedDayOfWeek, toPlainDate, today } from "@/lib/time";
 import { requireAuth } from "@/server/auth/session";
+import { getSchemaRust, RUST_THRESHOLD_VALUE } from "@/server/db/queries/analytics/drill-stats";
 import { getPushSubscriptionByUserId } from "@/server/db/queries/notifications/push-subscriptions";
-import { getSchemaRust, RUST_THRESHOLD_VALUE } from "@/server/db/queries/practice-attempts";
 import {
 	getLastPracticeDate,
 	listCompletedPracticeSessionsForStreak,

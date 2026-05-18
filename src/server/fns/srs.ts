@@ -3,13 +3,14 @@ import { z } from "zod";
 
 import { requireAuth } from "@/server/auth/session";
 import { transaction } from "@/server/db";
+import { insertDailyResults } from "@/server/db/queries/drill-daily-results";
+import { promoteDrillProgress } from "@/server/db/queries/drill-progress";
 import { listSessionVocabAttempts, recordAttempt } from "@/server/db/queries/practice-attempts";
 import {
 	type PracticeSessionInsert,
 	completeSession,
 	startSession,
 } from "@/server/db/queries/practice-sessions";
-import { insertDailyResults } from "@/server/db/queries/vocab-daily-results";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // SERVER FUNCTIONS — SRS lifecycle
@@ -92,6 +93,10 @@ export const completeSessionFn = createServerFn({ method: "POST" })
 				})),
 			);
 		});
+
+		const practicedIds = [...firstTryByVocab.keys()];
+		const drillId = [...firstTryByVocab.values()][0]?.drillId ?? "";
+		await promoteDrillProgress({ userId, drillId, practicedIds });
 
 		return { success: true, session };
 	});
