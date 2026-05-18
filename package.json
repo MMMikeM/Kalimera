@@ -22,6 +22,7 @@
 		"db:push": "drizzle-kit push",
 		"db:studio": "drizzle-kit studio",
 		"db:seed": "tsx src/scripts/seed.ts",
+		"query": "tsx --env-file=.env scripts/query.ts",
 		"db:generate-data": "tsx src/scripts/generate-seed-data.ts",
 		"screenshots": "tsx screenshots/capture.ts",
 		"test": "vitest",

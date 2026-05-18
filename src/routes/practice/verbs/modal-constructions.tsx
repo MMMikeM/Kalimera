@@ -3,8 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import type { SimpleListItem } from "../components/engines/deck";
 import { Drill } from "../components/engines/drill";
 
-// Modal + να + subjunctive verb. Highest-payoff sentence construction in casual Greek.
-// Slots: θέλω να, πρέπει να, μπορώ να, ξέρω να (skip πάω να + bare να — chunk territory).
+// Modal + να + subjunctive (perfective form). Highest-payoff sentence construction in casual Greek.
 // Subjunctive form = aorist stem + present endings (same shape as future minus θα).
 
 const ITEMS: SimpleListItem[] = [
@@ -73,6 +72,54 @@ const ITEMS: SimpleListItem[] = [
 		label: "θέλω να",
 		category: "thelo",
 	},
+	{
+		id: "thelo-koimitho",
+		greek: "θέλω να κοιμηθώ",
+		greeklish: "thelo na koimithow",
+		english: "I want to sleep",
+		label: "θέλω να",
+		category: "thelo",
+	},
+	{
+		id: "theleis-pieis-kafe",
+		greek: "θέλεις να πιεις καφέ;",
+		greeklish: "theleis na pieis kafe",
+		english: "Do you want to drink coffee?",
+		label: "θέλω να",
+		category: "thelo",
+	},
+	{
+		id: "thelei-agorasei",
+		greek: "θέλει να αγοράσει κάτι",
+		greeklish: "thelei na agorasei kati",
+		english: "He wants to buy something",
+		label: "θέλω να",
+		category: "thelo",
+	},
+	{
+		id: "thelo-se-do",
+		greek: "θέλω να σε δω",
+		greeklish: "thelo na se do",
+		english: "I want to see you",
+		label: "θέλω να",
+		category: "thelo",
+	},
+	{
+		id: "den-thelo-perimeino",
+		greek: "δεν θέλω να περιμένω",
+		greeklish: "den thelo na perimenow",
+		english: "I don't want to wait",
+		label: "θέλω να",
+		category: "thelo",
+	},
+	{
+		id: "theleis-akouseis",
+		greek: "θέλεις να ακούσεις;",
+		greeklish: "theleis na akouseis",
+		english: "Do you want to listen?",
+		label: "θέλω να",
+		category: "thelo",
+	},
 
 	// πρέπει να
 	{
@@ -120,6 +167,54 @@ const ITEMS: SimpleListItem[] = [
 		greek: "πρέπει να καταλάβουν",
 		greeklish: "prepei na katalavoun",
 		english: "They have to understand",
+		label: "πρέπει να",
+		category: "prepei",
+	},
+	{
+		id: "prepei-akouseis",
+		greek: "πρέπει να ακούσεις",
+		greeklish: "prepei na akouseis",
+		english: "You have to listen",
+		label: "πρέπει να",
+		category: "prepei",
+	},
+	{
+		id: "prepei-vroume-tropo",
+		greek: "πρέπει να βρούμε τρόπο",
+		greeklish: "prepei na vroume tropo",
+		english: "We have to find a way",
+		label: "πρέπει να",
+		category: "prepei",
+	},
+	{
+		id: "prepei-milisi-autous",
+		greek: "πρέπει να μιλήσει με αυτούς",
+		greeklish: "prepei na milisi me autous",
+		english: "She has to talk to them",
+		label: "πρέπει να",
+		category: "prepei",
+	},
+	{
+		id: "prepei-fygoume-tora",
+		greek: "πρέπει να φύγουμε τώρα",
+		greeklish: "prepei na fygoume tora",
+		english: "We have to leave now",
+		label: "πρέπει να",
+		category: "prepei",
+	},
+	{
+		id: "prepei-to-peis",
+		greek: "πρέπει να το πεις",
+		greeklish: "prepei na to peis",
+		english: "You have to say it",
+		label: "πρέπει να",
+		category: "prepei",
+	},
+	{
+		id: "prepei-grapseis",
+		greek: "πρέπει να το γράψεις",
+		greeklish: "prepei na to grapseis",
+		english: "You have to write it",
 		label: "πρέπει να",
 		category: "prepei",
 	},
@@ -173,8 +268,56 @@ const ITEMS: SimpleListItem[] = [
 		label: "μπορώ να",
 		category: "boro",
 	},
+	{
+		id: "boro-voithiso",
+		greek: "μπορώ να βοηθήσω;",
+		greeklish: "boro na voithiso",
+		english: "Can I help?",
+		label: "μπορώ να",
+		category: "boro",
+	},
+	{
+		id: "boreis-mou-eksigiseis",
+		greek: "μπορείς να μου εξηγήσεις;",
+		greeklish: "boreis na mou eksigiseis",
+		english: "Can you explain to me?",
+		label: "μπορώ να",
+		category: "boro",
+	},
+	{
+		id: "den-borei-to-xerei",
+		greek: "δεν μπορεί να το ξέρει",
+		greeklish: "den borei na to xerei",
+		english: "She can't know it",
+		label: "μπορώ να",
+		category: "boro",
+	},
+	{
+		id: "boroume-xekinisoume",
+		greek: "μπορούμε να ξεκινήσουμε",
+		greeklish: "boroume na xekinisoume",
+		english: "We can start",
+		label: "μπορώ να",
+		category: "boro",
+	},
+	{
+		id: "den-boroun-erthoun",
+		greek: "δεν μπορούν να έρθουν",
+		greeklish: "den boroun na erthoun",
+		english: "They can't come",
+		label: "μπορώ να",
+		category: "boro",
+	},
+	{
+		id: "boreis-perimeneis",
+		greek: "μπορείς να περιμένεις;",
+		greeklish: "boreis na perimeneis",
+		english: "Can you wait?",
+		label: "μπορώ να",
+		category: "boro",
+	},
 
-	// μην — negation INSIDE the να-clause (not the matrix verb)
+	// να μην — negation INSIDE the να-clause (not the matrix verb)
 	{
 		id: "min-thelo-na-min-erthei",
 		greek: "θέλω να μην έρθει",
@@ -215,6 +358,30 @@ const ITEMS: SimpleListItem[] = [
 		label: "να μην",
 		category: "min",
 	},
+	{
+		id: "min-thelo-na-min-ksechasis",
+		greek: "θέλω να μην ξεχάσεις",
+		greeklish: "thelo na min ksechaseis",
+		english: "I want you not to forget",
+		label: "να μην",
+		category: "min",
+	},
+	{
+		id: "min-boreis-na-min-to-peis",
+		greek: "μπορείς να μην το πεις;",
+		greeklish: "boreis na min to peis",
+		english: "Can you not say it?",
+		label: "να μην",
+		category: "min",
+	},
+	{
+		id: "min-prepei-na-min-argisei",
+		greek: "πρέπει να μην αργήσει",
+		greeklish: "prepei na min argisi",
+		english: "He must not be late",
+		label: "να μην",
+		category: "min",
+	},
 ];
 
 const CATEGORIES = [
@@ -224,23 +391,23 @@ const CATEGORIES = [
 	{ id: "min", label: "να μην" },
 ];
 
-export const Route = createFileRoute("/practice/verbs/na-constructions")({
-	component: NaConstructionsDrill,
+export const Route = createFileRoute("/practice/verbs/modal-constructions")({
+	component: ModalConstructionsDrill,
 });
 
-function NaConstructionsDrill() {
+function ModalConstructionsDrill() {
 	return (
 		<Drill
-			drillId="verbs-na-constructions"
+			drillId="verbs-modal-constructions"
 			items={ITEMS}
-			title="να-constructions"
-			subtitle="25 modal + subjunctive sentences / timed"
+			title="Modal verbs"
+			subtitle="want to · have to · can"
 			colorTheme="honey"
 			forwardDesc="English → modal + να + verb"
 			reverseDesc="Greek → English (self-assess)"
 			categories={CATEGORIES}
 			referenceHref="/reference/verbs#na-constructions"
-			referenceLabel="Reference: να-constructions →"
+			referenceLabel="Reference: modal verbs →"
 		/>
 	);
 }

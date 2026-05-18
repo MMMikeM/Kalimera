@@ -6,18 +6,17 @@ import { GroupSection } from "../components/group-section";
 import { PhaseSection } from "../components/PhaseSection";
 
 export const presentDrills: Drill[] = [
-	// Present
 	{
-		id: "verbs-present",
-		to: "/practice/verbs/present",
-		title: "Basic verbs",
-		greek: "λύω · θέλω · μπορώ",
+		id: "verbs-vocabulary-sg1",
+		to: "/practice/verbs/present/vocabulary",
+		title: "Verb vocabulary",
+		greek: "γράφω · τρώω · μιλάω · θέλω",
 		minutes: 2,
 	},
 	{
 		id: "verbs-conjugation-endings",
 		to: "/practice/verbs/present/conjugations",
-		title: "Conjugations",
+		title: "Conjugation endings",
 		greek: "-ω · -εις · -ει · -ουμε · -ετε · -ουν",
 		minutes: 1,
 	},
@@ -35,29 +34,28 @@ export const presentDrills: Drill[] = [
 		greek: "είμαι · είσαι · είναι · είμαστε",
 		minutes: 1,
 	},
+	{
+		id: "verbs-present",
+		to: "/practice/verbs/present",
+		title: "Full conjugations",
+		greek: "γράφω · γράφεις · γράφει · γράφουμε",
+		minutes: 2,
+	},
 ];
 
 const pastDrills: Drill[] = [
-	// Past
 	{
-		id: "verbs-aorist-conjugation",
-		to: "/practice/verbs/past/aorist-conjugation",
-		title: "Conjugations",
-		greek: "έκανα · έκανες · έκανε · κάναμε",
+		id: "verbs-aorist-sg1",
+		to: "/practice/verbs/past/aorist-vocabulary",
+		title: "Verb vocabulary · past",
+		greek: "έφαγα · πήγα · είπα · έκανα",
 		minutes: 2,
 	},
 	{
 		id: "verbs-aorist-stems",
 		to: "/practice/verbs/past/aorist-stems",
-		title: "Irregular verbs",
+		title: "Irregular stems",
 		greek: "τρώω → έφαγα · πίνω → ήπια",
-		minutes: 1,
-	},
-	{
-		id: "verbs-eimai-past",
-		to: "/practice/verbs/past/eimai",
-		title: "είμαι · past",
-		greek: "ήμουν · ήσουν · ήταν · ήμασταν",
 		minutes: 1,
 	},
 	{
@@ -67,10 +65,30 @@ const pastDrills: Drill[] = [
 		greek: "γράφω → έγραψα · ανοίγω → άνοιξα",
 		minutes: 1,
 	},
+	{
+		id: "verbs-conjugation-endings",
+		to: "/practice/verbs/present/conjugations",
+		title: "Conjugation endings",
+		greek: "έκανα · -ες · -ε · -αμε · -ατε · -αν",
+		minutes: 1,
+	},
+	{
+		id: "verbs-imperfect-stative",
+		to: "/practice/verbs/past/imperfect-stative",
+		title: "Stative verbs · past",
+		greek: "ήμουν · είχα · ήθελα · ήξερα · μπορούσα",
+		minutes: 2,
+	},
+	{
+		id: "verbs-aorist-conjugation",
+		to: "/practice/verbs/past/aorist-conjugation",
+		title: "Full conjugations",
+		greek: "έκανα · έκανες · έκανε · κάναμε",
+		minutes: 2,
+	},
 ];
 
-const otherDrills: Drill[] = [
-	// Future
+const futureAndModalDrills: Drill[] = [
 	{
 		id: "verbs-future-conjugation",
 		to: "/practice/verbs/future-conjugation",
@@ -78,15 +96,13 @@ const otherDrills: Drill[] = [
 		greek: "θα γράψω · θα φάω · θα πάω",
 		minutes: 2,
 	},
-	// να-form
 	{
-		id: "verbs-na-constructions",
-		to: "/practice/verbs/na-constructions",
-		title: "να-constructions",
+		id: "verbs-modal-constructions",
+		to: "/practice/verbs/modal-constructions",
+		title: "Modal verbs",
 		greek: "θέλω να φάω · πρέπει να πάω · μπορώ να έρθω",
 		minutes: 2,
 	},
-	// Commands
 	{
 		id: "verbs-imperatives",
 		to: "/practice/verbs/imperatives",
@@ -109,8 +125,8 @@ const VerbsPage = () => (
 					<DrillButton key={d.id} from={Route.fullPath} {...d} />
 				))}
 			</PhaseSection>
-			<PhaseSection phase="Other">
-				{otherDrills.map((d) => (
+			<PhaseSection phase="Future & Modal">
+				{futureAndModalDrills.map((d) => (
 					<DrillButton key={d.id} from={Route.fullPath} {...d} />
 				))}
 			</PhaseSection>

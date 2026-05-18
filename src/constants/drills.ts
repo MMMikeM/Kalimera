@@ -120,22 +120,10 @@ export const DRILL_REGISTRY: Record<string, DrillMeta> = {
 		caseRole: "mixed",
 	},
 
-	// Verbs
-	"verbs-present": {
-		label: "Present Tense",
-		route: "/practice/verbs/present",
-		category: "verbs",
-		caseRole: null,
-	},
-	"verbs-eimai-present": {
-		label: "είμαι (present)",
-		route: "/practice/verbs/present/eimai",
-		category: "verbs",
-		caseRole: null,
-	},
-	"verbs-present-irregular": {
-		label: "Irregular Present",
-		route: "/practice/verbs/present/irregular",
+	// Verbs — Present
+	"verbs-vocabulary-sg1": {
+		label: "Verb Vocabulary (Present)",
+		route: "/practice/verbs/present/vocabulary",
 		category: "verbs",
 		caseRole: null,
 	},
@@ -145,15 +133,29 @@ export const DRILL_REGISTRY: Record<string, DrillMeta> = {
 		category: "verbs",
 		caseRole: null,
 	},
-	"verbs-aorist-conjugation": {
-		label: "Aorist Conjugation",
-		route: "/practice/verbs/past/aorist-conjugation",
+	"verbs-present-irregular": {
+		label: "Irregular Present",
+		route: "/practice/verbs/present/irregular",
 		category: "verbs",
 		caseRole: null,
 	},
-	"verbs-aorist-formation": {
-		label: "Aorist Formation",
-		route: "/practice/verbs/past/aorist-formation",
+	"verbs-eimai-present": {
+		label: "είμαι (present)",
+		route: "/practice/verbs/present/eimai",
+		category: "verbs",
+		caseRole: null,
+	},
+	"verbs-present": {
+		label: "Full Present",
+		route: "/practice/verbs/present",
+		category: "verbs",
+		caseRole: null,
+	},
+
+	// Verbs — Past
+	"verbs-aorist-sg1": {
+		label: "Verb Vocabulary (Past)",
+		route: "/practice/verbs/past/aorist-vocabulary",
 		category: "verbs",
 		caseRole: null,
 	},
@@ -163,27 +165,41 @@ export const DRILL_REGISTRY: Record<string, DrillMeta> = {
 		category: "verbs",
 		caseRole: null,
 	},
-	"verbs-eimai-past": {
-		label: "είμαι (past)",
-		route: "/practice/verbs/past/eimai",
+	"verbs-aorist-formation": {
+		label: "Aorist Formation",
+		route: "/practice/verbs/past/aorist-formation",
 		category: "verbs",
 		caseRole: null,
 	},
-	"verbs-imperatives": {
-		label: "Imperatives",
-		route: "/practice/verbs/imperatives",
+	"verbs-imperfect-stative": {
+		label: "Stative Verbs Past",
+		route: "/practice/verbs/past/imperfect-stative",
 		category: "verbs",
 		caseRole: null,
 	},
+	"verbs-aorist-conjugation": {
+		label: "Full Aorist",
+		route: "/practice/verbs/past/aorist-conjugation",
+		category: "verbs",
+		caseRole: null,
+	},
+
+	// Verbs — Future & Modal
 	"verbs-future-conjugation": {
 		label: "Future",
 		route: "/practice/verbs/future-conjugation",
 		category: "verbs",
 		caseRole: null,
 	},
-	"verbs-na-constructions": {
-		label: "να Constructions",
-		route: "/practice/verbs/na-constructions",
+	"verbs-modal-constructions": {
+		label: "Modal Verbs",
+		route: "/practice/verbs/modal-constructions",
+		category: "verbs",
+		caseRole: null,
+	},
+	"verbs-imperatives": {
+		label: "Imperatives",
+		route: "/practice/verbs/imperatives",
 		category: "verbs",
 		caseRole: null,
 	},
