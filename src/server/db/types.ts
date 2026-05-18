@@ -11,10 +11,10 @@ import type {
 	verbConjugations,
 	verbDetails,
 	verbImperatives,
-	vocabDailyResults,
-	vocabMastery,
+	drillDailyResults,
+	drillProgress,
 	vocabulary,
-	vocabReviews,
+	vocabProgress,
 	vocabularyTags,
 } from "./schema";
 
@@ -30,7 +30,7 @@ export type VerbConjugation = typeof verbConjugations.$inferSelect;
 export type VerbImperative = typeof verbImperatives.$inferSelect;
 export type PracticeSession = typeof practiceSessions.$inferSelect;
 export type PracticeAttempt = typeof practiceAttempts.$inferSelect;
-export type VocabReview = typeof vocabReviews.$inferSelect;
+export type VocabReview = typeof vocabProgress.$inferSelect;
 export type PushSubscription = typeof pushSubscriptions.$inferSelect;
 export type UserProgress = typeof userProgress.$inferSelect;
 export type NewUserProgress = typeof userProgress.$inferInsert;
@@ -48,9 +48,9 @@ export type NewVerbConjugation = typeof verbConjugations.$inferInsert;
 export type NewVerbImperative = typeof verbImperatives.$inferInsert;
 export type NewPracticeSession = typeof practiceSessions.$inferInsert;
 export type NewPracticeAttempt = typeof practiceAttempts.$inferInsert;
-export type NewVocabReview = typeof vocabReviews.$inferInsert;
+export type NewVocabReview = typeof vocabProgress.$inferInsert;
 export type NewPushSubscription = typeof pushSubscriptions.$inferInsert;
-export type VocabDailyResult = typeof vocabDailyResults.$inferSelect;
-export type NewVocabDailyResult = typeof vocabDailyResults.$inferInsert;
-export type VocabMastery = typeof vocabMastery.$inferSelect;
-export type NewVocabMastery = typeof vocabMastery.$inferInsert;
+export type DrillDailyResult = typeof drillDailyResults.$inferSelect;
+export type NewDrillDailyResult = typeof drillDailyResults.$inferInsert;
+export type drillProgress = typeof drillProgress.$inferSelect;
+export type NewdrillProgress = typeof drillProgress.$inferInsert;

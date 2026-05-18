@@ -6,9 +6,9 @@ export const relations = defineRelations(schema, (r) => ({
 	users: {
 		practiceSessions: r.many.practiceSessions(),
 		practiceAttempts: r.many.practiceAttempts(),
-		vocabReviews: r.many.vocabReviews(),
-		vocabDailyResults: r.many.vocabDailyResults(),
-		vocabMastery: r.many.vocabMastery(),
+		vocabProgress: r.many.vocabProgress(),
+		drillDailyResults: r.many.drillDailyResults(),
+		drillProgress: r.many.drillProgress(),
 		userProgress: r.one.userProgress({
 			from: r.users.id,
 			to: r.userProgress.userId,
@@ -31,10 +31,10 @@ export const relations = defineRelations(schema, (r) => ({
 		verbConjugations: r.many.verbConjugations(),
 		verbImperatives: r.many.verbImperatives(),
 		vocabularyTags: r.many.vocabularyTags(),
-		vocabReviews: r.many.vocabReviews(),
+		vocabProgress: r.many.vocabProgress(),
 		practiceAttempts: r.many.practiceAttempts(),
-		vocabDailyResults: r.many.vocabDailyResults(),
-		vocabMastery: r.many.vocabMastery(),
+		drillDailyResults: r.many.drillDailyResults(),
+		drillProgress: r.many.drillProgress(),
 	},
 	nounDetails: {
 		vocabulary: r.one.vocabulary({
@@ -100,13 +100,13 @@ export const relations = defineRelations(schema, (r) => ({
 			to: r.vocabulary.id,
 		}),
 	},
-	vocabReviews: {
+	vocabProgress: {
 		user: r.one.users({
-			from: r.vocabReviews.userId,
+			from: r.vocabProgress.userId,
 			to: r.users.id,
 		}),
 		vocabulary: r.one.vocabulary({
-			from: r.vocabReviews.vocabId,
+			from: r.vocabProgress.vocabId,
 			to: r.vocabulary.id,
 		}),
 	},
@@ -116,23 +116,23 @@ export const relations = defineRelations(schema, (r) => ({
 			to: r.users.id,
 		}),
 	},
-	vocabDailyResults: {
+	drillDailyResults: {
 		user: r.one.users({
-			from: r.vocabDailyResults.userId,
+			from: r.drillDailyResults.userId,
 			to: r.users.id,
 		}),
 		vocabulary: r.one.vocabulary({
-			from: r.vocabDailyResults.vocabId,
+			from: r.drillDailyResults.vocabId,
 			to: r.vocabulary.id,
 		}),
 	},
-	vocabMastery: {
+	drillProgress: {
 		user: r.one.users({
-			from: r.vocabMastery.userId,
+			from: r.drillProgress.userId,
 			to: r.users.id,
 		}),
 		vocabulary: r.one.vocabulary({
-			from: r.vocabMastery.vocabId,
+			from: r.drillProgress.vocabId,
 			to: r.vocabulary.id,
 		}),
 	},

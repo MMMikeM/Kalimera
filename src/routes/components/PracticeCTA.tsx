@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { ChevronRight, Play } from "lucide-react";
 
 import { DRILL_REGISTRY } from "@/constants/drills";
-import type { DrillRust } from "@/server/db/queries/practice-attempts";
+import type { DrillRust } from "@/server/db/queries/analytics/drill-stats";
 
 const MAX_SHOWN = 3;
 

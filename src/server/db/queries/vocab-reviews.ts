@@ -4,14 +4,14 @@ import { nowInstant, toEpochSeconds } from "@/lib/time";
 import { reviewStateAfterAttempt } from "@/server/srs";
 
 import { db } from "../index";
-import { vocabReviews } from "../schema";
+import { vocabProgress } from "../schema";
 import type { DbTransaction } from "./transaction-client";
 
 export const getReviewStats = async (userId: number) => {
 	const nowSec = toEpochSeconds(nowInstant());
 	const masteredThresholdDays = 21;
 
-	const [stats] = await db.query.vocabReviews.findMany({
+	const [stats] = await db.query.vocabProgress.findMany({
 		where: {
 			userId,
 		},
@@ -40,17 +40,17 @@ export const getReviewStats = async (userId: number) => {
 /** Due review counts per user for push-notification targeting. */
 export const listDueVocabularyCountsByUser = async (now: number, userIds?: number[]) => {
 	if (userIds && userIds.length === 0) return [];
-	const base = and(isNotNull(vocabReviews.nextReviewAt), lt(vocabReviews.nextReviewAt, now));
-	const where = userIds === undefined ? base : and(base, inArray(vocabReviews.userId, userIds));
+	const base = and(isNotNull(vocabProgress.nextReviewAt), lt(vocabProgress.nextReviewAt, now));
+	const where = userIds === undefined ? base : and(base, inArray(vocabProgress.userId, userIds));
 
 	return await db
 		.select({
-			userId: vocabReviews.userId,
+			userId: vocabProgress.userId,
 			dueCount: count().as("due_count"),
 		})
-		.from(vocabReviews)
+		.from(vocabProgress)
 		.where(where)
-		.groupBy(vocabReviews.userId);
+		.groupBy(vocabProgress.userId);
 };
 
 type ReviewStateInput = {
@@ -64,7 +64,7 @@ type ReviewStateInput = {
 export const applyReviewStateAfterAttempt = async (tx: DbTransaction, input: ReviewStateInput) => {
 	const { userId, vocabId, isCorrect, timeTaken } = input;
 
-	const existing = await tx.query.vocabReviews.findFirst({
+	const existing = await tx.query.vocabProgress.findFirst({
 		where: { userId, vocabId },
 		columns: { easeFactor: true, intervalDays: true, reviewCount: true },
 	});
@@ -73,15 +73,15 @@ export const applyReviewStateAfterAttempt = async (tx: DbTransaction, input: Rev
 
 	if (mutation.op === "update") {
 		await tx
-			.update(vocabReviews)
+			.update(vocabProgress)
 			.set({
 				...mutation.set,
 				nextReviewAt: toEpochSeconds(mutation.set.nextReviewAt),
 				lastReviewedAt: toEpochSeconds(mutation.set.lastReviewedAt),
 			})
-			.where(and(eq(vocabReviews.userId, userId), eq(vocabReviews.vocabId, vocabId)));
+			.where(and(eq(vocabProgress.userId, userId), eq(vocabProgress.vocabId, vocabId)));
 	} else {
-		await tx.insert(vocabReviews).values({
+		await tx.insert(vocabProgress).values({
 			userId,
 			vocabId,
 			...mutation.values,

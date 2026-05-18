@@ -21,9 +21,9 @@ export {
 	practiceAttempts,
 	practiceSessions,
 	userProgress,
-	vocabDailyResults,
-	vocabMastery,
-	vocabReviews,
+	drillDailyResults,
+	drillProgress,
+	vocabProgress,
 } from "./schema-practice";
 
 // Types are exported from ./types.ts
