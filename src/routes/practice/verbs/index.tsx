@@ -36,7 +36,7 @@ export const presentDrills: Drill[] = [
 	},
 	{
 		id: "verbs-present",
-		to: "/practice/verbs/present",
+		to: "/practice/verbs/present/full",
 		title: "Full conjugations",
 		greek: "γράφω · γράφεις · γράφει · γράφουμε",
 		minutes: 2,

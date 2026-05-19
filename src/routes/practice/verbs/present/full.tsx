@@ -4,7 +4,7 @@ import { getVerbDrillQuestionsFn } from "@/server/fns";
 
 import { VocabDrillPage } from "../../components/engines/vocab-drill";
 
-export const Route = createFileRoute("/practice/verbs/present/")({
+export const Route = createFileRoute("/practice/verbs/present/full")({
 	loader: async () => {
 		const questions = await getVerbDrillQuestionsFn({ data: { limit: 30 } });
 		return { questions };
