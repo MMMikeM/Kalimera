@@ -17,4 +17,3 @@ const getDb = createServerOnlyFn(() => {
 });
 
 export const db = getDb();
-export const { transaction } = db;

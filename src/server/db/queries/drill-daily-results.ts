@@ -1,9 +1,9 @@
+import { db } from "../index";
 import { drillDailyResults } from "../schema";
-import type { DbTransaction } from "./transaction-client";
 
 type DailyResultRow = typeof drillDailyResults.$inferInsert;
 
-export const insertDailyResults = async (tx: DbTransaction, rows: DailyResultRow[]) => {
+export const insertDailyResults = async (rows: DailyResultRow[]) => {
 	if (rows.length === 0) return;
-	await tx.insert(drillDailyResults).values(rows).onConflictDoNothing();
+	await db.insert(drillDailyResults).values(rows).onConflictDoNothing();
 };
