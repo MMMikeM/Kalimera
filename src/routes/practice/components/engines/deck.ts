@@ -2,7 +2,7 @@ import type { DrillBucket } from "@/lib/drill/types";
 
 export type DrillMode = "forward" | "reverse";
 export type { DrillBucket };
-export type Phase = "config" | "active" | "feedback" | "complete";
+export type Phase = "config" | "active" | "feedback" | "complete" | "error";
 
 export const SESSION_SIZES = [10, 20, 30] as const;
 export type SessionSize = (typeof SESSION_SIZES)[number];
@@ -55,6 +55,9 @@ const BATCH_SLOTS: DrillBucket[] = [
  * New words are introduced twice (slots ~5 apart) to boost initial retention.
  */
 export const buildWeightedDeck = (forms: DrillForm[], size: SessionSize | number): DrillForm[] => {
+	const uniqueCount = new Set(forms.map((f) => f.id)).size;
+	if (uniqueCount < size) throw new Error(`Pool too small: ${uniqueCount} unique words for session size ${size}`);
+
 	const buckets: Record<DrillBucket, DrillForm[]> = {
 		tier1: [],
 		tier2: [],

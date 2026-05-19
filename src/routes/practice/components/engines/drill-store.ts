@@ -160,8 +160,15 @@ export const drillActions: DrillActions = {
 			? items.filter((i) => (i as DrillForm & { category?: string }).category === activeCategory)
 			: items;
 		const uniquePoolSize = new Set(source.map((f) => f.id)).size;
+		let deck: DrillForm[];
+		try {
+			deck = buildWeightedDeck(source, sessionSize);
+		} catch {
+			set({ phase: "error" });
+			return;
+		}
 		set({
-			deck: buildWeightedDeck(source, sessionSize),
+			deck,
 			cardIndex: 0,
 			input: "",
 			attempts: [],
