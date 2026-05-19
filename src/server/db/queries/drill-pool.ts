@@ -146,11 +146,17 @@ export const getDrillVocabPool = async ({
 			.slice(0, limit)
 			.map((c) => c.id);
 
-	return {
+	console.log(buckets);
+
+	const filledBuckets = {
 		tier1: processBucket(buckets.tier1, sortCefrFreq),
 		tier2: processBucket(buckets.tier2, sortSlow),
 		tier3: processBucket(buckets.tier3, sortSlow),
 		inProgress: processBucket(buckets.inProgress, sortCefrFreq),
 		new: processBucket(buckets.new, sortCefrFreq),
 	};
+
+	console.log(filledBuckets);
+
+	return filledBuckets;
 };
