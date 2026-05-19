@@ -8,1553 +8,1590 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as authLoginRouteImport } from "./routes/(auth)/login";
-import { Route as authRegisterRouteImport } from "./routes/(auth)/register";
-import { Route as rootRouteImport } from "./routes/__root";
-import { Route as ApiErrorsRouteImport } from "./routes/api/errors";
-import { Route as ApiPushLogTapRouteImport } from "./routes/api/push/log-tap";
-import { Route as ApiPushSnoozeRouteImport } from "./routes/api/push/snooze";
-import { Route as ApiPushSubscribeRouteImport } from "./routes/api/push/subscribe";
-import { Route as ApiPushUnsubscribeRouteImport } from "./routes/api/push/unsubscribe";
-import { Route as ApiPushVapidKeyRouteImport } from "./routes/api/push/vapid-key";
-import { Route as ApiWebauthnAuthOptionsRouteImport } from "./routes/api/webauthn/auth-options";
-import { Route as ApiWebauthnAuthVerifyRouteImport } from "./routes/api/webauthn/auth-verify";
-import { Route as ApiWebauthnRegisterOptionsRouteImport } from "./routes/api/webauthn/register-options";
-import { Route as ApiWebauthnRegisterVerifyRouteImport } from "./routes/api/webauthn/register-verify";
-import { Route as IndexRouteImport } from "./routes/index";
-import { Route as LearnConversationsTabRouteImport } from "./routes/learn/conversations/$tab";
-import { Route as LearnConversationsIndexRouteImport } from "./routes/learn/conversations/index";
-import { Route as LearnEssentialsSubtabRouteImport } from "./routes/learn/essentials/$subtab";
-import { Route as LearnEssentialsIndexRouteImport } from "./routes/learn/essentials/index";
-import { Route as LearnIndexRouteImport } from "./routes/learn/index";
-import { Route as LearnNounsRouteImport } from "./routes/learn/nouns";
-import { Route as LearnPhrasesTabRouteImport } from "./routes/learn/phrases/$tab";
-import { Route as LearnPhrasesIndexRouteImport } from "./routes/learn/phrases/index";
-import { Route as LearnVerbsRouteImport } from "./routes/learn/verbs";
-import { Route as LearnVerbsVerbIdRouteImport } from "./routes/learn/verbs/$verbId";
-import { Route as PracticeBlocksChunksRouteImport } from "./routes/practice/blocks/chunks";
-import { Route as PracticeBlocksDaysOfWeekRouteImport } from "./routes/practice/blocks/days-of-week";
-import { Route as PracticeBlocksIndexRouteImport } from "./routes/practice/blocks/index";
-import { Route as PracticeBlocksNumbersRouteImport } from "./routes/practice/blocks/numbers";
-import { Route as PracticeCasesAccusativeAdjectiveRouteImport } from "./routes/practice/cases/accusative/adjective";
-import { Route as PracticeCasesAccusativeArticleRouteImport } from "./routes/practice/cases/accusative/article";
-import { Route as PracticeCasesAccusativeNounRouteImport } from "./routes/practice/cases/accusative/noun";
-import { Route as PracticeCasesAccusativePhraseRouteImport } from "./routes/practice/cases/accusative/phrase";
-import { Route as PracticeCasesGenitiveAdjectiveRouteImport } from "./routes/practice/cases/genitive/adjective";
-import { Route as PracticeCasesGenitiveArticleRouteImport } from "./routes/practice/cases/genitive/article";
-import { Route as PracticeCasesGenitiveNounRouteImport } from "./routes/practice/cases/genitive/noun";
-import { Route as PracticeCasesGenitivePhraseRouteImport } from "./routes/practice/cases/genitive/phrase";
-import { Route as PracticeCasesIndexRouteImport } from "./routes/practice/cases/index";
-import { Route as PracticeCasesNominativeAdjectiveRouteImport } from "./routes/practice/cases/nominative/adjective";
-import { Route as PracticeCasesNominativeArticleRouteImport } from "./routes/practice/cases/nominative/article";
-import { Route as PracticeCasesNominativeNounRouteImport } from "./routes/practice/cases/nominative/noun";
-import { Route as PracticeCasesNominativePhraseRouteImport } from "./routes/practice/cases/nominative/phrase";
-import { Route as PracticeCasesReviewAdjectivesRouteImport } from "./routes/practice/cases/review/adjectives";
-import { Route as PracticeCasesReviewArticlesRouteImport } from "./routes/practice/cases/review/articles";
-import { Route as PracticeCasesReviewNounsRouteImport } from "./routes/practice/cases/review/nouns";
-import { Route as PracticeCasesReviewPhrasesRouteImport } from "./routes/practice/cases/review/phrases";
-import { Route as PracticeIndexRouteImport } from "./routes/practice/index";
-import { Route as PracticePronounsIndexRouteImport } from "./routes/practice/pronouns/index";
-import { Route as PracticePronounsObjectRouteImport } from "./routes/practice/pronouns/object";
-import { Route as PracticePronounsPlacementRouteImport } from "./routes/practice/pronouns/placement";
-import { Route as PracticePronounsPossessivesRouteImport } from "./routes/practice/pronouns/possessives";
-import { Route as PracticeReviewRouteImport } from "./routes/practice/review";
-import { Route as PracticeRouteRouteImport } from "./routes/practice/route";
-import { Route as PracticeVerbsFutureConjugationRouteImport } from "./routes/practice/verbs/future-conjugation";
-import { Route as PracticeVerbsImperativesRouteImport } from "./routes/practice/verbs/imperatives";
-import { Route as PracticeVerbsIndexRouteImport } from "./routes/practice/verbs/index";
-import { Route as PracticeVerbsModalConstructionsRouteImport } from "./routes/practice/verbs/modal-constructions";
-import { Route as PracticeVerbsPastAoristConjugationRouteImport } from "./routes/practice/verbs/past/aorist-conjugation";
-import { Route as PracticeVerbsPastAoristFormationRouteImport } from "./routes/practice/verbs/past/aorist-formation";
-import { Route as PracticeVerbsPastAoristStemsRouteImport } from "./routes/practice/verbs/past/aorist-stems";
-import { Route as PracticeVerbsPastAoristVocabularyRouteImport } from "./routes/practice/verbs/past/aorist-vocabulary";
-import { Route as PracticeVerbsPastImperfectStativeRouteImport } from "./routes/practice/verbs/past/imperfect-stative";
-import { Route as PracticeVerbsPresentConjugationsRouteImport } from "./routes/practice/verbs/present/conjugations";
-import { Route as PracticeVerbsPresentEimaiRouteImport } from "./routes/practice/verbs/present/eimai";
-import { Route as PracticeVerbsPresentIndexRouteImport } from "./routes/practice/verbs/present/index";
-import { Route as PracticeVerbsPresentIrregularRouteImport } from "./routes/practice/verbs/present/irregular";
-import { Route as PracticeVerbsPresentVocabularyRouteImport } from "./routes/practice/verbs/present/vocabulary";
-import { Route as ProgressRouteImport } from "./routes/progress";
-import { Route as ReferenceTabRouteImport } from "./routes/reference/$tab";
-import { Route as ReferenceIndexRouteImport } from "./routes/reference/index";
-import { Route as SearchRouteImport } from "./routes/search";
-import { Route as SupportRouteImport } from "./routes/support";
-import { Route as TryRouteImport } from "./routes/try";
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as TryRouteImport } from './routes/try'
+import { Route as SupportRouteImport } from './routes/support'
+import { Route as SearchRouteImport } from './routes/search'
+import { Route as ProgressRouteImport } from './routes/progress'
+import { Route as PracticeRouteRouteImport } from './routes/practice/route'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as ReferenceIndexRouteImport } from './routes/reference/index'
+import { Route as PracticeIndexRouteImport } from './routes/practice/index'
+import { Route as LearnIndexRouteImport } from './routes/learn/index'
+import { Route as ReferenceTabRouteImport } from './routes/reference/$tab'
+import { Route as PracticeReviewRouteImport } from './routes/practice/review'
+import { Route as LearnVerbsRouteImport } from './routes/learn/verbs'
+import { Route as LearnNounsRouteImport } from './routes/learn/nouns'
+import { Route as ApiErrorsRouteImport } from './routes/api/errors'
+import { Route as authRegisterRouteImport } from './routes/(auth)/register'
+import { Route as authLoginRouteImport } from './routes/(auth)/login'
+import { Route as PracticeVerbsIndexRouteImport } from './routes/practice/verbs/index'
+import { Route as PracticePronounsIndexRouteImport } from './routes/practice/pronouns/index'
+import { Route as PracticeCasesIndexRouteImport } from './routes/practice/cases/index'
+import { Route as PracticeBlocksIndexRouteImport } from './routes/practice/blocks/index'
+import { Route as LearnPhrasesIndexRouteImport } from './routes/learn/phrases/index'
+import { Route as LearnEssentialsIndexRouteImport } from './routes/learn/essentials/index'
+import { Route as LearnConversationsIndexRouteImport } from './routes/learn/conversations/index'
+import { Route as PracticeVerbsModalConstructionsRouteImport } from './routes/practice/verbs/modal-constructions'
+import { Route as PracticeVerbsImperativesRouteImport } from './routes/practice/verbs/imperatives'
+import { Route as PracticeVerbsFutureConjugationRouteImport } from './routes/practice/verbs/future-conjugation'
+import { Route as PracticePronounsPossessivesRouteImport } from './routes/practice/pronouns/possessives'
+import { Route as PracticePronounsPlacementRouteImport } from './routes/practice/pronouns/placement'
+import { Route as PracticePronounsObjectRouteImport } from './routes/practice/pronouns/object'
+import { Route as PracticeBlocksNumbersRouteImport } from './routes/practice/blocks/numbers'
+import { Route as PracticeBlocksDaysOfWeekRouteImport } from './routes/practice/blocks/days-of-week'
+import { Route as PracticeBlocksChunksRouteImport } from './routes/practice/blocks/chunks'
+import { Route as LearnVerbsVerbIdRouteImport } from './routes/learn/verbs/$verbId'
+import { Route as LearnPhrasesTabRouteImport } from './routes/learn/phrases/$tab'
+import { Route as LearnEssentialsSubtabRouteImport } from './routes/learn/essentials/$subtab'
+import { Route as LearnConversationsTabRouteImport } from './routes/learn/conversations/$tab'
+import { Route as ApiWebauthnRegisterVerifyRouteImport } from './routes/api/webauthn/register-verify'
+import { Route as ApiWebauthnRegisterOptionsRouteImport } from './routes/api/webauthn/register-options'
+import { Route as ApiWebauthnAuthVerifyRouteImport } from './routes/api/webauthn/auth-verify'
+import { Route as ApiWebauthnAuthOptionsRouteImport } from './routes/api/webauthn/auth-options'
+import { Route as ApiPushVapidKeyRouteImport } from './routes/api/push/vapid-key'
+import { Route as ApiPushUnsubscribeRouteImport } from './routes/api/push/unsubscribe'
+import { Route as ApiPushSubscribeRouteImport } from './routes/api/push/subscribe'
+import { Route as ApiPushSnoozeRouteImport } from './routes/api/push/snooze'
+import { Route as ApiPushLogTapRouteImport } from './routes/api/push/log-tap'
+import { Route as PracticeVerbsPresentVocabularyRouteImport } from './routes/practice/verbs/present/vocabulary'
+import { Route as PracticeVerbsPresentIrregularRouteImport } from './routes/practice/verbs/present/irregular'
+import { Route as PracticeVerbsPresentFullRouteImport } from './routes/practice/verbs/present/full'
+import { Route as PracticeVerbsPresentEimaiRouteImport } from './routes/practice/verbs/present/eimai'
+import { Route as PracticeVerbsPresentConjugationsRouteImport } from './routes/practice/verbs/present/conjugations'
+import { Route as PracticeVerbsPastImperfectStativeRouteImport } from './routes/practice/verbs/past/imperfect-stative'
+import { Route as PracticeVerbsPastAoristVocabularyRouteImport } from './routes/practice/verbs/past/aorist-vocabulary'
+import { Route as PracticeVerbsPastAoristStemsRouteImport } from './routes/practice/verbs/past/aorist-stems'
+import { Route as PracticeVerbsPastAoristFormationRouteImport } from './routes/practice/verbs/past/aorist-formation'
+import { Route as PracticeVerbsPastAoristConjugationRouteImport } from './routes/practice/verbs/past/aorist-conjugation'
+import { Route as PracticeCasesReviewPhrasesRouteImport } from './routes/practice/cases/review/phrases'
+import { Route as PracticeCasesReviewNounsRouteImport } from './routes/practice/cases/review/nouns'
+import { Route as PracticeCasesReviewArticlesRouteImport } from './routes/practice/cases/review/articles'
+import { Route as PracticeCasesReviewAdjectivesRouteImport } from './routes/practice/cases/review/adjectives'
+import { Route as PracticeCasesNominativePhraseRouteImport } from './routes/practice/cases/nominative/phrase'
+import { Route as PracticeCasesNominativeNounRouteImport } from './routes/practice/cases/nominative/noun'
+import { Route as PracticeCasesNominativeArticleRouteImport } from './routes/practice/cases/nominative/article'
+import { Route as PracticeCasesNominativeAdjectiveRouteImport } from './routes/practice/cases/nominative/adjective'
+import { Route as PracticeCasesGenitivePhraseRouteImport } from './routes/practice/cases/genitive/phrase'
+import { Route as PracticeCasesGenitiveNounRouteImport } from './routes/practice/cases/genitive/noun'
+import { Route as PracticeCasesGenitiveArticleRouteImport } from './routes/practice/cases/genitive/article'
+import { Route as PracticeCasesGenitiveAdjectiveRouteImport } from './routes/practice/cases/genitive/adjective'
+import { Route as PracticeCasesAccusativePhraseRouteImport } from './routes/practice/cases/accusative/phrase'
+import { Route as PracticeCasesAccusativeNounRouteImport } from './routes/practice/cases/accusative/noun'
+import { Route as PracticeCasesAccusativeArticleRouteImport } from './routes/practice/cases/accusative/article'
+import { Route as PracticeCasesAccusativeAdjectiveRouteImport } from './routes/practice/cases/accusative/adjective'
 
 const TryRoute = TryRouteImport.update({
-	id: "/try",
-	path: "/try",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/try',
+  path: '/try',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SupportRoute = SupportRouteImport.update({
-	id: "/support",
-	path: "/support",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/support',
+  path: '/support',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SearchRoute = SearchRouteImport.update({
-	id: "/search",
-	path: "/search",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProgressRoute = ProgressRouteImport.update({
-	id: "/progress",
-	path: "/progress",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/progress',
+  path: '/progress',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PracticeRouteRoute = PracticeRouteRouteImport.update({
-	id: "/practice",
-	path: "/practice",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/practice',
+  path: '/practice',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
-	id: "/",
-	path: "/",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ReferenceIndexRoute = ReferenceIndexRouteImport.update({
-	id: "/reference/",
-	path: "/reference/",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/reference/',
+  path: '/reference/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PracticeIndexRoute = PracticeIndexRouteImport.update({
-	id: "/",
-	path: "/",
-	getParentRoute: () => PracticeRouteRoute,
-} as any);
+  id: '/',
+  path: '/',
+  getParentRoute: () => PracticeRouteRoute,
+} as any)
 const LearnIndexRoute = LearnIndexRouteImport.update({
-	id: "/learn/",
-	path: "/learn/",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/learn/',
+  path: '/learn/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ReferenceTabRoute = ReferenceTabRouteImport.update({
-	id: "/reference/$tab",
-	path: "/reference/$tab",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/reference/$tab',
+  path: '/reference/$tab',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PracticeReviewRoute = PracticeReviewRouteImport.update({
-	id: "/review",
-	path: "/review",
-	getParentRoute: () => PracticeRouteRoute,
-} as any);
+  id: '/review',
+  path: '/review',
+  getParentRoute: () => PracticeRouteRoute,
+} as any)
 const LearnVerbsRoute = LearnVerbsRouteImport.update({
-	id: "/learn/verbs",
-	path: "/learn/verbs",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/learn/verbs',
+  path: '/learn/verbs',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LearnNounsRoute = LearnNounsRouteImport.update({
-	id: "/learn/nouns",
-	path: "/learn/nouns",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/learn/nouns',
+  path: '/learn/nouns',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiErrorsRoute = ApiErrorsRouteImport.update({
-	id: "/api/errors",
-	path: "/api/errors",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/api/errors',
+  path: '/api/errors',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const authRegisterRoute = authRegisterRouteImport.update({
-	id: "/(auth)/register",
-	path: "/register",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/(auth)/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const authLoginRoute = authLoginRouteImport.update({
-	id: "/(auth)/login",
-	path: "/login",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/(auth)/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PracticeVerbsIndexRoute = PracticeVerbsIndexRouteImport.update({
-	id: "/verbs/",
-	path: "/verbs/",
-	getParentRoute: () => PracticeRouteRoute,
-} as any);
+  id: '/verbs/',
+  path: '/verbs/',
+  getParentRoute: () => PracticeRouteRoute,
+} as any)
 const PracticePronounsIndexRoute = PracticePronounsIndexRouteImport.update({
-	id: "/pronouns/",
-	path: "/pronouns/",
-	getParentRoute: () => PracticeRouteRoute,
-} as any);
+  id: '/pronouns/',
+  path: '/pronouns/',
+  getParentRoute: () => PracticeRouteRoute,
+} as any)
 const PracticeCasesIndexRoute = PracticeCasesIndexRouteImport.update({
-	id: "/cases/",
-	path: "/cases/",
-	getParentRoute: () => PracticeRouteRoute,
-} as any);
+  id: '/cases/',
+  path: '/cases/',
+  getParentRoute: () => PracticeRouteRoute,
+} as any)
 const PracticeBlocksIndexRoute = PracticeBlocksIndexRouteImport.update({
-	id: "/blocks/",
-	path: "/blocks/",
-	getParentRoute: () => PracticeRouteRoute,
-} as any);
+  id: '/blocks/',
+  path: '/blocks/',
+  getParentRoute: () => PracticeRouteRoute,
+} as any)
 const LearnPhrasesIndexRoute = LearnPhrasesIndexRouteImport.update({
-	id: "/learn/phrases/",
-	path: "/learn/phrases/",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/learn/phrases/',
+  path: '/learn/phrases/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LearnEssentialsIndexRoute = LearnEssentialsIndexRouteImport.update({
-	id: "/learn/essentials/",
-	path: "/learn/essentials/",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/learn/essentials/',
+  path: '/learn/essentials/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LearnConversationsIndexRoute = LearnConversationsIndexRouteImport.update({
-	id: "/learn/conversations/",
-	path: "/learn/conversations/",
-	getParentRoute: () => rootRouteImport,
-} as any);
-const PracticeVerbsModalConstructionsRoute = PracticeVerbsModalConstructionsRouteImport.update({
-	id: "/verbs/modal-constructions",
-	path: "/verbs/modal-constructions",
-	getParentRoute: () => PracticeRouteRoute,
-} as any);
-const PracticeVerbsImperativesRoute = PracticeVerbsImperativesRouteImport.update({
-	id: "/verbs/imperatives",
-	path: "/verbs/imperatives",
-	getParentRoute: () => PracticeRouteRoute,
-} as any);
-const PracticeVerbsFutureConjugationRoute = PracticeVerbsFutureConjugationRouteImport.update({
-	id: "/verbs/future-conjugation",
-	path: "/verbs/future-conjugation",
-	getParentRoute: () => PracticeRouteRoute,
-} as any);
-const PracticePronounsPossessivesRoute = PracticePronounsPossessivesRouteImport.update({
-	id: "/pronouns/possessives",
-	path: "/pronouns/possessives",
-	getParentRoute: () => PracticeRouteRoute,
-} as any);
-const PracticePronounsPlacementRoute = PracticePronounsPlacementRouteImport.update({
-	id: "/pronouns/placement",
-	path: "/pronouns/placement",
-	getParentRoute: () => PracticeRouteRoute,
-} as any);
+  id: '/learn/conversations/',
+  path: '/learn/conversations/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PracticeVerbsModalConstructionsRoute =
+  PracticeVerbsModalConstructionsRouteImport.update({
+    id: '/verbs/modal-constructions',
+    path: '/verbs/modal-constructions',
+    getParentRoute: () => PracticeRouteRoute,
+  } as any)
+const PracticeVerbsImperativesRoute =
+  PracticeVerbsImperativesRouteImport.update({
+    id: '/verbs/imperatives',
+    path: '/verbs/imperatives',
+    getParentRoute: () => PracticeRouteRoute,
+  } as any)
+const PracticeVerbsFutureConjugationRoute =
+  PracticeVerbsFutureConjugationRouteImport.update({
+    id: '/verbs/future-conjugation',
+    path: '/verbs/future-conjugation',
+    getParentRoute: () => PracticeRouteRoute,
+  } as any)
+const PracticePronounsPossessivesRoute =
+  PracticePronounsPossessivesRouteImport.update({
+    id: '/pronouns/possessives',
+    path: '/pronouns/possessives',
+    getParentRoute: () => PracticeRouteRoute,
+  } as any)
+const PracticePronounsPlacementRoute =
+  PracticePronounsPlacementRouteImport.update({
+    id: '/pronouns/placement',
+    path: '/pronouns/placement',
+    getParentRoute: () => PracticeRouteRoute,
+  } as any)
 const PracticePronounsObjectRoute = PracticePronounsObjectRouteImport.update({
-	id: "/pronouns/object",
-	path: "/pronouns/object",
-	getParentRoute: () => PracticeRouteRoute,
-} as any);
+  id: '/pronouns/object',
+  path: '/pronouns/object',
+  getParentRoute: () => PracticeRouteRoute,
+} as any)
 const PracticeBlocksNumbersRoute = PracticeBlocksNumbersRouteImport.update({
-	id: "/blocks/numbers",
-	path: "/blocks/numbers",
-	getParentRoute: () => PracticeRouteRoute,
-} as any);
-const PracticeBlocksDaysOfWeekRoute = PracticeBlocksDaysOfWeekRouteImport.update({
-	id: "/blocks/days-of-week",
-	path: "/blocks/days-of-week",
-	getParentRoute: () => PracticeRouteRoute,
-} as any);
+  id: '/blocks/numbers',
+  path: '/blocks/numbers',
+  getParentRoute: () => PracticeRouteRoute,
+} as any)
+const PracticeBlocksDaysOfWeekRoute =
+  PracticeBlocksDaysOfWeekRouteImport.update({
+    id: '/blocks/days-of-week',
+    path: '/blocks/days-of-week',
+    getParentRoute: () => PracticeRouteRoute,
+  } as any)
 const PracticeBlocksChunksRoute = PracticeBlocksChunksRouteImport.update({
-	id: "/blocks/chunks",
-	path: "/blocks/chunks",
-	getParentRoute: () => PracticeRouteRoute,
-} as any);
+  id: '/blocks/chunks',
+  path: '/blocks/chunks',
+  getParentRoute: () => PracticeRouteRoute,
+} as any)
 const LearnVerbsVerbIdRoute = LearnVerbsVerbIdRouteImport.update({
-	id: "/$verbId",
-	path: "/$verbId",
-	getParentRoute: () => LearnVerbsRoute,
-} as any);
+  id: '/$verbId',
+  path: '/$verbId',
+  getParentRoute: () => LearnVerbsRoute,
+} as any)
 const LearnPhrasesTabRoute = LearnPhrasesTabRouteImport.update({
-	id: "/learn/phrases/$tab",
-	path: "/learn/phrases/$tab",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/learn/phrases/$tab',
+  path: '/learn/phrases/$tab',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LearnEssentialsSubtabRoute = LearnEssentialsSubtabRouteImport.update({
-	id: "/learn/essentials/$subtab",
-	path: "/learn/essentials/$subtab",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/learn/essentials/$subtab',
+  path: '/learn/essentials/$subtab',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LearnConversationsTabRoute = LearnConversationsTabRouteImport.update({
-	id: "/learn/conversations/$tab",
-	path: "/learn/conversations/$tab",
-	getParentRoute: () => rootRouteImport,
-} as any);
-const ApiWebauthnRegisterVerifyRoute = ApiWebauthnRegisterVerifyRouteImport.update({
-	id: "/api/webauthn/register-verify",
-	path: "/api/webauthn/register-verify",
-	getParentRoute: () => rootRouteImport,
-} as any);
-const ApiWebauthnRegisterOptionsRoute = ApiWebauthnRegisterOptionsRouteImport.update({
-	id: "/api/webauthn/register-options",
-	path: "/api/webauthn/register-options",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/learn/conversations/$tab',
+  path: '/learn/conversations/$tab',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiWebauthnRegisterVerifyRoute =
+  ApiWebauthnRegisterVerifyRouteImport.update({
+    id: '/api/webauthn/register-verify',
+    path: '/api/webauthn/register-verify',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiWebauthnRegisterOptionsRoute =
+  ApiWebauthnRegisterOptionsRouteImport.update({
+    id: '/api/webauthn/register-options',
+    path: '/api/webauthn/register-options',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiWebauthnAuthVerifyRoute = ApiWebauthnAuthVerifyRouteImport.update({
-	id: "/api/webauthn/auth-verify",
-	path: "/api/webauthn/auth-verify",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/api/webauthn/auth-verify',
+  path: '/api/webauthn/auth-verify',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiWebauthnAuthOptionsRoute = ApiWebauthnAuthOptionsRouteImport.update({
-	id: "/api/webauthn/auth-options",
-	path: "/api/webauthn/auth-options",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/api/webauthn/auth-options',
+  path: '/api/webauthn/auth-options',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPushVapidKeyRoute = ApiPushVapidKeyRouteImport.update({
-	id: "/api/push/vapid-key",
-	path: "/api/push/vapid-key",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/api/push/vapid-key',
+  path: '/api/push/vapid-key',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPushUnsubscribeRoute = ApiPushUnsubscribeRouteImport.update({
-	id: "/api/push/unsubscribe",
-	path: "/api/push/unsubscribe",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/api/push/unsubscribe',
+  path: '/api/push/unsubscribe',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPushSubscribeRoute = ApiPushSubscribeRouteImport.update({
-	id: "/api/push/subscribe",
-	path: "/api/push/subscribe",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/api/push/subscribe',
+  path: '/api/push/subscribe',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPushSnoozeRoute = ApiPushSnoozeRouteImport.update({
-	id: "/api/push/snooze",
-	path: "/api/push/snooze",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/api/push/snooze',
+  path: '/api/push/snooze',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPushLogTapRoute = ApiPushLogTapRouteImport.update({
-	id: "/api/push/log-tap",
-	path: "/api/push/log-tap",
-	getParentRoute: () => rootRouteImport,
-} as any);
-const PracticeVerbsPresentIndexRoute = PracticeVerbsPresentIndexRouteImport.update({
-	id: "/verbs/present/",
-	path: "/verbs/present/",
-	getParentRoute: () => PracticeRouteRoute,
-} as any);
-const PracticeVerbsPresentVocabularyRoute = PracticeVerbsPresentVocabularyRouteImport.update({
-	id: "/verbs/present/vocabulary",
-	path: "/verbs/present/vocabulary",
-	getParentRoute: () => PracticeRouteRoute,
-} as any);
-const PracticeVerbsPresentIrregularRoute = PracticeVerbsPresentIrregularRouteImport.update({
-	id: "/verbs/present/irregular",
-	path: "/verbs/present/irregular",
-	getParentRoute: () => PracticeRouteRoute,
-} as any);
-const PracticeVerbsPresentEimaiRoute = PracticeVerbsPresentEimaiRouteImport.update({
-	id: "/verbs/present/eimai",
-	path: "/verbs/present/eimai",
-	getParentRoute: () => PracticeRouteRoute,
-} as any);
-const PracticeVerbsPresentConjugationsRoute = PracticeVerbsPresentConjugationsRouteImport.update({
-	id: "/verbs/present/conjugations",
-	path: "/verbs/present/conjugations",
-	getParentRoute: () => PracticeRouteRoute,
-} as any);
-const PracticeVerbsPastImperfectStativeRoute = PracticeVerbsPastImperfectStativeRouteImport.update({
-	id: "/verbs/past/imperfect-stative",
-	path: "/verbs/past/imperfect-stative",
-	getParentRoute: () => PracticeRouteRoute,
-} as any);
-const PracticeVerbsPastAoristVocabularyRoute = PracticeVerbsPastAoristVocabularyRouteImport.update({
-	id: "/verbs/past/aorist-vocabulary",
-	path: "/verbs/past/aorist-vocabulary",
-	getParentRoute: () => PracticeRouteRoute,
-} as any);
-const PracticeVerbsPastAoristStemsRoute = PracticeVerbsPastAoristStemsRouteImport.update({
-	id: "/verbs/past/aorist-stems",
-	path: "/verbs/past/aorist-stems",
-	getParentRoute: () => PracticeRouteRoute,
-} as any);
-const PracticeVerbsPastAoristFormationRoute = PracticeVerbsPastAoristFormationRouteImport.update({
-	id: "/verbs/past/aorist-formation",
-	path: "/verbs/past/aorist-formation",
-	getParentRoute: () => PracticeRouteRoute,
-} as any);
+  id: '/api/push/log-tap',
+  path: '/api/push/log-tap',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PracticeVerbsPresentVocabularyRoute =
+  PracticeVerbsPresentVocabularyRouteImport.update({
+    id: '/verbs/present/vocabulary',
+    path: '/verbs/present/vocabulary',
+    getParentRoute: () => PracticeRouteRoute,
+  } as any)
+const PracticeVerbsPresentIrregularRoute =
+  PracticeVerbsPresentIrregularRouteImport.update({
+    id: '/verbs/present/irregular',
+    path: '/verbs/present/irregular',
+    getParentRoute: () => PracticeRouteRoute,
+  } as any)
+const PracticeVerbsPresentFullRoute =
+  PracticeVerbsPresentFullRouteImport.update({
+    id: '/verbs/present/full',
+    path: '/verbs/present/full',
+    getParentRoute: () => PracticeRouteRoute,
+  } as any)
+const PracticeVerbsPresentEimaiRoute =
+  PracticeVerbsPresentEimaiRouteImport.update({
+    id: '/verbs/present/eimai',
+    path: '/verbs/present/eimai',
+    getParentRoute: () => PracticeRouteRoute,
+  } as any)
+const PracticeVerbsPresentConjugationsRoute =
+  PracticeVerbsPresentConjugationsRouteImport.update({
+    id: '/verbs/present/conjugations',
+    path: '/verbs/present/conjugations',
+    getParentRoute: () => PracticeRouteRoute,
+  } as any)
+const PracticeVerbsPastImperfectStativeRoute =
+  PracticeVerbsPastImperfectStativeRouteImport.update({
+    id: '/verbs/past/imperfect-stative',
+    path: '/verbs/past/imperfect-stative',
+    getParentRoute: () => PracticeRouteRoute,
+  } as any)
+const PracticeVerbsPastAoristVocabularyRoute =
+  PracticeVerbsPastAoristVocabularyRouteImport.update({
+    id: '/verbs/past/aorist-vocabulary',
+    path: '/verbs/past/aorist-vocabulary',
+    getParentRoute: () => PracticeRouteRoute,
+  } as any)
+const PracticeVerbsPastAoristStemsRoute =
+  PracticeVerbsPastAoristStemsRouteImport.update({
+    id: '/verbs/past/aorist-stems',
+    path: '/verbs/past/aorist-stems',
+    getParentRoute: () => PracticeRouteRoute,
+  } as any)
+const PracticeVerbsPastAoristFormationRoute =
+  PracticeVerbsPastAoristFormationRouteImport.update({
+    id: '/verbs/past/aorist-formation',
+    path: '/verbs/past/aorist-formation',
+    getParentRoute: () => PracticeRouteRoute,
+  } as any)
 const PracticeVerbsPastAoristConjugationRoute =
-	PracticeVerbsPastAoristConjugationRouteImport.update({
-		id: "/verbs/past/aorist-conjugation",
-		path: "/verbs/past/aorist-conjugation",
-		getParentRoute: () => PracticeRouteRoute,
-	} as any);
-const PracticeCasesReviewPhrasesRoute = PracticeCasesReviewPhrasesRouteImport.update({
-	id: "/cases/review/phrases",
-	path: "/cases/review/phrases",
-	getParentRoute: () => PracticeRouteRoute,
-} as any);
-const PracticeCasesReviewNounsRoute = PracticeCasesReviewNounsRouteImport.update({
-	id: "/cases/review/nouns",
-	path: "/cases/review/nouns",
-	getParentRoute: () => PracticeRouteRoute,
-} as any);
-const PracticeCasesReviewArticlesRoute = PracticeCasesReviewArticlesRouteImport.update({
-	id: "/cases/review/articles",
-	path: "/cases/review/articles",
-	getParentRoute: () => PracticeRouteRoute,
-} as any);
-const PracticeCasesReviewAdjectivesRoute = PracticeCasesReviewAdjectivesRouteImport.update({
-	id: "/cases/review/adjectives",
-	path: "/cases/review/adjectives",
-	getParentRoute: () => PracticeRouteRoute,
-} as any);
-const PracticeCasesNominativePhraseRoute = PracticeCasesNominativePhraseRouteImport.update({
-	id: "/cases/nominative/phrase",
-	path: "/cases/nominative/phrase",
-	getParentRoute: () => PracticeRouteRoute,
-} as any);
-const PracticeCasesNominativeNounRoute = PracticeCasesNominativeNounRouteImport.update({
-	id: "/cases/nominative/noun",
-	path: "/cases/nominative/noun",
-	getParentRoute: () => PracticeRouteRoute,
-} as any);
-const PracticeCasesNominativeArticleRoute = PracticeCasesNominativeArticleRouteImport.update({
-	id: "/cases/nominative/article",
-	path: "/cases/nominative/article",
-	getParentRoute: () => PracticeRouteRoute,
-} as any);
-const PracticeCasesNominativeAdjectiveRoute = PracticeCasesNominativeAdjectiveRouteImport.update({
-	id: "/cases/nominative/adjective",
-	path: "/cases/nominative/adjective",
-	getParentRoute: () => PracticeRouteRoute,
-} as any);
-const PracticeCasesGenitivePhraseRoute = PracticeCasesGenitivePhraseRouteImport.update({
-	id: "/cases/genitive/phrase",
-	path: "/cases/genitive/phrase",
-	getParentRoute: () => PracticeRouteRoute,
-} as any);
-const PracticeCasesGenitiveNounRoute = PracticeCasesGenitiveNounRouteImport.update({
-	id: "/cases/genitive/noun",
-	path: "/cases/genitive/noun",
-	getParentRoute: () => PracticeRouteRoute,
-} as any);
-const PracticeCasesGenitiveArticleRoute = PracticeCasesGenitiveArticleRouteImport.update({
-	id: "/cases/genitive/article",
-	path: "/cases/genitive/article",
-	getParentRoute: () => PracticeRouteRoute,
-} as any);
-const PracticeCasesGenitiveAdjectiveRoute = PracticeCasesGenitiveAdjectiveRouteImport.update({
-	id: "/cases/genitive/adjective",
-	path: "/cases/genitive/adjective",
-	getParentRoute: () => PracticeRouteRoute,
-} as any);
-const PracticeCasesAccusativePhraseRoute = PracticeCasesAccusativePhraseRouteImport.update({
-	id: "/cases/accusative/phrase",
-	path: "/cases/accusative/phrase",
-	getParentRoute: () => PracticeRouteRoute,
-} as any);
-const PracticeCasesAccusativeNounRoute = PracticeCasesAccusativeNounRouteImport.update({
-	id: "/cases/accusative/noun",
-	path: "/cases/accusative/noun",
-	getParentRoute: () => PracticeRouteRoute,
-} as any);
-const PracticeCasesAccusativeArticleRoute = PracticeCasesAccusativeArticleRouteImport.update({
-	id: "/cases/accusative/article",
-	path: "/cases/accusative/article",
-	getParentRoute: () => PracticeRouteRoute,
-} as any);
-const PracticeCasesAccusativeAdjectiveRoute = PracticeCasesAccusativeAdjectiveRouteImport.update({
-	id: "/cases/accusative/adjective",
-	path: "/cases/accusative/adjective",
-	getParentRoute: () => PracticeRouteRoute,
-} as any);
+  PracticeVerbsPastAoristConjugationRouteImport.update({
+    id: '/verbs/past/aorist-conjugation',
+    path: '/verbs/past/aorist-conjugation',
+    getParentRoute: () => PracticeRouteRoute,
+  } as any)
+const PracticeCasesReviewPhrasesRoute =
+  PracticeCasesReviewPhrasesRouteImport.update({
+    id: '/cases/review/phrases',
+    path: '/cases/review/phrases',
+    getParentRoute: () => PracticeRouteRoute,
+  } as any)
+const PracticeCasesReviewNounsRoute =
+  PracticeCasesReviewNounsRouteImport.update({
+    id: '/cases/review/nouns',
+    path: '/cases/review/nouns',
+    getParentRoute: () => PracticeRouteRoute,
+  } as any)
+const PracticeCasesReviewArticlesRoute =
+  PracticeCasesReviewArticlesRouteImport.update({
+    id: '/cases/review/articles',
+    path: '/cases/review/articles',
+    getParentRoute: () => PracticeRouteRoute,
+  } as any)
+const PracticeCasesReviewAdjectivesRoute =
+  PracticeCasesReviewAdjectivesRouteImport.update({
+    id: '/cases/review/adjectives',
+    path: '/cases/review/adjectives',
+    getParentRoute: () => PracticeRouteRoute,
+  } as any)
+const PracticeCasesNominativePhraseRoute =
+  PracticeCasesNominativePhraseRouteImport.update({
+    id: '/cases/nominative/phrase',
+    path: '/cases/nominative/phrase',
+    getParentRoute: () => PracticeRouteRoute,
+  } as any)
+const PracticeCasesNominativeNounRoute =
+  PracticeCasesNominativeNounRouteImport.update({
+    id: '/cases/nominative/noun',
+    path: '/cases/nominative/noun',
+    getParentRoute: () => PracticeRouteRoute,
+  } as any)
+const PracticeCasesNominativeArticleRoute =
+  PracticeCasesNominativeArticleRouteImport.update({
+    id: '/cases/nominative/article',
+    path: '/cases/nominative/article',
+    getParentRoute: () => PracticeRouteRoute,
+  } as any)
+const PracticeCasesNominativeAdjectiveRoute =
+  PracticeCasesNominativeAdjectiveRouteImport.update({
+    id: '/cases/nominative/adjective',
+    path: '/cases/nominative/adjective',
+    getParentRoute: () => PracticeRouteRoute,
+  } as any)
+const PracticeCasesGenitivePhraseRoute =
+  PracticeCasesGenitivePhraseRouteImport.update({
+    id: '/cases/genitive/phrase',
+    path: '/cases/genitive/phrase',
+    getParentRoute: () => PracticeRouteRoute,
+  } as any)
+const PracticeCasesGenitiveNounRoute =
+  PracticeCasesGenitiveNounRouteImport.update({
+    id: '/cases/genitive/noun',
+    path: '/cases/genitive/noun',
+    getParentRoute: () => PracticeRouteRoute,
+  } as any)
+const PracticeCasesGenitiveArticleRoute =
+  PracticeCasesGenitiveArticleRouteImport.update({
+    id: '/cases/genitive/article',
+    path: '/cases/genitive/article',
+    getParentRoute: () => PracticeRouteRoute,
+  } as any)
+const PracticeCasesGenitiveAdjectiveRoute =
+  PracticeCasesGenitiveAdjectiveRouteImport.update({
+    id: '/cases/genitive/adjective',
+    path: '/cases/genitive/adjective',
+    getParentRoute: () => PracticeRouteRoute,
+  } as any)
+const PracticeCasesAccusativePhraseRoute =
+  PracticeCasesAccusativePhraseRouteImport.update({
+    id: '/cases/accusative/phrase',
+    path: '/cases/accusative/phrase',
+    getParentRoute: () => PracticeRouteRoute,
+  } as any)
+const PracticeCasesAccusativeNounRoute =
+  PracticeCasesAccusativeNounRouteImport.update({
+    id: '/cases/accusative/noun',
+    path: '/cases/accusative/noun',
+    getParentRoute: () => PracticeRouteRoute,
+  } as any)
+const PracticeCasesAccusativeArticleRoute =
+  PracticeCasesAccusativeArticleRouteImport.update({
+    id: '/cases/accusative/article',
+    path: '/cases/accusative/article',
+    getParentRoute: () => PracticeRouteRoute,
+  } as any)
+const PracticeCasesAccusativeAdjectiveRoute =
+  PracticeCasesAccusativeAdjectiveRouteImport.update({
+    id: '/cases/accusative/adjective',
+    path: '/cases/accusative/adjective',
+    getParentRoute: () => PracticeRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
-	"/": typeof IndexRoute;
-	"/practice": typeof PracticeRouteRouteWithChildren;
-	"/progress": typeof ProgressRoute;
-	"/search": typeof SearchRoute;
-	"/support": typeof SupportRoute;
-	"/try": typeof TryRoute;
-	"/login": typeof authLoginRoute;
-	"/register": typeof authRegisterRoute;
-	"/api/errors": typeof ApiErrorsRoute;
-	"/learn/nouns": typeof LearnNounsRoute;
-	"/learn/verbs": typeof LearnVerbsRouteWithChildren;
-	"/practice/review": typeof PracticeReviewRoute;
-	"/reference/$tab": typeof ReferenceTabRoute;
-	"/learn/": typeof LearnIndexRoute;
-	"/practice/": typeof PracticeIndexRoute;
-	"/reference/": typeof ReferenceIndexRoute;
-	"/api/push/log-tap": typeof ApiPushLogTapRoute;
-	"/api/push/snooze": typeof ApiPushSnoozeRoute;
-	"/api/push/subscribe": typeof ApiPushSubscribeRoute;
-	"/api/push/unsubscribe": typeof ApiPushUnsubscribeRoute;
-	"/api/push/vapid-key": typeof ApiPushVapidKeyRoute;
-	"/api/webauthn/auth-options": typeof ApiWebauthnAuthOptionsRoute;
-	"/api/webauthn/auth-verify": typeof ApiWebauthnAuthVerifyRoute;
-	"/api/webauthn/register-options": typeof ApiWebauthnRegisterOptionsRoute;
-	"/api/webauthn/register-verify": typeof ApiWebauthnRegisterVerifyRoute;
-	"/learn/conversations/$tab": typeof LearnConversationsTabRoute;
-	"/learn/essentials/$subtab": typeof LearnEssentialsSubtabRoute;
-	"/learn/phrases/$tab": typeof LearnPhrasesTabRoute;
-	"/learn/verbs/$verbId": typeof LearnVerbsVerbIdRoute;
-	"/practice/blocks/chunks": typeof PracticeBlocksChunksRoute;
-	"/practice/blocks/days-of-week": typeof PracticeBlocksDaysOfWeekRoute;
-	"/practice/blocks/numbers": typeof PracticeBlocksNumbersRoute;
-	"/practice/pronouns/object": typeof PracticePronounsObjectRoute;
-	"/practice/pronouns/placement": typeof PracticePronounsPlacementRoute;
-	"/practice/pronouns/possessives": typeof PracticePronounsPossessivesRoute;
-	"/practice/verbs/future-conjugation": typeof PracticeVerbsFutureConjugationRoute;
-	"/practice/verbs/imperatives": typeof PracticeVerbsImperativesRoute;
-	"/practice/verbs/modal-constructions": typeof PracticeVerbsModalConstructionsRoute;
-	"/learn/conversations/": typeof LearnConversationsIndexRoute;
-	"/learn/essentials/": typeof LearnEssentialsIndexRoute;
-	"/learn/phrases/": typeof LearnPhrasesIndexRoute;
-	"/practice/blocks/": typeof PracticeBlocksIndexRoute;
-	"/practice/cases/": typeof PracticeCasesIndexRoute;
-	"/practice/pronouns/": typeof PracticePronounsIndexRoute;
-	"/practice/verbs/": typeof PracticeVerbsIndexRoute;
-	"/practice/cases/accusative/adjective": typeof PracticeCasesAccusativeAdjectiveRoute;
-	"/practice/cases/accusative/article": typeof PracticeCasesAccusativeArticleRoute;
-	"/practice/cases/accusative/noun": typeof PracticeCasesAccusativeNounRoute;
-	"/practice/cases/accusative/phrase": typeof PracticeCasesAccusativePhraseRoute;
-	"/practice/cases/genitive/adjective": typeof PracticeCasesGenitiveAdjectiveRoute;
-	"/practice/cases/genitive/article": typeof PracticeCasesGenitiveArticleRoute;
-	"/practice/cases/genitive/noun": typeof PracticeCasesGenitiveNounRoute;
-	"/practice/cases/genitive/phrase": typeof PracticeCasesGenitivePhraseRoute;
-	"/practice/cases/nominative/adjective": typeof PracticeCasesNominativeAdjectiveRoute;
-	"/practice/cases/nominative/article": typeof PracticeCasesNominativeArticleRoute;
-	"/practice/cases/nominative/noun": typeof PracticeCasesNominativeNounRoute;
-	"/practice/cases/nominative/phrase": typeof PracticeCasesNominativePhraseRoute;
-	"/practice/cases/review/adjectives": typeof PracticeCasesReviewAdjectivesRoute;
-	"/practice/cases/review/articles": typeof PracticeCasesReviewArticlesRoute;
-	"/practice/cases/review/nouns": typeof PracticeCasesReviewNounsRoute;
-	"/practice/cases/review/phrases": typeof PracticeCasesReviewPhrasesRoute;
-	"/practice/verbs/past/aorist-conjugation": typeof PracticeVerbsPastAoristConjugationRoute;
-	"/practice/verbs/past/aorist-formation": typeof PracticeVerbsPastAoristFormationRoute;
-	"/practice/verbs/past/aorist-stems": typeof PracticeVerbsPastAoristStemsRoute;
-	"/practice/verbs/past/aorist-vocabulary": typeof PracticeVerbsPastAoristVocabularyRoute;
-	"/practice/verbs/past/imperfect-stative": typeof PracticeVerbsPastImperfectStativeRoute;
-	"/practice/verbs/present/conjugations": typeof PracticeVerbsPresentConjugationsRoute;
-	"/practice/verbs/present/eimai": typeof PracticeVerbsPresentEimaiRoute;
-	"/practice/verbs/present/irregular": typeof PracticeVerbsPresentIrregularRoute;
-	"/practice/verbs/present/vocabulary": typeof PracticeVerbsPresentVocabularyRoute;
-	"/practice/verbs/present/": typeof PracticeVerbsPresentIndexRoute;
+  '/': typeof IndexRoute
+  '/practice': typeof PracticeRouteRouteWithChildren
+  '/progress': typeof ProgressRoute
+  '/search': typeof SearchRoute
+  '/support': typeof SupportRoute
+  '/try': typeof TryRoute
+  '/login': typeof authLoginRoute
+  '/register': typeof authRegisterRoute
+  '/api/errors': typeof ApiErrorsRoute
+  '/learn/nouns': typeof LearnNounsRoute
+  '/learn/verbs': typeof LearnVerbsRouteWithChildren
+  '/practice/review': typeof PracticeReviewRoute
+  '/reference/$tab': typeof ReferenceTabRoute
+  '/learn/': typeof LearnIndexRoute
+  '/practice/': typeof PracticeIndexRoute
+  '/reference/': typeof ReferenceIndexRoute
+  '/api/push/log-tap': typeof ApiPushLogTapRoute
+  '/api/push/snooze': typeof ApiPushSnoozeRoute
+  '/api/push/subscribe': typeof ApiPushSubscribeRoute
+  '/api/push/unsubscribe': typeof ApiPushUnsubscribeRoute
+  '/api/push/vapid-key': typeof ApiPushVapidKeyRoute
+  '/api/webauthn/auth-options': typeof ApiWebauthnAuthOptionsRoute
+  '/api/webauthn/auth-verify': typeof ApiWebauthnAuthVerifyRoute
+  '/api/webauthn/register-options': typeof ApiWebauthnRegisterOptionsRoute
+  '/api/webauthn/register-verify': typeof ApiWebauthnRegisterVerifyRoute
+  '/learn/conversations/$tab': typeof LearnConversationsTabRoute
+  '/learn/essentials/$subtab': typeof LearnEssentialsSubtabRoute
+  '/learn/phrases/$tab': typeof LearnPhrasesTabRoute
+  '/learn/verbs/$verbId': typeof LearnVerbsVerbIdRoute
+  '/practice/blocks/chunks': typeof PracticeBlocksChunksRoute
+  '/practice/blocks/days-of-week': typeof PracticeBlocksDaysOfWeekRoute
+  '/practice/blocks/numbers': typeof PracticeBlocksNumbersRoute
+  '/practice/pronouns/object': typeof PracticePronounsObjectRoute
+  '/practice/pronouns/placement': typeof PracticePronounsPlacementRoute
+  '/practice/pronouns/possessives': typeof PracticePronounsPossessivesRoute
+  '/practice/verbs/future-conjugation': typeof PracticeVerbsFutureConjugationRoute
+  '/practice/verbs/imperatives': typeof PracticeVerbsImperativesRoute
+  '/practice/verbs/modal-constructions': typeof PracticeVerbsModalConstructionsRoute
+  '/learn/conversations/': typeof LearnConversationsIndexRoute
+  '/learn/essentials/': typeof LearnEssentialsIndexRoute
+  '/learn/phrases/': typeof LearnPhrasesIndexRoute
+  '/practice/blocks/': typeof PracticeBlocksIndexRoute
+  '/practice/cases/': typeof PracticeCasesIndexRoute
+  '/practice/pronouns/': typeof PracticePronounsIndexRoute
+  '/practice/verbs/': typeof PracticeVerbsIndexRoute
+  '/practice/cases/accusative/adjective': typeof PracticeCasesAccusativeAdjectiveRoute
+  '/practice/cases/accusative/article': typeof PracticeCasesAccusativeArticleRoute
+  '/practice/cases/accusative/noun': typeof PracticeCasesAccusativeNounRoute
+  '/practice/cases/accusative/phrase': typeof PracticeCasesAccusativePhraseRoute
+  '/practice/cases/genitive/adjective': typeof PracticeCasesGenitiveAdjectiveRoute
+  '/practice/cases/genitive/article': typeof PracticeCasesGenitiveArticleRoute
+  '/practice/cases/genitive/noun': typeof PracticeCasesGenitiveNounRoute
+  '/practice/cases/genitive/phrase': typeof PracticeCasesGenitivePhraseRoute
+  '/practice/cases/nominative/adjective': typeof PracticeCasesNominativeAdjectiveRoute
+  '/practice/cases/nominative/article': typeof PracticeCasesNominativeArticleRoute
+  '/practice/cases/nominative/noun': typeof PracticeCasesNominativeNounRoute
+  '/practice/cases/nominative/phrase': typeof PracticeCasesNominativePhraseRoute
+  '/practice/cases/review/adjectives': typeof PracticeCasesReviewAdjectivesRoute
+  '/practice/cases/review/articles': typeof PracticeCasesReviewArticlesRoute
+  '/practice/cases/review/nouns': typeof PracticeCasesReviewNounsRoute
+  '/practice/cases/review/phrases': typeof PracticeCasesReviewPhrasesRoute
+  '/practice/verbs/past/aorist-conjugation': typeof PracticeVerbsPastAoristConjugationRoute
+  '/practice/verbs/past/aorist-formation': typeof PracticeVerbsPastAoristFormationRoute
+  '/practice/verbs/past/aorist-stems': typeof PracticeVerbsPastAoristStemsRoute
+  '/practice/verbs/past/aorist-vocabulary': typeof PracticeVerbsPastAoristVocabularyRoute
+  '/practice/verbs/past/imperfect-stative': typeof PracticeVerbsPastImperfectStativeRoute
+  '/practice/verbs/present/conjugations': typeof PracticeVerbsPresentConjugationsRoute
+  '/practice/verbs/present/eimai': typeof PracticeVerbsPresentEimaiRoute
+  '/practice/verbs/present/full': typeof PracticeVerbsPresentFullRoute
+  '/practice/verbs/present/irregular': typeof PracticeVerbsPresentIrregularRoute
+  '/practice/verbs/present/vocabulary': typeof PracticeVerbsPresentVocabularyRoute
 }
 export interface FileRoutesByTo {
-	"/": typeof IndexRoute;
-	"/progress": typeof ProgressRoute;
-	"/search": typeof SearchRoute;
-	"/support": typeof SupportRoute;
-	"/try": typeof TryRoute;
-	"/login": typeof authLoginRoute;
-	"/register": typeof authRegisterRoute;
-	"/api/errors": typeof ApiErrorsRoute;
-	"/learn/nouns": typeof LearnNounsRoute;
-	"/learn/verbs": typeof LearnVerbsRouteWithChildren;
-	"/practice/review": typeof PracticeReviewRoute;
-	"/reference/$tab": typeof ReferenceTabRoute;
-	"/learn": typeof LearnIndexRoute;
-	"/practice": typeof PracticeIndexRoute;
-	"/reference": typeof ReferenceIndexRoute;
-	"/api/push/log-tap": typeof ApiPushLogTapRoute;
-	"/api/push/snooze": typeof ApiPushSnoozeRoute;
-	"/api/push/subscribe": typeof ApiPushSubscribeRoute;
-	"/api/push/unsubscribe": typeof ApiPushUnsubscribeRoute;
-	"/api/push/vapid-key": typeof ApiPushVapidKeyRoute;
-	"/api/webauthn/auth-options": typeof ApiWebauthnAuthOptionsRoute;
-	"/api/webauthn/auth-verify": typeof ApiWebauthnAuthVerifyRoute;
-	"/api/webauthn/register-options": typeof ApiWebauthnRegisterOptionsRoute;
-	"/api/webauthn/register-verify": typeof ApiWebauthnRegisterVerifyRoute;
-	"/learn/conversations/$tab": typeof LearnConversationsTabRoute;
-	"/learn/essentials/$subtab": typeof LearnEssentialsSubtabRoute;
-	"/learn/phrases/$tab": typeof LearnPhrasesTabRoute;
-	"/learn/verbs/$verbId": typeof LearnVerbsVerbIdRoute;
-	"/practice/blocks/chunks": typeof PracticeBlocksChunksRoute;
-	"/practice/blocks/days-of-week": typeof PracticeBlocksDaysOfWeekRoute;
-	"/practice/blocks/numbers": typeof PracticeBlocksNumbersRoute;
-	"/practice/pronouns/object": typeof PracticePronounsObjectRoute;
-	"/practice/pronouns/placement": typeof PracticePronounsPlacementRoute;
-	"/practice/pronouns/possessives": typeof PracticePronounsPossessivesRoute;
-	"/practice/verbs/future-conjugation": typeof PracticeVerbsFutureConjugationRoute;
-	"/practice/verbs/imperatives": typeof PracticeVerbsImperativesRoute;
-	"/practice/verbs/modal-constructions": typeof PracticeVerbsModalConstructionsRoute;
-	"/learn/conversations": typeof LearnConversationsIndexRoute;
-	"/learn/essentials": typeof LearnEssentialsIndexRoute;
-	"/learn/phrases": typeof LearnPhrasesIndexRoute;
-	"/practice/blocks": typeof PracticeBlocksIndexRoute;
-	"/practice/cases": typeof PracticeCasesIndexRoute;
-	"/practice/pronouns": typeof PracticePronounsIndexRoute;
-	"/practice/verbs": typeof PracticeVerbsIndexRoute;
-	"/practice/cases/accusative/adjective": typeof PracticeCasesAccusativeAdjectiveRoute;
-	"/practice/cases/accusative/article": typeof PracticeCasesAccusativeArticleRoute;
-	"/practice/cases/accusative/noun": typeof PracticeCasesAccusativeNounRoute;
-	"/practice/cases/accusative/phrase": typeof PracticeCasesAccusativePhraseRoute;
-	"/practice/cases/genitive/adjective": typeof PracticeCasesGenitiveAdjectiveRoute;
-	"/practice/cases/genitive/article": typeof PracticeCasesGenitiveArticleRoute;
-	"/practice/cases/genitive/noun": typeof PracticeCasesGenitiveNounRoute;
-	"/practice/cases/genitive/phrase": typeof PracticeCasesGenitivePhraseRoute;
-	"/practice/cases/nominative/adjective": typeof PracticeCasesNominativeAdjectiveRoute;
-	"/practice/cases/nominative/article": typeof PracticeCasesNominativeArticleRoute;
-	"/practice/cases/nominative/noun": typeof PracticeCasesNominativeNounRoute;
-	"/practice/cases/nominative/phrase": typeof PracticeCasesNominativePhraseRoute;
-	"/practice/cases/review/adjectives": typeof PracticeCasesReviewAdjectivesRoute;
-	"/practice/cases/review/articles": typeof PracticeCasesReviewArticlesRoute;
-	"/practice/cases/review/nouns": typeof PracticeCasesReviewNounsRoute;
-	"/practice/cases/review/phrases": typeof PracticeCasesReviewPhrasesRoute;
-	"/practice/verbs/past/aorist-conjugation": typeof PracticeVerbsPastAoristConjugationRoute;
-	"/practice/verbs/past/aorist-formation": typeof PracticeVerbsPastAoristFormationRoute;
-	"/practice/verbs/past/aorist-stems": typeof PracticeVerbsPastAoristStemsRoute;
-	"/practice/verbs/past/aorist-vocabulary": typeof PracticeVerbsPastAoristVocabularyRoute;
-	"/practice/verbs/past/imperfect-stative": typeof PracticeVerbsPastImperfectStativeRoute;
-	"/practice/verbs/present/conjugations": typeof PracticeVerbsPresentConjugationsRoute;
-	"/practice/verbs/present/eimai": typeof PracticeVerbsPresentEimaiRoute;
-	"/practice/verbs/present/irregular": typeof PracticeVerbsPresentIrregularRoute;
-	"/practice/verbs/present/vocabulary": typeof PracticeVerbsPresentVocabularyRoute;
-	"/practice/verbs/present": typeof PracticeVerbsPresentIndexRoute;
+  '/': typeof IndexRoute
+  '/progress': typeof ProgressRoute
+  '/search': typeof SearchRoute
+  '/support': typeof SupportRoute
+  '/try': typeof TryRoute
+  '/login': typeof authLoginRoute
+  '/register': typeof authRegisterRoute
+  '/api/errors': typeof ApiErrorsRoute
+  '/learn/nouns': typeof LearnNounsRoute
+  '/learn/verbs': typeof LearnVerbsRouteWithChildren
+  '/practice/review': typeof PracticeReviewRoute
+  '/reference/$tab': typeof ReferenceTabRoute
+  '/learn': typeof LearnIndexRoute
+  '/practice': typeof PracticeIndexRoute
+  '/reference': typeof ReferenceIndexRoute
+  '/api/push/log-tap': typeof ApiPushLogTapRoute
+  '/api/push/snooze': typeof ApiPushSnoozeRoute
+  '/api/push/subscribe': typeof ApiPushSubscribeRoute
+  '/api/push/unsubscribe': typeof ApiPushUnsubscribeRoute
+  '/api/push/vapid-key': typeof ApiPushVapidKeyRoute
+  '/api/webauthn/auth-options': typeof ApiWebauthnAuthOptionsRoute
+  '/api/webauthn/auth-verify': typeof ApiWebauthnAuthVerifyRoute
+  '/api/webauthn/register-options': typeof ApiWebauthnRegisterOptionsRoute
+  '/api/webauthn/register-verify': typeof ApiWebauthnRegisterVerifyRoute
+  '/learn/conversations/$tab': typeof LearnConversationsTabRoute
+  '/learn/essentials/$subtab': typeof LearnEssentialsSubtabRoute
+  '/learn/phrases/$tab': typeof LearnPhrasesTabRoute
+  '/learn/verbs/$verbId': typeof LearnVerbsVerbIdRoute
+  '/practice/blocks/chunks': typeof PracticeBlocksChunksRoute
+  '/practice/blocks/days-of-week': typeof PracticeBlocksDaysOfWeekRoute
+  '/practice/blocks/numbers': typeof PracticeBlocksNumbersRoute
+  '/practice/pronouns/object': typeof PracticePronounsObjectRoute
+  '/practice/pronouns/placement': typeof PracticePronounsPlacementRoute
+  '/practice/pronouns/possessives': typeof PracticePronounsPossessivesRoute
+  '/practice/verbs/future-conjugation': typeof PracticeVerbsFutureConjugationRoute
+  '/practice/verbs/imperatives': typeof PracticeVerbsImperativesRoute
+  '/practice/verbs/modal-constructions': typeof PracticeVerbsModalConstructionsRoute
+  '/learn/conversations': typeof LearnConversationsIndexRoute
+  '/learn/essentials': typeof LearnEssentialsIndexRoute
+  '/learn/phrases': typeof LearnPhrasesIndexRoute
+  '/practice/blocks': typeof PracticeBlocksIndexRoute
+  '/practice/cases': typeof PracticeCasesIndexRoute
+  '/practice/pronouns': typeof PracticePronounsIndexRoute
+  '/practice/verbs': typeof PracticeVerbsIndexRoute
+  '/practice/cases/accusative/adjective': typeof PracticeCasesAccusativeAdjectiveRoute
+  '/practice/cases/accusative/article': typeof PracticeCasesAccusativeArticleRoute
+  '/practice/cases/accusative/noun': typeof PracticeCasesAccusativeNounRoute
+  '/practice/cases/accusative/phrase': typeof PracticeCasesAccusativePhraseRoute
+  '/practice/cases/genitive/adjective': typeof PracticeCasesGenitiveAdjectiveRoute
+  '/practice/cases/genitive/article': typeof PracticeCasesGenitiveArticleRoute
+  '/practice/cases/genitive/noun': typeof PracticeCasesGenitiveNounRoute
+  '/practice/cases/genitive/phrase': typeof PracticeCasesGenitivePhraseRoute
+  '/practice/cases/nominative/adjective': typeof PracticeCasesNominativeAdjectiveRoute
+  '/practice/cases/nominative/article': typeof PracticeCasesNominativeArticleRoute
+  '/practice/cases/nominative/noun': typeof PracticeCasesNominativeNounRoute
+  '/practice/cases/nominative/phrase': typeof PracticeCasesNominativePhraseRoute
+  '/practice/cases/review/adjectives': typeof PracticeCasesReviewAdjectivesRoute
+  '/practice/cases/review/articles': typeof PracticeCasesReviewArticlesRoute
+  '/practice/cases/review/nouns': typeof PracticeCasesReviewNounsRoute
+  '/practice/cases/review/phrases': typeof PracticeCasesReviewPhrasesRoute
+  '/practice/verbs/past/aorist-conjugation': typeof PracticeVerbsPastAoristConjugationRoute
+  '/practice/verbs/past/aorist-formation': typeof PracticeVerbsPastAoristFormationRoute
+  '/practice/verbs/past/aorist-stems': typeof PracticeVerbsPastAoristStemsRoute
+  '/practice/verbs/past/aorist-vocabulary': typeof PracticeVerbsPastAoristVocabularyRoute
+  '/practice/verbs/past/imperfect-stative': typeof PracticeVerbsPastImperfectStativeRoute
+  '/practice/verbs/present/conjugations': typeof PracticeVerbsPresentConjugationsRoute
+  '/practice/verbs/present/eimai': typeof PracticeVerbsPresentEimaiRoute
+  '/practice/verbs/present/full': typeof PracticeVerbsPresentFullRoute
+  '/practice/verbs/present/irregular': typeof PracticeVerbsPresentIrregularRoute
+  '/practice/verbs/present/vocabulary': typeof PracticeVerbsPresentVocabularyRoute
 }
 export interface FileRoutesById {
-	__root__: typeof rootRouteImport;
-	"/": typeof IndexRoute;
-	"/practice": typeof PracticeRouteRouteWithChildren;
-	"/progress": typeof ProgressRoute;
-	"/search": typeof SearchRoute;
-	"/support": typeof SupportRoute;
-	"/try": typeof TryRoute;
-	"/(auth)/login": typeof authLoginRoute;
-	"/(auth)/register": typeof authRegisterRoute;
-	"/api/errors": typeof ApiErrorsRoute;
-	"/learn/nouns": typeof LearnNounsRoute;
-	"/learn/verbs": typeof LearnVerbsRouteWithChildren;
-	"/practice/review": typeof PracticeReviewRoute;
-	"/reference/$tab": typeof ReferenceTabRoute;
-	"/learn/": typeof LearnIndexRoute;
-	"/practice/": typeof PracticeIndexRoute;
-	"/reference/": typeof ReferenceIndexRoute;
-	"/api/push/log-tap": typeof ApiPushLogTapRoute;
-	"/api/push/snooze": typeof ApiPushSnoozeRoute;
-	"/api/push/subscribe": typeof ApiPushSubscribeRoute;
-	"/api/push/unsubscribe": typeof ApiPushUnsubscribeRoute;
-	"/api/push/vapid-key": typeof ApiPushVapidKeyRoute;
-	"/api/webauthn/auth-options": typeof ApiWebauthnAuthOptionsRoute;
-	"/api/webauthn/auth-verify": typeof ApiWebauthnAuthVerifyRoute;
-	"/api/webauthn/register-options": typeof ApiWebauthnRegisterOptionsRoute;
-	"/api/webauthn/register-verify": typeof ApiWebauthnRegisterVerifyRoute;
-	"/learn/conversations/$tab": typeof LearnConversationsTabRoute;
-	"/learn/essentials/$subtab": typeof LearnEssentialsSubtabRoute;
-	"/learn/phrases/$tab": typeof LearnPhrasesTabRoute;
-	"/learn/verbs/$verbId": typeof LearnVerbsVerbIdRoute;
-	"/practice/blocks/chunks": typeof PracticeBlocksChunksRoute;
-	"/practice/blocks/days-of-week": typeof PracticeBlocksDaysOfWeekRoute;
-	"/practice/blocks/numbers": typeof PracticeBlocksNumbersRoute;
-	"/practice/pronouns/object": typeof PracticePronounsObjectRoute;
-	"/practice/pronouns/placement": typeof PracticePronounsPlacementRoute;
-	"/practice/pronouns/possessives": typeof PracticePronounsPossessivesRoute;
-	"/practice/verbs/future-conjugation": typeof PracticeVerbsFutureConjugationRoute;
-	"/practice/verbs/imperatives": typeof PracticeVerbsImperativesRoute;
-	"/practice/verbs/modal-constructions": typeof PracticeVerbsModalConstructionsRoute;
-	"/learn/conversations/": typeof LearnConversationsIndexRoute;
-	"/learn/essentials/": typeof LearnEssentialsIndexRoute;
-	"/learn/phrases/": typeof LearnPhrasesIndexRoute;
-	"/practice/blocks/": typeof PracticeBlocksIndexRoute;
-	"/practice/cases/": typeof PracticeCasesIndexRoute;
-	"/practice/pronouns/": typeof PracticePronounsIndexRoute;
-	"/practice/verbs/": typeof PracticeVerbsIndexRoute;
-	"/practice/cases/accusative/adjective": typeof PracticeCasesAccusativeAdjectiveRoute;
-	"/practice/cases/accusative/article": typeof PracticeCasesAccusativeArticleRoute;
-	"/practice/cases/accusative/noun": typeof PracticeCasesAccusativeNounRoute;
-	"/practice/cases/accusative/phrase": typeof PracticeCasesAccusativePhraseRoute;
-	"/practice/cases/genitive/adjective": typeof PracticeCasesGenitiveAdjectiveRoute;
-	"/practice/cases/genitive/article": typeof PracticeCasesGenitiveArticleRoute;
-	"/practice/cases/genitive/noun": typeof PracticeCasesGenitiveNounRoute;
-	"/practice/cases/genitive/phrase": typeof PracticeCasesGenitivePhraseRoute;
-	"/practice/cases/nominative/adjective": typeof PracticeCasesNominativeAdjectiveRoute;
-	"/practice/cases/nominative/article": typeof PracticeCasesNominativeArticleRoute;
-	"/practice/cases/nominative/noun": typeof PracticeCasesNominativeNounRoute;
-	"/practice/cases/nominative/phrase": typeof PracticeCasesNominativePhraseRoute;
-	"/practice/cases/review/adjectives": typeof PracticeCasesReviewAdjectivesRoute;
-	"/practice/cases/review/articles": typeof PracticeCasesReviewArticlesRoute;
-	"/practice/cases/review/nouns": typeof PracticeCasesReviewNounsRoute;
-	"/practice/cases/review/phrases": typeof PracticeCasesReviewPhrasesRoute;
-	"/practice/verbs/past/aorist-conjugation": typeof PracticeVerbsPastAoristConjugationRoute;
-	"/practice/verbs/past/aorist-formation": typeof PracticeVerbsPastAoristFormationRoute;
-	"/practice/verbs/past/aorist-stems": typeof PracticeVerbsPastAoristStemsRoute;
-	"/practice/verbs/past/aorist-vocabulary": typeof PracticeVerbsPastAoristVocabularyRoute;
-	"/practice/verbs/past/imperfect-stative": typeof PracticeVerbsPastImperfectStativeRoute;
-	"/practice/verbs/present/conjugations": typeof PracticeVerbsPresentConjugationsRoute;
-	"/practice/verbs/present/eimai": typeof PracticeVerbsPresentEimaiRoute;
-	"/practice/verbs/present/irregular": typeof PracticeVerbsPresentIrregularRoute;
-	"/practice/verbs/present/vocabulary": typeof PracticeVerbsPresentVocabularyRoute;
-	"/practice/verbs/present/": typeof PracticeVerbsPresentIndexRoute;
+  __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
+  '/practice': typeof PracticeRouteRouteWithChildren
+  '/progress': typeof ProgressRoute
+  '/search': typeof SearchRoute
+  '/support': typeof SupportRoute
+  '/try': typeof TryRoute
+  '/(auth)/login': typeof authLoginRoute
+  '/(auth)/register': typeof authRegisterRoute
+  '/api/errors': typeof ApiErrorsRoute
+  '/learn/nouns': typeof LearnNounsRoute
+  '/learn/verbs': typeof LearnVerbsRouteWithChildren
+  '/practice/review': typeof PracticeReviewRoute
+  '/reference/$tab': typeof ReferenceTabRoute
+  '/learn/': typeof LearnIndexRoute
+  '/practice/': typeof PracticeIndexRoute
+  '/reference/': typeof ReferenceIndexRoute
+  '/api/push/log-tap': typeof ApiPushLogTapRoute
+  '/api/push/snooze': typeof ApiPushSnoozeRoute
+  '/api/push/subscribe': typeof ApiPushSubscribeRoute
+  '/api/push/unsubscribe': typeof ApiPushUnsubscribeRoute
+  '/api/push/vapid-key': typeof ApiPushVapidKeyRoute
+  '/api/webauthn/auth-options': typeof ApiWebauthnAuthOptionsRoute
+  '/api/webauthn/auth-verify': typeof ApiWebauthnAuthVerifyRoute
+  '/api/webauthn/register-options': typeof ApiWebauthnRegisterOptionsRoute
+  '/api/webauthn/register-verify': typeof ApiWebauthnRegisterVerifyRoute
+  '/learn/conversations/$tab': typeof LearnConversationsTabRoute
+  '/learn/essentials/$subtab': typeof LearnEssentialsSubtabRoute
+  '/learn/phrases/$tab': typeof LearnPhrasesTabRoute
+  '/learn/verbs/$verbId': typeof LearnVerbsVerbIdRoute
+  '/practice/blocks/chunks': typeof PracticeBlocksChunksRoute
+  '/practice/blocks/days-of-week': typeof PracticeBlocksDaysOfWeekRoute
+  '/practice/blocks/numbers': typeof PracticeBlocksNumbersRoute
+  '/practice/pronouns/object': typeof PracticePronounsObjectRoute
+  '/practice/pronouns/placement': typeof PracticePronounsPlacementRoute
+  '/practice/pronouns/possessives': typeof PracticePronounsPossessivesRoute
+  '/practice/verbs/future-conjugation': typeof PracticeVerbsFutureConjugationRoute
+  '/practice/verbs/imperatives': typeof PracticeVerbsImperativesRoute
+  '/practice/verbs/modal-constructions': typeof PracticeVerbsModalConstructionsRoute
+  '/learn/conversations/': typeof LearnConversationsIndexRoute
+  '/learn/essentials/': typeof LearnEssentialsIndexRoute
+  '/learn/phrases/': typeof LearnPhrasesIndexRoute
+  '/practice/blocks/': typeof PracticeBlocksIndexRoute
+  '/practice/cases/': typeof PracticeCasesIndexRoute
+  '/practice/pronouns/': typeof PracticePronounsIndexRoute
+  '/practice/verbs/': typeof PracticeVerbsIndexRoute
+  '/practice/cases/accusative/adjective': typeof PracticeCasesAccusativeAdjectiveRoute
+  '/practice/cases/accusative/article': typeof PracticeCasesAccusativeArticleRoute
+  '/practice/cases/accusative/noun': typeof PracticeCasesAccusativeNounRoute
+  '/practice/cases/accusative/phrase': typeof PracticeCasesAccusativePhraseRoute
+  '/practice/cases/genitive/adjective': typeof PracticeCasesGenitiveAdjectiveRoute
+  '/practice/cases/genitive/article': typeof PracticeCasesGenitiveArticleRoute
+  '/practice/cases/genitive/noun': typeof PracticeCasesGenitiveNounRoute
+  '/practice/cases/genitive/phrase': typeof PracticeCasesGenitivePhraseRoute
+  '/practice/cases/nominative/adjective': typeof PracticeCasesNominativeAdjectiveRoute
+  '/practice/cases/nominative/article': typeof PracticeCasesNominativeArticleRoute
+  '/practice/cases/nominative/noun': typeof PracticeCasesNominativeNounRoute
+  '/practice/cases/nominative/phrase': typeof PracticeCasesNominativePhraseRoute
+  '/practice/cases/review/adjectives': typeof PracticeCasesReviewAdjectivesRoute
+  '/practice/cases/review/articles': typeof PracticeCasesReviewArticlesRoute
+  '/practice/cases/review/nouns': typeof PracticeCasesReviewNounsRoute
+  '/practice/cases/review/phrases': typeof PracticeCasesReviewPhrasesRoute
+  '/practice/verbs/past/aorist-conjugation': typeof PracticeVerbsPastAoristConjugationRoute
+  '/practice/verbs/past/aorist-formation': typeof PracticeVerbsPastAoristFormationRoute
+  '/practice/verbs/past/aorist-stems': typeof PracticeVerbsPastAoristStemsRoute
+  '/practice/verbs/past/aorist-vocabulary': typeof PracticeVerbsPastAoristVocabularyRoute
+  '/practice/verbs/past/imperfect-stative': typeof PracticeVerbsPastImperfectStativeRoute
+  '/practice/verbs/present/conjugations': typeof PracticeVerbsPresentConjugationsRoute
+  '/practice/verbs/present/eimai': typeof PracticeVerbsPresentEimaiRoute
+  '/practice/verbs/present/full': typeof PracticeVerbsPresentFullRoute
+  '/practice/verbs/present/irregular': typeof PracticeVerbsPresentIrregularRoute
+  '/practice/verbs/present/vocabulary': typeof PracticeVerbsPresentVocabularyRoute
 }
 export interface FileRouteTypes {
-	fileRoutesByFullPath: FileRoutesByFullPath;
-	fullPaths:
-		| "/"
-		| "/practice"
-		| "/progress"
-		| "/search"
-		| "/support"
-		| "/try"
-		| "/login"
-		| "/register"
-		| "/api/errors"
-		| "/learn/nouns"
-		| "/learn/verbs"
-		| "/practice/review"
-		| "/reference/$tab"
-		| "/learn/"
-		| "/practice/"
-		| "/reference/"
-		| "/api/push/log-tap"
-		| "/api/push/snooze"
-		| "/api/push/subscribe"
-		| "/api/push/unsubscribe"
-		| "/api/push/vapid-key"
-		| "/api/webauthn/auth-options"
-		| "/api/webauthn/auth-verify"
-		| "/api/webauthn/register-options"
-		| "/api/webauthn/register-verify"
-		| "/learn/conversations/$tab"
-		| "/learn/essentials/$subtab"
-		| "/learn/phrases/$tab"
-		| "/learn/verbs/$verbId"
-		| "/practice/blocks/chunks"
-		| "/practice/blocks/days-of-week"
-		| "/practice/blocks/numbers"
-		| "/practice/pronouns/object"
-		| "/practice/pronouns/placement"
-		| "/practice/pronouns/possessives"
-		| "/practice/verbs/future-conjugation"
-		| "/practice/verbs/imperatives"
-		| "/practice/verbs/modal-constructions"
-		| "/learn/conversations/"
-		| "/learn/essentials/"
-		| "/learn/phrases/"
-		| "/practice/blocks/"
-		| "/practice/cases/"
-		| "/practice/pronouns/"
-		| "/practice/verbs/"
-		| "/practice/cases/accusative/adjective"
-		| "/practice/cases/accusative/article"
-		| "/practice/cases/accusative/noun"
-		| "/practice/cases/accusative/phrase"
-		| "/practice/cases/genitive/adjective"
-		| "/practice/cases/genitive/article"
-		| "/practice/cases/genitive/noun"
-		| "/practice/cases/genitive/phrase"
-		| "/practice/cases/nominative/adjective"
-		| "/practice/cases/nominative/article"
-		| "/practice/cases/nominative/noun"
-		| "/practice/cases/nominative/phrase"
-		| "/practice/cases/review/adjectives"
-		| "/practice/cases/review/articles"
-		| "/practice/cases/review/nouns"
-		| "/practice/cases/review/phrases"
-		| "/practice/verbs/past/aorist-conjugation"
-		| "/practice/verbs/past/aorist-formation"
-		| "/practice/verbs/past/aorist-stems"
-		| "/practice/verbs/past/aorist-vocabulary"
-		| "/practice/verbs/past/imperfect-stative"
-		| "/practice/verbs/present/conjugations"
-		| "/practice/verbs/present/eimai"
-		| "/practice/verbs/present/irregular"
-		| "/practice/verbs/present/vocabulary"
-		| "/practice/verbs/present/";
-	fileRoutesByTo: FileRoutesByTo;
-	to:
-		| "/"
-		| "/progress"
-		| "/search"
-		| "/support"
-		| "/try"
-		| "/login"
-		| "/register"
-		| "/api/errors"
-		| "/learn/nouns"
-		| "/learn/verbs"
-		| "/practice/review"
-		| "/reference/$tab"
-		| "/learn"
-		| "/practice"
-		| "/reference"
-		| "/api/push/log-tap"
-		| "/api/push/snooze"
-		| "/api/push/subscribe"
-		| "/api/push/unsubscribe"
-		| "/api/push/vapid-key"
-		| "/api/webauthn/auth-options"
-		| "/api/webauthn/auth-verify"
-		| "/api/webauthn/register-options"
-		| "/api/webauthn/register-verify"
-		| "/learn/conversations/$tab"
-		| "/learn/essentials/$subtab"
-		| "/learn/phrases/$tab"
-		| "/learn/verbs/$verbId"
-		| "/practice/blocks/chunks"
-		| "/practice/blocks/days-of-week"
-		| "/practice/blocks/numbers"
-		| "/practice/pronouns/object"
-		| "/practice/pronouns/placement"
-		| "/practice/pronouns/possessives"
-		| "/practice/verbs/future-conjugation"
-		| "/practice/verbs/imperatives"
-		| "/practice/verbs/modal-constructions"
-		| "/learn/conversations"
-		| "/learn/essentials"
-		| "/learn/phrases"
-		| "/practice/blocks"
-		| "/practice/cases"
-		| "/practice/pronouns"
-		| "/practice/verbs"
-		| "/practice/cases/accusative/adjective"
-		| "/practice/cases/accusative/article"
-		| "/practice/cases/accusative/noun"
-		| "/practice/cases/accusative/phrase"
-		| "/practice/cases/genitive/adjective"
-		| "/practice/cases/genitive/article"
-		| "/practice/cases/genitive/noun"
-		| "/practice/cases/genitive/phrase"
-		| "/practice/cases/nominative/adjective"
-		| "/practice/cases/nominative/article"
-		| "/practice/cases/nominative/noun"
-		| "/practice/cases/nominative/phrase"
-		| "/practice/cases/review/adjectives"
-		| "/practice/cases/review/articles"
-		| "/practice/cases/review/nouns"
-		| "/practice/cases/review/phrases"
-		| "/practice/verbs/past/aorist-conjugation"
-		| "/practice/verbs/past/aorist-formation"
-		| "/practice/verbs/past/aorist-stems"
-		| "/practice/verbs/past/aorist-vocabulary"
-		| "/practice/verbs/past/imperfect-stative"
-		| "/practice/verbs/present/conjugations"
-		| "/practice/verbs/present/eimai"
-		| "/practice/verbs/present/irregular"
-		| "/practice/verbs/present/vocabulary"
-		| "/practice/verbs/present";
-	id:
-		| "__root__"
-		| "/"
-		| "/practice"
-		| "/progress"
-		| "/search"
-		| "/support"
-		| "/try"
-		| "/(auth)/login"
-		| "/(auth)/register"
-		| "/api/errors"
-		| "/learn/nouns"
-		| "/learn/verbs"
-		| "/practice/review"
-		| "/reference/$tab"
-		| "/learn/"
-		| "/practice/"
-		| "/reference/"
-		| "/api/push/log-tap"
-		| "/api/push/snooze"
-		| "/api/push/subscribe"
-		| "/api/push/unsubscribe"
-		| "/api/push/vapid-key"
-		| "/api/webauthn/auth-options"
-		| "/api/webauthn/auth-verify"
-		| "/api/webauthn/register-options"
-		| "/api/webauthn/register-verify"
-		| "/learn/conversations/$tab"
-		| "/learn/essentials/$subtab"
-		| "/learn/phrases/$tab"
-		| "/learn/verbs/$verbId"
-		| "/practice/blocks/chunks"
-		| "/practice/blocks/days-of-week"
-		| "/practice/blocks/numbers"
-		| "/practice/pronouns/object"
-		| "/practice/pronouns/placement"
-		| "/practice/pronouns/possessives"
-		| "/practice/verbs/future-conjugation"
-		| "/practice/verbs/imperatives"
-		| "/practice/verbs/modal-constructions"
-		| "/learn/conversations/"
-		| "/learn/essentials/"
-		| "/learn/phrases/"
-		| "/practice/blocks/"
-		| "/practice/cases/"
-		| "/practice/pronouns/"
-		| "/practice/verbs/"
-		| "/practice/cases/accusative/adjective"
-		| "/practice/cases/accusative/article"
-		| "/practice/cases/accusative/noun"
-		| "/practice/cases/accusative/phrase"
-		| "/practice/cases/genitive/adjective"
-		| "/practice/cases/genitive/article"
-		| "/practice/cases/genitive/noun"
-		| "/practice/cases/genitive/phrase"
-		| "/practice/cases/nominative/adjective"
-		| "/practice/cases/nominative/article"
-		| "/practice/cases/nominative/noun"
-		| "/practice/cases/nominative/phrase"
-		| "/practice/cases/review/adjectives"
-		| "/practice/cases/review/articles"
-		| "/practice/cases/review/nouns"
-		| "/practice/cases/review/phrases"
-		| "/practice/verbs/past/aorist-conjugation"
-		| "/practice/verbs/past/aorist-formation"
-		| "/practice/verbs/past/aorist-stems"
-		| "/practice/verbs/past/aorist-vocabulary"
-		| "/practice/verbs/past/imperfect-stative"
-		| "/practice/verbs/present/conjugations"
-		| "/practice/verbs/present/eimai"
-		| "/practice/verbs/present/irregular"
-		| "/practice/verbs/present/vocabulary"
-		| "/practice/verbs/present/";
-	fileRoutesById: FileRoutesById;
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths:
+    | '/'
+    | '/practice'
+    | '/progress'
+    | '/search'
+    | '/support'
+    | '/try'
+    | '/login'
+    | '/register'
+    | '/api/errors'
+    | '/learn/nouns'
+    | '/learn/verbs'
+    | '/practice/review'
+    | '/reference/$tab'
+    | '/learn/'
+    | '/practice/'
+    | '/reference/'
+    | '/api/push/log-tap'
+    | '/api/push/snooze'
+    | '/api/push/subscribe'
+    | '/api/push/unsubscribe'
+    | '/api/push/vapid-key'
+    | '/api/webauthn/auth-options'
+    | '/api/webauthn/auth-verify'
+    | '/api/webauthn/register-options'
+    | '/api/webauthn/register-verify'
+    | '/learn/conversations/$tab'
+    | '/learn/essentials/$subtab'
+    | '/learn/phrases/$tab'
+    | '/learn/verbs/$verbId'
+    | '/practice/blocks/chunks'
+    | '/practice/blocks/days-of-week'
+    | '/practice/blocks/numbers'
+    | '/practice/pronouns/object'
+    | '/practice/pronouns/placement'
+    | '/practice/pronouns/possessives'
+    | '/practice/verbs/future-conjugation'
+    | '/practice/verbs/imperatives'
+    | '/practice/verbs/modal-constructions'
+    | '/learn/conversations/'
+    | '/learn/essentials/'
+    | '/learn/phrases/'
+    | '/practice/blocks/'
+    | '/practice/cases/'
+    | '/practice/pronouns/'
+    | '/practice/verbs/'
+    | '/practice/cases/accusative/adjective'
+    | '/practice/cases/accusative/article'
+    | '/practice/cases/accusative/noun'
+    | '/practice/cases/accusative/phrase'
+    | '/practice/cases/genitive/adjective'
+    | '/practice/cases/genitive/article'
+    | '/practice/cases/genitive/noun'
+    | '/practice/cases/genitive/phrase'
+    | '/practice/cases/nominative/adjective'
+    | '/practice/cases/nominative/article'
+    | '/practice/cases/nominative/noun'
+    | '/practice/cases/nominative/phrase'
+    | '/practice/cases/review/adjectives'
+    | '/practice/cases/review/articles'
+    | '/practice/cases/review/nouns'
+    | '/practice/cases/review/phrases'
+    | '/practice/verbs/past/aorist-conjugation'
+    | '/practice/verbs/past/aorist-formation'
+    | '/practice/verbs/past/aorist-stems'
+    | '/practice/verbs/past/aorist-vocabulary'
+    | '/practice/verbs/past/imperfect-stative'
+    | '/practice/verbs/present/conjugations'
+    | '/practice/verbs/present/eimai'
+    | '/practice/verbs/present/full'
+    | '/practice/verbs/present/irregular'
+    | '/practice/verbs/present/vocabulary'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | '/'
+    | '/progress'
+    | '/search'
+    | '/support'
+    | '/try'
+    | '/login'
+    | '/register'
+    | '/api/errors'
+    | '/learn/nouns'
+    | '/learn/verbs'
+    | '/practice/review'
+    | '/reference/$tab'
+    | '/learn'
+    | '/practice'
+    | '/reference'
+    | '/api/push/log-tap'
+    | '/api/push/snooze'
+    | '/api/push/subscribe'
+    | '/api/push/unsubscribe'
+    | '/api/push/vapid-key'
+    | '/api/webauthn/auth-options'
+    | '/api/webauthn/auth-verify'
+    | '/api/webauthn/register-options'
+    | '/api/webauthn/register-verify'
+    | '/learn/conversations/$tab'
+    | '/learn/essentials/$subtab'
+    | '/learn/phrases/$tab'
+    | '/learn/verbs/$verbId'
+    | '/practice/blocks/chunks'
+    | '/practice/blocks/days-of-week'
+    | '/practice/blocks/numbers'
+    | '/practice/pronouns/object'
+    | '/practice/pronouns/placement'
+    | '/practice/pronouns/possessives'
+    | '/practice/verbs/future-conjugation'
+    | '/practice/verbs/imperatives'
+    | '/practice/verbs/modal-constructions'
+    | '/learn/conversations'
+    | '/learn/essentials'
+    | '/learn/phrases'
+    | '/practice/blocks'
+    | '/practice/cases'
+    | '/practice/pronouns'
+    | '/practice/verbs'
+    | '/practice/cases/accusative/adjective'
+    | '/practice/cases/accusative/article'
+    | '/practice/cases/accusative/noun'
+    | '/practice/cases/accusative/phrase'
+    | '/practice/cases/genitive/adjective'
+    | '/practice/cases/genitive/article'
+    | '/practice/cases/genitive/noun'
+    | '/practice/cases/genitive/phrase'
+    | '/practice/cases/nominative/adjective'
+    | '/practice/cases/nominative/article'
+    | '/practice/cases/nominative/noun'
+    | '/practice/cases/nominative/phrase'
+    | '/practice/cases/review/adjectives'
+    | '/practice/cases/review/articles'
+    | '/practice/cases/review/nouns'
+    | '/practice/cases/review/phrases'
+    | '/practice/verbs/past/aorist-conjugation'
+    | '/practice/verbs/past/aorist-formation'
+    | '/practice/verbs/past/aorist-stems'
+    | '/practice/verbs/past/aorist-vocabulary'
+    | '/practice/verbs/past/imperfect-stative'
+    | '/practice/verbs/present/conjugations'
+    | '/practice/verbs/present/eimai'
+    | '/practice/verbs/present/full'
+    | '/practice/verbs/present/irregular'
+    | '/practice/verbs/present/vocabulary'
+  id:
+    | '__root__'
+    | '/'
+    | '/practice'
+    | '/progress'
+    | '/search'
+    | '/support'
+    | '/try'
+    | '/(auth)/login'
+    | '/(auth)/register'
+    | '/api/errors'
+    | '/learn/nouns'
+    | '/learn/verbs'
+    | '/practice/review'
+    | '/reference/$tab'
+    | '/learn/'
+    | '/practice/'
+    | '/reference/'
+    | '/api/push/log-tap'
+    | '/api/push/snooze'
+    | '/api/push/subscribe'
+    | '/api/push/unsubscribe'
+    | '/api/push/vapid-key'
+    | '/api/webauthn/auth-options'
+    | '/api/webauthn/auth-verify'
+    | '/api/webauthn/register-options'
+    | '/api/webauthn/register-verify'
+    | '/learn/conversations/$tab'
+    | '/learn/essentials/$subtab'
+    | '/learn/phrases/$tab'
+    | '/learn/verbs/$verbId'
+    | '/practice/blocks/chunks'
+    | '/practice/blocks/days-of-week'
+    | '/practice/blocks/numbers'
+    | '/practice/pronouns/object'
+    | '/practice/pronouns/placement'
+    | '/practice/pronouns/possessives'
+    | '/practice/verbs/future-conjugation'
+    | '/practice/verbs/imperatives'
+    | '/practice/verbs/modal-constructions'
+    | '/learn/conversations/'
+    | '/learn/essentials/'
+    | '/learn/phrases/'
+    | '/practice/blocks/'
+    | '/practice/cases/'
+    | '/practice/pronouns/'
+    | '/practice/verbs/'
+    | '/practice/cases/accusative/adjective'
+    | '/practice/cases/accusative/article'
+    | '/practice/cases/accusative/noun'
+    | '/practice/cases/accusative/phrase'
+    | '/practice/cases/genitive/adjective'
+    | '/practice/cases/genitive/article'
+    | '/practice/cases/genitive/noun'
+    | '/practice/cases/genitive/phrase'
+    | '/practice/cases/nominative/adjective'
+    | '/practice/cases/nominative/article'
+    | '/practice/cases/nominative/noun'
+    | '/practice/cases/nominative/phrase'
+    | '/practice/cases/review/adjectives'
+    | '/practice/cases/review/articles'
+    | '/practice/cases/review/nouns'
+    | '/practice/cases/review/phrases'
+    | '/practice/verbs/past/aorist-conjugation'
+    | '/practice/verbs/past/aorist-formation'
+    | '/practice/verbs/past/aorist-stems'
+    | '/practice/verbs/past/aorist-vocabulary'
+    | '/practice/verbs/past/imperfect-stative'
+    | '/practice/verbs/present/conjugations'
+    | '/practice/verbs/present/eimai'
+    | '/practice/verbs/present/full'
+    | '/practice/verbs/present/irregular'
+    | '/practice/verbs/present/vocabulary'
+  fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-	IndexRoute: typeof IndexRoute;
-	PracticeRouteRoute: typeof PracticeRouteRouteWithChildren;
-	ProgressRoute: typeof ProgressRoute;
-	SearchRoute: typeof SearchRoute;
-	SupportRoute: typeof SupportRoute;
-	TryRoute: typeof TryRoute;
-	authLoginRoute: typeof authLoginRoute;
-	authRegisterRoute: typeof authRegisterRoute;
-	ApiErrorsRoute: typeof ApiErrorsRoute;
-	LearnNounsRoute: typeof LearnNounsRoute;
-	LearnVerbsRoute: typeof LearnVerbsRouteWithChildren;
-	ReferenceTabRoute: typeof ReferenceTabRoute;
-	LearnIndexRoute: typeof LearnIndexRoute;
-	ReferenceIndexRoute: typeof ReferenceIndexRoute;
-	ApiPushLogTapRoute: typeof ApiPushLogTapRoute;
-	ApiPushSnoozeRoute: typeof ApiPushSnoozeRoute;
-	ApiPushSubscribeRoute: typeof ApiPushSubscribeRoute;
-	ApiPushUnsubscribeRoute: typeof ApiPushUnsubscribeRoute;
-	ApiPushVapidKeyRoute: typeof ApiPushVapidKeyRoute;
-	ApiWebauthnAuthOptionsRoute: typeof ApiWebauthnAuthOptionsRoute;
-	ApiWebauthnAuthVerifyRoute: typeof ApiWebauthnAuthVerifyRoute;
-	ApiWebauthnRegisterOptionsRoute: typeof ApiWebauthnRegisterOptionsRoute;
-	ApiWebauthnRegisterVerifyRoute: typeof ApiWebauthnRegisterVerifyRoute;
-	LearnConversationsTabRoute: typeof LearnConversationsTabRoute;
-	LearnEssentialsSubtabRoute: typeof LearnEssentialsSubtabRoute;
-	LearnPhrasesTabRoute: typeof LearnPhrasesTabRoute;
-	LearnConversationsIndexRoute: typeof LearnConversationsIndexRoute;
-	LearnEssentialsIndexRoute: typeof LearnEssentialsIndexRoute;
-	LearnPhrasesIndexRoute: typeof LearnPhrasesIndexRoute;
+  IndexRoute: typeof IndexRoute
+  PracticeRouteRoute: typeof PracticeRouteRouteWithChildren
+  ProgressRoute: typeof ProgressRoute
+  SearchRoute: typeof SearchRoute
+  SupportRoute: typeof SupportRoute
+  TryRoute: typeof TryRoute
+  authLoginRoute: typeof authLoginRoute
+  authRegisterRoute: typeof authRegisterRoute
+  ApiErrorsRoute: typeof ApiErrorsRoute
+  LearnNounsRoute: typeof LearnNounsRoute
+  LearnVerbsRoute: typeof LearnVerbsRouteWithChildren
+  ReferenceTabRoute: typeof ReferenceTabRoute
+  LearnIndexRoute: typeof LearnIndexRoute
+  ReferenceIndexRoute: typeof ReferenceIndexRoute
+  ApiPushLogTapRoute: typeof ApiPushLogTapRoute
+  ApiPushSnoozeRoute: typeof ApiPushSnoozeRoute
+  ApiPushSubscribeRoute: typeof ApiPushSubscribeRoute
+  ApiPushUnsubscribeRoute: typeof ApiPushUnsubscribeRoute
+  ApiPushVapidKeyRoute: typeof ApiPushVapidKeyRoute
+  ApiWebauthnAuthOptionsRoute: typeof ApiWebauthnAuthOptionsRoute
+  ApiWebauthnAuthVerifyRoute: typeof ApiWebauthnAuthVerifyRoute
+  ApiWebauthnRegisterOptionsRoute: typeof ApiWebauthnRegisterOptionsRoute
+  ApiWebauthnRegisterVerifyRoute: typeof ApiWebauthnRegisterVerifyRoute
+  LearnConversationsTabRoute: typeof LearnConversationsTabRoute
+  LearnEssentialsSubtabRoute: typeof LearnEssentialsSubtabRoute
+  LearnPhrasesTabRoute: typeof LearnPhrasesTabRoute
+  LearnConversationsIndexRoute: typeof LearnConversationsIndexRoute
+  LearnEssentialsIndexRoute: typeof LearnEssentialsIndexRoute
+  LearnPhrasesIndexRoute: typeof LearnPhrasesIndexRoute
 }
 
-declare module "@tanstack/react-router" {
-	interface FileRoutesByPath {
-		"/try": {
-			id: "/try";
-			path: "/try";
-			fullPath: "/try";
-			preLoaderRoute: typeof TryRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/support": {
-			id: "/support";
-			path: "/support";
-			fullPath: "/support";
-			preLoaderRoute: typeof SupportRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/search": {
-			id: "/search";
-			path: "/search";
-			fullPath: "/search";
-			preLoaderRoute: typeof SearchRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/progress": {
-			id: "/progress";
-			path: "/progress";
-			fullPath: "/progress";
-			preLoaderRoute: typeof ProgressRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/practice": {
-			id: "/practice";
-			path: "/practice";
-			fullPath: "/practice";
-			preLoaderRoute: typeof PracticeRouteRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/": {
-			id: "/";
-			path: "/";
-			fullPath: "/";
-			preLoaderRoute: typeof IndexRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/reference/": {
-			id: "/reference/";
-			path: "/reference";
-			fullPath: "/reference/";
-			preLoaderRoute: typeof ReferenceIndexRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/practice/": {
-			id: "/practice/";
-			path: "/";
-			fullPath: "/practice/";
-			preLoaderRoute: typeof PracticeIndexRouteImport;
-			parentRoute: typeof PracticeRouteRoute;
-		};
-		"/learn/": {
-			id: "/learn/";
-			path: "/learn";
-			fullPath: "/learn/";
-			preLoaderRoute: typeof LearnIndexRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/reference/$tab": {
-			id: "/reference/$tab";
-			path: "/reference/$tab";
-			fullPath: "/reference/$tab";
-			preLoaderRoute: typeof ReferenceTabRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/practice/review": {
-			id: "/practice/review";
-			path: "/review";
-			fullPath: "/practice/review";
-			preLoaderRoute: typeof PracticeReviewRouteImport;
-			parentRoute: typeof PracticeRouteRoute;
-		};
-		"/learn/verbs": {
-			id: "/learn/verbs";
-			path: "/learn/verbs";
-			fullPath: "/learn/verbs";
-			preLoaderRoute: typeof LearnVerbsRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/learn/nouns": {
-			id: "/learn/nouns";
-			path: "/learn/nouns";
-			fullPath: "/learn/nouns";
-			preLoaderRoute: typeof LearnNounsRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/api/errors": {
-			id: "/api/errors";
-			path: "/api/errors";
-			fullPath: "/api/errors";
-			preLoaderRoute: typeof ApiErrorsRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/(auth)/register": {
-			id: "/(auth)/register";
-			path: "/register";
-			fullPath: "/register";
-			preLoaderRoute: typeof authRegisterRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/(auth)/login": {
-			id: "/(auth)/login";
-			path: "/login";
-			fullPath: "/login";
-			preLoaderRoute: typeof authLoginRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/practice/verbs/": {
-			id: "/practice/verbs/";
-			path: "/verbs";
-			fullPath: "/practice/verbs/";
-			preLoaderRoute: typeof PracticeVerbsIndexRouteImport;
-			parentRoute: typeof PracticeRouteRoute;
-		};
-		"/practice/pronouns/": {
-			id: "/practice/pronouns/";
-			path: "/pronouns";
-			fullPath: "/practice/pronouns/";
-			preLoaderRoute: typeof PracticePronounsIndexRouteImport;
-			parentRoute: typeof PracticeRouteRoute;
-		};
-		"/practice/cases/": {
-			id: "/practice/cases/";
-			path: "/cases";
-			fullPath: "/practice/cases/";
-			preLoaderRoute: typeof PracticeCasesIndexRouteImport;
-			parentRoute: typeof PracticeRouteRoute;
-		};
-		"/practice/blocks/": {
-			id: "/practice/blocks/";
-			path: "/blocks";
-			fullPath: "/practice/blocks/";
-			preLoaderRoute: typeof PracticeBlocksIndexRouteImport;
-			parentRoute: typeof PracticeRouteRoute;
-		};
-		"/learn/phrases/": {
-			id: "/learn/phrases/";
-			path: "/learn/phrases";
-			fullPath: "/learn/phrases/";
-			preLoaderRoute: typeof LearnPhrasesIndexRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/learn/essentials/": {
-			id: "/learn/essentials/";
-			path: "/learn/essentials";
-			fullPath: "/learn/essentials/";
-			preLoaderRoute: typeof LearnEssentialsIndexRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/learn/conversations/": {
-			id: "/learn/conversations/";
-			path: "/learn/conversations";
-			fullPath: "/learn/conversations/";
-			preLoaderRoute: typeof LearnConversationsIndexRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/practice/verbs/modal-constructions": {
-			id: "/practice/verbs/modal-constructions";
-			path: "/verbs/modal-constructions";
-			fullPath: "/practice/verbs/modal-constructions";
-			preLoaderRoute: typeof PracticeVerbsModalConstructionsRouteImport;
-			parentRoute: typeof PracticeRouteRoute;
-		};
-		"/practice/verbs/imperatives": {
-			id: "/practice/verbs/imperatives";
-			path: "/verbs/imperatives";
-			fullPath: "/practice/verbs/imperatives";
-			preLoaderRoute: typeof PracticeVerbsImperativesRouteImport;
-			parentRoute: typeof PracticeRouteRoute;
-		};
-		"/practice/verbs/future-conjugation": {
-			id: "/practice/verbs/future-conjugation";
-			path: "/verbs/future-conjugation";
-			fullPath: "/practice/verbs/future-conjugation";
-			preLoaderRoute: typeof PracticeVerbsFutureConjugationRouteImport;
-			parentRoute: typeof PracticeRouteRoute;
-		};
-		"/practice/pronouns/possessives": {
-			id: "/practice/pronouns/possessives";
-			path: "/pronouns/possessives";
-			fullPath: "/practice/pronouns/possessives";
-			preLoaderRoute: typeof PracticePronounsPossessivesRouteImport;
-			parentRoute: typeof PracticeRouteRoute;
-		};
-		"/practice/pronouns/placement": {
-			id: "/practice/pronouns/placement";
-			path: "/pronouns/placement";
-			fullPath: "/practice/pronouns/placement";
-			preLoaderRoute: typeof PracticePronounsPlacementRouteImport;
-			parentRoute: typeof PracticeRouteRoute;
-		};
-		"/practice/pronouns/object": {
-			id: "/practice/pronouns/object";
-			path: "/pronouns/object";
-			fullPath: "/practice/pronouns/object";
-			preLoaderRoute: typeof PracticePronounsObjectRouteImport;
-			parentRoute: typeof PracticeRouteRoute;
-		};
-		"/practice/blocks/numbers": {
-			id: "/practice/blocks/numbers";
-			path: "/blocks/numbers";
-			fullPath: "/practice/blocks/numbers";
-			preLoaderRoute: typeof PracticeBlocksNumbersRouteImport;
-			parentRoute: typeof PracticeRouteRoute;
-		};
-		"/practice/blocks/days-of-week": {
-			id: "/practice/blocks/days-of-week";
-			path: "/blocks/days-of-week";
-			fullPath: "/practice/blocks/days-of-week";
-			preLoaderRoute: typeof PracticeBlocksDaysOfWeekRouteImport;
-			parentRoute: typeof PracticeRouteRoute;
-		};
-		"/practice/blocks/chunks": {
-			id: "/practice/blocks/chunks";
-			path: "/blocks/chunks";
-			fullPath: "/practice/blocks/chunks";
-			preLoaderRoute: typeof PracticeBlocksChunksRouteImport;
-			parentRoute: typeof PracticeRouteRoute;
-		};
-		"/learn/verbs/$verbId": {
-			id: "/learn/verbs/$verbId";
-			path: "/$verbId";
-			fullPath: "/learn/verbs/$verbId";
-			preLoaderRoute: typeof LearnVerbsVerbIdRouteImport;
-			parentRoute: typeof LearnVerbsRoute;
-		};
-		"/learn/phrases/$tab": {
-			id: "/learn/phrases/$tab";
-			path: "/learn/phrases/$tab";
-			fullPath: "/learn/phrases/$tab";
-			preLoaderRoute: typeof LearnPhrasesTabRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/learn/essentials/$subtab": {
-			id: "/learn/essentials/$subtab";
-			path: "/learn/essentials/$subtab";
-			fullPath: "/learn/essentials/$subtab";
-			preLoaderRoute: typeof LearnEssentialsSubtabRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/learn/conversations/$tab": {
-			id: "/learn/conversations/$tab";
-			path: "/learn/conversations/$tab";
-			fullPath: "/learn/conversations/$tab";
-			preLoaderRoute: typeof LearnConversationsTabRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/api/webauthn/register-verify": {
-			id: "/api/webauthn/register-verify";
-			path: "/api/webauthn/register-verify";
-			fullPath: "/api/webauthn/register-verify";
-			preLoaderRoute: typeof ApiWebauthnRegisterVerifyRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/api/webauthn/register-options": {
-			id: "/api/webauthn/register-options";
-			path: "/api/webauthn/register-options";
-			fullPath: "/api/webauthn/register-options";
-			preLoaderRoute: typeof ApiWebauthnRegisterOptionsRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/api/webauthn/auth-verify": {
-			id: "/api/webauthn/auth-verify";
-			path: "/api/webauthn/auth-verify";
-			fullPath: "/api/webauthn/auth-verify";
-			preLoaderRoute: typeof ApiWebauthnAuthVerifyRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/api/webauthn/auth-options": {
-			id: "/api/webauthn/auth-options";
-			path: "/api/webauthn/auth-options";
-			fullPath: "/api/webauthn/auth-options";
-			preLoaderRoute: typeof ApiWebauthnAuthOptionsRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/api/push/vapid-key": {
-			id: "/api/push/vapid-key";
-			path: "/api/push/vapid-key";
-			fullPath: "/api/push/vapid-key";
-			preLoaderRoute: typeof ApiPushVapidKeyRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/api/push/unsubscribe": {
-			id: "/api/push/unsubscribe";
-			path: "/api/push/unsubscribe";
-			fullPath: "/api/push/unsubscribe";
-			preLoaderRoute: typeof ApiPushUnsubscribeRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/api/push/subscribe": {
-			id: "/api/push/subscribe";
-			path: "/api/push/subscribe";
-			fullPath: "/api/push/subscribe";
-			preLoaderRoute: typeof ApiPushSubscribeRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/api/push/snooze": {
-			id: "/api/push/snooze";
-			path: "/api/push/snooze";
-			fullPath: "/api/push/snooze";
-			preLoaderRoute: typeof ApiPushSnoozeRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/api/push/log-tap": {
-			id: "/api/push/log-tap";
-			path: "/api/push/log-tap";
-			fullPath: "/api/push/log-tap";
-			preLoaderRoute: typeof ApiPushLogTapRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/practice/verbs/present/": {
-			id: "/practice/verbs/present/";
-			path: "/verbs/present";
-			fullPath: "/practice/verbs/present/";
-			preLoaderRoute: typeof PracticeVerbsPresentIndexRouteImport;
-			parentRoute: typeof PracticeRouteRoute;
-		};
-		"/practice/verbs/present/vocabulary": {
-			id: "/practice/verbs/present/vocabulary";
-			path: "/verbs/present/vocabulary";
-			fullPath: "/practice/verbs/present/vocabulary";
-			preLoaderRoute: typeof PracticeVerbsPresentVocabularyRouteImport;
-			parentRoute: typeof PracticeRouteRoute;
-		};
-		"/practice/verbs/present/irregular": {
-			id: "/practice/verbs/present/irregular";
-			path: "/verbs/present/irregular";
-			fullPath: "/practice/verbs/present/irregular";
-			preLoaderRoute: typeof PracticeVerbsPresentIrregularRouteImport;
-			parentRoute: typeof PracticeRouteRoute;
-		};
-		"/practice/verbs/present/eimai": {
-			id: "/practice/verbs/present/eimai";
-			path: "/verbs/present/eimai";
-			fullPath: "/practice/verbs/present/eimai";
-			preLoaderRoute: typeof PracticeVerbsPresentEimaiRouteImport;
-			parentRoute: typeof PracticeRouteRoute;
-		};
-		"/practice/verbs/present/conjugations": {
-			id: "/practice/verbs/present/conjugations";
-			path: "/verbs/present/conjugations";
-			fullPath: "/practice/verbs/present/conjugations";
-			preLoaderRoute: typeof PracticeVerbsPresentConjugationsRouteImport;
-			parentRoute: typeof PracticeRouteRoute;
-		};
-		"/practice/verbs/past/imperfect-stative": {
-			id: "/practice/verbs/past/imperfect-stative";
-			path: "/verbs/past/imperfect-stative";
-			fullPath: "/practice/verbs/past/imperfect-stative";
-			preLoaderRoute: typeof PracticeVerbsPastImperfectStativeRouteImport;
-			parentRoute: typeof PracticeRouteRoute;
-		};
-		"/practice/verbs/past/aorist-vocabulary": {
-			id: "/practice/verbs/past/aorist-vocabulary";
-			path: "/verbs/past/aorist-vocabulary";
-			fullPath: "/practice/verbs/past/aorist-vocabulary";
-			preLoaderRoute: typeof PracticeVerbsPastAoristVocabularyRouteImport;
-			parentRoute: typeof PracticeRouteRoute;
-		};
-		"/practice/verbs/past/aorist-stems": {
-			id: "/practice/verbs/past/aorist-stems";
-			path: "/verbs/past/aorist-stems";
-			fullPath: "/practice/verbs/past/aorist-stems";
-			preLoaderRoute: typeof PracticeVerbsPastAoristStemsRouteImport;
-			parentRoute: typeof PracticeRouteRoute;
-		};
-		"/practice/verbs/past/aorist-formation": {
-			id: "/practice/verbs/past/aorist-formation";
-			path: "/verbs/past/aorist-formation";
-			fullPath: "/practice/verbs/past/aorist-formation";
-			preLoaderRoute: typeof PracticeVerbsPastAoristFormationRouteImport;
-			parentRoute: typeof PracticeRouteRoute;
-		};
-		"/practice/verbs/past/aorist-conjugation": {
-			id: "/practice/verbs/past/aorist-conjugation";
-			path: "/verbs/past/aorist-conjugation";
-			fullPath: "/practice/verbs/past/aorist-conjugation";
-			preLoaderRoute: typeof PracticeVerbsPastAoristConjugationRouteImport;
-			parentRoute: typeof PracticeRouteRoute;
-		};
-		"/practice/cases/review/phrases": {
-			id: "/practice/cases/review/phrases";
-			path: "/cases/review/phrases";
-			fullPath: "/practice/cases/review/phrases";
-			preLoaderRoute: typeof PracticeCasesReviewPhrasesRouteImport;
-			parentRoute: typeof PracticeRouteRoute;
-		};
-		"/practice/cases/review/nouns": {
-			id: "/practice/cases/review/nouns";
-			path: "/cases/review/nouns";
-			fullPath: "/practice/cases/review/nouns";
-			preLoaderRoute: typeof PracticeCasesReviewNounsRouteImport;
-			parentRoute: typeof PracticeRouteRoute;
-		};
-		"/practice/cases/review/articles": {
-			id: "/practice/cases/review/articles";
-			path: "/cases/review/articles";
-			fullPath: "/practice/cases/review/articles";
-			preLoaderRoute: typeof PracticeCasesReviewArticlesRouteImport;
-			parentRoute: typeof PracticeRouteRoute;
-		};
-		"/practice/cases/review/adjectives": {
-			id: "/practice/cases/review/adjectives";
-			path: "/cases/review/adjectives";
-			fullPath: "/practice/cases/review/adjectives";
-			preLoaderRoute: typeof PracticeCasesReviewAdjectivesRouteImport;
-			parentRoute: typeof PracticeRouteRoute;
-		};
-		"/practice/cases/nominative/phrase": {
-			id: "/practice/cases/nominative/phrase";
-			path: "/cases/nominative/phrase";
-			fullPath: "/practice/cases/nominative/phrase";
-			preLoaderRoute: typeof PracticeCasesNominativePhraseRouteImport;
-			parentRoute: typeof PracticeRouteRoute;
-		};
-		"/practice/cases/nominative/noun": {
-			id: "/practice/cases/nominative/noun";
-			path: "/cases/nominative/noun";
-			fullPath: "/practice/cases/nominative/noun";
-			preLoaderRoute: typeof PracticeCasesNominativeNounRouteImport;
-			parentRoute: typeof PracticeRouteRoute;
-		};
-		"/practice/cases/nominative/article": {
-			id: "/practice/cases/nominative/article";
-			path: "/cases/nominative/article";
-			fullPath: "/practice/cases/nominative/article";
-			preLoaderRoute: typeof PracticeCasesNominativeArticleRouteImport;
-			parentRoute: typeof PracticeRouteRoute;
-		};
-		"/practice/cases/nominative/adjective": {
-			id: "/practice/cases/nominative/adjective";
-			path: "/cases/nominative/adjective";
-			fullPath: "/practice/cases/nominative/adjective";
-			preLoaderRoute: typeof PracticeCasesNominativeAdjectiveRouteImport;
-			parentRoute: typeof PracticeRouteRoute;
-		};
-		"/practice/cases/genitive/phrase": {
-			id: "/practice/cases/genitive/phrase";
-			path: "/cases/genitive/phrase";
-			fullPath: "/practice/cases/genitive/phrase";
-			preLoaderRoute: typeof PracticeCasesGenitivePhraseRouteImport;
-			parentRoute: typeof PracticeRouteRoute;
-		};
-		"/practice/cases/genitive/noun": {
-			id: "/practice/cases/genitive/noun";
-			path: "/cases/genitive/noun";
-			fullPath: "/practice/cases/genitive/noun";
-			preLoaderRoute: typeof PracticeCasesGenitiveNounRouteImport;
-			parentRoute: typeof PracticeRouteRoute;
-		};
-		"/practice/cases/genitive/article": {
-			id: "/practice/cases/genitive/article";
-			path: "/cases/genitive/article";
-			fullPath: "/practice/cases/genitive/article";
-			preLoaderRoute: typeof PracticeCasesGenitiveArticleRouteImport;
-			parentRoute: typeof PracticeRouteRoute;
-		};
-		"/practice/cases/genitive/adjective": {
-			id: "/practice/cases/genitive/adjective";
-			path: "/cases/genitive/adjective";
-			fullPath: "/practice/cases/genitive/adjective";
-			preLoaderRoute: typeof PracticeCasesGenitiveAdjectiveRouteImport;
-			parentRoute: typeof PracticeRouteRoute;
-		};
-		"/practice/cases/accusative/phrase": {
-			id: "/practice/cases/accusative/phrase";
-			path: "/cases/accusative/phrase";
-			fullPath: "/practice/cases/accusative/phrase";
-			preLoaderRoute: typeof PracticeCasesAccusativePhraseRouteImport;
-			parentRoute: typeof PracticeRouteRoute;
-		};
-		"/practice/cases/accusative/noun": {
-			id: "/practice/cases/accusative/noun";
-			path: "/cases/accusative/noun";
-			fullPath: "/practice/cases/accusative/noun";
-			preLoaderRoute: typeof PracticeCasesAccusativeNounRouteImport;
-			parentRoute: typeof PracticeRouteRoute;
-		};
-		"/practice/cases/accusative/article": {
-			id: "/practice/cases/accusative/article";
-			path: "/cases/accusative/article";
-			fullPath: "/practice/cases/accusative/article";
-			preLoaderRoute: typeof PracticeCasesAccusativeArticleRouteImport;
-			parentRoute: typeof PracticeRouteRoute;
-		};
-		"/practice/cases/accusative/adjective": {
-			id: "/practice/cases/accusative/adjective";
-			path: "/cases/accusative/adjective";
-			fullPath: "/practice/cases/accusative/adjective";
-			preLoaderRoute: typeof PracticeCasesAccusativeAdjectiveRouteImport;
-			parentRoute: typeof PracticeRouteRoute;
-		};
-	}
+declare module '@tanstack/react-router' {
+  interface FileRoutesByPath {
+    '/try': {
+      id: '/try'
+      path: '/try'
+      fullPath: '/try'
+      preLoaderRoute: typeof TryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/support': {
+      id: '/support'
+      path: '/support'
+      fullPath: '/support'
+      preLoaderRoute: typeof SupportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/progress': {
+      id: '/progress'
+      path: '/progress'
+      fullPath: '/progress'
+      preLoaderRoute: typeof ProgressRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/practice': {
+      id: '/practice'
+      path: '/practice'
+      fullPath: '/practice'
+      preLoaderRoute: typeof PracticeRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reference/': {
+      id: '/reference/'
+      path: '/reference'
+      fullPath: '/reference/'
+      preLoaderRoute: typeof ReferenceIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/practice/': {
+      id: '/practice/'
+      path: '/'
+      fullPath: '/practice/'
+      preLoaderRoute: typeof PracticeIndexRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+    '/learn/': {
+      id: '/learn/'
+      path: '/learn'
+      fullPath: '/learn/'
+      preLoaderRoute: typeof LearnIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reference/$tab': {
+      id: '/reference/$tab'
+      path: '/reference/$tab'
+      fullPath: '/reference/$tab'
+      preLoaderRoute: typeof ReferenceTabRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/practice/review': {
+      id: '/practice/review'
+      path: '/review'
+      fullPath: '/practice/review'
+      preLoaderRoute: typeof PracticeReviewRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+    '/learn/verbs': {
+      id: '/learn/verbs'
+      path: '/learn/verbs'
+      fullPath: '/learn/verbs'
+      preLoaderRoute: typeof LearnVerbsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/learn/nouns': {
+      id: '/learn/nouns'
+      path: '/learn/nouns'
+      fullPath: '/learn/nouns'
+      preLoaderRoute: typeof LearnNounsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/errors': {
+      id: '/api/errors'
+      path: '/api/errors'
+      fullPath: '/api/errors'
+      preLoaderRoute: typeof ApiErrorsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(auth)/register': {
+      id: '/(auth)/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof authRegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(auth)/login': {
+      id: '/(auth)/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof authLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/practice/verbs/': {
+      id: '/practice/verbs/'
+      path: '/verbs'
+      fullPath: '/practice/verbs/'
+      preLoaderRoute: typeof PracticeVerbsIndexRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+    '/practice/pronouns/': {
+      id: '/practice/pronouns/'
+      path: '/pronouns'
+      fullPath: '/practice/pronouns/'
+      preLoaderRoute: typeof PracticePronounsIndexRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+    '/practice/cases/': {
+      id: '/practice/cases/'
+      path: '/cases'
+      fullPath: '/practice/cases/'
+      preLoaderRoute: typeof PracticeCasesIndexRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+    '/practice/blocks/': {
+      id: '/practice/blocks/'
+      path: '/blocks'
+      fullPath: '/practice/blocks/'
+      preLoaderRoute: typeof PracticeBlocksIndexRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+    '/learn/phrases/': {
+      id: '/learn/phrases/'
+      path: '/learn/phrases'
+      fullPath: '/learn/phrases/'
+      preLoaderRoute: typeof LearnPhrasesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/learn/essentials/': {
+      id: '/learn/essentials/'
+      path: '/learn/essentials'
+      fullPath: '/learn/essentials/'
+      preLoaderRoute: typeof LearnEssentialsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/learn/conversations/': {
+      id: '/learn/conversations/'
+      path: '/learn/conversations'
+      fullPath: '/learn/conversations/'
+      preLoaderRoute: typeof LearnConversationsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/practice/verbs/modal-constructions': {
+      id: '/practice/verbs/modal-constructions'
+      path: '/verbs/modal-constructions'
+      fullPath: '/practice/verbs/modal-constructions'
+      preLoaderRoute: typeof PracticeVerbsModalConstructionsRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+    '/practice/verbs/imperatives': {
+      id: '/practice/verbs/imperatives'
+      path: '/verbs/imperatives'
+      fullPath: '/practice/verbs/imperatives'
+      preLoaderRoute: typeof PracticeVerbsImperativesRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+    '/practice/verbs/future-conjugation': {
+      id: '/practice/verbs/future-conjugation'
+      path: '/verbs/future-conjugation'
+      fullPath: '/practice/verbs/future-conjugation'
+      preLoaderRoute: typeof PracticeVerbsFutureConjugationRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+    '/practice/pronouns/possessives': {
+      id: '/practice/pronouns/possessives'
+      path: '/pronouns/possessives'
+      fullPath: '/practice/pronouns/possessives'
+      preLoaderRoute: typeof PracticePronounsPossessivesRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+    '/practice/pronouns/placement': {
+      id: '/practice/pronouns/placement'
+      path: '/pronouns/placement'
+      fullPath: '/practice/pronouns/placement'
+      preLoaderRoute: typeof PracticePronounsPlacementRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+    '/practice/pronouns/object': {
+      id: '/practice/pronouns/object'
+      path: '/pronouns/object'
+      fullPath: '/practice/pronouns/object'
+      preLoaderRoute: typeof PracticePronounsObjectRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+    '/practice/blocks/numbers': {
+      id: '/practice/blocks/numbers'
+      path: '/blocks/numbers'
+      fullPath: '/practice/blocks/numbers'
+      preLoaderRoute: typeof PracticeBlocksNumbersRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+    '/practice/blocks/days-of-week': {
+      id: '/practice/blocks/days-of-week'
+      path: '/blocks/days-of-week'
+      fullPath: '/practice/blocks/days-of-week'
+      preLoaderRoute: typeof PracticeBlocksDaysOfWeekRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+    '/practice/blocks/chunks': {
+      id: '/practice/blocks/chunks'
+      path: '/blocks/chunks'
+      fullPath: '/practice/blocks/chunks'
+      preLoaderRoute: typeof PracticeBlocksChunksRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+    '/learn/verbs/$verbId': {
+      id: '/learn/verbs/$verbId'
+      path: '/$verbId'
+      fullPath: '/learn/verbs/$verbId'
+      preLoaderRoute: typeof LearnVerbsVerbIdRouteImport
+      parentRoute: typeof LearnVerbsRoute
+    }
+    '/learn/phrases/$tab': {
+      id: '/learn/phrases/$tab'
+      path: '/learn/phrases/$tab'
+      fullPath: '/learn/phrases/$tab'
+      preLoaderRoute: typeof LearnPhrasesTabRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/learn/essentials/$subtab': {
+      id: '/learn/essentials/$subtab'
+      path: '/learn/essentials/$subtab'
+      fullPath: '/learn/essentials/$subtab'
+      preLoaderRoute: typeof LearnEssentialsSubtabRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/learn/conversations/$tab': {
+      id: '/learn/conversations/$tab'
+      path: '/learn/conversations/$tab'
+      fullPath: '/learn/conversations/$tab'
+      preLoaderRoute: typeof LearnConversationsTabRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/webauthn/register-verify': {
+      id: '/api/webauthn/register-verify'
+      path: '/api/webauthn/register-verify'
+      fullPath: '/api/webauthn/register-verify'
+      preLoaderRoute: typeof ApiWebauthnRegisterVerifyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/webauthn/register-options': {
+      id: '/api/webauthn/register-options'
+      path: '/api/webauthn/register-options'
+      fullPath: '/api/webauthn/register-options'
+      preLoaderRoute: typeof ApiWebauthnRegisterOptionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/webauthn/auth-verify': {
+      id: '/api/webauthn/auth-verify'
+      path: '/api/webauthn/auth-verify'
+      fullPath: '/api/webauthn/auth-verify'
+      preLoaderRoute: typeof ApiWebauthnAuthVerifyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/webauthn/auth-options': {
+      id: '/api/webauthn/auth-options'
+      path: '/api/webauthn/auth-options'
+      fullPath: '/api/webauthn/auth-options'
+      preLoaderRoute: typeof ApiWebauthnAuthOptionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/push/vapid-key': {
+      id: '/api/push/vapid-key'
+      path: '/api/push/vapid-key'
+      fullPath: '/api/push/vapid-key'
+      preLoaderRoute: typeof ApiPushVapidKeyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/push/unsubscribe': {
+      id: '/api/push/unsubscribe'
+      path: '/api/push/unsubscribe'
+      fullPath: '/api/push/unsubscribe'
+      preLoaderRoute: typeof ApiPushUnsubscribeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/push/subscribe': {
+      id: '/api/push/subscribe'
+      path: '/api/push/subscribe'
+      fullPath: '/api/push/subscribe'
+      preLoaderRoute: typeof ApiPushSubscribeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/push/snooze': {
+      id: '/api/push/snooze'
+      path: '/api/push/snooze'
+      fullPath: '/api/push/snooze'
+      preLoaderRoute: typeof ApiPushSnoozeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/push/log-tap': {
+      id: '/api/push/log-tap'
+      path: '/api/push/log-tap'
+      fullPath: '/api/push/log-tap'
+      preLoaderRoute: typeof ApiPushLogTapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/practice/verbs/present/vocabulary': {
+      id: '/practice/verbs/present/vocabulary'
+      path: '/verbs/present/vocabulary'
+      fullPath: '/practice/verbs/present/vocabulary'
+      preLoaderRoute: typeof PracticeVerbsPresentVocabularyRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+    '/practice/verbs/present/irregular': {
+      id: '/practice/verbs/present/irregular'
+      path: '/verbs/present/irregular'
+      fullPath: '/practice/verbs/present/irregular'
+      preLoaderRoute: typeof PracticeVerbsPresentIrregularRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+    '/practice/verbs/present/full': {
+      id: '/practice/verbs/present/full'
+      path: '/verbs/present/full'
+      fullPath: '/practice/verbs/present/full'
+      preLoaderRoute: typeof PracticeVerbsPresentFullRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+    '/practice/verbs/present/eimai': {
+      id: '/practice/verbs/present/eimai'
+      path: '/verbs/present/eimai'
+      fullPath: '/practice/verbs/present/eimai'
+      preLoaderRoute: typeof PracticeVerbsPresentEimaiRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+    '/practice/verbs/present/conjugations': {
+      id: '/practice/verbs/present/conjugations'
+      path: '/verbs/present/conjugations'
+      fullPath: '/practice/verbs/present/conjugations'
+      preLoaderRoute: typeof PracticeVerbsPresentConjugationsRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+    '/practice/verbs/past/imperfect-stative': {
+      id: '/practice/verbs/past/imperfect-stative'
+      path: '/verbs/past/imperfect-stative'
+      fullPath: '/practice/verbs/past/imperfect-stative'
+      preLoaderRoute: typeof PracticeVerbsPastImperfectStativeRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+    '/practice/verbs/past/aorist-vocabulary': {
+      id: '/practice/verbs/past/aorist-vocabulary'
+      path: '/verbs/past/aorist-vocabulary'
+      fullPath: '/practice/verbs/past/aorist-vocabulary'
+      preLoaderRoute: typeof PracticeVerbsPastAoristVocabularyRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+    '/practice/verbs/past/aorist-stems': {
+      id: '/practice/verbs/past/aorist-stems'
+      path: '/verbs/past/aorist-stems'
+      fullPath: '/practice/verbs/past/aorist-stems'
+      preLoaderRoute: typeof PracticeVerbsPastAoristStemsRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+    '/practice/verbs/past/aorist-formation': {
+      id: '/practice/verbs/past/aorist-formation'
+      path: '/verbs/past/aorist-formation'
+      fullPath: '/practice/verbs/past/aorist-formation'
+      preLoaderRoute: typeof PracticeVerbsPastAoristFormationRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+    '/practice/verbs/past/aorist-conjugation': {
+      id: '/practice/verbs/past/aorist-conjugation'
+      path: '/verbs/past/aorist-conjugation'
+      fullPath: '/practice/verbs/past/aorist-conjugation'
+      preLoaderRoute: typeof PracticeVerbsPastAoristConjugationRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+    '/practice/cases/review/phrases': {
+      id: '/practice/cases/review/phrases'
+      path: '/cases/review/phrases'
+      fullPath: '/practice/cases/review/phrases'
+      preLoaderRoute: typeof PracticeCasesReviewPhrasesRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+    '/practice/cases/review/nouns': {
+      id: '/practice/cases/review/nouns'
+      path: '/cases/review/nouns'
+      fullPath: '/practice/cases/review/nouns'
+      preLoaderRoute: typeof PracticeCasesReviewNounsRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+    '/practice/cases/review/articles': {
+      id: '/practice/cases/review/articles'
+      path: '/cases/review/articles'
+      fullPath: '/practice/cases/review/articles'
+      preLoaderRoute: typeof PracticeCasesReviewArticlesRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+    '/practice/cases/review/adjectives': {
+      id: '/practice/cases/review/adjectives'
+      path: '/cases/review/adjectives'
+      fullPath: '/practice/cases/review/adjectives'
+      preLoaderRoute: typeof PracticeCasesReviewAdjectivesRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+    '/practice/cases/nominative/phrase': {
+      id: '/practice/cases/nominative/phrase'
+      path: '/cases/nominative/phrase'
+      fullPath: '/practice/cases/nominative/phrase'
+      preLoaderRoute: typeof PracticeCasesNominativePhraseRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+    '/practice/cases/nominative/noun': {
+      id: '/practice/cases/nominative/noun'
+      path: '/cases/nominative/noun'
+      fullPath: '/practice/cases/nominative/noun'
+      preLoaderRoute: typeof PracticeCasesNominativeNounRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+    '/practice/cases/nominative/article': {
+      id: '/practice/cases/nominative/article'
+      path: '/cases/nominative/article'
+      fullPath: '/practice/cases/nominative/article'
+      preLoaderRoute: typeof PracticeCasesNominativeArticleRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+    '/practice/cases/nominative/adjective': {
+      id: '/practice/cases/nominative/adjective'
+      path: '/cases/nominative/adjective'
+      fullPath: '/practice/cases/nominative/adjective'
+      preLoaderRoute: typeof PracticeCasesNominativeAdjectiveRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+    '/practice/cases/genitive/phrase': {
+      id: '/practice/cases/genitive/phrase'
+      path: '/cases/genitive/phrase'
+      fullPath: '/practice/cases/genitive/phrase'
+      preLoaderRoute: typeof PracticeCasesGenitivePhraseRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+    '/practice/cases/genitive/noun': {
+      id: '/practice/cases/genitive/noun'
+      path: '/cases/genitive/noun'
+      fullPath: '/practice/cases/genitive/noun'
+      preLoaderRoute: typeof PracticeCasesGenitiveNounRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+    '/practice/cases/genitive/article': {
+      id: '/practice/cases/genitive/article'
+      path: '/cases/genitive/article'
+      fullPath: '/practice/cases/genitive/article'
+      preLoaderRoute: typeof PracticeCasesGenitiveArticleRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+    '/practice/cases/genitive/adjective': {
+      id: '/practice/cases/genitive/adjective'
+      path: '/cases/genitive/adjective'
+      fullPath: '/practice/cases/genitive/adjective'
+      preLoaderRoute: typeof PracticeCasesGenitiveAdjectiveRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+    '/practice/cases/accusative/phrase': {
+      id: '/practice/cases/accusative/phrase'
+      path: '/cases/accusative/phrase'
+      fullPath: '/practice/cases/accusative/phrase'
+      preLoaderRoute: typeof PracticeCasesAccusativePhraseRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+    '/practice/cases/accusative/noun': {
+      id: '/practice/cases/accusative/noun'
+      path: '/cases/accusative/noun'
+      fullPath: '/practice/cases/accusative/noun'
+      preLoaderRoute: typeof PracticeCasesAccusativeNounRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+    '/practice/cases/accusative/article': {
+      id: '/practice/cases/accusative/article'
+      path: '/cases/accusative/article'
+      fullPath: '/practice/cases/accusative/article'
+      preLoaderRoute: typeof PracticeCasesAccusativeArticleRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+    '/practice/cases/accusative/adjective': {
+      id: '/practice/cases/accusative/adjective'
+      path: '/cases/accusative/adjective'
+      fullPath: '/practice/cases/accusative/adjective'
+      preLoaderRoute: typeof PracticeCasesAccusativeAdjectiveRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+  }
 }
 
 interface PracticeRouteRouteChildren {
-	PracticeReviewRoute: typeof PracticeReviewRoute;
-	PracticeIndexRoute: typeof PracticeIndexRoute;
-	PracticeBlocksChunksRoute: typeof PracticeBlocksChunksRoute;
-	PracticeBlocksDaysOfWeekRoute: typeof PracticeBlocksDaysOfWeekRoute;
-	PracticeBlocksNumbersRoute: typeof PracticeBlocksNumbersRoute;
-	PracticePronounsObjectRoute: typeof PracticePronounsObjectRoute;
-	PracticePronounsPlacementRoute: typeof PracticePronounsPlacementRoute;
-	PracticePronounsPossessivesRoute: typeof PracticePronounsPossessivesRoute;
-	PracticeVerbsFutureConjugationRoute: typeof PracticeVerbsFutureConjugationRoute;
-	PracticeVerbsImperativesRoute: typeof PracticeVerbsImperativesRoute;
-	PracticeVerbsModalConstructionsRoute: typeof PracticeVerbsModalConstructionsRoute;
-	PracticeBlocksIndexRoute: typeof PracticeBlocksIndexRoute;
-	PracticeCasesIndexRoute: typeof PracticeCasesIndexRoute;
-	PracticePronounsIndexRoute: typeof PracticePronounsIndexRoute;
-	PracticeVerbsIndexRoute: typeof PracticeVerbsIndexRoute;
-	PracticeCasesAccusativeAdjectiveRoute: typeof PracticeCasesAccusativeAdjectiveRoute;
-	PracticeCasesAccusativeArticleRoute: typeof PracticeCasesAccusativeArticleRoute;
-	PracticeCasesAccusativeNounRoute: typeof PracticeCasesAccusativeNounRoute;
-	PracticeCasesAccusativePhraseRoute: typeof PracticeCasesAccusativePhraseRoute;
-	PracticeCasesGenitiveAdjectiveRoute: typeof PracticeCasesGenitiveAdjectiveRoute;
-	PracticeCasesGenitiveArticleRoute: typeof PracticeCasesGenitiveArticleRoute;
-	PracticeCasesGenitiveNounRoute: typeof PracticeCasesGenitiveNounRoute;
-	PracticeCasesGenitivePhraseRoute: typeof PracticeCasesGenitivePhraseRoute;
-	PracticeCasesNominativeAdjectiveRoute: typeof PracticeCasesNominativeAdjectiveRoute;
-	PracticeCasesNominativeArticleRoute: typeof PracticeCasesNominativeArticleRoute;
-	PracticeCasesNominativeNounRoute: typeof PracticeCasesNominativeNounRoute;
-	PracticeCasesNominativePhraseRoute: typeof PracticeCasesNominativePhraseRoute;
-	PracticeCasesReviewAdjectivesRoute: typeof PracticeCasesReviewAdjectivesRoute;
-	PracticeCasesReviewArticlesRoute: typeof PracticeCasesReviewArticlesRoute;
-	PracticeCasesReviewNounsRoute: typeof PracticeCasesReviewNounsRoute;
-	PracticeCasesReviewPhrasesRoute: typeof PracticeCasesReviewPhrasesRoute;
-	PracticeVerbsPastAoristConjugationRoute: typeof PracticeVerbsPastAoristConjugationRoute;
-	PracticeVerbsPastAoristFormationRoute: typeof PracticeVerbsPastAoristFormationRoute;
-	PracticeVerbsPastAoristStemsRoute: typeof PracticeVerbsPastAoristStemsRoute;
-	PracticeVerbsPastAoristVocabularyRoute: typeof PracticeVerbsPastAoristVocabularyRoute;
-	PracticeVerbsPastImperfectStativeRoute: typeof PracticeVerbsPastImperfectStativeRoute;
-	PracticeVerbsPresentConjugationsRoute: typeof PracticeVerbsPresentConjugationsRoute;
-	PracticeVerbsPresentEimaiRoute: typeof PracticeVerbsPresentEimaiRoute;
-	PracticeVerbsPresentIrregularRoute: typeof PracticeVerbsPresentIrregularRoute;
-	PracticeVerbsPresentVocabularyRoute: typeof PracticeVerbsPresentVocabularyRoute;
-	PracticeVerbsPresentIndexRoute: typeof PracticeVerbsPresentIndexRoute;
+  PracticeReviewRoute: typeof PracticeReviewRoute
+  PracticeIndexRoute: typeof PracticeIndexRoute
+  PracticeBlocksChunksRoute: typeof PracticeBlocksChunksRoute
+  PracticeBlocksDaysOfWeekRoute: typeof PracticeBlocksDaysOfWeekRoute
+  PracticeBlocksNumbersRoute: typeof PracticeBlocksNumbersRoute
+  PracticePronounsObjectRoute: typeof PracticePronounsObjectRoute
+  PracticePronounsPlacementRoute: typeof PracticePronounsPlacementRoute
+  PracticePronounsPossessivesRoute: typeof PracticePronounsPossessivesRoute
+  PracticeVerbsFutureConjugationRoute: typeof PracticeVerbsFutureConjugationRoute
+  PracticeVerbsImperativesRoute: typeof PracticeVerbsImperativesRoute
+  PracticeVerbsModalConstructionsRoute: typeof PracticeVerbsModalConstructionsRoute
+  PracticeBlocksIndexRoute: typeof PracticeBlocksIndexRoute
+  PracticeCasesIndexRoute: typeof PracticeCasesIndexRoute
+  PracticePronounsIndexRoute: typeof PracticePronounsIndexRoute
+  PracticeVerbsIndexRoute: typeof PracticeVerbsIndexRoute
+  PracticeCasesAccusativeAdjectiveRoute: typeof PracticeCasesAccusativeAdjectiveRoute
+  PracticeCasesAccusativeArticleRoute: typeof PracticeCasesAccusativeArticleRoute
+  PracticeCasesAccusativeNounRoute: typeof PracticeCasesAccusativeNounRoute
+  PracticeCasesAccusativePhraseRoute: typeof PracticeCasesAccusativePhraseRoute
+  PracticeCasesGenitiveAdjectiveRoute: typeof PracticeCasesGenitiveAdjectiveRoute
+  PracticeCasesGenitiveArticleRoute: typeof PracticeCasesGenitiveArticleRoute
+  PracticeCasesGenitiveNounRoute: typeof PracticeCasesGenitiveNounRoute
+  PracticeCasesGenitivePhraseRoute: typeof PracticeCasesGenitivePhraseRoute
+  PracticeCasesNominativeAdjectiveRoute: typeof PracticeCasesNominativeAdjectiveRoute
+  PracticeCasesNominativeArticleRoute: typeof PracticeCasesNominativeArticleRoute
+  PracticeCasesNominativeNounRoute: typeof PracticeCasesNominativeNounRoute
+  PracticeCasesNominativePhraseRoute: typeof PracticeCasesNominativePhraseRoute
+  PracticeCasesReviewAdjectivesRoute: typeof PracticeCasesReviewAdjectivesRoute
+  PracticeCasesReviewArticlesRoute: typeof PracticeCasesReviewArticlesRoute
+  PracticeCasesReviewNounsRoute: typeof PracticeCasesReviewNounsRoute
+  PracticeCasesReviewPhrasesRoute: typeof PracticeCasesReviewPhrasesRoute
+  PracticeVerbsPastAoristConjugationRoute: typeof PracticeVerbsPastAoristConjugationRoute
+  PracticeVerbsPastAoristFormationRoute: typeof PracticeVerbsPastAoristFormationRoute
+  PracticeVerbsPastAoristStemsRoute: typeof PracticeVerbsPastAoristStemsRoute
+  PracticeVerbsPastAoristVocabularyRoute: typeof PracticeVerbsPastAoristVocabularyRoute
+  PracticeVerbsPastImperfectStativeRoute: typeof PracticeVerbsPastImperfectStativeRoute
+  PracticeVerbsPresentConjugationsRoute: typeof PracticeVerbsPresentConjugationsRoute
+  PracticeVerbsPresentEimaiRoute: typeof PracticeVerbsPresentEimaiRoute
+  PracticeVerbsPresentFullRoute: typeof PracticeVerbsPresentFullRoute
+  PracticeVerbsPresentIrregularRoute: typeof PracticeVerbsPresentIrregularRoute
+  PracticeVerbsPresentVocabularyRoute: typeof PracticeVerbsPresentVocabularyRoute
 }
 
 const PracticeRouteRouteChildren: PracticeRouteRouteChildren = {
-	PracticeReviewRoute: PracticeReviewRoute,
-	PracticeIndexRoute: PracticeIndexRoute,
-	PracticeBlocksChunksRoute: PracticeBlocksChunksRoute,
-	PracticeBlocksDaysOfWeekRoute: PracticeBlocksDaysOfWeekRoute,
-	PracticeBlocksNumbersRoute: PracticeBlocksNumbersRoute,
-	PracticePronounsObjectRoute: PracticePronounsObjectRoute,
-	PracticePronounsPlacementRoute: PracticePronounsPlacementRoute,
-	PracticePronounsPossessivesRoute: PracticePronounsPossessivesRoute,
-	PracticeVerbsFutureConjugationRoute: PracticeVerbsFutureConjugationRoute,
-	PracticeVerbsImperativesRoute: PracticeVerbsImperativesRoute,
-	PracticeVerbsModalConstructionsRoute: PracticeVerbsModalConstructionsRoute,
-	PracticeBlocksIndexRoute: PracticeBlocksIndexRoute,
-	PracticeCasesIndexRoute: PracticeCasesIndexRoute,
-	PracticePronounsIndexRoute: PracticePronounsIndexRoute,
-	PracticeVerbsIndexRoute: PracticeVerbsIndexRoute,
-	PracticeCasesAccusativeAdjectiveRoute: PracticeCasesAccusativeAdjectiveRoute,
-	PracticeCasesAccusativeArticleRoute: PracticeCasesAccusativeArticleRoute,
-	PracticeCasesAccusativeNounRoute: PracticeCasesAccusativeNounRoute,
-	PracticeCasesAccusativePhraseRoute: PracticeCasesAccusativePhraseRoute,
-	PracticeCasesGenitiveAdjectiveRoute: PracticeCasesGenitiveAdjectiveRoute,
-	PracticeCasesGenitiveArticleRoute: PracticeCasesGenitiveArticleRoute,
-	PracticeCasesGenitiveNounRoute: PracticeCasesGenitiveNounRoute,
-	PracticeCasesGenitivePhraseRoute: PracticeCasesGenitivePhraseRoute,
-	PracticeCasesNominativeAdjectiveRoute: PracticeCasesNominativeAdjectiveRoute,
-	PracticeCasesNominativeArticleRoute: PracticeCasesNominativeArticleRoute,
-	PracticeCasesNominativeNounRoute: PracticeCasesNominativeNounRoute,
-	PracticeCasesNominativePhraseRoute: PracticeCasesNominativePhraseRoute,
-	PracticeCasesReviewAdjectivesRoute: PracticeCasesReviewAdjectivesRoute,
-	PracticeCasesReviewArticlesRoute: PracticeCasesReviewArticlesRoute,
-	PracticeCasesReviewNounsRoute: PracticeCasesReviewNounsRoute,
-	PracticeCasesReviewPhrasesRoute: PracticeCasesReviewPhrasesRoute,
-	PracticeVerbsPastAoristConjugationRoute: PracticeVerbsPastAoristConjugationRoute,
-	PracticeVerbsPastAoristFormationRoute: PracticeVerbsPastAoristFormationRoute,
-	PracticeVerbsPastAoristStemsRoute: PracticeVerbsPastAoristStemsRoute,
-	PracticeVerbsPastAoristVocabularyRoute: PracticeVerbsPastAoristVocabularyRoute,
-	PracticeVerbsPastImperfectStativeRoute: PracticeVerbsPastImperfectStativeRoute,
-	PracticeVerbsPresentConjugationsRoute: PracticeVerbsPresentConjugationsRoute,
-	PracticeVerbsPresentEimaiRoute: PracticeVerbsPresentEimaiRoute,
-	PracticeVerbsPresentIrregularRoute: PracticeVerbsPresentIrregularRoute,
-	PracticeVerbsPresentVocabularyRoute: PracticeVerbsPresentVocabularyRoute,
-	PracticeVerbsPresentIndexRoute: PracticeVerbsPresentIndexRoute,
-};
+  PracticeReviewRoute: PracticeReviewRoute,
+  PracticeIndexRoute: PracticeIndexRoute,
+  PracticeBlocksChunksRoute: PracticeBlocksChunksRoute,
+  PracticeBlocksDaysOfWeekRoute: PracticeBlocksDaysOfWeekRoute,
+  PracticeBlocksNumbersRoute: PracticeBlocksNumbersRoute,
+  PracticePronounsObjectRoute: PracticePronounsObjectRoute,
+  PracticePronounsPlacementRoute: PracticePronounsPlacementRoute,
+  PracticePronounsPossessivesRoute: PracticePronounsPossessivesRoute,
+  PracticeVerbsFutureConjugationRoute: PracticeVerbsFutureConjugationRoute,
+  PracticeVerbsImperativesRoute: PracticeVerbsImperativesRoute,
+  PracticeVerbsModalConstructionsRoute: PracticeVerbsModalConstructionsRoute,
+  PracticeBlocksIndexRoute: PracticeBlocksIndexRoute,
+  PracticeCasesIndexRoute: PracticeCasesIndexRoute,
+  PracticePronounsIndexRoute: PracticePronounsIndexRoute,
+  PracticeVerbsIndexRoute: PracticeVerbsIndexRoute,
+  PracticeCasesAccusativeAdjectiveRoute: PracticeCasesAccusativeAdjectiveRoute,
+  PracticeCasesAccusativeArticleRoute: PracticeCasesAccusativeArticleRoute,
+  PracticeCasesAccusativeNounRoute: PracticeCasesAccusativeNounRoute,
+  PracticeCasesAccusativePhraseRoute: PracticeCasesAccusativePhraseRoute,
+  PracticeCasesGenitiveAdjectiveRoute: PracticeCasesGenitiveAdjectiveRoute,
+  PracticeCasesGenitiveArticleRoute: PracticeCasesGenitiveArticleRoute,
+  PracticeCasesGenitiveNounRoute: PracticeCasesGenitiveNounRoute,
+  PracticeCasesGenitivePhraseRoute: PracticeCasesGenitivePhraseRoute,
+  PracticeCasesNominativeAdjectiveRoute: PracticeCasesNominativeAdjectiveRoute,
+  PracticeCasesNominativeArticleRoute: PracticeCasesNominativeArticleRoute,
+  PracticeCasesNominativeNounRoute: PracticeCasesNominativeNounRoute,
+  PracticeCasesNominativePhraseRoute: PracticeCasesNominativePhraseRoute,
+  PracticeCasesReviewAdjectivesRoute: PracticeCasesReviewAdjectivesRoute,
+  PracticeCasesReviewArticlesRoute: PracticeCasesReviewArticlesRoute,
+  PracticeCasesReviewNounsRoute: PracticeCasesReviewNounsRoute,
+  PracticeCasesReviewPhrasesRoute: PracticeCasesReviewPhrasesRoute,
+  PracticeVerbsPastAoristConjugationRoute:
+    PracticeVerbsPastAoristConjugationRoute,
+  PracticeVerbsPastAoristFormationRoute: PracticeVerbsPastAoristFormationRoute,
+  PracticeVerbsPastAoristStemsRoute: PracticeVerbsPastAoristStemsRoute,
+  PracticeVerbsPastAoristVocabularyRoute:
+    PracticeVerbsPastAoristVocabularyRoute,
+  PracticeVerbsPastImperfectStativeRoute:
+    PracticeVerbsPastImperfectStativeRoute,
+  PracticeVerbsPresentConjugationsRoute: PracticeVerbsPresentConjugationsRoute,
+  PracticeVerbsPresentEimaiRoute: PracticeVerbsPresentEimaiRoute,
+  PracticeVerbsPresentFullRoute: PracticeVerbsPresentFullRoute,
+  PracticeVerbsPresentIrregularRoute: PracticeVerbsPresentIrregularRoute,
+  PracticeVerbsPresentVocabularyRoute: PracticeVerbsPresentVocabularyRoute,
+}
 
 const PracticeRouteRouteWithChildren = PracticeRouteRoute._addFileChildren(
-	PracticeRouteRouteChildren,
-);
+  PracticeRouteRouteChildren,
+)
 
 interface LearnVerbsRouteChildren {
-	LearnVerbsVerbIdRoute: typeof LearnVerbsVerbIdRoute;
+  LearnVerbsVerbIdRoute: typeof LearnVerbsVerbIdRoute
 }
 
 const LearnVerbsRouteChildren: LearnVerbsRouteChildren = {
-	LearnVerbsVerbIdRoute: LearnVerbsVerbIdRoute,
-};
+  LearnVerbsVerbIdRoute: LearnVerbsVerbIdRoute,
+}
 
-const LearnVerbsRouteWithChildren = LearnVerbsRoute._addFileChildren(LearnVerbsRouteChildren);
+const LearnVerbsRouteWithChildren = LearnVerbsRoute._addFileChildren(
+  LearnVerbsRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
-	IndexRoute: IndexRoute,
-	PracticeRouteRoute: PracticeRouteRouteWithChildren,
-	ProgressRoute: ProgressRoute,
-	SearchRoute: SearchRoute,
-	SupportRoute: SupportRoute,
-	TryRoute: TryRoute,
-	authLoginRoute: authLoginRoute,
-	authRegisterRoute: authRegisterRoute,
-	ApiErrorsRoute: ApiErrorsRoute,
-	LearnNounsRoute: LearnNounsRoute,
-	LearnVerbsRoute: LearnVerbsRouteWithChildren,
-	ReferenceTabRoute: ReferenceTabRoute,
-	LearnIndexRoute: LearnIndexRoute,
-	ReferenceIndexRoute: ReferenceIndexRoute,
-	ApiPushLogTapRoute: ApiPushLogTapRoute,
-	ApiPushSnoozeRoute: ApiPushSnoozeRoute,
-	ApiPushSubscribeRoute: ApiPushSubscribeRoute,
-	ApiPushUnsubscribeRoute: ApiPushUnsubscribeRoute,
-	ApiPushVapidKeyRoute: ApiPushVapidKeyRoute,
-	ApiWebauthnAuthOptionsRoute: ApiWebauthnAuthOptionsRoute,
-	ApiWebauthnAuthVerifyRoute: ApiWebauthnAuthVerifyRoute,
-	ApiWebauthnRegisterOptionsRoute: ApiWebauthnRegisterOptionsRoute,
-	ApiWebauthnRegisterVerifyRoute: ApiWebauthnRegisterVerifyRoute,
-	LearnConversationsTabRoute: LearnConversationsTabRoute,
-	LearnEssentialsSubtabRoute: LearnEssentialsSubtabRoute,
-	LearnPhrasesTabRoute: LearnPhrasesTabRoute,
-	LearnConversationsIndexRoute: LearnConversationsIndexRoute,
-	LearnEssentialsIndexRoute: LearnEssentialsIndexRoute,
-	LearnPhrasesIndexRoute: LearnPhrasesIndexRoute,
-};
+  IndexRoute: IndexRoute,
+  PracticeRouteRoute: PracticeRouteRouteWithChildren,
+  ProgressRoute: ProgressRoute,
+  SearchRoute: SearchRoute,
+  SupportRoute: SupportRoute,
+  TryRoute: TryRoute,
+  authLoginRoute: authLoginRoute,
+  authRegisterRoute: authRegisterRoute,
+  ApiErrorsRoute: ApiErrorsRoute,
+  LearnNounsRoute: LearnNounsRoute,
+  LearnVerbsRoute: LearnVerbsRouteWithChildren,
+  ReferenceTabRoute: ReferenceTabRoute,
+  LearnIndexRoute: LearnIndexRoute,
+  ReferenceIndexRoute: ReferenceIndexRoute,
+  ApiPushLogTapRoute: ApiPushLogTapRoute,
+  ApiPushSnoozeRoute: ApiPushSnoozeRoute,
+  ApiPushSubscribeRoute: ApiPushSubscribeRoute,
+  ApiPushUnsubscribeRoute: ApiPushUnsubscribeRoute,
+  ApiPushVapidKeyRoute: ApiPushVapidKeyRoute,
+  ApiWebauthnAuthOptionsRoute: ApiWebauthnAuthOptionsRoute,
+  ApiWebauthnAuthVerifyRoute: ApiWebauthnAuthVerifyRoute,
+  ApiWebauthnRegisterOptionsRoute: ApiWebauthnRegisterOptionsRoute,
+  ApiWebauthnRegisterVerifyRoute: ApiWebauthnRegisterVerifyRoute,
+  LearnConversationsTabRoute: LearnConversationsTabRoute,
+  LearnEssentialsSubtabRoute: LearnEssentialsSubtabRoute,
+  LearnPhrasesTabRoute: LearnPhrasesTabRoute,
+  LearnConversationsIndexRoute: LearnConversationsIndexRoute,
+  LearnEssentialsIndexRoute: LearnEssentialsIndexRoute,
+  LearnPhrasesIndexRoute: LearnPhrasesIndexRoute,
+}
 export const routeTree = rootRouteImport
-	._addFileChildren(rootRouteChildren)
-	._addFileTypes<FileRouteTypes>();
+  ._addFileChildren(rootRouteChildren)
+  ._addFileTypes<FileRouteTypes>()
 
-import type { createStart } from "@tanstack/react-start";
-
-import type { getRouter } from "./router.tsx";
-declare module "@tanstack/react-start" {
-	interface Register {
-		ssr: true;
-		router: Awaited<ReturnType<typeof getRouter>>;
-	}
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
 }
