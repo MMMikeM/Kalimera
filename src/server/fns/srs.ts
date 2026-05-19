@@ -81,22 +81,32 @@ export const completeSessionFn = createServerFn({ method: "POST" })
 		}
 		if (firstTryByVocab.size === 0) return { success: true, session };
 
-		await transaction(async (tx) => {
-			await insertDailyResults(
-				tx,
-				[...firstTryByVocab.entries()].map(([vocabId, { correctFirstTry, drillId }]) => ({
-					userId,
-					vocabId,
-					drillId,
-					practicedDate: today,
-					correctFirstTry,
-				})),
-			);
-		});
+		try {
+			await transaction(async (tx) => {
+				await insertDailyResults(
+					tx,
+					[...firstTryByVocab.entries()].map(([vocabId, { correctFirstTry, drillId }]) => ({
+						userId,
+						vocabId,
+						drillId,
+						practicedDate: today,
+						correctFirstTry,
+					})),
+				);
+			});
+		} catch (e) {
+			console.error("[srs] insertDailyResults failed:", e);
+			throw e;
+		}
 
 		const practicedIds = [...firstTryByVocab.keys()];
 		const drillId = [...firstTryByVocab.values()][0]?.drillId ?? "";
-		await promoteDrillProgress({ userId, drillId, practicedIds });
+		try {
+			await promoteDrillProgress({ userId, drillId, practicedIds });
+		} catch (e) {
+			console.error("[srs] promoteDrillProgress failed:", e);
+			throw e;
+		}
 
 		return { success: true, session };
 	});
