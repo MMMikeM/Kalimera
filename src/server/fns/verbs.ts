@@ -32,7 +32,7 @@ const FUTURE_LABELS: Record<string, string> = {
 	pl3: "they will",
 };
 
-const getVerbConjugationQuestions = async (
+export const getVerbConjugationQuestions = async (
 	userId: number,
 	limit: number,
 	tense: "present" | "aorist" | "past_continuous" | "future",
@@ -93,6 +93,12 @@ const getVerbConjugationQuestions = async (
 				bucket: bucketMap.get(vocab.id),
 			});
 		}
+	}
+
+	if (questions.length < limit) {
+		throw new Error(
+			`Insufficient questions: got ${questions.length}, need ${limit}. Pool may be exhausted or conjugations unseeded.`,
+		);
 	}
 
 	return questions;

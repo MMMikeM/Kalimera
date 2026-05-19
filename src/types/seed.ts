@@ -47,7 +47,7 @@ interface VerbConjugationFormsSeed {
 	pl3: string;
 }
 
-interface VerbConjugationSeed {
+export interface VerbConjugationSeed {
 	tense: VerbTense;
 	forms: VerbConjugationFormsSeed;
 	stems?: Partial<VerbConjugationFormsSeed>;

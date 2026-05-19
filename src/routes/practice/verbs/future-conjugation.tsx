@@ -7,6 +7,7 @@ import { VocabDrillPage } from "../components/engines/vocab-drill";
 export const Route = createFileRoute("/practice/verbs/future-conjugation")({
 	loader: async () => {
 		const questions = await getFutureDrillQuestionsFn({ data: { limit: 30 } });
+		if (questions.length === 0) throw new Error("No questions available");
 		return { questions };
 	},
 	staleTime: 0,
@@ -19,7 +20,7 @@ function FutureConjugationDrill() {
 		<VocabDrillPage
 			drillId="verbs-future-conjugation"
 			category="verbs"
-			initialQuestions={questions.length > 0 ? questions : undefined}
+			questions={questions}
 		/>
 	);
 }

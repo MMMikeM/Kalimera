@@ -1,9 +1,9 @@
 import { sql } from "drizzle-orm";
 
-import { db } from "../server/db";
+import type { db as ProdDb } from "../server/db";
 import { tags, vocabularyTags } from "../server/db/schema";
-import type { NewNominalForm, NewVocabularyTag } from "../server/db/types";
 import type { NewAdjectiveDetails } from "../server/db/types";
+import type { NewNominalForm, NewVocabularyTag } from "../server/db/types";
 import {
 	CONTENT_TAGS,
 	LESSON_SEED_CATEGORIES,
@@ -24,7 +24,9 @@ import {
 } from "./seed-pipeline";
 import { seedVerbConjugations } from "./seed-verb-conjugations";
 
-async function seed() {
+type Db = typeof ProdDb;
+
+export async function seed(db: Db) {
 	console.log("Seeding database (additive mode with batching)...\n");
 
 	// Upsert all tags (content tags + lesson tags)
@@ -69,7 +71,7 @@ async function seed() {
 	};
 
 	const run = (categoryName: string, items: VocabWithTags[]) =>
-		runSeedCategory(categoryName, items, ctx);
+		runSeedCategory(db, categoryName, items, ctx);
 
 	const allVerbDetails: VerbDetailRecord[] = [];
 
@@ -79,16 +81,16 @@ async function seed() {
 	}
 
 	console.log(`\nInserting ${allNounDetails.length} noun details...`);
-	await batchInsertNounDetails(allNounDetails);
+	await batchInsertNounDetails(db, allNounDetails);
 
 	console.log(`\nInserting ${allAdjectiveDetails.length} adjective details...`);
-	await batchInsertAdjectiveDetails(allAdjectiveDetails);
+	await batchInsertAdjectiveDetails(db, allAdjectiveDetails);
 
 	console.log(`\nUpserting ${allNominalForms.length} nominal forms...`);
-	await batchUpsertNominalForms(allNominalForms);
+	await batchUpsertNominalForms(db, allNominalForms);
 
 	console.log(`\nInserting ${allVerbDetails.length} verb details...`);
-	await batchInsertVerbDetails(allVerbDetails);
+	await batchInsertVerbDetails(db, allVerbDetails);
 
 	console.log("Creating vocabulary-tag associations...");
 	if (vocabTagLinks.length > 0) {
@@ -117,13 +119,17 @@ async function seed() {
 
 	console.log("\nVocabulary seed complete.\n");
 
-	await seedVerbConjugations();
+	await seedVerbConjugations(db);
 
 	console.log("\nAll seeding complete.");
-	process.exit(0);
 }
 
-seed().catch((err) => {
-	console.error("Seeding failed:", err);
-	process.exit(1);
-});
+// Standalone runner
+import("../server/db").then(({ db }) =>
+	seed(db)
+		.then(() => process.exit(0))
+		.catch((err) => {
+			console.error("Seeding failed:", err);
+			process.exit(1);
+		}),
+);

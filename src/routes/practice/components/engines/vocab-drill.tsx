@@ -1,10 +1,6 @@
 import { useMemo } from "react";
 
-import {
-	CATEGORY_CONFIG,
-	type DrillQuestion,
-	generateQuestions,
-} from "@/lib/drill/generate-questions";
+import { CATEGORY_CONFIG, type DrillQuestion } from "@/lib/drill/generate-questions";
 import { greekToPhonetic } from "@/lib/greek-transliteration";
 
 import type { DrillForm } from "./deck";
@@ -14,7 +10,7 @@ interface VocabDrillPageProps {
 	category: keyof typeof CATEGORY_CONFIG;
 	drillId: string;
 	backTo?: string;
-	initialQuestions?: DrillQuestion[];
+	questions: DrillQuestion[];
 }
 
 const toForm = (q: DrillQuestion): DrillForm => ({
@@ -26,11 +22,8 @@ const toForm = (q: DrillQuestion): DrillForm => ({
 	bucket: q.bucket,
 });
 
-export function VocabDrillPage({ category, drillId, backTo, initialQuestions }: VocabDrillPageProps) {
-	const items = useMemo(() => {
-		const source = initialQuestions?.length ? initialQuestions : generateQuestions([category], 30);
-		return source.map(toForm);
-	}, [category, initialQuestions]);
+export function VocabDrillPage({ category, drillId, backTo, questions }: VocabDrillPageProps) {
+	const items = useMemo(() => questions.map(toForm), [questions]);
 
 	const categoryConfig = CATEGORY_CONFIG[category];
 

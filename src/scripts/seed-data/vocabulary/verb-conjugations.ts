@@ -507,7 +507,7 @@ export const FULL_VERB_CONJUGATIONS: FullVerbSeed[] = [
 		lemma: "έχω",
 		english: "I have",
 		conjugationFamily: "-ω",
-		isSuppletive: false,
+		isSuppletive: true,
 		stems: {
 			present: "έχ-",
 			aorist: "είχ-",
@@ -564,71 +564,10 @@ export const FULL_VERB_CONJUGATIONS: FullVerbSeed[] = [
 	},
 
 	{
-		lemma: "κάνω",
-		english: "I do/make",
-		conjugationFamily: "-ω",
-		isSuppletive: false,
-		stems: {
-			present: "κάν-",
-			aorist: "έκαν-",
-		},
-		conjugations: [
-			{
-				tense: "present",
-				forms: {
-					sg1: "κάνω",
-					sg2: "κάνεις",
-					sg3: "κάνει",
-					pl1: "κάνουμε",
-					pl2: "κάνετε",
-					pl3: "κάνουν",
-				},
-			},
-			{
-				tense: "aorist",
-				forms: {
-					sg1: "έκανα",
-					sg2: "έκανες",
-					sg3: "έκανε",
-					pl1: "κάναμε",
-					pl2: "κάνατε",
-					pl3: "έκαναν",
-				},
-			},
-			{
-				tense: "future",
-				forms: {
-					sg1: "θα κάνω",
-					sg2: "θα κάνεις",
-					sg3: "θα κάνει",
-					pl1: "θα κάνουμε",
-					pl2: "θα κάνετε",
-					pl3: "θα κάνουν",
-				},
-			},
-			{
-				tense: "past_continuous",
-				forms: {
-					sg1: "έκανα",
-					sg2: "έκανες",
-					sg3: "έκανε",
-					pl1: "κάναμε",
-					pl2: "κάνατε",
-					pl3: "έκαναν",
-				},
-			},
-		],
-		imperatives: {
-			imperfective: { singular: "κάνε", plural: "κάνετε" },
-			perfective: { singular: "κάνε", plural: "κάντε" },
-		},
-	},
-
-	{
 		lemma: "θέλω",
 		english: "I want",
 		conjugationFamily: "-ω",
-		isSuppletive: false,
+		isSuppletive: true,
 		stems: {
 			present: "θέλ-",
 			aorist: "θέλησ-",
@@ -682,67 +621,10 @@ export const FULL_VERB_CONJUGATIONS: FullVerbSeed[] = [
 	},
 
 	{
-		lemma: "μπορώ",
-		english: "I can",
-		conjugationFamily: "-άω/-ώ",
-		isSuppletive: false,
-		stems: {
-			present: "μπορ-",
-			aorist: "μπόρεσ-",
-		},
-		conjugations: [
-			{
-				tense: "present",
-				forms: {
-					sg1: "μπορώ",
-					sg2: "μπορείς",
-					sg3: "μπορεί",
-					pl1: "μπορούμε",
-					pl2: "μπορείτε",
-					pl3: "μπορούν",
-				},
-			},
-			{
-				tense: "aorist",
-				forms: {
-					sg1: "μπόρεσα",
-					sg2: "μπόρεσες",
-					sg3: "μπόρεσε",
-					pl1: "μπορέσαμε",
-					pl2: "μπορέσατε",
-					pl3: "μπόρεσαν",
-				},
-			},
-			{
-				tense: "future",
-				forms: {
-					sg1: "θα μπορώ",
-					sg2: "θα μπορείς",
-					sg3: "θα μπορεί",
-					pl1: "θα μπορούμε",
-					pl2: "θα μπορείτε",
-					pl3: "θα μπορούν",
-				},
-			},
-			{
-				tense: "past_continuous",
-				forms: {
-					sg1: "μπορούσα",
-					sg2: "μπορούσες",
-					sg3: "μπορούσε",
-					pl1: "μπορούσαμε",
-					pl2: "μπορούσατε",
-					pl3: "μπορούσαν",
-				},
-			},
-		],
-	},
-
-	{
 		lemma: "ξέρω",
 		english: "I know",
 		conjugationFamily: "-ω",
-		isSuppletive: false,
+		isSuppletive: true,
 		stems: {
 			present: "ξέρ-",
 			aorist: "ήξερ-",
@@ -796,315 +678,10 @@ export const FULL_VERB_CONJUGATIONS: FullVerbSeed[] = [
 	},
 
 	{
-		lemma: "μιλάω",
-		english: "I speak",
-		conjugationFamily: "-άω/-ώ",
-		isSuppletive: false,
-		stems: {
-			present: "μιλ-",
-			aorist: "μίλησ-",
-		},
-		conjugations: [
-			{
-				tense: "present",
-				forms: {
-					sg1: "μιλάω",
-					sg2: "μιλάς",
-					sg3: "μιλάει",
-					pl1: "μιλάμε",
-					pl2: "μιλάτε",
-					pl3: "μιλάνε",
-				},
-			},
-			{
-				tense: "aorist",
-				forms: {
-					sg1: "μίλησα",
-					sg2: "μίλησες",
-					sg3: "μίλησε",
-					pl1: "μιλήσαμε",
-					pl2: "μιλήσατε",
-					pl3: "μίλησαν",
-				},
-			},
-			{
-				tense: "future",
-				forms: {
-					sg1: "θα μιλήσω",
-					sg2: "θα μιλήσεις",
-					sg3: "θα μιλήσει",
-					pl1: "θα μιλήσουμε",
-					pl2: "θα μιλήσετε",
-					pl3: "θα μιλήσουν",
-				},
-			},
-			{
-				tense: "past_continuous",
-				forms: {
-					sg1: "μιλούσα",
-					sg2: "μιλούσες",
-					sg3: "μιλούσε",
-					pl1: "μιλούσαμε",
-					pl2: "μιλούσατε",
-					pl3: "μιλούσαν",
-				},
-			},
-		],
-		imperatives: {
-			imperfective: { singular: "μίλα", plural: "μιλάτε" },
-			perfective: { singular: "μίλησε", plural: "μιλήστε" },
-		},
-	},
-
-	{
-		lemma: "αγαπάω",
-		english: "I love",
-		conjugationFamily: "-άω/-ώ",
-		isSuppletive: false,
-		stems: {
-			present: "αγαπ-",
-			aorist: "αγάπησ-",
-		},
-		conjugations: [
-			{
-				tense: "present",
-				forms: {
-					sg1: "αγαπάω",
-					sg2: "αγαπάς",
-					sg3: "αγαπάει",
-					pl1: "αγαπάμε",
-					pl2: "αγαπάτε",
-					pl3: "αγαπάνε",
-				},
-			},
-			{
-				tense: "aorist",
-				forms: {
-					sg1: "αγάπησα",
-					sg2: "αγάπησες",
-					sg3: "αγάπησε",
-					pl1: "αγαπήσαμε",
-					pl2: "αγαπήσατε",
-					pl3: "αγάπησαν",
-				},
-			},
-			{
-				tense: "future",
-				forms: {
-					sg1: "θα αγαπήσω",
-					sg2: "θα αγαπήσεις",
-					sg3: "θα αγαπήσει",
-					pl1: "θα αγαπήσουμε",
-					pl2: "θα αγαπήσετε",
-					pl3: "θα αγαπήσουν",
-				},
-			},
-			{
-				tense: "past_continuous",
-				forms: {
-					sg1: "αγαπούσα",
-					sg2: "αγαπούσες",
-					sg3: "αγαπούσε",
-					pl1: "αγαπούσαμε",
-					pl2: "αγαπούσατε",
-					pl3: "αγαπούσαν",
-				},
-			},
-		],
-		imperatives: {
-			imperfective: { singular: "αγάπα", plural: "αγαπάτε" },
-			perfective: { singular: "αγάπησε", plural: "αγαπήστε" },
-		},
-	},
-
-	{
-		lemma: "δουλεύω",
-		english: "I work",
-		conjugationFamily: "-ω",
-		isSuppletive: false,
-		stems: {
-			present: "δουλεύ-",
-			aorist: "δούλεψ-",
-		},
-		conjugations: [
-			{
-				tense: "present",
-				forms: {
-					sg1: "δουλεύω",
-					sg2: "δουλεύεις",
-					sg3: "δουλεύει",
-					pl1: "δουλεύουμε",
-					pl2: "δουλεύετε",
-					pl3: "δουλεύουν",
-				},
-			},
-			{
-				tense: "aorist",
-				forms: {
-					sg1: "δούλεψα",
-					sg2: "δούλεψες",
-					sg3: "δούλεψε",
-					pl1: "δουλέψαμε",
-					pl2: "δουλέψατε",
-					pl3: "δούλεψαν",
-				},
-			},
-			{
-				tense: "future",
-				forms: {
-					sg1: "θα δουλέψω",
-					sg2: "θα δουλέψεις",
-					sg3: "θα δουλέψει",
-					pl1: "θα δουλέψουμε",
-					pl2: "θα δουλέψετε",
-					pl3: "θα δουλέψουν",
-				},
-			},
-			{
-				tense: "past_continuous",
-				forms: {
-					sg1: "δούλευα",
-					sg2: "δούλευες",
-					sg3: "δούλευε",
-					pl1: "δουλεύαμε",
-					pl2: "δουλεύατε",
-					pl3: "δούλευαν",
-				},
-			},
-		],
-		imperatives: {
-			imperfective: { singular: "δούλευε", plural: "δουλεύετε" },
-			perfective: { singular: "δούλεψε", plural: "δουλέψτε" },
-		},
-	},
-
-	{
-		lemma: "γράφω",
-		english: "I write",
-		conjugationFamily: "-ω",
-		isSuppletive: false,
-		stems: {
-			present: "γράφ-",
-			aorist: "έγραψ-",
-		},
-		conjugations: [
-			{
-				tense: "present",
-				forms: {
-					sg1: "γράφω",
-					sg2: "γράφεις",
-					sg3: "γράφει",
-					pl1: "γράφουμε",
-					pl2: "γράφετε",
-					pl3: "γράφουν",
-				},
-			},
-			{
-				tense: "aorist",
-				forms: {
-					sg1: "έγραψα",
-					sg2: "έγραψες",
-					sg3: "έγραψε",
-					pl1: "γράψαμε",
-					pl2: "γράψατε",
-					pl3: "έγραψαν",
-				},
-			},
-			{
-				tense: "future",
-				forms: {
-					sg1: "θα γράψω",
-					sg2: "θα γράψεις",
-					sg3: "θα γράψει",
-					pl1: "θα γράψουμε",
-					pl2: "θα γράψετε",
-					pl3: "θα γράψουν",
-				},
-			},
-			{
-				tense: "past_continuous",
-				forms: {
-					sg1: "έγραφα",
-					sg2: "έγραφες",
-					sg3: "έγραφε",
-					pl1: "γράφαμε",
-					pl2: "γράφατε",
-					pl3: "έγραφαν",
-				},
-			},
-		],
-		imperatives: {
-			imperfective: { singular: "γράφε", plural: "γράφετε" },
-			perfective: { singular: "γράψε", plural: "γράψτε" },
-		},
-	},
-
-	{
-		lemma: "διαβάζω",
-		english: "I read",
-		conjugationFamily: "-ω",
-		isSuppletive: false,
-		stems: {
-			present: "διαβάζ-",
-			aorist: "διάβασ-",
-		},
-		conjugations: [
-			{
-				tense: "present",
-				forms: {
-					sg1: "διαβάζω",
-					sg2: "διαβάζεις",
-					sg3: "διαβάζει",
-					pl1: "διαβάζουμε",
-					pl2: "διαβάζετε",
-					pl3: "διαβάζουν",
-				},
-			},
-			{
-				tense: "aorist",
-				forms: {
-					sg1: "διάβασα",
-					sg2: "διάβασες",
-					sg3: "διάβασε",
-					pl1: "διαβάσαμε",
-					pl2: "διαβάσατε",
-					pl3: "διάβασαν",
-				},
-			},
-			{
-				tense: "future",
-				forms: {
-					sg1: "θα διαβάσω",
-					sg2: "θα διαβάσεις",
-					sg3: "θα διαβάσει",
-					pl1: "θα διαβάσουμε",
-					pl2: "θα διαβάσετε",
-					pl3: "θα διαβάσουν",
-				},
-			},
-			{
-				tense: "past_continuous",
-				forms: {
-					sg1: "διάβαζα",
-					sg2: "διάβαζες",
-					sg3: "διάβαζε",
-					pl1: "διαβάζαμε",
-					pl2: "διαβάζατε",
-					pl3: "διάβαζαν",
-				},
-			},
-		],
-		imperatives: {
-			imperfective: { singular: "διάβαζε", plural: "διαβάζετε" },
-			perfective: { singular: "διάβασε", plural: "διαβάστε" },
-		},
-	},
-
-	{
 		lemma: "ακούω",
 		english: "I hear/listen",
 		conjugationFamily: "-ω",
-		isSuppletive: false,
+		isSuppletive: true,
 		stems: {
 			present: "ακού-",
 			aorist: "άκουσ-",
@@ -1346,302 +923,9 @@ export const FULL_VERB_CONJUGATIONS: FullVerbSeed[] = [
 		},
 	},
 
-	{
-		lemma: "μένω",
-		english: "I stay/live",
-		conjugationFamily: "-ω",
-		isSuppletive: false,
-		stems: {
-			present: "μέν-",
-			aorist: "έμειν-",
-		},
-		conjugations: [
-			{
-				tense: "present",
-				forms: {
-					sg1: "μένω",
-					sg2: "μένεις",
-					sg3: "μένει",
-					pl1: "μένουμε",
-					pl2: "μένετε",
-					pl3: "μένουν",
-				},
-			},
-			{
-				tense: "aorist",
-				forms: {
-					sg1: "έμεινα",
-					sg2: "έμεινες",
-					sg3: "έμεινε",
-					pl1: "μείναμε",
-					pl2: "μείνατε",
-					pl3: "έμειναν",
-				},
-			},
-			{
-				tense: "future",
-				forms: {
-					sg1: "θα μείνω",
-					sg2: "θα μείνεις",
-					sg3: "θα μείνει",
-					pl1: "θα μείνουμε",
-					pl2: "θα μείνετε",
-					pl3: "θα μείνουν",
-				},
-			},
-			{
-				tense: "past_continuous",
-				forms: {
-					sg1: "έμενα",
-					sg2: "έμενες",
-					sg3: "έμενε",
-					pl1: "μέναμε",
-					pl2: "μένατε",
-					pl3: "έμεναν",
-				},
-			},
-		],
-		imperatives: {
-			imperfective: { singular: "μένε", plural: "μένετε" },
-			perfective: { singular: "μείνε", plural: "μείντε" },
-		},
-	},
-
-	// ============================================
-	// HIGH-FREQUENCY ACTIVE VERBS (top-110 corpus)
-	// ============================================
-
-	{
-		lemma: "ευχαριστώ",
-		english: "I thank",
-		conjugationFamily: "-άω/-ώ",
-		isSuppletive: false,
-		stems: {
-			present: "ευχαριστ-",
-			aorist: "ευχαρίστησ-",
-		},
-		conjugations: [
-			{
-				tense: "present",
-				forms: {
-					sg1: "ευχαριστώ",
-					sg2: "ευχαριστείς",
-					sg3: "ευχαριστεί",
-					pl1: "ευχαριστούμε",
-					pl2: "ευχαριστείτε",
-					pl3: "ευχαριστούν",
-				},
-			},
-			{
-				tense: "aorist",
-				forms: {
-					sg1: "ευχαρίστησα",
-					sg2: "ευχαρίστησες",
-					sg3: "ευχαρίστησε",
-					pl1: "ευχαριστήσαμε",
-					pl2: "ευχαριστήσατε",
-					pl3: "ευχαρίστησαν",
-				},
-			},
-			{
-				tense: "future",
-				forms: {
-					sg1: "θα ευχαριστώ",
-					sg2: "θα ευχαριστείς",
-					sg3: "θα ευχαριστεί",
-					pl1: "θα ευχαριστούμε",
-					pl2: "θα ευχαριστείτε",
-					pl3: "θα ευχαριστούν",
-				},
-			},
-			{
-				tense: "past_continuous",
-				forms: {
-					sg1: "ευχαριστούσα",
-					sg2: "ευχαριστούσες",
-					sg3: "ευχαριστούσε",
-					pl1: "ευχαριστούσαμε",
-					pl2: "ευχαριστούσατε",
-					pl3: "ευχαριστούσαν",
-				},
-			},
-		],
-	},
-
-	{
-		lemma: "παρακαλώ",
-		english: "I ask / please",
-		conjugationFamily: "-άω/-ώ",
-		isSuppletive: false,
-		stems: {
-			present: "παρακαλ-",
-			aorist: "παρακάλεσ-",
-		},
-		conjugations: [
-			{
-				tense: "present",
-				forms: {
-					sg1: "παρακαλώ",
-					sg2: "παρακαλείς",
-					sg3: "παρακαλεί",
-					pl1: "παρακαλούμε",
-					pl2: "παρακαλείτε",
-					pl3: "παρακαλούν",
-				},
-			},
-			{
-				tense: "aorist",
-				forms: {
-					sg1: "παρακάλεσα",
-					sg2: "παρακάλεσες",
-					sg3: "παρακάλεσε",
-					pl1: "παρακαλέσαμε",
-					pl2: "παρακαλέσατε",
-					pl3: "παρακάλεσαν",
-				},
-			},
-			{
-				tense: "future",
-				forms: {
-					sg1: "θα παρακαλώ",
-					sg2: "θα παρακαλείς",
-					sg3: "θα παρακαλεί",
-					pl1: "θα παρακαλούμε",
-					pl2: "θα παρακαλείτε",
-					pl3: "θα παρακαλούν",
-				},
-			},
-			{
-				tense: "past_continuous",
-				forms: {
-					sg1: "παρακαλούσα",
-					sg2: "παρακαλούσες",
-					sg3: "παρακαλούσε",
-					pl1: "παρακαλούσαμε",
-					pl2: "παρακαλούσατε",
-					pl3: "παρακαλούσαν",
-				},
-			},
-		],
-	},
-
-	{
-		lemma: "νομίζω",
-		english: "I think (opinion)",
-		conjugationFamily: "-ω",
-		isSuppletive: false,
-		stems: {
-			present: "νομίζ-",
-			aorist: "νόμισ-",
-		},
-		conjugations: [
-			{
-				tense: "present",
-				forms: {
-					sg1: "νομίζω",
-					sg2: "νομίζεις",
-					sg3: "νομίζει",
-					pl1: "νομίζουμε",
-					pl2: "νομίζετε",
-					pl3: "νομίζουν",
-				},
-			},
-			{
-				tense: "aorist",
-				forms: {
-					sg1: "νόμισα",
-					sg2: "νόμισες",
-					sg3: "νόμισε",
-					pl1: "νομίσαμε",
-					pl2: "νομίσατε",
-					pl3: "νόμισαν",
-				},
-			},
-			{
-				tense: "future",
-				forms: {
-					sg1: "θα νομίζω",
-					sg2: "θα νομίζεις",
-					sg3: "θα νομίζει",
-					pl1: "θα νομίζουμε",
-					pl2: "θα νομίζετε",
-					pl3: "θα νομίζουν",
-				},
-			},
-			{
-				tense: "past_continuous",
-				forms: {
-					sg1: "νόμιζα",
-					sg2: "νόμιζες",
-					sg3: "νόμιζε",
-					pl1: "νομίζαμε",
-					pl2: "νομίζατε",
-					pl3: "νόμιζαν",
-				},
-			},
-		],
-	},
-
 	// ============================================
 	// HIGH-FREQUENCY DEPONENTS (-μαι family)
 	// ============================================
-
-	{
-		lemma: "λυπάμαι",
-		english: "I'm sorry",
-		conjugationFamily: "-άμαι",
-		isSuppletive: false,
-		stems: {
-			present: "λυπ-",
-			aorist: "λυπήθηκ-",
-		},
-		conjugations: [
-			{
-				tense: "present",
-				forms: {
-					sg1: "λυπάμαι",
-					sg2: "λυπάσαι",
-					sg3: "λυπάται",
-					pl1: "λυπόμαστε",
-					pl2: "λυπάστε",
-					pl3: "λυπούνται",
-				},
-			},
-			{
-				tense: "aorist",
-				forms: {
-					sg1: "λυπήθηκα",
-					sg2: "λυπήθηκες",
-					sg3: "λυπήθηκε",
-					pl1: "λυπηθήκαμε",
-					pl2: "λυπηθήκατε",
-					pl3: "λυπήθηκαν",
-				},
-			},
-			{
-				tense: "future",
-				forms: {
-					sg1: "θα λυπάμαι",
-					sg2: "θα λυπάσαι",
-					sg3: "θα λυπάται",
-					pl1: "θα λυπόμαστε",
-					pl2: "θα λυπάστε",
-					pl3: "θα λυπούνται",
-				},
-			},
-			{
-				tense: "past_continuous",
-				forms: {
-					sg1: "λυπόμουν",
-					sg2: "λυπόσουν",
-					sg3: "λυπόταν",
-					pl1: "λυπόμασταν",
-					pl2: "λυπόσασταν",
-					pl3: "λυπόνταν",
-				},
-			},
-		],
-	},
 
 	{
 		lemma: "χρειάζομαι",
@@ -1752,63 +1036,6 @@ export const FULL_VERB_CONJUGATIONS: FullVerbSeed[] = [
 					pl1: "χαιρόμασταν",
 					pl2: "χαιρόσασταν",
 					pl3: "χαίρονταν",
-				},
-			},
-		],
-	},
-
-	{
-		lemma: "φοβάμαι",
-		english: "I'm afraid",
-		conjugationFamily: "-άμαι",
-		isSuppletive: false,
-		stems: {
-			present: "φοβ-",
-			aorist: "φοβήθηκ-",
-		},
-		conjugations: [
-			{
-				tense: "present",
-				forms: {
-					sg1: "φοβάμαι",
-					sg2: "φοβάσαι",
-					sg3: "φοβάται",
-					pl1: "φοβόμαστε",
-					pl2: "φοβάστε",
-					pl3: "φοβούνται",
-				},
-			},
-			{
-				tense: "aorist",
-				forms: {
-					sg1: "φοβήθηκα",
-					sg2: "φοβήθηκες",
-					sg3: "φοβήθηκε",
-					pl1: "φοβηθήκαμε",
-					pl2: "φοβηθήκατε",
-					pl3: "φοβήθηκαν",
-				},
-			},
-			{
-				tense: "future",
-				forms: {
-					sg1: "θα φοβάμαι",
-					sg2: "θα φοβάσαι",
-					sg3: "θα φοβάται",
-					pl1: "θα φοβόμαστε",
-					pl2: "θα φοβάστε",
-					pl3: "θα φοβούνται",
-				},
-			},
-			{
-				tense: "past_continuous",
-				forms: {
-					sg1: "φοβόμουν",
-					sg2: "φοβόσουν",
-					sg3: "φοβόταν",
-					pl1: "φοβόμασταν",
-					pl2: "φοβόσασταν",
-					pl3: "φοβόνταν",
 				},
 			},
 		],
@@ -1931,6 +1158,7 @@ export const FULL_VERB_CONJUGATIONS: FullVerbSeed[] = [
 		lemma: "νιώθω",
 		english: "I feel",
 		conjugationFamily: "-ω",
+		isSuppletive: true,
 		conjugations: [
 			{
 				tense: "present",
@@ -1983,58 +1211,206 @@ export const FULL_VERB_CONJUGATIONS: FullVerbSeed[] = [
 		},
 	},
 	{
-		lemma: "πεθαίνω",
-		english: "I die",
-		conjugationFamily: "-ω",
+		lemma: "πηγαίνω",
+		english: "I go",
+		cefrLevel: "A1",
+		conjugationFamily: "irregular",
+		isSuppletive: true,
 		conjugations: [
-			{
-				tense: "present",
-				forms: {
-					sg1: "πεθαίνω",
-					sg2: "πεθαίνεις",
-					sg3: "πεθαίνει",
-					pl1: "πεθαίνουμε",
-					pl2: "πεθαίνετε",
-					pl3: "πεθαίνουν",
-				},
-			},
-			{
-				tense: "aorist",
-				forms: {
-					sg1: "πέθανα",
-					sg2: "πέθανες",
-					sg3: "πέθανε",
-					pl1: "πεθάναμε",
-					pl2: "πεθάνατε",
-					pl3: "πέθαναν",
-				},
-			},
-			{
-				tense: "future",
-				forms: {
-					sg1: "θα πεθάνω",
-					sg2: "θα πεθάνεις",
-					sg3: "θα πεθάνει",
-					pl1: "θα πεθάνουμε",
-					pl2: "θα πεθάνετε",
-					pl3: "θα πεθάνουν",
-				},
-			},
-			{
-				tense: "past_continuous",
-				forms: {
-					sg1: "πέθαινα",
-					sg2: "πέθαινες",
-					sg3: "πέθαινε",
-					pl1: "πεθαίναμε",
-					pl2: "πεθαίνατε",
-					pl3: "πέθαιναν",
-				},
-			},
+			{ tense: "present", forms: { sg1: "πηγαίνω", sg2: "πηγαίνεις", sg3: "πηγαίνει", pl1: "πηγαίνουμε", pl2: "πηγαίνετε", pl3: "πηγαίνουν" } },
+			{ tense: "aorist", forms: { sg1: "πήγα", sg2: "πήγες", sg3: "πήγε", pl1: "πήγαμε", pl2: "πήγατε", pl3: "πήγαν" } },
+			{ tense: "past_continuous", forms: { sg1: "πήγαινα", sg2: "πήγαινες", sg3: "πήγαινε", pl1: "πηγαίναμε", pl2: "πηγαίνατε", pl3: "πήγαιναν" } },
+			{ tense: "future", forms: { sg1: "θα πάω", sg2: "θα πας", sg3: "θα πάει", pl1: "θα πάμε", pl2: "θα πάτε", pl3: "θα πάνε" } },
 		],
-		imperatives: {
-			imperfective: { singular: "πέθαινε", plural: "πεθαίνετε" },
-			perfective: { singular: "πέθανε", plural: "πεθάνετε" },
-		},
+		imperatives: { imperfective: { singular: "πήγαινε", plural: "πηγαίνετε" }, perfective: { singular: "πήγαινε", plural: "πηγαίνετε" } },
+	},
+	{
+		lemma: "ζω",
+		english: "I live/am alive",
+		cefrLevel: "A1",
+		conjugationFamily: "irregular",
+		conjugations: [
+			{ tense: "present", forms: { sg1: "ζω", sg2: "ζεις", sg3: "ζει", pl1: "ζούμε", pl2: "ζείτε", pl3: "ζουν" } },
+			{ tense: "aorist", forms: { sg1: "έζησα", sg2: "έζησες", sg3: "έζησε", pl1: "ζήσαμε", pl2: "ζήσατε", pl3: "έζησαν" } },
+			{ tense: "past_continuous", forms: { sg1: "ζούσα", sg2: "ζούσες", sg3: "ζούσε", pl1: "ζούσαμε", pl2: "ζούσατε", pl3: "ζούσαν" } },
+			{ tense: "future", forms: { sg1: "θα ζήσω", sg2: "θα ζήσεις", sg3: "θα ζήσει", pl1: "θα ζήσουμε", pl2: "θα ζήσετε", pl3: "θα ζήσουν" } },
+		],
+		imperatives: { perfective: { singular: "ζήσε", plural: "ζήστε" } },
+	},
+	{
+		lemma: "βγαίνω",
+		english: "I go out",
+		cefrLevel: "A1",
+		conjugationFamily: "irregular",
+		conjugations: [
+			{ tense: "present", forms: { sg1: "βγαίνω", sg2: "βγαίνεις", sg3: "βγαίνει", pl1: "βγαίνουμε", pl2: "βγαίνετε", pl3: "βγαίνουν" } },
+			{ tense: "aorist", forms: { sg1: "βγήκα", sg2: "βγήκες", sg3: "βγήκε", pl1: "βγήκαμε", pl2: "βγήκατε", pl3: "βγήκαν" } },
+			{ tense: "past_continuous", forms: { sg1: "έβγαινα", sg2: "έβγαινες", sg3: "έβγαινε", pl1: "βγαίναμε", pl2: "βγαίνατε", pl3: "έβγαιναν" } },
+			{ tense: "future", forms: { sg1: "θα βγω", sg2: "θα βγεις", sg3: "θα βγει", pl1: "θα βγούμε", pl2: "θα βγείτε", pl3: "θα βγουν" } },
+		],
+		imperatives: { imperfective: { singular: "βγαίνε", plural: "βγαίνετε" }, perfective: { singular: "βγες", plural: "βγείτε" } },
+	},
+	{
+		lemma: "μπαίνω",
+		english: "I enter/get in",
+		cefrLevel: "A1",
+		conjugationFamily: "irregular",
+		conjugations: [
+			{ tense: "present", forms: { sg1: "μπαίνω", sg2: "μπαίνεις", sg3: "μπαίνει", pl1: "μπαίνουμε", pl2: "μπαίνετε", pl3: "μπαίνουν" } },
+			{ tense: "aorist", forms: { sg1: "μπήκα", sg2: "μπήκες", sg3: "μπήκε", pl1: "μπήκαμε", pl2: "μπήκατε", pl3: "μπήκαν" } },
+			{ tense: "past_continuous", forms: { sg1: "έμπαινα", sg2: "έμπαινες", sg3: "έμπαινε", pl1: "μπαίναμε", pl2: "μπαίνατε", pl3: "έμπαιναν" } },
+			{ tense: "future", forms: { sg1: "θα μπω", sg2: "θα μπεις", sg3: "θα μπει", pl1: "θα μπούμε", pl2: "θα μπείτε", pl3: "θα μπουν" } },
+		],
+		imperatives: { imperfective: { singular: "μπαίνε", plural: "μπαίνετε" }, perfective: { singular: "μπες", plural: "μπείτε" } },
+	},
+	{
+		lemma: "μαθαίνω",
+		english: "I learn/teach",
+		cefrLevel: "A1",
+		conjugationFamily: "irregular",
+		conjugations: [
+			{ tense: "present", forms: { sg1: "μαθαίνω", sg2: "μαθαίνεις", sg3: "μαθαίνει", pl1: "μαθαίνουμε", pl2: "μαθαίνετε", pl3: "μαθαίνουν" } },
+			{ tense: "aorist", forms: { sg1: "έμαθα", sg2: "έμαθες", sg3: "έμαθε", pl1: "μάθαμε", pl2: "μάθατε", pl3: "έμαθαν" } },
+			{ tense: "past_continuous", forms: { sg1: "μάθαινα", sg2: "μάθαινες", sg3: "μάθαινε", pl1: "μαθαίναμε", pl2: "μαθαίνατε", pl3: "μάθαιναν" } },
+			{ tense: "future", forms: { sg1: "θα μάθω", sg2: "θα μάθεις", sg3: "θα μάθει", pl1: "θα μάθουμε", pl2: "θα μάθετε", pl3: "θα μάθουν" } },
+		],
+		imperatives: { imperfective: { singular: "μάθαινε", plural: "μαθαίνετε" }, perfective: { singular: "μάθε", plural: "μάθετε" } },
+	},
+	{
+		lemma: "κλαίω",
+		english: "I cry",
+		cefrLevel: "A1",
+		conjugationFamily: "irregular",
+		conjugations: [
+			{ tense: "present", forms: { sg1: "κλαίω", sg2: "κλαις", sg3: "κλαίει", pl1: "κλαίμε", pl2: "κλαίτε", pl3: "κλαίνε" } },
+			{ tense: "aorist", forms: { sg1: "έκλαψα", sg2: "έκλαψες", sg3: "έκλαψε", pl1: "κλάψαμε", pl2: "κλάψατε", pl3: "έκλαψαν" } },
+			{ tense: "past_continuous", forms: { sg1: "έκλαιγα", sg2: "έκλαιγες", sg3: "έκλαιγε", pl1: "κλαίγαμε", pl2: "κλαίγατε", pl3: "έκλαιγαν" } },
+			{ tense: "future", forms: { sg1: "θα κλάψω", sg2: "θα κλάψεις", sg3: "θα κλάψει", pl1: "θα κλάψουμε", pl2: "θα κλάψετε", pl3: "θα κλάψουν" } },
+		],
+		imperatives: { perfective: { singular: "κλάψε", plural: "κλάψτε" } },
+	},
+
+	// ── A1 -ομαι / -άμαι ───────────────────────────────────────────────────────
+
+	{
+		lemma: "κάθομαι",
+		english: "I sit",
+		cefrLevel: "A1",
+		conjugationFamily: "-ομαι",
+		conjugations: [
+			{ tense: "present", forms: { sg1: "κάθομαι", sg2: "κάθεσαι", sg3: "κάθεται", pl1: "καθόμαστε", pl2: "κάθεστε", pl3: "κάθονται" } },
+			{ tense: "aorist", forms: { sg1: "κάθισα", sg2: "κάθισες", sg3: "κάθισε", pl1: "καθίσαμε", pl2: "καθίσατε", pl3: "κάθισαν" } },
+			{ tense: "past_continuous", forms: { sg1: "καθόμουν", sg2: "καθόσουν", sg3: "καθόταν", pl1: "καθόμαστε", pl2: "καθόσαστε", pl3: "κάθονταν" } },
+			{ tense: "future", forms: { sg1: "θα καθίσω", sg2: "θα καθίσεις", sg3: "θα καθίσει", pl1: "θα καθίσουμε", pl2: "θα καθίσετε", pl3: "θα καθίσουν" } },
+		],
+		imperatives: { imperfective: { singular: "κάθου", plural: "καθίστε" }, perfective: { singular: "κάθισε", plural: "καθίστε" } },
+	},
+	{
+		lemma: "γίνομαι",
+		english: "I become",
+		cefrLevel: "A1",
+		conjugationFamily: "-ομαι",
+		isSuppletive: true,
+		conjugations: [
+			{ tense: "present", forms: { sg1: "γίνομαι", sg2: "γίνεσαι", sg3: "γίνεται", pl1: "γινόμαστε", pl2: "γίνεστε", pl3: "γίνονται" } },
+			{ tense: "aorist", forms: { sg1: "έγινα", sg2: "έγινες", sg3: "έγινε", pl1: "γίναμε", pl2: "γίνατε", pl3: "έγιναν" } },
+			{ tense: "past_continuous", forms: { sg1: "γινόμουν", sg2: "γινόσουν", sg3: "γινόταν", pl1: "γινόμαστε", pl2: "γινόσαστε", pl3: "γίνονταν" } },
+			{ tense: "future", forms: { sg1: "θα γίνω", sg2: "θα γίνεις", sg3: "θα γίνει", pl1: "θα γίνουμε", pl2: "θα γίνετε", pl3: "θα γίνουν" } },
+		],
+		imperatives: { perfective: { singular: "γίνε", plural: "γίνετε" } },
+	},
+	{
+		lemma: "κουρεύομαι",
+		english: "I get a haircut",
+		cefrLevel: "A2",
+		conjugationFamily: "-ομαι",
+		conjugations: [
+			{ tense: "present", forms: { sg1: "κουρεύομαι", sg2: "κουρεύεσαι", sg3: "κουρεύεται", pl1: "κουρευόμαστε", pl2: "κουρεύεστε", pl3: "κουρεύονται" } },
+			{ tense: "aorist", forms: { sg1: "κουρεύτηκα", sg2: "κουρεύτηκες", sg3: "κουρεύτηκε", pl1: "κουρευτήκαμε", pl2: "κουρευτήκατε", pl3: "κουρεύτηκαν" } },
+			{ tense: "past_continuous", forms: { sg1: "κουρευόμουν", sg2: "κουρευόσουν", sg3: "κουρευόταν", pl1: "κουρευόμαστε", pl2: "κουρευόσαστε", pl3: "κουρεύονταν" } },
+			{ tense: "future", forms: { sg1: "θα κουρευτώ", sg2: "θα κουρευτείς", sg3: "θα κουρευτεί", pl1: "θα κουρευτούμε", pl2: "θα κουρευτείτε", pl3: "θα κουρευτούν" } },
+		],
+		imperatives: { perfective: { singular: "κουρέψου", plural: "κουρευτείτε" } },
+	},
+	{
+		lemma: "υπάρχω",
+		english: "I exist/there is",
+		cefrLevel: "A1",
+		conjugationFamily: "-ω",
+		isSuppletive: true,
+		conjugations: [
+			{ tense: "present", forms: { sg1: "υπάρχω", sg2: "υπάρχεις", sg3: "υπάρχει", pl1: "υπάρχουμε", pl2: "υπάρχετε", pl3: "υπάρχουν" } },
+			{ tense: "aorist", forms: { sg1: "υπήρξα", sg2: "υπήρξες", sg3: "υπήρξε", pl1: "υπήρξαμε", pl2: "υπήρξατε", pl3: "υπήρξαν" } },
+			{ tense: "past_continuous", forms: { sg1: "υπήρχα", sg2: "υπήρχες", sg3: "υπήρχε", pl1: "υπάρχαμε", pl2: "υπάρχατε", pl3: "υπήρχαν" } },
+			{ tense: "future", forms: { sg1: "θα υπάρξω", sg2: "θα υπάρξεις", sg3: "θα υπάρξει", pl1: "θα υπάρξουμε", pl2: "θα υπάρξετε", pl3: "θα υπάρξουν" } },
+		],
+	},
+	// ── A2 irregular ───────────────────────────────────────────────────────────
+
+	{
+		lemma: "καταλαβαίνω",
+		english: "I understand",
+		cefrLevel: "A2",
+		conjugationFamily: "irregular",
+		conjugations: [
+			{ tense: "present", forms: { sg1: "καταλαβαίνω", sg2: "καταλαβαίνεις", sg3: "καταλαβαίνει", pl1: "καταλαβαίνουμε", pl2: "καταλαβαίνετε", pl3: "καταλαβαίνουν" } },
+			{ tense: "aorist", forms: { sg1: "κατάλαβα", sg2: "κατάλαβες", sg3: "κατάλαβε", pl1: "καταλάβαμε", pl2: "καταλάβατε", pl3: "κατάλαβαν" } },
+			{ tense: "past_continuous", forms: { sg1: "καταλάβαινα", sg2: "καταλάβαινες", sg3: "καταλάβαινε", pl1: "καταλαβαίναμε", pl2: "καταλαβαίνατε", pl3: "καταλάβαιναν" } },
+			{ tense: "future", forms: { sg1: "θα καταλάβω", sg2: "θα καταλάβεις", sg3: "θα καταλάβει", pl1: "θα καταλάβουμε", pl2: "θα καταλάβετε", pl3: "θα καταλάβουν" } },
+		],
+		imperatives: { perfective: { singular: "κατάλαβε", plural: "καταλάβτε" } },
+	},
+	{
+		lemma: "κατεβαίνω",
+		english: "I go down/get off",
+		cefrLevel: "A2",
+		conjugationFamily: "irregular",
+		conjugations: [
+			{ tense: "present", forms: { sg1: "κατεβαίνω", sg2: "κατεβαίνεις", sg3: "κατεβαίνει", pl1: "κατεβαίνουμε", pl2: "κατεβαίνετε", pl3: "κατεβαίνουν" } },
+			{ tense: "aorist", forms: { sg1: "κατέβηκα", sg2: "κατέβηκες", sg3: "κατέβηκε", pl1: "κατεβήκαμε", pl2: "κατεβήκατε", pl3: "κατέβηκαν" } },
+			{ tense: "past_continuous", forms: { sg1: "κατέβαινα", sg2: "κατέβαινες", sg3: "κατέβαινε", pl1: "κατεβαίναμε", pl2: "κατεβαίνατε", pl3: "κατέβαιναν" } },
+			{ tense: "future", forms: { sg1: "θα κατεβώ", sg2: "θα κατεβείς", sg3: "θα κατεβεί", pl1: "θα κατεβούμε", pl2: "θα κατεβείτε", pl3: "θα κατεβούν" } },
+		],
+		imperatives: { imperfective: { singular: "κατέβαινε", plural: "κατεβαίνετε" }, perfective: { singular: "κατέβα", plural: "κατεβείτε" } },
+	},
+	{
+		lemma: "ανεβαίνω",
+		english: "I go up/get on",
+		cefrLevel: "A2",
+		conjugationFamily: "irregular",
+		conjugations: [
+			{ tense: "present", forms: { sg1: "ανεβαίνω", sg2: "ανεβαίνεις", sg3: "ανεβαίνει", pl1: "ανεβαίνουμε", pl2: "ανεβαίνετε", pl3: "ανεβαίνουν" } },
+			{ tense: "aorist", forms: { sg1: "ανέβηκα", sg2: "ανέβηκες", sg3: "ανέβηκε", pl1: "ανεβήκαμε", pl2: "ανεβήκατε", pl3: "ανέβηκαν" } },
+			{ tense: "past_continuous", forms: { sg1: "ανέβαινα", sg2: "ανέβαινες", sg3: "ανέβαινε", pl1: "ανεβαίναμε", pl2: "ανεβαίνατε", pl3: "ανέβαιναν" } },
+			{ tense: "future", forms: { sg1: "θα ανεβώ", sg2: "θα ανεβείς", sg3: "θα ανεβεί", pl1: "θα ανεβούμε", pl2: "θα ανεβείτε", pl3: "θα ανεβούν" } },
+		],
+		imperatives: { imperfective: { singular: "ανέβαινε", plural: "ανεβαίνετε" }, perfective: { singular: "ανέβα", plural: "ανεβείτε" } },
+	},
+
+	// ── A2 -ομαι / -άμαι ───────────────────────────────────────────────────────
+
+	{
+		lemma: "επισκέπτομαι",
+		english: "I visit",
+		cefrLevel: "A2",
+		conjugationFamily: "-ομαι",
+		conjugations: [
+			{ tense: "present", forms: { sg1: "επισκέπτομαι", sg2: "επισκέπτεσαι", sg3: "επισκέπτεται", pl1: "επισκεπτόμαστε", pl2: "επισκέπτεστε", pl3: "επισκέπτονται" } },
+			{ tense: "aorist", forms: { sg1: "επισκέφτηκα", sg2: "επισκέφτηκες", sg3: "επισκέφτηκε", pl1: "επισκεφτήκαμε", pl2: "επισκεφτήκατε", pl3: "επισκέφτηκαν" } },
+			{ tense: "past_continuous", forms: { sg1: "επισκεπτόμουν", sg2: "επισκεπτόσουν", sg3: "επισκεπτόταν", pl1: "επισκεπτόμαστε", pl2: "επισκεπτόσαστε", pl3: "επισκέπτονταν" } },
+			{ tense: "future", forms: { sg1: "θα επισκεφτώ", sg2: "θα επισκεφτείς", sg3: "θα επισκεφτεί", pl1: "θα επισκεφτούμε", pl2: "θα επισκεφτείτε", pl3: "θα επισκεφτούν" } },
+		],
+	},
+	{
+		lemma: "φαίνομαι",
+		english: "I seem/appear",
+		cefrLevel: "A2",
+		conjugationFamily: "-ομαι",
+		conjugations: [
+			{ tense: "present", forms: { sg1: "φαίνομαι", sg2: "φαίνεσαι", sg3: "φαίνεται", pl1: "φαινόμαστε", pl2: "φαίνεστε", pl3: "φαίνονται" } },
+			{ tense: "aorist", forms: { sg1: "φάνηκα", sg2: "φάνηκες", sg3: "φάνηκε", pl1: "φανήκαμε", pl2: "φανήκατε", pl3: "φάνηκαν" } },
+			{ tense: "past_continuous", forms: { sg1: "φαινόμουν", sg2: "φαινόσουν", sg3: "φαινόταν", pl1: "φαινόμαστε", pl2: "φαινόσαστε", pl3: "φαίνονταν" } },
+			{ tense: "future", forms: { sg1: "θα φανώ", sg2: "θα φανείς", sg3: "θα φανεί", pl1: "θα φανούμε", pl2: "θα φανείτε", pl3: "θα φανούν" } },
+		],
 	},
 ];

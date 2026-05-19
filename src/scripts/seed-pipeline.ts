@@ -2,7 +2,7 @@ import { createRequire } from "module";
 
 import { sql } from "drizzle-orm";
 
-import { db } from "../server/db";
+import type { db as ProdDb } from "../server/db";
 import {
 	type Gender,
 	type GrammaticalCase,
@@ -33,6 +33,8 @@ import type {
 	NounNominalFormsSeed,
 	NounSeed,
 } from "../types/seed";
+
+type Db = typeof ProdDb;
 
 const _require = createRequire(import.meta.url);
 const GREEK_FREQUENCY_LOOKUP = _require("./seed-data/frequency-lookup.json") as Record<
@@ -200,7 +202,7 @@ const enrichWithFrequencyRank = (item: NewVocabulary): NewVocabulary => {
 	return rank != null ? { ...item, frequencyRank: rank } : item;
 };
 
-export async function batchInsertVocab(items: NewVocabulary[]): Promise<Map<string, number>> {
+export async function batchInsertVocab(db: Db, items: NewVocabulary[]): Promise<Map<string, number>> {
 	const resultMap = new Map<string, number>();
 	if (items.length === 0) return resultMap;
 
@@ -233,7 +235,7 @@ export async function batchInsertVocab(items: NewVocabulary[]): Promise<Map<stri
 	return resultMap;
 }
 
-export async function batchInsertVerbDetails(details: VerbDetailRecord[]) {
+export async function batchInsertVerbDetails(db: Db, details: VerbDetailRecord[]) {
 	if (details.length === 0) return;
 
 	for (let i = 0; i < details.length; i += BATCH_SIZE) {
@@ -242,7 +244,7 @@ export async function batchInsertVerbDetails(details: VerbDetailRecord[]) {
 	}
 }
 
-export async function batchInsertNounDetails(details: NounDetailRecord[]) {
+export async function batchInsertNounDetails(db: Db, details: NounDetailRecord[]) {
 	if (details.length === 0) return;
 
 	for (let i = 0; i < details.length; i += BATCH_SIZE) {
@@ -260,7 +262,7 @@ export async function batchInsertNounDetails(details: NounDetailRecord[]) {
 	}
 }
 
-export async function batchInsertAdjectiveDetails(details: NewAdjectiveDetails[]) {
+export async function batchInsertAdjectiveDetails(db: Db, details: NewAdjectiveDetails[]) {
 	if (details.length === 0) return;
 
 	for (let i = 0; i < details.length; i += BATCH_SIZE) {
@@ -275,7 +277,7 @@ export async function batchInsertAdjectiveDetails(details: NewAdjectiveDetails[]
 	}
 }
 
-export async function batchUpsertNominalForms(rows: NewNominalForm[]) {
+export async function batchUpsertNominalForms(db: Db, rows: NewNominalForm[]) {
 	if (rows.length === 0) return;
 
 	for (let i = 0; i < rows.length; i += BATCH_SIZE) {
@@ -300,6 +302,7 @@ export async function batchUpsertNominalForms(rows: NewNominalForm[]) {
 }
 
 async function processCategory(
+	db: Db,
 	categoryName: string,
 	items: VocabWithTags[],
 	ctx: SeedAccumulators,
@@ -307,7 +310,7 @@ async function processCategory(
 	console.log(`Seeding ${categoryName}...`);
 
 	const vocabItems = items.map((item) => item.vocab);
-	const idMap = await batchInsertVocab(vocabItems);
+	const idMap = await batchInsertVocab(db, vocabItems);
 
 	const verbDetailsToInsert: VerbDetailRecord[] = [];
 
@@ -359,9 +362,10 @@ async function processCategory(
 }
 
 export function runSeedCategory(
+	db: Db,
 	categoryName: string,
 	items: VocabWithTags[],
 	ctx: SeedAccumulators,
 ): Promise<VerbDetailRecord[]> {
-	return processCategory(categoryName, items, ctx);
+	return processCategory(db, categoryName, items, ctx);
 }
