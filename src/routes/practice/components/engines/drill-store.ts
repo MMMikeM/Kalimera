@@ -75,6 +75,8 @@ interface DrillState {
 	sessionId: number | null;
 	isReDrill: boolean;
 
+	uniquePoolSize: number; // distinct words at session start; gates re-intro pruning
+
 	// Remediation tracking
 	firstPresented: Record<string, boolean>; // wordId → presented at least once this session
 	remediationCounts: Record<string, number>; // wordId → times re-inserted
@@ -100,6 +102,7 @@ export const useDrillStore = create<DrillState>()(() => ({
 	lastAttempt: null,
 	sessionId: null,
 	isReDrill: false,
+	uniquePoolSize: 0,
 	firstPresented: {},
 	remediationCounts: {},
 }));
@@ -156,6 +159,7 @@ export const drillActions: DrillActions = {
 		const source = activeCategory
 			? items.filter((i) => (i as DrillForm & { category?: string }).category === activeCategory)
 			: items;
+		const uniquePoolSize = new Set(source.map((f) => f.id)).size;
 		set({
 			deck: buildWeightedDeck(source, sessionSize),
 			cardIndex: 0,
@@ -165,6 +169,7 @@ export const drillActions: DrillActions = {
 			phase: "active",
 			sessionId: null,
 			isReDrill: false,
+			uniquePoolSize,
 			firstPresented: {},
 			remediationCounts: {},
 		});
@@ -182,6 +187,7 @@ export const drillActions: DrillActions = {
 			deck,
 			cardIndex,
 			sessionSize,
+			uniquePoolSize,
 			userId,
 			drillId,
 			sessionId,
@@ -218,11 +224,10 @@ export const drillActions: DrillActions = {
 				phase: "feedback",
 			}));
 		} else {
-			// On first correct answer, drop any future duplicates of this card (e.g. new-word
-			// re-introductions from buildWeightedDeck). If you got it right, you don't need
-			// to see it again this session.
+			// Prune re-intros on first correct answer — but only when the pool has enough
+			// unique words to fill the session. Small pools need every re-intro.
 			const prunedDeck =
-				isCorrect && !alreadySeen
+				isCorrect && !alreadySeen && uniquePoolSize >= sessionSize
 					? deck.filter((card, idx) => idx <= cardIndex || card.id !== currentForm.id)
 					: deck;
 			set((prev) => ({
