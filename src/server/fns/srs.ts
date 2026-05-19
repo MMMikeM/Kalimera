@@ -2,7 +2,6 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
 import { requireAuth } from "@/server/auth/session";
-import { transaction } from "@/server/db";
 import { insertDailyResults } from "@/server/db/queries/drill-daily-results";
 import { promoteDrillProgress } from "@/server/db/queries/drill-progress";
 import { listSessionVocabAttempts, recordAttempt } from "@/server/db/queries/practice-attempts";
@@ -81,32 +80,19 @@ export const completeSessionFn = createServerFn({ method: "POST" })
 		}
 		if (firstTryByVocab.size === 0) return { success: true, session };
 
-		try {
-			await transaction(async (tx) => {
-				await insertDailyResults(
-					tx,
-					[...firstTryByVocab.entries()].map(([vocabId, { correctFirstTry, drillId }]) => ({
-						userId,
-						vocabId,
-						drillId,
-						practicedDate: today,
-						correctFirstTry,
-					})),
-				);
-			});
-		} catch (e) {
-			console.error("[srs] insertDailyResults failed:", e);
-			throw e;
-		}
+		await insertDailyResults(
+			[...firstTryByVocab.entries()].map(([vocabId, { correctFirstTry, drillId }]) => ({
+				userId,
+				vocabId,
+				drillId,
+				practicedDate: today,
+				correctFirstTry,
+			})),
+		);
 
 		const practicedIds = [...firstTryByVocab.keys()];
 		const drillId = [...firstTryByVocab.values()][0]?.drillId ?? "";
-		try {
-			await promoteDrillProgress({ userId, drillId, practicedIds });
-		} catch (e) {
-			console.error("[srs] promoteDrillProgress failed:", e);
-			throw e;
-		}
+		await promoteDrillProgress({ userId, drillId, practicedIds });
 
 		return { success: true, session };
 	});

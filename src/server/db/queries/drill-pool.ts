@@ -34,13 +34,14 @@ const median = (nums: number[]): number => {
  *   vocabProgress  (user, vocab)          — lexical mastery: "do I know this word?"
  *
  * Buckets (high → low priority):
- *   tier1      — mastery due, wrong last day           → actively failing, surface first
- *   tier2      — mastery due, drillProgress tier ≤ 1   → recent schema learning
- *   tier3      — mastery due, drillProgress tier ≥ 2   → established, scheduled refresh
+ *   tier1      — mastery due, most-recent attempt wrong   → actively failing, surface first
+ *   tier2      — mastery due, drillProgress tier ≤ 1      → recent schema learning
+ *   tier3      — mastery due, drillProgress tier ≥ 2      → established, scheduled refresh
  *   inProgress — no mastery for this drill, lexically known → bootstrap cross-drill transfer
- *   new        — no mastery, no lexical history        → truly new
+ *   new        — no mastery, no lexical history           → truly new
  *
- * Excluded: drillProgress exists AND nextReviewAt > now.
+ * Excluded: first attempt today was correct (100% first-try = done for the day).
+ *           OR drillProgress exists AND nextReviewAt > now.
  * tier2/tier3 sorted slowest-per-char first within bucket (automatisation signal).
  */
 export const getDrillVocabPool = async ({
@@ -66,11 +67,6 @@ export const getDrillVocabPool = async ({
 				where: { userId },
 				columns: { vocabId: true },
 			},
-			drillDailyResults: {
-				where: { userId, drillId },
-				columns: { practicedDate: true, correctFirstTry: true },
-				orderBy: { practicedDate: "desc" },
-			},
 			practiceAttempts: {
 				where: { userId, drillId },
 				columns: { timeTaken: true, correctAnswer: true, isCorrect: true, attemptedAt: true },
@@ -93,17 +89,17 @@ export const getDrillVocabPool = async ({
 	};
 
 	const matchBucket = (c: Candidate): DrillBucket | null => {
-		const wasCorrectToday = c.practiceAttempts.some(
-			(a) => a.attemptedAt?.startsWith(todayStr) && a.isCorrect,
-		);
-		if (wasCorrectToday) return null;
+		// Exclude if first attempt of today was correct — done for the day
+		const todayAttempts = c.practiceAttempts.filter((a) => a.attemptedAt?.startsWith(todayStr));
+		const firstAttemptToday = todayAttempts[todayAttempts.length - 1];
+		if (firstAttemptToday?.isCorrect) return null;
 
 		const mastery = c.drillProgress[0];
 		if (mastery) {
 			const isDue = !mastery.nextReviewAt || mastery.nextReviewAt <= now;
-			if (!isDue) return null; // schema mastered for this drill, not due — exclude
-			const wasWrongLastDay = c.drillDailyResults[0]?.correctFirstTry === false;
-			if (wasWrongLastDay) return "tier1";
+			if (!isDue) return null; // scheduled for future — exclude
+			const mostRecentAttempt = c.practiceAttempts[0];
+			if (mostRecentAttempt?.isCorrect === false) return "tier1";
 			return (mastery.tier ?? 0) <= 1 ? "tier2" : "tier3";
 		}
 		return c.vocabProgress.length > 0 ? "inProgress" : "new";
@@ -117,7 +113,6 @@ export const getDrillVocabPool = async ({
 	const medianSlowness = (c: Candidate): number =>
 		median(
 			c.practiceAttempts
-				.filter((a) => !a.attemptedAt?.startsWith(todayStr))
 				.slice(0, 5)
 				.map((a) => slowness(a.timeTaken ?? 0, a.correctAnswer)),
 		);
@@ -146,17 +141,11 @@ export const getDrillVocabPool = async ({
 			.slice(0, limit)
 			.map((c) => c.id);
 
-	console.log(buckets);
-
-	const filledBuckets = {
+	return {
 		tier1: processBucket(buckets.tier1, sortCefrFreq),
 		tier2: processBucket(buckets.tier2, sortSlow),
 		tier3: processBucket(buckets.tier3, sortSlow),
 		inProgress: processBucket(buckets.inProgress, sortCefrFreq),
 		new: processBucket(buckets.new, sortCefrFreq),
 	};
-
-	console.log(filledBuckets);
-
-	return filledBuckets;
 };
