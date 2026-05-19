@@ -273,6 +273,7 @@ function AoristFormationDrill() {
 		<Drill
 			drillId="verbs-aorist-formation"
 			items={ITEMS}
+			backTo="/practice/verbs"
 			title="Aorist formation"
 			subtitle="25 rules / timed"
 			colorTheme="terracotta"

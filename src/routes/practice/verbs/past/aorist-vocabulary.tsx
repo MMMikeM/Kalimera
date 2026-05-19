@@ -19,6 +19,7 @@ function AoristVocabularyDrill() {
 		<VocabDrillPage
 			drillId="verbs-aorist-sg1"
 			category="verbs"
+			backTo="/practice/verbs"
 			initialQuestions={questions.length > 0 ? questions : undefined}
 		/>
 	);

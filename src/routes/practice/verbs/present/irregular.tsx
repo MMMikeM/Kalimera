@@ -132,6 +132,7 @@ function PresentIrregularDrill() {
 		<Drill
 			drillId="verbs-present-irregular"
 			items={FORMS}
+			backTo="/practice/verbs"
 			title="Irregular verbs · present"
 			subtitle="30 forms / timed"
 			colorTheme="olive"

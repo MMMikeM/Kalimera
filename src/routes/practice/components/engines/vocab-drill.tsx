@@ -13,6 +13,7 @@ import { Drill } from "./drill";
 interface VocabDrillPageProps {
 	category: keyof typeof CATEGORY_CONFIG;
 	drillId: string;
+	backTo?: string;
 	initialQuestions?: DrillQuestion[];
 }
 
@@ -25,7 +26,7 @@ const toForm = (q: DrillQuestion): DrillForm => ({
 	bucket: q.bucket,
 });
 
-export function VocabDrillPage({ category, drillId, initialQuestions }: VocabDrillPageProps) {
+export function VocabDrillPage({ category, drillId, backTo, initialQuestions }: VocabDrillPageProps) {
 	const items = useMemo(() => {
 		const source = initialQuestions?.length ? initialQuestions : generateQuestions([category], 30);
 		return source.map(toForm);
@@ -41,6 +42,7 @@ export function VocabDrillPage({ category, drillId, initialQuestions }: VocabDri
 			subtitle="Rapid-fire production"
 			colorTheme="terracotta"
 			sessionSize={20}
+			backTo={backTo}
 			forwardDesc="English meaning → Greek"
 			reverseDesc="Greek → recall meaning (self-assess)"
 		/>

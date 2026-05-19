@@ -19,6 +19,7 @@ function AoristConjugationDrill() {
 		<VocabDrillPage
 			drillId="verbs-aorist-conjugation"
 			category="verbs"
+			backTo="/practice/verbs"
 			initialQuestions={questions.length > 0 ? questions : undefined}
 		/>
 	);
