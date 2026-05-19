@@ -1,4 +1,4 @@
-import { diffInHours, fromEpochSeconds, nowInstant } from "@/lib/time";
+import { diffInHours, fromISOString, nowInstant } from "@/lib/time";
 import type { User } from "@/server/db/types";
 
 const STREAK_CONFIG = {
@@ -25,7 +25,7 @@ export const getFreezeStatus = (user: User): FreezeStatus => {
 		return { status: "available", freezeCount };
 	}
 
-	const hoursSinceLastUse = diffInHours(nowInstant(), fromEpochSeconds(lastFreezeUsedAt));
+	const hoursSinceLastUse = diffInHours(nowInstant(), fromISOString(lastFreezeUsedAt));
 
 	if (hoursSinceLastUse < STREAK_CONFIG.RECOVERY_HOURS) {
 		return {

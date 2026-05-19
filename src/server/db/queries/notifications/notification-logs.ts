@@ -2,14 +2,7 @@ import { and, eq, gte, lt } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-orm/zod";
 import type z from "zod/v4";
 
-import {
-	fromEpochSeconds,
-	nowInstant,
-	toEpochSeconds,
-	toInstant,
-	toPlainDate,
-	today,
-} from "@/lib/time";
+import { fromISOString, nowIso, toISOString, toInstant, toPlainDate, today } from "@/lib/time";
 
 import { db } from "../../index";
 import { notificationLogs, practiceSessions } from "../../schema";
@@ -22,7 +15,7 @@ export type TappedAction = "2min" | "body" | "snooze";
 type LogNotificationSentInput = Pick<NotificationLogInsert, "userId" | "type">;
 
 export const logNotificationSent = async (data: LogNotificationSentInput) => {
-	await db.insert(notificationLogs).values({ ...data, sentAt: toEpochSeconds(nowInstant()) });
+	await db.insert(notificationLogs).values({ ...data, sentAt: nowIso() });
 };
 
 export const logNotificationTap = async (userId: number, tappedAction: TappedAction) => {
@@ -36,7 +29,7 @@ export const logNotificationTap = async (userId: number, tappedAction: TappedAct
 		if (recentLog) {
 			await tx
 				.update(notificationLogs)
-				.set({ tappedAction, tappedAt: toEpochSeconds(nowInstant()) })
+				.set({ tappedAction, tappedAt: nowIso() })
 				.where(eq(notificationLogs.id, recentLog.id));
 		}
 	});
@@ -50,7 +43,7 @@ export const userQualifiesForNotificationTaper = async (
 	userId: number,
 	notificationHourUtc: number,
 ) => {
-	const sevenDaysAgo = toEpochSeconds(toInstant(today().subtract({ days: 7 })));
+	const sevenDaysAgo = toISOString(toInstant(today().subtract({ days: 7 })));
 
 	const recentSends = await db.query.notificationLogs.findMany({
 		where: { userId, sentAt: { gte: sevenDaysAgo } },
@@ -65,9 +58,9 @@ export const userQualifiesForNotificationTaper = async (
 	for (const send of recentSends) {
 		if (!send.sentAt) continue;
 
-		const sentInstant = fromEpochSeconds(send.sentAt);
-		const sendDay = toEpochSeconds(toInstant(toPlainDate(sentInstant)));
-		const notificationTime = toEpochSeconds(
+		const sentInstant = fromISOString(send.sentAt);
+		const sendDay = toISOString(toInstant(toPlainDate(sentInstant)));
+		const notificationTime = toISOString(
 			toPlainDate(sentInstant)
 				.toZonedDateTime("UTC")
 				.with({ hour: notificationHourUtc })

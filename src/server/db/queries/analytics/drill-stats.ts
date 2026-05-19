@@ -1,7 +1,7 @@
 import { Temporal } from "@js-temporal/polyfill";
 import { and, eq, gte, isNotNull, sql } from "drizzle-orm";
 
-import { nowInstant, toEpochSeconds, fromEpochSeconds } from "@/lib/time";
+import { fromISOString, nowInstant, toEpochSeconds, toISOString } from "@/lib/time";
 
 import { db } from "../../index";
 import { drillProgress, practiceAttempts } from "../../schema";
@@ -14,7 +14,7 @@ const MASTERY_INTERVAL_DAYS = [3, 6, 9, 9] as const;
 
 export interface DrillRust {
 	drillId: string;
-	lastPracticedAt: number;
+	lastPracticedAt: string; // ISO 8601
 	daysSince: number;
 	recentAccuracy: number;
 	avgTime: number;
@@ -62,14 +62,21 @@ export const getSchemaRust = async (userId: number): Promise<DrillRust[]> => {
 
 	return [...byDrill.entries()]
 		.map(([drillId, attempts]) => {
-			const lastPracticedAt = attempts[0]!.attemptedAt!;
-			const daysSince = (nowSec - lastPracticedAt) / 86400;
+			const lastAttemptedAt = attempts[0]!.attemptedAt!;
+			const daysSince = (nowSec - toEpochSeconds(fromISOString(lastAttemptedAt))) / 86400;
 			const correctCount = attempts.filter((a) => a.isCorrect).length;
 			const recentAccuracy = attempts.length > 0 ? correctCount / attempts.length : 0;
 			const avgTime = attempts.reduce((s, a) => s + (a.timeTaken ?? 0), 0) / attempts.length;
 			// Forgetting-curve: >1 = overdue; higher-tier drills have longer expected interval → less rusty for same elapsed time.
 			const rustScore = daysSince / intervalForDrill(drillId);
-			return { drillId, lastPracticedAt, daysSince, recentAccuracy, avgTime, rustScore };
+			return {
+				drillId,
+				lastPracticedAt: lastAttemptedAt,
+				daysSince,
+				recentAccuracy,
+				avgTime,
+				rustScore,
+			};
 		})
 		.sort((a, b) => b.rustScore - a.rustScore);
 };
@@ -86,7 +93,7 @@ export interface DrillStat {
 const WINDOW_DAYS = 14;
 
 export const getDrillStats = async (userId: number): Promise<DrillStat[]> => {
-	const since = toEpochSeconds(nowInstant().subtract({ hours: WINDOW_DAYS * 24 }));
+	const since = toISOString(nowInstant().subtract({ hours: WINDOW_DAYS * 24 }));
 
 	const rows = await db
 		.select({
@@ -94,7 +101,7 @@ export const getDrillStats = async (userId: number): Promise<DrillStat[]> => {
 			attempts: sql<number>`COUNT(*)`,
 			correct: sql<number>`SUM(CASE WHEN ${practiceAttempts.isCorrect} THEN 1 ELSE 0 END)`,
 			avgTimeMs: sql<number | null>`AVG(${practiceAttempts.timeTaken})`,
-			lastAttemptAt: sql<number | null>`MAX(${practiceAttempts.attemptedAt})`,
+			lastAttemptAt: sql<string | null>`MAX(${practiceAttempts.attemptedAt})`,
 		})
 		.from(practiceAttempts)
 		.where(
@@ -114,6 +121,6 @@ export const getDrillStats = async (userId: number): Promise<DrillStat[]> => {
 			correct: Number(r.correct),
 			accuracy: r.attempts > 0 ? Number(r.correct) / Number(r.attempts) : 0,
 			avgTimeMs: r.avgTimeMs == null ? null : Number(r.avgTimeMs),
-			lastAttemptAt: r.lastAttemptAt == null ? null : fromEpochSeconds(Number(r.lastAttemptAt)),
+			lastAttemptAt: r.lastAttemptAt == null ? null : fromISOString(r.lastAttemptAt),
 		}));
 };

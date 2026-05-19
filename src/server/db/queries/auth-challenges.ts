@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 
-import { nowInstant, toEpochSeconds } from "@/lib/time";
+import { nowInstant, nowIso, toISOString } from "@/lib/time";
 
 import { db } from "../index";
 import { type ChallengeType, authChallenges } from "../schema";
@@ -14,7 +14,7 @@ export const createChallenge = async (challenge: string, type: ChallengeType, us
 			challenge,
 			type,
 			userId: userId ?? null,
-			expiresAt: toEpochSeconds(nowInstant().add({ milliseconds: CHALLENGE_TTL_MS })),
+			expiresAt: toISOString(nowInstant().add({ milliseconds: CHALLENGE_TTL_MS })),
 		})
 		.returning();
 	return record;
@@ -22,7 +22,7 @@ export const createChallenge = async (challenge: string, type: ChallengeType, us
 
 export const findChallenge = async (challenge: string, type: ChallengeType) => {
 	return await db.query.authChallenges.findFirst({
-		where: { challenge, type, expiresAt: { gte: toEpochSeconds(nowInstant()) } },
+		where: { challenge, type, expiresAt: { gte: nowIso() } },
 	});
 };
 

@@ -1,6 +1,6 @@
 import { and, count, eq, inArray, isNotNull, lt, sql } from "drizzle-orm";
 
-import { nowInstant, toEpochSeconds } from "@/lib/time";
+import { nowIso, toISOString } from "@/lib/time";
 import { reviewStateAfterAttempt } from "@/server/srs";
 
 import { db } from "../index";
@@ -8,7 +8,7 @@ import { vocabProgress } from "../schema";
 import type { DbTransaction } from "./transaction-client";
 
 export const getReviewStats = async (userId: number) => {
-	const nowSec = toEpochSeconds(nowInstant());
+	const now = nowIso();
 	const masteredThresholdDays = 21;
 
 	const [stats] = await db.query.vocabProgress.findMany({
@@ -18,7 +18,7 @@ export const getReviewStats = async (userId: number) => {
 		extras: {
 			mastered: (t, { sql }) =>
 				sql<number>`COUNT(CASE WHEN ${t.intervalDays} >= ${masteredThresholdDays} THEN 1 END)`,
-			due: (t, { sql }) => sql<number>`COUNT(CASE WHEN ${t.nextReviewAt} <= ${nowSec} THEN 1 END)`,
+			due: (t, { sql }) => sql<number>`COUNT(CASE WHEN ${t.nextReviewAt} <= ${now} THEN 1 END)`,
 			learned: count(),
 			total: sql<number>`(SELECT COUNT(*) FROM vocabulary)`,
 		},
@@ -38,7 +38,7 @@ export const getReviewStats = async (userId: number) => {
 };
 
 /** Due review counts per user for push-notification targeting. */
-export const listDueVocabularyCountsByUser = async (now: number, userIds?: number[]) => {
+export const listDueVocabularyCountsByUser = async (now: string, userIds?: number[]) => {
 	if (userIds && userIds.length === 0) return [];
 	const base = and(isNotNull(vocabProgress.nextReviewAt), lt(vocabProgress.nextReviewAt, now));
 	const where = userIds === undefined ? base : and(base, inArray(vocabProgress.userId, userIds));
@@ -76,8 +76,8 @@ export const applyReviewStateAfterAttempt = async (tx: DbTransaction, input: Rev
 			.update(vocabProgress)
 			.set({
 				...mutation.set,
-				nextReviewAt: toEpochSeconds(mutation.set.nextReviewAt),
-				lastReviewedAt: toEpochSeconds(mutation.set.lastReviewedAt),
+				nextReviewAt: toISOString(mutation.set.nextReviewAt),
+				lastReviewedAt: toISOString(mutation.set.lastReviewedAt),
 			})
 			.where(and(eq(vocabProgress.userId, userId), eq(vocabProgress.vocabId, vocabId)));
 	} else {
@@ -85,8 +85,8 @@ export const applyReviewStateAfterAttempt = async (tx: DbTransaction, input: Rev
 			userId,
 			vocabId,
 			...mutation.values,
-			nextReviewAt: toEpochSeconds(mutation.values.nextReviewAt),
-			lastReviewedAt: toEpochSeconds(mutation.values.lastReviewedAt),
+			nextReviewAt: toISOString(mutation.values.nextReviewAt),
+			lastReviewedAt: toISOString(mutation.values.lastReviewedAt),
 		});
 	}
 };

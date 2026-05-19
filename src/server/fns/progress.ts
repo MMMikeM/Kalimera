@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 
 import { streakLengthFromCompletedSessionDates } from "@/lib/practice-streak";
-import { fromEpochSeconds } from "@/lib/time";
+import { fromISOString } from "@/lib/time";
 import { requireAuth } from "@/server/auth/session";
 import {
 	getAccuracyTrends,
@@ -23,7 +23,7 @@ export const getProgressDataFn = createServerFn({ method: "GET" }).handler(async
 			listCompletedPracticeSessionsForStreak(userId),
 		],
 	);
-	const completedDates = completedSessions.map((s) => fromEpochSeconds(s.completedAt!));
+	const completedDates = completedSessions.map((s) => fromISOString(s.completedAt!));
 
 	const accuracyData = accuracyTrends.map((d) => ({
 		date: d.date,

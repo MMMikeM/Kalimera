@@ -2,7 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 
 import { streakLengthFromCompletedSessionDates } from "@/lib/practice-streak";
 import { calculateDaysUntilNextFreeze, getFreezeStatus } from "@/lib/streak";
-import { diffInDays, fromEpochSeconds, mondayBasedDayOfWeek, toPlainDate, today } from "@/lib/time";
+import { diffInDays, fromISOString, mondayBasedDayOfWeek, toPlainDate, today } from "@/lib/time";
 import { requireAuth } from "@/server/auth/session";
 import { getSchemaRust, RUST_THRESHOLD_VALUE } from "@/server/db/queries/analytics/drill-stats";
 import { getPushSubscriptionByUserId } from "@/server/db/queries/notifications/push-subscriptions";
@@ -31,7 +31,7 @@ export const getDashboardDataFn = createServerFn({ method: "GET" }).handler(asyn
 		getSchemaRust(userId),
 	]);
 	const completedDates = completedSessions.flatMap((s) =>
-		s.completedAt ? [fromEpochSeconds(s.completedAt)] : [],
+		s.completedAt ? [fromISOString(s.completedAt)] : [],
 	);
 
 	const todayDate = today();
