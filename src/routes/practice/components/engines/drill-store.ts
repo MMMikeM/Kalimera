@@ -227,7 +227,6 @@ export const drillActions: DrillActions = {
 					: deck;
 			set((prev) => ({
 				deck: prunedDeck,
-				sessionSize: prunedDeck.length,
 				firstPresented: { ...prev.firstPresented, [currentForm.id]: true },
 				lastAttempt: attempt,
 				attempts: [...prev.attempts, attempt],
@@ -252,7 +251,7 @@ export const drillActions: DrillActions = {
 	advance: () => {
 		const {
 			cardIndex,
-			sessionSize,
+			deck,
 			sessionId,
 			userId,
 			isReDrill,
@@ -261,7 +260,7 @@ export const drillActions: DrillActions = {
 			attempts,
 		} = s();
 		const next = cardIndex + 1;
-		if (next >= sessionSize) {
+		if (next >= deck.length) {
 			set({ phase: "complete" });
 			if (!isReDrill && sessionId && userId && sessionCallbacks) {
 				sessionCallbacks.completeSession({
@@ -276,12 +275,6 @@ export const drillActions: DrillActions = {
 				attempts,
 			});
 			return;
-		}
-		const { deck } = s();
-		if (!deck[next]) {
-			throw new Error(
-				`drill-store advance: no card at index ${next} (deck.length=${deck.length}, sessionSize=${sessionSize}). retryMistakes likely called without updating sessionSize.`,
-			);
 		}
 		set({ cardIndex: next, input: "", phase: "active" });
 	},
