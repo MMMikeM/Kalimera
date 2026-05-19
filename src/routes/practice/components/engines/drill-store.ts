@@ -188,6 +188,7 @@ export const drillActions: DrillActions = {
 			isReDrill,
 			sessionCallbacks,
 			remediationCounts,
+			firstPresented,
 		} = s();
 		const currentForm = deck[cardIndex];
 		if (!currentForm) return;
@@ -202,6 +203,8 @@ export const drillActions: DrillActions = {
 		// Remediation: on wrong answer, re-insert within session (max 3 times per word).
 		// Skip if no room to space it at least 2 positions ahead — avoids back-to-back repeats near end.
 		const remCount = remediationCounts[currentForm.id] ?? 0;
+		const alreadySeen = firstPresented[currentForm.id] ?? false;
+
 		if (!isCorrect && remCount < 3 && cardIndex + 2 <= sessionSize - 1) {
 			const insertAt = Math.min(cardIndex + 5, sessionSize - 1);
 			const newDeck = [...deck];
@@ -215,7 +218,16 @@ export const drillActions: DrillActions = {
 				phase: "feedback",
 			}));
 		} else {
+			// On first correct answer, drop any future duplicates of this card (e.g. new-word
+			// re-introductions from buildWeightedDeck). If you got it right, you don't need
+			// to see it again this session.
+			const prunedDeck =
+				isCorrect && !alreadySeen
+					? deck.filter((card, idx) => idx <= cardIndex || card.id !== currentForm.id)
+					: deck;
 			set((prev) => ({
+				deck: prunedDeck,
+				sessionSize: prunedDeck.length,
 				firstPresented: { ...prev.firstPresented, [currentForm.id]: true },
 				lastAttempt: attempt,
 				attempts: [...prev.attempts, attempt],

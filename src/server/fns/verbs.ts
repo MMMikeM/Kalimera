@@ -64,12 +64,20 @@ const getVerbConjugationQuestions = async (
 	const labels = tense === "future" ? FUTURE_LABELS : PERSON_LABELS;
 	const questions: DrillQuestion[] = [];
 	for (const vocab of vocabRows) {
-		const stem = vocab.englishTranslation.replace(/^I /, "");
+		const rawStem = vocab.englishTranslation.replace(/^I /, "");
 		const conjForms = persons
 			? vocab.verbConjugations.filter((c) => persons.includes(c.person))
 			: vocab.verbConjugations;
 		for (const conj of conjForms) {
 			const personLabel = labels[conj.person] ?? conj.person;
+			// "I am" / "I am X" verbs: stem starts with "am", which is not a valid
+			// English stem for non-first-person. Normalise to "are" / "is".
+			const stem =
+				rawStem === "am" || rawStem.startsWith("am ")
+					? conj.person === "sg3"
+						? rawStem.replace(/^am/, "is")
+						: rawStem.replace(/^am/, "are")
+					: rawStem;
 			const prompt =
 				tense === "future"
 					? `${personLabel} ${stem}`
