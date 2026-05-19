@@ -2,7 +2,7 @@ import { sql } from "drizzle-orm";
 
 import type { DrillBucket } from "@/lib/drill/types";
 import { shuffle } from "@/lib/shuffle";
-import { nowInstant, toEpochSeconds } from "@/lib/time";
+import { nowIso } from "@/lib/time";
 
 import type { CefrLevel, WordType } from "../enums";
 import { db } from "../index";
@@ -50,7 +50,7 @@ export const getDrillVocabPool = async ({
 	wordTypes,
 	limit,
 }: DrillPoolOptions): Promise<DrillPool> => {
-	const now = toEpochSeconds(nowInstant());
+	const now = nowIso();
 	const primaryCefr = cefrPool[0];
 
 	const candidates = await db.query.vocabulary.findMany({

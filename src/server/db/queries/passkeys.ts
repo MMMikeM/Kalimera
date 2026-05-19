@@ -2,7 +2,7 @@ import { eq } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-orm/zod";
 import { z } from "zod/v4";
 
-import { nowInstant, toEpochSeconds } from "@/lib/time";
+import { nowIso } from "@/lib/time";
 
 import { authenticatorTransports } from "../enums";
 import { db } from "../index";
@@ -30,7 +30,7 @@ export const createPasskey = async (data: PasskeyInsert) => {
 export const updatePasskeyCounter = async (credentialId: string, counter: number) => {
 	await db
 		.update(passkeys)
-		.set({ counter, lastUsedAt: toEpochSeconds(nowInstant()) })
+		.set({ counter, lastUsedAt: nowIso() })
 		.where(eq(passkeys.credentialId, credentialId));
 };
 

@@ -257,11 +257,11 @@ export const DrillShell = ({
 			</div>
 			{currentForm && (
 				<div className="flex gap-2 px-4 pt-1">
-					<span className="rounded bg-stone-100 px-1.5 py-0.5 font-mono text-[10px] text-stone-400">
+					<span className="rounded bg-stone-100 px-1.5 py-0.5 font-mono text-xs text-stone-400">
 						{currentForm.bucket ?? "—"}
 					</span>
 					{isRemediation && (
-						<span className="rounded bg-amber-100 px-1.5 py-0.5 font-mono text-[10px] text-amber-600">
+						<span className="rounded bg-amber-100 px-1.5 py-0.5 font-mono text-xs text-amber-600">
 							remediation ×{remCount}
 						</span>
 					)}

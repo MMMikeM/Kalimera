@@ -1,9 +1,14 @@
+import { nowInstant, nowIso, toISOString } from "@/lib/time";
+
 import { db } from "../index";
 import { drillProgress } from "../schema";
 
 const MASTERY_WINDOWS = [4, 7, 10, 10] as const;
 const MASTERY_THRESHOLDS = [3, 6, 9, 9] as const;
 const MASTERY_INTERVAL_DAYS = [3, 6, 9, 9] as const;
+// While window isn't full yet, schedule next review for tomorrow so the word
+// doesn't flood every session until the promotion window fills.
+const LEARNING_INTERVAL_DAYS = 1;
 
 /**
  * Promote drill mastery tier for each practiced vocab if windowed accuracy threshold is met.
@@ -39,11 +44,11 @@ export const promoteDrillProgress = async ({
 		dailyByVocab.set(row.vocabId, list);
 	}
 	const progressByVocab = new Map(progressRows.map((p) => [p.vocabId, p]));
-	const now = Math.floor(Date.now() / 1000);
+	const now = nowIso();
 
-	const upsertTier = async (vocabId: number, newTier: number) => {
-		const intervalDays = MASTERY_INTERVAL_DAYS[Math.min(newTier, 3) as 0 | 1 | 2 | 3]!;
-		const nextReviewAt = now + intervalDays * 86400;
+	const upsertTier = async (vocabId: number, newTier: number, intervalDays?: number) => {
+		const days = intervalDays ?? MASTERY_INTERVAL_DAYS[Math.min(newTier, 3) as 0 | 1 | 2 | 3]!;
+		const nextReviewAt = toISOString(nowInstant().add({ hours: days * 24 }));
 		await db
 			.insert(drillProgress)
 			.values({ userId, vocabId, drillId, tier: newTier, masteredAt: now, nextReviewAt })
@@ -71,9 +76,17 @@ export const promoteDrillProgress = async ({
 		const window = MASTERY_WINDOWS[tierIdx]!;
 		const threshold = MASTERY_THRESHOLDS[tierIdx]!;
 		const rows = (dailyByVocab.get(vocabId) ?? []).slice(0, window);
-		if (rows.length < window) continue;
+		if (rows.length < window) {
+			// Window not full — come back tomorrow to keep building the window.
+			await upsertTier(vocabId, currentTier, LEARNING_INTERVAL_DAYS);
+			continue;
+		}
 		const correctCount = rows.filter((r) => r.correctFirstTry).length;
-		if (correctCount < threshold) continue;
+		if (correctCount < threshold) {
+			// Window full but threshold not met — keep tier, retry tomorrow.
+			await upsertTier(vocabId, currentTier, LEARNING_INTERVAL_DAYS);
+			continue;
+		}
 		await upsertTier(vocabId, Math.min(currentTier + 1, 3));
 	}
 };

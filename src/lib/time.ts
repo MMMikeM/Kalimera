@@ -4,6 +4,7 @@ import { Temporal } from "@js-temporal/polyfill";
 
 export const nowInstant = (): Temporal.Instant => Temporal.Now.instant();
 export const today = (): Temporal.PlainDate => Temporal.Now.plainDateISO("UTC");
+export const nowIso = (): string => Temporal.Now.instant().toString({ fractionalSecondDigits: 0 });
 
 // --- Parsing -------------------------------------------------------------
 
@@ -27,6 +28,13 @@ export const fromEpochSeconds = (n: number): Temporal.Instant =>
 
 export const toEpochSeconds = (i: Temporal.Instant): number =>
 	Math.floor(i.epochMilliseconds / 1000);
+
+/** Temporal.Instant → ISO 8601 string for DB storage (second precision, UTC) */
+export const toISOString = (i: Temporal.Instant): string =>
+	i.toString({ fractionalSecondDigits: 0 });
+
+/** ISO 8601 string from DB → Temporal.Instant */
+export const fromISOString = (s: string): Temporal.Instant => Temporal.Instant.from(s);
 
 // --- Diff helpers --------------------------------------------------------
 

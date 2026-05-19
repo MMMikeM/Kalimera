@@ -1,8 +1,8 @@
 {
 	"version": "7",
 	"dialect": "sqlite",
-	"id": "c13bba98-6dc0-4661-a92f-9d44db1873ec",
-	"prevIds": ["63c7e79f-9808-490c-8501-f2637ac0462d"],
+	"id": "abe91b6a-d470-4ebb-a123-a152415708c1",
+	"prevIds": ["c13bba98-6dc0-4661-a92f-9d44db1873ec"],
 	"ddl": [
 		{
 			"name": "adjective_details",
@@ -145,7 +145,7 @@
 			"table": "auth_challenges"
 		},
 		{
-			"type": "integer",
+			"type": "text",
 			"notNull": true,
 			"autoincrement": false,
 			"default": null,
@@ -155,10 +155,10 @@
 			"table": "auth_challenges"
 		},
 		{
-			"type": "integer",
+			"type": "text",
 			"notNull": true,
 			"autoincrement": false,
-			"default": "(unixepoch())",
+			"default": "(strftime('%Y-%m-%dT%H:%M:%SZ','now'))",
 			"generated": null,
 			"name": "created_at",
 			"entityType": "columns",
@@ -215,10 +215,10 @@
 			"table": "drill_daily_results"
 		},
 		{
-			"type": "integer",
+			"type": "text",
 			"notNull": true,
 			"autoincrement": false,
-			"default": "(unixepoch())",
+			"default": "(strftime('%Y-%m-%dT%H:%M:%SZ','now'))",
 			"generated": null,
 			"name": "created_at",
 			"entityType": "columns",
@@ -265,7 +265,7 @@
 			"table": "drill_progress"
 		},
 		{
-			"type": "integer",
+			"type": "text",
 			"notNull": false,
 			"autoincrement": false,
 			"default": null,
@@ -275,7 +275,7 @@
 			"table": "drill_progress"
 		},
 		{
-			"type": "integer",
+			"type": "text",
 			"notNull": false,
 			"autoincrement": false,
 			"default": null,
@@ -385,7 +385,7 @@
 			"table": "notification_logs"
 		},
 		{
-			"type": "integer",
+			"type": "text",
 			"notNull": false,
 			"autoincrement": false,
 			"default": null,
@@ -415,7 +415,7 @@
 			"table": "notification_logs"
 		},
 		{
-			"type": "integer",
+			"type": "text",
 			"notNull": false,
 			"autoincrement": false,
 			"default": null,
@@ -545,7 +545,7 @@
 			"table": "passkeys"
 		},
 		{
-			"type": "integer",
+			"type": "text",
 			"notNull": false,
 			"autoincrement": false,
 			"default": null,
@@ -555,10 +555,10 @@
 			"table": "passkeys"
 		},
 		{
-			"type": "integer",
+			"type": "text",
 			"notNull": true,
 			"autoincrement": false,
-			"default": "(unixepoch())",
+			"default": "(strftime('%Y-%m-%dT%H:%M:%SZ','now'))",
 			"generated": null,
 			"name": "created_at",
 			"entityType": "columns",
@@ -665,10 +665,10 @@
 			"table": "practice_attempts"
 		},
 		{
-			"type": "integer",
+			"type": "text",
 			"notNull": true,
 			"autoincrement": false,
-			"default": "(unixepoch())",
+			"default": "(strftime('%Y-%m-%dT%H:%M:%SZ','now'))",
 			"generated": null,
 			"name": "attempted_at",
 			"entityType": "columns",
@@ -715,17 +715,17 @@
 			"table": "practice_sessions"
 		},
 		{
-			"type": "integer",
+			"type": "text",
 			"notNull": true,
 			"autoincrement": false,
-			"default": "(unixepoch())",
+			"default": "(strftime('%Y-%m-%dT%H:%M:%SZ','now'))",
 			"generated": null,
 			"name": "started_at",
 			"entityType": "columns",
 			"table": "practice_sessions"
 		},
 		{
-			"type": "integer",
+			"type": "text",
 			"notNull": false,
 			"autoincrement": false,
 			"default": null,
@@ -785,7 +785,7 @@
 			"table": "push_subscriptions"
 		},
 		{
-			"type": "integer",
+			"type": "text",
 			"notNull": false,
 			"autoincrement": false,
 			"default": null,
@@ -815,10 +815,10 @@
 			"table": "push_subscriptions"
 		},
 		{
-			"type": "integer",
+			"type": "text",
 			"notNull": true,
 			"autoincrement": false,
-			"default": "(unixepoch())",
+			"default": "(strftime('%Y-%m-%dT%H:%M:%SZ','now'))",
 			"generated": null,
 			"name": "created_at",
 			"entityType": "columns",
@@ -885,10 +885,10 @@
 			"table": "tags"
 		},
 		{
-			"type": "integer",
+			"type": "text",
 			"notNull": true,
 			"autoincrement": false,
-			"default": "(unixepoch())",
+			"default": "(strftime('%Y-%m-%dT%H:%M:%SZ','now'))",
 			"generated": null,
 			"name": "created_at",
 			"entityType": "columns",
@@ -915,7 +915,7 @@
 			"table": "user_progress"
 		},
 		{
-			"type": "integer",
+			"type": "text",
 			"notNull": false,
 			"autoincrement": false,
 			"default": null,
@@ -975,10 +975,10 @@
 			"table": "users"
 		},
 		{
-			"type": "integer",
+			"type": "text",
 			"notNull": true,
 			"autoincrement": false,
-			"default": "(unixepoch())",
+			"default": "(strftime('%Y-%m-%dT%H:%M:%SZ','now'))",
 			"generated": null,
 			"name": "created_at",
 			"entityType": "columns",
@@ -995,7 +995,7 @@
 			"table": "users"
 		},
 		{
-			"type": "integer",
+			"type": "text",
 			"notNull": false,
 			"autoincrement": false,
 			"default": null,
@@ -1235,7 +1235,7 @@
 			"table": "vocabulary_progress"
 		},
 		{
-			"type": "integer",
+			"type": "text",
 			"notNull": false,
 			"autoincrement": false,
 			"default": null,
@@ -1275,7 +1275,7 @@
 			"table": "vocabulary_progress"
 		},
 		{
-			"type": "integer",
+			"type": "text",
 			"notNull": false,
 			"autoincrement": false,
 			"default": null,
@@ -1345,10 +1345,10 @@
 			"table": "vocabulary"
 		},
 		{
-			"type": "integer",
+			"type": "text",
 			"notNull": true,
 			"autoincrement": false,
-			"default": "(unixepoch())",
+			"default": "(strftime('%Y-%m-%dT%H:%M:%SZ','now'))",
 			"generated": null,
 			"name": "created_at",
 			"entityType": "columns",
@@ -2290,9 +2290,5 @@
 			"table": "vocabulary_tags"
 		}
 	],
-	"renames": [
-		"vocab_daily_results->drill_daily_results",
-		"vocab_mastery->drill_progress",
-		"vocabulary_reviews->vocabulary_progress"
-	]
+	"renames": []
 }

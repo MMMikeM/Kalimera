@@ -2,7 +2,7 @@ import { eq, inArray } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-orm/zod";
 import type z from "zod/v4";
 
-import { endOfDayUTC, toEpochSeconds, today } from "@/lib/time";
+import { endOfDayUTC, toISOString, today } from "@/lib/time";
 
 import { db } from "../../index";
 import { pushSubscriptions } from "../../schema";
@@ -63,7 +63,7 @@ export const deletePushSubscription = async (endpoint: string) => {
 export const snoozePushSubscription = async (userId: number) => {
 	await db
 		.update(pushSubscriptions)
-		.set({ snoozedUntil: toEpochSeconds(endOfDayUTC(today())) })
+		.set({ snoozedUntil: toISOString(endOfDayUTC(today())) })
 		.where(eq(pushSubscriptions.userId, userId));
 };
 

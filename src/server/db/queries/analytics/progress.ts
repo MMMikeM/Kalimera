@@ -1,6 +1,6 @@
 import { and, count, eq, gte, isNotNull, sql } from "drizzle-orm";
 
-import { toEpochSeconds, toInstant, today } from "@/lib/time";
+import { toISOString, toInstant, today } from "@/lib/time";
 
 import { db } from "../../index";
 import { practiceAttempts, practiceSessions } from "../../schema";
@@ -26,11 +26,11 @@ export const getPracticeDatesForCalendar = async (
 	userId: number,
 	months: number,
 ): Promise<PracticeDate[]> => {
-	const cutoff = toEpochSeconds(toInstant(today().subtract({ months })));
+	const cutoff = toISOString(toInstant(today().subtract({ months })));
 
 	const results = await db
 		.select({
-			date: sql<string>`date(${practiceSessions.completedAt}, 'unixepoch')`.as("date"),
+			date: sql<string>`substr(${practiceSessions.completedAt}, 1, 10)`.as("date"),
 			sessionCount: count().as("session_count"),
 		})
 		.from(practiceSessions)
@@ -41,8 +41,8 @@ export const getPracticeDatesForCalendar = async (
 				gte(practiceSessions.completedAt, cutoff),
 			),
 		)
-		.groupBy(sql`date(${practiceSessions.completedAt}, 'unixepoch')`)
-		.orderBy(sql`date(${practiceSessions.completedAt}, 'unixepoch')`);
+		.groupBy(sql`substr(${practiceSessions.completedAt}, 1, 10)`)
+		.orderBy(sql`substr(${practiceSessions.completedAt}, 1, 10)`);
 
 	return results.map((r) => ({
 		date: r.date,
@@ -51,11 +51,11 @@ export const getPracticeDatesForCalendar = async (
 };
 
 export const getAccuracyTrends = async (userId: number, days: number): Promise<AccuracyTrend[]> => {
-	const cutoff = toEpochSeconds(toInstant(today().subtract({ days })));
+	const cutoff = toISOString(toInstant(today().subtract({ days })));
 
 	const results = await db
 		.select({
-			date: sql<string>`date(${practiceAttempts.attemptedAt}, 'unixepoch')`.as("date"),
+			date: sql<string>`substr(${practiceAttempts.attemptedAt}, 1, 10)`.as("date"),
 			totalAttempts: count().as("total"),
 			correctAttempts:
 				sql<number>`sum(case when ${practiceAttempts.isCorrect} = 1 then 1 else 0 end)`.as(
@@ -70,8 +70,8 @@ export const getAccuracyTrends = async (userId: number, days: number): Promise<A
 				gte(practiceAttempts.attemptedAt, cutoff),
 			),
 		)
-		.groupBy(sql`date(${practiceAttempts.attemptedAt}, 'unixepoch')`)
-		.orderBy(sql`date(${practiceAttempts.attemptedAt}, 'unixepoch')`);
+		.groupBy(sql`substr(${practiceAttempts.attemptedAt}, 1, 10)`)
+		.orderBy(sql`substr(${practiceAttempts.attemptedAt}, 1, 10)`);
 
 	return results.map((r) => ({
 		date: r.date,
@@ -86,7 +86,7 @@ export const getTimeInvested = async (userId: number): Promise<TimeInvested> => 
 	const [result] = await db
 		.select({
 			totalSeconds:
-				sql<number>`sum(${practiceSessions.completedAt} - ${practiceSessions.startedAt})`.as(
+				sql<number>`sum(cast(strftime('%s', ${practiceSessions.completedAt}) as integer) - cast(strftime('%s', ${practiceSessions.startedAt}) as integer))`.as(
 					"total_seconds",
 				),
 			sessionCount: count().as("session_count"),
