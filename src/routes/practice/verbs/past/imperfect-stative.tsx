@@ -339,6 +339,7 @@ function ImperfectStativeDrill() {
 			drillId="verbs-imperfect-stative"
 			items={FORMS}
 			categories={CATEGORIES}
+			backTo="/practice/verbs"
 			title="Stative verbs · past"
 			subtitle="was · had · wanted · knew · could"
 			colorTheme="terracotta"

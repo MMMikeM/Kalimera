@@ -74,6 +74,7 @@ function EimaiPresentDrill() {
 		<Drill
 			drillId="verbs-eimai-present"
 			items={FORMS}
+			backTo="/practice/verbs"
 			title="είμαι · present"
 			subtitle="6 forms / timed"
 			colorTheme="olive"

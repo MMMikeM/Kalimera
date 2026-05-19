@@ -19,6 +19,7 @@ function VerbsDrill() {
 		<VocabDrillPage
 			drillId="verbs-present"
 			category="verbs"
+			backTo="/practice/verbs"
 			initialQuestions={questions.length > 0 ? questions : undefined}
 		/>
 	);
