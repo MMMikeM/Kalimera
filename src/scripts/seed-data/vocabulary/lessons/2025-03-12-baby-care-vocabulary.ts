@@ -10,7 +10,7 @@ export const LESSON_2025_03_12 = createLesson({
 	verbs: [
 		{ lemma: "ταΐζω", english: "I feed", conjugationFamily: "-ω", cefrLevel: "A2" },
 		{ lemma: "αγκαλιάζω", english: "I hug", conjugationFamily: "-ω", cefrLevel: "A2" },
-		{ lemma: "κοιτάζω", english: "I look at/watch", conjugationFamily: "-ω", cefrLevel: "A2" },
+		{ lemma: "κοιτάω", english: "I look at/watch", conjugationFamily: "-άω/-ώ", cefrLevel: "A2" },
 		{ lemma: "γελάω", english: "I laugh", conjugationFamily: "-άω/-ώ", cefrLevel: "A1" },
 		{ lemma: "χαμογελάω", english: "I smile", conjugationFamily: "-άω/-ώ", cefrLevel: "A2" },
 		{ lemma: "κλαίω", english: "I cry", conjugationFamily: "-ω", cefrLevel: "A1" },
@@ -101,7 +101,7 @@ export const LESSON_2025_03_12 = createLesson({
 			pattern: "Baby care verbs — present → past",
 			examples: [
 				"αγκαλιάζω → αγκάλιασα (hug → hugged)",
-				"κοιτάζω → κοίταξα (look at → looked at)",
+				"κοιτάω → κοίταξα (look at → looked at)",
 				"γελάω → γέλασα (laugh → laughed)",
 				"χαμογελάω → χαμογέλασα (smile → smiled)",
 				"κλαίω → έκλαψα (cry → cried)",

@@ -88,6 +88,8 @@ export const DISCOURSE_FILLERS: Phrase[] = [
 
 // Social phrases - common things to say
 export const SOCIAL_PHRASES: Phrase[] = [
+	{ text: "δε με νοιάζει", english: "I don't care / it doesn't matter to me", cefrLevel: "A2" },
+	{ text: "πρόκειται να", english: "it's going to / it's about to", cefrLevel: "A2" },
 	{ text: "τι γίνεται;", english: "what's happening?", cefrLevel: "A1" },
 	{ text: "τα λέμε", english: "see ya", cefrLevel: "A1" },
 	{ text: "καλή όρεξη", english: "bon appetit/enjoy your meal", cefrLevel: "A1" },
