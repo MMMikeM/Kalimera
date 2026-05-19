@@ -417,12 +417,12 @@ export const ReverseFeedback = () => {
 
 export const SummaryScreen = () => {
 	const attempts = useDrillStore((s) => s.attempts);
-	const sessionSize = useDrillStore((s) => s.sessionSize);
 	const { resetToConfig, retryMistakes } = drillActions;
 
 	const correct = attempts.filter((a) => a.isCorrect).length;
-	const avgTime = attempts.reduce((s, a) => s + a.timeTaken, 0) / attempts.length;
-	const accuracy = Math.round((correct / sessionSize) * 100);
+	const total = attempts.length;
+	const avgTime = attempts.reduce((s, a) => s + a.timeTaken, 0) / total;
+	const accuracy = Math.round((correct / total) * 100);
 
 	const incorrectByForm = new Map<string, { attempt: (typeof attempts)[number]; count: number }>();
 	for (const a of attempts) {
@@ -447,7 +447,7 @@ export const SummaryScreen = () => {
 			<div className="mb-10 space-y-6">
 				<div>
 					<p className="font-serif text-4xl text-foreground tabular-nums">
-						{correct} <span className="text-stone-300">/</span> {sessionSize}
+						{correct} <span className="text-stone-300">/</span> {total}
 					</p>
 					<p className="mt-1 text-sm text-muted-foreground">
 						{accuracy}% correct · {(avgTime / 1000).toFixed(1)}s avg
