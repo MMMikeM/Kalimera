@@ -2,7 +2,7 @@ import { sql } from "drizzle-orm";
 
 import type { DrillBucket } from "@/lib/drill/types";
 import { shuffle } from "@/lib/shuffle";
-import { nowIso } from "@/lib/time";
+import { formatISO, nowIso, today } from "@/lib/time";
 
 import type { CefrLevel, WordType } from "../enums";
 import { db } from "../index";
@@ -51,6 +51,7 @@ export const getDrillVocabPool = async ({
 	limit,
 }: DrillPoolOptions): Promise<DrillPool> => {
 	const now = nowIso();
+	const todayStr = formatISO(today());
 	const primaryCefr = cefrPool[0];
 
 	const candidates = await db.query.vocabulary.findMany({
@@ -72,9 +73,9 @@ export const getDrillVocabPool = async ({
 			},
 			practiceAttempts: {
 				where: { userId, drillId },
-				columns: { timeTaken: true, correctAnswer: true },
+				columns: { timeTaken: true, correctAnswer: true, isCorrect: true, attemptedAt: true },
 				orderBy: { attemptedAt: "desc" },
-				limit: 5,
+				limit: 30,
 			},
 		},
 		orderBy: (t) =>
@@ -92,6 +93,11 @@ export const getDrillVocabPool = async ({
 	};
 
 	const matchBucket = (c: Candidate): DrillBucket | null => {
+		const wasCorrectToday = c.practiceAttempts.some(
+			(a) => a.attemptedAt?.startsWith(todayStr) && a.isCorrect,
+		);
+		if (wasCorrectToday) return null;
+
 		const mastery = c.drillProgress[0];
 		if (mastery) {
 			const isDue = !mastery.nextReviewAt || mastery.nextReviewAt <= now;
@@ -109,7 +115,12 @@ export const getDrillVocabPool = async ({
 	}
 
 	const medianSlowness = (c: Candidate): number =>
-		median(c.practiceAttempts.map((a) => slowness(a.timeTaken ?? 0, a.correctAnswer)));
+		median(
+			c.practiceAttempts
+				.filter((a) => !a.attemptedAt?.startsWith(todayStr))
+				.slice(0, 5)
+				.map((a) => slowness(a.timeTaken ?? 0, a.correctAnswer)),
+		);
 
 	// tier2/tier3: slowest-per-char first (surface automation gaps), then CEFR, then frequency
 	const sortSlow = (a: Candidate, b: Candidate) => {
