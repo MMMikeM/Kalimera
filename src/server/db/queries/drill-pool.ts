@@ -89,10 +89,11 @@ export const getDrillVocabPool = async ({
 	};
 
 	const matchBucket = (c: Candidate): DrillBucket | null => {
-		// Exclude if first attempt of today was correct — done for the day
 		const todayAttempts = c.practiceAttempts.filter((a) => a.attemptedAt?.startsWith(todayStr));
+		// Exclude if first attempt today was correct, or 3+ correct today
 		const firstAttemptToday = todayAttempts[todayAttempts.length - 1];
 		if (firstAttemptToday?.isCorrect) return null;
+		if (todayAttempts.filter((a) => a.isCorrect).length >= 3) return null;
 
 		const mastery = c.drillProgress[0];
 		if (mastery) {
