@@ -216,6 +216,17 @@ function DrillInner<K extends string>(
 		return <SummaryScreen />;
 	}
 
+	// ── Error (should be unreachable — pool must be validated before startDrill) ─
+
+	if (phase === "error") {
+		return (
+			<div className="mx-auto max-w-xs px-6 py-12 text-center">
+				<p className="font-serif text-lg text-foreground">Not enough words available.</p>
+				<p className="mt-2 text-sm text-muted-foreground">Try a smaller session size.</p>
+			</div>
+		);
+	}
+
 	// ── Active / Feedback ─────────────────────────────────────────────────────
 
 	return (
