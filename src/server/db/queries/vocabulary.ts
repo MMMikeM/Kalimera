@@ -85,6 +85,8 @@ export type VerbConjugationGraphRow = NonNullable<
 	Awaited<ReturnType<typeof fetchVerbWithConjugationRelations>>
 >;
 
+export type VerbWithConjugations = Awaited<ReturnType<typeof getVerbsWithConjugationsForTense>>[number];
+
 export const getVerbsWithConjugationsForTense = async (
 	vocabIds: number[],
 	tense: "present" | "aorist" | "past_continuous" | "future",

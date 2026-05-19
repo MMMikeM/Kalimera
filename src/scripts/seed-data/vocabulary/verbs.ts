@@ -84,6 +84,24 @@ export const VERBS: FullVerbSeed[] = [
 	{ lemma: "φοβάμαι", english: "I'm afraid", cefrLevel: "A2", conjugationFamily: "-άμαι" },
 	{ lemma: "σκέφτομαι", english: "I think", cefrLevel: "A2", conjugationFamily: "-ομαι" },
 	{ lemma: "υπόσχομαι", english: "I promise", cefrLevel: "B1", conjugationFamily: "-ομαι" },
+
+	// A2 additions
+	{ lemma: "κατεβαίνω", english: "I go down/get off", cefrLevel: "A2", conjugationFamily: "irregular" },
+	{ lemma: "ανεβαίνω", english: "I go up/get on", cefrLevel: "A2", conjugationFamily: "irregular" },
+	{ lemma: "πληρώνω", english: "I pay", cefrLevel: "A2", conjugationFamily: "-ω" },
+	{ lemma: "στέλνω", english: "I send", cefrLevel: "A2", conjugationFamily: "-ω" },
+	{ lemma: "συνεχίζω", english: "I continue", cefrLevel: "A2", conjugationFamily: "-ω" },
+	{ lemma: "ετοιμάζω", english: "I prepare", cefrLevel: "A2", conjugationFamily: "-ω" },
+	{ lemma: "γνωρίζω", english: "I know/meet", cefrLevel: "A2", conjugationFamily: "-ω" },
+	{ lemma: "χάνω", english: "I lose", cefrLevel: "A2", conjugationFamily: "-ω" },
+	{ lemma: "αποφασίζω", english: "I decide", cefrLevel: "A2", conjugationFamily: "-ω" },
+	{ lemma: "γυρίζω", english: "I return/turn", cefrLevel: "A2", conjugationFamily: "-ω" },
+	{ lemma: "λείπω", english: "I am missing/away", cefrLevel: "A2", conjugationFamily: "-ω" },
+	{ lemma: "κλέβω", english: "I steal", cefrLevel: "A2", conjugationFamily: "-ω" },
+	{ lemma: "εξηγώ", english: "I explain", cefrLevel: "A2", conjugationFamily: "-άω/-ώ" },
+	{ lemma: "τραγουδάω", english: "I sing", cefrLevel: "A2", conjugationFamily: "-άω/-ώ" },
+	{ lemma: "συναντάω", english: "I meet", cefrLevel: "A2", conjugationFamily: "-άω/-ώ" },
+	{ lemma: "κρατάω", english: "I hold/keep", cefrLevel: "A2", conjugationFamily: "-άω/-ώ" },
 ];
 
 // Transport-related verbs (third person forms for describing schedules)

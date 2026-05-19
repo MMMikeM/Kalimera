@@ -9,6 +9,7 @@ export const Route = createFileRoute("/practice/cases/review/nouns")({
 		const questions = await getNominalReviewQuestionsFn({
 			data: { wordType: "noun", drillId: "nominal-all-nouns", limit: 45 },
 		});
+		if (questions.length === 0) throw new Error("No questions available");
 		return { questions };
 	},
 	staleTime: 0,
@@ -21,7 +22,7 @@ function AllNounsDrill() {
 		<VocabDrillPage
 			drillId="nominal-all-nouns"
 			category="nouns"
-			initialQuestions={questions.length > 0 ? questions : undefined}
+			questions={questions}
 		/>
 	);
 }

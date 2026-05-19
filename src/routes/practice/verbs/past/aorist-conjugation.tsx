@@ -7,6 +7,7 @@ import { VocabDrillPage } from "../../components/engines/vocab-drill";
 export const Route = createFileRoute("/practice/verbs/past/aorist-conjugation")({
 	loader: async () => {
 		const questions = await getAoristDrillQuestionsFn({ data: { limit: 30 } });
+		if (questions.length === 0) throw new Error("No questions available");
 		return { questions };
 	},
 	staleTime: 0,
@@ -20,7 +21,7 @@ function AoristConjugationDrill() {
 			drillId="verbs-aorist-conjugation"
 			category="verbs"
 			backTo="/practice/verbs"
-			initialQuestions={questions.length > 0 ? questions : undefined}
+			questions={questions}
 		/>
 	);
 }
