@@ -55,7 +55,7 @@ export const VERB_STEMS: VerbStem[] = [
 	{ lemma: "μαγειρεύω", aoristStem: "μαγειρεψ", family: "-ω", english: "I cook", cefrLevel: "A1" },
 	{ lemma: "κόβω", aoristStem: "κοψ", family: "-ω", english: "I cut", cefrLevel: "A1" },
 	{ lemma: "ψωνίζω", aoristStem: "ψωνισ", family: "-ω", english: "I shop", cefrLevel: "A1" },
-	{ lemma: "αρέσω", aoristStem: "αρεσ", family: "-ω", english: "to please (μου αρέσει = I like)", cefrLevel: "A1" },
+	{ lemma: "αρέσω", aoristStem: "αρεσ", family: "-ω", english: "I please", cefrLevel: "A1" },
 
 	// ── A2 verbs ───────────────────────────────────────────────────────────────
 	{ lemma: "περιμένω", aoristStem: "περιμεν", family: "-ω", english: "I wait", cefrLevel: "A2" },

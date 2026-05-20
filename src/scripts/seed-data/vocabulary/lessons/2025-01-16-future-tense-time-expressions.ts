@@ -14,7 +14,6 @@ export const LESSON_2025_01_16 = createLesson({
 		{ lemma: "πίνω", english: "I drink", conjugationFamily: "-ω", cefrLevel: "A1" },
 		{ lemma: "διαβάζω", english: "I read", conjugationFamily: "-ω", cefrLevel: "A1" },
 		{ lemma: "δουλεύω", english: "I work", conjugationFamily: "-ω", cefrLevel: "A1" },
-		{ lemma: "πηγαίνω", english: "I go", conjugationFamily: "-ω", cefrLevel: "A1" },
 	],
 
 	nouns: [

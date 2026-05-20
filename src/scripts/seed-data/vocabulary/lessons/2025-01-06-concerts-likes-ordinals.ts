@@ -15,12 +15,7 @@ export const LESSON_2025_01_06 = createLesson({
 			cefrLevel: "A2",
 		},
 		{ lemma: "χορεύω", english: "I dance", conjugationFamily: "-ω", cefrLevel: "A1" },
-		{
-			lemma: "αρέσω",
-			english: "to please (μου αρέσει = I like)",
-			conjugationFamily: "-ω",
-			cefrLevel: "A1",
-		},
+		{ lemma: "αρέσω", english: "I please", conjugationFamily: "-ω", cefrLevel: "A1" },
 	],
 
 	nouns: [

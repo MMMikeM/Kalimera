@@ -34,7 +34,6 @@ import { Route as LearnEssentialsIndexRouteImport } from './routes/learn/essenti
 import { Route as LearnConversationsIndexRouteImport } from './routes/learn/conversations/index'
 import { Route as PracticeVerbsModalConstructionsRouteImport } from './routes/practice/verbs/modal-constructions'
 import { Route as PracticeVerbsImperativesRouteImport } from './routes/practice/verbs/imperatives'
-import { Route as PracticeVerbsFutureConjugationRouteImport } from './routes/practice/verbs/future-conjugation'
 import { Route as PracticePronounsPossessivesRouteImport } from './routes/practice/pronouns/possessives'
 import { Route as PracticePronounsPlacementRouteImport } from './routes/practice/pronouns/placement'
 import { Route as PracticePronounsObjectRouteImport } from './routes/practice/pronouns/object'
@@ -64,6 +63,7 @@ import { Route as PracticeVerbsPastAoristVocabularyRouteImport } from './routes/
 import { Route as PracticeVerbsPastAoristStemsRouteImport } from './routes/practice/verbs/past/aorist-stems'
 import { Route as PracticeVerbsPastAoristFormationRouteImport } from './routes/practice/verbs/past/aorist-formation'
 import { Route as PracticeVerbsPastAoristConjugationRouteImport } from './routes/practice/verbs/past/aorist-conjugation'
+import { Route as PracticeVerbsFutureConjugationRouteImport } from './routes/practice/verbs/future/conjugation'
 import { Route as PracticeCasesReviewPhrasesRouteImport } from './routes/practice/cases/review/phrases'
 import { Route as PracticeCasesReviewNounsRouteImport } from './routes/practice/cases/review/nouns'
 import { Route as PracticeCasesReviewArticlesRouteImport } from './routes/practice/cases/review/articles'
@@ -206,12 +206,6 @@ const PracticeVerbsImperativesRoute =
   PracticeVerbsImperativesRouteImport.update({
     id: '/verbs/imperatives',
     path: '/verbs/imperatives',
-    getParentRoute: () => PracticeRouteRoute,
-  } as any)
-const PracticeVerbsFutureConjugationRoute =
-  PracticeVerbsFutureConjugationRouteImport.update({
-    id: '/verbs/future-conjugation',
-    path: '/verbs/future-conjugation',
     getParentRoute: () => PracticeRouteRoute,
   } as any)
 const PracticePronounsPossessivesRoute =
@@ -374,6 +368,12 @@ const PracticeVerbsPastAoristConjugationRoute =
     path: '/verbs/past/aorist-conjugation',
     getParentRoute: () => PracticeRouteRoute,
   } as any)
+const PracticeVerbsFutureConjugationRoute =
+  PracticeVerbsFutureConjugationRouteImport.update({
+    id: '/verbs/future/conjugation',
+    path: '/verbs/future/conjugation',
+    getParentRoute: () => PracticeRouteRoute,
+  } as any)
 const PracticeCasesReviewPhrasesRoute =
   PracticeCasesReviewPhrasesRouteImport.update({
     id: '/cases/review/phrases',
@@ -507,7 +507,6 @@ export interface FileRoutesByFullPath {
   '/practice/pronouns/object': typeof PracticePronounsObjectRoute
   '/practice/pronouns/placement': typeof PracticePronounsPlacementRoute
   '/practice/pronouns/possessives': typeof PracticePronounsPossessivesRoute
-  '/practice/verbs/future-conjugation': typeof PracticeVerbsFutureConjugationRoute
   '/practice/verbs/imperatives': typeof PracticeVerbsImperativesRoute
   '/practice/verbs/modal-constructions': typeof PracticeVerbsModalConstructionsRoute
   '/learn/conversations/': typeof LearnConversationsIndexRoute
@@ -533,6 +532,7 @@ export interface FileRoutesByFullPath {
   '/practice/cases/review/articles': typeof PracticeCasesReviewArticlesRoute
   '/practice/cases/review/nouns': typeof PracticeCasesReviewNounsRoute
   '/practice/cases/review/phrases': typeof PracticeCasesReviewPhrasesRoute
+  '/practice/verbs/future/conjugation': typeof PracticeVerbsFutureConjugationRoute
   '/practice/verbs/past/aorist-conjugation': typeof PracticeVerbsPastAoristConjugationRoute
   '/practice/verbs/past/aorist-formation': typeof PracticeVerbsPastAoristFormationRoute
   '/practice/verbs/past/aorist-stems': typeof PracticeVerbsPastAoristStemsRoute
@@ -579,7 +579,6 @@ export interface FileRoutesByTo {
   '/practice/pronouns/object': typeof PracticePronounsObjectRoute
   '/practice/pronouns/placement': typeof PracticePronounsPlacementRoute
   '/practice/pronouns/possessives': typeof PracticePronounsPossessivesRoute
-  '/practice/verbs/future-conjugation': typeof PracticeVerbsFutureConjugationRoute
   '/practice/verbs/imperatives': typeof PracticeVerbsImperativesRoute
   '/practice/verbs/modal-constructions': typeof PracticeVerbsModalConstructionsRoute
   '/learn/conversations': typeof LearnConversationsIndexRoute
@@ -605,6 +604,7 @@ export interface FileRoutesByTo {
   '/practice/cases/review/articles': typeof PracticeCasesReviewArticlesRoute
   '/practice/cases/review/nouns': typeof PracticeCasesReviewNounsRoute
   '/practice/cases/review/phrases': typeof PracticeCasesReviewPhrasesRoute
+  '/practice/verbs/future/conjugation': typeof PracticeVerbsFutureConjugationRoute
   '/practice/verbs/past/aorist-conjugation': typeof PracticeVerbsPastAoristConjugationRoute
   '/practice/verbs/past/aorist-formation': typeof PracticeVerbsPastAoristFormationRoute
   '/practice/verbs/past/aorist-stems': typeof PracticeVerbsPastAoristStemsRoute
@@ -653,7 +653,6 @@ export interface FileRoutesById {
   '/practice/pronouns/object': typeof PracticePronounsObjectRoute
   '/practice/pronouns/placement': typeof PracticePronounsPlacementRoute
   '/practice/pronouns/possessives': typeof PracticePronounsPossessivesRoute
-  '/practice/verbs/future-conjugation': typeof PracticeVerbsFutureConjugationRoute
   '/practice/verbs/imperatives': typeof PracticeVerbsImperativesRoute
   '/practice/verbs/modal-constructions': typeof PracticeVerbsModalConstructionsRoute
   '/learn/conversations/': typeof LearnConversationsIndexRoute
@@ -679,6 +678,7 @@ export interface FileRoutesById {
   '/practice/cases/review/articles': typeof PracticeCasesReviewArticlesRoute
   '/practice/cases/review/nouns': typeof PracticeCasesReviewNounsRoute
   '/practice/cases/review/phrases': typeof PracticeCasesReviewPhrasesRoute
+  '/practice/verbs/future/conjugation': typeof PracticeVerbsFutureConjugationRoute
   '/practice/verbs/past/aorist-conjugation': typeof PracticeVerbsPastAoristConjugationRoute
   '/practice/verbs/past/aorist-formation': typeof PracticeVerbsPastAoristFormationRoute
   '/practice/verbs/past/aorist-stems': typeof PracticeVerbsPastAoristStemsRoute
@@ -728,7 +728,6 @@ export interface FileRouteTypes {
     | '/practice/pronouns/object'
     | '/practice/pronouns/placement'
     | '/practice/pronouns/possessives'
-    | '/practice/verbs/future-conjugation'
     | '/practice/verbs/imperatives'
     | '/practice/verbs/modal-constructions'
     | '/learn/conversations/'
@@ -754,6 +753,7 @@ export interface FileRouteTypes {
     | '/practice/cases/review/articles'
     | '/practice/cases/review/nouns'
     | '/practice/cases/review/phrases'
+    | '/practice/verbs/future/conjugation'
     | '/practice/verbs/past/aorist-conjugation'
     | '/practice/verbs/past/aorist-formation'
     | '/practice/verbs/past/aorist-stems'
@@ -800,7 +800,6 @@ export interface FileRouteTypes {
     | '/practice/pronouns/object'
     | '/practice/pronouns/placement'
     | '/practice/pronouns/possessives'
-    | '/practice/verbs/future-conjugation'
     | '/practice/verbs/imperatives'
     | '/practice/verbs/modal-constructions'
     | '/learn/conversations'
@@ -826,6 +825,7 @@ export interface FileRouteTypes {
     | '/practice/cases/review/articles'
     | '/practice/cases/review/nouns'
     | '/practice/cases/review/phrases'
+    | '/practice/verbs/future/conjugation'
     | '/practice/verbs/past/aorist-conjugation'
     | '/practice/verbs/past/aorist-formation'
     | '/practice/verbs/past/aorist-stems'
@@ -873,7 +873,6 @@ export interface FileRouteTypes {
     | '/practice/pronouns/object'
     | '/practice/pronouns/placement'
     | '/practice/pronouns/possessives'
-    | '/practice/verbs/future-conjugation'
     | '/practice/verbs/imperatives'
     | '/practice/verbs/modal-constructions'
     | '/learn/conversations/'
@@ -899,6 +898,7 @@ export interface FileRouteTypes {
     | '/practice/cases/review/articles'
     | '/practice/cases/review/nouns'
     | '/practice/cases/review/phrases'
+    | '/practice/verbs/future/conjugation'
     | '/practice/verbs/past/aorist-conjugation'
     | '/practice/verbs/past/aorist-formation'
     | '/practice/verbs/past/aorist-stems'
@@ -1120,13 +1120,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PracticeVerbsImperativesRouteImport
       parentRoute: typeof PracticeRouteRoute
     }
-    '/practice/verbs/future-conjugation': {
-      id: '/practice/verbs/future-conjugation'
-      path: '/verbs/future-conjugation'
-      fullPath: '/practice/verbs/future-conjugation'
-      preLoaderRoute: typeof PracticeVerbsFutureConjugationRouteImport
-      parentRoute: typeof PracticeRouteRoute
-    }
     '/practice/pronouns/possessives': {
       id: '/practice/pronouns/possessives'
       path: '/pronouns/possessives'
@@ -1330,6 +1323,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PracticeVerbsPastAoristConjugationRouteImport
       parentRoute: typeof PracticeRouteRoute
     }
+    '/practice/verbs/future/conjugation': {
+      id: '/practice/verbs/future/conjugation'
+      path: '/verbs/future/conjugation'
+      fullPath: '/practice/verbs/future/conjugation'
+      preLoaderRoute: typeof PracticeVerbsFutureConjugationRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
     '/practice/cases/review/phrases': {
       id: '/practice/cases/review/phrases'
       path: '/cases/review/phrases'
@@ -1454,7 +1454,6 @@ interface PracticeRouteRouteChildren {
   PracticePronounsObjectRoute: typeof PracticePronounsObjectRoute
   PracticePronounsPlacementRoute: typeof PracticePronounsPlacementRoute
   PracticePronounsPossessivesRoute: typeof PracticePronounsPossessivesRoute
-  PracticeVerbsFutureConjugationRoute: typeof PracticeVerbsFutureConjugationRoute
   PracticeVerbsImperativesRoute: typeof PracticeVerbsImperativesRoute
   PracticeVerbsModalConstructionsRoute: typeof PracticeVerbsModalConstructionsRoute
   PracticeBlocksIndexRoute: typeof PracticeBlocksIndexRoute
@@ -1477,6 +1476,7 @@ interface PracticeRouteRouteChildren {
   PracticeCasesReviewArticlesRoute: typeof PracticeCasesReviewArticlesRoute
   PracticeCasesReviewNounsRoute: typeof PracticeCasesReviewNounsRoute
   PracticeCasesReviewPhrasesRoute: typeof PracticeCasesReviewPhrasesRoute
+  PracticeVerbsFutureConjugationRoute: typeof PracticeVerbsFutureConjugationRoute
   PracticeVerbsPastAoristConjugationRoute: typeof PracticeVerbsPastAoristConjugationRoute
   PracticeVerbsPastAoristFormationRoute: typeof PracticeVerbsPastAoristFormationRoute
   PracticeVerbsPastAoristStemsRoute: typeof PracticeVerbsPastAoristStemsRoute
@@ -1498,7 +1498,6 @@ const PracticeRouteRouteChildren: PracticeRouteRouteChildren = {
   PracticePronounsObjectRoute: PracticePronounsObjectRoute,
   PracticePronounsPlacementRoute: PracticePronounsPlacementRoute,
   PracticePronounsPossessivesRoute: PracticePronounsPossessivesRoute,
-  PracticeVerbsFutureConjugationRoute: PracticeVerbsFutureConjugationRoute,
   PracticeVerbsImperativesRoute: PracticeVerbsImperativesRoute,
   PracticeVerbsModalConstructionsRoute: PracticeVerbsModalConstructionsRoute,
   PracticeBlocksIndexRoute: PracticeBlocksIndexRoute,
@@ -1521,6 +1520,7 @@ const PracticeRouteRouteChildren: PracticeRouteRouteChildren = {
   PracticeCasesReviewArticlesRoute: PracticeCasesReviewArticlesRoute,
   PracticeCasesReviewNounsRoute: PracticeCasesReviewNounsRoute,
   PracticeCasesReviewPhrasesRoute: PracticeCasesReviewPhrasesRoute,
+  PracticeVerbsFutureConjugationRoute: PracticeVerbsFutureConjugationRoute,
   PracticeVerbsPastAoristConjugationRoute:
     PracticeVerbsPastAoristConjugationRoute,
   PracticeVerbsPastAoristFormationRoute: PracticeVerbsPastAoristFormationRoute,

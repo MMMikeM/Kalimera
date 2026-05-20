@@ -217,6 +217,7 @@ export async function batchInsertVocab(db: Db, items: NewVocabulary[]): Promise<
 			.onConflictDoUpdate({
 				target: vocabulary.greekText,
 				set: {
+					wordType: sql`excluded.word_type`,
 					frequencyRank: sql`excluded.frequency_rank`,
 					cefrLevel: sql`CASE WHEN excluded.cefr_level IS NOT NULL THEN excluded.cefr_level ELSE ${vocabulary.cefrLevel} END`,
 				},

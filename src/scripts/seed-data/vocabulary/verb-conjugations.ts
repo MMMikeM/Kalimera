@@ -1210,20 +1210,7 @@ export const FULL_VERB_CONJUGATIONS: FullVerbSeed[] = [
 			perfective: { singular: "νιώσε", plural: "νιώστε" },
 		},
 	},
-	{
-		lemma: "πηγαίνω",
-		english: "I go",
-		cefrLevel: "A1",
-		conjugationFamily: "irregular",
-		isSuppletive: true,
-		conjugations: [
-			{ tense: "present", forms: { sg1: "πηγαίνω", sg2: "πηγαίνεις", sg3: "πηγαίνει", pl1: "πηγαίνουμε", pl2: "πηγαίνετε", pl3: "πηγαίνουν" } },
-			{ tense: "aorist", forms: { sg1: "πήγα", sg2: "πήγες", sg3: "πήγε", pl1: "πήγαμε", pl2: "πήγατε", pl3: "πήγαν" } },
-			{ tense: "past_continuous", forms: { sg1: "πήγαινα", sg2: "πήγαινες", sg3: "πήγαινε", pl1: "πηγαίναμε", pl2: "πηγαίνατε", pl3: "πήγαιναν" } },
-			{ tense: "future", forms: { sg1: "θα πάω", sg2: "θα πας", sg3: "θα πάει", pl1: "θα πάμε", pl2: "θα πάτε", pl3: "θα πάνε" } },
-		],
-		imperatives: { imperfective: { singular: "πήγαινε", plural: "πηγαίνετε" }, perfective: { singular: "πήγαινε", plural: "πηγαίνετε" } },
-	},
+
 	{
 		lemma: "ζω",
 		english: "I live/am alive",

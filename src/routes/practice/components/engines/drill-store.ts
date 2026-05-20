@@ -218,8 +218,8 @@ export const drillActions: DrillActions = {
 		const remCount = remediationCounts[currentForm.id] ?? 0;
 		const alreadySeen = firstPresented[currentForm.id] ?? false;
 
-		if (!isCorrect && remCount < 3 && cardIndex + 2 <= sessionSize - 1) {
-			const insertAt = Math.min(cardIndex + 5, sessionSize - 1);
+		if (!isCorrect && remCount < 3 && cardIndex + 2 <= deck.length - 1) {
+			const insertAt = Math.min(cardIndex + 5, deck.length);
 			const newDeck = [...deck];
 			newDeck.splice(insertAt, 0, currentForm);
 			set((prev) => ({
@@ -272,7 +272,7 @@ export const drillActions: DrillActions = {
 			attempts,
 		} = s();
 		const next = cardIndex + 1;
-		if (next >= deck.length) {
+		if (next >= deck.length || attempts.length >= sessionSize) {
 			set({ phase: "complete" });
 			if (!isReDrill && sessionId && userId && sessionCallbacks) {
 				sessionCallbacks.completeSession({
