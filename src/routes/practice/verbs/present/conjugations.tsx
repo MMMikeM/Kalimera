@@ -38,7 +38,7 @@ const ENDINGS: SimpleListItem[] = [
 		detail: PRONOUNS.sg1.grammatical,
 		context: G1_PRES,
 		label: "κάνω",
-		category: "g1-present",
+		category: "present",
 	},
 	{
 		id: "g1p-sg2",
@@ -48,7 +48,7 @@ const ENDINGS: SimpleListItem[] = [
 		detail: PRONOUNS.sg2.grammatical,
 		context: G1_PRES,
 		label: "κάνεις",
-		category: "g1-present",
+		category: "present",
 	},
 	{
 		id: "g1p-sg3",
@@ -58,7 +58,7 @@ const ENDINGS: SimpleListItem[] = [
 		detail: PRONOUNS.sg3.grammatical,
 		context: G1_PRES,
 		label: "κάνει",
-		category: "g1-present",
+		category: "present",
 	},
 	{
 		id: "g1p-pl1",
@@ -68,7 +68,7 @@ const ENDINGS: SimpleListItem[] = [
 		detail: PRONOUNS.pl1.grammatical,
 		context: G1_PRES,
 		label: "κάνουμε",
-		category: "g1-present",
+		category: "present",
 	},
 	{
 		id: "g1p-pl2",
@@ -78,7 +78,7 @@ const ENDINGS: SimpleListItem[] = [
 		detail: PRONOUNS.pl2.grammatical,
 		context: G1_PRES,
 		label: "κάνετε",
-		category: "g1-present",
+		category: "present",
 	},
 	{
 		id: "g1p-pl3",
@@ -88,7 +88,7 @@ const ENDINGS: SimpleListItem[] = [
 		detail: PRONOUNS.pl3.grammatical,
 		context: G1_PRES,
 		label: "κάνουν",
-		category: "g1-present",
+		category: "present",
 	},
 
 	// ── group2a present — μιλάω ──
@@ -100,7 +100,7 @@ const ENDINGS: SimpleListItem[] = [
 		detail: PRONOUNS.sg1.grammatical,
 		context: G2A_PRES,
 		label: "μιλάω",
-		category: "g2a-present",
+		category: "present",
 	},
 	{
 		id: "g2ap-sg2",
@@ -110,7 +110,7 @@ const ENDINGS: SimpleListItem[] = [
 		detail: PRONOUNS.sg2.grammatical,
 		context: G2A_PRES,
 		label: "μιλάς",
-		category: "g2a-present",
+		category: "present",
 	},
 	{
 		id: "g2ap-sg3",
@@ -120,7 +120,7 @@ const ENDINGS: SimpleListItem[] = [
 		detail: PRONOUNS.sg3.grammatical,
 		context: G2A_PRES,
 		label: "μιλάει",
-		category: "g2a-present",
+		category: "present",
 	},
 	{
 		id: "g2ap-pl1",
@@ -130,7 +130,7 @@ const ENDINGS: SimpleListItem[] = [
 		detail: PRONOUNS.pl1.grammatical,
 		context: G2A_PRES,
 		label: "μιλάμε",
-		category: "g2a-present",
+		category: "present",
 	},
 	{
 		id: "g2ap-pl2",
@@ -140,7 +140,7 @@ const ENDINGS: SimpleListItem[] = [
 		detail: PRONOUNS.pl2.grammatical,
 		context: G2A_PRES,
 		label: "μιλάτε",
-		category: "g2a-present",
+		category: "present",
 	},
 	{
 		id: "g2ap-pl3",
@@ -150,7 +150,7 @@ const ENDINGS: SimpleListItem[] = [
 		detail: PRONOUNS.pl3.grammatical,
 		context: G2A_PRES,
 		label: "μιλάνε",
-		category: "g2a-present",
+		category: "present",
 	},
 
 	// ── group2b present — μπορώ ──
@@ -162,7 +162,7 @@ const ENDINGS: SimpleListItem[] = [
 		detail: PRONOUNS.sg1.grammatical,
 		context: G2B_PRES,
 		label: "μπορώ",
-		category: "g2b-present",
+		category: "present",
 	},
 	{
 		id: "g2bp-sg2",
@@ -172,7 +172,7 @@ const ENDINGS: SimpleListItem[] = [
 		detail: PRONOUNS.sg2.grammatical,
 		context: G2B_PRES,
 		label: "μπορείς",
-		category: "g2b-present",
+		category: "present",
 	},
 	{
 		id: "g2bp-sg3",
@@ -182,7 +182,7 @@ const ENDINGS: SimpleListItem[] = [
 		detail: PRONOUNS.sg3.grammatical,
 		context: G2B_PRES,
 		label: "μπορεί",
-		category: "g2b-present",
+		category: "present",
 	},
 	{
 		id: "g2bp-pl1",
@@ -192,7 +192,7 @@ const ENDINGS: SimpleListItem[] = [
 		detail: PRONOUNS.pl1.grammatical,
 		context: G2B_PRES,
 		label: "μπορούμε",
-		category: "g2b-present",
+		category: "present",
 	},
 	{
 		id: "g2bp-pl2",
@@ -202,7 +202,7 @@ const ENDINGS: SimpleListItem[] = [
 		detail: PRONOUNS.pl2.grammatical,
 		context: G2B_PRES,
 		label: "μπορείτε",
-		category: "g2b-present",
+		category: "present",
 	},
 	{
 		id: "g2bp-pl3",
@@ -212,7 +212,7 @@ const ENDINGS: SimpleListItem[] = [
 		detail: PRONOUNS.pl3.grammatical,
 		context: G2B_PRES,
 		label: "μπορούν",
-		category: "g2b-present",
+		category: "present",
 	},
 
 	// ── deponent present — έρχομαι ──
@@ -224,7 +224,7 @@ const ENDINGS: SimpleListItem[] = [
 		detail: PRONOUNS.sg1.grammatical,
 		context: DEP_PRES,
 		label: "έρχομαι",
-		category: "deponent-present",
+		category: "present",
 	},
 	{
 		id: "depp-sg2",
@@ -234,7 +234,7 @@ const ENDINGS: SimpleListItem[] = [
 		detail: PRONOUNS.sg2.grammatical,
 		context: DEP_PRES,
 		label: "έρχεσαι",
-		category: "deponent-present",
+		category: "present",
 	},
 	{
 		id: "depp-sg3",
@@ -244,7 +244,7 @@ const ENDINGS: SimpleListItem[] = [
 		detail: PRONOUNS.sg3.grammatical,
 		context: DEP_PRES,
 		label: "έρχεται",
-		category: "deponent-present",
+		category: "present",
 	},
 	{
 		id: "depp-pl1",
@@ -254,7 +254,7 @@ const ENDINGS: SimpleListItem[] = [
 		detail: PRONOUNS.pl1.grammatical,
 		context: DEP_PRES,
 		label: "ερχόμαστε",
-		category: "deponent-present",
+		category: "present",
 	},
 	{
 		id: "depp-pl2",
@@ -264,7 +264,7 @@ const ENDINGS: SimpleListItem[] = [
 		detail: PRONOUNS.pl2.grammatical,
 		context: DEP_PRES,
 		label: "ερχόσαστε",
-		category: "deponent-present",
+		category: "present",
 	},
 	{
 		id: "depp-pl3",
@@ -274,7 +274,7 @@ const ENDINGS: SimpleListItem[] = [
 		detail: PRONOUNS.pl3.grammatical,
 		context: DEP_PRES,
 		label: "έρχονται",
-		category: "deponent-present",
+		category: "present",
 	},
 
 	// ── aorist (simple past) — έκανα ──
@@ -286,7 +286,7 @@ const ENDINGS: SimpleListItem[] = [
 		detail: PRONOUNS.sg1.grammatical,
 		context: AORIST,
 		label: "έκανα",
-		category: "aorist",
+		category: "past",
 	},
 	{
 		id: "aor-sg2",
@@ -296,7 +296,7 @@ const ENDINGS: SimpleListItem[] = [
 		detail: PRONOUNS.sg2.grammatical,
 		context: AORIST,
 		label: "έκανες",
-		category: "aorist",
+		category: "past",
 	},
 	{
 		id: "aor-sg3",
@@ -306,7 +306,7 @@ const ENDINGS: SimpleListItem[] = [
 		detail: PRONOUNS.sg3.grammatical,
 		context: AORIST,
 		label: "έκανε",
-		category: "aorist",
+		category: "past",
 	},
 	{
 		id: "aor-pl1",
@@ -316,7 +316,7 @@ const ENDINGS: SimpleListItem[] = [
 		detail: PRONOUNS.pl1.grammatical,
 		context: AORIST,
 		label: "κάναμε",
-		category: "aorist",
+		category: "past",
 	},
 	{
 		id: "aor-pl2",
@@ -326,7 +326,7 @@ const ENDINGS: SimpleListItem[] = [
 		detail: PRONOUNS.pl2.grammatical,
 		context: AORIST,
 		label: "κάνατε",
-		category: "aorist",
+		category: "past",
 	},
 	{
 		id: "aor-pl3",
@@ -336,7 +336,7 @@ const ENDINGS: SimpleListItem[] = [
 		detail: PRONOUNS.pl3.grammatical,
 		context: AORIST,
 		label: "έκαναν",
-		category: "aorist",
+		category: "past",
 	},
 
 	// ── group1 imperfect (ongoing past) — έγραφα ──
@@ -348,7 +348,7 @@ const ENDINGS: SimpleListItem[] = [
 		detail: PRONOUNS.sg1.grammatical,
 		context: G1_IMP,
 		label: "έγραφα",
-		category: "g1-imperfect",
+		category: "past",
 	},
 	{
 		id: "g1i-sg2",
@@ -358,7 +358,7 @@ const ENDINGS: SimpleListItem[] = [
 		detail: PRONOUNS.sg2.grammatical,
 		context: G1_IMP,
 		label: "έγραφες",
-		category: "g1-imperfect",
+		category: "past",
 	},
 	{
 		id: "g1i-sg3",
@@ -368,7 +368,7 @@ const ENDINGS: SimpleListItem[] = [
 		detail: PRONOUNS.sg3.grammatical,
 		context: G1_IMP,
 		label: "έγραφε",
-		category: "g1-imperfect",
+		category: "past",
 	},
 	{
 		id: "g1i-pl1",
@@ -378,7 +378,7 @@ const ENDINGS: SimpleListItem[] = [
 		detail: PRONOUNS.pl1.grammatical,
 		context: G1_IMP,
 		label: "γράφαμε",
-		category: "g1-imperfect",
+		category: "past",
 	},
 	{
 		id: "g1i-pl2",
@@ -388,7 +388,7 @@ const ENDINGS: SimpleListItem[] = [
 		detail: PRONOUNS.pl2.grammatical,
 		context: G1_IMP,
 		label: "γράφατε",
-		category: "g1-imperfect",
+		category: "past",
 	},
 	{
 		id: "g1i-pl3",
@@ -398,7 +398,7 @@ const ENDINGS: SimpleListItem[] = [
 		detail: PRONOUNS.pl3.grammatical,
 		context: G1_IMP,
 		label: "έγραφαν",
-		category: "g1-imperfect",
+		category: "past",
 	},
 
 	// ── group2 imperfect — μιλούσα ──
@@ -410,7 +410,7 @@ const ENDINGS: SimpleListItem[] = [
 		detail: PRONOUNS.sg1.grammatical,
 		context: G2_IMP,
 		label: "μιλούσα",
-		category: "g2-imperfect",
+		category: "past",
 	},
 	{
 		id: "g2i-sg2",
@@ -420,7 +420,7 @@ const ENDINGS: SimpleListItem[] = [
 		detail: PRONOUNS.sg2.grammatical,
 		context: G2_IMP,
 		label: "μιλούσες",
-		category: "g2-imperfect",
+		category: "past",
 	},
 	{
 		id: "g2i-sg3",
@@ -430,7 +430,7 @@ const ENDINGS: SimpleListItem[] = [
 		detail: PRONOUNS.sg3.grammatical,
 		context: G2_IMP,
 		label: "μιλούσε",
-		category: "g2-imperfect",
+		category: "past",
 	},
 	{
 		id: "g2i-pl1",
@@ -440,7 +440,7 @@ const ENDINGS: SimpleListItem[] = [
 		detail: PRONOUNS.pl1.grammatical,
 		context: G2_IMP,
 		label: "μιλούσαμε",
-		category: "g2-imperfect",
+		category: "past",
 	},
 	{
 		id: "g2i-pl2",
@@ -450,7 +450,7 @@ const ENDINGS: SimpleListItem[] = [
 		detail: PRONOUNS.pl2.grammatical,
 		context: G2_IMP,
 		label: "μιλούσατε",
-		category: "g2-imperfect",
+		category: "past",
 	},
 	{
 		id: "g2i-pl3",
@@ -460,18 +460,13 @@ const ENDINGS: SimpleListItem[] = [
 		detail: PRONOUNS.pl3.grammatical,
 		context: G2_IMP,
 		label: "μιλούσαν",
-		category: "g2-imperfect",
+		category: "past",
 	},
 ].map<SimpleListItem>((item) => ({ ...item, acceptAlso: item.label }));
 
 const CATEGORIES = [
-	{ id: "g1-present", label: "Present · κάνω" },
-	{ id: "g2a-present", label: "Present · μιλάω" },
-	{ id: "g2b-present", label: "Present · μπορώ" },
-	{ id: "deponent-present", label: "Present · έρχομαι" },
-	{ id: "aorist", label: "Aorist · έκανα" },
-	{ id: "g1-imperfect", label: "Imperfect · έγραφα" },
-	{ id: "g2-imperfect", label: "Imperfect · μιλούσα" },
+	{ id: "present", label: "Present" },
+	{ id: "past", label: "Past" },
 ];
 
 export const Route = createFileRoute("/practice/verbs/present/conjugations")({
