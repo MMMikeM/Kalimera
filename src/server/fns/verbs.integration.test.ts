@@ -29,7 +29,7 @@ beforeAll(async () => {
 
 
 const getQuestions = async (limit: number, persons: PersonNumber[] = ["sg1"]) => {
-	const { getVerbConjugationQuestions } = await import("./verbs");
+	const { getVerbConjugationQuestions } = await import("./verbs.server");
 	return getVerbConjugationQuestions(
 		1,
 		limit,
