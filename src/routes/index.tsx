@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { FreezeIndicator } from "@/components/FreezeIndicator";
 import { LandingPage } from "@/components/LandingPage";
-import { getDashboardDataFn } from "@/server/fns";
+import { getDashboardDataFn } from "@/server/fns/dashboard";
 
 import { AllCaughtUpCTA } from "./components/AllCaughtUpCTA";
 import { DailyPhrase } from "./components/DailyPhrase";

@@ -8,7 +8,7 @@ import { SearchInput } from "@/components/SearchInput";
 import { TabHero } from "@/components/TabHero";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { getSearchVocabularyFn } from "@/server/fns";
+import { getSearchVocabularyFn } from "@/server/fns/search";
 
 type VocabularySearchGraphRow = Awaited<ReturnType<typeof getSearchVocabularyFn>>[number];
 
