@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { getAoristDrillQuestionsFn } from "@/server/fns";
+import { getAoristDrillQuestionsFn } from "@/server/fns/verbs";
 
 import { VocabDrillPage } from "../../components/engines/vocab-drill";
 

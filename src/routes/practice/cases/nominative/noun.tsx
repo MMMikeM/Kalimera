@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { getNounDrillItemsFn } from "@/server/fns";
+import { getNounDrillItemsFn } from "@/server/fns/noun";
 
 import { Drill } from "../../components/engines/drill";
 import { GENDER_STYLE } from "../../components/engines/drill-constants";

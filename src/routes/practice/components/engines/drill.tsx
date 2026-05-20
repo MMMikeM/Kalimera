@@ -2,7 +2,7 @@ import { getRouteApi } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 
 import { matchPhonetic } from "@/lib/greek-transliteration";
-import { startSessionFn, recordAttemptFn, completeSessionFn } from "@/server/fns";
+import { startSessionFn, recordAttemptFn, completeSessionFn } from "@/server/fns/srs";
 
 import { type DrillForm, type SessionSize } from "./deck";
 import { useCountdown, useForwardKeyboard } from "./drill-hooks";
