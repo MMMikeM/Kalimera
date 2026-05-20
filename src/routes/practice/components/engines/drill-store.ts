@@ -265,6 +265,7 @@ export const drillActions: DrillActions = {
 			cardIndex,
 			deck,
 			sessionId,
+			sessionSize,
 			userId,
 			isReDrill,
 			onComplete,
