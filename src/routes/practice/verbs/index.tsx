@@ -91,7 +91,7 @@ const pastDrills: Drill[] = [
 const futureAndModalDrills: Drill[] = [
 	{
 		id: "verbs-future-conjugation",
-		to: "/practice/verbs/future-conjugation",
+		to: "/practice/verbs/future/conjugation",
 		title: "Conjugations",
 		greek: "θα γράψω · θα φάω · θα πάω",
 		minutes: 2,

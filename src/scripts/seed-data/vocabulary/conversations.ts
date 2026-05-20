@@ -29,8 +29,6 @@ export const COMMON_RESPONSES: Phrase[] = [
 
 // Opinion & Feeling Expressions
 export const OPINION_PHRASES: Phrase[] = [
-	{ text: "νομίζω", english: "I think", cefrLevel: "A1" },
-	{ text: "πιστεύω", english: "I believe", cefrLevel: "A1" },
 	{ text: "μου φαίνεται", english: "it seems to me", cefrLevel: "A2" },
 	{ text: "δεν ξέρω", english: "I don't know", cefrLevel: "A1" },
 	{ text: "έχεις δίκιο", english: "you're right", cefrLevel: "A2" },

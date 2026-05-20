@@ -213,7 +213,7 @@ function DrillInner<K extends string>(
 	// ── Complete ──────────────────────────────────────────────────────────────
 
 	if (phase === "complete") {
-		return <SummaryScreen />;
+		return <SummaryScreen backTo={props.backTo} />;
 	}
 
 	// ── Error (should be unreachable — pool must be validated before startDrill) ─

@@ -415,7 +415,7 @@ export const ReverseFeedback = () => {
 
 // ─── SummaryScreen ─────────────────────────────────────────────────────────────
 
-export const SummaryScreen = () => {
+export const SummaryScreen = ({ backTo }: { backTo?: string }) => {
 	const attempts = useDrillStore((s) => s.attempts);
 	const { resetToConfig, retryMistakes } = drillActions;
 
@@ -530,7 +530,7 @@ export const SummaryScreen = () => {
 			</div>
 
 			<div className="text-center">
-				<Link to=".." className="text-xs text-stone-500 underline hover:text-stone-700">
+				<Link to={backTo ?? ".."} className="text-xs text-stone-500 underline hover:text-stone-700">
 					← back
 				</Link>
 			</div>
