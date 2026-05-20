@@ -5,7 +5,7 @@ import {
 	type VerbWithConjugations,
 	getVerbsWithConjugationsForTense,
 } from "@/server/db/queries/vocabulary";
-import { getVerbConjugationQuestions } from "./verbs";
+import { getVerbConjugationQuestions } from "./verbs.server";
 
 // ─── Mocks (hoisted by Vitest — order relative to imports doesn't matter) ─────
 
