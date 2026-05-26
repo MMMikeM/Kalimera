@@ -361,7 +361,7 @@ export const FeedbackDisplay = () => {
 		return (
 			<button
 				type="button"
-				className="mt-5 block w-full cursor-pointer text-left"
+				className="mt-5 block w-full cursor-pointer select-text text-left"
 				onPointerDown={(e) => e.preventDefault()}
 				onClick={advance}
 			>
@@ -403,7 +403,7 @@ export const ReverseFeedback = () => {
 		return (
 			<button
 				type="button"
-				className="block w-full cursor-pointer pt-4 text-left"
+				className="block w-full cursor-pointer select-text pt-4 text-left"
 				onClick={advance}
 			>
 				{inner}
