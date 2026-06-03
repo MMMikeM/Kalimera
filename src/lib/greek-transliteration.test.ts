@@ -229,4 +229,22 @@ describe("matchPhonetic — cluster variants", () => {
 		expect(matchPhonetic("spiti", "το σπίτι").isCorrect).toBe(true);
 		expect(matchPhonetic("xspiti", "το σπίτι").isCorrect).toBe(false);
 	});
+
+	// ξ = "ks"; users may type "x" instead
+	it("accepts exi for έξι", () => {
+		expect(matchPhonetic("exi", "έξι").isCorrect).toBe(true);
+	});
+
+	it("accepts eksi for έξι", () => {
+		expect(matchPhonetic("eksi", "έξι").isCorrect).toBe(true);
+	});
+
+	// υ sounds like "i"; users may type "u" instead
+	it("accepts duo for δύο", () => {
+		expect(matchPhonetic("duo", "δύο").isCorrect).toBe(true);
+	});
+
+	it("accepts dio for δύο", () => {
+		expect(matchPhonetic("dio", "δύο").isCorrect).toBe(true);
+	});
 });

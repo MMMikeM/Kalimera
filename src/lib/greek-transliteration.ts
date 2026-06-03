@@ -154,7 +154,7 @@ const stripGreekArticle = (greek: string): string => {
  * // { isCorrect: true, ... }
  */
 // Collapse variant spellings on both sides so either form accepts.
-// ει→i, αι→e, οι→i: user can type letter-faithful ("kaneis") or phonetic ("kanis").
+// ει→i, αι→e, οι→i, υ→u→i: user can type letter-faithful ("kaneis") or phonetic ("kanis").
 // nd→d, mb→b, ng→g: user can type simplified cluster ("adras") or accurate ("andras").
 // η→h, ω→w (Greek Greeklish convention): protect "ch"/"ph" before normalising h→i.
 // "th" is NOT protected — τη→"th" and θ→"th" both canonicalise to "ti", so typing
@@ -163,6 +163,8 @@ const toPhoneticCanonical = (text: string): string =>
 	text
 		.replace(/ei/g, "i")
 		.replace(/ai/g, "e")
+		.replace(/u/g, "i") // υ sounds like "i"; user may type either
+		.replace(/ks/g, "x") // ξ = "ks"; user may type "x"
 		.replace(/w/g, "o") // ω (as w) → o
 		.replace(/ch/g, "") // protect χ digraph before h→i fires
 		.replace(/ph/g, "") // protect φ digraph before h→i fires
