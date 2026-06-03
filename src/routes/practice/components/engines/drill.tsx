@@ -252,7 +252,7 @@ function DrillInner<K extends string>(
 											</p>
 										)}
 										<p className="text-3xl font-medium text-foreground">{currentForm.label}</p>
-										{"detail" in currentForm && (
+										{"detail" in currentForm && phase === "feedback" && (
 											<p className="mt-1 text-xl text-stone-600">
 												{(currentForm as DrillForm & { detail?: string }).detail}
 											</p>
