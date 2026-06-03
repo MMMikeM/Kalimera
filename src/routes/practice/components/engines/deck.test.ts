@@ -23,9 +23,14 @@ describe("deck size", () => {
 		expect(buildWeightedDeck(forms, 20)).toHaveLength(20);
 	});
 
-	it("throws when pool has fewer unique words than sessionSize", () => {
+	it("pads with duplicates when pool has fewer unique words than sessionSize", () => {
 		const forms = [form("a"), form("b"), form("c")];
-		expect(() => buildWeightedDeck(forms, 10)).toThrow();
+		const deck = buildWeightedDeck(forms, 10);
+		expect(deck).toHaveLength(10);
+		// All unique words must appear
+		expect(ids(deck)).toContain("a");
+		expect(ids(deck)).toContain("b");
+		expect(ids(deck)).toContain("c");
 	});
 
 	it("throws when pool is empty", () => {
@@ -91,20 +96,22 @@ describe("bucket priority", () => {
 // ─── Small pool edge cases (the recurring bug source) ─────────────────────────
 
 describe("small pool behaviour", () => {
-	it("throws with 3 words for sessionSize=10", () => {
-		expect(() => buildWeightedDeck([form("a"), form("b"), form("c")], 10)).toThrow();
+	it("pads with 3 words for sessionSize=10", () => {
+		const deck = buildWeightedDeck([form("a"), form("b"), form("c")], 10);
+		expect(deck).toHaveLength(10);
 	});
 
-	it("throws with 4 words for sessionSize=10", () => {
-		expect(() =>
-			buildWeightedDeck([form("a"), form("b"), form("c"), form("d")], 10),
-		).toThrow();
+	it("pads with 4 words for sessionSize=10", () => {
+		const deck = buildWeightedDeck([form("a"), form("b"), form("c"), form("d")], 10);
+		expect(deck).toHaveLength(10);
 	});
 
-	it("throws with 5 words for sessionSize=10", () => {
-		expect(() =>
-			buildWeightedDeck([form("a"), form("b"), form("c"), form("d"), form("e")], 10),
-		).toThrow();
+	it("pads with 5 words for sessionSize=10", () => {
+		const deck = buildWeightedDeck(
+			[form("a"), form("b"), form("c"), form("d"), form("e")],
+			10,
+		);
+		expect(deck).toHaveLength(10);
 	});
 
 	it("all unique words in pool appear in deck", () => {

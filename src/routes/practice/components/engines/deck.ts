@@ -55,8 +55,13 @@ const BATCH_SLOTS: DrillBucket[] = [
  * New words are introduced twice (slots ~5 apart) to boost initial retention.
  */
 export const buildWeightedDeck = (forms: DrillForm[], size: SessionSize | number): DrillForm[] => {
-	const uniqueCount = new Set(forms.map((f) => f.id)).size;
-	if (uniqueCount < size) throw new Error(`Pool too small: ${uniqueCount} unique words for session size ${size}`);
+	if (forms.length === 0) throw new Error("Pool is empty");
+	// If pool smaller than session size, pad by cycling through forms
+	if (forms.length < size) {
+		const padded = [...forms];
+		while (padded.length < size) padded.push(...forms.slice(0, size - padded.length));
+		forms = padded;
+	}
 
 	const buckets: Record<DrillBucket, DrillForm[]> = {
 		tier1: [],
