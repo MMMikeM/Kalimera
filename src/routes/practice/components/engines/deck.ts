@@ -63,6 +63,14 @@ export const buildWeightedDeck = (forms: DrillForm[], size: SessionSize | number
 		forms = padded;
 	}
 
+	const shuffle = <T>(arr: T[]): T[] => {
+		for (let i = arr.length - 1; i > 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1));
+			[arr[i], arr[j]] = [arr[j]!, arr[i]!];
+		}
+		return arr;
+	};
+
 	const buckets: Record<DrillBucket, DrillForm[]> = {
 		tier1: [],
 		tier2: [],
@@ -74,6 +82,7 @@ export const buildWeightedDeck = (forms: DrillForm[], size: SessionSize | number
 		const b = f.bucket ?? "inProgress";
 		buckets[b].push(f);
 	}
+	for (const b of Object.keys(buckets) as DrillBucket[]) shuffle(buckets[b]);
 
 	const deck: DrillForm[] = [];
 	const seenNew = new Set<string>();
