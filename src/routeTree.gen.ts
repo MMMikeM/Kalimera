@@ -37,6 +37,7 @@ import { Route as PracticeVerbsImperativesRouteImport } from './routes/practice/
 import { Route as PracticePronounsPossessivesRouteImport } from './routes/practice/pronouns/possessives'
 import { Route as PracticePronounsPlacementRouteImport } from './routes/practice/pronouns/placement'
 import { Route as PracticePronounsObjectRouteImport } from './routes/practice/pronouns/object'
+import { Route as PracticeBlocksQuestionWordsRouteImport } from './routes/practice/blocks/question-words'
 import { Route as PracticeBlocksOppositesRouteImport } from './routes/practice/blocks/opposites'
 import { Route as PracticeBlocksNumbersRouteImport } from './routes/practice/blocks/numbers'
 import { Route as PracticeBlocksDaysOfWeekRouteImport } from './routes/practice/blocks/days-of-week'
@@ -226,6 +227,12 @@ const PracticePronounsObjectRoute = PracticePronounsObjectRouteImport.update({
   path: '/pronouns/object',
   getParentRoute: () => PracticeRouteRoute,
 } as any)
+const PracticeBlocksQuestionWordsRoute =
+  PracticeBlocksQuestionWordsRouteImport.update({
+    id: '/blocks/question-words',
+    path: '/blocks/question-words',
+    getParentRoute: () => PracticeRouteRoute,
+  } as any)
 const PracticeBlocksOppositesRoute = PracticeBlocksOppositesRouteImport.update({
   id: '/blocks/opposites',
   path: '/blocks/opposites',
@@ -511,6 +518,7 @@ export interface FileRoutesByFullPath {
   '/practice/blocks/days-of-week': typeof PracticeBlocksDaysOfWeekRoute
   '/practice/blocks/numbers': typeof PracticeBlocksNumbersRoute
   '/practice/blocks/opposites': typeof PracticeBlocksOppositesRoute
+  '/practice/blocks/question-words': typeof PracticeBlocksQuestionWordsRoute
   '/practice/pronouns/object': typeof PracticePronounsObjectRoute
   '/practice/pronouns/placement': typeof PracticePronounsPlacementRoute
   '/practice/pronouns/possessives': typeof PracticePronounsPossessivesRoute
@@ -584,6 +592,7 @@ export interface FileRoutesByTo {
   '/practice/blocks/days-of-week': typeof PracticeBlocksDaysOfWeekRoute
   '/practice/blocks/numbers': typeof PracticeBlocksNumbersRoute
   '/practice/blocks/opposites': typeof PracticeBlocksOppositesRoute
+  '/practice/blocks/question-words': typeof PracticeBlocksQuestionWordsRoute
   '/practice/pronouns/object': typeof PracticePronounsObjectRoute
   '/practice/pronouns/placement': typeof PracticePronounsPlacementRoute
   '/practice/pronouns/possessives': typeof PracticePronounsPossessivesRoute
@@ -659,6 +668,7 @@ export interface FileRoutesById {
   '/practice/blocks/days-of-week': typeof PracticeBlocksDaysOfWeekRoute
   '/practice/blocks/numbers': typeof PracticeBlocksNumbersRoute
   '/practice/blocks/opposites': typeof PracticeBlocksOppositesRoute
+  '/practice/blocks/question-words': typeof PracticeBlocksQuestionWordsRoute
   '/practice/pronouns/object': typeof PracticePronounsObjectRoute
   '/practice/pronouns/placement': typeof PracticePronounsPlacementRoute
   '/practice/pronouns/possessives': typeof PracticePronounsPossessivesRoute
@@ -735,6 +745,7 @@ export interface FileRouteTypes {
     | '/practice/blocks/days-of-week'
     | '/practice/blocks/numbers'
     | '/practice/blocks/opposites'
+    | '/practice/blocks/question-words'
     | '/practice/pronouns/object'
     | '/practice/pronouns/placement'
     | '/practice/pronouns/possessives'
@@ -808,6 +819,7 @@ export interface FileRouteTypes {
     | '/practice/blocks/days-of-week'
     | '/practice/blocks/numbers'
     | '/practice/blocks/opposites'
+    | '/practice/blocks/question-words'
     | '/practice/pronouns/object'
     | '/practice/pronouns/placement'
     | '/practice/pronouns/possessives'
@@ -882,6 +894,7 @@ export interface FileRouteTypes {
     | '/practice/blocks/days-of-week'
     | '/practice/blocks/numbers'
     | '/practice/blocks/opposites'
+    | '/practice/blocks/question-words'
     | '/practice/pronouns/object'
     | '/practice/pronouns/placement'
     | '/practice/pronouns/possessives'
@@ -1151,6 +1164,13 @@ declare module '@tanstack/react-router' {
       path: '/pronouns/object'
       fullPath: '/practice/pronouns/object'
       preLoaderRoute: typeof PracticePronounsObjectRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+    '/practice/blocks/question-words': {
+      id: '/practice/blocks/question-words'
+      path: '/blocks/question-words'
+      fullPath: '/practice/blocks/question-words'
+      preLoaderRoute: typeof PracticeBlocksQuestionWordsRouteImport
       parentRoute: typeof PracticeRouteRoute
     }
     '/practice/blocks/opposites': {
@@ -1471,6 +1491,7 @@ interface PracticeRouteRouteChildren {
   PracticeBlocksDaysOfWeekRoute: typeof PracticeBlocksDaysOfWeekRoute
   PracticeBlocksNumbersRoute: typeof PracticeBlocksNumbersRoute
   PracticeBlocksOppositesRoute: typeof PracticeBlocksOppositesRoute
+  PracticeBlocksQuestionWordsRoute: typeof PracticeBlocksQuestionWordsRoute
   PracticePronounsObjectRoute: typeof PracticePronounsObjectRoute
   PracticePronounsPlacementRoute: typeof PracticePronounsPlacementRoute
   PracticePronounsPossessivesRoute: typeof PracticePronounsPossessivesRoute
@@ -1516,6 +1537,7 @@ const PracticeRouteRouteChildren: PracticeRouteRouteChildren = {
   PracticeBlocksDaysOfWeekRoute: PracticeBlocksDaysOfWeekRoute,
   PracticeBlocksNumbersRoute: PracticeBlocksNumbersRoute,
   PracticeBlocksOppositesRoute: PracticeBlocksOppositesRoute,
+  PracticeBlocksQuestionWordsRoute: PracticeBlocksQuestionWordsRoute,
   PracticePronounsObjectRoute: PracticePronounsObjectRoute,
   PracticePronounsPlacementRoute: PracticePronounsPlacementRoute,
   PracticePronounsPossessivesRoute: PracticePronounsPossessivesRoute,
