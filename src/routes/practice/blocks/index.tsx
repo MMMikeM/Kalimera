@@ -26,6 +26,13 @@ export const drills: Drill[] = [
 		greek: "Δευτέρα · Τρίτη · χτες · αύριο",
 		minutes: 1,
 	},
+	{
+		id: "blocks-opposites",
+		to: "/practice/blocks/opposites",
+		title: "Opposites",
+		greek: "μεγάλος ↔ μικρός · μέρα ↔ νύχτα",
+		minutes: 2,
+	},
 ];
 
 export const Route = createFileRoute("/practice/blocks/")({

@@ -10,6 +10,7 @@ import {
 	LESSON_TAGS,
 	VOCAB_SEED_CATEGORIES,
 } from "./seed-data";
+import { seedOpposites } from "./seed-opposites";
 import {
 	BATCH_SIZE,
 	type NounDetailRecord,
@@ -120,6 +121,8 @@ export async function seed(db: Db) {
 	console.log("\nVocabulary seed complete.\n");
 
 	await seedVerbConjugations(db);
+
+	await seedOpposites(db);
 
 	console.log("\nAll seeding complete.");
 }
