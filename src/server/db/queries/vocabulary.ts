@@ -20,6 +20,7 @@ export const fetchVocabularyRowsForSearch = async () => {
 	return await db.query.vocabulary.findMany({
 		where: { wordType: { ne: "phrase" } },
 		with: {
+			nounDetails: { columns: { gender: true } },
 			verbDetails: true,
 			vocabularyTags: {
 				with: { tag: true },
@@ -49,6 +50,9 @@ export const getVocabBySlug = async (section: VocabSection, wordTypes: WordType[
 							wordType: {
 								in: wordTypes,
 							},
+						},
+						with: {
+							nounDetails: { columns: { gender: true } },
 						},
 					},
 				},

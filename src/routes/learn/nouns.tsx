@@ -7,24 +7,17 @@ import type React from "react";
 import { ContentSection } from "@/components/ContentSection";
 import { MonoText } from "@/components/MonoText";
 import { TabHero } from "@/components/TabHero";
+import { getArticle } from "@/lib/greek-grammar";
 import { typedEntries } from "@/lib/object";
 import { getVocabBySlug } from "@/server/db/queries/vocabulary";
+import type { Gender } from "@/server/db/schema";
 import type { Vocabulary } from "@/server/db/types";
-
-type Gender = "masculine" | "feminine" | "neuter";
 
 export type NounWithGender = Vocabulary & { gender: Gender };
 
-const detectGender = (greek: string): Gender => {
-	const trimmed = greek.trim().toLowerCase();
-	if (trimmed.startsWith("ο ") || trimmed.startsWith("οι ")) return "masculine";
-	if (trimmed.startsWith("η ") || trimmed.startsWith("οι ")) return "feminine";
-	return "neuter";
-};
-
-const parseNoun = (item: Vocabulary): NounWithGender => ({
+const parseNoun = (item: Vocabulary & { nounDetails: { gender: Gender } | null }): NounWithGender => ({
 	...item,
-	gender: detectGender(item.greekText),
+	gender: item.nounDetails?.gender ?? "neuter",
 });
 
 export type CategoryData = {
@@ -38,10 +31,12 @@ type CategoriesMap = Record<CategoryKey, CategoryData>;
 
 const nounsLoader = createServerFn().handler(async () => {
 	const tags = await getVocabBySlug("nouns", ["noun"]);
-	const bySlug: Record<string, Vocabulary[]> = Object.fromEntries(
+	const bySlug = Object.fromEntries(
 		tags.map((t) => [
 			t.slug,
-			t.vocabularyTags.map((vt) => vt.vocabulary).filter((v): v is Vocabulary => v !== null),
+			t.vocabularyTags
+				.map((vt) => vt.vocabulary)
+				.filter((v) => v !== null),
 		]),
 	);
 
@@ -106,25 +101,21 @@ const NOUN_ENDINGS = [
 	"ϊ",
 ];
 
-const parseGreekNoun = (greek: string): { article: string; noun: string; ending: string } => {
-	const parts = greek.trim().split(" ");
-	const article = parts[0] ?? "";
-	const noun = parts.slice(1).join(" ");
-
+const parseGreekNoun = (lemma: string): { noun: string; ending: string } => {
 	let ending = "";
 	for (const e of NOUN_ENDINGS) {
-		if (noun.endsWith(e)) {
+		if (lemma.endsWith(e)) {
 			ending = e;
 			break;
 		}
 	}
-
-	return { article, noun, ending };
+	return { noun: lemma, ending };
 };
 
 const NounDisplay: React.FC<{ noun: NounWithGender }> = ({ noun }) => {
 	const styles = genderStyles[noun.gender];
-	const { article, noun: nounWord, ending } = parseGreekNoun(noun.greekText);
+	const article = getArticle(noun.gender);
+	const { noun: nounWord, ending } = parseGreekNoun(noun.greekText);
 	const stem = ending ? nounWord.slice(0, -ending.length) : nounWord;
 
 	return (
@@ -174,8 +165,7 @@ const splitIntoPairsAndSingles = (
 	const nounMap = new Map<string, NounWithGender>();
 
 	for (const noun of nouns) {
-		const word = noun.greekText.split(" ").slice(1).join(" ").toLowerCase();
-		nounMap.set(word, noun);
+		nounMap.set(noun.greekText.toLowerCase(), noun);
 	}
 
 	const pairs: Array<[NounWithGender, NounWithGender]> = [];
@@ -192,10 +182,7 @@ const splitIntoPairsAndSingles = (
 		}
 	}
 
-	const singles = nouns.filter((noun) => {
-		const word = noun.greekText.split(" ").slice(1).join(" ").toLowerCase();
-		return !usedWords.has(word);
-	});
+	const singles = nouns.filter((noun) => !usedWords.has(noun.greekText.toLowerCase()));
 
 	return { pairs, singles };
 };

@@ -5,7 +5,6 @@ import { fileURLToPath } from "node:url";
 
 import type { Lesson } from "@/types/lesson-seed";
 
-import { formatNounWithArticle } from "../../../../lib/greek-grammar";
 import {
 	type VocabWithTags,
 	nounDetailFromSeed,
@@ -50,10 +49,9 @@ function buildLessonSeedCategories(): Array<{ name: string; items: VocabWithTags
 
 		for (const nounInput of lesson.nouns ?? []) {
 			const noun = enrichNoun(nounInput);
-			const displayText = formatNounWithArticle(noun.lemma, noun.gender);
 			lessonItems.push({
 				vocab: {
-					greekText: displayText,
+					greekText: noun.lemma,
 					englishTranslation: noun.english,
 					wordType: "noun",
 					cefrLevel: noun.cefrLevel ?? null,

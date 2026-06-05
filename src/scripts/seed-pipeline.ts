@@ -192,9 +192,8 @@ const normalize = (s: string) => s.normalize("NFC").toLowerCase();
 
 const enrichWithFrequencyRank = (item: NewVocabulary): NewVocabulary => {
 	if (item.frequencyRank != null) return item;
-	// Nouns store greekText as "ο φίλος" — strip leading article for lookup
-	const bare =
-		item.wordType === "noun" ? item.greekText.split(" ").slice(1).join(" ") : item.greekText;
+	// greekText is now the bare lemma for all word types (nouns no longer store the article)
+	const bare = item.greekText;
 	const alias = NOUN_CORPUS_ALIASES[bare];
 	const rank =
 		GREEK_FREQUENCY_LOOKUP[normalize(bare)] ??

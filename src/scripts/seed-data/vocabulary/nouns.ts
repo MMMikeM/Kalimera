@@ -1,4 +1,3 @@
-import { formatNounWithArticle } from "../../../lib/greek-grammar";
 import { type VocabWithTags, nounDetailFromSeed, pickNounNominalForms } from "../../seed-pipeline";
 import { type NounSeedInput, enrichNounsRecord } from "./noun-seed-enrichment";
 
@@ -283,13 +282,12 @@ export const NOUNS = enrichNounsRecord(NOUNS_RAW);
 export const NOUN_ITEMS: VocabWithTags[] = [];
 for (const [theme, nouns] of Object.entries(NOUNS)) {
 	for (const noun of nouns) {
-		const displayText = formatNounWithArticle(noun.lemma, noun.gender);
 		const itemTags: string[] = [];
 		if (themeTagMap[theme]) itemTags.push(themeTagMap[theme]);
 
 		NOUN_ITEMS.push({
 			vocab: {
-				greekText: displayText,
+				greekText: noun.lemma,
 				englishTranslation: noun.english,
 				wordType: "noun",
 				cefrLevel: noun.cefrLevel ?? null,

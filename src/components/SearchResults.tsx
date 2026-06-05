@@ -1,6 +1,7 @@
 import { SearchX } from "lucide-react";
 
 import { MonoText } from "@/components/MonoText";
+import { formatNounWithArticle } from "@/lib/greek-grammar";
 import { cn } from "@/lib/utils";
 import type { VocabularySearchGraphRow } from "@/server/db/queries/vocabulary";
 
@@ -11,6 +12,13 @@ interface SearchResultsProps {
 	searchTerm: string;
 	compact?: boolean;
 }
+
+const displayGreek = (result: VocabularySearchGraphRow): string => {
+	if (result.wordType === "noun" && result.nounDetails?.gender) {
+		return formatNounWithArticle(result.greekText, result.nounDetails.gender);
+	}
+	return result.greekText;
+};
 
 export const SearchResults = ({ results, searchTerm, compact = false }: SearchResultsProps) => {
 	if (searchTerm && results.length === 0) {
@@ -36,7 +44,7 @@ export const SearchResults = ({ results, searchTerm, compact = false }: SearchRe
 						className="flex items-center gap-2 rounded px-1 py-2 transition-colors hover:bg-stone-50"
 					>
 						<MonoText variant="greek" size="sm" className="max-w-44 truncate font-medium">
-							{result.greekText}
+							{displayGreek(result)}
 						</MonoText>
 						<span className="text-stone-300">—</span>
 						<span className="flex-1 truncate text-sm text-stone-600">
@@ -69,7 +77,7 @@ export const SearchResults = ({ results, searchTerm, compact = false }: SearchRe
 						<div className="flex items-start justify-between gap-3">
 							<div className="min-w-0 flex-1">
 								<MonoText variant="greek" size="lg" className="mb-1 block text-2xl font-medium">
-									{result.greekText}
+									{displayGreek(result)}
 								</MonoText>
 								<p className="text-stone-600">{result.englishTranslation}</p>
 							</div>
