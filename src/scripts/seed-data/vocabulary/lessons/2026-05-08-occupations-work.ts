@@ -27,12 +27,6 @@ export const LESSON_2026_05_08 = createLesson({
 		},
 		{ lemma: "δασκάλα", gender: "feminine", english: "teacher (f)" },
 		{
-			lemma: "μπαρίστα",
-			gender: "masculine",
-			english: "barista",
-			metadata: { note: "indeclinable; ένας/μια μπαρίστα" },
-		},
-		{
 			lemma: "νοσοκόμος",
 			gender: "masculine",
 			english: "nurse (m)",
