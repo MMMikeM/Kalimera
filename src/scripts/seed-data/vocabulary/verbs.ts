@@ -102,6 +102,16 @@ export const VERBS: FullVerbSeed[] = [
 	{ lemma: "τραγουδάω", english: "I sing", cefrLevel: "A2", conjugationFamily: "-άω/-ώ" },
 	{ lemma: "συναντάω", english: "I meet", cefrLevel: "A2", conjugationFamily: "-άω/-ώ" },
 	{ lemma: "κρατάω", english: "I hold/keep", cefrLevel: "A2", conjugationFamily: "-άω/-ώ" },
+
+	// Opposites-drill additions
+	{ lemma: "πουλάω", english: "I sell", cefrLevel: "A2", conjugationFamily: "-άω/-ώ" },
+	{ lemma: "κερδίζω", english: "I win", cefrLevel: "A2", conjugationFamily: "-ω" },
+	{ lemma: "μισώ", english: "I hate", cefrLevel: "A2", conjugationFamily: "-άω/-ώ" },
+	{ lemma: "ξυπνάω", english: "I wake up", cefrLevel: "A2", conjugationFamily: "-άω/-ώ" },
+	{ lemma: "ανοίγω", english: "I open", cefrLevel: "A1", conjugationFamily: "-ω" },
+	{ lemma: "κλείνω", english: "I close/book", cefrLevel: "A1", conjugationFamily: "-ω" },
+	{ lemma: "αρχίζω", english: "I start/begin", cefrLevel: "A2", conjugationFamily: "-ω" },
+	{ lemma: "τελειώνω", english: "I finish/end", cefrLevel: "A2", conjugationFamily: "-ω" },
 ];
 
 // Transport-related verbs (third person forms for describing schedules)

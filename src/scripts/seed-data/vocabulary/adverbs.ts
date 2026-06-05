@@ -32,6 +32,8 @@ export const POSITION_ADVERBS: AdverbSeed[] = [
 	{ lemma: "μακριά", english: "far", cefrLevel: "A2" },
 	{ lemma: "εδώ", english: "here", cefrLevel: "A1" },
 	{ lemma: "εκεί", english: "there", cefrLevel: "A1" },
+	{ lemma: "νωρίς", english: "early", cefrLevel: "A2" },
+	{ lemma: "αργά", english: "late", cefrLevel: "A2" },
 ];
 
 // Indefinite adverbs (somewhere, sometime, somehow, etc.)

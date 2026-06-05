@@ -74,6 +74,7 @@ const NOUNS_RAW = {
 		{ lemma: "νύχτα", gender: "feminine", english: "night", cefrLevel: "A1" },
 		{ lemma: "διακοπές", gender: "feminine", english: "holidays", cefrLevel: "A2" },
 		{ lemma: "ταξίδι", gender: "neuter", english: "journey/trip", cefrLevel: "A2" },
+		{ lemma: "χειμώνας", gender: "masculine", english: "winter", cefrLevel: "A2" },
 	],
 
 	shopping: [
@@ -116,6 +117,9 @@ const NOUNS_RAW = {
 	people: [
 		{ lemma: "γυναίκα", gender: "feminine", english: "woman/wife", cefrLevel: "A1" },
 		{ lemma: "άντρας", gender: "masculine", english: "man/husband", cefrLevel: "A1" },
+		{ lemma: "αγόρι", gender: "neuter", english: "boy", cefrLevel: "A1" },
+		{ lemma: "κόρη", gender: "feminine", english: "daughter", cefrLevel: "A2" },
+		{ lemma: "γιος", gender: "masculine", english: "son", cefrLevel: "A2" },
 		{ lemma: "παιδί", gender: "neuter", english: "child", cefrLevel: "A1" },
 		{ lemma: "οικογένεια", gender: "feminine", english: "family", cefrLevel: "A1" },
 		{ lemma: "σκύλος", gender: "masculine", english: "dog", cefrLevel: "A2" },
