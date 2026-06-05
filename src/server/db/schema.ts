@@ -5,6 +5,7 @@ export {
 	nounDetails,
 	tags,
 	vocabulary,
+	vocabularyOpposites,
 	vocabularyTags,
 	verbConjugations,
 	verbDetails,

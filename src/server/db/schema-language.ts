@@ -156,3 +156,18 @@ export const vocabularyTags = sqliteTable(
 		index("idx_vocabulary_tags_tag_order").on(table.tagId, table.displayOrder),
 	],
 );
+
+// Each row stores one canonical opposite pair (wordAId < wordBId enforced by seeder).
+// Unique on each column ensures every word has at most one opposite.
+export const vocabularyOpposites = sqliteTable(
+	"vocabulary_opposites",
+	{
+		wordAId: cascadeFk("word_a_id", () => vocabulary.id),
+		wordBId: cascadeFk("word_b_id", () => vocabulary.id),
+	},
+	(table) => [
+		primaryKey({ columns: [table.wordAId, table.wordBId] }),
+		uniqueIndex("idx_vocabulary_opposites_a").on(table.wordAId),
+		uniqueIndex("idx_vocabulary_opposites_b").on(table.wordBId),
+	],
+);

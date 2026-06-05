@@ -18,6 +18,18 @@ export const relations = defineRelations(schema, (r) => ({
 		pushSubscriptions: r.many.pushSubscriptions(),
 		notificationLogs: r.many.notificationLogs(),
 	},
+	vocabularyOpposites: {
+		wordA: r.one.vocabulary({
+			from: r.vocabularyOpposites.wordAId,
+			to: r.vocabulary.id,
+			alias: "wordA",
+		}),
+		wordB: r.one.vocabulary({
+			from: r.vocabularyOpposites.wordBId,
+			to: r.vocabulary.id,
+			alias: "wordB",
+		}),
+	},
 	vocabulary: {
 		nounDetails: r.one.nounDetails({
 			from: r.vocabulary.id,
