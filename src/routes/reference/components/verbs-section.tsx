@@ -312,7 +312,7 @@ const AoristPatternCard: React.FC<{
 	);
 };
 
-const PastTenseSection: React.FC = () => {
+export const PastTenseSection: React.FC = () => {
 	const activeStyle = SCHEME["verb-active"];
 	const contractedStyle = SCHEME["verb-contracted"];
 	const deponentStyle = SCHEME["verb-deponent"];
@@ -655,10 +655,17 @@ const NaConstructionsSection: React.FC = () => (
 	</section>
 );
 
+export const FutureNaSection: React.FC = () => (
+	<div className="space-y-10">
+		<FutureTenseSection />
+		<NaConstructionsSection />
+	</div>
+);
+
 const eimai = IRREGULAR_VERBS.find((v) => v.infinitive === "είμαι");
 const otherIrregulars = IRREGULAR_VERBS.filter((v) => v.infinitive !== "είμαι");
 
-export const VerbsSection: React.FC = () => (
+export const PresentTenseSection: React.FC = () => (
 	<section id="verbs" className="space-y-6">
 		<SectionHeading
 			title="Verb Conjugation"
@@ -767,11 +774,5 @@ export const VerbsSection: React.FC = () => (
 				View vocabulary <ArrowRight size={14} />
 			</Link>
 		</div>
-
-		<PastTenseSection />
-
-		<FutureTenseSection />
-
-		<NaConstructionsSection />
 	</section>
 );

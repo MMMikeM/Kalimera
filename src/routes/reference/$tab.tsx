@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 
-import { type NavTab, NavTabs } from "@/components/NavTabs";
 import { getVocabBySlug } from "@/server/db/queries/vocabulary";
 import type { Vocabulary } from "@/server/db/types";
 
+import { ReferenceNav } from "./components/reference-nav";
 import { AdjectivesTab } from "./tabs/adjectives";
 import { CasesTab } from "./tabs/cases";
 import { NounsTab } from "./tabs/nouns";
@@ -12,7 +12,6 @@ import { ArticlesTab } from "./tabs/nouns-articles";
 import { PatternsTab } from "./tabs/patterns";
 import { PrepositionsTab } from "./tabs/prepositions";
 import { PronounsTab } from "./tabs/pronouns";
-import { VerbsTab } from "./tabs/verbs";
 
 export type PatternItem = Vocabulary;
 
@@ -50,21 +49,9 @@ const VALID_TABS = [
 	"nouns",
 	"adjectives",
 	"prepositions",
-	"verbs",
 	"patterns",
 ] as const;
 type TabId = (typeof VALID_TABS)[number];
-
-const REFERENCE_TABS: NavTab[] = [
-	{ id: "cases", label: "Cases", color: "ocean" },
-	{ id: "pronouns", label: "Pronouns", color: "ocean" },
-	{ id: "articles", label: "Articles", color: "olive" },
-	{ id: "nouns", label: "Nouns", color: "olive" },
-	{ id: "adjectives", label: "Adjectives", color: "honey" },
-	{ id: "prepositions", label: "Prepositions", color: "terracotta" },
-	{ id: "verbs", label: "Verbs", color: "ocean" },
-	{ id: "patterns", label: "Patterns", color: "honey" },
-];
 
 export const Route = createFileRoute("/reference/$tab")({
 	loader: async ({ params: { tab } }) => {
@@ -97,8 +84,6 @@ function TabRoute() {
 				return <AdjectivesTab />;
 			case "prepositions":
 				return <PrepositionsTab />;
-			case "verbs":
-				return <VerbsTab />;
 			case "patterns":
 				return patterns ? <PatternsTab data={patterns} /> : null;
 			default:
@@ -108,7 +93,7 @@ function TabRoute() {
 
 	return (
 		<div className="space-y-4">
-			<NavTabs tabs={REFERENCE_TABS} activeTab={tab} buildUrl={(tabId) => `/reference/${tabId}`} />
+			<ReferenceNav activeTab={tab} />
 			{renderTab()}
 		</div>
 	);

@@ -25,6 +25,8 @@ import { Route as LearnNounsRouteImport } from './routes/learn/nouns'
 import { Route as ApiErrorsRouteImport } from './routes/api/errors'
 import { Route as authRegisterRouteImport } from './routes/(auth)/register'
 import { Route as authLoginRouteImport } from './routes/(auth)/login'
+import { Route as ReferenceVerbsRouteRouteImport } from './routes/reference/verbs/route'
+import { Route as ReferenceVerbsIndexRouteImport } from './routes/reference/verbs/index'
 import { Route as PracticeVerbsIndexRouteImport } from './routes/practice/verbs/index'
 import { Route as PracticePronounsIndexRouteImport } from './routes/practice/pronouns/index'
 import { Route as PracticeCasesIndexRouteImport } from './routes/practice/cases/index'
@@ -32,6 +34,7 @@ import { Route as PracticeBlocksIndexRouteImport } from './routes/practice/block
 import { Route as LearnPhrasesIndexRouteImport } from './routes/learn/phrases/index'
 import { Route as LearnEssentialsIndexRouteImport } from './routes/learn/essentials/index'
 import { Route as LearnConversationsIndexRouteImport } from './routes/learn/conversations/index'
+import { Route as ReferenceVerbsBandRouteImport } from './routes/reference/verbs/$band'
 import { Route as PracticeVerbsModalConstructionsRouteImport } from './routes/practice/verbs/modal-constructions'
 import { Route as PracticeVerbsImperativesRouteImport } from './routes/practice/verbs/imperatives'
 import { Route as PracticePronounsPossessivesRouteImport } from './routes/practice/pronouns/possessives'
@@ -163,6 +166,16 @@ const authLoginRoute = authLoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReferenceVerbsRouteRoute = ReferenceVerbsRouteRouteImport.update({
+  id: '/reference/verbs',
+  path: '/reference/verbs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReferenceVerbsIndexRoute = ReferenceVerbsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ReferenceVerbsRouteRoute,
+} as any)
 const PracticeVerbsIndexRoute = PracticeVerbsIndexRouteImport.update({
   id: '/verbs/',
   path: '/verbs/',
@@ -197,6 +210,11 @@ const LearnConversationsIndexRoute = LearnConversationsIndexRouteImport.update({
   id: '/learn/conversations/',
   path: '/learn/conversations/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const ReferenceVerbsBandRoute = ReferenceVerbsBandRouteImport.update({
+  id: '/$band',
+  path: '/$band',
+  getParentRoute: () => ReferenceVerbsRouteRoute,
 } as any)
 const PracticeVerbsModalConstructionsRoute =
   PracticeVerbsModalConstructionsRouteImport.update({
@@ -491,6 +509,7 @@ export interface FileRoutesByFullPath {
   '/search': typeof SearchRoute
   '/support': typeof SupportRoute
   '/try': typeof TryRoute
+  '/reference/verbs': typeof ReferenceVerbsRouteRouteWithChildren
   '/login': typeof authLoginRoute
   '/register': typeof authRegisterRoute
   '/api/errors': typeof ApiErrorsRoute
@@ -524,6 +543,7 @@ export interface FileRoutesByFullPath {
   '/practice/pronouns/possessives': typeof PracticePronounsPossessivesRoute
   '/practice/verbs/imperatives': typeof PracticeVerbsImperativesRoute
   '/practice/verbs/modal-constructions': typeof PracticeVerbsModalConstructionsRoute
+  '/reference/verbs/$band': typeof ReferenceVerbsBandRoute
   '/learn/conversations/': typeof LearnConversationsIndexRoute
   '/learn/essentials/': typeof LearnEssentialsIndexRoute
   '/learn/phrases/': typeof LearnPhrasesIndexRoute
@@ -531,6 +551,7 @@ export interface FileRoutesByFullPath {
   '/practice/cases/': typeof PracticeCasesIndexRoute
   '/practice/pronouns/': typeof PracticePronounsIndexRoute
   '/practice/verbs/': typeof PracticeVerbsIndexRoute
+  '/reference/verbs/': typeof ReferenceVerbsIndexRoute
   '/practice/cases/accusative/adjective': typeof PracticeCasesAccusativeAdjectiveRoute
   '/practice/cases/accusative/article': typeof PracticeCasesAccusativeArticleRoute
   '/practice/cases/accusative/noun': typeof PracticeCasesAccusativeNounRoute
@@ -598,6 +619,7 @@ export interface FileRoutesByTo {
   '/practice/pronouns/possessives': typeof PracticePronounsPossessivesRoute
   '/practice/verbs/imperatives': typeof PracticeVerbsImperativesRoute
   '/practice/verbs/modal-constructions': typeof PracticeVerbsModalConstructionsRoute
+  '/reference/verbs/$band': typeof ReferenceVerbsBandRoute
   '/learn/conversations': typeof LearnConversationsIndexRoute
   '/learn/essentials': typeof LearnEssentialsIndexRoute
   '/learn/phrases': typeof LearnPhrasesIndexRoute
@@ -605,6 +627,7 @@ export interface FileRoutesByTo {
   '/practice/cases': typeof PracticeCasesIndexRoute
   '/practice/pronouns': typeof PracticePronounsIndexRoute
   '/practice/verbs': typeof PracticeVerbsIndexRoute
+  '/reference/verbs': typeof ReferenceVerbsIndexRoute
   '/practice/cases/accusative/adjective': typeof PracticeCasesAccusativeAdjectiveRoute
   '/practice/cases/accusative/article': typeof PracticeCasesAccusativeArticleRoute
   '/practice/cases/accusative/noun': typeof PracticeCasesAccusativeNounRoute
@@ -641,6 +664,7 @@ export interface FileRoutesById {
   '/search': typeof SearchRoute
   '/support': typeof SupportRoute
   '/try': typeof TryRoute
+  '/reference/verbs': typeof ReferenceVerbsRouteRouteWithChildren
   '/(auth)/login': typeof authLoginRoute
   '/(auth)/register': typeof authRegisterRoute
   '/api/errors': typeof ApiErrorsRoute
@@ -674,6 +698,7 @@ export interface FileRoutesById {
   '/practice/pronouns/possessives': typeof PracticePronounsPossessivesRoute
   '/practice/verbs/imperatives': typeof PracticeVerbsImperativesRoute
   '/practice/verbs/modal-constructions': typeof PracticeVerbsModalConstructionsRoute
+  '/reference/verbs/$band': typeof ReferenceVerbsBandRoute
   '/learn/conversations/': typeof LearnConversationsIndexRoute
   '/learn/essentials/': typeof LearnEssentialsIndexRoute
   '/learn/phrases/': typeof LearnPhrasesIndexRoute
@@ -681,6 +706,7 @@ export interface FileRoutesById {
   '/practice/cases/': typeof PracticeCasesIndexRoute
   '/practice/pronouns/': typeof PracticePronounsIndexRoute
   '/practice/verbs/': typeof PracticeVerbsIndexRoute
+  '/reference/verbs/': typeof ReferenceVerbsIndexRoute
   '/practice/cases/accusative/adjective': typeof PracticeCasesAccusativeAdjectiveRoute
   '/practice/cases/accusative/article': typeof PracticeCasesAccusativeArticleRoute
   '/practice/cases/accusative/noun': typeof PracticeCasesAccusativeNounRoute
@@ -718,6 +744,7 @@ export interface FileRouteTypes {
     | '/search'
     | '/support'
     | '/try'
+    | '/reference/verbs'
     | '/login'
     | '/register'
     | '/api/errors'
@@ -751,6 +778,7 @@ export interface FileRouteTypes {
     | '/practice/pronouns/possessives'
     | '/practice/verbs/imperatives'
     | '/practice/verbs/modal-constructions'
+    | '/reference/verbs/$band'
     | '/learn/conversations/'
     | '/learn/essentials/'
     | '/learn/phrases/'
@@ -758,6 +786,7 @@ export interface FileRouteTypes {
     | '/practice/cases/'
     | '/practice/pronouns/'
     | '/practice/verbs/'
+    | '/reference/verbs/'
     | '/practice/cases/accusative/adjective'
     | '/practice/cases/accusative/article'
     | '/practice/cases/accusative/noun'
@@ -825,6 +854,7 @@ export interface FileRouteTypes {
     | '/practice/pronouns/possessives'
     | '/practice/verbs/imperatives'
     | '/practice/verbs/modal-constructions'
+    | '/reference/verbs/$band'
     | '/learn/conversations'
     | '/learn/essentials'
     | '/learn/phrases'
@@ -832,6 +862,7 @@ export interface FileRouteTypes {
     | '/practice/cases'
     | '/practice/pronouns'
     | '/practice/verbs'
+    | '/reference/verbs'
     | '/practice/cases/accusative/adjective'
     | '/practice/cases/accusative/article'
     | '/practice/cases/accusative/noun'
@@ -867,6 +898,7 @@ export interface FileRouteTypes {
     | '/search'
     | '/support'
     | '/try'
+    | '/reference/verbs'
     | '/(auth)/login'
     | '/(auth)/register'
     | '/api/errors'
@@ -900,6 +932,7 @@ export interface FileRouteTypes {
     | '/practice/pronouns/possessives'
     | '/practice/verbs/imperatives'
     | '/practice/verbs/modal-constructions'
+    | '/reference/verbs/$band'
     | '/learn/conversations/'
     | '/learn/essentials/'
     | '/learn/phrases/'
@@ -907,6 +940,7 @@ export interface FileRouteTypes {
     | '/practice/cases/'
     | '/practice/pronouns/'
     | '/practice/verbs/'
+    | '/reference/verbs/'
     | '/practice/cases/accusative/adjective'
     | '/practice/cases/accusative/article'
     | '/practice/cases/accusative/noun'
@@ -943,6 +977,7 @@ export interface RootRouteChildren {
   SearchRoute: typeof SearchRoute
   SupportRoute: typeof SupportRoute
   TryRoute: typeof TryRoute
+  ReferenceVerbsRouteRoute: typeof ReferenceVerbsRouteRouteWithChildren
   authLoginRoute: typeof authLoginRoute
   authRegisterRoute: typeof authRegisterRoute
   ApiErrorsRoute: typeof ApiErrorsRoute
@@ -1082,6 +1117,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reference/verbs': {
+      id: '/reference/verbs'
+      path: '/reference/verbs'
+      fullPath: '/reference/verbs'
+      preLoaderRoute: typeof ReferenceVerbsRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reference/verbs/': {
+      id: '/reference/verbs/'
+      path: '/'
+      fullPath: '/reference/verbs/'
+      preLoaderRoute: typeof ReferenceVerbsIndexRouteImport
+      parentRoute: typeof ReferenceVerbsRouteRoute
+    }
     '/practice/verbs/': {
       id: '/practice/verbs/'
       path: '/verbs'
@@ -1130,6 +1179,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/learn/conversations/'
       preLoaderRoute: typeof LearnConversationsIndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/reference/verbs/$band': {
+      id: '/reference/verbs/$band'
+      path: '/$band'
+      fullPath: '/reference/verbs/$band'
+      preLoaderRoute: typeof ReferenceVerbsBandRouteImport
+      parentRoute: typeof ReferenceVerbsRouteRoute
     }
     '/practice/verbs/modal-constructions': {
       id: '/practice/verbs/modal-constructions'
@@ -1583,6 +1639,19 @@ const PracticeRouteRouteWithChildren = PracticeRouteRoute._addFileChildren(
   PracticeRouteRouteChildren,
 )
 
+interface ReferenceVerbsRouteRouteChildren {
+  ReferenceVerbsBandRoute: typeof ReferenceVerbsBandRoute
+  ReferenceVerbsIndexRoute: typeof ReferenceVerbsIndexRoute
+}
+
+const ReferenceVerbsRouteRouteChildren: ReferenceVerbsRouteRouteChildren = {
+  ReferenceVerbsBandRoute: ReferenceVerbsBandRoute,
+  ReferenceVerbsIndexRoute: ReferenceVerbsIndexRoute,
+}
+
+const ReferenceVerbsRouteRouteWithChildren =
+  ReferenceVerbsRouteRoute._addFileChildren(ReferenceVerbsRouteRouteChildren)
+
 interface LearnVerbsRouteChildren {
   LearnVerbsVerbIdRoute: typeof LearnVerbsVerbIdRoute
 }
@@ -1602,6 +1671,7 @@ const rootRouteChildren: RootRouteChildren = {
   SearchRoute: SearchRoute,
   SupportRoute: SupportRoute,
   TryRoute: TryRoute,
+  ReferenceVerbsRouteRoute: ReferenceVerbsRouteRouteWithChildren,
   authLoginRoute: authLoginRoute,
   authRegisterRoute: authRegisterRoute,
   ApiErrorsRoute: ApiErrorsRoute,

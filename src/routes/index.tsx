@@ -5,7 +5,6 @@ import { LandingPage } from "@/components/LandingPage";
 import { getDashboardDataFn } from "@/server/fns/dashboard";
 
 import { AllCaughtUpCTA } from "./components/AllCaughtUpCTA";
-import { DailyPhrase } from "./components/DailyPhrase";
 import { FirstTimeUserCTA } from "./components/FirstTimeUserCTA";
 import {
 	LapsedUserCTA,
@@ -107,10 +106,6 @@ function DashboardRoute() {
 				</section>
 			)}
 
-			{/* Daily Phrase */}
-			<section>
-				<DailyPhrase />
-			</section>
 
 			{/* Week View + Freeze Status */}
 			<section className="space-y-3">
