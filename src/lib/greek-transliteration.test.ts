@@ -202,6 +202,39 @@ describe("matchPhonetic — cluster variants", () => {
 		expect(matchPhonetic("pede", "πέντε").isCorrect).toBe(false);
 	});
 
+	// letter-faithful spellings: ντ→nt, μπ→mp, γκ→nk accepted alongside voiced nd/mb/ng
+	it("accepts ogdonta for ογδόντα (letter-faithful ντ→nt)", () => {
+		expect(matchPhonetic("ogdonta", "ογδόντα").isCorrect).toBe(true);
+	});
+
+	it("accepts ogdonda for ογδόντα (voiced ντ→nd)", () => {
+		expect(matchPhonetic("ogdonda", "ογδόντα").isCorrect).toBe(true);
+	});
+
+	it("accepts pente for πέντε (letter-faithful ντ→nt)", () => {
+		expect(matchPhonetic("pente", "πέντε").isCorrect).toBe(true);
+	});
+
+	it("accepts saranta for σαράντα (letter-faithful ντ→nt)", () => {
+		expect(matchPhonetic("saranta", "σαράντα").isCorrect).toBe(true);
+	});
+
+	it("accepts antras for άντρας (letter-faithful ντ→nt)", () => {
+		expect(matchPhonetic("antras", "άντρας").isCorrect).toBe(true);
+	});
+
+	it("accepts lampada for λαμπάδα (letter-faithful μπ→mp)", () => {
+		expect(matchPhonetic("lampada", "λαμπάδα").isCorrect).toBe(true);
+	});
+
+	it("accepts ankinara for αγκινάρα (letter-faithful γκ→nk)", () => {
+		expect(matchPhonetic("ankinara", "αγκινάρα").isCorrect).toBe(true);
+	});
+
+	it("accepts anginara for αγκινάρα (voiced γκ→ng)", () => {
+		expect(matchPhonetic("anginara", "αγκινάρα").isCorrect).toBe(true);
+	});
+
 	// medial μπ → mb required; word-initial μπ → b
 	it("accepts lambada for λαμπάδα", () => {
 		expect(matchPhonetic("lambada", "λαμπάδα").isCorrect).toBe(true);
