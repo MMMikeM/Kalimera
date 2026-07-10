@@ -168,6 +168,7 @@ const toPhoneticCanonical = (text: string): string =>
 		.replace(/ei/g, "i")
 		.replace(/ai/g, "e")
 		.replace(/u/g, "i") // υ sounds like "i"; user may type either
+		.replace(/y/g, "i") // υ as letter-faithful "y" ("kyriaki") also accepted
 		.replace(/ks/g, "x") // ξ = "ks"; user may type "x"
 		.replace(/w/g, "o") // ω (as w) → o
 		.replace(/ch/g, "") // protect χ digraph before h→i fires

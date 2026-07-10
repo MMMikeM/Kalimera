@@ -227,6 +227,10 @@ describe("matchPhonetic — cluster variants", () => {
 		expect(matchPhonetic("lampada", "λαμπάδα").isCorrect).toBe(true);
 	});
 
+	it("accepts pempti for Πέμπτη (μπ before consonant)", () => {
+		expect(matchPhonetic("pempti", "Πέμπτη").isCorrect).toBe(true);
+	});
+
 	it("accepts ankinara for αγκινάρα (letter-faithful γκ→nk)", () => {
 		expect(matchPhonetic("ankinara", "αγκινάρα").isCorrect).toBe(true);
 	});
@@ -270,6 +274,19 @@ describe("matchPhonetic — cluster variants", () => {
 
 	it("accepts eksi for έξι", () => {
 		expect(matchPhonetic("eksi", "έξι").isCorrect).toBe(true);
+	});
+
+	// υ may also be typed as "y" (letter-faithful Greeklish)
+	it("accepts kyriaki for Κυριακή", () => {
+		expect(matchPhonetic("kyriaki", "Κυριακή").isCorrect).toBe(true);
+	});
+
+	it("accepts kiriaki for Κυριακή", () => {
+		expect(matchPhonetic("kiriaki", "Κυριακή").isCorrect).toBe(true);
+	});
+
+	it("accepts nychta for νύχτα (y for υ)", () => {
+		expect(matchPhonetic("nychta", "νύχτα").isCorrect).toBe(true);
 	});
 
 	// υ sounds like "i"; users may type "u" instead
