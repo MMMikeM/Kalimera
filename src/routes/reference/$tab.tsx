@@ -25,7 +25,7 @@ const loadPatterns = createServerFn().handler(async () => {
 		Object.fromEntries(
 			tags.map((t) => [
 				t.slug,
-				t.vocabularyTags.map((vt) => vt.vocabulary).filter((v): v is Vocabulary => v !== null),
+				t.vocabularyTags.map((vt) => vt.vocabulary).filter((v) => v !== null),
 			]),
 		);
 
