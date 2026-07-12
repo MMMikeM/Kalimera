@@ -21,6 +21,12 @@ The seeders (vocab + verb conjugations) are **idempotent additive upserts**. Re-
 
 ---
 
+## Duplicate Detection (jscpd)
+
+`pnpm duplicates:llm` (or `make duplicates-llm`) — LLM-friendly output: runs jscpd then prints summary + clone list as `file:start-end <-> file:start-end` pairs (via `scripts/duplicates-summary.ts`). **Always use this**, never read `reports/jscpd/jscpd-report.json` raw (~200K). `duplicates:report` opens the HTML — human use only.
+
+---
+
 ## Code Style
 
 - Self-documenting; comments only for non-obvious logic

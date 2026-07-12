@@ -1,4 +1,4 @@
-.PHONY: dev build deploy preview help duplicates duplicates-report
+.PHONY: dev build deploy preview help duplicates duplicates-report duplicates-llm
 
 # Development
 dev:
@@ -31,6 +31,9 @@ duplicates:
 
 duplicates-report:
 	pnpm duplicates:report
+
+duplicates-llm:
+	pnpm duplicates:llm
 
 # Help
 help:
