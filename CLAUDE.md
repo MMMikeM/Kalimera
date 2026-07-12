@@ -2,6 +2,8 @@
 
 **Makefile first.** Check Makefile before run any command.
 
+**pnpm only.** Never `npm` / `npx` — use `pnpm` / `pnpm exec` / `pnpm dlx`.
+
 **Database setup (this repo):** `.env` holds **production** Turso credentials (no separate `.env.prod` exists). The `prod-db-*` Makefile targets fail (`.env.prod: No such file`).
 
 ```bash
@@ -18,6 +20,12 @@ mv .env .env.bak && make db-push && make db-seed; mv .env.bak .env
 The seeders (vocab + verb conjugations) are **idempotent additive upserts**. Re-running against prod is safe — only adds/updates rows, never deletes.
 
 **Git:** `git mv` rename/move (keep history), `git rm` delete. Never commit without approval.
+
+---
+
+## Screenshots
+
+`pnpm screenshots` (desktop 1280×720) or `pnpm screenshots --mobile` (375×812) — Playwright script at `screenshots/capture.ts`. Requires dev server running; `BASE_URL` env overrides `http://localhost:5173`. Logs in via `screenshots/login.ts`, captures ~30 fixed routes as full-page PNGs to `screenshots/desktop/` or `screenshots/mobile/`. For a single ad-hoc page, write a one-off Playwright script reusing `loginWithCredentials`.
 
 ---
 
