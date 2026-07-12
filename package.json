@@ -16,7 +16,7 @@
 		"lint:unused:fix": "knip --fix",
 		"duplicates": "jscpd",
 		"duplicates:report": "jscpd && open reports/jscpd/index.html",
-		"preview": "wrangler dev",
+		"preview": "node .output/server/index.mjs",
 		"db:generate": "drizzle-kit generate",
 		"db:migrate": "drizzle-kit migrate",
 		"db:push": "drizzle-kit push",
@@ -81,8 +81,7 @@
 		"workbox-expiration": "^7.4.1",
 		"workbox-precaching": "^7.4.1",
 		"workbox-routing": "^7.4.1",
-		"workbox-strategies": "^7.4.1",
-		"wrangler": "^4.110.0"
+		"workbox-strategies": "^7.4.1"
 	},
 	"engines": {
 		"node": ">=26.0.0"
