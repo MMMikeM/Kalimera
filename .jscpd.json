@@ -1,8 +1,11 @@
 {
-	"threshold": 5,
+	"threshold": 1,
 	"minLines": 4,
 	"minTokens": 100,
-	"reporters": ["html", "json"],
+	"reporters": [
+		"html",
+		"json"
+	],
 	"output": "reports/jscpd",
 	"ignore": [
 		"**/.claude/**",
@@ -17,5 +20,8 @@
 	],
 	"absolute": true,
 	"gitignore": true,
-	"languages": ["typescript", "typescriptreact"]
+	"format": [
+		"typescript",
+		"tsx"
+	]
 }
