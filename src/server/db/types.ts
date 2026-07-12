@@ -17,6 +17,14 @@ import type {
 	vocabProgress,
 	vocabularyTags,
 } from "./schema";
+import type { SQLiteAsyncDatabase } from "drizzle-orm/sqlite-core";
+
+import type { relations } from "./relations";
+
+// Driver-agnostic database type: both the Turso serverless prod db and the
+// in-memory libsql test db extend this base. Run result narrowed to the shape
+// both drivers return from `db.run()`.
+export type Db = SQLiteAsyncDatabase<"async", { rowsAffected: number }, typeof relations>;
 
 // Inferred select types (what you get when querying)
 export type User = typeof users.$inferSelect;

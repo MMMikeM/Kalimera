@@ -14,9 +14,7 @@
 
 import { sql } from "drizzle-orm";
 
-import type { db as ProdDb } from "../server/db";
-
-type Db = typeof ProdDb;
+import type { Db } from "../server/db/types";
 
 export async function migrateNounLemmas(db: Db) {
 	console.log("Migrating noun greekText: stripping leading articles...");

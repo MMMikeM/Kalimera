@@ -1,6 +1,5 @@
 import { sql } from "drizzle-orm";
 
-import type { db as ProdDb } from "../server/db";
 import type {
 	GrammaticalNumber,
 	ImperativeAspect,
@@ -8,14 +7,12 @@ import type {
 	VerbTense,
 } from "../server/db/enums";
 import { verbConjugations, verbDetails, verbImperatives } from "../server/db/schema";
-import type { NewVerbConjugation, NewVerbImperative } from "../server/db/types";
+import type { Db, NewVerbConjugation, NewVerbImperative } from "../server/db/types";
 import { generateConjugations } from "./generate-conjugations";
 import { FULL_VERB_CONJUGATIONS } from "./seed-data/vocabulary/verb-conjugations";
 import { VERB_STEMS } from "./seed-data/vocabulary/verb-stems";
 
 const BATCH_SIZE = 100;
-
-type Db = typeof ProdDb;
 
 export async function seedVerbConjugations(db: Db) {
 	console.log("Seeding verb conjugations (idempotent mode)...\n");
