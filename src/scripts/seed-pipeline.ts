@@ -2,7 +2,6 @@ import { createRequire } from "module";
 
 import { sql } from "drizzle-orm";
 
-import type { db as ProdDb } from "../server/db";
 import {
 	type Gender,
 	type GrammaticalCase,
@@ -21,6 +20,7 @@ import {
 	vocabulary,
 } from "../server/db/schema";
 import type {
+	Db,
 	NewAdjectiveDetails,
 	NewNominalForm,
 	NewNounDetails,
@@ -33,8 +33,6 @@ import type {
 	NounNominalFormsSeed,
 	NounSeed,
 } from "../types/seed";
-
-type Db = typeof ProdDb;
 
 const _require = createRequire(import.meta.url);
 const GREEK_FREQUENCY_LOOKUP = _require("./seed-data/frequency-lookup.json") as Record<

@@ -1,8 +1,7 @@
 import { sql } from "drizzle-orm";
 
-import type { db as ProdDb } from "../server/db";
 import { tags, vocabularyTags } from "../server/db/schema";
-import type { NewAdjectiveDetails } from "../server/db/types";
+import type { Db, NewAdjectiveDetails } from "../server/db/types";
 import type { NewNominalForm, NewVocabularyTag } from "../server/db/types";
 import {
 	CONTENT_TAGS,
@@ -24,8 +23,6 @@ import {
 	runSeedCategory,
 } from "./seed-pipeline";
 import { seedVerbConjugations } from "./seed-verb-conjugations";
-
-type Db = typeof ProdDb;
 
 export async function seed(db: Db) {
 	console.log("Seeding database (additive mode with batching)...\n");

@@ -1,10 +1,8 @@
 import { inArray } from "drizzle-orm";
 
-import type { db as ProdDb } from "../server/db";
 import { vocabulary, vocabularyOpposites } from "../server/db/schema";
+import type { Db } from "../server/db/types";
 import { OPPOSITE_PAIRS } from "./seed-data/vocabulary/opposites";
-
-type Db = typeof ProdDb;
 
 export async function seedOpposites(db: Db) {
 	console.log("\nSeeding opposite pairs...");
