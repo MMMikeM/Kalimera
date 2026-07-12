@@ -39,7 +39,7 @@ help:
 	@echo "Development:"
 	@echo "  dev              - Start development server"
 	@echo "  build            - Build for production"
-	@echo "  preview          - Preview with Wrangler locally"
+	@echo "  preview          - Serve production build locally"
 	@echo ""
 	@echo "Production Database (Turso):"
 	@echo "  prod-db-push              - Push schema to production"
