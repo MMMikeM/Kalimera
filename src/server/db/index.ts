@@ -8,6 +8,8 @@ import { relations } from "./relations";
 const getDb = createServerOnlyFn(() => {
 	if (!process.env.TURSO_DATABASE_URL) throw new Error("Env vars missing");
 
+	console.log("[db] connecting to", process.env.TURSO_DATABASE_URL);
+
 	const client = connect({
 		url: process.env.TURSO_DATABASE_URL,
 		authToken: process.env.TURSO_AUTH_TOKEN,
