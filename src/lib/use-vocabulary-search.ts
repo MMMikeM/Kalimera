@@ -1,3 +1,4 @@
+import { createFuzzySearch } from "ekrina";
 import { useEffect, useState } from "react";
 
 import type { VocabularySearchGraphRow } from "@/server/db/queries/vocabulary";
@@ -24,16 +25,11 @@ export const useVocabularySearch = (options: UseVocabularySearchOptions = {}) =>
 			.finally(() => setIsLoading(false));
 	}, [enabled, vocabulary.length]);
 
-	const fuzzySearch = createFuzzySearch<VocabularySearchGraphRow>(vocabulary, {
-		getText: (item) => {
-			const row = item as VocabularySearchGraphRow;
-			return [
-				row.greekText,
-				row.englishTranslation,
-				...row.vocabularyTags.flatMap((vt) => (vt.tag?.name ? [vt.tag.name] : [])),
-			];
-		},
-	});
+	const fuzzySearch = createFuzzySearch(vocabulary, [
+		{ text: (v) => v.greekText },
+		{ text: (v) => v.englishTranslation },
+		{ text: (v) => v.vocabularyTags.join(" ") },
+	]);
 
 	const results =
 		searchTerm.length === 0
