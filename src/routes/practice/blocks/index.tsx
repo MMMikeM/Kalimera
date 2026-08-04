@@ -37,8 +37,8 @@ export const drills: Drill[] = [
 		id: "blocks-question-words",
 		to: "/practice/blocks/question-words",
 		title: "Question words",
-		greek: "τι · πού · πότε · ποιος · ποια · ποιο",
-		minutes: 2,
+		greek: "τι · ποιον καφέ · πόση ζάχαρη",
+		minutes: 10,
 	},
 ];
 
