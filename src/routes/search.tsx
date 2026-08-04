@@ -8,6 +8,7 @@ import { SearchInput } from "@/components/SearchInput";
 import { TabHero } from "@/components/TabHero";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { vocabularySearchFields } from "@/lib/vocabulary-search-fields";
 import { getSearchVocabularyFn } from "@/server/fns/search";
 
 export const Route = createFileRoute("/search")({
@@ -20,11 +21,7 @@ function SearchRoute() {
 
 	const [searchTerm, setSearchTerm] = useState("");
 
-	const fuzzySearch = createFuzzySearch(allWords, [
-		{ text: (v) => v.greekText },
-		{ text: (v) => v.englishTranslation },
-		{ text: (v) => v.vocabularyTags.join(" ") },
-	]);
+	const fuzzySearch = createFuzzySearch(allWords, vocabularySearchFields);
 
 	const searchResults =
 		searchTerm.length === 0 ? [] : fuzzySearch(searchTerm).map((result) => result.item);
