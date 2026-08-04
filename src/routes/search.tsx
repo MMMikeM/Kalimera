@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { createFuzzySearch } from "ekrina";
 import { Search } from "lucide-react";
 import { useState } from "react";
 
@@ -8,8 +9,6 @@ import { TabHero } from "@/components/TabHero";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { getSearchVocabularyFn } from "@/server/fns/search";
-
-type VocabularySearchGraphRow = Awaited<ReturnType<typeof getSearchVocabularyFn>>[number];
 
 export const Route = createFileRoute("/search")({
 	loader: () => getSearchVocabularyFn().then((vocabulary) => ({ vocabulary })),
@@ -21,16 +20,11 @@ function SearchRoute() {
 
 	const [searchTerm, setSearchTerm] = useState("");
 
-	const fuzzySearch = createFuzzySearch(allWords, {
-		getText: (item) => {
-			const row = item as VocabularySearchGraphRow;
-			return [
-				row.greekText,
-				row.englishTranslation,
-				...row.vocabularyTags.flatMap((vt) => (vt.tag?.name ? [vt.tag.name] : [])),
-			];
-		},
-	});
+	const fuzzySearch = createFuzzySearch(allWords, [
+		{ text: (v) => v.greekText },
+		{ text: (v) => v.englishTranslation },
+		{ text: (v) => v.vocabularyTags.join(" ") },
+	]);
 
 	const searchResults =
 		searchTerm.length === 0 ? [] : fuzzySearch(searchTerm).map((result) => result.item);
