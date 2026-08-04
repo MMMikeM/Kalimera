@@ -1,3 +1,6 @@
+import type { SQLiteAsyncDatabase } from "drizzle-orm/sqlite-core";
+
+import type { relations } from "./relations";
 import type {
 	adjectiveDetails,
 	nominalForms,
@@ -17,9 +20,6 @@ import type {
 	vocabProgress,
 	vocabularyTags,
 } from "./schema";
-import type { SQLiteAsyncDatabase } from "drizzle-orm/sqlite-core";
-
-import type { relations } from "./relations";
 
 // Driver-agnostic database type: both the Turso serverless prod db and the
 // in-memory libsql test db extend this base. Run result narrowed to the shape

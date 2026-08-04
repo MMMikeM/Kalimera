@@ -47,13 +47,14 @@ The app's job is to make you faster at producing correct Greek, not to teach you
 - Track speed AND accuracy over time
 
 **Drill types:**
-| Type | Prompt | Response |
-|------|--------|----------|
-| Translation sprint | "I see the child" | Βλέπω το παιδί |
-| Conjugation | "θέλω → they" | θέλουν |
-| Case transformation | "ο φίλος → accusative" | τον φίλο |
-| Article selection | "coffee (masc) + accusative" | τον καφέ |
-| Pronoun insertion | "I see \_\_\_" (him) | τον |
+
+| Type                | Prompt                       | Response       |
+| ------------------- | ---------------------------- | -------------- |
+| Translation sprint  | "I see the child"            | Βλέπω το παιδί |
+| Conjugation         | "θέλω → they"                | θέλουν         |
+| Case transformation | "ο φίλος → accusative"       | τον φίλο       |
+| Article selection   | "coffee (masc) + accusative" | τον καφέ       |
+| Pronoun insertion   | "I see \_\_\_" (him)         | τον            |
 
 **Key metrics:**
 

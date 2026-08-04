@@ -112,11 +112,7 @@ export const getDrillVocabPool = async ({
 	}
 
 	const medianSlowness = (c: Candidate): number =>
-		median(
-			c.practiceAttempts
-				.slice(0, 5)
-				.map((a) => slowness(a.timeTaken ?? 0, a.correctAnswer)),
-		);
+		median(c.practiceAttempts.slice(0, 5).map((a) => slowness(a.timeTaken ?? 0, a.correctAnswer)));
 
 	// tier2/tier3: slowest-per-char first (surface automation gaps), then CEFR, then frequency
 	const sortSlow = (a: Candidate, b: Candidate) => {
