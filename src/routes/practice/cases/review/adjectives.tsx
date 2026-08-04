@@ -18,11 +18,5 @@ export const Route = createFileRoute("/practice/cases/review/adjectives")({
 
 function AllAdjectivesDrill() {
 	const { questions } = Route.useLoaderData();
-	return (
-		<VocabDrillPage
-			drillId="nominal-all-adjectives"
-			category="nouns"
-			questions={questions}
-		/>
-	);
+	return <VocabDrillPage drillId="nominal-all-adjectives" category="nouns" questions={questions} />;
 }

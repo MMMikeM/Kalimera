@@ -15,7 +15,9 @@ import type { Vocabulary } from "@/server/db/types";
 
 export type NounWithGender = Vocabulary & { gender: Gender };
 
-const parseNoun = (item: Vocabulary & { nounDetails: { gender: Gender } | null }): NounWithGender => ({
+const parseNoun = (
+	item: Vocabulary & { nounDetails: { gender: Gender } | null },
+): NounWithGender => ({
 	...item,
 	gender: item.nounDetails?.gender ?? "neuter",
 });
@@ -34,9 +36,7 @@ const nounsLoader = createServerFn().handler(async () => {
 	const bySlug = Object.fromEntries(
 		tags.map((t) => [
 			t.slug,
-			t.vocabularyTags
-				.map((vt) => vt.vocabulary)
-				.filter((v) => v !== null),
+			t.vocabularyTags.map((vt) => vt.vocabulary).filter((v) => v !== null),
 		]),
 	);
 

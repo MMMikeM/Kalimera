@@ -18,11 +18,5 @@ export const Route = createFileRoute("/practice/cases/review/nouns")({
 
 function AllNounsDrill() {
 	const { questions } = Route.useLoaderData();
-	return (
-		<VocabDrillPage
-			drillId="nominal-all-nouns"
-			category="nouns"
-			questions={questions}
-		/>
-	);
+	return <VocabDrillPage drillId="nominal-all-nouns" category="nouns" questions={questions} />;
 }

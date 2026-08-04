@@ -1,12 +1,12 @@
+import { FULL_VERB_CONJUGATIONS } from "../scripts/seed-data/vocabulary/verb-conjugations";
+import { VERB_ITEMS } from "../scripts/seed-data/vocabulary/verbs";
+import { batchInsertVocab } from "../scripts/seed-pipeline";
 /**
  * Minimal seeder for integration tests — verbs + test user.
  * Avoids importing lesson files which use @/types path aliases that Vitest
  * doesn't resolve correctly in deep transitive imports.
  */
 import { users } from "../server/db/schema-auth";
-import { FULL_VERB_CONJUGATIONS } from "../scripts/seed-data/vocabulary/verb-conjugations";
-import { VERB_ITEMS } from "../scripts/seed-data/vocabulary/verbs";
-import { batchInsertVocab } from "../scripts/seed-pipeline";
 import type { TestDb } from "./db";
 
 export const seedTestUser = async (db: TestDb, userId = 1) => {

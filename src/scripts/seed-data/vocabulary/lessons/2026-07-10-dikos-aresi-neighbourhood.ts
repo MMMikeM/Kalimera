@@ -154,7 +154,10 @@ export const LESSON_2026_07_10 = createLesson({
 		},
 		{
 			pattern: "Weather: verb vs έχει + noun",
-			examples: ["βρέχει (it's raining) / δεν βρέχει", "έχει βροχή (there's rain) / δεν έχει βροχή"],
+			examples: [
+				"βρέχει (it's raining) / δεν βρέχει",
+				"έχει βροχή (there's rain) / δεν έχει βροχή",
+			],
 			explanation:
 				"Two ways to talk about weather: an impersonal verb (βρέχει) or impersonal έχει + noun (έχει βροχή). Both third person singular, no subject.",
 		},

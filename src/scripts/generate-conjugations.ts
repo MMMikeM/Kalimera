@@ -4,13 +4,24 @@ import type { VerbConjugationSeed } from "../types/seed";
 // ─── Greek accent utilities ────────────────────────────────────────────────────
 
 const ACUTE: Record<string, string> = {
-	α: "ά", ε: "έ", η: "ή", ι: "ί", ο: "ό", υ: "ύ", ω: "ώ",
+	α: "ά",
+	ε: "έ",
+	η: "ή",
+	ι: "ί",
+	ο: "ό",
+	υ: "ύ",
+	ω: "ώ",
 };
 
 const stripAccents = (s: string): string =>
 	s
-		.replace(/ά/g, "α").replace(/έ/g, "ε").replace(/ή/g, "η")
-		.replace(/ί/g, "ι").replace(/ό/g, "ο").replace(/ύ/g, "υ").replace(/ώ/g, "ω");
+		.replace(/ά/g, "α")
+		.replace(/έ/g, "ε")
+		.replace(/ή/g, "η")
+		.replace(/ί/g, "ι")
+		.replace(/ό/g, "ο")
+		.replace(/ύ/g, "υ")
+		.replace(/ώ/g, "ω");
 
 /**
  * Syllable nuclei character positions (left to right).

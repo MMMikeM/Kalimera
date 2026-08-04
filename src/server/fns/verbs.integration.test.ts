@@ -1,9 +1,9 @@
 import { beforeAll, describe, expect, it, vi } from "vitest";
 
+import { seedVerbConjugations } from "@/scripts/seed-verb-conjugations";
 import type { PersonNumber } from "@/server/db/enums";
 import { createTestDb, runMigrations } from "@/test/db";
 import { seedTestUser, seedTestVerbs } from "@/test/seed-verbs";
-import { seedVerbConjugations } from "@/scripts/seed-verb-conjugations";
 
 // ─── Test DB setup ────────────────────────────────────────────────────────────
 
@@ -26,7 +26,6 @@ beforeAll(async () => {
 
 // The test seed has ~18 A1/A2 verbs with present conjugations, but pool shuffles
 // so the exact count available varies. Use 10 as a conservative safe limit.
-
 
 const getQuestions = async (limit: number, persons: PersonNumber[] = ["sg1"]) => {
 	const { getVerbConjugationQuestions } = await import("./verbs.server");
