@@ -1,4 +1,3 @@
-import { createFuzzySearch } from "@mmmike/mikrofuzz";
 import { createFileRoute } from "@tanstack/react-router";
 import { Search } from "lucide-react";
 import { useState } from "react";
