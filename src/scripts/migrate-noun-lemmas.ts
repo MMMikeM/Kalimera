@@ -50,10 +50,20 @@ export async function migrateNounLemmas(db: Db) {
 
 		if (alreadyBare.has(bareForm)) {
 			const bareId = alreadyBare.get(bareForm);
-			toDelete.push({ id: row.id, greekText: row.greekText, bareForm, reason: `bare row id=${bareId} already exists` });
+			toDelete.push({
+				id: row.id,
+				greekText: row.greekText,
+				bareForm,
+				reason: `bare row id=${bareId} already exists`,
+			});
 		} else if (seenBareForms.has(bareForm)) {
 			const firstId = seenBareForms.get(bareForm);
-			toDelete.push({ id: row.id, greekText: row.greekText, bareForm, reason: `duplicate of id=${firstId}` });
+			toDelete.push({
+				id: row.id,
+				greekText: row.greekText,
+				bareForm,
+				reason: `duplicate of id=${firstId}`,
+			});
 		} else {
 			seenBareForms.set(bareForm, row.id);
 			safe.push({ id: row.id, greekText: row.greekText, bareForm });
@@ -66,9 +76,7 @@ export async function migrateNounLemmas(db: Db) {
 			console.log(`  DELETE id=${c.id} "${c.greekText}" → "${c.bareForm}" (${c.reason})`);
 		}
 		const deleteIds = toDelete.map((c) => c.id);
-		await db.run(
-			sql`DELETE FROM vocabulary WHERE id IN (${sql.raw(deleteIds.join(","))})`,
-		);
+		await db.run(sql`DELETE FROM vocabulary WHERE id IN (${sql.raw(deleteIds.join(","))})`);
 		console.log(`Deleted ${toDelete.length} duplicate rows.`);
 	}
 

@@ -107,10 +107,7 @@ describe("small pool behaviour", () => {
 	});
 
 	it("pads with 5 words for sessionSize=10", () => {
-		const deck = buildWeightedDeck(
-			[form("a"), form("b"), form("c"), form("d"), form("e")],
-			10,
-		);
+		const deck = buildWeightedDeck([form("a"), form("b"), form("c"), form("d"), form("e")], 10);
 		expect(deck).toHaveLength(10);
 	});
 

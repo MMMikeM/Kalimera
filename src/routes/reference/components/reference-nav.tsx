@@ -14,5 +14,9 @@ export const REFERENCE_TABS: NavTab[] = [
 ];
 
 export const ReferenceNav: React.FC<{ activeTab: string }> = ({ activeTab }) => (
-	<NavTabs tabs={REFERENCE_TABS} activeTab={activeTab} buildUrl={(tabId) => `/reference/${tabId}`} />
+	<NavTabs
+		tabs={REFERENCE_TABS}
+		activeTab={activeTab}
+		buildUrl={(tabId) => `/reference/${tabId}`}
+	/>
 );
