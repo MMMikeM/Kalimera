@@ -380,7 +380,7 @@ In-page filter buttons before starting drill:
 <route path="/search">
 <purpose>Fuzzy vocabulary search</purpose>
 <file>src/routes/search.tsx</file>
-<data-source>DB: vocabulary (via @mmmike/mikrofuzz)</data-source>
+<data-source>DB: vocabulary (via ekrina)</data-source>
 <displays>
 - Search input (autofocus)
 - Results list with Greek, English, word type, tags
