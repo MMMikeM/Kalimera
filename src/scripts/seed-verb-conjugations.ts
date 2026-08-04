@@ -209,7 +209,9 @@ export async function seedVerbConjugations(db: Db) {
 			});
 		upsertedConjugations += allConjugationRows.length;
 	}
-	console.log(`Generated ${allConjugationRows.length} forms for ${allVerbDetailRows.length} verbs from VERB_STEMS.`);
+	console.log(
+		`Generated ${allConjugationRows.length} forms for ${allVerbDetailRows.length} verbs from VERB_STEMS.`,
+	);
 
 	console.log("\n--- Summary ---");
 	console.log(`Verb details updated: ${updatedVerbDetails}`);

@@ -141,20 +141,22 @@ This rule is ~95% reliable.
 Pronouns have strong (emphatic) and weak (clitic) forms. Weak forms are dramatically more frequent.
 
 **Weak object pronouns (accusative)**
+
 | Person | Singular | Plural |
-|--------|----------|--------|
-| 1st | με | μας |
-| 2nd | σε | σας |
-| 3rd m | τον | τους |
-| 3rd f | την | τις |
-| 3rd n | το | τα |
+| ------ | -------- | ------ |
+| 1st    | με       | μας    |
+| 2nd    | σε       | σας    |
+| 3rd m  | τον      | τους   |
+| 3rd f  | την      | τις    |
+| 3rd n  | το       | τα     |
 
 **Weak pronouns (genitive = indirect object)**
+
 | Person | Singular | Plural |
-|--------|----------|--------|
-| 1st | μου | μας |
-| 2nd | σου | σας |
-| 3rd | του/της | τους |
+| ------ | -------- | ------ |
+| 1st    | μου      | μας    |
+| 2nd    | σου      | σας    |
+| 3rd    | του/της  | τους   |
 
 ### Placement rule
 
