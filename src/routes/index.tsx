@@ -106,7 +106,6 @@ function DashboardRoute() {
 				</section>
 			)}
 
-
 			{/* Week View + Freeze Status */}
 			<section className="space-y-3">
 				<WeekStreak weekData={weekData} todayPracticed={todayPracticed} />

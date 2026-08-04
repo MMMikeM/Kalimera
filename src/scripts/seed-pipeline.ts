@@ -199,7 +199,10 @@ const enrichWithFrequencyRank = (item: NewVocabulary): NewVocabulary => {
 	return rank != null ? { ...item, frequencyRank: rank } : item;
 };
 
-export async function batchInsertVocab(db: Db, items: NewVocabulary[]): Promise<Map<string, number>> {
+export async function batchInsertVocab(
+	db: Db,
+	items: NewVocabulary[],
+): Promise<Map<string, number>> {
 	const resultMap = new Map<string, number>();
 	if (items.length === 0) return resultMap;
 

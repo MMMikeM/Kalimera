@@ -28,7 +28,12 @@ export const VERBS: FullVerbSeed[] = [
 	{ lemma: "ελπίζω", english: "I hope", cefrLevel: "A2", conjugationFamily: "-ω" },
 	{ lemma: "πειράζω", english: "it bothers/matters", cefrLevel: "A2", conjugationFamily: "-ω" },
 	{ lemma: "τρέχω", english: "I run", cefrLevel: "A2", conjugationFamily: "-ω" },
-	{ lemma: "προσέχω", english: "I pay attention/be careful", cefrLevel: "A2", conjugationFamily: "-ω" },
+	{
+		lemma: "προσέχω",
+		english: "I pay attention/be careful",
+		cefrLevel: "A2",
+		conjugationFamily: "-ω",
+	},
 	{ lemma: "φαίνομαι", english: "I seem/appear", cefrLevel: "A2", conjugationFamily: "-ομαι" },
 
 	// -άω/-ώ family
@@ -65,7 +70,12 @@ export const VERBS: FullVerbSeed[] = [
 
 	// Irregular / impersonal
 	{ lemma: "είμαι", english: "I am", cefrLevel: "A1", conjugationFamily: "irregular" },
-	{ lemma: "πρέπει", english: "must/should (it is necessary)", cefrLevel: "A1", conjugationFamily: "irregular" },
+	{
+		lemma: "πρέπει",
+		english: "must/should (it is necessary)",
+		cefrLevel: "A1",
+		conjugationFamily: "irregular",
+	},
 	{ lemma: "πάω", english: "I go", cefrLevel: "A1", conjugationFamily: "irregular" },
 	{ lemma: "λέω", english: "I say", cefrLevel: "A1", conjugationFamily: "irregular" },
 	{ lemma: "τρώω", english: "I eat", cefrLevel: "A1", conjugationFamily: "irregular" },
@@ -86,7 +96,12 @@ export const VERBS: FullVerbSeed[] = [
 	{ lemma: "υπόσχομαι", english: "I promise", cefrLevel: "B1", conjugationFamily: "-ομαι" },
 
 	// A2 additions
-	{ lemma: "κατεβαίνω", english: "I go down/get off", cefrLevel: "A2", conjugationFamily: "irregular" },
+	{
+		lemma: "κατεβαίνω",
+		english: "I go down/get off",
+		cefrLevel: "A2",
+		conjugationFamily: "irregular",
+	},
 	{ lemma: "ανεβαίνω", english: "I go up/get on", cefrLevel: "A2", conjugationFamily: "irregular" },
 	{ lemma: "πληρώνω", english: "I pay", cefrLevel: "A2", conjugationFamily: "-ω" },
 	{ lemma: "στέλνω", english: "I send", cefrLevel: "A2", conjugationFamily: "-ω" },
