@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 import { vocabularySearchFields } from "@/lib/vocabulary-search-fields";
 import type { VocabularySearchGraphRow } from "@/server/db/queries/vocabulary";
+import { getSearchVocabularyFn } from "@/server/fns/search";
 
 const EMPTY_VOCABULARY: VocabularySearchGraphRow[] = [];
 
@@ -19,10 +20,9 @@ export const useVocabularySearch = (options: UseVocabularySearchOptions = {}) =>
 	useEffect(() => {
 		if (!enabled || vocabulary.length > 0) return;
 		setIsLoading(true);
-		fetch("/search")
-			.then((r) => r.json() as Promise<{ vocabulary: VocabularySearchGraphRow[] }>)
-			.then(({ vocabulary: v }) => setVocabulary(v ?? EMPTY_VOCABULARY))
-			.catch(() => { })
+		getSearchVocabularyFn()
+			.then((v) => setVocabulary(v ?? EMPTY_VOCABULARY))
+			.catch(() => setVocabulary(EMPTY_VOCABULARY))
 			.finally(() => setIsLoading(false));
 	}, [enabled, vocabulary.length]);
 
