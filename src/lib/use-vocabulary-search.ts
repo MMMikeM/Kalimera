@@ -1,4 +1,3 @@
-import { createFuzzySearch } from "@mmmike/mikrofuzz";
 import { useEffect, useState } from "react";
 
 import type { VocabularySearchGraphRow } from "@/server/db/queries/vocabulary";
@@ -21,7 +20,7 @@ export const useVocabularySearch = (options: UseVocabularySearchOptions = {}) =>
 		fetch("/search")
 			.then((r) => r.json() as Promise<{ vocabulary: VocabularySearchGraphRow[] }>)
 			.then(({ vocabulary: v }) => setVocabulary(v ?? EMPTY_VOCABULARY))
-			.catch(() => {})
+			.catch(() => { })
 			.finally(() => setIsLoading(false));
 	}, [enabled, vocabulary.length]);
 
@@ -40,8 +39,8 @@ export const useVocabularySearch = (options: UseVocabularySearchOptions = {}) =>
 		searchTerm.length === 0
 			? []
 			: fuzzySearch(searchTerm)
-					.sort((a, b) => a.score - b.score)
-					.map((result) => result.item);
+				.sort((a, b) => a.score - b.score)
+				.map((result) => result.item);
 
 	return { searchTerm, setSearchTerm, results, isLoading, vocabulary };
 };
