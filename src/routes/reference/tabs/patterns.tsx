@@ -166,6 +166,36 @@ export function PatternsTab({ data }: { data: PatternsData }) {
 					</div>
 				</TeachingCard>
 			)}
+
+			<QuickTest
+				title="ίσως or μήπως?"
+				intro="Both soften what you say, but they live in different sentences."
+				colorScheme="olive"
+				options={[
+					{
+						condition: "You are saying something — maybe, possibly",
+						answer: "ίσως",
+						examples: [
+							{ greek: "Ίσως πάρω ράμεν", english: "Maybe I'll have ramen" },
+							{ greek: "Ίσως αύριο", english: "Maybe tomorrow" },
+						],
+					},
+					{
+						condition: "You are asking something — by any chance",
+						answer: "μήπως",
+						examples: [
+							{ greek: "Μήπως έχετε τακογιάκι;", english: "Do you happen to have takoyaki?" },
+							{ greek: "Μήπως ξέρεις τι ώρα είναι;", english: "Do you happen to know the time?" },
+						],
+					},
+				]}
+				summary={
+					<>
+						ίσως never opens a question, μήπως never closes a statement. After ίσως the verb takes
+						its short form with no θα: <strong>Ίσως πάω</strong>, not ίσως θα πάω.
+					</>
+				}
+			/>
 		</div>
 	);
 }

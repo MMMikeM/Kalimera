@@ -15,10 +15,17 @@ import { PronounsTab } from "./tabs/pronouns";
 
 export type PatternItem = Vocabulary;
 
+/**
+ * The likes tags live in the verbs section, but their items are full phrases
+ * (μου αρέσει ο καφές). Filtering to "verb" alone nulls every one of them and
+ * the Likes card renders empty — see reference-patterns.integration.test.ts.
+ */
+export const PATTERN_VERB_WORD_TYPES = ["verb", "phrase"] as const;
+
 const loadPatterns = createServerFn().handler(async () => {
 	const [phraseTags, verbTags] = await Promise.all([
 		getVocabBySlug("phrases", ["phrase"]),
-		getVocabBySlug("verbs", ["verb"]),
+		getVocabBySlug("verbs", [...PATTERN_VERB_WORD_TYPES]),
 	]);
 
 	const toSlugMap = (tags: typeof phraseTags): Record<string, Vocabulary[]> =>
