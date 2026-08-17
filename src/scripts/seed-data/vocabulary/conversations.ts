@@ -35,7 +35,9 @@ export const OPINION_PHRASES: Phrase[] = [
 	{ text: "δεν συμφωνώ", english: "I don't agree", cefrLevel: "A2" },
 	{ text: "ίσως", english: "maybe, perhaps", cefrLevel: "A2" },
 	{ text: "μακάρι", english: "I wish, hopefully", cefrLevel: "A1" },
-	{ text: "ελπίζω", english: "I hope", cefrLevel: "A1" },
+	// ελπίζω lives in verbs.ts — seeding the bare lemma here as a phrase overwrote
+	// its wordType and blocked conjugation seeding.
+	{ text: "ελπίζω ναι", english: "I hope so", cefrLevel: "A2" },
 ];
 
 // Arriving & Leaving phrases
