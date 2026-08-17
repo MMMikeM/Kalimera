@@ -93,6 +93,35 @@ Remember: the thing liked is the **subject**, so the verb agrees with it!
 
 ---
 
+## Quick Test: ίσως or μήπως?
+
+<decision-guide name="hedging-test">
+<intro>Both soften what you say, but they live in different sentences.</intro>
+
+### You are saying something — maybe, possibly → ίσως
+
+| Greek             | English              |
+|-------------------|----------------------|
+| Ίσως πάρω ράμεν   | Maybe I'll have ramen|
+| Ίσως αύριο        | Maybe tomorrow       |
+
+### You are asking something — by any chance → μήπως
+
+| Greek                        | English                          |
+|------------------------------|----------------------------------|
+| Μήπως έχετε τακογιάκι;       | Do you happen to have takoyaki?  |
+| Μήπως ξέρεις τι ώρα είναι;   | Do you happen to know the time?  |
+
+<summary>
+ίσως never opens a question, μήπως never closes a statement. After ίσως the verb takes its short form with no θα: **Ίσως πάω**, not ίσως θα πάω.
+</summary>
+
+</decision-guide>
+
+---
+
+---
+
 ## Pattern Logic
 
 <insight>
@@ -135,4 +164,4 @@ See: `src/routes/reference/data.server.ts`
 - [x] paradigm-tables: Person paradigms for both patterns
 - [x] function-first-labels: "Likes Construction", "Name Construction"
 - [x] contextual-examples: Full sentences showing usage
-- [x] decision-guides: αρέσει vs αρέσουν test included
+- [x] decision-guides: αρέσει vs αρέσουν and ίσως vs μήπως tests included
