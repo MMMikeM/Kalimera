@@ -54,8 +54,10 @@ export function inferDeclensionPattern(lemma: string, gender: Gender): NounDecle
 
 	if (gender === "feminine") {
 		if (low.endsWith("α") && !low.endsWith("μα")) return "fem-a";
-		// -ση/-ξη also end in -η; classify before the generic -η branch
-		if (low.endsWith("ση") || low.endsWith("ξη")) return "fem-si";
+		// -ση/-ξη/-ψη also end in -η; classify before the generic -η branch
+		if (low.endsWith("ση")) return "fem-si";
+		if (low.endsWith("ξη")) return "fem-ksi";
+		if (low.endsWith("ψη")) return "fem-psi";
 		if (low.endsWith("η") || low.endsWith("ή")) return "fem-i";
 		return "fem-a";
 	}

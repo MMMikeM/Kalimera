@@ -1,7 +1,8 @@
+import { isStemStressed } from "@/constants/adjective-agreement";
 import type { AdjectiveDeclensionPattern, CefrLevel } from "@/server/db/enums";
 
 import { declineAdjective } from "../../../lib/adjective-declension";
-import { getArticle } from "../../../lib/greek-grammar";
+import { getArticleForWord } from "../../../lib/greek-grammar";
 import type { AdjectiveNominalFormsSeed, AdjectiveSeed } from "../../../types/seed";
 
 /** Lean adjective row; enrichment supplies pattern and nominal forms when omitted. */
@@ -77,6 +78,11 @@ function inferAdjectivePattern(lemma: string): AdjectiveDeclensionPattern {
 		return "os-i-o";
 	}
 
+	// Cited in the neuter (colours): strip the single vowel before testing
+	if (lemma.endsWith("ο") || lemma.endsWith("ό")) {
+		return VOWELS.test(lemma.slice(0, -1)) ? "os-ia-o" : "os-i-o";
+	}
+
 	return "os-i-o";
 }
 
@@ -101,11 +107,22 @@ function inferAdjectiveNominalForms(lemma: string): AdjectiveNominalFormsSeed {
 		};
 	}
 
-	// Typical -ος adjectives not in the table (best-effort)
+	// Typical -ος adjectives not in the table (best-effort).
+	// A stem that already carries the accent takes unaccented endings — άνετος
+	// gives άνετη/άνετο, never άνετή/άνετό.
 	if (lemma.endsWith("ος") || lemma.endsWith("ός")) {
 		const stem = lemma.slice(0, -2);
-		const fem = inferAdjectivePattern(lemma) === "os-ia-o" ? `${stem}α` : `${stem}ή`;
-		return triForms(lemma, fem, `${stem}ό`);
+		const stemStressed = isStemStressed(stem);
+		const feminine =
+			inferAdjectivePattern(lemma) === "os-ia-o"
+				? stemStressed
+					? "α"
+					: "ά"
+				: stemStressed
+					? "η"
+					: "ή";
+		const neuter = stemStressed ? "ο" : "ό";
+		return triForms(lemma, `${stem}${feminine}`, `${stem}${neuter}`);
 	}
 
 	return {
@@ -122,7 +139,7 @@ function declineToFormsSeed(
 	const seed: Record<string, { form: string; article: string | null }> = {};
 	for (const f of declined) {
 		const key = `${f.case}_${f.number}_${f.gender}`;
-		const article = getArticle(f.gender, f.number, f.case) || null;
+		const article = getArticleForWord(f.gender, f.number, f.case, f.form) || null;
 		seed[key] = { form: f.form, article };
 	}
 	return seed as AdjectiveNominalFormsSeed;
