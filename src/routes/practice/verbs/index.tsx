@@ -90,6 +90,20 @@ const pastDrills: Drill[] = [
 
 const futureAndModalDrills: Drill[] = [
 	{
+		id: "verbs-future-sg1",
+		to: "/practice/verbs/future/vocabulary",
+		title: "Verb vocabulary · future",
+		greek: "θα δω · θα φάω · θα πάρω",
+		minutes: 2,
+	},
+	{
+		id: "verbs-future-formation",
+		to: "/practice/verbs/future/formation",
+		title: "Present → θα form",
+		greek: "γράφω → θα γράψω · βάζω → θα βάλω",
+		minutes: 2,
+	},
+	{
 		id: "verbs-future-conjugation",
 		to: "/practice/verbs/future/conjugation",
 		title: "Conjugations",
@@ -112,6 +126,23 @@ const futureAndModalDrills: Drill[] = [
 	},
 ];
 
+const mixedTenseDrills: Drill[] = [
+	{
+		id: "verbs-tense-ladder",
+		to: "/practice/verbs/ladder",
+		title: "Tense ladder",
+		greek: "βάζω → έβαλα → θα βάλω",
+		minutes: 3,
+	},
+	{
+		id: "verbs-tense-recognition",
+		to: "/practice/verbs/tense-recognition",
+		title: "Which tense?",
+		greek: "έβαλα · χθες ή αύριο;",
+		minutes: 2,
+	},
+];
+
 const VerbsPage = () => (
 	<div className="mx-auto max-w-2xl">
 		<GroupSection title="Verbs">
@@ -127,6 +158,11 @@ const VerbsPage = () => (
 			</PhaseSection>
 			<PhaseSection phase="Future & Modal">
 				{futureAndModalDrills.map((d) => (
+					<DrillButton key={d.id} from={Route.fullPath} {...d} />
+				))}
+			</PhaseSection>
+			<PhaseSection phase="Mixed tenses">
+				{mixedTenseDrills.map((d) => (
 					<DrillButton key={d.id} from={Route.fullPath} {...d} />
 				))}
 			</PhaseSection>

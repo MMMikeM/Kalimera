@@ -28,6 +28,23 @@ export const PERSON_LABELS: Record<Person, string> = {
 	third: "3rd",
 };
 
+/** Shared DIMENSION_OPTIONS for reverse-mode tense selectors, anchored to time words. */
+export const TENSE_DIMENSION_OPTIONS = [
+	{ id: "past", label: "χθες · past", selectorBg: "bg-stone-100", selectorText: "text-stone-800" },
+	{
+		id: "present",
+		label: "σήμερα · present",
+		selectorBg: "bg-stone-100",
+		selectorText: "text-stone-800",
+	},
+	{
+		id: "future",
+		label: "αύριο · future",
+		selectorBg: "bg-stone-100",
+		selectorText: "text-stone-800",
+	},
+];
+
 /** Shared DIMENSION_OPTIONS for reverse-mode person selectors (sg/pl × 1/2/3). */
 export const PERSON_DIMENSION_OPTIONS = [
 	{ id: "sg1", label: "I", selectorBg: "bg-stone-100", selectorText: "text-stone-800" },

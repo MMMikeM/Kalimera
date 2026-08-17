@@ -16,6 +16,8 @@ export interface DrillQuestion {
 	targetMs?: number;
 	vocabId?: number;
 	bucket?: DrillBucket;
+	/** Reverse-mode answer key for select-based drills (e.g. tense of the shown form). */
+	dimension?: string;
 }
 
 type QuestionCategory = "pronouns" | "articles" | "verbs" | "nouns";
