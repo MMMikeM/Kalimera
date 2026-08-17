@@ -10,6 +10,11 @@ interface AgreementPattern {
 	ending: string;
 	full: string;
 	english: string;
+	/**
+	 * -ση/-ξη/-ψη feminines move the accent onto the stem's final vowel in the
+	 * plural: ερώτηση → ερωτήσεις, απόδειξη → αποδείξεις, άποψη → απόψεις.
+	 */
+	stressOnStemFinal?: boolean;
 }
 
 export interface AgreementParadigm {
@@ -447,8 +452,8 @@ export const AGREEMENT_PARADIGMS: AgreementParadigm[] = [
 	{
 		id: "fem-si",
 		gender: "feminine",
-		pattern: "-ση/-ξη",
-		title: "Feminine -ση/-ξη words",
+		pattern: "-ση",
+		title: "Feminine -ση words",
 		example: "ερώτηση (question)",
 		frequency: "common",
 		tip: "Action nouns (like English -tion)",
@@ -487,6 +492,7 @@ export const AGREEMENT_PARADIGMS: AgreementParadigm[] = [
 				case: "nom",
 				article: "οι",
 				ending: "-σεις",
+				stressOnStemFinal: true,
 				full: "οι ερωτήσεις",
 				english: "the questions",
 			},
@@ -494,6 +500,7 @@ export const AGREEMENT_PARADIGMS: AgreementParadigm[] = [
 				case: "acc",
 				article: "τις",
 				ending: "-σεις",
+				stressOnStemFinal: true,
 				full: "τις ερωτήσεις",
 				english: "the questions (object)",
 			},
@@ -501,6 +508,7 @@ export const AGREEMENT_PARADIGMS: AgreementParadigm[] = [
 				case: "gen",
 				article: "των",
 				ending: "-σεων",
+				stressOnStemFinal: true,
 				full: "των ερωτήσεων",
 				english: "of the questions",
 			},
@@ -508,8 +516,155 @@ export const AGREEMENT_PARADIGMS: AgreementParadigm[] = [
 				case: "voc",
 				article: "—",
 				ending: "-σεις",
+				stressOnStemFinal: true,
 				full: "ερωτήσεις!",
 				english: "Questions!",
+			},
+		],
+	},
+	{
+		id: "fem-ksi",
+		gender: "feminine",
+		pattern: "-ξη",
+		title: "Feminine -ξη words",
+		example: "απόδειξη (receipt)",
+		frequency: "common",
+		tip: "Same endings as -ση words; the ξ stays in every form",
+		forms: [
+			{
+				case: "nom",
+				article: "η",
+				ending: "-ξη",
+				full: "η απόδειξη",
+				english: "the receipt",
+			},
+			{
+				case: "acc",
+				article: "τη(ν)",
+				ending: "-ξη",
+				full: "την απόδειξη",
+				english: "the receipt (object)",
+			},
+			{
+				case: "gen",
+				article: "της",
+				ending: "-ξης",
+				full: "της απόδειξης",
+				english: "of the receipt",
+			},
+			{
+				case: "voc",
+				article: "—",
+				ending: "-ξη",
+				full: "απόδειξη!",
+				english: "Receipt!",
+			},
+		],
+		pluralForms: [
+			{
+				case: "nom",
+				article: "οι",
+				ending: "-ξεις",
+				stressOnStemFinal: true,
+				full: "οι αποδείξεις",
+				english: "the receipts",
+			},
+			{
+				case: "acc",
+				article: "τις",
+				ending: "-ξεις",
+				stressOnStemFinal: true,
+				full: "τις αποδείξεις",
+				english: "the receipts (object)",
+			},
+			{
+				case: "gen",
+				article: "των",
+				ending: "-ξεων",
+				stressOnStemFinal: true,
+				full: "των αποδείξεων",
+				english: "of the receipts",
+			},
+			{
+				case: "voc",
+				article: "—",
+				ending: "-ξεις",
+				stressOnStemFinal: true,
+				full: "αποδείξεις!",
+				english: "Receipts!",
+			},
+		],
+	},
+	{
+		id: "fem-psi",
+		gender: "feminine",
+		pattern: "-ψη",
+		title: "Feminine -ψη words",
+		example: "άποψη (opinion)",
+		frequency: "less common",
+		tip: "Same endings as -ση words; the ψ stays in every form",
+		forms: [
+			{
+				case: "nom",
+				article: "η",
+				ending: "-ψη",
+				full: "η άποψη",
+				english: "the opinion",
+			},
+			{
+				case: "acc",
+				article: "τη(ν)",
+				ending: "-ψη",
+				full: "την άποψη",
+				english: "the opinion (object)",
+			},
+			{
+				case: "gen",
+				article: "της",
+				ending: "-ψης",
+				full: "της άποψης",
+				english: "of the opinion",
+			},
+			{
+				case: "voc",
+				article: "—",
+				ending: "-ψη",
+				full: "άποψη!",
+				english: "Opinion!",
+			},
+		],
+		pluralForms: [
+			{
+				case: "nom",
+				article: "οι",
+				ending: "-ψεις",
+				stressOnStemFinal: true,
+				full: "οι απόψεις",
+				english: "the opinions",
+			},
+			{
+				case: "acc",
+				article: "τις",
+				ending: "-ψεις",
+				stressOnStemFinal: true,
+				full: "τις απόψεις",
+				english: "the opinions (object)",
+			},
+			{
+				case: "gen",
+				article: "των",
+				ending: "-ψεων",
+				stressOnStemFinal: true,
+				full: "των απόψεων",
+				english: "of the opinions",
+			},
+			{
+				case: "voc",
+				article: "—",
+				ending: "-ψεις",
+				stressOnStemFinal: true,
+				full: "απόψεις!",
+				english: "Opinions!",
 			},
 		],
 	},
