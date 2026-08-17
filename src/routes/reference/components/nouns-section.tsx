@@ -2,7 +2,12 @@ import { useState } from "react";
 
 import { NextStepCard, TeachingCard } from "@/components/cards";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
-import { CASE_ROW_DEFS, type ColumnDef, GrammarTable } from "@/components/GrammarTable";
+import {
+	CASE_ROW_DEFS,
+	type ColumnDef,
+	GrammarTable,
+	type RowDef,
+} from "@/components/GrammarTable";
 import { MonoText } from "@/components/MonoText";
 import { SectionHeading } from "@/components/SectionHeading";
 import { AGREEMENT_PARADIGMS, type AgreementParadigm } from "@/constants/agreement";
@@ -10,21 +15,40 @@ import { GENDER_SCHEME, SCHEME } from "@/constants/grammar-palette";
 
 type Gender = "masculine" | "feminine" | "neuter";
 type Case = "Nom" | "Acc" | "Gen";
+/** The vocative is real Greek (Μάικ!) but sits outside the Doer/Target/Owner system. */
+type TableCase = Case | "Voc";
 
 const CASES: Case[] = ["Nom", "Acc", "Gen"];
 
+const VOCATIVE_ROW: RowDef = { key: "voc", label: "Calling", sublabel: "Vocative" };
+
+/**
+ * Both the paradigm lists and the ending strings come from AGREEMENT_PARADIGMS
+ * so a new declension pattern shows up here automatically. Hand-maintained
+ * copies drifted from the data before — the page advertised -ξη while the
+ * generator was producing απόδειση.
+ */
+const paradigmsByGender = (gender: Gender): AgreementParadigm[] =>
+	AGREEMENT_PARADIGMS.filter((p) => p.gender === gender);
+
 const GENDER_PATTERNS: Record<Gender, readonly string[]> = {
-	masculine: ["masc-os", "masc-as", "masc-is"],
-	feminine: ["fem-a", "fem-i", "fem-si"],
-	neuter: ["neut-o", "neut-i", "neut-ma"],
+	masculine: paradigmsByGender("masculine").map((p) => p.id),
+	feminine: paradigmsByGender("feminine").map((p) => p.id),
+	neuter: paradigmsByGender("neuter").map((p) => p.id),
 };
+
+const endingsFor = (gender: Gender): string =>
+	paradigmsByGender(gender)
+		.map((p) => p.pattern)
+		.join(", ");
 
 const ESSENTIAL_IDS = ["masc-os", "fem-a", "neut-o", "neut-i"] as const;
 
+/** Ending lists derive from the paradigms; the hints are teaching copy. */
 const GENDER_HINTS: Record<Gender, { endings: string; hint: string }> = {
-	masculine: { endings: "-ος, -ας, -ης, -ές", hint: "Male people, -ος words" },
-	feminine: { endings: "-α, -η, -ση/-ξη", hint: "Female people, αγάπη / ζωή" },
-	neuter: { endings: "-ο, -ι, -μα", hint: "Diminutives, result nouns" },
+	masculine: { endings: endingsFor("masculine"), hint: "Male people, -ος words" },
+	feminine: { endings: endingsFor("feminine"), hint: "Female people, αγάπη / ζωή" },
+	neuter: { endings: endingsFor("neuter"), hint: "Diminutives, result nouns" },
 };
 
 const CASE_META: Record<
@@ -97,10 +121,10 @@ const getParadigms = (ids: readonly string[]): AgreementParadigm[] =>
 		.map((id) => AGREEMENT_PARADIGMS.find((p) => p.id === id))
 		.filter((p): p is AgreementParadigm => p !== undefined);
 
-const getEnding = (paradigm: AgreementParadigm, caseType: Case) =>
+const getEnding = (paradigm: AgreementParadigm, caseType: TableCase) =>
 	paradigm.forms.find((f) => f.case.toLowerCase() === caseType.toLowerCase())?.ending ?? "—";
 
-const getFull = (paradigm: AgreementParadigm, caseType: Case) =>
+const getFull = (paradigm: AgreementParadigm, caseType: TableCase) =>
 	paradigm.forms.find((f) => f.case.toLowerCase() === caseType.toLowerCase())?.full ?? "—";
 
 const CaseGuide = () => (
@@ -193,9 +217,11 @@ const ViewToggle = ({
 const NounEndingsTable = ({
 	paradigms,
 	mode = "endings",
+	includeVocative = false,
 }: {
 	paradigms: AgreementParadigm[];
 	mode?: "endings" | "full";
+	includeVocative?: boolean;
 }) => {
 	const columns: ColumnDef[] = paradigms.map((p) => ({
 		key: p.id,
@@ -203,8 +229,13 @@ const NounEndingsTable = ({
 		scheme: GENDER_SCHEME[p.gender],
 	}));
 
-	const cells = CASE_ROW_DEFS.map((_row, ri) => {
-		const caseType = (["Nom", "Acc", "Gen"] as const)[ri]!;
+	const rows = includeVocative ? [...CASE_ROW_DEFS, VOCATIVE_ROW] : CASE_ROW_DEFS;
+	const caseOrder: TableCase[] = includeVocative
+		? ["Nom", "Acc", "Gen", "Voc"]
+		: ["Nom", "Acc", "Gen"];
+
+	const cells = rows.map((_row, ri) => {
+		const caseType = caseOrder[ri]!;
 		return paradigms.map((p) => {
 			const value = mode === "endings" ? getEnding(p, caseType) : getFull(p, caseType);
 			return (
@@ -217,7 +248,7 @@ const NounEndingsTable = ({
 
 	return (
 		<div className="-mx-4 overflow-x-auto px-4">
-			<GrammarTable columns={columns} rows={CASE_ROW_DEFS} cells={cells} />
+			<GrammarTable columns={columns} rows={rows} cells={cells} />
 		</div>
 	);
 };
@@ -244,7 +275,7 @@ const EssentialPatterns = () => {
 				</div>
 			}
 		>
-			<NounEndingsTable paradigms={paradigms} mode={mode} />
+			<NounEndingsTable paradigms={paradigms} mode={mode} includeVocative={mode === "full"} />
 		</TeachingCard>
 	);
 };
