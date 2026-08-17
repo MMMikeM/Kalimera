@@ -1,6 +1,7 @@
 import { AGREEMENT_PARADIGMS } from "@/constants/agreement";
 import type { NounDeclensionPattern } from "@/server/db/enums";
 
+import { retainsNu } from "./greek-grammar";
 import { typedKeys } from "./object";
 
 type Case = "nominative" | "accusative" | "genitive";
@@ -35,7 +36,11 @@ const getStemFromLemma = (lemma: string, pattern: NounDeclensionPattern): string
 		case "fem-i":
 			return lemma.slice(0, -1); // Remove -η
 		case "fem-si":
-			return lemma.slice(0, -2); // Remove -ση or -ξη
+			return lemma.slice(0, -2); // Remove -ση
+		case "fem-ksi":
+			return lemma.slice(0, -2); // Remove -ξη
+		case "fem-psi":
+			return lemma.slice(0, -2); // Remove -ψη
 		case "neut-o":
 			return lemma.slice(0, -1); // Remove -ο
 		case "neut-i":
@@ -49,8 +54,15 @@ const getStemFromLemma = (lemma: string, pattern: NounDeclensionPattern): string
 	}
 };
 
-const TONOS_CHARS = /[άέήίόύώΐΰ]/;
+const TONOS_CHARS = /[άέήίόύώΐΰΆΈΉΊΌΎΏ]/;
 const TONOS_MAP: Record<string, string> = {
+	Ά: "Α",
+	Έ: "Ε",
+	Ή: "Η",
+	Ί: "Ι",
+	Ό: "Ο",
+	Ύ: "Υ",
+	Ώ: "Ω",
 	ά: "α",
 	ε: "ε",
 	έ: "ε",
@@ -72,7 +84,35 @@ const ADD_TONOS_MAP: Record<string, string> = {
 	υ: "ύ",
 	ω: "ώ",
 };
-const stripTonos = (s: string): string => s.replace(/[άέήίόύώΐΰ]/g, (m) => TONOS_MAP[m] ?? m);
+const stripTonos = (s: string): string =>
+	s.replace(/[άέήίόύώΐΰΆΈΉΊΌΎΏ]/g, (m) => TONOS_MAP[m] ?? m);
+
+const NUCLEUS = /(αι|ει|οι|ου|αυ|ευ|υι|[αεηιουωάέήίόύώΆΈΉΊΌΎΏϊϋΐΰ])/g;
+
+/**
+ * The unaccented genitive plural -ων pulls the stress onto the penult:
+ * Έλληνας → Ελλήνων, άνθρωπος → ανθρώπων. A word already stressed on the penult
+ * or later is left alone (πατέρας → πατέρων).
+ */
+const shiftStressToPenult = (phrase: string): string => {
+	// Multi-word lemmas (ουράνιο τόξο): only the head word declines.
+	const split = phrase.lastIndexOf(" ");
+	if (split !== -1) {
+		return phrase.slice(0, split + 1) + shiftStressToPenult(phrase.slice(split + 1));
+	}
+
+	const word = phrase;
+	const nuclei = [...word.matchAll(NUCLEUS)];
+	if (nuclei.length < 2) return word;
+	const accentedAt = nuclei.findIndex((m) => TONOS_CHARS.test(m[0]!));
+	const penult = nuclei.length - 2;
+	if (accentedAt === -1 || accentedAt >= penult) return word;
+
+	const target = nuclei[penult]!;
+	const plain = stripTonos(word);
+	const index = target.index + target[0]!.length - 1;
+	return addTonosToLastVowel(plain.slice(0, index + 1)) + plain.slice(index + 1);
+};
 
 /** Add accent to the last vowel of a string (for oxytone forms where stem has no tonos). */
 const addTonosToLastVowel = (s: string): string => {
@@ -88,9 +128,20 @@ const addTonosToLastVowel = (s: string): string => {
  * one must drop. Genitive forms typically shift stress to the suffix; other
  * forms keep stress on the stem. This is a pragmatic approximation — full
  * stress-shift rules per paradigm are out of scope. */
-const applyEnding = (stem: string, ending: string, isGenitive = false): string => {
+const applyEnding = (
+	stem: string,
+	ending: string,
+	isGenitive = false,
+	stressOnStemFinal = false,
+): string => {
 	if (ending === "—") return stem;
 	const cleanEnding = ending.startsWith("-") ? ending.slice(1) : ending;
+
+	// -ση/-ξη/-ψη plurals: the accent lands on the stem's final vowel,
+	// wherever it sat in the singular (ερώτηση → ερωτήσεις).
+	if (stressOnStemFinal) {
+		return addTonosToLastVowel(stripTonos(stem)) + cleanEnding;
+	}
 
 	const stemHasTonos = TONOS_CHARS.test(stem);
 	const endingHasTonos = TONOS_CHARS.test(cleanEnding);
@@ -107,15 +158,14 @@ const applyEnding = (stem: string, ending: string, isGenitive = false): string =
 	if (!TONOS_CHARS.test(result) && result.length > 1) {
 		return addTonosToLastVowel(result);
 	}
-	return result;
+
+	return cleanEnding === "ων" ? shiftStressToPenult(result) : result;
 };
 
-const GREEK_VOWEL_START = /^[αεηιοουωάέήίόύώ]/;
-
-/** Feminine accusative article: τη before consonants, την before vowels. */
+/** Feminine accusative article: την before the ν-retaining set, τη elsewhere. */
 const mapArticleForAccusative = (article: string, noun: string): string => {
 	if (article === "τη(ν)") {
-		return GREEK_VOWEL_START.test(noun) ? "την" : "τη";
+		return retainsNu(noun) ? "την" : "τη";
 	}
 	return article;
 };
@@ -141,7 +191,12 @@ const _declineNounForms = (
 
 		if (!grammaticalCase) continue;
 
-		const noun = applyEnding(stem, form.ending, grammaticalCase === "genitive");
+		const noun = applyEnding(
+			stem,
+			form.ending,
+			grammaticalCase === "genitive",
+			form.stressOnStemFinal,
+		);
 		const article = mapArticleForAccusative(form.article, noun);
 
 		forms.push({
