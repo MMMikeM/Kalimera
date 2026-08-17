@@ -3,7 +3,11 @@ import { z } from "zod";
 
 import { requireAuth } from "@/server/auth/session";
 
-import { getVerbConjugationQuestions } from "./verbs.server";
+import {
+	getTenseLadderQuestions,
+	getTenseRecognitionQuestions,
+	getVerbConjugationQuestions,
+} from "./verbs.server";
 
 async function getVerbDrillQuestionsImpl(userId: number, limit: number) {
 	return getVerbConjugationQuestions(userId, limit, "present", "db-verb-", 3500, "verbs-present");
@@ -40,6 +44,18 @@ async function getAoristSg1QuestionsImpl(userId: number, limit: number) {
 		"db-verb-aor-sg1-",
 		4000,
 		"verbs-aorist-sg1",
+		["sg1"],
+	);
+}
+
+async function getFutureSg1QuestionsImpl(userId: number, limit: number) {
+	return getVerbConjugationQuestions(
+		userId,
+		limit,
+		"future",
+		"db-verb-fut-sg1-",
+		4000,
+		"verbs-future-sg1",
 		["sg1"],
 	);
 }
@@ -88,4 +104,25 @@ export const getFutureDrillQuestionsFn = createServerFn({ method: "GET" })
 	.handler(async ({ data }) => {
 		const { userId } = requireAuth();
 		return getFutureDrillQuestionsImpl(userId, data.limit);
+	});
+
+export const getFutureSg1QuestionsFn = createServerFn({ method: "GET" })
+	.inputValidator(z.object({ limit: z.number() }))
+	.handler(async ({ data }) => {
+		const { userId } = requireAuth();
+		return getFutureSg1QuestionsImpl(userId, data.limit);
+	});
+
+export const getTenseLadderQuestionsFn = createServerFn({ method: "GET" })
+	.inputValidator(z.object({ limit: z.number() }))
+	.handler(async ({ data }) => {
+		const { userId } = requireAuth();
+		return getTenseLadderQuestions(userId, data.limit);
+	});
+
+export const getTenseRecognitionQuestionsFn = createServerFn({ method: "GET" })
+	.inputValidator(z.object({ limit: z.number() }))
+	.handler(async ({ data }) => {
+		const { userId } = requireAuth();
+		return getTenseRecognitionQuestions(userId, data.limit);
 	});

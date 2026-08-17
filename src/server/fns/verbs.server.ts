@@ -5,7 +5,10 @@ import { typedEntries } from "@/lib/object";
 import type { PersonNumber } from "@/server/db/enums";
 import { getDrillVocabPool } from "@/server/db/queries/drill-pool";
 import { ensureUserProgress } from "@/server/db/queries/user-progress";
-import { getVerbsWithConjugationsForTense } from "@/server/db/queries/vocabulary";
+import {
+	getVerbsWithConjugationsForTense,
+	getVerbsWithConjugationsForTenses,
+} from "@/server/db/queries/vocabulary";
 
 // TODO: view concern — prompt strings should be assembled client-side from
 // structured data (person, tense, stem). DrillQuestion.prompt is currently a
@@ -28,15 +31,18 @@ const FUTURE_LABELS: Record<string, string> = {
 	pl3: "they will",
 };
 
-export const getVerbConjugationQuestions = async (
-	userId: number,
-	limit: number,
-	tense: "present" | "aorist" | "past_continuous" | "future",
-	idPrefix: string,
-	timeLimit: number,
-	drillId: string,
-	persons?: PersonNumber[],
-): Promise<DrillQuestion[]> => {
+/** Time words anchor each tense the way the lesson sheets do (χθες / σήμερα / αύριο). */
+const LADDER_TENSES = {
+	present: { timeWord: "σήμερα", label: "present", dimension: "present" },
+	aorist: { timeWord: "χθες", label: "past", dimension: "past" },
+	future: { timeWord: "αύριο", label: "future", dimension: "future" },
+} as const;
+
+type LadderTense = keyof typeof LADDER_TENSES;
+
+const LADDER_TENSE_LIST = ["present", "aorist", "future"] as const;
+
+const drawVerbPool = async (userId: number, drillId: string, limit: number) => {
 	const { currentCefrLevel } = await ensureUserProgress(userId);
 
 	const pool = await getDrillVocabPool({
@@ -48,13 +54,42 @@ export const getVerbConjugationQuestions = async (
 	});
 
 	const entries = typedEntries(pool);
-	const allIds = entries.flatMap(([, ids]) => ids);
-
 	const bucketMap = new Map<number, DrillBucket>();
 	for (const [bucket, ids] of entries) {
 		for (const id of ids) bucketMap.set(id, bucket);
 	}
 
+	return { allIds: entries.flatMap(([, ids]) => ids), bucketMap };
+};
+
+const assertEnough = (questions: DrillQuestion[], limit: number) => {
+	if (questions.length < limit) {
+		throw new Error(
+			`Insufficient questions: got ${questions.length}, need ${limit}. Pool may be exhausted or conjugations unseeded.`,
+		);
+	}
+	return questions;
+};
+
+const sg1ByTense = (conjugations: Array<{ tense: string; person: string; form: string }>) => {
+	const forms = new Map<LadderTense, string>();
+	for (const conj of conjugations) {
+		if (conj.person !== "sg1") continue;
+		if (conj.tense in LADDER_TENSES) forms.set(conj.tense as LadderTense, conj.form);
+	}
+	return forms;
+};
+
+export const getVerbConjugationQuestions = async (
+	userId: number,
+	limit: number,
+	tense: "present" | "aorist" | "past_continuous" | "future",
+	idPrefix: string,
+	timeLimit: number,
+	drillId: string,
+	persons?: PersonNumber[],
+): Promise<DrillQuestion[]> => {
+	const { allIds, bucketMap } = await drawVerbPool(userId, drillId, limit);
 	const vocabRows = await getVerbsWithConjugationsForTense(allIds, tense);
 
 	const labels = tense === "future" ? FUTURE_LABELS : PERSON_LABELS;
@@ -67,13 +102,15 @@ export const getVerbConjugationQuestions = async (
 		for (const conj of conjForms) {
 			const personLabel = labels[conj.person] ?? conj.person;
 			// "I am" / "I am X" verbs: stem starts with "am", which is not a valid
-			// English stem for non-first-person. Normalise to "are" / "is".
-			const stem =
-				rawStem === "am" || rawStem.startsWith("am ")
-					? conj.person === "sg3"
+			// English stem elsewhere. Normalise to "are" / "is", or "be" after "will".
+			const isAmStem = rawStem === "am" || rawStem.startsWith("am ");
+			const stem = isAmStem
+				? tense === "future"
+					? rawStem.replace(/^am/, "be")
+					: conj.person === "sg3"
 						? rawStem.replace(/^am/, "is")
 						: rawStem.replace(/^am/, "are")
-					: rawStem;
+				: rawStem;
 			const prompt =
 				tense === "future"
 					? `${personLabel} ${stem}`
@@ -91,11 +128,79 @@ export const getVerbConjugationQuestions = async (
 		}
 	}
 
-	if (questions.length < limit) {
-		throw new Error(
-			`Insufficient questions: got ${questions.length}, need ${limit}. Pool may be exhausted or conjugations unseeded.`,
-		);
+	return assertEnough(questions, limit);
+};
+
+/**
+ * Transformation cards across the three-form ladder: each card shows one form and
+ * asks for the next one round the loop (present → past → future → present).
+ */
+export const getTenseLadderQuestions = async (
+	userId: number,
+	limit: number,
+): Promise<DrillQuestion[]> => {
+	const { allIds, bucketMap } = await drawVerbPool(userId, "verbs-tense-ladder", limit);
+	const vocabRows = await getVerbsWithConjugationsForTenses(allIds, [...LADDER_TENSE_LIST]);
+
+	const questions: DrillQuestion[] = [];
+	for (const vocab of vocabRows) {
+		const forms = sg1ByTense(vocab.verbConjugations);
+		const present = forms.get("present");
+		const aorist = forms.get("aorist");
+		const future = forms.get("future");
+		if (!present || !aorist || !future) continue;
+
+		const steps = [
+			{ from: present, to: aorist, tense: "aorist" },
+			{ from: aorist, to: future, tense: "future" },
+			{ from: future, to: present, tense: "present" },
+		] as const;
+
+		for (const step of steps) {
+			const target = LADDER_TENSES[step.tense];
+			questions.push({
+				id: `db-verb-ladder-${vocab.id}-${step.tense}`,
+				prompt: `${step.from} → ${target.timeWord} (${target.label})`,
+				correctGreek: step.to,
+				timeLimit: 4500,
+				vocabId: vocab.id,
+				bucket: bucketMap.get(vocab.id),
+			});
+		}
 	}
 
-	return questions;
+	return assertEnough(questions, limit);
+};
+
+/**
+ * Same sg1 forms as the ladder, but each card carries its tense as the reverse-mode
+ * answer key: show έβαλα, pick "past".
+ */
+export const getTenseRecognitionQuestions = async (
+	userId: number,
+	limit: number,
+): Promise<DrillQuestion[]> => {
+	const { allIds, bucketMap } = await drawVerbPool(userId, "verbs-tense-recognition", limit);
+	const vocabRows = await getVerbsWithConjugationsForTenses(allIds, [...LADDER_TENSE_LIST]);
+
+	const questions: DrillQuestion[] = [];
+	for (const vocab of vocabRows) {
+		const forms = sg1ByTense(vocab.verbConjugations);
+		for (const tense of LADDER_TENSE_LIST) {
+			const form = forms.get(tense);
+			if (!form) continue;
+			const target = LADDER_TENSES[tense];
+			questions.push({
+				id: `db-verb-tense-${vocab.id}-${tense}`,
+				prompt: `${vocab.englishTranslation} · ${target.timeWord} (${target.label})`,
+				correctGreek: form,
+				timeLimit: 4000,
+				vocabId: vocab.id,
+				bucket: bucketMap.get(vocab.id),
+				dimension: target.dimension,
+			});
+		}
+	}
+
+	return assertEnough(questions, limit);
 };

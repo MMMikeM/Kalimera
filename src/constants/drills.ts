@@ -147,7 +147,7 @@ export const DRILL_REGISTRY: Record<string, DrillMeta> = {
 	},
 	"verbs-present": {
 		label: "Full Present",
-		route: "/practice/verbs/present",
+		route: "/practice/verbs/present/full",
 		category: "verbs",
 		caseRole: null,
 	},
@@ -187,7 +187,31 @@ export const DRILL_REGISTRY: Record<string, DrillMeta> = {
 	// Verbs — Future & Modal
 	"verbs-future-conjugation": {
 		label: "Future",
-		route: "/practice/verbs/future-conjugation",
+		route: "/practice/verbs/future/conjugation",
+		category: "verbs",
+		caseRole: null,
+	},
+	"verbs-future-sg1": {
+		label: "Verb Vocabulary (Future)",
+		route: "/practice/verbs/future/vocabulary",
+		category: "verbs",
+		caseRole: null,
+	},
+	"verbs-future-formation": {
+		label: "Future Formation",
+		route: "/practice/verbs/future/formation",
+		category: "verbs",
+		caseRole: null,
+	},
+	"verbs-tense-ladder": {
+		label: "Tense Ladder",
+		route: "/practice/verbs/ladder",
+		category: "verbs",
+		caseRole: null,
+	},
+	"verbs-tense-recognition": {
+		label: "Which Tense?",
+		route: "/practice/verbs/tense-recognition",
 		category: "verbs",
 		caseRole: null,
 	},
