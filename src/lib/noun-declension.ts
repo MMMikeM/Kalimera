@@ -89,13 +89,9 @@ const stripTonos = (s: string): string =>
 
 const NUCLEUS = /(αι|ει|οι|ου|αυ|ευ|υι|[αεηιουωάέήίόύώΆΈΉΊΌΎΏϊϋΐΰ])/g;
 
-/**
- * The unaccented genitive plural -ων pulls the stress onto the penult:
- * Έλληνας → Ελλήνων, άνθρωπος → ανθρώπων. A word already stressed on the penult
- * or later is left alone (πατέρας → πατέρων).
- */
+/** Genitive plural -ων pulls stress to the penult: Έλληνας → Ελλήνων. */
 const shiftStressToPenult = (phrase: string): string => {
-	// Multi-word lemmas (ουράνιο τόξο): only the head word declines.
+	// Only the head word declines (ουράνιο τόξο).
 	const split = phrase.lastIndexOf(" ");
 	if (split !== -1) {
 		return phrase.slice(0, split + 1) + shiftStressToPenult(phrase.slice(split + 1));
@@ -137,8 +133,7 @@ const applyEnding = (
 	if (ending === "—") return stem;
 	const cleanEnding = ending.startsWith("-") ? ending.slice(1) : ending;
 
-	// -ση/-ξη/-ψη plurals: the accent lands on the stem's final vowel,
-	// wherever it sat in the singular (ερώτηση → ερωτήσεις).
+	// ερώτηση → ερωτήσεις: stress lands on the stem's final vowel.
 	if (stressOnStemFinal) {
 		return addTonosToLastVowel(stripTonos(stem)) + cleanEnding;
 	}
@@ -162,7 +157,6 @@ const applyEnding = (
 	return cleanEnding === "ων" ? shiftStressToPenult(result) : result;
 };
 
-/** Feminine accusative article: την before the ν-retaining set, τη elsewhere. */
 const mapArticleForAccusative = (article: string, noun: string): string => {
 	if (article === "τη(ν)") {
 		return retainsNu(noun) ? "την" : "τη";

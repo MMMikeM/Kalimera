@@ -15,19 +15,14 @@ import { GENDER_SCHEME, SCHEME } from "@/constants/grammar-palette";
 
 type Gender = "masculine" | "feminine" | "neuter";
 type Case = "Nom" | "Acc" | "Gen";
-/** The vocative is real Greek (Μάικ!) but sits outside the Doer/Target/Owner system. */
+/** Sits outside the Doer/Target/Owner system, so it hides behind the toggle. */
 type TableCase = Case | "Voc";
 
 const CASES: Case[] = ["Nom", "Acc", "Gen"];
 
 const VOCATIVE_ROW: RowDef = { key: "voc", label: "Calling", sublabel: "Vocative" };
 
-/**
- * Both the paradigm lists and the ending strings come from AGREEMENT_PARADIGMS
- * so a new declension pattern shows up here automatically. Hand-maintained
- * copies drifted from the data before — the page advertised -ξη while the
- * generator was producing απόδειση.
- */
+/** Derived from AGREEMENT_PARADIGMS: hand-kept copies drifted from the generator. */
 const paradigmsByGender = (gender: Gender): AgreementParadigm[] =>
 	AGREEMENT_PARADIGMS.filter((p) => p.gender === gender);
 
@@ -44,7 +39,6 @@ const endingsFor = (gender: Gender): string =>
 
 const ESSENTIAL_IDS = ["masc-os", "fem-a", "neut-o", "neut-i"] as const;
 
-/** Ending lists derive from the paradigms; the hints are teaching copy. */
 const GENDER_HINTS: Record<Gender, { endings: string; hint: string }> = {
 	masculine: { endings: endingsFor("masculine"), hint: "Male people, -ος words" },
 	feminine: { endings: endingsFor("feminine"), hint: "Female people, αγάπη / ζωή" },

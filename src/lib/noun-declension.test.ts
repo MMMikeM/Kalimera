@@ -13,9 +13,6 @@ const nouns = (lemma: string, pattern: Parameters<typeof declineNoun>[1]) =>
 	) as Record<string, string>;
 
 // ─── Feminine accusative article: the ν keep-list ─────────────────────────────
-//
-// ν survives before a vowel and before κ, π, τ, ξ, ψ, γκ, μπ, ντ, τσ, τζ.
-// It drops before every other consonant.
 
 describe("feminine accusative article", () => {
 	it.each([

@@ -20,8 +20,7 @@ const citation = (lemma: string) => {
 	};
 };
 
-// A Greek word carries exactly one accent. The feminine and neuter endings are
-// only written accented when the stem itself is unstressed (καλός → καλή/καλό).
+// Endings are written accented only when the stem is unstressed: καλός → καλή.
 
 describe("adjective citation forms", () => {
 	it.each([
@@ -70,8 +69,7 @@ describe("adjective citation forms", () => {
 	});
 });
 
-// The article agrees with the word that follows it, which for an adjective form
-// is the adjective itself: τη μαύρη πόρτα, but την κόκκινη πόρτα.
+// The article reads the next word — the adjective: τη μαύρη, but την κόκκινη.
 
 describe("adjective accusative article", () => {
 	it.each([

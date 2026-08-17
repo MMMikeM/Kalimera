@@ -107,9 +107,7 @@ function inferAdjectiveNominalForms(lemma: string): AdjectiveNominalFormsSeed {
 		};
 	}
 
-	// Typical -ος adjectives not in the table (best-effort).
-	// A stem that already carries the accent takes unaccented endings — άνετος
-	// gives άνετη/άνετο, never άνετή/άνετό.
+	// Not in the table: a stressed stem takes unaccented endings, άνετος → άνετη.
 	if (lemma.endsWith("ος") || lemma.endsWith("ός")) {
 		const stem = lemma.slice(0, -2);
 		const stemStressed = isStemStressed(stem);
