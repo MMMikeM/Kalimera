@@ -104,3 +104,15 @@ export const getVerbsWithConjugationsForTense = async (
 		orderBy: { cefrLevel: "asc", frequencyRank: "asc" },
 	});
 };
+
+export const getVerbsWithConjugationsForTenses = async (
+	vocabIds: number[],
+	tenses: Array<"present" | "aorist" | "past_continuous" | "future">,
+) => {
+	if (vocabIds.length === 0) return [];
+	return await db.query.vocabulary.findMany({
+		where: { id: { in: vocabIds } },
+		with: { verbConjugations: { where: { tense: { in: tenses } } } },
+		orderBy: { cefrLevel: "asc", frequencyRank: "asc" },
+	});
+};
