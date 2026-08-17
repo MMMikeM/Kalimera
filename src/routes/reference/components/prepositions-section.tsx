@@ -38,7 +38,21 @@ const SeCard: React.FC = () => {
 				The σε story
 			</div>
 			<h3 className="mb-2 font-serif text-3xl text-navy-text">σε + article contraction</h3>
-			<p className="mb-8 max-w-md text-sm text-stone-600">{SE_CONTRACTIONS.intro}</p>
+			<p className="mb-4 max-w-md text-sm text-stone-600">{SE_CONTRACTIONS.intro}</p>
+
+			{/* Key before the coloured forms, not after — the reader needs it to read them. */}
+			<div className="mb-8 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs">
+				<span className="text-stone-500">Colour shows gender:</span>
+				{GENDER_ORDER.map((gender) => {
+					const style = SCHEME[CONTRACTION_GENDER_SCHEME[gender] ?? "neutral"];
+					return (
+						<span key={gender} className="flex items-center gap-1.5">
+							<span className={`h-2 w-2 rounded-full ${style.badgeBg}`} />
+							<span className={`font-medium capitalize ${style.text}`}>{gender}</span>
+						</span>
+					);
+				})}
+			</div>
 
 			{/* All 6 forms — singular then plural */}
 			<div className="mb-6 space-y-3">

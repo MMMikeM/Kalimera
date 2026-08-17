@@ -1,72 +1,96 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowRightLeft, Blocks, FileText, Languages, Palette, Scale, Users } from "lucide-react";
 
 import { type Section, SectionCard } from "@/components/SectionCard";
+
+/**
+ * Each card carries a specimen of the thing it links to rather than a generic
+ * icon — the card shows the paradigm instead of pointing at one.
+ */
+const Specimen = ({ forms }: { forms: string[] }) => (
+	<div
+		lang="el"
+		className="greek-text flex w-24 flex-col gap-0.5 text-right font-mono text-xs leading-tight text-stone-500"
+	>
+		{forms.map((form) => (
+			<span key={form}>{form}</span>
+		))}
+	</div>
+);
+
+const CARD_STYLE = "bg-stone-100 text-stone-700 border-stone-200";
 
 const sections: Section[] = [
 	{
 		id: "cases",
 		label: "Cases",
+		greek: "Πτώσεις",
 		description: "The framework for understanding Greek grammar",
-		icon: <Scale size={24} />,
+		icon: <Specimen forms={["ο φίλος", "τον φίλο", "του φίλου"]} />,
 		href: "/reference/cases",
-		color: "bg-stone-100 text-stone-700 border-stone-200",
+		color: CARD_STYLE,
 	},
 	{
 		id: "pronouns",
 		label: "Pronouns",
+		greek: "Αντωνυμίες",
 		description: "Cases in action - the words you'll use most",
-		icon: <Users size={24} />,
+		icon: <Specimen forms={["με", "μου", "εμένα"]} />,
 		href: "/reference/pronouns",
-		color: "bg-stone-100 text-stone-700 border-stone-200",
+		color: CARD_STYLE,
 	},
 	{
 		id: "articles",
 		label: "Articles",
+		greek: "Άρθρα",
 		description: "The definite article and agreement rules",
-		icon: <FileText size={24} />,
+		icon: <Specimen forms={["ο", "η", "το"]} />,
 		href: "/reference/articles",
-		color: "bg-stone-100 text-stone-700 border-stone-200",
+		color: CARD_STYLE,
 	},
 	{
 		id: "nouns",
 		label: "Nouns",
+		greek: "Ουσιαστικά",
 		description: "Noun declensions by gender and case",
-		icon: <FileText size={24} />,
+		icon: <Specimen forms={["-ος", "-α", "-ο"]} />,
 		href: "/reference/nouns",
-		color: "bg-stone-100 text-stone-700 border-stone-200",
+		color: CARD_STYLE,
 	},
 	{
 		id: "adjectives",
 		label: "Adjectives",
+		greek: "Επίθετα",
 		description: "Agreement patterns that follow the noun",
-		icon: <Palette size={24} />,
+		icon: <Specimen forms={["καλός", "καλή", "καλό"]} />,
 		href: "/reference/adjectives",
-		color: "bg-stone-100 text-stone-700 border-stone-200",
+		color: CARD_STYLE,
 	},
 	{
 		id: "prepositions",
 		label: "Prepositions",
+		greek: "Προθέσεις",
 		description: "Connecting words and their case requirements",
-		icon: <ArrowRightLeft size={24} />,
+		icon: <Specimen forms={["στον", "στη", "στο"]} />,
 		href: "/reference/prepositions",
-		color: "bg-stone-100 text-stone-700 border-stone-200",
+		color: CARD_STYLE,
 	},
 	{
 		id: "verbs",
 		label: "Verbs",
+		greek: "Ρήματα",
 		description: "Conjugation patterns and verb families",
-		icon: <Languages size={24} />,
+		icon: <Specimen forms={["κάνω", "κάνεις", "κάνει"]} />,
 		href: "/reference/verbs",
-		color: "bg-stone-100 text-stone-700 border-stone-200",
+		color: CARD_STYLE,
 	},
 	{
 		id: "patterns",
 		label: "Patterns",
+		greek: "Δομές",
 		description: "Greek-specific constructions like μου αρέσει",
-		icon: <Blocks size={24} />,
+		icon: <Specimen forms={["μου αρέσει", "με λένε"]} />,
 		href: "/reference/patterns",
-		color: "bg-stone-100 text-stone-700 border-stone-200",
+		color: CARD_STYLE,
 	},
 ];
 
