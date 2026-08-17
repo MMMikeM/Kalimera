@@ -1,4 +1,6 @@
 import type { SQLiteAsyncDatabase } from "drizzle-orm/sqlite-core";
+import type { TursoDatabaseRunResult } from "drizzle-orm/tursodatabase";
+import type { TursoDatabaseServerlessRunResult } from "drizzle-orm/tursodatabase-serverless";
 
 import type { relations } from "./relations";
 import type {
@@ -21,10 +23,19 @@ import type {
 	vocabularyTags,
 } from "./schema";
 
-// Driver-agnostic database type: both the Turso serverless prod db and the
-// in-memory libsql test db extend this base. Run result narrowed to the shape
-// both drivers return from `db.run()`.
-export type Db = SQLiteAsyncDatabase<"async", { rowsAffected: number }, typeof relations>;
+/** Taken from the drivers rather than transcribed — the two report differently. */
+export type DbRunResult = TursoDatabaseServerlessRunResult | TursoDatabaseRunResult;
+
+/** Row count from a `db.run()` result, whichever driver produced it. */
+export const rowsAffected = (result: DbRunResult): number =>
+	"rowsAffected" in result ? result.rowsAffected : result.changes;
+
+/** Both drivers satisfy the default; name one when you need its run result. */
+export type Db<TRunResult = DbRunResult> = SQLiteAsyncDatabase<
+	"async",
+	TRunResult,
+	typeof relations
+>;
 
 // Inferred select types (what you get when querying)
 export type User = typeof users.$inferSelect;

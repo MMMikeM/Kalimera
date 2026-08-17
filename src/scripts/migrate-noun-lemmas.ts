@@ -14,7 +14,7 @@
 
 import { sql } from "drizzle-orm";
 
-import type { Db } from "../server/db/types";
+import { type Db, rowsAffected } from "../server/db/types";
 
 export async function migrateNounLemmas(db: Db) {
 	console.log("Migrating noun greekText: stripping leading articles...");
@@ -90,7 +90,7 @@ export async function migrateNounLemmas(db: Db) {
 		sql`UPDATE vocabulary SET greek_text = substr(greek_text, instr(greek_text, ' ') + 1) WHERE word_type = 'noun' AND greek_text LIKE '% %'`,
 	);
 
-	console.log(`\nUpdated ${result.rowsAffected} rows.`);
+	console.log(`\nUpdated ${rowsAffected(result)} rows.`);
 	console.log("Migration complete.");
 }
 

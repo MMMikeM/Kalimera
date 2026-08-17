@@ -11,15 +11,12 @@ vi.mock("@/server/db", () => ({
 	},
 }));
 
-// The Patterns tab reads the likes construction out of the *verbs* tag section,
-// but every item tagged there is a full phrase (μου αρέσει ο καφές). Filtering
-// the nested vocabulary to wordType "verb" nulls all of them and the card
-// renders two empty columns — which is what production was doing.
+// Likes items are phrases tagged in the verbs section; filtering to "verb" empties the card.
 
 beforeAll(async () => {
-	const { db, client } = createTestDb();
+	const { db } = createTestDb();
 	testDbInstance = db;
-	await runMigrations(client);
+	await runMigrations(db);
 
 	const [singular, plural] = await db
 		.insert(tags)
