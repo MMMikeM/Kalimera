@@ -4,7 +4,6 @@ import type React from "react";
 export interface Section {
 	id: string;
 	label: string;
-	/** Greek name, shown ahead of the English label where the section has one. */
 	greek?: string;
 	description: string;
 	icon: React.ReactNode;

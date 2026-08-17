@@ -10,10 +10,7 @@ interface AgreementPattern {
 	ending: string;
 	full: string;
 	english: string;
-	/**
-	 * -ση/-ξη/-ψη feminines move the accent onto the stem's final vowel in the
-	 * plural: ερώτηση → ερωτήσεις, απόδειξη → αποδείξεις, άποψη → απόψεις.
-	 */
+	/** -ση/-ξη/-ψη plurals stress the stem's final vowel: ερώτηση → ερωτήσεις. */
 	stressOnStemFinal?: boolean;
 }
 

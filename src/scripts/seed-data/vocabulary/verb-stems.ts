@@ -293,10 +293,8 @@ export const VERB_STEMS: VerbStem[] = [
 		cefrLevel: "A2",
 	},
 	{ lemma: "ξοδεύω", aoristStem: "ξοδεψ", family: "-ω", english: "I spend", cefrLevel: "A2" },
-	// Not generatable — the -ιά- of αγκαλιάζω/φτιάχνω is one syllable (synizesis) but
-	// accentAntepenult counts ι and α separately, yielding αγκαλίασα for αγκάλιασα.
-	// ταΐζω breaks the same way: the diaeresis is not counted as a nucleus.
-	// These three need hand-written entries in verb-conjugations.ts.
+	// αγκαλιάζω, φτιάχνω, ταΐζω need hand-written entries: the generator counts
+	// -ιά- as two syllables and skips the diaeresis, giving αγκαλίασα for αγκάλιασα.
 	{ lemma: "ζητάω", aoristStem: "ζητησ", family: "-άω/-ώ", english: "I ask for", cefrLevel: "A2" },
 	{
 		lemma: "κοιτάω",

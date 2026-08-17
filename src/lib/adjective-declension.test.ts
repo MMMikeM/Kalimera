@@ -10,8 +10,7 @@ const nomSingular = (lemma: string, pattern: Parameters<typeof declineAdjective>
 	return { m: pick("masculine"), f: pick("feminine"), n: pick("neuter") };
 };
 
-// Adjectives cited in the neuter (the colour words) must not lose a stem
-// consonant: άσπρο strips one character, not the paradigm's two.
+// Colour words are cited in the neuter: άσπρο strips one character, not two.
 
 describe("adjectives cited in the neuter", () => {
 	it.each([

@@ -2,10 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { type Section, SectionCard } from "@/components/SectionCard";
 
-/**
- * Each card carries a specimen of the thing it links to rather than a generic
- * icon — the card shows the paradigm instead of pointing at one.
- */
+/** A specimen of the section's own content, in place of a generic icon. */
 const Specimen = ({ forms }: { forms: string[] }) => (
 	<div
 		lang="el"
