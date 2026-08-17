@@ -7,12 +7,18 @@
 **Database setup (this repo):** `.env` holds **production** Turso credentials (no separate `.env.prod` exists). The `prod-db-*` Makefile targets fail (`.env.prod: No such file`).
 
 ```bash
-# Production (Turso) — `.env` is auto-loaded by drizzle-kit
-make db-push | db-seed | db-setup | db-studio   # ← these hit PROD
+# Production (Turso) — drizzle-kit auto-loads `.env`; these hit PROD
+pnpm db:push        # or db:studio, db:generate, db:migrate
 
-# Local (Docker libsql :8080) — rename `.env` so drizzle falls back to localhost
-docker compose up -d libsql                     # one-time
-mv .env .env.bak && make db-push && make db-seed; mv .env.bak .env
+# Seeding needs the env passed explicitly — `pnpm db:seed` does NOT load `.env`
+node --env-file=.env --import tsx src/scripts/seed.ts
+
+# Local schema only — a `file:` URL makes drizzle.config.ts drop the auth token,
+# so drizzle-kit uses the embedded @tursodatabase/database driver (no Docker)
+TURSO_DATABASE_URL=file:./local.db pnpm exec drizzle-kit push
+
+# Seeding and the app itself always hit Turso: src/server/db/index.ts uses the
+# HTTP @tursodatabase/serverless driver, which rejects `file:` URLs.
 
 # DO NOT use `make prod-db-*` — they require a `.env.prod` that doesn't exist.
 ```

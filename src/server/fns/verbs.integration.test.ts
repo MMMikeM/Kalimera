@@ -16,9 +16,9 @@ vi.mock("@/server/db", () => ({
 }));
 
 beforeAll(async () => {
-	const { db, client } = createTestDb();
+	const { db } = createTestDb();
 	testDbInstance = db;
-	await runMigrations(client);
+	await runMigrations(db);
 	await seedTestUser(db);
 	await seedTestVerbs(db);
 	await seedVerbConjugations(db);
@@ -67,8 +67,8 @@ describe("getVerbConjugationQuestions — integration", () => {
 	});
 
 	it("throws when pool returns fewer questions than limit — catches unseeded conjugations", async () => {
-		const { db: emptyDb, client } = createTestDb();
-		await runMigrations(client);
+		const { db: emptyDb } = createTestDb();
+		await runMigrations(emptyDb);
 		await seedTestUser(emptyDb);
 		await seedTestVerbs(emptyDb); // vocab only — no conjugations
 

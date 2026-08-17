@@ -6,7 +6,7 @@
  *   pnpm query "SELECT COUNT(*) FROM practice_attempts"
  */
 
-import { createClient } from "@libsql/client";
+import { connect } from "@tursodatabase/serverless";
 
 const url = process.env.TURSO_DATABASE_URL;
 const authToken = process.env.TURSO_AUTH_TOKEN;
@@ -23,12 +23,18 @@ if (!sqlArg) {
 	process.exit(1);
 }
 
-const client = createClient({ url, authToken });
+const client = connect({ url, authToken });
 const result = await client.execute(sqlArg);
-client.close();
+await client.close();
 
 if (result.rows.length === 0) {
 	console.log("(no rows)");
 } else {
-	console.table(result.rows);
+	// Rows come back positional; pair with `columns` so console.table names them.
+	const columns: string[] = result.columns;
+	console.table(
+		result.rows.map((row: unknown[]) =>
+			Object.fromEntries(columns.map((name, i) => [name, row[i]])),
+		),
+	);
 }
