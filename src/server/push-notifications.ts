@@ -8,7 +8,9 @@ import {
 	type PushPayload,
 	type PushSubscriptionData,
 	type VapidConfig,
+	WebPushError,
 	sendPushNotification,
+	topicFromString,
 } from "@mmmike/web-push/send";
 
 import { streakLengthFromCompletedSessionDates } from "@/lib/practice-streak";
@@ -44,8 +46,26 @@ import { listDueVocabularyCountsByUser } from "@/server/db/queries/vocab-reviews
 interface NotificationResult {
 	sent: number;
 	failed: number;
+	/** Reported gone by the push service — safe to delete. */
 	invalidSubscriptions: string[];
 }
+
+/** Only `gone` may delete a subscription; `failed` covers rate limits and timeouts. */
+type SendOutcome = "delivered" | "gone" | "failed";
+
+/** Keeps one hung push service from stalling a whole cron run. */
+const SEND_TIMEOUT_MS = 10_000;
+
+/** Collapse key per type: an offline device gets the newest reminder, not a week of them. */
+const topicCache = new Map<string, Promise<string>>();
+
+const topicFor = (kind: string): Promise<string> => {
+	const cached = topicCache.get(kind);
+	if (cached) return cached;
+	const topic = topicFromString(`kalimera:${kind}`);
+	topicCache.set(kind, topic);
+	return topic;
+};
 
 const toPushPayload = (sub: PushSubscriptionCronRow): PushSubscriptionData => ({
 	endpoint: sub.endpoint,
@@ -84,18 +104,16 @@ const distinctPracticeDaysDesc = (
 
 const utcCalendarDayIndex = (): number => Math.floor(nowInstant().epochMilliseconds / 86_400_000);
 
-/**
- * Send a push notification to a specific subscription
- */
+/** false means the endpoint is gone (404/410); everything else throws. */
 const sendNotification = async (
 	subscription: PushSubscriptionData,
 	title: string,
 	body: string,
 	vapid: VapidConfig,
-	options: { url?: string; userId?: number } = {},
-): Promise<boolean> => {
+	options: { url?: string; userId?: number; topic?: string } = {},
+): Promise<SendOutcome> => {
 	try {
-		return await sendPushNotification(
+		const delivered = await sendPushNotification(
 			subscription,
 			{
 				title,
@@ -105,11 +123,16 @@ const sendNotification = async (
 				quickSessionUrl: "/practice?size=quick",
 			} as PushPayload & { userId?: number; quickSessionUrl?: string },
 			vapid,
-			{ ttl: 86400 },
+			{ ttl: 86400, timeoutMs: SEND_TIMEOUT_MS, ...(options.topic ? { topic: options.topic } : {}) },
 		);
+		return delivered ? "delivered" : "gone";
 	} catch (error) {
-		console.error("Push notification failed:", error);
-		return false;
+		// toJSON truncates the endpoint — it is a capability URL.
+		console.error(
+			"Push notification failed:",
+			error instanceof WebPushError ? error.toJSON() : error,
+		);
+		return "failed";
 	}
 };
 
@@ -150,6 +173,8 @@ export const sendPracticeReminders = async (vapid: VapidConfig): Promise<Notific
 		return result;
 	}
 
+	const topic = await topicFor("practice-reminder");
+
 	for (const sub of subscriptions) {
 		if (!sub.userId) continue;
 
@@ -158,20 +183,20 @@ export const sendPracticeReminders = async (vapid: VapidConfig): Promise<Notific
 		}
 
 		// TODO: Add "practiced today" check to skip users who already practiced
-		const success = await sendNotification(
+		const outcome = await sendNotification(
 			toPushPayload(sub),
 			"Quick 2-minute review?",
 			"Your review queue is ready.",
 			vapid,
-			{ url: "/practice", userId: sub.userId },
+			{ url: "/practice", userId: sub.userId, topic },
 		);
 
-		if (success) {
+		if (outcome === "delivered") {
 			result.sent++;
 			await logNotificationSent({ userId: sub.userId, type: "practice_reminder" });
 		} else {
 			result.failed++;
-			result.invalidSubscriptions.push(sub.endpoint);
+			if (outcome === "gone") result.invalidSubscriptions.push(sub.endpoint);
 		}
 	}
 
@@ -202,6 +227,7 @@ export const sendReviewDueNotifications = async (
 	}
 
 	const subscriptions = await getPushSubscriptionsForUserIds(userIds);
+	const topic = await topicFor("review-due");
 
 	for (const sub of subscriptions) {
 		if (!sub.userId) continue;
@@ -213,20 +239,20 @@ export const sendReviewDueNotifications = async (
 		const count = dueByUser.get(sub.userId) ?? 0;
 		if (count === 0) continue;
 
-		const success = await sendNotification(
+		const outcome = await sendNotification(
 			toPushPayload(sub),
 			`${count} word${count > 1 ? "s" : ""} ready for review!`,
 			"Spaced repetition works best with timely reviews.",
 			vapid,
-			{ url: "/practice/review", userId: sub.userId },
+			{ url: "/practice/review", userId: sub.userId, topic },
 		);
 
-		if (success) {
+		if (outcome === "delivered") {
 			result.sent++;
 			await logNotificationSent({ userId: sub.userId, type: "review_due" });
 		} else {
 			result.failed++;
-			result.invalidSubscriptions.push(sub.endpoint);
+			if (outcome === "gone") result.invalidSubscriptions.push(sub.endpoint);
 		}
 	}
 
@@ -329,6 +355,7 @@ export const sendStreakWarningNotifications = async (
 		toISOString(toInstant(todayDate.subtract({ days: 45 }))),
 	);
 	const datesByUser = distinctPracticeDaysDesc(sessionRows, 30);
+	const topic = await topicFor("streak-warning");
 
 	for (const sub of streakCandidates) {
 		const dates = datesByUser.get(sub.userId) ?? [];
@@ -343,12 +370,13 @@ export const sendStreakWarningNotifications = async (
 		const dueCount = dueByUser.get(sub.userId) ?? 0;
 		const { title, body } = selectCopy(sub.userId, dueCount, streak);
 
-		const success = await sendNotification(toPushPayload(sub), title, body, vapid, {
+		const outcome = await sendNotification(toPushPayload(sub), title, body, vapid, {
 			url: "/",
 			userId: sub.userId,
+			topic,
 		});
 
-		if (success) {
+		if (outcome === "delivered") {
 			result.sent++;
 			await logNotificationSent({ userId: sub.userId, type: "streak_warning" });
 
@@ -361,7 +389,7 @@ export const sendStreakWarningNotifications = async (
 			}
 		} else {
 			result.failed++;
-			result.invalidSubscriptions.push(sub.endpoint);
+			if (outcome === "gone") result.invalidSubscriptions.push(sub.endpoint);
 		}
 	}
 
