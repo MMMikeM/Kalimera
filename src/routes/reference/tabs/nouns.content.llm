@@ -20,8 +20,11 @@ Greek nouns change their endings to show grammatical function (case) and number.
 | Gender    | Common Endings | Tip |
 |-----------|----------------|-----|
 | Masculine | -ος, -ας, -ης, -ές | Most words for male people |
-| Feminine  | -α, -η, -ση/-ξη | Female people, abstract nouns (-η) |
+| Feminine  | -α, -η, -ση, -ξη, -ψη | Female people, abstract nouns (-η) |
 | Neuter    | -ο, -ι, -μα | Diminutives (-ι, -άκι), result nouns (-μα) |
+
+Ending lists are derived from `AGREEMENT_PARADIGMS` — adding a declension pattern
+updates this table with no edit here.
 
 </quick-reference>
 
@@ -127,8 +130,9 @@ The article changes along with the noun and helps identify the gender.
 </paradigm>
 
 <paradigm name="feminine-si" frequency="common">
-<pattern>-ση/-ξη</pattern>
+<pattern>-ση</pattern>
 <example>ερώτηση (question)</example>
+<note>-ξη (απόδειξη) and -ψη (άποψη) are separate paradigms with the same endings — the consonant is kept: αποδείξεις, απόψεις</note>
 <tip>Action nouns (like English -tion)</tip>
 
 | Case | Singular | Plural |
@@ -184,6 +188,12 @@ The article changes along with the noun and helps identify the gender.
 </paradigm>
 
 ---
+
+## Vocative
+
+The essential-patterns table adds a fourth row, "Calling / Vocative", when the
+view toggle is set to **Full forms**. It is hidden in the default Endings view so
+the Doer / Target / Owner trio stays uncluttered.
 
 ## Vocative Changes (Collapsible)
 
