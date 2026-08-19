@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 
 import { drillActions, useDrillStore } from "../drill-store";
 import { ReverseFeedback } from "../shells";
+import { GreekText } from "@/components/GreekText";
 
 export function SelfAssessReverse() {
 	const phase = useDrillStore((s) => s.phase);
@@ -37,9 +38,9 @@ export function SelfAssessReverse() {
 	return (
 		<>
 			<div>
-				<p lang="el" className="greek-text text-4xl text-foreground">
+				<GreekText as="p" size="4xl">
 					{currentForm.greek}
-				</p>
+				</GreekText>
 			</div>
 
 			{phase === "active" && !revealedAnswer && (

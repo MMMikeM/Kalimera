@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 
 import type { Drill } from "./group-section";
+import { GreekText } from "@/components/GreekText";
 
 export const DrillButton = ({ from, to, greek, title, minutes }: Drill) => (
 	<li>
@@ -11,9 +12,9 @@ export const DrillButton = ({ from, to, greek, title, minutes }: Drill) => (
 		>
 			<div className="min-w-0 flex-1">
 				<div className="mb-0.5 text-sm font-medium text-foreground">{title}</div>
-				<p lang="el" className="greek-text truncate text-muted-foreground">
+				<GreekText as="p" tone="muted" className="truncate">
 					{greek}
-				</p>
+				</GreekText>
 			</div>
 			<span className="shrink-0 text-xs text-muted-foreground tabular-nums">{minutes} min</span>
 		</Link>
