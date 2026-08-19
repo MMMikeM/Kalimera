@@ -12,19 +12,19 @@ Understanding where code runs is fundamental to building TanStack Start applicat
 ```tsx
 // ✅ This runs on BOTH server and client
 function formatPrice(price: number) {
-	return new Intl.NumberFormat("en-US", {
-		style: "currency",
-		currency: "USD",
-	}).format(price);
+ return new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+ }).format(price);
 }
 
 // ✅ Route loaders are ISOMORPHIC
 export const Route = createFileRoute("/products")({
-	loader: async () => {
-		// This runs on server during SSR AND on client during navigation
-		const response = await fetch("/api/products");
-		return response.json();
-	},
+ loader: async () => {
+  // This runs on server during SSR AND on client during navigation
+  const response = await fetch("/api/products");
+  return response.json();
+ },
 });
 ```
 
@@ -62,11 +62,11 @@ import { createServerFn, createServerOnlyFn } from "@tanstack/react-start";
 
 // RPC: Server execution, callable from client
 const updateUser = createServerFn({ method: "POST" })
-	.inputValidator((data: UserData) => data)
-	.handler(async ({ data }) => {
-		// Only runs on server, but client can call it
-		return await db.users.update(data);
-	});
+ .validator((data: UserData) => data)
+ .handler(async ({ data }) => {
+  // Only runs on server, but client can call it
+  return await db.users.update(data);
+ });
 
 // Utility: Server-only, client crashes if called
 const getEnvVar = createServerOnlyFn(() => process.env.DATABASE_URL);
@@ -85,16 +85,16 @@ import { ClientOnly } from "@tanstack/react-router";
 
 // Utility: Client-only, server crashes if called
 const saveToStorage = createClientOnlyFn((key: string, value: any) => {
-	localStorage.setItem(key, JSON.stringify(value));
+ localStorage.setItem(key, JSON.stringify(value));
 });
 
 // Component: Only renders children after hydration
 function Analytics() {
-	return (
-		<ClientOnly fallback={null}>
-			<GoogleAnalyticsScript />
-		</ClientOnly>
-	);
+ return (
+  <ClientOnly fallback={null}>
+   <GoogleAnalyticsScript />
+  </ClientOnly>
+ );
 }
 ```
 
@@ -106,10 +106,10 @@ For more granular control over hydration-dependent behavior, use the `useHydrate
 import { useHydrated } from "@tanstack/react-router";
 
 function TimeZoneDisplay() {
-	const hydrated = useHydrated();
-	const timeZone = hydrated ? Intl.DateTimeFormat().resolvedOptions().timeZone : "UTC";
+ const hydrated = useHydrated();
+ const timeZone = hydrated ? Intl.DateTimeFormat().resolvedOptions().timeZone : "UTC";
 
-	return <div>Your timezone: {timeZone}</div>;
+ return <div>Your timezone: {timeZone}</div>;
 }
 ```
 
@@ -128,8 +128,8 @@ import { createIsomorphicFn } from "@tanstack/react-start";
 
 // Different implementation per environment
 const getDeviceInfo = createIsomorphicFn()
-	.server(() => ({ type: "server", platform: process.platform }))
-	.client(() => ({ type: "client", userAgent: navigator.userAgent }));
+ .server(() => ({ type: "server", platform: process.platform }))
+ .client(() => ({ type: "client", userAgent: navigator.userAgent }));
 ```
 
 ## Architectural Patterns
@@ -140,16 +140,16 @@ Build components that work without JavaScript and enhance with client-side funct
 
 ```tsx
 function SearchForm() {
-	const [query, setQuery] = useState("");
+ const [query, setQuery] = useState("");
 
-	return (
-		<form action="/search" method="get">
-			<input name="q" value={query} onChange={(e) => setQuery(e.target.value)} />
-			<ClientOnly fallback={<button type="submit">Search</button>}>
-				<SearchButton onSearch={() => search(query)} />
-			</ClientOnly>
-		</form>
-	);
+ return (
+  <form action="/search" method="get">
+   <input name="q" value={query} onChange={(e) => setQuery(e.target.value)} />
+   <ClientOnly fallback={<button type="submit">Search</button>}>
+    <SearchButton onSearch={() => search(query)} />
+   </ClientOnly>
+  </form>
+ );
 }
 ```
 
@@ -157,15 +157,15 @@ function SearchForm() {
 
 ```tsx
 const storage = createIsomorphicFn()
-	.server((key: string) => {
-		// Server: File-based cache
-		const fs = require("node:fs");
-		return JSON.parse(fs.readFileSync(".cache", "utf-8"))[key];
-	})
-	.client((key: string) => {
-		// Client: localStorage
-		return JSON.parse(localStorage.getItem(key) || "null");
-	});
+ .server((key: string) => {
+  // Server: File-based cache
+  const fs = require("node:fs");
+  return JSON.parse(fs.readFileSync(".cache", "utf-8"))[key];
+ })
+ .client((key: string) => {
+  // Client: localStorage
+  return JSON.parse(localStorage.getItem(key) || "null");
+ });
 ```
 
 ### RPC vs Direct Function Calls
@@ -204,8 +204,8 @@ const apiKey = createServerOnlyFn(() => process.env.SECRET_KEY);
 
 // ✅ Or read directly inside `.handler()` / middleware `.server()` / server-route handlers
 const fetchData = createServerFn().handler(async () => {
-	const apiKey = process.env.SECRET_KEY;
-	// ...
+ const apiKey = process.env.SECRET_KEY;
+ // ...
 });
 ```
 
@@ -214,21 +214,21 @@ const fetchData = createServerFn().handler(async () => {
 ```tsx
 // ❌ Assuming loader is server-only
 export const Route = createFileRoute("/users")({
-	loader: () => {
-		// This runs on BOTH server and client!
-		const secret = process.env.SECRET; // Exposed to client
-		return fetch(`/api/users?key=${secret}`);
-	},
+ loader: () => {
+  // This runs on BOTH server and client!
+  const secret = process.env.SECRET; // Exposed to client
+  return fetch(`/api/users?key=${secret}`);
+ },
 });
 
 // ✅ Use server function for server-only operations
 const getUsersSecurely = createServerFn().handler(() => {
-	const secret = process.env.SECRET; // Server-only
-	return fetch(`/api/users?key=${secret}`);
+ const secret = process.env.SECRET; // Server-only
+ return fetch(`/api/users?key=${secret}`);
 });
 
 export const Route = createFileRoute("/users")({
-	loader: () => getUsersSecurely(), // Isomorphic call to server function
+ loader: () => getUsersSecurely(), // Isomorphic call to server function
 });
 ```
 
@@ -237,18 +237,18 @@ export const Route = createFileRoute("/users")({
 ```tsx
 // ❌ Different content server vs client
 function CurrentTime() {
-	return <div>{new Date().toLocaleString()}</div>;
+ return <div>{new Date().toLocaleString()}</div>;
 }
 
 // ✅ Consistent rendering
 function CurrentTime() {
-	const [time, setTime] = useState<string>();
+ const [time, setTime] = useState<string>();
 
-	useEffect(() => {
-		setTime(new Date().toLocaleString());
-	}, []);
+ useEffect(() => {
+  setTime(new Date().toLocaleString());
+ }, []);
 
-	return <div>{time || "Loading..."}</div>;
+ return <div>{time || "Loading..."}</div>;
 }
 ```
 
@@ -257,17 +257,17 @@ function CurrentTime() {
 ```tsx
 // Manual: You handle the logic
 function logMessage(msg: string) {
-	if (typeof window === "undefined") {
-		console.log(`[SERVER]: ${msg}`);
-	} else {
-		console.log(`[CLIENT]: ${msg}`);
-	}
+ if (typeof window === "undefined") {
+  console.log(`[SERVER]: ${msg}`);
+ } else {
+  console.log(`[CLIENT]: ${msg}`);
+ }
 }
 
 // API: Framework handles it
 const logMessage = createIsomorphicFn()
-	.server((msg) => console.log(`[SERVER]: ${msg}`))
-	.client((msg) => console.log(`[CLIENT]: ${msg}`));
+ .server((msg) => console.log(`[SERVER]: ${msg}`))
+ .client((msg) => console.log(`[CLIENT]: ${msg}`));
 ```
 
 ## Marking Whole Files Server- or Client-Only
@@ -279,7 +279,7 @@ The `.server.*` and `.client.*` filename suffixes opt a file into Start's import
 import "@tanstack/react-start/server-only";
 
 export function getApiKey() {
-	return process.env.API_KEY;
+ return process.env.API_KEY;
 }
 ```
 
@@ -288,7 +288,7 @@ export function getApiKey() {
 import "@tanstack/react-start/client-only";
 
 export function savePreferences(prefs: Record<string, string>) {
-	localStorage.setItem("prefs", JSON.stringify(prefs));
+ localStorage.setItem("prefs", JSON.stringify(prefs));
 }
 ```
 
@@ -341,20 +341,20 @@ Handle server/client execution errors gracefully:
 
 ```tsx
 function ErrorBoundary({ children }: { children: React.ReactNode }) {
-	return (
-		<ErrorBoundaryComponent
-			fallback={<div>Something went wrong</div>}
-			onError={(error) => {
-				if (typeof window === "undefined") {
-					console.error("[SERVER ERROR]:", error);
-				} else {
-					console.error("[CLIENT ERROR]:", error);
-				}
-			}}
-		>
-			{children}
-		</ErrorBoundaryComponent>
-	);
+ return (
+  <ErrorBoundaryComponent
+   fallback={<div>Something went wrong</div>}
+   onError={(error) => {
+    if (typeof window === "undefined") {
+     console.error("[SERVER ERROR]:", error);
+    } else {
+     console.error("[CLIENT ERROR]:", error);
+    }
+   }}
+  >
+   {children}
+  </ErrorBoundaryComponent>
+ );
 }
 ```
 

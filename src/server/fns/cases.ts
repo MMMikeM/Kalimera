@@ -72,7 +72,7 @@ async function getNominalReviewQuestionsImpl(
 }
 
 export const getNominalReviewQuestionsFn = createServerFn({ method: "GET" })
-	.inputValidator(
+	.validator(
 		z.object({
 			wordType: z.enum(["noun", "adjective"]),
 			drillId: z.string(),

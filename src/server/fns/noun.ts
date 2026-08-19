@@ -66,7 +66,7 @@ async function getNounDrillItemsImpl(
 }
 
 export const getNounDrillItemsFn = createServerFn({ method: "GET" })
-	.inputValidator(
+	.validator(
 		z.object({
 			grammaticalCase: z.enum(["nominative", "accusative", "genitive"]),
 			drillId: z.string(),

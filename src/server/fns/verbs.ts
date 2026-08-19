@@ -72,56 +72,56 @@ async function getFutureDrillQuestionsImpl(userId: number, limit: number) {
 }
 
 export const getVerbDrillQuestionsFn = createServerFn({ method: "GET" })
-	.inputValidator(z.object({ limit: z.number() }))
+	.validator(z.object({ limit: z.number() }))
 	.handler(async ({ data }) => {
 		const { userId } = requireAuth();
 		return getVerbDrillQuestionsImpl(userId, data.limit);
 	});
 
 export const getPresentSg1QuestionsFn = createServerFn({ method: "GET" })
-	.inputValidator(z.object({ limit: z.number() }))
+	.validator(z.object({ limit: z.number() }))
 	.handler(async ({ data }) => {
 		const { userId } = requireAuth();
 		return getPresentSg1QuestionsImpl(userId, data.limit);
 	});
 
 export const getAoristDrillQuestionsFn = createServerFn({ method: "GET" })
-	.inputValidator(z.object({ limit: z.number() }))
+	.validator(z.object({ limit: z.number() }))
 	.handler(async ({ data }) => {
 		const { userId } = requireAuth();
 		return getAoristDrillQuestionsImpl(userId, data.limit);
 	});
 
 export const getAoristSg1QuestionsFn = createServerFn({ method: "GET" })
-	.inputValidator(z.object({ limit: z.number() }))
+	.validator(z.object({ limit: z.number() }))
 	.handler(async ({ data }) => {
 		const { userId } = requireAuth();
 		return getAoristSg1QuestionsImpl(userId, data.limit);
 	});
 
 export const getFutureDrillQuestionsFn = createServerFn({ method: "GET" })
-	.inputValidator(z.object({ limit: z.number() }))
+	.validator(z.object({ limit: z.number() }))
 	.handler(async ({ data }) => {
 		const { userId } = requireAuth();
 		return getFutureDrillQuestionsImpl(userId, data.limit);
 	});
 
 export const getFutureSg1QuestionsFn = createServerFn({ method: "GET" })
-	.inputValidator(z.object({ limit: z.number() }))
+	.validator(z.object({ limit: z.number() }))
 	.handler(async ({ data }) => {
 		const { userId } = requireAuth();
 		return getFutureSg1QuestionsImpl(userId, data.limit);
 	});
 
 export const getTenseLadderQuestionsFn = createServerFn({ method: "GET" })
-	.inputValidator(z.object({ limit: z.number() }))
+	.validator(z.object({ limit: z.number() }))
 	.handler(async ({ data }) => {
 		const { userId } = requireAuth();
 		return getTenseLadderQuestions(userId, data.limit);
 	});
 
 export const getTenseRecognitionQuestionsFn = createServerFn({ method: "GET" })
-	.inputValidator(z.object({ limit: z.number() }))
+	.validator(z.object({ limit: z.number() }))
 	.handler(async ({ data }) => {
 		const { userId } = requireAuth();
 		return getTenseRecognitionQuestions(userId, data.limit);

@@ -11,7 +11,7 @@ import {
 } from "@/server/db/queries/users";
 
 export const loginFn = createServerFn({ method: "POST" })
-	.inputValidator(loginSchema)
+	.validator(loginSchema)
 	.handler(async ({ data }) => {
 		const { username: identifier, password } = data;
 
@@ -40,7 +40,7 @@ export const loginFn = createServerFn({ method: "POST" })
 	});
 
 export const setupPasswordFn = createServerFn({ method: "POST" })
-	.inputValidator(passwordSetupSchema)
+	.validator(passwordSetupSchema)
 	.handler(async ({ data }) => {
 		const { newPassword, userId, username } = data;
 		const hash = await hashPassword(newPassword);
@@ -50,7 +50,7 @@ export const setupPasswordFn = createServerFn({ method: "POST" })
 	});
 
 export const registerFn = createServerFn({ method: "POST" })
-	.inputValidator(registerSchema)
+	.validator(registerSchema)
 	.handler(async ({ data }) => {
 		const { username, displayName, password } = data;
 

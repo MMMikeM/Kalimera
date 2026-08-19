@@ -37,10 +37,10 @@ export const Route = createFileRoute("/example")({
 import { createServerFn } from "@tanstack/react-start";
 
 export const doThingFn = createServerFn({ method: "POST" })
-	.inputValidator(z.object({ id: z.number() }))
-	.handler(async ({ data }) => {
-		return await db.doThing(data.id);
-	});
+ .validator(z.object({ id: z.number() }))
+ .handler(async ({ data }) => {
+  return await db.doThing(data.id);
+ });
 
 // In component:
 await doThingFn({ data: { id: 42 } });
@@ -54,15 +54,15 @@ import "@tanstack/react-start";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/api/thing")({
-	server: {
-		handlers: {
-			GET: async ({ request }) => Response.json({ ok: true }),
-			POST: async ({ request }) => {
-				const body = await request.json();
-				return Response.json({ received: body });
-			},
-		},
-	},
+ server: {
+  handlers: {
+   GET: async ({ request }) => Response.json({ ok: true }),
+   POST: async ({ request }) => {
+    const body = await request.json();
+    return Response.json({ received: body });
+   },
+  },
+ },
 });
 ```
 
