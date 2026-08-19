@@ -4,6 +4,7 @@ import { connect } from "@tursodatabase/serverless";
 import { drizzle } from "drizzle-orm/tursodatabase-serverless";
 
 import { relations } from "./relations";
+import { withReadRetry } from "./retry";
 
 const getDb = createServerOnlyFn(() => {
 	if (!process.env.TURSO_DATABASE_URL) throw new Error("Env vars missing");
@@ -15,7 +16,7 @@ const getDb = createServerOnlyFn(() => {
 		authToken: process.env.TURSO_AUTH_TOKEN,
 	});
 
-	return drizzle({ client, relations });
+	return drizzle({ client: withReadRetry(client), relations });
 });
 
 export const db = getDb();
