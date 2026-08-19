@@ -3,11 +3,7 @@ import { Hand } from "lucide-react";
 import { ConversationHero } from "@/components/ConversationHero";
 import type { DialogueLine } from "@/components/DialogueExchange";
 
-import {
-	LearningTips,
-	ScenarioCard,
-	useConversationContext,
-} from "../components/conversation-shell";
+import { LearningTips, ScenarioCard } from "../components/conversation-shell";
 
 const INTRODUCTIONS: DialogueLine[] = [
 	{ speaker: "stranger", greek: "Πώς σε λένε;", english: "What's your name?" },
@@ -97,8 +93,6 @@ const MAKING_REQUESTS: DialogueLine[] = [
 ];
 
 export function RequestsTab() {
-	const { mode } = useConversationContext();
-
 	return (
 		<div className="space-y-4">
 			<ConversationHero
@@ -114,7 +108,6 @@ export function RequestsTab() {
 				description="When meeting someone new"
 				formality="formal"
 				dialogue={INTRODUCTIONS}
-				mode={mode}
 			/>
 
 			<ScenarioCard
@@ -122,7 +115,6 @@ export function RequestsTab() {
 				description="Getting directions or assistance"
 				formality="formal"
 				dialogue={ASKING_FOR_HELP}
-				mode={mode}
 			/>
 
 			<ScenarioCard
@@ -130,7 +122,6 @@ export function RequestsTab() {
 				description="Essential survival phrases for beginners"
 				formality="formal"
 				dialogue={COMPREHENSION_HELP}
-				mode={mode}
 			/>
 
 			<ScenarioCard
@@ -138,7 +129,6 @@ export function RequestsTab() {
 				description="Getting someone's thoughts"
 				formality="informal"
 				dialogue={ASKING_OPINION}
-				mode={mode}
 			/>
 
 			<ScenarioCard
@@ -146,7 +136,6 @@ export function RequestsTab() {
 				description="Common imperative phrases"
 				formality="informal"
 				dialogue={MAKING_REQUESTS}
-				mode={mode}
 			/>
 
 			<LearningTips

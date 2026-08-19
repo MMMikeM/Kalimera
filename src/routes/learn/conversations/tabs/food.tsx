@@ -3,11 +3,7 @@ import { Utensils } from "lucide-react";
 import { ConversationHero } from "@/components/ConversationHero";
 import type { DialogueLine } from "@/components/DialogueExchange";
 
-import {
-	LearningTips,
-	ScenarioCard,
-	useConversationContext,
-} from "../components/conversation-shell";
+import { LearningTips, ScenarioCard } from "../components/conversation-shell";
 
 const OFFERING_FOOD: DialogueLine[] = [
 	{ speaker: "host", greek: "Θέλεις κάτι;", english: "Do you want something?" },
@@ -79,8 +75,6 @@ const CAFE_ORDER: DialogueLine[] = [
 ];
 
 export function FoodTab() {
-	const { mode } = useConversationContext();
-
 	return (
 		<div className="space-y-4">
 			<ConversationHero
@@ -96,7 +90,6 @@ export function FoodTab() {
 				description="Greeks will always offer you something to drink"
 				formality="mixed"
 				dialogue={OFFERING_FOOD}
-				mode={mode}
 			/>
 
 			<ScenarioCard
@@ -104,7 +97,6 @@ export function FoodTab() {
 				description="Expect to be encouraged to eat more!"
 				formality="informal"
 				dialogue={DURING_MEAL}
-				mode={mode}
 			/>
 
 			<ScenarioCard
@@ -112,7 +104,6 @@ export function FoodTab() {
 				description="Show appreciation for home cooking"
 				formality="informal"
 				dialogue={COMPLIMENTING_FOOD}
-				mode={mode}
 			/>
 
 			<ScenarioCard
@@ -120,7 +111,6 @@ export function FoodTab() {
 				description="Ordering at a Greek kafeneio"
 				formality="formal"
 				dialogue={CAFE_ORDER}
-				mode={mode}
 			/>
 
 			<LearningTips

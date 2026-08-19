@@ -23,20 +23,25 @@ const CONVERSATION_TABS: NavTab[] = [
 		id: "arriving",
 		label: "Arriving",
 		icon: <DoorOpen size={16} />,
-		color: "ocean",
+		color: "olive",
 	},
-	{ id: "food", label: "Food", icon: <Utensils size={16} />, color: "olive" },
+	{
+		id: "food",
+		label: "Food",
+		icon: <Utensils size={16} />,
+		color: "terracotta",
+	},
 	{
 		id: "smalltalk",
 		label: "Talk",
 		icon: <MessageCircle size={16} />,
-		color: "honey",
+		color: "ocean",
 	},
 	{
 		id: "requests",
 		label: "Requests",
 		icon: <Hand size={16} />,
-		color: "terracotta",
+		color: "honey",
 	},
 ];
 
