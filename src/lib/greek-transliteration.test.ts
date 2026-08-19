@@ -298,3 +298,48 @@ describe("matchPhonetic — cluster variants", () => {
 		expect(matchPhonetic("dio", "δύο").isCorrect).toBe(true);
 	});
 });
+
+describe("terminal punctuation", () => {
+	// Greek questions are written with ';' — content keeps it, the learner never types it
+	it("accepts ti kanis for Τι κάνεις;", () => {
+		expect(matchPhonetic("ti kanis", "Τι κάνεις;").isCorrect).toBe(true);
+	});
+
+	it("still accepts the question mark if typed", () => {
+		expect(matchPhonetic("ti kanis;", "Τι κάνεις;").isCorrect).toBe(true);
+	});
+
+	it("accepts pou einai for Πού είναι;", () => {
+		expect(matchPhonetic("pou einai", "Πού είναι;").isCorrect).toBe(true);
+	});
+});
+
+describe("γ clusters", () => {
+	// συγγνώμη is [siɣnomi] — γγ before ν loses the nasal
+	it("accepts signomi for Συγγνώμη", () => {
+		expect(matchPhonetic("signomi", "Συγγνώμη").isCorrect).toBe(true);
+	});
+
+	// γ before a front vowel is [ʝ]; both spellings are natural
+	it("accepts pos legetai for Πώς λέγεται;", () => {
+		expect(matchPhonetic("pos legetai", "Πώς λέγεται;").isCorrect).toBe(true);
+	});
+
+	it("accepts pos leyetai for Πώς λέγεται;", () => {
+		expect(matchPhonetic("pos leyetai", "Πώς λέγεται;").isCorrect).toBe(true);
+	});
+});
+
+describe("digraph breaks", () => {
+	it("accepts taizo for ταΐζω", () => {
+		expect(matchPhonetic("taizo", "ταΐζω").isCorrect).toBe(true);
+	});
+
+	it("accepts maios for Μάιος", () => {
+		expect(matchPhonetic("maios", "Μάιος").isCorrect).toBe(true);
+	});
+
+	it("accepts trolei for τρόλεϊ", () => {
+		expect(matchPhonetic("trolei", "τρόλεϊ").isCorrect).toBe(true);
+	});
+});
