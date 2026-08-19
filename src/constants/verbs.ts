@@ -324,23 +324,111 @@ export const IRREGULAR_VERBS: IrregularVerb[] = [
 interface IrregularAoristStem {
 	present: string;
 	aoristSg1: string;
+	/** θα form: the aorist stem without its augment. */
+	futureSg1: string;
 	english: string;
 	category: "suppletive" | "irregular";
 }
 
 export const IRREGULAR_AORIST_STEMS: IrregularAoristStem[] = [
-	{ present: "τρώω", aoristSg1: "έφαγα", english: "eat", category: "suppletive" },
-	{ present: "πίνω", aoristSg1: "ήπια", english: "drink", category: "suppletive" },
-	{ present: "βλέπω", aoristSg1: "είδα", english: "see", category: "suppletive" },
-	{ present: "πηγαίνω / πάω", aoristSg1: "πήγα", english: "go", category: "suppletive" },
-	{ present: "λέω", aoristSg1: "είπα", english: "say", category: "suppletive" },
-	{ present: "έρχομαι", aoristSg1: "ήρθα", english: "come", category: "suppletive" },
-	{ present: "κάνω", aoristSg1: "έκανα", english: "do / make", category: "irregular" },
-	{ present: "παίρνω", aoristSg1: "πήρα", english: "take / get", category: "irregular" },
-	{ present: "φεύγω", aoristSg1: "έφυγα", english: "leave", category: "irregular" },
-	{ present: "βρίσκω", aoristSg1: "βρήκα", english: "find", category: "irregular" },
-	{ present: "δίνω", aoristSg1: "έδωσα", english: "give", category: "irregular" },
-	{ present: "μαθαίνω", aoristSg1: "έμαθα", english: "learn", category: "irregular" },
+	{ present: "τρώω", aoristSg1: "έφαγα", futureSg1: "θα φάω", english: "eat", category: "suppletive" },
+	{ present: "πίνω", aoristSg1: "ήπια", futureSg1: "θα πιω", english: "drink", category: "suppletive" },
+	{ present: "βλέπω", aoristSg1: "είδα", futureSg1: "θα δω", english: "see", category: "suppletive" },
+	{ present: "πηγαίνω / πάω", aoristSg1: "πήγα", futureSg1: "θα πάω", english: "go", category: "suppletive" },
+	{ present: "λέω", aoristSg1: "είπα", futureSg1: "θα πω", english: "say", category: "suppletive" },
+	{ present: "έρχομαι", aoristSg1: "ήρθα", futureSg1: "θα έρθω", english: "come", category: "suppletive" },
+	{ present: "κάνω", aoristSg1: "έκανα", futureSg1: "θα κάνω", english: "do / make", category: "irregular" },
+	{ present: "παίρνω", aoristSg1: "πήρα", futureSg1: "θα πάρω", english: "take / get", category: "irregular" },
+	{ present: "φεύγω", aoristSg1: "έφυγα", futureSg1: "θα φύγω", english: "leave", category: "irregular" },
+	{ present: "βρίσκω", aoristSg1: "βρήκα", futureSg1: "θα βρω", english: "find", category: "irregular" },
+	{ present: "δίνω", aoristSg1: "έδωσα", futureSg1: "θα δώσω", english: "give", category: "irregular" },
+	{ present: "μαθαίνω", aoristSg1: "έμαθα", futureSg1: "θα μάθω", english: "learn", category: "irregular" },
+];
+
+interface AoristFinderRow {
+	/** What the present looks like — the only clue you have when reaching for the past. */
+	ending: string;
+	becomes: string;
+	/** One worked pair per rule; the drill carries the rest. */
+	example: [string, string];
+}
+
+/**
+ * Keyed on the visible present ending rather than the stem's underlying consonant:
+ * you can see -ζω, you cannot see the velar hiding inside παίζω.
+ */
+export const AORIST_FINDER: AoristFinderRow[] = [
+	{ ending: "-πω  -βω  -φω  -εύω", becomes: "-ψα", example: ["γράφω", "έγραψα"] },
+	{ ending: "-κω  -γω  -χω  -χνω", becomes: "-ξα", example: ["ανοίγω", "άνοιξα"] },
+	{ ending: "-νω  -ώνω", becomes: "-σα", example: ["κλείνω", "έκλεισα"] },
+	{ ending: "vowel + -ω", becomes: "-σα", example: ["ακούω", "άκουσα"] },
+	{ ending: "-άω  -ώ", becomes: "-ησα", example: ["μιλάω", "μίλησα"] },
+	{ ending: "-ομαι  -άμαι", becomes: "-θηκα", example: ["θυμάμαι", "θυμήθηκα"] },
+];
+
+/** The two groups the table above cannot predict for you. */
+export const AORIST_EXCEPTIONS = [
+	{
+		title: "-ζω goes both ways",
+		detail: "Nothing in the spelling tells you which. Learn each -ζω verb as a pair.",
+		pairs: [
+			["αγοράζω", "αγόρασα"],
+			["αλλάζω", "άλλαξα"],
+			["παίζω", "έπαιξα"],
+		] as [string, string][],
+	},
+	{
+		title: "A handful keep no pattern at all",
+		detail: "They are also the verbs you use most, so they repay memorising outright.",
+		pairs: [
+			["βλέπω", "είδα"],
+			["λέω", "είπα"],
+			["τρώω", "έφαγα"],
+		] as [string, string][],
+	},
+];
+
+interface FutureLadderRow {
+	present: string;
+	aorist: string;
+	future: string;
+	english: string;
+}
+
+/**
+ * Verbs from the July–August future lessons, ordered by how common their most
+ * frequent form is — not by the dictionary form, which badly under-ranks them
+ * (βλέπω sits at 173, but δω is the 41st most common word in the corpus).
+ */
+export const FUTURE_LADDER: FutureLadderRow[] = [
+	{ present: "βλέπω", aorist: "είδα", future: "θα δω", english: "see" },
+	{ present: "λέω", aorist: "είπα", future: "θα πω", english: "say" },
+	{ present: "πάω", aorist: "πήγα", future: "θα πάω", english: "go" },
+	{ present: "παίρνω", aorist: "πήρα", future: "θα πάρω", english: "take / get" },
+	{ present: "έρχομαι", aorist: "ήρθα", future: "θα έρθω", english: "come" },
+	{ present: "φεύγω", aorist: "έφυγα", future: "θα φύγω", english: "leave" },
+	{ present: "δίνω", aorist: "έδωσα", future: "θα δώσω", english: "give" },
+	{ present: "μαθαίνω", aorist: "έμαθα", future: "θα μάθω", english: "learn" },
+	{ present: "βάζω", aorist: "έβαλα", future: "θα βάλω", english: "put" },
+	{ present: "βγάζω", aorist: "έβγαλα", future: "θα βγάλω", english: "take off / out" },
+	{ present: "τρώω", aorist: "έφαγα", future: "θα φάω", english: "eat" },
+	{ present: "πίνω", aorist: "ήπια", future: "θα πιω", english: "drink" },
+];
+/** θα does all the work — these five never shorten, and they are the most common verbs there are. */
+export const FUTURE_UNCHANGED: FutureLadderRow[] = [
+	{ present: "είμαι", aorist: "ήμουν", future: "θα είμαι", english: "be" },
+	{ present: "ξέρω", aorist: "ήξερα", future: "θα ξέρω", english: "know" },
+	{ present: "έχω", aorist: "είχα", future: "θα έχω", english: "have" },
+	{ present: "κάνω", aorist: "έκανα", future: "θα κάνω", english: "do / make" },
+	{ present: "περιμένω", aorist: "περίμενα", future: "θα περιμένω", english: "wait" },
+];
+
+/** One rule for the whole -αίνω family: past in -ηκα, future short. */
+export const FUTURE_AINO: FutureLadderRow[] = [
+	{ present: "βγαίνω", aorist: "βγήκα", future: "θα βγω", english: "go out" },
+	{ present: "μπαίνω", aorist: "μπήκα", future: "θα μπω", english: "go in" },
+	{ present: "ανεβαίνω", aorist: "ανέβηκα", future: "θα ανέβω", english: "go up" },
+	{ present: "κατεβαίνω", aorist: "κατέβηκα", future: "θα κατέβω", english: "go down" },
 ];
 
 export const AORIST_FORMATION_PATTERNS = {

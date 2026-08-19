@@ -5,12 +5,18 @@ import type React from "react";
 import { Card } from "@/components/Card";
 import { NavigatorCard, NavigatorCell, TeachingCard } from "@/components/cards";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
+import { type ColumnDef, GrammarTable, type RowDef } from "@/components/GrammarTable";
 import { MonoText } from "@/components/MonoText";
 import { ParadigmTable } from "@/components/ParadigmTable";
 import { SectionHeading } from "@/components/SectionHeading";
 import { type GrammarScheme, SCHEME } from "@/constants/grammar-palette";
 import {
+	AORIST_EXCEPTIONS,
+	AORIST_FINDER,
 	AORIST_FORMATION_PATTERNS,
+	FUTURE_AINO,
+	FUTURE_LADDER,
+	FUTURE_UNCHANGED,
 	IRREGULAR_AORIST_STEMS,
 	IRREGULAR_VERBS,
 	PAST_TENSE_PATTERNS,
@@ -130,6 +136,159 @@ const PATTERN_META: Record<PatternKey, PatternMeta> = {
 	contracted: { ending: "-άω/-ώ", displayName: "Contracted", scheme: "verb-contracted" },
 	deponent: { ending: "-μαι", displayName: "Deponent", scheme: "verb-deponent" },
 };
+
+const PERSON_ROW_DEFS: RowDef[] = [
+	{ key: "sg1", label: "I" },
+	{ key: "sg2", label: "you" },
+	{ key: "sg3", label: "he/she" },
+	{ key: "pl1", label: "we" },
+	{ key: "pl2", label: "you all" },
+	{ key: "pl3", label: "they" },
+];
+
+const PATTERN_ORDER: PatternKey[] = ["active", "contracted", "deponent"];
+
+type ComparisonForms = Record<string, { stem: string; ending: string }>;
+
+interface ComparisonColumn {
+	key: string;
+	heading: React.ReactNode;
+	scheme: GrammarScheme;
+	forms: ComparisonForms;
+}
+
+/** One table, several paradigms: the slots line up so only the differences move. */
+const FormComparison: React.FC<{
+	eyebrow: string;
+	title: string;
+	description: string;
+	columns: ComparisonColumn[];
+	footer?: React.ReactNode;
+}> = ({ eyebrow, title, description, columns, footer }) => {
+	const columnDefs: ColumnDef[] = columns.map((col) => ({
+		key: col.key,
+		label: col.heading,
+		scheme: col.scheme,
+	}));
+
+	const cells = PERSON_ROW_DEFS.map((row) =>
+		columns.map((col) => {
+			const form = col.forms[row.key];
+			if (!form) return null;
+			return (
+				<MonoText key={col.key} variant="greek" size="sm">
+					<span className="text-stone-600">{form.stem}</span>
+					<span className={`font-bold ${SCHEME[col.scheme].text}`}>{form.ending}</span>
+				</MonoText>
+			);
+		}),
+	);
+
+	return (
+		<TeachingCard scheme="neutral" eyebrow={eyebrow} title={title} description={description} footer={footer}>
+			<div className="-mx-4 overflow-x-auto px-4">
+				<GrammarTable columns={columnDefs} rows={PERSON_ROW_DEFS} cells={cells} />
+			</div>
+		</TeachingCard>
+	);
+};
+
+const columnHeading = (infinitive: string, tag: string, scheme: GrammarScheme) => (
+	<span className="flex items-baseline gap-1.5">
+		<MonoText variant="greek" size="sm" className="text-stone-700">
+			{infinitive}
+		</MonoText>
+		<span className={`font-mono text-sm font-bold ${SCHEME[scheme].text}`}>{tag}</span>
+	</span>
+);
+
+const PatternComparison: React.FC = () => {
+	const columns: ComparisonColumn[] = PATTERN_ORDER.flatMap((key) => {
+		const pattern = VERB_PATTERNS[key];
+		if (!pattern) return [];
+		const meta = PATTERN_META[key];
+		return [
+			{
+				key,
+				heading: columnHeading(pattern.canonical.infinitive, meta.ending, meta.scheme),
+				scheme: meta.scheme,
+				forms: pattern.canonical.forms,
+			},
+		];
+	});
+
+	return (
+		<FormComparison
+			eyebrow="Side by side"
+			title="Same slots, different endings"
+			description="The stem never moves. Learn which ending column a verb belongs to and the rest follows."
+			columns={columns}
+		/>
+	);
+};
+
+/** The mirror of the present table: endings hold still, the stem does the work. */
+const AoristComparison: React.FC = () => (
+	<FormComparison
+		eyebrow="Side by side"
+		title="Same endings, different stems"
+		description="In the present each family has its own endings. In the past they collapse to one set — what changes is the stem."
+		columns={[
+			{
+				key: "active",
+				heading: columnHeading("κάνω", "→ έκανα", "verb-active"),
+				scheme: "verb-active",
+				forms: PAST_TENSE_PATTERNS.aorist_active.canonical.forms,
+			},
+			{
+				key: "contracted",
+				heading: columnHeading("μιλάω", "→ μίλησα", "verb-contracted"),
+				scheme: "verb-contracted",
+				forms: PAST_TENSE_PATTERNS.aorist_contracted.canonical.forms,
+			},
+			{
+				key: "deponent",
+				heading: columnHeading("έρχομαι", "→ ήρθα", "verb-deponent"),
+				scheme: "verb-deponent",
+				forms: PAST_TENSE_PATTERNS.aorist_deponent.canonical.forms,
+			},
+		]}
+		footer={
+			<p className="text-sm text-stone-600">
+				-α, -ες, -ε, -αμε, -ατε, -αν in every column. Deponents just carry -θηκ- (or a suppletive
+				stem like ήρθ-) in front of them.
+			</p>
+		}
+	/>
+);
+
+/** One verb, both past aspects — the distinction χθες vs κάθε μέρα turns on. */
+const AspectComparison: React.FC = () => (
+	<FormComparison
+		eyebrow="One-off or ongoing"
+		title="μίλησα or μιλούσα?"
+		description="Same verb, same endings. -ησ- closes the action, -ούσ- leaves it running."
+		columns={[
+			{
+				key: "aorist",
+				heading: columnHeading("μίλησα", "one-off", "verb-contracted"),
+				scheme: "verb-contracted",
+				forms: PAST_TENSE_PATTERNS.aorist_contracted.canonical.forms,
+			},
+			{
+				key: "continuous",
+				heading: columnHeading("μιλούσα", "ongoing", "verb-active"),
+				scheme: "verb-active",
+				forms: PAST_TENSE_PATTERNS.past_continuous_contracted.canonical.forms,
+			},
+		]}
+		footer={
+			<p className="text-sm text-stone-600">
+				Χθες μίλησα με τη Μαρία (once). Κάθε μέρα μιλούσα με τη Μαρία (a habit).
+			</p>
+		}
+	/>
+);
 
 const PatternSection: React.FC<{
 	patternKey: PatternKey;
@@ -312,6 +471,78 @@ const AoristPatternCard: React.FC<{
 	);
 };
 
+/** Fixed columns so the eye can run straight down "becomes" instead of hunting for it. */
+const AoristFinder: React.FC = () => (
+	<TeachingCard
+		scheme="neutral"
+		eyebrow="Start here"
+		title="Find your verb's ending"
+		description="Find how your verb ends in the present on the left. The past ending is in the middle."
+	>
+		<div className="overflow-hidden rounded-lg border border-stone-200 bg-white">
+			<div className="grid grid-cols-[1fr_auto] items-baseline gap-x-6 border-b border-stone-100 px-4 py-2 text-xs tracking-widest text-stone-400 uppercase sm:grid-cols-[13rem_5rem_1fr]">
+				<span>Present</span>
+				<span className="hidden sm:block">Past</span>
+				<span className="text-right sm:text-left">Example</span>
+			</div>
+			{AORIST_FINDER.map((row) => (
+				<div
+					key={row.ending}
+					className="grid grid-cols-[1fr_auto] items-baseline gap-x-6 gap-y-1 border-b border-stone-100 px-4 py-3 last:border-b-0 sm:grid-cols-[13rem_5rem_1fr]"
+				>
+					<MonoText size="sm" className="text-stone-600">
+						{row.ending}
+					</MonoText>
+					<MonoText size="sm" className="order-last font-bold text-navy-text sm:order-none">
+						{row.becomes}
+					</MonoText>
+					<span className="text-right sm:text-left">
+						<MonoText size="sm" className="text-stone-500">
+							{row.example[0]}
+						</MonoText>
+						<span className="mx-1.5 text-xs text-stone-300">→</span>
+						<MonoText size="sm" className="font-semibold text-stone-800">
+							{row.example[1]}
+						</MonoText>
+					</span>
+				</div>
+			))}
+		</div>
+	</TeachingCard>
+);
+
+/** The two groups the finder cannot decide for you. */
+const AoristExceptions: React.FC = () => (
+	<TeachingCard
+		scheme="neutral"
+		eyebrow="Learn as pairs"
+		title="Where the endings stop helping"
+		description="Two groups you cannot read off the present tense."
+	>
+		<div className="grid gap-3 sm:grid-cols-2">
+			{AORIST_EXCEPTIONS.map((group) => (
+				<div key={group.title} className="rounded-lg border border-stone-200 bg-white p-4">
+					<p className="mb-1 text-sm font-medium text-stone-800">{group.title}</p>
+					<p className="mb-3 text-xs text-stone-500">{group.detail}</p>
+					<div className="space-y-1">
+						{group.pairs.map(([present, past]) => (
+							<div key={present}>
+								<MonoText size="sm" className="text-stone-500">
+									{present}
+								</MonoText>
+								<span className="mx-1.5 text-xs text-stone-300">→</span>
+								<MonoText size="sm" className="font-semibold text-stone-800">
+									{past}
+								</MonoText>
+							</div>
+						))}
+					</div>
+				</div>
+			))}
+		</div>
+	</TeachingCard>
+);
+
 export const PastTenseSection: React.FC = () => {
 	const activeStyle = SCHEME["verb-active"];
 	const contractedStyle = SCHEME["verb-contracted"];
@@ -321,27 +552,17 @@ export const PastTenseSection: React.FC = () => {
 		<section id="past-tense" className="space-y-6">
 			<SectionHeading
 				title="Past Tense"
-				subtitle="Two past tenses — αόριστος (completed) and παρατατικός (ongoing)"
+				subtitle="Αόριστος — the completed past. One action, finished."
 			/>
 
-			{/* Two tenses compared */}
-			<div className="grid gap-3 sm:grid-cols-2">
-				<div className="rounded-lg border-2 border-navy-200 bg-navy-50 p-4">
-					<p className="mb-0.5 font-mono text-base font-bold text-navy-text">Αόριστος</p>
-					<p className="mb-2 text-xs text-stone-500">Simple past — completed action</p>
-					<MonoText className="text-sm text-stone-800">Έφαγα χθες.</MonoText>
-					<p className="text-xs text-stone-500">I ate yesterday.</p>
-				</div>
-				<div className="rounded-lg border-2 border-slate-200 bg-slate-50 p-4">
-					<p className="mb-0.5 font-mono text-base font-bold text-slate-text">Παρατατικός</p>
-					<p className="mb-2 text-xs text-stone-500">Continuous past — ongoing or repeated</p>
-					<MonoText className="text-sm text-stone-800">Έτρωγα κάθε μέρα.</MonoText>
-					<p className="text-xs text-stone-500">I used to eat every day.</p>
-				</div>
-			</div>
 
 			{/* ── FORMING THE AORIST ─────────────────────── */}
 			<div className="space-y-6 pt-2">
+				<AoristFinder />
+
+				<AoristExceptions />
+
+				<AoristComparison />
 				<h3 className="mb-4 px-1 text-base font-bold text-stone-800">Forming the aorist</h3>
 
 				{/* Augment rule */}
@@ -423,68 +644,81 @@ export const PastTenseSection: React.FC = () => {
 				</TeachingCard>
 			</div>
 
-			{/* Aorist paradigms — all patterns */}
-			<AoristPatternCard pattern={AORIST_FORMATION_PATTERNS.sa} scheme="verb-active" />
-			<AoristPatternCard pattern={AORIST_FORMATION_PATTERNS.psa} scheme="verb-active" />
-			<AoristPatternCard pattern={AORIST_FORMATION_PATTERNS.ksa} scheme="verb-active" />
-
-			{/* -άω aorist (-ησα) */}
-			<TeachingCard
-				scheme="verb-contracted"
-				title="Aorist: -άω verbs"
-				badge={<span className={`font-mono text-base ${contractedStyle.text}`}>-ησα</span>}
-				description={PAST_TENSE_PATTERNS.aorist_contracted.description}
+			<CollapsibleSection
+				title="Full paradigms (6)"
+				colorScheme="stone"
+				defaultOpen={false}
 			>
-				<div className="rounded-lg border border-stone-200 bg-white p-4 shadow-sm">
-					<ParadigmTable
-						infinitive={PAST_TENSE_PATTERNS.aorist_contracted.canonical.infinitive}
-						meaning={PAST_TENSE_PATTERNS.aorist_contracted.canonical.meaning}
-						forms={PAST_TENSE_PATTERNS.aorist_contracted.canonical.forms}
-						endingClassName={`${contractedStyle.text} font-bold`}
-						scheme="verb-contracted"
-						fadeStem={true}
-					/>
-				</div>
-				<AoristExamples
-					examples={[
-						{ greek: "Μίλησα μαζί του χθες.", english: "I spoke with him yesterday." },
-						{ greek: "Μιλήσαμε για ώρες.", english: "We talked for hours." },
-					]}
-				/>
-			</TeachingCard>
-
-			{/* -θηκα aorist */}
-			<AoristPatternCard pattern={AORIST_FORMATION_PATTERNS.thika} scheme="verb-deponent" />
-
-			{/* Suppletive (έρχομαι) */}
-			<TeachingCard
-				scheme="verb-deponent"
-				title="Aorist: suppletive verbs"
-				badge={<span className={`font-mono text-base ${deponentStyle.text}`}>new stem</span>}
-				description="Stem changes completely — endings are identical to regular aorist."
-			>
-				<div className="rounded-lg border border-stone-200 bg-white p-4 shadow-sm">
-					<ParadigmTable
-						infinitive={PAST_TENSE_PATTERNS.aorist_deponent.canonical.infinitive}
-						meaning={PAST_TENSE_PATTERNS.aorist_deponent.canonical.meaning}
-						forms={PAST_TENSE_PATTERNS.aorist_deponent.canonical.forms}
-						endingClassName={`${deponentStyle.text} font-bold`}
-						scheme="verb-deponent"
-						fadeStem={true}
-					/>
-				</div>
-				<AoristExamples
-					examples={[
-						{ greek: "Ήρθα νωρίς.", english: "I arrived early." },
-						{ greek: "Πότε ήρθες;", english: "When did you arrive?" },
-						{ greek: "Ήρθαμε μαζί.", english: "We came together." },
-					]}
-				/>
-				<p className="mt-3 px-1 text-xs text-stone-500">
-					Find the aorist stem (listed below), then add the same{" "}
-					<MonoText size="sm">-α -ες -ε -αμε -ατε -αν</MonoText>.
+				<p className="mb-4 text-sm text-stone-600">
+					The endings are identical in every one — these are here for the stems.
 				</p>
-			</TeachingCard>
+
+				<div className="space-y-6">
+				{/* Aorist paradigms — all patterns */}
+				<AoristPatternCard pattern={AORIST_FORMATION_PATTERNS.sa} scheme="verb-active" />
+				<AoristPatternCard pattern={AORIST_FORMATION_PATTERNS.psa} scheme="verb-active" />
+				<AoristPatternCard pattern={AORIST_FORMATION_PATTERNS.ksa} scheme="verb-active" />
+
+				{/* -άω aorist (-ησα) */}
+				<TeachingCard
+					scheme="verb-contracted"
+					title="Aorist: -άω verbs"
+					badge={<span className={`font-mono text-base ${contractedStyle.text}`}>-ησα</span>}
+					description={PAST_TENSE_PATTERNS.aorist_contracted.description}
+				>
+					<div className="rounded-lg border border-stone-200 bg-white p-4 shadow-sm">
+						<ParadigmTable
+							infinitive={PAST_TENSE_PATTERNS.aorist_contracted.canonical.infinitive}
+							meaning={PAST_TENSE_PATTERNS.aorist_contracted.canonical.meaning}
+							forms={PAST_TENSE_PATTERNS.aorist_contracted.canonical.forms}
+							endingClassName={`${contractedStyle.text} font-bold`}
+							scheme="verb-contracted"
+							fadeStem={true}
+						/>
+					</div>
+					<AoristExamples
+						examples={[
+							{ greek: "Μίλησα μαζί του χθες.", english: "I spoke with him yesterday." },
+							{ greek: "Μιλήσαμε για ώρες.", english: "We talked for hours." },
+						]}
+					/>
+				</TeachingCard>
+
+				{/* -θηκα aorist */}
+				<AoristPatternCard pattern={AORIST_FORMATION_PATTERNS.thika} scheme="verb-deponent" />
+
+				{/* Suppletive (έρχομαι) */}
+				<TeachingCard
+					scheme="verb-deponent"
+					title="Aorist: suppletive verbs"
+					badge={<span className={`font-mono text-base ${deponentStyle.text}`}>new stem</span>}
+					description="Stem changes completely — endings are identical to regular aorist."
+				>
+					<div className="rounded-lg border border-stone-200 bg-white p-4 shadow-sm">
+						<ParadigmTable
+							infinitive={PAST_TENSE_PATTERNS.aorist_deponent.canonical.infinitive}
+							meaning={PAST_TENSE_PATTERNS.aorist_deponent.canonical.meaning}
+							forms={PAST_TENSE_PATTERNS.aorist_deponent.canonical.forms}
+							endingClassName={`${deponentStyle.text} font-bold`}
+							scheme="verb-deponent"
+							fadeStem={true}
+						/>
+					</div>
+					<AoristExamples
+						examples={[
+							{ greek: "Ήρθα νωρίς.", english: "I arrived early." },
+							{ greek: "Πότε ήρθες;", english: "When did you arrive?" },
+							{ greek: "Ήρθαμε μαζί.", english: "We came together." },
+						]}
+					/>
+					<p className="mt-3 px-1 text-xs text-stone-500">
+						Find the aorist stem (listed below), then add the same{" "}
+						<MonoText size="sm">-α -ες -ε -αμε -ατε -αν</MonoText>.
+					</p>
+				</TeachingCard>
+				</div>
+			</CollapsibleSection>
+
 
 			{/* Stems that break the rules */}
 			<Card variant="bordered" padding="lg" className="border-2 border-honey-300 bg-honey-50">
@@ -526,48 +760,160 @@ export const PastTenseSection: React.FC = () => {
 				</div>
 			</Card>
 
-			{/* ── CONTINUOUS PAST (secondary) ───────────────── */}
-			<CollapsibleSection
-				title="Continuous past (παρατατικός)"
-				colorScheme="stone"
-				defaultOpen={false}
-			>
-				<div className="space-y-4">
-					<div className="rounded-lg border border-stone-200 bg-white p-4">
-						<p className="mb-3 text-sm text-stone-600">
-							Use the <strong>present stem</strong> with the same -α -ες -ε -αμε -ατε -αν endings.
-							For -άω verbs, insert <MonoText size="sm">-ούσ-</MonoText> instead.
-						</p>
-						<div className="grid gap-4 sm:grid-cols-2">
-							<div>
-								<p className="mb-2 text-xs font-semibold text-stone-500">-ω verbs (δουλεύω)</p>
-								<ParadigmTable
-									infinitive={PAST_TENSE_PATTERNS.past_continuous_active.canonical.infinitive}
-									meaning={PAST_TENSE_PATTERNS.past_continuous_active.canonical.meaning}
-									forms={PAST_TENSE_PATTERNS.past_continuous_active.canonical.forms}
-									endingClassName={`${activeStyle.text} font-bold`}
-									scheme="verb-active"
-									fadeStem={true}
-								/>
-							</div>
-							<div>
-								<p className="mb-2 text-xs font-semibold text-stone-500">-άω verbs (μιλάω)</p>
-								<ParadigmTable
-									infinitive={PAST_TENSE_PATTERNS.past_continuous_contracted.canonical.infinitive}
-									meaning={PAST_TENSE_PATTERNS.past_continuous_contracted.canonical.meaning}
-									forms={PAST_TENSE_PATTERNS.past_continuous_contracted.canonical.forms}
-									endingClassName={`${contractedStyle.text} font-bold`}
-									scheme="verb-contracted"
-									fadeStem={true}
-								/>
-							</div>
-						</div>
-					</div>
-				</div>
-			</CollapsibleSection>
 		</section>
 	);
 };
+
+export const PastContinuousSection: React.FC = () => {
+	const activeStyle = SCHEME["verb-active"];
+	const contractedStyle = SCHEME["verb-contracted"];
+
+	return (
+		<section id="past-continuous" className="space-y-6">
+			<SectionHeading
+				title="Continuous Past"
+				subtitle="Παρατατικός — the past that was still running. Ongoing or repeated."
+			/>
+
+<div className="space-y-4">
+				<div className="rounded-lg border border-stone-200 bg-white p-4">
+					<p className="mb-3 text-sm text-stone-600">
+						Use the <strong>present stem</strong> with the same -α -ες -ε -αμε -ατε -αν endings.
+						For -άω verbs, insert <MonoText size="sm">-ούσ-</MonoText> instead.
+					</p>
+					<div className="grid gap-4 sm:grid-cols-2">
+						<div>
+							<p className="mb-2 text-xs font-semibold text-stone-500">-ω verbs (δουλεύω)</p>
+							<ParadigmTable
+								infinitive={PAST_TENSE_PATTERNS.past_continuous_active.canonical.infinitive}
+								meaning={PAST_TENSE_PATTERNS.past_continuous_active.canonical.meaning}
+								forms={PAST_TENSE_PATTERNS.past_continuous_active.canonical.forms}
+								endingClassName={`${activeStyle.text} font-bold`}
+								scheme="verb-active"
+								fadeStem={true}
+							/>
+						</div>
+						<div>
+							<p className="mb-2 text-xs font-semibold text-stone-500">-άω verbs (μιλάω)</p>
+							<ParadigmTable
+								infinitive={PAST_TENSE_PATTERNS.past_continuous_contracted.canonical.infinitive}
+								meaning={PAST_TENSE_PATTERNS.past_continuous_contracted.canonical.meaning}
+								forms={PAST_TENSE_PATTERNS.past_continuous_contracted.canonical.forms}
+								endingClassName={`${contractedStyle.text} font-bold`}
+								scheme="verb-contracted"
+								fadeStem={true}
+							/>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			{/* The contrast comes last, once both tenses stand on their own */}
+			{/* Two tenses compared */}
+			<div className="grid gap-3 sm:grid-cols-2">
+				<div className="rounded-lg border-2 border-navy-200 bg-navy-50 p-4">
+					<p className="mb-0.5 font-mono text-base font-bold text-navy-text">Αόριστος</p>
+					<p className="mb-2 text-xs text-stone-500">Simple past — completed action</p>
+					<MonoText className="text-sm text-stone-800">Έφαγα χθες.</MonoText>
+					<p className="text-xs text-stone-500">I ate yesterday.</p>
+				</div>
+				<div className="rounded-lg border-2 border-slate-200 bg-slate-50 p-4">
+					<p className="mb-0.5 font-mono text-base font-bold text-slate-text">Παρατατικός</p>
+					<p className="mb-2 text-xs text-stone-500">Continuous past — ongoing or repeated</p>
+					<MonoText className="text-sm text-stone-800">Έτρωγα κάθε μέρα.</MonoText>
+					<p className="text-xs text-stone-500">I used to eat every day.</p>
+				</div>
+			</div>
+
+			<AspectComparison />
+		</section>
+	);
+};
+
+const LADDER_COLUMNS: ColumnDef[] = [
+	{ key: "present", label: "σήμερα · present" },
+	{ key: "aorist", label: "χθες · past" },
+	{ key: "future", label: "αύριο · future" },
+];
+
+const LadderTable: React.FC<{ rows: typeof FUTURE_LADDER }> = ({ rows }) => (
+	<div className="-mx-4 overflow-x-auto px-4">
+		<GrammarTable
+			columns={LADDER_COLUMNS}
+			rows={rows.map((verb) => ({ key: verb.present, label: verb.english }))}
+			cells={rows.map((verb) =>
+				[verb.present, verb.aorist, verb.future].map((form, i) => (
+					<MonoText
+						key={form}
+						variant="greek"
+						size="sm"
+						className={i === 2 ? "font-semibold text-stone-800" : "text-stone-600"}
+					>
+						{form}
+					</MonoText>
+				)),
+			)}
+		/>
+	</div>
+);
+
+/** θα + the aorist stem, minus its augment — the shape the lessons drill. */
+const TenseLadder: React.FC = () => (
+	<TeachingCard
+		scheme="neutral"
+		eyebrow="The ladder"
+		title="Past first, then future"
+		description="The θα form is the past without its augment. Learn a verb's past and its future comes free."
+		footer={
+			<div className="space-y-1.5 text-sm text-stone-600">
+				<p>έφαγα → θα φάω, ήπια → θα πιω, έβαλα → θα βάλω. Strip the έ- or ή-, keep what is left.</p>
+				<p>
+					The effort pays twice over: δω, πω and πάρω are the 41st, 46th and 201st most common words
+					in Greek — more common than βλέπω, λέω and παίρνω themselves, because να, ας and every
+					modal take the same form.
+				</p>
+			</div>
+		}
+	>
+		<LadderTable rows={FUTURE_LADDER} />
+	</TeachingCard>
+);
+
+/** The highest-frequency verbs are the ones that do not shorten at all. */
+const FutureUnchanged: React.FC = () => (
+	<TeachingCard
+		scheme="neutral"
+		eyebrow="No short form"
+		title="θα does all the work"
+		description="These five never change shape. They describe states, and a state has no one-off version."
+		footer={
+			<p className="text-sm text-stone-600">
+				Between them they are the five most common verbs you will use — worth knowing before the
+				ladder above.
+			</p>
+		}
+	>
+		<LadderTable rows={FUTURE_UNCHANGED} />
+	</TeachingCard>
+);
+
+/** The -αίνω four, learned as one set. */
+const FutureAino: React.FC = () => (
+	<TeachingCard
+		scheme="neutral"
+		eyebrow="One rule, four verbs"
+		title="The -αίνω family"
+		description="Past in -ηκα, future stripped right back. Learn one and you have all four."
+		footer={
+			<p className="text-sm text-stone-600">
+				Στο σπίτι: θα μπω μέσα, θα ανέβω πάνω. The app's drills currently serve the θα ανεβώ series
+				instead — worth settling with Konstantina which one you want to keep.
+			</p>
+		}
+	>
+		<LadderTable rows={FUTURE_AINO} />
+	</TeachingCard>
+);
 
 const FutureTenseSection: React.FC = () => (
 	<section id="future-tense" className="space-y-4">
@@ -598,6 +944,41 @@ const FutureTenseSection: React.FC = () => (
 				</MonoText>{" "}
 				(I won't eat). δεν always sits before θα.
 			</p>
+		</TeachingCard>
+
+		<FutureUnchanged />
+
+		<TenseLadder />
+
+		<FutureAino />
+
+		<TeachingCard
+			scheme="neutral"
+			eyebrow="Saying there will be"
+			title="θα υπάρχει / θα υπάρχουν"
+			description="υπάρχει takes θα like any other verb, and stays in the third person."
+		>
+			<div className="space-y-1.5 text-sm">
+				<p>
+					<MonoText variant="greek" size="sm">
+						Θα υπάρχουν πολλά πάρκα στην πόλη μου
+					</MonoText>{" "}
+					<span className="text-stone-500">— there will be many parks in my city</span>
+				</p>
+				<p>
+					<MonoText variant="greek" size="sm">
+						Δεν θα υπάρχει κανένα αυτοκίνητο
+					</MonoText>{" "}
+					<span className="text-stone-500">— there won't be a single car</span>
+				</p>
+				<p className="pt-2 text-stone-600">
+					ίσως takes the same short form but never θα:{" "}
+					<MonoText variant="greek" size="sm">
+						Ίσως πάω
+					</MonoText>
+					, not ίσως θα πάω.
+				</p>
+			</div>
 		</TeachingCard>
 	</section>
 );
@@ -710,6 +1091,7 @@ export const PresentTenseSection: React.FC = () => (
 
 		{/* Pattern families */}
 		<div className="space-y-6">
+			<PatternComparison />
 			{VERB_PATTERNS.active && (
 				<PatternSection patternKey="active" pattern={VERB_PATTERNS.active} />
 			)}
