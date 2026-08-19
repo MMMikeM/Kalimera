@@ -2,7 +2,6 @@ import type React from "react";
 
 import { CollapsibleSection } from "@/components/CollapsibleSection";
 import { MistakeComparison } from "@/components/MistakeComparison";
-import { MonoText } from "@/components/MonoText";
 import { SectionHeading } from "@/components/SectionHeading";
 import { type GrammarScheme, SCHEME } from "@/constants/grammar-palette";
 import {
@@ -16,6 +15,7 @@ import {
 import { cn } from "@/lib/utils";
 
 import { PrepositionNavigator } from "./preposition-navigator";
+import { GreekText } from "@/components/GreekText";
 
 const CONTRACTION_GENDER_SCHEME: Record<string, GrammarScheme> = {
 	neuter: "gender-neuter",
@@ -89,9 +89,9 @@ const SeCard: React.FC = () => {
 					.flatMap((f) => f.examples.slice(0, 1))
 					.map((ex) => (
 						<div key={ex.greek} className="flex items-baseline gap-3 text-sm">
-							<MonoText size="sm" variant="greek" className="font-medium text-stone-800">
+							<GreekText tone="accent" size="sm" className="font-medium text-stone-800">
 								{ex.greek}
-							</MonoText>
+							</GreekText>
 							<span className="text-stone-500">{ex.english}</span>
 						</div>
 					))}
@@ -107,9 +107,9 @@ const SeCard: React.FC = () => {
 					{SE_CONTRACTIONS.noArticle.examples.map((ex, i) => (
 						<span key={ex.greek}>
 							{i > 0 && ", "}
-							<MonoText size="sm" variant="highlighted" className="font-medium">
+							<GreekText tone="inherit" size="sm" className="rounded border border-stone-200 bg-white px-2 py-1 font-semibold text-stone-800 font-medium">
 								{ex.greek}
-							</MonoText>{" "}
+							</GreekText>{" "}
 							<span className="text-stone-500">({ex.english})</span>
 						</span>
 					))}
@@ -169,13 +169,13 @@ export const PrepositionsSection: React.FC = () => (
 					})),
 				].map((prep) => (
 					<div key={prep.greek} className="flex items-baseline gap-4">
-						<MonoText variant="greek" size="xl" className="w-12 shrink-0 font-bold text-stone-900">
+						<GreekText tone="accent" size="xl" className="w-12 shrink-0 font-bold text-stone-900">
 							{prep.greek}
-						</MonoText>
+						</GreekText>
 						<span className="w-24 shrink-0 text-sm text-stone-500">{prep.english}</span>
-						<MonoText size="sm" variant="greek" className="text-stone-500">
+						<GreekText tone="accent" size="sm" className="text-stone-500">
 							{prep.example}
-						</MonoText>
+						</GreekText>
 						<span className="text-xs text-stone-400">{prep.exampleEnglish}</span>
 					</div>
 				))}
@@ -196,9 +196,9 @@ export const PrepositionsSection: React.FC = () => (
 						<div className="space-y-1">
 							{p.examples.map((ex) => (
 								<div key={ex.greek} className="text-sm">
-									<MonoText size="sm" variant="greek">
+									<GreekText tone="accent" size="sm">
 										{ex.greek}
-									</MonoText>
+									</GreekText>
 									<span className="ml-1 text-xs text-stone-400">{ex.english}</span>
 								</div>
 							))}
@@ -223,9 +223,9 @@ export const PrepositionsSection: React.FC = () => (
 						key={ex.greek}
 						className="rounded-full border border-stone-200 bg-white px-3 py-1.5 text-sm"
 					>
-						<MonoText size="sm" className="font-medium text-stone-800">
+						<GreekText tone="default" size="sm" className="font-medium text-stone-800">
 							{ex.greek}
-						</MonoText>
+						</GreekText>
 						<span className="ml-1 text-stone-500">({ex.english})</span>
 					</div>
 				))}
@@ -265,18 +265,18 @@ export const PrepositionsSection: React.FC = () => (
 								+ σε
 							</span>
 							<span className="text-stone-600">contracts with article:</span>
-							<MonoText size="sm" className="font-semibold text-stone-800">
+							<GreekText tone="default" size="sm" className="font-semibold text-stone-800">
 								πάνω στο
-							</MonoText>
+							</GreekText>
 						</div>
 						<div className="flex items-center gap-2">
 							<span className="w-20 shrink-0 rounded border border-stone-200 px-2 py-0.5 text-center text-xs text-stone-400">
 								+ από
 							</span>
 							<span className="text-stone-500">no change:</span>
-							<MonoText size="sm" className="text-stone-600">
+							<GreekText tone="default" size="sm" className="text-stone-600">
 								κάτω από το
-							</MonoText>
+							</GreekText>
 						</div>
 					</div>
 				</div>
@@ -298,14 +298,14 @@ export const PrepositionsSection: React.FC = () => (
 									)}
 								>
 									<div className="mb-1 flex items-baseline gap-2">
-										<MonoText variant="greek" size="md" className="font-semibold text-stone-800">
+										<GreekText tone="accent" size="lg" className="font-semibold text-stone-800">
 											{item.greek}
-										</MonoText>
+										</GreekText>
 										<span className="text-sm text-stone-500">{item.english}</span>
 									</div>
-									<MonoText variant="greek" size="sm" className="block text-stone-500">
+									<GreekText tone="accent" size="sm" className="block text-stone-500">
 										{item.example}
-									</MonoText>
+									</GreekText>
 								</div>
 							))}
 						</div>

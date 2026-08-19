@@ -2,11 +2,11 @@ import type React from "react";
 
 import { Card } from "@/components/Card";
 import { LookupCard, NextStepCard, TeachingCard } from "@/components/cards";
-import { MonoText } from "@/components/MonoText";
 import { CASE_SCHEME, SCHEME } from "@/constants/grammar-palette";
 import { CASE_ROLES, CASE_TRIGGERS } from "@/constants/recognition";
 
 import { BandHeading } from "./BandHeading";
+import { GreekText } from "@/components/GreekText";
 
 export const CasesSection: React.FC = () => {
 	const triggersByCase = CASE_ROLES.map((role) => ({
@@ -30,9 +30,9 @@ export const CasesSection: React.FC = () => {
 								badge={role.caseName}
 								description={role.description}
 							>
-								<MonoText variant="greek" size="2xl" className={`block leading-snug ${style.text}`}>
+								<GreekText tone="accent" size="2xl" className={`block leading-snug ${style.text}`}>
 									{role.example}
-								</MonoText>
+								</GreekText>
 								<p className="mt-1 text-xs text-stone-500 italic">{role.translation}</p>
 							</TeachingCard>
 						);
@@ -43,13 +43,13 @@ export const CasesSection: React.FC = () => {
 						<strong className="text-stone-800">Word order is flexible in Greek</strong> because the
 						ending carries the job. <em>"Ο σκύλος δάγκωσε τον άντρα"</em> and{" "}
 						<em>"Τον άντρα δάγκωσε ο σκύλος"</em> both mean the dog bit the man — the{" "}
-						<MonoText variant="greek" size="sm" className="inline">
+						<GreekText tone="accent" size="sm" className="inline">
 							-ς
-						</MonoText>{" "}
+						</GreekText>{" "}
 						and{" "}
-						<MonoText variant="greek" size="sm" className="inline">
+						<GreekText tone="accent" size="sm" className="inline">
 							-ν
-						</MonoText>{" "}
+						</GreekText>{" "}
 						do the work English word order does.
 					</p>
 				</Card>
@@ -97,14 +97,9 @@ export const CasesSection: React.FC = () => {
 										</span>
 										<div className="flex flex-wrap gap-2">
 											{role.articles.map((article) => (
-												<MonoText
-													key={article}
-													variant="greek"
-													size="sm"
-													className={`inline-flex min-w-12 justify-center rounded-md px-2 py-1 ${style.badgeBg} ${style.text}`}
-												>
+												<GreekText tone="accent" size="sm" key={article} className={`inline-flex min-w-12 justify-center rounded-md px-2 py-1 ${style.badgeBg} ${style.text}`}>
 													{article}
-												</MonoText>
+												</GreekText>
 											))}
 										</div>
 									</li>
@@ -138,14 +133,9 @@ export const CasesSection: React.FC = () => {
 												<p className="mt-0.5 mb-2 text-sm text-stone-600">{trigger.meaning}</p>
 												<div className="space-y-0.5">
 													{trigger.examples.map((example) => (
-														<MonoText
-															key={example}
-															variant="greek"
-															size="sm"
-															className={`block ${style.text}`}
-														>
+														<GreekText tone="accent" size="sm" key={example} className={`block ${style.text}`}>
 															{example}
-														</MonoText>
+														</GreekText>
 													))}
 												</div>
 											</li>

@@ -8,10 +8,10 @@ import {
 	GrammarTable,
 	type RowDef,
 } from "@/components/GrammarTable";
-import { MonoText } from "@/components/MonoText";
 import { SectionHeading } from "@/components/SectionHeading";
 import { AGREEMENT_PARADIGMS, type AgreementParadigm } from "@/constants/agreement";
 import { GENDER_SCHEME, SCHEME } from "@/constants/grammar-palette";
+import { GreekText } from "@/components/GreekText";
 
 type Gender = "masculine" | "feminine" | "neuter";
 type Case = "Nom" | "Acc" | "Gen";
@@ -148,9 +148,9 @@ const CaseGuide = () => (
 						<div>
 							<span className="text-sm font-medium">{question}</span>
 							<div className="text-sm text-stone-500">
-								<MonoText variant="greek" size="sm">
+								<GreekText tone="accent" size="sm">
 									{greek}
-								</MonoText>{" "}
+								</GreekText>{" "}
 								({english})
 							</div>
 						</div>
@@ -233,9 +233,9 @@ const NounEndingsTable = ({
 		return paradigms.map((p) => {
 			const value = mode === "endings" ? getEnding(p, caseType) : getFull(p, caseType);
 			return (
-				<MonoText key={p.id} size="sm" variant={p.gender}>
+				<GreekText key={p.id} size="sm" tone={p.gender}>
 					{value}
-				</MonoText>
+				</GreekText>
 			);
 		});
 	});
@@ -290,9 +290,9 @@ const GenderVariants = ({ gender }: { gender: Gender }) => {
 				<div className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-stone-600">
 					{paradigms.map((p) => (
 						<span key={p.id}>
-							<MonoText size="sm" variant={gender}>
+							<GreekText size="sm" tone={gender}>
 								{p.pattern}
-							</MonoText>{" "}
+							</GreekText>{" "}
 							{p.example}
 						</span>
 					))}
@@ -322,9 +322,9 @@ const DecisionGuide = () => (
 									>
 										{meta.handle}
 									</span>
-									<MonoText variant="greek" size="sm">
+									<GreekText tone="accent" size="sm">
 										{form.greek}
-									</MonoText>
+									</GreekText>
 									<span className="text-xs text-stone-500">({form.english})</span>
 								</div>
 							);

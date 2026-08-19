@@ -1,13 +1,13 @@
 import { Heart, UserCircle } from "lucide-react";
 
 import { TeachingCard } from "@/components/cards";
-import { MonoText } from "@/components/MonoText";
 import { QuickTest } from "@/components/QuickTest";
 import { ReferenceHero } from "@/components/ReferenceHero";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { type GrammarScheme, SCHEME } from "@/constants/grammar-palette";
 
 import type { PatternItem, PatternsData } from "../$tab";
+import { GreekText } from "@/components/GreekText";
 
 const ParadigmCard = ({
 	title,
@@ -57,9 +57,9 @@ const ParadigmCard = ({
 									key={item.id}
 									className="flex items-baseline gap-2 rounded border border-stone-200 bg-white p-2"
 								>
-									<MonoText variant="greek" size="md">
+									<GreekText tone="accent" size="lg">
 										{item.greekText}
-									</MonoText>
+									</GreekText>
 									<span className="text-sm text-stone-600">{item.englishTranslation}</span>
 								</div>
 							))}
@@ -157,9 +157,9 @@ export function PatternsTab({ data }: { data: PatternsData }) {
 								key={name.id}
 								className="flex items-baseline gap-2 rounded border border-stone-200 bg-white p-2"
 							>
-								<MonoText variant="greek" size="md">
+								<GreekText tone="accent" size="lg">
 									{name.greekText}
-								</MonoText>
+								</GreekText>
 								<span className="text-sm text-stone-600">{name.englishTranslation}</span>
 							</div>
 						))}

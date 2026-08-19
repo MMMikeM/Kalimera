@@ -3,7 +3,6 @@ import type React from "react";
 import { Card } from "@/components/Card";
 import { LookupCard } from "@/components/cards";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
-import { MonoText } from "@/components/MonoText";
 import { CASE_SCHEME, SCHEME } from "@/constants/grammar-palette";
 import {
 	EMPHATIC_PRONOUNS,
@@ -22,6 +21,7 @@ import { typedEntries } from "@/lib/object";
 import { BandHeading } from "./BandHeading";
 import { PronounDecisionGuide } from "./pronoun-decision-guide";
 import { PronounParadigmTable } from "./pronoun-paradigm-table";
+import { GreekText } from "@/components/GreekText";
 
 const ParadigmLookup = ({
 	caseName,
@@ -74,9 +74,9 @@ const PronounExamplePills = ({
 					key={ex.greek}
 					className={`rounded-full border ${borderColor} bg-white px-3 py-1.5 text-sm`}
 				>
-					<MonoText size="sm" className={textColor}>
+					<GreekText tone="default" size="sm" className={textColor}>
 						{ex.greek}
-					</MonoText>
+					</GreekText>
 					<span className="ml-1 text-stone-600">({ex.english})</span>
 				</div>
 			))}
@@ -163,15 +163,15 @@ export const PronounsSection: React.FC = () => {
 									// eslint-disable-next-line better-tailwindcss/no-restricted-classes -- fixed form column
 									className="grid items-baseline gap-x-5 gap-y-1 sm:grid-cols-[6rem_1fr_auto]"
 								>
-									<MonoText variant="greek" size="2xl" className={`leading-none ${style.text}`}>
+									<GreekText tone="accent" size="2xl" className={`leading-none ${style.text}`}>
 										{item.greek}
-									</MonoText>
+									</GreekText>
 									<div className="text-sm text-stone-700">
 										<span className="text-stone-500">{item.job}</span>
 										<span className="mx-2 text-stone-300">·</span>
-										<MonoText variant="greek" size="sm" className={style.text}>
+										<GreekText tone="accent" size="sm" className={style.text}>
 											{item.example}
-										</MonoText>
+										</GreekText>
 										<span className="ml-1 text-stone-500 italic">({item.translation})</span>
 									</div>
 									<span
@@ -267,22 +267,22 @@ export const PronounsSection: React.FC = () => {
 												{obj.singular.english} / {obj.plural.english}
 											</td>
 											<td className="px-2 py-2">
-												<MonoText variant="greek" size="sm" className="text-case-accusative-text">
+												<GreekText tone="accent" size="sm" className="text-case-accusative-text">
 													{obj.singular.greek}
-												</MonoText>
+												</GreekText>
 												<span className="text-stone-400"> · </span>
-												<MonoText variant="greek" size="sm" className="text-case-accusative-text">
+												<GreekText tone="accent" size="sm" className="text-case-accusative-text">
 													{obj.plural.greek}
-												</MonoText>
+												</GreekText>
 											</td>
 											<td className="px-2 py-2">
-												<MonoText variant="greek" size="sm" className="text-case-accusative-text">
+												<GreekText tone="accent" size="sm" className="text-case-accusative-text">
 													{strong.singular.greek}
-												</MonoText>
+												</GreekText>
 												<span className="text-stone-400"> · </span>
-												<MonoText variant="greek" size="sm" className="text-case-accusative-text">
+												<GreekText tone="accent" size="sm" className="text-case-accusative-text">
 													{strong.plural.greek}
-												</MonoText>
+												</GreekText>
 											</td>
 										</tr>
 									);
@@ -295,18 +295,18 @@ export const PronounsSection: React.FC = () => {
 							<div className="mb-1 text-xs font-semibold tracking-wide text-stone-500 uppercase">
 								Weak example
 							</div>
-							<MonoText variant="greek" size="md" className="block text-stone-800">
+							<GreekText tone="accent" size="lg" className="block text-stone-800">
 								με βλέπεις
-							</MonoText>
+							</GreekText>
 							<p className="mt-0.5 text-xs text-stone-500 italic">you see me</p>
 						</div>
 						<div className="rounded-md border border-stone-200 bg-stone-50 p-3">
 							<div className="mb-1 text-xs font-semibold tracking-wide text-stone-500 uppercase">
 								Strong example
 							</div>
-							<MonoText variant="greek" size="md" className="block text-stone-800">
+							<GreekText tone="accent" size="lg" className="block text-stone-800">
 								για εμένα
-							</MonoText>
+							</GreekText>
 							<p className="mt-0.5 text-xs text-stone-500 italic">for me (after preposition)</p>
 						</div>
 					</div>
@@ -320,9 +320,9 @@ export const PronounsSection: React.FC = () => {
 									key={ex.greek}
 									className="rounded-full border border-stone-200 bg-white px-3 py-1.5 text-sm"
 								>
-									<MonoText size="sm" className="text-case-accusative-text">
+									<GreekText tone="default" size="sm" className="text-case-accusative-text">
 										{ex.greek}
-									</MonoText>
+									</GreekText>
 									<span className="ml-1 text-stone-600">({ex.english})</span>
 								</div>
 							))}
@@ -348,9 +348,9 @@ export const PronounsSection: React.FC = () => {
 								<div className="space-y-1.5">
 									{phrases.map((phrase) => (
 										<div key={phrase.greek} className="flex items-baseline gap-2 text-sm">
-											<MonoText variant="greek" size="sm" className="font-medium text-stone-800">
+											<GreekText tone="accent" size="sm" className="font-medium text-stone-800">
 												{phrase.greek}
-											</MonoText>
+											</GreekText>
 											<span className="text-stone-600">{phrase.english}</span>
 										</div>
 									))}
@@ -392,9 +392,9 @@ export const PronounsSection: React.FC = () => {
 							{ greek: "παντού", english: "everywhere" },
 						].map((item) => (
 							<div key={item.greek} className="flex items-baseline gap-2 text-sm">
-								<MonoText variant="greek" size="sm" className="font-medium text-stone-800">
+								<GreekText tone="accent" size="sm" className="font-medium text-stone-800">
 									{item.greek}
-								</MonoText>
+								</GreekText>
 								<span className="text-stone-600">{item.english}</span>
 							</div>
 						))}
@@ -420,9 +420,9 @@ export const PronounsSection: React.FC = () => {
 						</div>
 						<div className="flex items-center gap-2">
 							<span className="w-16 text-stone-600">Greek:</span>
-							<MonoText variant="highlighted">
+							<GreekText tone="inherit" size="lg" className="rounded border border-stone-200 bg-white px-2 py-1 font-semibold text-stone-800">
 								{PRONOUN_PATTERNS.doubleObject.contrast.greek}
-							</MonoText>
+							</GreekText>
 							<span className="text-stone-600">
 								({PRONOUN_PATTERNS.doubleObject.contrast.literal})
 							</span>
@@ -434,7 +434,7 @@ export const PronounsSection: React.FC = () => {
 								key={ex.greek}
 								className="rounded-lg border border-stone-200 bg-stone-50 px-3 py-2"
 							>
-								<MonoText variant="highlighted">{ex.greek}</MonoText>
+								<GreekText tone="inherit" size="lg" className="rounded border border-stone-200 bg-white px-2 py-1 font-semibold text-stone-800">{ex.greek}</GreekText>
 								<span className="ml-2 text-sm text-stone-600">({ex.literal})</span>
 							</div>
 						))}
@@ -460,9 +460,9 @@ export const PronounsSection: React.FC = () => {
 						<p className="mb-1 text-xs font-semibold text-terracotta-text">
 							1. Default — before the verb
 						</p>
-						<MonoText variant="greek" size="lg" className="text-stone-900">
+						<GreekText tone="accent" size="xl" className="text-stone-900">
 							Με βλέπει.
-						</MonoText>
+						</GreekText>
 						<p className="mt-1 text-xs text-stone-500">He sees me.</p>
 					</Card>
 
@@ -470,29 +470,29 @@ export const PronounsSection: React.FC = () => {
 						<p className="mb-1 text-xs font-semibold text-terracotta-text">
 							2. Imperative — after the verb
 						</p>
-						<MonoText variant="greek" size="lg" className="text-stone-900">
+						<GreekText tone="accent" size="xl" className="text-stone-900">
 							Δες με!
-						</MonoText>
+						</GreekText>
 						<p className="mt-1 text-xs text-stone-500">Look at me!</p>
 					</Card>
 
 					<Card variant="bordered" padding="md" className="border-terracotta-200 bg-terracotta-50">
 						<p className="mb-1 text-xs font-semibold text-terracotta-text">3. After θα or να</p>
-						<MonoText variant="greek" size="lg" className="text-stone-900">
+						<GreekText tone="accent" size="xl" className="text-stone-900">
 							Θα με δει.
-						</MonoText>
+						</GreekText>
 						<p className="mt-1 text-xs text-stone-500">He will see me.</p>
-						<MonoText variant="greek" size="sm" className="mt-2 text-stone-800">
+						<GreekText tone="accent" size="sm" className="mt-2 text-stone-800">
 							Θέλω να με δεις.
-						</MonoText>
+						</GreekText>
 						<p className="text-xs text-stone-500">I want you to see me.</p>
 					</Card>
 
 					<Card variant="bordered" padding="md" className="border-terracotta-200 bg-terracotta-50">
 						<p className="mb-1 text-xs font-semibold text-terracotta-text">4. After δεν</p>
-						<MonoText variant="greek" size="lg" className="text-stone-900">
+						<GreekText tone="accent" size="xl" className="text-stone-900">
 							Δεν με βλέπει.
-						</MonoText>
+						</GreekText>
 						<p className="mt-1 text-xs text-stone-500">He doesn't see me.</p>
 					</Card>
 				</div>
