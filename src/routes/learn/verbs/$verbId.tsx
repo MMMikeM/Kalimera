@@ -96,7 +96,7 @@ function verbDetailFromGraph(result: VerbConjugationGraphRow): VerbWithConjugati
 }
 
 const verbDetailLoader = createServerFn()
-	.inputValidator(z.object({ verbId: z.string() }))
+	.validator(z.object({ verbId: z.string() }))
 	.handler(async ({ data }) => {
 		const verbId = Number(data.verbId);
 

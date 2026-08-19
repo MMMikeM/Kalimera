@@ -63,14 +63,14 @@ import { z } from "zod";
 
 // GET (default) — queries
 export const getItem = createServerFn({ method: "GET" })
-	.inputValidator(z.object({ id: z.string() }))
+	.validator(z.object({ id: z.string() }))
 	.handler(async ({ data }) => {
 		return db.findItem(data.id);
 	});
 
 // POST — mutations
 export const createItem = createServerFn({ method: "POST" })
-	.inputValidator(z.object({ name: z.string().min(1) }))
+	.validator(z.object({ name: z.string().min(1) }))
 	.handler(async ({ data }) => {
 		const item = await db.createItem(data.name);
 		return { success: true, id: item.id } as const;
@@ -105,7 +105,7 @@ const handleDelete = async () => {
 import { redirect, notFound } from "@tanstack/react-router";
 
 export const getPost = createServerFn()
-	.inputValidator(z.object({ id: z.string() }))
+	.validator(z.object({ id: z.string() }))
 	.handler(async ({ data }) => {
 		const user = await getSession();
 		if (!user) throw redirect({ to: "/login" }); // redirect
@@ -129,7 +129,7 @@ import {
 } from "@tanstack/react-start/server";
 
 export const login = createServerFn({ method: "POST" })
-	.inputValidator(z.object({ password: z.string() }))
+	.validator(z.object({ password: z.string() }))
 	.handler(async ({ data }) => {
 		const userId = await validatePassword(data.password);
 		if (!userId) return { success: false } as const;
@@ -461,7 +461,7 @@ Dynamic routes (`/posts/$id`) are excluded from auto-discovery but can be reache
 | Dynamic `import()` of server function files | Static import only                               |
 | `Cache-Control: public` on auth'd responses | Use `private` + `Vary: Cookie`                   |
 | `method: "GET"` for mutations               | `method: "POST"`                                 |
-| No `.inputValidator()`                      | Validate all inputs with Zod                     |
+| No `.validator()`                           | Validate all inputs with Zod                     |
 
 ---
 
@@ -469,7 +469,7 @@ Dynamic routes (`/posts/$id`) are excluded from auto-discovery but can be reache
 
 1. **Load relevant reference files** before writing code
 2. **Server functions for all server logic** — never sensitive logic in route loaders directly
-3. **Validate all inputs with Zod** via `.inputValidator()`
+3. **Validate all inputs with Zod** via `.validator()`
 4. **Auth in middleware, enforced on every server function** that needs it
 5. **Discriminated union returns** with `as const`
 6. **Fire-and-forget non-critical side effects** (no await)

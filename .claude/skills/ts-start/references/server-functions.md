@@ -11,8 +11,8 @@ Server functions let you define server-only logic that can be called from anywhe
 import { createServerFn } from "@tanstack/react-start";
 
 export const getServerTime = createServerFn().handler(async () => {
-	// This runs only on the server
-	return new Date().toISOString();
+ // This runs only on the server
+ return new Date().toISOString();
 });
 
 // Call from anywhere - components, loaders, hooks, etc.
@@ -32,11 +32,11 @@ TanStack Start provides `createCsrfMiddleware()` to protect server functions fro
 import { createStart, createCsrfMiddleware } from "@tanstack/react-start";
 
 const csrfMiddleware = createCsrfMiddleware({
-	filter: (ctx) => ctx.handlerType === "serverFn",
+ filter: (ctx) => ctx.handlerType === "serverFn",
 });
 
 export const startInstance = createStart(() => ({
-	requestMiddleware: [csrfMiddleware],
+ requestMiddleware: [csrfMiddleware],
 }));
 ```
 
@@ -54,13 +54,13 @@ import { createServerFn } from "@tanstack/react-start";
 
 // GET request (default)
 export const getData = createServerFn().handler(async () => {
-	return { message: "Hello from server!" };
+ return { message: "Hello from server!" };
 });
 
 // POST request
 export const saveData = createServerFn({ method: "POST" }).handler(async () => {
-	// Server-only logic
-	return { success: true };
+ // Server-only logic
+ return { success: true };
 });
 ```
 
@@ -76,17 +76,17 @@ Call server functions from:
 ```tsx
 // In a route loader
 export const Route = createFileRoute("/posts")({
-	loader: () => getServerPosts(),
+ loader: () => getServerPosts(),
 });
 
 // In a component
 function PostList() {
-	const getPosts = useServerFn(getServerPosts);
+ const getPosts = useServerFn(getServerPosts);
 
-	const { data } = useQuery({
-		queryKey: ["posts"],
-		queryFn: () => getPosts(),
-	});
+ const { data } = useQuery({
+  queryKey: ["posts"],
+  queryFn: () => getPosts(),
+ });
 }
 ```
 
@@ -112,7 +112,7 @@ src/utils/
 import { db } from "~/db";
 
 export async function findUserById(id: string) {
-	return db.query.users.findFirst({ where: eq(users.id, id) });
+ return db.query.users.findFirst({ where: eq(users.id, id) });
 }
 ```
 
@@ -122,10 +122,10 @@ import { createServerFn } from "@tanstack/react-start";
 import { findUserById } from "./users.server";
 
 export const getUser = createServerFn({ method: "GET" })
-	.inputValidator((data: { id: string }) => data)
-	.handler(async ({ data }) => {
-		return findUserById(data.id);
-	});
+ .validator((data: { id: string }) => data)
+ .handler(async ({ data }) => {
+  return findUserById(data.id);
+ });
 ```
 
 ### Static Imports Are Safe
@@ -137,10 +137,10 @@ Server functions can be statically imported in any file, including client compon
 import { getUser } from "~/utils/users.functions";
 
 function UserProfile({ id }) {
-	const { data } = useQuery({
-		queryKey: ["user", id],
-		queryFn: () => getUser({ data: { id } }),
-	});
+ const { data } = useQuery({
+  queryKey: ["user", id],
+  queryFn: () => getUser({ data: { id } }),
+ });
 }
 ```
 
@@ -164,10 +164,10 @@ Server functions accept a single `data` parameter. Since they cross the network 
 import { createServerFn } from "@tanstack/react-start";
 
 export const greetUser = createServerFn({ method: "GET" })
-	.inputValidator((data: { name: string }) => data)
-	.handler(async ({ data }) => {
-		return `Hello, ${data.name}!`;
-	});
+ .validator((data: { name: string }) => data)
+ .handler(async ({ data }) => {
+  return `Hello, ${data.name}!`;
+ });
 
 await greetUser({ data: { name: "John" } });
 ```
@@ -181,16 +181,16 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
 const UserSchema = z.object({
-	name: z.string().min(1),
-	age: z.number().min(0),
+ name: z.string().min(1),
+ age: z.number().min(0),
 });
 
 export const createUser = createServerFn({ method: "POST" })
-	.inputValidator(UserSchema)
-	.handler(async ({ data }) => {
-		// data is fully typed and validated
-		return `Created user: ${data.name}, age ${data.age}`;
-	});
+ .validator(UserSchema)
+ .handler(async ({ data }) => {
+  // data is fully typed and validated
+  return `Created user: ${data.name}, age ${data.age}`;
+ });
 ```
 
 ### Form Data
@@ -199,20 +199,20 @@ Handle form submissions with FormData:
 
 ```tsx
 export const submitForm = createServerFn({ method: "POST" })
-	.inputValidator((data) => {
-		if (!(data instanceof FormData)) {
-			throw new Error("Expected FormData");
-		}
+ .validator((data) => {
+  if (!(data instanceof FormData)) {
+   throw new Error("Expected FormData");
+  }
 
-		return {
-			name: data.get("name")?.toString() || "",
-			email: data.get("email")?.toString() || "",
-		};
-	})
-	.handler(async ({ data }) => {
-		// Process form data
-		return { success: true };
-	});
+  return {
+   name: data.get("name")?.toString() || "",
+   email: data.get("email")?.toString() || "",
+  };
+ })
+ .handler(async ({ data }) => {
+  // Process form data
+  return { success: true };
+ });
 ```
 
 ### Serialization Type Checking
@@ -227,25 +227,25 @@ This default behavior is called `strict` mode. If you intentionally need to opt 
 ```tsx
 // Disable input and output serialization type checks
 export const looseServerFn = createServerFn({ strict: false })
-	.inputValidator((data: { value: unknown }) => data)
-	.handler(async ({ data }) => {
-		return data.value;
-	});
+ .validator((data: { value: unknown }) => data)
+ .handler(async ({ data }) => {
+  return data.value;
+ });
 
 // Disable only input serialization type checks
 export const looseInputServerFn = createServerFn({
-	strict: { input: false },
+ strict: { input: false },
 })
-	.inputValidator((data: { value: unknown }) => data)
-	.handler(async () => {
-		return { ok: true };
-	});
+ .validator((data: { value: unknown }) => data)
+ .handler(async () => {
+  return { ok: true };
+ });
 
 // Disable only output serialization type checks
 export const looseOutputServerFn = createServerFn({
-	strict: { output: false },
+ strict: { output: false },
 }).handler(async () => {
-	return getCustomSerializedValue();
+ return getCustomSerializedValue();
 });
 ```
 
@@ -262,17 +262,17 @@ Server functions can throw errors, redirects, and not-found responses that are h
 import { createServerFn } from "@tanstack/react-start";
 
 export const riskyFunction = createServerFn().handler(async () => {
-	if (Math.random() > 0.5) {
-		throw new Error("Something went wrong!");
-	}
-	return { success: true };
+ if (Math.random() > 0.5) {
+  throw new Error("Something went wrong!");
+ }
+ return { success: true };
 });
 
 // Errors are serialized to the client
 try {
-	await riskyFunction();
+ await riskyFunction();
 } catch (error) {
-	console.log(error.message); // "Something went wrong!"
+ console.log(error.message); // "Something went wrong!"
 }
 ```
 
@@ -285,13 +285,13 @@ import { createServerFn } from "@tanstack/react-start";
 import { redirect } from "@tanstack/react-router";
 
 export const requireAuth = createServerFn().handler(async () => {
-	const user = await getCurrentUser();
+ const user = await getCurrentUser();
 
-	if (!user) {
-		throw redirect({ to: "/login" });
-	}
+ if (!user) {
+  throw redirect({ to: "/login" });
+ }
 
-	return user;
+ return user;
 });
 ```
 
@@ -304,16 +304,16 @@ import { createServerFn } from "@tanstack/react-start";
 import { notFound } from "@tanstack/react-router";
 
 export const getPost = createServerFn()
-	.inputValidator((data: { id: string }) => data)
-	.handler(async ({ data }) => {
-		const post = await db.findPost(data.id);
+ .validator((data: { id: string }) => data)
+ .handler(async ({ data }) => {
+  const post = await db.findPost(data.id);
 
-		if (!post) {
-			throw notFound();
-		}
+  if (!post) {
+   throw notFound();
+  }
 
-		return post;
-	});
+  return post;
+ });
 ```
 
 ## Advanced Topics
@@ -327,24 +327,24 @@ Access request headers, cookies, and customize responses:
 ```tsx
 import { createServerFn } from "@tanstack/react-start";
 import {
-	getRequest,
-	getRequestHeader,
-	setResponseHeaders,
-	setResponseStatus,
+ getRequest,
+ getRequestHeader,
+ setResponseHeaders,
+ setResponseStatus,
 } from "@tanstack/react-start/server";
 
 // Public, non-personalized data — safe to cache shared across users.
 export const getPublicData = createServerFn({ method: "GET" }).handler(async () => {
-	setResponseHeaders(
-		new Headers({
-			// 'public' is correct ONLY when the response does not depend on identity.
-			// For anything tied to a session/user/tenant, see the authenticated example below.
-			"Cache-Control": "public, max-age=300",
-			"CDN-Cache-Control": "max-age=3600, stale-while-revalidate=600",
-		}),
-	);
-	setResponseStatus(200);
-	return fetchPublicData();
+ setResponseHeaders(
+  new Headers({
+   // 'public' is correct ONLY when the response does not depend on identity.
+   // For anything tied to a session/user/tenant, see the authenticated example below.
+   "Cache-Control": "public, max-age=300",
+   "CDN-Cache-Control": "max-age=3600, stale-while-revalidate=600",
+  }),
+ );
+ setResponseStatus(200);
+ return fetchPublicData();
 });
 ```
 
@@ -353,16 +353,16 @@ export const getPublicData = createServerFn({ method: "GET" }).handler(async () 
 ```tsx
 // Authenticated data — must NOT be 'public'.
 export const getMyOrders = createServerFn({ method: "GET" }).handler(async () => {
-	const session = await requireSession();
-	setResponseHeaders(
-		new Headers({
-			// 'private' = only the user-agent may cache. Vary by Cookie/Authorization
-			// so any intermediary that does cache keys by identity, not URL alone.
-			"Cache-Control": "private, max-age=60",
-			Vary: "Cookie, Authorization",
-		}),
-	);
-	return db.orders.findMany({ where: { userId: session.userId } });
+ const session = await requireSession();
+ setResponseHeaders(
+  new Headers({
+   // 'private' = only the user-agent may cache. Vary by Cookie/Authorization
+   // so any intermediary that does cache keys by identity, not URL alone.
+   "Cache-Control": "private, max-age=60",
+   Vary: "Cookie, Authorization",
+  }),
+ );
+ return db.orders.findMany({ where: { userId: session.userId } });
 });
 
 // For sensitive data, opt out entirely:
@@ -431,20 +431,20 @@ import react from "@vitejs/plugin-react";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 
 export default defineConfig({
-	plugins: [
-		tanstackStart({
-			serverFns: {
-				generateFunctionId: ({ filename, functionName }) => {
-					// Return a custom ID string
-					return crypto.createHash("sha1").update(`${filename}--${functionName}`).digest("hex");
+ plugins: [
+  tanstackStart({
+   serverFns: {
+    generateFunctionId: ({ filename, functionName }) => {
+     // Return a custom ID string
+     return crypto.createHash("sha1").update(`${filename}--${functionName}`).digest("hex");
 
-					// If you return undefined, the default is used
-					// return undefined
-				},
-			},
-		}),
-		react(),
-	],
+     // If you return undefined, the default is used
+     // return undefined
+    },
+   },
+  }),
+  react(),
+ ],
 });
 ```
 
