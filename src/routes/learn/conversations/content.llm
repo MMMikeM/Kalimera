@@ -5,27 +5,59 @@ Themed dialogues demonstrating Greek in real-world contexts.
 ## Route Structure
 
 ```
-/learn/conversations/:tab
+/learn/conversations/$tab
 ```
 
 Tabs: arriving, food, smalltalk, requests
 
+TanStack Start file route `/learn/conversations/$tab` (`$tab.tsx`) validates the
+`$tab` param against `VALID_TABS`, redirects unknown values to `arriving`, and
+renders the matching tab component from `tabs/`.
+
+## File Structure
+
+```
+src/routes/learn/conversations/
+├── $tab.tsx                        # Route, VALID_TABS, CONVERSATION_TABS, layout + mode state
+├── index.tsx                       # beforeLoad redirect to the `arriving` tab
+├── content.llm                     # This file
+├── components/conversation-shell.tsx  # ConversationProvider, useConversationContext,
+│                                   #   ScenarioCard, LearningTips
+└── tabs/
+    ├── arriving.tsx
+    ├── food.tsx
+    ├── requests.tsx
+    └── smalltalk.tsx
+```
+
 ## Data Source
 
-**Static content** - Dialogues are hardcoded in `$tab.tsx`, not database-driven.
-This allows precise control over dialogue flow and cultural notes.
+**Static content** - Dialogue constants live in each `tabs/<id>.tsx` module, not
+database-driven. This allows precise control over dialogue flow and cultural notes.
+
+## Component Layer (`components/conversation-shell.tsx`)
+
+- **`ConversationProvider`** - React context supplying `{ mode, setMode }`; mounted by the
+  layout in `$tab.tsx` and read via `useConversationContext()`.
+- **`ScenarioCard`** - `Card` wrapper around `DialogueScenario`; takes `title`, `description`,
+  `formality`, `dialogue`, and an optional `mode` override (defaults to the context mode).
+- **`LearningTips`** - `CollapsibleSection` (honey, open by default) rendering `patterns`,
+  `tips`, and an optional `commonMistake` via the shared `MistakeComparison` component.
 
 ## Display Modes
 
-Conversations support two modes (toggled in layout, persists across tabs):
-- **Study mode**: Full dialogue visible with translations
-- **Speak mode**: Greek hidden for "you" lines, English hidden on all lines - tap to reveal
+Conversations support two modes (toggled in layout via `ConversationModeToggle`, persisted
+across tabs in `conversation-mode`):
+- **`read`** (UI label "Study"): Full dialogue visible with translations
+- **`roleplay`** (UI label "Speak"): Greek hidden for "you" lines, English hidden on all lines - tap to reveal
 
 ## Dialogue Line Structure
 
+`SpeakerRole` is defined in `src/components/SpeakerBadge.tsx`.
+
 ```typescript
 interface DialogueLine {
-  speaker: "you" | "friend" | "host" | "waiter" | "stranger";
+  speaker: "you" | "friend" | "host" | "waiter" | "shopkeeper" | "stranger";
   greek: string;
   english: string;
   note?: string;  // Cultural/linguistic context
@@ -308,6 +340,7 @@ Practical phrases for everyday needs. Asking for help, making introductions, and
 | friend | Casual acquaintance | Informal |
 | host | Greek home owner | Formal (shows respect) |
 | waiter | Service staff | Formal |
+| shopkeeper | Shop or kiosk staff | Formal |
 | stranger | Unknown person | Formal |
 
 ## Content Guidelines
@@ -325,8 +358,10 @@ When adding conversations:
 
 To add a new conversation topic:
 
-1. Add tab ID to `VALID_TABS` array in `$tab.tsx`
-2. Create dialogue constants (follow existing naming: `SCENARIO_NAME: DialogueLine[]`)
-3. Create tab component with `ConversationHero`, `ScenarioCard`s, and `LearningTips`
-4. Add case to switch statement in default export
+1. Add tab ID to `VALID_TABS` and an entry to `CONVERSATION_TABS` in `$tab.tsx` (tab colour
+   should match the tab's `ConversationHero` `colorScheme`)
+2. Create `tabs/<id>.tsx` with its dialogue constants (follow existing naming:
+   `SCENARIO_NAME: DialogueLine[]`)
+3. Build the tab component from `ConversationHero`, `ScenarioCard`s, and `LearningTips`
+4. Add a case to the `TabRoute` switch in `$tab.tsx`
 5. Update this documentation
