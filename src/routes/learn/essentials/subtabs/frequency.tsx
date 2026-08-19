@@ -1,12 +1,12 @@
 import { Lightbulb } from "lucide-react";
 
 import { ContentSection } from "@/components/ContentSection";
-import { MonoText } from "@/components/MonoText";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 import type { EssentialsLoaderData } from "../$subtab";
 import { EssentialsBackLink } from "./essentials-back-link";
 import { ExampleList } from "./example-list";
+import { GreekText } from "@/components/GreekText";
 
 interface Props {
 	data: EssentialsLoaderData;
@@ -71,7 +71,7 @@ export function FrequencySubtab({ data }: Props) {
 							<div key={greek} className="px-3 py-2.5">
 								<div className="flex items-center justify-between gap-3">
 									<div className="min-w-0">
-										<MonoText variant="greek">{greek}</MonoText>
+										<GreekText tone="accent" size="lg">{greek}</GreekText>
 										<div className="text-xs text-stone-500">
 											{adverb?.englishTranslation ?? greek}
 										</div>
@@ -98,15 +98,15 @@ export function FrequencySubtab({ data }: Props) {
 
 				<div className="divide-y divide-stone-200/60">
 					<div className="px-3 py-2.5">
-						<MonoText variant="greek">
+						<GreekText tone="accent" size="lg">
 							ποτ<span className="font-bold text-honey-600">έ</span>
-						</MonoText>
+						</GreekText>
 						<div className="text-xs text-stone-500">never (accent on ε)</div>
 					</div>
 					<div className="px-3 py-2.5">
-						<MonoText variant="greek">
+						<GreekText tone="accent" size="lg">
 							π<span className="font-bold text-honey-600">ό</span>τε
-						</MonoText>
+						</GreekText>
 						<div className="text-xs text-stone-500">when? (accent on ο)</div>
 					</div>
 				</div>
@@ -115,11 +115,11 @@ export function FrequencySubtab({ data }: Props) {
 					<p className="mb-2 text-sm font-medium text-honey-text">Grammar pattern</p>
 					<div className="space-y-1.5 text-sm">
 						<div>
-							<MonoText variant="greek">ποτέ δεν + verb</MonoText>
+							<GreekText tone="accent" size="lg">ποτέ δεν + verb</GreekText>
 							<span className="ml-2 text-xs text-stone-500">= never do X</span>
 						</div>
 						<div>
-							<MonoText variant="greek">Ποτέ δεν τρώω κρέας.</MonoText>
+							<GreekText tone="accent" size="lg">Ποτέ δεν τρώω κρέας.</GreekText>
 							<div className="text-xs text-stone-500">I never eat meat.</div>
 						</div>
 					</div>
@@ -134,53 +134,53 @@ export function FrequencySubtab({ data }: Props) {
 			>
 				<div className="space-y-3 px-3 pt-3 pb-1">
 					<div>
-						<MonoText variant="greek" className="font-semibold">
+						<GreekText tone="accent" size="lg" className="font-semibold">
 							καμιά φορά
-						</MonoText>
+						</GreekText>
 						<p className="mt-0.5 text-xs text-stone-500">Once in a while, unexpectedly</p>
 						<div className="mt-1">
-							<MonoText variant="greek" size="sm">
+							<GreekText tone="accent" size="sm">
 								Καμιά φορά τρώω γλυκά.
-							</MonoText>
+							</GreekText>
 							<span className="ml-2 text-xs text-stone-400">I eat sweets once in a while.</span>
 						</div>
 					</div>
 
 					<div>
-						<MonoText variant="greek" className="font-semibold">
+						<GreekText tone="accent" size="lg" className="font-semibold">
 							μερικές φορές
-						</MonoText>
+						</GreekText>
 						<p className="mt-0.5 text-xs text-stone-500">Several times, countable occurrences</p>
 						<div className="mt-1">
-							<MonoText variant="greek" size="sm">
+							<GreekText tone="accent" size="sm">
 								Έχω πάει μερικές φορές.
-							</MonoText>
+							</GreekText>
 							<span className="ml-2 text-xs text-stone-400">I've been several times.</span>
 						</div>
 					</div>
 
 					<div>
-						<MonoText variant="greek" className="font-semibold">
+						<GreekText tone="accent" size="lg" className="font-semibold">
 							πότε πότε
-						</MonoText>
+						</GreekText>
 						<p className="mt-0.5 text-xs text-stone-500">Now and then, neutral/standard</p>
 						<div className="mt-1">
-							<MonoText variant="greek" size="sm">
+							<GreekText tone="accent" size="sm">
 								Πότε πότε πάω γυμναστήριο.
-							</MonoText>
+							</GreekText>
 							<span className="ml-2 text-xs text-stone-400">I go to the gym now and then.</span>
 						</div>
 					</div>
 
 					<div>
-						<MonoText variant="greek" className="font-semibold">
+						<GreekText tone="accent" size="lg" className="font-semibold">
 							κάπου κάπου
-						</MonoText>
+						</GreekText>
 						<p className="mt-0.5 text-xs text-stone-500">Here and there, casual/colloquial</p>
 						<div className="mt-1">
-							<MonoText variant="greek" size="sm">
+							<GreekText tone="accent" size="sm">
 								Κάπου κάπου βλέπω ταινίες.
-							</MonoText>
+							</GreekText>
 							<span className="ml-2 text-xs text-stone-400">I watch films here and there.</span>
 						</div>
 					</div>

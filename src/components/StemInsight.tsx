@@ -3,7 +3,7 @@ import { AlertTriangle } from "lucide-react";
 import { type ColorScheme, colorStyles } from "@/lib/colors";
 import { cn } from "@/lib/utils";
 
-import { MonoText } from "./MonoText";
+import { GreekText } from "@/components/GreekText";
 
 interface StemInsightProps {
 	isSuppletive: boolean;
@@ -34,9 +34,9 @@ const StemBox = ({ label, stem, color }: StemBoxProps) => {
 			)}
 		>
 			<span className={cn("text-xs font-medium mb-1", styles.text)}>{label}</span>
-			<MonoText variant="greek" size="xl" weight="bold">
+			<GreekText tone="accent" size="xl" weight="bold">
 				{stem}-
-			</MonoText>
+			</GreekText>
 		</div>
 	);
 };

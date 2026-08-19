@@ -6,13 +6,13 @@ import { z } from "zod";
 
 import { Card } from "@/components/Card";
 import { ImperativeTable } from "@/components/ImperativeTable";
-import { MonoText } from "@/components/MonoText";
 import { SectionHeading } from "@/components/SectionHeading";
 import { StemInsight } from "@/components/StemInsight";
 import { TenseNavigator } from "@/components/TenseNavigator";
 import { Badge } from "@/components/ui/badge";
 import type { VerbConjugationGraphRow } from "@/server/db/queries/vocabulary";
 import { fetchVerbWithConjugationRelations } from "@/server/db/queries/vocabulary";
+import { GreekText } from "@/components/GreekText";
 
 type ParadigmForms = {
 	sg1: string;
@@ -152,9 +152,9 @@ function VerbDetailPage() {
 			<Card variant="bordered" padding="lg" className="bg-white">
 				<div className="flex flex-wrap items-start justify-between gap-4">
 					<div>
-						<MonoText variant="greek" size="2xl" weight="bold">
+						<GreekText tone="accent" size="2xl" weight="bold">
 							{verb.greekText}
-						</MonoText>
+						</GreekText>
 						<p className="mt-1 text-lg text-stone-600">{verb.englishTranslation}</p>
 					</div>
 

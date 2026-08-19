@@ -3,13 +3,13 @@ import { createFuzzySearch } from "ekrina";
 import { Search } from "lucide-react";
 import { useState } from "react";
 
-import { MonoText } from "@/components/MonoText";
 import { SearchInput } from "@/components/SearchInput";
 import { TabHero } from "@/components/TabHero";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { vocabularySearchFields } from "@/lib/vocabulary-search-fields";
 import { getSearchVocabularyFn } from "@/server/fns/search";
+import { GreekText } from "@/components/GreekText";
 
 export const Route = createFileRoute("/search")({
 	loader: () => getSearchVocabularyFn().then((vocabulary) => ({ vocabulary })),
@@ -71,9 +71,9 @@ function SearchRoute() {
 								<div className="flex items-start justify-between gap-4">
 									<div className="min-w-0 flex-1">
 										{/* Greek text prominently displayed */}
-										<MonoText variant="greek" size="lg" className="mb-1 block text-2xl font-medium">
+										<GreekText tone="accent" size="xl" className="mb-1 block text-2xl font-medium">
 											{result.greekText}
-										</MonoText>
+										</GreekText>
 										<p className="text-stone-600">{result.englishTranslation}</p>
 									</div>
 									<div className="flex flex-shrink-0 flex-wrap justify-end gap-2">

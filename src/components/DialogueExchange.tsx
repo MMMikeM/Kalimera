@@ -4,8 +4,8 @@ import { useState } from "react";
 
 import { cn } from "@/lib/utils";
 
-import { MonoText } from "./MonoText";
 import { SpeakerBadge, type SpeakerRole } from "./SpeakerBadge";
+import { GreekText } from "@/components/GreekText";
 
 export type ConversationMode = "read" | "roleplay";
 
@@ -105,7 +105,7 @@ const DialogueExchange: React.FC<DialogueExchangeProps> = ({
 						)}
 					>
 						<SpeakerBadge role={line.speaker} className="mb-2" />
-						<MonoText variant="greek" size="lg" className="mt-2 block">
+						<GreekText tone="accent" size="xl" className="mt-2 block">
 							{shouldHideGreek(line, idx) ? (
 								<RevealableText
 									text={line.greek}
@@ -116,7 +116,7 @@ const DialogueExchange: React.FC<DialogueExchangeProps> = ({
 							) : (
 								line.greek
 							)}
-						</MonoText>
+						</GreekText>
 						<div className="mt-1 text-sm text-stone-600">
 							<RevealableText
 								text={line.english}

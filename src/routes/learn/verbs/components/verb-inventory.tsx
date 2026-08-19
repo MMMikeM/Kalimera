@@ -3,11 +3,11 @@ import type React from "react";
 import { useState } from "react";
 
 import { CollapsibleSection } from "@/components/CollapsibleSection";
-import { MonoText } from "@/components/MonoText";
 import { type AoristClass, classifyAorist } from "@/lib/aorist-class";
 import { deviatingPersons } from "@/lib/paradigm-deviation";
 import { cn } from "@/lib/utils";
 import type { VerbInventoryRow } from "@/server/db/queries/vocabulary";
+import { GreekText } from "@/components/GreekText";
 
 interface ClassifiedVerb {
 	id: number;
@@ -85,9 +85,9 @@ const ParadigmGrid: React.FC<{ paradigm: Paradigm }> = ({ paradigm }) => {
 						<td className="w-16 py-0.5 text-xs text-stone-400">{label}</td>
 						{TENSES.map((tense) => (
 							<td key={tense} className="py-0.5 pr-3">
-								<MonoText variant="greek" size="sm" className={weightOf(key, deviating[tense] ?? [])}>
+								<GreekText tone="accent" size="sm" className={weightOf(key, deviating[tense] ?? [])}>
 									{paradigm[tense]?.[key] ?? "—"}
-								</MonoText>
+								</GreekText>
 							</td>
 						))}
 					</tr>
@@ -128,20 +128,20 @@ const VerbRow: React.FC<{
 					: { className: "border-t border-stone-100" })}
 			>
 				<td className={CELL}>
-					<MonoText variant="greek" size="sm" className="text-stone-500">
+					<GreekText tone="accent" size="sm" className="text-stone-500">
 						{verb.present}
-					</MonoText>
+					</GreekText>
 				</td>
 				<td className={CELL}>
-					<MonoText variant="greek" size="sm" className="font-semibold text-stone-900">
+					<GreekText tone="accent" size="sm" className="font-semibold text-stone-900">
 						{verb.aorist}
-					</MonoText>
+					</GreekText>
 				</td>
 				{showFuture && (
 					<td className={CELL}>
-						<MonoText variant="greek" size="sm" className="text-stone-500">
+						<GreekText tone="accent" size="sm" className="text-stone-500">
 							{verb.future ?? "—"}
-						</MonoText>
+						</GreekText>
 					</td>
 				)}
 				<td className={cn(CELL, "pr-0 text-xs whitespace-nowrap text-stone-400")}>
@@ -156,6 +156,10 @@ const VerbRow: React.FC<{
 					<td colSpan={columns} className="pb-3">
 						<div className="rounded-lg bg-stone-50 px-3 py-2">
 							<ParadigmGrid paradigm={paradigm} />
+							<p className="mt-1.5 text-xs text-stone-400">
+								<span className="font-semibold text-stone-900">Bold</span> = breaks the usual pattern —
+								worth memorising
+							</p>
 						</div>
 					</td>
 				</tr>
@@ -303,13 +307,13 @@ export const RulesSection: React.FC<{ verbs: ClassifiedVerb[] }> = ({ verbs }) =
 				return (
 					<div key={group.klass} className="rounded-xl border border-stone-200 bg-white">
 						<div className="flex items-baseline gap-3 border-b border-stone-100 px-4 py-2.5">
-							<MonoText size="sm" className="text-stone-600">
+							<GreekText tone="default" size="sm" className="text-stone-600">
 								{group.label}
-							</MonoText>
+							</GreekText>
 							<span className="text-xs text-stone-300">→</span>
-							<MonoText size="sm" className="font-bold text-navy-text">
+							<GreekText tone="default" size="sm" className="font-bold text-navy-text">
 								{group.becomes}
-							</MonoText>
+							</GreekText>
 							<span className="ml-auto text-xs text-stone-400">{members.length} verbs</span>
 						</div>
 						<div className="px-4 py-2">
@@ -332,9 +336,9 @@ export const RulesSection: React.FC<{ verbs: ClassifiedVerb[] }> = ({ verbs }) =
 								{exceptions.map((v, i) => (
 									<span key={v.present}>
 										{i > 0 && ", "}
-										<MonoText size="sm" className="text-stone-700">
+										<GreekText tone="default" size="sm" className="text-stone-700">
 											{v.present} → {v.aorist}
-										</MonoText>
+										</GreekText>
 									</span>
 								))}
 							</p>

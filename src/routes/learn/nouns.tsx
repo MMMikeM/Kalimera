@@ -5,13 +5,13 @@ import { ChevronLeft, Package } from "lucide-react";
 import type React from "react";
 
 import { ContentSection } from "@/components/ContentSection";
-import { MonoText } from "@/components/MonoText";
 import { TabHero } from "@/components/TabHero";
 import { getArticle } from "@/lib/greek-grammar";
 import { typedEntries } from "@/lib/object";
 import { getVocabBySlug } from "@/server/db/queries/vocabulary";
 import type { Gender } from "@/server/db/schema";
 import type { Vocabulary } from "@/server/db/types";
+import { GreekText } from "@/components/GreekText";
 
 export type NounWithGender = Vocabulary & { gender: Gender };
 
@@ -127,7 +127,7 @@ const NounDisplay: React.FC<{ noun: NounWithGender }> = ({ noun }) => {
 				<span className={`rounded px-1.5 py-0.5 text-sm font-bold ${styles.text} ${styles.bg}`}>
 					{article}
 				</span>
-				<MonoText variant="greek" className="text-stone-900">
+				<GreekText tone="accent" size="lg" className="text-stone-900">
 					{ending ? (
 						<>
 							{stem}
@@ -136,7 +136,7 @@ const NounDisplay: React.FC<{ noun: NounWithGender }> = ({ noun }) => {
 					) : (
 						nounWord
 					)}
-				</MonoText>
+				</GreekText>
 			</div>
 			<div className="mt-0.5 ml-8 text-xs text-stone-500">{noun.englishTranslation}</div>
 		</div>

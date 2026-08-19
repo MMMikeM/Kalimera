@@ -386,9 +386,8 @@
 		font-family: var(--font-sans);
 	}
 
-	/* Greek text rendering */
-	[lang="el"],
-	.greek {
+	/* Greek text rendering — GreekText always emits lang="el" */
+	[lang="el"] {
 		font-feature-settings:
 			"kern" 1,
 			"liga" 1;
@@ -410,9 +409,10 @@
 }
 
 @layer components {
-	/* Greek text — render slightly larger for visual balance */
+	/* Greek text. No size here: GreekText carries an explicit size scale, and a
+	   1.1em multiplier on top of it compounded confusingly at every call site. */
 	.greek-text {
-		@apply text-[1.1em] leading-relaxed;
+		@apply leading-relaxed;
 		letter-spacing: 0.01em;
 	}
 }
