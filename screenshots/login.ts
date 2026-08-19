@@ -9,6 +9,11 @@ export async function loginWithCredentials(
 	// Navigate to login page
 	await page.goto(`${baseUrl}/login`, { waitUntil: "domcontentloaded" });
 
+	// Wait for hydration before touching the form. Submitting before React has
+	// attached its onSubmit handler makes the browser do a native GET, which
+	// lands on /login?username=…&password=… and never redirects.
+	await page.waitForLoadState("networkidle");
+
 	// Fill in the login form
 	await page.fill('input[name="username"]', username);
 	await page.fill('input[name="password"]', password);
