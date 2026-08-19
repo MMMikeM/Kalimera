@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { drillActions, useDrillStore } from "../drill-store";
 import { ReverseFeedback, SelectorButton } from "../shells";
+import { GreekText } from "@/components/GreekText";
 
 type Selected<K extends string> = Partial<Record<K, string>>;
 
@@ -87,9 +88,9 @@ export function MultiSelectReverse<K extends string>({ dimensions }: MultiSelect
 	return (
 		<>
 			<div className="pt-2">
-				<p lang="el" className="greek-text font-sans text-8xl leading-none text-foreground">
+				<GreekText as="p" size="8xl" className="font-sans">
 					{currentForm.greek}
-				</p>
+				</GreekText>
 			</div>
 
 			<div className="space-y-3">

@@ -4,6 +4,7 @@ import { getOppositePairsFn } from "@/server/fns/opposites";
 
 import type { DrillForm } from "../components/engines/deck";
 import { Drill } from "../components/engines/drill";
+import { GreekText } from "@/components/GreekText";
 
 interface OppositeCard extends DrillForm {
 	sourceGreek: string;
@@ -60,9 +61,9 @@ function OppositesDrill() {
 						<p className="mb-3 text-xs font-medium tracking-widest text-muted-foreground uppercase">
 							opposite of
 						</p>
-						<p lang="el" className="greek-text text-5xl leading-none text-foreground">
+						<GreekText as="p" size="5xl">
 							{card.sourceGreek}
-						</p>
+						</GreekText>
 						<p className="mt-4 text-base text-muted-foreground italic">
 							“{card.sourceEnglish}”
 						</p>

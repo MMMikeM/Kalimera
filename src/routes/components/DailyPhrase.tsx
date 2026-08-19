@@ -2,6 +2,7 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 
 import { today } from "@/lib/time";
+import { GreekText } from "@/components/GreekText";
 
 const DAILY_PHRASES = [
 	{
@@ -68,7 +69,9 @@ export const DailyPhrase = () => {
 					<p className="font-medium text-terracotta">Tap to reveal Greek</p>
 				) : (
 					<div>
-						<p className="greek-text font-serif text-2xl text-navy">{phrase?.greek}</p>
+						<GreekText as="p" size="2xl" tone="inherit" className="font-serif text-navy">
+							{phrase?.greek}
+						</GreekText>
 						<p className="mt-1 text-sm text-stone-500 italic">lit. "{phrase?.literal}"</p>
 					</div>
 				)}

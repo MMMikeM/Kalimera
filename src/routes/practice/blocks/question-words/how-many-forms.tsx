@@ -5,6 +5,7 @@ import type { SimpleListItem } from "../../components/engines/deck";
 import { Drill } from "../../components/engines/drill";
 
 import { QuestionWordParadigm } from "./components/paradigm";
+import { GreekText } from "@/components/GreekText";
 
 const item = (
 	id: string,
@@ -49,13 +50,13 @@ const PARADIGM = [
 const Paradigm = () => (
 	<QuestionWordParadigm caption="πόσος agrees" columns={PARADIGM_COLUMNS} rows={PARADIGM}>
 		On its own,{" "}
-		<span lang="el" className="greek-text text-sm text-foreground">
+		<GreekText size="sm">
 			πόσο
-		</span>{" "}
+		</GreekText>{" "}
 		asks price or degree —{" "}
-		<span lang="el" className="greek-text text-sm text-foreground">
+		<GreekText size="sm">
 			πόσο κάνει;
-		</span>
+		</GreekText>
 	</QuestionWordParadigm>
 );
 

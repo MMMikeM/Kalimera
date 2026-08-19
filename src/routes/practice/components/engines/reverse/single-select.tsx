@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { drillActions, useDrillStore } from "../drill-store";
 import { ReverseFeedback, SelectorButton } from "../shells";
+import { GreekText } from "@/components/GreekText";
 
 interface SelectOption {
 	id: string;
@@ -53,9 +54,9 @@ export function SingleSelectReverse({ options, getCorrectId }: SingleSelectRever
 	return (
 		<>
 			<div>
-				<p lang="el" className="greek-text text-4xl text-foreground">
+				<GreekText as="p" size="4xl">
 					{currentForm.greek}
-				</p>
+				</GreekText>
 			</div>
 
 			<div className="flex flex-wrap gap-2">
