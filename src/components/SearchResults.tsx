@@ -1,11 +1,11 @@
 import { SearchX } from "lucide-react";
 
-import { MonoText } from "@/components/MonoText";
 import { formatNounWithArticle } from "@/lib/greek-grammar";
 import { cn } from "@/lib/utils";
 import type { VocabularySearchGraphRow } from "@/server/db/queries/vocabulary";
 
 import { Badge } from "./ui/badge";
+import { GreekText } from "@/components/GreekText";
 
 interface SearchResultsProps {
 	results: VocabularySearchGraphRow[];
@@ -43,9 +43,9 @@ export const SearchResults = ({ results, searchTerm, compact = false }: SearchRe
 						key={result.id}
 						className="flex items-center gap-2 rounded px-1 py-2 transition-colors hover:bg-stone-50"
 					>
-						<MonoText variant="greek" size="sm" className="max-w-44 truncate font-medium">
+						<GreekText tone="accent" size="sm" className="max-w-44 truncate font-medium">
 							{displayGreek(result)}
-						</MonoText>
+						</GreekText>
 						<span className="text-stone-300">—</span>
 						<span className="flex-1 truncate text-sm text-stone-600">
 							{result.englishTranslation}
@@ -76,9 +76,9 @@ export const SearchResults = ({ results, searchTerm, compact = false }: SearchRe
 					<div key={result.id} className={cn("rounded-lg p-4", bgClass)}>
 						<div className="flex items-start justify-between gap-3">
 							<div className="min-w-0 flex-1">
-								<MonoText variant="greek" size="lg" className="mb-1 block text-2xl font-medium">
+								<GreekText tone="accent" size="xl" className="mb-1 block text-2xl font-medium">
 									{displayGreek(result)}
-								</MonoText>
+								</GreekText>
 								<p className="text-stone-600">{result.englishTranslation}</p>
 							</div>
 							<div className="flex flex-shrink-0 flex-wrap justify-end gap-1.5">

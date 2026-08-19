@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 
-import { MonoText } from "./MonoText";
+import { GreekText } from "@/components/GreekText";
 
 interface ImperativeFormsData {
 	imperfective: { singular: string; plural: string } | null;
@@ -22,9 +22,9 @@ const AspectLabel = ({ aspect, description }: { aspect: string; description: str
 const FormCell = ({ form, isEmpty }: { form?: string; isEmpty?: boolean }) => (
 	<td className={cn("p-3 text-center border border-stone-200", isEmpty && "bg-stone-50")}>
 		{form ? (
-			<MonoText variant="greek" size="lg">
+			<GreekText tone="accent" size="xl">
 				{form}
-			</MonoText>
+			</GreekText>
 		) : (
 			<span className="text-sm text-stone-400 italic">-</span>
 		)}

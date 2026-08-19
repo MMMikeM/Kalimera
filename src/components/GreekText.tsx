@@ -5,12 +5,10 @@ import { tv } from "tailwind-variants";
  * The single component for rendering Greek script.
  *
  * It exists so that Greek-ness is one decision made in one place: the `lang`
- * attribute, the font, and the optical sizing. Raw `<span lang="el">` markup and
- * `<MonoText variant="greek">` are both being replaced by it.
- *
- * Note that "is this Greek" and "what colour does it carry" are separate props
- * here. `MonoText` fused them into one `variant` enum, which is why gender- and
- * case-coloured Greek currently renders with no `lang` attribute at all.
+ * attribute, the font, and the optical sizing. It replaced two unrelated
+ * conventions — raw `<span lang="el">` markup and a `MonoText` component whose
+ * `variant` enum fused "is this Greek" with "what colour does it carry", which
+ * is why gender- and case-coloured Greek used to render with no `lang` at all.
  *
  * It never styles stress. The tonos already marks the stressed syllable, and
  * marking it twice spends salience for no added information. Stress belongs to

@@ -1,9 +1,9 @@
 import { ContentSection } from "@/components/ContentSection";
-import { MonoText } from "@/components/MonoText";
 
 import type { EssentialsLoaderData } from "../$subtab";
 import { EssentialsBackLink } from "./essentials-back-link";
 import { ExampleList } from "./example-list";
+import { GreekText } from "@/components/GreekText";
 
 interface Props {
 	data: EssentialsLoaderData;
@@ -105,7 +105,7 @@ export function ColoursSubtab({ data }: Props) {
 										<>
 											<ColourSwatch greek={left.greekText} />
 											<div className="min-w-0">
-												<MonoText variant="greek">{left.greekText}</MonoText>
+												<GreekText tone="accent" size="lg">{left.greekText}</GreekText>
 												<div className="text-xs text-stone-500">{left.englishTranslation}</div>
 											</div>
 										</>
@@ -118,7 +118,7 @@ export function ColoursSubtab({ data }: Props) {
 										<>
 											<ColourSwatch greek={right.greekText} />
 											<div className="min-w-0">
-												<MonoText variant="greek">{right.greekText}</MonoText>
+												<GreekText tone="accent" size="lg">{right.greekText}</GreekText>
 												<div className="text-xs text-stone-500">{right.englishTranslation}</div>
 											</div>
 										</>
@@ -135,7 +135,7 @@ export function ColoursSubtab({ data }: Props) {
 				<div className="divide-y divide-stone-200/60">
 					{MODIFIERS.map((mod) => (
 						<div key={mod.greek} className="grid grid-cols-2 gap-x-3 px-3 py-2.5">
-							<MonoText variant="greek">{mod.greek}</MonoText>
+							<GreekText tone="accent" size="lg">{mod.greek}</GreekText>
 							<span className="text-sm text-stone-500">{mod.english}</span>
 						</div>
 					))}
@@ -150,7 +150,7 @@ export function ColoursSubtab({ data }: Props) {
 							<div key={example.greek} className="flex items-center gap-2.5">
 								<ColourSwatch greek={example.greek} />
 								<div>
-									<MonoText variant="greek">{example.greek}</MonoText>
+									<GreekText tone="accent" size="lg">{example.greek}</GreekText>
 									<span className="ml-2 text-xs text-stone-500">{example.english}</span>
 								</div>
 							</div>
@@ -162,11 +162,11 @@ export function ColoursSubtab({ data }: Props) {
 					<p className="mb-2 text-sm font-medium text-honey-text">In context</p>
 					<div className="space-y-1.5 text-sm">
 						<div>
-							<MonoText variant="greek">Θέλω το σκούρο μπλε.</MonoText>
+							<GreekText tone="accent" size="lg">Θέλω το σκούρο μπλε.</GreekText>
 							<div className="text-xs text-stone-500">I want the dark blue (one).</div>
 						</div>
 						<div>
-							<MonoText variant="greek">Έχετε απαλό ροζ;</MonoText>
+							<GreekText tone="accent" size="lg">Έχετε απαλό ροζ;</GreekText>
 							<div className="text-xs text-stone-500">Do you have soft pink?</div>
 						</div>
 					</div>
@@ -185,9 +185,9 @@ export function ColoursSubtab({ data }: Props) {
 						</p>
 						<div className="space-y-1 pl-2">
 							<div>
-								<MonoText variant="greek">
+								<GreekText tone="accent" size="lg">
 									μπλε, μωβ, ροζ, γκρι, καφέ, πορτοκαλί, μπεζ, ασημί
-								</MonoText>
+								</GreekText>
 							</div>
 						</div>
 					</div>
@@ -197,31 +197,31 @@ export function ColoursSubtab({ data }: Props) {
 						</p>
 						<div className="space-y-1 pl-2">
 							<div>
-								<MonoText variant="greek">άσπρος, -η, -ο</MonoText>
+								<GreekText tone="accent" size="lg">άσπρος, -η, -ο</GreekText>
 								<span className="ml-2 text-xs text-stone-500">(white)</span>
 							</div>
 							<div>
-								<MonoText variant="greek">μαύρος, -η, -ο</MonoText>
+								<GreekText tone="accent" size="lg">μαύρος, -η, -ο</GreekText>
 								<span className="ml-2 text-xs text-stone-500">(black)</span>
 							</div>
 							<div>
-								<MonoText variant="greek">κόκκινος, -η, -ο</MonoText>
+								<GreekText tone="accent" size="lg">κόκκινος, -η, -ο</GreekText>
 								<span className="ml-2 text-xs text-stone-500">(red)</span>
 							</div>
 							<div>
-								<MonoText variant="greek">πράσινος, -η, -ο</MonoText>
+								<GreekText tone="accent" size="lg">πράσινος, -η, -ο</GreekText>
 								<span className="ml-2 text-xs text-stone-500">(green)</span>
 							</div>
 							<div>
-								<MonoText variant="greek">κίτρινος, -η, -ο</MonoText>
+								<GreekText tone="accent" size="lg">κίτρινος, -η, -ο</GreekText>
 								<span className="ml-2 text-xs text-stone-500">(yellow)</span>
 							</div>
 							<div>
-								<MonoText variant="greek">γαλάζιος, -α, -ο</MonoText>
+								<GreekText tone="accent" size="lg">γαλάζιος, -α, -ο</GreekText>
 								<span className="ml-2 text-xs text-stone-500">(sky blue)</span>
 							</div>
 							<div>
-								<MonoText variant="greek">χρυσός, -ή, -ό</MonoText>
+								<GreekText tone="accent" size="lg">χρυσός, -ή, -ό</GreekText>
 								<span className="ml-2 text-xs text-stone-500">(gold/golden)</span>
 							</div>
 						</div>

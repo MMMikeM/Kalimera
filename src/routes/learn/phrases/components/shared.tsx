@@ -1,8 +1,8 @@
 import { type ContentColorScheme, ContentSection } from "@/components/ContentSection";
-import { MonoText } from "@/components/MonoText";
 import { cn } from "@/lib/utils";
 
 import type { PhraseItem, PhrasesLoaderData } from "../$tab";
+import { GreekText } from "@/components/GreekText";
 
 export type { PhraseItem, PhrasesLoaderData };
 
@@ -27,13 +27,16 @@ const PhraseItemDisplay: React.FC<{
 	colorScheme?: ContentColorScheme;
 }> = ({ greek, english, variant = "default", colorScheme = "honey" }) => (
 	<div className="grid grid-cols-2 items-center gap-x-4 py-2.5 pl-3">
-		<MonoText
-			variant={variant}
-			size="md"
-			className={cn("text-lg font-semibold", textColors[colorScheme])}
+		<GreekText
+			tone="inherit"
+			className={cn(
+				"text-lg font-semibold",
+				variant === "highlighted" && "rounded border border-stone-200 bg-white px-2 py-1",
+				textColors[colorScheme],
+			)}
 		>
 			{greek}
-		</MonoText>
+		</GreekText>
 		<span className="text-sm text-stone-500">{english}</span>
 	</div>
 );

@@ -1,8 +1,8 @@
 import { Fragment } from "react";
 
-import { MonoText } from "@/components/MonoText";
 import { type GrammarScheme, SCHEME } from "@/constants/grammar-palette";
 import { cn } from "@/lib/utils";
+import { GreekText } from "@/components/GreekText";
 
 interface ReferenceHeroDemoItem {
 	greek: string;
@@ -39,13 +39,9 @@ export const ReferenceHero = ({ eyebrow, title, thesis, demo }: ReferenceHeroPro
 								</span>
 							) : null}
 							<div className="flex flex-col items-start gap-1">
-								<MonoText
-									variant="greek"
-									size="2xl"
-									className={cn("leading-none", style ? style.text : "text-stone-800")}
-								>
+								<GreekText tone="accent" size="2xl" className={cn("leading-none", style ? style.text : "text-stone-800")}>
 									{item.greek}
-								</MonoText>
+								</GreekText>
 								<span
 									className={cn(
 										"text-xs font-medium tracking-wide",
