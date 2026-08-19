@@ -1,19 +1,17 @@
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
-import { KeyRound, Loader2, LogIn } from "lucide-react";
-import { useState } from "react";
+import { AlertCircle, KeyRound, Loader2, LogIn } from "lucide-react";
+import { useRef, useState } from "react";
 
 import { Card } from "@/components/Card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/ui/form-field";
 import { usePasskeyAuth } from "@/lib/hooks/use-passkey-auth";
 import { loginFn, setupPasswordFn } from "@/server/fns/auth";
 
-export const Route = createFileRoute("/(auth)/login")({
-	component: LoginRoute,
-});
-
-function LoginRoute() {
+const LoginRoute = () => {
 	const router = useRouter();
+	const formRef = useRef<HTMLFormElement>(null);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 	const [needsPasswordSetup, setNeedsPasswordSetup] = useState<{
@@ -24,8 +22,8 @@ function LoginRoute() {
 
 	const passkey = usePasskeyAuth({
 		getUsername: () => {
-			const el = document.querySelector<HTMLInputElement>('input[name="username"]');
-			return el?.value || undefined;
+			const el = formRef.current?.elements.namedItem("username");
+			return el instanceof HTMLInputElement ? el.value || undefined : undefined;
 		},
 	});
 
@@ -90,7 +88,7 @@ function LoginRoute() {
 		return (
 			<div className="flex min-h-page flex-col items-center justify-center space-y-8 px-4">
 				<div className="space-y-2 text-center">
-					<h1 className="font-serif text-3xl text-terracotta">Set Up Your Password</h1>
+					<h1 className="font-serif text-3xl text-navy-text">Set Up Your Password</h1>
 					<p className="text-stone-600">
 						Welcome back
 						{needsPasswordSetup.displayName ? `, ${needsPasswordSetup.displayName}` : ""}! Please
@@ -122,7 +120,12 @@ function LoginRoute() {
 							/>
 						</div>
 
-						{displayError && <p className="text-center text-sm text-red-600">{displayError}</p>}
+						{displayError && (
+							<Alert variant="error">
+								<AlertCircle />
+								<AlertDescription>{displayError}</AlertDescription>
+							</Alert>
+						)}
 
 						<Button type="submit" variant="primary" className="w-full" disabled={isSubmitting}>
 							{isSubmitting ? (
@@ -146,12 +149,12 @@ function LoginRoute() {
 	return (
 		<div className="flex min-h-page flex-col items-center justify-center space-y-8 px-4">
 			<div className="space-y-2 text-center">
-				<h1 className="font-serif text-3xl text-terracotta">Welcome Back</h1>
+				<h1 className="font-serif text-3xl text-navy-text">Welcome Back</h1>
 				<p className="text-stone-600">Sign in to continue learning Greek</p>
 			</div>
 
 			<Card className="w-full max-w-sm p-6">
-				<form onSubmit={handleLoginSubmit} className="space-y-6">
+				<form ref={formRef} onSubmit={handleLoginSubmit} className="space-y-6">
 					<div className="space-y-4">
 						<FormField
 							name="username"
@@ -175,7 +178,12 @@ function LoginRoute() {
 						</div>
 					</div>
 
-					{displayError && <p className="text-center text-sm text-red-600">{displayError}</p>}
+					{displayError && (
+						<Alert variant="error">
+							<AlertCircle />
+							<AlertDescription>{displayError}</AlertDescription>
+						</Alert>
+					)}
 
 					<div className="space-y-3">
 						<Button
@@ -230,11 +238,15 @@ function LoginRoute() {
 
 				<div className="mt-6 text-center text-sm text-stone-600">
 					Don't have an account?{" "}
-					<Link to="/register" className="font-medium text-terracotta hover:text-terracotta-dark">
+					<Link to="/register" className="font-medium text-terracotta-text hover:underline">
 						Create one
 					</Link>
 				</div>
 			</Card>
 		</div>
 	);
-}
+};
+
+export const Route = createFileRoute("/(auth)/login")({
+	component: LoginRoute,
+});

@@ -3,17 +3,14 @@ import { AlertCircle, ArrowRight, Check, KeyRound, UserPlus } from "lucide-react
 import { useState } from "react";
 
 import { Card } from "@/components/Card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/ui/form-field";
 import { setStoredAuth } from "@/lib/auth-storage";
 import { usePasskeyRegistration } from "@/lib/hooks/use-passkey-registration";
 import { registerFn } from "@/server/fns/auth";
 
-export const Route = createFileRoute("/(auth)/register")({
-	component: RegisterRoute,
-});
-
-function RegisterRoute() {
+const RegisterRoute = () => {
 	const router = useRouter();
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [error, setError] = useState<string | null>(null);
@@ -62,13 +59,13 @@ function RegisterRoute() {
 
 	if (registeredUser) {
 		return (
-			<div className="flex min-h-page flex-col items-center justify-center space-y-8">
+			<div className="flex min-h-page flex-col items-center justify-center space-y-8 px-4">
 				<div className="space-y-2 text-center">
-					<div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
-						<Check size={32} className="text-green-600" />
+					<div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-olive-100">
+						<Check size={32} className="text-olive" />
 					</div>
-					<h1 className="font-serif text-3xl text-terracotta">Account Created</h1>
-					<p className="text-stone-600">Welcome to Greek Learning!</p>
+					<h1 className="font-serif text-3xl text-navy-text">Account Created</h1>
+					<p className="text-stone-600">Your Greek study desk is ready.</p>
 				</div>
 
 				<Card className="w-full max-w-md p-6">
@@ -82,18 +79,18 @@ function RegisterRoute() {
 						</div>
 
 						{passkey.state === "error" && (
-							<div className="flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
-								<AlertCircle size={16} />
-								{passkey.error || "Failed to set up passkey"}
-							</div>
+							<Alert variant="error">
+								<AlertCircle />
+								<AlertDescription>{passkey.error || "Failed to set up passkey"}</AlertDescription>
+							</Alert>
 						)}
 
 						{passkey.state === "success" ? (
 							<div className="space-y-4">
-								<div className="flex items-center gap-2 rounded-lg border border-green-200 bg-green-50 p-3 text-sm text-green-700">
-									<Check size={16} />
-									Passkey set up successfully!
-								</div>
+								<Alert variant="success">
+									<Check />
+									<AlertDescription>Passkey set up successfully!</AlertDescription>
+								</Alert>
 								<Button variant="primary" className="w-full" onClick={handleComplete}>
 									Continue to App
 									<ArrowRight size={16} />
@@ -127,9 +124,9 @@ function RegisterRoute() {
 	}
 
 	return (
-		<div className="flex min-h-page flex-col items-center justify-center space-y-8">
+		<div className="flex min-h-page flex-col items-center justify-center space-y-8 px-4">
 			<div className="space-y-2 text-center">
-				<h1 className="font-serif text-3xl text-terracotta">Create Account</h1>
+				<h1 className="font-serif text-3xl text-navy-text">Create Account</h1>
 				<p className="text-stone-600">Start your Greek learning journey</p>
 			</div>
 
@@ -140,12 +137,16 @@ function RegisterRoute() {
 						label="Username"
 						placeholder="Choose a username"
 						autoComplete="username"
+						autoCapitalize="none"
+						autoCorrect="off"
+						disabled={isSubmitting}
 					/>
 					<FormField
 						name="displayName"
 						label="Display Name"
 						placeholder="How should we call you?"
 						autoComplete="name"
+						disabled={isSubmitting}
 					/>
 					<FormField
 						name="password"
@@ -153,6 +154,7 @@ function RegisterRoute() {
 						type="password"
 						placeholder="At least 6 characters"
 						autoComplete="new-password"
+						disabled={isSubmitting}
 					/>
 					<FormField
 						name="confirmPassword"
@@ -160,13 +162,14 @@ function RegisterRoute() {
 						type="password"
 						placeholder="Re-enter your password"
 						autoComplete="new-password"
+						disabled={isSubmitting}
 					/>
 
 					{error && (
-						<div className="flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
-							<AlertCircle size={16} />
-							{error}
-						</div>
+						<Alert variant="error">
+							<AlertCircle />
+							<AlertDescription>{error}</AlertDescription>
+						</Alert>
 					)}
 
 					<Button type="submit" variant="primary" className="w-full" disabled={isSubmitting}>
@@ -178,10 +181,14 @@ function RegisterRoute() {
 
 			<p className="text-sm text-stone-500">
 				Already have an account?{" "}
-				<Link to="/login" className="font-medium text-terracotta hover:underline">
+				<Link to="/login" className="font-medium text-terracotta-text hover:underline">
 					Sign in
 				</Link>
 			</p>
 		</div>
 	);
-}
+};
+
+export const Route = createFileRoute("/(auth)/register")({
+	component: RegisterRoute,
+});
