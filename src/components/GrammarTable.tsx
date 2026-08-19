@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 export interface ColumnDef {
 	key: string;
-	label: string;
+	label: React.ReactNode;
 	scheme?: GrammarScheme;
 }
 

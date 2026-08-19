@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 
 import {
 	FutureNaSection,
+	PastContinuousSection,
 	PastTenseSection,
 	PresentTenseSection,
 } from "../components/verbs-section";
@@ -12,6 +13,7 @@ import {
 const VERB_BANDS = [
 	{ id: "present", label: "Present" },
 	{ id: "past", label: "Past" },
+	{ id: "past-continuous", label: "Continuous past" },
 	{ id: "future", label: "Future & να" },
 ] as const;
 
@@ -58,6 +60,7 @@ function VerbBand() {
 
 			{band === "present" && <PresentTenseSection />}
 			{band === "past" && <PastTenseSection />}
+			{band === "past-continuous" && <PastContinuousSection />}
 			{band === "future" && <FutureNaSection />}
 		</div>
 	);
