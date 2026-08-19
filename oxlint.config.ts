@@ -13,10 +13,12 @@ export default defineConfig({
 	jsPlugins: [
 		"eslint-plugin-better-tailwindcss",
 		{ name: "react-compiler", specifier: "eslint-plugin-react-hooks" },
+		"./oxlint-plugins/greek-rendering.ts",
 	],
 	categories: { correctness: "error" },
 	ignorePatterns: ["dist/**", ".claude/**"],
 	rules: {
+		"greek/no-phonetic-render": "error",
 		"import/first": "warn",
 		"@typescript-eslint/no-explicit-any": ["error"],
 		"no-unused-vars": ["error"],
@@ -45,6 +47,20 @@ export default defineConfig({
 		],
 	},
 	overrides: [
+		{
+			// The only files allowed past the components to the raw helpers:
+			// the conversion modules themselves, their tests, and the harvester.
+			files: [
+				"src/lib/greek-*.ts",
+				"src/components/GreekText.tsx",
+				"src/components/Pronunciation.tsx",
+				"src/components/GreekGloss.tsx",
+				"scripts/**/*.ts",
+			],
+			rules: {
+				"greek/no-phonetic-render": "off",
+			},
+		},
 		{
 			files: ["./src/*.server/**/*.ts"],
 			plugins: ["node"],
