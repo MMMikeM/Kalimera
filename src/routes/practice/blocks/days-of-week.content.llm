@@ -2,7 +2,10 @@
 
 ## Purpose
 
-Drill English day → Greek day name and reverse. 7 items, completely arbitrary, must be memorised. Used constantly for scheduling, plans, and past narrative ("last Monday", "on Thursday"). Currently in /learn/essentials as reference only.
+Drill English day → Greek day name and reverse. Completely arbitrary, must be memorised. Used constantly for scheduling, plans, and past narrative ("last Monday", "on Thursday"). Also presented in /learn/essentials as reference; this is the timed production drill.
+
+Implemented as 14 items in `days-of-week.tsx` — 7 days plus 7 time expressions — under two
+categories, Days and Time expressions. Colour theme: olive. Returns to `/practice/blocks`.
 
 Target: 3 seconds.
 
@@ -29,7 +32,7 @@ Days are used with `την` (accusative feminine) for "on [day]":
 
 The in-context form is what learners actually produce in sentences. Consider drilling both: bare noun AND "on [day]" phrase.
 
-## Related time expressions (optional extension)
+## Time expressions (`category: "time"`) — implemented
 
 | English | Greek |
 |---------|-------|
@@ -39,18 +42,24 @@ The in-context form is what learners actually produce in sentences. Consider dri
 | the day after tomorrow | μεθαύριο |
 | last week | την περασμένη εβδομάδα |
 | next week | την επόμενη εβδομάδα |
-| weekend | το Σαββατοκύριακο |
+| the weekend | το Σαββατοκύριακο |
 
-These 7 time adverbs are high-frequency and pure memorisation. Could be a second filter in the same drill ("Days" vs "Time expressions") rather than a separate drill — the set is small enough.
+These 7 time adverbs are high-frequency and pure memorisation. They live as a second category in
+this drill rather than a separate drill — the set is small enough that 14 items is one session.
+
+The last three are seeded with their article/preposition intact (την περασμένη εβδομάδα, not
+εβδομάδα) because that is the produced form; `matchPhonetic` also accepts the answer without the
+leading article.
 
 ## Drill format
 
-**Forward**: English → type Greek day name
-**Reverse**: Greek → English
-**Optional in-context mode**: "on Monday" → "τη Δευτέρα"
+**Forward**: English → type Greek
+**Reverse**: Greek → English, self-assess
+
+Days are drilled as bare nouns. The in-context "on [day]" form (τη Δευτέρα / το Σάββατο) is **not**
+implemented and would need a separate item set or a mode switch.
 
 ## Notes
 
-- 7 items drills fast — consider bundling with time expressions (adds 7 more) for a full 14-item session
 - Saturday/Sunday distinction is a common source of errors — worth flagging if learner misses Σάββατο gender
 - Accent positions matter: Δευτέρα/Τρίτη/Τετάρτη/Πέμπτη — all end in accented -α or -η

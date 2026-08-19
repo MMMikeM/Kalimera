@@ -16,7 +16,7 @@ export const drills: Drill[] = [
 		id: "blocks-numbers",
 		to: "/practice/blocks/numbers",
 		title: "Numbers",
-		greek: "ένα, δύο, δέκα, είκοσι, τριάντα…",
+		greek: "ένα · δύο · δέκα · είκοσι · τριάντα",
 		minutes: 1,
 	},
 	{

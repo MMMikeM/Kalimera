@@ -2,24 +2,30 @@
 
 ## Purpose
 
-Drill digit → Greek number word and reverse. Numbers are 100% arbitrary — no derivation possible, must be recalled from memory. Currently in /learn/essentials as reference only; no timed production drill exists.
+Drill digit → Greek number word and reverse. Numbers are 100% arbitrary — no derivation possible, must be recalled from memory. Also presented in /learn/essentials as reference; this is the timed production drill.
 
 Target: 3 seconds digit → word.
+
+Implemented as 28 items in `numbers.tsx` under three categories: 1–10, 11–20, Decades.
+Colour theme: terracotta. Returns to `/practice/blocks`.
+
+**Every item is the canonical neuter form** — one form per digit, no variants seeded.
+See "Forms deliberately not seeded" below.
 
 ## Core sets
 
 ### Set A: 1–10 (drill to automaticity before Set B)
 | Digit | Greek |
 |-------|-------|
-| 1 | ένα / μία (neuter/feminine) |
+| 1 | ένα |
 | 2 | δύο |
-| 3 | τρία / τρεις |
-| 4 | τέσσερα / τέσσερις |
+| 3 | τρία |
+| 4 | τέσσερα |
 | 5 | πέντε |
 | 6 | έξι |
-| 7 | εφτά / επτά |
-| 8 | οχτώ / οκτώ |
-| 9 | εννέα / εννιά |
+| 7 | εφτά |
+| 8 | οχτώ |
+| 9 | εννέα |
 | 10 | δέκα |
 
 ### Set B: 11–20
@@ -55,12 +61,17 @@ Target: 3 seconds digit → word.
 
 No paradigm table. Sequential or random order. Could add: number reading in context ("I am __ years old" → "Έχω πέντε χρόνια").
 
-## Agreement note (for future expansion)
+## Forms deliberately not seeded
 
-1, 3, 4 have gender agreement (ένας/μία/ένα, τρεις/τρία, τέσσερις/τέσσερα). Do NOT drill agreement forms in this drill — that is a separate grammar concern. Drill the neuter form as the canonical number for now.
+**Gender agreement.** 1, 3, 4 agree (ένας/μία/ένα, τρεις/τρία, τέσσερις/τέσσερα). Only the neuter
+is drilled — agreement is a separate grammar concern and belongs in the cases drills, not here.
+
+**Spelling variants.** 7, 8, 9 have two written forms each (εφτά/επτά, οχτώ/οκτώ, εννέα/εννιά).
+Only the spoken-preferred form is seeded. If the alternates should be accepted, add them via
+`acceptAlso` rather than as extra items — a second item for the same digit would make the reverse
+direction ambiguous.
 
 ## Notes
 
-- 7, 8, 9 have two accepted forms — accept both, show canonical (εφτά, οχτώ, εννέα preferred in speech)
 - Build order: Set A → Set B → Set C
 - Real-world anchors to show after correct answer: "Κάνει πέντε ευρώ" / "Έχω τριάντα χρόνια" — bridges number recall to sentence production
