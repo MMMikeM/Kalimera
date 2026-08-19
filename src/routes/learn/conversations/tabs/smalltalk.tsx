@@ -3,11 +3,7 @@ import { MessageCircle } from "lucide-react";
 import { ConversationHero } from "@/components/ConversationHero";
 import type { DialogueLine } from "@/components/DialogueExchange";
 
-import {
-	LearningTips,
-	ScenarioCard,
-	useConversationContext,
-} from "../components/conversation-shell";
+import { LearningTips, ScenarioCard } from "../components/conversation-shell";
 
 const ORIGIN_CHAT: DialogueLine[] = [
 	{
@@ -106,8 +102,6 @@ const FAMILY_CHAT: DialogueLine[] = [
 ];
 
 export function SmalltalkTab() {
-	const { mode } = useConversationContext();
-
 	return (
 		<div className="space-y-4">
 			<ConversationHero
@@ -123,7 +117,6 @@ export function SmalltalkTab() {
 				description="The most common question tourists face"
 				formality="informal"
 				dialogue={ORIGIN_CHAT}
-				mode={mode}
 			/>
 
 			<ScenarioCard
@@ -131,7 +124,6 @@ export function SmalltalkTab() {
 				description="A universal conversation starter"
 				formality="informal"
 				dialogue={WEATHER_CHAT}
-				mode={mode}
 			/>
 
 			<ScenarioCard
@@ -139,7 +131,6 @@ export function SmalltalkTab() {
 				description="Making plans with friends"
 				formality="informal"
 				dialogue={WEEKEND_PLANS}
-				mode={mode}
 			/>
 
 			<ScenarioCard
@@ -147,7 +138,6 @@ export function SmalltalkTab() {
 				description="Common friendly question"
 				formality="informal"
 				dialogue={WORK_CHAT}
-				mode={mode}
 			/>
 
 			<ScenarioCard
@@ -155,7 +145,6 @@ export function SmalltalkTab() {
 				description="Greeks love to ask about family"
 				formality="informal"
 				dialogue={FAMILY_CHAT}
-				mode={mode}
 			/>
 
 			<LearningTips

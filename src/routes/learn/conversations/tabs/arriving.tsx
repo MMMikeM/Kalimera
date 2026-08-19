@@ -3,11 +3,7 @@ import { DoorOpen } from "lucide-react";
 import { ConversationHero } from "@/components/ConversationHero";
 import type { DialogueLine } from "@/components/DialogueExchange";
 
-import {
-	LearningTips,
-	ScenarioCard,
-	useConversationContext,
-} from "../components/conversation-shell";
+import { LearningTips, ScenarioCard } from "../components/conversation-shell";
 
 const CASUAL_GREETING: DialogueLine[] = [
 	{ speaker: "friend", greek: "Γεια σου!", english: "Hi!" },
@@ -54,8 +50,6 @@ const LEAVING_DIALOGUE: DialogueLine[] = [
 ];
 
 export function ArrivingTab() {
-	const { mode } = useConversationContext();
-
 	return (
 		<div className="space-y-4">
 			<ConversationHero
@@ -71,7 +65,6 @@ export function ArrivingTab() {
 				description="Informal greeting between friends"
 				formality="informal"
 				dialogue={CASUAL_GREETING}
-				mode={mode}
 			/>
 
 			<ScenarioCard
@@ -79,7 +72,6 @@ export function ArrivingTab() {
 				description="The host will enthusiastically welcome you"
 				formality="formal"
 				dialogue={ARRIVAL_DIALOGUE}
-				mode={mode}
 			/>
 
 			<ScenarioCard
@@ -87,7 +79,6 @@ export function ArrivingTab() {
 				description="Greeks often insist you stay longer!"
 				formality="formal"
 				dialogue={LEAVING_DIALOGUE}
-				mode={mode}
 			/>
 
 			<LearningTips

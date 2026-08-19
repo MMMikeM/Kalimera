@@ -1,9 +1,23 @@
 import { BookOpen, MessageSquare } from "lucide-react";
 import type React from "react";
-
-import { cn } from "@/lib/utils";
+import { tv } from "tailwind-variants";
 
 import type { ConversationMode } from "./DialogueExchange";
+
+const modeToggleVariants = tv({
+	slots: {
+		root: "flex items-center gap-1 p-1 bg-stone-100 rounded-lg sm:w-fit",
+		button:
+			"flex flex-1 sm:flex-none items-center justify-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all",
+	},
+	variants: {
+		active: {
+			true: { button: "bg-white text-stone-800 shadow-sm" },
+			false: { button: "text-stone-600 hover:text-stone-800 hover:bg-stone-50" },
+		},
+	},
+	defaultVariants: { active: false },
+});
 
 interface ConversationModeToggleProps {
 	mode: ConversationMode;
@@ -36,18 +50,13 @@ export const ConversationModeToggle: React.FC<ConversationModeToggleProps> = ({
 	onModeChange,
 	className,
 }) => (
-	<div className={cn("flex items-center gap-1 p-1 bg-stone-100 rounded-lg sm:w-fit", className)}>
+	<div className={modeToggleVariants().root({ className })}>
 		{modes.map((m) => (
 			<button
 				key={m.value}
 				type="button"
 				onClick={() => onModeChange(m.value)}
-				className={cn(
-					"flex flex-1 sm:flex-none items-center justify-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all",
-					mode === m.value
-						? "bg-white text-stone-800 shadow-sm"
-						: "text-stone-600 hover:text-stone-800 hover:bg-stone-50",
-				)}
+				className={modeToggleVariants({ active: mode === m.value }).button()}
 				aria-label={`${m.label}: ${m.description}`}
 			>
 				{m.icon}
