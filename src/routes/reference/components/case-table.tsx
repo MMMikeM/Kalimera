@@ -1,9 +1,9 @@
 import type React from "react";
 
 import { CASE_ROW_DEFS, GENDER_COLUMN_DEFS, GrammarTable } from "@/components/GrammarTable";
-import { MonoText } from "@/components/MonoText";
 import { GENDER_SCHEME, SCHEME } from "@/constants/grammar-palette";
 import type { Gender } from "@/server/db/enums";
+import { GreekText } from "@/components/GreekText";
 
 interface GenderData {
 	masculine: { nom: string; acc: string; gen: string };
@@ -17,13 +17,9 @@ const CASES = ["nom", "acc", "gen"] as const;
 const CaseTable: React.FC<{ label: string; data: GenderData }> = ({ label, data }) => {
 	const cells = CASES.map((c) =>
 		GENDERS.map((g) => (
-			<MonoText
-				key={`${c}-${g}`}
-				size="sm"
-				className={`font-semibold ${SCHEME[GENDER_SCHEME[g]].text}`}
-			>
+			<GreekText tone="default" size="sm" key={`${c}-${g}`} className={`font-semibold ${SCHEME[GENDER_SCHEME[g]].text}`}>
 				{data[g][c]}
-			</MonoText>
+			</GreekText>
 		)),
 	);
 

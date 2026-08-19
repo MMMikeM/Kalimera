@@ -2,13 +2,13 @@ import type React from "react";
 
 import { Callout, LookupCard, NextStepCard, TeachingCard } from "@/components/cards";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
-import { MonoText } from "@/components/MonoText";
 import { ARTICLE_AGREEMENT_QUICK_REF } from "@/constants/agreement";
 import { GENDER_SCHEME, SCHEME } from "@/constants/grammar-palette";
 import type { Gender } from "@/server/db/enums";
 
 import { BandHeading } from "./BandHeading";
 import { CaseTableGrid } from "./case-table";
+import { GreekText } from "@/components/GreekText";
 
 const USAGE_NOTES: Array<{ greek: string; note: string; gender: Gender | null }> = [
 	{ greek: "η αγάπη είναι τυφλή", note: "Abstract nouns need the article", gender: "feminine" },
@@ -48,9 +48,9 @@ export const ArticlesSection: React.FC = () => {
 							const style = row.gender ? SCHEME[GENDER_SCHEME[row.gender]] : null;
 							return (
 								<div key={row.greek} className="rounded border border-stone-200 bg-white p-2">
-									<MonoText variant="greek" size="sm" className={style?.text}>
+									<GreekText tone="accent" size="sm" className={style?.text}>
 										{row.greek}
-									</MonoText>
+									</GreekText>
 									<span className="ml-2 text-sm text-stone-500">{row.note}</span>
 								</div>
 							);
@@ -60,9 +60,9 @@ export const ArticlesSection: React.FC = () => {
 
 				<Callout scheme="neutral" title="The -ν on τον / την">
 					<p className="leading-relaxed text-stone-700">
-						Always keep the <MonoText size="sm">-ν</MonoText>. Native speakers sometimes drop it,
+						Always keep the <GreekText tone="default" size="sm">-ν</GreekText>. Native speakers sometimes drop it,
 						but keeping it is never wrong. <strong className="text-stone-800">Safe default:</strong>{" "}
-						<MonoText size="sm">τον / την / στον / στην</MonoText>.
+						<GreekText tone="default" size="sm">τον / την / στον / στην</GreekText>.
 					</p>
 					<CollapsibleSection
 						title="When do natives drop it?"
@@ -71,7 +71,7 @@ export const ArticlesSection: React.FC = () => {
 					>
 						<div className="space-y-3 p-3 text-sm text-stone-600">
 							<p>
-								Keep the <MonoText size="sm">-ν</MonoText> before vowels and κ, π, τ, ξ, ψ, γκ, μπ,
+								Keep the <GreekText tone="default" size="sm">-ν</GreekText> before vowels and κ, π, τ, ξ, ψ, γκ, μπ,
 								ντ. Drop it before other consonants (μ, δ, θ, …).
 							</p>
 							<div className="grid gap-3 md:grid-cols-2">
@@ -79,15 +79,15 @@ export const ArticlesSection: React.FC = () => {
 									<div className="mb-1 font-medium text-correct">Keep -ν</div>
 									<div className="space-y-1">
 										<div>
-											<MonoText variant="greek" size="sm">
+											<GreekText tone="accent" size="sm">
 												τον άντρα
-											</MonoText>{" "}
+											</GreekText>{" "}
 											<span className="text-stone-400">(before vowel)</span>
 										</div>
 										<div>
-											<MonoText variant="greek" size="sm">
+											<GreekText tone="accent" size="sm">
 												στην πόρτα
-											</MonoText>{" "}
+											</GreekText>{" "}
 											<span className="text-stone-400">(before π)</span>
 										</div>
 									</div>
@@ -96,15 +96,15 @@ export const ArticlesSection: React.FC = () => {
 									<div className="mb-1 font-medium text-incorrect">Drop -ν</div>
 									<div className="space-y-1">
 										<div>
-											<MonoText variant="greek" size="sm">
+											<GreekText tone="accent" size="sm">
 												τη μητέρα
-											</MonoText>{" "}
+											</GreekText>{" "}
 											<span className="text-stone-400">(before μ)</span>
 										</div>
 										<div>
-											<MonoText variant="greek" size="sm">
+											<GreekText tone="accent" size="sm">
 												στη θάλασσα
-											</MonoText>{" "}
+											</GreekText>{" "}
 											<span className="text-stone-400">(before θ)</span>
 										</div>
 									</div>
