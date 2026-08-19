@@ -107,7 +107,7 @@ export const colorStyles: Record<
 		bgMuted: "bg-stone-100",
 		border: "border-stone-200",
 		borderMuted: "border-stone-200",
-		header: "bg-stone-400",
+		header: "bg-stone-700",
 		headerLight: "bg-stone-300",
 		text: "text-stone-700",
 		accent: "text-stone-600",
