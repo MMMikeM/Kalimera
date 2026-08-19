@@ -77,6 +77,35 @@ Default **page routes** (loader + action + component) with `<Form>` and `useFetc
 
 ---
 
+## Greek Rendering — Two Conventions
+
+Two transliteration helpers exist with **opposite jobs**. Using the wrong one shipped
+`pws` and `thelw` to learners for months.
+
+| Module | Function | Job |
+| --- | --- | --- |
+| `src/lib/greek-transliteration.ts` | `greekToPhonetic` | **Matching only.** Reversible keyboard spelling (η→h, ω→w). `πώς` → `pws`. Never render it. |
+| `src/lib/greek-phonetic.ts` | `greekToPronunciation` | **Display only.** Pronunciation gloss (η→i, ω→o, γ→y/gh). `πώς` → `pos`. Lossy — never match against it. |
+
+`matchPhonetic` is the answer grader and may be imported anywhere.
+
+**Never import either helper in a component.** Rendering goes through:
+
+- `<GreekText>` — all Greek script. Owns `lang="el"`, the `greek-text` class, size and
+  tone. Greek-ness and grammar colour are separate props (`tone="masculine"`,
+  `tone="genitive"`), never fused.
+- `<Pronunciation greek={…} />` — the gloss. Derives its own string and underlines the
+  stressed run. Underline, not bold: weight is load-bearing in paradigm tables.
+- `<GreekGloss greek={…} />` — the two paired.
+
+`pnpm lint:greek` enforces this.
+
+**Never edit Greek content to make a drill pass.** If a card is unpassable the matcher
+is wrong, not the Greek. Greek strings keep their authentic `;` and their tonos; the
+gloss strips punctuation itself. There is no stored `greeklish` field — it is derived.
+
+---
+
 ## Case Terminology
 
 Two vocabularies in use — both correct, different contexts:
