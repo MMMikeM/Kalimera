@@ -117,3 +117,91 @@ describe("feminine -ση/-ξη/-ψη nouns", () => {
 		});
 	});
 });
+
+// ─── Masculine -ος antepenult stress shift ───────────────────────────────────
+
+describe("masculine -os antepenult stress shift", () => {
+	it("shifts stress to penult in genitive singular, accusative plural, and genitive plural for άνθρωπος", () => {
+		expect(nouns("άνθρωπος", "masc-os")).toEqual({
+			nominative_singular: "άνθρωπος",
+			accusative_singular: "άνθρωπο",
+			genitive_singular: "ανθρώπου",
+			nominative_plural: "άνθρωποι",
+			accusative_plural: "ανθρώπους",
+			genitive_plural: "ανθρώπων",
+		});
+	});
+
+	it("renders full phrases with correct articles and shifted stress for άνθρωπος", () => {
+		expect(declineNoun("άνθρωπος", "masc-os").map((f) => f.full)).toEqual([
+			"ο άνθρωπος",
+			"τον άνθρωπο",
+			"του ανθρώπου",
+			"οι άνθρωποι",
+			"τους ανθρώπους",
+			"των ανθρώπων",
+		]);
+	});
+
+	it("shifts stress for other proparoxytone -os nouns (e.g. πρόεδρος, δήμαρχος)", () => {
+		expect(nouns("πρόεδρος", "masc-os")).toEqual({
+			nominative_singular: "πρόεδρος",
+			accusative_singular: "πρόεδρο",
+			genitive_singular: "προέδρου",
+			nominative_plural: "πρόεδροι",
+			accusative_plural: "προέδρους",
+			genitive_plural: "προέδρων",
+		});
+		expect(nouns("δήμαρχος", "masc-os")).toEqual({
+			nominative_singular: "δήμαρχος",
+			accusative_singular: "δήμαρχο",
+			genitive_singular: "δημάρχου",
+			nominative_plural: "δήμαρχοι",
+			accusative_plural: "δημάρχους",
+			genitive_plural: "δημάρχων",
+		});
+	});
+
+	it("does not shift stress for paroxytone or oxytone -os nouns (e.g. φίλος, ουρανός)", () => {
+		expect(nouns("φίλος", "masc-os")).toEqual({
+			nominative_singular: "φίλος",
+			accusative_singular: "φίλο",
+			genitive_singular: "φίλου",
+			nominative_plural: "φίλοι",
+			accusative_plural: "φίλους",
+			genitive_plural: "φίλων",
+		});
+		expect(nouns("ουρανός", "masc-os")).toEqual({
+			nominative_singular: "ουρανός",
+			accusative_singular: "ουρανό",
+			genitive_singular: "ουρανού",
+			nominative_plural: "ουρανοί",
+			accusative_plural: "ουρανούς",
+			genitive_plural: "ουρανών",
+		});
+	});
+});
+
+
+// ─── Synizesis: unstressed ι before a vowel is a glide, not a syllable ────────
+
+describe("-ιος nouns do not shift stress", () => {
+	it("ήλιος stays put — ή-λιος is two syllables, so it is already paroxytone", () => {
+		expect(nouns("ήλιος", "masc-os")).toEqual({
+			nominative_singular: "ήλιος",
+			accusative_singular: "ήλιο",
+			genitive_singular: "ήλιου",
+			nominative_plural: "ήλιοι",
+			accusative_plural: "ήλιους",
+			genitive_plural: "ήλιων",
+		});
+	});
+
+	it("still shifts genuinely proparoxytone nouns", () => {
+		expect(nouns("άνθρωπος", "masc-os")).toMatchObject({
+			genitive_singular: "ανθρώπου",
+			accusative_plural: "ανθρώπους",
+			genitive_plural: "ανθρώπων",
+		});
+	});
+});
