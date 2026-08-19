@@ -23,7 +23,7 @@ export const startSessionFn = createServerFn({ method: "POST" }).handler(async (
 });
 
 export const recordAttemptFn = createServerFn({ method: "POST" })
-	.inputValidator(
+	.validator(
 		z.object({
 			sessionId: z.number().optional(),
 			vocabId: z.number().optional(),
@@ -52,7 +52,7 @@ export const recordAttemptFn = createServerFn({ method: "POST" })
 	});
 
 export const completeSessionFn = createServerFn({ method: "POST" })
-	.inputValidator(
+	.validator(
 		z.object({
 			sessionId: z.number(),
 			totalQuestions: z.number(),
