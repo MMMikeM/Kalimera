@@ -1,15 +1,16 @@
 /**
- * Greek to Latin transliteration for phonetic matching.
+ * Greek \u2192 Latin keyboard transliteration, for answer matching.
  *
- * This converts Greek text to a normalized phonetic Latin representation,
- * allowing users to type answers using a standard keyboard while testing
- * their knowledge of Greek sounds.
+ * Letter-faithful and reversible: \u03b7\u2192"h", \u03c9\u2192"w", \u03b1\u03b9\u2192"ai", so the Greek spelling
+ * survives the round trip. That makes it the right basis for comparing what a
+ * learner typed, and the wrong thing to ever show them \u2014 it emits strings like
+ * "pws" and "thelw" that nobody says.
+ *
+ * For anything learner-facing use `greekToPronunciation` from
+ * `greek-phonetic.ts`. The two conventions are deliberately different systems.
  */
 
-// Strip Greek diacritics (accents, breathing marks)
-const stripGreekDiacritics = (text: string): string => {
-	return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-};
+import { DIGRAPH_BREAK, applyWordInitialClusters, stripGreekDiacritics } from "@/lib/greek-letters";
 
 // Digraphs must be processed before single letters (order matters)
 const DIGRAPH_MAP: [RegExp, string][] = [
@@ -74,20 +75,14 @@ const SINGLE_LETTER_MAP: Record<string, string> = {
 	ψ: "ps",
 };
 
-// Word-initial γκ/μπ/ντ are realised as g/b/d; medial as ng/mb/nd.
-// Replace word-initial first so the DIGRAPH_MAP catches only medial instances.
-const applyWordInitialClusters = (text: string): string =>
-	text
-		.replace(/(^|[\s])γκ/gi, "$1g")
-		.replace(/(^|[\s])μπ/gi, "$1b")
-		.replace(/(^|[\s])ντ/gi, "$1d");
-
 /**
- * Convert Greek text to Latin phonetic representation.
+ * Convert Greek text to its Latin keyboard transliteration.
+ *
+ * Output is a matching key, not a gloss — do not render it.
  *
  * @example
- * greekToPhonetic("Θέλω καφέ") // "thelo kafe"
- * greekToPhonetic("ευχαριστώ") // "efcharisto"
+ * greekToPhonetic("Θέλω καφέ") // "thelw kafe"
+ * greekToPhonetic("ευχαριστώ") // "evcharistw"
  * greekToPhonetic("μπύρα") // "bira"
  * greekToPhonetic("ο άντρας") // "o andras"
  */
@@ -108,8 +103,9 @@ export const greekToPhonetic = (greek: string): string => {
 		output += SINGLE_LETTER_MAP[char] ?? char;
 	}
 
-	return output;
+	return output.replaceAll(DIGRAPH_BREAK, "");
 };
+
 
 /**
  * Normalize user input for comparison.
@@ -120,6 +116,11 @@ export const greekToPhonetic = (greek: string): string => {
 const normalizeInput = (input: string): string => {
 	return input.toLowerCase().trim().replace(/\s+/g, " ");
 };
+
+// Terminal punctuation is display, not sound. Stripped on both sides of a comparison so drill
+// content can carry the authentic Greek question mark (Τι κάνεις;) without demanding the user
+// type it. Deliberately NOT done in greekToPhonetic, which also feeds rendered pronunciation.
+const stripTerminalPunctuation = (text: string): string => text.replace(/[;;?!.]+$/, "");
 
 interface PhoneticMatchResult {
 	isCorrect: boolean;
@@ -162,12 +163,18 @@ const stripGreekArticle = (greek: string): string => {
 // "ti" or "th" is accepted for either. w→o accepts old-style "o" for ω.
 const toPhoneticCanonical = (text: string): string =>
 	text
+		.replace(/ngn/g, "gn") // γγν: συγγνώμη is [siɣnomi] — the nasal is not pronounced
+		// γ renders "gh" in the pronunciation gloss (greek-phonetic.ts). A learner
+		// typing what the gloss shows must be accepted, so collapse it to "g" —
+		// and do it before h→i fires, or "ghala" canonicalises to "giala".
+		.replace(/gh/g, "g")
 		.replace(/nt/g, "nd")
 		.replace(/mp/g, "mb")
 		.replace(/nk/g, "ng")
 		.replace(/ei/g, "i")
 		.replace(/ai/g, "e")
 		.replace(/u/g, "i") // υ sounds like "i"; user may type either
+		.replace(/g(?=[ei])/g, "y") // γ before front vowels is [ʝ]: "legetai" ≡ "leyetai"
 		.replace(/y/g, "i") // υ as letter-faithful "y" ("kyriaki") also accepted
 		.replace(/ks/g, "x") // ξ = "ks"; user may type "x"
 		.replace(/w/g, "o") // ω (as w) → o
@@ -176,13 +183,18 @@ const toPhoneticCanonical = (text: string): string =>
 		.replace(/h/g, "i") // η (as h) → i BEFORE oi→i: "zwh"→"zoh"→"zoi"→"zi" matches "zoi"→"zoi"→"zi"
 		.replace(/oi/g, "i")
 		.replace(/ev/g, "ef") // ευ → ef/ev both accepted (voicing context varies)
+		.replace(/av/g, "af") // αυ likewise: the gloss devoices by context, the key does not
 		.replace(//g, "x") // χ canonical = x (accepts both "ch" and "x")
 		.replace(//g, "ph") // restore φ
 		.replace(/x/g, "x") // x already canonical — noop but documents intent
 		.replace(/d/g, "ti"); // δ (voiced "th") ≈ θ: canonical both as "ti" — "doulia"≡"thoulia"
 
-const phoneticEquals = (user: string, correct: string): boolean =>
-	user === correct || toPhoneticCanonical(user) === toPhoneticCanonical(correct);
+const phoneticEquals = (user: string, correct: string): boolean => {
+	const u = stripTerminalPunctuation(user);
+	const c = stripTerminalPunctuation(correct);
+
+	return u === c || toPhoneticCanonical(u) === toPhoneticCanonical(c);
+};
 
 export const matchPhonetic = (userInput: string, correctGreek: string): PhoneticMatchResult => {
 	const userPhonetic = normalizeInput(userInput);
