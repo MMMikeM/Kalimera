@@ -61,21 +61,24 @@ export const Route = createFileRoute("/learn/nouns")({
 	component: NounsRefactorPage,
 });
 
-const genderStyles: Record<Gender, { text: string; bg: string; ending: string }> = {
+const genderStyles: Record<Gender, { text: string; bg: string; ending: string; border: string }> = {
 	masculine: {
-		text: "text-ocean-500",
-		bg: "bg-ocean-100",
-		ending: "text-ocean-500",
+		text: "text-gender-masculine-text",
+		bg: "bg-gender-masculine-100",
+		ending: "text-gender-masculine-text",
+		border: "border-gender-masculine-500",
 	},
 	feminine: {
-		text: "text-rose-700",
-		bg: "bg-rose-100",
-		ending: "text-rose-700",
+		text: "text-gender-feminine-text",
+		bg: "bg-gender-feminine-100",
+		ending: "text-gender-feminine-text",
+		border: "border-gender-feminine-500",
 	},
 	neuter: {
-		text: "text-olive-500",
-		bg: "bg-olive-200",
-		ending: "text-olive-500",
+		text: "text-gender-neuter-text",
+		bg: "bg-gender-neuter-100",
+		ending: "text-gender-neuter-text",
+		border: "border-gender-neuter-500",
 	},
 };
 
@@ -119,7 +122,7 @@ const NounDisplay: React.FC<{ noun: NounWithGender }> = ({ noun }) => {
 	const stem = ending ? nounWord.slice(0, -ending.length) : nounWord;
 
 	return (
-		<div className="px-3 py-2.5">
+		<div className={`border-l-4 px-3 py-2.5 ${styles.border}`}>
 			<div className="flex items-baseline gap-2">
 				<span className={`rounded px-1.5 py-0.5 text-sm font-bold ${styles.text} ${styles.bg}`}>
 					{article}
@@ -143,14 +146,36 @@ const NounDisplay: React.FC<{ noun: NounWithGender }> = ({ noun }) => {
 const nounPairs: Record<string, Array<[string, string]>> = {
 	people: [
 		["πατέρας", "μητέρα"],
-		["αδερφός", "αδερφή"],
 		["αδελφός", "αδελφή"],
 		["παππούς", "γιαγιά"],
 		["άντρας", "γυναίκα"],
 		["γιος", "κόρη"],
 		["θείος", "θεία"],
 		["ξάδερφος", "ξαδέρφη"],
+		["ανιψιός", "ανιψιά"],
+		["εγγονός", "εγγονή"],
+		["πεθερός", "πεθερά"],
+		["γαμπρός", "νύφη"],
 		["φίλος", "φίλη"],
+	],
+};
+
+const nounSubgroups: Record<string, Array<{ title: string; words: string[] }>> = {
+	people: [
+		{ title: "Family", words: ["πατέρας", "μητέρα", "αδελφός", "αδελφή", "γιος", "κόρη", "παιδί", "οικογένεια"] },
+		{ title: "Extended family", words: ["θείος", "θεία", "ξάδερφος", "ξαδέρφη", "ανιψιός", "ανιψιά", "εγγονός", "εγγονή"] },
+		{ title: "In-laws", words: ["πεθερός", "πεθερά", "γαμπρός", "νύφη"] },
+		{ title: "Partners & friends", words: ["άντρας", "γυναίκα", "φίλος", "φίλη", "σύζυγος"] },
+		{ title: "Jobs", words: ["γιατρός", "δάσκαλος", "οδηγός", "ηθοποιός", "κηπουρός", "γεωργός", "βοσκός", "κυνηγός", "αρχηγός"] },
+		{ title: "People & pets", words: ["άνθρωπος", "αγόρι", "νάνος", "σκύλος"] },
+	],
+	shopping: [
+		{ title: "Food & drink", words: ["καφές", "χυμός", "ντομάτα", "αγγούρι", "πορτοκάλι", "ψωμί"] },
+		{ title: "At the shop", words: ["αντηλιακό", "μπουκάλι", "απόδειξη", "ψώνια"] },
+	],
+	summer: [
+		{ title: "At the beach", words: ["θάλασσα", "παραλία", "ήλιος", "ξαπλώστρα", "μαγιό", "καπέλο"] },
+		{ title: "Summer treats", words: ["καλοκαίρι", "ζέστη", "παγωτό", "καρπούζι"] },
 	],
 };
 
@@ -187,29 +212,22 @@ const splitIntoPairsAndSingles = (
 	return { pairs, singles };
 };
 
-const categoryColors: Record<string, "terracotta" | "olive" | "ocean" | "honey"> = {
-	people: "terracotta",
-	shopping: "olive",
-	household: "ocean",
-	vehicles: "ocean",
-	summer: "honey",
+const categoryColors: Record<string, "stone"> = {
+	people: "stone",
+	shopping: "stone",
+	household: "stone",
+	vehicles: "stone",
+	summer: "stone",
 };
 
-const CategorySection: React.FC<{
+const NounList: React.FC<{
+	nouns: NounWithGender[];
 	categoryKey: string;
-	category: CategoryData;
-}> = ({ categoryKey, category }) => {
-	if (category.nouns.length === 0) return null;
-
-	const { pairs, singles } = splitIntoPairsAndSingles(category.nouns, categoryKey);
-	const colorScheme = categoryColors[categoryKey] ?? "ocean";
+}> = ({ nouns, categoryKey }) => {
+	const { pairs, singles } = splitIntoPairsAndSingles(nouns, categoryKey);
 
 	return (
-		<ContentSection
-			title={category.title}
-			subtitle={`${category.total} nouns`}
-			colorScheme={colorScheme}
-		>
+		<>
 			{/* Paired nouns */}
 			{pairs.length > 0 && (
 				<div className="divide-y divide-stone-200/60">
@@ -235,6 +253,65 @@ const CategorySection: React.FC<{
 					))}
 				</div>
 			)}
+		</>
+	);
+};
+
+const CategorySection: React.FC<{
+	categoryKey: string;
+	category: CategoryData;
+}> = ({ categoryKey, category }) => {
+	if (category.nouns.length === 0) return null;
+
+	const colorScheme = categoryColors[categoryKey] ?? "stone";
+	const subgroups = nounSubgroups[categoryKey];
+
+	if (!subgroups) {
+		return (
+			<ContentSection
+				title={category.title}
+				subtitle={`${category.total} nouns`}
+				colorScheme={colorScheme}
+			>
+				<NounList nouns={category.nouns} categoryKey={categoryKey} />
+			</ContentSection>
+		);
+	}
+
+	const seenIds = new Set<string | number>();
+	const groups: Array<{ title: string; nouns: NounWithGender[] }> = [];
+
+	for (const sub of subgroups) {
+		const wordSet = new Set(sub.words.map((w) => w.toLowerCase()));
+		const matched = category.nouns.filter(
+			(noun) => !seenIds.has(noun.id) && wordSet.has(noun.greekText.toLowerCase()),
+		);
+		for (const n of matched) seenIds.add(n.id);
+		if (matched.length > 0) {
+			groups.push({ title: sub.title, nouns: matched });
+		}
+	}
+
+	// Fallback so nouns not covered by hand-authored sub-groups are not silently dropped
+	const unmatched = category.nouns.filter((noun) => !seenIds.has(noun.id));
+	if (unmatched.length > 0) {
+		groups.push({ title: "More", nouns: unmatched });
+	}
+
+	return (
+		<ContentSection
+			title={category.title}
+			subtitle={`${category.total} nouns`}
+			colorScheme={colorScheme}
+		>
+			{groups.map((group) => (
+				<div key={group.title}>
+					<h4 className="px-3 pt-3 pb-1 text-xs font-semibold uppercase tracking-wide text-stone-500">
+						{group.title}
+					</h4>
+					<NounList nouns={group.nouns} categoryKey={categoryKey} />
+				</div>
+			))}
 		</ContentSection>
 	);
 };
@@ -266,16 +343,16 @@ function NounsRefactorPage() {
 							</p>
 							<div className="flex flex-wrap gap-3 text-sm">
 								<span>
-									<strong className="text-ocean-500">ο</strong> +{" "}
-									<span className="text-ocean-500">-ος, -ης, -ας</span> = masculine
+									<strong className="text-gender-masculine-text">ο</strong> +{" "}
+									<span className="text-gender-masculine-text">-ος, -ης, -ας</span> = masculine
 								</span>
 								<span>
-									<strong className="text-rose-600">η</strong> +{" "}
-									<span className="text-rose-600">-η, -α</span> = feminine
+									<strong className="text-gender-feminine-text">η</strong> +{" "}
+									<span className="text-gender-feminine-text">-η, -α</span> = feminine
 								</span>
 								<span>
-									<strong className="text-stone-500">το</strong> +{" "}
-									<span className="text-stone-500">-ο, -ι, -μα</span> = neuter
+									<strong className="text-gender-neuter-text">το</strong> +{" "}
+									<span className="text-gender-neuter-text">-ο, -ι, -μα</span> = neuter
 								</span>
 							</div>
 						</div>
@@ -283,24 +360,26 @@ function NounsRefactorPage() {
 				}}
 			>
 				The words you'll use most, organised by situation. The{" "}
-				<span className="font-medium text-ocean-500">coloured article</span> shows gender at a
+				<span className="font-medium text-stone-700">coloured article</span> shows gender at a
 				glance.
 			</TabHero>
 
 			<div className="flex items-center gap-3 px-1 text-xs text-stone-500">
 				<span className="font-medium">Gender:</span>
 				<span className="flex items-center gap-1.5">
-					<span className="rounded bg-ocean-100 px-1 py-0.5 text-xs font-bold text-ocean-500">
+					<span className="rounded bg-gender-masculine-100 px-1 py-0.5 text-xs font-bold text-gender-masculine-text">
 						ο
 					</span>
 					masculine
 				</span>
 				<span className="flex items-center gap-1.5">
-					<span className="rounded bg-rose-100 px-1 py-0.5 text-xs font-bold text-rose-600">η</span>
+					<span className="rounded bg-gender-feminine-100 px-1 py-0.5 text-xs font-bold text-gender-feminine-text">
+						η
+					</span>
 					feminine
 				</span>
 				<span className="flex items-center gap-1.5">
-					<span className="rounded bg-stone-200 px-1 py-0.5 text-xs font-bold text-stone-600">
+					<span className="rounded bg-gender-neuter-100 px-1 py-0.5 text-xs font-bold text-gender-neuter-text">
 						το
 					</span>
 					neuter
