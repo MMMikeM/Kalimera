@@ -7,10 +7,11 @@
 
 ## Custom Components
 
-Built with `tailwind-variants`. Import from `@/components`:
+Built with `tailwind-variants`. Direct imports only — no barrel file:
 
 ```typescript
-import { Card, Badge, MonoText, SearchInput, Table } from "@/components";
+import { GreekText } from "@/components/GreekText";
+import { Card } from "@/components/Card";
 ```
 
 ## ShadCN Components

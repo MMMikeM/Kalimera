@@ -3,7 +3,7 @@ import type React from "react";
 import { type ColorScheme, colorStyles } from "@/lib/colors";
 import { cn } from "@/lib/utils";
 
-import { MonoText } from "./MonoText";
+import { GreekText } from "@/components/GreekText";
 
 interface ConversationHeroProps {
 	icon: React.ReactNode;
@@ -39,9 +39,9 @@ export const ConversationHero: React.FC<ConversationHeroProps> = ({
 				</div>
 				<div className="min-w-0 flex-1">
 					<h2 className={cn("text-xl font-bold", styles.text)}>{title}</h2>
-					<MonoText variant="greek" size="sm" className="mt-1 block text-stone-600">
+					<GreekText tone="accent" size="sm" className="mt-1 block text-stone-600">
 						{greekPhrase}
-					</MonoText>
+					</GreekText>
 					<p className="mt-2 text-sm leading-relaxed text-stone-600">{description}</p>
 				</div>
 			</div>

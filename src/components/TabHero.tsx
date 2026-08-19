@@ -5,7 +5,7 @@ import { type ColorScheme, colorStyles } from "@/lib/colors";
 import { cn } from "@/lib/utils";
 
 import { Card } from "./Card";
-import { MonoText } from "./MonoText";
+import { GreekText } from "@/components/GreekText";
 
 /**
  * Enforces a maximum character length on string literals at compile time.
@@ -74,9 +74,9 @@ export const TabHero = <T extends string>({
 					<div className="flex min-w-0 flex-col justify-center">
 						<h3 className={cn("sm:text-xl font-bold leading-tight", styles.text)}>{title}</h3>
 						{greekPhrase && (
-							<MonoText variant="greek" size="sm" className="mt-0.5 text-stone-600">
+							<GreekText tone="accent" size="sm" className="mt-0.5 text-stone-600">
 								{greekPhrase}
-							</MonoText>
+							</GreekText>
 						)}
 					</div>
 				</div>

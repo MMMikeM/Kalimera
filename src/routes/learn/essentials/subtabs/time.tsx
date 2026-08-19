@@ -1,8 +1,8 @@
 import { ContentSection } from "@/components/ContentSection";
-import { MonoText } from "@/components/MonoText";
 
 import type { EssentialsLoaderData } from "../$subtab";
 import { EssentialsBackLink } from "./essentials-back-link";
+import { GreekText } from "@/components/GreekText";
 
 interface Props {
 	data: EssentialsLoaderData;
@@ -59,7 +59,7 @@ export function TimeSubtab({ data }: Props) {
 							// eslint-disable-next-line better-tailwindcss/no-restricted-classes -- 60/40 layout, no token fit
 							className="grid grid-cols-[3fr_2fr] items-center gap-x-3 px-3 py-2.5"
 						>
-							<MonoText variant="greek">{time.greekText}</MonoText>
+							<GreekText tone="accent" size="lg">{time.greekText}</GreekText>
 							<div>
 								<span className="text-sm text-stone-500">{time.englishTranslation}</span>
 								{time.timeRange && (
@@ -73,21 +73,21 @@ export function TimeSubtab({ data }: Props) {
 					<p className="mb-2 text-sm font-medium text-honey-text">Pattern: το + time of day</p>
 					<div className="space-y-2 text-sm">
 						<div>
-							<MonoText variant="greek">
+							<GreekText tone="accent" size="lg">
 								στις δύο <span className="font-semibold">το μεσημέρι</span>
-							</MonoText>
+							</GreekText>
 							<div className="text-xs text-stone-500">at two in the afternoon</div>
 						</div>
 						<div>
-							<MonoText variant="greek">
+							<GreekText tone="accent" size="lg">
 								στις οκτώ <span className="font-semibold">το βράδυ</span>
-							</MonoText>
+							</GreekText>
 							<div className="text-xs text-stone-500">at eight in the evening</div>
 						</div>
 						<p className="border-t border-honey-200/50 pt-1.5 text-xs text-stone-500">
-							<MonoText variant="greek" className="text-stone-700">
+							<GreekText tone="accent" size="lg" className="text-stone-700">
 								το
-							</MonoText>{" "}
+							</GreekText>{" "}
 							(neuter) — time periods are neuter nouns
 						</p>
 					</div>
@@ -108,7 +108,7 @@ export function TimeSubtab({ data }: Props) {
 								// eslint-disable-next-line better-tailwindcss/no-restricted-classes -- 60/40 layout, no token fit
 								className="grid grid-cols-[3fr_2fr] items-center gap-x-3 px-3 py-2.5"
 							>
-								<MonoText variant="greek">{day.greekText}</MonoText>
+								<GreekText tone="accent" size="lg">{day.greekText}</GreekText>
 								<span className="text-sm text-stone-500">{day.englishTranslation}</span>
 							</div>
 						))}
@@ -117,29 +117,29 @@ export function TimeSubtab({ data }: Props) {
 						<p className="mb-2 text-sm font-medium text-ocean-text">Days use feminine accusative</p>
 						<div className="space-y-2 text-sm">
 							<div>
-								<MonoText variant="greek">
+								<GreekText tone="accent" size="lg">
 									<span className="font-semibold">την</span> Τρίτη
-								</MonoText>
+								</GreekText>
 								<div className="text-xs text-stone-500">on Tuesday (specific)</div>
 							</div>
 							<div>
-								<MonoText variant="greek">κάθε Τρίτη</MonoText>
+								<GreekText tone="accent" size="lg">κάθε Τρίτη</GreekText>
 								<div className="text-xs text-stone-500">every Tuesday (no article)</div>
 							</div>
 							<div>
-								<MonoText variant="greek">
+								<GreekText tone="accent" size="lg">
 									<span className="font-semibold">την</span> περασμένη Τρίτη
-								</MonoText>
+								</GreekText>
 								<div className="text-xs text-stone-500">last Tuesday</div>
 							</div>
 							<p className="border-t border-ocean-200/50 pt-1.5 text-xs text-stone-500">
-								<MonoText variant="greek" className="text-stone-700">
+								<GreekText tone="accent" size="lg" className="text-stone-700">
 									την
-								</MonoText>{" "}
+								</GreekText>{" "}
 								= accusative of{" "}
-								<MonoText variant="greek" className="text-stone-700">
+								<GreekText tone="accent" size="lg" className="text-stone-700">
 									η
-								</MonoText>{" "}
+								</GreekText>{" "}
 								(fem.)
 							</p>
 						</div>
@@ -161,7 +161,7 @@ export function TimeSubtab({ data }: Props) {
 								// eslint-disable-next-line better-tailwindcss/no-restricted-classes -- 60/40 layout, no token fit
 								className="grid grid-cols-[3fr_2fr] items-center gap-x-3 px-3 py-2.5"
 							>
-								<MonoText variant="greek">{month.greekText}</MonoText>
+								<GreekText tone="accent" size="lg">{month.greekText}</GreekText>
 								<span className="text-sm text-stone-500">{month.englishTranslation}</span>
 							</div>
 						))}
@@ -172,31 +172,31 @@ export function TimeSubtab({ data }: Props) {
 						</p>
 						<div className="space-y-2 text-sm">
 							<div>
-								<MonoText variant="greek">
+								<GreekText tone="accent" size="lg">
 									<span className="font-semibold">τον</span> Ιούλιο
-								</MonoText>
+								</GreekText>
 								<div className="text-xs text-stone-500">in July</div>
 							</div>
 							<div>
-								<MonoText variant="greek">
+								<GreekText tone="accent" size="lg">
 									<span className="font-semibold">τον</span> περασμένο Μάρτιο
-								</MonoText>
+								</GreekText>
 								<div className="text-xs text-stone-500">last March</div>
 							</div>
 							<div>
-								<MonoText variant="greek">
+								<GreekText tone="accent" size="lg">
 									<span className="font-semibold">τον</span> επόμενο μήνα
-								</MonoText>
+								</GreekText>
 								<div className="text-xs text-stone-500">next month</div>
 							</div>
 							<p className="border-t border-olive-200/50 pt-1.5 text-xs text-stone-500">
-								<MonoText variant="greek" className="text-stone-700">
+								<GreekText tone="accent" size="lg" className="text-stone-700">
 									τον
-								</MonoText>{" "}
+								</GreekText>{" "}
 								= accusative of{" "}
-								<MonoText variant="greek" className="text-stone-700">
+								<GreekText tone="accent" size="lg" className="text-stone-700">
 									ο
-								</MonoText>{" "}
+								</GreekText>{" "}
 								(masc.)
 							</p>
 						</div>

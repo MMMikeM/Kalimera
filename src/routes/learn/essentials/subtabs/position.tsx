@@ -1,9 +1,9 @@
 import { ContentSection } from "@/components/ContentSection";
-import { MonoText } from "@/components/MonoText";
 
 import type { EssentialsLoaderData } from "../$subtab";
 import { EssentialsBackLink } from "./essentials-back-link";
 import { ExampleList } from "./example-list";
+import { GreekText } from "@/components/GreekText";
 
 interface Props {
 	data: EssentialsLoaderData;
@@ -60,7 +60,7 @@ export function PositionSubtab({ data }: Props) {
 								<div className="px-3 py-2.5">
 									{left && (
 										<>
-											<MonoText variant="greek">{left.greekText}</MonoText>
+											<GreekText tone="accent" size="lg">{left.greekText}</GreekText>
 											<div className="text-xs text-stone-500">{left.englishTranslation}</div>
 										</>
 									)}
@@ -70,7 +70,7 @@ export function PositionSubtab({ data }: Props) {
 								<div className="px-3 py-2.5">
 									{right && (
 										<>
-											<MonoText variant="greek">{right.greekText}</MonoText>
+											<GreekText tone="accent" size="lg">{right.greekText}</GreekText>
 											<div className="text-xs text-stone-500">{right.englishTranslation}</div>
 										</>
 									)}
@@ -84,19 +84,19 @@ export function PositionSubtab({ data }: Props) {
 					<p className="mb-2 text-sm font-medium text-ocean-text">Using opposites with verbs</p>
 					<div className="space-y-1.5 text-sm">
 						<div>
-							<MonoText variant="greek">μπες μέσα</MonoText>
+							<GreekText tone="accent" size="lg">μπες μέσα</GreekText>
 							<span className="ml-2 text-xs text-stone-500">go inside</span>
 						</div>
 						<div>
-							<MonoText variant="greek">βγες έξω</MonoText>
+							<GreekText tone="accent" size="lg">βγες έξω</GreekText>
 							<span className="ml-2 text-xs text-stone-500">go outside</span>
 						</div>
 						<div>
-							<MonoText variant="greek">ανέβα πάνω</MonoText>
+							<GreekText tone="accent" size="lg">ανέβα πάνω</GreekText>
 							<span className="ml-2 text-xs text-stone-500">go up</span>
 						</div>
 						<div>
-							<MonoText variant="greek">κατέβα κάτω</MonoText>
+							<GreekText tone="accent" size="lg">κατέβα κάτω</GreekText>
 							<span className="ml-2 text-xs text-stone-500">go down</span>
 						</div>
 					</div>
@@ -118,15 +118,15 @@ export function PositionSubtab({ data }: Props) {
 					<p className="mb-2 text-sm font-medium text-terracotta-text">Key verbs for directions</p>
 					<div className="space-y-1.5 text-sm">
 						<div>
-							<MonoText variant="greek">στρίψε</MonoText>
+							<GreekText tone="accent" size="lg">στρίψε</GreekText>
 							<span className="ml-2 text-xs text-stone-500">turn (command)</span>
 						</div>
 						<div>
-							<MonoText variant="greek">πήγαινε</MonoText>
+							<GreekText tone="accent" size="lg">πήγαινε</GreekText>
 							<span className="ml-2 text-xs text-stone-500">go (command)</span>
 						</div>
 						<div>
-							<MonoText variant="greek">έλα</MonoText>
+							<GreekText tone="accent" size="lg">έλα</GreekText>
 							<span className="ml-2 text-xs text-stone-500">come (command)</span>
 						</div>
 					</div>
@@ -145,24 +145,24 @@ export function PositionSubtab({ data }: Props) {
 					<p className="mb-2 text-sm font-medium text-olive-text">Preposition patterns</p>
 					<div className="space-y-1.5 text-sm">
 						<div>
-							<MonoText variant="greek">μπροστά / πίσω / μακριά</MonoText>
+							<GreekText tone="accent" size="lg">μπροστά / πίσω / μακριά</GreekText>
 							<span className="ml-2 text-xs text-stone-500">+ από</span>
 						</div>
 						<div>
-							<MonoText variant="greek">κοντά / μέσα</MonoText>
+							<GreekText tone="accent" size="lg">κοντά / μέσα</GreekText>
 							<span className="ml-2 text-xs text-stone-500">+ σε</span>
 						</div>
 						<div>
-							<MonoText variant="greek">ανάμεσα</MonoText>
+							<GreekText tone="accent" size="lg">ανάμεσα</GreekText>
 							<span className="ml-2 text-xs text-stone-500">+ σε</span>
 						</div>
 						<div>
-							<MonoText variant="greek">απέναντι</MonoText>
+							<GreekText tone="accent" size="lg">απέναντι</GreekText>
 							<span className="ml-2 text-xs text-stone-500">+ από</span>
 						</div>
 					</div>
 					<p className="mt-2 border-t border-olive-200/50 pt-1.5 text-xs text-stone-500">
-						<MonoText className="text-stone-700">κοντά στο</MonoText> = κοντά + σε + το (contracted)
+						<GreekText tone="default" size="base" className="text-stone-700">κοντά στο</GreekText> = κοντά + σε + το (contracted)
 					</p>
 				</div>
 			</ContentSection>

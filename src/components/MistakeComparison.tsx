@@ -1,7 +1,7 @@
 import { AlertCircle, CheckCircle } from "lucide-react";
 
 import { Card } from "./Card";
-import { MonoText } from "./MonoText";
+import { GreekText } from "@/components/GreekText";
 
 interface Mistake {
 	wrong: string;
@@ -38,18 +38,18 @@ export const MistakeComparison = ({
 							Wrong:
 						</span>
 						<AlertCircle className="mt-0.5 shrink-0 text-incorrect" size={14} aria-hidden="true" />
-						<MonoText variant="error" size="sm" className="line-through">
+						<GreekText tone="incorrect" size="sm" className="font-medium line-through">
 							{mistake.wrong}
-						</MonoText>
+						</GreekText>
 					</div>
 					<div className="mb-2 flex items-start gap-2">
 						<span className="w-16 shrink-0 text-xs font-semibold tracking-wide text-correct uppercase">
 							Correct:
 						</span>
 						<CheckCircle className="mt-0.5 shrink-0 text-correct" size={14} aria-hidden="true" />
-						<MonoText variant="success" size="sm">
+						<GreekText tone="correct" size="sm" className="font-medium">
 							{mistake.correct}
-						</MonoText>
+						</GreekText>
 					</div>
 					<div className="pl-18 text-xs text-stone-600">{mistake.explanation}</div>
 				</Card>

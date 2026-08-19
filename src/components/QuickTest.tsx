@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { type ColorScheme, colorStyles } from "@/lib/colors";
 
 import { Card } from "./Card";
-import { MonoText } from "./MonoText";
+import { GreekText } from "@/components/GreekText";
 
 interface QuickTestOption {
 	condition: string;
@@ -48,9 +48,9 @@ export const QuickTest = ({
 									<div className="space-y-0.5 text-sm text-stone-600">
 										{option.examples.map((ex) => (
 											<div key={ex.greek}>
-												<MonoText size="sm" variant="greek">
+												<GreekText tone="accent" size="sm">
 													{ex.greek}
-												</MonoText>
+												</GreekText>
 												<span className="ml-2 text-stone-600">— {ex.english}</span>
 											</div>
 										))}
