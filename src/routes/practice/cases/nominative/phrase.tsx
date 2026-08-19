@@ -18,7 +18,6 @@ export const PHRASES: SimpleListItem[] = [
 	{
 		id: "kalos-filos",
 		greek: "ο καλός φίλος",
-		greeklish: "o kalos filos",
 		english: "the good friend (m)",
 		label: "ο καλός φίλος",
 		category: "masculine",
@@ -27,7 +26,6 @@ export const PHRASES: SimpleListItem[] = [
 	{
 		id: "megalos-dromos",
 		greek: "ο μεγάλος δρόμος",
-		greeklish: "o megalos dromos",
 		english: "the big road",
 		label: "ο μεγάλος δρόμος",
 		category: "masculine",
@@ -36,7 +34,6 @@ export const PHRASES: SimpleListItem[] = [
 	{
 		id: "neos-daskalos",
 		greek: "ο νέος δάσκαλος",
-		greeklish: "o neos daskalos",
 		english: "the new teacher (m)",
 		label: "ο νέος δάσκαλος",
 		category: "masculine",
@@ -45,7 +42,6 @@ export const PHRASES: SimpleListItem[] = [
 	{
 		id: "mikros-skylos",
 		greek: "ο μικρός σκύλος",
-		greeklish: "o mikros skylos",
 		english: "the small dog",
 		label: "ο μικρός σκύλος",
 		category: "masculine",
@@ -54,7 +50,6 @@ export const PHRASES: SimpleListItem[] = [
 	{
 		id: "omorfos-anthropos",
 		greek: "ο όμορφος άνθρωπος",
-		greeklish: "o omorfos anthropos",
 		english: "the handsome person",
 		label: "ο όμορφος άνθρωπος",
 		category: "masculine",
@@ -65,7 +60,6 @@ export const PHRASES: SimpleListItem[] = [
 	{
 		id: "kali-mera",
 		greek: "η καλή μέρα",
-		greeklish: "i kali mera",
 		english: "the good day",
 		label: "η καλή μέρα",
 		category: "feminine",
@@ -74,7 +68,6 @@ export const PHRASES: SimpleListItem[] = [
 	{
 		id: "megali-poli",
 		greek: "η μεγάλη πόλη",
-		greeklish: "i megali poli",
 		english: "the big city",
 		label: "η μεγάλη πόλη",
 		category: "feminine",
@@ -83,7 +76,6 @@ export const PHRASES: SimpleListItem[] = [
 	{
 		id: "nea-tainia",
 		greek: "η νέα ταινία",
-		greeklish: "i nea tainia",
 		english: "the new film",
 		label: "η νέα ταινία",
 		category: "feminine",
@@ -92,7 +84,6 @@ export const PHRASES: SimpleListItem[] = [
 	{
 		id: "mikri-gata",
 		greek: "η μικρή γάτα",
-		greeklish: "i mikri gata",
 		english: "the small cat",
 		label: "η μικρή γάτα",
 		category: "feminine",
@@ -101,7 +92,6 @@ export const PHRASES: SimpleListItem[] = [
 	{
 		id: "zesti-soupa",
 		greek: "η ζεστή σούπα",
-		greeklish: "i zesti soupa",
 		english: "the hot soup",
 		label: "η ζεστή σούπα",
 		category: "feminine",
@@ -112,7 +102,6 @@ export const PHRASES: SimpleListItem[] = [
 	{
 		id: "kalo-spiti",
 		greek: "το καλό σπίτι",
-		greeklish: "to kalo spiti",
 		english: "the good house",
 		label: "το καλό σπίτι",
 		category: "neuter",
@@ -121,7 +110,6 @@ export const PHRASES: SimpleListItem[] = [
 	{
 		id: "megalo-provlima",
 		greek: "το μεγάλο πρόβλημα",
-		greeklish: "to megalo provlima",
 		english: "the big problem",
 		label: "το μεγάλο πρόβλημα",
 		category: "neuter",
@@ -130,7 +118,6 @@ export const PHRASES: SimpleListItem[] = [
 	{
 		id: "neo-aftokinito",
 		greek: "το νέο αυτοκίνητο",
-		greeklish: "to neo aftokinito",
 		english: "the new car",
 		label: "το νέο αυτοκίνητο",
 		category: "neuter",
@@ -139,7 +126,6 @@ export const PHRASES: SimpleListItem[] = [
 	{
 		id: "mikro-paidi",
 		greek: "το μικρό παιδί",
-		greeklish: "to mikro paidi",
 		english: "the small child",
 		label: "το μικρό παιδί",
 		category: "neuter",
@@ -148,7 +134,6 @@ export const PHRASES: SimpleListItem[] = [
 	{
 		id: "kryo-nero",
 		greek: "το κρύο νερό",
-		greeklish: "to kryo nero",
 		english: "the cold water",
 		label: "το κρύο νερό",
 		category: "neuter",
@@ -159,7 +144,6 @@ export const PHRASES: SimpleListItem[] = [
 	{
 		id: "kaloi-filoi",
 		greek: "οι καλοί φίλοι",
-		greeklish: "i kaloi filoi",
 		english: "the good friends (m, pl)",
 		label: "οι καλοί φίλοι",
 		category: "plural",
@@ -168,7 +152,6 @@ export const PHRASES: SimpleListItem[] = [
 	{
 		id: "megaloi-dromoi",
 		greek: "οι μεγάλοι δρόμοι",
-		greeklish: "i megaloi dromoi",
 		english: "the big roads (pl)",
 		label: "οι μεγάλοι δρόμοι",
 		category: "plural",
@@ -177,7 +160,6 @@ export const PHRASES: SimpleListItem[] = [
 	{
 		id: "neoi-daskaloi",
 		greek: "οι νέοι δάσκαλοι",
-		greeklish: "i neoi daskaloi",
 		english: "the new teachers (m, pl)",
 		label: "οι νέοι δάσκαλοι",
 		category: "plural",
@@ -186,7 +168,6 @@ export const PHRASES: SimpleListItem[] = [
 	{
 		id: "mikroi-skyloi",
 		greek: "οι μικροί σκύλοι",
-		greeklish: "i mikroi skyloi",
 		english: "the small dogs (pl)",
 		label: "οι μικροί σκύλοι",
 		category: "plural",
@@ -195,7 +176,6 @@ export const PHRASES: SimpleListItem[] = [
 	{
 		id: "omorfoi-anthropoi",
 		greek: "οι όμορφοι άνθρωποι",
-		greeklish: "i omorfoi anthropoi",
 		english: "the handsome people (pl)",
 		label: "οι όμορφοι άνθρωποι",
 		category: "plural",
@@ -206,7 +186,6 @@ export const PHRASES: SimpleListItem[] = [
 	{
 		id: "kales-meres",
 		greek: "οι καλές μέρες",
-		greeklish: "i kales meres",
 		english: "the good days (pl)",
 		label: "οι καλές μέρες",
 		category: "plural",
@@ -215,7 +194,6 @@ export const PHRASES: SimpleListItem[] = [
 	{
 		id: "megales-poleis",
 		greek: "οι μεγάλες πόλεις",
-		greeklish: "i megales poleis",
 		english: "the big cities (pl)",
 		label: "οι μεγάλες πόλεις",
 		category: "plural",
@@ -224,7 +202,6 @@ export const PHRASES: SimpleListItem[] = [
 	{
 		id: "nees-tainies",
 		greek: "οι νέες ταινίες",
-		greeklish: "i nees tainies",
 		english: "the new films (pl)",
 		label: "οι νέες ταινίες",
 		category: "plural",
@@ -233,7 +210,6 @@ export const PHRASES: SimpleListItem[] = [
 	{
 		id: "mikres-gates",
 		greek: "οι μικρές γάτες",
-		greeklish: "i mikres gates",
 		english: "the small cats (pl)",
 		label: "οι μικρές γάτες",
 		category: "plural",
@@ -242,7 +218,6 @@ export const PHRASES: SimpleListItem[] = [
 	{
 		id: "zestes-soupes",
 		greek: "οι ζεστές σούπες",
-		greeklish: "i zestes soupes",
 		english: "the hot soups (pl)",
 		label: "οι ζεστές σούπες",
 		category: "plural",
@@ -253,7 +228,6 @@ export const PHRASES: SimpleListItem[] = [
 	{
 		id: "kala-spitia",
 		greek: "τα καλά σπίτια",
-		greeklish: "ta kala spitia",
 		english: "the good houses (pl)",
 		label: "τα καλά σπίτια",
 		category: "plural",
@@ -262,7 +236,6 @@ export const PHRASES: SimpleListItem[] = [
 	{
 		id: "megala-provlimata",
 		greek: "τα μεγάλα προβλήματα",
-		greeklish: "ta megala provlimata",
 		english: "the big problems (pl)",
 		label: "τα μεγάλα προβλήματα",
 		category: "plural",
@@ -271,7 +244,6 @@ export const PHRASES: SimpleListItem[] = [
 	{
 		id: "nea-aftokinita",
 		greek: "τα νέα αυτοκίνητα",
-		greeklish: "ta nea aftokinita",
 		english: "the new cars (pl)",
 		label: "τα νέα αυτοκίνητα",
 		category: "plural",
@@ -280,7 +252,6 @@ export const PHRASES: SimpleListItem[] = [
 	{
 		id: "mikra-paidia",
 		greek: "τα μικρά παιδιά",
-		greeklish: "ta mikra paidia",
 		english: "the small children (pl)",
 		label: "τα μικρά παιδιά",
 		category: "plural",
@@ -289,7 +260,6 @@ export const PHRASES: SimpleListItem[] = [
 	{
 		id: "krya-nera",
 		greek: "τα κρύα νερά",
-		greeklish: "ta krya nera",
 		english: "the cold waters (pl)",
 		label: "τα κρύα νερά",
 		category: "plural",

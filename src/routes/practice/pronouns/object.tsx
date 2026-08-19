@@ -43,7 +43,6 @@ const PRONOUNS: ObjectPronoun[] = [
 		number: "singular",
 		gender: "",
 		greek: "με",
-		greeklish: "me",
 		label: "me / 1st singular",
 	},
 	{
@@ -52,7 +51,6 @@ const PRONOUNS: ObjectPronoun[] = [
 		number: "singular",
 		gender: "",
 		greek: "σε",
-		greeklish: "se",
 		label: "you / 2nd singular",
 	},
 	{
@@ -61,7 +59,6 @@ const PRONOUNS: ObjectPronoun[] = [
 		number: "singular",
 		gender: "masculine",
 		greek: "τον",
-		greeklish: "ton",
 		label: "him / 3rd singular",
 	},
 	{
@@ -70,7 +67,6 @@ const PRONOUNS: ObjectPronoun[] = [
 		number: "singular",
 		gender: "feminine",
 		greek: "την",
-		greeklish: "tin",
 		label: "her / 3rd singular",
 	},
 	{
@@ -79,7 +75,6 @@ const PRONOUNS: ObjectPronoun[] = [
 		number: "singular",
 		gender: "neuter",
 		greek: "το",
-		greeklish: "to",
 		label: "it / 3rd singular",
 	},
 	{
@@ -88,7 +83,6 @@ const PRONOUNS: ObjectPronoun[] = [
 		number: "plural",
 		gender: "",
 		greek: "μας",
-		greeklish: "mas",
 		label: "us / 1st plural",
 	},
 	{
@@ -97,7 +91,6 @@ const PRONOUNS: ObjectPronoun[] = [
 		number: "plural",
 		gender: "",
 		greek: "σας",
-		greeklish: "sas",
 		label: "you / 2nd plural",
 	},
 	{
@@ -106,7 +99,6 @@ const PRONOUNS: ObjectPronoun[] = [
 		number: "plural",
 		gender: "masculine",
 		greek: "τους",
-		greeklish: "tous",
 		label: "them (m) / 3rd plural",
 	},
 	{
@@ -115,7 +107,6 @@ const PRONOUNS: ObjectPronoun[] = [
 		number: "plural",
 		gender: "feminine",
 		greek: "τις",
-		greeklish: "tis",
 		label: "them (f) / 3rd plural",
 	},
 	{
@@ -124,7 +115,6 @@ const PRONOUNS: ObjectPronoun[] = [
 		number: "plural",
 		gender: "neuter",
 		greek: "τα",
-		greeklish: "ta",
 		label: "them (n) / 3rd plural",
 	},
 ];

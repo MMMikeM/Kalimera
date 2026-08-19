@@ -8,7 +8,6 @@ const CHUNKS: SimpleListItem[] = [
 	{
 		id: "hello",
 		greek: "Γεια σου",
-		greeklish: "gia sou",
 		english: "Hello / Hi",
 		label: "greeting",
 		category: "social",
@@ -16,7 +15,6 @@ const CHUNKS: SimpleListItem[] = [
 	{
 		id: "hello-formal",
 		greek: "Γεια σας",
-		greeklish: "gia sas",
 		english: "Hello (formal)",
 		label: "greeting",
 		category: "social",
@@ -24,7 +22,6 @@ const CHUNKS: SimpleListItem[] = [
 	{
 		id: "good-morning",
 		greek: "Καλημέρα",
-		greeklish: "kalimera",
 		english: "Good morning",
 		label: "greeting",
 		category: "social",
@@ -32,7 +29,6 @@ const CHUNKS: SimpleListItem[] = [
 	{
 		id: "good-evening",
 		greek: "Καλησπέρα",
-		greeklish: "kalispera",
 		english: "Good evening",
 		label: "greeting",
 		category: "social",
@@ -40,7 +36,6 @@ const CHUNKS: SimpleListItem[] = [
 	{
 		id: "good-night",
 		greek: "Καληνύχτα",
-		greeklish: "kalinychta",
 		english: "Good night",
 		label: "greeting",
 		category: "social",
@@ -48,7 +43,6 @@ const CHUNKS: SimpleListItem[] = [
 	{
 		id: "goodbye",
 		greek: "Αντίο",
-		greeklish: "antio",
 		english: "Goodbye",
 		label: "parting",
 		category: "social",
@@ -56,7 +50,6 @@ const CHUNKS: SimpleListItem[] = [
 	{
 		id: "see-you",
 		greek: "Τα λέμε",
-		greeklish: "ta leme",
 		english: "See you later",
 		label: "parting",
 		category: "social",
@@ -64,7 +57,6 @@ const CHUNKS: SimpleListItem[] = [
 	{
 		id: "thank-you",
 		greek: "Ευχαριστώ",
-		greeklish: "efcharisto",
 		english: "Thank you",
 		label: "politeness",
 		category: "social",
@@ -72,7 +64,6 @@ const CHUNKS: SimpleListItem[] = [
 	{
 		id: "please",
 		greek: "Παρακαλώ",
-		greeklish: "parakalo",
 		english: "Please / You're welcome",
 		label: "politeness",
 		category: "social",
@@ -80,7 +71,6 @@ const CHUNKS: SimpleListItem[] = [
 	{
 		id: "sorry",
 		greek: "Συγγνώμη",
-		greeklish: "signomi",
 		english: "Excuse me / Sorry",
 		label: "politeness",
 		category: "social",
@@ -88,7 +78,6 @@ const CHUNKS: SimpleListItem[] = [
 	{
 		id: "how-are-you",
 		greek: "Τι κάνεις;",
-		greeklish: "ti kanis",
 		english: "How are you?",
 		label: "social",
 		category: "social",
@@ -97,7 +86,6 @@ const CHUNKS: SimpleListItem[] = [
 	{
 		id: "dont-understand",
 		greek: "Δεν καταλαβαίνω",
-		greeklish: "den katalaveno",
 		english: "I don't understand",
 		label: "survival",
 		category: "survival",
@@ -105,7 +93,6 @@ const CHUNKS: SimpleListItem[] = [
 	{
 		id: "dont-know",
 		greek: "Δεν ξέρω",
-		greeklish: "den xero",
 		english: "I don't know",
 		label: "survival",
 		category: "survival",
@@ -113,7 +100,6 @@ const CHUNKS: SimpleListItem[] = [
 	{
 		id: "speak-slowly",
 		greek: "Μπορείτε να μιλάτε πιο αργά;",
-		greeklish: "borite na milate pio arga",
 		english: "Can you speak more slowly?",
 		label: "survival",
 		category: "survival",
@@ -121,7 +107,6 @@ const CHUNKS: SimpleListItem[] = [
 	{
 		id: "how-say",
 		greek: "Πώς λέγεται;",
-		greeklish: "pos legetai",
 		english: "How do you say...?",
 		label: "survival",
 		category: "survival",
@@ -129,7 +114,6 @@ const CHUNKS: SimpleListItem[] = [
 	{
 		id: "what-means",
 		greek: "Τι σημαίνει;",
-		greeklish: "ti simeni",
 		english: "What does ... mean?",
 		label: "survival",
 		category: "survival",
@@ -138,7 +122,6 @@ const CHUNKS: SimpleListItem[] = [
 	{
 		id: "my-name",
 		greek: "Με λένε",
-		greeklish: "me lene",
 		english: "My name is... (opener)",
 		label: "sentence starter",
 		category: "starters",
@@ -146,7 +129,6 @@ const CHUNKS: SimpleListItem[] = [
 	{
 		id: "i-would-like",
 		greek: "Θα ήθελα",
-		greeklish: "tha ithela",
 		english: "I would like... (opener)",
 		label: "sentence starter",
 		category: "starters",
@@ -154,7 +136,6 @@ const CHUNKS: SimpleListItem[] = [
 	{
 		id: "where-is",
 		greek: "Πού είναι;",
-		greeklish: "pou einai",
 		english: "Where is...?",
 		label: "sentence starter",
 		category: "starters",
@@ -162,7 +143,6 @@ const CHUNKS: SimpleListItem[] = [
 	{
 		id: "how-much",
 		greek: "Πόσο κάνει;",
-		greeklish: "poso kani",
 		english: "How much is...?",
 		label: "sentence starter",
 		category: "starters",
@@ -170,7 +150,6 @@ const CHUNKS: SimpleListItem[] = [
 	{
 		id: "can-i",
 		greek: "Μπορώ να",
-		greeklish: "boro na",
 		english: "Can I... (opener)",
 		label: "sentence starter",
 		category: "starters",
@@ -178,7 +157,6 @@ const CHUNKS: SimpleListItem[] = [
 	{
 		id: "i-need",
 		greek: "Πρέπει να",
-		greeklish: "prepi na",
 		english: "I need to... (opener)",
 		label: "sentence starter",
 		category: "starters",
@@ -186,7 +164,6 @@ const CHUNKS: SimpleListItem[] = [
 	{
 		id: "i-want",
 		greek: "Θέλω να",
-		greeklish: "thelo na",
 		english: "I want to... (opener)",
 		label: "sentence starter",
 		category: "starters",
@@ -194,7 +171,6 @@ const CHUNKS: SimpleListItem[] = [
 	{
 		id: "do-you-have",
 		greek: "Έχετε;",
-		greeklish: "echete",
 		english: "Do you have...?",
 		label: "sentence starter",
 		category: "starters",
@@ -219,6 +195,7 @@ function ChunksDrill() {
 			title="Survival Phrases"
 			subtitle="24 phrases / timed"
 			colorTheme="honey"
+			backTo="/practice/blocks"
 			forwardDesc="English prompt → Greek phrase"
 			reverseDesc="Greek phrase → English (self-assess)"
 			categories={CATEGORIES}
