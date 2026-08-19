@@ -6,7 +6,6 @@ import { Card } from "@/components/Card";
 import { NavigatorCard, NavigatorCell, TeachingCard } from "@/components/cards";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
 import { type ColumnDef, GrammarTable, type RowDef } from "@/components/GrammarTable";
-import { MonoText } from "@/components/MonoText";
 import { ParadigmTable } from "@/components/ParadigmTable";
 import { SectionHeading } from "@/components/SectionHeading";
 import { type GrammarScheme, SCHEME } from "@/constants/grammar-palette";
@@ -23,6 +22,7 @@ import {
 	VERB_PATTERNS,
 } from "@/constants/verbs";
 import { cn } from "@/lib/utils";
+import { GreekText } from "@/components/GreekText";
 
 interface UsageExample {
 	greek: string;
@@ -96,11 +96,11 @@ const UsageExamples: React.FC<{
 		{examples.map((ex) => (
 			<div key={ex.greek} className="space-y-1">
 				<div className="flex items-baseline gap-2">
-					<MonoText className={`${textClass} text-base font-bold`}>{ex.verb}</MonoText>
+					<GreekText tone="default" size="base" className={`${textClass} text-base font-bold`}>{ex.verb}</GreekText>
 					<span className="text-sm text-stone-500">{ex.formNote}</span>
 				</div>
 				<div className="border-l-2 border-stone-200 pl-2">
-					<MonoText className="text-stone-700">{ex.greek}</MonoText>
+					<GreekText tone="default" size="base" className="text-stone-700">{ex.greek}</GreekText>
 					<p className="text-sm text-stone-500">{ex.english}</p>
 				</div>
 			</div>
@@ -115,7 +115,7 @@ const SamePatternList: React.FC<{
 	<div className="divide-y divide-stone-100">
 		{verbs.map((v) => (
 			<div key={v.infinitive} className="flex items-baseline gap-2 py-2 first:pt-0 last:pb-0">
-				<MonoText className={`${textClass} font-semibold`}>{v.infinitive}</MonoText>
+				<GreekText tone="default" size="base" className={`${textClass} font-semibold`}>{v.infinitive}</GreekText>
 				<span className="text-sm text-stone-600">({v.meaning})</span>
 				<span className="ml-auto text-xs text-stone-400">same endings</span>
 			</div>
@@ -176,10 +176,10 @@ const FormComparison: React.FC<{
 			const form = col.forms[row.key];
 			if (!form) return null;
 			return (
-				<MonoText key={col.key} variant="greek" size="sm">
+				<GreekText tone="accent" size="sm" key={col.key}>
 					<span className="text-stone-600">{form.stem}</span>
 					<span className={`font-bold ${SCHEME[col.scheme].text}`}>{form.ending}</span>
-				</MonoText>
+				</GreekText>
 			);
 		}),
 	);
@@ -195,9 +195,9 @@ const FormComparison: React.FC<{
 
 const columnHeading = (infinitive: string, tag: string, scheme: GrammarScheme) => (
 	<span className="flex items-baseline gap-1.5">
-		<MonoText variant="greek" size="sm" className="text-stone-700">
+		<GreekText tone="accent" size="sm" className="text-stone-700">
 			{infinitive}
-		</MonoText>
+		</GreekText>
 		<span className={`font-mono text-sm font-bold ${SCHEME[scheme].text}`}>{tag}</span>
 	</span>
 );
@@ -307,9 +307,9 @@ const PatternSection: React.FC<{
 				patternKey === "contracted" ? (
 					<p className="text-xs text-stone-500">
 						The{" "}
-						<MonoText size="sm" className="font-medium">
+						<GreekText tone="default" size="sm" className="font-medium">
 							-ώ
-						</MonoText>{" "}
+						</GreekText>{" "}
 						variant (μπορώ, οδηγώ) has different endings — shown in the high-frequency section
 						below.
 					</p>
@@ -376,9 +376,9 @@ const PatternIdentifier: React.FC = () => (
 					key={row.ending}
 					className={cn(style.bg, style.border, "flex items-center gap-3 border-2 sm:gap-4")}
 				>
-					<MonoText className={`w-20 shrink-0 text-xl font-bold ${style.text}`}>
+					<GreekText tone="default" size="base" className={`w-20 shrink-0 text-xl font-bold ${style.text}`}>
 						{row.ending}
-					</MonoText>
+					</GreekText>
 					<span className="font-semibold text-stone-800">{row.name}</span>
 					<div className="ml-auto hidden gap-2 sm:flex">
 						{row.examples.map((ex) => (
@@ -437,7 +437,7 @@ const AoristExamples: React.FC<{
 	<div className="mt-3 space-y-2 border-t border-stone-100 pt-3">
 		{examples.map((ex) => (
 			<div key={ex.greek} className="flex flex-col gap-0.5">
-				<MonoText className="text-sm text-stone-800">{ex.greek}</MonoText>
+				<GreekText tone="default" size="base" className="text-sm text-stone-800">{ex.greek}</GreekText>
 				<p className="text-xs text-stone-500">{ex.english}</p>
 			</div>
 		))}
@@ -490,20 +490,20 @@ const AoristFinder: React.FC = () => (
 					key={row.ending}
 					className="grid grid-cols-[1fr_auto] items-baseline gap-x-6 gap-y-1 border-b border-stone-100 px-4 py-3 last:border-b-0 sm:grid-cols-[13rem_5rem_1fr]"
 				>
-					<MonoText size="sm" className="text-stone-600">
+					<GreekText tone="default" size="sm" className="text-stone-600">
 						{row.ending}
-					</MonoText>
-					<MonoText size="sm" className="order-last font-bold text-navy-text sm:order-none">
+					</GreekText>
+					<GreekText tone="default" size="sm" className="order-last font-bold text-navy-text sm:order-none">
 						{row.becomes}
-					</MonoText>
+					</GreekText>
 					<span className="text-right sm:text-left">
-						<MonoText size="sm" className="text-stone-500">
+						<GreekText tone="default" size="sm" className="text-stone-500">
 							{row.example[0]}
-						</MonoText>
+						</GreekText>
 						<span className="mx-1.5 text-xs text-stone-300">→</span>
-						<MonoText size="sm" className="font-semibold text-stone-800">
+						<GreekText tone="default" size="sm" className="font-semibold text-stone-800">
 							{row.example[1]}
-						</MonoText>
+						</GreekText>
 					</span>
 				</div>
 			))}
@@ -527,13 +527,13 @@ const AoristExceptions: React.FC = () => (
 					<div className="space-y-1">
 						{group.pairs.map(([present, past]) => (
 							<div key={present}>
-								<MonoText size="sm" className="text-stone-500">
+								<GreekText tone="default" size="sm" className="text-stone-500">
 									{present}
-								</MonoText>
+								</GreekText>
 								<span className="mx-1.5 text-xs text-stone-300">→</span>
-								<MonoText size="sm" className="font-semibold text-stone-800">
+								<GreekText tone="default" size="sm" className="font-semibold text-stone-800">
 									{past}
-								</MonoText>
+								</GreekText>
 							</div>
 						))}
 					</div>
@@ -578,11 +578,11 @@ export const PastTenseSection: React.FC = () => {
 								Short verb → needs ε-
 							</p>
 							<div className="flex items-center gap-2">
-								<MonoText className="text-base text-stone-500">γράφω</MonoText>
+								<GreekText tone="default" size="base" className="text-base text-stone-500">γράφω</GreekText>
 								<span className="text-stone-300">→</span>
 								<div className="flex items-baseline gap-0">
 									<span className={`font-mono text-lg font-bold ${activeStyle.text}`}>ε</span>
-									<MonoText className="text-lg font-bold text-stone-800">γραψ</MonoText>
+									<GreekText tone="default" size="base" className="text-lg font-bold text-stone-800">γραψ</GreekText>
 									<span className={`font-mono text-lg font-bold ${activeStyle.text}`}>α</span>
 								</div>
 							</div>
@@ -593,10 +593,10 @@ export const PastTenseSection: React.FC = () => {
 								Long verb → stress shifts
 							</p>
 							<div className="flex items-center gap-2">
-								<MonoText className="text-base text-stone-500">δουλεύω</MonoText>
+								<GreekText tone="default" size="base" className="text-base text-stone-500">δουλεύω</GreekText>
 								<span className="text-stone-300">→</span>
 								<div className="flex items-baseline gap-0">
-									<MonoText className="text-lg font-bold text-stone-800">δούλεψ</MonoText>
+									<GreekText tone="default" size="base" className="text-lg font-bold text-stone-800">δούλεψ</GreekText>
 									<span className={`font-mono text-lg font-bold ${activeStyle.text}`}>α</span>
 								</div>
 							</div>
@@ -632,11 +632,11 @@ export const PastTenseSection: React.FC = () => {
 									</span>
 								</div>
 								<div className="text-right">
-									<MonoText className="text-sm text-stone-500">{rule.examplePresent}</MonoText>
+									<GreekText tone="default" size="base" className="text-sm text-stone-500">{rule.examplePresent}</GreekText>
 									<span className="mx-1 text-xs text-stone-300">→</span>
-									<MonoText className={`text-sm font-bold ${activeStyle.text}`}>
+									<GreekText tone="default" size="base" className={`text-sm font-bold ${activeStyle.text}`}>
 										{rule.examplePast}
-									</MonoText>
+									</GreekText>
 								</div>
 							</div>
 						))}
@@ -713,7 +713,7 @@ export const PastTenseSection: React.FC = () => {
 					/>
 					<p className="mt-3 px-1 text-xs text-stone-500">
 						Find the aorist stem (listed below), then add the same{" "}
-						<MonoText size="sm">-α -ες -ε -αμε -ατε -αν</MonoText>.
+						<GreekText tone="default" size="sm">-α -ες -ε -αμε -ατε -αν</GreekText>.
 					</p>
 				</TeachingCard>
 				</div>
@@ -748,9 +748,9 @@ export const PastTenseSection: React.FC = () => {
 										key={s.present}
 										className="grid grid-rule-suffix items-baseline gap-2 px-3 py-2"
 									>
-										<MonoText className="font-semibold text-stone-600">{s.present}</MonoText>
+										<GreekText tone="default" size="base" className="font-semibold text-stone-600">{s.present}</GreekText>
 										<span className="text-honey-300">→</span>
-										<MonoText className="font-bold text-honey-text">{s.aoristSg1}</MonoText>
+										<GreekText tone="default" size="base" className="font-bold text-honey-text">{s.aoristSg1}</GreekText>
 										<span className="text-right text-xs text-stone-400">{s.english}</span>
 									</div>
 								))}
@@ -779,7 +779,7 @@ export const PastContinuousSection: React.FC = () => {
 				<div className="rounded-lg border border-stone-200 bg-white p-4">
 					<p className="mb-3 text-sm text-stone-600">
 						Use the <strong>present stem</strong> with the same -α -ες -ε -αμε -ατε -αν endings.
-						For -άω verbs, insert <MonoText size="sm">-ούσ-</MonoText> instead.
+						For -άω verbs, insert <GreekText tone="default" size="sm">-ούσ-</GreekText> instead.
 					</p>
 					<div className="grid gap-4 sm:grid-cols-2">
 						<div>
@@ -814,13 +814,13 @@ export const PastContinuousSection: React.FC = () => {
 				<div className="rounded-lg border-2 border-navy-200 bg-navy-50 p-4">
 					<p className="mb-0.5 font-mono text-base font-bold text-navy-text">Αόριστος</p>
 					<p className="mb-2 text-xs text-stone-500">Simple past — completed action</p>
-					<MonoText className="text-sm text-stone-800">Έφαγα χθες.</MonoText>
+					<GreekText tone="default" size="base" className="text-sm text-stone-800">Έφαγα χθες.</GreekText>
 					<p className="text-xs text-stone-500">I ate yesterday.</p>
 				</div>
 				<div className="rounded-lg border-2 border-slate-200 bg-slate-50 p-4">
 					<p className="mb-0.5 font-mono text-base font-bold text-slate-text">Παρατατικός</p>
 					<p className="mb-2 text-xs text-stone-500">Continuous past — ongoing or repeated</p>
-					<MonoText className="text-sm text-stone-800">Έτρωγα κάθε μέρα.</MonoText>
+					<GreekText tone="default" size="base" className="text-sm text-stone-800">Έτρωγα κάθε μέρα.</GreekText>
 					<p className="text-xs text-stone-500">I used to eat every day.</p>
 				</div>
 			</div>
@@ -843,14 +843,9 @@ const LadderTable: React.FC<{ rows: typeof FUTURE_LADDER }> = ({ rows }) => (
 			rows={rows.map((verb) => ({ key: verb.present, label: verb.english }))}
 			cells={rows.map((verb) =>
 				[verb.present, verb.aorist, verb.future].map((form, i) => (
-					<MonoText
-						key={form}
-						variant="greek"
-						size="sm"
-						className={i === 2 ? "font-semibold text-stone-800" : "text-stone-600"}
-					>
+					<GreekText tone="accent" size="sm" key={form} className={i === 2 ? "font-semibold text-stone-800" : "text-stone-600"}>
 						{form}
-					</MonoText>
+					</GreekText>
 				)),
 			)}
 		/>
@@ -928,20 +923,20 @@ const FutureTenseSection: React.FC = () => (
 			<div className="grid gap-3 sm:grid-cols-2">
 				<div className="rounded-lg border border-honey-200 bg-honey-50 p-4">
 					<p className="mb-2 text-xs font-semibold text-honey-text">Regular</p>
-					<MonoText className="text-sm text-stone-800">γράφω → έγραψα → θα γράψω</MonoText>
+					<GreekText tone="default" size="base" className="text-sm text-stone-800">γράφω → έγραψα → θα γράψω</GreekText>
 					<p className="mt-1 text-xs text-stone-500">I write → I wrote → I will write</p>
 				</div>
 				<div className="rounded-lg border border-honey-200 bg-honey-50 p-4">
 					<p className="mb-2 text-xs font-semibold text-honey-text">Suppletive</p>
-					<MonoText className="text-sm text-stone-800">τρώω → έφαγα → θα φάω</MonoText>
+					<GreekText tone="default" size="base" className="text-sm text-stone-800">τρώω → έφαγα → θα φάω</GreekText>
 					<p className="mt-1 text-xs text-stone-500">I eat → I ate → I will eat</p>
 				</div>
 			</div>
 			<p className="mt-4 text-sm text-stone-600">
 				Negation:{" "}
-				<MonoText variant="greek" size="sm">
+				<GreekText tone="accent" size="sm">
 					δεν θα φάω
-				</MonoText>{" "}
+				</GreekText>{" "}
 				(I won't eat). δεν always sits before θα.
 			</p>
 		</TeachingCard>
@@ -960,22 +955,22 @@ const FutureTenseSection: React.FC = () => (
 		>
 			<div className="space-y-1.5 text-sm">
 				<p>
-					<MonoText variant="greek" size="sm">
+					<GreekText tone="accent" size="sm">
 						Θα υπάρχουν πολλά πάρκα στην πόλη μου
-					</MonoText>{" "}
+					</GreekText>{" "}
 					<span className="text-stone-500">— there will be many parks in my city</span>
 				</p>
 				<p>
-					<MonoText variant="greek" size="sm">
+					<GreekText tone="accent" size="sm">
 						Δεν θα υπάρχει κανένα αυτοκίνητο
-					</MonoText>{" "}
+					</GreekText>{" "}
 					<span className="text-stone-500">— there won't be a single car</span>
 				</p>
 				<p className="pt-2 text-stone-600">
 					ίσως takes the same short form but never θα:{" "}
-					<MonoText variant="greek" size="sm">
+					<GreekText tone="accent" size="sm">
 						Ίσως πάω
-					</MonoText>
+					</GreekText>
 					, not ίσως θα πάω.
 				</p>
 			</div>
@@ -998,38 +993,38 @@ const NaConstructionsSection: React.FC = () => (
 		>
 			<div className="space-y-2">
 				<div className="rounded-lg border border-honey-200 bg-honey-50 p-3">
-					<MonoText className="text-sm text-stone-800">Θέλω να φάω.</MonoText>
+					<GreekText tone="default" size="base" className="text-sm text-stone-800">Θέλω να φάω.</GreekText>
 					<p className="text-xs text-stone-500">I want to eat.</p>
 				</div>
 				<div className="rounded-lg border border-honey-200 bg-honey-50 p-3">
-					<MonoText className="text-sm text-stone-800">Πρέπει να πάω.</MonoText>
+					<GreekText tone="default" size="base" className="text-sm text-stone-800">Πρέπει να πάω.</GreekText>
 					<p className="text-xs text-stone-500">I have to go.</p>
 				</div>
 				<div className="rounded-lg border border-honey-200 bg-honey-50 p-3">
-					<MonoText className="text-sm text-stone-800">Μπορώ να έρθω.</MonoText>
+					<GreekText tone="default" size="base" className="text-sm text-stone-800">Μπορώ να έρθω.</GreekText>
 					<p className="text-xs text-stone-500">I can come.</p>
 				</div>
 				<div className="rounded-lg border border-honey-200 bg-honey-50 p-3">
-					<MonoText className="text-sm text-stone-800">Ξέρω να μαγειρεύω.</MonoText>
+					<GreekText tone="default" size="base" className="text-sm text-stone-800">Ξέρω να μαγειρεύω.</GreekText>
 					<p className="text-xs text-stone-500">I know how to cook.</p>
 				</div>
 			</div>
 			<p className="mt-4 text-sm text-stone-600">
 				Both verbs conjugate to match the subject:{" "}
-				<MonoText variant="greek" size="sm">
+				<GreekText tone="accent" size="sm">
 					Θέλει να φάει
-				</MonoText>{" "}
+				</GreekText>{" "}
 				(she wants to eat).
 			</p>
 			<p className="mt-2 text-sm text-stone-600">
 				Negation: put{" "}
-				<MonoText variant="greek" size="sm">
+				<GreekText tone="accent" size="sm">
 					δεν
-				</MonoText>{" "}
+				</GreekText>{" "}
 				before the modal —{" "}
-				<MonoText variant="greek" size="sm">
+				<GreekText tone="accent" size="sm">
 					δεν θέλω να φάω
-				</MonoText>
+				</GreekText>
 				.
 			</p>
 		</TeachingCard>
@@ -1079,13 +1074,13 @@ export const PresentTenseSection: React.FC = () => (
 		{/* Negation — low salience, plain text */}
 		<p className="px-1 text-sm text-stone-600">
 			<strong className="text-stone-800">Negation:</strong> put{" "}
-			<MonoText variant="greek" size="sm">
+			<GreekText tone="accent" size="sm">
 				δεν
-			</MonoText>{" "}
+			</GreekText>{" "}
 			before any verb —{" "}
-			<MonoText variant="greek" size="sm">
+			<GreekText tone="accent" size="sm">
 				Δεν μιλάω
-			</MonoText>{" "}
+			</GreekText>{" "}
 			(I don't speak).
 		</p>
 

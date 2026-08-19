@@ -1,8 +1,8 @@
 import { type ColumnDef, GrammarTable, type RowDef } from "@/components/GrammarTable";
-import { MonoText } from "@/components/MonoText";
 import { CASE_SCHEME } from "@/constants/grammar-palette";
 import type { PronounForm, PronounParadigm } from "@/constants/pronouns";
 import type { CaseName } from "@/constants/recognition";
+import { GreekText } from "@/components/GreekText";
 
 const PRONOUN_COLUMNS: ColumnDef[] = [
 	{ key: "singular", label: "Singular" },
@@ -20,12 +20,12 @@ const PronounCell = ({
 	variant,
 }: {
 	form: PronounForm;
-	variant: "nominative" | "accusative" | "genitive" | "greek";
+	variant: "nominative" | "accusative" | "genitive" | "accent";
 }) => (
 	<div className="flex flex-col gap-0.5">
-		<MonoText variant={variant} size="sm">
+		<GreekText tone={variant} size="sm">
 			{form.greek}
-		</MonoText>
+		</GreekText>
 		<div className="flex items-baseline gap-1 text-xs text-stone-500">
 			{form.alt && <span>({form.alt})</span>}
 			<span>{form.english}</span>
@@ -41,7 +41,7 @@ interface PronounParadigmTableProps {
 
 export const PronounParadigmTable = ({ data, caseName, note }: PronounParadigmTableProps) => {
 	const scheme = caseName ? CASE_SCHEME[caseName] : undefined;
-	const variant = caseName ? CASE_TO_VARIANT[caseName] : "greek";
+	const variant = caseName ? CASE_TO_VARIANT[caseName] : "accent";
 
 	const rows: RowDef[] = data.map((row) => ({
 		key: row.person,

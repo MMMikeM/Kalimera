@@ -1,5 +1,5 @@
 import { NavigatorCard, NavigatorCell } from "@/components/cards";
-import { MonoText } from "@/components/MonoText";
+import { GreekText } from "@/components/GreekText";
 
 interface PronounOption {
 	label: string;
@@ -82,49 +82,49 @@ export const PronounDecisionGuide = () => (
 								<tr>
 									<td className="px-2 py-1.5 text-xs text-stone-600">me / my</td>
 									<td className="px-2 py-1.5">
-										<MonoText size="sm">με</MonoText>
+										<GreekText tone="default" size="sm">με</GreekText>
 									</td>
 									<td className="px-2 py-1.5">
-										<MonoText size="sm">μου</MonoText>
+										<GreekText tone="default" size="sm">μου</GreekText>
 									</td>
 									<td className="px-2 py-1.5">
-										<MonoText size="sm">εμένα</MonoText>
+										<GreekText tone="default" size="sm">εμένα</GreekText>
 									</td>
 								</tr>
 								<tr>
 									<td className="px-2 py-1.5 text-xs text-stone-600">you / your</td>
 									<td className="px-2 py-1.5">
-										<MonoText size="sm">σε</MonoText>
+										<GreekText tone="default" size="sm">σε</GreekText>
 									</td>
 									<td className="px-2 py-1.5">
-										<MonoText size="sm">σου</MonoText>
+										<GreekText tone="default" size="sm">σου</GreekText>
 									</td>
 									<td className="px-2 py-1.5">
-										<MonoText size="sm">εσένα</MonoText>
+										<GreekText tone="default" size="sm">εσένα</GreekText>
 									</td>
 								</tr>
 								<tr>
 									<td className="px-2 py-1.5 text-xs text-stone-600">him / his</td>
 									<td className="px-2 py-1.5">
-										<MonoText size="sm">τον</MonoText>
+										<GreekText tone="default" size="sm">τον</GreekText>
 									</td>
 									<td className="px-2 py-1.5">
-										<MonoText size="sm">του</MonoText>
+										<GreekText tone="default" size="sm">του</GreekText>
 									</td>
 									<td className="px-2 py-1.5">
-										<MonoText size="sm">αυτόν</MonoText>
+										<GreekText tone="default" size="sm">αυτόν</GreekText>
 									</td>
 								</tr>
 								<tr>
 									<td className="px-2 py-1.5 text-xs text-stone-600">her</td>
 									<td className="px-2 py-1.5">
-										<MonoText size="sm">την</MonoText>
+										<GreekText tone="default" size="sm">την</GreekText>
 									</td>
 									<td className="px-2 py-1.5">
-										<MonoText size="sm">της</MonoText>
+										<GreekText tone="default" size="sm">της</GreekText>
 									</td>
 									<td className="px-2 py-1.5">
-										<MonoText size="sm">αυτήν</MonoText>
+										<GreekText tone="default" size="sm">αυτήν</GreekText>
 									</td>
 								</tr>
 							</tbody>
@@ -132,9 +132,9 @@ export const PronounDecisionGuide = () => (
 					</div>
 				</div>
 				<strong>Quick test:</strong> Can you insert "to" before it? → Use{" "}
-				<MonoText size="sm">μου/σου</MonoText>. Is there a preposition before it? → Use{" "}
-				<MonoText size="sm">εμένα/εσένα</MonoText>. Otherwise → Use{" "}
-				<MonoText size="sm">με/σε</MonoText>.
+				<GreekText tone="default" size="sm">μου/σου</GreekText>. Is there a preposition before it? → Use{" "}
+				<GreekText tone="default" size="sm">εμένα/εσένα</GreekText>. Otherwise → Use{" "}
+				<GreekText tone="default" size="sm">με/σε</GreekText>.
 			</>
 		}
 	>
@@ -149,9 +149,9 @@ export const PronounDecisionGuide = () => (
 						<div className="space-y-0.5 text-sm text-stone-600">
 							{option.examples.map((ex) => (
 								<div key={ex.greek}>
-									<MonoText size="sm" variant="highlighted">
+									<GreekText tone="inherit" size="sm" className="rounded border border-stone-200 bg-white px-2 py-1 font-semibold text-stone-800">
 										{ex.greek}
-									</MonoText>
+									</GreekText>
 									<span className="text-stone-600"> = {ex.english}</span>
 								</div>
 							))}

@@ -1,17 +1,20 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { type Section, SectionCard } from "@/components/SectionCard";
+import { GreekText } from "@/components/GreekText";
 
 /** A specimen of the section's own content, in place of a generic icon. */
 const Specimen = ({ forms }: { forms: string[] }) => (
-	<div
-		lang="el"
-		className="greek-text flex w-24 flex-col gap-0.5 text-right font-mono text-xs leading-tight text-stone-500"
+	<GreekText
+		as="div"
+		size="xs"
+		tone="inherit"
+		className="flex w-24 flex-col gap-0.5 text-right font-mono leading-tight text-stone-500"
 	>
 		{forms.map((form) => (
 			<span key={form}>{form}</span>
 		))}
-	</div>
+	</GreekText>
 );
 
 const CARD_STYLE = "bg-stone-100 text-stone-700 border-stone-200";

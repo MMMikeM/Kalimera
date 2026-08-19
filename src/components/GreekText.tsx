@@ -38,6 +38,18 @@ const greekTextVariants = tv({
 			accent: "text-terracotta-text",
 			correct: "text-correct",
 			incorrect: "text-incorrect",
+			// Gender is a global grammar axis, so it gets reserved role tokens
+			// rather than a colour chosen per call site. Named here because
+			// Tailwind cannot see a class built as `text-gender-${g}`.
+			masculine: "font-semibold text-gender-masculine",
+			feminine: "font-semibold text-gender-feminine",
+			neuter: "font-semibold text-gender-neuter",
+			// Case is the other global axis. Ocean = doer, terracotta = target,
+			// olive = owner, honey = address.
+			nominative: "font-semibold text-ocean-text",
+			accusative: "font-semibold text-terracotta-text",
+			genitive: "font-semibold text-olive-text",
+			vocative: "font-semibold text-honey-text",
 			// For call sites that carry their own colour in `className`
 			inherit: "",
 		},
@@ -60,7 +72,20 @@ type GreekElement = "span" | "p" | "td" | "th" | "div";
 interface GreekTextProps extends React.HTMLAttributes<HTMLElement> {
 	as?: GreekElement;
 	size?: "xs" | "sm" | "base" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl" | "8xl";
-	tone?: "default" | "muted" | "accent" | "correct" | "incorrect" | "inherit";
+	tone?:
+		| "default"
+		| "muted"
+		| "accent"
+		| "correct"
+		| "incorrect"
+		| "masculine"
+		| "feminine"
+		| "neuter"
+		| "nominative"
+		| "accusative"
+		| "genitive"
+		| "vocative"
+		| "inherit";
 	weight?: "normal" | "medium" | "semibold" | "bold";
 	children: ReactNode;
 }

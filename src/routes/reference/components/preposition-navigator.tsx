@@ -1,8 +1,8 @@
 import { ArrowLeft, Gift, MapPin, Users } from "lucide-react";
 
 import { NavigatorCard, NavigatorCell } from "@/components/cards";
-import { MonoText } from "@/components/MonoText";
 import { PREPOSITION_NAVIGATOR_OPTIONS } from "@/constants/prepositions";
+import { GreekText } from "@/components/GreekText";
 
 const ICONS = {
 	MapPin,
@@ -38,16 +38,16 @@ export const PrepositionNavigator = () => (
 						<div className="min-w-0 flex-1">
 							<div className="mb-2 text-sm text-stone-500">{option.question}</div>
 							<div className="mb-3">
-								<MonoText size="xl" className="font-bold text-honey-text">
+								<GreekText tone="default" size="xl" className="font-bold text-honey-text">
 									{option.answer.replace(" → ", " / ")}
-								</MonoText>
+								</GreekText>
 							</div>
 							<div className="space-y-1">
 								{option.examples.map((ex) => (
 									<div key={ex.greek} className="text-sm">
-										<MonoText size="sm" variant="greek" className="text-stone-700">
+										<GreekText tone="accent" size="sm" className="text-stone-700">
 											{ex.greek}
-										</MonoText>
+										</GreekText>
 										<span className="ml-2 text-xs text-stone-400">{ex.english}</span>
 									</div>
 								))}

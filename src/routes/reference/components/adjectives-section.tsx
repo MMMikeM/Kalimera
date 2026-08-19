@@ -5,7 +5,6 @@ import { Callout, TeachingCard } from "@/components/cards";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
 import { CASE_ROW_DEFS, type ColumnDef, GrammarTable } from "@/components/GrammarTable";
 import { MistakeComparison } from "@/components/MistakeComparison";
-import { MonoText } from "@/components/MonoText";
 import { SectionHeading } from "@/components/SectionHeading";
 import {
 	ADJECTIVE_AGREEMENT_EXAMPLES,
@@ -19,6 +18,7 @@ import {
 import { GENDER_SCHEME, SCHEME } from "@/constants/grammar-palette";
 
 import { CaseTableGrid } from "./case-table";
+import { GreekText } from "@/components/GreekText";
 
 // Adjective endings quick lookup table
 const AdjectiveEndingsTable: React.FC = () => (
@@ -44,18 +44,9 @@ const CaseExampleGroup: React.FC<{
 			{examples.map((ex) => (
 				<div key={ex.greek} className="rounded border border-stone-200 bg-stone-50 p-2">
 					<div className="flex items-baseline gap-2">
-						<MonoText
-							variant={
-								ex.gender === "masculine"
-									? "masculine"
-									: ex.gender === "feminine"
-										? "feminine"
-										: "neuter"
-							}
-							size="lg"
-						>
+						<GreekText tone={ex.gender} size="lg">
 							{ex.greek}
-						</MonoText>
+						</GreekText>
 					</div>
 					<div className="mt-1 text-sm text-stone-600">{ex.english}</div>
 				</div>
@@ -93,9 +84,8 @@ const AgreementExamplesCard: React.FC = () => {
 };
 
 // Full paradigm display for a single adjective pattern
-const AdjectiveParadigmCard: React.FC<{ paradigm: AdjectiveParadigm; emphasis?: boolean }> = ({
+const AdjectiveParadigmCard: React.FC<{ paradigm: AdjectiveParadigm }> = ({
 	paradigm,
-	emphasis = false,
 }) => {
 	const genderStyles = {
 		masculine: { border: "border-gender-masculine-300", bg: "bg-gender-masculine-100/40" },
@@ -123,12 +113,12 @@ const AdjectiveParadigmCard: React.FC<{ paradigm: AdjectiveParadigm; emphasis?: 
 			const sg = forms.singular[ri];
 			const pl = forms.plural[ri];
 			return [
-				<MonoText key={`${row.key}-sg`} variant={variant} size="sm">
+				<GreekText key={`${row.key}-sg`} tone={variant} size="sm">
 					{sg?.form ?? "—"}
-				</MonoText>,
-				<MonoText key={`${row.key}-pl`} variant={variant} size="sm">
+				</GreekText>,
+				<GreekText key={`${row.key}-pl`} tone={variant} size="sm">
 					{pl?.form ?? "—"}
-				</MonoText>,
+				</GreekText>,
 			];
 		});
 
@@ -147,9 +137,9 @@ const AdjectiveParadigmCard: React.FC<{ paradigm: AdjectiveParadigm; emphasis?: 
 			scheme="neutral"
 			eyebrow="Pattern"
 			title={
-				<MonoText variant="greek" size={emphasis ? "xl" : "lg"} className="font-bold">
+				<GreekText tone="accent" size="xl" className="font-bold">
 					{paradigm.pattern}
-				</MonoText>
+				</GreekText>
 			}
 			badge={paradigm.frequency}
 			description={paradigm.title}
@@ -157,11 +147,11 @@ const AdjectiveParadigmCard: React.FC<{ paradigm: AdjectiveParadigm; emphasis?: 
 			<div className="space-y-4">
 				<div className="flex items-baseline gap-2 text-sm">
 					<span className="text-stone-600">Example:</span>
-					<MonoText variant="masculine">{paradigm.example.masculine}</MonoText>
+					<GreekText tone="inherit" size="base" className="font-semibold text-gender-masculine">{paradigm.example.masculine}</GreekText>
 					<span className="text-stone-400">/</span>
-					<MonoText variant="feminine">{paradigm.example.feminine}</MonoText>
+					<GreekText tone="inherit" size="base" className="font-semibold text-gender-feminine">{paradigm.example.feminine}</GreekText>
 					<span className="text-stone-400">/</span>
-					<MonoText variant="neuter">{paradigm.example.neuter}</MonoText>
+					<GreekText tone="inherit" size="base" className="font-semibold text-gender-neuter">{paradigm.example.neuter}</GreekText>
 					<span className="text-stone-500">= {paradigm.example.english}</span>
 				</div>
 
@@ -188,7 +178,7 @@ const CommonAdjectivesCard: React.FC = () => (
 		<div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm sm:grid-cols-3 md:grid-cols-4">
 			{COMMON_ADJECTIVES.map((adj) => (
 				<div key={adj.greek} className="flex items-baseline gap-2">
-					<MonoText variant="greek">{adj.greek}</MonoText>
+					<GreekText tone="accent" size="lg">{adj.greek}</GreekText>
 					<span className="text-stone-500">{adj.english}</span>
 				</div>
 			))}
@@ -215,11 +205,11 @@ export const AdjectivesSection: React.FC = () => {
 			>
 				<div className="space-y-1">
 					<div>
-						<MonoText variant="masculine">ο καλός φίλος</MonoText>
+						<GreekText tone="inherit" size="base" className="font-semibold text-gender-masculine">ο καλός φίλος</GreekText>
 						<span className="ml-2 text-sm text-stone-600">(all masculine nominative)</span>
 					</div>
 					<div>
-						<MonoText variant="masculine">τον καλό φίλο</MonoText>
+						<GreekText tone="inherit" size="base" className="font-semibold text-gender-masculine">τον καλό φίλο</GreekText>
 						<span className="ml-2 text-sm text-stone-600">
 							(all masculine accusative, drop the -ς)
 						</span>
@@ -229,9 +219,9 @@ export const AdjectivesSection: React.FC = () => {
 
 			<Callout scheme="neutral" icon={<Lightbulb size={16} />} title="Word order">
 				Greek adjectives usually come <strong>before</strong> the noun:{" "}
-				<MonoText variant="greek" size="sm">
+				<GreekText tone="accent" size="sm">
 					ο καλός φίλος
-				</MonoText>{" "}
+				</GreekText>{" "}
 				(the good friend), not *ο φίλος καλός.
 			</Callout>
 
@@ -246,9 +236,9 @@ export const AdjectivesSection: React.FC = () => {
 				</p>
 				<div className="mt-2 space-y-1 text-sm">
 					<div>
-						<MonoText variant="neuter" size="sm">
+						<GreekText tone="inherit" size="sm" className="font-semibold text-gender-neuter">
 							το μεγάλο αυτοκίνητο του γιατρού
-						</MonoText>
+						</GreekText>
 						<span className="ml-2 text-stone-500">the doctor's big car</span>
 					</div>
 					<p className="text-xs text-stone-500">
@@ -269,7 +259,7 @@ export const AdjectivesSection: React.FC = () => {
 					<div className="text-sm font-medium text-stone-700">
 						The most common pattern (covers ~80% of adjectives):
 					</div>
-					<AdjectiveParadigmCard paradigm={mainPattern} emphasis />
+					<AdjectiveParadigmCard paradigm={mainPattern} />
 				</div>
 			)}
 
