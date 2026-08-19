@@ -54,14 +54,14 @@ Greek learning app with SRS-based vocabulary practice and timed production drill
 
 <route path="/login">
 <purpose>User authentication - password or passkey</purpose>
-<file>src/routes/login.tsx</file>
+<file>src/routes/(auth)/login.tsx</file>
 <displays>
 - Username input field
 - Password input field
 - "Sign in" button (password auth)
 - "Sign in with passkey" button (WebAuthn)
 - Link to /register
-- Info box for existing users to set up password
+- Full-screen password-setup view for existing users signing in without a password
 </displays>
 <user-actions>
 - Enter username + password → submit → logged in
@@ -72,7 +72,7 @@ Greek learning app with SRS-based vocabulary practice and timed production drill
 
 <route path="/register">
 <purpose>New user account creation</purpose>
-<file>src/routes/register.tsx</file>
+<file>src/routes/(auth)/register.tsx</file>
 <displays>
 - Username input
 - Display name input
