@@ -10,6 +10,7 @@
 		"format": "oxfmt",
 		"format:check": "oxfmt --check",
 		"lint": "oxlint",
+		"lint:greek": "tsx scripts/lint-greek.ts",
 		"lint:fix": "oxlint --fix --fix-suggestions --fix-dangerously",
 		"lint:ls": "ls-lint",
 		"lint:unused": "knip",
