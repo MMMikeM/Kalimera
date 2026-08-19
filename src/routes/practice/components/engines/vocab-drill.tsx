@@ -1,7 +1,6 @@
 import { useMemo } from "react";
 
 import { CATEGORY_CONFIG, type DrillQuestion } from "@/lib/drill/generate-questions";
-import { greekToPhonetic } from "@/lib/greek-transliteration";
 
 import type { DrillForm } from "./deck";
 import { Drill, type ReverseStrategy } from "./drill";
@@ -23,7 +22,6 @@ interface VocabDrillPageProps {
 const toForm = (q: DrillQuestion): DrillForm & { dimension?: string } => ({
 	id: q.id,
 	greek: q.correctGreek,
-	greeklish: greekToPhonetic(q.correctGreek),
 	label: q.prompt,
 	vocabId: q.vocabId,
 	bucket: q.bucket,

@@ -8,7 +8,6 @@ const IMPERATIVES: SimpleListItem[] = [
 	{
 		id: "ela",
 		greek: "Έλα!",
-		greeklish: "ela",
 		english: "Come!",
 		label: "imperative of έρχομαι",
 		category: "tier-a",
@@ -16,7 +15,6 @@ const IMPERATIVES: SimpleListItem[] = [
 	{
 		id: "pes",
 		greek: "Πες!",
-		greeklish: "pes",
 		english: "Say! / Tell me!",
 		label: "imperative of λέω",
 		category: "tier-a",
@@ -24,7 +22,6 @@ const IMPERATIVES: SimpleListItem[] = [
 	{
 		id: "dose",
 		greek: "Δώσε!",
-		greeklish: "dose",
 		english: "Give!",
 		label: "imperative of δίνω",
 		category: "tier-a",
@@ -32,7 +29,6 @@ const IMPERATIVES: SimpleListItem[] = [
 	{
 		id: "fere",
 		greek: "Φέρε!",
-		greeklish: "fere",
 		english: "Bring!",
 		label: "imperative of φέρνω",
 		category: "tier-a",
@@ -40,7 +36,6 @@ const IMPERATIVES: SimpleListItem[] = [
 	{
 		id: "kane",
 		greek: "Κάνε!",
-		greeklish: "kane",
 		english: "Do it! / Make it!",
 		label: "imperative of κάνω",
 		category: "tier-a",
@@ -49,7 +44,6 @@ const IMPERATIVES: SimpleListItem[] = [
 	{
 		id: "pare",
 		greek: "Πάρε!",
-		greeklish: "pare",
 		english: "Take! / Pick up!",
 		label: "imperative of παίρνω",
 		category: "full",
@@ -57,7 +51,6 @@ const IMPERATIVES: SimpleListItem[] = [
 	{
 		id: "fate",
 		greek: "Φάε!",
-		greeklish: "fae",
 		english: "Eat!",
 		label: "imperative of τρώω",
 		category: "full",
@@ -65,7 +58,6 @@ const IMPERATIVES: SimpleListItem[] = [
 	{
 		id: "pies",
 		greek: "Πιες!",
-		greeklish: "pies",
 		english: "Drink!",
 		label: "imperative of πίνω",
 		category: "full",
@@ -73,7 +65,6 @@ const IMPERATIVES: SimpleListItem[] = [
 	{
 		id: "koita",
 		greek: "Κοίτα!",
-		greeklish: "koita",
 		english: "Look! / Watch!",
 		label: "imperative of κοιτάζω",
 		category: "full",
@@ -81,7 +72,6 @@ const IMPERATIVES: SimpleListItem[] = [
 	{
 		id: "perimene",
 		greek: "Περίμενε!",
-		greeklish: "perimene",
 		english: "Wait!",
 		label: "imperative of περιμένω",
 		category: "full",
@@ -89,7 +79,6 @@ const IMPERATIVES: SimpleListItem[] = [
 	{
 		id: "grapso",
 		greek: "Γράψε!",
-		greeklish: "grapso",
 		english: "Write!",
 		label: "imperative of γράφω",
 		category: "full",
@@ -97,7 +86,6 @@ const IMPERATIVES: SimpleListItem[] = [
 	{
 		id: "diavase",
 		greek: "Διάβασε!",
-		greeklish: "diavase",
 		english: "Read!",
 		label: "imperative of διαβάζω",
 		category: "full",
@@ -105,7 +93,6 @@ const IMPERATIVES: SimpleListItem[] = [
 	{
 		id: "akouso",
 		greek: "Άκουσε!",
-		greeklish: "akouso",
 		english: "Listen!",
 		label: "imperative of ακούω",
 		category: "full",
@@ -113,7 +100,6 @@ const IMPERATIVES: SimpleListItem[] = [
 	{
 		id: "pigaine",
 		greek: "Πήγαινε!",
-		greeklish: "pigaine",
 		english: "Go!",
 		label: "imperative of πηγαίνω",
 		category: "full",
@@ -121,7 +107,6 @@ const IMPERATIVES: SimpleListItem[] = [
 	{
 		id: "vres",
 		greek: "Βρες!",
-		greeklish: "vres",
 		english: "Find!",
 		label: "imperative of βρίσκω",
 		category: "full",

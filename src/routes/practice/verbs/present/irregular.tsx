@@ -110,7 +110,6 @@ const FORMS: SimpleListItem[] = VERBS.flatMap((v) =>
 		return {
 			id: `${v.id}-${p}`,
 			greek: f.greek,
-			greeklish: f.greeklish,
 			english: `${pron.english} ${v.gloss}${p === "sg3" ? "s" : ""}`,
 			detail: pron.detail,
 			context: v.lemma,

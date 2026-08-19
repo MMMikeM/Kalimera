@@ -1,8 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import type React from "react";
 
+import { GreekGloss } from "@/components/GreekGloss";
 import { Button } from "@/components/ui/button";
-import { greekToPhonetic } from "@/lib/greek-transliteration";
 
 import { SPEEDS } from "../drill-speeds";
 import { SESSION_SIZES } from "./deck";
@@ -332,25 +332,13 @@ export const FeedbackDisplay = () => {
 			>
 				{lastAttempt.isCorrect ? "Correct" : lastAttempt.timedOut ? "Time's up" : "Incorrect"}
 			</p>
-			{fullForm && (
-				<div className="mt-1 flex items-baseline gap-2">
-					<span lang="el" className="greek-text text-2xl text-foreground">
-						{fullForm}
-					</span>
-					<span className="font-sans text-sm text-muted-foreground">
-						/{greekToPhonetic(fullForm)}/
-					</span>
-				</div>
-			)}
-			<div className="mt-1 flex items-baseline gap-2">
-				<span className="text-xs tracking-widest text-muted-foreground uppercase">
-					{fullForm ? "ending" : ""}
-				</span>
-				<span lang="el" className="greek-text text-2xl text-foreground">
-					{form.greek}
-				</span>
-				<span className="font-sans text-sm text-muted-foreground">/{form.greeklish}/</span>
-			</div>
+			{fullForm && <GreekGloss greek={fullForm} size="2xl" className="mt-1" />}
+			<GreekGloss
+				greek={form.greek}
+				size="2xl"
+				label={fullForm ? "ending" : undefined}
+				className="mt-1"
+			/>
 			{showContinue && (
 				<p className="mt-3 text-xs text-stone-500">Press Enter or tap to continue</p>
 			)}
@@ -467,34 +455,12 @@ export const SummaryScreen = ({ backTo }: { backTo?: string }) => {
 								<div key={a.form.id} className="rounded-lg border bg-white p-3">
 									{fullGreek ? (
 										<div className="space-y-0.5">
-											<div className="flex items-baseline gap-2">
-												<span lang="el" className="greek-text text-lg text-foreground">
-													{fullGreek}
-												</span>
-												<span className="font-mono text-xs text-muted-foreground">
-													/{greekToPhonetic(fullGreek)}/
-												</span>
-											</div>
-											<div className="flex items-baseline gap-2">
-												<span className="text-xs tracking-widest text-muted-foreground uppercase">
-													ending
-												</span>
-												<span lang="el" className="greek-text text-sm text-foreground">
-													{a.form.greek}
-												</span>
-												<span className="font-mono text-xs text-muted-foreground">
-													/{a.form.greeklish}/
-												</span>
-											</div>
+											<GreekGloss greek={fullGreek} size="lg" />
+											<GreekGloss greek={a.form.greek} size="sm" label="ending" />
 										</div>
 									) : (
 										<div className="flex items-baseline gap-2">
-											<span lang="el" className="greek-text text-lg text-foreground">
-												{a.form.greek}
-											</span>
-											<span className="font-mono text-xs text-muted-foreground">
-												/{a.form.greeklish}/
-											</span>
+											<GreekGloss greek={a.form.greek} size="lg" />
 											<span className="text-xs text-muted-foreground">{a.form.label}</span>
 										</div>
 									)}

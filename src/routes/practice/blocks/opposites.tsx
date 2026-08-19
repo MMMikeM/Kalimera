@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { greekToPhonetic } from "@/lib/greek-transliteration";
 import { getOppositePairsFn } from "@/server/fns/opposites";
 
 import type { DrillForm } from "../components/engines/deck";
@@ -22,7 +21,6 @@ const makeCard = (
 ): OppositeCard => ({
 	id: `opp-${sourceId}-${targetId}`,
 	greek: targetGreek,
-	greeklish: greekToPhonetic(targetGreek),
 	label: `${sourceGreek} — ${cleanGloss(sourceEnglish)}`,
 	vocabId: targetId,
 	sourceGreek,
@@ -62,11 +60,11 @@ function OppositesDrill() {
 						<p className="mb-3 text-xs font-medium tracking-widest text-muted-foreground uppercase">
 							opposite of
 						</p>
-						<p lang="el" className="greek-text font-serif text-5xl leading-none text-foreground">
+						<p lang="el" className="greek-text text-5xl leading-none text-foreground">
 							{card.sourceGreek}
 						</p>
-						<p className="mt-4 font-serif text-base text-muted-foreground italic">
-							"{card.sourceEnglish}"
+						<p className="mt-4 text-base text-muted-foreground italic">
+							“{card.sourceEnglish}”
 						</p>
 					</div>
 				);

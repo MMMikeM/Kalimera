@@ -8,7 +8,6 @@ const DAYS: SimpleListItem[] = [
 	{
 		id: "monday",
 		greek: "Δευτέρα",
-		greeklish: "deftera",
 		english: "Monday",
 		label: "Monday",
 		category: "days",
@@ -16,7 +15,6 @@ const DAYS: SimpleListItem[] = [
 	{
 		id: "tuesday",
 		greek: "Τρίτη",
-		greeklish: "triti",
 		english: "Tuesday",
 		label: "Tuesday",
 		category: "days",
@@ -24,7 +22,6 @@ const DAYS: SimpleListItem[] = [
 	{
 		id: "wednesday",
 		greek: "Τετάρτη",
-		greeklish: "tetarti",
 		english: "Wednesday",
 		label: "Wednesday",
 		category: "days",
@@ -32,7 +29,6 @@ const DAYS: SimpleListItem[] = [
 	{
 		id: "thursday",
 		greek: "Πέμπτη",
-		greeklish: "pempti",
 		english: "Thursday",
 		label: "Thursday",
 		category: "days",
@@ -40,7 +36,6 @@ const DAYS: SimpleListItem[] = [
 	{
 		id: "friday",
 		greek: "Παρασκευή",
-		greeklish: "paraskevi",
 		english: "Friday",
 		label: "Friday",
 		category: "days",
@@ -48,7 +43,6 @@ const DAYS: SimpleListItem[] = [
 	{
 		id: "saturday",
 		greek: "Σάββατο",
-		greeklish: "savvato",
 		english: "Saturday",
 		label: "Saturday",
 		category: "days",
@@ -56,7 +50,6 @@ const DAYS: SimpleListItem[] = [
 	{
 		id: "sunday",
 		greek: "Κυριακή",
-		greeklish: "kyriaki",
 		english: "Sunday",
 		label: "Sunday",
 		category: "days",
@@ -65,7 +58,6 @@ const DAYS: SimpleListItem[] = [
 	{
 		id: "yesterday",
 		greek: "χτες",
-		greeklish: "chtes",
 		english: "yesterday",
 		label: "yesterday",
 		category: "time",
@@ -73,7 +65,6 @@ const DAYS: SimpleListItem[] = [
 	{
 		id: "today",
 		greek: "σήμερα",
-		greeklish: "simera",
 		english: "today",
 		label: "today",
 		category: "time",
@@ -81,7 +72,6 @@ const DAYS: SimpleListItem[] = [
 	{
 		id: "tomorrow",
 		greek: "αύριο",
-		greeklish: "avrio",
 		english: "tomorrow",
 		label: "tomorrow",
 		category: "time",
@@ -89,7 +79,6 @@ const DAYS: SimpleListItem[] = [
 	{
 		id: "day-after",
 		greek: "μεθαύριο",
-		greeklish: "methavrio",
 		english: "the day after tomorrow",
 		label: "the day after tomorrow",
 		category: "time",
@@ -97,7 +86,6 @@ const DAYS: SimpleListItem[] = [
 	{
 		id: "last-week",
 		greek: "την περασμένη εβδομάδα",
-		greeklish: "tin perasmeni evdomada",
 		english: "last week",
 		label: "last week",
 		category: "time",
@@ -105,7 +93,6 @@ const DAYS: SimpleListItem[] = [
 	{
 		id: "next-week",
 		greek: "την επόμενη εβδομάδα",
-		greeklish: "tin epomeni evdomada",
 		english: "next week",
 		label: "next week",
 		category: "time",
@@ -113,7 +100,6 @@ const DAYS: SimpleListItem[] = [
 	{
 		id: "weekend",
 		greek: "το Σαββατοκύριακο",
-		greeklish: "to savvatokyriako",
 		english: "the weekend",
 		label: "the weekend",
 		category: "time",
@@ -137,6 +123,7 @@ function DaysOfWeekDrill() {
 			title="Days & Time"
 			subtitle="14 forms / timed"
 			colorTheme="olive"
+			backTo="/practice/blocks"
 			forwardDesc="English → Greek"
 			reverseDesc="Greek → English (self-assess)"
 			categories={CATEGORIES}

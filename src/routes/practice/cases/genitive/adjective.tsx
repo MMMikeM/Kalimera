@@ -106,7 +106,6 @@ const ITEMS: SimpleListItem[] = ADJECTIVES.flatMap((adj) => [
 	{
 		id: `${adj.id}-m`,
 		greek: adj.masculine.greek,
-		greeklish: adj.masculine.greeklish,
 		english: `${adj.english} (m, owner)`,
 		label: "masculine",
 		category: "masculine",
@@ -115,7 +114,6 @@ const ITEMS: SimpleListItem[] = ADJECTIVES.flatMap((adj) => [
 	{
 		id: `${adj.id}-f`,
 		greek: adj.feminine.greek,
-		greeklish: adj.feminine.greeklish,
 		english: `${adj.english} (f, owner)`,
 		label: "feminine",
 		category: "feminine",
@@ -124,7 +122,6 @@ const ITEMS: SimpleListItem[] = ADJECTIVES.flatMap((adj) => [
 	{
 		id: `${adj.id}-n`,
 		greek: adj.neuter.greek,
-		greeklish: adj.neuter.greeklish,
 		english: `${adj.english} (n, owner)`,
 		label: "neuter",
 		category: "neuter",
@@ -134,7 +131,6 @@ const ITEMS: SimpleListItem[] = ADJECTIVES.flatMap((adj) => [
 	{
 		id: `${adj.id}-pl`,
 		greek: adj.plural.greek,
-		greeklish: adj.plural.greeklish,
 		english: `${adj.english} (pl, owner — all genders)`,
 		label: "plural",
 		category: "plural",

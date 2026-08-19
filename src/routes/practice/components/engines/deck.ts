@@ -10,7 +10,6 @@ export type SessionSize = (typeof SESSION_SIZES)[number];
 export interface DrillForm {
 	id: string;
 	greek: string;
-	greeklish: string;
 	label: string;
 	acceptAlso?: string;
 	vocabId?: number;

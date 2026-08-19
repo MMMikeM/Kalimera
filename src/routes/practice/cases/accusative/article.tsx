@@ -11,7 +11,6 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "m-sg",
 		greek: "τον",
-		greeklish: "ton",
 		english: "the (m, sg, target)",
 		label: "the (m, sg, target)",
 		category: "singular",
@@ -19,7 +18,6 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "f-sg",
 		greek: "τη",
-		greeklish: "ti(n)",
 		english: "the (f, sg, target)",
 		label: "the (f, sg, target)",
 		category: "singular",
@@ -28,7 +26,6 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "n-sg",
 		greek: "το",
-		greeklish: "to",
 		english: "the (n, sg, target)",
 		label: "the (n, sg, target)",
 		category: "singular",
@@ -36,7 +33,6 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "m-pl",
 		greek: "τους",
-		greeklish: "tous",
 		english: "the (m, pl, target)",
 		label: "the (m, pl, target)",
 		category: "plural",
@@ -44,7 +40,6 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "f-pl",
 		greek: "τις",
-		greeklish: "tis",
 		english: "the (f, pl, target)",
 		label: "the (f, pl, target)",
 		category: "plural",
@@ -52,7 +47,6 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "n-pl",
 		greek: "τα",
-		greeklish: "ta",
 		english: "the (n, pl, target)",
 		label: "the (n, pl, target)",
 		category: "plural",
