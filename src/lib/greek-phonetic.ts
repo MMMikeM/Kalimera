@@ -124,6 +124,20 @@ const PRONUNCIATION_RULES: PronunciationRule[] = [
 	// γ before a front vowel is [ʝ] ≈ "y". MUST precede the vowel digraphs
 	// below, or γει collapses to γ+i and renders "gi" instead of "yi".
 	// stressStart skips the consonant so γή underlines "i", not "yi".
+	// γ + ευ must beat plain γε, or the ε is eaten out of the diphthong and the
+	// υ is stranded as a bare vowel: απόγευμα would gloss "apoyeima", not
+	// "apoyevma". Same devoicing rule as bare ευ, one position further along.
+	{
+		greek: "γευ",
+		latin: "yef",
+		stressStart: 1,
+		when: (chars, i) => {
+			const following = chars[i + 3];
+			return !following || VOICELESS.includes(following.ch) || /\s/.test(following.ch);
+		},
+	},
+	{ greek: "γευ", latin: "yev", stressStart: 1 },
+
 	{ greek: "γαι", latin: "ye", stressStart: 1 },
 	{ greek: "γει", latin: "yi", stressStart: 1 },
 	{ greek: "γοι", latin: "yi", stressStart: 1 },

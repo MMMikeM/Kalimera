@@ -158,7 +158,7 @@ const stripGreekArticle = (greek: string): string => {
 // ει→i, αι→e, οι→i, υ→u→i: user can type letter-faithful ("kaneis") or phonetic ("kanis").
 // nt→nd, mp→mb, nk→ng: letter-faithful cluster spellings ("pente", "ogdonta")
 // accepted alongside voiced pronunciations ("pende", "ogdonda").
-// η→h, ω→w (Greek Greeklish convention): protect "ch"/"ph" before normalising h→i.
+// η→h, ω→w (Greek Greeklish convention): protect "ch" before normalising h→i.
 // "th" is NOT protected — τη→"th" and θ→"th" both canonicalise to "ti", so typing
 // "ti" or "th" is accepted for either. w→o accepts old-style "o" for ω.
 const toPhoneticCanonical = (text: string): string =>
@@ -179,21 +179,36 @@ const toPhoneticCanonical = (text: string): string =>
 		.replace(/ks/g, "x") // ξ = "ks"; user may type "x"
 		.replace(/w/g, "o") // ω (as w) → o
 		.replace(/ch/g, "") // protect χ digraph before h→i fires
-		.replace(/ph/g, "") // protect φ digraph before h→i fires
 		.replace(/h/g, "i") // η (as h) → i BEFORE oi→i: "zwh"→"zoh"→"zoi"→"zi" matches "zoi"→"zoi"→"zi"
 		.replace(/oi/g, "i")
 		.replace(/ev/g, "ef") // ευ → ef/ev both accepted (voicing context varies)
 		.replace(/av/g, "af") // αυ likewise: the gloss devoices by context, the key does not
 		.replace(//g, "x") // χ canonical = x (accepts both "ch" and "x")
-		.replace(//g, "ph") // restore φ
 		.replace(/x/g, "x") // x already canonical — noop but documents intent
 		.replace(/d/g, "ti"); // δ (voiced "th") ≈ θ: canonical both as "ti" — "doulia"≡"thoulia"
+
+/**
+ * The rules above are applied in sequence, which is not confluent: collapsing
+ * οι→i can create an "ει" that the earlier ει→i rule has already passed. νέοι
+ * ("neoi") settles at "nei" while a typed "nei" goes straight to "ni". Running
+ * to a fixed point makes the result independent of rule order.
+ */
+const canonicalFixedPoint = (text: string): string => {
+	let current = text;
+	for (let pass = 0; pass < 3; pass++) {
+		const next = toPhoneticCanonical(current);
+		if (next === current) break;
+		current = next;
+	}
+
+	return current;
+};
 
 const phoneticEquals = (user: string, correct: string): boolean => {
 	const u = stripTerminalPunctuation(user);
 	const c = stripTerminalPunctuation(correct);
 
-	return u === c || toPhoneticCanonical(u) === toPhoneticCanonical(c);
+	return u === c || canonicalFixedPoint(u) === canonicalFixedPoint(c);
 };
 
 export const matchPhonetic = (userInput: string, correctGreek: string): PhoneticMatchResult => {

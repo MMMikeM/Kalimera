@@ -15,29 +15,20 @@ import { matchPhonetic } from "@/lib/greek-transliteration";
  */
 
 /**
- * Known-failing, all pre-existing defects in `toPhoneticCanonical`, not in the
- * gloss. Two causes:
+ * Empty, and it should stay that way.
  *
- * 1. π followed by η renders "p" + "h" = "ph", which the φ-digraph protection
- *    mistakes for φ, so η never becomes "i" (πήγα → "phga", αγάπη → "agaph").
- *    This is the bulk of the list.
- * 2. The ει/οι collapses are not confluent — they fire on the typed side but
- *    not the key side (νέοι → "neoi" vs "nei").
+ * It once held 40 words, all failing for two reasons that turned out to be
+ * mechanical rather than fundamental:
  *
- * The real fix is that `greekToPhonetic` is now matching-only and never
- * rendered, so its output alphabet is free: giving η and φ non-colliding
- * tokens would remove the whole class. Deliberately out of scope here.
- *
- * This list may SHRINK freely. It must never grow.
+ * 1. `toPhoneticCanonical` protected "ph" from the h→i step, on the belief that
+ *    φ renders "ph". It does not — φ maps to "f" — so the only thing that rule
+ *    ever matched was π followed by η, which is exactly what it broke. αγάπη
+ *    keyed as "agaph" and a typed "agapi" was rejected.
+ * 2. The canonical rules are applied in sequence and were not confluent:
+ *    collapsing οι→i creates an "ει" that the earlier ει→i rule has already
+ *    passed. Running to a fixed point removed the order dependence.
  */
-const KNOWN_UNTYPEABLE = new Set([
-	"Ευρώπη", "αγάπη", "αγάπησα", "αγαπημένος", "αγαπησ", "απόγευμα", "κλαίει",
-	"λάσπη", "λυπήθηκα", "λυπημένος", "νέοι", "πήγα", "πήγαινα", "πήγαιναν",
-	"πήγαινε", "πήγαινες", "πήγαμε", "πήγαν", "πήγατε", "πήγε", "πήγες", "πήρα",
-	"πήραμε", "πήραν", "πήρατε", "πήρε", "πήρες", "πηγαίναμε", "πηγαίνατε",
-	"πηγαίνετε", "υπήρξα", "υπήρξαμε", "υπήρξαν", "υπήρξατε", "υπήρξε",
-	"υπήρξες", "υπήρχα", "υπήρχαν", "υπήρχε", "υπήρχες",
-]);
+const KNOWN_UNTYPEABLE = new Set<string>([]);
 
 const singleWords = Object.keys(corpus as Record<string, string>).filter((word) =>
 	/^[Ͱ-Ͽἀ-῿]+$/.test(word),
@@ -64,5 +55,29 @@ describe("the gloss must be typeable", () => {
 	it("still accepts the plain g spelling", () => {
 		expect(matchPhonetic("gala", "γάλα").isCorrect).toBe(true);
 		expect(matchPhonetic("signomi", "Συγγνώμη").isCorrect).toBe(true);
+	});
+});
+
+describe("collisions in the matching key", () => {
+	// φ maps to "f", so "ph" in the key can only ever be π followed by η.
+	// Guarding it as if it were φ silently broke every πη word.
+	it("accepts πη words spelled as they sound", () => {
+		expect(matchPhonetic("agapi", "αγάπη").isCorrect).toBe(true);
+		expect(matchPhonetic("pigha", "πήγα").isCorrect).toBe(true);
+		expect(matchPhonetic("laspi", "λάσπη").isCorrect).toBe(true);
+		expect(matchPhonetic("evropi", "Ευρώπη").isCorrect).toBe(true);
+	});
+
+	// τη and θ both key as "th" — deliberately not disambiguated, both accepted
+	it("still accepts either reading of th", () => {
+		expect(matchPhonetic("afti", "αυτή").isCorrect).toBe(true);
+		expect(matchPhonetic("thelo", "θέλω").isCorrect).toBe(true);
+	});
+
+	// Sequential rules are not confluent: οι→i creates an "ει" the ει→i rule
+	// has already passed. Only a fixed point makes these agree.
+	it("accepts vowel collapses regardless of rule order", () => {
+		expect(matchPhonetic("nei", "νέοι").isCorrect).toBe(true);
+		expect(matchPhonetic("klei", "κλαίει").isCorrect).toBe(true);
 	});
 });
