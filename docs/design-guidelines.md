@@ -40,9 +40,12 @@ Research-backed design principles for effective language learning interfaces.
 
 **Application:**
 
-- Render Greek at 1.1x the size of surrounding English text (`.greek-text`)
+- Render Greek through `<GreekText>`, never raw markup — it owns `lang="el"`, the
+  `greek-text` class and the size scale
 - Use line-height of 1.5–1.7 for mixed Greek/English content
 - Add slight letter-spacing (+0.01em) to prevent character collision
+- **No 1.1x scale.** It was removed: `<GreekText>` takes an explicit `size`, and a
+  multiplier on top of that compounded unpredictably at every call site
 
 ---
 
@@ -207,26 +210,35 @@ Feedback states are applied using standard Tailwind utility classes (e.g. `text-
 | Page titles | Serif | 2.5–3rem (`font-serif`) |
 | Section headings | Serif / Sans | 1.5–2rem (`font-serif text-2xl` / `text-xl`) |
 | Body text | Sans | 1rem (`font-sans`) |
-| Greek vocabulary | Sans | 1.1x scale (`.greek-text` / `text-[1.1em]`) |
-| Paradigm tables | Mono | 0.875–0.9rem (`MonoText` / `font-mono`) |
+| Greek vocabulary | Sans | `<GreekText size="…">` |
+| Paradigm tables | Sans | `<GreekText size="base">` in a `td` |
 | Captions / labels | Sans | 0.75–0.875rem (`text-xs` / `text-sm`) |
 
 ### Greek Text Helper
 
-Apply `.greek-text` to Greek content for proper sizing and optical balance:
+Never apply `.greek-text` yourself. `<GreekText>` applies it, along with `lang="el"`:
 
 ```tsx
-<span className="greek-text">Καλημέρα</span>
+<GreekText size="lg">Καλημέρα</GreekText>
+<GreekText as="td" tone="masculine" size="sm">{form}</GreekText>
 ```
 
-Definition in `src/index.css`:
+Greek-ness and grammar colour are separate props. The gender and case tones map to the
+reserved role tokens, so a colour never has to be built as `text-gender-${g}` — which
+Tailwind's extractor cannot see.
+
+Definition in `src/index.css` (no size — `<GreekText>` carries the scale):
 
 ```css
 .greek-text {
- @apply text-[1.1em] leading-relaxed;
+ @apply leading-relaxed;
  letter-spacing: 0.01em;
 }
 ```
+
+**Fonts:** Greek renders in the proportional brand stack everywhere, paradigm tables
+included. Monospace was never a deliberate choice — there is no `--font-mono` token, so
+`font-mono` fell through to an unchosen system stack.
 
 ---
 
@@ -257,7 +269,7 @@ This layout shows:
 ```text
 Level 1: Section title (Cases, Pronouns)     → Largest, serif
 Level 2: Category (Nominative, Accusative)   → Medium, sans bold
-Level 3: Greek content                        → Prominent, 1.1x size
+Level 3: Greek content                        → Prominent, <GreekText size>
 Level 4: English gloss                        → Smaller, muted colour
 Level 5: Usage notes                          → Smallest, italic
 ```
@@ -397,7 +409,7 @@ Use `MistakeComparison` (`src/components/MistakeComparison.tsx`) for wrong vs co
 1. **Don't use accent colours for body text** — Base accents fail contrast requirements; always use their `-text` variants
 2. **Don't show case AND gender colours together** — Maximum 3–4 colours per context to avoid cognitive overload
 3. **Don't misapply grammar role colours** — Grammar colour on or around Greek content asserts its grammatical value; use base palette or neutral stone for non-grammatical UI
-4. **Don't render Greek at the same size as English** — Scale up by 1.1x using `.greek-text`
+4. **Don't hand-roll Greek markup** — No raw `lang="el"` spans and no `greek-text` class at call sites; use `<GreekText>`. `pnpm lint:greek` enforces it
 5. **Don't use SVG noise/grain textures** — They create visual artefacts
 6. **Don't use opacity modifiers on text colours** — Breaks AAA contrast (see below)
 7. **Don't use coloured shadows** — Use neutral shadows only (`shadow-sm`, `shadow-md`), never `shadow-{color}-*`
