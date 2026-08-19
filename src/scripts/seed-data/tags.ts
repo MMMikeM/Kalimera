@@ -17,42 +17,48 @@ export interface LessonTag {
 // Content tags organized by section (these appear in UI)
 export const CONTENT_TAGS = {
 	// NOUNS SECTION
+	coreNouns: {
+		slug: "core-nouns",
+		name: "Core Nouns",
+		section: "nouns",
+		displayOrder: 1,
+	},
 	people: {
 		slug: "people",
 		name: "People & Family",
 		section: "nouns",
-		displayOrder: 1,
+		displayOrder: 2,
 	},
-	nature: { slug: "nature", name: "Nature", section: "nouns", displayOrder: 2 },
+	nature: { slug: "nature", name: "Nature", section: "nouns", displayOrder: 3 },
 	summer: {
 		slug: "summer",
 		name: "Summer & Beach",
 		section: "nouns",
-		displayOrder: 3,
+		displayOrder: 4,
 	},
 	shopping: {
 		slug: "shopping",
 		name: "Shopping & Groceries",
 		section: "nouns",
-		displayOrder: 4,
+		displayOrder: 5,
 	},
 	clothing: {
 		slug: "clothing",
 		name: "Clothing & Wardrobe",
 		section: "nouns",
-		displayOrder: 5,
+		displayOrder: 6,
 	},
 	household: {
 		slug: "household",
 		name: "Household & Home",
 		section: "nouns",
-		displayOrder: 6,
+		displayOrder: 7,
 	},
 	transportVehicle: {
 		slug: "transport-vehicle",
 		name: "Transport - Vehicles",
 		section: "nouns",
-		displayOrder: 7,
+		displayOrder: 8,
 	},
 
 	// VERBS SECTION
