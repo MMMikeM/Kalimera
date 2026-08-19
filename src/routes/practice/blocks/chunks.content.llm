@@ -6,60 +6,79 @@ Drill high-frequency phrases as atomic units. Do not decompose into grammar. Pro
 
 Target: 3 seconds for social phrases, 5 seconds for longer openers.
 
-## Phase 1 core set
+## Implemented set — 24 items in `chunks.tsx`
 
-### Social ritual (simplest, drill first)
-| English | Greek |
-|---------|-------|
-| Hello / Hi | Γεια σου / Γεια σας (formal) |
-| Good morning | Καλημέρα |
-| Good evening | Καλησπέρα |
-| Good night | Καληνύχτα |
-| Goodbye | Αντίο / Γεια |
-| See you later | Τα λέμε |
-| Thank you | Ευχαριστώ |
-| You're welcome / Please | Παρακαλώ |
-| Excuse me / Sorry | Συγγνώμη |
-| How are you? (informal) | Τι κάνεις; |
-| I'm fine | Είμαι καλά |
+Three categories, filterable in the drill: Social (11) · Survival (5) · Starters (8).
 
-### Comprehension survival
+### Social (`category: "social"`)
+| English | Greek | label |
+|---------|-------|-------|
+| Hello / Hi | Γεια σου | greeting |
+| Hello (formal) | Γεια σας | greeting |
+| Good morning | Καλημέρα | greeting |
+| Good evening | Καλησπέρα | greeting |
+| Good night | Καληνύχτα | greeting |
+| Goodbye | Αντίο | parting |
+| See you later | Τα λέμε | parting |
+| Thank you | Ευχαριστώ | politeness |
+| Please / You're welcome | Παρακαλώ | politeness |
+| Excuse me / Sorry | Συγγνώμη | politeness |
+| How are you? | Τι κάνεις | social |
+
+Informal and formal greeting are **separate items** (`hello` / `hello-formal`), not one item with
+two accepted answers.
+
+### Survival (`category: "survival"`)
 | English | Greek |
 |---------|-------|
 | I don't understand | Δεν καταλαβαίνω |
 | I don't know | Δεν ξέρω |
-| Can you speak more slowly? | Μπορείτε να μιλάτε πιο αργά; |
-| How do you say...? | Πώς λέγεται...;  |
-| What does ... mean? | Τι σημαίνει ...;  |
+| Can you speak more slowly? | Μπορείτε να μιλάτε πιο αργά |
+| How do you say...? | Πώς λέγεται |
+| What does ... mean? | Τι σημαίνει |
 
-### Sentence starters (frames, not full sentences — drill the opener)
+### Starters (`category: "starters"`) — frames, not full sentences
 | English prompt | Greek opener |
 |----------------|--------------|
-| My name is... | Με λένε... |
-| I would like... | Θα ήθελα... |
-| Where is...? | Πού είναι...;  |
-| How much is...? | Πόσο κάνει...;  |
-| Can I...? | Μπορώ να...;  |
-| I need to... | Πρέπει να... |
-| I want to... | Θέλω να... |
-| Do you have...? | Έχετε...;  |
+| My name is... | Με λένε |
+| I would like... | Θα ήθελα |
+| Where is...? | Πού είναι |
+| How much is...? | Πόσο κάνει |
+| Can I... | Μπορώ να |
+| I need to... | Πρέπει να |
+| I want to... | Θέλω να |
+| Do you have...? | Έχετε |
+
+### Punctuation
+
+Drill `greek` strings keep the authentic Greek question mark (`Τι κάνεις;`). `phoneticEquals` in
+`src/lib/greek-transliteration.ts` strips terminal punctuation from both sides, so the learner is
+never required to type it. Do not strip `;` from content to make a card passable.
+
+### Not implemented
+
+`Είμαι καλά` ("I'm fine") is a natural pair for `Τι κάνεις` but is not in the item list. Add it to
+`chunks.tsx` and update the subtitle count if it is wanted.
 
 ## Drill format
 
-**Forward**: English → Greek (type full phrase, including punctuation optional)
-**Recognition**: Greek → English (multiple choice or typed)
+**Forward**: English prompt → type the Greek phrase in greeklish
+**Reverse**: Greek phrase → English, self-assess
 
 No paradigm table. No person/number selector. Pure sequential recall.
+Colour theme: honey. Returns to `/practice/blocks`.
 
-## Grouping
+## Build order
 
-- Group A: Social ritual (11 items) — drill to automaticity before B
-- Group B: Comprehension survival (5 items)
-- Group C: Sentence starters (8 items) — lowest priority, learner may already have these from tutor
+Social (11) → Survival (5) → Starters (8). Drill Social to automaticity before moving on; Starters
+are lowest priority, as the learner may already have them from tutor work.
 
 ## Notes
 
-- Accept minor variants: Αντίο / Γεια both valid for goodbye
-- "Γεια σου" vs "Γεια σας" distinction: informal vs formal — could teach as separate items or accept both
-- Sentence starters are frames — drill just the opener chunk ("Θα ήθελα"), not a full sentence completion
+- Sentence starters are frames — drill just the opener chunk ("Θα ήθελα"), not a full sentence
+- Γεια is not seeded as an alternative to Αντίο; if a variant is wanted, use `acceptAlso`
+- `greeklish` is hand-written here, not derived. It is learner-facing, so it must spell what a
+  learner would say — Συγγνώμη is "signomi" [siɣnomi], Πώς λέγεται is "pos legetai". If a card is
+  unpassable, fix the matcher, never the content: the engine serves the Greek, not the reverse
+- If learner's tutor work has covered these already, this drill surfaces which are NOT yet automatic
 - If learner's tutor work has covered these already, this drill surfaces which are NOT yet automatic vs which can be deprioritised

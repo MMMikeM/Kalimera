@@ -1,0 +1,120 @@
+# Question Words — Drill Group
+
+Six drills behind `/practice/blocks/question-words`, listed by `index.tsx` in four phases. Every
+drill uses terracotta and returns to this index via `backTo="/practice/blocks/question-words/"`.
+
+## Why the split
+
+Greek question words divide cleanly into two kinds, and the learner must feel the difference:
+
+- **Invariable** — τι, πού, πότε, πώς, γιατί. One form, no agreement, nothing to decline.
+- **Agreeing** — ποιος and πόσος behave like adjectives: they change with the gender, number and
+  role of the noun they ask about.
+
+The whole group is sequenced on that split. Learn the five that never change, then learn each
+agreeing word twice: bare forms first, then the form welded to a noun.
+
+## Phase 1 — Basics (`basics.tsx`)
+
+`blocks-qw-basics` · 5 items · no categories.
+
+| Greek | English |
+|-------|---------|
+| τι | what? |
+| πού | where? |
+| πότε | when? |
+| πώς | how? |
+| γιατί | why? |
+
+Accents are load-bearing and are the reason these are drilled written, not just spoken:
+πού/πώς ask a question, που/πως are unaccented connectives ("that", "which").
+
+## Phase 2 — Which? (ποιος)
+
+### `which-forms.tsx` — bare forms
+
+`blocks-qw-which-forms` · 11 items · categories Doer / Target / Owner / Plural.
+
+`configExtras` shows a paradigm before the session starts (`QuestionWordParadigm`, rows = gender,
+columns = role):
+
+| | Doer | Target | Owner | Plural |
+|---|---|---|---|---|
+| he-word (m) | ποιος | ποιον | ποιανού | ποιοι |
+| she-word (f) | ποια | ποια | ποιανής | ποιες |
+| it-word (n) | ποιο | ποιο | ποιανού | ποια |
+
+Footnote: owner plural is ποιανών for every gender; τίνος is the colloquial stand-in for ποιανού.
+Both appear in the item list (ποιανών as an item, plus the phrase ποιανού είναι).
+
+Labels use the plain-English handles — "which? (about a he-word)", "whose? (she-word)" — never
+"masculine nominative". The Doer / Target / Owner category names carry the grammar.
+
+### `which-phrase.tsx` — ποιος + noun
+
+`blocks-qw-which-phrase` · 15 items · same four categories, plus a `dimension` of
+masculine / feminine / neuter on every item.
+
+Forward is production: English → ποιος agreeing with its noun (ποιον καφέ, ποια μέρα, ποιο σπίτι).
+Reverse is **not** self-assess — it is a single-select on gender (`GENDER_DIMENSION_OPTIONS`,
+`getCorrectId` reads `form.dimension`). The learner sees the phrase and picks he-/she-/it-word,
+which tests the agreement signal rather than the gloss.
+
+Target items carry a disambiguating label ("which coffee? (you want it)") because the English is
+identical to the Doer item.
+
+## Phase 3 — How much? (πόσος)
+
+### `how-many-forms.tsx` — bare forms
+
+`blocks-qw-how-many-forms` · 7 items · categories "How much (sg)" / "How many (pl)".
+
+| | How much | How many |
+|---|---|---|
+| he-word (m) | πόσος | πόσοι |
+| she-word (f) | πόση | πόσες |
+| it-word (n) | πόσο | πόσα |
+
+Footnote: on its own, πόσο asks price or degree — πόσο κάνει;
+
+πόσο appears twice as an item, deliberately: once as the it-word agreeing form (γάλα, ψωμί) and
+once as the standalone adverb of cost/degree.
+
+### `how-many-phrase.tsx` — πόσος + noun
+
+`blocks-qw-how-many-phrase` · 15 items · `GENDER_PLURAL_CATEGORIES`, reverse is single-select on
+gender like `which-phrase`, with an extra "Doesn't change" option for the invariable item.
+
+Two deliberate design decisions, both recorded in the file:
+
+- Masculine singular is the only πόσος form that visibly changes for the Target role
+  (πόσος καιρός → πόσο καιρό), so Target items sit inside the masculine category rather than
+  getting a category of their own.
+- Genitive πόσου/πόσης is **excluded** — rare in modern speech, and it would double the item count
+  for almost no production value.
+
+πόσο κάνει is `dimension: "invariable"` with no category, so it surfaces only under "All".
+
+## Phase 4 — Review (`review.tsx`)
+
+`blocks-qw-review` · 23 items = BASICS (5) + WHICH_FORMS (11) + HOW_MANY_FORMS (7), re-imported
+from the three forms drills rather than duplicated. Categories Basics / Which / How many.
+`sessionSize={20}` so a session is a sample, not the whole set.
+
+The phrase drills are **not** folded in — they test gender selection, a different response mode,
+and mixing response modes inside one session muddies the timing signal.
+
+Subtitle says the quiet part out loud: "mixing is harder, and sticks better".
+
+## Notes
+
+- `WHICH_FORMS`, `HOW_MANY_FORMS` and `BASICS` are exported so `review.tsx` can compose them.
+  `WHICH_PHRASES` and `HOW_MANY_PHRASES` are exported for symmetry but currently unused elsewhere.
+- Every item builds `greeklish` from `greekToPhonetic(greek)` — none are hand-written, so the typed
+  answer and the displayed pronunciation cannot drift apart.
+- Drill `greek` strings carry no terminal `;` — the Greek question mark is not stripped before
+  phonetic comparison, so it would make correct answers fail. The "?" in the English gloss carries
+  the question cue instead.
+- The two paradigm tables share `components/paradigm.tsx` (`QuestionWordParadigm`); it takes a
+  caption, column headers, gender rows and a footnote as children, so it handles both the 4-column
+  ποιος table and the 2-column πόσος table.
