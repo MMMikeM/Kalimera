@@ -8,7 +8,7 @@ import { Drill } from "../../components/engines/drill";
 //   [title]
 //   present · -ω verb          ← context (small)
 //   we                          ← pronoun (big)
-// `greeklish` matches greekToPhonetic output (αι → "e", ει → "i", ντ → "d").
+// The Latin gloss is derived at render by <Pronunciation>, never stored.
 
 const PRONOUNS = {
 	sg1: { pronoun: "I", grammatical: "1st person singular" },

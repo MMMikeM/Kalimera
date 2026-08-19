@@ -24,6 +24,7 @@ import {
 	SummaryScreen,
 	type ConfigShellProps,
 } from "./shells";
+import { GreekText } from "@/components/GreekText";
 
 const rootRoute = getRouteApi("__root__");
 
@@ -244,12 +245,15 @@ function DrillInner<K extends string>(
 								{currentForm && (
 									<>
 										{"context" in currentForm && (
-											<p
-												lang="el"
-												className="greek-text mb-4 text-3xl font-semibold text-stone-800"
+											<GreekText
+												as="p"
+												size="3xl"
+												weight="semibold"
+												tone="inherit"
+												className="mb-4 text-stone-800"
 											>
 												{(currentForm as DrillForm & { context?: string }).context}
-											</p>
+											</GreekText>
 										)}
 										<p className="text-3xl font-medium text-foreground">{currentForm.label}</p>
 										{"detail" in currentForm && (

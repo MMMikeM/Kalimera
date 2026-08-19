@@ -1,9 +1,12 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
+import { GreekText } from "@/components/GreekText";
 
 export const FirstTimeUserCTA = () => (
 	<div className="rounded-2xl border border-stone-200 bg-cream py-8 text-center">
-		<p className="greek-text mb-2 font-serif text-3xl text-navy">Καλώς ήρθες!</p>
+		<GreekText as="p" size="3xl" tone="inherit" className="mb-2 font-serif text-navy">
+			Καλώς ήρθες!
+		</GreekText>
 		<p className="mb-6 text-lg text-stone-600">Let's learn your first Greek words.</p>
 		<Link
 			to="/practice"

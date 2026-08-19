@@ -11,6 +11,7 @@ import type { DrillForm } from "../components/engines/deck";
 import { Drill, type DimensionSpec } from "../components/engines/drill";
 import { GENDER_STYLE, PERSON_LABELS } from "../components/engines/drill-constants";
 import { ForwardPromptCard } from "../components/engines/forward-prompt-card";
+import { GreekText } from "@/components/GreekText";
 
 type Person = "first" | "second" | "third";
 type Gender = "masculine" | "feminine" | "neuter";
@@ -146,13 +147,9 @@ const Paradigm = () => (
 					<tr key={row.label} className="border-t border-stone-100">
 						<td className="py-1.5 pr-4 text-xs font-medium text-terracotta-text">{row.label}</td>
 						{row.forms.map((form, i) => (
-							<td
-								key={`${row.label}-${i}`}
-								lang="el"
-								className="greek-text px-3 py-1.5 text-center text-base text-foreground"
-							>
+							<GreekText as="td" key={`${row.label}-${i}`} className="px-3 py-1.5 text-center">
 								{form}
-							</td>
+							</GreekText>
 						))}
 					</tr>
 				))}

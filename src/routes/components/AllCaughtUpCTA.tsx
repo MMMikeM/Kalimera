@@ -1,12 +1,15 @@
 import { Link } from "@tanstack/react-router";
 import { Check, Sparkles } from "lucide-react";
+import { GreekText } from "@/components/GreekText";
 
 export const AllCaughtUpCTA = ({ newAvailable }: { newAvailable: number }) => (
 	<div className="rounded-2xl border border-olive-200 bg-olive-50 py-8 text-center">
 		<div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-olive-100">
 			<Check className="h-8 w-8 text-olive" />
 		</div>
-		<p className="greek-text font-serif text-2xl text-olive">Μπράβο!</p>
+		<GreekText as="p" size="2xl" tone="inherit" className="font-serif text-olive">
+			Μπράβο!
+		</GreekText>
 		<p className="mt-1 text-lg text-stone-700">All caught up</p>
 		<p className="mt-2 text-sm text-stone-500">
 			No rusty drills right now. Check back later or learn something new.

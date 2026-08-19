@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import type React from "react";
+import { GreekText } from "@/components/GreekText";
 
 export interface Section {
 	id: string;
@@ -21,9 +22,7 @@ export const SectionCard = ({ section }: { section: Section }) => (
 			<h2 className="font-semibold">
 				{section.greek ? (
 					<>
-						<span lang="el" className="greek-text">
-							{section.greek}
-						</span>
+						<GreekText tone="inherit">{section.greek}</GreekText>
 						<span className="mx-1.5 opacity-40">·</span>
 						<span className="font-normal opacity-80">{section.label}</span>
 					</>

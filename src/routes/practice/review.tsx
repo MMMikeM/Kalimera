@@ -5,6 +5,7 @@ import { ChevronRight } from "lucide-react";
 import { DRILL_CATEGORY_LABELS, DRILL_REGISTRY, type DrillCategory } from "@/constants/drills";
 import { requireAuth } from "@/server/auth/session";
 import { getSchemaRust } from "@/server/db/queries/analytics/drill-stats";
+import { GreekText } from "@/components/GreekText";
 
 const getReviewDrillsFn = createServerFn({ method: "GET" }).handler(async () => {
 	const { userId } = requireAuth();
@@ -56,7 +57,9 @@ function ReviewPage() {
 
 			{drills.length === 0 ? (
 				<div className="rounded-xl border border-olive-200 bg-olive-50 py-10 text-center">
-					<p className="greek-text font-serif text-2xl text-olive">Μπράβο!</p>
+					<GreekText as="p" size="2xl" tone="inherit" className="font-serif text-olive">
+						Μπράβο!
+					</GreekText>
 					<p className="mt-2 text-sm text-stone-500">Come back after some time away.</p>
 				</div>
 			) : (

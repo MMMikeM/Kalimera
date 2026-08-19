@@ -1,3 +1,5 @@
+import { GreekText } from "@/components/GreekText";
+
 interface ParadigmRow {
 	label: string;
 	forms: readonly string[];
@@ -40,13 +42,13 @@ export const QuestionWordParadigm = ({
 					<tr key={row.label} className="border-t border-stone-100">
 						<td className="py-1.5 pr-4 text-xs font-medium text-terracotta-text">{row.label}</td>
 						{row.forms.map((form, i) => (
-							<td
+							<GreekText
+								as="td"
 								key={`${row.label}-${columns[i]}`}
-								lang="el"
-								className="greek-text px-3 py-1.5 text-center text-base text-foreground"
+								className="px-3 py-1.5 text-center"
 							>
 								{form}
-							</td>
+							</GreekText>
 						))}
 					</tr>
 				))}

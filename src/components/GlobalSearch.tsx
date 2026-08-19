@@ -10,6 +10,7 @@ import {
 	PopoverTrigger,
 } from "@/components/ui/popover";
 import { useVocabularySearch } from "@/lib/use-vocabulary-search";
+import { GreekText } from "@/components/GreekText";
 
 const QUICK_SEARCHES = [
 	{ greek: "θελω", english: "I want" },
@@ -107,7 +108,9 @@ const SearchEmptyState = ({ onQuickSearch }: SearchEmptyStateProps) => (
 					onClick={() => onQuickSearch(item.greek)}
 					className="flex min-h-13 flex-col items-start rounded-lg border border-stone-200 bg-cream-50 p-3 text-left transition-colors hover:border-terracotta-300 hover:bg-cream-100"
 				>
-					<span className="greek-text text-base font-medium text-stone-900">{item.greek}</span>
+					<GreekText weight="medium" tone="inherit" className="text-stone-900">
+						{item.greek}
+					</GreekText>
 					<span className="text-xs text-stone-500">{item.english}</span>
 				</button>
 			))}

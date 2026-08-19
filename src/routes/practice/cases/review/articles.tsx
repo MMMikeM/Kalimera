@@ -13,6 +13,7 @@ import type { DrillForm } from "../../components/engines/deck";
 import { Drill, type DimensionSpec } from "../../components/engines/drill";
 import { GENDER_STYLE } from "../../components/engines/drill-constants";
 import { ForwardPromptCard } from "../../components/engines/forward-prompt-card";
+import { GreekText } from "@/components/GreekText";
 
 type ArticleCase = "nominative" | "accusative" | "genitive";
 type Gender = "masculine" | "feminine" | "neuter";
@@ -207,13 +208,9 @@ const Paradigm = () => (
 							{row.label}
 						</td>
 						{(["masculine", "feminine", "neuter"] as const).map((g, i) => (
-							<td
-								key={g}
-								lang="el"
-								className="greek-text px-3 py-1.5 text-center text-base text-foreground"
-							>
+							<GreekText as="td" key={g} className="px-3 py-1.5 text-center">
 								{row.forms[i]}
-							</td>
+							</GreekText>
 						))}
 					</tr>
 				))}

@@ -5,6 +5,7 @@ import type { SimpleListItem } from "../../components/engines/deck";
 import { Drill } from "../../components/engines/drill";
 
 import { QuestionWordParadigm } from "./components/paradigm";
+import { GreekText } from "@/components/GreekText";
 
 const item = (
 	id: string,
@@ -59,13 +60,13 @@ const PARADIGM = [
 const Paradigm = () => (
 	<QuestionWordParadigm caption="ποιος agrees" columns={PARADIGM_COLUMNS} rows={PARADIGM}>
 		Owner plural, every gender:{" "}
-		<span lang="el" className="greek-text text-sm text-foreground">
+		<GreekText size="sm">
 			ποιανών
-		</span>{" "}
+		</GreekText>{" "}
 		· colloquial stand-in for ποιανού:{" "}
-		<span lang="el" className="greek-text text-sm text-foreground">
+		<GreekText size="sm">
 			τίνος
-		</span>
+		</GreekText>
 	</QuestionWordParadigm>
 );
 
