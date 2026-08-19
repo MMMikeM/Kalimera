@@ -182,3 +182,20 @@ describe("greekToPronunciationTokens", () => {
 		}
 	});
 });
+
+describe("γ before a diphthong", () => {
+	// γε must not eat the ε out of ευ, stranding the υ as a bare vowel:
+	// απόγευμα is [aˈpoʝevma], so "apoyevma" and never "apoyeima"
+	it("keeps ευ intact after γ", () => {
+		expect(greekToPronunciation("απόγευμα")).toBe("apoyevma");
+		expect(greekToPronunciation("γεύμα")).toBe("yevma");
+	});
+
+	it("still devoices γευ before a voiceless consonant", () => {
+		expect(greekToPronunciation("γεύση")).toBe("yefsi");
+	});
+
+	it("leaves a bare γε alone", () => {
+		expect(greekToPronunciation("γελάω")).toBe("yelao");
+	});
+});
