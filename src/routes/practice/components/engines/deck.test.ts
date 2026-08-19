@@ -6,7 +6,6 @@ import type { DrillForm } from "./deck";
 const form = (id: string, bucket: DrillForm["bucket"] = "new"): DrillForm => ({
 	id,
 	greek: id,
-	greeklish: id,
 	label: id,
 	bucket,
 });

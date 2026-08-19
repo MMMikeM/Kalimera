@@ -15,7 +15,6 @@ const ITEMS: SimpleListItem[] = [
 	{
 		id: "grapho",
 		greek: "έγραψα",
-		greeklish: "egrapsa",
 		english: "write (γράφω)",
 		label: "γράφω → έγραψα",
 		context: "φ + σ → ψ",
@@ -24,7 +23,6 @@ const ITEMS: SimpleListItem[] = [
 	{
 		id: "doulevo",
 		greek: "δούλεψα",
-		greeklish: "doulepsa",
 		english: "work (δουλεύω)",
 		label: "δουλεύω → δούλεψα",
 		context: "ευ + σ → ψ",
@@ -33,7 +31,6 @@ const ITEMS: SimpleListItem[] = [
 	{
 		id: "taxidevo",
 		greek: "ταξίδεψα",
-		greeklish: "taxidepsa",
 		english: "travel (ταξιδεύω)",
 		label: "ταξιδεύω → ταξίδεψα",
 		context: "ευ + σ → ψ",
@@ -42,7 +39,6 @@ const ITEMS: SimpleListItem[] = [
 	{
 		id: "kovo",
 		greek: "έκοψα",
-		greeklish: "ekopsa",
 		english: "cut (κόβω)",
 		label: "κόβω → έκοψα",
 		context: "β + σ → ψ",
@@ -51,7 +47,6 @@ const ITEMS: SimpleListItem[] = [
 	{
 		id: "leipo",
 		greek: "έλειψα",
-		greeklish: "eleipsa",
 		english: "be missing / away (λείπω)",
 		label: "λείπω → έλειψα",
 		context: "π + σ → ψ",
@@ -60,7 +55,6 @@ const ITEMS: SimpleListItem[] = [
 	{
 		id: "anavo",
 		greek: "άναψα",
-		greeklish: "anapsa",
 		english: "turn on / light (ανάβω)",
 		label: "ανάβω → άναψα",
 		context: "β + σ → ψ",
@@ -71,7 +65,6 @@ const ITEMS: SimpleListItem[] = [
 	{
 		id: "anoigo",
 		greek: "άνοιξα",
-		greeklish: "anoixa",
 		english: "open (ανοίγω)",
 		label: "ανοίγω → άνοιξα",
 		context: "γ + σ → ξ",
@@ -80,7 +73,6 @@ const ITEMS: SimpleListItem[] = [
 	{
 		id: "ftiachno",
 		greek: "έφτιαξα",
-		greeklish: "eftiaxa",
 		english: "make (φτιάχνω)",
 		label: "φτιάχνω → έφτιαξα",
 		context: "-χνω: χν cluster → ξ",
@@ -89,7 +81,6 @@ const ITEMS: SimpleListItem[] = [
 	{
 		id: "prosecho",
 		greek: "πρόσεξα",
-		greeklish: "prosexa",
 		english: "take care (προσέχω)",
 		label: "προσέχω → πρόσεξα",
 		context: "χ + σ → ξ",
@@ -98,7 +89,6 @@ const ITEMS: SimpleListItem[] = [
 	{
 		id: "allazo",
 		greek: "άλλαξα",
-		greeklish: "allaxa",
 		english: "change (αλλάζω)",
 		label: "αλλάζω → άλλαξα",
 		context: "ζ + σ → ξ",
@@ -109,7 +99,6 @@ const ITEMS: SimpleListItem[] = [
 	{
 		id: "teleiono",
 		greek: "τελείωσα",
-		greeklish: "teleiosa",
 		english: "finish (τελειώνω)",
 		label: "τελειώνω → τελείωσα",
 		context: "-νω: ν drops, then + σα",
@@ -118,7 +107,6 @@ const ITEMS: SimpleListItem[] = [
 	{
 		id: "agorazo",
 		greek: "αγόρασα",
-		greeklish: "agorasa",
 		english: "buy (αγοράζω)",
 		label: "αγοράζω → αγόρασα",
 		context: "ζ + σ → σ",
@@ -127,7 +115,6 @@ const ITEMS: SimpleListItem[] = [
 	{
 		id: "diavazo",
 		greek: "διάβασα",
-		greeklish: "diavasa",
 		english: "read (διαβάζω)",
 		label: "διαβάζω → διάβασα",
 		context: "ζ + σ → σ",
@@ -136,7 +123,6 @@ const ITEMS: SimpleListItem[] = [
 	{
 		id: "akouo",
 		greek: "άκουσα",
-		greeklish: "akousa",
 		english: "listen (ακούω)",
 		label: "ακούω → άκουσα",
 		context: "vowel + σ → σ",
@@ -145,7 +131,6 @@ const ITEMS: SimpleListItem[] = [
 	{
 		id: "apofasizo",
 		greek: "αποφάσισα",
-		greeklish: "apofasisa",
 		english: "decide (αποφασίζω)",
 		label: "αποφασίζω → αποφάσισα",
 		context: "ζ + σ → σ",
@@ -154,7 +139,6 @@ const ITEMS: SimpleListItem[] = [
 	{
 		id: "gyrizo",
 		greek: "γύρισα",
-		greeklish: "gyrisa",
 		english: "turn (γυρίζω)",
 		label: "γυρίζω → γύρισα",
 		context: "ζ + σ → σ",
@@ -165,7 +149,6 @@ const ITEMS: SimpleListItem[] = [
 	{
 		id: "milao",
 		greek: "μίλησα",
-		greeklish: "milisa",
 		english: "speak (μιλάω)",
 		label: "μιλάω → μίλησα",
 		context: "-άω → -ησα",
@@ -174,7 +157,6 @@ const ITEMS: SimpleListItem[] = [
 	{
 		id: "rotao",
 		greek: "ρώτησα",
-		greeklish: "rotisa",
 		english: "ask (ρωτάω)",
 		label: "ρωτάω → ρώτησα",
 		context: "-άω → -ησα",
@@ -183,7 +165,6 @@ const ITEMS: SimpleListItem[] = [
 	{
 		id: "agapao",
 		greek: "αγάπησα",
-		greeklish: "agapisa",
 		english: "love (αγαπάω)",
 		label: "αγαπάω → αγάπησα",
 		context: "-άω → -ησα",
@@ -192,7 +173,6 @@ const ITEMS: SimpleListItem[] = [
 	{
 		id: "boro",
 		greek: "μπόρεσα",
-		greeklish: "boresa",
 		english: "can / be able (μπορώ)",
 		label: "μπορώ → μπόρεσα",
 		context: "-ώ → -εσα",
@@ -203,7 +183,6 @@ const ITEMS: SimpleListItem[] = [
 	{
 		id: "lypamai",
 		greek: "λυπήθηκα",
-		greeklish: "lypithika",
 		english: "be sorry (λυπάμαι)",
 		label: "λυπάμαι → λυπήθηκα",
 		context: "-μαι → -θηκα",
@@ -212,7 +191,6 @@ const ITEMS: SimpleListItem[] = [
 	{
 		id: "chreiazomai",
 		greek: "χρειάστηκα",
-		greeklish: "chreiastika",
 		english: "need (χρειάζομαι)",
 		label: "χρειάζομαι → χρειάστηκα",
 		context: "-ζομαι → -στηκα",
@@ -221,7 +199,6 @@ const ITEMS: SimpleListItem[] = [
 	{
 		id: "chairomai",
 		greek: "χάρηκα",
-		greeklish: "charika",
 		english: "be glad (χαίρομαι)",
 		label: "χαίρομαι → χάρηκα",
 		context: "-ομαι → -ηκα",
@@ -230,7 +207,6 @@ const ITEMS: SimpleListItem[] = [
 	{
 		id: "thymamai",
 		greek: "θυμήθηκα",
-		greeklish: "thymithika",
 		english: "remember (θυμάμαι)",
 		label: "θυμάμαι → θυμήθηκα",
 		context: "-μαι → -θηκα",
@@ -239,7 +215,6 @@ const ITEMS: SimpleListItem[] = [
 	{
 		id: "fovamai",
 		greek: "φοβήθηκα",
-		greeklish: "fovithika",
 		english: "be afraid (φοβάμαι)",
 		label: "φοβάμαι → φοβήθηκα",
 		context: "-μαι → -θηκα",
@@ -248,7 +223,6 @@ const ITEMS: SimpleListItem[] = [
 	{
 		id: "skeftomai",
 		greek: "σκέφτηκα",
-		greeklish: "skeftika",
 		english: "think (σκέφτομαι)",
 		label: "σκέφτομαι → σκέφτηκα",
 		context: "-φτομαι → -φτηκα",

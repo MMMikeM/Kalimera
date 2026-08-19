@@ -2,7 +2,6 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
 import { adjacentCefrPool } from "@/lib/cefr";
-import { greekToPhonetic } from "@/lib/greek-transliteration";
 import { typedEntries } from "@/lib/object";
 import type { DrillBucket, SimpleListItem } from "@/routes/practice/components/engines/deck";
 import { requireAuth } from "@/server/auth/session";
@@ -51,7 +50,6 @@ async function getNounDrillItemsImpl(
 		items.push({
 			id: `noun-${vocab.id}-${grammaticalCase}`,
 			greek: greekFull,
-			greeklish: greekToPhonetic(greekFull),
 			english: vocab.englishTranslation,
 			label: vocab.englishTranslation,
 			category: gender,

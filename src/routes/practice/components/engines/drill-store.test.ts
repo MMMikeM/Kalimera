@@ -6,7 +6,6 @@ import { drillActions, useDrillStore } from "./drill-store";
 const form = (id: string): DrillForm => ({
 	id,
 	greek: `greek-${id}`,
-	greeklish: id,
 	label: `label-${id}`,
 	bucket: "inProgress",
 });

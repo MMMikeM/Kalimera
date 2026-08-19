@@ -10,7 +10,6 @@ const AORIST_STEMS: SimpleListItem[] = [
 	{
 		id: "troo",
 		greek: "έφαγα",
-		greeklish: "efaga",
 		english: "eat (τρώω)",
 		label: "τρώω → έφαγα",
 		category: "suppletive",
@@ -18,7 +17,6 @@ const AORIST_STEMS: SimpleListItem[] = [
 	{
 		id: "pino",
 		greek: "ήπια",
-		greeklish: "ipia",
 		english: "drink (πίνω)",
 		label: "πίνω → ήπια",
 		category: "suppletive",
@@ -26,7 +24,6 @@ const AORIST_STEMS: SimpleListItem[] = [
 	{
 		id: "vlepo",
 		greek: "είδα",
-		greeklish: "eida",
 		english: "see (βλέπω)",
 		label: "βλέπω → είδα",
 		category: "suppletive",
@@ -34,7 +31,6 @@ const AORIST_STEMS: SimpleListItem[] = [
 	{
 		id: "pao",
 		greek: "πήγα",
-		greeklish: "piga",
 		english: "go (πηγαίνω/πάω)",
 		label: "πηγαίνω → πήγα",
 		category: "suppletive",
@@ -42,7 +38,6 @@ const AORIST_STEMS: SimpleListItem[] = [
 	{
 		id: "leo",
 		greek: "είπα",
-		greeklish: "eipa",
 		english: "say (λέω)",
 		label: "λέω → είπα",
 		category: "suppletive",
@@ -51,7 +46,6 @@ const AORIST_STEMS: SimpleListItem[] = [
 	{
 		id: "erchomai",
 		greek: "ήρθα",
-		greeklish: "irtha",
 		english: "come (έρχομαι)",
 		label: "έρχομαι → ήρθα",
 		category: "irregular",
@@ -59,7 +53,6 @@ const AORIST_STEMS: SimpleListItem[] = [
 	{
 		id: "kano",
 		greek: "έκανα",
-		greeklish: "ekana",
 		english: "do / make (κάνω)",
 		label: "κάνω → έκανα",
 		category: "irregular",
@@ -67,7 +60,6 @@ const AORIST_STEMS: SimpleListItem[] = [
 	{
 		id: "perno",
 		greek: "πήρα",
-		greeklish: "pira",
 		english: "take / get (παίρνω)",
 		label: "παίρνω → πήρα",
 		category: "irregular",
@@ -75,7 +67,6 @@ const AORIST_STEMS: SimpleListItem[] = [
 	{
 		id: "fevgo",
 		greek: "έφυγα",
-		greeklish: "efiga",
 		english: "leave (φεύγω)",
 		label: "φεύγω → έφυγα",
 		category: "irregular",
@@ -83,7 +74,6 @@ const AORIST_STEMS: SimpleListItem[] = [
 	{
 		id: "vrisko",
 		greek: "βρήκα",
-		greeklish: "vrika",
 		english: "find (βρίσκω)",
 		label: "βρίσκω → βρήκα",
 		category: "irregular",
@@ -91,7 +81,6 @@ const AORIST_STEMS: SimpleListItem[] = [
 	{
 		id: "dino",
 		greek: "έδωσα",
-		greeklish: "edosa",
 		english: "give (δίνω)",
 		label: "δίνω → έδωσα",
 		category: "irregular",
@@ -99,7 +88,6 @@ const AORIST_STEMS: SimpleListItem[] = [
 	{
 		id: "mathaino",
 		greek: "έμαθα",
-		greeklish: "ematha",
 		english: "learn (μαθαίνω)",
 		label: "μαθαίνω → έμαθα",
 		category: "irregular",
@@ -107,7 +95,6 @@ const AORIST_STEMS: SimpleListItem[] = [
 	{
 		id: "meno",
 		greek: "έμεινα",
-		greeklish: "emeina",
 		english: "stay / live (μένω)",
 		label: "μένω → έμεινα",
 		category: "irregular",
@@ -115,7 +102,6 @@ const AORIST_STEMS: SimpleListItem[] = [
 	{
 		id: "katalavaino",
 		greek: "κατάλαβα",
-		greeklish: "katalava",
 		english: "understand (καταλαβαίνω)",
 		label: "καταλαβαίνω → κατάλαβα",
 		category: "irregular",
@@ -123,7 +109,6 @@ const AORIST_STEMS: SimpleListItem[] = [
 	{
 		id: "stelno",
 		greek: "έστειλα",
-		greeklish: "esteila",
 		english: "send (στέλνω)",
 		label: "στέλνω → έστειλα",
 		category: "irregular",

@@ -1,9 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { greekToPhonetic } from "@/lib/greek-transliteration";
 
 import type { SimpleListItem } from "../../components/engines/deck";
 import { Drill } from "../../components/engines/drill";
+
+import { QuestionWordParadigm } from "./components/paradigm";
 
 const item = (
 	id: string,
@@ -14,7 +15,6 @@ const item = (
 ): SimpleListItem => ({
 	id,
 	greek,
-	greeklish: greekToPhonetic(greek),
 	english,
 	label,
 	category,
@@ -48,60 +48,25 @@ const CATEGORIES = [
 	{ id: "plural", label: "Plural" },
 ];
 
-const PARADIGM: { label: string; forms: [string, string, string, string] }[] = [
+const PARADIGM_COLUMNS = ["Doer", "Target", "Owner", "Plural"];
+
+const PARADIGM = [
 	{ label: "he-word (m)", forms: ["ποιος", "ποιον", "ποιανού", "ποιοι"] },
 	{ label: "she-word (f)", forms: ["ποια", "ποια", "ποιανής", "ποιες"] },
 	{ label: "it-word (n)", forms: ["ποιο", "ποιο", "ποιανού", "ποια"] },
 ];
 
 const Paradigm = () => (
-	<div className="mb-6 overflow-x-auto">
-		<p className="mb-2 text-xs tracking-widest text-muted-foreground uppercase">ποιος agrees</p>
-		<table className="w-full border-collapse text-sm">
-			<thead>
-				<tr>
-					<th
-						aria-label="Gender"
-						className="py-1 pr-4 text-left text-xs font-normal text-muted-foreground"
-					/>
-					<th className="px-3 py-1 text-center text-xs font-medium text-muted-foreground">Doer</th>
-					<th className="px-3 py-1 text-center text-xs font-medium text-muted-foreground">
-						Target
-					</th>
-					<th className="px-3 py-1 text-center text-xs font-medium text-muted-foreground">Owner</th>
-					<th className="px-3 py-1 text-center text-xs font-medium text-muted-foreground">
-						Plural
-					</th>
-				</tr>
-			</thead>
-			<tbody>
-				{PARADIGM.map((row) => (
-					<tr key={row.label} className="border-t border-stone-100">
-						<td className="py-1.5 pr-4 text-xs font-medium text-terracotta-text">{row.label}</td>
-						{row.forms.map((form, i) => (
-							<td
-								key={`${row.label}-${i}`}
-								lang="el"
-								className="greek-text px-3 py-1.5 text-center text-base text-foreground"
-							>
-								{form}
-							</td>
-						))}
-					</tr>
-				))}
-			</tbody>
-		</table>
-		<p className="mt-2 text-xs text-muted-foreground">
-			Owner plural, every gender:{" "}
-			<span lang="el" className="greek-text text-sm text-foreground">
-				ποιανών
-			</span>{" "}
-			· colloquial stand-in for ποιανού:{" "}
-			<span lang="el" className="greek-text text-sm text-foreground">
-				τίνος
-			</span>
-		</p>
-	</div>
+	<QuestionWordParadigm caption="ποιος agrees" columns={PARADIGM_COLUMNS} rows={PARADIGM}>
+		Owner plural, every gender:{" "}
+		<span lang="el" className="greek-text text-sm text-foreground">
+			ποιανών
+		</span>{" "}
+		· colloquial stand-in for ποιανού:{" "}
+		<span lang="el" className="greek-text text-sm text-foreground">
+			τίνος
+		</span>
+	</QuestionWordParadigm>
 );
 
 export const Route = createFileRoute("/practice/blocks/question-words/which-forms")({

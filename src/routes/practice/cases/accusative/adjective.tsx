@@ -128,7 +128,6 @@ const ITEMS: SimpleListItem[] = ADJECTIVES.flatMap((adj) => [
 	{
 		id: `${adj.id}-m`,
 		greek: adj.masculine.greek,
-		greeklish: adj.masculine.greeklish,
 		english: `${adj.english} (m, target)`,
 		label: "masculine",
 		category: "masculine",
@@ -137,7 +136,6 @@ const ITEMS: SimpleListItem[] = ADJECTIVES.flatMap((adj) => [
 	{
 		id: `${adj.id}-f`,
 		greek: adj.feminine.greek,
-		greeklish: adj.feminine.greeklish,
 		english: `${adj.english} (f, target)`,
 		label: "feminine",
 		category: "feminine",
@@ -146,7 +144,6 @@ const ITEMS: SimpleListItem[] = ADJECTIVES.flatMap((adj) => [
 	{
 		id: `${adj.id}-n`,
 		greek: adj.neuter.greek,
-		greeklish: adj.neuter.greeklish,
 		english: `${adj.english} (n, target)`,
 		label: "neuter",
 		category: "neuter",
@@ -155,7 +152,6 @@ const ITEMS: SimpleListItem[] = ADJECTIVES.flatMap((adj) => [
 	{
 		id: `${adj.id}-pl-m`,
 		greek: adj.pluralMasc.greek,
-		greeklish: adj.pluralMasc.greeklish,
 		english: `${adj.english} (m, pl, target)`,
 		label: "plural m",
 		category: "plural",
@@ -164,7 +160,6 @@ const ITEMS: SimpleListItem[] = ADJECTIVES.flatMap((adj) => [
 	{
 		id: `${adj.id}-pl-f`,
 		greek: adj.pluralFem.greek,
-		greeklish: adj.pluralFem.greeklish,
 		english: `${adj.english} (f, pl, target)`,
 		label: "plural f",
 		category: "plural",
@@ -173,7 +168,6 @@ const ITEMS: SimpleListItem[] = ADJECTIVES.flatMap((adj) => [
 	{
 		id: `${adj.id}-pl-n`,
 		greek: adj.pluralNeut.greek,
-		greeklish: adj.pluralNeut.greeklish,
 		english: `${adj.english} (n, pl, target)`,
 		label: "plural n",
 		category: "plural",

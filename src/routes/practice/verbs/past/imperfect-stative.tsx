@@ -14,7 +14,6 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "eimai-imoun",
 		greek: "ήμουν",
-		greeklish: "imoun",
 		english: "I was",
 		detail: "1st person singular",
 		label: "ήμουν",
@@ -24,7 +23,6 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "eimai-isoun",
 		greek: "ήσουν",
-		greeklish: "isoun",
 		english: "you were",
 		detail: "2nd person singular",
 		label: "ήσουν",
@@ -34,7 +32,6 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "eimai-itan-sg",
 		greek: "ήταν",
-		greeklish: "itan",
 		english: "he / she / it was",
 		detail: "3rd person singular",
 		label: "ήταν (sg)",
@@ -44,7 +41,6 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "eimai-imastan",
 		greek: "ήμασταν",
-		greeklish: "imastan",
 		english: "we were",
 		detail: "1st person plural",
 		label: "ήμασταν",
@@ -54,7 +50,6 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "eimai-isastan",
 		greek: "ήσασταν",
-		greeklish: "isastan",
 		english: "you all were",
 		detail: "2nd person plural",
 		label: "ήσασταν",
@@ -64,7 +59,6 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "eimai-itan-pl",
 		greek: "ήταν",
-		greeklish: "itan",
 		english: "they were",
 		detail: "3rd person plural",
 		label: "ήταν (pl)",
@@ -76,7 +70,6 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "echo-eicha",
 		greek: "είχα",
-		greeklish: "eicha",
 		english: "I had",
 		detail: "1st person singular",
 		label: "είχα",
@@ -86,7 +79,6 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "echo-eiches",
 		greek: "είχες",
-		greeklish: "eiches",
 		english: "you had",
 		detail: "2nd person singular",
 		label: "είχες",
@@ -96,7 +88,6 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "echo-eiche",
 		greek: "είχε",
-		greeklish: "eiche",
 		english: "he / she / it had",
 		detail: "3rd person singular",
 		label: "είχε",
@@ -106,7 +97,6 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "echo-eichame",
 		greek: "είχαμε",
-		greeklish: "eichame",
 		english: "we had",
 		detail: "1st person plural",
 		label: "είχαμε",
@@ -116,7 +106,6 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "echo-eichate",
 		greek: "είχατε",
-		greeklish: "eichate",
 		english: "you all had",
 		detail: "2nd person plural",
 		label: "είχατε",
@@ -126,7 +115,6 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "echo-eichan",
 		greek: "είχαν",
-		greeklish: "eichan",
 		english: "they had",
 		detail: "3rd person plural",
 		label: "είχαν",
@@ -138,7 +126,6 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "thelo-ithela",
 		greek: "ήθελα",
-		greeklish: "ithela",
 		english: "I wanted",
 		detail: "1st person singular",
 		label: "ήθελα",
@@ -148,7 +135,6 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "thelo-itheles",
 		greek: "ήθελες",
-		greeklish: "itheles",
 		english: "you wanted",
 		detail: "2nd person singular",
 		label: "ήθελες",
@@ -158,7 +144,6 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "thelo-ithele",
 		greek: "ήθελε",
-		greeklish: "ithele",
 		english: "he / she / it wanted",
 		detail: "3rd person singular",
 		label: "ήθελε",
@@ -168,7 +153,6 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "thelo-thelame",
 		greek: "θέλαμε",
-		greeklish: "thelame",
 		english: "we wanted",
 		detail: "1st person plural",
 		label: "θέλαμε",
@@ -178,7 +162,6 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "thelo-thelate",
 		greek: "θέλατε",
-		greeklish: "thelate",
 		english: "you all wanted",
 		detail: "2nd person plural",
 		label: "θέλατε",
@@ -188,7 +171,6 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "thelo-ithelan",
 		greek: "ήθελαν",
-		greeklish: "ithelan",
 		english: "they wanted",
 		detail: "3rd person plural",
 		label: "ήθελαν",
@@ -200,7 +182,6 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "ksero-ixera",
 		greek: "ήξερα",
-		greeklish: "ixera",
 		english: "I knew",
 		detail: "1st person singular",
 		label: "ήξερα",
@@ -210,7 +191,6 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "ksero-ixeres",
 		greek: "ήξερες",
-		greeklish: "ixeres",
 		english: "you knew",
 		detail: "2nd person singular",
 		label: "ήξερες",
@@ -220,7 +200,6 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "ksero-ixere",
 		greek: "ήξερε",
-		greeklish: "ixere",
 		english: "he / she / it knew",
 		detail: "3rd person singular",
 		label: "ήξερε",
@@ -230,7 +209,6 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "ksero-xerame",
 		greek: "ξέραμε",
-		greeklish: "xerame",
 		english: "we knew",
 		detail: "1st person plural",
 		label: "ξέραμε",
@@ -240,7 +218,6 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "ksero-xerate",
 		greek: "ξέρατε",
-		greeklish: "xerate",
 		english: "you all knew",
 		detail: "2nd person plural",
 		label: "ξέρατε",
@@ -250,7 +227,6 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "ksero-ixeran",
 		greek: "ήξεραν",
-		greeklish: "ixeran",
 		english: "they knew",
 		detail: "3rd person plural",
 		label: "ήξεραν",
@@ -262,7 +238,6 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "boro-borousa",
 		greek: "μπορούσα",
-		greeklish: "borousa",
 		english: "I could",
 		detail: "1st person singular",
 		label: "μπορούσα",
@@ -272,7 +247,6 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "boro-borouses",
 		greek: "μπορούσες",
-		greeklish: "borouses",
 		english: "you could",
 		detail: "2nd person singular",
 		label: "μπορούσες",
@@ -282,7 +256,6 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "boro-borouse",
 		greek: "μπορούσε",
-		greeklish: "borouse",
 		english: "he / she / it could",
 		detail: "3rd person singular",
 		label: "μπορούσε",
@@ -292,7 +265,6 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "boro-borousame",
 		greek: "μπορούσαμε",
-		greeklish: "borousame",
 		english: "we could",
 		detail: "1st person plural",
 		label: "μπορούσαμε",
@@ -302,7 +274,6 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "boro-borousate",
 		greek: "μπορούσατε",
-		greeklish: "borousate",
 		english: "you all could",
 		detail: "2nd person plural",
 		label: "μπορούσατε",
@@ -312,7 +283,6 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "boro-borousan",
 		greek: "μπορούσαν",
-		greeklish: "borousan",
 		english: "they could",
 		detail: "3rd person plural",
 		label: "μπορούσαν",

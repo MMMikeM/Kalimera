@@ -5,7 +5,6 @@ import { useState } from "react";
 
 import { Card } from "@/components/Card";
 import { Button } from "@/components/ui/button";
-import { greekToPhonetic } from "@/lib/greek-transliteration";
 
 import type { DrillForm, SimpleListItem } from "./practice/components/engines/deck";
 import { Drill } from "./practice/components/engines/drill";
@@ -29,7 +28,6 @@ const TRY_QUESTIONS: Array<{ id: string; prompt: string; correctGreek: string }>
 const TRY_ITEMS: SimpleListItem[] = TRY_QUESTIONS.map((q) => ({
 	id: q.id,
 	greek: q.correctGreek,
-	greeklish: greekToPhonetic(q.correctGreek),
 	label: q.prompt,
 	english: q.prompt,
 }));

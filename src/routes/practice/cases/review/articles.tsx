@@ -33,7 +33,6 @@ const ARTICLES: Article[] = [
 		gender: "masculine",
 		number: "singular",
 		greek: "ο",
-		greeklish: "o",
 		label: "masculine / singular / nominative",
 	},
 	{
@@ -42,7 +41,6 @@ const ARTICLES: Article[] = [
 		gender: "feminine",
 		number: "singular",
 		greek: "η",
-		greeklish: "i",
 		label: "feminine / singular / nominative",
 	},
 	{
@@ -51,7 +49,6 @@ const ARTICLES: Article[] = [
 		gender: "neuter",
 		number: "singular",
 		greek: "το",
-		greeklish: "to",
 		label: "neuter / singular / nominative",
 	},
 	{
@@ -60,7 +57,6 @@ const ARTICLES: Article[] = [
 		gender: "masculine",
 		number: "singular",
 		greek: "τον",
-		greeklish: "ton",
 		label: "masculine / singular / accusative",
 	},
 	{
@@ -69,7 +65,6 @@ const ARTICLES: Article[] = [
 		gender: "feminine",
 		number: "singular",
 		greek: "την",
-		greeklish: "tin",
 		label: "feminine / singular / accusative",
 	},
 	{
@@ -78,7 +73,6 @@ const ARTICLES: Article[] = [
 		gender: "neuter",
 		number: "singular",
 		greek: "το",
-		greeklish: "to",
 		label: "neuter / singular / accusative",
 	},
 	{
@@ -87,7 +81,6 @@ const ARTICLES: Article[] = [
 		gender: "masculine",
 		number: "singular",
 		greek: "του",
-		greeklish: "tou",
 		label: "masculine / singular / genitive",
 	},
 	{
@@ -96,7 +89,6 @@ const ARTICLES: Article[] = [
 		gender: "feminine",
 		number: "singular",
 		greek: "της",
-		greeklish: "tis",
 		label: "feminine / singular / genitive",
 	},
 	{
@@ -105,7 +97,6 @@ const ARTICLES: Article[] = [
 		gender: "neuter",
 		number: "singular",
 		greek: "του",
-		greeklish: "tou",
 		label: "neuter / singular / genitive",
 	},
 	{
@@ -114,7 +105,6 @@ const ARTICLES: Article[] = [
 		gender: "masculine",
 		number: "plural",
 		greek: "οι",
-		greeklish: "i",
 		label: "masculine / plural / nominative",
 	},
 	{
@@ -123,7 +113,6 @@ const ARTICLES: Article[] = [
 		gender: "feminine",
 		number: "plural",
 		greek: "οι",
-		greeklish: "i",
 		label: "feminine / plural / nominative",
 	},
 	{
@@ -132,7 +121,6 @@ const ARTICLES: Article[] = [
 		gender: "neuter",
 		number: "plural",
 		greek: "τα",
-		greeklish: "ta",
 		label: "neuter / plural / nominative",
 	},
 	{
@@ -141,7 +129,6 @@ const ARTICLES: Article[] = [
 		gender: "masculine",
 		number: "plural",
 		greek: "τους",
-		greeklish: "tous",
 		label: "masculine / plural / accusative",
 	},
 	{
@@ -150,7 +137,6 @@ const ARTICLES: Article[] = [
 		gender: "feminine",
 		number: "plural",
 		greek: "τις",
-		greeklish: "tis",
 		label: "feminine / plural / accusative",
 	},
 	{
@@ -159,7 +145,6 @@ const ARTICLES: Article[] = [
 		gender: "neuter",
 		number: "plural",
 		greek: "τα",
-		greeklish: "ta",
 		label: "neuter / plural / accusative",
 	},
 	{
@@ -168,7 +153,6 @@ const ARTICLES: Article[] = [
 		gender: "masculine",
 		number: "plural",
 		greek: "των",
-		greeklish: "ton",
 		label: "masculine / plural / genitive",
 	},
 	{
@@ -177,7 +161,6 @@ const ARTICLES: Article[] = [
 		gender: "feminine",
 		number: "plural",
 		greek: "των",
-		greeklish: "ton",
 		label: "feminine / plural / genitive",
 	},
 	{
@@ -186,7 +169,6 @@ const ARTICLES: Article[] = [
 		gender: "neuter",
 		number: "plural",
 		greek: "των",
-		greeklish: "ton",
 		label: "neuter / plural / genitive",
 	},
 ];

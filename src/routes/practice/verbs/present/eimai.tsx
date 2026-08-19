@@ -12,7 +12,6 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "eimai",
 		greek: "είμαι",
-		greeklish: "eimai",
 		english: "I am",
 		detail: "1st person singular",
 		label: "I am",
@@ -21,7 +20,6 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "eisai",
 		greek: "είσαι",
-		greeklish: "eisai",
 		english: "you are",
 		detail: "2nd person singular",
 		label: "you are",
@@ -30,7 +28,6 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "einai-sg",
 		greek: "είναι",
-		greeklish: "einai",
 		english: "he / she / it is",
 		detail: "3rd person singular",
 		label: "he / she / it is",
@@ -39,7 +36,6 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "eimaste",
 		greek: "είμαστε",
-		greeklish: "eimaste",
 		english: "we are",
 		detail: "1st person plural",
 		label: "we are",
@@ -48,7 +44,6 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "eiste",
 		greek: "είστε",
-		greeklish: "eiste",
 		english: "you all are",
 		detail: "2nd person plural",
 		label: "you all are",
@@ -57,7 +52,6 @@ const FORMS: SimpleListItem[] = [
 	{
 		id: "einai-pl",
 		greek: "είναι",
-		greeklish: "einai",
 		english: "they are",
 		detail: "3rd person plural",
 		label: "they are",

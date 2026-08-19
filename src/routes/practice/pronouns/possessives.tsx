@@ -41,7 +41,6 @@ const POSSESSIVES: Possessive[] = [
 		number: "singular",
 		gender: "",
 		greek: "μου",
-		greeklish: "mou",
 		label: "my / 1st singular",
 	},
 	{
@@ -50,7 +49,6 @@ const POSSESSIVES: Possessive[] = [
 		number: "singular",
 		gender: "",
 		greek: "σου",
-		greeklish: "sou",
 		label: "your / 2nd singular",
 	},
 	{
@@ -59,7 +57,6 @@ const POSSESSIVES: Possessive[] = [
 		number: "singular",
 		gender: "masculine",
 		greek: "του",
-		greeklish: "tou",
 		label: "his / 3rd singular",
 	},
 	{
@@ -68,7 +65,6 @@ const POSSESSIVES: Possessive[] = [
 		number: "singular",
 		gender: "feminine",
 		greek: "της",
-		greeklish: "tis",
 		label: "her / 3rd singular",
 	},
 	{
@@ -77,7 +73,6 @@ const POSSESSIVES: Possessive[] = [
 		number: "singular",
 		gender: "neuter",
 		greek: "του",
-		greeklish: "tou",
 		label: "its / 3rd singular",
 	},
 	{
@@ -86,7 +81,6 @@ const POSSESSIVES: Possessive[] = [
 		number: "plural",
 		gender: "",
 		greek: "μας",
-		greeklish: "mas",
 		label: "our / 1st plural",
 	},
 	{
@@ -95,7 +89,6 @@ const POSSESSIVES: Possessive[] = [
 		number: "plural",
 		gender: "",
 		greek: "σας",
-		greeklish: "sas",
 		label: "your / 2nd plural",
 	},
 	{
@@ -104,7 +97,6 @@ const POSSESSIVES: Possessive[] = [
 		number: "plural",
 		gender: "",
 		greek: "τους",
-		greeklish: "tous",
 		label: "their / 3rd plural",
 	},
 ];

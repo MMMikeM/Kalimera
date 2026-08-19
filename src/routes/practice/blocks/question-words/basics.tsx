@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { greekToPhonetic } from "@/lib/greek-transliteration";
 
 import type { SimpleListItem } from "../../components/engines/deck";
 import { Drill } from "../../components/engines/drill";
@@ -8,7 +7,6 @@ import { Drill } from "../../components/engines/drill";
 const item = (id: string, greek: string, english: string, label: string): SimpleListItem => ({
 	id,
 	greek,
-	greeklish: greekToPhonetic(greek),
 	english,
 	label,
 });
