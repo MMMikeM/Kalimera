@@ -1,0 +1,73 @@
+# Opposites — Memory Drill
+
+## Purpose
+
+Drill a Greek word → the word that means its opposite. Antonym pairs give each item a second
+retrieval route: the learner who cannot recall μικρός cold can often reach it from μεγάλος.
+Both directions of every pair are drilled, so neither member is only ever the prompt.
+
+Target: 3 seconds.
+
+## Item source — NOT hardcoded
+
+Unlike the other blocks drills, `opposites.tsx` has **no literal item list**. Items come from the
+database at load time:
+
+```text
+opposites.tsx loader
+  → getOppositePairsFn()            src/server/fns/opposites.ts
+  → getOppositePairs()              src/server/db/queries/opposites.ts
+  → vocabularyOpposites table joined to vocabulary for both members
+```
+
+The authority for which pairs exist is `src/scripts/seed-data/vocabulary/opposites.ts`
+(`OPPOSITE_PAIRS`), seeded by `src/scripts/seed-opposites.ts`. **Edit that file, not this one, to
+change the item set.** Do not treat any list reproduced here as the source of truth.
+
+Constraints enforced by the seed layer:
+
+- Both members must already exist in vocabulary seed data as a bare lemma (`greekText`, no article)
+- Each lemma appears in at most one pair (unique constraint on the table)
+- The seeder normalises `wordAId < wordBId`, so each pair is one canonical row; drill order is
+  independent of the order written in the seed file
+- A pair whose lemma is missing from vocabulary is skipped with a warning, so the live card count
+  can be lower than the seed-file pair count
+
+At time of writing the seed file holds 48 pairs across four bands — adjectives, adverbs, verbs,
+nouns — which the loader expands to two cards per pair. The subtitle renders the live count
+(`${items.length} cards`), so it never drifts from the data.
+
+## Card construction
+
+Each pair produces two cards, one per direction:
+
+| Field | Value |
+|-------|-------|
+| `greek` | the **target** word — what the learner types |
+| `greeklish` | `greekToPhonetic(target)` — derived, never hand-written |
+| `label` | `source Greek — source gloss` |
+| `sourceGreek` / `sourceEnglish` | the prompt word, rendered by `forwardPrompt` |
+
+Glosses are cleaned with `cleanGloss`, which strips a leading `I ` so verb entries read
+"remember / forget" rather than "I remember / I forget".
+
+## Drill format
+
+**Forward**: custom `forwardPrompt` — small uppercase "opposite of", the source word large in
+Greek, the English gloss below in quotes as support. Learner types the opposite in greeklish.
+
+**Reverse**: self-assess. Greek word → recall its opposite, grade yourself.
+
+No paradigm table — there is no pattern to show. Pure paired-associate recall.
+
+Colour theme: terracotta.
+
+## Notes
+
+- Antonym pairing is the whole pedagogy here; do not reorder into "adjectives session, verbs
+  session" groups that break a pair across sessions
+- Adjectives are seeded in the masculine singular (μεγάλος, not μεγάλη/μεγάλο) — this drill teaches
+  the lexical pairing, not agreement; agreement lives in the cases drills
+- άσπρο / μαύρο are the neuter colour forms, matching how colours are seeded
+- The loader throws when no pairs are returned rather than rendering an empty drill — an empty
+  result means the seed has not been run, not that the drill is finished
