@@ -127,12 +127,17 @@ function RootBody() {
 
 function ErrorBoundary({ error }: { error: Error }) {
 	const errorMessage = error instanceof Error ? error.message : "Unknown error";
+	// Drizzle puts the SQL in `message` and the reason the database rejected it in `cause`.
+	const cause = error?.cause instanceof Error ? error.cause.message : undefined;
 
 	return (
 		<div className="flex min-h-screen items-center justify-center bg-cream p-6">
-			<div className="max-w-md text-center">
+			<div className="max-w-2xl text-center">
 				<h1 className="mb-4 font-serif text-3xl text-terracotta">Something went wrong</h1>
-				<p className="mb-6 text-stone-600">{errorMessage}</p>
+				{cause && <p className="mb-4 font-medium text-stone-700">{cause}</p>}
+				<pre className="mb-6 max-h-64 overflow-auto rounded-lg bg-stone-100 p-3 text-left text-xs whitespace-pre-wrap text-stone-500">
+					{errorMessage}
+				</pre>
 				<a
 					href="/"
 					className="inline-block rounded-xl bg-terracotta px-6 py-3 font-medium text-white transition-colors hover:bg-terracotta-dark"
