@@ -27,7 +27,7 @@ export default defineConfig({
 		nitro(),
 		tanstackStart({
 			router: {
-				routeFileIgnorePattern: "(tabs|components)",
+				routeFileIgnorePattern: "(tabs|components|\\.test\\.)",
 			},
 		}),
 		viteReact(),

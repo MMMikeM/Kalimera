@@ -8,7 +8,7 @@ import { TabHero } from "@/components/TabHero";
 import { cn } from "@/lib/utils";
 import { fetchVerbParadigms, fetchVerbsForInventory } from "@/server/db/queries/vocabulary";
 
-import { MemoriseSection, type Paradigm, RulesSection, classifyVerbs } from "./verb-inventory";
+import { MemoriseSection, type Paradigm, RulesSection, classifyVerbs } from "./verbs/components/verb-inventory";
 
 const verbsLoader = createServerFn().handler(async () => {
 	const inventory = classifyVerbs(await fetchVerbsForInventory());
