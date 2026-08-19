@@ -138,6 +138,17 @@ const NOUNS_RAW = {
 		{ lemma: "μητέρα", gender: "feminine", english: "mother", cefrLevel: "A1" },
 		{ lemma: "πατέρας", gender: "masculine", english: "father", cefrLevel: "A1" },
 		{ lemma: "πεθερά", gender: "feminine", english: "mother-in-law", cefrLevel: "B1" },
+		{ lemma: "θείος", gender: "masculine", english: "uncle", cefrLevel: "A2" },
+		{ lemma: "θεία", gender: "feminine", english: "aunt", cefrLevel: "A2" },
+		{ lemma: "πεθερός", gender: "masculine", english: "father-in-law", cefrLevel: "B1" },
+		{ lemma: "γαμπρός", gender: "masculine", english: "son-in-law/groom", cefrLevel: "B1" },
+		{ lemma: "νύφη", gender: "feminine", english: "daughter-in-law/bride", cefrLevel: "B1" },
+		{ lemma: "ξάδερφος", gender: "masculine", english: "cousin (male)", cefrLevel: "A2" },
+		{ lemma: "ξαδέρφη", gender: "feminine", english: "cousin (female)", cefrLevel: "A2" },
+		{ lemma: "ανιψιός", gender: "masculine", english: "nephew", cefrLevel: "B1" },
+		{ lemma: "ανιψιά", gender: "feminine", english: "niece", cefrLevel: "B1" },
+		{ lemma: "εγγονός", gender: "masculine", english: "grandson", cefrLevel: "B1" },
+		{ lemma: "εγγονή", gender: "feminine", english: "granddaughter", cefrLevel: "B1" },
 		{ lemma: "σύζυγος", gender: "masculine", english: "spouse", cefrLevel: "A2" },
 		{ lemma: "γιατρός", gender: "masculine", english: "doctor", cefrLevel: "A2" },
 		{ lemma: "κηπουρός", gender: "masculine", english: "gardener", cefrLevel: "B1" },
@@ -278,7 +289,7 @@ const themeTagMap: Record<string, string> = {
 	household: "household",
 	people: "people",
 	nature: "nature",
-	essential: "essential",
+	essential: "core-nouns",
 };
 
 export const NOUNS = enrichNounsRecord(NOUNS_RAW);
