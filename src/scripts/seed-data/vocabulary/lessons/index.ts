@@ -5,6 +5,8 @@ import { fileURLToPath } from "node:url";
 
 import type { Lesson } from "@/types/lesson-seed";
 
+import { subjectTagsFor } from "../noun-subjects";
+
 import {
 	type VocabWithTags,
 	nounDetailFromSeed,
@@ -57,7 +59,8 @@ function buildLessonSeedCategories(): Array<{ name: string; items: VocabWithTags
 					cefrLevel: noun.cefrLevel ?? null,
 					metadata: { lessonDate: date },
 				},
-				tags: [lessonTag],
+				// A lesson date is not a subject, so add the noun's subject group too.
+				tags: [lessonTag, ...subjectTagsFor(noun.lemma)],
 				nounDetail: nounDetailFromSeed(noun),
 				...pickNounNominalForms(noun),
 			});
