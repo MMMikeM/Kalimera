@@ -49,9 +49,12 @@ export const nounDeclensionPatterns = [
 	"fem-si", // η ερώτηση -> την ερώτηση -> της ερώτησης -> οι ερωτήσεις
 	"fem-ksi", // η απόδειξη -> της απόδειξης -> οι αποδείξεις
 	"fem-psi", // η άποψη -> της άποψης -> οι απόψεις
+	"fem-i-archaic", // η πόλη -> της πόλης -> οι πόλεις (not inferable: αγάπη takes -ες)
 	"neut-o", // το βιβλίο -> το βιβλίο -> του βιβλίου
 	"neut-i", // το παιδί -> το παιδί -> του παιδιού
 	"neut-ma", // το όνομα -> το όνομα -> του ονόματος
+	"neut-os", // το μέρος -> του μέρους -> τα μέρη
+	"neut-as", // το κρέας -> του κρέατος -> τα κρέατα
 ] as const;
 export type NounDeclensionPattern = (typeof nounDeclensionPatterns)[number];
 
