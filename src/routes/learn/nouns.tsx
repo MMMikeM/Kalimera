@@ -6,143 +6,25 @@ import type React from "react";
 
 import { ContentSection } from "@/components/ContentSection";
 import { TabHero } from "@/components/TabHero";
-import { getArticle } from "@/lib/greek-grammar";
-import { typedEntries } from "@/lib/object";
-import { getVocabBySlug } from "@/server/db/queries/vocabulary";
-import type { Gender } from "@/server/db/schema";
-import type { Vocabulary } from "@/server/db/types";
-import { GreekText } from "@/components/GreekText";
+import {
+	type BrowsableNoun,
+	type NounSubjectGroup,
+	groupNounsBySubject,
+} from "@/lib/noun-browser-groups";
+import { getNounsWithFormsAndSubjects } from "@/server/db/queries/noun-browser";
 
-export type NounWithGender = Vocabulary & { gender: Gender };
+import { NounRow } from "./components/noun-row";
 
-const parseNoun = (
-	item: Vocabulary & { nounDetails: { gender: Gender } | null },
-): NounWithGender => ({
-	...item,
-	gender: item.nounDetails?.gender ?? "neuter",
-});
-
-export type CategoryData = {
-	title: string;
-	nouns: NounWithGender[];
-	total: number;
-};
-
-type CategoryKey = "people" | "shopping" | "household" | "vehicles" | "summer";
-type CategoriesMap = Record<CategoryKey, CategoryData>;
-
-const nounsLoader = createServerFn().handler(async () => {
-	const tags = await getVocabBySlug("nouns", ["noun"]);
-	const bySlug = Object.fromEntries(
-		tags.map((t) => [
-			t.slug,
-			t.vocabularyTags.map((vt) => vt.vocabulary).filter((v) => v !== null),
-		]),
-	);
-
-	const buildCategory = (title: string, tagKey: string): CategoryData => {
-		const items = (bySlug[tagKey] ?? []).map(parseNoun);
-		return { title, nouns: items, total: items.length };
-	};
-
-	const categories: CategoriesMap = {
-		people: buildCategory("Family & People", "people"),
-		shopping: buildCategory("Shopping & Groceries", "shopping"),
-		household: buildCategory("Household & Home", "household"),
-		vehicles: buildCategory("Transportation", "transport-vehicle"),
-		summer: buildCategory("Summer & Beach", "summer"),
-	};
-
-	return { categories };
-});
+const nounsLoader = createServerFn().handler(async () => ({
+	groups: groupNounsBySubject(await getNounsWithFormsAndSubjects()),
+}));
 
 export const Route = createFileRoute("/learn/nouns")({
 	loader: () => nounsLoader(),
 	component: NounsRefactorPage,
 });
 
-const genderStyles: Record<Gender, { text: string; bg: string; ending: string; border: string }> = {
-	masculine: {
-		text: "text-gender-masculine-text",
-		bg: "bg-gender-masculine-100",
-		ending: "text-gender-masculine-text",
-		border: "border-gender-masculine-500",
-	},
-	feminine: {
-		text: "text-gender-feminine-text",
-		bg: "bg-gender-feminine-100",
-		ending: "text-gender-feminine-text",
-		border: "border-gender-feminine-500",
-	},
-	neuter: {
-		text: "text-gender-neuter-text",
-		bg: "bg-gender-neuter-100",
-		ending: "text-gender-neuter-text",
-		border: "border-gender-neuter-500",
-	},
-};
-
-const NOUN_ENDINGS = [
-	// Longer endings first (so -μα matches before -α)
-	"μα",
-	// Two-character (with and without accent)
-	"ος",
-	"ός",
-	"ας",
-	"άς",
-	"ης",
-	"ής",
-	// One-character (with and without accent/diaeresis)
-	"α",
-	"ά",
-	"η",
-	"ή",
-	"ο",
-	"ό",
-	"ι",
-	"ί",
-	"ϊ",
-];
-
-const parseGreekNoun = (lemma: string): { noun: string; ending: string } => {
-	let ending = "";
-	for (const e of NOUN_ENDINGS) {
-		if (lemma.endsWith(e)) {
-			ending = e;
-			break;
-		}
-	}
-	return { noun: lemma, ending };
-};
-
-const NounDisplay: React.FC<{ noun: NounWithGender }> = ({ noun }) => {
-	const styles = genderStyles[noun.gender];
-	const article = getArticle(noun.gender);
-	const { noun: nounWord, ending } = parseGreekNoun(noun.greekText);
-	const stem = ending ? nounWord.slice(0, -ending.length) : nounWord;
-
-	return (
-		<div className={`border-l-4 px-3 py-2.5 ${styles.border}`}>
-			<div className="flex items-baseline gap-2">
-				<span className={`rounded px-1.5 py-0.5 text-sm font-bold ${styles.text} ${styles.bg}`}>
-					{article}
-				</span>
-				<GreekText tone="accent" size="lg" className="text-stone-900">
-					{ending ? (
-						<>
-							{stem}
-							<span className={styles.ending}>{ending}</span>
-						</>
-					) : (
-						nounWord
-					)}
-				</GreekText>
-			</div>
-			<div className="mt-0.5 ml-8 text-xs text-stone-500">{noun.englishTranslation}</div>
-		</div>
-	);
-};
-
+/** Masculine/feminine counterparts worth seeing side by side. */
 const nounPairs: Record<string, Array<[string, string]>> = {
 	people: [
 		["πατέρας", "μητέρα"],
@@ -160,14 +42,24 @@ const nounPairs: Record<string, Array<[string, string]>> = {
 	],
 };
 
+/** Hand-authored sub-groups inside a subject; anything unmatched falls to "More". */
 const nounSubgroups: Record<string, Array<{ title: string; words: string[] }>> = {
 	people: [
 		{ title: "Family", words: ["πατέρας", "μητέρα", "αδελφός", "αδελφή", "γιος", "κόρη", "παιδί", "οικογένεια"] },
 		{ title: "Extended family", words: ["θείος", "θεία", "ξάδερφος", "ξαδέρφη", "ανιψιός", "ανιψιά", "εγγονός", "εγγονή"] },
 		{ title: "In-laws", words: ["πεθερός", "πεθερά", "γαμπρός", "νύφη"] },
 		{ title: "Partners & friends", words: ["άντρας", "γυναίκα", "φίλος", "φίλη", "σύζυγος"] },
-		{ title: "Jobs", words: ["γιατρός", "δάσκαλος", "οδηγός", "ηθοποιός", "κηπουρός", "γεωργός", "βοσκός", "κυνηγός", "αρχηγός"] },
 		{ title: "People & pets", words: ["άνθρωπος", "αγόρι", "νάνος", "σκύλος"] },
+	],
+	"time-calendar": [
+		{ title: "Days", words: ["Δευτέρα", "Τρίτη", "Τετάρτη", "Πέμπτη", "Παρασκευή", "Σάββατο", "Κυριακή", "Σαββατοκύριακο"] },
+		{ title: "Months", words: ["Ιανουάριος", "Φεβρουάριος", "Μάρτιος", "Απρίλιος", "Μάιος", "Ιούνιος", "Ιούλιος", "Αύγουστος", "Σεπτέμβριος", "Οκτώβριος", "Νοέμβριος", "Δεκέμβριος"] },
+		{ title: "Seasons", words: ["άνοιξη", "καλοκαίρι", "φθινόπωρο", "χειμώνας"] },
+		{ title: "Parts of the day", words: ["πρωί", "μεσημέρι", "απόγευμα", "βράδυ", "νύχτα", "μεσάνυχτα"] },
+	],
+	"work-study": [
+		{ title: "Jobs", words: ["γιατρός", "δάσκαλος", "δασκάλα", "οδηγός", "ηθοποιός", "κηπουρός", "γεωργός", "βοσκός", "κυνηγός", "αρχηγός", "αρχιτέκτονας", "μηχανικός", "κομμωτής", "κομμώτρια", "κρεοπώλης", "κουρέας", "μπαρμπέρης", "γραμματέας", "ιατρός", "νοσοκόμα", "νοσοκόμος", "νοσηλευτής", "οδοντίατρος", "πωλητής", "προγραμματιστής", "υπάλληλος", "υπεύθυνος", "ξεναγός", "φύλακας", "μάστορας", "μπαρίστα", "μαθηματικός", "καλλιτέχνης", "βοηθός"] },
+		{ title: "Study", words: ["μάθημα", "εκπαίδευση", "ερώτηση", "έρευνα", "παρουσίαση", "φοιτητής", "φοιτήτρια", "γλώσσα", "επίπεδο", "πίνακας"] },
 	],
 	shopping: [
 		{ title: "Food & drink", words: ["καφές", "χυμός", "ντομάτα", "αγγούρι", "πορτοκάλι", "ψωμί"] },
@@ -180,76 +72,56 @@ const nounSubgroups: Record<string, Array<{ title: string; words: string[] }>> =
 };
 
 const splitIntoPairsAndSingles = (
-	nouns: NounWithGender[],
-	categoryKey: string,
-): {
-	pairs: Array<[NounWithGender, NounWithGender]>;
-	singles: NounWithGender[];
-} => {
-	const pairDefs = nounPairs[categoryKey] ?? [];
-	const nounMap = new Map<string, NounWithGender>();
+	nouns: BrowsableNoun[],
+	subjectSlug: string,
+): { pairs: Array<[BrowsableNoun, BrowsableNoun]>; singles: BrowsableNoun[] } => {
+	const pairDefs = nounPairs[subjectSlug] ?? [];
+	const byLemma = new Map(nouns.map((n) => [n.lemma.toLowerCase(), n]));
 
-	for (const noun of nouns) {
-		nounMap.set(noun.greekText.toLowerCase(), noun);
-	}
-
-	const pairs: Array<[NounWithGender, NounWithGender]> = [];
-	const usedWords = new Set<string>();
+	const pairs: Array<[BrowsableNoun, BrowsableNoun]> = [];
+	const used = new Set<string>();
 
 	for (const [leftWord, rightWord] of pairDefs) {
-		const left = nounMap.get(leftWord);
-		const right = nounMap.get(rightWord);
-
+		const left = byLemma.get(leftWord);
+		const right = byLemma.get(rightWord);
 		if (left && right) {
 			pairs.push([left, right]);
-			usedWords.add(leftWord);
-			usedWords.add(rightWord);
+			used.add(leftWord);
+			used.add(rightWord);
 		}
 	}
 
-	const singles = nouns.filter((noun) => !usedWords.has(noun.greekText.toLowerCase()));
-
-	return { pairs, singles };
+	return { pairs, singles: nouns.filter((n) => !used.has(n.lemma.toLowerCase())) };
 };
 
-const categoryColors: Record<string, "stone"> = {
-	people: "stone",
-	shopping: "stone",
-	household: "stone",
-	vehicles: "stone",
-	summer: "stone",
-};
-
-const NounList: React.FC<{
-	nouns: NounWithGender[];
-	categoryKey: string;
-}> = ({ nouns, categoryKey }) => {
-	const { pairs, singles } = splitIntoPairsAndSingles(nouns, categoryKey);
+const NounList: React.FC<{ nouns: BrowsableNoun[]; subjectSlug: string }> = ({
+	nouns,
+	subjectSlug,
+}) => {
+	const { pairs, singles } = splitIntoPairsAndSingles(nouns, subjectSlug);
 
 	return (
 		<>
-			{/* Paired nouns */}
 			{pairs.length > 0 && (
 				<div className="divide-y divide-stone-200/60">
 					{pairs.map(([left, right]) => (
 						<div
 							key={`${left.id}-${right.id}`}
-							className="grid grid-cols-2 divide-x divide-stone-200/60"
+							className="grid grid-cols-1 divide-y divide-stone-200/60 sm:grid-cols-2 sm:divide-x sm:divide-y-0"
 						>
-							<NounDisplay noun={left} />
-							<NounDisplay noun={right} />
+							<NounRow noun={left} />
+							<NounRow noun={right} />
 						</div>
 					))}
 				</div>
 			)}
 
-			{/* Single nouns */}
 			{singles.length > 0 && (
 				<div
 					className={`divide-y divide-stone-200/60 ${pairs.length > 0 ? "border-t border-stone-200/60" : ""}`}
 				>
 					{singles.map((noun) => (
-						<NounDisplay key={noun.id} noun={noun} />
+						<NounRow key={noun.id} noun={noun} />
 					))}
 				</div>
 			)}
@@ -257,59 +129,47 @@ const NounList: React.FC<{
 	);
 };
 
-const CategorySection: React.FC<{
-	categoryKey: string;
-	category: CategoryData;
-}> = ({ categoryKey, category }) => {
-	if (category.nouns.length === 0) return null;
-
-	const colorScheme = categoryColors[categoryKey] ?? "stone";
-	const subgroups = nounSubgroups[categoryKey];
+const SubjectSection: React.FC<{ group: NounSubjectGroup }> = ({ group }) => {
+	const subgroups = nounSubgroups[group.slug];
 
 	if (!subgroups) {
 		return (
 			<ContentSection
-				title={category.title}
-				subtitle={`${category.total} nouns`}
-				colorScheme={colorScheme}
+				title={group.title}
+				subtitle={`${group.nouns.length} nouns`}
+				colorScheme="stone"
 			>
-				<NounList nouns={category.nouns} categoryKey={categoryKey} />
+				<NounList nouns={group.nouns} subjectSlug={group.slug} />
 			</ContentSection>
 		);
 	}
 
-	const seenIds = new Set<string | number>();
-	const groups: Array<{ title: string; nouns: NounWithGender[] }> = [];
+	const seen = new Set<number>();
+	const blocks: Array<{ title: string; nouns: BrowsableNoun[] }> = [];
 
 	for (const sub of subgroups) {
-		const wordSet = new Set(sub.words.map((w) => w.toLowerCase()));
-		const matched = category.nouns.filter(
-			(noun) => !seenIds.has(noun.id) && wordSet.has(noun.greekText.toLowerCase()),
-		);
-		for (const n of matched) seenIds.add(n.id);
-		if (matched.length > 0) {
-			groups.push({ title: sub.title, nouns: matched });
-		}
+		const words = new Set(sub.words.map((w) => w.toLowerCase()));
+		const matched = group.nouns.filter((n) => !seen.has(n.id) && words.has(n.lemma.toLowerCase()));
+		for (const n of matched) seen.add(n.id);
+		if (matched.length > 0) blocks.push({ title: sub.title, nouns: matched });
 	}
 
-	// Fallback so nouns not covered by hand-authored sub-groups are not silently dropped
-	const unmatched = category.nouns.filter((noun) => !seenIds.has(noun.id));
-	if (unmatched.length > 0) {
-		groups.push({ title: "More", nouns: unmatched });
-	}
+	// Catch-all so nouns outside the hand-authored sub-groups are never dropped.
+	const unmatched = group.nouns.filter((n) => !seen.has(n.id));
+	if (unmatched.length > 0) blocks.push({ title: "More", nouns: unmatched });
 
 	return (
 		<ContentSection
-			title={category.title}
-			subtitle={`${category.total} nouns`}
-			colorScheme={colorScheme}
+			title={group.title}
+			subtitle={`${group.nouns.length} nouns`}
+			colorScheme="stone"
 		>
-			{groups.map((group) => (
-				<div key={group.title}>
-					<h4 className="px-3 pt-3 pb-1 text-xs font-semibold uppercase tracking-wide text-stone-500">
-						{group.title}
+			{blocks.map((block) => (
+				<div key={block.title}>
+					<h4 className="px-3 pt-3 pb-1 text-xs font-semibold tracking-wide text-stone-500 uppercase">
+						{block.title}
 					</h4>
-					<NounList nouns={group.nouns} categoryKey={categoryKey} />
+					<NounList nouns={block.nouns} subjectSlug={group.slug} />
 				</div>
 			))}
 		</ContentSection>
@@ -317,7 +177,7 @@ const CategorySection: React.FC<{
 };
 
 function NounsRefactorPage() {
-	const { categories } = Route.useLoaderData();
+	const { groups } = Route.useLoaderData();
 
 	return (
 		<div className="space-y-6">
@@ -359,9 +219,9 @@ function NounsRefactorPage() {
 					),
 				}}
 			>
-				The words you'll use most, organised by situation. The{" "}
+				The words you'll use most, organised by subject. The{" "}
 				<span className="font-medium text-stone-700">coloured article</span> shows gender at a
-				glance.
+				glance — tap any word to see how it changes.
 			</TabHero>
 
 			<div className="flex items-center gap-3 px-1 text-xs text-stone-500">
@@ -387,8 +247,8 @@ function NounsRefactorPage() {
 			</div>
 
 			<div className="space-y-4">
-				{typedEntries(categories).map(([cName, cData]) => (
-					<CategorySection categoryKey={cName} category={cData} key={cName} />
+				{groups.map((group) => (
+					<SubjectSection group={group} key={group.slug} />
 				))}
 			</div>
 		</div>
