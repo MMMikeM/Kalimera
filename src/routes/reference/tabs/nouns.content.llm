@@ -1,5 +1,9 @@
 # Nouns Reference Content
 
+> **This is a design spec, not a description of what the page currently renders.**
+> Where it disagrees with `components/nouns-section.tsx`, the code is the truth.
+> Several boxes in the Verification list below were ticked while unimplemented.
+
 Noun declensions by gender and case - how Greek nouns change their endings.
 
 ## Purpose
@@ -20,8 +24,8 @@ Greek nouns change their endings to show grammatical function (case) and number.
 | Gender    | Common Endings | Tip |
 |-----------|----------------|-----|
 | Masculine | -ος, -ας, -ης, -ές | Most words for male people |
-| Feminine  | -α, -η, -ση, -ξη, -ψη | Female people, abstract nouns (-η) |
-| Neuter    | -ο, -ι, -μα | Diminutives (-ι, -άκι), result nouns (-μα) |
+| Feminine  | -α, -η, -ση, -ξη, -ψη, -η (πόλη) | Female people, abstract nouns (-η) |
+| Neuter    | -ο, -ι, -μα, -ος, -ας | Diminutives (-ι, -άκι), result nouns (-μα); -ος/-ας look masculine but are not (το μέρος, το κρέας) |
 
 Ending lists are derived from `AGREEMENT_PARADIGMS` — adding a declension pattern
 updates this table with no edit here.
@@ -187,28 +191,56 @@ The article changes along with the noun and helps identify the gender.
 
 </paradigm>
 
+<paradigm name="neuter-os" frequency="less common">
+<pattern>-ος</pattern>
+<example>μέρος (part / place)</example>
+<tip>Looks masculine but is neuter: το μέρος, τα μέρη</tip>
+
+| Case | Singular | Plural |
+|------|----------|--------|
+| Nom  | το μέρος | τα μέρη |
+| Acc  | το μέρος | τα μέρη |
+| Gen  | του μέρους | των μερών |
+
+</paradigm>
+
+<paradigm name="neuter-as" frequency="less common">
+<pattern>-ας</pattern>
+<example>κρέας (meat)</example>
+<tip>Adds -τ- before the ending, like -μα words</tip>
+
+| Case | Singular | Plural |
+|------|----------|--------|
+| Nom  | το κρέας | τα κρέατα |
+| Acc  | το κρέας | τα κρέατα |
+| Gen  | του κρέατος | των κρεάτων |
+
+</paradigm>
+
+<paradigm name="feminine-i-archaic" frequency="common">
+<pattern>-η (πόλη)</pattern>
+<example>πόλη (city)</example>
+<note>Cannot be inferred from the ending: πόλη takes -εις but αγάπη takes -ες.
+Membership is a hand-kept list in `DECLENSION_BY_LEMMA`
+(`scripts/seed-data/vocabulary/noun-seed-enrichment.ts`).</note>
+
+| Case | Singular | Plural |
+|------|----------|--------|
+| Nom  | η πόλη | οι πόλεις |
+| Acc  | την πόλη | τις πόλεις |
+| Gen  | της πόλης | των πόλεων |
+
+</paradigm>
+
 ---
 
 ## Vocative
 
-The essential-patterns table adds a fourth row, "Calling / Vocative", when the
-view toggle is set to **Full forms**. It is hidden in the default Endings view so
-the Doer / Target / Owner trio stays uncluttered.
-
-## Vocative Changes (Collapsible)
-
-<section expandable="true" default="collapsed">
-<title>Vocative Changes (Direct Address)</title>
-
-Masculine nouns change their ending for direct address:
-- -ος → -ε (φίλος → φίλε!)
-- -ας → -α (πατέρας → πατέρα!)
-- -ης → -η (μαθητής → μαθητή!)
-- -ές → -έ (καφές → καφέ!)
-
-Feminine and neuter nouns keep nominative form.
-
-</section>
+Not given a section of its own. The curriculum guidance is that the vocative earns
+incidental exposure, not drilling, so it appears only as a fourth row of the
+essential-patterns table under the **Full forms** toggle, and only in the singular
+— the plural vocative is identical to the plural nominative in all 15 paradigms,
+so a plural row would merely repeat the one above it.
 
 ---
 
@@ -221,7 +253,7 @@ Feminine and neuter nouns keep nominative form.
 | βλέπω ο πατέρας    | βλέπω τον πατέρα   | Object needs accusative, not nominative  |
 | θέλω ο καφές       | θέλω τον καφέ      | "I want" takes accusative object         |
 | το σπίτι ο Νίκος   | το σπίτι του Νίκου | Possession needs genitive                |
-| οι παιδί           | τα παιδιά          | παιδί is neuter, use τα for plural       |
+| οι παιδιά          | τα παιδιά          | παιδί is neuter, so its plural article is τα |
 | το βιβλία          | τα βιβλία          | Plural nouns need plural article         |
 
 </mistakes>
@@ -231,22 +263,29 @@ Feminine and neuter nouns keep nominative form.
 ## Navigation
 
 <previous>See article forms first: /reference/articles</previous>
-<practice>Build fluency with timed retrieval drills: /practice/nominal/all-nouns</practice>
+<practice>Build fluency with timed retrieval drills: /practice/cases/review/nouns
+(auth-gated — logged-out visitors get /register instead)</practice>
 
 ---
 
 ## Data Source
 
-Static content from:
-- `@/constants/agreement` (AGREEMENT_PARADIGMS)
-- `@/constants/nouns` (GENDER_HINTS)
+Endings and articles (the rules) are static:
+- `@/constants/agreement` (AGREEMENT_PARADIGMS) — 15 paradigms
+- `GENDER_HINTS` is local to `components/nouns-section.tsx`, derived from
+  AGREEMENT_PARADIGMS. There is no `@/constants/nouns`.
+
+Example words and per-pattern counts are **loaded from the database** by
+`loadNouns` in `routes/reference/$tab.tsx`, grouped by `groupNounsByPattern`
+(`@/lib/noun-paradigm-groups`). Nouns fall back to each paradigm's static
+`example` when a pattern has no corpus members.
 
 ## Verification
 
 - [x] greek-first: Greek forms prominent in all paradigms
-- [x] paradigm-tables: Case (rows) reveals patterns
-- [x] progressive-disclosure: Vocative and mistakes collapsible
-- [x] function-first-labels: Patterns named by ending + example word
-- [x] frequency-priority: "very common" / "common" / "less common" markers
-- [x] no-redundancy: Article + noun shown together in examples
-- [x] contextual-examples: Examples show usage
+- [x] paradigm-tables: Case (rows) x pattern (columns), singular and plural stacked
+- [x] progressive-disclosure: variants and mistakes collapsible
+- [x] function-first-labels: Doer / Target / Owner lead, grammar terms as sublabels
+- [x] frequency-priority: per-pattern counts come from the corpus, not a static label
+- [x] no-redundancy: colour lives on the row and column headers only; cells are neutral
+- [x] contextual-examples: example words are real corpus nouns, ordered by CEFR then frequency

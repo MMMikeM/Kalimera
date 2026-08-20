@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 
+import { groupNounsByPattern } from "@/lib/noun-paradigm-groups";
+import { getNounsForParadigmReference } from "@/server/db/queries/noun-paradigms";
 import { getVocabBySlug } from "@/server/db/queries/vocabulary";
 import type { Vocabulary } from "@/server/db/types";
 
@@ -45,6 +47,13 @@ const loadPatterns = createServerFn().handler(async () => {
 });
 
 export type PatternsData = Awaited<ReturnType<typeof loadPatterns>>;
+
+const loadNouns = createServerFn().handler(async () => ({
+	byPattern: groupNounsByPattern(await getNounsForParadigmReference()),
+}));
+
+export type NounsData = Awaited<ReturnType<typeof loadNouns>>;
+
 const VALID_TABS = [
 	"cases",
 	"pronouns",
@@ -62,16 +71,17 @@ export const Route = createFileRoute("/reference/$tab")({
 			throw new Response("Not Found", { status: 404 });
 		}
 
-		// Only load patterns data when on patterns tab
+		// Each DB-backed tab loads only its own data.
 		const patterns = tab === "patterns" ? await loadPatterns() : null;
+		const nouns = tab === "nouns" ? await loadNouns() : null;
 
-		return { tab: tab as TabId, patterns };
+		return { tab: tab as TabId, patterns, nouns };
 	},
 	component: TabRoute,
 });
 
 function TabRoute() {
-	const { tab, patterns } = Route.useLoaderData();
+	const { tab, patterns, nouns } = Route.useLoaderData();
 
 	const renderTab = () => {
 		switch (tab) {
@@ -82,7 +92,7 @@ function TabRoute() {
 			case "articles":
 				return <ArticlesTab />;
 			case "nouns":
-				return <NounsTab />;
+				return <NounsTab data={nouns} />;
 			case "adjectives":
 				return <AdjectivesTab />;
 			case "prepositions":
