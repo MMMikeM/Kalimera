@@ -1,5 +1,6 @@
 import { type VocabWithTags, nounDetailFromSeed, pickNounNominalForms } from "../../seed-pipeline";
 import { type NounSeedInput, enrichNounsRecord } from "./noun-seed-enrichment";
+import { subjectTagsFor } from "./noun-subjects";
 
 const NOUNS_RAW = {
 	summer: [
@@ -231,36 +232,10 @@ const NOUNS_RAW = {
 		// A2
 		{ lemma: "φορά", gender: "feminine", english: "time/occasion", cefrLevel: "A2" },
 		{ lemma: "στιγμή", gender: "feminine", english: "moment", cefrLevel: "A2" },
-		{
-			lemma: "μέρος",
-			gender: "neuter",
-			english: "place/part",
-			cefrLevel: "A2",
-			nominalForms: {
-				nominative_singular: { form: "μέρος", article: "το" },
-				genitive_singular: { form: "μέρους", article: "του" },
-				accusative_singular: { form: "μέρος", article: "το" },
-				nominative_plural: { form: "μέρη", article: "τα" },
-				genitive_plural: { form: "μερών", article: "των" },
-				accusative_plural: { form: "μέρη", article: "τα" },
-			},
-		},
+		{ lemma: "μέρος", gender: "neuter", english: "place/part", cefrLevel: "A2" },
 		{ lemma: "ιδέα", gender: "feminine", english: "idea", cefrLevel: "A2" },
 		{ lemma: "χαρά", gender: "feminine", english: "joy", cefrLevel: "A2" },
-		{
-			lemma: "τέλος",
-			gender: "neuter",
-			english: "end",
-			cefrLevel: "A2",
-			nominalForms: {
-				nominative_singular: { form: "τέλος", article: "το" },
-				genitive_singular: { form: "τέλους", article: "του" },
-				accusative_singular: { form: "τέλος", article: "το" },
-				nominative_plural: { form: "τέλη", article: "τα" },
-				genitive_plural: { form: "τελών", article: "των" },
-				accusative_plural: { form: "τέλη", article: "τα" },
-			},
-		},
+		{ lemma: "τέλος", gender: "neuter", english: "end", cefrLevel: "A2" },
 		{ lemma: "βοήθεια", gender: "feminine", english: "help", cefrLevel: "A2" },
 		{ lemma: "ιστορία", gender: "feminine", english: "story/history", cefrLevel: "A2" },
 		{ lemma: "αγάπη", gender: "feminine", english: "love", cefrLevel: "A2" },
@@ -299,6 +274,11 @@ for (const [theme, nouns] of Object.entries(NOUNS)) {
 	for (const noun of nouns) {
 		const itemTags: string[] = [];
 		if (themeTagMap[theme]) itemTags.push(themeTagMap[theme]);
+		// Themes without a tag of their own (abstract, animals, places, body, objects)
+		// fall through to the lemma-keyed subject map.
+		for (const tag of subjectTagsFor(noun.lemma)) {
+			if (!itemTags.includes(tag)) itemTags.push(tag);
+		}
 
 		NOUN_ITEMS.push({
 			vocab: {

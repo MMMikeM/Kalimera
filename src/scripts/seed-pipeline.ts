@@ -342,7 +342,7 @@ async function processCategory(
 			ctx.allNounDetails.push({
 				vocabId,
 				gender: item.nounDetail.gender,
-				declensionPattern: item.nounDetail.declensionPattern ?? null,
+				declensionPattern: item.nounDetail.declensionPattern,
 			});
 		}
 
