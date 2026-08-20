@@ -30,6 +30,81 @@ const DECLENSION_BY_LEMMA: Record<string, NounDeclensionPattern> = {
 	διακοπές: "fem-a",
 	ρούχα: "neut-o",
 	ψώνια: "neut-o",
+	// Archaic -η: takes -εις in the plural. Not inferable — πόλη gives πόλεις but
+	// αγάπη gives αγάπες, and the two are indistinguishable by ending.
+	πόλη: "fem-i-archaic",
+	δύναμη: "fem-i-archaic",
+	πίστη: "fem-i-archaic",
+};
+
+/** Indeclinable loanwords: every cell is the citation form. */
+const INDECLINABLE = new Set(["σπορ", "πικνίκ"]);
+
+/**
+ * Lemmas whose forms no paradigm generates. Kept central rather than at the seed
+ * site because a lemma may be seeded from several lessons (παππούς appears in
+ * two), and `batchUpsertNominalForms` is last-write-wins — a per-site override
+ * would be silently clobbered by whichever file seeds last.
+ */
+const IRREGULAR_FORMS: Record<string, Partial<Record<CaseNumberKey, NominalFormCellSeed>>> = {
+	// -τ- stems: no paradigm covers a class of one.
+	φως: {
+		genitive_singular: { form: "φωτός", article: "του" },
+		nominative_plural: { form: "φώτα", article: "τα" },
+		accusative_plural: { form: "φώτα", article: "τα" },
+		genitive_plural: { form: "φώτων", article: "των" },
+	},
+	περιβάλλον: {
+		nominative_singular: { form: "περιβάλλον", article: "το" },
+		accusative_singular: { form: "περιβάλλον", article: "το" },
+		genitive_singular: { form: "περιβάλλοντος", article: "του" },
+		nominative_plural: { form: "περιβάλλοντα", article: "τα" },
+		accusative_plural: { form: "περιβάλλοντα", article: "τα" },
+		genitive_plural: { form: "περιβαλλόντων", article: "των" },
+	},
+	// Imparisyllable feminines: -ά nouns add a syllable rather than taking -ες.
+	γιαγιά: {
+		nominative_plural: { form: "γιαγιάδες", article: "οι" },
+		accusative_plural: { form: "γιαγιάδες", article: "τις" },
+		genitive_plural: { form: "γιαγιάδων", article: "των" },
+	},
+	μαμά: {
+		nominative_plural: { form: "μαμάδες", article: "οι" },
+		accusative_plural: { form: "μαμάδες", article: "τις" },
+		genitive_plural: { form: "μαμάδων", article: "των" },
+	},
+	// Genitive-plural stress in -α feminines is lexical, not derivable. The
+	// paradigm takes the oxytone majority (γυναικών, θαλασσών, ωρών); these keep
+	// the stem stress instead.
+	ομάδα: { genitive_plural: { form: "ομάδων", article: "των" } },
+	εικόνα: { genitive_plural: { form: "εικόνων", article: "των" } },
+	// Imparisyllable -ούς: adds a syllable in the plural.
+	παππούς: {
+		accusative_singular: { form: "παππού", article: "τον" },
+		genitive_singular: { form: "παππού", article: "του" },
+		nominative_plural: { form: "παππούδες", article: "οι" },
+		accusative_plural: { form: "παππούδες", article: "τους" },
+		genitive_plural: { form: "παππούδων", article: "των" },
+	},
+};
+
+/** Vocative is omitted throughout the seed, matching `declineToFormsSeed`. */
+const NEUTER_ARTICLES: Partial<Record<CaseNumberKey, string>> = {
+	nominative_singular: "το",
+	accusative_singular: "το",
+	genitive_singular: "του",
+	nominative_plural: "τα",
+	accusative_plural: "τα",
+	genitive_plural: "των",
+};
+
+const irregularFormsFor = (
+	lemma: string,
+): Partial<Record<CaseNumberKey, NominalFormCellSeed>> | undefined => {
+	if (!INDECLINABLE.has(lemma)) return IRREGULAR_FORMS[lemma];
+	return Object.fromEntries(
+		Object.entries(NEUTER_ARTICLES).map(([key, article]) => [key, { form: lemma, article }]),
+	) as Partial<Record<CaseNumberKey, NominalFormCellSeed>>;
 };
 
 export function inferDeclensionPattern(lemma: string, gender: Gender): NounDeclensionPattern {
@@ -40,6 +115,11 @@ export function inferDeclensionPattern(lemma: string, gender: Gender): NounDecle
 
 	if (gender === "neuter") {
 		if (low.endsWith("μα")) return "neut-ma";
+		// Neuter -ος/-ας decline on a longer stem (μέρος -> μέρους/μέρη,
+		// κρέας -> κρέατος/κρέατα). Without these they fell through to
+		// neut-o and produced *μέροου / *κρέαου.
+		if (low.endsWith("ος")) return "neut-os";
+		if (low.endsWith("ας")) return "neut-as";
 		if (
 			low.endsWith("ι") ||
 			low.endsWith("ί") ||
@@ -123,9 +203,36 @@ export function enrichNoun(input: NounSeedInput): NounSeed {
 	} catch {
 		declined = base;
 	}
-	const merged: NounNominalFormsSeed = input.nominalForms
-		? { ...base, ...declined, ...input.nominalForms }
-		: { ...base, ...declined };
+	// A hand-written override that disagrees with the generator is the signature of
+	// a missing paradigm, not a one-off irregular. That mismatch is how μέρος and
+	// τέλος quietly papered over the absent neut-os pattern while every other
+	// -ος noun seeded *μέροου-shaped garbage.
+	if (input.nominalForms) {
+		for (const [key, cell] of Object.entries(input.nominalForms)) {
+			const generated = declined[key as CaseNumberKey];
+			if (generated && cell && generated.form !== cell.form) {
+				console.warn(
+					`[seed] "${input.lemma}" (${pattern}) overrides ${key}: generator says "${generated.form}", seed says "${cell.form}". If more nouns of this class exist, the pattern is missing.`,
+				);
+			}
+		}
+	}
+
+	const irregular = irregularFormsFor(input.lemma);
+	const merged: NounNominalFormsSeed = {
+		...base,
+		...declined,
+		...irregular,
+		...input.nominalForms,
+	};
+
+	// The citation form is the lemma by definition. Stem-plus-ending does not
+	// round-trip for irregulars (φως rebuilt as *φωό, παππούς as *παπποός), so the
+	// generated cell must never win here.
+	merged.nominative_singular =
+		input.nominalForms?.nominative_singular ??
+		irregular?.nominative_singular ??
+		base.nominative_singular;
 
 	const out: NounSeed = {
 		lemma: input.lemma,
