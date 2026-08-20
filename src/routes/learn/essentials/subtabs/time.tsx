@@ -1,8 +1,47 @@
 import { ContentSection } from "@/components/ContentSection";
+import { GreekText } from "@/components/GreekText";
+import { type Gender, getArticle } from "@/lib/greek-grammar";
 
 import type { EssentialsLoaderData } from "../$subtab";
 import { EssentialsBackLink } from "./essentials-back-link";
-import { GreekText } from "@/components/GreekText";
+
+const ARTICLE_STYLES: Record<Gender, string> = {
+	masculine: "bg-gender-masculine-100 text-gender-masculine-text",
+	feminine: "bg-gender-feminine-100 text-gender-feminine-text",
+	neuter: "bg-gender-neuter-100 text-gender-neuter-text",
+};
+
+/**
+ * The article is derived from the noun's gender rather than baked into
+ * `greek_text`. Storing it in the text is what produced a duplicate "η Δευτέρα"
+ * row beside "Δευτέρα", and it cannot show that Σάββατο is the one neuter day.
+ */
+const CalendarName = ({
+	greek,
+	english,
+	gender,
+}: {
+	greek: string;
+	english: string;
+	gender?: Gender | null;
+}) => (
+	<div
+		// eslint-disable-next-line better-tailwindcss/no-restricted-classes -- 60/40 layout, no token fit
+		className="grid grid-cols-[3fr_2fr] items-center gap-x-3 px-3 py-2.5"
+	>
+		<span className="flex items-baseline gap-2">
+			{gender && (
+				<span className={`rounded px-1.5 py-0.5 text-sm font-bold ${ARTICLE_STYLES[gender]}`}>
+					{getArticle(gender)}
+				</span>
+			)}
+			<GreekText tone="accent" size="lg">
+				{greek}
+			</GreekText>
+		</span>
+		<span className="text-sm text-stone-500">{english}</span>
+	</div>
+);
 
 interface Props {
 	data: EssentialsLoaderData;
@@ -103,14 +142,12 @@ export function TimeSubtab({ data }: Props) {
 				>
 					<div className="divide-y divide-stone-200/60">
 						{sortedDays.map((day) => (
-							<div
+							<CalendarName
 								key={day.id}
-								// eslint-disable-next-line better-tailwindcss/no-restricted-classes -- 60/40 layout, no token fit
-								className="grid grid-cols-[3fr_2fr] items-center gap-x-3 px-3 py-2.5"
-							>
-								<GreekText tone="accent" size="lg">{day.greekText}</GreekText>
-								<span className="text-sm text-stone-500">{day.englishTranslation}</span>
-							</div>
+								greek={day.greekText}
+								english={day.englishTranslation}
+								gender={day.nounDetails?.gender}
+							/>
 						))}
 					</div>
 					<div className="mx-3 mt-3 rounded-lg border border-ocean-200 bg-ocean-100 p-2.5">
@@ -156,14 +193,12 @@ export function TimeSubtab({ data }: Props) {
 				>
 					<div className="divide-y divide-stone-200/60">
 						{sortedMonths.map((month) => (
-							<div
+							<CalendarName
 								key={month.id}
-								// eslint-disable-next-line better-tailwindcss/no-restricted-classes -- 60/40 layout, no token fit
-								className="grid grid-cols-[3fr_2fr] items-center gap-x-3 px-3 py-2.5"
-							>
-								<GreekText tone="accent" size="lg">{month.greekText}</GreekText>
-								<span className="text-sm text-stone-500">{month.englishTranslation}</span>
-							</div>
+								greek={month.greekText}
+								english={month.englishTranslation}
+								gender={month.nounDetails?.gender}
+							/>
 						))}
 					</div>
 					<div className="mx-3 mt-3 rounded-lg border border-olive-200 bg-olive-100 p-2.5">

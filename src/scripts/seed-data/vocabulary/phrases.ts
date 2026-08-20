@@ -1,5 +1,12 @@
+import type { Gender } from "../../../lib/greek-grammar";
 import type { Phrase } from "../../../types/phrase";
-import type { VocabWithTags } from "../../seed-pipeline";
+import {
+	type VocabWithTags,
+	nounDetailFromSeed,
+	pickNounNominalForms,
+} from "../../seed-pipeline";
+import { enrichNoun } from "./noun-seed-enrichment";
+import { subjectTagsFor } from "./noun-subjects";
 import {
 	ARRIVING_PHRASES,
 	COMMON_RESPONSES,
@@ -57,6 +64,32 @@ export const DAYS_OF_WEEK: Phrase[] = [
 	{ text: "η Παρασκευή", english: "Friday" },
 	{ text: "το Σάββατο", english: "Saturday" },
 	{ text: "η Κυριακή", english: "Sunday" },
+];
+
+/** Bare lemmas + gender for seeding; the arrays above stay article-first for display. */
+const DAY_NOUNS: Array<{ lemma: string; english: string; gender: Gender }> = [
+	{ lemma: "Δευτέρα", english: "Monday", gender: "feminine" },
+	{ lemma: "Τρίτη", english: "Tuesday", gender: "feminine" },
+	{ lemma: "Τετάρτη", english: "Wednesday", gender: "feminine" },
+	{ lemma: "Πέμπτη", english: "Thursday", gender: "feminine" },
+	{ lemma: "Παρασκευή", english: "Friday", gender: "feminine" },
+	{ lemma: "Σάββατο", english: "Saturday", gender: "neuter" },
+	{ lemma: "Κυριακή", english: "Sunday", gender: "feminine" },
+];
+
+const MONTH_NOUNS: Array<{ lemma: string; english: string }> = [
+	{ lemma: "Ιανουάριος", english: "January" },
+	{ lemma: "Φεβρουάριος", english: "February" },
+	{ lemma: "Μάρτιος", english: "March" },
+	{ lemma: "Απρίλιος", english: "April" },
+	{ lemma: "Μάιος", english: "May" },
+	{ lemma: "Ιούνιος", english: "June" },
+	{ lemma: "Ιούλιος", english: "July" },
+	{ lemma: "Αύγουστος", english: "August" },
+	{ lemma: "Σεπτέμβριος", english: "September" },
+	{ lemma: "Οκτώβριος", english: "October" },
+	{ lemma: "Νοέμβριος", english: "November" },
+	{ lemma: "Δεκέμβριος", english: "December" },
 ];
 
 // Months of the year - all masculine
@@ -350,23 +383,34 @@ export const TIME_TELLING_ITEMS: VocabWithTags[] = TIME_TELLING.map((phrase) => 
 	tags: ["time-telling"],
 }));
 
-export const DAY_ITEMS: VocabWithTags[] = DAYS_OF_WEEK.map((day) => ({
-	vocab: {
-		greekText: day.text,
-		englishTranslation: day.english,
-		wordType: "noun" as const,
-	},
-	tags: ["days-of-week"],
-}));
+/**
+ * Days and months are nouns, so they are seeded with a bare lemma and a gender
+ * rather than the article baked into `greek_text`. Seeding "η Δευτέρα" created a
+ * second vocabulary row alongside the "Δευτέρα" that lessons already seed — the
+ * unique index is on greek_text — and left both without a noun_details row, so
+ * every month rendered as neuter via a `?? "neuter"` fallback.
+ */
+const dayMonthItem = (lemma: string, english: string, gender: Gender, tag: string) => {
+	const noun = enrichNoun({ lemma, gender, english });
+	return {
+		vocab: {
+			greekText: noun.lemma,
+			englishTranslation: noun.english,
+			wordType: "noun" as const,
+		},
+		tags: [tag, ...subjectTagsFor(noun.lemma)],
+		nounDetail: nounDetailFromSeed(noun),
+		...pickNounNominalForms(noun),
+	};
+};
 
-export const MONTH_ITEMS: VocabWithTags[] = MONTHS.map((month) => ({
-	vocab: {
-		greekText: month.text,
-		englishTranslation: month.english,
-		wordType: "noun" as const,
-	},
-	tags: ["months"],
-}));
+export const DAY_ITEMS: VocabWithTags[] = DAY_NOUNS.map((d) =>
+	dayMonthItem(d.lemma, d.english, d.gender, "days-of-week"),
+);
+
+export const MONTH_ITEMS: VocabWithTags[] = MONTH_NOUNS.map((m) =>
+	dayMonthItem(m.lemma, m.english, "masculine", "months"),
+);
 
 export const LIKES_SINGULAR_ITEMS: VocabWithTags[] = LIKES_CONSTRUCTION.singular.map((like) => ({
 	vocab: {
