@@ -205,3 +205,105 @@ describe("-ιος nouns do not shift stress", () => {
 		});
 	});
 });
+
+// ─── Patterns the enum used to lack ──────────────────────────────────────────
+// Before neut-os / neut-as / fem-i-archaic existed, inferDeclensionPattern fell
+// these through to neut-o / fem-i and seeded forms like *μέροου and *πόλες
+// straight into nominal_forms, where the drills read them.
+
+describe("neuter -ος (neut-os)", () => {
+	it.each([
+		["μέρος", "μέρους", "μέρη", "μερών"],
+		["τέλος", "τέλους", "τέλη", "τελών"],
+		["ύψος", "ύψους", "ύψη", "υψών"],
+	])("declines %s on the longer stem", (lemma, genSg, nomPl, genPl) => {
+		expect(nouns(lemma, "neut-os")).toMatchObject({
+			nominative_singular: lemma,
+			accusative_singular: lemma,
+			genitive_singular: genSg,
+			nominative_plural: nomPl,
+			accusative_plural: nomPl,
+			genitive_plural: genPl,
+		});
+	});
+});
+
+describe("neuter -ας (neut-as)", () => {
+	it("κρέας takes the -τ- stem, like -μα words", () => {
+		expect(nouns("κρέας", "neut-as")).toMatchObject({
+			nominative_singular: "κρέας",
+			genitive_singular: "κρέατος",
+			nominative_plural: "κρέατα",
+			genitive_plural: "κρεάτων",
+		});
+	});
+});
+
+describe("archaic feminine -η (fem-i-archaic)", () => {
+	it("πόλη takes -εις without moving the stress", () => {
+		expect(nouns("πόλη", "fem-i-archaic")).toMatchObject({
+			genitive_singular: "πόλης",
+			nominative_plural: "πόλεις",
+			genitive_plural: "πόλεων",
+		});
+	});
+
+	it("δύναμη pulls the stress to the penult: δυνάμεις, not δύναμεις", () => {
+		expect(nouns("δύναμη", "fem-i-archaic")).toMatchObject({
+			genitive_singular: "δύναμης",
+			nominative_plural: "δυνάμεις",
+			genitive_plural: "δυνάμεων",
+		});
+	});
+
+	// The archaic set is a hand-kept list, so guard the far larger regular class
+	// against it leaking: both lemmas end in -η and only one takes -εις.
+	it.each([
+		["αγάπη", "αγάπες", "αγαπών"],
+		["ζωή", "ζωές", "ζωών"],
+	])("leaves regular -η nouns alone: %s", (lemma, nomPl, genPl) => {
+		expect(nouns(lemma, "fem-i")).toMatchObject({
+			nominative_plural: nomPl,
+			genitive_plural: genPl,
+		});
+	});
+});
+
+// ─── Stress in the genitive plural and on lengthened stems ───────────────────
+
+describe("genitive plural stress", () => {
+	// The paradigm's own example is "των γυναικών", but the ending was stored as
+	// unstressed -ων, so the generator produced *γυναίκων for all 99 fem-a nouns.
+	it.each([
+		["γυναίκα", "γυναικών"],
+		["θάλασσα", "θαλασσών"],
+		["ώρα", "ωρών"],
+		["χώρα", "χωρών"],
+		["γλώσσα", "γλωσσών"],
+		["καρδιά", "καρδιών"],
+	])("%s takes the oxytone -ών", (lemma, expected) => {
+		expect(nouns(lemma, "fem-a").genitive_plural).toBe(expected);
+	});
+});
+
+describe("three-syllable rule", () => {
+	// Greek stress cannot sit further back than the antepenult, so a suffix that
+	// adds a syllable drags it forward: όνομα -> ονόματος, not *όνοματος.
+	it.each([
+		["όνομα", "ονόματος", "ονόματα"],
+		["πρόγραμμα", "προγράμματος", "προγράμματα"],
+	])("%s moves its stress when the stem lengthens", (lemma, genSg, nomPl) => {
+		expect(nouns(lemma, "neut-ma")).toMatchObject({
+			genitive_singular: genSg,
+			nominative_plural: nomPl,
+		});
+	});
+
+	it("leaves words already inside the three-syllable window alone", () => {
+		expect(nouns("πράγμα", "neut-ma")).toMatchObject({
+			genitive_singular: "πράγματος",
+			nominative_plural: "πράγματα",
+		});
+		expect(nouns("ήλιος", "masc-os")).toMatchObject({ genitive_singular: "ήλιου" });
+	});
+});

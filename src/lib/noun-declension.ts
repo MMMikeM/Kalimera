@@ -41,12 +41,18 @@ const getStemFromLemma = (lemma: string, pattern: NounDeclensionPattern): string
 			return lemma.slice(0, -2); // Remove -ξη
 		case "fem-psi":
 			return lemma.slice(0, -2); // Remove -ψη
+		case "fem-i-archaic":
+			return lemma.slice(0, -1); // Remove -η (πόλη -> πόλ -> πόλεις)
 		case "neut-o":
 			return lemma.slice(0, -1); // Remove -ο
 		case "neut-i":
 			return lemma.slice(0, -1); // Remove -ί
 		case "neut-ma":
 			return lemma.slice(0, -2); // Remove -μα
+		case "neut-os":
+			return lemma.slice(0, -2); // Remove -ος (μέρος -> μέρ -> μέρη)
+		case "neut-as":
+			return lemma.slice(0, -2); // Remove -ας (κρέας -> κρέ -> κρέατα)
 		default: {
 			const _exhaustive: never = pattern;
 			return _exhaustive;
@@ -88,6 +94,35 @@ const stripTonos = (s: string): string =>
 	s.replace(/[άέήίόύώΐΰΆΈΉΊΌΎΏ]/g, (m) => TONOS_MAP[m] ?? m);
 
 const NUCLEUS = /(αι|ει|οι|ου|αυ|ευ|υι|[αεηιουωάέήίόύώΆΈΉΊΌΎΏϊϋΐΰ])/g;
+
+/** Nuclei of a word, with synizesis collapsed (ήλιος is ή-λιος, two syllables). */
+const syllableNuclei = (word: string) =>
+	[...word.matchAll(NUCLEUS)].filter(
+		(m, i, all) => !(/^[ιυ]$/.test(m[0]!) && all[i + 1]?.index === m.index + 1),
+	);
+
+/**
+ * Greek stress cannot fall further back than the antepenult, so a suffix that
+ * adds a syllable drags it forward: όνομα → ονόματος, not *όνοματος.
+ */
+const enforceThreeSyllableRule = (phrase: string): string => {
+	const split = phrase.lastIndexOf(" ");
+	if (split !== -1) {
+		return phrase.slice(0, split + 1) + enforceThreeSyllableRule(phrase.slice(split + 1));
+	}
+
+	const nuclei = syllableNuclei(phrase);
+	if (nuclei.length < 4) return phrase;
+
+	const accentedAt = nuclei.findIndex((m) => TONOS_CHARS.test(m[0]!));
+	const antepenult = nuclei.length - 3;
+	if (accentedAt === -1 || accentedAt >= antepenult) return phrase;
+
+	const target = nuclei[antepenult]!;
+	const plain = stripTonos(phrase);
+	const index = target.index + target[0]!.length - 1;
+	return addTonosToLastVowel(plain.slice(0, index + 1)) + plain.slice(index + 1);
+};
 
 /** Genitive plural -ων pulls stress to the penult: Έλληνας → Ελλήνων. */
 const shiftStressToPenult = (phrase: string): string => {
@@ -164,7 +199,9 @@ const applyEnding = (
 		cleanEnding === "ων" ||
 		(pattern === "masc-os" && (cleanEnding === "ου" || cleanEnding === "ους"));
 
-	return shouldShiftToPenult ? shiftStressToPenult(result) : result;
+	return enforceThreeSyllableRule(
+		shouldShiftToPenult ? shiftStressToPenult(result) : result,
+	);
 };
 
 const mapArticleForAccusative = (article: string, noun: string): string => {
