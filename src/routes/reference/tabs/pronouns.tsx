@@ -18,7 +18,6 @@ export function PronounsTab() {
 				title="Practice pronouns"
 				description="Forms, possessives, and where weak pronouns sit in real sentences."
 				topic="pronouns"
-				drillHref="/practice#pronouns"
 				ctaLabel="Open pronoun drills"
 			/>
 		</div>
