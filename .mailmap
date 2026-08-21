@@ -1,0 +1,8 @@
+# Canonical identity for this repo's history.
+#
+# One WIP commit was authored from a work account, and an older run of
+# commits used a short name with the same personal address. A mailmap fixes
+# attribution for git log, shortlog and blame without rewriting published
+# history — main carries 54 commits on top of the work-account one.
+Mike Murray <mikem.tba@gmail.com> <mike.murray@peachpayments.com>
+Mike Murray <mikem.tba@gmail.com> Mike <mikem.tba@gmail.com>
