@@ -1,19 +1,6 @@
-export type NounGender = "masculine" | "feminine" | "neuter";
+import type { BrowsableNoun, NounGender } from "./noun-filters";
 
-export interface BrowsableNounForm {
-	form: string;
-	article: string | null;
-}
-
-export interface BrowsableNoun {
-	id: number;
-	lemma: string;
-	english: string;
-	/** Null for numerals, which carry no lexical gender. */
-	gender: NounGender | null;
-	/** Keyed `${case}_${number}`; empty when nothing is stored. */
-	forms: Record<string, BrowsableNounForm>;
-}
+export type { BrowsableNoun, NounGender } from "./noun-filters";
 
 export interface NounSubjectGroup {
 	slug: string;
@@ -85,6 +72,9 @@ export const groupNounsBySubject = (rows: readonly GroupableRow[]): NounSubjectG
 				lemma: row.greekText,
 				english: row.englishTranslation,
 				gender: (row.nounDetails?.gender as NounGender | undefined) ?? null,
+				// Carried through so the subject page can filter on them.
+				cefrLevel: row.cefrLevel,
+				frequencyRank: row.frequencyRank,
 				forms: Object.fromEntries(
 					row.nominalForms.map((f) => [
 						`${f.grammaticalCase}_${f.number}`,
