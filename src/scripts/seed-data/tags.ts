@@ -17,12 +17,6 @@ export interface LessonTag {
 // Content tags organized by section (these appear in UI)
 export const CONTENT_TAGS = {
 	// NOUNS SECTION
-	coreNouns: {
-		slug: "core-nouns",
-		name: "Core Nouns",
-		section: "nouns",
-		displayOrder: 1,
-	},
 	people: {
 		slug: "people",
 		name: "People & Family",

@@ -18,7 +18,7 @@ export type NounSeedInput = {
 	lemma: string;
 	gender: Gender;
 	english: string;
-	cefrLevel?: CefrLevel;
+	cefrLevel: CefrLevel;
 	metadata?: Record<string, JsonValue>;
 	declensionPattern?: NounDeclensionPattern;
 	/** Merged over inferred nominative singular baseline. */
@@ -238,10 +238,10 @@ export function enrichNoun(input: NounSeedInput): NounSeed {
 		lemma: input.lemma,
 		gender: input.gender,
 		english: input.english,
+		cefrLevel: input.cefrLevel,
 		declensionPattern: pattern,
 		nominalForms: merged,
 	};
-	if (input.cefrLevel !== undefined) out.cefrLevel = input.cefrLevel;
 	if (input.metadata !== undefined) out.metadata = input.metadata;
 	return out;
 }

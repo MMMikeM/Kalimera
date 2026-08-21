@@ -8,7 +8,7 @@ export const LESSON_2024_08_12 = createLesson({
 
 	verbs: [{ lemma: "ξεχνάω", english: "I forget", conjugationFamily: "-άω/-ώ", cefrLevel: "A2" }],
 
-	nouns: [{ lemma: "λαχανικά", gender: "neuter", english: "vegetables" }],
+	nouns: [{ lemma: "λαχανικά", gender: "neuter", english: "vegetables", cefrLevel: "A1" }],
 
 	phrases: [
 		{

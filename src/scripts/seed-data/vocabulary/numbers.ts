@@ -43,6 +43,8 @@ export const NUMBER_ITEMS: VocabWithTags[] = NUMBERS.map((num) => ({
 		greekText: num.lemma,
 		englishTranslation: String(num.value),
 		wordType: "noun" as const,
+		// Counting is first-lesson material, whatever the corpus rank says.
+		cefrLevel: "A1" as const,
 		metadata: { numericValue: num.value },
 	},
 	tags: ["number"],

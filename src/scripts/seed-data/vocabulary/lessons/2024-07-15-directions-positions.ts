@@ -11,9 +11,9 @@ export const LESSON_2024_07_15 = createLesson({
 	],
 
 	nouns: [
-		{ lemma: "λουλούδι", gender: "neuter", english: "flower" },
-		{ lemma: "ανθοπωλείο", gender: "neuter", english: "flower shop" },
-		{ lemma: "ταβέρνα", gender: "feminine", english: "tavern" },
+		{ lemma: "λουλούδι", gender: "neuter", english: "flower", cefrLevel: "A1" },
+		{ lemma: "ανθοπωλείο", gender: "neuter", english: "flower shop", cefrLevel: "B1" },
+		{ lemma: "ταβέρνα", gender: "feminine", english: "tavern", cefrLevel: "A1" },
 	],
 
 	adverbs: [

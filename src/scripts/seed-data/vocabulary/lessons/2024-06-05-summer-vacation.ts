@@ -15,12 +15,12 @@ export const LESSON_2024_06_05 = createLesson({
 
 	nouns: [
 		// Summer/beach
-		{ lemma: "ξενοδοχείο", gender: "neuter", english: "hotel" },
-		{ lemma: "βαλίτσα", gender: "feminine", english: "suitcase/luggage" },
+		{ lemma: "ξενοδοχείο", gender: "neuter", english: "hotel", cefrLevel: "A1" },
+		{ lemma: "βαλίτσα", gender: "feminine", english: "suitcase/luggage", cefrLevel: "A2" },
 		// Food
-		{ lemma: "ροδάκινο", gender: "neuter", english: "peach" },
-		{ lemma: "πεπόνι", gender: "neuter", english: "melon" },
-		{ lemma: "ψάρι", gender: "neuter", english: "fish" },
+		{ lemma: "ροδάκινο", gender: "neuter", english: "peach", cefrLevel: "A2" },
+		{ lemma: "πεπόνι", gender: "neuter", english: "melon", cefrLevel: "A2" },
+		{ lemma: "ψάρι", gender: "neuter", english: "fish", cefrLevel: "A1" },
 	],
 
 	phrases: [

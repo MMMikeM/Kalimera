@@ -14,9 +14,9 @@ export const LESSON_2024_06_26 = createLesson({
 	],
 
 	nouns: [
-		{ lemma: "ύπνος", gender: "masculine", english: "sleep" },
-		{ lemma: "χαρά", gender: "feminine", english: "joy" },
-		{ lemma: "χαιρετίσματα", gender: "neuter", english: "greetings" },
+		{ lemma: "ύπνος", gender: "masculine", english: "sleep", cefrLevel: "A2" },
+		{ lemma: "χαρά", gender: "feminine", english: "joy", cefrLevel: "A2" },
+		{ lemma: "χαιρετίσματα", gender: "neuter", english: "greetings", cefrLevel: "A2" },
 	],
 
 	adverbs: [

@@ -32,11 +32,11 @@ export const LESSON_2024_04_04 = createLesson({
 	],
 
 	nouns: [
-		{ lemma: "διάθεση", gender: "feminine", english: "mood" },
-		{ lemma: "κίνητρο", gender: "neuter", english: "motivation" },
-		{ lemma: "απόλαυση", gender: "feminine", english: "pleasure" },
-		{ lemma: "εθισμός", gender: "masculine", english: "addiction" },
-		{ lemma: "ισορροπία", gender: "feminine", english: "balance" },
+		{ lemma: "διάθεση", gender: "feminine", english: "mood", cefrLevel: "B1" },
+		{ lemma: "κίνητρο", gender: "neuter", english: "motivation", cefrLevel: "B2" },
+		{ lemma: "απόλαυση", gender: "feminine", english: "pleasure", cefrLevel: "B2" },
+		{ lemma: "εθισμός", gender: "masculine", english: "addiction", cefrLevel: "B2" },
+		{ lemma: "ισορροπία", gender: "feminine", english: "balance", cefrLevel: "B2" },
 	],
 
 	adjectives: [

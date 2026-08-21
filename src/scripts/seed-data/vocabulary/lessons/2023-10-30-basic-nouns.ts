@@ -8,14 +8,14 @@ export const LESSON_2023_10_30 = createLesson({
 
 	nouns: [
 		// Places - many overlap with 2023-11-08 but that's ok, additive seeding handles it
-		{ lemma: "Ελλάδα", gender: "feminine", english: "Greece" },
-		{ lemma: "Ασία", gender: "feminine", english: "Asia" },
-		{ lemma: "Αμερική", gender: "feminine", english: "America" },
-		{ lemma: "Αίγυπτος", gender: "feminine", english: "Egypt" },
-		{ lemma: "Αφρική", gender: "feminine", english: "Africa" },
-		{ lemma: "Ευρώπη", gender: "feminine", english: "Europe" },
-		{ lemma: "Αθήνα", gender: "feminine", english: "Athens" },
-		{ lemma: "Θεσσαλονίκη", gender: "feminine", english: "Thessaloniki" },
-		{ lemma: "Πεκίνο", gender: "neuter", english: "Beijing" },
+		{ lemma: "Ελλάδα", gender: "feminine", english: "Greece", cefrLevel: "A1" },
+		{ lemma: "Ασία", gender: "feminine", english: "Asia", cefrLevel: "A2" },
+		{ lemma: "Αμερική", gender: "feminine", english: "America", cefrLevel: "A1" },
+		{ lemma: "Αίγυπτος", gender: "feminine", english: "Egypt", cefrLevel: "B1" },
+		{ lemma: "Αφρική", gender: "feminine", english: "Africa", cefrLevel: "A2" },
+		{ lemma: "Ευρώπη", gender: "feminine", english: "Europe", cefrLevel: "A2" },
+		{ lemma: "Αθήνα", gender: "feminine", english: "Athens", cefrLevel: "A1" },
+		{ lemma: "Θεσσαλονίκη", gender: "feminine", english: "Thessaloniki", cefrLevel: "A1" },
+		{ lemma: "Πεκίνο", gender: "neuter", english: "Beijing", cefrLevel: "B1" },
 	],
 });

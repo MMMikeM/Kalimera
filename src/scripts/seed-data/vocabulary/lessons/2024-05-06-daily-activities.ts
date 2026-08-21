@@ -15,13 +15,13 @@ export const LESSON_2024_05_06 = createLesson({
 	],
 
 	nouns: [
-		{ lemma: "τραγούδι", gender: "neuter", english: "song" },
-		{ lemma: "μεσημεριανό", gender: "neuter", english: "lunch" },
-		{ lemma: "μουσική", gender: "feminine", english: "music" },
-		{ lemma: "εφημερίδα", gender: "feminine", english: "newspaper" },
-		{ lemma: "τηλεόραση", gender: "feminine", english: "television" },
-		{ lemma: "σινεμά", gender: "neuter", english: "cinema" },
-		{ lemma: "σπορ", gender: "neuter", english: "sport" },
+		{ lemma: "τραγούδι", gender: "neuter", english: "song", cefrLevel: "A2" },
+		{ lemma: "μεσημεριανό", gender: "neuter", english: "lunch", cefrLevel: "A1" },
+		{ lemma: "μουσική", gender: "feminine", english: "music", cefrLevel: "A1" },
+		{ lemma: "εφημερίδα", gender: "feminine", english: "newspaper", cefrLevel: "A2" },
+		{ lemma: "τηλεόραση", gender: "feminine", english: "television", cefrLevel: "A1" },
+		{ lemma: "σινεμά", gender: "neuter", english: "cinema", cefrLevel: "A1" },
+		{ lemma: "σπορ", gender: "neuter", english: "sport", cefrLevel: "A2" },
 	],
 
 	phrases: [

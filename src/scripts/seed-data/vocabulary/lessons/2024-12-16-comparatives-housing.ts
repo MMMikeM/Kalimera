@@ -14,36 +14,39 @@ export const LESSON_2024_12_16 = createLesson({
 
 	nouns: [
 		// Food
-		{ lemma: "κρέας", gender: "neuter", english: "meat" },
+		{ lemma: "κρέας", gender: "neuter", english: "meat", cefrLevel: "A1" },
 		{
 			lemma: "μοσχάρι",
 			gender: "neuter",
 			english: "beef/veal",
+			cefrLevel: "A2",
 			metadata: { note: "μοσχαρίσιο κρέας = beef meat" },
 		},
 		// Rooms
-		{ lemma: "μπάνιο", gender: "neuter", english: "bathroom" },
-		{ lemma: "κρεβατοκάμαρα", gender: "feminine", english: "bedroom" },
-		{ lemma: "κρεβάτι", gender: "neuter", english: "bed" },
-		{ lemma: "κουζίνα", gender: "feminine", english: "kitchen" },
-		{ lemma: "σαλόνι", gender: "neuter", english: "living room" },
+		{ lemma: "μπάνιο", gender: "neuter", english: "bathroom", cefrLevel: "A1" },
+		{ lemma: "κρεβατοκάμαρα", gender: "feminine", english: "bedroom", cefrLevel: "A1" },
+		{ lemma: "κρεβάτι", gender: "neuter", english: "bed", cefrLevel: "A1" },
+		{ lemma: "κουζίνα", gender: "feminine", english: "kitchen", cefrLevel: "A1" },
+		{ lemma: "σαλόνι", gender: "neuter", english: "living room", cefrLevel: "A1" },
 		// Housing types
 		{
 			lemma: "πολυκατοικία",
 			gender: "feminine",
 			english: "apartment building",
+			cefrLevel: "A2",
 			metadata: { note: "πολύ + κατοικία = many + dwelling" },
 		},
 		{
 			lemma: "μονοκατοικία",
 			gender: "feminine",
 			english: "single-family house",
+			cefrLevel: "B1",
 			metadata: { note: "μόνο + κατοικία = single + dwelling" },
 		},
 		// Other
-		{ lemma: "έναρξη", gender: "feminine", english: "start/beginning" },
-		{ lemma: "οδηγός", gender: "masculine", english: "driver" },
-		{ lemma: "ύπνος", gender: "masculine", english: "sleep" },
+		{ lemma: "έναρξη", gender: "feminine", english: "start/beginning", cefrLevel: "B2" },
+		{ lemma: "οδηγός", gender: "masculine", english: "driver", cefrLevel: "A2" },
+		{ lemma: "ύπνος", gender: "masculine", english: "sleep", cefrLevel: "A2" },
 	],
 
 	adjectives: [

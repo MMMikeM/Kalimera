@@ -7,7 +7,7 @@ const allNouns = Object.values(NOUNS).flat();
 
 const formsOf = (lemma: string, gender: "masculine" | "feminine" | "neuter") =>
 	Object.fromEntries(
-		Object.entries(enrichNoun({ lemma, gender, english: "x" }).nominalForms).map(([k, cell]) => [
+		Object.entries(enrichNoun({ lemma, gender, english: "x", cefrLevel: "A1" }).nominalForms).map(([k, cell]) => [
 			k,
 			cell?.form,
 		]),
