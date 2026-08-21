@@ -9,15 +9,16 @@ export const LESSON_2024_10_15 = createLesson({
 	verbs: [{ lemma: "διδάσκω", english: "I teach", conjugationFamily: "-ω", cefrLevel: "A2" }],
 
 	nouns: [
-		{ lemma: "λογισμικό", gender: "neuter", english: "software" },
-		{ lemma: "μηχανικός", gender: "masculine", english: "engineer" },
-		{ lemma: "δασκάλα", gender: "feminine", english: "teacher (female)" },
+		{ lemma: "λογισμικό", gender: "neuter", english: "software", cefrLevel: "B1" },
+		{ lemma: "μηχανικός", gender: "masculine", english: "engineer", cefrLevel: "A2" },
+		{ lemma: "δασκάλα", gender: "feminine", english: "teacher (female)", cefrLevel: "A1" },
 		{
 			lemma: "υπολογιστής",
 			gender: "masculine",
 			english: "computer/calculator",
+			cefrLevel: "A1",
 		},
-		{ lemma: "πληκτρολόγιο", gender: "neuter", english: "keyboard" },
+		{ lemma: "πληκτρολόγιο", gender: "neuter", english: "keyboard", cefrLevel: "A2" },
 	],
 
 	phrases: [

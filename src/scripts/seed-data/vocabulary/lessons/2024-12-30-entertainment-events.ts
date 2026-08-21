@@ -14,37 +14,40 @@ export const LESSON_2024_12_30 = createLesson({
 
 	nouns: [
 		// Entertainment
-		{ lemma: "τηλεόραση", gender: "feminine", english: "television" },
+		{ lemma: "τηλεόραση", gender: "feminine", english: "television", cefrLevel: "A1" },
 		{
 			lemma: "ηθοποιός",
 			gender: "masculine",
 			english: "actor",
+			cefrLevel: "B1",
 			metadata: { note: "Common gender: ο/η ηθοποιός" },
 		},
-		{ lemma: "ταινία", gender: "feminine", english: "movie/film" },
-		{ lemma: "εικόνα", gender: "feminine", english: "image/picture" },
-		{ lemma: "τέχνη", gender: "feminine", english: "art" },
+		{ lemma: "ταινία", gender: "feminine", english: "movie/film", cefrLevel: "A1" },
+		{ lemma: "εικόνα", gender: "feminine", english: "image/picture", cefrLevel: "A2" },
+		{ lemma: "τέχνη", gender: "feminine", english: "art", cefrLevel: "A2" },
 		// Events and venues
-		{ lemma: "σινεμά", gender: "neuter", english: "cinema" },
-		{ lemma: "συναυλία", gender: "feminine", english: "concert" },
-		{ lemma: "πικνίκ", gender: "neuter", english: "picnic" },
+		{ lemma: "σινεμά", gender: "neuter", english: "cinema", cefrLevel: "A1" },
+		{ lemma: "συναυλία", gender: "feminine", english: "concert", cefrLevel: "A2" },
+		{ lemma: "πικνίκ", gender: "neuter", english: "picnic", cefrLevel: "A2" },
 		{
 			lemma: "αγώνας",
 			gender: "masculine",
 			english: "match/game",
+			cefrLevel: "A2",
 			metadata: { note: "ποδοσφαιρικός αγώνας = football match" },
 		},
-		{ lemma: "πάρτι", gender: "neuter", english: "party" },
-		{ lemma: "γκαλερί", gender: "feminine", english: "gallery" },
+		{ lemma: "πάρτι", gender: "neuter", english: "party", cefrLevel: "A2" },
+		{ lemma: "γκαλερί", gender: "feminine", english: "gallery", cefrLevel: "B1" },
 		// From error correction sentences
-		{ lemma: "καρέκλα", gender: "feminine", english: "chair" },
-		{ lemma: "καρπούζι", gender: "neuter", english: "watermelon" },
+		{ lemma: "καρέκλα", gender: "feminine", english: "chair", cefrLevel: "A1" },
+		{ lemma: "καρπούζι", gender: "neuter", english: "watermelon", cefrLevel: "A2" },
 		{
 			lemma: "πορτοκαλάδα",
 			gender: "feminine",
 			english: "orange juice/orangeade",
+			cefrLevel: "A2",
 		},
-		{ lemma: "γιαγιά", gender: "feminine", english: "grandmother" },
+		{ lemma: "γιαγιά", gender: "feminine", english: "grandmother", cefrLevel: "A1" },
 	],
 
 	adjectives: [

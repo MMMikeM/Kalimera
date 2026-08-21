@@ -8,6 +8,7 @@ export const FULL_VERB_CONJUGATIONS: FullVerbSeed[] = [
 	{
 		lemma: "βλέπω",
 		english: "I see",
+		cefrLevel: "A1",
 		conjugationFamily: "-ω",
 		isSuppletive: true,
 		stems: {
@@ -70,6 +71,7 @@ export const FULL_VERB_CONJUGATIONS: FullVerbSeed[] = [
 	{
 		lemma: "λέω",
 		english: "I say",
+		cefrLevel: "A1",
 		conjugationFamily: "irregular",
 		isSuppletive: true,
 		stems: {
@@ -132,6 +134,7 @@ export const FULL_VERB_CONJUGATIONS: FullVerbSeed[] = [
 	{
 		lemma: "τρώω",
 		english: "I eat",
+		cefrLevel: "A1",
 		conjugationFamily: "irregular",
 		isSuppletive: true,
 		stems: {
@@ -194,6 +197,7 @@ export const FULL_VERB_CONJUGATIONS: FullVerbSeed[] = [
 	{
 		lemma: "πίνω",
 		english: "I drink",
+		cefrLevel: "A1",
 		conjugationFamily: "-ω",
 		isSuppletive: true,
 		stems: {
@@ -256,6 +260,7 @@ export const FULL_VERB_CONJUGATIONS: FullVerbSeed[] = [
 	{
 		lemma: "πάω",
 		english: "I go",
+		cefrLevel: "A1",
 		conjugationFamily: "irregular",
 		isSuppletive: true,
 		stems: {
@@ -318,6 +323,7 @@ export const FULL_VERB_CONJUGATIONS: FullVerbSeed[] = [
 	{
 		lemma: "έρχομαι",
 		english: "I come",
+		cefrLevel: "A1",
 		conjugationFamily: "-ομαι",
 		isSuppletive: true,
 		stems: {
@@ -380,6 +386,7 @@ export const FULL_VERB_CONJUGATIONS: FullVerbSeed[] = [
 	{
 		lemma: "βρίσκω",
 		english: "I find",
+		cefrLevel: "A1",
 		conjugationFamily: "-ω",
 		isSuppletive: true,
 		stems: {
@@ -446,6 +453,7 @@ export const FULL_VERB_CONJUGATIONS: FullVerbSeed[] = [
 	{
 		lemma: "είμαι",
 		english: "I am",
+		cefrLevel: "A1",
 		conjugationFamily: "irregular",
 		isSuppletive: false,
 		conjugations: [
@@ -506,6 +514,7 @@ export const FULL_VERB_CONJUGATIONS: FullVerbSeed[] = [
 	{
 		lemma: "έχω",
 		english: "I have",
+		cefrLevel: "A1",
 		conjugationFamily: "-ω",
 		isSuppletive: true,
 		stems: {
@@ -566,6 +575,7 @@ export const FULL_VERB_CONJUGATIONS: FullVerbSeed[] = [
 	{
 		lemma: "θέλω",
 		english: "I want",
+		cefrLevel: "A1",
 		conjugationFamily: "-ω",
 		isSuppletive: true,
 		stems: {
@@ -623,6 +633,7 @@ export const FULL_VERB_CONJUGATIONS: FullVerbSeed[] = [
 	{
 		lemma: "ξέρω",
 		english: "I know",
+		cefrLevel: "A1",
 		conjugationFamily: "-ω",
 		isSuppletive: true,
 		stems: {
@@ -680,6 +691,7 @@ export const FULL_VERB_CONJUGATIONS: FullVerbSeed[] = [
 	{
 		lemma: "ακούω",
 		english: "I hear/listen",
+		cefrLevel: "A1",
 		conjugationFamily: "-ω",
 		isSuppletive: true,
 		stems: {
@@ -741,6 +753,7 @@ export const FULL_VERB_CONJUGATIONS: FullVerbSeed[] = [
 	{
 		lemma: "παίρνω",
 		english: "I take",
+		cefrLevel: "A1",
 		conjugationFamily: "-ω",
 		isSuppletive: true,
 		stems: {
@@ -803,6 +816,7 @@ export const FULL_VERB_CONJUGATIONS: FullVerbSeed[] = [
 	{
 		lemma: "δίνω",
 		english: "I give",
+		cefrLevel: "A2",
 		conjugationFamily: "-ω",
 		isSuppletive: true,
 		stems: {
@@ -865,6 +879,7 @@ export const FULL_VERB_CONJUGATIONS: FullVerbSeed[] = [
 	{
 		lemma: "φεύγω",
 		english: "I leave",
+		cefrLevel: "A2",
 		conjugationFamily: "-ω",
 		isSuppletive: true,
 		stems: {
@@ -930,6 +945,7 @@ export const FULL_VERB_CONJUGATIONS: FullVerbSeed[] = [
 	{
 		lemma: "χρειάζομαι",
 		english: "I need",
+		cefrLevel: "A2",
 		conjugationFamily: "-ομαι",
 		isSuppletive: false,
 		stems: {
@@ -987,6 +1003,7 @@ export const FULL_VERB_CONJUGATIONS: FullVerbSeed[] = [
 	{
 		lemma: "χαίρομαι",
 		english: "I'm glad",
+		cefrLevel: "A2",
 		conjugationFamily: "-ομαι",
 		isSuppletive: false,
 		stems: {
@@ -1044,6 +1061,7 @@ export const FULL_VERB_CONJUGATIONS: FullVerbSeed[] = [
 	{
 		lemma: "σκέφτομαι",
 		english: "I think",
+		cefrLevel: "A2",
 		conjugationFamily: "-ομαι",
 		isSuppletive: false,
 		stems: {
@@ -1101,6 +1119,7 @@ export const FULL_VERB_CONJUGATIONS: FullVerbSeed[] = [
 	{
 		lemma: "υπόσχομαι",
 		english: "I promise",
+		cefrLevel: "B1",
 		conjugationFamily: "-ομαι",
 		isSuppletive: false,
 		stems: {
@@ -1157,6 +1176,7 @@ export const FULL_VERB_CONJUGATIONS: FullVerbSeed[] = [
 	{
 		lemma: "νιώθω",
 		english: "I feel",
+		cefrLevel: "A2",
 		conjugationFamily: "-ω",
 		isSuppletive: true,
 		conjugations: [

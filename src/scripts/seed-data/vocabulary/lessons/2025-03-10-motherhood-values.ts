@@ -28,6 +28,7 @@ export const LESSON_2025_03_10 = createLesson({
 			lemma: "παιδικός σταθμός",
 			gender: "masculine",
 			english: "daycare/nursery",
+			cefrLevel: "A2",
 			metadata: { note: "παιδικός (children's) + σταθμός (station)" },
 		},
 		{ lemma: "ψυχραιμία", gender: "feminine", english: "composure/calm", cefrLevel: "B1" },

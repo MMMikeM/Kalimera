@@ -13,13 +13,13 @@ export const LESSON_2024_09_10 = createLesson({
 	],
 
 	nouns: [
-		{ lemma: "υγρασία", gender: "feminine", english: "humidity" },
-		{ lemma: "σκουπίδια", gender: "neuter", english: "garbage/trash" },
-		{ lemma: "μάστορας", gender: "masculine", english: "handyman" },
-		{ lemma: "μετανάστης", gender: "masculine", english: "immigrant" },
-		{ lemma: "καριέρα", gender: "feminine", english: "career" },
-		{ lemma: "εμβόλιο", gender: "neuter", english: "vaccine" },
-		{ lemma: "ορχήστρα", gender: "feminine", english: "orchestra" },
+		{ lemma: "υγρασία", gender: "feminine", english: "humidity", cefrLevel: "B1" },
+		{ lemma: "σκουπίδια", gender: "neuter", english: "garbage/trash", cefrLevel: "A2" },
+		{ lemma: "μάστορας", gender: "masculine", english: "handyman", cefrLevel: "B1" },
+		{ lemma: "μετανάστης", gender: "masculine", english: "immigrant", cefrLevel: "B1" },
+		{ lemma: "καριέρα", gender: "feminine", english: "career", cefrLevel: "B1" },
+		{ lemma: "εμβόλιο", gender: "neuter", english: "vaccine", cefrLevel: "B1" },
+		{ lemma: "ορχήστρα", gender: "feminine", english: "orchestra", cefrLevel: "B1" },
 	],
 
 	adjectives: [

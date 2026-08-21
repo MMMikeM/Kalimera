@@ -9,8 +9,8 @@ export const LESSON_2024_04_22 = createLesson({
 	verbs: [{ lemma: "ζηλεύω", english: "I am jealous", conjugationFamily: "-ω", cefrLevel: "A2" }],
 
 	nouns: [
-		{ lemma: "φως", gender: "neuter", english: "light" },
-		{ lemma: "χιόνι", gender: "neuter", english: "snow" },
+		{ lemma: "φως", gender: "neuter", english: "light", cefrLevel: "A2" },
+		{ lemma: "χιόνι", gender: "neuter", english: "snow", cefrLevel: "A1" },
 	],
 
 	adverbs: [

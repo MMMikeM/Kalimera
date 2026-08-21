@@ -6,7 +6,7 @@ export const LESSON_2024_06_10 = createLesson({
 		source: "Weekly lesson - πολύ/πολλοί distinction",
 	},
 
-	nouns: [{ lemma: "αφτί", gender: "neuter", english: "ear" }],
+	nouns: [{ lemma: "αφτί", gender: "neuter", english: "ear", cefrLevel: "A1" }],
 
 	adverbs: [{ lemma: "πολύ", english: "very/a lot", cefrLevel: "A1" }],
 

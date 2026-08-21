@@ -3,13 +3,13 @@ import { describe, expect, it } from "vitest";
 import { enrichAdjective } from "./adjective-seed-enrichment";
 
 const grid = (lemma: string) =>
-	enrichAdjective({ lemma, english: "x" }).nominalForms as Record<
+	enrichAdjective({ lemma, english: "x", cefrLevel: "A1" }).nominalForms as Record<
 		string,
 		{ form: string; article: string | null }
 	>;
 
 const citation = (lemma: string) => {
-	const forms = enrichAdjective({ lemma, english: "x" }).nominalForms as Record<
+	const forms = enrichAdjective({ lemma, english: "x", cefrLevel: "A1" }).nominalForms as Record<
 		string,
 		{ form: string }
 	>;

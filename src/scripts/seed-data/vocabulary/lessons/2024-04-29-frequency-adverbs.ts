@@ -19,7 +19,7 @@ export const LESSON_2024_04_29 = createLesson({
 		{ lemma: "ξυπνάω", english: "I wake up", conjugationFamily: "-άω/-ώ", cefrLevel: "A1" },
 	],
 
-	nouns: [{ lemma: "πράγμα", gender: "neuter", english: "thing" }],
+	nouns: [{ lemma: "πράγμα", gender: "neuter", english: "thing", cefrLevel: "A1" }],
 
 	adjectives: [
 		{ lemma: "ζωηρός", english: "lively/full of life", cefrLevel: "B1" },

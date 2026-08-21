@@ -27,8 +27,8 @@ export const LESSON_2024_07_29 = createLesson({
 	],
 
 	nouns: [
-		{ lemma: "καμπούρα", gender: "feminine", english: "hunch/hunchback" },
-		{ lemma: "ξύλο", gender: "neuter", english: "wood/beating" },
+		{ lemma: "καμπούρα", gender: "feminine", english: "hunch/hunchback", cefrLevel: "B2" },
+		{ lemma: "ξύλο", gender: "neuter", english: "wood/beating", cefrLevel: "B1" },
 	],
 
 	phrases: [
