@@ -21,7 +21,6 @@ import { Route as LearnIndexRouteImport } from './routes/learn/index'
 import { Route as ReferenceTabRouteImport } from './routes/reference/$tab'
 import { Route as PracticeReviewRouteImport } from './routes/practice/review'
 import { Route as LearnVerbsRouteImport } from './routes/learn/verbs'
-import { Route as LearnNounsRouteImport } from './routes/learn/nouns'
 import { Route as ApiErrorsRouteImport } from './routes/api/errors'
 import { Route as authRegisterRouteImport } from './routes/(auth)/register'
 import { Route as authLoginRouteImport } from './routes/(auth)/login'
@@ -32,6 +31,7 @@ import { Route as PracticePronounsIndexRouteImport } from './routes/practice/pro
 import { Route as PracticeCasesIndexRouteImport } from './routes/practice/cases/index'
 import { Route as PracticeBlocksIndexRouteImport } from './routes/practice/blocks/index'
 import { Route as LearnPhrasesIndexRouteImport } from './routes/learn/phrases/index'
+import { Route as LearnNounsIndexRouteImport } from './routes/learn/nouns/index'
 import { Route as LearnEssentialsIndexRouteImport } from './routes/learn/essentials/index'
 import { Route as LearnConversationsIndexRouteImport } from './routes/learn/conversations/index'
 import { Route as ReferenceVerbsBandRouteImport } from './routes/reference/verbs/$band'
@@ -48,6 +48,7 @@ import { Route as PracticeBlocksDaysOfWeekRouteImport } from './routes/practice/
 import { Route as PracticeBlocksChunksRouteImport } from './routes/practice/blocks/chunks'
 import { Route as LearnVerbsVerbIdRouteImport } from './routes/learn/verbs/$verbId'
 import { Route as LearnPhrasesTabRouteImport } from './routes/learn/phrases/$tab'
+import { Route as LearnNounsSubjectRouteImport } from './routes/learn/nouns/$subject'
 import { Route as LearnEssentialsSubtabRouteImport } from './routes/learn/essentials/$subtab'
 import { Route as LearnConversationsTabRouteImport } from './routes/learn/conversations/$tab'
 import { Route as ApiWebauthnRegisterVerifyRouteImport } from './routes/api/webauthn/register-verify'
@@ -156,11 +157,6 @@ const LearnVerbsRoute = LearnVerbsRouteImport.update({
   path: '/learn/verbs',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LearnNounsRoute = LearnNounsRouteImport.update({
-  id: '/learn/nouns',
-  path: '/learn/nouns',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ApiErrorsRoute = ApiErrorsRouteImport.update({
   id: '/api/errors',
   path: '/api/errors',
@@ -209,6 +205,11 @@ const PracticeBlocksIndexRoute = PracticeBlocksIndexRouteImport.update({
 const LearnPhrasesIndexRoute = LearnPhrasesIndexRouteImport.update({
   id: '/learn/phrases/',
   path: '/learn/phrases/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LearnNounsIndexRoute = LearnNounsIndexRouteImport.update({
+  id: '/learn/nouns/',
+  path: '/learn/nouns/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LearnEssentialsIndexRoute = LearnEssentialsIndexRouteImport.update({
@@ -295,6 +296,11 @@ const LearnVerbsVerbIdRoute = LearnVerbsVerbIdRouteImport.update({
 const LearnPhrasesTabRoute = LearnPhrasesTabRouteImport.update({
   id: '/learn/phrases/$tab',
   path: '/learn/phrases/$tab',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LearnNounsSubjectRoute = LearnNounsSubjectRouteImport.update({
+  id: '/learn/nouns/$subject',
+  path: '/learn/nouns/$subject',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LearnEssentialsSubtabRoute = LearnEssentialsSubtabRouteImport.update({
@@ -582,7 +588,6 @@ export interface FileRoutesByFullPath {
   '/login': typeof authLoginRoute
   '/register': typeof authRegisterRoute
   '/api/errors': typeof ApiErrorsRoute
-  '/learn/nouns': typeof LearnNounsRoute
   '/learn/verbs': typeof LearnVerbsRouteWithChildren
   '/practice/review': typeof PracticeReviewRoute
   '/reference/$tab': typeof ReferenceTabRoute
@@ -600,6 +605,7 @@ export interface FileRoutesByFullPath {
   '/api/webauthn/register-verify': typeof ApiWebauthnRegisterVerifyRoute
   '/learn/conversations/$tab': typeof LearnConversationsTabRoute
   '/learn/essentials/$subtab': typeof LearnEssentialsSubtabRoute
+  '/learn/nouns/$subject': typeof LearnNounsSubjectRoute
   '/learn/phrases/$tab': typeof LearnPhrasesTabRoute
   '/learn/verbs/$verbId': typeof LearnVerbsVerbIdRoute
   '/practice/blocks/chunks': typeof PracticeBlocksChunksRoute
@@ -616,6 +622,7 @@ export interface FileRoutesByFullPath {
   '/reference/verbs/$band': typeof ReferenceVerbsBandRoute
   '/learn/conversations/': typeof LearnConversationsIndexRoute
   '/learn/essentials/': typeof LearnEssentialsIndexRoute
+  '/learn/nouns/': typeof LearnNounsIndexRoute
   '/learn/phrases/': typeof LearnPhrasesIndexRoute
   '/practice/blocks/': typeof PracticeBlocksIndexRoute
   '/practice/cases/': typeof PracticeCasesIndexRoute
@@ -668,7 +675,6 @@ export interface FileRoutesByTo {
   '/login': typeof authLoginRoute
   '/register': typeof authRegisterRoute
   '/api/errors': typeof ApiErrorsRoute
-  '/learn/nouns': typeof LearnNounsRoute
   '/learn/verbs': typeof LearnVerbsRouteWithChildren
   '/practice/review': typeof PracticeReviewRoute
   '/reference/$tab': typeof ReferenceTabRoute
@@ -686,6 +692,7 @@ export interface FileRoutesByTo {
   '/api/webauthn/register-verify': typeof ApiWebauthnRegisterVerifyRoute
   '/learn/conversations/$tab': typeof LearnConversationsTabRoute
   '/learn/essentials/$subtab': typeof LearnEssentialsSubtabRoute
+  '/learn/nouns/$subject': typeof LearnNounsSubjectRoute
   '/learn/phrases/$tab': typeof LearnPhrasesTabRoute
   '/learn/verbs/$verbId': typeof LearnVerbsVerbIdRoute
   '/practice/blocks/chunks': typeof PracticeBlocksChunksRoute
@@ -702,6 +709,7 @@ export interface FileRoutesByTo {
   '/reference/verbs/$band': typeof ReferenceVerbsBandRoute
   '/learn/conversations': typeof LearnConversationsIndexRoute
   '/learn/essentials': typeof LearnEssentialsIndexRoute
+  '/learn/nouns': typeof LearnNounsIndexRoute
   '/learn/phrases': typeof LearnPhrasesIndexRoute
   '/practice/blocks': typeof PracticeBlocksIndexRoute
   '/practice/cases': typeof PracticeCasesIndexRoute
@@ -757,7 +765,6 @@ export interface FileRoutesById {
   '/(auth)/login': typeof authLoginRoute
   '/(auth)/register': typeof authRegisterRoute
   '/api/errors': typeof ApiErrorsRoute
-  '/learn/nouns': typeof LearnNounsRoute
   '/learn/verbs': typeof LearnVerbsRouteWithChildren
   '/practice/review': typeof PracticeReviewRoute
   '/reference/$tab': typeof ReferenceTabRoute
@@ -775,6 +782,7 @@ export interface FileRoutesById {
   '/api/webauthn/register-verify': typeof ApiWebauthnRegisterVerifyRoute
   '/learn/conversations/$tab': typeof LearnConversationsTabRoute
   '/learn/essentials/$subtab': typeof LearnEssentialsSubtabRoute
+  '/learn/nouns/$subject': typeof LearnNounsSubjectRoute
   '/learn/phrases/$tab': typeof LearnPhrasesTabRoute
   '/learn/verbs/$verbId': typeof LearnVerbsVerbIdRoute
   '/practice/blocks/chunks': typeof PracticeBlocksChunksRoute
@@ -791,6 +799,7 @@ export interface FileRoutesById {
   '/reference/verbs/$band': typeof ReferenceVerbsBandRoute
   '/learn/conversations/': typeof LearnConversationsIndexRoute
   '/learn/essentials/': typeof LearnEssentialsIndexRoute
+  '/learn/nouns/': typeof LearnNounsIndexRoute
   '/learn/phrases/': typeof LearnPhrasesIndexRoute
   '/practice/blocks/': typeof PracticeBlocksIndexRoute
   '/practice/cases/': typeof PracticeCasesIndexRoute
@@ -847,7 +856,6 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/api/errors'
-    | '/learn/nouns'
     | '/learn/verbs'
     | '/practice/review'
     | '/reference/$tab'
@@ -865,6 +873,7 @@ export interface FileRouteTypes {
     | '/api/webauthn/register-verify'
     | '/learn/conversations/$tab'
     | '/learn/essentials/$subtab'
+    | '/learn/nouns/$subject'
     | '/learn/phrases/$tab'
     | '/learn/verbs/$verbId'
     | '/practice/blocks/chunks'
@@ -881,6 +890,7 @@ export interface FileRouteTypes {
     | '/reference/verbs/$band'
     | '/learn/conversations/'
     | '/learn/essentials/'
+    | '/learn/nouns/'
     | '/learn/phrases/'
     | '/practice/blocks/'
     | '/practice/cases/'
@@ -933,7 +943,6 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/api/errors'
-    | '/learn/nouns'
     | '/learn/verbs'
     | '/practice/review'
     | '/reference/$tab'
@@ -951,6 +960,7 @@ export interface FileRouteTypes {
     | '/api/webauthn/register-verify'
     | '/learn/conversations/$tab'
     | '/learn/essentials/$subtab'
+    | '/learn/nouns/$subject'
     | '/learn/phrases/$tab'
     | '/learn/verbs/$verbId'
     | '/practice/blocks/chunks'
@@ -967,6 +977,7 @@ export interface FileRouteTypes {
     | '/reference/verbs/$band'
     | '/learn/conversations'
     | '/learn/essentials'
+    | '/learn/nouns'
     | '/learn/phrases'
     | '/practice/blocks'
     | '/practice/cases'
@@ -1021,7 +1032,6 @@ export interface FileRouteTypes {
     | '/(auth)/login'
     | '/(auth)/register'
     | '/api/errors'
-    | '/learn/nouns'
     | '/learn/verbs'
     | '/practice/review'
     | '/reference/$tab'
@@ -1039,6 +1049,7 @@ export interface FileRouteTypes {
     | '/api/webauthn/register-verify'
     | '/learn/conversations/$tab'
     | '/learn/essentials/$subtab'
+    | '/learn/nouns/$subject'
     | '/learn/phrases/$tab'
     | '/learn/verbs/$verbId'
     | '/practice/blocks/chunks'
@@ -1055,6 +1066,7 @@ export interface FileRouteTypes {
     | '/reference/verbs/$band'
     | '/learn/conversations/'
     | '/learn/essentials/'
+    | '/learn/nouns/'
     | '/learn/phrases/'
     | '/practice/blocks/'
     | '/practice/cases/'
@@ -1110,7 +1122,6 @@ export interface RootRouteChildren {
   authLoginRoute: typeof authLoginRoute
   authRegisterRoute: typeof authRegisterRoute
   ApiErrorsRoute: typeof ApiErrorsRoute
-  LearnNounsRoute: typeof LearnNounsRoute
   LearnVerbsRoute: typeof LearnVerbsRouteWithChildren
   ReferenceTabRoute: typeof ReferenceTabRoute
   LearnIndexRoute: typeof LearnIndexRoute
@@ -1126,9 +1137,11 @@ export interface RootRouteChildren {
   ApiWebauthnRegisterVerifyRoute: typeof ApiWebauthnRegisterVerifyRoute
   LearnConversationsTabRoute: typeof LearnConversationsTabRoute
   LearnEssentialsSubtabRoute: typeof LearnEssentialsSubtabRoute
+  LearnNounsSubjectRoute: typeof LearnNounsSubjectRoute
   LearnPhrasesTabRoute: typeof LearnPhrasesTabRoute
   LearnConversationsIndexRoute: typeof LearnConversationsIndexRoute
   LearnEssentialsIndexRoute: typeof LearnEssentialsIndexRoute
+  LearnNounsIndexRoute: typeof LearnNounsIndexRoute
   LearnPhrasesIndexRoute: typeof LearnPhrasesIndexRoute
 }
 
@@ -1218,13 +1231,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LearnVerbsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/learn/nouns': {
-      id: '/learn/nouns'
-      path: '/learn/nouns'
-      fullPath: '/learn/nouns'
-      preLoaderRoute: typeof LearnNounsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/api/errors': {
       id: '/api/errors'
       path: '/api/errors'
@@ -1293,6 +1299,13 @@ declare module '@tanstack/react-router' {
       path: '/learn/phrases'
       fullPath: '/learn/phrases/'
       preLoaderRoute: typeof LearnPhrasesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/learn/nouns/': {
+      id: '/learn/nouns/'
+      path: '/learn/nouns'
+      fullPath: '/learn/nouns/'
+      preLoaderRoute: typeof LearnNounsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/learn/essentials/': {
@@ -1405,6 +1418,13 @@ declare module '@tanstack/react-router' {
       path: '/learn/phrases/$tab'
       fullPath: '/learn/phrases/$tab'
       preLoaderRoute: typeof LearnPhrasesTabRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/learn/nouns/$subject': {
+      id: '/learn/nouns/$subject'
+      path: '/learn/nouns/$subject'
+      fullPath: '/learn/nouns/$subject'
+      preLoaderRoute: typeof LearnNounsSubjectRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/learn/essentials/$subtab': {
@@ -1900,7 +1920,6 @@ const rootRouteChildren: RootRouteChildren = {
   authLoginRoute: authLoginRoute,
   authRegisterRoute: authRegisterRoute,
   ApiErrorsRoute: ApiErrorsRoute,
-  LearnNounsRoute: LearnNounsRoute,
   LearnVerbsRoute: LearnVerbsRouteWithChildren,
   ReferenceTabRoute: ReferenceTabRoute,
   LearnIndexRoute: LearnIndexRoute,
@@ -1916,9 +1935,11 @@ const rootRouteChildren: RootRouteChildren = {
   ApiWebauthnRegisterVerifyRoute: ApiWebauthnRegisterVerifyRoute,
   LearnConversationsTabRoute: LearnConversationsTabRoute,
   LearnEssentialsSubtabRoute: LearnEssentialsSubtabRoute,
+  LearnNounsSubjectRoute: LearnNounsSubjectRoute,
   LearnPhrasesTabRoute: LearnPhrasesTabRoute,
   LearnConversationsIndexRoute: LearnConversationsIndexRoute,
   LearnEssentialsIndexRoute: LearnEssentialsIndexRoute,
+  LearnNounsIndexRoute: LearnNounsIndexRoute,
   LearnPhrasesIndexRoute: LearnPhrasesIndexRoute,
 }
 export const routeTree = rootRouteImport
