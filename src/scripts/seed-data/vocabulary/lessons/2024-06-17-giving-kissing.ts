@@ -15,9 +15,9 @@ export const LESSON_2024_06_17 = createLesson({
 	],
 
 	nouns: [
-		{ lemma: "φιλί", gender: "neuter", english: "kiss" },
-		{ lemma: "γιορτή", gender: "feminine", english: "holiday/celebration" },
-		{ lemma: "νούμερο", gender: "neuter", english: "number" },
+		{ lemma: "φιλί", gender: "neuter", english: "kiss", cefrLevel: "A2" },
+		{ lemma: "γιορτή", gender: "feminine", english: "holiday/celebration", cefrLevel: "A2" },
+		{ lemma: "νούμερο", gender: "neuter", english: "number", cefrLevel: "A2" },
 	],
 
 	adjectives: [{ lemma: "πρώτος", english: "first", cefrLevel: "A1" }],

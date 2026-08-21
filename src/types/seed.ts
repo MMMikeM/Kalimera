@@ -61,7 +61,7 @@ interface VerbImperativeSeed {
 export interface FullVerbSeed {
 	lemma: string;
 	english: string;
-	cefrLevel?: CefrLevel;
+	cefrLevel: CefrLevel;
 	conjugationFamily: ConjugationFamily;
 	isSuppletive?: boolean;
 	stems?: {
@@ -77,7 +77,7 @@ export interface NounSeed {
 	lemma: string;
 	gender: Gender;
 	english: string;
-	cefrLevel?: CefrLevel;
+	cefrLevel: CefrLevel;
 	declensionPattern: NounDeclensionPattern;
 	nominalForms: NounNominalFormsSeed;
 	metadata?: Record<string, JsonValue>;
@@ -86,13 +86,13 @@ export interface NounSeed {
 export interface AdverbSeed {
 	lemma: string;
 	english: string;
-	cefrLevel?: CefrLevel;
+	cefrLevel: CefrLevel;
 }
 
 export interface AdjectiveSeed {
 	lemma: string;
 	english: string;
-	cefrLevel?: CefrLevel;
+	cefrLevel: CefrLevel;
 	pattern: AdjectiveDeclensionPattern;
 	nominalForms: AdjectiveNominalFormsSeed;
 }
@@ -100,6 +100,7 @@ export interface AdjectiveSeed {
 export interface PronounSeed {
 	lemma: string;
 	english: string;
+	cefrLevel: CefrLevel;
 }
 
 export interface NumberSeed {

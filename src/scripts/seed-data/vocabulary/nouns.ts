@@ -264,7 +264,6 @@ const themeTagMap: Record<string, string> = {
 	household: "household",
 	people: "people",
 	nature: "nature",
-	essential: "core-nouns",
 };
 
 export const NOUNS = enrichNounsRecord(NOUNS_RAW);

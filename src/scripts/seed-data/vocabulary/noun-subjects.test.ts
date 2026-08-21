@@ -7,7 +7,7 @@ const MONTHS = [
 	"Ιανουάριος", "Φεβρουάριος", "Μάρτιος", "Απρίλιος", "Μάιος", "Ιούνιος",
 	"Ιούλιος", "Αύγουστος", "Σεπτέμβριος", "Οκτώβριος", "Νοέμβριος", "Δεκέμβριος",
 ];
-const NUMERALS = ["μηδέν", "ένα", "δύο", "πέντε", "δέκα", "είκοσι", "εκατό", "χιλιάδα"];
+const NUMERALS = ["μηδέν", "ένα", "δύο", "πέντε", "δέκα", "είκοσι", "εκατό"];
 
 describe("noun subjects", () => {
 	// /learn/essentials owns numbers and teaches them by composition (unit↔ten,
@@ -23,10 +23,38 @@ describe("noun subjects", () => {
 		expect(subjectTagsFor(lemma)).toEqual([]);
 	});
 
+	// χιλιάδα is a feminine noun that declines (η χιλιάδα -> οι χιλιάδες), unlike
+	// the indeclinable numerals beside it, so it belongs in the browser.
+	it.each(["χιλιάδα", "νούμερο"])("keeps %s, which is a noun rather than a numeral", (lemma) => {
+		expect(subjectTagsFor(lemma)).toEqual(["ideas-feelings"]);
+	});
+
 	it("keeps the ordinary time nouns that essentials does not cover", () => {
 		for (const lemma of ["ώρα", "μέρα", "εβδομάδα", "πρωί", "βράδυ", "χειμώνας"]) {
 			expect(subjectTagsFor(lemma)).toEqual(["time-calendar"]);
 		}
+	});
+
+	// "Core Nouns" was an importance grouping wearing a subject's clothes: it held
+	// body parts, people, places, food, money and abstractions side by side, so it
+	// overlapped every real subject and taught nothing about any of them.
+	it.each([
+		["χέρι", "body-health"],
+		["κεφάλι", "body-health"],
+		["καρδιά", "body-health"],
+		["μωρό", "people"],
+		["κορίτσι", "people"],
+		["κόσμος", "people"],
+		["πόλη", "places-buildings"],
+		["μέρος", "places-buildings"],
+		["δωμάτιο", "household"],
+		["φαγητό", "food-drink"],
+		["λεφτά", "shopping"],
+		["φορά", "time-calendar"],
+		["στιγμή", "time-calendar"],
+		["αγάπη", "ideas-feelings"],
+	])("files the former core noun %s under %s", (lemma, subject) => {
+		expect(subjectTagsFor(lemma)).toEqual([subject]);
 	});
 
 	it("assigns every lemma exactly one subject", () => {

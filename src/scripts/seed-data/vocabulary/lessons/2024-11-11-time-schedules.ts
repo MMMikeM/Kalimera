@@ -15,23 +15,23 @@ export const LESSON_2024_11_11 = createLesson({
 
 	nouns: [
 		// Time-related
-		{ lemma: "εβδομάδα", gender: "feminine", english: "week" },
-		{ lemma: "ημερολόγιο", gender: "neuter", english: "calendar/diary" },
-		{ lemma: "πρόγραμμα", gender: "neuter", english: "schedule/planner" },
+		{ lemma: "εβδομάδα", gender: "feminine", english: "week", cefrLevel: "A1" },
+		{ lemma: "ημερολόγιο", gender: "neuter", english: "calendar/diary", cefrLevel: "A2" },
+		{ lemma: "πρόγραμμα", gender: "neuter", english: "schedule/planner", cefrLevel: "A2" },
 		// Work/appointments
-		{ lemma: "ραντεβού", gender: "neuter", english: "appointment/date" },
-		{ lemma: "συνάντηση", gender: "feminine", english: "meeting" },
-		{ lemma: "παρουσίαση", gender: "feminine", english: "presentation" },
-		{ lemma: "κλήση", gender: "feminine", english: "call" },
-		{ lemma: "μάθημα", gender: "neuter", english: "lesson" },
-		{ lemma: "αγώνας", gender: "masculine", english: "match/game" },
+		{ lemma: "ραντεβού", gender: "neuter", english: "appointment/date", cefrLevel: "A2" },
+		{ lemma: "συνάντηση", gender: "feminine", english: "meeting", cefrLevel: "B1" },
+		{ lemma: "παρουσίαση", gender: "feminine", english: "presentation", cefrLevel: "B1" },
+		{ lemma: "κλήση", gender: "feminine", english: "call", cefrLevel: "B1" },
+		{ lemma: "μάθημα", gender: "neuter", english: "lesson", cefrLevel: "A1" },
+		{ lemma: "αγώνας", gender: "masculine", english: "match/game", cefrLevel: "A2" },
 		// People
-		{ lemma: "οδοντίατρος", gender: "masculine", english: "dentist" },
-		{ lemma: "γιατρός", gender: "masculine", english: "doctor" },
-		{ lemma: "πελάτης", gender: "masculine", english: "client" },
-		{ lemma: "ομάδα", gender: "feminine", english: "team" },
+		{ lemma: "οδοντίατρος", gender: "masculine", english: "dentist", cefrLevel: "A2" },
+		{ lemma: "γιατρός", gender: "masculine", english: "doctor", cefrLevel: "A2" },
+		{ lemma: "πελάτης", gender: "masculine", english: "client", cefrLevel: "A2" },
+		{ lemma: "ομάδα", gender: "feminine", english: "team", cefrLevel: "A2" },
 		// Other
-		{ lemma: "σχέδιο", gender: "neuter", english: "plan/sketch" },
+		{ lemma: "σχέδιο", gender: "neuter", english: "plan/sketch", cefrLevel: "B1" },
 	],
 
 	adjectives: [

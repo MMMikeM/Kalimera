@@ -9,7 +9,7 @@ import type { AdjectiveNominalFormsSeed, AdjectiveSeed } from "../../../types/se
 export type AdjectiveSeedInput = {
 	lemma: string;
 	english: string;
-	cefrLevel?: CefrLevel;
+	cefrLevel: CefrLevel;
 	pattern?: AdjectiveDeclensionPattern;
 	nominalForms?: AdjectiveNominalFormsSeed;
 };
@@ -165,9 +165,9 @@ export function enrichAdjective(input: AdjectiveSeedInput): AdjectiveSeed {
 	const out: AdjectiveSeed = {
 		lemma: input.lemma,
 		english: input.english,
+		cefrLevel: input.cefrLevel,
 		pattern,
 		nominalForms: merged,
 	};
-	if (input.cefrLevel !== undefined) out.cefrLevel = input.cefrLevel;
 	return out;
 }

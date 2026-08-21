@@ -1,3 +1,5 @@
+import type { CefrLevel } from "@/server/db/enums";
+
 import type { Gender } from "../../../lib/greek-grammar";
 import type { Phrase } from "../../../types/phrase";
 import {
@@ -67,29 +69,29 @@ export const DAYS_OF_WEEK: Phrase[] = [
 ];
 
 /** Bare lemmas + gender for seeding; the arrays above stay article-first for display. */
-const DAY_NOUNS: Array<{ lemma: string; english: string; gender: Gender }> = [
-	{ lemma: "Δευτέρα", english: "Monday", gender: "feminine" },
-	{ lemma: "Τρίτη", english: "Tuesday", gender: "feminine" },
-	{ lemma: "Τετάρτη", english: "Wednesday", gender: "feminine" },
-	{ lemma: "Πέμπτη", english: "Thursday", gender: "feminine" },
-	{ lemma: "Παρασκευή", english: "Friday", gender: "feminine" },
-	{ lemma: "Σάββατο", english: "Saturday", gender: "neuter" },
-	{ lemma: "Κυριακή", english: "Sunday", gender: "feminine" },
+const DAY_NOUNS: Array<{ lemma: string; english: string; gender: Gender; cefrLevel: CefrLevel }> = [
+	{ lemma: "Δευτέρα", english: "Monday", gender: "feminine", cefrLevel: "A1" },
+	{ lemma: "Τρίτη", english: "Tuesday", gender: "feminine", cefrLevel: "A1" },
+	{ lemma: "Τετάρτη", english: "Wednesday", gender: "feminine", cefrLevel: "A1" },
+	{ lemma: "Πέμπτη", english: "Thursday", gender: "feminine", cefrLevel: "A1" },
+	{ lemma: "Παρασκευή", english: "Friday", gender: "feminine", cefrLevel: "A1" },
+	{ lemma: "Σάββατο", english: "Saturday", gender: "neuter", cefrLevel: "A1" },
+	{ lemma: "Κυριακή", english: "Sunday", gender: "feminine", cefrLevel: "A1" },
 ];
 
-const MONTH_NOUNS: Array<{ lemma: string; english: string }> = [
-	{ lemma: "Ιανουάριος", english: "January" },
-	{ lemma: "Φεβρουάριος", english: "February" },
-	{ lemma: "Μάρτιος", english: "March" },
-	{ lemma: "Απρίλιος", english: "April" },
-	{ lemma: "Μάιος", english: "May" },
-	{ lemma: "Ιούνιος", english: "June" },
-	{ lemma: "Ιούλιος", english: "July" },
-	{ lemma: "Αύγουστος", english: "August" },
-	{ lemma: "Σεπτέμβριος", english: "September" },
-	{ lemma: "Οκτώβριος", english: "October" },
-	{ lemma: "Νοέμβριος", english: "November" },
-	{ lemma: "Δεκέμβριος", english: "December" },
+const MONTH_NOUNS: Array<{ lemma: string; english: string; cefrLevel: CefrLevel }> = [
+	{ lemma: "Ιανουάριος", english: "January", cefrLevel: "A1" },
+	{ lemma: "Φεβρουάριος", english: "February", cefrLevel: "A1" },
+	{ lemma: "Μάρτιος", english: "March", cefrLevel: "A1" },
+	{ lemma: "Απρίλιος", english: "April", cefrLevel: "A1" },
+	{ lemma: "Μάιος", english: "May", cefrLevel: "A1" },
+	{ lemma: "Ιούνιος", english: "June", cefrLevel: "A1" },
+	{ lemma: "Ιούλιος", english: "July", cefrLevel: "A1" },
+	{ lemma: "Αύγουστος", english: "August", cefrLevel: "A1" },
+	{ lemma: "Σεπτέμβριος", english: "September", cefrLevel: "A1" },
+	{ lemma: "Οκτώβριος", english: "October", cefrLevel: "A1" },
+	{ lemma: "Νοέμβριος", english: "November", cefrLevel: "A1" },
+	{ lemma: "Δεκέμβριος", english: "December", cefrLevel: "A1" },
 ];
 
 // Months of the year - all masculine
@@ -390,13 +392,20 @@ export const TIME_TELLING_ITEMS: VocabWithTags[] = TIME_TELLING.map((phrase) => 
  * unique index is on greek_text — and left both without a noun_details row, so
  * every month rendered as neuter via a `?? "neuter"` fallback.
  */
-const dayMonthItem = (lemma: string, english: string, gender: Gender, tag: string) => {
-	const noun = enrichNoun({ lemma, gender, english });
+const dayMonthItem = (
+	lemma: string,
+	english: string,
+	gender: Gender,
+	tag: string,
+	cefrLevel: CefrLevel,
+) => {
+	const noun = enrichNoun({ lemma, gender, english, cefrLevel });
 	return {
 		vocab: {
 			greekText: noun.lemma,
 			englishTranslation: noun.english,
 			wordType: "noun" as const,
+			cefrLevel: noun.cefrLevel ?? null,
 		},
 		tags: [tag, ...subjectTagsFor(noun.lemma)],
 		nounDetail: nounDetailFromSeed(noun),
@@ -405,11 +414,11 @@ const dayMonthItem = (lemma: string, english: string, gender: Gender, tag: strin
 };
 
 export const DAY_ITEMS: VocabWithTags[] = DAY_NOUNS.map((d) =>
-	dayMonthItem(d.lemma, d.english, d.gender, "days-of-week"),
+	dayMonthItem(d.lemma, d.english, d.gender, "days-of-week", d.cefrLevel),
 );
 
 export const MONTH_ITEMS: VocabWithTags[] = MONTH_NOUNS.map((m) =>
-	dayMonthItem(m.lemma, m.english, "masculine", "months"),
+	dayMonthItem(m.lemma, m.english, "masculine", "months", m.cefrLevel),
 );
 
 export const LIKES_SINGULAR_ITEMS: VocabWithTags[] = LIKES_CONSTRUCTION.singular.map((like) => ({

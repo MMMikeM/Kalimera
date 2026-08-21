@@ -16,8 +16,8 @@ export const LESSON_2024_07_08 = createLesson({
 	],
 
 	nouns: [
-		{ lemma: "κύμα", gender: "neuter", english: "wave" },
-		{ lemma: "γραφείο", gender: "neuter", english: "office" },
+		{ lemma: "κύμα", gender: "neuter", english: "wave", cefrLevel: "B1" },
+		{ lemma: "γραφείο", gender: "neuter", english: "office", cefrLevel: "A2" },
 	],
 
 	adjectives: [

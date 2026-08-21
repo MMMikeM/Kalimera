@@ -6,7 +6,7 @@ export const LESSON_2024_03_25 = createLesson({
 		source: "Weekly lesson - basic introduction questions",
 	},
 
-	nouns: [{ lemma: "δόντι", gender: "neuter", english: "tooth" }],
+	nouns: [{ lemma: "δόντι", gender: "neuter", english: "tooth", cefrLevel: "A1" }],
 
 	adjectives: [
 		{ lemma: "κρύος", english: "cold", cefrLevel: "A1" },
