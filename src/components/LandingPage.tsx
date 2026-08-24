@@ -9,17 +9,17 @@ const FEATURES = [
 	{
 		icon: Clock,
 		title: "Timed Drills",
-		description: "3.5 seconds. Your normal keyboard. Pure retrieval.",
+		description: "4 different timing options, answers in reasonably typo generous Greeklish .",
 	},
 	{
 		icon: Brain,
 		title: "Spaced Repetition",
-		description: "Science-backed review scheduling.",
+		description: "Whatever you keep getting wrong comes back round more often.",
 	},
 	{
 		icon: Flame,
 		title: "Daily Streaks",
-		description: "Build the habit. Track your progress.",
+		description: "A week of practice earns a freeze, so one missed day doesn't wipe it.",
 	},
 ];
 
@@ -27,13 +27,12 @@ export const LandingPage = () => (
 	<>
 		<section className="py-12 text-center md:py-20">
 			<h1 className="mb-4 font-serif text-3xl leading-tight text-terracotta md:text-4xl lg:text-5xl">
-				You know Greek.
-				<br />
-				You just can't say it.
+				Helping to remember Greek when you need it
 			</h1>
 
 			<p className="mx-auto mb-8 max-w-xl text-lg text-stone-600 md:text-xl">
-				Recognition isn't fluency. Retrieval is. Train your Greek with timed production drills.
+				The apps I tried all seemed to focus on recognising Greek. These ones drill producing it, 4
+				seconds on the clock, your normal keyboard, nothing to pick from.
 			</p>
 
 			{/* Drill Demo */}
@@ -82,8 +81,8 @@ export const LandingPage = () => (
 						went blank.
 					</p>
 					<p>
-						So I built this. Timed drills that force retrieval under pressure. 3.5 seconds to
-						produce the Greek. No hints. No multiple choice. Either you know it or you don't.
+						So I built this. Timed drills that force retrieval under pressure. 4 seconds to produce the
+						Greek. No hints. No multiple choice. Either you know it or you don't.
 					</p>
 					<p className="text-stone-600">It's how I'm learning. Maybe it'll help you too.</p>
 				</div>
@@ -113,12 +112,12 @@ export const LandingPage = () => (
 			<p className="font-serif text-2xl text-stone-700">
 				Just <span className="text-terracotta">2-3 minutes</span> a day
 			</p>
-			<p className="mt-2 text-stone-500">Small consistent effort beats occasional cramming</p>
+			<p className="mt-2 text-stone-500">That's what I manage most mornings, and it's enough to stop the reviews stacking up</p>
 		</section>
 
 		{/* Footer CTA */}
 		<section className="border-t border-stone-200 py-12 text-center md:py-16">
-			<h2 className="mb-4 font-serif text-2xl text-terracotta">Ready to start?</h2>
+			<h2 className="mb-4 font-serif text-2xl text-terracotta">Give one drill a go</h2>
 			<Link to="/try">
 				<Button variant="primary" size="lg">
 					Try a Drill
