@@ -3,12 +3,18 @@
  * drops one while the server sits idle, the next query fails on a dead socket and
  * an identical retry succeeds — the failure never reached the database.
  *
+ * Fly suspends the machine rather than stopping it, so the process resumes hours
+ * later holding a Turso baton (the server-side session handle) that expired long
+ * ago. The server rejects the stale baton, and the driver nulls it on the way out,
+ * so the retry opens a fresh session and succeeds. 401 stays out of the list, a
+ * rejected auth token fails the same way twice.
+ *
  * Only reads are retried. A write that failed in transit may still have been
  * applied, so replaying it risks doubling it.
  */
 
 const TRANSPORT_FAILURE =
-	/fetch failed|other side closed|socket hang up|premature close|ECONNRESET|ECONNREFUSED|ETIMEDOUT|EPIPE|ENOTFOUND|EAI_AGAIN|UND_ERR|HTTP error! status: 5\d\d/i;
+	/fetch failed|other side closed|socket hang up|premature close|ECONNRESET|ECONNREFUSED|ETIMEDOUT|EPIPE|ENOTFOUND|EAI_AGAIN|UND_ERR|HTTP error! status: (?:400|5\d\d)/i;
 
 /** Drizzle wraps driver errors, and undici nests its own — the reason can be several causes deep. */
 export const isTransportFailure = (error: unknown): boolean => {
