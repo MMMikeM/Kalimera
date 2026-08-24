@@ -8,6 +8,7 @@ describe("isTransportFailure", () => {
 		"read ECONNRESET",
 		"other side closed",
 		"HTTP error! status: 503",
+		"HTTP error! status: 400",
 		"UND_ERR_SOCKET",
 	])("recognises %s", (message) => {
 		expect(isTransportFailure(new Error(message))).toBe(true);
@@ -64,6 +65,17 @@ describe("withReadRetry", () => {
 
 		await expect(client.all()).rejects.toThrow("no such column");
 		expect(all).toHaveBeenCalledTimes(1);
+	});
+
+	it("retries the stale session the server rejects after the machine resumes", async () => {
+		const all = vi
+			.fn()
+			.mockRejectedValueOnce(new Error("HTTP error! status: 400"))
+			.mockResolvedValue([{ id: 1 }]);
+		const client = withReadRetry(clientWith(all));
+
+		expect(await client.all()).toEqual([{ id: 1 }]);
+		expect(all).toHaveBeenCalledTimes(2);
 	});
 
 	it("does not retry a write, which may already have applied", async () => {
