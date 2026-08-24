@@ -89,6 +89,7 @@ beforeLoad: async () => {
 Files not discovered as routes (configured via `routeFileIgnorePattern` in `vite.config.ts`):
 
 - `*.server.ts` — server-only queries
+- `*.data.ts` — drill/content item lists, importable from tests without pulling in the route
 - `tabs/`, `subtabs/`, `components/`, `engines/` directories
 - `hooks.ts`, `drill-lookup.ts`, `group-section.tsx`
 - `*.content.llm` content files

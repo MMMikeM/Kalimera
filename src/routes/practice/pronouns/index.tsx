@@ -26,6 +26,13 @@ const drills: Drill[] = [
 		greek: "μου, σου, του, της, μας…",
 		minutes: 1,
 	},
+	{
+		id: "pronouns-possessive-vs-article",
+		to: "/practice/pronouns/possessive-vs-article",
+		title: "Whose, or of the?",
+		greek: "ο πατέρας του · ο πατέρας του παιδιού",
+		minutes: 2,
+	},
 ];
 
 export const Route = createFileRoute("/practice/pronouns/")({

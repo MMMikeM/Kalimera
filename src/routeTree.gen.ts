@@ -40,6 +40,7 @@ import { Route as PracticeVerbsModalConstructionsRouteImport } from './routes/pr
 import { Route as PracticeVerbsLadderRouteImport } from './routes/practice/verbs/ladder'
 import { Route as PracticeVerbsImperativesRouteImport } from './routes/practice/verbs/imperatives'
 import { Route as PracticePronounsPossessivesRouteImport } from './routes/practice/pronouns/possessives'
+import { Route as PracticePronounsPossessiveVsArticleRouteImport } from './routes/practice/pronouns/possessive-vs-article'
 import { Route as PracticePronounsPlacementRouteImport } from './routes/practice/pronouns/placement'
 import { Route as PracticePronounsObjectRouteImport } from './routes/practice/pronouns/object'
 import { Route as PracticeBlocksOppositesRouteImport } from './routes/practice/blocks/opposites'
@@ -254,6 +255,12 @@ const PracticePronounsPossessivesRoute =
   PracticePronounsPossessivesRouteImport.update({
     id: '/pronouns/possessives',
     path: '/pronouns/possessives',
+    getParentRoute: () => PracticeRouteRoute,
+  } as any)
+const PracticePronounsPossessiveVsArticleRoute =
+  PracticePronounsPossessiveVsArticleRouteImport.update({
+    id: '/pronouns/possessive-vs-article',
+    path: '/pronouns/possessive-vs-article',
     getParentRoute: () => PracticeRouteRoute,
   } as any)
 const PracticePronounsPlacementRoute =
@@ -614,6 +621,7 @@ export interface FileRoutesByFullPath {
   '/practice/blocks/opposites': typeof PracticeBlocksOppositesRoute
   '/practice/pronouns/object': typeof PracticePronounsObjectRoute
   '/practice/pronouns/placement': typeof PracticePronounsPlacementRoute
+  '/practice/pronouns/possessive-vs-article': typeof PracticePronounsPossessiveVsArticleRoute
   '/practice/pronouns/possessives': typeof PracticePronounsPossessivesRoute
   '/practice/verbs/imperatives': typeof PracticeVerbsImperativesRoute
   '/practice/verbs/ladder': typeof PracticeVerbsLadderRoute
@@ -701,6 +709,7 @@ export interface FileRoutesByTo {
   '/practice/blocks/opposites': typeof PracticeBlocksOppositesRoute
   '/practice/pronouns/object': typeof PracticePronounsObjectRoute
   '/practice/pronouns/placement': typeof PracticePronounsPlacementRoute
+  '/practice/pronouns/possessive-vs-article': typeof PracticePronounsPossessiveVsArticleRoute
   '/practice/pronouns/possessives': typeof PracticePronounsPossessivesRoute
   '/practice/verbs/imperatives': typeof PracticeVerbsImperativesRoute
   '/practice/verbs/ladder': typeof PracticeVerbsLadderRoute
@@ -791,6 +800,7 @@ export interface FileRoutesById {
   '/practice/blocks/opposites': typeof PracticeBlocksOppositesRoute
   '/practice/pronouns/object': typeof PracticePronounsObjectRoute
   '/practice/pronouns/placement': typeof PracticePronounsPlacementRoute
+  '/practice/pronouns/possessive-vs-article': typeof PracticePronounsPossessiveVsArticleRoute
   '/practice/pronouns/possessives': typeof PracticePronounsPossessivesRoute
   '/practice/verbs/imperatives': typeof PracticeVerbsImperativesRoute
   '/practice/verbs/ladder': typeof PracticeVerbsLadderRoute
@@ -882,6 +892,7 @@ export interface FileRouteTypes {
     | '/practice/blocks/opposites'
     | '/practice/pronouns/object'
     | '/practice/pronouns/placement'
+    | '/practice/pronouns/possessive-vs-article'
     | '/practice/pronouns/possessives'
     | '/practice/verbs/imperatives'
     | '/practice/verbs/ladder'
@@ -969,6 +980,7 @@ export interface FileRouteTypes {
     | '/practice/blocks/opposites'
     | '/practice/pronouns/object'
     | '/practice/pronouns/placement'
+    | '/practice/pronouns/possessive-vs-article'
     | '/practice/pronouns/possessives'
     | '/practice/verbs/imperatives'
     | '/practice/verbs/ladder'
@@ -1058,6 +1070,7 @@ export interface FileRouteTypes {
     | '/practice/blocks/opposites'
     | '/practice/pronouns/object'
     | '/practice/pronouns/placement'
+    | '/practice/pronouns/possessive-vs-article'
     | '/practice/pronouns/possessives'
     | '/practice/verbs/imperatives'
     | '/practice/verbs/ladder'
@@ -1362,6 +1375,13 @@ declare module '@tanstack/react-router' {
       path: '/pronouns/possessives'
       fullPath: '/practice/pronouns/possessives'
       preLoaderRoute: typeof PracticePronounsPossessivesRouteImport
+      parentRoute: typeof PracticeRouteRoute
+    }
+    '/practice/pronouns/possessive-vs-article': {
+      id: '/practice/pronouns/possessive-vs-article'
+      path: '/pronouns/possessive-vs-article'
+      fullPath: '/practice/pronouns/possessive-vs-article'
+      preLoaderRoute: typeof PracticePronounsPossessiveVsArticleRouteImport
       parentRoute: typeof PracticeRouteRoute
     }
     '/practice/pronouns/placement': {
@@ -1768,6 +1788,7 @@ interface PracticeRouteRouteChildren {
   PracticeBlocksOppositesRoute: typeof PracticeBlocksOppositesRoute
   PracticePronounsObjectRoute: typeof PracticePronounsObjectRoute
   PracticePronounsPlacementRoute: typeof PracticePronounsPlacementRoute
+  PracticePronounsPossessiveVsArticleRoute: typeof PracticePronounsPossessiveVsArticleRoute
   PracticePronounsPossessivesRoute: typeof PracticePronounsPossessivesRoute
   PracticeVerbsImperativesRoute: typeof PracticeVerbsImperativesRoute
   PracticeVerbsLadderRoute: typeof PracticeVerbsLadderRoute
@@ -1824,6 +1845,8 @@ const PracticeRouteRouteChildren: PracticeRouteRouteChildren = {
   PracticeBlocksOppositesRoute: PracticeBlocksOppositesRoute,
   PracticePronounsObjectRoute: PracticePronounsObjectRoute,
   PracticePronounsPlacementRoute: PracticePronounsPlacementRoute,
+  PracticePronounsPossessiveVsArticleRoute:
+    PracticePronounsPossessiveVsArticleRoute,
   PracticePronounsPossessivesRoute: PracticePronounsPossessivesRoute,
   PracticeVerbsImperativesRoute: PracticeVerbsImperativesRoute,
   PracticeVerbsLadderRoute: PracticeVerbsLadderRoute,
