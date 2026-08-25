@@ -80,6 +80,32 @@ These colours fail WCAG AA for body text on light backgrounds. Use only for:
 | `navy` (`--color-navy`) | `oklch(0.44 0.07 257)` | ~5.8:1 | Headings, active verbs, scholarly |
 | `slate` (`--color-slate`) | `oklch(0.58 0.03 183)` | ~4.0:1 | Secondary accents, contracted verbs |
 
+### Choosing a Tint for a Non-Grammatical Surface
+
+The base palette is the **correct** choice for any surface that is not making a grammatical
+claim — navigation, section grouping, chrome, page-local axes. It is not a fallback to feel
+guilty about; `grammar-palette.ts` uses it deliberately for `verb-active` (navy),
+`verb-contracted` (slate), `verb-deponent` (sunset) and `decision` (honey).
+
+Do not reason from hue when deciding whether a colour is "the case colour". `ocean` and
+`case-nominative` both sit near hue 223, and `olive` and `case-genitive` near 127–131, but
+they are separate tokens with separate jobs.
+
+**The ramps are not calibrated against each other.** Picking sibling tints at the same step
+number does not give you balanced weight:
+
+| Token | `-100` | `-200` |
+| --- | --- | --- |
+| `ocean` | `oklch(0.94 0.01 225)` | `oklch(0.88 0.03 224)` |
+| `olive` | `oklch(0.94 0.01 132)` | `oklch(0.88 0.03 131)` |
+| `cream` | `oklch(0.94 0.01 82)` | `oklch(0.88 0.03 75)` |
+| `honey` | `oklch(0.94 0.04 94)` | `oklch(0.88 0.07 92)` |
+
+`honey` carries roughly four times the chroma of the others at every step, so a set that
+mixes it with `ocean` and `olive` will pull the eye to the honey group. At the `-100` step
+`ocean` and `olive` are chroma `0.01` and read as grey. For a balanced set of sibling
+tints, match chroma — `ocean-200` / `olive-200` / `cream-200` is the tested trio.
+
 ### Text-Safe Variants (AAA Compliant)
 
 Use these for any text content. Contrast ratios are calculated against cream backgrounds and tinted backgrounds (e.g. `bg-honey-100`, `bg-case-accusative-100`).
