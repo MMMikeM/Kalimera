@@ -6,11 +6,11 @@ import type { SimpleListItem } from "../components/engines/deck";
 
 export type Role = "possessive" | "article" | "object";
 
-interface ContrastPhrase extends SimpleListItem {
+export interface ContrastPhrase extends SimpleListItem {
 	dimension: Role;
 }
 
-export const PHRASES: ContrastPhrase[] = [
+const RAW_PHRASES: ContrastPhrase[] = [
 	// ── Points back: noun + weak pronoun ────────────────────────────────────────
 	{
 		id: "o-pateras-tou",
@@ -185,3 +185,9 @@ export const PHRASES: ContrastPhrase[] = [
 		dimension: "object",
 	},
 ];
+
+// The config-screen filter runs on `category`; here the filter axis is the role itself.
+export const PHRASES: ContrastPhrase[] = RAW_PHRASES.map((p) => ({
+	...p,
+	category: p.dimension,
+}));
