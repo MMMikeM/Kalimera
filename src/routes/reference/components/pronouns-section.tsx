@@ -19,6 +19,7 @@ import {
 import { typedEntries } from "@/lib/object";
 
 import { BandHeading } from "./BandHeading";
+import { HomographCallout } from "./homograph-callout";
 import { PronounDecisionGuide } from "./pronoun-decision-guide";
 import { PronounParadigmTable } from "./pronoun-paradigm-table";
 import { GreekText } from "@/components/GreekText";
@@ -219,6 +220,8 @@ export const PronounsSection: React.FC = () => {
 						note="Neuter uses the same form as masculine (του)"
 					/>
 				</div>
+
+				<HomographCallout id="article-or-pronoun" />
 
 				{/* Tier 2: Subject (demoted) */}
 				<ParadigmLookup
