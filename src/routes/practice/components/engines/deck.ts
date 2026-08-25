@@ -24,9 +24,11 @@ export interface Attempt<T extends DrillForm> {
 	userInput?: string;
 }
 
-// Extended DrillForm used by most practice routes
+// Extended DrillForm used by most practice routes.
+// `label` is the learner-facing prompt — the engine renders nothing else in forward
+// mode. `english` is a note to whoever maintains the data; it never reaches the screen.
 export interface SimpleListItem extends DrillForm {
-	english: string;
+	english?: string;
 	category?: string;
 	reverseGreek?: string;
 	dimension?: string;

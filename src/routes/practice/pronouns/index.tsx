@@ -16,7 +16,7 @@ const drills: Drill[] = [
 		id: "pronouns-placement",
 		to: "/practice/pronouns/placement",
 		title: "Placement",
-		greek: "Με βλέπει · Δες με! · Θα με δει",
+		greek: "Με κοιτάζει · Κοίτα με · Δεν με ακούει",
 		minutes: 2,
 	},
 	{
