@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 
+import type { DrillForm } from "../deck";
 import { drillActions, useDrillStore } from "../drill-store";
 import { ReverseFeedback, SelectorButton } from "../shells";
 import { GreekText } from "@/components/GreekText";
@@ -14,9 +15,16 @@ interface SelectOption {
 interface SingleSelectReverseProps {
 	options: SelectOption[];
 	getCorrectId: (form: Record<string, unknown>) => string;
+	renderGreek?: (form: DrillForm) => ReactNode;
+	getExplanation?: (form: DrillForm) => ReactNode;
 }
 
-export function SingleSelectReverse({ options, getCorrectId }: SingleSelectReverseProps) {
+export function SingleSelectReverse({
+	options,
+	getCorrectId,
+	renderGreek,
+	getExplanation,
+}: SingleSelectReverseProps) {
 	const phase = useDrillStore((s) => s.phase);
 	const cardIndex = useDrillStore((s) => s.cardIndex);
 	const deck = useDrillStore((s) => s.deck);
@@ -55,7 +63,7 @@ export function SingleSelectReverse({ options, getCorrectId }: SingleSelectRever
 		<>
 			<div>
 				<GreekText as="p" size="4xl">
-					{currentForm.greek}
+					{renderGreek ? renderGreek(currentForm) : currentForm.greek}
 				</GreekText>
 			</div>
 
@@ -73,7 +81,7 @@ export function SingleSelectReverse({ options, getCorrectId }: SingleSelectRever
 				))}
 			</div>
 
-			<ReverseFeedback />
+			<ReverseFeedback detail={getExplanation?.(currentForm)} />
 		</>
 	);
 }
