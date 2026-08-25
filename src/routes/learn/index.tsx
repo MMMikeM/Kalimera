@@ -1,51 +1,58 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Boxes, Hash, Languages, MessageCircle, Quote } from "lucide-react";
+import { Hash, MessageCircle, Package, Quote, Zap } from "lucide-react";
 
-import { type Section, SectionCard } from "@/components/SectionCard";
+import { type IndexGroup, SectionIndex } from "@/components/SectionIndex";
 
-const communicationSections: Section[] = [
+const groups: IndexGroup[] = [
 	{
-		id: "conversations",
-		label: "Conversations",
-		description: "Real situations with family and friends",
-		icon: <MessageCircle size={24} />,
-		href: "/learn/conversations/arriving",
-		color: "bg-olive-100 text-olive-700 border-olive-200",
+		title: "Communication",
+		topics: [
+			{
+				id: "conversations",
+				label: "Conversations",
+				greek: "Διάλογοι",
+				description: "Real situations with family and friends",
+				icon: <MessageCircle size={20} />,
+				href: "/learn/conversations/arriving",
+			},
+			{
+				id: "phrases",
+				label: "Phrases",
+				greek: "Φράσεις",
+				description: "Common expressions and useful phrases",
+				icon: <Quote size={20} />,
+				href: "/learn/phrases/survival",
+			},
+		],
 	},
 	{
-		id: "phrases",
-		label: "Phrases",
-		description: "Common expressions and useful phrases",
-		icon: <Quote size={24} />,
-		href: "/learn/phrases/survival",
-		color: "bg-ocean-100 text-ocean-700 border-ocean-200",
-	},
-];
-
-const wordsSections: Section[] = [
-	{
-		id: "nouns",
-		label: "Nouns",
-		description: "Objects, people, places — with gender",
-		icon: <Boxes size={24} />,
-		href: "/learn/nouns",
-		color: "bg-ocean-100 text-ocean-700 border-ocean-200",
-	},
-	{
-		id: "verbs",
-		label: "Verbs",
-		description: "Actions by conjugation family",
-		icon: <Languages size={24} />,
-		href: "/learn/verbs",
-		color: "bg-honey-100 text-honey-700 border-honey-200",
-	},
-	{
-		id: "essentials",
-		label: "Essentials",
-		description: "Numbers, colours, time, position",
-		icon: <Hash size={24} />,
-		href: "/learn/essentials",
-		color: "bg-olive-100 text-olive-700 border-olive-200",
+		title: "Words",
+		topics: [
+			{
+				id: "nouns",
+				label: "Nouns",
+				greek: "Ουσιαστικά",
+				description: "Objects, people, places — with gender",
+				icon: <Package size={20} />,
+				href: "/learn/nouns",
+			},
+			{
+				id: "verbs",
+				label: "Verbs",
+				greek: "Ρήματα",
+				description: "Actions by conjugation family",
+				icon: <Zap size={20} />,
+				href: "/learn/verbs",
+			},
+			{
+				id: "essentials",
+				label: "Essentials",
+				greek: "Βασικά",
+				description: "Numbers, colours, time, position",
+				icon: <Hash size={20} />,
+				href: "/learn/essentials",
+			},
+		],
 	},
 ];
 
@@ -54,32 +61,5 @@ export const Route = createFileRoute("/learn/")({
 });
 
 function LearnIndex() {
-	return (
-		<div className="space-y-6">
-			<div>
-				<h1 className="text-2xl font-bold text-stone-800">Learn</h1>
-				<p className="mt-1 text-stone-600">Browse Greek content by topic</p>
-			</div>
-
-			<section>
-				<h2 className="mb-3 text-xs font-semibold tracking-wide text-stone-500 uppercase">
-					Communication
-				</h2>
-				<div className="grid gap-3">
-					{communicationSections.map((section) => (
-						<SectionCard key={section.id} section={section} />
-					))}
-				</div>
-			</section>
-
-			<section>
-				<h2 className="mb-3 text-xs font-semibold tracking-wide text-stone-500 uppercase">Words</h2>
-				<div className="grid gap-3">
-					{wordsSections.map((section) => (
-						<SectionCard key={section.id} section={section} />
-					))}
-				</div>
-			</section>
-		</div>
-	);
+	return <SectionIndex title="Learn" lede="Browse Greek content by topic" groups={groups} />;
 }
