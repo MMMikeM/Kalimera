@@ -1,96 +1,151 @@
 import { createFileRoute } from "@tanstack/react-router";
+import {
+	Brush,
+	Package,
+	Puzzle,
+	Shapes,
+	Tag,
+	UserRound,
+	Waypoints,
+	Zap,
+} from "lucide-react";
+import type { ReactNode } from "react";
 
 import { type Section, SectionCard } from "@/components/SectionCard";
-import { GreekText } from "@/components/GreekText";
 
-/** A specimen of the section's own content, in place of a generic icon. */
-const Specimen = ({ forms }: { forms: string[] }) => (
-	<GreekText
-		as="div"
-		size="xs"
-		tone="inherit"
-		className="flex w-24 flex-col gap-0.5 text-right font-mono leading-tight text-stone-500"
-	>
-		{forms.map((form) => (
-			<span key={form}>{form}</span>
-		))}
-	</GreekText>
+/**
+ * Base-palette tints, one per group, never the reserved `case-*` / `gender-*`
+ * tokens: the cards carry topic names rather than declined examples, so a tint
+ * here names the family of grammar, not the grammatical value of any Greek.
+ *
+ * All three sit on the -200 step, which shares a lightness and a chroma across
+ * these ramps; honey would have been half again as saturated and pulled the eye
+ * to the last group.
+ */
+interface Group {
+	title: string;
+	tint: string;
+	topics: Omit<Section, "color">[];
+}
+
+const TopicIcon = ({ children }: { children: ReactNode }) => (
+	<div className="flex size-10 items-center justify-center rounded-lg bg-white/70">{children}</div>
 );
 
-const CARD_STYLE = "bg-stone-100 text-stone-700 border-stone-200";
-
-const sections: Section[] = [
+const groups: Group[] = [
 	{
-		id: "cases",
-		label: "Cases",
-		greek: "Πτώσεις",
-		description: "The framework for understanding Greek grammar",
-		icon: <Specimen forms={["ο φίλος", "τον φίλο", "του φίλου"]} />,
-		href: "/reference/cases",
-		color: CARD_STYLE,
+		title: "The case system",
+		tint: "border-ocean-300 bg-ocean-200 text-ocean-800",
+		topics: [
+			{
+				id: "cases",
+				label: "Cases",
+				greek: "Πτώσεις",
+				description: "What each ending is for",
+				icon: (
+					<TopicIcon>
+						<Shapes size={20} />
+					</TopicIcon>
+				),
+				href: "/reference/cases",
+			},
+			{
+				id: "pronouns",
+				label: "Pronouns",
+				greek: "Αντωνυμίες",
+				description: "Cases in the words you use most",
+				icon: (
+					<TopicIcon>
+						<UserRound size={20} />
+					</TopicIcon>
+				),
+				href: "/reference/pronouns",
+			},
+		],
 	},
 	{
-		id: "pronouns",
-		label: "Pronouns",
-		greek: "Αντωνυμίες",
-		description: "Cases in action - the words you'll use most",
-		icon: <Specimen forms={["με", "μου", "εμένα"]} />,
-		href: "/reference/pronouns",
-		color: CARD_STYLE,
+		title: "Words that agree",
+		tint: "border-olive-300 bg-olive-200 text-olive-800",
+		topics: [
+			{
+				id: "articles",
+				label: "Articles",
+				greek: "Άρθρα",
+				description: "The definite article, case by case",
+				icon: (
+					<TopicIcon>
+						<Tag size={20} />
+					</TopicIcon>
+				),
+				href: "/reference/articles",
+			},
+			{
+				id: "nouns",
+				label: "Nouns",
+				greek: "Ουσιαστικά",
+				description: "Endings by gender",
+				icon: (
+					<TopicIcon>
+						<Package size={20} />
+					</TopicIcon>
+				),
+				href: "/reference/nouns",
+			},
+			{
+				id: "adjectives",
+				label: "Adjectives",
+				greek: "Επίθετα",
+				description: "The noun's grammar, copied",
+				icon: (
+					<TopicIcon>
+						<Brush size={20} />
+					</TopicIcon>
+				),
+				href: "/reference/adjectives",
+			},
+		],
 	},
 	{
-		id: "articles",
-		label: "Articles",
-		greek: "Άρθρα",
-		description: "The definite article and agreement rules",
-		icon: <Specimen forms={["ο", "η", "το"]} />,
-		href: "/reference/articles",
-		color: CARD_STYLE,
-	},
-	{
-		id: "nouns",
-		label: "Nouns",
-		greek: "Ουσιαστικά",
-		description: "Noun declensions by gender and case",
-		icon: <Specimen forms={["-ος", "-α", "-ο"]} />,
-		href: "/reference/nouns",
-		color: CARD_STYLE,
-	},
-	{
-		id: "adjectives",
-		label: "Adjectives",
-		greek: "Επίθετα",
-		description: "Agreement patterns that follow the noun",
-		icon: <Specimen forms={["καλός", "καλή", "καλό"]} />,
-		href: "/reference/adjectives",
-		color: CARD_STYLE,
-	},
-	{
-		id: "prepositions",
-		label: "Prepositions",
-		greek: "Προθέσεις",
-		description: "Connecting words and their case requirements",
-		icon: <Specimen forms={["στον", "στη", "στο"]} />,
-		href: "/reference/prepositions",
-		color: CARD_STYLE,
-	},
-	{
-		id: "verbs",
-		label: "Verbs",
-		greek: "Ρήματα",
-		description: "Conjugation patterns and verb families",
-		icon: <Specimen forms={["κάνω", "κάνεις", "κάνει"]} />,
-		href: "/reference/verbs",
-		color: CARD_STYLE,
-	},
-	{
-		id: "patterns",
-		label: "Patterns",
-		greek: "Δομές",
-		description: "Greek-specific constructions like μου αρέσει",
-		icon: <Specimen forms={["μου αρέσει", "με λένε"]} />,
-		href: "/reference/patterns",
-		color: CARD_STYLE,
+		title: "Building sentences",
+		tint: "border-cream-300 bg-cream-200 text-cream-800",
+		topics: [
+			{
+				id: "prepositions",
+				label: "Prepositions",
+				greek: "Προθέσεις",
+				description: "Little words, big relationships",
+				icon: (
+					<TopicIcon>
+						<Waypoints size={20} />
+					</TopicIcon>
+				),
+				href: "/reference/prepositions",
+			},
+			{
+				id: "verbs",
+				label: "Verbs",
+				greek: "Ρήματα",
+				description: "Three patterns, thousands of verbs",
+				icon: (
+					<TopicIcon>
+						<Zap size={20} />
+					</TopicIcon>
+				),
+				href: "/reference/verbs",
+			},
+			{
+				id: "patterns",
+				label: "Patterns",
+				greek: "Δομές",
+				description: "Constructions that don't translate",
+				icon: (
+					<TopicIcon>
+						<Puzzle size={20} />
+					</TopicIcon>
+				),
+				href: "/reference/patterns",
+			},
+		],
 	},
 ];
 
@@ -106,11 +161,18 @@ function ReferenceIndex() {
 				<p className="mt-1 text-stone-600">Grammar patterns and paradigms</p>
 			</div>
 
-			<div className="grid gap-3">
-				{sections.map((section) => (
-					<SectionCard key={section.id} section={section} />
-				))}
-			</div>
+			{groups.map((group) => (
+				<section key={group.title}>
+					<h2 className="mb-3 text-xs font-semibold tracking-wide text-stone-500 uppercase">
+						{group.title}
+					</h2>
+					<div className="grid gap-3">
+						{group.topics.map((topic) => (
+							<SectionCard key={topic.id} section={{ ...topic, color: group.tint }} />
+						))}
+					</div>
+				</section>
+			))}
 		</div>
 	);
 }
