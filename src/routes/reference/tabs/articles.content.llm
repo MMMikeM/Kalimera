@@ -1,42 +1,42 @@
 # Articles Reference Content
 
-The definite article and agreement rules - the framework for understanding Greek nouns.
+When to reach for the definite article, and every form it takes.
 
 ## Purpose
 
-Show how Greek articles change to match their noun's gender, case, and number. The article is your guide to understanding any noun.
+Teach deployment, not formation. The six-slot paradigm is a lookup; the error learners actually make is omitting an article Greek requires, or supplying one it refuses.
 
 ## Key Insight
 
-Greek articles change to match their noun's gender, case, and number. Once you see the pattern, it becomes predictable.
+Forming the article is a lookup. Knowing when to use it is the skill. Greek puts an article in front of countries, abstract nouns, whole categories and possessives, where English refuses one.
+
+Gender detection lives on the Nouns tab — the ending tells you the gender, the gender picks the column here.
 
 ---
 
-## The Core Pattern (Hero Element)
+## Usage vs English (Hero Element)
 
-<insight>
-The article must AGREE with its noun in three ways:
-- **Gender**: masculine / feminine / neuter
-- **Case**: nominative / accusative / genitive
-- **Number**: singular / plural
+<insight name="article-usage" highlight="true">
+<title>Greek adds it — English doesn't</title>
 
-This is why "the" has so many forms!
+| Greek | English | Why |
+|-------|---------|-----|
+| η Ελλάδα | Greece | Countries, and first names in speech — ο Γιάννης |
+| η αγάπη είναι τυφλή | love is blind | Abstract nouns |
+| ο φίλος μου | my friend | Possessives keep the article — never "a friend of mine" |
+| μου αρέσουν οι γάτες | I like cats | Whole categories, stated in the plural |
+| το Σάββατο | on Saturday | Days and dates |
+
 </insight>
 
----
+<insight name="article-omission">
+<title>Greek drops it — English keeps it</title>
 
-## Gender Hints (Compact Reference)
+| Greek | English | Why |
+|-------|---------|-----|
+| είναι γιατρός | he is a doctor | Professions after είμαι take no article at all |
 
-<quick-reference name="gender-hints">
-<title>Spot gender by noun ending</title>
-
-| Gender    | Common Endings |
-|-----------|----------------|
-| Masculine | -ος, -ας, -ης, -ές |
-| Feminine  | -α, -η, -ση, -ξη |
-| Neuter    | -ο, -ι, -μα |
-
-</quick-reference>
+</insight>
 
 ---
 
@@ -80,11 +80,14 @@ Native speakers sometimes drop it, but keeping it is never wrong.
 ## The -ν Rule (Movable Nu) - Detailed
 
 <section name="movable-nu">
-<title>Fine-tuning: when to keep or drop final -ν on articles</title>
+<title>Fine-tuning: when to keep or drop final -ν</title>
 
 <rule>
 Keep the -ν before vowels and certain consonants (κ, π, τ, γκ, μπ, ντ, ξ, ψ).
 Drop the -ν before other consonants.
+
+The rule is not article-specific: the negatives δεν and μην follow it too.
+δεν πάω (before π) but δε θέλω (before θ).
 </rule>
 
 ### Keep the -ν
@@ -98,6 +101,34 @@ Drop the -ν before other consonants.
 - στο σπίτι (neuter - no ν anyway)
 
 </section>
+
+---
+
+## Article or Pronoun? (Shared with the Pronouns tab)
+
+<insight name="article-or-pronoun" highlight="true">
+<title>Same word, two jobs</title>
+<explanation>
+Eight article forms are spelled exactly like pronouns — the whole third person of the
+pronoun system. The form never tells you which one you are reading. Its neighbour does:
+a noun after it means article, a verb after it means object pronoun, and a noun before
+it means possessive.
+
+Case colour cannot separate these. τον φίλο and τον ξέρω are both Target.
+</explanation>
+
+| Form | Before a noun ("the") | Before a verb (him/her/it) | After a noun (his/her/their) |
+|------|-----------------------|----------------------------|------------------------------|
+| τον  | τον φίλο              | τον ξέρω                   | —                            |
+| την  | την πόρτα             | την ακούω                  | —                            |
+| το   | το σπίτι              | το θέλω                    | —                            |
+| τους | τους φίλους           | τους ξέρω                  | το σπίτι τους                |
+| τις  | τις μέρες             | τις βλέπω                  | —                            |
+| τα   | τα παιδιά             | τα βλέπω                   | —                            |
+| του  | του φίλου             | του λέω                    | ο φίλος του                  |
+| της  | της Μαρίας            | της λέω                    | η μητέρα της                 |
+
+</insight>
 
 ---
 
@@ -125,9 +156,11 @@ Drop the -ν before other consonants.
 ## Data Source
 
 Static content from:
-- `@/constants/agreement` (ARTICLE_AGREEMENT_QUICK_REF, AGREEMENT_MISTAKES - gender category)
-- `@/constants/articles` (MOVABLE_NU_RULE)
-- `@/constants/nouns` (GENDER_HINTS - compact reference)
+- `@/constants/agreement` (ARTICLE_AGREEMENT_QUICK_REF)
+- `@/constants/homographs` (HOMOGRAPH_ROWS - shared with the Pronouns tab)
+- `articles-section.tsx` locals (GREEK_ADDS, GREEK_DROPS, the movable-ν examples)
+
+Gender hints are NOT here — they live in `nouns-section.tsx` (GENDER_HINTS).
 
 ## Verification
 
@@ -135,5 +168,5 @@ Static content from:
 - [x] paradigm-tables: Case (rows) x Gender (columns) reveals patterns
 - [x] progressive-disclosure: Detailed -ν rule and mistakes collapsible
 - [x] function-first-labels: Focus on agreement function
-- [x] no-redundancy: Article paradigm clean and focused
+- [x] no-redundancy: the paradigm is a lookup card, not the hero — Cases and Nouns already show these forms in context
 - [x] contextual-examples: -ν rule examples show real usage

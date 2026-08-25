@@ -3,66 +3,116 @@ import type React from "react";
 import { Callout, LookupCard, NextStepCard, TeachingCard } from "@/components/cards";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
 import { ARTICLE_AGREEMENT_QUICK_REF } from "@/constants/agreement";
-import { GENDER_SCHEME, SCHEME } from "@/constants/grammar-palette";
-import type { Gender } from "@/server/db/enums";
 
 import { BandHeading } from "./BandHeading";
 import { CaseTableGrid } from "./case-table";
+import { HomographCallout } from "./homograph-callout";
 import { GreekText } from "@/components/GreekText";
 
-const USAGE_NOTES: Array<{ greek: string; note: string; gender: Gender | null }> = [
-	{ greek: "η αγάπη είναι τυφλή", note: "Abstract nouns need the article", gender: "feminine" },
-	{ greek: "είναι γιατρός", note: "Professions after είμαι: no article", gender: null },
+interface UsageNote {
+	greek: string;
+	english: string;
+	note: string;
+}
+
+// Greek reaches for the article in five places English refuses it, and drops it in one
+// place English keeps it. Forming the article is a lookup; deploying it is the error.
+const GREEK_ADDS: UsageNote[] = [
+	{
+		greek: "η Ελλάδα",
+		english: "Greece",
+		note: "Countries, and first names in speech — ο Γιάννης",
+	},
+	{
+		greek: "η αγάπη είναι τυφλή",
+		english: "love is blind",
+		note: "Abstract nouns",
+	},
 	{
 		greek: "ο φίλος μου",
-		note: "Possessives use the definite article (not 'a friend of mine')",
-		gender: "masculine",
+		english: "my friend",
+		note: "Possessives keep the article — never 'a friend of mine'",
 	},
-	{ greek: "η Ελλάδα", note: "Countries and proper nouns take the article", gender: "feminine" },
+	{
+		greek: "μου αρέσουν οι γάτες",
+		english: "I like cats",
+		note: "Whole categories, stated in the plural",
+	},
+	{
+		greek: "το Σάββατο",
+		english: "on Saturday",
+		note: "Days and dates",
+	},
 ];
+
+const GREEK_DROPS: UsageNote[] = [
+	{
+		greek: "είναι γιατρός",
+		english: "he is a doctor",
+		note: "Professions after είμαι take no article at all",
+	},
+];
+
+const UsageList = ({ rows, heading }: { rows: UsageNote[]; heading: string }) => (
+	<div className="space-y-2">
+		<div className="text-xs font-semibold tracking-widest text-stone-500 uppercase">{heading}</div>
+		{rows.map((row) => (
+			<div key={row.greek} className="rounded border border-stone-200 bg-white p-2">
+				<div className="flex flex-wrap items-baseline gap-x-2">
+					<GreekText tone="accent" size="sm">
+						{row.greek}
+					</GreekText>
+					<span className="text-sm text-stone-500">{row.english}</span>
+				</div>
+				<div className="mt-0.5 text-xs text-stone-500">{row.note}</div>
+			</div>
+		))}
+	</div>
+);
 
 export const ArticlesSection: React.FC = () => {
 	return (
 		<section id="articles" className="space-y-16">
-			{/* BAND 1 — CONCEPT (the intersection table is the king) */}
+			{/* BAND 1 — CONCEPT (forming the article is a lookup; deploying it is the skill) */}
 			<TeachingCard
 				scheme="neutral"
-				eyebrow="The table"
-				title="One article, six slots."
-				description="The definite article changes along two axes: gender (M · F · N) across the columns, case (Nom · Acc · Gen) down the rows. Reading Greek: the article tells you the case. Writing Greek: pick the case first, then find the column for the noun's gender."
+				eyebrow="The hard part"
+				title="Forming it is a lookup. Knowing when to use it is the skill."
+				description="Six slots cover every form, and the table below has them all. What actually costs you marks is that Greek puts an article where English refuses one — in front of countries, abstract nouns, whole categories, even your own friend."
 			>
-				<CaseTableGrid data={ARTICLE_AGREEMENT_QUICK_REF} />
+				<div className="space-y-4">
+					<UsageList rows={GREEK_ADDS} heading="Greek adds it — English doesn't" />
+					<UsageList rows={GREEK_DROPS} heading="Greek drops it — English keeps it" />
+				</div>
 			</TeachingCard>
 
-			{/* BAND 2 — LOOKUP (related reference material) */}
+			{/* BAND 2 — LOOKUP (the form tables and the spelling rules) */}
 			<div className="space-y-6">
 				<BandHeading
-					kicker="Related"
-					title="Usage notes"
-					lede="Where Greek article usage differs from English. The preposition σε fuses with these article forms (στο, στη, στον…) — see Prepositions for the full breakdown."
+					kicker="Lookup"
+					title="Every form, and how it's spelled"
+					lede="The preposition σε fuses with these forms (στο, στη, στον…) — see Prepositions for the full breakdown."
 				/>
 
-				<LookupCard scheme="neutral" chip="Usage" eyebrow="When Greek differs from English">
-					<div className="space-y-2 px-5 pt-4 pb-4">
-						{USAGE_NOTES.map((row) => {
-							const style = row.gender ? SCHEME[GENDER_SCHEME[row.gender]] : null;
-							return (
-								<div key={row.greek} className="rounded border border-stone-200 bg-white p-2">
-									<GreekText tone="accent" size="sm" className={style?.text}>
-										{row.greek}
-									</GreekText>
-									<span className="ml-2 text-sm text-stone-500">{row.note}</span>
-								</div>
-							);
-						})}
+				<LookupCard scheme="neutral" chip="Forms" eyebrow="Gender across, case down">
+					<div className="px-5 pt-4 pb-4">
+						<CaseTableGrid data={ARTICLE_AGREEMENT_QUICK_REF} />
 					</div>
 				</LookupCard>
 
-				<Callout scheme="neutral" title="The -ν on τον / την">
+				<Callout scheme="neutral" title="The -ν on τον / την / δεν / μην">
 					<p className="leading-relaxed text-stone-700">
 						Always keep the <GreekText tone="default" size="sm">-ν</GreekText>. Native speakers sometimes drop it,
 						but keeping it is never wrong. <strong className="text-stone-800">Safe default:</strong>{" "}
 						<GreekText tone="default" size="sm">τον / την / στον / στην</GreekText>.
+					</p>
+					<p className="leading-relaxed text-stone-700">
+						The same rule governs the negatives:{" "}
+						<GreekText tone="default" size="sm">δεν</GreekText> and{" "}
+						<GreekText tone="default" size="sm">μην</GreekText> keep or drop their{" "}
+						<GreekText tone="default" size="sm">-ν</GreekText> on exactly the same grounds —{" "}
+						<GreekText tone="accent" size="sm">δεν πάω</GreekText> but{" "}
+						<GreekText tone="accent" size="sm">δε θέλω</GreekText>.
 					</p>
 					<CollapsibleSection
 						title="When do natives drop it?"
@@ -113,6 +163,8 @@ export const ArticlesSection: React.FC = () => {
 						</div>
 					</CollapsibleSection>
 				</Callout>
+
+				<HomographCallout id="article-or-pronoun" />
 			</div>
 
 			{/* BAND 3 — HANDOFF */}
