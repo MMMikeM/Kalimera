@@ -24,17 +24,19 @@ interface ObjectPronoun extends DrillForm, Record<DimKey, string> {
 	gender: Gender | "";
 }
 
+// Bare pronouns ("you", "her") don't show object function in English and
+// collide with the possessives drill — a fixed "see" frame keeps the role clear.
 const ENGLISH: Record<string, string> = {
-	"1sg": "me",
-	"2sg": "you",
-	"3sg-m": "him",
-	"3sg-f": "her",
-	"3sg-n": "it",
-	"1pl": "us",
-	"2pl": "you",
-	"3pl-m": "them",
-	"3pl-f": "them",
-	"3pl-n": "them",
+	"1sg": "he sees me",
+	"2sg": "I see you",
+	"3sg-m": "I see him",
+	"3sg-f": "I see her",
+	"3sg-n": "I see it",
+	"1pl": "he sees us",
+	"2pl": "I see you",
+	"3pl-m": "I see them",
+	"3pl-f": "I see them",
+	"3pl-n": "I see them",
 };
 
 const PRONOUNS: ObjectPronoun[] = [
@@ -44,7 +46,7 @@ const PRONOUNS: ObjectPronoun[] = [
 		number: "singular",
 		gender: "",
 		greek: "με",
-		label: "me / 1st singular",
+		label: "he sees me / 1st singular",
 	},
 	{
 		id: "2sg",
@@ -52,7 +54,7 @@ const PRONOUNS: ObjectPronoun[] = [
 		number: "singular",
 		gender: "",
 		greek: "σε",
-		label: "you / 2nd singular",
+		label: "I see you / 2nd singular",
 	},
 	{
 		id: "3sg-m",
@@ -60,7 +62,7 @@ const PRONOUNS: ObjectPronoun[] = [
 		number: "singular",
 		gender: "masculine",
 		greek: "τον",
-		label: "him / 3rd singular",
+		label: "I see him / 3rd singular",
 	},
 	{
 		id: "3sg-f",
@@ -68,7 +70,7 @@ const PRONOUNS: ObjectPronoun[] = [
 		number: "singular",
 		gender: "feminine",
 		greek: "την",
-		label: "her / 3rd singular",
+		label: "I see her / 3rd singular",
 	},
 	{
 		id: "3sg-n",
@@ -76,7 +78,7 @@ const PRONOUNS: ObjectPronoun[] = [
 		number: "singular",
 		gender: "neuter",
 		greek: "το",
-		label: "it / 3rd singular",
+		label: "I see it / 3rd singular",
 	},
 	{
 		id: "1pl",
@@ -84,7 +86,7 @@ const PRONOUNS: ObjectPronoun[] = [
 		number: "plural",
 		gender: "",
 		greek: "μας",
-		label: "us / 1st plural",
+		label: "he sees us / 1st plural",
 	},
 	{
 		id: "2pl",
@@ -92,7 +94,7 @@ const PRONOUNS: ObjectPronoun[] = [
 		number: "plural",
 		gender: "",
 		greek: "σας",
-		label: "you / 2nd plural",
+		label: "I see you / 2nd plural",
 	},
 	{
 		id: "3pl-m",
@@ -100,7 +102,7 @@ const PRONOUNS: ObjectPronoun[] = [
 		number: "plural",
 		gender: "masculine",
 		greek: "τους",
-		label: "them (m) / 3rd plural",
+		label: "I see them (m) / 3rd plural",
 	},
 	{
 		id: "3pl-f",
@@ -108,7 +110,7 @@ const PRONOUNS: ObjectPronoun[] = [
 		number: "plural",
 		gender: "feminine",
 		greek: "τις",
-		label: "them (f) / 3rd plural",
+		label: "I see them (f) / 3rd plural",
 	},
 	{
 		id: "3pl-n",
@@ -116,7 +118,7 @@ const PRONOUNS: ObjectPronoun[] = [
 		number: "plural",
 		gender: "neuter",
 		greek: "τα",
-		label: "them (n) / 3rd plural",
+		label: "I see them (n) / 3rd plural",
 	},
 ];
 
@@ -193,7 +195,7 @@ function PronounsDrill() {
 			title="Object Pronouns"
 			subtitle="10 forms / timed"
 			colorTheme="terracotta"
-			forwardDesc="e.g. me → με"
+			forwardDesc="e.g. he sees me → με"
 			reverseDesc="e.g. με → 1st / singular"
 			items={PRONOUNS}
 			reverse={{ kind: "multi-select", dimensions: DIMENSIONS }}
