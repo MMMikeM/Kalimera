@@ -48,6 +48,8 @@ export interface ConfigShellProps {
 	forwardDesc?: string;
 	reverseLabel?: string;
 	reverseDesc?: string;
+	/** Hides the mode selector for drills whose construct cannot be tested in reverse. */
+	forwardOnly?: boolean;
 	referenceHref?: string;
 	referenceLabel?: string;
 	backTo?: string;
@@ -64,6 +66,7 @@ export const ConfigShell = ({
 	forwardDesc = "English meaning → Greek form",
 	reverseLabel = "Greek → English",
 	reverseDesc = "Greek form → recall meaning",
+	forwardOnly,
 	referenceHref,
 	referenceLabel,
 	backTo,
@@ -131,6 +134,7 @@ export const ConfigShell = ({
 				</fieldset>
 			)}
 
+			{!forwardOnly && (
 			<fieldset className="mb-8">
 				<legend className="mb-3 text-xs tracking-widest text-muted-foreground uppercase">
 					Mode
@@ -162,6 +166,7 @@ export const ConfigShell = ({
 					</button>
 				</div>
 			</fieldset>
+			)}
 
 			<fieldset className="mb-8">
 				<legend className="mb-3 text-xs tracking-widest text-muted-foreground uppercase">
