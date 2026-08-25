@@ -33,7 +33,7 @@ const ENGLISH: Record<string, string> = {
 	"3sg-f": "I see her",
 	"3sg-n": "I see it",
 	"1pl": "he sees us",
-	"2pl": "I see you",
+	"2pl": "I see you all",
 	"3pl-m": "I see them",
 	"3pl-f": "I see them",
 	"3pl-n": "I see them",
@@ -94,7 +94,7 @@ const PRONOUNS: ObjectPronoun[] = [
 		number: "plural",
 		gender: "",
 		greek: "σας",
-		label: "I see you / 2nd plural",
+		label: "I see you all / 2nd plural",
 	},
 	{
 		id: "3pl-m",
