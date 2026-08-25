@@ -158,22 +158,22 @@ export const CasesSection: React.FC = () => {
 				<div className="grid gap-3 md:grid-cols-3">
 					<NextStepCard
 						to="/reference/articles"
-						kicker="Reference"
+						kicker="Continue"
 						title="Articles"
-						description="Every gender, every case"
+						description="The signal this page reads the case from"
+						emphasis
+					/>
+					<NextStepCard
+						to="/reference/pronouns"
+						kicker="Reference"
+						title="Pronouns"
+						description="Cases in the words you'll use most"
 					/>
 					<NextStepCard
 						to="/reference/nouns"
 						kicker="Reference"
 						title="Nouns"
 						description="Endings by declension and case"
-					/>
-					<NextStepCard
-						to="/reference/pronouns"
-						kicker="Continue"
-						title="Pronouns"
-						description="Cases in the words you'll use most"
-						emphasis
 					/>
 				</div>
 			</div>

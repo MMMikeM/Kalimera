@@ -8,8 +8,8 @@ export function ArticlesTab() {
 		<div className="space-y-10">
 			<ReferenceHero
 				eyebrow="Articles"
-				title="Agreement made visible."
-				thesis="The Greek article changes to match its noun's gender and case. Once you can read the article, you can read the noun's grammar off it."
+				title="Six forms. The hard part is knowing when."
+				thesis="Reading Greek, the article hands you the noun's gender and case for free. Writing Greek, the trouble is that Greek wants an article in places English flatly refuses one."
 			/>
 			<ArticlesSection />
 			<PracticeCTA
