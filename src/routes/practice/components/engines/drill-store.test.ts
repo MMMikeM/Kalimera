@@ -101,3 +101,66 @@ describe("session cap", () => {
 		expect(useDrillStore.getState().attempts).toHaveLength(10);
 	});
 });
+
+// ─── Default mode ─────────────────────────────────────────────────────────────
+
+describe("defaultMode", () => {
+	it("starts in forward mode when no defaultMode is given", () => {
+		drillActions.initialize({ drillId: "d", items: [form("w0")], userId: 0 });
+		expect(useDrillStore.getState().mode).toBe("forward");
+	});
+
+	it("starts in the configured defaultMode", () => {
+		drillActions.initialize({
+			drillId: "d",
+			items: [form("w0")],
+			userId: 0,
+			defaultMode: "reverse",
+		});
+		expect(useDrillStore.getState().mode).toBe("reverse");
+	});
+});
+
+// ─── Phrase-scaled time limit ─────────────────────────────────────────────────
+
+describe("getEffectiveTimeLimit", () => {
+	const phraseForm: DrillForm = {
+		id: "phrase",
+		greek: "ο πατέρας του παιδιού",
+		label: "the child's father",
+		bucket: "inProgress",
+	};
+
+	const initWith = (defaultMode?: "forward" | "reverse") => {
+		drillActions.initialize({
+			drillId: "d",
+			items: [phraseForm],
+			userId: 0,
+			sessionSize: 10,
+			defaultMode,
+		});
+		drillActions.startDrill();
+	};
+
+	it("scales the forward-mode limit with the word count of the current card", () => {
+		initWith();
+		// medium base 6000ms, 4 words → 6000 × (1 + 0.35 × 3) = 12300
+		expect(drillActions.getEffectiveTimeLimit()).toBe(12300);
+	});
+
+	it("leaves single-word forward cards at the base limit", () => {
+		drillActions.initialize({
+			drillId: "d",
+			items: [form("w0")],
+			userId: 0,
+			sessionSize: 10,
+		});
+		drillActions.startDrill();
+		expect(drillActions.getEffectiveTimeLimit()).toBe(6000);
+	});
+
+	it("does not scale in reverse mode", () => {
+		initWith("reverse");
+		expect(drillActions.getEffectiveTimeLimit()).toBe(6000);
+	});
+});

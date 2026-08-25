@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { matchPhonetic } from "@/lib/greek-transliteration";
 import { startSessionFn, recordAttemptFn, completeSessionFn } from "@/server/fns/srs";
 
-import { type DrillForm, type SessionSize } from "./deck";
+import { type DrillForm, type DrillMode, type SessionSize } from "./deck";
 import { useCountdown, useForwardKeyboard } from "./drill-hooks";
 import {
 	type DrillSessionCallbacks,
@@ -74,6 +74,8 @@ interface SingleSelectStrategy {
 	kind: "single-select";
 	options: Array<{ id: string; label: string; selectorBg: string; selectorText: string }>;
 	getCorrectId: (form: Record<string, unknown>) => string;
+	renderGreek?: (form: DrillForm) => React.ReactNode;
+	getExplanation?: (form: DrillForm) => React.ReactNode;
 }
 
 interface MultiSelectStrategy<K extends string> {
@@ -97,6 +99,7 @@ export interface DrillProps<K extends string = string> extends Omit<
 	drillId: string;
 	items: DrillForm[];
 	colorTheme?: ColorTheme;
+	defaultMode?: DrillMode;
 	reverse?: ReverseStrategy<K>;
 	forwardPrompt?: (form: DrillForm) => React.ReactNode;
 	configExtras?: React.ReactNode;
@@ -116,6 +119,8 @@ function DrillInner<K extends string>(
 		forwardPrompt,
 		configExtras,
 		autoStart,
+		// oxlint-disable-next-line no-unused-vars
+		defaultMode,
 		...rest
 	} = props;
 	const theme = THEME[colorTheme];
@@ -273,7 +278,12 @@ function DrillInner<K extends string>(
 				<>
 					{reverse.kind === "self-assess" && <SelfAssessReverse />}
 					{reverse.kind === "single-select" && (
-						<SingleSelectReverse options={reverse.options} getCorrectId={reverse.getCorrectId} />
+						<SingleSelectReverse
+							options={reverse.options}
+							getCorrectId={reverse.getCorrectId}
+							renderGreek={reverse.renderGreek}
+							getExplanation={reverse.getExplanation}
+						/>
 					)}
 					{reverse.kind === "multi-select" && (
 						<MultiSelectReverse dimensions={reverse.dimensions} />
@@ -296,6 +306,7 @@ export function Drill<K extends string = string>(props: DrillProps<K>) {
 			items: props.items,
 			userId: auth?.userId ?? 0,
 			sessionSize: props.sessionSize,
+			defaultMode: props.defaultMode,
 			onComplete: props.onComplete,
 			sessionCallbacks: SESSION_CALLBACKS,
 		};

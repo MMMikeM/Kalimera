@@ -362,7 +362,7 @@ export const FeedbackDisplay = () => {
 
 // ─── ReverseFeedback ───────────────────────────────────────────────────────────
 
-export const ReverseFeedback = () => {
+export const ReverseFeedback = ({ detail }: { detail?: React.ReactNode }) => {
 	const lastAttempt = useDrillStore((s) => s.lastAttempt);
 	const phase = useDrillStore((s) => s.phase);
 	const { advance } = drillActions;
@@ -380,6 +380,9 @@ export const ReverseFeedback = () => {
 			</p>
 			{!lastAttempt.isCorrect && (
 				<p className="mt-1 text-sm text-muted-foreground">{lastAttempt.form.label}</p>
+			)}
+			{!lastAttempt.isCorrect && detail && (
+				<div className="mt-2 text-sm text-muted-foreground">{detail}</div>
 			)}
 			{showContinue && (
 				<p className="mt-3 text-xs text-stone-500">Press Enter or tap to continue</p>

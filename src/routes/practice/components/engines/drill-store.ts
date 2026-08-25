@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-import { SPEEDMAP, type SpeedId } from "../drill-speeds";
+import { SPEEDMAP, scaleTimeLimitForPhrase, type SpeedId } from "../drill-speeds";
 import {
 	buildWeightedDeck,
 	type Attempt,
@@ -47,6 +47,7 @@ export interface DrillStoreConfig {
 	items: DrillForm[];
 	userId: number;
 	sessionSize?: SessionSize;
+	defaultMode?: DrillMode;
 	onComplete?: (stats: SessionStats<DrillForm>) => void;
 	sessionCallbacks?: DrillSessionCallbacks;
 }
@@ -134,11 +135,12 @@ const s = () => useDrillStore.getState();
 const set = useDrillStore.setState;
 
 export const drillActions: DrillActions = {
-	initialize: ({ sessionSize = 10, ...config }) => {
+	initialize: ({ sessionSize = 10, defaultMode = "forward", ...config }) => {
 		set({
 			...useDrillStore.getInitialState(),
 			...config,
 			sessionSize,
+			mode: defaultMode,
 		});
 	},
 	getCurrentForm: () => {
@@ -146,8 +148,11 @@ export const drillActions: DrillActions = {
 		return deck[cardIndex];
 	},
 	getEffectiveTimeLimit: () => {
-		const { activeSpeedId } = s();
-		return SPEEDMAP[activeSpeedId].timeLimit;
+		const { activeSpeedId, mode, deck, cardIndex } = s();
+		const base = SPEEDMAP[activeSpeedId].timeLimit;
+		const greek = deck[cardIndex]?.greek;
+		if (mode !== "forward" || !greek) return base;
+		return scaleTimeLimitForPhrase(base, greek);
 	},
 	setMode: (mode) => set({ mode }),
 	setSessionSize: (sessionSize) => set({ sessionSize }),
