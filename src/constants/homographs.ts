@@ -1,3 +1,5 @@
+import type { Gender } from "@/server/db/enums";
+
 import { OBJECT_PRONOUNS, POSSESSIVE_PRONOUNS } from "./pronouns";
 import { CASE_ROLES } from "./recognition";
 
@@ -22,6 +24,8 @@ export const HOMOGRAPH_FORMS = [...articleForms].filter((form) => pronounForms.h
 
 export interface HomographRow {
 	form: string;
+	/** The gender this row demonstrates — του gets one row per gender it serves. */
+	gender: Gender;
 	/** Before a noun — the article. */
 	article: string;
 	/** Before a verb — the object pronoun. */
@@ -31,12 +35,37 @@ export interface HomographRow {
 }
 
 export const HOMOGRAPH_ROWS: HomographRow[] = [
-	{ form: "τον", article: "τον φίλο", object: "τον ξέρω" },
-	{ form: "την", article: "την πόρτα", object: "την ακούω" },
-	{ form: "το", article: "το σπίτι", object: "το θέλω" },
-	{ form: "τους", article: "τους φίλους", object: "τους ξέρω", possessive: "το σπίτι τους" },
-	{ form: "τις", article: "τις μέρες", object: "τις βλέπω" },
-	{ form: "τα", article: "τα παιδιά", object: "τα βλέπω" },
-	{ form: "του", article: "του φίλου", object: "του λέω", possessive: "ο φίλος του" },
-	{ form: "της", article: "της Μαρίας", object: "της λέω", possessive: "η μητέρα της" },
+	{ form: "τον", gender: "masculine", article: "τον φίλο", object: "τον ξέρω" },
+	{ form: "την", gender: "feminine", article: "την πόρτα", object: "την ακούω" },
+	{ form: "το", gender: "neuter", article: "το σπίτι", object: "το θέλω" },
+	{
+		form: "τους",
+		gender: "masculine",
+		article: "τους φίλους",
+		object: "τους ξέρω",
+		possessive: "το σπίτι τους",
+	},
+	{ form: "τις", gender: "feminine", article: "τις μέρες", object: "τις βλέπω" },
+	{ form: "τα", gender: "neuter", article: "τα παιδιά", object: "τα βλέπω" },
+	{
+		form: "του",
+		gender: "masculine",
+		article: "του φίλου",
+		object: "του λέω",
+		possessive: "ο φίλος του",
+	},
+	{
+		form: "του",
+		gender: "neuter",
+		article: "του σπιτιού",
+		object: "του δίνω γάλα",
+		possessive: "το χρώμα του",
+	},
+	{
+		form: "της",
+		gender: "feminine",
+		article: "της Μαρίας",
+		object: "της λέω",
+		possessive: "η μητέρα της",
+	},
 ];

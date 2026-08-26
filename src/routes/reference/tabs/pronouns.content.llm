@@ -124,14 +124,12 @@ Position relative to the verb/noun?
 ## Article or Pronoun? (Shared with the Articles tab)
 
 <insight name="article-or-pronoun" highlight="true">
-<title>Same word, two jobs</title>
+<title>Article or pronoun?</title>
 <explanation>
 Every third-person pronoun is spelled like a definite article — eight forms in total.
 The form never tells you which one you are reading. Its neighbour does: a noun after it
 means article, a verb after it means object pronoun, and a noun before it means
 possessive.
-
-Case colour cannot separate these. τον φίλο and τον ξέρω are both Target.
 </explanation>
 
 | Form | Before a noun ("the") | Before a verb (him/her/it) | After a noun (his/her/their) |
@@ -142,7 +140,8 @@ Case colour cannot separate these. τον φίλο and τον ξέρω are both 
 | τους | τους φίλους           | τους ξέρω                  | το σπίτι τους                |
 | τις  | τις μέρες             | τις βλέπω                  | —                            |
 | τα   | τα παιδιά             | τα βλέπω                   | —                            |
-| του  | του φίλου             | του λέω                    | ο φίλος του                  |
+| του (m) | του φίλου          | του λέω                    | ο φίλος του                  |
+| του (n) | του σπιτιού        | του δίνω γάλα              | το χρώμα του                 |
 | της  | της Μαρίας            | της λέω                    | η μητέρα της                 |
 
 </insight>

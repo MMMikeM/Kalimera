@@ -83,22 +83,27 @@ Native speakers sometimes drop it, but keeping it is never wrong.
 <title>Fine-tuning: when to keep or drop final -ν</title>
 
 <rule>
-Keep the -ν before vowels and certain consonants (κ, π, τ, γκ, μπ, ντ, ξ, ψ).
-Drop the -ν before other consonants.
+Keep the -ν before vowels and the κ, π, τ family (ξ, ψ, γκ, μπ, ντ) - the hard
+stops the ν blends into (την πόρτα flows out as "tim-bórta").
+Drop the -ν before stretchable sounds (β, γ, δ, ζ, θ, λ, μ, ν, ρ, σ, φ, χ).
 
 The rule is not article-specific: the negatives δεν and μην follow it too.
 δεν πάω (before π) but δε θέλω (before θ).
+
+Exception: masculine τον keeps its -ν everywhere (τον φίλο, never το φίλο) -
+the -ν is all that separates it from neuter το. The sound rule governs
+feminine τη(ν)/στη(ν) and the negatives.
 </rule>
 
-### Keep the -ν
-- τον άνθρωπο (before vowel α)
-- την πόρτα (before π)
-- στον κήπο (before κ)
+### Keep the -ν (minimal pairs with the drop column)
+- την άνοιξη (before vowel)
+- στην πόρτα (before π)
+- δεν πάω (before π)
 
 ### Drop the -ν
 - τη μητέρα (before μ)
-- τη θάλασσα (before θ)
-- στο σπίτι (neuter - no ν anyway)
+- στη θάλασσα (before θ)
+- δε θέλω (before θ)
 
 </section>
 
@@ -107,14 +112,12 @@ The rule is not article-specific: the negatives δεν and μην follow it too.
 ## Article or Pronoun? (Shared with the Pronouns tab)
 
 <insight name="article-or-pronoun" highlight="true">
-<title>Same word, two jobs</title>
+<title>Article or pronoun?</title>
 <explanation>
 Eight article forms are spelled exactly like pronouns — the whole third person of the
 pronoun system. The form never tells you which one you are reading. Its neighbour does:
 a noun after it means article, a verb after it means object pronoun, and a noun before
 it means possessive.
-
-Case colour cannot separate these. τον φίλο and τον ξέρω are both Target.
 </explanation>
 
 | Form | Before a noun ("the") | Before a verb (him/her/it) | After a noun (his/her/their) |
@@ -125,7 +128,8 @@ Case colour cannot separate these. τον φίλο and τον ξέρω are both 
 | τους | τους φίλους           | τους ξέρω                  | το σπίτι τους                |
 | τις  | τις μέρες             | τις βλέπω                  | —                            |
 | τα   | τα παιδιά             | τα βλέπω                   | —                            |
-| του  | του φίλου             | του λέω                    | ο φίλος του                  |
+| του (m) | του φίλου          | του λέω                    | ο φίλος του                  |
+| του (n) | του σπιτιού        | του δίνω γάλα              | το χρώμα του                 |
 | της  | της Μαρίας            | της λέω                    | η μητέρα της                 |
 
 </insight>
