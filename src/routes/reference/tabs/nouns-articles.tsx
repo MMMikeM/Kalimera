@@ -9,12 +9,12 @@ export function ArticlesTab() {
 			<ReferenceHero
 				eyebrow="Articles"
 				title="Six forms. The hard part is knowing when."
-				thesis="Reading Greek, the article hands you the noun's gender and case for free. Writing Greek, the trouble is that Greek wants an article in places English flatly refuses one."
+				thesis="Reading Greek, the article hands you the noun's gender and case for free. The trouble starts when you write, because Greek wants an article in places English flatly refuses one."
 			/>
 			<ArticlesSection />
 			<PracticeCTA
 				title="Practice articles"
-				description="Build fluency with timed retrieval drills on Greek articles."
+				description="Timed retrieval drills on the article forms."
 				topic="articles"
 			/>
 		</div>

@@ -23,6 +23,7 @@ interface GrammarTableProps {
 	rows: RowDef[];
 	cells: React.ReactNode[][];
 	scheme?: GrammarScheme;
+	density?: "compact" | "roomy";
 	className?: string;
 }
 
@@ -36,6 +37,19 @@ const grammarTable = tv({
 		rowLabel: "block leading-tight",
 		rowSublabel: "block text-xs font-normal opacity-70",
 		cell: "px-2 py-2",
+	},
+	variants: {
+		density: {
+			compact: {},
+			roomy: {
+				colHeader: "px-3 pb-2.5",
+				rowHeader: "w-24 py-3 pr-3 pl-3",
+				cell: "px-3 py-3",
+			},
+		},
+	},
+	defaultVariants: {
+		density: "compact",
 	},
 });
 
@@ -56,10 +70,11 @@ export const GrammarTable: React.FC<GrammarTableProps> = ({
 	rows,
 	cells,
 	scheme,
+	density,
 	className,
 }) => {
 	const { root, headerRow, colHeader, bodyRow, rowHeader, rowLabel, rowSublabel, cell } =
-		grammarTable();
+		grammarTable({ density });
 	const borderColor = scheme ? SCHEME[scheme].border : "border-stone-200";
 
 	return (
