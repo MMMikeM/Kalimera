@@ -244,22 +244,6 @@ so a plural row would merely repeat the one above it.
 
 ---
 
-## Common Noun Mistakes (Collapsible)
-
-<mistakes expandable="true" default="collapsed">
-
-| Wrong              | Correct            | Why                                      |
-|--------------------|--------------------|------------------------------------------|
-| βλέπω ο πατέρας    | βλέπω τον πατέρα   | Object needs accusative, not nominative  |
-| θέλω ο καφές       | θέλω τον καφέ      | "I want" takes accusative object         |
-| το σπίτι ο Νίκος   | το σπίτι του Νίκου | Possession needs genitive                |
-| οι παιδιά          | τα παιδιά          | παιδί is neuter, so its plural article is τα |
-| το βιβλία          | τα βιβλία          | Plural nouns need plural article         |
-
-</mistakes>
-
----
-
 ## Navigation
 
 <previous>See article forms first: /reference/articles</previous>
@@ -284,7 +268,7 @@ Example words and per-pattern counts are **loaded from the database** by
 
 - [x] greek-first: Greek forms prominent in all paradigms
 - [x] paradigm-tables: Case (rows) x pattern (columns), singular and plural stacked
-- [x] progressive-disclosure: variants and mistakes collapsible
+- [x] progressive-disclosure: variant patterns collapsible
 - [x] function-first-labels: Doer / Target / Owner lead, grammar terms as sublabels
 - [x] frequency-priority: per-pattern counts come from the corpus, not a static label
 - [x] no-redundancy: colour lives on the row and column headers only; cells are neutral

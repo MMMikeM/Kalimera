@@ -9,7 +9,6 @@ import {
 	type RowDef,
 } from "@/components/GrammarTable";
 import { GreekText } from "@/components/GreekText";
-import { MistakeComparison } from "@/components/MistakeComparison";
 import { SectionHeading } from "@/components/SectionHeading";
 import { AGREEMENT_PARADIGMS, type AgreementParadigm } from "@/constants/agreement";
 import { GENDER_SCHEME, SCHEME } from "@/constants/grammar-palette";
@@ -124,22 +123,6 @@ const ROLE_SENTENCES: Array<{ paradigmId: string; frames: Record<RoleCase, Sente
 			gen: { prefix: "το σπίτι ", english: "the friend's house" },
 		},
 	},
-	{
-		paradigmId: "fem-a",
-		frames: {
-			nom: { suffix: " γελάει", english: "the woman laughs" },
-			acc: { prefix: "ξέρω ", english: "I know the woman" },
-			gen: { prefix: "το παιδί ", english: "the woman's child" },
-		},
-	},
-	{
-		paradigmId: "neut-o",
-		frames: {
-			nom: { suffix: " πέφτει", english: "the book falls" },
-			acc: { prefix: "διαβάζω ", english: "I read the book" },
-			gen: { prefix: "ο τίτλος ", english: "the title of the book" },
-		},
-	},
 ];
 
 const sentenceFor = (paradigm: AgreementParadigm, caseKey: RoleCase, frame: SentenceFrame) =>
@@ -150,34 +133,6 @@ const CASE_QUESTIONS: Record<RoleCase, string> = {
 	acc: "Who/what receives?",
 	gen: "Whose is it?",
 };
-
-const NOUN_MISTAKES = [
-	{
-		wrong: "βλέπω ο πατέρας",
-		correct: "βλέπω τον πατέρα",
-		explanation: "What the verb acts on is the Target, so ο πατέρας becomes τον πατέρα.",
-	},
-	{
-		wrong: "θέλω ο καφές",
-		correct: "θέλω τον καφέ",
-		explanation: "θέλω takes a Target too — the -ς drops off.",
-	},
-	{
-		wrong: "το σπίτι ο Νίκος",
-		correct: "το σπίτι του Νίκου",
-		explanation: "Possession is the Owner: ο Νίκος becomes του Νίκου.",
-	},
-	{
-		wrong: "οι παιδιά",
-		correct: "τα παιδιά",
-		explanation: "παιδί is neuter, so its plural article is τα, never οι.",
-	},
-	{
-		wrong: "το βιβλία",
-		correct: "τα βιβλία",
-		explanation: "The article matches the noun's number: plural βιβλία takes τα.",
-	},
-];
 
 /** Three example words per pattern keeps new material inside the working-memory ceiling. */
 const EXAMPLES_SHOWN = 3;
@@ -455,46 +410,6 @@ const GenderVariants = ({ gender, data }: { gender: Gender; data: NounsData | nu
 	);
 };
 
-const DecisionGuide = () => (
-	<CollapsibleSection title="Same noun, different role" colorScheme="honey" defaultOpen={false}>
-		<div className="space-y-4 p-4">
-			{ROLE_SENTENCES.map(({ paradigmId, frames }) => {
-				const paradigm = getParadigms([paradigmId])[0];
-				if (!paradigm) return null;
-				return (
-					<div key={paradigmId} className="rounded-lg bg-stone-50 p-3">
-						<div className="mb-2 font-mono text-xs text-stone-500">{paradigm.example}</div>
-						<div className="space-y-1.5">
-							{ROLE_CASES.map((caseKey) => {
-								const meta = CASE_META[caseKey];
-								const style = SCHEME[meta.scheme];
-								const frame = frames[caseKey];
-								return (
-									<div key={caseKey} className="flex items-center gap-2 text-sm">
-										<span
-											className={`shrink-0 rounded px-2 py-0.5 text-xs font-medium ${style.bg} ${style.text}`}
-										>
-											{meta.handle}
-										</span>
-										<GreekText tone="accent" size="sm">
-											{sentenceFor(paradigm, caseKey, frame)}
-										</GreekText>
-										<span className="text-xs text-stone-500">({frame.english})</span>
-									</div>
-								);
-							})}
-						</div>
-					</div>
-				);
-			})}
-			<div className="rounded-lg border border-honey-200 bg-honey-50 p-3 text-sm text-stone-700">
-				<span className="font-medium text-honey-700">Shortcut:</span> after σε, με, για, από, σαν →
-				always Target (accusative).
-			</div>
-		</div>
-	</CollapsibleSection>
-);
-
 const Handoff = () => (
 	<div className="grid gap-3 md:grid-cols-2">
 		<NextStepCard
@@ -523,23 +438,13 @@ const MorePatterns = ({ data }: { data: NounsData | null }) => (
 	</CollapsibleSection>
 );
 
-const CommonMistakes = () => (
-	<CollapsibleSection title="Common mistakes" colorScheme="terracotta" defaultOpen={false}>
-		<div className="p-4">
-			<MistakeComparison mistakes={NOUN_MISTAKES} title="" layout="grid" />
-		</div>
-	</CollapsibleSection>
-);
-
 export const NounsSection = ({ data = null }: { data?: NounsData | null }) => (
 	<section id="nouns" className="space-y-6">
 		<SectionHeading title="How Noun Endings Change" subtitle="Patterns by gender and case" />
 		<CaseGuide />
 		<GenderHints />
 		<EssentialPatterns data={data} />
-		<DecisionGuide />
 		<MorePatterns data={data} />
-		<CommonMistakes />
 		<Handoff />
 	</section>
 );

@@ -61,6 +61,16 @@ export const CasesSection: React.FC = () => {
 				</Card>
 				<Card variant="bordered" padding="md" className="border-stone-200 bg-stone-50/60">
 					<p className="text-sm leading-relaxed text-stone-700">
+						<strong className="text-stone-800">Every everyday preposition pulls Target.</strong>{" "}
+						After{" "}
+						<GreekText tone="accent" size="sm" className="inline">
+							σε, με, για, από, χωρίς, σαν
+						</GreekText>
+						, there is no case decision to make.
+					</p>
+				</Card>
+				<Card variant="bordered" padding="md" className="border-stone-200 bg-stone-50/60">
+					<p className="text-sm leading-relaxed text-stone-700">
 						<strong className="text-stone-800">After είναι, both sides stay nominative.</strong>{" "}
 						Linking verbs (είναι, γίνομαι) identify rather than act —{" "}
 						<em>η Χρυσάνθη είναι η μητέρα</em> keeps both nouns as Doer. Nothing is being acted on,
