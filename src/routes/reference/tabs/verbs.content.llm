@@ -346,7 +346,6 @@ Future tense coming soon.
 
 Static content from: `@/constants/verbs`
 - VERB_PATTERNS (active, contracted, deponent)
-- VERB_FAMILIES, VERB_CONJUGATIONS
 - IRREGULAR_VERBS
 
 ## Verification
