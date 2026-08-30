@@ -1,6 +1,6 @@
 import type { DrillForm } from "../components/engines/deck";
 
-export type PlacementCategory = "with-verb" | "after-command";
+type PlacementCategory = "with-verb" | "after-command";
 
 export interface PlacementItem extends DrillForm {
 	context: string;

@@ -13,7 +13,7 @@ export interface BrowsableNoun {
 	forms: Record<string, { form: string; article: string | null }>;
 }
 
-export const CEFR_LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"] as const;
+const CEFR_LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"] as const;
 
 /** Selectable values. No "all" pseudo-level: selecting nothing already means all. */
 export const LEVELS = [...CEFR_LEVELS, "unlevelled"] as const;

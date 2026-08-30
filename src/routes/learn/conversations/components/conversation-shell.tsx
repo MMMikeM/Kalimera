@@ -22,7 +22,7 @@ const ConversationCtx = createContext<ConversationContext>({
 	setMode: () => {},
 });
 
-export const useConversationContext = () => useContext(ConversationCtx);
+const useConversationContext = () => useContext(ConversationCtx);
 
 export const ConversationProvider = ConversationCtx.Provider;
 
