@@ -260,6 +260,7 @@ export const VERB_STEMS: VerbStem[] = [
 		cefrLevel: "A2",
 	},
 	{ lemma: "χαλαρώνω", aoristStem: "χαλαρωσ", family: "-ω", english: "I relax", cefrLevel: "A2" },
+	{ lemma: "σηκώνω", aoristStem: "σηκωσ", family: "-ω", english: "I lift", cefrLevel: "A2" },
 	{
 		lemma: "διασκεδάζω",
 		aoristStem: "διασκεδασ",
