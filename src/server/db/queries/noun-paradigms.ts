@@ -22,5 +22,3 @@ export const getNounsForParadigmReference = async () =>
 			},
 		},
 	});
-
-export type NounParadigmRow = Awaited<ReturnType<typeof getNounsForParadigmReference>>[number];

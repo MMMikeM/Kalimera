@@ -1,10 +1,9 @@
-import { Temporal } from "@js-temporal/polyfill";
-import { and, eq, gte, isNotNull, sql } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 
-import { fromISOString, nowInstant, toEpochSeconds, toISOString } from "@/lib/time";
+import { fromISOString, nowInstant, toEpochSeconds } from "@/lib/time";
 
 import { db } from "../../index";
-import { drillProgress, practiceAttempts } from "../../schema";
+import { drillProgress } from "../../schema";
 
 // ─── Drill rust / fading score ───────────────────────────────────────────────
 
@@ -81,46 +80,3 @@ export const getSchemaRust = async (userId: number): Promise<DrillRust[]> => {
 		.sort((a, b) => b.rustScore - a.rustScore);
 };
 
-export interface DrillStat {
-	drillId: string;
-	attempts: number;
-	correct: number;
-	accuracy: number;
-	avgTimeMs: number | null;
-	lastAttemptAt: Temporal.Instant | null;
-}
-
-const WINDOW_DAYS = 14;
-
-export const getDrillStats = async (userId: number): Promise<DrillStat[]> => {
-	const since = toISOString(nowInstant().subtract({ hours: WINDOW_DAYS * 24 }));
-
-	const rows = await db
-		.select({
-			drillId: practiceAttempts.drillId,
-			attempts: sql<number>`COUNT(*)`,
-			correct: sql<number>`SUM(CASE WHEN ${practiceAttempts.isCorrect} THEN 1 ELSE 0 END)`,
-			avgTimeMs: sql<number | null>`AVG(${practiceAttempts.timeTaken})`,
-			lastAttemptAt: sql<string | null>`MAX(${practiceAttempts.attemptedAt})`,
-		})
-		.from(practiceAttempts)
-		.where(
-			and(
-				eq(practiceAttempts.userId, userId),
-				isNotNull(practiceAttempts.drillId),
-				gte(practiceAttempts.attemptedAt, since),
-			),
-		)
-		.groupBy(practiceAttempts.drillId);
-
-	return rows
-		.filter((r): r is typeof r & { drillId: string } => r.drillId != null)
-		.map((r) => ({
-			drillId: r.drillId,
-			attempts: Number(r.attempts),
-			correct: Number(r.correct),
-			accuracy: r.attempts > 0 ? Number(r.correct) / Number(r.attempts) : 0,
-			avgTimeMs: r.avgTimeMs == null ? null : Number(r.avgTimeMs),
-			lastAttemptAt: r.lastAttemptAt == null ? null : fromISOString(r.lastAttemptAt),
-		}));
-};

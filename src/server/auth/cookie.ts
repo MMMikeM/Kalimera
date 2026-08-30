@@ -63,13 +63,6 @@ export function createAuthCookie(session: AuthSession): string {
 }
 
 /**
- * Create Set-Cookie header value to clear auth session.
- */
-export function clearAuthCookie(): string {
-	return `${AUTH_COOKIE_NAME}=; Path=/; Max-Age=0; HttpOnly; SameSite=Lax`;
-}
-
-/**
  * Parse cookies from Cookie header string.
  */
 function parseCookies(cookieHeader: string): Record<string, string> {

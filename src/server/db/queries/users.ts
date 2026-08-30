@@ -19,17 +19,6 @@ export const getUserById = async (userId: number) => {
 	return await db.query.users.findFirst({ where: { id: userId } });
 };
 
-export const createUser = async (data: Pick<UserInsert, "displayName" | "code">) => {
-	const normalizedCode = data.code.toLowerCase();
-
-	const [newUser] = await db
-		.insert(users)
-		.values({ displayName: data.displayName, code: normalizedCode })
-		.returning();
-
-	return newUser;
-};
-
 type CreateUserWithPasswordInput = Pick<UserInsert, "displayName" | "passwordHash"> & {
 	username: string;
 };
