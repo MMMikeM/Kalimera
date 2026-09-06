@@ -2,7 +2,7 @@
 
 A Greek learning app for intermediate learners building procedural fluency — drilling grammar and vocabulary until responses become automatic.
 
-**Stack:** React Router 7 · Cloudflare Workers · Turso (libsql) · Drizzle ORM · Tailwind CSS v4
+**Stack:** TanStack Start (TanStack Router + Nitro) · Turso (libsql) · Drizzle ORM · Tailwind CSS v4
 
 ---
 
@@ -82,7 +82,7 @@ All commands go through the Makefile — direct `pnpm` database commands skip `.
 ### Linting
 
 ```bash
-pnpm lint:fix && pnpm lint:unused && pnpm lint:types && pnpm lint:dupes
+pnpm lint:fix && pnpm lint:unused && pnpm typecheck && pnpm duplicates:llm
 ```
 
 ## Architecture
@@ -91,8 +91,8 @@ pnpm lint:fix && pnpm lint:unused && pnpm lint:types && pnpm lint:dupes
 src/
   components/        # Custom components (tailwind-variants)
   components/ui/     # ShadCN components
-  routes/            # React Router 7 routes
-  db.server/         # Drizzle schema and queries
+  routes/            # TanStack Router file-based routes
+  server/db/         # Drizzle schema and queries
   scripts/           # Seed scripts
 docs/
   user-flows.llm     # Route map, user journeys, data tables
@@ -100,7 +100,7 @@ docs/
 
 **Path alias:** `@/` → `./src/`
 
-**Route types:** Run `pnpm react-router typegen` after changing loaders.
+**Route types:** generated into `src/routeTree.gen.ts` by the Vite plugin; `Route.useLoaderData()` is typed from the loader with no separate codegen step.
 
 ## Routes
 

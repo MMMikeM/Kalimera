@@ -86,12 +86,18 @@ beforeLoad: async () => {
 
 ## Co-located non-route files
 
-Files not discovered as routes (configured via `routeFileIgnorePattern` in `vite.config.ts`):
+The ignore pattern is `(tabs|components|\.test\.|\.data\.)`, so what is excluded is:
 
-- `*.server.ts` — server-only queries
-- `*.data.ts` — drill/content item lists, importable from tests without pulling in the route
-- `tabs/`, `subtabs/`, `components/`, `engines/` directories
-- `hooks.ts`, `drill-lookup.ts`, `group-section.tsx`
-- `*.content.llm` content files
+- `*.data.ts` — drill catalogues and content item lists, importable from tests
+  without pulling in the route
+- `*.test.ts` / `*.test.tsx`
+- anything under a `tabs/` or `components/` directory — which also covers
+  `subtabs/` and `components/engines/`, since the pattern is a substring match
+- `*.content.llm`, which is not a `.ts`/`.tsx` file at all
 
-To exclude a new co-located file, prefix with `-` or extend the ignore pattern.
+`*.server.ts` is **not** in the pattern. Server-only code lives under
+`src/server/` and is imported from routes; a `foo.server.ts` sitting beside a
+route would be picked up as one.
+
+To exclude a new co-located file, name it `*.data.ts` or put it under
+`components/`, or extend the pattern in `vite.config.ts`.
