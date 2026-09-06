@@ -34,4 +34,5 @@ import { getVocabBySection } from "@/server/db/queries/vocabulary";
 
 Read the `drizzle` skill before writing any Drizzle code — this project is on
 v1, whose API differs from v0.
+
 - Streaming / loader performance patterns

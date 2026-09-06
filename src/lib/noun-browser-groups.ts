@@ -31,7 +31,12 @@ type GroupableRow = {
 		article: string | null;
 	}>;
 	vocabularyTags: Array<{
-		tag: { slug: string; name: string; section: string | null; sectionDisplayOrder: number | null } | null;
+		tag: {
+			slug: string;
+			name: string;
+			section: string | null;
+			sectionDisplayOrder: number | null;
+		} | null;
 	}>;
 };
 

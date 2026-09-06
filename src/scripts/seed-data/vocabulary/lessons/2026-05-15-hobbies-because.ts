@@ -19,8 +19,19 @@ export const LESSON_2026_05_15 = createLesson({
 	],
 
 	nouns: [
-		{ lemma: "μαγειρική", gender: "feminine", english: "cooking (the activity/art)", cefrLevel: "A2" },
-		{ lemma: "χόμπι", gender: "neuter", english: "hobby", metadata: { note: "indeclinable" }, cefrLevel: "A2" },
+		{
+			lemma: "μαγειρική",
+			gender: "feminine",
+			english: "cooking (the activity/art)",
+			cefrLevel: "A2",
+		},
+		{
+			lemma: "χόμπι",
+			gender: "neuter",
+			english: "hobby",
+			metadata: { note: "indeclinable" },
+			cefrLevel: "A2",
+		},
 		{ lemma: "περιοχή", gender: "feminine", english: "area/neighbourhood", cefrLevel: "B1" },
 		{ lemma: "κήπος", gender: "masculine", english: "garden", cefrLevel: "A2" },
 		{ lemma: "ερώτηση", gender: "feminine", english: "question", cefrLevel: "A1" },

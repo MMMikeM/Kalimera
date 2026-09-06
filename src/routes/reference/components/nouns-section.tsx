@@ -13,8 +13,9 @@ import { GreekText } from "@/components/GreekText";
 import { SectionHeading } from "@/components/SectionHeading";
 import { AGREEMENT_PARADIGMS, type AgreementParadigm } from "@/constants/agreement";
 import { GENDER_SCHEME, SCHEME } from "@/constants/grammar-palette";
-import type { NounsData } from "../$tab";
 import type { Gender } from "@/server/db/enums";
+
+import type { NounsData } from "../$tab";
 
 /** Matches both `RowDef.key` and `AgreementPattern["case"]`, which is what lets
  * the table look cells up by key instead of by row position. */
@@ -40,9 +41,8 @@ const GENDER_PATTERNS: Record<Gender, readonly string[]> = {
 
 /** Two paradigms can share a label (`-η` covers both regular and archaic), and a
  * repeated ending in the hint list reads as a bug. */
-const endingsFor = (gender: Gender): string => [
-	...new Set(paradigmsByGender(gender).map((p) => p.pattern)),
-].join(", ");
+const endingsFor = (gender: Gender): string =>
+	[...new Set(paradigmsByGender(gender).map((p) => p.pattern))].join(", ");
 
 /**
  * The four commonest patterns in the seeded corpus — fem-a 99, neut-o 91,
@@ -233,13 +233,7 @@ const GenderHints = () => (
 	</TeachingCard>
 );
 
-const ViewToggle = ({
-	mode,
-	onChange,
-}: {
-	mode: ViewMode;
-	onChange: (mode: ViewMode) => void;
-}) => (
+const ViewToggle = ({ mode, onChange }: { mode: ViewMode; onChange: (mode: ViewMode) => void }) => (
 	<div className="flex overflow-hidden rounded-lg border border-stone-200 text-xs">
 		{(["endings", "full"] as const).map((m) => (
 			<button
@@ -299,9 +293,10 @@ const NounEndingsTable = ({
 	);
 };
 
-const NumberBlock = ({ label, ...tableProps }: { label: string } & Parameters<
-	typeof NounEndingsTable
->[0]) => (
+const NumberBlock = ({
+	label,
+	...tableProps
+}: { label: string } & Parameters<typeof NounEndingsTable>[0]) => (
 	<div className="space-y-1.5">
 		<p className="text-xs font-semibold tracking-wide text-stone-500 uppercase">{label}</p>
 		<NounEndingsTable {...tableProps} />

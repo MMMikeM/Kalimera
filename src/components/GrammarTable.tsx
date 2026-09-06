@@ -1,5 +1,5 @@
 import type React from "react";
-import {cn, tv } from "tailwind-variants";
+import { cn, tv } from "tailwind-variants";
 
 import { type GrammarScheme, SCHEME } from "@/constants/grammar-palette";
 

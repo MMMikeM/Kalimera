@@ -39,7 +39,9 @@ describe("groupNounsByPattern", () => {
 		const grouped = groupNounsByPattern([row("φίλος", "masc-os"), row("ο Ιανουάριος", null)]);
 
 		expect(grouped["masc-os"]?.count).toBe(1);
-		expect(Object.values(grouped).flatMap((g) => g.examples.map((e) => e.lemma))).toEqual(["φίλος"]);
+		expect(Object.values(grouped).flatMap((g) => g.examples.map((e) => e.lemma))).toEqual([
+			"φίλος",
+		]);
 	});
 
 	it("counts every member but caps example candidates", () => {

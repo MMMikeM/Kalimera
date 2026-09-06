@@ -1,6 +1,5 @@
-import { cn } from "tailwind-variants";
 import type * as React from "react";
-
+import { cn } from "tailwind-variants";
 
 function Input({ className, type, ...props }: React.ComponentProps<"input">) {
 	return (

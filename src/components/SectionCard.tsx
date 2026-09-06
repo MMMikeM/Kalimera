@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import type React from "react";
+
 import { GreekText } from "@/components/GreekText";
 
 export interface Section {

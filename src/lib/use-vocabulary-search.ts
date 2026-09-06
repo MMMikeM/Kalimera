@@ -32,8 +32,8 @@ export const useVocabularySearch = (options: UseVocabularySearchOptions = {}) =>
 		searchTerm.length === 0
 			? []
 			: fuzzySearch(searchTerm)
-				.sort((a, b) => a.score - b.score)
-				.map((result) => result.item);
+					.sort((a, b) => a.score - b.score)
+					.map((result) => result.item);
 
 	return { searchTerm, setSearchTerm, results, isLoading, vocabulary };
 };

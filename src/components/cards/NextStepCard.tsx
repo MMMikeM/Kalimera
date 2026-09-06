@@ -1,6 +1,6 @@
-import { cn } from "tailwind-variants";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
+import { cn } from "tailwind-variants";
 
 import { Card } from "@/components/Card";
 

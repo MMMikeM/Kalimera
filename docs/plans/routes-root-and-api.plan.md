@@ -7,6 +7,7 @@ Audit feedback and implementation plan for `src/routes/` root files (`__root.tsx
 ## 1. LLM Context Files
 
 ### Issues
+
 - **`docs/user-flows.llm`:**
   - Line 35 references `home.tsx` instead of `src/routes/index.tsx`.
   - Line 41 references `DailyPhrase`, which is currently orphaned/unmounted in `index.tsx`.
@@ -16,6 +17,7 @@ Audit feedback and implementation plan for `src/routes/` root files (`__root.tsx
   - Line 434 specifies Buy Me a Coffee, but `support.tsx` links to Ko-fi.
 
 ### Actions
+
 - [ ] Update `docs/user-flows.llm` to reflect `index.tsx`, 7-day rolling progress, and Ko-fi support link.
 - [ ] Either mount `<DailyPhrase />` in `index.tsx` or prune it from `user-flows.llm`.
 
@@ -24,6 +26,7 @@ Audit feedback and implementation plan for `src/routes/` root files (`__root.tsx
 ## 2. Design Guidelines, Layout & Contrast
 
 ### Issues
+
 - **PWA Layout Shell & DOM Hierarchy (`__root.tsx`):**
   - Line 52: `<TanStackRouterDevtoolsInProd />` is rendered before `<RootComponent />`, placing DOM elements outside `<html>`.
   - Line 123: `<MobileNav />` is rendered outside the `isAuthRoute` check, displaying the bottom nav bar on `/login` and `/register`.
@@ -41,6 +44,7 @@ Audit feedback and implementation plan for `src/routes/` root files (`__root.tsx
   - `try.tsx:71-88`: Uses gamified emoji heroes (`🎉`, `💪`, `🌱` in `text-5xl`). Replace with an editorial score summary card.
 
 ### Actions
+
 - [ ] Move `<TanStackRouterDevtoolsInProd />` inside `RootBody` in `__root.tsx`.
 - [ ] Wrap `<MobileNav />` in `{!isAuthRoute && <MobileNav />}` in `__root.tsx`.
 - [ ] Fix gradient class typo in `LapsedUserCTA.tsx`.
@@ -52,6 +56,7 @@ Audit feedback and implementation plan for `src/routes/` root files (`__root.tsx
 ## 3. Tailwind & API Routes
 
 ### Issues
+
 - **API Route Defect in `api/push/vapid-key.ts:4` (High):**
   - Uses `loader` instead of `server.handlers.GET` and lacks `import "@tanstack/react-start";`. Fails as an HTTP endpoint.
 - **Inconsistent Push Endpoint Wrapper:**
@@ -60,27 +65,30 @@ Audit feedback and implementation plan for `src/routes/` root files (`__root.tsx
   - Uses nested `if/else` procedural logic to build day indicator classes.
 
 ### Actions
+
 - [ ] Fix `api/push/vapid-key.ts` handler:
+
 ```typescript
 import "@tanstack/react-start";
 import { createFileRoute } from "@tanstack/react-router";
 import { getVapidPublicKey } from "@/server/push/web-push";
 
 export const Route = createFileRoute("/api/push/vapid-key")({
-  server: {
-    handlers: {
-      GET: async () => {
-        const key = getVapidPublicKey();
-        if (!key) {
-          return new Response(JSON.stringify({ error: "Push notifications not configured" }), {
-            status: 503,
-            headers: { "Content-Type": "application/json" },
-          });
-        }
-        return Response.json({ publicKey: key });
-      },
-    },
-  },
+	server: {
+		handlers: {
+			GET: async () => {
+				const key = getVapidPublicKey();
+				if (!key) {
+					return new Response(JSON.stringify({ error: "Push notifications not configured" }), {
+						status: 503,
+						headers: { "Content-Type": "application/json" },
+					});
+				}
+				return Response.json({ publicKey: key });
+			},
+		},
+	},
 });
 ```
+
 - [ ] Refactor `WeekStreak.tsx` using `tv()` day indicator variants.

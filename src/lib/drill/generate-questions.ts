@@ -1,8 +1,8 @@
 import { OBJECT_PRONOUNS, POSSESSIVE_PRONOUNS } from "@/constants/pronouns";
 import { VERB_CONJUGATIONS } from "@/constants/verbs";
-import { shuffle } from "@/lib/shuffle";
 import type { DrillBucket } from "@/lib/drill/types";
 import { declineNoun } from "@/lib/noun-declension";
+import { shuffle } from "@/lib/shuffle";
 import type { NounDeclensionPattern } from "@/server/db/enums";
 
 import { typedKeys } from "../object";

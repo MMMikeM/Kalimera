@@ -7,6 +7,7 @@ Audit feedback and implementation plan for `src/routes/learn/essentials/` (`inde
 ## 1. LLM Context Files
 
 ### Issues
+
 - **`src/routes/learn/essentials/content.llm`:**
   - Lines 14–18 reference obsolete `data.server.ts` and `getEssentialsData()`.
   - Lines 8–10 use Express param syntax (`:subtab`) instead of `$subtab`.
@@ -15,6 +16,7 @@ Audit feedback and implementation plan for `src/routes/learn/essentials/` (`inde
   - Inconsistent property naming: `$subtab.tsx` returns `colors` while routes and content use British English `colours`.
 
 ### Actions
+
 - [ ] Update `content.llm` to document inline TanStack Start `createServerFn` and `getVocabBySlug` from `@/server/db/queries/vocabulary`.
 - [ ] Update route parameters to `$subtab`.
 - [ ] Add documentation for `EssentialsBackLink` and `ExampleList`.
@@ -25,6 +27,7 @@ Audit feedback and implementation plan for `src/routes/learn/essentials/` (`inde
 ## 2. Design Guidelines & Contrast
 
 ### Issues
+
 - **Decorative Tokens on Text:**
   - `subtabs/numbers.tsx:30, 36, 45, 125`: Uses raw `text-ocean-600` on Greek stems and badge connections instead of `text-ocean-text`.
   - `subtabs/frequency.tsx:102, 108`: Uses raw `text-honey-600` on accented vowels instead of `text-honey-text`.
@@ -38,6 +41,7 @@ Audit feedback and implementation plan for `src/routes/learn/essentials/` (`inde
   - 12 ad-hoc callout containers constructed manually across subtabs instead of reusing canonical `<Callout scheme="...">`.
 
 ### Actions
+
 - [ ] Replace `text-ocean-600` and `text-honey-600` with `text-ocean-text` and `text-honey-text`.
 - [ ] Wrap all unstyled Greek vocabulary and table cells in `<MonoText variant="greek">` or `.greek-text`.
 - [ ] Split mixed Greek/English phrases into separate spans.
@@ -48,6 +52,7 @@ Audit feedback and implementation plan for `src/routes/learn/essentials/` (`inde
 ## 3. Tailwind & Component Architecture
 
 ### Issues
+
 - **Manual String Concatenation & Ternaries:**
   - `index.tsx:46-58, 98, 101`: Uses `COLOR_CLASSES` record lookups in template strings.
   - `subtabs/colours.tsx:75`: Template string ternary `className={\`inline-block ... ${isLight ? "border border-stone-300" : ""}\`}`.
@@ -57,22 +62,37 @@ Audit feedback and implementation plan for `src/routes/learn/essentials/` (`inde
   - All 11 components in `learn/essentials/` use `function` declarations instead of `const` arrow functions.
 
 ### Actions
+
 - [ ] Implement `toolkitCardVariants` with `tv()` in `index.tsx`:
+
 ```typescript
 const toolkitCardVariants = tv({
-  slots: {
-    card: "h-full transition-colors",
-    iconWrapper: "rounded-lg p-2",
-  },
-  variants: {
-    color: {
-      ocean: { card: "bg-ocean-50 border-ocean-300 hover:border-ocean-400", iconWrapper: "bg-ocean-200 text-ocean-text" },
-      honey: { card: "bg-honey-50 border-honey-300 hover:border-honey-400", iconWrapper: "bg-honey-200 text-honey-text" },
-      olive: { card: "bg-olive-50 border-olive-300 hover:border-olive-400", iconWrapper: "bg-olive-200 text-olive-text" },
-      terracotta: { card: "bg-terracotta-50 border-terracotta-300 hover:border-terracotta-400", iconWrapper: "bg-terracotta-200 text-terracotta-text" },
-    },
-  },
+	slots: {
+		card: "h-full transition-colors",
+		iconWrapper: "rounded-lg p-2",
+	},
+	variants: {
+		color: {
+			ocean: {
+				card: "bg-ocean-50 border-ocean-300 hover:border-ocean-400",
+				iconWrapper: "bg-ocean-200 text-ocean-text",
+			},
+			honey: {
+				card: "bg-honey-50 border-honey-300 hover:border-honey-400",
+				iconWrapper: "bg-honey-200 text-honey-text",
+			},
+			olive: {
+				card: "bg-olive-50 border-olive-300 hover:border-olive-400",
+				iconWrapper: "bg-olive-200 text-olive-text",
+			},
+			terracotta: {
+				card: "bg-terracotta-50 border-terracotta-300 hover:border-terracotta-400",
+				iconWrapper: "bg-terracotta-200 text-terracotta-text",
+			},
+		},
+	},
 });
 ```
+
 - [ ] Standardise 2-column layouts using standard Tailwind 12-column or 5-column grids (`col-span-3` / `col-span-2`).
 - [ ] Refactor all component functions to `const` arrow functions.

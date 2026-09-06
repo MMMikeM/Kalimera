@@ -1,5 +1,5 @@
-import { cn } from "tailwind-variants";
 import { type ReactNode, useId } from "react";
+import { cn } from "tailwind-variants";
 
 import { type ColorScheme, colorStyles } from "@/lib/colors";
 

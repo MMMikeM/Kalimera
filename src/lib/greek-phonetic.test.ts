@@ -176,9 +176,11 @@ describe("greekToPronunciationTokens", () => {
 
 	it("joins back to the plain gloss", () => {
 		for (const word of ["καλημέρα", "γαϊδούρι", "συγγνώμη", "Ευχαριστώ", "Θέλω καφέ"]) {
-			expect(greekToPronunciationTokens(word).map((t) => t.text).join("")).toBe(
-				greekToPronunciation(word),
-			);
+			expect(
+				greekToPronunciationTokens(word)
+					.map((t) => t.text)
+					.join(""),
+			).toBe(greekToPronunciation(word));
 		}
 	});
 });

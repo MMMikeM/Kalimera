@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
+import { GreekText } from "@/components/GreekText";
+
 import { drillActions, useDrillStore } from "../drill-store";
 import { ReverseFeedback, SelectorButton } from "../shells";
-import { GreekText } from "@/components/GreekText";
 
 type Selected<K extends string> = Partial<Record<K, string>>;
 

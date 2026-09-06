@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
+
 import { GreekText } from "@/components/GreekText";
 
 export const FirstTimeUserCTA = () => (

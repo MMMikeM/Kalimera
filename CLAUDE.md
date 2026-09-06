@@ -82,10 +82,10 @@ Default **page routes** (loader + action + component) with `<Form>` and `useFetc
 Two transliteration helpers exist with **opposite jobs**. Using the wrong one shipped
 `pws` and `thelw` to learners for months.
 
-| Module | Function | Job |
-| --- | --- | --- |
-| `src/lib/greek-transliteration.ts` | `greekToPhonetic` | **Matching only.** Reversible keyboard spelling (η→h, ω→w). `πώς` → `pws`. Never render it. |
-| `src/lib/greek-phonetic.ts` | `greekToPronunciation` | **Display only.** Pronunciation gloss (η→i, ω→o, γ→y/gh). `πώς` → `pos`. Lossy — never match against it. |
+| Module                             | Function               | Job                                                                                                      |
+| ---------------------------------- | ---------------------- | -------------------------------------------------------------------------------------------------------- |
+| `src/lib/greek-transliteration.ts` | `greekToPhonetic`      | **Matching only.** Reversible keyboard spelling (η→h, ω→w). `πώς` → `pws`. Never render it.              |
+| `src/lib/greek-phonetic.ts`        | `greekToPronunciation` | **Display only.** Pronunciation gloss (η→i, ω→o, γ→y/gh). `πώς` → `pos`. Lossy — never match against it. |
 
 `matchPhonetic` is the answer grader and may be imported anywhere.
 
@@ -111,10 +111,10 @@ gloss strips punctuation itself. There is no stored `greeklish` field — it is 
 Two colour systems exist and they are **not** interchangeable. Reaching for the wrong one
 is the colour equivalent of shipping `pws` to a learner.
 
-| Palette | Tokens | Job |
-| --- | --- | --- |
+| Palette                                                     | Tokens                                                                                                                    | Job                                                                                                |
+| ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
 | **Reserved role tokens** (`@theme static`, `src/index.css`) | `case-nominative-*`, `case-accusative-*`, `case-genitive-*`, `gender-masculine-*`, `gender-feminine-*`, `gender-neuter-*` | **Grammatical claims only.** Applying one asserts that the Greek it wraps has that case or gender. |
-| **Base palette** | `cream`, `terracotta`, `sunset`, `olive`, `ocean`, `honey`, `navy`, `slate`, `stone` | **Everything else.** Nav, chrome, buttons, section grouping, page-local axes. Asserts nothing. |
+| **Base palette**                                            | `cream`, `terracotta`, `sunset`, `olive`, `ocean`, `honey`, `navy`, `slate`, `stone`                                      | **Everything else.** Nav, chrome, buttons, section grouping, page-local axes. Asserts nothing.     |
 
 **The rule:** a colour used as fill, background or border around Greek grammatical content
 asserts that content's grammatical value. If the assertion would be false, use the base
@@ -145,8 +145,8 @@ Two practical notes:
 
 Two vocabularies in use — both correct, different contexts:
 
-| Grammatical term | Learner label | Role token         | Route segment  |
-| ---------------- | ------------- | ------------------ | -------------- |
+| Grammatical term | Learner label | Role token          | Route segment  |
+| ---------------- | ------------- | ------------------- | -------------- |
 | Nominative       | Doer          | `case-nominative-*` | `nominative-*` |
 | Accusative       | Target        | `case-accusative-*` | `accusative-*` |
 | Genitive         | Owner         | `case-genitive-*`   | `genitive-*`   |

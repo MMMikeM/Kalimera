@@ -1,4 +1,5 @@
 import { cn } from "tailwind-variants";
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { type ParadigmForms, ParadigmTable } from "./ParadigmTable";
