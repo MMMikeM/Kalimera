@@ -3,7 +3,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { NUMBER_COLUMNS, Paradigm, type ParadigmRow } from "../components/paradigm";
 
 import {
-	type Gender as ChipGender,
 	GENDER_CHIP,
 	HERO_TEXT,
 	NUMBER_CHIP,
@@ -13,9 +12,9 @@ import type { DrillForm } from "../components/engines/deck";
 import { Drill, type DimensionSpec } from "../components/engines/drill";
 import { GENDER_STYLE, PERSON_LABELS } from "../components/engines/drill-constants";
 import { ForwardPromptCard } from "../components/engines/forward-prompt-card";
+import type { Gender } from "@/server/db/enums";
 
 type Person = "first" | "second" | "third";
-type Gender = "masculine" | "feminine" | "neuter";
 type Num = "singular" | "plural";
 type DimKey = "person" | "number" | "gender";
 
@@ -160,7 +159,7 @@ function PossessivesDrill() {
 				const english = ENGLISH[f.id] ?? "";
 				const person = PERSON_CHIP[f.person as Person];
 				const number = NUMBER_CHIP[f.number as keyof typeof NUMBER_CHIP];
-				const gender = f.gender ? GENDER_CHIP[f.gender as ChipGender] : null;
+				const gender = f.gender ? GENDER_CHIP[f.gender as Gender] : null;
 				const facets = [
 					{
 						icon: person.icon,
@@ -177,7 +176,7 @@ function PossessivesDrill() {
 					facets.push({
 						icon: gender.icon,
 						label: gender.longLabel,
-						colorText: HERO_TEXT.gender[f.gender as ChipGender],
+						colorText: HERO_TEXT.gender[f.gender as Gender],
 					});
 				}
 				return <ForwardPromptCard facets={facets} gloss={`"${english}"`} />;

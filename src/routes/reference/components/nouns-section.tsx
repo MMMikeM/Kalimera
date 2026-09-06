@@ -13,8 +13,8 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { AGREEMENT_PARADIGMS, type AgreementParadigm } from "@/constants/agreement";
 import { GENDER_SCHEME, SCHEME } from "@/constants/grammar-palette";
 import type { NounsData } from "../$tab";
+import type { Gender } from "@/server/db/enums";
 
-type Gender = "masculine" | "feminine" | "neuter";
 /** Matches both `RowDef.key` and `AgreementPattern["case"]`, which is what lets
  * the table look cells up by key instead of by row position. */
 type CaseKey = "nom" | "acc" | "gen" | "voc";

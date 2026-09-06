@@ -8,12 +8,13 @@ import { requireAuth } from "@/server/auth/session";
 import { getDrillVocabPool } from "@/server/db/queries/drill-pool";
 import { getVocabularyWithNominalForms } from "@/server/db/queries/nominal-forms";
 import { ensureUserProgress } from "@/server/db/queries/user-progress";
+import type { NominalCase } from "@/server/db/enums";
 
 /** Build SimpleListItem[] for a single case drill (nominative / accusative / genitive).
  *  Pool is SRS-aware: nouns the user has been exposed to in their CEFR band. */
 async function getNounDrillItemsImpl(
 	userId: number,
-	grammaticalCase: "nominative" | "accusative" | "genitive",
+	grammaticalCase: NominalCase,
 	drillId: string,
 	{ stripArticleForReverse = false } = {},
 ): Promise<SimpleListItem[]> {

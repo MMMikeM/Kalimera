@@ -1,5 +1,6 @@
 import { OBJECT_PRONOUNS, POSSESSIVE_PRONOUNS } from "@/constants/pronouns";
 import { VERB_CONJUGATIONS } from "@/constants/verbs";
+import { shuffle } from "@/lib/shuffle";
 import type { DrillBucket } from "@/lib/drill/types";
 import { declineNoun } from "@/lib/noun-declension";
 import type { NounDeclensionPattern } from "@/server/db/enums";
@@ -168,17 +169,6 @@ const generateNounQuestions = (): DrillQuestion[] => {
 	return questions;
 };
 
-const shuffleArray = <T>(array: T[]): T[] => {
-	const shuffled = [...array];
-	for (let i = shuffled.length - 1; i > 0; i--) {
-		const j = Math.floor(Math.random() * (i + 1));
-		const temp = shuffled[i];
-		shuffled[i] = shuffled[j] as T;
-		shuffled[j] = temp as T;
-	}
-	return shuffled;
-};
-
 const generators: Record<QuestionCategory, () => DrillQuestion[]> = {
 	pronouns: generatePronounQuestions,
 	articles: generateArticleQuestions,
@@ -193,7 +183,7 @@ export const generateQuestions = (
 	const cats = categories === "all" ? typedKeys(generators) : categories;
 
 	const all = cats.flatMap((c) => generators[c]());
-	const shuffled = shuffleArray(all);
+	const shuffled = shuffle(all);
 
 	return count ? shuffled.slice(0, count) : shuffled;
 };

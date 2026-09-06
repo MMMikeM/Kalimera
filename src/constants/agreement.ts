@@ -1,8 +1,9 @@
 // Article-Noun Agreement Paradigms
 // Shows how articles and noun endings must match in gender, case, and number
 
+import type { Gender } from "@/server/db/enums";
+
 export type Case = "nom" | "acc" | "gen" | "voc";
-type Gender = "masculine" | "feminine" | "neuter";
 
 interface AgreementPattern {
 	case: Case;

@@ -6,7 +6,6 @@ import {
 	CASE_BAR,
 	CASE_CHIP,
 	type Case,
-	type Gender as ChipGender,
 	GENDER_CHIP,
 	HERO_TEXT,
 	NUMBER_CHIP,
@@ -15,15 +14,15 @@ import type { DrillForm } from "../../components/engines/deck";
 import { Drill, type DimensionSpec } from "../../components/engines/drill";
 import { GENDER_STYLE } from "../../components/engines/drill-constants";
 import { ForwardPromptCard } from "../../components/engines/forward-prompt-card";
+import type { Gender, NominalCase } from "@/server/db/enums";
 
-type ArticleCase = "nominative" | "accusative" | "genitive";
-type Gender = "masculine" | "feminine" | "neuter";
+
 type Num = "singular" | "plural";
 
 type DimKey = "case" | "gender" | "number";
 
 interface Article extends DrillForm, Record<DimKey, string> {
-	case: ArticleCase;
+	case: NominalCase;
 	gender: Gender;
 	number: Num;
 }
@@ -175,10 +174,10 @@ const ARTICLES: Article[] = [
 	},
 ];
 
-const caseText = (c: ArticleCase) => CASE_CHIP[c].colorText;
-const caseBg = (c: ArticleCase) => CASE_BAR[c].bg;
+const caseText = (c: NominalCase) => CASE_CHIP[c].colorText;
+const caseBg = (c: NominalCase) => CASE_BAR[c].bg;
 
-const PARADIGM_ROWS: { label: string; caseKey: ArticleCase; forms: string[] }[] = [
+const PARADIGM_ROWS: { label: string; caseKey: NominalCase; forms: string[] }[] = [
 	{ label: "Nom sg", caseKey: "nominative", forms: ["ο", "η", "το"] },
 	{ label: "Acc sg", caseKey: "accusative", forms: ["τον", "την", "το"] },
 	{ label: "Gen sg", caseKey: "genitive", forms: ["του", "της", "του"] },
@@ -211,7 +210,7 @@ const DIMENSIONS: DimensionSpec<DimKey>[] = [
 	{
 		key: "case",
 		values: ["nominative", "accusative", "genitive"] as const,
-		selectorStyle: (v) => ({ bg: caseBg(v as ArticleCase), text: caseText(v as ArticleCase) }),
+		selectorStyle: (v) => ({ bg: caseBg(v as NominalCase), text: caseText(v as NominalCase) }),
 	},
 ];
 
@@ -232,7 +231,7 @@ function ArticlesDrill() {
 			configExtras={<ArticleParadigm />}
 			forwardPrompt={(form) => {
 				const f = form as (typeof ARTICLES)[number];
-				const gender = GENDER_CHIP[f.gender as ChipGender];
+				const gender = GENDER_CHIP[f.gender as Gender];
 				const number = NUMBER_CHIP[f.number as keyof typeof NUMBER_CHIP];
 				const caseSpec = CASE_CHIP[f.case as Case];
 				return (
@@ -241,7 +240,7 @@ function ArticlesDrill() {
 							{
 								icon: gender.icon,
 								label: gender.longLabel,
-								colorText: HERO_TEXT.gender[f.gender as ChipGender],
+								colorText: HERO_TEXT.gender[f.gender as Gender],
 							},
 							{
 								icon: number.icon,

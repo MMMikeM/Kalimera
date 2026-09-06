@@ -14,9 +14,11 @@ import {
 } from "lucide-react";
 
 import { SCHEME } from "@/constants/grammar-palette";
+import type { Gender, NominalCase as Case } from "@/server/db/enums";
 
-export type Case = "nominative" | "accusative" | "genitive";
-export type Gender = "masculine" | "feminine" | "neuter";
+export type { Gender, NominalCase as Case } from "@/server/db/enums";
+
+
 type Num = "singular" | "plural";
 type Person = "first" | "second" | "third";
 
