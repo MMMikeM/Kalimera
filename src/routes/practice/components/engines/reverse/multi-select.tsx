@@ -7,14 +7,32 @@ import { ReverseFeedback, SelectorButton } from "../shells";
 
 type Selected<K extends string> = Partial<Record<K, string>>;
 
-export interface DimensionSpec<K extends string> {
+/**
+ * `label` and `selectorStyle` use method syntax deliberately: methods are
+ * bivariant under `strictFunctionTypes`, so a spec written for a narrow `V`
+ * stays assignable to `DimensionSpec<K>` when the drill stores it in one array.
+ * Written as function-typed properties this needs a cast; written as methods it
+ * needs none, and each callback is only ever invoked with its own `values`.
+ */
+export interface DimensionSpec<K extends string, V extends string = string> {
 	key: K;
-	values: readonly string[];
-	label?: (v: string) => string;
-	selectorStyle: (v: string) => { bg: string; text: string };
-	shown?: (selected: Selected<K>) => boolean;
-	required?: (selected: Selected<K>) => boolean;
+	values: readonly V[];
+	label?(v: V): string;
+	selectorStyle(v: V): { bg: string; text: string };
+	shown?(selected: Selected<K>): boolean;
+	required?(selected: Selected<K>): boolean;
 }
+
+/**
+ * Declares one dimension of a drill whose keys are `K`, inferring the value union
+ * from that dimension's own `values` so `label` and `selectorStyle` receive the
+ * literal type instead of `string`. Curried because `K` spans the whole drill and
+ * must be given, while `V` differs per dimension and must be inferred.
+ */
+export const dimensionFor =
+	<K extends string>() =>
+	<V extends string>(spec: DimensionSpec<K, V>): DimensionSpec<K> =>
+		spec;
 
 interface MultiSelectReverseProps<K extends string> {
 	dimensions: DimensionSpec<K>[];

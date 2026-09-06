@@ -2,6 +2,16 @@
 // PREPOSITION CONSTANTS
 // =============================================================================
 
+import type { Gender } from "@/server/db/enums";
+
+/** σε + article. `gender` is typed so the reference table can colour it. */
+interface SeContraction {
+	formula: string;
+	gender: Gender;
+	number: "singular" | "plural";
+	examples: { greek: string; english: string }[];
+}
+
 // The Big 4 - highest frequency prepositions (90%+ of usage)
 
 // Navigator options - for the decision guide
@@ -45,7 +55,15 @@ export const PREPOSITION_NAVIGATOR_OPTIONS = [
 ];
 
 // σε contraction formulas
-export const SE_CONTRACTIONS = {
+export const SE_CONTRACTIONS: {
+	intro: string;
+	formulas: SeContraction[];
+	noArticle: {
+		title: string;
+		explanation: string;
+		examples: { greek: string; english: string }[];
+	};
+} = {
 	intro: "σε + article ALWAYS contracts. You'll never hear 'σε το' in speech.",
 	formulas: [
 		{

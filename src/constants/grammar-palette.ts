@@ -1,4 +1,4 @@
-import type { Gender } from "@/server/db/enums";
+import type { Gender, NominalCase } from "@/server/db/enums";
 
 import type { CaseName } from "./recognition";
 
@@ -142,4 +142,52 @@ export const GENDER_SCHEME: Record<Gender, GrammarScheme> = {
 	masculine: "gender-masculine",
 	feminine: "gender-feminine",
 	neuter: "gender-neuter",
+};
+
+/**
+ * The learner-facing name for each role case — the UI says Doer, the routes say
+ * nominative. Defined here because naming a role is the same act as choosing its
+ * token; `constants/drills` widens it with `mixed` and `null`.
+ */
+export const ROLE_SCHEME = {
+	doer: "case-nominative",
+	target: "case-accusative",
+	owner: "case-genitive",
+} as const satisfies Record<string, GrammarScheme>;
+
+export type CaseRoleName = keyof typeof ROLE_SCHEME;
+
+/**
+ * The reference surface names cases in prose ("Nominative"); the drills and the
+ * DB use the enum ("nominative"). This is the one bridge between the two, so no
+ * call site has to rebuild it by string surgery.
+ */
+export const CASE_KEY: Record<CaseName, NominalCase> = {
+	Nominative: "nominative",
+	Accusative: "accusative",
+	Genitive: "genitive",
+};
+
+/** The scheme for a case, keyed as the DB enum and the drill tree spell it. */
+export const caseScheme = (c: NominalCase) => SCHEME[`case-${c}`];
+
+/** The scheme for a gender. */
+export const genderScheme = (g: Gender) => SCHEME[GENDER_SCHEME[g]];
+
+// Step variants the base SCHEME does not carry, kept here so this file stays the
+// only one naming a role token. Tailwind only sees literal class names, so these
+// cannot be built from SCHEME.bg at the call site.
+
+/** A paradigm panel tints a whole gender block: heavier border, washed fill. */
+export const GENDER_PANEL: Record<Gender, { border: string; bg: string }> = {
+	masculine: { border: "border-gender-masculine-300", bg: "bg-gender-masculine-100/40" },
+	feminine: { border: "border-gender-feminine-300", bg: "bg-gender-feminine-100/40" },
+	neuter: { border: "border-gender-neuter-300", bg: "bg-gender-neuter-100/40" },
+};
+
+/** The noun browser stacks rows, so it needs a heavier rule than `SCHEME.border`. */
+export const GENDER_ROW_BORDER: Record<Gender, string> = {
+	masculine: "border-gender-masculine-500",
+	feminine: "border-gender-feminine-500",
+	neuter: "border-gender-neuter-500",
 };

@@ -61,11 +61,18 @@ const grammarTable = tv({
 	},
 });
 
-export const CASE_ROW_DEFS: RowDef[] = [
-	{ key: "nom", label: "Doer", sublabel: "Nominative", scheme: "case-nominative" },
-	{ key: "acc", label: "Target", sublabel: "Accusative", scheme: "case-accusative" },
-	{ key: "gen", label: "Owner", sublabel: "Genitive", scheme: "case-genitive" },
-];
+/**
+ * The three role cases, named once. Surfaces that iterate take `CASE_ROW_DEFS`;
+ * surfaces that look one up by key take this record, so the learner label, the
+ * grammatical term and the token never have to be restated.
+ */
+export const CASE_ROW_BY_KEY = {
+	nom: { key: "nom", label: "Doer", sublabel: "Nominative", scheme: "case-nominative" },
+	acc: { key: "acc", label: "Target", sublabel: "Accusative", scheme: "case-accusative" },
+	gen: { key: "gen", label: "Owner", sublabel: "Genitive", scheme: "case-genitive" },
+} as const satisfies Record<string, RowDef>;
+
+export const CASE_ROW_DEFS: RowDef[] = Object.values(CASE_ROW_BY_KEY);
 
 export const GENDER_COLUMN_DEFS: ColumnDef[] = [
 	{ key: "masculine", label: "M", scheme: "gender-masculine" },
