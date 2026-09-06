@@ -1,7 +1,7 @@
 import type React from "react";
 import { cn, tv } from "tailwind-variants";
 
-import { type GrammarScheme, SCHEME } from "@/constants/grammar-palette";
+import { GENDER_SCHEME, type GrammarScheme, SCHEME } from "@/constants/grammar-palette";
 
 export interface ColumnDef {
 	key: string;
@@ -71,9 +71,9 @@ export const CASE_ROW_BY_KEY = {
 export const CASE_ROW_DEFS: RowDef[] = Object.values(CASE_ROW_BY_KEY);
 
 export const GENDER_COLUMN_DEFS: ColumnDef[] = [
-	{ key: "masculine", label: "M", scheme: "gender-masculine" },
-	{ key: "feminine", label: "F", scheme: "gender-feminine" },
-	{ key: "neuter", label: "N", scheme: "gender-neuter" },
+	{ key: "masculine", label: "M", scheme: GENDER_SCHEME.masculine },
+	{ key: "feminine", label: "F", scheme: GENDER_SCHEME.feminine },
+	{ key: "neuter", label: "N", scheme: GENDER_SCHEME.neuter },
 ];
 
 export const GrammarTable: React.FC<GrammarTableProps> = ({
