@@ -3,6 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { caseScheme, genderScheme } from "@/constants/grammar-palette";
 import {
 	type Gender,
+	type GrammaticalNumber,
 	type NominalCase,
 	genders,
 	grammaticalNumbers,
@@ -21,14 +22,12 @@ import { ForwardPromptCard } from "../../components/engines/forward-prompt-card"
 import { dimensionFor } from "../../components/engines/reverse/multi-select";
 import { GENDER_COLUMNS, Paradigm } from "../../components/paradigm";
 
-type Num = "singular" | "plural";
-
 type DimKey = "case" | "gender" | "number";
 
 interface Article extends DrillForm {
 	case: NominalCase;
 	gender: Gender;
-	number: Num;
+	number: GrammaticalNumber;
 }
 
 const ARTICLES: Article[] = [

@@ -14,13 +14,11 @@ import {
 } from "lucide-react";
 
 import { caseScheme, genderScheme } from "@/constants/grammar-palette";
-import type { Gender, NominalCase as Case } from "@/server/db/enums";
+import type { Gender, GrammaticalNumber, NominalCase as Case } from "@/server/db/enums";
 
 import type { Person } from "./drill-constants";
 
 export type { Gender, NominalCase as Case } from "@/server/db/enums";
-
-type Num = "singular" | "plural";
 
 /** Colour is absent on purpose: it comes from the palette at the point of use. */
 interface ChipSpec {
@@ -40,7 +38,7 @@ export const GENDER_CHIP: Record<Gender, ChipSpec> = {
 	neuter: { icon: Circle, longLabel: "neuter" },
 };
 
-export const NUMBER_CHIP: Record<Num, ChipSpec> = {
+export const NUMBER_CHIP: Record<GrammaticalNumber, ChipSpec> = {
 	singular: { icon: Dot, longLabel: "singular" },
 	plural: { icon: MoreHorizontal, longLabel: "plural" },
 };
@@ -58,7 +56,7 @@ const PERSON_HERO = "text-terracotta-700";
 export const HERO_TEXT: {
 	gender: Record<Gender, string>;
 	case: Record<Case, string>;
-	number: Record<Num, string>;
+	number: Record<GrammaticalNumber, string>;
 	person: Record<Person, string>;
 } = {
 	gender: {
