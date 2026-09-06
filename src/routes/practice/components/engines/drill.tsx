@@ -2,7 +2,8 @@ import { getRouteApi } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 
 import { GreekText } from "@/components/GreekText";
-import { SCHEME } from "@/constants/grammar-palette";
+import type { CaseRole } from "@/constants/drills";
+import { SCHEME, type GrammarScheme } from "@/constants/grammar-palette";
 import { matchPhonetic } from "@/lib/greek-transliteration";
 import { DRILL_REGISTRY, drillTitle } from "@/routes/practice/drill-catalogue.data";
 import { startSessionFn, recordAttemptFn, completeSessionFn } from "@/server/fns/srs";
@@ -53,10 +54,7 @@ const SESSION_CALLBACKS: DrillSessionCallbacks = {
 
 // ─── Theme ─────────────────────────────────────────────────────────────────────
 
-/**
- * Drills that assert nothing grammatical — verb tense, question words,
- * building blocks — pick freely from the base palette.
- */
+/** For drills that assert nothing grammatical: verb tense, question words, blocks. */
 const BASE_THEME = {
 	honey: { bar: "bg-honey", selectorBg: "bg-honey-100", selectorText: "text-honey-text" },
 	terracotta: {
@@ -70,29 +68,19 @@ const BASE_THEME = {
 
 type ColorTheme = keyof typeof BASE_THEME;
 
-/**
- * A drill whose catalogue entry declares a case role is claiming that role, so
- * it takes the reserved tokens and cannot be given a colour by hand. That is
- * how the Doer noun drill came to be honey while its three Doer siblings were
- * ocean, and how the mixed-case article review claimed Doer blue.
- *
- * `mixed` and `null` claim nothing and fall back to the base palette.
- */
-const CASE_ROLE_SCHEME = {
+/** A declared case role takes the reserved tokens; `mixed` and `null` claim nothing. */
+const CASE_ROLE_SCHEME: Partial<Record<NonNullable<CaseRole>, GrammarScheme>> = {
 	doer: "case-nominative",
 	target: "case-accusative",
 	owner: "case-genitive",
-} as const;
+};
 
 const themeFor = (drillId: string, colorTheme: ColorTheme) => {
 	const role = DRILL_REGISTRY[drillId]?.caseRole;
-	const scheme =
-		role && role in CASE_ROLE_SCHEME
-			? SCHEME[CASE_ROLE_SCHEME[role as keyof typeof CASE_ROLE_SCHEME]]
-			: null;
-	return scheme
-		? { bar: scheme.bar, selectorBg: scheme.bg, selectorText: scheme.text }
-		: BASE_THEME[colorTheme];
+	const key = role ? CASE_ROLE_SCHEME[role] : undefined;
+	if (!key) return BASE_THEME[colorTheme];
+	const scheme = SCHEME[key];
+	return { bar: scheme.bar, selectorBg: scheme.bg, selectorText: scheme.text };
 };
 
 // ─── Reverse strategy ─────────────────────────────────────────────────────────
@@ -123,20 +111,19 @@ export type ReverseStrategy<K extends string = string> =
 
 // ─── Props ─────────────────────────────────────────────────────────────────────
 
-export interface DrillProps<K extends string = string> extends Omit<
-	ConfigShellProps,
-	"selectorBg" | "selectorText" | "children" | "title"
-> {
+export interface DrillProps<
+	K extends string = string,
+	T extends DrillForm = DrillForm,
+> extends Omit<ConfigShellProps, "selectorBg" | "selectorText" | "children" | "title"> {
 	drillId: string;
-	/** Omit it: the drill's name comes from its catalogue entry, so it is written
-	 *  once and the index and the review queue show the same string. Pass it only
-	 *  for a drill that has no catalogue entry, such as the anonymous /try drill. */
+	/** Omit it — the name comes from the catalogue entry. Pass it only for a drill
+	 *  with no entry, such as the anonymous /try drill. */
 	title?: string;
-	items: DrillForm[];
+	items: T[];
 	colorTheme?: ColorTheme;
 	defaultMode?: DrillMode;
 	reverse?: ReverseStrategy<K>;
-	forwardPrompt?: (form: DrillForm) => React.ReactNode;
+	forwardPrompt?: (form: T) => React.ReactNode;
 	configExtras?: React.ReactNode;
 	autoStart?: boolean;
 	sessionSize?: SessionSize;
@@ -145,8 +132,8 @@ export interface DrillProps<K extends string = string> extends Omit<
 
 // ─── Inner drill (reads from store) ───────────────────────────────────────────
 
-function DrillInner<K extends string>(
-	props: Omit<DrillProps<K>, "drillId" | "items" | "sessionSize" | "onComplete"> & {
+function DrillInner<K extends string, T extends DrillForm>(
+	props: Omit<DrillProps<K, T>, "drillId" | "items" | "sessionSize" | "onComplete"> & {
 		/** Both already resolved by <Drill>, so the shells can rely on them. */
 		title: string;
 		theme: { bar: string; selectorBg: string; selectorText: string };
@@ -281,7 +268,8 @@ function DrillInner<K extends string>(
 				<>
 					<div>
 						{forwardPrompt && currentForm ? (
-							forwardPrompt(currentForm)
+							// The store holds DrillForm; T is only known to the caller.
+							forwardPrompt(currentForm as T)
 						) : (
 							<>
 								<p className="mb-3 text-xs tracking-widest text-muted-foreground uppercase">
@@ -336,7 +324,9 @@ function DrillInner<K extends string>(
 
 // ─── Public <Drill> ────────────────────────────────────────────────────────────
 
-export function Drill<K extends string = string>(props: DrillProps<K>) {
+export function Drill<K extends string = string, T extends DrillForm = DrillForm>(
+	props: DrillProps<K, T>,
+) {
 	const { auth } = rootRoute.useRouteContext();
 	const title = props.title ?? drillTitle(props.drillId) ?? props.drillId;
 	const theme = themeFor(props.drillId, props.colorTheme ?? "terracotta");

@@ -2,10 +2,7 @@ import type React from "react";
 
 import { SCHEME } from "@/constants/grammar-palette";
 
-/**
- * A phase heading names a case role, so it takes that role's tokens. Review
- * mixes the roles and claims none of them.
- */
+/** Doer/Target/Owner name a case role; Review mixes them and claims none. */
 const PHASE_TINT: Record<string, string> = {
 	Doer: `${SCHEME["case-nominative"].text} ${SCHEME["case-nominative"].border}`,
 	Target: `${SCHEME["case-accusative"].text} ${SCHEME["case-accusative"].border}`,

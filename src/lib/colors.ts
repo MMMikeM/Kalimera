@@ -1,10 +1,4 @@
-/**
- * Base-palette section chrome only. It asserts nothing grammatical, which is
- * why it no longer carries `masculine`/`feminine`/`neuter` keys: those mapped
- * gender to navy/sunset/slate, a second gender mapping competing with the
- * reserved tokens in `constants/grammar-palette.ts`. Nothing ever passed them.
- * A grammatical claim goes through SCHEME, never through here.
- */
+/** Base-palette section chrome. A grammatical claim goes through SCHEME, never here. */
 export type ColorScheme =
 	| "ocean"
 	| "terracotta"

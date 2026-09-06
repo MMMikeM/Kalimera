@@ -37,6 +37,9 @@ export interface SimpleListItem extends DrillForm {
 	detail?: string;
 }
 
+/** Draw order when a bucket empties, and the full set of buckets. */
+const PRIORITY: DrillBucket[] = ["tier1", "tier2", "tier3", "inProgress", "new"];
+
 // Slots per 10-card batch, in draw order. Cascade to next priority when a bucket empties.
 const BATCH_SLOTS: DrillBucket[] = [
 	"inProgress",
@@ -76,11 +79,10 @@ export const buildWeightedDeck = (forms: DrillForm[], size: SessionSize | number
 		const b = f.bucket ?? "inProgress";
 		buckets[b].push(f);
 	}
-	for (const b of Object.keys(buckets) as DrillBucket[]) buckets[b] = shuffle(buckets[b]);
+	for (const b of PRIORITY) buckets[b] = shuffle(buckets[b]);
 
 	const deck: DrillForm[] = [];
 	const seenNew = new Set<string>();
-	const PRIORITY: DrillBucket[] = ["tier1", "tier2", "tier3", "inProgress", "new"];
 
 	const draw = (preferred: DrillBucket): DrillForm | undefined => {
 		const order = [preferred, ...PRIORITY.filter((b) => b !== preferred)];

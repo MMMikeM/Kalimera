@@ -37,10 +37,7 @@ interface SchemeClasses {
 	text: string;
 	/** Saturated fill for progress bars and solid chips. */
 	bar: string;
-	/**
-	 * Higher-chroma text for large serif display. The `-text` tokens are tuned
-	 * for AAA at body size and read dull at 44px, so hero prompts take this.
-	 */
+	/** Higher-chroma text for large serif display; the `-text` tokens read dull at 44px. */
 	heroText: string;
 }
 
