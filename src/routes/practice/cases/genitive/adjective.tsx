@@ -13,99 +13,99 @@ import { GENDER_DIMENSION_OPTIONS } from "../../components/engines/drill-constan
 interface AdjGroup {
 	id: string;
 	english: string;
-	masculine: { greek: string; greeklish: string };
-	feminine: { greek: string; greeklish: string };
-	neuter: { greek: string; greeklish: string };
-	plural: { greek: string; greeklish: string };
+	masculine: string;
+	feminine: string;
+	neuter: string;
+	plural: string;
 }
 
 const ADJECTIVES: AdjGroup[] = [
 	{
 		id: "kalou",
 		english: "good",
-		masculine: { greek: "καλού", greeklish: "kalou" },
-		feminine: { greek: "καλής", greeklish: "kalis" },
-		neuter: { greek: "καλού", greeklish: "kalou" },
-		plural: { greek: "καλών", greeklish: "kalon" },
+		masculine: "καλού",
+		feminine: "καλής",
+		neuter: "καλού",
+		plural: "καλών",
 	},
 	{
 		id: "megalou",
 		english: "big",
-		masculine: { greek: "μεγάλου", greeklish: "megalou" },
-		feminine: { greek: "μεγάλης", greeklish: "megalis" },
-		neuter: { greek: "μεγάλου", greeklish: "megalou" },
-		plural: { greek: "μεγάλων", greeklish: "megalon" },
+		masculine: "μεγάλου",
+		feminine: "μεγάλης",
+		neuter: "μεγάλου",
+		plural: "μεγάλων",
 	},
 	{
 		id: "mikrou",
 		english: "small",
-		masculine: { greek: "μικρού", greeklish: "mikrou" },
-		feminine: { greek: "μικρής", greeklish: "mikris" },
-		neuter: { greek: "μικρού", greeklish: "mikrou" },
-		plural: { greek: "μικρών", greeklish: "mikron" },
+		masculine: "μικρού",
+		feminine: "μικρής",
+		neuter: "μικρού",
+		plural: "μικρών",
 	},
 	{
 		id: "neou",
 		english: "new / young",
-		masculine: { greek: "νέου", greeklish: "neou" },
-		feminine: { greek: "νέας", greeklish: "neas" },
-		neuter: { greek: "νέου", greeklish: "neou" },
-		plural: { greek: "νέων", greeklish: "neon" },
+		masculine: "νέου",
+		feminine: "νέας",
+		neuter: "νέου",
+		plural: "νέων",
 	},
 	{
 		id: "paliou",
 		english: "old",
-		masculine: { greek: "παλιού", greeklish: "paliou" },
-		feminine: { greek: "παλιάς", greeklish: "palias" },
-		neuter: { greek: "παλιού", greeklish: "paliou" },
-		plural: { greek: "παλιών", greeklish: "palion" },
+		masculine: "παλιού",
+		feminine: "παλιάς",
+		neuter: "παλιού",
+		plural: "παλιών",
 	},
 	{
 		id: "omorfou",
 		english: "pretty / handsome",
-		masculine: { greek: "όμορφου", greeklish: "omorfou" },
-		feminine: { greek: "όμορφης", greeklish: "omorfis" },
-		neuter: { greek: "όμορφου", greeklish: "omorfou" },
-		plural: { greek: "όμορφων", greeklish: "omorfon" },
+		masculine: "όμορφου",
+		feminine: "όμορφης",
+		neuter: "όμορφου",
+		plural: "όμορφων",
 	},
 	{
 		id: "zestou",
 		english: "hot",
-		masculine: { greek: "ζεστού", greeklish: "zestou" },
-		feminine: { greek: "ζεστής", greeklish: "zestis" },
-		neuter: { greek: "ζεστού", greeklish: "zestou" },
-		plural: { greek: "ζεστών", greeklish: "zeston" },
+		masculine: "ζεστού",
+		feminine: "ζεστής",
+		neuter: "ζεστού",
+		plural: "ζεστών",
 	},
 	{
 		id: "kryou",
 		english: "cold",
-		masculine: { greek: "κρύου", greeklish: "kryou" },
-		feminine: { greek: "κρύας", greeklish: "kryas" },
-		neuter: { greek: "κρύου", greeklish: "kryou" },
-		plural: { greek: "κρύων", greeklish: "kryon" },
+		masculine: "κρύου",
+		feminine: "κρύας",
+		neuter: "κρύου",
+		plural: "κρύων",
 	},
 	{
 		id: "efkolou",
 		english: "easy",
-		masculine: { greek: "εύκολου", greeklish: "efkolou" },
-		feminine: { greek: "εύκολης", greeklish: "efkolis" },
-		neuter: { greek: "εύκολου", greeklish: "efkolou" },
-		plural: { greek: "εύκολων", greeklish: "efkolon" },
+		masculine: "εύκολου",
+		feminine: "εύκολης",
+		neuter: "εύκολου",
+		plural: "εύκολων",
 	},
 	{
 		id: "dyskolou",
 		english: "difficult",
-		masculine: { greek: "δύσκολου", greeklish: "dyskolou" },
-		feminine: { greek: "δύσκολης", greeklish: "dyskolis" },
-		neuter: { greek: "δύσκολου", greeklish: "dyskolou" },
-		plural: { greek: "δύσκολων", greeklish: "dyskolon" },
+		masculine: "δύσκολου",
+		feminine: "δύσκολης",
+		neuter: "δύσκολου",
+		plural: "δύσκολων",
 	},
 ];
 
 const ITEMS: SimpleListItem[] = ADJECTIVES.flatMap((adj) => [
 	{
 		id: `${adj.id}-m`,
-		greek: adj.masculine.greek,
+		greek: adj.masculine,
 		english: `${adj.english} (m, owner)`,
 		label: "masculine",
 		category: "masculine",
@@ -113,7 +113,7 @@ const ITEMS: SimpleListItem[] = ADJECTIVES.flatMap((adj) => [
 	},
 	{
 		id: `${adj.id}-f`,
-		greek: adj.feminine.greek,
+		greek: adj.feminine,
 		english: `${adj.english} (f, owner)`,
 		label: "feminine",
 		category: "feminine",
@@ -121,7 +121,7 @@ const ITEMS: SimpleListItem[] = ADJECTIVES.flatMap((adj) => [
 	},
 	{
 		id: `${adj.id}-n`,
-		greek: adj.neuter.greek,
+		greek: adj.neuter,
 		english: `${adj.english} (n, owner)`,
 		label: "neuter",
 		category: "neuter",
@@ -130,7 +130,7 @@ const ITEMS: SimpleListItem[] = ADJECTIVES.flatMap((adj) => [
 	// Plural -ων is identical across all three genders — one item per adjective
 	{
 		id: `${adj.id}-pl`,
-		greek: adj.plural.greek,
+		greek: adj.plural,
 		english: `${adj.english} (pl, owner — all genders)`,
 		label: "plural",
 		category: "plural",
