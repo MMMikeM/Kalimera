@@ -193,50 +193,73 @@ counts, and consistency tracking all serve the goal of getting enough repetition
 for the behaviour to start becoming automatic. But the *form* of that scaffolding
 matters — it should be informational, never controlling.
 
+Each hook is marked for whether it ships. The design intent below is the brief
+either way — but an unmarked hook reads as a description of the app, and several
+of these describe things that were never built.
+
 <hooks>
-<hook name="due-count" location="dashboard" mechanism="informational">
+<hook name="due-count" location="dashboard" mechanism="informational" status="ships">
 Shows number of items due for review with time estimate. Factual: "12 items (~3 min)".
 No urgency framing, no FOMO language. The count is useful information, not pressure.
 </hook>
-<hook name="practice-calendar" location="dashboard" mechanism="informational">
+<hook name="practice-calendar" location="dashboard" mechanism="informational" status="conflict">
 Weekly grid showing practice days. A passive record of consistency — the user can
 see their pattern without the app evaluating it. No streak counter, no "X days!"
 label. The calendar speaks for itself.
+
+CONFLICT: the grid ships, but the dashboard contradicts the rest of this hook.
+src/routes/index.tsx passes a `streak` count to WeekStreak and renders
+"Day 1! Practice for 7 days to earn a streak freeze." That is a streak counter
+and an "X days!" label. Either the brief or the dashboard should change; this
+file cannot decide which.
 </hook>
-<hook name="short-sessions" location="practice" mechanism="low-friction">
+<hook name="short-sessions" location="practice" mechanism="low-friction" status="ships">
 2-3 minute sessions lower the activation threshold. The user can always do "just
 one drill." Starting is the hard part; most users continue once they begin.
 </hook>
-<hook name="auto-advance" location="speed-drill" mechanism="flow-state">
+<hook name="auto-advance" location="practice drill" mechanism="flow-state" status="ships">
 Correct answers auto-advance, maintaining momentum. Flow produces its own
 dopamine — don't interrupt it with celebrations.
 </hook>
-<hook name="push-notifications" location="system" mechanism="external-prompt">
+<hook name="push-notifications" location="system" mechanism="external-prompt" status="partial">
+NOT SENT. The subscription side is live — /api/push/{subscribe,unsubscribe,snooze,
+log-tap,vapid-key}, and pushSubscriptions carries notification mode, snooze and
+taper-offer state. Nothing calls the senders in src/server/push-notifications.ts,
+so none of the below reaches a learner yet.
+
 Daily reminders for first 2 weeks, tapering to every-other-day by week 3.
 Content is informational: "Your Greek is waiting" not "Don't break your streak!"
 Includes one-tap "Not today" that triggers no guilt. Around day 14, offer:
 "You seem to have this — want fewer reminders?"
 </hook>
-<hook name="lapsed-user-recovery" location="dashboard" mechanism="reduced-friction">
+<hook name="lapsed-user-recovery" location="dashboard" mechanism="reduced-friction" status="partial">
+LapsedUserCta ships, alongside FirstTimeUserCta and AllCaughtUpCta. The
+"Just 5 items" tiny action does not exist anywhere in the codebase.
+
 Users returning after 7+ days see warm, no-guilt messaging. "Your vocabulary is
 still here." For large queues (15+ items): "Just 5 items" as default tiny action.
 After longer gaps: show what they'd built before the break, offer a lighter
 re-entry session. Never reset or penalise progress.
 </hook>
-<hook name="post-session-acknowledgement" location="drill-summary" mechanism="informational">
+<hook name="post-session-acknowledgement" location="drill-summary" mechanism="informational" status="ships">
 Describes what happened: items practised, time spent, which items took the most
 effort. No person-praise ("You're amazing!"), no evaluation ("Great session!").
 When sessions are hard, reframe the struggle: "These 3 forms took the most effort.
 That's where durable learning happens." Offer a fork: 2-3 genuinely different next
 steps as low-key links, not one dominant CTA.
 </hook>
-<hook name="consistency-milestones" location="dashboard" mechanism="informational">
+<hook name="consistency-milestones" location="dashboard" mechanism="informational" status="not-implemented">
+Nothing ships. Written as the replacement for a confetti modal that has since
+been removed, so this describes neither the old behaviour nor the current one.
+
 Quiet inline text at natural breakpoints. "You've been practising for a week."
 Period. No confetti, no modal, no forced interaction. The user feels whatever they
 feel about it without the app directing the emotion. These appear as part of the
 normal dashboard flow, not as interruptions.
 </hook>
-<hook name="evening-reminder" location="system" mechanism="external-prompt">
+<hook name="evening-reminder" location="system" mechanism="external-prompt" status="not-implemented">
+There is no scheduler. See push-notifications above.
+
 Push notification at 8pm UTC for users who haven't practised today (first few
 weeks only). Content: "Your review queue has X items" — factual, no streak
 mention, no loss framing. Tapers as the habit forms.

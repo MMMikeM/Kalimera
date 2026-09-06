@@ -4,7 +4,7 @@
 
 **pnpm only.** Never `npm` / `npx` — use `pnpm` / `pnpm exec` / `pnpm dlx`.
 
-**Database setup (this repo):** `.env` holds **production** Turso credentials (no separate `.env.prod` exists). The `prod-db-*` Makefile targets fail (`.env.prod: No such file`).
+**Database setup (this repo):** `.env` holds **production** Turso credentials (no separate `.env.prod` exists). The `db-*` Makefile targets wrap the commands below; there are no `prod-db-*` targets — they sourced a `.env.prod` that never existed and have been removed.
 
 ```bash
 # Production (Turso) — drizzle-kit auto-loads `.env`; these hit PROD
@@ -20,7 +20,7 @@ TURSO_DATABASE_URL=file:./local.db pnpm exec drizzle-kit push
 # Seeding and the app itself always hit Turso: src/server/db/index.ts uses the
 # HTTP @tursodatabase/serverless driver, which rejects `file:` URLs.
 
-# DO NOT use `make prod-db-*` — they require a `.env.prod` that doesn't exist.
+# Or via the Makefile: make db-push · db-seed · db-setup · db-studio · db-push-local
 ```
 
 The seeders (vocab + verb conjugations) are **idempotent additive upserts**. Re-running against prod is safe — only adds/updates rows, never deletes.
