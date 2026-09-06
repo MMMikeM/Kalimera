@@ -16,11 +16,13 @@ export default defineConfig({
 		"eslint-plugin-better-tailwindcss",
 		{ name: "react-compiler", specifier: "eslint-plugin-react-hooks" },
 		"./oxlint-plugins/greek-rendering.ts",
+		"./oxlint-plugins/tailwind-classes.ts",
 	],
 	categories: { correctness: "error" },
 	ignorePatterns: ["dist/**", ".claude/**"],
 	rules: {
 		"greek/no-phonetic-render": "error",
+		"tw/no-interpolated-class": "error",
 		"import/first": "warn",
 		"@typescript-eslint/no-explicit-any": ["error"],
 		"no-unused-vars": ["error"],
