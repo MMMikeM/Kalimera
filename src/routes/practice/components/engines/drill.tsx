@@ -2,8 +2,8 @@ import { getRouteApi } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 
 import { GreekText } from "@/components/GreekText";
-import { matchPhonetic } from "@/lib/greek-transliteration";
 import { SCHEME } from "@/constants/grammar-palette";
+import { matchPhonetic } from "@/lib/greek-transliteration";
 import { DRILL_REGISTRY, drillTitle } from "@/routes/practice/drill-catalogue.data";
 import { startSessionFn, recordAttemptFn, completeSessionFn } from "@/server/fns/srs";
 
@@ -86,7 +86,10 @@ const CASE_ROLE_SCHEME = {
 
 const themeFor = (drillId: string, colorTheme: ColorTheme) => {
 	const role = DRILL_REGISTRY[drillId]?.caseRole;
-	const scheme = role && role in CASE_ROLE_SCHEME ? SCHEME[CASE_ROLE_SCHEME[role as keyof typeof CASE_ROLE_SCHEME]] : null;
+	const scheme =
+		role && role in CASE_ROLE_SCHEME
+			? SCHEME[CASE_ROLE_SCHEME[role as keyof typeof CASE_ROLE_SCHEME]]
+			: null;
 	return scheme
 		? { bar: scheme.bar, selectorBg: scheme.bg, selectorText: scheme.text }
 		: BASE_THEME[colorTheme];

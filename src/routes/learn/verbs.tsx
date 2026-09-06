@@ -1,14 +1,19 @@
-import { cn } from "tailwind-variants";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { ChevronLeft } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
+import { cn } from "tailwind-variants";
 
 import { TabHero } from "@/components/TabHero";
 import { fetchVerbParadigms, fetchVerbsForInventory } from "@/server/db/queries/vocabulary";
 
-import { MemoriseSection, type Paradigm, RulesSection, classifyVerbs } from "./verbs/components/verb-inventory";
+import {
+	MemoriseSection,
+	type Paradigm,
+	RulesSection,
+	classifyVerbs,
+} from "./verbs/components/verb-inventory";
 
 const verbsLoader = createServerFn().handler(async () => {
 	const inventory = classifyVerbs(await fetchVerbsForInventory());

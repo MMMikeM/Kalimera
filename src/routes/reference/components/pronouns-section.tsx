@@ -3,6 +3,7 @@ import type React from "react";
 import { Card } from "@/components/Card";
 import { LookupCard } from "@/components/cards/LookupCard";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
+import { GreekText } from "@/components/GreekText";
 import { CASE_SCHEME, SCHEME } from "@/constants/grammar-palette";
 import {
 	EMPHATIC_PRONOUNS,
@@ -22,7 +23,6 @@ import { BandHeading } from "./BandHeading";
 import { HomographCallout } from "./homograph-callout";
 import { PronounDecisionGuide } from "./pronoun-decision-guide";
 import { PronounParadigmTable } from "./pronoun-paradigm-table";
-import { GreekText } from "@/components/GreekText";
 
 const ParadigmLookup = ({
 	caseName,
@@ -423,7 +423,11 @@ export const PronounsSection: React.FC = () => {
 						</div>
 						<div className="flex items-center gap-2">
 							<span className="w-16 text-stone-600">Greek:</span>
-							<GreekText tone="inherit" size="lg" className="rounded border border-stone-200 bg-white px-2 py-1 font-semibold text-stone-800">
+							<GreekText
+								tone="inherit"
+								size="lg"
+								className="rounded border border-stone-200 bg-white px-2 py-1 font-semibold text-stone-800"
+							>
 								{PRONOUN_PATTERNS.doubleObject.contrast.greek}
 							</GreekText>
 							<span className="text-stone-600">
@@ -437,7 +441,13 @@ export const PronounsSection: React.FC = () => {
 								key={ex.greek}
 								className="rounded-lg border border-stone-200 bg-stone-50 px-3 py-2"
 							>
-								<GreekText tone="inherit" size="lg" className="rounded border border-stone-200 bg-white px-2 py-1 font-semibold text-stone-800">{ex.greek}</GreekText>
+								<GreekText
+									tone="inherit"
+									size="lg"
+									className="rounded border border-stone-200 bg-white px-2 py-1 font-semibold text-stone-800"
+								>
+									{ex.greek}
+								</GreekText>
 								<span className="ml-2 text-sm text-stone-600">({ex.literal})</span>
 							</div>
 						))}

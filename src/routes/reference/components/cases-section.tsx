@@ -4,11 +4,11 @@ import { Card } from "@/components/Card";
 import { LookupCard } from "@/components/cards/LookupCard";
 import { NextStepCard } from "@/components/cards/NextStepCard";
 import { TeachingCard } from "@/components/cards/TeachingCard";
+import { GreekText } from "@/components/GreekText";
 import { CASE_SCHEME, SCHEME } from "@/constants/grammar-palette";
 import { CASE_ROLES, CASE_TRIGGERS } from "@/constants/recognition";
 
 import { BandHeading } from "./BandHeading";
-import { GreekText } from "@/components/GreekText";
 
 export const CasesSection: React.FC = () => {
 	const triggersByCase = CASE_ROLES.map((role) => ({
@@ -109,7 +109,12 @@ export const CasesSection: React.FC = () => {
 										</span>
 										<div className="flex flex-wrap gap-2">
 											{role.articles.map((article) => (
-												<GreekText tone="accent" size="sm" key={article} className={`inline-flex min-w-12 justify-center rounded-md px-2 py-1 ${style.badgeBg} ${style.text}`}>
+												<GreekText
+													tone="accent"
+													size="sm"
+													key={article}
+													className={`inline-flex min-w-12 justify-center rounded-md px-2 py-1 ${style.badgeBg} ${style.text}`}
+												>
 													{article}
 												</GreekText>
 											))}
@@ -145,7 +150,12 @@ export const CasesSection: React.FC = () => {
 												<p className="mt-0.5 mb-2 text-sm text-stone-600">{trigger.meaning}</p>
 												<div className="space-y-0.5">
 													{trigger.examples.map((example) => (
-														<GreekText tone="accent" size="sm" key={example} className={`block ${style.text}`}>
+														<GreekText
+															tone="accent"
+															size="sm"
+															key={example}
+															className={`block ${style.text}`}
+														>
 															{example}
 														</GreekText>
 													))}

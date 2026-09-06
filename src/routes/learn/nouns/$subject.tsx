@@ -13,16 +13,17 @@ import {
 	filterNouns,
 	isUnlevelled,
 } from "@/lib/noun-filters";
-import { getNounsWithFormsAndSubjects } from "@/server/db/queries/noun-browser";
-
 import { toNounRows } from "@/lib/noun-rows";
+import { getNounsWithFormsAndSubjects } from "@/server/db/queries/noun-browser";
 
 import { NounList, nounPairs, nounSubgroups } from "../components/noun-list";
 
 const subjectLoader = createServerFn()
 	.validator((slug: unknown) => String(slug))
 	.handler(async ({ data: slug }) => ({
-		group: groupNounsBySubject(await getNounsWithFormsAndSubjects()).find((g) => g.slug === slug) ?? null,
+		group:
+			groupNounsBySubject(await getNounsWithFormsAndSubjects()).find((g) => g.slug === slug) ??
+			null,
 	}));
 
 export const Route = createFileRoute("/learn/nouns/$subject")({

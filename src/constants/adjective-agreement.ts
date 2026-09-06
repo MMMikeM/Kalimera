@@ -7,7 +7,6 @@
 
 import type { AdjectiveDeclensionPattern } from "@/server/db/enums";
 
-
 export type Num = "singular" | "plural";
 import type { Gender, NominalCase as Case } from "@/server/db/enums";
 

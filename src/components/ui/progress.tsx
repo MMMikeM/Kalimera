@@ -1,6 +1,5 @@
-import { cn } from "tailwind-variants";
 import { Progress as ProgressPrimitive } from "@base-ui/react/progress";
-
+import { cn } from "tailwind-variants";
 
 function Progress({
 	className,

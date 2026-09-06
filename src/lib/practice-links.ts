@@ -20,10 +20,7 @@ export const DRILL_BY_TOPIC: Record<string, string> = {
  * `/reference` is public — so for a logged-out reader a drill link is worse
  * than no link, and register is the honest destination.
  */
-export const drillHrefForTopic = (
-	topic: string | undefined,
-	isAuthenticated: boolean,
-): string => {
+export const drillHrefForTopic = (topic: string | undefined, isAuthenticated: boolean): string => {
 	if (!isAuthenticated) return "/register";
 	return (topic && DRILL_BY_TOPIC[topic]) ?? "/practice";
 };

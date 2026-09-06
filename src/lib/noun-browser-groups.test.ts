@@ -41,7 +41,14 @@ describe("groupNounsBySubject", () => {
 	it("ignores tags outside the nouns section", () => {
 		const lessonTagged = row("σπίτι", "household", {
 			vocabularyTags: [
-				{ tag: { slug: "lesson-2024-04-22", name: "Lesson", section: null, sectionDisplayOrder: null } },
+				{
+					tag: {
+						slug: "lesson-2024-04-22",
+						name: "Lesson",
+						section: null,
+						sectionDisplayOrder: null,
+					},
+				},
 			],
 		});
 

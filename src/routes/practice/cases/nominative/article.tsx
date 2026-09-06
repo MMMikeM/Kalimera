@@ -71,7 +71,9 @@ function ArticleDoerDrill() {
 			subtitle="Nominative articles"
 			forwardDesc="Gender + number → article (Doer)"
 			reverseDesc="Article → recall gender + number (self-assess)"
-			configExtras={<Paradigm className="my-8 mb-12" columns={GENDER_COLUMNS} rows={PARADIGM_ROWS} />}
+			configExtras={
+				<Paradigm className="my-8 mb-12" columns={GENDER_COLUMNS} rows={PARADIGM_ROWS} />
+			}
 		/>
 	);
 }

@@ -1,7 +1,6 @@
-import { cn } from "tailwind-variants";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import type React from "react";
-
+import { cn } from "tailwind-variants";
 
 import {
 	FutureNaSection,

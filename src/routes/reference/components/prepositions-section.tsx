@@ -1,7 +1,8 @@
-import { cn } from "tailwind-variants";
 import type React from "react";
+import { cn } from "tailwind-variants";
 
 import { CollapsibleSection } from "@/components/CollapsibleSection";
+import { GreekText } from "@/components/GreekText";
 import { MistakeComparison } from "@/components/MistakeComparison";
 import { SectionHeading } from "@/components/SectionHeading";
 import { type GrammarScheme, SCHEME } from "@/constants/grammar-palette";
@@ -15,7 +16,6 @@ import {
 } from "@/constants/prepositions";
 
 import { PrepositionNavigator } from "./preposition-navigator";
-import { GreekText } from "@/components/GreekText";
 
 const CONTRACTION_GENDER_SCHEME: Record<string, GrammarScheme> = {
 	neuter: "gender-neuter",
@@ -107,7 +107,11 @@ const SeCard: React.FC = () => {
 					{SE_CONTRACTIONS.noArticle.examples.map((ex, i) => (
 						<span key={ex.greek}>
 							{i > 0 && ", "}
-							<GreekText tone="inherit" size="sm" className="rounded border border-stone-200 bg-white px-2 py-1 font-semibold text-stone-800 font-medium">
+							<GreekText
+								tone="inherit"
+								size="sm"
+								className="rounded border border-stone-200 bg-white px-2 py-1 font-medium font-semibold text-stone-800"
+							>
 								{ex.greek}
 							</GreekText>{" "}
 							<span className="text-stone-500">({ex.english})</span>

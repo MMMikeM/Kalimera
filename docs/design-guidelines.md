@@ -53,13 +53,13 @@ Research-backed design principles for effective language learning interfaces.
 
 ### Base Colours
 
-| Token | OKLCH Value | Use |
-| --- | --- | --- |
-| `cream` (`--color-cream` / `--color-cream-50`) | `oklch(0.98 0 78)` | Primary background |
+| Token                                                     | OKLCH Value           | Use                  |
+| --------------------------------------------------------- | --------------------- | -------------------- |
+| `cream` (`--color-cream` / `--color-cream-50`)            | `oklch(0.98 0 78)`    | Primary background   |
 | `cream-dark` (`--color-cream-dark` / `--color-cream-100`) | `oklch(0.94 0.01 82)` | Secondary background |
-| `foreground` (`--color-foreground`) | `oklch(0.22 0.01 56)` | Primary text |
-| `muted-foreground` (`--color-muted-foreground`) | `oklch(0.44 0.01 74)` | Secondary text |
-| `stone-warm` (`--color-stone-warm`) | `oklch(0.55 0.01 58)` | Neutral warm tone |
+| `foreground` (`--color-foreground`)                       | `oklch(0.22 0.01 56)` | Primary text         |
+| `muted-foreground` (`--color-muted-foreground`)           | `oklch(0.44 0.01 74)` | Secondary text       |
+| `stone-warm` (`--color-stone-warm`)                       | `oklch(0.55 0.01 58)` | Neutral warm tone    |
 
 ### Accent Colours (Decorative Only)
 
@@ -70,15 +70,15 @@ These colours fail WCAG AA for body text on light backgrounds. Use only for:
 - Large text (18px+ or 14px+ bold)
 - Interactive state indicators
 
-| Token | OKLCH Value | Contrast | Use |
-| --- | --- | --- | --- |
-| `terracotta` (`--color-terracotta`) | `oklch(0.61 0.13 42)` | ~3.9:1 | Primary actions, emphasis |
-| `sunset` (`--color-sunset`) | `oklch(0.58 0.13 355)` | ~4.1:1 | Feminine accents, deponent verbs |
-| `olive` (`--color-olive`) | `oklch(0.66 0.05 128)` | ~4.2:1 | Secondary accent, nature, connection |
-| `ocean` (`--color-ocean`) | `oklch(0.56 0.06 224)` | ~4.1:1 | Tertiary accent, stability, calm |
-| `honey` (`--color-honey`) | `oklch(0.76 0.12 82)` | ~3.2:1 | Highlights, hints, decision trees |
-| `navy` (`--color-navy`) | `oklch(0.44 0.07 257)` | ~5.8:1 | Headings, active verbs, scholarly |
-| `slate` (`--color-slate`) | `oklch(0.58 0.03 183)` | ~4.0:1 | Secondary accents, contracted verbs |
+| Token                               | OKLCH Value            | Contrast | Use                                  |
+| ----------------------------------- | ---------------------- | -------- | ------------------------------------ |
+| `terracotta` (`--color-terracotta`) | `oklch(0.61 0.13 42)`  | ~3.9:1   | Primary actions, emphasis            |
+| `sunset` (`--color-sunset`)         | `oklch(0.58 0.13 355)` | ~4.1:1   | Feminine accents, deponent verbs     |
+| `olive` (`--color-olive`)           | `oklch(0.66 0.05 128)` | ~4.2:1   | Secondary accent, nature, connection |
+| `ocean` (`--color-ocean`)           | `oklch(0.56 0.06 224)` | ~4.1:1   | Tertiary accent, stability, calm     |
+| `honey` (`--color-honey`)           | `oklch(0.76 0.12 82)`  | ~3.2:1   | Highlights, hints, decision trees    |
+| `navy` (`--color-navy`)             | `oklch(0.44 0.07 257)` | ~5.8:1   | Headings, active verbs, scholarly    |
+| `slate` (`--color-slate`)           | `oklch(0.58 0.03 183)` | ~4.0:1   | Secondary accents, contracted verbs  |
 
 ### Choosing a Tint for a Non-Grammatical Surface
 
@@ -94,12 +94,12 @@ they are separate tokens with separate jobs.
 **The ramps are not calibrated against each other.** Picking sibling tints at the same step
 number does not give you balanced weight:
 
-| Token | `-100` | `-200` |
-| --- | --- | --- |
+| Token   | `-100`                 | `-200`                 |
+| ------- | ---------------------- | ---------------------- |
 | `ocean` | `oklch(0.94 0.01 225)` | `oklch(0.88 0.03 224)` |
 | `olive` | `oklch(0.94 0.01 132)` | `oklch(0.88 0.03 131)` |
-| `cream` | `oklch(0.94 0.01 82)` | `oklch(0.88 0.03 75)` |
-| `honey` | `oklch(0.94 0.04 94)` | `oklch(0.88 0.07 92)` |
+| `cream` | `oklch(0.94 0.01 82)`  | `oklch(0.88 0.03 75)`  |
+| `honey` | `oklch(0.94 0.04 94)`  | `oklch(0.88 0.07 92)`  |
 
 `honey` carries roughly four times the chroma of the others at every step, so a set that
 mixes it with `ocean` and `olive` will pull the eye to the honey group. At the `-100` step
@@ -110,15 +110,15 @@ tints, match chroma — `ocean-200` / `olive-200` / `cream-200` is the tested tr
 
 Use these for any text content. Contrast ratios are calculated against cream backgrounds and tinted backgrounds (e.g. `bg-honey-100`, `bg-case-accusative-100`).
 
-| Token | OKLCH Value | On Cream | On Tinted BG |
-| --- | --- | --- | --- |
-| `terracotta-text` (`--color-terracotta-text`) | `oklch(0.31 0.05 40)` | 10:1+ | 10:1+ |
-| `sunset-text` (`--color-sunset-text`) | `oklch(0.31 0.05 358)` | 10:1+ | 10:1+ |
-| `olive-text` (`--color-olive-text`) | `oklch(0.31 0.05 131)` | 12:1+ | 12:1+ |
-| `ocean-text` (`--color-ocean-text`) | `oklch(0.31 0.05 223)` | 11:1+ | 11:1+ |
-| `honey-text` (`--color-honey-text`) | `oklch(0.34 0.07 81)` | 11:1+ | 11:1+ |
-| `navy-text` (`--color-navy-text`) | `oklch(0.31 0.05 255)` | 12:1+ | 12:1+ |
-| `slate-text` (`--color-slate-text`) | `oklch(0.31 0.05 182)` | 11:1+ | 11:1+ |
+| Token                                         | OKLCH Value            | On Cream | On Tinted BG |
+| --------------------------------------------- | ---------------------- | -------- | ------------ |
+| `terracotta-text` (`--color-terracotta-text`) | `oklch(0.31 0.05 40)`  | 10:1+    | 10:1+        |
+| `sunset-text` (`--color-sunset-text`)         | `oklch(0.31 0.05 358)` | 10:1+    | 10:1+        |
+| `olive-text` (`--color-olive-text`)           | `oklch(0.31 0.05 131)` | 12:1+    | 12:1+        |
+| `ocean-text` (`--color-ocean-text`)           | `oklch(0.31 0.05 223)` | 11:1+    | 11:1+        |
+| `honey-text` (`--color-honey-text`)           | `oklch(0.34 0.07 81)`  | 11:1+    | 11:1+        |
+| `navy-text` (`--color-navy-text`)             | `oklch(0.31 0.05 255)` | 12:1+    | 12:1+        |
+| `slate-text` (`--color-slate-text`)           | `oklch(0.31 0.05 182)` | 11:1+    | 11:1+        |
 
 **Critical:** These colours are intentionally calibrated to maintain AAA compliance on tinted backgrounds.
 
@@ -130,11 +130,11 @@ Use these for any text content. Contrast ratios are calculated against cream bac
 
 Each Greek case has a reserved role scale in `src/index.css` (`@theme static`, hues 223, 60, 127). Only Nominative, Accusative, and Genitive have role tokens; there is no vocative token. Learner labels (Doer, Target, Owner) are taught alongside grammatical names:
 
-| Case | Learner Label | Hue | Role Token Scale | Text Token (Verbatim OKLCH) | Rationale |
-| --- | --- | --- | --- | --- | --- |
-| Nominative | Doer | 223 | `--color-case-nominative-100..950` | `--color-case-nominative-text`: `oklch(0.34 0.06 223)` | Subject — stable, foundational |
-| Accusative | Target | 60 | `--color-case-accusative-100..950` | `--color-case-accusative-text`: `oklch(0.35 0.08 60)` | Direct object — action target |
-| Genitive | Owner | 127 | `--color-case-genitive-100..950` | `--color-case-genitive-text`: `oklch(0.34 0.09 127)` | Possession — connection, relation |
+| Case       | Learner Label | Hue | Role Token Scale                   | Text Token (Verbatim OKLCH)                            | Rationale                         |
+| ---------- | ------------- | --- | ---------------------------------- | ------------------------------------------------------ | --------------------------------- |
+| Nominative | Doer          | 223 | `--color-case-nominative-100..950` | `--color-case-nominative-text`: `oklch(0.34 0.06 223)` | Subject — stable, foundational    |
+| Accusative | Target        | 60  | `--color-case-accusative-100..950` | `--color-case-accusative-text`: `oklch(0.35 0.08 60)`  | Direct object — action target     |
+| Genitive   | Owner         | 127 | `--color-case-genitive-100..950`   | `--color-case-genitive-text`: `oklch(0.34 0.09 127)`   | Possession — connection, relation |
 
 **Application via `SCHEME` and `GrammarTable`:**
 
@@ -143,9 +143,9 @@ Grammar colour is applied via the `SCHEME` record in `src/constants/grammar-pale
 ```typescript
 // src/constants/grammar-palette.ts
 export const CASE_SCHEME: Record<CaseName, GrammarScheme> = {
- Nominative: "case-nominative",
- Accusative: "case-accusative",
- Genitive: "case-genitive",
+	Nominative: "case-nominative",
+	Accusative: "case-accusative",
+	Genitive: "case-genitive",
 };
 
 // "case-nominative": { bg: "bg-case-nominative-100", border: "border-case-nominative-300", badgeBg: "bg-case-nominative-400", text: "text-case-nominative-text" }
@@ -156,9 +156,9 @@ export const CASE_SCHEME: Record<CaseName, GrammarScheme> = {
 ```typescript
 // src/components/GrammarTable.tsx
 export const CASE_ROW_DEFS: RowDef[] = [
- { key: "nom", label: "Doer", sublabel: "Nominative", scheme: "case-nominative" },
- { key: "acc", label: "Target", sublabel: "Accusative", scheme: "case-accusative" },
- { key: "gen", label: "Owner", sublabel: "Genitive", scheme: "case-genitive" },
+	{ key: "nom", label: "Doer", sublabel: "Nominative", scheme: "case-nominative" },
+	{ key: "acc", label: "Target", sublabel: "Accusative", scheme: "case-accusative" },
+	{ key: "gen", label: "Owner", sublabel: "Genitive", scheme: "case-genitive" },
 ];
 ```
 
@@ -166,20 +166,20 @@ export const CASE_ROW_DEFS: RowDef[] = [
 
 Gender colours use reserved role tokens (`@theme static`, hues 268, 2, 171) applied through the `SCHEME` record:
 
-| Gender | Hue | Role Token Scale | Text Token (Verbatim OKLCH) |
-| --- | --- | --- | --- |
+| Gender    | Hue | Role Token Scale                    | Text Token (Verbatim OKLCH)                             |
+| --------- | --- | ----------------------------------- | ------------------------------------------------------- |
 | Masculine | 268 | `--color-gender-masculine-100..950` | `--color-gender-masculine-text`: `oklch(0.47 0.12 268)` |
-| Feminine | 2 | `--color-gender-feminine-100..950` | `--color-gender-feminine-text`: `oklch(0.49 0.18 2)` |
-| Neuter | 171 | `--color-gender-neuter-100..950` | `--color-gender-neuter-text`: `oklch(0.51 0.1 171)` |
+| Feminine  | 2   | `--color-gender-feminine-100..950`  | `--color-gender-feminine-text`: `oklch(0.49 0.18 2)`    |
+| Neuter    | 171 | `--color-gender-neuter-100..950`    | `--color-gender-neuter-text`: `oklch(0.51 0.1 171)`     |
 
 **Application via `SCHEME` and `GrammarTable`:**
 
 ```typescript
 // src/constants/grammar-palette.ts
 export const GENDER_SCHEME: Record<Gender, GrammarScheme> = {
- masculine: "gender-masculine",
- feminine: "gender-feminine",
- neuter: "gender-neuter",
+	masculine: "gender-masculine",
+	feminine: "gender-feminine",
+	neuter: "gender-neuter",
 };
 
 // "gender-masculine": { bg: "bg-gender-masculine-100", border: "border-gender-masculine-200", badgeBg: "bg-gender-masculine-300", text: "text-gender-masculine-text" }
@@ -190,9 +190,9 @@ export const GENDER_SCHEME: Record<Gender, GrammarScheme> = {
 ```typescript
 // src/components/GrammarTable.tsx
 export const GENDER_COLUMN_DEFS: ColumnDef[] = [
- { key: "masculine", label: "M", scheme: "gender-masculine" },
- { key: "feminine", label: "F", scheme: "gender-feminine" },
- { key: "neuter", label: "N", scheme: "gender-neuter" },
+	{ key: "masculine", label: "M", scheme: "gender-masculine" },
+	{ key: "feminine", label: "F", scheme: "gender-feminine" },
+	{ key: "neuter", label: "N", scheme: "gender-neuter" },
 ];
 ```
 
@@ -200,21 +200,21 @@ export const GENDER_COLUMN_DEFS: ColumnDef[] = [
 
 Verb schemes encode local structural axes that do not claim global grammatical role. They map to base palette colours chosen not to collide with case/gender role tokens:
 
-| Verb Scheme | Palette Key | Classes (`bg` / `border` / `badgeBg` / `text`) |
-| --- | --- | --- |
-| `verb-active` | Navy | `bg-navy-100`, `border-navy-300`, `bg-navy-300`, `text-navy-text` |
-| `verb-contracted` | Slate | `bg-slate-100`, `border-slate-300`, `bg-slate-300`, `text-slate-text` |
-| `verb-deponent` | Sunset | `bg-sunset-100`, `border-sunset-300`, `bg-sunset-300`, `text-sunset-text` |
+| Verb Scheme       | Palette Key | Classes (`bg` / `border` / `badgeBg` / `text`)                            |
+| ----------------- | ----------- | ------------------------------------------------------------------------- |
+| `verb-active`     | Navy        | `bg-navy-100`, `border-navy-300`, `bg-navy-300`, `text-navy-text`         |
+| `verb-contracted` | Slate       | `bg-slate-100`, `border-slate-300`, `bg-slate-300`, `text-slate-text`     |
+| `verb-deponent`   | Sunset      | `bg-sunset-100`, `border-sunset-300`, `bg-sunset-300`, `text-sunset-text` |
 
 ### Learning Feedback
 
 Feedback states use dedicated semantic tokens:
 
-| State | Role Token | OKLCH Value | Light / Background Token | OKLCH Value |
-| --- | --- | --- | --- | --- |
-| Correct | `--color-correct` | `oklch(0.63 0.17 149)` | `--color-correct-light` | `oklch(0.96 0.04 157)` |
-| Incorrect | `--color-incorrect` | `oklch(0.58 0.21 27)` | `--color-incorrect-light` | `oklch(0.94 0.03 18)` |
-| Hint | `--color-hint` | `var(--color-honey)` (`oklch(0.76 0.12 82)`) | `--color-hint-light` | `oklch(0.96 0.06 96)` |
+| State     | Role Token          | OKLCH Value                                  | Light / Background Token  | OKLCH Value            |
+| --------- | ------------------- | -------------------------------------------- | ------------------------- | ---------------------- |
+| Correct   | `--color-correct`   | `oklch(0.63 0.17 149)`                       | `--color-correct-light`   | `oklch(0.96 0.04 157)` |
+| Incorrect | `--color-incorrect` | `oklch(0.58 0.21 27)`                        | `--color-incorrect-light` | `oklch(0.94 0.03 18)`  |
+| Hint      | `--color-hint`      | `var(--color-honey)` (`oklch(0.76 0.12 82)`) | `--color-hint-light`      | `oklch(0.96 0.06 96)`  |
 
 Feedback states are applied using standard Tailwind utility classes (e.g. `text-correct`, `bg-correct-light`, `text-incorrect`, `bg-incorrect-light`, `text-hint`, `bg-hint-light`).
 
@@ -231,14 +231,14 @@ Feedback states are applied using standard Tailwind utility classes (e.g. `text-
 
 ### Usage
 
-| Context | Font | Size / Utility |
-| --- | --- | --- |
-| Page titles | Serif | 2.5–3rem (`font-serif`) |
-| Section headings | Serif / Sans | 1.5–2rem (`font-serif text-2xl` / `text-xl`) |
-| Body text | Sans | 1rem (`font-sans`) |
-| Greek vocabulary | Sans | `<GreekText size="…">` |
-| Paradigm tables | Sans | `<GreekText size="base">` in a `td` |
-| Captions / labels | Sans | 0.75–0.875rem (`text-xs` / `text-sm`) |
+| Context           | Font         | Size / Utility                               |
+| ----------------- | ------------ | -------------------------------------------- |
+| Page titles       | Serif        | 2.5–3rem (`font-serif`)                      |
+| Section headings  | Serif / Sans | 1.5–2rem (`font-serif text-2xl` / `text-xl`) |
+| Body text         | Sans         | 1rem (`font-sans`)                           |
+| Greek vocabulary  | Sans         | `<GreekText size="…">`                       |
+| Paradigm tables   | Sans         | `<GreekText size="base">` in a `td`          |
+| Captions / labels | Sans         | 0.75–0.875rem (`text-xs` / `text-sm`)        |
 
 ### Greek Text Helper
 
@@ -257,8 +257,8 @@ Definition in `src/index.css` (no size — `<GreekText>` carries the scale):
 
 ```css
 .greek-text {
- @apply leading-relaxed;
- letter-spacing: 0.01em;
+	@apply leading-relaxed;
+	letter-spacing: 0.01em;
 }
 ```
 
@@ -316,11 +316,7 @@ Level 5: Usage notes                          → Smallest, italic
 Use `SectionHeading` (`src/components/SectionHeading.tsx`) for consistent hierarchy:
 
 ```tsx
-<SectionHeading
- title="Cases"
- subtitle="The framework that explains why words change"
- level="h2"
-/>
+<SectionHeading title="Cases" subtitle="The framework that explains why words change" level="h2" />
 ```
 
 - Level variants:
@@ -335,14 +331,14 @@ Use `TeachingCard` (`src/components/cards/TeachingCard.tsx`) for prominent gramm
 
 ```tsx
 <TeachingCard
- scheme="case-accusative"
- eyebrow="Direct Object"
- title="Accusative Case"
- badge="Target"
- description="The direct recipient of an action."
- footer={<p className="text-xs text-stone-500">Always used after prepositions.</p>}
+	scheme="case-accusative"
+	eyebrow="Direct Object"
+	title="Accusative Case"
+	badge="Target"
+	description="The direct recipient of an action."
+	footer={<p className="text-xs text-stone-500">Always used after prepositions.</p>}
 >
- <p>Grammar content here...</p>
+	<p>Grammar content here...</p>
 </TeachingCard>
 ```
 
@@ -354,12 +350,8 @@ Use `TeachingCard` (`src/components/cards/TeachingCard.tsx`) for prominent gramm
 Use `Callout` (`src/components/cards/Callout.tsx`) for compact grammar notes and rules:
 
 ```tsx
-<Callout
- scheme="decision"
- title="Key Rule"
- footer="Applies to all regular nouns."
->
- All prepositions in modern Greek take the accusative case.
+<Callout scheme="decision" title="Key Rule" footer="Applies to all regular nouns.">
+	All prepositions in modern Greek take the accusative case.
 </Callout>
 ```
 
@@ -371,12 +363,8 @@ Use `Callout` (`src/components/cards/Callout.tsx`) for compact grammar notes and
 Use `CollapsibleSection` (`src/components/CollapsibleSection.tsx`) for progressive disclosure:
 
 ```tsx
-<CollapsibleSection
- title="Quick Spot-Check"
- colorScheme="honey"
- defaultOpen={true}
->
- Content here
+<CollapsibleSection title="Quick Spot-Check" colorScheme="honey" defaultOpen={true}>
+	Content here
 </CollapsibleSection>
 ```
 
@@ -390,16 +378,16 @@ Use `QuickTest` (`src/components/QuickTest.tsx`) for step-by-step learner self-t
 
 ```tsx
 <QuickTest
- title="Which preposition?"
- colorScheme="olive"
- options={[
-  {
-   answer: "σε / στο",
-   condition: "Location where something IS or going TO",
-   examples: [{ greek: "στο σπίτι", english: "at/to home" }],
-  },
- ]}
- summary="Remember that σε contracts with the definite article."
+	title="Which preposition?"
+	colorScheme="olive"
+	options={[
+		{
+			answer: "σε / στο",
+			condition: "Location where something IS or going TO",
+			examples: [{ greek: "στο σπίτι", english: "at/to home" }],
+		},
+	]}
+	summary="Remember that σε contracts with the definite article."
 />
 ```
 
@@ -412,15 +400,15 @@ Use `MistakeComparison` (`src/components/MistakeComparison.tsx`) for wrong vs co
 
 ```tsx
 <MistakeComparison
- mistakes={[
-  {
-   wrong: "με το φίλος",
-   correct: "με τον φίλο",
-   explanation: "Prepositions require the accusative case.",
-  },
- ]}
- title="Common Preposition Mistakes"
- layout="list"
+	mistakes={[
+		{
+			wrong: "με το φίλος",
+			correct: "με τον φίλο",
+			explanation: "Prepositions require the accusative case.",
+		},
+	]}
+	title="Common Preposition Mistakes"
+	layout="list"
 />
 ```
 
@@ -464,22 +452,22 @@ Tailwind's opacity modifier syntax (`text-honey-text/80`) reduces contrast:
 The `-text` colour variants are carefully calibrated to achieve 10:1+ contrast ratios on tinted backgrounds. Any opacity reduction (even `/90`) can drop below the 7:1 AAA threshold:
 
 | Original Contrast | With /80 | With /70 |
-| --- | --- | --- |
-| 10:1 | ~8:1 | ~7:1 |
-| 11:1 | ~9:1 | ~8:1 |
+| ----------------- | -------- | -------- |
+| 10:1              | ~8:1     | ~7:1     |
+| 11:1              | ~9:1     | ~8:1     |
 
 ### Rule: Never Use Opacity on `-text` Colours
 
 ```tsx
 // NEVER do this:
-text-honey-text/80
-text-ocean-text/70
-text-olive-text/90
+text - honey - text / 80;
+text - ocean - text / 70;
+text - olive - text / 90;
 
 // Always use full opacity:
-text-honey-text
-text-ocean-text
-text-olive-text
+text - honey - text;
+text - ocean - text;
+text - olive - text;
 ```
 
 ### When You Need Lighter Text
@@ -499,7 +487,7 @@ Opacity modifiers are fine for backgrounds since they do not affect text contras
 ```tsx
 // GOOD - background opacity doesn't affect text readability
 <div className="bg-honey-100">
- <p className="text-honey-text">Still readable</p>
+	<p className="text-honey-text">Still readable</p>
 </div>
 ```
 
@@ -519,31 +507,31 @@ Opacity modifiers are fine for backgrounds since they do not affect text contras
 
 ### Component-Level Colour Assignments
 
-| Element | Colour Token / Pattern | Rationale |
-| --- | --- | --- |
-| Section h2/h3/h4 headings | `text-navy-text` | Scholarly, hierarchical |
-| Subtitles / descriptions | `text-slate-text` | Subtle, supporting |
-| Teaching cards & Callouts | `SCHEME[scheme]` (`bg`, `border`, `badgeBg`, `text`) | Semantic grammar mapping |
-| Decision navigators & tests | `bg-honey-50`, `border-honey-300`, `text-honey-text` | Hints, warmth, navigation |
-| Feedback — Correct | `text-correct` / `bg-correct-light` | Unambiguous positive feedback |
-| Feedback — Incorrect | `text-incorrect` / `bg-incorrect-light` | Unambiguous error feedback |
-| Decorative icons | Base colour (e.g. `text-honey`, `text-terracotta`) | Visual accent only |
-| Text labels & inline badges | `-text` variant (e.g. `text-honey-text`, `text-terracotta-text`) | AAA compliance |
+| Element                     | Colour Token / Pattern                                           | Rationale                     |
+| --------------------------- | ---------------------------------------------------------------- | ----------------------------- |
+| Section h2/h3/h4 headings   | `text-navy-text`                                                 | Scholarly, hierarchical       |
+| Subtitles / descriptions    | `text-slate-text`                                                | Subtle, supporting            |
+| Teaching cards & Callouts   | `SCHEME[scheme]` (`bg`, `border`, `badgeBg`, `text`)             | Semantic grammar mapping      |
+| Decision navigators & tests | `bg-honey-50`, `border-honey-300`, `text-honey-text`             | Hints, warmth, navigation     |
+| Feedback — Correct          | `text-correct` / `bg-correct-light`                              | Unambiguous positive feedback |
+| Feedback — Incorrect        | `text-incorrect` / `bg-incorrect-light`                          | Unambiguous error feedback    |
+| Decorative icons            | Base colour (e.g. `text-honey`, `text-terracotta`)               | Visual accent only            |
+| Text labels & inline badges | `-text` variant (e.g. `text-honey-text`, `text-terracotta-text`) | AAA compliance                |
 
 ### Semantic Colour Mapping by Grammar Concept
 
-| Concept | Scheme / Token | Rationale |
-| --- | --- | --- |
-| Cases — Nominative (Doer) | `case-nominative` (`--color-case-nominative-*`, hue 223) | Subject — foundational, stable |
-| Cases — Accusative (Target) | `case-accusative` (`--color-case-accusative-*`, hue 60) | Direct object — action target |
-| Cases — Genitive (Owner) | `case-genitive` (`--color-case-genitive-*`, hue 127) | Possession — connection, relation |
-| Gender — Masculine | `gender-masculine` (`--color-gender-masculine-*`, hue 268) | Masculine nouns, articles, adjectives |
-| Gender — Feminine | `gender-feminine` (`--color-gender-feminine-*`, hue 2) | Feminine nouns, articles, adjectives |
-| Gender — Neuter | `gender-neuter` (`--color-gender-neuter-*`, hue 171) | Neuter nouns, articles, adjectives |
-| Verbs — Active (-ω) | `verb-active` (`--color-navy-*`) | Active voice paradigm |
-| Verbs — Contracted (-άω) | `verb-contracted` (`--color-slate-*`) | Contracted verb classes |
-| Verbs — Deponent (-μαι) | `verb-deponent` (`--color-sunset-*`) | Deponent / medio-passive verbs |
-| Decision / Navigation | `decision` (`--color-honey-*`) | Decision branching, heuristics |
+| Concept                     | Scheme / Token                                             | Rationale                             |
+| --------------------------- | ---------------------------------------------------------- | ------------------------------------- |
+| Cases — Nominative (Doer)   | `case-nominative` (`--color-case-nominative-*`, hue 223)   | Subject — foundational, stable        |
+| Cases — Accusative (Target) | `case-accusative` (`--color-case-accusative-*`, hue 60)    | Direct object — action target         |
+| Cases — Genitive (Owner)    | `case-genitive` (`--color-case-genitive-*`, hue 127)       | Possession — connection, relation     |
+| Gender — Masculine          | `gender-masculine` (`--color-gender-masculine-*`, hue 268) | Masculine nouns, articles, adjectives |
+| Gender — Feminine           | `gender-feminine` (`--color-gender-feminine-*`, hue 2)     | Feminine nouns, articles, adjectives  |
+| Gender — Neuter             | `gender-neuter` (`--color-gender-neuter-*`, hue 171)       | Neuter nouns, articles, adjectives    |
+| Verbs — Active (-ω)         | `verb-active` (`--color-navy-*`)                           | Active voice paradigm                 |
+| Verbs — Contracted (-άω)    | `verb-contracted` (`--color-slate-*`)                      | Contracted verb classes               |
+| Verbs — Deponent (-μαι)     | `verb-deponent` (`--color-sunset-*`)                       | Deponent / medio-passive verbs        |
+| Decision / Navigation       | `decision` (`--color-honey-*`)                             | Decision branching, heuristics        |
 
 ---
 

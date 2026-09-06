@@ -6,14 +6,14 @@ import type { ConversationMode } from "./DialogueExchange";
 
 const modeToggleVariants = tv({
 	slots: {
-		root: "flex items-center gap-1 p-1 bg-stone-100 rounded-lg sm:w-fit",
+		root: "flex items-center gap-1 rounded-lg bg-stone-100 p-1 sm:w-fit",
 		button:
-			"flex flex-1 sm:flex-none items-center justify-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all",
+			"flex flex-1 items-center justify-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-all sm:flex-none",
 	},
 	variants: {
 		active: {
 			true: { button: "bg-white text-stone-800 shadow-sm" },
-			false: { button: "text-stone-600 hover:text-stone-800 hover:bg-stone-50" },
+			false: { button: "text-stone-600 hover:bg-stone-50 hover:text-stone-800" },
 		},
 	},
 	defaultVariants: { active: false },

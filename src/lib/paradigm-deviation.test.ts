@@ -50,9 +50,7 @@ describe("deviatingPersons", () => {
 	});
 
 	it("ignores the θα particle when comparing future stems", () => {
-		expect(
-			deviatingPersons({ sg1: "θα πάω", sg2: "θα πας", sg3: "θα πάει" }),
-		).toEqual(["sg2"]);
+		expect(deviatingPersons({ sg1: "θα πάω", sg2: "θα πας", sg3: "θα πάει" })).toEqual(["sg2"]);
 	});
 
 	it("returns nothing without an sg1 anchor", () => {

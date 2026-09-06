@@ -5,8 +5,6 @@ import { fileURLToPath } from "node:url";
 
 import type { Lesson } from "@/types/lesson-seed";
 
-import { subjectTagsFor } from "../noun-subjects";
-
 import {
 	type VocabWithTags,
 	nounDetailFromSeed,
@@ -16,6 +14,7 @@ import {
 } from "../../../seed-pipeline";
 import { enrichAdjective } from "../adjective-seed-enrichment";
 import { enrichNoun } from "../noun-seed-enrichment";
+import { subjectTagsFor } from "../noun-subjects";
 
 const _require = createRequire(import.meta.url);
 const _dir = dirname(fileURLToPath(import.meta.url));

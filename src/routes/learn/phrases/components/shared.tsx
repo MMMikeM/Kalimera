@@ -1,8 +1,9 @@
 import { cn } from "tailwind-variants";
+
 import { type ContentColorScheme, ContentSection } from "@/components/ContentSection";
+import { GreekText } from "@/components/GreekText";
 
 import type { PhraseItem, PhrasesLoaderData } from "../$tab";
-import { GreekText } from "@/components/GreekText";
 
 export type { PhraseItem, PhrasesLoaderData };
 

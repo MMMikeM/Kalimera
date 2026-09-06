@@ -1,18 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { NUMBER_COLUMNS, Paradigm, type ParadigmRow } from "../components/paradigm";
+import type { Gender } from "@/server/db/enums";
 
-import {
-	GENDER_CHIP,
-	HERO_TEXT,
-	NUMBER_CHIP,
-	PERSON_CHIP,
-} from "../components/engines/chip-specs";
+import { GENDER_CHIP, HERO_TEXT, NUMBER_CHIP, PERSON_CHIP } from "../components/engines/chip-specs";
 import type { DrillForm } from "../components/engines/deck";
 import { Drill, type DimensionSpec } from "../components/engines/drill";
 import { GENDER_STYLE, PERSON_LABELS } from "../components/engines/drill-constants";
 import { ForwardPromptCard } from "../components/engines/forward-prompt-card";
-import type { Gender } from "@/server/db/enums";
+import { NUMBER_COLUMNS, Paradigm, type ParadigmRow } from "../components/paradigm";
 
 type Person = "first" | "second" | "third";
 type Num = "singular" | "plural";
@@ -130,9 +125,7 @@ const PARADIGM_ROWS: ParadigmRow[] = [
 	{ label: "3rd neuter", forms: ["το", "τα"] },
 ];
 
-const PronounParadigm = () => (
-	<Paradigm columns={NUMBER_COLUMNS} rows={PARADIGM_ROWS} />
-);
+const PronounParadigm = () => <Paradigm columns={NUMBER_COLUMNS} rows={PARADIGM_ROWS} />;
 
 const DIMENSIONS: DimensionSpec<DimKey>[] = [
 	{

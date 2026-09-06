@@ -18,7 +18,6 @@ import type { Gender, NominalCase as Case } from "@/server/db/enums";
 
 export type { Gender, NominalCase as Case } from "@/server/db/enums";
 
-
 type Num = "singular" | "plural";
 type Person = "first" | "second" | "third";
 

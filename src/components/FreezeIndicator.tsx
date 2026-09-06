@@ -1,6 +1,5 @@
 import { ShieldCheck, Snowflake } from "lucide-react";
-import {cn, tv } from "tailwind-variants";
-
+import { cn, tv } from "tailwind-variants";
 
 type FreezeStatus = "available" | "recovering" | "none" | "just_used";
 

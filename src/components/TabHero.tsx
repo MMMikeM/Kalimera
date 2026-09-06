@@ -1,11 +1,11 @@
-import { cn } from "tailwind-variants";
 import { Lightbulb } from "lucide-react";
 import type { ReactNode } from "react";
+import { cn } from "tailwind-variants";
 
+import { GreekText } from "@/components/GreekText";
 import { type ColorScheme, colorStyles } from "@/lib/colors";
 
 import { Card } from "./Card";
-import { GreekText } from "@/components/GreekText";
 
 /**
  * Enforces a maximum character length on string literals at compile time.
