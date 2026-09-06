@@ -2,25 +2,15 @@ import { useState } from "react";
 import type React from "react";
 
 import { GreekText } from "@/components/GreekText";
+import { GENDER_ROW_BORDER, caseScheme, genderScheme } from "@/constants/grammar-palette";
 import { getArticle } from "@/lib/greek-grammar";
 import type { BrowsableNoun, NounGender } from "@/lib/noun-browser-groups";
+import type { NominalCase } from "@/server/db/enums";
 
 const GENDER_STYLES: Record<NounGender, { text: string; bg: string; border: string }> = {
-	masculine: {
-		text: "text-gender-masculine-text",
-		bg: "bg-gender-masculine-100",
-		border: "border-gender-masculine-500",
-	},
-	feminine: {
-		text: "text-gender-feminine-text",
-		bg: "bg-gender-feminine-100",
-		border: "border-gender-feminine-500",
-	},
-	neuter: {
-		text: "text-gender-neuter-text",
-		bg: "bg-gender-neuter-100",
-		border: "border-gender-neuter-500",
-	},
+	masculine: { ...genderScheme("masculine"), border: GENDER_ROW_BORDER.masculine },
+	feminine: { ...genderScheme("feminine"), border: GENDER_ROW_BORDER.feminine },
+	neuter: { ...genderScheme("neuter"), border: GENDER_ROW_BORDER.neuter },
 };
 
 /** Longer endings first, so -μα matches before -α. */
@@ -51,10 +41,10 @@ const splitEnding = (lemma: string): { stem: string; ending: string } => {
 };
 
 const CASE_ROWS = [
-	{ key: "nominative", handle: "Doer", grammar: "Nominative", scheme: "text-ocean-text" },
-	{ key: "accusative", handle: "Target", grammar: "Accusative", scheme: "text-terracotta-text" },
-	{ key: "genitive", handle: "Owner", grammar: "Genitive", scheme: "text-olive-text" },
-] as const;
+	{ key: "nominative", handle: "Doer", grammar: "Nominative" },
+	{ key: "accusative", handle: "Target", grammar: "Accusative" },
+	{ key: "genitive", handle: "Owner", grammar: "Genitive" },
+] as const satisfies readonly { key: NominalCase; handle: string; grammar: string }[];
 
 const cell = (noun: BrowsableNoun, caseKey: string, number: "singular" | "plural") => {
 	const stored = noun.forms[`${caseKey}_${number}`];
@@ -83,7 +73,9 @@ const NounParadigm: React.FC<{ noun: BrowsableNoun }> = ({ noun }) => (
 				if (!singular && !plural) return null;
 				return (
 					<tr key={row.key} className="border-t border-stone-200/60">
-						<td className={`py-1.5 pr-3 align-baseline text-xs font-semibold ${row.scheme}`}>
+						<td
+							className={`py-1.5 pr-3 align-baseline text-xs font-semibold ${caseScheme(row.key).text}`}
+						>
 							<span className="block leading-tight">{row.handle}</span>
 							<span className="block text-xs font-normal opacity-70">{row.grammar}</span>
 						</td>

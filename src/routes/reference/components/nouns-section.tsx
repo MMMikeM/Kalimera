@@ -4,6 +4,7 @@ import { NextStepCard } from "@/components/cards/NextStepCard";
 import { TeachingCard } from "@/components/cards/TeachingCard";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
 import {
+	CASE_ROW_BY_KEY,
 	CASE_ROW_DEFS,
 	type ColumnDef,
 	GrammarTable,
@@ -56,15 +57,6 @@ const GENDER_HINTS: Record<Gender, { endings: string; hint: string }> = {
 	masculine: { endings: endingsFor("masculine"), hint: "Male people, -ος words" },
 	feminine: { endings: endingsFor("feminine"), hint: "Female people, αγάπη / ζωή" },
 	neuter: { endings: endingsFor("neuter"), hint: "Diminutives, result nouns" },
-};
-
-const CASE_META: Record<
-	RoleCase,
-	{ handle: string; greek: string; scheme: "case-nominative" | "case-accusative" | "case-genitive" }
-> = {
-	nom: { handle: "Doer", greek: "Nominative", scheme: "case-nominative" },
-	acc: { handle: "Target", greek: "Accusative", scheme: "case-accusative" },
-	gen: { handle: "Owner", greek: "Genitive", scheme: "case-genitive" },
 };
 
 const getParadigms = (ids: readonly string[]): AgreementParadigm[] =>
@@ -181,7 +173,7 @@ const CaseGuide = () => {
 		>
 			<div className="space-y-3">
 				{ROLE_CASES.map((caseKey) => {
-					const meta = CASE_META[caseKey];
+					const meta = CASE_ROW_BY_KEY[caseKey];
 					const style = SCHEME[meta.scheme];
 					const frame = frames[caseKey];
 					return (
@@ -189,8 +181,8 @@ const CaseGuide = () => {
 							<span
 								className={`shrink-0 rounded px-2 py-1 text-xs font-semibold ${style.bg} ${style.text}`}
 							>
-								<span className="block leading-tight">{meta.handle}</span>
-								<span className="block text-xs font-normal opacity-70">{meta.greek}</span>
+								<span className="block leading-tight">{meta.label}</span>
+								<span className="block text-xs font-normal opacity-70">{meta.sublabel}</span>
 							</span>
 							<div>
 								<span className="text-sm font-medium">{CASE_QUESTIONS[caseKey]}</span>
