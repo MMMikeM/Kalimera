@@ -1,10 +1,11 @@
 import { AGREEMENT_PARADIGMS } from "@/constants/agreement";
+import type { NominalCase } from "@/server/db/enums";
 import type { NounDeclensionPattern } from "@/server/db/enums";
 
 import { retainsNu } from "./greek-grammar";
 import { typedKeys } from "./object";
 
-type Case = "nominative" | "accusative" | "genitive";
+type Case = NominalCase;
 type Number = "singular" | "plural";
 
 interface DeclinedForm {
