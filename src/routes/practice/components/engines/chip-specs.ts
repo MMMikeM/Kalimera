@@ -21,15 +21,7 @@ export type { Gender, NominalCase as Case } from "@/server/db/enums";
 type Num = "singular" | "plural";
 type Person = "first" | "second" | "third";
 
-/**
- * Case and gender colours come from the reserved role tokens, never from a
- * colour picked here. This file used to carry its own mapping — case to
- * ocean/terracotta/olive and gender to navy/sunset/slate — which put the same
- * navy on "masculine" in a drill and on "active verb" in the reference.
- *
- * Number and person are not global grammar axes and make no claim, so they
- * stay neutral.
- */
+/** Number and person are not global grammar axes, so they stay neutral. */
 const caseScheme = (c: Case) => SCHEME[`case-${c}`];
 const genderScheme = (g: Gender) => SCHEME[`gender-${g}`];
 

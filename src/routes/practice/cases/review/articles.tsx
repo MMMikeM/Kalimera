@@ -5,7 +5,6 @@ import type { Gender, NominalCase } from "@/server/db/enums";
 import {
 	CASE_BAR,
 	CASE_CHIP,
-	type Case,
 	GENDER_CHIP,
 	HERO_TEXT,
 	NUMBER_CHIP,
@@ -20,7 +19,7 @@ type Num = "singular" | "plural";
 
 type DimKey = "case" | "gender" | "number";
 
-interface Article extends DrillForm, Record<DimKey, string> {
+interface Article extends DrillForm {
 	case: NominalCase;
 	gender: Gender;
 	number: Num;
@@ -219,7 +218,7 @@ export const Route = createFileRoute("/practice/cases/review/articles")({
 
 function ArticlesDrill() {
 	return (
-		<Drill<DimKey>
+		<Drill<DimKey, Article>
 			drillId="articles-paradigm"
 			subtitle="18 forms / timed"
 			colorTheme="honey"
@@ -229,27 +228,26 @@ function ArticlesDrill() {
 			reverse={{ kind: "multi-select", dimensions: DIMENSIONS }}
 			configExtras={<ArticleParadigm />}
 			forwardPrompt={(form) => {
-				const f = form as (typeof ARTICLES)[number];
-				const gender = GENDER_CHIP[f.gender as Gender];
-				const number = NUMBER_CHIP[f.number as keyof typeof NUMBER_CHIP];
-				const caseSpec = CASE_CHIP[f.case as Case];
+				const gender = GENDER_CHIP[form.gender];
+				const number = NUMBER_CHIP[form.number];
+				const caseSpec = CASE_CHIP[form.case];
 				return (
 					<ForwardPromptCard
 						facets={[
 							{
 								icon: gender.icon,
 								label: gender.longLabel,
-								colorText: HERO_TEXT.gender[f.gender as Gender],
+								colorText: HERO_TEXT.gender[form.gender],
 							},
 							{
 								icon: number.icon,
 								label: number.longLabel,
-								colorText: HERO_TEXT.number[f.number as keyof typeof HERO_TEXT.number],
+								colorText: HERO_TEXT.number[form.number],
 							},
 							{
 								icon: caseSpec.icon,
 								label: caseSpec.longLabel,
-								colorText: HERO_TEXT.case[f.case as Case],
+								colorText: HERO_TEXT.case[form.case],
 							},
 						]}
 					/>

@@ -13,7 +13,7 @@ type Person = "first" | "second" | "third";
 type Num = "singular" | "plural";
 type DimKey = "person" | "number" | "gender";
 
-interface ObjectPronoun extends DrillForm, Record<DimKey, string> {
+interface ObjectPronoun extends DrillForm {
 	person: Person;
 	number: Num;
 	gender: Gender | "";
@@ -157,7 +157,7 @@ export const Route = createFileRoute("/practice/pronouns/object")({
 
 function PronounsDrill() {
 	return (
-		<Drill<DimKey>
+		<Drill<DimKey, ObjectPronoun>
 			drillId="pronouns-object"
 			subtitle="10 forms / timed"
 			colorTheme="terracotta"
@@ -168,28 +168,27 @@ function PronounsDrill() {
 			configExtras={<PronounParadigm />}
 			sessionSize={10}
 			forwardPrompt={(form) => {
-				const f = form as (typeof PRONOUNS)[number];
-				const english = ENGLISH[f.id] ?? "";
-				const person = PERSON_CHIP[f.person as Person];
-				const number = NUMBER_CHIP[f.number as keyof typeof NUMBER_CHIP];
-				const gender = f.gender ? GENDER_CHIP[f.gender as Gender] : null;
+				const english = ENGLISH[form.id] ?? "";
+				const person = PERSON_CHIP[form.person];
+				const number = NUMBER_CHIP[form.number];
+				const gender = form.gender ? GENDER_CHIP[form.gender] : null;
 				const facets = [
 					{
 						icon: person.icon,
 						label: person.longLabel,
-						colorText: HERO_TEXT.person[f.person as Person],
+						colorText: HERO_TEXT.person[form.person],
 					},
 					{
 						icon: number.icon,
 						label: number.longLabel,
-						colorText: HERO_TEXT.number[f.number as keyof typeof HERO_TEXT.number],
+						colorText: HERO_TEXT.number[form.number],
 					},
 				];
-				if (gender && f.gender) {
+				if (gender && form.gender) {
 					facets.push({
 						icon: gender.icon,
 						label: gender.longLabel,
-						colorText: HERO_TEXT.gender[f.gender as Gender],
+						colorText: HERO_TEXT.gender[form.gender],
 					});
 				}
 				return <ForwardPromptCard facets={facets} gloss={`"${english}"`} />;

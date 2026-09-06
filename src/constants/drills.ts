@@ -12,16 +12,9 @@ export type DrillCategory =
 export type CaseRole = "doer" | "target" | "owner" | "mixed" | null;
 
 /**
- * One drill, named once.
- *
- * The drill screen, its group's index page and the review queue all read this
- * entry. They used to each carry their own copy: 23 of 39 registry labels
- * disagreed with the drill's own title, 14 index titles disagreed again, and
- * nine drills were absent from the registry altogether, which silently dropped
- * them from review. A drill has one name because it has one entry.
- *
- * Entries live with the group they belong to (`practice/<group>/drills.data.ts`).
- * `drill-catalogue.data.ts` derives the by-id lookup from those owners.
+ * One drill, named once — the drill screen, its group's index and the review
+ * queue all read this entry. Entries live with their group in
+ * `practice/<group>/drills.data.ts`; `drill-catalogue.data.ts` derives the lookup.
  */
 export interface DrillEntry {
 	/** Matches the `drillId` the route passes to `<Drill>`; the key attempts are recorded under. */

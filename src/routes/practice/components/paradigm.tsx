@@ -9,17 +9,7 @@ import {
 import { GreekText } from "@/components/GreekText";
 import type { GrammarScheme } from "@/constants/grammar-palette";
 
-/**
- * The paradigm grid the drills show above a session: a row label, then one
- * Greek form per column.
- *
- * It exists because this table had been written out by hand five times — the
- * article drills, the article review, the question-word drills, and inline in
- * both pronoun drills — each copy repeating the same markup and each drifting
- * its own way. Four of the five shipped an unlabelled corner `<th>`; one had
- * been fixed. Three coloured the gender headings navy/sunset/slate instead of
- * with the reserved gender tokens.
- */
+/** A row label, then one Greek form per column. */
 export interface ParadigmRow {
 	label: string;
 	forms: readonly string[];
