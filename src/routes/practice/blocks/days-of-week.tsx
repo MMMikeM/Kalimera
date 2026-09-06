@@ -120,7 +120,6 @@ function DaysOfWeekDrill() {
 		<Drill
 			drillId="blocks-days-of-week"
 			items={DAYS}
-			title="Days & Time"
 			subtitle="14 forms / timed"
 			colorTheme="olive"
 			backTo="/practice/blocks"

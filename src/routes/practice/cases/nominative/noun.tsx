@@ -36,7 +36,6 @@ function NounGendersDrill() {
 			backTo={"/practice/cases/"}
 			drillId="nominative-nouns"
 			items={items}
-			title="Nominative Nouns"
 			subtitle={`Basic noun vocabulary practice`}
 			colorTheme="honey"
 			forwardDesc="English → article + noun (e.g. το σπίτι)"

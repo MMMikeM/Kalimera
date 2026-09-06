@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { tv } from "tailwind-variants";
+import { type VariantProps, tv } from "tailwind-variants";
 
 /**
  * The single component for rendering Greek script.
@@ -42,12 +42,13 @@ const greekTextVariants = tv({
 			masculine: "font-semibold text-gender-masculine",
 			feminine: "font-semibold text-gender-feminine",
 			neuter: "font-semibold text-gender-neuter",
-			// Case is the other global axis. Ocean = doer, terracotta = target,
-			// olive = owner, honey = address.
-			nominative: "font-semibold text-ocean-text",
-			accusative: "font-semibold text-terracotta-text",
-			genitive: "font-semibold text-olive-text",
-			vocative: "font-semibold text-honey-text",
+			// Case is the other global axis, and takes the reserved case tokens for
+			// the same reason. It used to take ocean/terracotta/olive, which meant a
+			// paradigm table drew its border in case-accusative and the Greek inside
+			// it in terracotta: two colours claiming one grammatical fact.
+			nominative: "font-semibold text-case-nominative",
+			accusative: "font-semibold text-case-accusative",
+			genitive: "font-semibold text-case-genitive",
 			// For call sites that carry their own colour in `className`
 			inherit: "",
 		},
@@ -67,24 +68,9 @@ const greekTextVariants = tv({
 
 type GreekElement = "span" | "p" | "td" | "th" | "div";
 
-interface GreekTextProps extends React.HTMLAttributes<HTMLElement> {
+interface GreekTextProps
+	extends React.HTMLAttributes<HTMLElement>, VariantProps<typeof greekTextVariants> {
 	as?: GreekElement;
-	size?: "xs" | "sm" | "base" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl" | "8xl";
-	tone?:
-		| "default"
-		| "muted"
-		| "accent"
-		| "correct"
-		| "incorrect"
-		| "masculine"
-		| "feminine"
-		| "neuter"
-		| "nominative"
-		| "accusative"
-		| "genitive"
-		| "vocative"
-		| "inherit";
-	weight?: "normal" | "medium" | "semibold" | "bold";
 	children: ReactNode;
 }
 

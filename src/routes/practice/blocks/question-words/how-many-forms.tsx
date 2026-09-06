@@ -1,11 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { GreekText } from "@/components/GreekText";
 
 import type { SimpleListItem } from "../../components/engines/deck";
 import { Drill } from "../../components/engines/drill";
-
 import { QuestionWordParadigm } from "./components/paradigm";
-import { GreekText } from "@/components/GreekText";
 
 const item = (
 	id: string,
@@ -49,14 +48,8 @@ const PARADIGM = [
 
 const Paradigm = () => (
 	<QuestionWordParadigm caption="πόσος agrees" columns={PARADIGM_COLUMNS} rows={PARADIGM}>
-		On its own,{" "}
-		<GreekText size="sm">
-			πόσο
-		</GreekText>{" "}
-		asks price or degree —{" "}
-		<GreekText size="sm">
-			πόσο κάνει;
-		</GreekText>
+		On its own, <GreekText size="sm">πόσο</GreekText> asks price or degree —{" "}
+		<GreekText size="sm">πόσο κάνει;</GreekText>
 	</QuestionWordParadigm>
 );
 
@@ -69,7 +62,6 @@ function HowManyFormsDrill() {
 		<Drill
 			drillId="blocks-qw-how-many-forms"
 			items={HOW_MANY_FORMS}
-			title="How much — forms"
 			subtitle={`${HOW_MANY_FORMS.length} forms / timed`}
 			colorTheme="terracotta"
 			backTo="/practice/blocks/question-words/"

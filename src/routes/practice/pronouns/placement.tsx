@@ -12,7 +12,6 @@ function CliticPlacementDrill() {
 		<Drill
 			drillId="pronouns-placement"
 			items={PLACEMENTS}
-			title="Pronoun placement"
 			subtitle="17 sentences / timed"
 			sessionSize={20}
 			colorTheme="terracotta"

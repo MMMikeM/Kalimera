@@ -1,12 +1,11 @@
 import { useMemo } from "react";
 
-import { CATEGORY_CONFIG, type DrillQuestion } from "@/lib/drill/generate-questions";
+import type { DrillQuestion } from "@/lib/drill/generate-questions";
 
 import type { DrillForm } from "./deck";
 import { Drill, type ReverseStrategy } from "./drill";
 
 interface VocabDrillPageProps {
-	category: keyof typeof CATEGORY_CONFIG;
 	drillId: string;
 	backTo?: string;
 	questions: DrillQuestion[];
@@ -29,7 +28,6 @@ const toForm = (q: DrillQuestion): DrillForm & { dimension?: string } => ({
 });
 
 export function VocabDrillPage({
-	category,
 	drillId,
 	backTo,
 	questions,
@@ -43,13 +41,11 @@ export function VocabDrillPage({
 }: VocabDrillPageProps) {
 	const items = useMemo(() => questions.map(toForm), [questions]);
 
-	const categoryConfig = CATEGORY_CONFIG[category];
-
 	return (
 		<Drill
 			drillId={drillId}
 			items={items}
-			title={title ?? `${categoryConfig.label} drill`}
+			title={title}
 			subtitle={subtitle ?? "Rapid-fire production"}
 			colorTheme="terracotta"
 			sessionSize={20}

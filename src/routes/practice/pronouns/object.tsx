@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { GreekText } from "@/components/GreekText";
+
 import {
 	type Gender as ChipGender,
 	GENDER_CHIP,
@@ -11,7 +13,6 @@ import type { DrillForm } from "../components/engines/deck";
 import { Drill, type DimensionSpec } from "../components/engines/drill";
 import { GENDER_STYLE, PERSON_LABELS } from "../components/engines/drill-constants";
 import { ForwardPromptCard } from "../components/engines/forward-prompt-card";
-import { GreekText } from "@/components/GreekText";
 
 type Person = "first" | "second" | "third";
 type Gender = "masculine" | "feminine" | "neuter";
@@ -192,7 +193,6 @@ function PronounsDrill() {
 	return (
 		<Drill<DimKey>
 			drillId="pronouns-object"
-			title="Object Pronouns"
 			subtitle="10 forms / timed"
 			colorTheme="terracotta"
 			forwardDesc="e.g. he sees me → με"

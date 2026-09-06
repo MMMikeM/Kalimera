@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { ChevronRight, Play } from "lucide-react";
 
-import { DRILL_REGISTRY } from "@/constants/drills";
+import { DRILL_REGISTRY } from "@/routes/practice/drill-catalogue.data";
 import type { DrillRust } from "@/server/db/queries/analytics/drill-stats";
 
 const MAX_SHOWN = 3;
@@ -41,11 +41,11 @@ export const PracticeCTA = ({ rustyDrills }: { rustyDrills: DrillRust[] }) => {
 						return (
 							<Link
 								key={drill.drillId}
-								to={meta.route}
+								to={meta.to}
 								className="flex items-center justify-between rounded-xl bg-white/70 px-4 py-3 transition-colors hover:bg-white/90"
 							>
 								<div>
-									<p className="text-sm font-medium text-stone-800">{meta.label}</p>
+									<p className="text-sm font-medium text-stone-800">{meta.title}</p>
 									<p className={`text-xs ${rustColor(drill.rustScore)}`}>
 										{rustLabel(drill.rustScore)}
 										{drill.daysSince >= 1 ? ` · ${Math.floor(drill.daysSince)}d ago` : " · today"}

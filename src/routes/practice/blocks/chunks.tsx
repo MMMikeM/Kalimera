@@ -168,7 +168,6 @@ function ChunksDrill() {
 		<Drill
 			drillId="blocks-chunks"
 			items={CHUNKS}
-			title="Survival Phrases"
 			subtitle="24 phrases / timed"
 			colorTheme="honey"
 			backTo="/practice/blocks"

@@ -1,27 +1,19 @@
 import { type ColumnDef, GrammarTable, type RowDef } from "@/components/GrammarTable";
-import { CASE_SCHEME } from "@/constants/grammar-palette";
+import { GreekText } from "@/components/GreekText";
+import { CASE_SCHEME, type GrammarScheme } from "@/constants/grammar-palette";
 import type { PronounForm, PronounParadigm } from "@/constants/pronouns";
 import type { CaseName } from "@/constants/recognition";
-import { GreekText } from "@/components/GreekText";
+
+/** `case-nominative` → the GreekText tone of the same name. */
+type CaseVariant = "nominative" | "accusative" | "genitive";
+const toneOf = (scheme: GrammarScheme): CaseVariant => scheme.replace("case-", "") as CaseVariant;
 
 const PRONOUN_COLUMNS: ColumnDef[] = [
 	{ key: "singular", label: "Singular" },
 	{ key: "plural", label: "Plural" },
 ];
 
-const CASE_TO_VARIANT: Record<CaseName, "nominative" | "accusative" | "genitive"> = {
-	Nominative: "nominative",
-	Accusative: "accusative",
-	Genitive: "genitive",
-};
-
-const PronounCell = ({
-	form,
-	variant,
-}: {
-	form: PronounForm;
-	variant: "nominative" | "accusative" | "genitive" | "accent";
-}) => (
+const PronounCell = ({ form, variant }: { form: PronounForm; variant: CaseVariant | "accent" }) => (
 	<div className="flex flex-col gap-0.5">
 		<GreekText tone={variant} size="sm">
 			{form.greek}
@@ -41,7 +33,7 @@ interface PronounParadigmTableProps {
 
 export const PronounParadigmTable = ({ data, caseName, note }: PronounParadigmTableProps) => {
 	const scheme = caseName ? CASE_SCHEME[caseName] : undefined;
-	const variant = caseName ? CASE_TO_VARIANT[caseName] : "accent";
+	const variant = scheme ? toneOf(scheme) : "accent";
 
 	const rows: RowDef[] = data.map((row) => ({
 		key: row.person,

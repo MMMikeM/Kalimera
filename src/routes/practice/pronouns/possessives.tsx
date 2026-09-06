@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { GreekText } from "@/components/GreekText";
+
 import {
 	type Gender as ChipGender,
 	GENDER_CHIP,
@@ -11,7 +13,6 @@ import type { DrillForm } from "../components/engines/deck";
 import { Drill, type DimensionSpec } from "../components/engines/drill";
 import { GENDER_STYLE, PERSON_LABELS } from "../components/engines/drill-constants";
 import { ForwardPromptCard } from "../components/engines/forward-prompt-card";
-import { GreekText } from "@/components/GreekText";
 
 type Person = "first" | "second" | "third";
 type Gender = "masculine" | "feminine" | "neuter";
@@ -172,7 +173,6 @@ function PossessivesDrill() {
 	return (
 		<Drill<DimKey>
 			drillId="pronouns-possessives"
-			title="Possessive Pronouns"
 			subtitle="8 forms / timed"
 			colorTheme="olive"
 			forwardDesc="e.g. my → μου"

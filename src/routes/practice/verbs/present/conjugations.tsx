@@ -395,7 +395,6 @@ function ConjugationEndingsDrill() {
 			drillId="verbs-conjugation-endings"
 			items={ENDINGS}
 			backTo="/practice/verbs"
-			title="Conjugation endings"
 			subtitle="42 forms / timed"
 			colorTheme="olive"
 			forwardDesc="Pronoun + paradigm → ending"
