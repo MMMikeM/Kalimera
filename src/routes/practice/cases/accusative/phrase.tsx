@@ -248,7 +248,6 @@ function PhraseTargetDrill() {
 			drillId="nominal-phrase-target"
 			items={PHRASES}
 			subtitle="30 noun phrases / timed"
-			colorTheme="terracotta"
 			forwardDesc="English → article + adjective + noun (Target form)"
 			reverseLabel="Greek → gender"
 			reverseDesc="Phrase → select gender"

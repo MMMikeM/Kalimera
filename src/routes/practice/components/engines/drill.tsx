@@ -3,7 +3,8 @@ import { useEffect, useRef, useState } from "react";
 
 import { GreekText } from "@/components/GreekText";
 import { matchPhonetic } from "@/lib/greek-transliteration";
-import { drillTitle } from "@/routes/practice/drill-catalogue.data";
+import { SCHEME } from "@/constants/grammar-palette";
+import { DRILL_REGISTRY, drillTitle } from "@/routes/practice/drill-catalogue.data";
 import { startSessionFn, recordAttemptFn, completeSessionFn } from "@/server/fns/srs";
 
 import { type DrillForm, type DrillMode, type SessionSize } from "./deck";
@@ -52,7 +53,11 @@ const SESSION_CALLBACKS: DrillSessionCallbacks = {
 
 // ─── Theme ─────────────────────────────────────────────────────────────────────
 
-const THEME = {
+/**
+ * Drills that assert nothing grammatical — verb tense, question words,
+ * building blocks — pick freely from the base palette.
+ */
+const BASE_THEME = {
 	honey: { bar: "bg-honey", selectorBg: "bg-honey-100", selectorText: "text-honey-text" },
 	terracotta: {
 		bar: "bg-terracotta",
@@ -63,7 +68,29 @@ const THEME = {
 	ocean: { bar: "bg-ocean", selectorBg: "bg-ocean-100", selectorText: "text-ocean-text" },
 } as const;
 
-type ColorTheme = keyof typeof THEME;
+type ColorTheme = keyof typeof BASE_THEME;
+
+/**
+ * A drill whose catalogue entry declares a case role is claiming that role, so
+ * it takes the reserved tokens and cannot be given a colour by hand. That is
+ * how the Doer noun drill came to be honey while its three Doer siblings were
+ * ocean, and how the mixed-case article review claimed Doer blue.
+ *
+ * `mixed` and `null` claim nothing and fall back to the base palette.
+ */
+const CASE_ROLE_SCHEME = {
+	doer: "case-nominative",
+	target: "case-accusative",
+	owner: "case-genitive",
+} as const;
+
+const themeFor = (drillId: string, colorTheme: ColorTheme) => {
+	const role = DRILL_REGISTRY[drillId]?.caseRole;
+	const scheme = role && role in CASE_ROLE_SCHEME ? SCHEME[CASE_ROLE_SCHEME[role as keyof typeof CASE_ROLE_SCHEME]] : null;
+	return scheme
+		? { bar: scheme.bar, selectorBg: scheme.bg, selectorText: scheme.text }
+		: BASE_THEME[colorTheme];
+};
 
 // ─── Reverse strategy ─────────────────────────────────────────────────────────
 
@@ -117,12 +144,15 @@ export interface DrillProps<K extends string = string> extends Omit<
 
 function DrillInner<K extends string>(
 	props: Omit<DrillProps<K>, "drillId" | "items" | "sessionSize" | "onComplete"> & {
-		/** Already resolved by <Drill>, so the shells can rely on it. */
+		/** Both already resolved by <Drill>, so the shells can rely on them. */
 		title: string;
+		theme: { bar: string; selectorBg: string; selectorText: string };
 	},
 ) {
 	const {
-		colorTheme = "terracotta",
+		theme,
+		// oxlint-disable-next-line no-unused-vars
+		colorTheme,
 		reverse = { kind: "self-assess" },
 		forwardPrompt,
 		configExtras,
@@ -131,7 +161,6 @@ function DrillInner<K extends string>(
 		defaultMode,
 		...rest
 	} = props;
-	const theme = THEME[colorTheme];
 
 	const phase = useDrillStore((s) => s.phase);
 	const mode = useDrillStore((s) => s.mode);
@@ -307,6 +336,7 @@ function DrillInner<K extends string>(
 export function Drill<K extends string = string>(props: DrillProps<K>) {
 	const { auth } = rootRoute.useRouteContext();
 	const title = props.title ?? drillTitle(props.drillId) ?? props.drillId;
+	const theme = themeFor(props.drillId, props.colorTheme ?? "terracotta");
 
 	// Initialize store once per mount with this drill's config
 	useState(() => {
@@ -322,5 +352,5 @@ export function Drill<K extends string = string>(props: DrillProps<K>) {
 		drillActions.initialize(config);
 	});
 
-	return <DrillInner {...props} title={title} />;
+	return <DrillInner {...props} title={title} theme={theme} />;
 }

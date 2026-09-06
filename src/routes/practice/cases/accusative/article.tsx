@@ -69,7 +69,6 @@ function ArticleTargetDrill() {
 			drillId="articles-article-target"
 			items={FORMS}
 			subtitle="Accusative articles"
-			colorTheme="terracotta"
 			forwardDesc="Gender + number → article (Target)"
 			reverseDesc="Article → recall gender + number (self-assess)"
 			configExtras={<ParadigmTable rows={PARADIGM_ROWS} />}

@@ -1,3 +1,4 @@
+import { SCHEME } from "@/constants/grammar-palette";
 import { GreekText } from "@/components/GreekText";
 
 interface ParadigmRow {
@@ -11,9 +12,14 @@ export const ParadigmTable = ({ rows }: { rows: ParadigmRow[] }) => (
 			<thead>
 				<tr>
 					<th className="py-1 pr-4 text-left text-xs font-normal text-muted-foreground" />
-					<th className="px-3 py-1 text-center text-xs font-medium text-navy-text">Masculine</th>
-					<th className="px-3 py-1 text-center text-xs font-medium text-sunset-text">Feminine</th>
-					<th className="px-3 py-1 text-center text-xs font-medium text-slate-text">Neuter</th>
+					{(["masculine", "feminine", "neuter"] as const).map((g) => (
+						<th
+							key={g}
+							className={`px-3 py-1 text-center text-xs font-medium capitalize ${SCHEME[`gender-${g}`].text}`}
+						>
+							{g}
+						</th>
+					))}
 				</tr>
 			</thead>
 			<tbody>
