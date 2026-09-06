@@ -5,7 +5,7 @@ import { CollapsibleSection } from "@/components/CollapsibleSection";
 import { GreekText } from "@/components/GreekText";
 import { MistakeComparison } from "@/components/MistakeComparison";
 import { SectionHeading } from "@/components/SectionHeading";
-import { SCHEME, genderScheme } from "@/constants/grammar-palette";
+import { caseScheme, genderScheme } from "@/constants/grammar-palette";
 import {
 	COMPOUND_CONTRAST_PAIRS,
 	OTHER_PREPOSITIONS,
@@ -14,13 +14,14 @@ import {
 	SE_CONTRACTIONS,
 	TIME_EXPRESSIONS,
 } from "@/constants/prepositions";
-import type { Gender } from "@/server/db/enums";
+import { type Gender, genders } from "@/server/db/enums";
 
 import { PrepositionNavigator } from "./preposition-navigator";
 
-const GENDER_ORDER: Gender[] = ["masculine", "feminine", "neuter"];
 const byGender = (a: { gender: Gender }, b: { gender: Gender }) =>
-	GENDER_ORDER.indexOf(a.gender) - GENDER_ORDER.indexOf(b.gender);
+	genders.indexOf(a.gender) - genders.indexOf(b.gender);
+
+const ACCUSATIVE = caseScheme("accusative");
 
 const SeCard: React.FC = () => {
 	const singular = SE_CONTRACTIONS.formulas.filter((f) => f.number === "singular").sort(byGender);
@@ -38,7 +39,7 @@ const SeCard: React.FC = () => {
 			{/* Key before the coloured forms, not after — the reader needs it to read them. */}
 			<div className="mb-8 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs">
 				<span className="text-stone-500">Colour shows gender:</span>
-				{GENDER_ORDER.map((gender) => {
+				{genders.map((gender) => {
 					const style = genderScheme(gender);
 					return (
 						<span key={gender} className="flex items-center gap-1.5">
@@ -291,9 +292,7 @@ export const PrepositionsSection: React.FC = () => (
 									key={item.greek}
 									className={cn(
 										"rounded-lg border p-3",
-										tinted
-											? `${SCHEME["case-accusative"].border} ${SCHEME["case-accusative"].bg}`
-											: "border-stone-200 bg-white",
+										tinted ? `${ACCUSATIVE.border} ${ACCUSATIVE.bg}` : "border-stone-200 bg-white",
 									)}
 								>
 									<div className="mb-1 flex items-baseline gap-2">
@@ -312,9 +311,7 @@ export const PrepositionsSection: React.FC = () => (
 					return (
 						<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
 							<div className="space-y-2">
-								<p
-									className={`text-xs font-semibold tracking-widest uppercase ${SCHEME["case-accusative"].text}`}
-								>
+								<p className={`text-xs font-semibold tracking-widest uppercase ${ACCUSATIVE.text}`}>
 									σε — contracts
 								</p>
 								{col(contracts, true)}

@@ -1,7 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { caseScheme, genderScheme } from "@/constants/grammar-palette";
-import { type Gender, type NominalCase, genders, nominalCases } from "@/server/db/enums";
+import {
+	type Gender,
+	type NominalCase,
+	genders,
+	grammaticalNumbers,
+	nominalCases,
+} from "@/server/db/enums";
 
 import {
 	CASE_CHIP,
@@ -194,7 +200,7 @@ const DIMENSIONS: DimensionSpec<DimKey>[] = [
 	dim({ key: "gender", values: genders, selectorStyle: genderScheme }),
 	{
 		key: "number",
-		values: ["singular", "plural"] as const,
+		values: grammaticalNumbers,
 		selectorStyle: () => ({ bg: "bg-terracotta-100", text: "text-terracotta-text" }),
 	},
 	dim({ key: "case", values: nominalCases, selectorStyle: caseScheme }),

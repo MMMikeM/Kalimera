@@ -10,7 +10,7 @@ export type DrillCategory =
 	| "pronouns"
 	| "blocks";
 
-export type CaseRole = CaseRoleName | "mixed" | null;
+type CaseRole = CaseRoleName | "mixed" | null;
 
 /**
  * One drill, named once — the drill screen, its group's index and the review

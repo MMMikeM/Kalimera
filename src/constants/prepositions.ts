@@ -2,12 +2,12 @@
 // PREPOSITION CONSTANTS
 // =============================================================================
 
-import type { Gender } from "@/server/db/enums";
+import type { Gender, GrammaticalNumber } from "@/server/db/enums";
 
 interface SeContraction {
 	formula: string;
 	gender: Gender;
-	number: "singular" | "plural";
+	number: GrammaticalNumber;
 	examples: { greek: string; english: string }[];
 }
 

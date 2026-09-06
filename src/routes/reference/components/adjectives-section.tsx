@@ -134,15 +134,15 @@ const AdjectiveParadigmCard: React.FC<{ paradigm: AdjectiveParadigm }> = ({ para
 			<div className="space-y-4">
 				<div className="flex items-baseline gap-2 text-sm">
 					<span className="text-stone-600">Example:</span>
-					<GreekText tone="masculine" size="base">
+					<GreekText tone="masculine" size="base" weight="semibold">
 						{paradigm.example.masculine}
 					</GreekText>
 					<span className="text-stone-400">/</span>
-					<GreekText tone="feminine" size="base">
+					<GreekText tone="feminine" size="base" weight="semibold">
 						{paradigm.example.feminine}
 					</GreekText>
 					<span className="text-stone-400">/</span>
-					<GreekText tone="neuter" size="base">
+					<GreekText tone="neuter" size="base" weight="semibold">
 						{paradigm.example.neuter}
 					</GreekText>
 					<span className="text-stone-500">= {paradigm.example.english}</span>
@@ -200,13 +200,13 @@ export const AdjectivesSection: React.FC = () => {
 			>
 				<div className="space-y-1">
 					<div>
-						<GreekText tone="masculine" size="base">
+						<GreekText tone="masculine" size="base" weight="semibold">
 							ο καλός φίλος
 						</GreekText>
 						<span className="ml-2 text-sm text-stone-600">(all masculine nominative)</span>
 					</div>
 					<div>
-						<GreekText tone="masculine" size="base">
+						<GreekText tone="masculine" size="base" weight="semibold">
 							τον καλό φίλο
 						</GreekText>
 						<span className="ml-2 text-sm text-stone-600">
@@ -235,7 +235,7 @@ export const AdjectivesSection: React.FC = () => {
 				</p>
 				<div className="mt-2 space-y-1 text-sm">
 					<div>
-						<GreekText tone="neuter" size="sm">
+						<GreekText tone="neuter" size="sm" weight="semibold">
 							το μεγάλο αυτοκίνητο του γιατρού
 						</GreekText>
 						<span className="ml-2 text-stone-500">the doctor's big car</span>
