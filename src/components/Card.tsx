@@ -1,6 +1,6 @@
+import { cn } from "tailwind-variants";
 import type { ReactNode } from "react";
 
-import { cn } from "@/lib/utils";
 
 const variantStyles = {
 	default: "",

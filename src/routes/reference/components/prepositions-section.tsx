@@ -1,3 +1,4 @@
+import { cn } from "tailwind-variants";
 import type React from "react";
 
 import { CollapsibleSection } from "@/components/CollapsibleSection";
@@ -12,7 +13,6 @@ import {
 	SE_CONTRACTIONS,
 	TIME_EXPRESSIONS,
 } from "@/constants/prepositions";
-import { cn } from "@/lib/utils";
 
 import { PrepositionNavigator } from "./preposition-navigator";
 import { GreekText } from "@/components/GreekText";

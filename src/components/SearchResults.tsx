@@ -1,7 +1,7 @@
+import { cn } from "tailwind-variants";
 import { SearchX } from "lucide-react";
 
 import { formatNounWithArticle } from "@/lib/greek-grammar";
-import { cn } from "@/lib/utils";
 import type { VocabularySearchGraphRow } from "@/server/db/queries/vocabulary";
 
 import { Badge } from "./ui/badge";

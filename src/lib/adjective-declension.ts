@@ -35,7 +35,7 @@ export const declineAdjective = (
 ): DeclinedAdjectiveForm[] => {
 	const paradigm = ADJECTIVE_PARADIGMS[pattern];
 	const stem = getStem(lemma, paradigm.stripChars);
-	const table = isStemStressed(stem) ? paradigm.unstressed : paradigm.stressed;
+	const table = (isStemStressed(stem) && paradigm.unstressed) || paradigm.stressed;
 
 	const forms: DeclinedAdjectiveForm[] = [];
 	for (const c of CASES) {

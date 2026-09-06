@@ -1,6 +1,6 @@
 import { ArrowLeft, Gift, MapPin, Users } from "lucide-react";
 
-import { NavigatorCard, NavigatorCell } from "@/components/cards";
+import { NavigatorCard, NavigatorCell } from "@/components/cards/NavigatorCard";
 import { PREPOSITION_NAVIGATOR_OPTIONS } from "@/constants/prepositions";
 import { GreekText } from "@/components/GreekText";
 

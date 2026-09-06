@@ -1,7 +1,7 @@
 import type React from "react";
 
 import { Card } from "@/components/Card";
-import { LookupCard } from "@/components/cards";
+import { LookupCard } from "@/components/cards/LookupCard";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
 import { CASE_SCHEME, SCHEME } from "@/constants/grammar-palette";
 import {

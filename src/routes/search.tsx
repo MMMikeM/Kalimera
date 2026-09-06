@@ -1,3 +1,4 @@
+import { cn } from "tailwind-variants";
 import { createFileRoute } from "@tanstack/react-router";
 import { createFuzzySearch } from "ekrina";
 import { Search } from "lucide-react";
@@ -6,7 +7,6 @@ import { useState } from "react";
 import { SearchInput } from "@/components/SearchInput";
 import { TabHero } from "@/components/TabHero";
 import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
 import { vocabularySearchFields } from "@/lib/vocabulary-search-fields";
 import { getSearchVocabularyFn } from "@/server/fns/search";
 import { GreekText } from "@/components/GreekText";

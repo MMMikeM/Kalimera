@@ -1,4 +1,4 @@
-import { NavigatorCard, NavigatorCell } from "@/components/cards";
+import { NavigatorCard, NavigatorCell } from "@/components/cards/NavigatorCard";
 import { GreekText } from "@/components/GreekText";
 
 interface PronounOption {

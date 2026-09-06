@@ -1,9 +1,11 @@
+import { cn } from "tailwind-variants";
 import { Link } from "@tanstack/react-router";
 import { AlertCircle, ArrowRight, BookOpen } from "lucide-react";
 import type React from "react";
 
 import { Card } from "@/components/Card";
-import { NavigatorCard, NavigatorCell, TeachingCard } from "@/components/cards";
+import { NavigatorCard, NavigatorCell } from "@/components/cards/NavigatorCard";
+import { TeachingCard } from "@/components/cards/TeachingCard";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
 import { type ColumnDef, GrammarTable, type RowDef } from "@/components/GrammarTable";
 import { ParadigmTable } from "@/components/ParadigmTable";
@@ -21,7 +23,6 @@ import {
 	PAST_TENSE_PATTERNS,
 	VERB_PATTERNS,
 } from "@/constants/verbs";
-import { cn } from "@/lib/utils";
 import { GreekText } from "@/components/GreekText";
 
 interface UsageExample {

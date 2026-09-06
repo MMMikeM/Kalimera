@@ -1,6 +1,7 @@
 import { useState } from "react";
 
-import { NextStepCard, TeachingCard } from "@/components/cards";
+import { NextStepCard } from "@/components/cards/NextStepCard";
+import { TeachingCard } from "@/components/cards/TeachingCard";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
 import {
 	CASE_ROW_DEFS,
