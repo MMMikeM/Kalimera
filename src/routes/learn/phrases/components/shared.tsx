@@ -14,9 +14,6 @@ const textColors: Record<ContentColorScheme, string> = {
 	honey: "text-honey-800",
 	navy: "text-navy-800",
 	slate: "text-slate-800",
-	masculine: "text-navy-800",
-	feminine: "text-sunset-800",
-	neuter: "text-slate-700",
 	stone: "text-stone-800",
 };
 

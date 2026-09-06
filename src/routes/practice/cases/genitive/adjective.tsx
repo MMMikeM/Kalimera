@@ -155,7 +155,6 @@ function AdjectiveAgreementOwnerDrill() {
 			drillId="adjectives-agreement-owner"
 			items={ITEMS}
 			subtitle="40 forms / timed"
-			colorTheme="olive"
 			forwardDesc="English + gender → adjective form (Owner)"
 			reverseLabel="Greek → gender"
 			reverseDesc="Adjective form → select gender"

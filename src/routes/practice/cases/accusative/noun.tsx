@@ -32,7 +32,6 @@ function NounTargetDrill() {
 			drillId="nominal-noun-target"
 			items={items}
 			subtitle={`${items.length} nouns / timed`}
-			colorTheme="terracotta"
 			forwardDesc="English → article + noun (Target form)"
 			reverseLabel="Greek → gender"
 			reverseDesc="Phrase → select gender"

@@ -248,7 +248,6 @@ function PhraseDoerDrill() {
 			drillId="nominal-phrase-doer"
 			items={PHRASES}
 			subtitle="30 noun phrases / timed"
-			colorTheme="ocean"
 			forwardDesc="English → article + adjective + noun (Doer form)"
 			reverseLabel="Greek → gender"
 			reverseDesc="Phrase → select gender"
