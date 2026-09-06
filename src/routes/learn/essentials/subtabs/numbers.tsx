@@ -1,8 +1,8 @@
 import { ContentSection } from "@/components/ContentSection";
+import { GreekText } from "@/components/GreekText";
 
 import type { EssentialsLoaderData } from "../$subtab";
 import { EssentialsBackLink } from "./essentials-back-link";
-import { GreekText } from "@/components/GreekText";
 
 interface Props {
 	data: EssentialsLoaderData;
@@ -83,7 +83,9 @@ export function NumbersSubtab({ data }: Props) {
 					{zero && (
 						<div className="grid grid-cols-2 gap-4 px-3 py-2.5">
 							<div>
-								<GreekText tone="accent" size="lg">{zero.greekText}</GreekText>
+								<GreekText tone="accent" size="lg">
+									{zero.greekText}
+								</GreekText>
 								<div className="text-xs text-stone-500">{zero.englishTranslation}</div>
 							</div>
 							<div className="text-sm text-stone-300 italic">—</div>
@@ -101,7 +103,9 @@ export function NumbersSubtab({ data }: Props) {
 								<div>
 									{unitNum ? (
 										<>
-											<GreekText tone="accent" size="lg">{unitNum.greekText}</GreekText>
+											<GreekText tone="accent" size="lg">
+												{unitNum.greekText}
+											</GreekText>
 											<div className="text-xs text-stone-500">{unitNum.englishTranslation}</div>
 										</>
 									) : (
@@ -114,7 +118,9 @@ export function NumbersSubtab({ data }: Props) {
 									<div className="flex-1">
 										{tenNum ? (
 											<>
-												<GreekText tone="accent" size="lg">{tenNum.greekText}</GreekText>
+												<GreekText tone="accent" size="lg">
+													{tenNum.greekText}
+												</GreekText>
 												<div className="text-xs text-stone-500">{tenNum.englishTranslation}</div>
 											</>
 										) : (
@@ -142,14 +148,20 @@ export function NumbersSubtab({ data }: Props) {
 							// eslint-disable-next-line better-tailwindcss/no-restricted-classes -- 60/40 layout, no token fit
 							className="grid grid-cols-[3fr_2fr] items-center gap-x-3 px-3 py-2.5"
 						>
-							<GreekText tone="accent" size="lg">{highlightTeenPattern(number.greekText)}</GreekText>
+							<GreekText tone="accent" size="lg">
+								{highlightTeenPattern(number.greekText)}
+							</GreekText>
 							<span className="text-sm text-stone-500">{number.englishTranslation}</span>
 						</div>
 					))}
 				</div>
 				<div className="mx-3 mt-3 rounded-lg border border-honey-200 bg-honey-100 p-2.5">
 					<p className="text-sm font-medium text-honey-text">
-						Pattern: <GreekText tone="default" size="base" className="text-honey-text">δεκα</GreekText> + unit
+						Pattern:{" "}
+						<GreekText tone="default" size="base" className="text-honey-text">
+							δεκα
+						</GreekText>{" "}
+						+ unit
 					</p>
 					<p className="mt-1 text-xs text-stone-500">
 						Exception: 11, 12 are irregular (έντεκα, δώδεκα)
@@ -195,16 +207,23 @@ export function NumbersSubtab({ data }: Props) {
 						</p>
 						<div className="space-y-2">
 							<div>
-								<GreekText tone="accent" size="lg">στις τρεις</GreekText>
+								<GreekText tone="accent" size="lg">
+									στις τρεις
+								</GreekText>
 								<div className="text-xs text-stone-500">at three o'clock</div>
 							</div>
 							<div>
-								<GreekText tone="accent" size="lg">στις δέκα και μισή</GreekText>
+								<GreekText tone="accent" size="lg">
+									στις δέκα και μισή
+								</GreekText>
 								<div className="text-xs text-stone-500">at half past ten</div>
 							</div>
 						</div>
 						<p className="mt-1.5 border-t border-terracotta-200/50 pt-1.5 text-xs text-stone-500">
-							<GreekText tone="default" size="base" className="text-stone-700">στις</GreekText> = at (uses feminine accusative)
+							<GreekText tone="default" size="base" className="text-stone-700">
+								στις
+							</GreekText>{" "}
+							= at (uses feminine accusative)
 						</p>
 					</div>
 
@@ -215,15 +234,21 @@ export function NumbersSubtab({ data }: Props) {
 						</p>
 						<div className="space-y-2">
 							<div>
-								<GreekText tone="accent" size="lg">πέντε ευρώ</GreekText>
+								<GreekText tone="accent" size="lg">
+									πέντε ευρώ
+								</GreekText>
 								<div className="text-xs text-stone-500">five euros</div>
 							</div>
 							<div>
-								<GreekText tone="accent" size="lg">δύο κιλά</GreekText>
+								<GreekText tone="accent" size="lg">
+									δύο κιλά
+								</GreekText>
 								<div className="text-xs text-stone-500">two kilos</div>
 							</div>
 							<div>
-								<GreekText tone="accent" size="lg">τρία μπουκάλια νερό</GreekText>
+								<GreekText tone="accent" size="lg">
+									τρία μπουκάλια νερό
+								</GreekText>
 								<div className="text-xs text-stone-500">three bottles of water</div>
 							</div>
 						</div>
@@ -236,11 +261,15 @@ export function NumbersSubtab({ data }: Props) {
 						</p>
 						<div className="space-y-2">
 							<div>
-								<GreekText tone="accent" size="lg">είμαι τριάντα δύο χρονών</GreekText>
+								<GreekText tone="accent" size="lg">
+									είμαι τριάντα δύο χρονών
+								</GreekText>
 								<div className="text-xs text-stone-500">I'm 32 years old</div>
 							</div>
 							<div>
-								<GreekText tone="accent" size="lg">πόσων χρονών είσαι;</GreekText>
+								<GreekText tone="accent" size="lg">
+									πόσων χρονών είσαι;
+								</GreekText>
 								<div className="text-xs text-stone-500">How old are you?</div>
 							</div>
 						</div>
@@ -262,49 +291,73 @@ export function NumbersSubtab({ data }: Props) {
 
 						<div className="text-xs font-medium text-stone-600">1</div>
 						<div className="text-center">
-							<GreekText tone="default" size="sm">ένας</GreekText>
+							<GreekText tone="default" size="sm">
+								ένας
+							</GreekText>
 						</div>
 						<div className="text-center">
-							<GreekText tone="default" size="sm">μία</GreekText>
+							<GreekText tone="default" size="sm">
+								μία
+							</GreekText>
 						</div>
 						<div className="text-center">
-							<GreekText tone="default" size="sm">ένα</GreekText>
+							<GreekText tone="default" size="sm">
+								ένα
+							</GreekText>
 						</div>
 
 						<div className="text-xs font-medium text-stone-600">3</div>
 						<div className="text-center">
-							<GreekText tone="default" size="sm">τρεις</GreekText>
+							<GreekText tone="default" size="sm">
+								τρεις
+							</GreekText>
 						</div>
 						<div className="text-center">
-							<GreekText tone="default" size="sm">τρεις</GreekText>
+							<GreekText tone="default" size="sm">
+								τρεις
+							</GreekText>
 						</div>
 						<div className="text-center">
-							<GreekText tone="default" size="sm">τρία</GreekText>
+							<GreekText tone="default" size="sm">
+								τρία
+							</GreekText>
 						</div>
 
 						<div className="text-xs font-medium text-stone-600">4</div>
 						<div className="text-center">
-							<GreekText tone="default" size="sm">τέσσερις</GreekText>
+							<GreekText tone="default" size="sm">
+								τέσσερις
+							</GreekText>
 						</div>
 						<div className="text-center">
-							<GreekText tone="default" size="sm">τέσσερις</GreekText>
+							<GreekText tone="default" size="sm">
+								τέσσερις
+							</GreekText>
 						</div>
 						<div className="text-center">
-							<GreekText tone="default" size="sm">τέσσερα</GreekText>
+							<GreekText tone="default" size="sm">
+								τέσσερα
+							</GreekText>
 						</div>
 					</div>
 
 					<div className="space-y-1.5 text-sm">
 						<div>
-							<GreekText tone="accent" size="lg">ένας καφές</GreekText>
+							<GreekText tone="accent" size="lg">
+								ένας καφές
+							</GreekText>
 							<span className="ml-2 text-xs text-stone-500">(one coffee, masc.)</span>
 						</div>
 						<div>
-							<GreekText tone="accent" size="lg">μία μπύρα</GreekText>
+							<GreekText tone="accent" size="lg">
+								μία μπύρα
+							</GreekText>
 							<span className="ml-2 text-xs text-stone-500">(one beer, fem.)</span>
 						</div>
 						<div>
-							<GreekText tone="accent" size="lg">ένα νερό</GreekText>
+							<GreekText tone="accent" size="lg">
+								ένα νερό
+							</GreekText>
 							<span className="ml-2 text-xs text-stone-500">(one water, neut.)</span>
 						</div>
 					</div>

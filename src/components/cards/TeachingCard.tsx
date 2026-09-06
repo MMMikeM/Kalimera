@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import {cn, tv } from "tailwind-variants";
+import { cn, tv } from "tailwind-variants";
 
 import { Card } from "@/components/Card";
 import { type GrammarScheme, SCHEME } from "@/constants/grammar-palette";

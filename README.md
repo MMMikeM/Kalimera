@@ -46,20 +46,20 @@ There is no local Docker database.
 
 ### Development
 
-| Command        | Description                                     |
-| -------------- | ----------------------------------------------- |
-| `make dev`     | Start the Vite dev server                       |
-| `make build`   | Build for production                            |
+| Command        | Description                                              |
+| -------------- | -------------------------------------------------------- |
+| `make dev`     | Start the Vite dev server                                |
+| `make build`   | Build for production                                     |
 | `make preview` | Serve the built output (`node .output/server/index.mjs`) |
 
 ### Database (Turso — production)
 
-| Command              | Description                                              |
-| -------------------- | -------------------------------------------------------- |
-| `make db-push`       | Push schema **to production**                            |
+| Command              | Description                                                     |
+| -------------------- | --------------------------------------------------------------- |
+| `make db-push`       | Push schema **to production**                                   |
 | `make db-seed`       | Seed **production** — idempotent additive upsert, never deletes |
-| `make db-setup`      | `db-push` then `db-seed`                                 |
-| `make db-studio`     | Open Drizzle Studio against **production**               |
+| `make db-setup`      | `db-push` then `db-seed`                                        |
+| `make db-studio`     | Open Drizzle Studio against **production**                      |
 | `make db-push-local` | Push schema to a local file DB (`local.db`), no Docker, no prod |
 
 `pnpm db:seed` alone does **not** load `.env`; `make db-seed` passes it explicitly.

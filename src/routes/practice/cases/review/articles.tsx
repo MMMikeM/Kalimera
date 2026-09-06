@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { GENDER_COLUMNS, Paradigm } from "../../components/paradigm";
+import type { Gender, NominalCase } from "@/server/db/enums";
 
 import {
 	CASE_BAR,
@@ -14,8 +14,7 @@ import type { DrillForm } from "../../components/engines/deck";
 import { Drill, type DimensionSpec } from "../../components/engines/drill";
 import { GENDER_STYLE } from "../../components/engines/drill-constants";
 import { ForwardPromptCard } from "../../components/engines/forward-prompt-card";
-import type { Gender, NominalCase } from "@/server/db/enums";
-
+import { GENDER_COLUMNS, Paradigm } from "../../components/paradigm";
 
 type Num = "singular" | "plural";
 

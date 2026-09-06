@@ -52,8 +52,6 @@ export const filterNouns = (
 	if (levels.length === 0) return [...nouns];
 	const wanted = new Set<string>(levels);
 	return nouns.filter((noun) =>
-		isUnlevelled(noun.cefrLevel)
-			? wanted.has("unlevelled")
-			: wanted.has(noun.cefrLevel as string),
+		isUnlevelled(noun.cefrLevel) ? wanted.has("unlevelled") : wanted.has(noun.cefrLevel as string),
 	);
 };

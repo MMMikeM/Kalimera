@@ -1,6 +1,6 @@
-import { cn } from "tailwind-variants";
 import type React from "react";
 import { Fragment } from "react";
+import { cn } from "tailwind-variants";
 
 import { Callout } from "@/components/cards/Callout";
 import { GreekText } from "@/components/GreekText";

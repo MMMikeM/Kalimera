@@ -1,8 +1,13 @@
 import type React from "react";
 
-import { type ColumnDef, GENDER_COLUMN_DEFS, GrammarTable, type RowDef } from "@/components/GrammarTable";
-import type { GrammarScheme } from "@/constants/grammar-palette";
+import {
+	type ColumnDef,
+	GENDER_COLUMN_DEFS,
+	GrammarTable,
+	type RowDef,
+} from "@/components/GrammarTable";
 import { GreekText } from "@/components/GreekText";
+import type { GrammarScheme } from "@/constants/grammar-palette";
 
 /**
  * The paradigm grid the drills show above a session: a row label, then one

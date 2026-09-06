@@ -1,6 +1,5 @@
-import { cn } from "tailwind-variants";
 import { Popover as PopoverPrimitive } from "@base-ui/react/popover";
-
+import { cn } from "tailwind-variants";
 
 function Popover({ ...props }: PopoverPrimitive.Root.Props) {
 	return <PopoverPrimitive.Root data-slot="popover" {...props} />;

@@ -1,6 +1,7 @@
 import { Search, Sparkles } from "lucide-react";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 
+import { GreekText } from "@/components/GreekText";
 import { SearchInput } from "@/components/SearchInput";
 import { SearchResults } from "@/components/SearchResults";
 import {
@@ -10,7 +11,6 @@ import {
 	PopoverTrigger,
 } from "@/components/ui/popover";
 import { useVocabularySearch } from "@/lib/use-vocabulary-search";
-import { GreekText } from "@/components/GreekText";
 
 const QUICK_SEARCHES = [
 	{ greek: "θελω", english: "I want" },

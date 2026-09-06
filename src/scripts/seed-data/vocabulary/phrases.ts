@@ -2,13 +2,7 @@ import type { CefrLevel } from "@/server/db/enums";
 
 import type { Gender } from "../../../lib/greek-grammar";
 import type { Phrase } from "../../../types/phrase";
-import {
-	type VocabWithTags,
-	nounDetailFromSeed,
-	pickNounNominalForms,
-} from "../../seed-pipeline";
-import { enrichNoun } from "./noun-seed-enrichment";
-import { subjectTagsFor } from "./noun-subjects";
+import { type VocabWithTags, nounDetailFromSeed, pickNounNominalForms } from "../../seed-pipeline";
 import {
 	ARRIVING_PHRASES,
 	COMMON_RESPONSES,
@@ -17,6 +11,8 @@ import {
 	OPINION_PHRASES,
 	SMALLTALK_PHRASES,
 } from "./conversations";
+import { enrichNoun } from "./noun-seed-enrichment";
+import { subjectTagsFor } from "./noun-subjects";
 
 // Essential phrases - THE most important phrases for a beginner
 // These should be learned first

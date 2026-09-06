@@ -1,11 +1,11 @@
-import { cn } from "tailwind-variants";
 import { motion } from "motion/react";
 import type React from "react";
 import { useState } from "react";
+import { cn } from "tailwind-variants";
 
+import { GreekText } from "@/components/GreekText";
 
 import { SpeakerBadge, type SpeakerRole } from "./SpeakerBadge";
-import { GreekText } from "@/components/GreekText";
 
 export type ConversationMode = "read" | "roleplay";
 

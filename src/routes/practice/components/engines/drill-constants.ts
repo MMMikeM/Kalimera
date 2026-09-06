@@ -5,8 +5,14 @@ type Person = "first" | "second" | "third";
 
 /** A gender chip claims a gender, so it takes the reserved gender tokens. */
 export const GENDER_STYLE: Record<Gender, { selectorBg: string; selectorText: string }> = {
-	masculine: { selectorBg: SCHEME["gender-masculine"].bg, selectorText: SCHEME["gender-masculine"].text },
-	feminine: { selectorBg: SCHEME["gender-feminine"].bg, selectorText: SCHEME["gender-feminine"].text },
+	masculine: {
+		selectorBg: SCHEME["gender-masculine"].bg,
+		selectorText: SCHEME["gender-masculine"].text,
+	},
+	feminine: {
+		selectorBg: SCHEME["gender-feminine"].bg,
+		selectorText: SCHEME["gender-feminine"].text,
+	},
 	neuter: { selectorBg: SCHEME["gender-neuter"].bg, selectorText: SCHEME["gender-neuter"].text },
 };
 

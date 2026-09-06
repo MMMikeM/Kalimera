@@ -28,7 +28,12 @@ const GLOSS_SIZE = {
 	"2xl": "sm",
 } as const;
 
-export const GreekGloss: React.FC<GreekGlossProps> = ({ greek, size = "base", label, className }) => (
+export const GreekGloss: React.FC<GreekGlossProps> = ({
+	greek,
+	size = "base",
+	label,
+	className,
+}) => (
 	<div className={`flex items-baseline gap-2 ${className ?? ""}`}>
 		{label && (
 			<span className="text-xs tracking-widest text-muted-foreground uppercase">{label}</span>

@@ -1,9 +1,9 @@
 import type { ReactNode } from "react";
 
+import { GreekText } from "@/components/GreekText";
 import { type ColorScheme, colorStyles } from "@/lib/colors";
 
 import { Card } from "./Card";
-import { GreekText } from "@/components/GreekText";
 
 interface QuickTestOption {
 	condition: string;
