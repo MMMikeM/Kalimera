@@ -192,7 +192,6 @@ function AdjectiveAgreementDrill() {
 			backTo={"/practice/cases/"}
 			drillId="adjectives-agreement"
 			items={ITEMS}
-			title="Adjective agreement"
 			subtitle="60 forms / timed"
 			colorTheme="ocean"
 			forwardDesc="English + gender → adjective form"

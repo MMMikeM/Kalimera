@@ -247,7 +247,6 @@ function PhraseOwnerDrill() {
 			backTo={"/practice/cases/"}
 			drillId="nominal-phrase-owner"
 			items={PHRASES}
-			title="Owner phrase"
 			subtitle="30 noun phrases / timed"
 			colorTheme="olive"
 			forwardDesc="English → article + adjective + noun (Owner form)"

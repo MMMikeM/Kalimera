@@ -19,9 +19,7 @@ function FutureVocabularyDrill() {
 	return (
 		<VocabDrillPage
 			drillId="verbs-future-sg1"
-			category="verbs"
 			backTo="/practice/verbs"
-			title="Verb vocabulary · future"
 			subtitle="θα forms / timed"
 			forwardDesc="English meaning → θα form"
 			questions={questions}

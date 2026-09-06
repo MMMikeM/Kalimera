@@ -2,10 +2,11 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { ChevronRight } from "lucide-react";
 
-import { DRILL_CATEGORY_LABELS, DRILL_REGISTRY, type DrillCategory } from "@/constants/drills";
+import { GreekText } from "@/components/GreekText";
+import { DRILL_CATEGORY_LABELS, type DrillCategory } from "@/constants/drills";
+import { DRILL_REGISTRY } from "@/routes/practice/drill-catalogue.data";
 import { requireAuth } from "@/server/auth/session";
 import { getSchemaRust } from "@/server/db/queries/analytics/drill-stats";
-import { GreekText } from "@/components/GreekText";
 
 const getReviewDrillsFn = createServerFn({ method: "GET" }).handler(async () => {
 	const { userId } = requireAuth();
@@ -78,11 +79,11 @@ function ReviewPage() {
 										return (
 											<Link
 												key={d.drillId}
-												to={meta.route}
+												to={meta.to}
 												className="flex items-center gap-4 rounded-xl border border-stone-200 bg-white px-4 py-3 transition-colors hover:border-stone-300 hover:bg-stone-50"
 											>
 												<div className="min-w-0 flex-1">
-													<p className="text-sm font-medium text-stone-800">{meta.label}</p>
+													<p className="text-sm font-medium text-stone-800">{meta.title}</p>
 													<div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-stone-100">
 														<div
 															className={`h-full rounded-full transition-all ${rustBarColor(d.rustScore)}`}
