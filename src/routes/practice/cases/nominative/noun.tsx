@@ -30,7 +30,6 @@ const DIMENSION_OPTIONS = [
 
 function NounGendersDrill() {
 	const { items } = Route.useLoaderData();
-	console.log({ items });
 	return (
 		<Drill
 			backTo={"/practice/cases/"}

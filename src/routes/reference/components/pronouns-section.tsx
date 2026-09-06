@@ -4,7 +4,7 @@ import { Card } from "@/components/Card";
 import { LookupCard } from "@/components/cards/LookupCard";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
 import { GreekText } from "@/components/GreekText";
-import { CASE_SCHEME, SCHEME } from "@/constants/grammar-palette";
+import { CASE_SCHEME, SCHEME, caseScheme } from "@/constants/grammar-palette";
 import {
 	EMPHATIC_PRONOUNS,
 	EMPHATIC_PRONOUN_EXAMPLES,
@@ -17,6 +17,7 @@ import {
 	type PronounParadigm,
 	SUBJECT_PRONOUNS,
 } from "@/constants/pronouns";
+import type { CaseName } from "@/constants/recognition";
 import { typedEntries } from "@/lib/object";
 
 import { BandHeading } from "./BandHeading";
@@ -32,7 +33,7 @@ const ParadigmLookup = ({
 	examples,
 	note,
 }: {
-	caseName: "Nominative" | "Accusative" | "Genitive";
+	caseName: CaseName;
 	handle: string;
 	rule: string;
 	paradigm: PronounParadigm[];
@@ -270,20 +271,36 @@ export const PronounsSection: React.FC = () => {
 												{obj.singular.english} / {obj.plural.english}
 											</td>
 											<td className="px-2 py-2">
-												<GreekText tone="accent" size="sm" className="text-case-accusative-text">
+												<GreekText
+													tone="inherit"
+													size="sm"
+													className={caseScheme("accusative").text}
+												>
 													{obj.singular.greek}
 												</GreekText>
 												<span className="text-stone-400"> · </span>
-												<GreekText tone="accent" size="sm" className="text-case-accusative-text">
+												<GreekText
+													tone="inherit"
+													size="sm"
+													className={caseScheme("accusative").text}
+												>
 													{obj.plural.greek}
 												</GreekText>
 											</td>
 											<td className="px-2 py-2">
-												<GreekText tone="accent" size="sm" className="text-case-accusative-text">
+												<GreekText
+													tone="inherit"
+													size="sm"
+													className={caseScheme("accusative").text}
+												>
 													{strong.singular.greek}
 												</GreekText>
 												<span className="text-stone-400"> · </span>
-												<GreekText tone="accent" size="sm" className="text-case-accusative-text">
+												<GreekText
+													tone="inherit"
+													size="sm"
+													className={caseScheme("accusative").text}
+												>
 													{strong.plural.greek}
 												</GreekText>
 											</td>
@@ -323,7 +340,7 @@ export const PronounsSection: React.FC = () => {
 									key={ex.greek}
 									className="rounded-full border border-stone-200 bg-white px-3 py-1.5 text-sm"
 								>
-									<GreekText tone="default" size="sm" className="text-case-accusative-text">
+									<GreekText tone="inherit" size="sm" className={caseScheme("accusative").text}>
 										{ex.greek}
 									</GreekText>
 									<span className="ml-1 text-stone-600">({ex.english})</span>
