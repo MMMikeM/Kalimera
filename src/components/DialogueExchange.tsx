@@ -1,8 +1,8 @@
+import { cn } from "tailwind-variants";
 import { motion } from "motion/react";
 import type React from "react";
 import { useState } from "react";
 
-import { cn } from "@/lib/utils";
 
 import { SpeakerBadge, type SpeakerRole } from "./SpeakerBadge";
 import { GreekText } from "@/components/GreekText";

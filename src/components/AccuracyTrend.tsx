@@ -1,7 +1,7 @@
+import { cn } from "tailwind-variants";
 import { useState } from "react";
 
 import { formatDayMonth, parsePlainDate } from "@/lib/time";
-import { cn } from "@/lib/utils";
 
 interface AccuracyTrendProps {
 	data: Array<{

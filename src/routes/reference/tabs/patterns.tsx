@@ -1,6 +1,6 @@
 import { Heart, UserCircle } from "lucide-react";
 
-import { TeachingCard } from "@/components/cards";
+import { TeachingCard } from "@/components/cards/TeachingCard";
 import { QuickTest } from "@/components/QuickTest";
 import { ReferenceHero } from "@/components/ReferenceHero";
 import { Alert, AlertDescription } from "@/components/ui/alert";

@@ -1,3 +1,4 @@
+import { cn } from "tailwind-variants";
 import { Link } from "@tanstack/react-router";
 import type React from "react";
 import { useState } from "react";
@@ -5,7 +6,6 @@ import { useState } from "react";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
 import { type AoristClass, classifyAorist } from "@/lib/aorist-class";
 import { deviatingPersons } from "@/lib/paradigm-deviation";
-import { cn } from "@/lib/utils";
 import type { VerbInventoryRow } from "@/server/db/queries/vocabulary";
 import { GreekText } from "@/components/GreekText";
 
