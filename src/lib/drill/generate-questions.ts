@@ -197,16 +197,3 @@ export const generateQuestions = (
 
 	return count ? shuffled.slice(0, count) : shuffled;
 };
-
-export const CATEGORY_CONFIG: Record<QuestionCategory, { label: string; description: string }> = {
-	pronouns: {
-		label: "Pronouns",
-		description: "Object and possessive pronouns",
-	},
-	articles: { label: "Articles", description: "Definite articles with nouns" },
-	verbs: { label: "Verbs", description: "Common verb conjugations" },
-	nouns: {
-		label: "Nouns",
-		description: "Noun declensions (accusative/genitive)",
-	},
-};

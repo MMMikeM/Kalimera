@@ -61,7 +61,6 @@ function AllPhrasesDrill() {
 		<Drill
 			drillId="nominal-all-phrases"
 			items={ITEMS}
-			title="All phrases"
 			subtitle="45 noun phrases / mixed case / timed"
 			colorTheme="honey"
 			forwardDesc="English → article + adjective + noun (any case)"

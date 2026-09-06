@@ -10,7 +10,13 @@ const config: KnipConfig = {
 		"scripts/*.ts",
 	],
 	project: ["src/**/*.{ts,tsx}", "service-worker/**/*.ts", "scripts/**/*.ts"],
-	ignore: ["src/types/lesson-builder.ts", "src/components/ui/**", "src/scripts/seed-data/**"],
+	ignore: [
+		"src/types/lesson-builder.ts",
+		"src/components/ui/**",
+		"src/scripts/seed-data/**",
+		// TanStack Start client entry — resolved by the framework, not by an import.
+		"src/main.tsx",
+	],
 	ignoreDependencies: [
 		"@vitejs/plugin-react",
 		"tw-animate-css",

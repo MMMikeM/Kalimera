@@ -31,7 +31,6 @@ function NounTargetDrill() {
 			backTo={"/practice/cases/"}
 			drillId="nominal-noun-target"
 			items={items}
-			title="Noun (Target)"
 			subtitle={`${items.length} nouns / timed`}
 			colorTheme="terracotta"
 			forwardDesc="English → article + noun (Target form)"

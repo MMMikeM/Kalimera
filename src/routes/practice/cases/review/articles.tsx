@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { GreekText } from "@/components/GreekText";
+
 import {
 	CASE_BAR,
 	CASE_CHIP,
@@ -13,7 +15,6 @@ import type { DrillForm } from "../../components/engines/deck";
 import { Drill, type DimensionSpec } from "../../components/engines/drill";
 import { GENDER_STYLE } from "../../components/engines/drill-constants";
 import { ForwardPromptCard } from "../../components/engines/forward-prompt-card";
-import { GreekText } from "@/components/GreekText";
 
 type ArticleCase = "nominative" | "accusative" | "genitive";
 type Gender = "masculine" | "feminine" | "neuter";
@@ -248,7 +249,6 @@ function ArticlesDrill() {
 	return (
 		<Drill<DimKey>
 			drillId="articles-paradigm"
-			title="Definite Articles"
 			subtitle="18 forms / timed"
 			colorTheme="ocean"
 			forwardDesc="e.g. masculine / singular / accusative → τον"

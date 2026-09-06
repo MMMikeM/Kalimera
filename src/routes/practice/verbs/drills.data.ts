@@ -1,0 +1,185 @@
+import type { DrillEntry, DrillPhase } from "@/constants/drills";
+
+/**
+ * Conjugation endings sit in both the Present and the Past section: the same
+ * drill, reached from either tense. Defined once and referenced twice, so the
+ * two listings cannot drift apart.
+ */
+const CONJUGATION_ENDINGS: DrillEntry = {
+	id: "verbs-conjugation-endings",
+	to: "/practice/verbs/present/conjugations",
+	title: "Conjugation endings",
+	greek: "-ω · -εις · -ει · -ουμε · -ετε · -ουν",
+	minutes: 1,
+	category: "verbs",
+	caseRole: null,
+};
+
+export const VERB_PHASES: DrillPhase[] = [
+	{
+		phase: "Present",
+		drills: [
+			{
+				id: "verbs-vocabulary-sg1",
+				to: "/practice/verbs/present/vocabulary",
+				title: "Verb vocabulary · present",
+				greek: "γράφω · τρώω · μιλάω · θέλω",
+				minutes: 2,
+				category: "verbs",
+				caseRole: null,
+			},
+			CONJUGATION_ENDINGS,
+			{
+				id: "verbs-present-irregular",
+				to: "/practice/verbs/present/irregular",
+				title: "Irregular verbs · present",
+				greek: "έχω · πάω · λέω · τρώω · ακούω",
+				minutes: 2,
+				category: "verbs",
+				caseRole: null,
+			},
+			{
+				id: "verbs-eimai-present",
+				to: "/practice/verbs/present/eimai",
+				title: "είμαι · present",
+				greek: "είμαι · είσαι · είναι · είμαστε",
+				minutes: 1,
+				category: "verbs",
+				caseRole: null,
+			},
+			{
+				id: "verbs-present",
+				to: "/practice/verbs/present/full",
+				title: "Full conjugations · present",
+				greek: "γράφω · γράφεις · γράφει · γράφουμε",
+				minutes: 2,
+				category: "verbs",
+				caseRole: null,
+			},
+		],
+	},
+	{
+		phase: "Past",
+		drills: [
+			{
+				id: "verbs-aorist-sg1",
+				to: "/practice/verbs/past/aorist-vocabulary",
+				title: "Verb vocabulary · past",
+				greek: "έφαγα · πήγα · είπα · έκανα",
+				minutes: 2,
+				category: "verbs",
+				caseRole: null,
+			},
+			{
+				id: "verbs-aorist-stems",
+				to: "/practice/verbs/past/aorist-stems",
+				title: "Aorist stems",
+				greek: "τρώω → έφαγα · πίνω → ήπια",
+				minutes: 1,
+				category: "verbs",
+				caseRole: null,
+			},
+			{
+				id: "verbs-aorist-formation",
+				to: "/practice/verbs/past/aorist-formation",
+				title: "Aorist formation",
+				greek: "γράφω → έγραψα · ανοίγω → άνοιξα",
+				minutes: 1,
+				category: "verbs",
+				caseRole: null,
+			},
+			CONJUGATION_ENDINGS,
+			{
+				id: "verbs-imperfect-stative",
+				to: "/practice/verbs/past/imperfect-stative",
+				title: "Stative verbs · past",
+				greek: "ήμουν · είχα · ήθελα · ήξερα · μπορούσα",
+				minutes: 2,
+				category: "verbs",
+				caseRole: null,
+			},
+			{
+				id: "verbs-aorist-conjugation",
+				to: "/practice/verbs/past/aorist-conjugation",
+				title: "Full conjugations · past",
+				greek: "έκανα · έκανες · έκανε · κάναμε",
+				minutes: 2,
+				category: "verbs",
+				caseRole: null,
+			},
+		],
+	},
+	{
+		phase: "Future & Modal",
+		drills: [
+			{
+				id: "verbs-future-sg1",
+				to: "/practice/verbs/future/vocabulary",
+				title: "Verb vocabulary · future",
+				greek: "θα δω · θα φάω · θα πάρω",
+				minutes: 2,
+				category: "verbs",
+				caseRole: null,
+			},
+			{
+				id: "verbs-future-formation",
+				to: "/practice/verbs/future/formation",
+				title: "Future formation",
+				greek: "γράφω → θα γράψω · βάζω → θα βάλω",
+				minutes: 2,
+				category: "verbs",
+				caseRole: null,
+			},
+			{
+				id: "verbs-future-conjugation",
+				to: "/practice/verbs/future/conjugation",
+				title: "Full conjugations · future",
+				greek: "θα γράψω · θα φάω · θα πάω",
+				minutes: 2,
+				category: "verbs",
+				caseRole: null,
+			},
+			{
+				id: "verbs-modal-constructions",
+				to: "/practice/verbs/modal-constructions",
+				title: "Modal verbs",
+				greek: "θέλω να φάω · πρέπει να πάω · μπορώ να έρθω",
+				minutes: 2,
+				category: "verbs",
+				caseRole: null,
+			},
+			{
+				id: "verbs-imperatives",
+				to: "/practice/verbs/imperatives",
+				title: "Imperatives",
+				greek: "Έλα! · Πες! · Δώσε! · Φέρε!",
+				minutes: 1,
+				category: "verbs",
+				caseRole: null,
+			},
+		],
+	},
+	{
+		phase: "Mixed tenses",
+		drills: [
+			{
+				id: "verbs-tense-ladder",
+				to: "/practice/verbs/ladder",
+				title: "Tense ladder",
+				greek: "βάζω → έβαλα → θα βάλω",
+				minutes: 3,
+				category: "verbs",
+				caseRole: null,
+			},
+			{
+				id: "verbs-tense-recognition",
+				to: "/practice/verbs/tense-recognition",
+				title: "Which tense?",
+				greek: "έβαλα · χθες ή αύριο;",
+				minutes: 2,
+				category: "verbs",
+				caseRole: null,
+			},
+		],
+	},
+];

@@ -2,7 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import type { SimpleListItem } from "../../components/engines/deck";
 import { Drill } from "../../components/engines/drill";
-
 import { BASICS } from "./basics";
 import { HOW_MANY_FORMS } from "./how-many-forms";
 import { WHICH_FORMS } from "./which-forms";
@@ -28,7 +27,6 @@ function ReviewDrill() {
 		<Drill
 			drillId="blocks-qw-review"
 			items={REVIEW_ITEMS}
-			title="All question words"
 			subtitle={`${REVIEW_ITEMS.length} forms mixed — mixing is harder, and sticks better`}
 			colorTheme="terracotta"
 			backTo="/practice/blocks/question-words/"

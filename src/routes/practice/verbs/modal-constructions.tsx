@@ -308,7 +308,6 @@ function ModalConstructionsDrill() {
 		<Drill
 			drillId="verbs-modal-constructions"
 			items={ITEMS}
-			title="Modal verbs"
 			subtitle="want to · have to · can"
 			colorTheme="honey"
 			forwardDesc="English → modal + να + verb"
