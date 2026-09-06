@@ -37,7 +37,6 @@ function NounGendersDrill() {
 			drillId="nominative-nouns"
 			items={items}
 			subtitle={`Basic noun vocabulary practice`}
-			colorTheme="honey"
 			forwardDesc="English → article + noun (e.g. το σπίτι)"
 			reverseLabel="Greek → Gender"
 			reverseDesc="Greek noun → select gender"

@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { SCHEME } from "@/constants/grammar-palette";
 import { GreekText } from "@/components/GreekText";
 
 import {
@@ -197,9 +198,14 @@ const Paradigm = () => (
 			<thead>
 				<tr>
 					<th className="py-1 pr-4 text-left text-xs font-normal text-muted-foreground" />
-					<th className="px-3 py-1 text-center text-xs font-medium text-navy-text">Masculine</th>
-					<th className="px-3 py-1 text-center text-xs font-medium text-sunset-text">Feminine</th>
-					<th className="px-3 py-1 text-center text-xs font-medium text-slate-text">Neuter</th>
+					{(["masculine", "feminine", "neuter"] as const).map((g) => (
+						<th
+							key={g}
+							className={`px-3 py-1 text-center text-xs font-medium capitalize ${SCHEME[`gender-${g}`].text}`}
+						>
+							{g}
+						</th>
+					))}
 				</tr>
 			</thead>
 			<tbody>
@@ -250,7 +256,7 @@ function ArticlesDrill() {
 		<Drill<DimKey>
 			drillId="articles-paradigm"
 			subtitle="18 forms / timed"
-			colorTheme="ocean"
+			colorTheme="honey"
 			forwardDesc="e.g. masculine / singular / accusative → τον"
 			reverseDesc="e.g. τον → masculine / singular / accusative"
 			items={ARTICLES}

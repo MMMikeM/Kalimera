@@ -69,7 +69,6 @@ function ArticleOwnerDrill() {
 			drillId="articles-article-owner"
 			items={FORMS}
 			subtitle="Genitive articles"
-			colorTheme="olive"
 			forwardDesc="Gender + number → article (Owner)"
 			reverseDesc="Article → recall gender + number (self-assess)"
 			configExtras={<ParadigmTable rows={PARADIGM_ROWS} />}

@@ -69,7 +69,6 @@ function ArticleDoerDrill() {
 			drillId="articles-article-doer"
 			items={FORMS}
 			subtitle="Nominative articles"
-			colorTheme="ocean"
 			forwardDesc="Gender + number → article (Doer)"
 			reverseDesc="Article → recall gender + number (self-assess)"
 			configExtras={<ParadigmTable rows={PARADIGM_ROWS} />}
