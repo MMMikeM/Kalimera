@@ -1,3 +1,4 @@
+import { CASE_ROW_BY_KEY } from "@/components/GrammarTable";
 import { PracticeCTA } from "@/components/PracticeCta";
 import { ReferenceHero } from "@/components/ReferenceHero";
 import { AGREEMENT_PARADIGMS } from "@/constants/agreement";
@@ -9,11 +10,11 @@ import { NounsSection } from "../components/nouns-section";
 const HERO_DEMO = (() => {
 	const friend = AGREEMENT_PARADIGMS.find((p) => p.id === "masc-os");
 	const full = (caseKey: string) => friend?.forms.find((f) => f.case === caseKey)?.full ?? "";
-	return [
-		{ greek: full("nom"), label: "Doer", scheme: "case-nominative" as const },
-		{ greek: full("acc"), label: "Target", scheme: "case-accusative" as const },
-		{ greek: full("gen"), label: "Owner", scheme: "case-genitive" as const },
-	];
+	return Object.values(CASE_ROW_BY_KEY).map((row) => ({
+		greek: full(row.key),
+		label: row.label,
+		scheme: row.scheme,
+	}));
 })();
 
 export function NounsTab({ data = null }: { data?: NounsData | null }) {
