@@ -3,7 +3,9 @@ import type React from "react";
 
 import type { FileRoutesByFullPath, FileRoutesByTo } from "@/routeTree.gen";
 
-export interface Drill {
+/** What a row in a drill list needs. `DrillEntry` satisfies it; so does a
+ *  plain link to a sub-group that has no drill of its own. */
+export interface DrillLink {
 	id: string;
 	to: keyof FileRoutesByTo;
 	from?: keyof FileRoutesByFullPath;

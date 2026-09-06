@@ -132,7 +132,6 @@ function PresentIrregularDrill() {
 			drillId="verbs-present-irregular"
 			items={FORMS}
 			backTo="/practice/verbs"
-			title="Irregular verbs · present"
 			subtitle="30 forms / timed"
 			colorTheme="olive"
 			forwardDesc="English → Greek present form"

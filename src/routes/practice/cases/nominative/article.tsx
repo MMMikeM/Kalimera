@@ -68,7 +68,6 @@ function ArticleDoerDrill() {
 			backTo={"/practice/cases/"}
 			drillId="articles-article-doer"
 			items={FORMS}
-			title="Article (Doer)"
 			subtitle="Nominative articles"
 			colorTheme="ocean"
 			forwardDesc="Gender + number → article (Doer)"

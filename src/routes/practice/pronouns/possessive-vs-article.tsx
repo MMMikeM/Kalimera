@@ -1,10 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 
-import { Drill } from "../components/engines/drill";
-import type { DrillForm } from "../components/engines/deck";
-import { PHRASES, type ContrastPhrase } from "./possessive-vs-article.data";
 import { GreekText } from "@/components/GreekText";
+
+import type { DrillForm } from "../components/engines/deck";
+import { Drill } from "../components/engines/drill";
+import { PHRASES, type ContrastPhrase } from "./possessive-vs-article.data";
 
 const ROLE_OPTIONS = [
 	{
@@ -14,7 +15,12 @@ const ROLE_OPTIONS = [
 		selectorText: "text-stone-800",
 	},
 	{ id: "article", label: "of the…", selectorBg: "bg-stone-100", selectorText: "text-stone-800" },
-	{ id: "object", label: "to me / to him", selectorBg: "bg-stone-100", selectorText: "text-stone-800" },
+	{
+		id: "object",
+		label: "to me / to him",
+		selectorBg: "bg-stone-100",
+		selectorText: "text-stone-800",
+	},
 ];
 
 const CATEGORIES = [
@@ -113,7 +119,6 @@ function PossessiveVsArticleDrill() {
 		<Drill
 			backTo="/practice/pronouns/"
 			drillId="pronouns-possessive-vs-article"
-			title="Whose, or of the?"
 			subtitle="24 phrases / timed"
 			colorTheme="olive"
 			items={PHRASES}

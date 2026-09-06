@@ -19,9 +19,7 @@ function TenseLadderDrill() {
 	return (
 		<VocabDrillPage
 			drillId="verbs-tense-ladder"
-			category="verbs"
 			backTo="/practice/verbs"
-			title="Tense ladder"
 			subtitle="σήμερα · χθες · αύριο / timed"
 			forwardLabel="Greek → Greek"
 			forwardDesc="Greek form → the form for the time word shown"

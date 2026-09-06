@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-
 import type { SimpleListItem } from "../../components/engines/deck";
 import { Drill } from "../../components/engines/drill";
 import { GENDER_DIMENSION_OPTIONS } from "../../components/engines/drill-constants";
@@ -118,7 +117,6 @@ function WhichPhraseDrill() {
 		<Drill
 			drillId="blocks-qw-which-phrase"
 			items={WHICH_PHRASES}
-			title="Which + noun"
 			subtitle={`${WHICH_PHRASES.length} phrases / timed`}
 			colorTheme="terracotta"
 			backTo="/practice/blocks/question-words/"

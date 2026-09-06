@@ -2,45 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { DrillButton } from "../components/DrillButton";
 import { GroupSection } from "../components/group-section";
-import type { Drill } from "../components/group-section";
-
-export const drills: Drill[] = [
-	{
-		id: "blocks-chunks",
-		to: "/practice/blocks/chunks",
-		title: "Survival phrases",
-		greek: "Γεια σου · Ευχαριστώ · Θα ήθελα",
-		minutes: 1,
-	},
-	{
-		id: "blocks-numbers",
-		to: "/practice/blocks/numbers",
-		title: "Numbers",
-		greek: "ένα · δύο · δέκα · είκοσι · τριάντα",
-		minutes: 1,
-	},
-	{
-		id: "blocks-days-of-week",
-		to: "/practice/blocks/days-of-week",
-		title: "Days & time",
-		greek: "Δευτέρα · Τρίτη · χτες · αύριο",
-		minutes: 1,
-	},
-	{
-		id: "blocks-opposites",
-		to: "/practice/blocks/opposites",
-		title: "Opposites",
-		greek: "μεγάλος ↔ μικρός · μέρα ↔ νύχτα",
-		minutes: 2,
-	},
-	{
-		id: "blocks-question-words",
-		to: "/practice/blocks/question-words",
-		title: "Question words",
-		greek: "τι · ποιον καφέ · πόση ζάχαρη",
-		minutes: 10,
-	},
-];
+import { BLOCK_DRILLS, QUESTION_WORDS_LINK } from "./drills.data";
 
 export const Route = createFileRoute("/practice/blocks/")({
 	component: BlocksPage,
@@ -54,7 +16,7 @@ function BlocksPage() {
 				subtitle="Phrases, numbers, and time words you reach for every day."
 			>
 				<ul className="divide-y divide-border">
-					{drills.map((d) => (
+					{[...BLOCK_DRILLS, QUESTION_WORDS_LINK].map((d) => (
 						<DrillButton {...d} from={Route.fullPath} key={d.id} />
 					))}
 				</ul>

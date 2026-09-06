@@ -68,7 +68,6 @@ function ArticleOwnerDrill() {
 			backTo={"/practice/cases/"}
 			drillId="articles-article-owner"
 			items={FORMS}
-			title="Article (Owner)"
 			subtitle="Genitive articles"
 			colorTheme="olive"
 			forwardDesc="Gender + number → article (Owner)"

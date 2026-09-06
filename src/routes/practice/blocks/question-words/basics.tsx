@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-
 import type { SimpleListItem } from "../../components/engines/deck";
 import { Drill } from "../../components/engines/drill";
 
@@ -29,7 +28,6 @@ function BasicsDrill() {
 		<Drill
 			drillId="blocks-qw-basics"
 			items={BASICS}
-			title="The five invariables"
 			subtitle="5 words that never change / timed"
 			colorTheme="terracotta"
 			backTo="/practice/blocks/question-words/"

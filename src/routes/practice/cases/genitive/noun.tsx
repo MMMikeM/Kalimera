@@ -31,7 +31,6 @@ function NounOwnerDrill() {
 			backTo={"/practice/cases/"}
 			drillId="nominal-noun-owner"
 			items={items}
-			title="Noun (Owner)"
 			subtitle={`${items.length} nouns / timed`}
 			colorTheme="olive"
 			forwardDesc="English → article + noun (Owner form)"

@@ -1,11 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { GreekText } from "@/components/GreekText";
 
 import type { SimpleListItem } from "../../components/engines/deck";
 import { Drill } from "../../components/engines/drill";
-
 import { QuestionWordParadigm } from "./components/paradigm";
-import { GreekText } from "@/components/GreekText";
 
 const item = (
 	id: string,
@@ -59,14 +58,8 @@ const PARADIGM = [
 
 const Paradigm = () => (
 	<QuestionWordParadigm caption="ποιος agrees" columns={PARADIGM_COLUMNS} rows={PARADIGM}>
-		Owner plural, every gender:{" "}
-		<GreekText size="sm">
-			ποιανών
-		</GreekText>{" "}
-		· colloquial stand-in for ποιανού:{" "}
-		<GreekText size="sm">
-			τίνος
-		</GreekText>
+		Owner plural, every gender: <GreekText size="sm">ποιανών</GreekText> · colloquial stand-in for
+		ποιανού: <GreekText size="sm">τίνος</GreekText>
 	</QuestionWordParadigm>
 );
 
@@ -79,7 +72,6 @@ function WhichFormsDrill() {
 		<Drill
 			drillId="blocks-qw-which-forms"
 			items={WHICH_FORMS}
-			title="Which — forms"
 			subtitle={`${WHICH_FORMS.length} forms / timed`}
 			colorTheme="terracotta"
 			backTo="/practice/blocks/question-words/"
