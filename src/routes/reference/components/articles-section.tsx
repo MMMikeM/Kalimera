@@ -1,8 +1,10 @@
+import { cn } from "tailwind-variants";
 import type React from "react";
 
-import { Callout, LookupCard, NextStepCard } from "@/components/cards";
+import { Callout } from "@/components/cards/Callout";
+import { LookupCard } from "@/components/cards/LookupCard";
+import { NextStepCard } from "@/components/cards/NextStepCard";
 import { ARTICLE_AGREEMENT_QUICK_REF } from "@/constants/agreement";
-import { cn } from "@/lib/utils";
 
 import { BandHeading } from "./BandHeading";
 import { CaseTableGrid } from "./case-table";

@@ -1,6 +1,6 @@
+import { cn } from "tailwind-variants";
 import { Tabs as TabsPrimitive } from "@base-ui/react/tabs";
 
-import { cn } from "@/lib/utils";
 
 function Tabs({ className, ...props }: TabsPrimitive.Root.Props) {
 	return (

@@ -1,5 +1,5 @@
+import { cn } from "tailwind-variants";
 import { type ContentColorScheme, ContentSection } from "@/components/ContentSection";
-import { cn } from "@/lib/utils";
 
 import type { PhraseItem, PhrasesLoaderData } from "../$tab";
 import { GreekText } from "@/components/GreekText";

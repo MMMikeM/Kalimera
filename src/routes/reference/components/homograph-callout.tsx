@@ -1,11 +1,11 @@
+import { cn } from "tailwind-variants";
 import type React from "react";
 import { Fragment } from "react";
 
-import { Callout } from "@/components/cards";
+import { Callout } from "@/components/cards/Callout";
 import { GreekText } from "@/components/GreekText";
 import { type GrammarScheme, SCHEME } from "@/constants/grammar-palette";
 import { HOMOGRAPH_ROWS } from "@/constants/homographs";
-import { cn } from "@/lib/utils";
 
 const Discriminator: React.FC<{ children: string }> = ({ children }) => (
 	<span className="font-bold text-stone-800">{children}</span>

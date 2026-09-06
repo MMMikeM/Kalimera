@@ -1,7 +1,8 @@
 import { Lightbulb } from "lucide-react";
 import type React from "react";
 
-import { Callout, TeachingCard } from "@/components/cards";
+import { Callout } from "@/components/cards/Callout";
+import { TeachingCard } from "@/components/cards/TeachingCard";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
 import { CASE_ROW_DEFS, type ColumnDef, GrammarTable } from "@/components/GrammarTable";
 import { MistakeComparison } from "@/components/MistakeComparison";

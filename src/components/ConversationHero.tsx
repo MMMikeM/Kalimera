@@ -1,7 +1,7 @@
+import { cn } from "tailwind-variants";
 import type React from "react";
 
 import { type ColorScheme, colorStyles } from "@/lib/colors";
-import { cn } from "@/lib/utils";
 
 import { GreekText } from "@/components/GreekText";
 

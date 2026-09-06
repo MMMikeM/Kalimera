@@ -1,8 +1,7 @@
 import type React from "react";
-import { tv } from "tailwind-variants";
+import {cn, tv } from "tailwind-variants";
 
 import { type GrammarScheme, SCHEME } from "@/constants/grammar-palette";
-import { cn } from "@/lib/utils";
 
 export interface ColumnDef {
 	key: string;

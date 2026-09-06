@@ -1,7 +1,7 @@
+import { cn } from "tailwind-variants";
 import { Fragment } from "react";
 
 import { type GrammarScheme, SCHEME } from "@/constants/grammar-palette";
-import { cn } from "@/lib/utils";
 import { GreekText } from "@/components/GreekText";
 
 interface ReferenceHeroDemoItem {

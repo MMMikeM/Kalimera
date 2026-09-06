@@ -1,7 +1,7 @@
+import { cn } from "tailwind-variants";
 import type { ReactNode } from "react";
 
 import { Card } from "@/components/Card";
-import { cn } from "@/lib/utils";
 
 interface NavigatorCardProps {
 	title: string;

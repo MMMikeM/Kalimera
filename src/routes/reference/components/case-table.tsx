@@ -1,3 +1,4 @@
+import { cn } from "tailwind-variants";
 import type React from "react";
 
 import {
@@ -8,7 +9,6 @@ import {
 } from "@/components/GrammarTable";
 import { GENDER_SCHEME, SCHEME } from "@/constants/grammar-palette";
 import type { Gender } from "@/server/db/enums";
-import { cn } from "@/lib/utils";
 import { GreekText } from "@/components/GreekText";
 
 interface GenderData {
