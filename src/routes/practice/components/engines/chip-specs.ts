@@ -16,10 +16,11 @@ import {
 import { caseScheme, genderScheme } from "@/constants/grammar-palette";
 import type { Gender, NominalCase as Case } from "@/server/db/enums";
 
+import type { Person } from "./drill-constants";
+
 export type { Gender, NominalCase as Case } from "@/server/db/enums";
 
 type Num = "singular" | "plural";
-type Person = "first" | "second" | "third";
 
 /** Colour is absent on purpose: it comes from the palette at the point of use. */
 interface ChipSpec {

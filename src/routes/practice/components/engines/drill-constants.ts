@@ -2,8 +2,7 @@ import { genderScheme } from "@/constants/grammar-palette";
 import type { Gender } from "@/server/db/enums";
 
 export const persons = ["first", "second", "third"] as const;
-export const numbers = ["singular", "plural"] as const;
-type Person = (typeof persons)[number];
+export type Person = (typeof persons)[number];
 
 /** A gender chip claims a gender, so it takes the reserved gender tokens. */
 const genderSelector = (g: Gender) => ({

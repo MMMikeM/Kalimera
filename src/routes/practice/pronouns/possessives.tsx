@@ -1,17 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { genderScheme } from "@/constants/grammar-palette";
-import { type Gender, genders } from "@/server/db/enums";
+import { type Gender, genders, grammaticalNumbers } from "@/server/db/enums";
 
 import { GENDER_CHIP, HERO_TEXT, NUMBER_CHIP, PERSON_CHIP } from "../components/engines/chip-specs";
 import type { DrillForm } from "../components/engines/deck";
 import { Drill, type DimensionSpec } from "../components/engines/drill";
-import { PERSON_LABELS, numbers, persons } from "../components/engines/drill-constants";
+import { PERSON_LABELS, type Person, persons } from "../components/engines/drill-constants";
 import { ForwardPromptCard } from "../components/engines/forward-prompt-card";
 import { dimensionFor } from "../components/engines/reverse/multi-select";
 import { NUMBER_COLUMNS, Paradigm, type ParadigmRow } from "../components/paradigm";
 
-type Person = "first" | "second" | "third";
 type Num = "singular" | "plural";
 type DimKey = "person" | "number" | "gender";
 
@@ -115,7 +114,7 @@ const local = () => ({ bg: "bg-olive-100", text: "text-olive-text" });
 
 const DIMENSIONS: DimensionSpec<DimKey>[] = [
 	dim({ key: "person", values: persons, label: (v) => PERSON_LABELS[v], selectorStyle: local }),
-	dim({ key: "number", values: numbers, selectorStyle: local }),
+	dim({ key: "number", values: grammaticalNumbers, selectorStyle: local }),
 	dim({
 		key: "gender",
 		values: genders,
