@@ -123,4 +123,4 @@ Asymmetric content reflects honest priority. Owner has fewer drills than Doer be
 - **Vocabulary + cases**: seeded into `vocabulary` + `nominal_forms` via `src/scripts/seed.ts`. Enrichment in `noun-seed-enrichment.ts` calls `declineNoun` to populate all (case × number) cells; `adjective-seed-enrichment.ts` calls `declineAdjective` for (case × number × gender) cells.
 - **Verb conjugations**: seeded inside the same `seed.ts` pipeline (calls `seedVerbConjugations()` at the end).
 
-See `src/db.server/CLAUDE.md` for query patterns.
+See `src/server/db/CLAUDE.md` for query patterns.

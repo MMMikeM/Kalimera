@@ -4,14 +4,14 @@ import { FreezeIndicator } from "@/components/FreezeIndicator";
 import { LandingPage } from "@/components/LandingPage";
 import { getDashboardDataFn } from "@/server/fns/dashboard";
 
-import { AllCaughtUpCTA } from "./components/AllCaughtUpCTA";
-import { FirstTimeUserCTA } from "./components/FirstTimeUserCTA";
+import { AllCaughtUpCTA } from "./components/AllCaughtUpCta";
+import { FirstTimeUserCTA } from "./components/FirstTimeUserCta";
 import {
 	LapsedUserCTA,
 	LAPSED_DAYS_THRESHOLD,
 	LAPSED_QUEUE_THRESHOLD,
-} from "./components/LapsedUserCTA";
-import { PracticeCTA } from "./components/PracticeCTA";
+} from "./components/LapsedUserCta";
+import { RustyDrillsCta } from "./components/RustyDrillsCta";
 import { StatsSummary } from "./components/StatsSummary";
 import { WeekStreak } from "./components/WeekStreak";
 
@@ -72,7 +72,7 @@ function DashboardRoute() {
 				/>
 			);
 		}
-		return <PracticeCTA rustyDrills={rustyDrills} />;
+		return <RustyDrillsCta rustyDrills={rustyDrills} />;
 	};
 
 	return (

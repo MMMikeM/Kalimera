@@ -45,9 +45,9 @@ The seeders (vocab + verb conjugations) are **idempotent additive upserts**. Re-
 
 - Self-documenting; comments only for non-obvious logic
 - Queen's English (colour, favourite)
-- Derive route types from loader: `Route.ComponentProps["loaderData"]`
+- Read loader data with `Route.useLoaderData()`; it is typed from the loader
 - Path alias: `@/` → `./src/`
-- After loader change, run `pnpm react-router typegen` if type errors
+- The Vite plugin regenerates `src/routeTree.gen.ts`; there is no separate typegen script
 
 ---
 

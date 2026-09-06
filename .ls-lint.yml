@@ -12,9 +12,20 @@ ls:
   src/components/ui:
     .tsx: kebab-case
 
-  # Routes - kebab-case
+  # Routes - kebab-case, plus the two shapes the router itself requires:
+  # __root.tsx and dynamic segments like $tab.tsx / $verbId.tsx.
   src/routes:
-    .tsx: kebab-case
+    .tsx: kebab-case | regex:^__root$ | regex:^\$[a-zA-Z]+$
+    .ts: kebab-case
+
+  # Route-local components are PascalCase, as in src/components
+  src/routes/components:
+    .tsx: PascalCase
+  src/routes/practice/components:
+    .tsx: PascalCase | kebab-case
+    .ts: kebab-case
+  src/routes/reference/components:
+    .tsx: PascalCase | kebab-case
     .ts: kebab-case
 
   # Scripts - kebab-case
