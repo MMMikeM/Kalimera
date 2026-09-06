@@ -1,7 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { genderScheme } from "@/constants/grammar-palette";
-import { type Gender, genders, grammaticalNumbers } from "@/server/db/enums";
+import {
+	type Gender,
+	type GrammaticalNumber,
+	genders,
+	grammaticalNumbers,
+} from "@/server/db/enums";
 
 import { GENDER_CHIP, HERO_TEXT, NUMBER_CHIP, PERSON_CHIP } from "../components/engines/chip-specs";
 import type { DrillForm } from "../components/engines/deck";
@@ -11,12 +16,11 @@ import { ForwardPromptCard } from "../components/engines/forward-prompt-card";
 import { dimensionFor } from "../components/engines/reverse/multi-select";
 import { NUMBER_COLUMNS, Paradigm, type ParadigmRow } from "../components/paradigm";
 
-type Num = "singular" | "plural";
 type DimKey = "person" | "number" | "gender";
 
 interface Possessive extends DrillForm {
 	person: Person;
-	number: Num;
+	number: GrammaticalNumber;
 	gender: Gender | "";
 }
 
