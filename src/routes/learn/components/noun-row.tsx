@@ -5,7 +5,7 @@ import { GreekText } from "@/components/GreekText";
 import { GENDER_ROW_BORDER, caseScheme, genderScheme } from "@/constants/grammar-palette";
 import { getArticle } from "@/lib/greek-grammar";
 import type { BrowsableNoun, NounGender } from "@/lib/noun-browser-groups";
-import type { NominalCase } from "@/server/db/enums";
+import type { GrammaticalNumber, NominalCase } from "@/server/db/enums";
 
 const GENDER_STYLES: Record<NounGender, { text: string; bg: string; border: string }> = {
 	masculine: { ...genderScheme("masculine"), border: GENDER_ROW_BORDER.masculine },
@@ -46,7 +46,7 @@ const CASE_ROWS = [
 	{ key: "genitive", handle: "Owner", grammar: "Genitive" },
 ] as const satisfies readonly { key: NominalCase; handle: string; grammar: string }[];
 
-const cell = (noun: BrowsableNoun, caseKey: string, number: "singular" | "plural") => {
+const cell = (noun: BrowsableNoun, caseKey: string, number: GrammaticalNumber) => {
 	const stored = noun.forms[`${caseKey}_${number}`];
 	if (!stored) return null;
 	return stored.article ? `${stored.article} ${stored.form}` : stored.form;

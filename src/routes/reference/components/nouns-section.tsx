@@ -14,7 +14,7 @@ import { GreekText } from "@/components/GreekText";
 import { SectionHeading } from "@/components/SectionHeading";
 import { AGREEMENT_PARADIGMS, type AgreementParadigm } from "@/constants/agreement";
 import { GENDER_SCHEME, SCHEME } from "@/constants/grammar-palette";
-import type { Gender } from "@/server/db/enums";
+import type { Gender, GrammaticalNumber } from "@/server/db/enums";
 
 import type { NounsData } from "../$tab";
 
@@ -22,7 +22,6 @@ import type { NounsData } from "../$tab";
  * the table look cells up by key instead of by row position. */
 type CaseKey = "nom" | "acc" | "gen" | "voc";
 type RoleCase = Exclude<CaseKey, "voc">;
-type GrammaticalNumber = "singular" | "plural";
 type ViewMode = "endings" | "full";
 
 const ROLE_CASES: RoleCase[] = ["nom", "acc", "gen"];
