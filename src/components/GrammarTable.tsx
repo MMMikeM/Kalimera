@@ -24,6 +24,10 @@ interface GrammarTableProps {
 	cells: React.ReactNode[][];
 	scheme?: GrammarScheme;
 	density?: "compact" | "roomy";
+	/** Paradigm grids read better centred; prose-ish tables stay left. */
+	align?: "left" | "center";
+	/** Screen-reader name for the empty corner cell above the row headers. */
+	rowHeaderLabel?: string;
 	className?: string;
 }
 
@@ -39,6 +43,10 @@ const grammarTable = tv({
 		cell: "px-2 py-2",
 	},
 	variants: {
+		align: {
+			left: {},
+			center: { colHeader: "text-center", cell: "text-center" },
+		},
 		density: {
 			compact: {},
 			roomy: {
@@ -50,6 +58,7 @@ const grammarTable = tv({
 	},
 	defaultVariants: {
 		density: "compact",
+		align: "left",
 	},
 });
 
@@ -71,17 +80,21 @@ export const GrammarTable: React.FC<GrammarTableProps> = ({
 	cells,
 	scheme,
 	density,
+	align,
+	rowHeaderLabel = "Row",
 	className,
 }) => {
 	const { root, headerRow, colHeader, bodyRow, rowHeader, rowLabel, rowSublabel, cell } =
-		grammarTable({ density });
+		grammarTable({ density, align });
 	const borderColor = scheme ? SCHEME[scheme].border : "border-stone-200";
 
 	return (
 		<table className={root({ class: className })}>
 			<thead>
 				<tr className={headerRow({ class: borderColor })}>
-					<th className={colHeader({ class: "w-20" })} />
+					<th className={colHeader({ class: "w-20" })} scope="col">
+						<span className="sr-only">{rowHeaderLabel}</span>
+					</th>
 					{columns.map((col) => {
 						const style = col.scheme ? SCHEME[col.scheme] : null;
 						return (

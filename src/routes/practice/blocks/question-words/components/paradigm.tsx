@@ -1,9 +1,6 @@
-import { GreekText } from "@/components/GreekText";
+import type { ColumnDef } from "@/components/GrammarTable";
 
-interface ParadigmRow {
-	label: string;
-	forms: readonly string[];
-}
+import { Paradigm, type ParadigmRow } from "../../../components/paradigm";
 
 interface QuestionWordParadigmProps {
 	caption: string;
@@ -12,48 +9,19 @@ interface QuestionWordParadigmProps {
 	children: React.ReactNode;
 }
 
+/** ποιος / πόσος agreement grids: the shared paradigm, with plain column labels. */
 export const QuestionWordParadigm = ({
 	caption,
 	columns,
 	rows,
 	children,
 }: QuestionWordParadigmProps) => (
-	<div className="mb-6 overflow-x-auto">
-		<p className="mb-2 text-xs tracking-widest text-muted-foreground uppercase">{caption}</p>
-		<table className="w-full border-collapse text-sm">
-			<thead>
-				<tr>
-					<th
-						aria-label="Gender"
-						className="py-1 pr-4 text-left text-xs font-normal text-muted-foreground"
-					/>
-					{columns.map((column) => (
-						<th
-							key={column}
-							className="px-3 py-1 text-center text-xs font-medium text-muted-foreground"
-						>
-							{column}
-						</th>
-					))}
-				</tr>
-			</thead>
-			<tbody>
-				{rows.map((row) => (
-					<tr key={row.label} className="border-t border-stone-100">
-						<td className="py-1.5 pr-4 text-xs font-medium text-terracotta-text">{row.label}</td>
-						{row.forms.map((form, i) => (
-							<GreekText
-								as="td"
-								key={`${row.label}-${columns[i]}`}
-								className="px-3 py-1.5 text-center"
-							>
-								{form}
-							</GreekText>
-						))}
-					</tr>
-				))}
-			</tbody>
-		</table>
-		<p className="mt-2 text-xs text-muted-foreground">{children}</p>
-	</div>
+	<Paradigm
+		className="mb-6"
+		caption={caption}
+		columns={columns.map((label): ColumnDef => ({ key: label, label }))}
+		rows={rows}
+	>
+		{children}
+	</Paradigm>
 );
