@@ -112,7 +112,6 @@ function ImperativesDrill() {
 		<Drill
 			drillId="verbs-imperatives"
 			items={IMPERATIVES}
-			title="Imperatives"
 			subtitle="15 forms / timed"
 			colorTheme="terracotta"
 			forwardDesc="English command → Greek imperative"

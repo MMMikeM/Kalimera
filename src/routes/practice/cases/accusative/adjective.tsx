@@ -192,7 +192,6 @@ function AdjectiveAgreementTargetDrill() {
 			backTo={"/practice/cases/"}
 			drillId="adjectives-agreement-target"
 			items={ITEMS}
-			title="Adjective agreement (Target)"
 			subtitle="60 forms / timed"
 			colorTheme="terracotta"
 			forwardDesc="English + gender → adjective form (Target)"

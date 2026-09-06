@@ -22,9 +22,7 @@ function TenseRecognitionDrill() {
 	return (
 		<VocabDrillPage
 			drillId="verbs-tense-recognition"
-			category="verbs"
 			backTo="/practice/verbs"
-			title="Which tense?"
 			subtitle="σήμερα · χθες · αύριο / timed"
 			forwardDesc="English meaning + time word → Greek form"
 			reverseLabel="Greek → tense"

@@ -68,7 +68,6 @@ function ArticleTargetDrill() {
 			backTo={"/practice/cases/"}
 			drillId="articles-article-target"
 			items={FORMS}
-			title="Article (Target)"
 			subtitle="Accusative articles"
 			colorTheme="terracotta"
 			forwardDesc="Gender + number → article (Target)"

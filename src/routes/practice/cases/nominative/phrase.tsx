@@ -247,7 +247,6 @@ function PhraseDoerDrill() {
 			backTo={"/practice/cases/"}
 			drillId="nominal-phrase-doer"
 			items={PHRASES}
-			title="Doer phrase"
 			subtitle="30 noun phrases / timed"
 			colorTheme="ocean"
 			forwardDesc="English → article + adjective + noun (Doer form)"
