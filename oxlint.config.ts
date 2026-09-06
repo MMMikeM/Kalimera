@@ -7,8 +7,10 @@ const ARBITRARY_VALUE_PATTERN = "-\\[([^\\[\\]]*?)\\](?!:)";
 
 // Role tokens are named in src/constants/grammar-palette.ts; everything else
 // reads SCHEME. That file and GreekText are exempted in the overrides below.
+// The plugin matches each whitespace-split chunk with its variants attached, so
+// the utility is anchored to the start, a variant `:` or the important `!`.
 const ROLE_TOKEN_PATTERN =
-	"^(?:bg|text|border|ring|fill|stroke|divide|outline|accent)-(?:case|gender)-(?:nominative|accusative|genitive|masculine|feminine|neuter)";
+	"(?:^|[:!])(?:bg|text|border|ring|fill|stroke|divide|outline|accent)-(?:case|gender)-(?:nominative|accusative|genitive|masculine|feminine|neuter)";
 
 export default defineConfig({
 	plugins: ["eslint", "typescript", "unicorn", "oxc", "react", "import", "jsx-a11y"],
@@ -84,8 +86,9 @@ export default defineConfig({
 			},
 		},
 		{
-			// Names the six tones so Tailwind's scanner can see them.
-			files: ["src/components/GreekText.tsx"],
+			// The two files allowed to name a role token: the palette itself, and
+			// GreekText's six tones, spelled out so Tailwind's scanner can see them.
+			files: ["src/constants/grammar-palette.ts", "src/components/GreekText.tsx"],
 			rules: {
 				"better-tailwindcss/no-restricted-classes": "off",
 			},
