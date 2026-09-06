@@ -1,4 +1,5 @@
-.PHONY: dev build deploy preview help duplicates duplicates-report duplicates-llm
+.PHONY: dev build deploy preview help duplicates duplicates-report duplicates-llm \
+	db-push db-studio db-seed db-setup db-push-local
 
 # Development
 dev:
@@ -11,19 +12,27 @@ preview:
 	pnpm preview
 
 
-# Production database (Turso Cloud - loads from .env.prod)
-# Note: Uses generate + migrate to avoid transaction bug with db:push and PRAGMA foreign_keys
-prod-db-push:
-	set -a && . ./.env.prod && set +a && pnpm drizzle-kit generate && \
-	set -a && . ./.env.prod && set +a && pnpm drizzle-kit migrate
+# Production database (Turso Cloud)
+# `.env` already holds the production credentials and drizzle-kit auto-loads it,
+# so these hit prod directly. There is no .env.prod; the prod-db-* targets that
+# sourced one could never run and have been removed.
+db-push:
+	pnpm db:push
 
-prod-db-seed:
-	set -a && . ./.env.prod && set +a && pnpm db:seed
+db-studio:
+	pnpm db:studio
 
-prod-db-setup: prod-db-push prod-db-seed
+# db:seed does not load .env by itself. Seeding is an idempotent additive
+# upsert, so re-running against prod only adds and updates rows.
+db-seed:
+	node --env-file=.env --import tsx src/scripts/seed.ts
 
-prod-db-studio:
-	set -a && . ./.env.prod && set +a && pnpm db:studio
+db-setup: db-push db-seed
+
+# Schema-only iteration against a local file, no Docker: a file: URL makes
+# drizzle.config.ts drop the auth token and use the embedded driver.
+db-push-local:
+	TURSO_DATABASE_URL=file:./local.db pnpm exec drizzle-kit push
 
 # Code quality
 duplicates:
@@ -44,9 +53,10 @@ help:
 	@echo "  build            - Build for production"
 	@echo "  preview          - Serve production build locally"
 	@echo ""
-	@echo "Production Database (Turso):"
-	@echo "  prod-db-push              - Push schema to production"
-	@echo "  prod-db-seed              - Seed production database (vocab + verb conjugations)"
-	@echo "  prod-db-setup             - Push schema and seed production"
-	@echo "  prod-db-studio            - Open Drizzle Studio (production)"
+	@echo "Database (Turso — .env holds PRODUCTION credentials):"
+	@echo "  db-push          - Push schema to production"
+	@echo "  db-seed          - Seed production (vocab + verb conjugations; idempotent)"
+	@echo "  db-setup         - Push schema and seed production"
+	@echo "  db-studio        - Open Drizzle Studio (production)"
+	@echo "  db-push-local    - Push schema to a local file DB (no Docker, no prod)"
 

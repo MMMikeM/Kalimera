@@ -1,11 +1,11 @@
 import { Clock } from "lucide-react";
+import { cn } from "tailwind-variants";
 
 import { ContentSection, TwoColumnList } from "@/components/ContentSection";
+import { GreekText } from "@/components/GreekText";
 import { TabHero } from "@/components/TabHero";
-import { cn } from "@/lib/utils";
 
 import type { PhraseItem, PhrasesLoaderData } from "../components/shared";
-import { GreekText } from "@/components/GreekText";
 
 type TimeListItem = {
 	id: string | number;

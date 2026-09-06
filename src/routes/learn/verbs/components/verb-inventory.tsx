@@ -1,13 +1,13 @@
 import { Link } from "@tanstack/react-router";
 import type React from "react";
 import { useState } from "react";
+import { cn } from "tailwind-variants";
 
 import { CollapsibleSection } from "@/components/CollapsibleSection";
+import { GreekText } from "@/components/GreekText";
 import { type AoristClass, classifyAorist } from "@/lib/aorist-class";
 import { deviatingPersons } from "@/lib/paradigm-deviation";
-import { cn } from "@/lib/utils";
 import type { VerbInventoryRow } from "@/server/db/queries/vocabulary";
-import { GreekText } from "@/components/GreekText";
 
 interface ClassifiedVerb {
 	id: number;
@@ -85,7 +85,11 @@ const ParadigmGrid: React.FC<{ paradigm: Paradigm }> = ({ paradigm }) => {
 						<td className="w-16 py-0.5 text-xs text-stone-400">{label}</td>
 						{TENSES.map((tense) => (
 							<td key={tense} className="py-0.5 pr-3">
-								<GreekText tone="accent" size="sm" className={weightOf(key, deviating[tense] ?? [])}>
+								<GreekText
+									tone="accent"
+									size="sm"
+									className={weightOf(key, deviating[tense] ?? [])}
+								>
 									{paradigm[tense]?.[key] ?? "—"}
 								</GreekText>
 							</td>
@@ -157,8 +161,8 @@ const VerbRow: React.FC<{
 						<div className="rounded-lg bg-stone-50 px-3 py-2">
 							<ParadigmGrid paradigm={paradigm} />
 							<p className="mt-1.5 text-xs text-stone-400">
-								<span className="font-semibold text-stone-900">Bold</span> = breaks the usual pattern —
-								worth memorising
+								<span className="font-semibold text-stone-900">Bold</span> = breaks the usual
+								pattern — worth memorising
 							</p>
 						</div>
 					</td>
@@ -214,7 +218,14 @@ const irregularGroup = (verb: ClassifiedVerb): string => {
 	const p = plain(verb.present);
 	const a = plain(verb.aorist).replace(/^[εη]/, "");
 	if (p.endsWith("αινω")) return "aino";
-	if (!a.startsWith(plain(verb.present).slice(0, 2).replace(/[^α-ω]/g, ""))) return "suppletive";
+	if (
+		!a.startsWith(
+			plain(verb.present)
+				.slice(0, 2)
+				.replace(/[^α-ω]/g, ""),
+		)
+	)
+		return "suppletive";
 	if (/[^σξψ]α$/.test(a)) return "bare";
 	return "stem";
 };
@@ -266,7 +277,10 @@ export const MemoriseSection: React.FC<{
 				return (
 					<div
 						key={group.key}
-						className={cn("overflow-hidden rounded-xl border border-l-4 border-stone-200", group.accent)}
+						className={cn(
+							"overflow-hidden rounded-xl border border-l-4 border-stone-200",
+							group.accent,
+						)}
 					>
 						<div className="border-b border-stone-100 px-4 py-2.5">
 							<div className="flex items-baseline gap-2">

@@ -98,7 +98,9 @@ export function TimeSubtab({ data }: Props) {
 							// eslint-disable-next-line better-tailwindcss/no-restricted-classes -- 60/40 layout, no token fit
 							className="grid grid-cols-[3fr_2fr] items-center gap-x-3 px-3 py-2.5"
 						>
-							<GreekText tone="accent" size="lg">{time.greekText}</GreekText>
+							<GreekText tone="accent" size="lg">
+								{time.greekText}
+							</GreekText>
 							<div>
 								<span className="text-sm text-stone-500">{time.englishTranslation}</span>
 								{time.timeRange && (
@@ -160,7 +162,9 @@ export function TimeSubtab({ data }: Props) {
 								<div className="text-xs text-stone-500">on Tuesday (specific)</div>
 							</div>
 							<div>
-								<GreekText tone="accent" size="lg">κάθε Τρίτη</GreekText>
+								<GreekText tone="accent" size="lg">
+									κάθε Τρίτη
+								</GreekText>
 								<div className="text-xs text-stone-500">every Tuesday (no article)</div>
 							</div>
 							<div>

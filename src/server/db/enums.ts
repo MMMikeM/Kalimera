@@ -18,6 +18,11 @@ export type Gender = (typeof genders)[number];
 export const grammaticalCases = ["nominative", "genitive", "accusative", "vocative"] as const;
 export type GrammaticalCase = (typeof grammaticalCases)[number];
 
+// The three cases the drills and paradigm grids cover. Vocative is taught in
+// the reference but never drilled, so anything drill-facing takes this.
+export const nominalCases = ["nominative", "accusative", "genitive"] as const;
+export type NominalCase = (typeof nominalCases)[number];
+
 // Display sections for UI organization (tag_sections lookup table)
 export const displaySections = ["nouns", "verbs", "phrases", "reference"] as const;
 export type DisplaySection = (typeof displaySections)[number];

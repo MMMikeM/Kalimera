@@ -10,7 +10,9 @@ export function ExampleList({ examples }: { examples: Example[] }) {
 		<div className="divide-y divide-stone-200/60">
 			{examples.map((example) => (
 				<div key={example.greek} className="px-3 py-2.5">
-					<GreekText tone="accent" size="lg">{example.greek}</GreekText>
+					<GreekText tone="accent" size="lg">
+						{example.greek}
+					</GreekText>
 					<div className="text-xs text-stone-500">{example.english}</div>
 				</div>
 			))}

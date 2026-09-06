@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 
+import { GreekText } from "@/components/GreekText";
+
 import type { DrillForm } from "../deck";
 import { drillActions, useDrillStore } from "../drill-store";
 import { ReverseFeedback, SelectorButton } from "../shells";
-import { GreekText } from "@/components/GreekText";
 
 interface SelectOption {
 	id: string;

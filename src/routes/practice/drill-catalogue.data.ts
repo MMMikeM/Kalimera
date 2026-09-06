@@ -7,13 +7,8 @@ import { PRONOUN_DRILLS } from "./pronouns/drills.data";
 import { VERB_PHASES } from "./verbs/drills.data";
 
 /**
- * Every practice drill, keyed by the id attempts are recorded under.
- *
- * Derived, never authored: each group owns its own entries and this file only
- * flattens them. That is what keeps the review queue honest — a drill cannot be
- * listed on its index page and missing here, which is how six question-word
- * drills, opposites and possessive-vs-article used to fall out of review
- * without anything failing.
+ * Every practice drill, keyed by the id attempts are recorded under. Derived,
+ * never authored: a drill listed on its index page cannot be missing here.
  */
 const ALL: DrillEntry[] = [
 	...CASE_PHASES.flatMap((p) => p.drills),

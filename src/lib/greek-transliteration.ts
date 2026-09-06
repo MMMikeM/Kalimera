@@ -106,7 +106,6 @@ export const greekToPhonetic = (greek: string): string => {
 	return output.replaceAll(DIGRAPH_BREAK, "");
 };
 
-
 /**
  * Normalize user input for comparison.
  * - Lowercase

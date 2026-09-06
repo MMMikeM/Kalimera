@@ -1,4 +1,5 @@
 import type React from "react";
+import { cn } from "tailwind-variants";
 
 import {
 	CASE_ROW_DEFS,
@@ -6,10 +7,9 @@ import {
 	GENDER_COLUMN_DEFS,
 	GrammarTable,
 } from "@/components/GrammarTable";
+import { GreekText } from "@/components/GreekText";
 import { GENDER_SCHEME, SCHEME } from "@/constants/grammar-palette";
 import type { Gender } from "@/server/db/enums";
-import { cn } from "@/lib/utils";
-import { GreekText } from "@/components/GreekText";
 
 interface GenderData {
 	masculine: { nom: string; acc: string; gen: string };
@@ -54,7 +54,12 @@ const CaseTable: React.FC<{ label: string; data: GenderData; hero?: boolean }> =
 					{data[g][c]}
 				</GreekText>
 			) : (
-				<GreekText tone="default" size="sm" key={`${c}-${g}`} className={`font-semibold ${SCHEME[GENDER_SCHEME[g]].text}`}>
+				<GreekText
+					tone="default"
+					size="sm"
+					key={`${c}-${g}`}
+					className={`font-semibold ${SCHEME[GENDER_SCHEME[g]].text}`}
+				>
 					{data[g][c]}
 				</GreekText>
 			),

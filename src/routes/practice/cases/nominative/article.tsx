@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import type { SimpleListItem } from "../../components/engines/deck";
 import { Drill } from "../../components/engines/drill";
-import { ParadigmTable } from "../../components/ParadigmTable";
+import { GENDER_COLUMNS, Paradigm } from "../../components/paradigm";
 
 // Articles in Doer (nominative): ο · η · το · οι · οι · τα
 // Forward: "the (m, sg)" → type "o" (matchPhonetic → ο)
@@ -58,8 +58,8 @@ export const Route = createFileRoute("/practice/cases/nominative/article")({
 });
 
 const PARADIGM_ROWS = [
-	{ label: "Nom sg", forms: ["ο", "η", "το"] as [string, string, string] },
-	{ label: "Nom pl", forms: ["οι", "οι", "τα"] as [string, string, string] },
+	{ label: "Nom sg", forms: ["ο", "η", "το"] },
+	{ label: "Nom pl", forms: ["οι", "οι", "τα"] },
 ];
 
 function ArticleDoerDrill() {
@@ -69,10 +69,11 @@ function ArticleDoerDrill() {
 			drillId="articles-article-doer"
 			items={FORMS}
 			subtitle="Nominative articles"
-			colorTheme="ocean"
 			forwardDesc="Gender + number → article (Doer)"
 			reverseDesc="Article → recall gender + number (self-assess)"
-			configExtras={<ParadigmTable rows={PARADIGM_ROWS} />}
+			configExtras={
+				<Paradigm className="my-8 mb-12" columns={GENDER_COLUMNS} rows={PARADIGM_ROWS} />
+			}
 		/>
 	);
 }

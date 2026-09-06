@@ -182,7 +182,6 @@ describe("masculine -os antepenult stress shift", () => {
 	});
 });
 
-
 // ─── Synizesis: unstressed ι before a vowel is a glide, not a syllable ────────
 
 describe("-ιος nouns do not shift stress", () => {

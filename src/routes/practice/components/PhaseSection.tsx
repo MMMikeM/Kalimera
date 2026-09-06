@@ -1,9 +1,12 @@
 import type React from "react";
 
+import { SCHEME } from "@/constants/grammar-palette";
+
+/** Doer/Target/Owner name a case role; Review mixes them and claims none. */
 const PHASE_TINT: Record<string, string> = {
-	Doer: "text-ocean-600 border-ocean/50",
-	Target: "text-terracotta-600 border-terracotta/50",
-	Owner: "text-olive-600 border-olive/50",
+	Doer: `${SCHEME["case-nominative"].text} ${SCHEME["case-nominative"].border}`,
+	Target: `${SCHEME["case-accusative"].text} ${SCHEME["case-accusative"].border}`,
+	Owner: `${SCHEME["case-genitive"].text} ${SCHEME["case-genitive"].border}`,
 	Review: "text-muted-foreground border-border",
 };
 export const PhaseSection = ({ phase, children }: { phase: string; children: React.ReactNode }) => {

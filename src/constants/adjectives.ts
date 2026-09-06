@@ -1,3 +1,4 @@
+import type { Gender } from "@/server/db/enums";
 // Adjective Paradigms
 // Shows how adjectives must agree with nouns in gender, case, and number
 
@@ -205,7 +206,7 @@ export interface AgreementExample {
 		adjective: string;
 		noun: string;
 	};
-	gender: "masculine" | "feminine" | "neuter";
+	gender: Gender;
 	case: "Nom" | "Acc" | "Gen";
 }
 

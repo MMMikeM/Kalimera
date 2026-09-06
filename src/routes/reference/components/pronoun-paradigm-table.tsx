@@ -3,9 +3,10 @@ import { GreekText } from "@/components/GreekText";
 import { CASE_SCHEME, type GrammarScheme } from "@/constants/grammar-palette";
 import type { PronounForm, PronounParadigm } from "@/constants/pronouns";
 import type { CaseName } from "@/constants/recognition";
+import type { NominalCase } from "@/server/db/enums";
 
 /** `case-nominative` → the GreekText tone of the same name. */
-type CaseVariant = "nominative" | "accusative" | "genitive";
+type CaseVariant = NominalCase;
 const toneOf = (scheme: GrammarScheme): CaseVariant => scheme.replace("case-", "") as CaseVariant;
 
 const PRONOUN_COLUMNS: ColumnDef[] = [

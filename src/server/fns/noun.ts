@@ -5,6 +5,7 @@ import { adjacentCefrPool } from "@/lib/cefr";
 import { typedEntries } from "@/lib/object";
 import type { DrillBucket, SimpleListItem } from "@/routes/practice/components/engines/deck";
 import { requireAuth } from "@/server/auth/session";
+import type { NominalCase } from "@/server/db/enums";
 import { getDrillVocabPool } from "@/server/db/queries/drill-pool";
 import { getVocabularyWithNominalForms } from "@/server/db/queries/nominal-forms";
 import { ensureUserProgress } from "@/server/db/queries/user-progress";
@@ -13,7 +14,7 @@ import { ensureUserProgress } from "@/server/db/queries/user-progress";
  *  Pool is SRS-aware: nouns the user has been exposed to in their CEFR band. */
 async function getNounDrillItemsImpl(
 	userId: number,
-	grammaticalCase: "nominative" | "accusative" | "genitive",
+	grammaticalCase: NominalCase,
 	drillId: string,
 	{ stripArticleForReverse = false } = {},
 ): Promise<SimpleListItem[]> {

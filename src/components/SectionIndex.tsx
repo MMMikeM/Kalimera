@@ -33,7 +33,8 @@ const GROUP_TINTS = [
 	"border-cream-300 bg-cream-200 text-cream-800",
 ] as const;
 
-const tintFor = (index: number): string => GROUP_TINTS[index % GROUP_TINTS.length] ?? GROUP_TINTS[0];
+const tintFor = (index: number): string =>
+	GROUP_TINTS[index % GROUP_TINTS.length] ?? GROUP_TINTS[0];
 
 const TopicIcon = ({ children }: { children: ReactNode }) => (
 	<div className="flex size-10 items-center justify-center rounded-lg bg-white/70">{children}</div>

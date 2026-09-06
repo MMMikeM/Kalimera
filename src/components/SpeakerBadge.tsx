@@ -1,6 +1,5 @@
 import type React from "react";
-
-import { cn } from "@/lib/utils";
+import { cn } from "tailwind-variants";
 
 export type SpeakerRole = "host" | "you" | "friend" | "waiter" | "shopkeeper" | "stranger";
 

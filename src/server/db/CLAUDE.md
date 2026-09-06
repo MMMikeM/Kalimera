@@ -5,7 +5,7 @@ Drizzle ORM + Turso (distributed SQLite). Every query pay 100-400ms network late
 ## Key Files
 
 ```
-schema.ts       # Table definitions
+schema.ts       # Re-exports schema-{auth,language,practice}.ts
 relations.ts    # Drizzle relations for Query API
 queries/        # Query functions (import from here)
 types.ts        # Derived types from schema
@@ -27,15 +27,12 @@ const vocab = await db.query.vocabulary.findFirst({
 });
 
 // Import queries in routes
-import { getVocabBySection } from "@/db.server/queries/vocabulary";
+import { getVocabBySection } from "@/server/db/queries/vocabulary";
 ```
 
 ## When to Defer
 
-**Use `drizzle-db-specialist` agent for:**
+Read the `drizzle` skill before writing any Drizzle code — this project is on
+v1, whose API differs from v0.
 
-- Complex joins or aggregations
-- Query optimization / N+1 fixes
-- Schema design or migrations
-- Composite key relations
 - Streaming / loader performance patterns

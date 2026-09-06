@@ -1,7 +1,8 @@
 import { AlertCircle, CheckCircle } from "lucide-react";
 
-import { Card } from "./Card";
 import { GreekText } from "@/components/GreekText";
+
+import { Card } from "./Card";
 
 interface Mistake {
 	wrong: string;

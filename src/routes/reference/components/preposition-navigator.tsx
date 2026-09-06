@@ -1,8 +1,8 @@
 import { ArrowLeft, Gift, MapPin, Users } from "lucide-react";
 
-import { NavigatorCard, NavigatorCell } from "@/components/cards";
-import { PREPOSITION_NAVIGATOR_OPTIONS } from "@/constants/prepositions";
+import { NavigatorCard, NavigatorCell } from "@/components/cards/NavigatorCard";
 import { GreekText } from "@/components/GreekText";
+import { PREPOSITION_NAVIGATOR_OPTIONS } from "@/constants/prepositions";
 
 const ICONS = {
 	MapPin,
