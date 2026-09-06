@@ -1,15 +1,10 @@
 import { ContentSection } from "@/components/ContentSection";
 import { GreekText } from "@/components/GreekText";
+import { genderScheme } from "@/constants/grammar-palette";
 import { type Gender, getArticle } from "@/lib/greek-grammar";
 
 import type { EssentialsLoaderData } from "../$subtab";
 import { EssentialsBackLink } from "./essentials-back-link";
-
-const ARTICLE_STYLES: Record<Gender, string> = {
-	masculine: "bg-gender-masculine-100 text-gender-masculine-text",
-	feminine: "bg-gender-feminine-100 text-gender-feminine-text",
-	neuter: "bg-gender-neuter-100 text-gender-neuter-text",
-};
 
 /**
  * The article is derived from the noun's gender rather than baked into
@@ -31,7 +26,9 @@ const CalendarName = ({
 	>
 		<span className="flex items-baseline gap-2">
 			{gender && (
-				<span className={`rounded px-1.5 py-0.5 text-sm font-bold ${ARTICLE_STYLES[gender]}`}>
+				<span
+					className={`rounded px-1.5 py-0.5 text-sm font-bold ${genderScheme(gender).bg} ${genderScheme(gender).text}`}
+				>
 					{getArticle(gender)}
 				</span>
 			)}

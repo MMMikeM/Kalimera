@@ -1,4 +1,4 @@
-import type { Gender } from "@/server/db/enums";
+import type { Gender, NominalCase } from "@/server/db/enums";
 
 import type { CaseName } from "./recognition";
 
@@ -142,4 +142,41 @@ export const GENDER_SCHEME: Record<Gender, GrammarScheme> = {
 	masculine: "gender-masculine",
 	feminine: "gender-feminine",
 	neuter: "gender-neuter",
+};
+
+/** The learner-facing name for each role case: the UI says Doer, routes say nominative. */
+export const ROLE_SCHEME = {
+	doer: "case-nominative",
+	target: "case-accusative",
+	owner: "case-genitive",
+} as const satisfies Record<string, GrammarScheme>;
+
+export type CaseRoleName = keyof typeof ROLE_SCHEME;
+
+/** The prose case name the reference uses, to the enum the drills and DB use. */
+export const CASE_KEY: Record<CaseName, NominalCase> = {
+	Nominative: "nominative",
+	Accusative: "accusative",
+	Genitive: "genitive",
+};
+
+export const caseScheme = (c: NominalCase) => SCHEME[`case-${c}`];
+
+export const genderScheme = (g: Gender) => SCHEME[GENDER_SCHEME[g]];
+
+// Steps SCHEME does not carry. Spelled out because Tailwind only sees literal
+// class names, and kept here so this file stays the only one naming a role token.
+
+/** A paradigm panel tints a whole gender block: heavier border, washed fill. */
+export const GENDER_PANEL: Record<Gender, { border: string; bg: string }> = {
+	masculine: { border: "border-gender-masculine-300", bg: "bg-gender-masculine-100/40" },
+	feminine: { border: "border-gender-feminine-300", bg: "bg-gender-feminine-100/40" },
+	neuter: { border: "border-gender-neuter-300", bg: "bg-gender-neuter-100/40" },
+};
+
+/** The noun browser stacks rows, so it needs a heavier rule than `SCHEME.border`. */
+export const GENDER_ROW_BORDER: Record<Gender, string> = {
+	masculine: "border-gender-masculine-500",
+	feminine: "border-gender-feminine-500",
+	neuter: "border-gender-neuter-500",
 };

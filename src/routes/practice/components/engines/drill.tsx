@@ -2,8 +2,7 @@ import { getRouteApi } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 
 import { GreekText } from "@/components/GreekText";
-import type { CaseRole } from "@/constants/drills";
-import { SCHEME, type GrammarScheme } from "@/constants/grammar-palette";
+import { ROLE_SCHEME, SCHEME } from "@/constants/grammar-palette";
 import { matchPhonetic } from "@/lib/greek-transliteration";
 import { DRILL_REGISTRY, drillTitle } from "@/routes/practice/drill-catalogue.data";
 import { startSessionFn, recordAttemptFn, completeSessionFn } from "@/server/fns/srs";
@@ -69,15 +68,9 @@ const BASE_THEME = {
 type ColorTheme = keyof typeof BASE_THEME;
 
 /** A declared case role takes the reserved tokens; `mixed` and `null` claim nothing. */
-const CASE_ROLE_SCHEME: Partial<Record<NonNullable<CaseRole>, GrammarScheme>> = {
-	doer: "case-nominative",
-	target: "case-accusative",
-	owner: "case-genitive",
-};
-
 const themeFor = (drillId: string, colorTheme: ColorTheme) => {
 	const role = DRILL_REGISTRY[drillId]?.caseRole;
-	const key = role ? CASE_ROLE_SCHEME[role] : undefined;
+	const key = role && role !== "mixed" ? ROLE_SCHEME[role] : undefined;
 	if (!key) return BASE_THEME[colorTheme];
 	const scheme = SCHEME[key];
 	return { bar: scheme.bar, selectorBg: scheme.bg, selectorText: scheme.text };

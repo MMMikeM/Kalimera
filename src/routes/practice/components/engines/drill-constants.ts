@@ -1,19 +1,20 @@
-import { SCHEME } from "@/constants/grammar-palette";
+import { genderScheme } from "@/constants/grammar-palette";
 import type { Gender } from "@/server/db/enums";
 
-type Person = "first" | "second" | "third";
+export const persons = ["first", "second", "third"] as const;
+export const numbers = ["singular", "plural"] as const;
+type Person = (typeof persons)[number];
 
 /** A gender chip claims a gender, so it takes the reserved gender tokens. */
+const genderSelector = (g: Gender) => ({
+	selectorBg: genderScheme(g).bg,
+	selectorText: genderScheme(g).text,
+});
+
 export const GENDER_STYLE: Record<Gender, { selectorBg: string; selectorText: string }> = {
-	masculine: {
-		selectorBg: SCHEME["gender-masculine"].bg,
-		selectorText: SCHEME["gender-masculine"].text,
-	},
-	feminine: {
-		selectorBg: SCHEME["gender-feminine"].bg,
-		selectorText: SCHEME["gender-feminine"].text,
-	},
-	neuter: { selectorBg: SCHEME["gender-neuter"].bg, selectorText: SCHEME["gender-neuter"].text },
+	masculine: genderSelector("masculine"),
+	feminine: genderSelector("feminine"),
+	neuter: genderSelector("neuter"),
 };
 
 /** Shared CATEGORIES list for drills covering singular (by gender) + plural. */
@@ -37,29 +38,22 @@ export const PERSON_LABELS: Record<Person, string> = {
 	third: "3rd",
 };
 
+/** Page-local axes, so their selectors claim no role colour. */
+const NEUTRAL = { selectorBg: "bg-stone-100", selectorText: "text-stone-800" };
+
 /** Shared DIMENSION_OPTIONS for reverse-mode tense selectors, anchored to time words. */
 export const TENSE_DIMENSION_OPTIONS = [
-	{ id: "past", label: "χθες · past", selectorBg: "bg-stone-100", selectorText: "text-stone-800" },
-	{
-		id: "present",
-		label: "σήμερα · present",
-		selectorBg: "bg-stone-100",
-		selectorText: "text-stone-800",
-	},
-	{
-		id: "future",
-		label: "αύριο · future",
-		selectorBg: "bg-stone-100",
-		selectorText: "text-stone-800",
-	},
+	{ id: "past", label: "χθες · past", ...NEUTRAL },
+	{ id: "present", label: "σήμερα · present", ...NEUTRAL },
+	{ id: "future", label: "αύριο · future", ...NEUTRAL },
 ];
 
 /** Shared DIMENSION_OPTIONS for reverse-mode person selectors (sg/pl × 1/2/3). */
 export const PERSON_DIMENSION_OPTIONS = [
-	{ id: "sg1", label: "I", selectorBg: "bg-stone-100", selectorText: "text-stone-800" },
-	{ id: "sg2", label: "you", selectorBg: "bg-stone-100", selectorText: "text-stone-800" },
-	{ id: "sg3", label: "he / she", selectorBg: "bg-stone-100", selectorText: "text-stone-800" },
-	{ id: "pl1", label: "we", selectorBg: "bg-stone-100", selectorText: "text-stone-800" },
-	{ id: "pl2", label: "you all", selectorBg: "bg-stone-100", selectorText: "text-stone-800" },
-	{ id: "pl3", label: "they", selectorBg: "bg-stone-100", selectorText: "text-stone-800" },
+	{ id: "sg1", label: "I", ...NEUTRAL },
+	{ id: "sg2", label: "you", ...NEUTRAL },
+	{ id: "sg3", label: "he / she", ...NEUTRAL },
+	{ id: "pl1", label: "we", ...NEUTRAL },
+	{ id: "pl2", label: "you all", ...NEUTRAL },
+	{ id: "pl3", label: "they", ...NEUTRAL },
 ];
