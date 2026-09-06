@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { GreekText } from "@/components/GreekText";
+import { NUMBER_COLUMNS, Paradigm, type ParadigmRow } from "../components/paradigm";
 
 import {
 	type Gender as ChipGender,
@@ -123,7 +123,7 @@ const PRONOUNS: ObjectPronoun[] = [
 	},
 ];
 
-const PARADIGM_ROWS: { label: string; forms: [string, string] }[] = [
+const PARADIGM_ROWS: ParadigmRow[] = [
 	{ label: "1st", forms: ["με", "μας"] },
 	{ label: "2nd", forms: ["σε", "σας"] },
 	{ label: "3rd masculine", forms: ["τον", "τους"] },
@@ -131,34 +131,8 @@ const PARADIGM_ROWS: { label: string; forms: [string, string] }[] = [
 	{ label: "3rd neuter", forms: ["το", "τα"] },
 ];
 
-const Paradigm = () => (
-	<div className="overflow-x-auto">
-		<table className="w-full border-collapse text-sm">
-			<thead>
-				<tr>
-					<th className="py-1 pr-4 text-left text-xs font-normal text-muted-foreground" />
-					<th className="px-3 py-1 text-center text-xs font-medium text-muted-foreground">
-						Singular
-					</th>
-					<th className="px-3 py-1 text-center text-xs font-medium text-muted-foreground">
-						Plural
-					</th>
-				</tr>
-			</thead>
-			<tbody>
-				{PARADIGM_ROWS.map((row) => (
-					<tr key={row.label} className="border-t border-stone-100">
-						<td className="py-1.5 pr-4 text-xs font-medium text-terracotta-text">{row.label}</td>
-						{row.forms.map((form, i) => (
-							<GreekText as="td" key={`${row.label}-${i}`} className="px-3 py-1.5 text-center">
-								{form}
-							</GreekText>
-						))}
-					</tr>
-				))}
-			</tbody>
-		</table>
-	</div>
+const PronounParadigm = () => (
+	<Paradigm columns={NUMBER_COLUMNS} rows={PARADIGM_ROWS} />
 );
 
 const DIMENSIONS: DimensionSpec<DimKey>[] = [
@@ -199,7 +173,7 @@ function PronounsDrill() {
 			reverseDesc="e.g. με → 1st / singular"
 			items={PRONOUNS}
 			reverse={{ kind: "multi-select", dimensions: DIMENSIONS }}
-			configExtras={<Paradigm />}
+			configExtras={<PronounParadigm />}
 			sessionSize={10}
 			forwardPrompt={(form) => {
 				const f = form as (typeof PRONOUNS)[number];

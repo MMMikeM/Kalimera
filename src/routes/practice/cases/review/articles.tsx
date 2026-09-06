@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { SCHEME } from "@/constants/grammar-palette";
-import { GreekText } from "@/components/GreekText";
+import { GENDER_COLUMNS, Paradigm } from "../../components/paradigm";
 
 import {
 	CASE_BAR,
@@ -179,11 +178,7 @@ const ARTICLES: Article[] = [
 const caseText = (c: ArticleCase) => CASE_CHIP[c].colorText;
 const caseBg = (c: ArticleCase) => CASE_BAR[c].bg;
 
-const PARADIGM_ROWS: {
-	label: string;
-	caseKey: ArticleCase;
-	forms: [string, string, string];
-}[] = [
+const PARADIGM_ROWS: { label: string; caseKey: ArticleCase; forms: string[] }[] = [
 	{ label: "Nom sg", caseKey: "nominative", forms: ["ο", "η", "το"] },
 	{ label: "Acc sg", caseKey: "accusative", forms: ["τον", "την", "το"] },
 	{ label: "Gen sg", caseKey: "genitive", forms: ["του", "της", "του"] },
@@ -192,38 +187,11 @@ const PARADIGM_ROWS: {
 	{ label: "Gen pl", caseKey: "genitive", forms: ["των", "των", "των"] },
 ];
 
-const Paradigm = () => (
-	<div className="overflow-x-auto">
-		<table className="w-full border-collapse text-sm">
-			<thead>
-				<tr>
-					<th className="py-1 pr-4 text-left text-xs font-normal text-muted-foreground" />
-					{(["masculine", "feminine", "neuter"] as const).map((g) => (
-						<th
-							key={g}
-							className={`px-3 py-1 text-center text-xs font-medium capitalize ${SCHEME[`gender-${g}`].text}`}
-						>
-							{g}
-						</th>
-					))}
-				</tr>
-			</thead>
-			<tbody>
-				{PARADIGM_ROWS.map((row) => (
-					<tr key={row.label} className="border-t border-stone-100">
-						<td className={`py-1.5 pr-4 text-xs font-medium ${caseText(row.caseKey)}`}>
-							{row.label}
-						</td>
-						{(["masculine", "feminine", "neuter"] as const).map((g, i) => (
-							<GreekText as="td" key={g} className="px-3 py-1.5 text-center">
-								{row.forms[i]}
-							</GreekText>
-						))}
-					</tr>
-				))}
-			</tbody>
-		</table>
-	</div>
+const ArticleParadigm = () => (
+	<Paradigm
+		columns={GENDER_COLUMNS}
+		rows={PARADIGM_ROWS.map((r) => ({ ...r, scheme: `case-${r.caseKey}` as const }))}
+	/>
 );
 
 const DIMENSIONS: DimensionSpec<DimKey>[] = [
@@ -261,7 +229,7 @@ function ArticlesDrill() {
 			reverseDesc="e.g. τον → masculine / singular / accusative"
 			items={ARTICLES}
 			reverse={{ kind: "multi-select", dimensions: DIMENSIONS }}
-			configExtras={<Paradigm />}
+			configExtras={<ArticleParadigm />}
 			forwardPrompt={(form) => {
 				const f = form as (typeof ARTICLES)[number];
 				const gender = GENDER_CHIP[f.gender as ChipGender];
