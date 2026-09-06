@@ -1,9 +1,10 @@
 import { Link } from "@tanstack/react-router";
 
-import type { Drill } from "./group-section";
 import { GreekText } from "@/components/GreekText";
 
-export const DrillButton = ({ from, to, greek, title, minutes }: Drill) => (
+import type { DrillLink } from "./group-section";
+
+export const DrillButton = ({ from, to, greek, title, minutes }: DrillLink) => (
 	<li>
 		<Link
 			from={from}

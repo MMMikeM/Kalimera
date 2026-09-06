@@ -1,8 +1,8 @@
 import { type ColumnDef, GrammarTable, type RowDef } from "@/components/GrammarTable";
+import { GreekText } from "@/components/GreekText";
 import { CASE_SCHEME, type GrammarScheme } from "@/constants/grammar-palette";
 import type { PronounForm, PronounParadigm } from "@/constants/pronouns";
 import type { CaseName } from "@/constants/recognition";
-import { GreekText } from "@/components/GreekText";
 
 /** `case-nominative` → the GreekText tone of the same name. */
 type CaseVariant = "nominative" | "accusative" | "genitive";
@@ -13,13 +13,7 @@ const PRONOUN_COLUMNS: ColumnDef[] = [
 	{ key: "plural", label: "Plural" },
 ];
 
-const PronounCell = ({
-	form,
-	variant,
-}: {
-	form: PronounForm;
-	variant: CaseVariant | "accent";
-}) => (
+const PronounCell = ({ form, variant }: { form: PronounForm; variant: CaseVariant | "accent" }) => (
 	<div className="flex flex-col gap-0.5">
 		<GreekText tone={variant} size="sm">
 			{form.greek}

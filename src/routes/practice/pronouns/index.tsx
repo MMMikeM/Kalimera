@@ -2,38 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { DrillButton } from "../components/DrillButton";
 import { GroupSection } from "../components/group-section";
-import type { Drill } from "../components/group-section";
-
-const drills: Drill[] = [
-	{
-		id: "pronouns-object",
-		to: "/practice/pronouns/object",
-		title: "Object pronouns",
-		greek: "με, σε, τον, την, μας, σας…",
-		minutes: 1,
-	},
-	{
-		id: "pronouns-placement",
-		to: "/practice/pronouns/placement",
-		title: "Placement",
-		greek: "Με κοιτάζει · Κοίτα με · Δεν με ακούει",
-		minutes: 2,
-	},
-	{
-		id: "pronouns-possessives",
-		to: "/practice/pronouns/possessives",
-		title: "Possessives",
-		greek: "μου, σου, του, της, μας…",
-		minutes: 1,
-	},
-	{
-		id: "pronouns-possessive-vs-article",
-		to: "/practice/pronouns/possessive-vs-article",
-		title: "Whose, or of the?",
-		greek: "ο πατέρας του · ο πατέρας του παιδιού",
-		minutes: 2,
-	},
-];
+import { PRONOUN_DRILLS } from "./drills.data";
 
 export const Route = createFileRoute("/practice/pronouns/")({
 	component: PronounsPage,
@@ -47,7 +16,7 @@ function PronounsPage() {
 				subtitle="Object forms, possessives, and where they sit in a sentence."
 			>
 				<ul className="divide-y divide-border">
-					{drills.map((d) => (
+					{PRONOUN_DRILLS.map((d) => (
 						<DrillButton {...d} from={Route.fullPath} key={d.id} />
 					))}
 				</ul>

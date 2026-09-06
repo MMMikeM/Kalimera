@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { GreekText } from "@/components/GreekText";
 import { getOppositePairsFn } from "@/server/fns/opposites";
 
 import type { DrillForm } from "../components/engines/deck";
 import { Drill } from "../components/engines/drill";
-import { GreekText } from "@/components/GreekText";
 
 interface OppositeCard extends DrillForm {
 	sourceGreek: string;
@@ -48,7 +48,6 @@ function OppositesDrill() {
 		<Drill
 			drillId="blocks-opposites"
 			items={items}
-			title="Opposites"
 			subtitle={`${items.length} cards / timed`}
 			colorTheme="terracotta"
 			backTo="/practice/blocks"
@@ -64,9 +63,7 @@ function OppositesDrill() {
 						<GreekText as="p" size="5xl">
 							{card.sourceGreek}
 						</GreekText>
-						<p className="mt-4 text-base text-muted-foreground italic">
-							“{card.sourceEnglish}”
-						</p>
+						<p className="mt-4 text-base text-muted-foreground italic">“{card.sourceEnglish}”</p>
 					</div>
 				);
 			}}

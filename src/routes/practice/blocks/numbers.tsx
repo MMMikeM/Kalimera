@@ -166,7 +166,6 @@ function NumbersDrill() {
 		<Drill
 			drillId="blocks-numbers"
 			items={NUMBERS}
-			title="Numbers"
 			subtitle="28 forms / timed"
 			colorTheme="terracotta"
 			backTo="/practice/blocks"

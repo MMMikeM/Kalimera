@@ -280,7 +280,6 @@ function ImperfectStativeDrill() {
 			items={FORMS}
 			categories={CATEGORIES}
 			backTo="/practice/verbs"
-			title="Stative verbs · past"
 			subtitle="was · had · wanted · knew · could"
 			colorTheme="terracotta"
 			forwardDesc="English → Greek past form"

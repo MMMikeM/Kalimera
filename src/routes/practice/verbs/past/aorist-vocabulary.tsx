@@ -17,11 +17,6 @@ export const Route = createFileRoute("/practice/verbs/past/aorist-vocabulary")({
 function AoristVocabularyDrill() {
 	const { questions } = Route.useLoaderData();
 	return (
-		<VocabDrillPage
-			drillId="verbs-aorist-sg1"
-			category="verbs"
-			backTo="/practice/verbs"
-			questions={questions}
-		/>
+		<VocabDrillPage drillId="verbs-aorist-sg1" backTo="/practice/verbs" questions={questions} />
 	);
 }

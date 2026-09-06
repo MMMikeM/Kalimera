@@ -69,7 +69,6 @@ function EimaiPresentDrill() {
 			drillId="verbs-eimai-present"
 			items={FORMS}
 			backTo="/practice/verbs"
-			title="είμαι · present"
 			subtitle="6 forms / timed"
 			colorTheme="olive"
 			forwardDesc="English → Greek present form of είμαι"

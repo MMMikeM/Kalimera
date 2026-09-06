@@ -17,11 +17,6 @@ export const Route = createFileRoute("/practice/verbs/present/vocabulary")({
 function PresentVocabularyDrill() {
 	const { questions } = Route.useLoaderData();
 	return (
-		<VocabDrillPage
-			drillId="verbs-vocabulary-sg1"
-			category="verbs"
-			backTo="/practice/verbs"
-			questions={questions}
-		/>
+		<VocabDrillPage drillId="verbs-vocabulary-sg1" backTo="/practice/verbs" questions={questions} />
 	);
 }

@@ -69,8 +69,7 @@ const greekTextVariants = tv({
 type GreekElement = "span" | "p" | "td" | "th" | "div";
 
 interface GreekTextProps
-	extends React.HTMLAttributes<HTMLElement>,
-		VariantProps<typeof greekTextVariants> {
+	extends React.HTMLAttributes<HTMLElement>, VariantProps<typeof greekTextVariants> {
 	as?: GreekElement;
 	children: ReactNode;
 }

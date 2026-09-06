@@ -115,7 +115,6 @@ function AoristStemsDrill() {
 			drillId="verbs-aorist-stems"
 			items={AORIST_STEMS}
 			backTo="/practice/verbs"
-			title="Aorist Stems"
 			subtitle="15 irregular stems / timed"
 			colorTheme="terracotta"
 			forwardDesc="Present (English) → aorist sg1"

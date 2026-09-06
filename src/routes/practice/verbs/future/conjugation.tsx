@@ -16,7 +16,5 @@ export const Route = createFileRoute("/practice/verbs/future/conjugation")({
 
 function FutureConjugationDrill() {
 	const { questions } = Route.useLoaderData();
-	return (
-		<VocabDrillPage drillId="verbs-future-conjugation" category="verbs" questions={questions} />
-	);
+	return <VocabDrillPage drillId="verbs-future-conjugation" questions={questions} />;
 }

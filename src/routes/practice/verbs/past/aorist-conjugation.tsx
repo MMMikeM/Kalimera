@@ -19,7 +19,6 @@ function AoristConjugationDrill() {
 	return (
 		<VocabDrillPage
 			drillId="verbs-aorist-conjugation"
-			category="verbs"
 			backTo="/practice/verbs"
 			questions={questions}
 		/>

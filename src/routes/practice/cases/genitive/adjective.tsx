@@ -154,7 +154,6 @@ function AdjectiveAgreementOwnerDrill() {
 			backTo={"/practice/cases/"}
 			drillId="adjectives-agreement-owner"
 			items={ITEMS}
-			title="Adjective agreement (Owner)"
 			subtitle="40 forms / timed"
 			colorTheme="olive"
 			forwardDesc="English + gender → adjective form (Owner)"

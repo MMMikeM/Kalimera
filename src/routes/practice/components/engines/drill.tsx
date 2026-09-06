@@ -1,7 +1,9 @@
 import { getRouteApi } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 
+import { GreekText } from "@/components/GreekText";
 import { matchPhonetic } from "@/lib/greek-transliteration";
+import { drillTitle } from "@/routes/practice/drill-catalogue.data";
 import { startSessionFn, recordAttemptFn, completeSessionFn } from "@/server/fns/srs";
 
 import { type DrillForm, type DrillMode, type SessionSize } from "./deck";
@@ -24,7 +26,6 @@ import {
 	SummaryScreen,
 	type ConfigShellProps,
 } from "./shells";
-import { GreekText } from "@/components/GreekText";
 
 const rootRoute = getRouteApi("__root__");
 
@@ -94,9 +95,13 @@ export type ReverseStrategy<K extends string = string> =
 
 export interface DrillProps<K extends string = string> extends Omit<
 	ConfigShellProps,
-	"selectorBg" | "selectorText" | "children"
+	"selectorBg" | "selectorText" | "children" | "title"
 > {
 	drillId: string;
+	/** Omit it: the drill's name comes from its catalogue entry, so it is written
+	 *  once and the index and the review queue show the same string. Pass it only
+	 *  for a drill that has no catalogue entry, such as the anonymous /try drill. */
+	title?: string;
 	items: DrillForm[];
 	colorTheme?: ColorTheme;
 	defaultMode?: DrillMode;
@@ -111,7 +116,10 @@ export interface DrillProps<K extends string = string> extends Omit<
 // ─── Inner drill (reads from store) ───────────────────────────────────────────
 
 function DrillInner<K extends string>(
-	props: Omit<DrillProps<K>, "drillId" | "items" | "sessionSize" | "onComplete">,
+	props: Omit<DrillProps<K>, "drillId" | "items" | "sessionSize" | "onComplete"> & {
+		/** Already resolved by <Drill>, so the shells can rely on it. */
+		title: string;
+	},
 ) {
 	const {
 		colorTheme = "terracotta",
@@ -298,6 +306,7 @@ function DrillInner<K extends string>(
 
 export function Drill<K extends string = string>(props: DrillProps<K>) {
 	const { auth } = rootRoute.useRouteContext();
+	const title = props.title ?? drillTitle(props.drillId) ?? props.drillId;
 
 	// Initialize store once per mount with this drill's config
 	useState(() => {
@@ -313,5 +322,5 @@ export function Drill<K extends string = string>(props: DrillProps<K>) {
 		drillActions.initialize(config);
 	});
 
-	return <DrillInner {...props} />;
+	return <DrillInner {...props} title={title} />;
 }

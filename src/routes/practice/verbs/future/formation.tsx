@@ -327,7 +327,6 @@ function FutureFormationDrill() {
 			drillId="verbs-future-formation"
 			items={ITEMS}
 			backTo="/practice/verbs"
-			title="Future formation"
 			subtitle="40 rules / timed"
 			colorTheme="terracotta"
 			forwardDesc="Present (English) → θα form"
