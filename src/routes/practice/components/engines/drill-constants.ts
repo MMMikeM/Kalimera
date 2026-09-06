@@ -1,6 +1,6 @@
 import { SCHEME } from "@/constants/grammar-palette";
+import type { Gender } from "@/server/db/enums";
 
-type Gender = "masculine" | "feminine" | "neuter";
 type Person = "first" | "second" | "third";
 
 /** A gender chip claims a gender, so it takes the reserved gender tokens. */

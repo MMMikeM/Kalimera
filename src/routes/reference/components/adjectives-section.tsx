@@ -19,6 +19,7 @@ import { GENDER_SCHEME, SCHEME } from "@/constants/grammar-palette";
 
 import { CaseTableGrid } from "./case-table";
 import { GreekText } from "@/components/GreekText";
+import type { Gender } from "@/server/db/enums";
 
 // Adjective endings quick lookup table
 const AdjectiveEndingsTable: React.FC = () => (
@@ -94,7 +95,7 @@ const AdjectiveParadigmCard: React.FC<{ paradigm: AdjectiveParadigm }> = ({
 	};
 
 	const renderGenderTable = (
-		gender: "masculine" | "feminine" | "neuter",
+		gender: Gender,
 		forms: AdjectiveParadigm["masculine"],
 	) => {
 		const style = genderStyles[gender];

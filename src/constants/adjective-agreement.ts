@@ -7,9 +7,11 @@
 
 import type { AdjectiveDeclensionPattern } from "@/server/db/enums";
 
-export type Case = "nominative" | "accusative" | "genitive";
+
 export type Num = "singular" | "plural";
-export type Gender = "masculine" | "feminine" | "neuter";
+import type { Gender, NominalCase as Case } from "@/server/db/enums";
+
+export type { Gender, NominalCase as Case } from "@/server/db/enums";
 
 type GenderTriple = Record<Gender, string>;
 type CaseSuffix = Record<Num, GenderTriple>;
