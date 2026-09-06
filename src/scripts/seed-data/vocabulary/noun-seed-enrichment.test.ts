@@ -1,16 +1,15 @@
 import { describe, expect, it } from "vitest";
 
-import { NOUNS } from "./nouns";
 import { enrichNoun, inferDeclensionPattern } from "./noun-seed-enrichment";
+import { NOUNS } from "./nouns";
 
 const allNouns = Object.values(NOUNS).flat();
 
 const formsOf = (lemma: string, gender: "masculine" | "feminine" | "neuter") =>
 	Object.fromEntries(
-		Object.entries(enrichNoun({ lemma, gender, english: "x", cefrLevel: "A1" }).nominalForms).map(([k, cell]) => [
-			k,
-			cell?.form,
-		]),
+		Object.entries(enrichNoun({ lemma, gender, english: "x", cefrLevel: "A1" }).nominalForms).map(
+			([k, cell]) => [k, cell?.form],
+		),
 	) as Record<string, string>;
 
 // Stem and ending colliding leaves a vowel run Greek does not have (*μέροου,
@@ -112,10 +111,7 @@ describe("sibilant -ξη / -ψη stems", () => {
 });
 
 describe("lemmas no paradigm generates", () => {
-	it.each([
-		["σπορ"],
-		["πικνίκ"],
-	])("keeps indeclinable %s invariant in every cell", (lemma) => {
+	it.each([["σπορ"], ["πικνίκ"]])("keeps indeclinable %s invariant in every cell", (lemma) => {
 		const forms = formsOf(lemma, "neuter");
 		expect(new Set(Object.values(forms))).toEqual(new Set([lemma]));
 	});

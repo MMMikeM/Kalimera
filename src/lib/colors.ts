@@ -1,3 +1,4 @@
+/** Base-palette section chrome. A grammatical claim goes through SCHEME, never here. */
 export type ColorScheme =
 	| "ocean"
 	| "terracotta"
@@ -6,10 +7,7 @@ export type ColorScheme =
 	| "honey"
 	| "navy"
 	| "slate"
-	| "stone"
-	| "masculine"
-	| "feminine"
-	| "neuter";
+	| "stone";
 
 export const colorStyles: Record<
 	ColorScheme,
@@ -112,38 +110,5 @@ export const colorStyles: Record<
 		text: "text-stone-700",
 		accent: "text-stone-600",
 		hover: "hover:bg-stone-100",
-	},
-	masculine: {
-		bg: "bg-navy-50",
-		bgMuted: "bg-navy-100",
-		border: "border-navy-400",
-		borderMuted: "border-navy-200",
-		header: "bg-navy-400",
-		headerLight: "bg-navy-300",
-		text: "text-navy-text",
-		accent: "text-navy",
-		hover: "hover:bg-navy-200",
-	},
-	feminine: {
-		bg: "bg-sunset-50",
-		bgMuted: "bg-sunset-100",
-		border: "border-sunset-400",
-		borderMuted: "border-sunset-200",
-		header: "bg-sunset-400",
-		headerLight: "bg-sunset-300",
-		text: "text-sunset-text",
-		accent: "text-sunset",
-		hover: "hover:bg-sunset-200",
-	},
-	neuter: {
-		bg: "bg-slate-50",
-		bgMuted: "bg-slate-100",
-		border: "border-slate-400",
-		borderMuted: "border-slate-200",
-		header: "bg-slate-400",
-		headerLight: "bg-slate-300",
-		text: "text-slate-text",
-		accent: "text-slate",
-		hover: "hover:bg-slate-200",
 	},
 };

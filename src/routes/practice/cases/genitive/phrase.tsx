@@ -248,7 +248,6 @@ function PhraseOwnerDrill() {
 			drillId="nominal-phrase-owner"
 			items={PHRASES}
 			subtitle="30 noun phrases / timed"
-			colorTheme="olive"
 			forwardDesc="English → article + adjective + noun (Owner form)"
 			reverseLabel="Greek → gender"
 			reverseDesc="Phrase → select gender"

@@ -1,9 +1,8 @@
 import type { ReactNode } from "react";
-import { tv } from "tailwind-variants";
+import { cn, tv } from "tailwind-variants";
 
 import { Card } from "@/components/Card";
 import { type GrammarScheme, SCHEME } from "@/constants/grammar-palette";
-import { cn } from "@/lib/utils";
 
 const teachingCard = tv({
 	slots: {

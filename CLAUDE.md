@@ -4,7 +4,7 @@
 
 **pnpm only.** Never `npm` / `npx` — use `pnpm` / `pnpm exec` / `pnpm dlx`.
 
-**Database setup (this repo):** `.env` holds **production** Turso credentials (no separate `.env.prod` exists). The `prod-db-*` Makefile targets fail (`.env.prod: No such file`).
+**Database setup (this repo):** `.env` holds **production** Turso credentials (no separate `.env.prod` exists). The `db-*` Makefile targets wrap the commands below; there are no `prod-db-*` targets — they sourced a `.env.prod` that never existed and have been removed.
 
 ```bash
 # Production (Turso) — drizzle-kit auto-loads `.env`; these hit PROD
@@ -20,7 +20,7 @@ TURSO_DATABASE_URL=file:./local.db pnpm exec drizzle-kit push
 # Seeding and the app itself always hit Turso: src/server/db/index.ts uses the
 # HTTP @tursodatabase/serverless driver, which rejects `file:` URLs.
 
-# DO NOT use `make prod-db-*` — they require a `.env.prod` that doesn't exist.
+# Or via the Makefile: make db-push · db-seed · db-setup · db-studio · db-push-local
 ```
 
 The seeders (vocab + verb conjugations) are **idempotent additive upserts**. Re-running against prod is safe — only adds/updates rows, never deletes.
@@ -45,9 +45,9 @@ The seeders (vocab + verb conjugations) are **idempotent additive upserts**. Re-
 
 - Self-documenting; comments only for non-obvious logic
 - Queen's English (colour, favourite)
-- Derive route types from loader: `Route.ComponentProps["loaderData"]`
+- Read loader data with `Route.useLoaderData()`; it is typed from the loader
 - Path alias: `@/` → `./src/`
-- After loader change, run `pnpm react-router typegen` if type errors
+- The Vite plugin regenerates `src/routeTree.gen.ts`; there is no separate typegen script
 
 ---
 
@@ -82,10 +82,10 @@ Default **page routes** (loader + action + component) with `<Form>` and `useFetc
 Two transliteration helpers exist with **opposite jobs**. Using the wrong one shipped
 `pws` and `thelw` to learners for months.
 
-| Module | Function | Job |
-| --- | --- | --- |
-| `src/lib/greek-transliteration.ts` | `greekToPhonetic` | **Matching only.** Reversible keyboard spelling (η→h, ω→w). `πώς` → `pws`. Never render it. |
-| `src/lib/greek-phonetic.ts` | `greekToPronunciation` | **Display only.** Pronunciation gloss (η→i, ω→o, γ→y/gh). `πώς` → `pos`. Lossy — never match against it. |
+| Module                             | Function               | Job                                                                                                      |
+| ---------------------------------- | ---------------------- | -------------------------------------------------------------------------------------------------------- |
+| `src/lib/greek-transliteration.ts` | `greekToPhonetic`      | **Matching only.** Reversible keyboard spelling (η→h, ω→w). `πώς` → `pws`. Never render it.              |
+| `src/lib/greek-phonetic.ts`        | `greekToPronunciation` | **Display only.** Pronunciation gloss (η→i, ω→o, γ→y/gh). `πώς` → `pos`. Lossy — never match against it. |
 
 `matchPhonetic` is the answer grader and may be imported anywhere.
 
@@ -111,10 +111,10 @@ gloss strips punctuation itself. There is no stored `greeklish` field — it is 
 Two colour systems exist and they are **not** interchangeable. Reaching for the wrong one
 is the colour equivalent of shipping `pws` to a learner.
 
-| Palette | Tokens | Job |
-| --- | --- | --- |
+| Palette                                                     | Tokens                                                                                                                    | Job                                                                                                |
+| ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
 | **Reserved role tokens** (`@theme static`, `src/index.css`) | `case-nominative-*`, `case-accusative-*`, `case-genitive-*`, `gender-masculine-*`, `gender-feminine-*`, `gender-neuter-*` | **Grammatical claims only.** Applying one asserts that the Greek it wraps has that case or gender. |
-| **Base palette** | `cream`, `terracotta`, `sunset`, `olive`, `ocean`, `honey`, `navy`, `slate`, `stone` | **Everything else.** Nav, chrome, buttons, section grouping, page-local axes. Asserts nothing. |
+| **Base palette**                                            | `cream`, `terracotta`, `sunset`, `olive`, `ocean`, `honey`, `navy`, `slate`, `stone`                                      | **Everything else.** Nav, chrome, buttons, section grouping, page-local axes. Asserts nothing.     |
 
 **The rule:** a colour used as fill, background or border around Greek grammatical content
 asserts that content's grammatical value. If the assertion would be false, use the base
@@ -145,8 +145,8 @@ Two practical notes:
 
 Two vocabularies in use — both correct, different contexts:
 
-| Grammatical term | Learner label | Role token         | Route segment  |
-| ---------------- | ------------- | ------------------ | -------------- |
+| Grammatical term | Learner label | Role token          | Route segment  |
+| ---------------- | ------------- | ------------------- | -------------- |
 | Nominative       | Doer          | `case-nominative-*` | `nominative-*` |
 | Accusative       | Target        | `case-accusative-*` | `accusative-*` |
 | Genitive         | Owner         | `case-genitive-*`   | `genitive-*`   |

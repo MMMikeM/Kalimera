@@ -81,8 +81,8 @@ export const LandingPage = () => (
 						went blank.
 					</p>
 					<p>
-						So I built this. Timed drills that force retrieval under pressure. 4 seconds to produce the
-						Greek. No hints. No multiple choice. Either you know it or you don't.
+						So I built this. Timed drills that force retrieval under pressure. 4 seconds to produce
+						the Greek. No hints. No multiple choice. Either you know it or you don't.
 					</p>
 					<p className="text-stone-600">It's how I'm learning. Maybe it'll help you too.</p>
 				</div>
@@ -112,7 +112,9 @@ export const LandingPage = () => (
 			<p className="font-serif text-2xl text-stone-700">
 				Just <span className="text-terracotta">2-3 minutes</span> a day
 			</p>
-			<p className="mt-2 text-stone-500">That's what I manage most mornings, and it's enough to stop the reviews stacking up</p>
+			<p className="mt-2 text-stone-500">
+				That's what I manage most mornings, and it's enough to stop the reviews stacking up
+			</p>
 		</section>
 
 		{/* Footer CTA */}

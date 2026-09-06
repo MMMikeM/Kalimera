@@ -7,6 +7,7 @@ Audit feedback and implementation plan for all 13 components in `src/routes/refe
 ## 1. Design Guidelines & Contrast
 
 ### Issues
+
 - **Simultaneous Case & Gender Colors (Guideline 2 Violation):**
   - `adjectives-section.tsx:100-104, 136-141`: Wraps gender tables in gender tints (`bg-gender-masculine-100/40`) while row headers use case borders (`border-case-*`).
 - **Forbidden Opacity on `-text` Tokens:**
@@ -22,6 +23,7 @@ Audit feedback and implementation plan for all 13 components in `src/routes/refe
   - `adjectives-section.tsx:235, 255`, `articles-section.tsx:74`, `cases-section.tsx:44, 66, 137`, `nouns-section.tsx:180`: Greek examples and pattern triggers rendered in unscaled Latin text without `.greek-text` or `<MonoText>`.
 
 ### Actions
+
 - [ ] Remove gender background tints from `adjectives-section.tsx` tables to eliminate case/gender color collision.
 - [ ] Remove `opacity-70` in `nouns-section.tsx:146` and use `text-stone-600`.
 - [ ] Upgrade `text-honey-300` in `verbs-section.tsx` to `text-honey-text` and `text-stone-400` in `prepositions-section.tsx` to `text-stone-500` / `text-stone-600`.
@@ -32,6 +34,7 @@ Audit feedback and implementation plan for all 13 components in `src/routes/refe
 ## 2. Educational Design & Reusable Components
 
 ### Issues
+
 - **Reinventing Standard Components:**
   - `cases-section.tsx:41-69`: Handcrafts 3 card containers duplicating `<Callout scheme="neutral">`.
   - `prepositions-section.tsx:35-42`: `SeCard` manually crafts card headers instead of using `<TeachingCard scheme="verb-active">`.
@@ -41,6 +44,7 @@ Audit feedback and implementation plan for all 13 components in `src/routes/refe
   - `cases-section.tsx:95-97`: Article table only displays grammatical labels (`Nominative`, `Accusative`, `Genitive`) without learner labels (`Doer`, `Target`, `Owner`).
 
 ### Actions
+
 - [ ] Replace handcrafted cards across components with `<Callout>`, `<TeachingCard>`, and `<QuickTest>`.
 - [ ] Add learner labels (`Doer`, `Target`, `Owner`) alongside grammatical terms in `cases-section.tsx`.
 
@@ -49,6 +53,7 @@ Audit feedback and implementation plan for all 13 components in `src/routes/refe
 ## 3. Tailwind & Component Architecture
 
 ### Issues
+
 - **Missing `tv()` Abstractions:**
   - `BandHeading.tsx` uses PascalCase filename and manual styling.
   - Prevalent use of template literal class string concatenations across `case-table.tsx`, `adjectives-section.tsx`, `cases-section.tsx`, `pronouns-section.tsx`, and `verbs-section.tsx`.
@@ -56,16 +61,19 @@ Audit feedback and implementation plan for all 13 components in `src/routes/refe
   - Replace `React.FC` with standard typed parameter declarations across all 13 components.
 
 ### Actions
+
 - [ ] Rename `BandHeading.tsx` to `band-heading.tsx` via `git mv` and convert to a slotted `tv()` component:
+
 ```typescript
 const bandHeadingVariants = tv({
-  slots: {
-    container: "space-y-1",
-    kicker: "text-xs font-semibold tracking-widest text-stone-500 uppercase",
-    title: "font-serif text-2xl text-navy-text",
-    lede: "max-w-2xl text-sm text-stone-600",
-  },
+	slots: {
+		container: "space-y-1",
+		kicker: "text-xs font-semibold tracking-widest text-stone-500 uppercase",
+		title: "font-serif text-2xl text-navy-text",
+		lede: "max-w-2xl text-sm text-stone-600",
+	},
 });
 ```
+
 - [ ] Replace all template string class interpolations with `cn()`.
 - [ ] Remove `React.FC` and refactor function declarations to `const` arrow functions.

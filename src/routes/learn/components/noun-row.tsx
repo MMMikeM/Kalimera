@@ -2,8 +2,8 @@ import { useState } from "react";
 import type React from "react";
 
 import { GreekText } from "@/components/GreekText";
-import type { BrowsableNoun, NounGender } from "@/lib/noun-browser-groups";
 import { getArticle } from "@/lib/greek-grammar";
+import type { BrowsableNoun, NounGender } from "@/lib/noun-browser-groups";
 
 const GENDER_STYLES: Record<NounGender, { text: string; bg: string; border: string }> = {
 	masculine: {
@@ -25,7 +25,24 @@ const GENDER_STYLES: Record<NounGender, { text: string; bg: string; border: stri
 
 /** Longer endings first, so -μα matches before -α. */
 const NOUN_ENDINGS = [
-	"ματα", "εις", "μα", "ος", "ός", "ας", "άς", "ης", "ής", "α", "ά", "η", "ή", "ο", "ό", "ι", "ί", "ϊ",
+	"ματα",
+	"εις",
+	"μα",
+	"ος",
+	"ός",
+	"ας",
+	"άς",
+	"ης",
+	"ής",
+	"α",
+	"ά",
+	"η",
+	"ή",
+	"ο",
+	"ό",
+	"ι",
+	"ί",
+	"ϊ",
 ];
 
 const splitEnding = (lemma: string): { stem: string; ending: string } => {

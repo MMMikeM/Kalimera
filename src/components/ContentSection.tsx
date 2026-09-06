@@ -1,7 +1,7 @@
 import { type ReactNode, useId } from "react";
+import { cn } from "tailwind-variants";
 
 import { type ColorScheme, colorStyles } from "@/lib/colors";
-import { cn } from "@/lib/utils";
 
 export type ContentColorScheme = ColorScheme;
 

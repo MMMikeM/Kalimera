@@ -1,8 +1,8 @@
 import { Fragment } from "react";
+import { cn } from "tailwind-variants";
 
-import { type GrammarScheme, SCHEME } from "@/constants/grammar-palette";
-import { cn } from "@/lib/utils";
 import { GreekText } from "@/components/GreekText";
+import { type GrammarScheme, SCHEME } from "@/constants/grammar-palette";
 
 interface ReferenceHeroDemoItem {
 	greek: string;
@@ -39,7 +39,11 @@ export const ReferenceHero = ({ eyebrow, title, thesis, demo }: ReferenceHeroPro
 								</span>
 							) : null}
 							<div className="flex flex-col items-start gap-1">
-								<GreekText tone="accent" size="2xl" className={cn("leading-none", style ? style.text : "text-stone-800")}>
+								<GreekText
+									tone="accent"
+									size="2xl"
+									className={cn("leading-none", style ? style.text : "text-stone-800")}
+								>
 									{item.greek}
 								</GreekText>
 								<span

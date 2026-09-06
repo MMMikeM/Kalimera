@@ -24,7 +24,10 @@ describe("pronunciation corpus", () => {
 	it("reproduces every snapshotted rendering", () => {
 		const drifted = entries
 			.filter(([greek, expected]) => greekToPronunciation(greek) !== expected)
-			.map(([greek, expected]) => `${greek}\n  expected: ${expected}\n  actual:   ${greekToPronunciation(greek)}`);
+			.map(
+				([greek, expected]) =>
+					`${greek}\n  expected: ${expected}\n  actual:   ${greekToPronunciation(greek)}`,
+			);
 
 		expect(drifted).toEqual([]);
 	});

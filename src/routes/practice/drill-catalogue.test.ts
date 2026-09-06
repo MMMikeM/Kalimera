@@ -33,10 +33,8 @@ describe("drill catalogue", () => {
 			.filter(([id]) => !DRILL_REGISTRY[id])
 			.map(([id, file]) => `${id} (${file})`);
 
-		// A drill absent from the catalogue still runs and still records attempts,
-		// but the review queue and the practice CTA both filter on the catalogue,
-		// so it silently never resurfaces. That is how six question-word drills,
-		// opposites and possessive-vs-article went missing from review.
+		// Review and the practice CTA both filter on the catalogue, so a drill
+		// missing here still runs but can never resurface.
 		expect(missing).toEqual([]);
 	});
 

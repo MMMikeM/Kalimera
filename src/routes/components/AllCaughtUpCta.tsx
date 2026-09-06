@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Check, Sparkles } from "lucide-react";
+
 import { GreekText } from "@/components/GreekText";
 
 export const AllCaughtUpCTA = ({ newAvailable }: { newAvailable: number }) => (

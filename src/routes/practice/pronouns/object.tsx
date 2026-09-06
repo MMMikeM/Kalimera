@@ -1,25 +1,19 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { GreekText } from "@/components/GreekText";
+import type { Gender } from "@/server/db/enums";
 
-import {
-	type Gender as ChipGender,
-	GENDER_CHIP,
-	HERO_TEXT,
-	NUMBER_CHIP,
-	PERSON_CHIP,
-} from "../components/engines/chip-specs";
+import { GENDER_CHIP, HERO_TEXT, NUMBER_CHIP, PERSON_CHIP } from "../components/engines/chip-specs";
 import type { DrillForm } from "../components/engines/deck";
 import { Drill, type DimensionSpec } from "../components/engines/drill";
 import { GENDER_STYLE, PERSON_LABELS } from "../components/engines/drill-constants";
 import { ForwardPromptCard } from "../components/engines/forward-prompt-card";
+import { NUMBER_COLUMNS, Paradigm, type ParadigmRow } from "../components/paradigm";
 
 type Person = "first" | "second" | "third";
-type Gender = "masculine" | "feminine" | "neuter";
 type Num = "singular" | "plural";
 type DimKey = "person" | "number" | "gender";
 
-interface ObjectPronoun extends DrillForm, Record<DimKey, string> {
+interface ObjectPronoun extends DrillForm {
 	person: Person;
 	number: Num;
 	gender: Gender | "";
@@ -123,7 +117,7 @@ const PRONOUNS: ObjectPronoun[] = [
 	},
 ];
 
-const PARADIGM_ROWS: { label: string; forms: [string, string] }[] = [
+const PARADIGM_ROWS: ParadigmRow[] = [
 	{ label: "1st", forms: ["με", "μας"] },
 	{ label: "2nd", forms: ["σε", "σας"] },
 	{ label: "3rd masculine", forms: ["τον", "τους"] },
@@ -131,35 +125,7 @@ const PARADIGM_ROWS: { label: string; forms: [string, string] }[] = [
 	{ label: "3rd neuter", forms: ["το", "τα"] },
 ];
 
-const Paradigm = () => (
-	<div className="overflow-x-auto">
-		<table className="w-full border-collapse text-sm">
-			<thead>
-				<tr>
-					<th className="py-1 pr-4 text-left text-xs font-normal text-muted-foreground" />
-					<th className="px-3 py-1 text-center text-xs font-medium text-muted-foreground">
-						Singular
-					</th>
-					<th className="px-3 py-1 text-center text-xs font-medium text-muted-foreground">
-						Plural
-					</th>
-				</tr>
-			</thead>
-			<tbody>
-				{PARADIGM_ROWS.map((row) => (
-					<tr key={row.label} className="border-t border-stone-100">
-						<td className="py-1.5 pr-4 text-xs font-medium text-terracotta-text">{row.label}</td>
-						{row.forms.map((form, i) => (
-							<GreekText as="td" key={`${row.label}-${i}`} className="px-3 py-1.5 text-center">
-								{form}
-							</GreekText>
-						))}
-					</tr>
-				))}
-			</tbody>
-		</table>
-	</div>
-);
+const PronounParadigm = () => <Paradigm columns={NUMBER_COLUMNS} rows={PARADIGM_ROWS} />;
 
 const DIMENSIONS: DimensionSpec<DimKey>[] = [
 	{
@@ -191,7 +157,7 @@ export const Route = createFileRoute("/practice/pronouns/object")({
 
 function PronounsDrill() {
 	return (
-		<Drill<DimKey>
+		<Drill<DimKey, ObjectPronoun>
 			drillId="pronouns-object"
 			subtitle="10 forms / timed"
 			colorTheme="terracotta"
@@ -199,31 +165,30 @@ function PronounsDrill() {
 			reverseDesc="e.g. με → 1st / singular"
 			items={PRONOUNS}
 			reverse={{ kind: "multi-select", dimensions: DIMENSIONS }}
-			configExtras={<Paradigm />}
+			configExtras={<PronounParadigm />}
 			sessionSize={10}
 			forwardPrompt={(form) => {
-				const f = form as (typeof PRONOUNS)[number];
-				const english = ENGLISH[f.id] ?? "";
-				const person = PERSON_CHIP[f.person as Person];
-				const number = NUMBER_CHIP[f.number as keyof typeof NUMBER_CHIP];
-				const gender = f.gender ? GENDER_CHIP[f.gender as ChipGender] : null;
+				const english = ENGLISH[form.id] ?? "";
+				const person = PERSON_CHIP[form.person];
+				const number = NUMBER_CHIP[form.number];
+				const gender = form.gender ? GENDER_CHIP[form.gender] : null;
 				const facets = [
 					{
 						icon: person.icon,
 						label: person.longLabel,
-						colorText: HERO_TEXT.person[f.person as Person],
+						colorText: HERO_TEXT.person[form.person],
 					},
 					{
 						icon: number.icon,
 						label: number.longLabel,
-						colorText: HERO_TEXT.number[f.number as keyof typeof HERO_TEXT.number],
+						colorText: HERO_TEXT.number[form.number],
 					},
 				];
-				if (gender && f.gender) {
+				if (gender && form.gender) {
 					facets.push({
 						icon: gender.icon,
 						label: gender.longLabel,
-						colorText: HERO_TEXT.gender[f.gender as ChipGender],
+						colorText: HERO_TEXT.gender[form.gender],
 					});
 				}
 				return <ForwardPromptCard facets={facets} gloss={`"${english}"`} />;

@@ -1,8 +1,10 @@
 // Core grammatical types for Greek language learning
 
-export type Gender = "masculine" | "feminine" | "neuter";
-export type GrammaticalNumber = "singular" | "plural";
-export type Case = "nominative" | "genitive" | "accusative" | "vocative";
+import type { GrammaticalCase, GrammaticalNumber, Gender } from "@/server/db/enums";
+
+export type { Gender, GrammaticalNumber } from "@/server/db/enums";
+/** Local alias kept for this module's callers; the canonical name is GrammaticalCase. */
+export type Case = GrammaticalCase;
 
 export type ConjugationFamily = "-ω" | "-άω/-ώ" | "-ομαι" | "-άμαι" | "irregular";
 

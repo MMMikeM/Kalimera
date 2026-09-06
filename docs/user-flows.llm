@@ -4,437 +4,161 @@ Greek learning app with SRS-based vocabulary practice and timed production drill
 
 ## Quick Reference
 
+Generated from `src/routeTree.gen.ts`. The practice drills are not listed here —
+they are owned by the per-group catalogues (see **Practice** below), and any list
+kept in this file would drift from them.
+
 ```
-/                    Dashboard (home)
-/login               Sign in (password or passkey)
-/register            Create account
-/try                 Anonymous drill (conversion flow)
-/practice            Drill browser (grouped: articles · pronouns · verbs · blocks)
-/practice/vocab/*    DB-driven production drills (articles, pronouns, verbs, nouns)
-/practice/memory/*   Paradigm recall drills (13 drills across 4 groups)
-/practice/review     Weakest drills (last 14 days) + SRS vocabulary review
-/practice/vocabulary New vocabulary learning (SRS intro tab)
-/learn               Learn landing page (section cards)
-/learn/conversations Themed dialogues
-/learn/phrases       Common expressions
-/learn/nouns         Noun browser by gender/category
-/learn/verbs         Verb browser by conjugation family
-/learn/verbs/:verbId Full verb conjugation detail
-/learn/essentials    Building blocks (numbers, colours, time, position, frequency)
-/reference           Reference landing page (section cards)
-/reference/*         Grammar reference by topic (8 tabs)
-/search              Vocabulary search
-/progress            Analytics (streak calendar, accuracy trends)
-/support             About page
+/                          Dashboard (home)
+/login  /register          Sign in (password or passkey) · create account
+/try                       Anonymous drill, 8 pronoun questions (conversion flow)
+
+/practice                  Drill browser — four group cards
+/practice/cases            Case drills, sectioned Doer · Target · Owner · Review
+/practice/pronouns         Object forms, placement, possessives
+/practice/verbs            Present · Past · Future & Modal · Mixed tenses
+/practice/blocks           Survival phrases, numbers, days, opposites
+/practice/blocks/question-words   ποιος / πόσος agreement, own sub-index
+/practice/review           Drills gone rusty, grouped by category
+
+/learn                     Learn landing (section cards)
+/learn/conversations/:tab  Themed dialogues
+/learn/phrases/:tab        Common expressions
+/learn/nouns  /:subject    Noun browser by subject
+/learn/verbs  /:verbId     Verb browser · full conjugation detail
+/learn/essentials/:subtab  Numbers, colours, time, position, frequency
+
+/reference                 Reference landing (section cards)
+/reference/:tab            Grammar reference by topic
+/reference/verbs  /:band   Verb reference, by frequency band
+
+/search                    Vocabulary search
+/progress                  Analytics (streak calendar, accuracy trends)
+/support                   About page
+
+/api/push/*                subscribe · unsubscribe · snooze · log-tap · vapid-key
+/api/webauthn/*            register-options · register-verify · auth-options · auth-verify
 ```
 
 ## Routes
 
+### Practice
+
+Every drill route is thin: it owns its item data and hands it to `<Drill>` with a
+`drillId`. Everything else about the drill — its name, its route, the sample forms
+and estimated minutes shown in a list, its category and case role — lives in one
+catalogue entry:
+
+<catalogue>
+<file>src/routes/practice/cases/drills.data.ts</file>
+<file>src/routes/practice/verbs/drills.data.ts</file>
+<file>src/routes/practice/pronouns/drills.data.ts</file>
+<file>src/routes/practice/blocks/drills.data.ts</file>
+<file>src/routes/practice/blocks/question-words/drills.data.ts</file>
+<derived>src/routes/practice/drill-catalogue.data.ts — the by-id lookup, flattened from the above</derived>
+<guard>src/routes/practice/drill-catalogue.test.ts — fails if a drill and the catalogue disagree</guard>
+</catalogue>
+
+Read those files for the current drill list. A drill's `caseRole` also decides its
+colour: `doer`/`target`/`owner` take the reserved case tokens, `mixed` and `null`
+take the base palette and claim nothing.
+
+<route path="/practice">
+<purpose>Drill browser — four cards, one per group</purpose>
+<file>src/routes/practice/index.tsx</file>
+<note>An auth guard on practice/route.tsx redirects logged-out visitors to /</note>
+</route>
+
+<route path="/practice/{cases,verbs,pronouns,blocks}">
+<purpose>Per-group drill index</purpose>
+<file>src/routes/practice/&lt;group&gt;/index.tsx</file>
+<data-source>That group's drills.data.ts</data-source>
+<displays>Drill rows (title, sample Greek, minutes), sectioned by phase where the group has phases</displays>
+</route>
+
+<route path="/practice/review">
+<purpose>Drills that have gone rusty, grouped by category</purpose>
+<file>src/routes/practice/review.tsx</file>
+<data-source>DB: getSchemaRust(userId), filtered against the drill catalogue</data-source>
+<displays>Rust bar per drill, days since last practice, recent accuracy</displays>
+</route>
+
+### Dashboard and auth
+
 <route path="/">
-<purpose>Dashboard - primary entry point and engagement hub</purpose>
-<file>src/routes/home.tsx</file>
-<data-source>DB: vocabularySkills (via getPracticeStats query)</data-source>
+<purpose>Dashboard — primary entry point</purpose>
+<file>src/routes/index.tsx</file>
+<data-source>DB: vocabProgress / drillProgress via the dashboard server fns</data-source>
 <displays>
-- Due item count with time estimate (~0.25 min per item)
-- Weekly streak visualisation (7-day grid, Mon-Sun)
-- Freeze indicator (shows available freezes, recovery status)
-- Today's phrase (rotates by day of month from 5 phrases)
-- Mastered/learning counts
-- Quick practice CTA (contextual: first-time user, all caught up, lapsed user, or due items)
-- "Just 5 items" option when queue > 15 items
-- Tomorrow preview ("X items due tomorrow")
+- Due count with time estimate
+- Weekly streak grid (Mon-Sun) and freeze indicator
+- Contextual practice CTA: first-time, all-caught-up, lapsed, or rusty drills
+- Mastered / learning counts
 </displays>
-<user-actions>
-- Tap "Start Practice" → /practice (general practice)
-- Tap "Learn new items" → /practice/vocabulary (when caught up)
-- Navigate via bottom nav
-</user-actions>
-<engagement>Primary habit trigger - due count is informational ("12 items, ~3 min"), practice calendar is a passive consistency record</engagement>
 </route>
 
 <route path="/login">
-<purpose>User authentication - password or passkey</purpose>
+<purpose>Sign in — password or passkey</purpose>
 <file>src/routes/(auth)/login.tsx</file>
-<displays>
-- Username input field
-- Password input field
-- "Sign in" button (password auth)
-- "Sign in with passkey" button (WebAuthn)
-- Link to /register
-- Full-screen password-setup view for existing users signing in without a password
-</displays>
 <user-actions>
-- Enter username + password → submit → logged in
-- Enter username/code without password → prompted to set password (existing users)
-- Click passkey button → browser WebAuthn prompt → logged in
+- Username + password
+- Username without a password (existing accounts) → prompted to set one
+- Passkey via WebAuthn
 </user-actions>
 </route>
 
 <route path="/register">
-<purpose>New user account creation</purpose>
+<purpose>Account creation, with optional passkey setup after</purpose>
 <file>src/routes/(auth)/register.tsx</file>
-<displays>
-- Username input
-- Display name input
-- Password + confirmation inputs
-- Optional passkey setup after registration
-</displays>
-<user-actions>
-- Fill registration form → submit → account created
-- Optionally set up passkey for future logins
-- Redirected to home
-</user-actions>
 </route>
 
 <route path="/try">
-<purpose>Anonymous drill for try-before-signup conversion</purpose>
+<purpose>Anonymous drill for try-before-signup</purpose>
 <file>src/routes/try.tsx</file>
 <data-source>Static: 8 hardcoded pronoun questions</data-source>
-<displays>
-- Intro screen explaining the drill format
-- Timed drill (8 questions, 4s each)
-- Completion screen with stats and signup prompt
-</displays>
-<user-actions>
-- Click "Start" to begin drill
-- Type Greek answers under time pressure
-- View results at completion
-- Click "Create Account" → /register (to save progress)
-- Click "Try Again" to repeat drill
-</user-actions>
-<engagement>Foot-in-the-door - experience value before commitment</engagement>
+<note>The only drill with no catalogue entry; it passes its own title to &lt;Drill&gt;</note>
 </route>
 
-<route path="/practice">
-<purpose>Redirects to /practice/speed</purpose>
-<file>src/routes/practice/index.tsx</file>
-<behaviour>Loader redirects to /practice/speed</behaviour>
-</route>
-
-<route path="/practice/speed">
-<purpose>Timed mixed production drills - core retrieval practice</purpose>
-<file>src/routes/practice/speed-drill.tsx</file>
-<data-source>Static question sets + runtime-generated case transformations</data-source>
-<displays>
-- Countdown timer (3.5-5s per question type)
-- English prompt (or Greek→case transformation prompt)
-- Greek input field
-- Session progress (X/Y)
-- Configurable session size (10/15/20/30 questions)
-</displays>
-<filter-ui>
-In-page filter buttons before starting drill:
-- All (default) - Mixed questions from all categories
-- Pronouns - Object and possessive pronouns only
-- Articles - Article + noun agreement only
-- Verbs - Verb conjugations only
-- Nouns - Case transformation questions (ο φίλος → accusative)
-</filter-ui>
-<user-actions>
-- Type Greek answer
-- Submit (Enter or timeout)
-- View feedback (correct/incorrect)
-- Auto-advance to next question
-- Complete session → view stats
-</user-actions>
-<question-types>
-- Object pronouns (με, σε, τον...)
-- Possessive pronouns (μου, σου...)
-- Verb conjugations (έχω, θέλω, μπορώ, είμαι)
-- Article + noun phrases
-- Case transformations (nominative → accusative/genitive)
-- Common sentences
-</question-types>
-<engagement>Time pressure creates flow state, variable content prevents boredom</engagement>
-</route>
-
-<route path="/practice/memory">
-<purpose>Memory drill hub - timed paradigm recall for forms that need to become automatic</purpose>
-<file>src/routes/practice/memory/index.tsx</file>
-<data-source>Static: hardcoded paradigm data</data-source>
-<displays>
-- Header: "Memory Drills" with subtitle
-- Paradigm cards (4 items):
-  - Definite Articles (18 forms)
-  - Object Pronouns (10 forms)
-  - Possessive Pronouns (8 forms)
-  - Contractions/σε (6 forms)
-- Each card shows form count and Greek preview
-</displays>
-<user-actions>
-- Tap a paradigm card → individual memory drill
-</user-actions>
-<engagement>Form count creates concrete goal, Greek preview primes recall</engagement>
-</route>
-
-<route path="/practice/memory/:drill" drills="articles,pronouns,possessives,contractions">
-<purpose>Individual timed memory drills for specific paradigms</purpose>
-<files>
-- src/routes/practice/memory/articles.tsx
-- src/routes/practice/memory/pronouns.tsx
-- src/routes/practice/memory/possessives.tsx
-- src/routes/practice/memory/contractions.tsx
-</files>
-<data-source>Static: hardcoded paradigm questions per drill type</data-source>
-<displays>
-- Timed recall drill for specific paradigm
-- Progress indicator
-- Feedback on each answer
-- Session summary with accuracy
-</displays>
-<user-actions>
-- Type Greek form under time pressure
-- View feedback
-- Complete drill → view stats
-</user-actions>
-<engagement>Focused paradigm drilling builds automaticity for specific form sets</engagement>
-</route>
-
-<route path="/practice/review">
-<purpose>SRS review queue - spaced repetition for long-term retention</purpose>
-<file>src/routes/practice/$tab.tsx (tab=review)</file>
-<data-source>DB: vocabulary, vocabularySkills (filtered by nextReviewAt)</data-source>
-<displays>
-- Due item count
-- Current vocabulary item
-- Greek input field
-- Feedback with correct answer
-- Queue progress
-</displays>
-<user-actions>
-- Type Greek translation
-- Submit answer
-- View feedback
-- Continue to next item
-- Complete queue → "All caught up!"
-</user-actions>
-<srs-algorithm>
-- Quality 5: Correct in <2s → increase interval (easy)
-- Quality 4: Correct in >=2s → increase interval (good)
-- Quality 2: Incorrect → decrease interval (hard)
-- Mastery threshold: 21+ day interval
-</srs-algorithm>
-<engagement>Informational due count, completion as natural endpoint</engagement>
-</route>
-
-<route path="/practice/:tab" tabs="vocabulary,review">
-<purpose>Tab container for SRS-based drills</purpose>
-<file>src/routes/practice/$tab.tsx</file>
-<data-source>DB: vocabulary, vocabularySkills</data-source>
-<tabs>
-- vocabulary: New vocabulary learning (DB, requires user)
-- review: SRS review queue (DB, requires user)
-</tabs>
-<legacy-redirects>
-- /practice/pronouns → /practice/speed
-- /practice/articles → /practice/speed
-- /practice/verbs → /practice/speed
-- /practice/nouns → /practice/speed
-</legacy-redirects>
-<engagement>Focused practice on weak areas</engagement>
-</route>
+### Learn and reference
 
 <route path="/learn">
-<purpose>Learn section hub - visual overview of content areas</purpose>
+<purpose>Section cards into conversations, phrases, nouns, verbs, essentials</purpose>
 <file>src/routes/learn/index.tsx</file>
-<displays>
-- Header: "Learn" with subtitle "Browse Greek content by topic"
-- Two groups with section cards:
-  - Communication: Conversations, Phrases
-  - Words: Nouns, Verbs, Essentials
-- Colour-coded borders by section (olive, ocean, honey, terracotta)
-</displays>
-<engagement>Progressive disclosure - browse overview, then dive into content</engagement>
 </route>
 
-<route path="/learn/conversations/:tab">
-<purpose>Themed dialogues for contextual learning</purpose>
-<file>src/routes/learn/conversations/$tab.tsx</file>
-<data-source>Static: hardcoded dialogue content</data-source>
-<tabs>
-- arriving: Arriving and leaving scenarios
-- food: Food and hospitality
-- smalltalk: Small talk and greetings
-- requests: Quick requests
-</tabs>
-<displays>
-- Dialogue exchanges (speaker roles: you, friend, host, waiter, etc.)
-- Greek text with English translation
-- Study / Speak mode toggle (shared across conversations)
-- Optional notes for phrases (literal meanings, context)
-</displays>
-<legacy-redirect>/explore/conversations/* → /learn/conversations/*</legacy-redirect>
-<engagement>Real-world context, practical application</engagement>
+<route path="/learn/{conversations,phrases}/:tab">
+<purpose>Themed dialogues · common expressions, one tab per theme</purpose>
+<file>src/routes/learn/&lt;section&gt;/$tab.tsx with tabs/ beneath it</file>
+<content>Each section's content.llm documents its tabs</content>
 </route>
 
-<route path="/learn/phrases/:tab">
-<purpose>Common expressions organised by function</purpose>
-<file>src/routes/learn/phrases/$tab.tsx</file>
-<data-source>Static: hardcoded phrase content</data-source>
-<tabs>
-- survival: Essential survival phrases
-- responses: Response patterns
-- requests: Request phrases
-- opinions: Expressing opinions
-- connectors: Discourse connectors
-- time: Time expressions
-</tabs>
-<note>Grammar patterns (μου αρέσει, με λένε) moved to /reference/patterns</note>
-<displays>
-- Phrase cards with Greek/English
-- Usage notes
-- Related phrases
-</displays>
-<legacy-redirect>/explore/phrases/* → /learn/phrases/*</legacy-redirect>
-<engagement>Quick reference, practical utility</engagement>
+<route path="/learn/essentials/:subtab">
+<purpose>Numbers, colours, time, position, frequency</purpose>
+<file>src/routes/learn/essentials/$subtab.tsx with subtabs/ beneath it</file>
 </route>
 
-<route path="/learn/nouns">
-<purpose>Noun browser by gender and semantic category</purpose>
-<file>src/routes/learn/nouns/route.tsx</file>
-<data-source>DB: vocabulary (grouped by tags)</data-source>
-<displays>
-- Nouns by semantic category (people, shopping, household, vehicles, summer)
-- Greek text, English translation
-- Gender badges
-</displays>
-<user-actions>
-- Browse categories
-</user-actions>
-<engagement>Discovery mode, fill knowledge gaps</engagement>
-</route>
-
-<route path="/learn/verbs">
-<purpose>Verb browser by conjugation family</purpose>
-<file>src/routes/learn/verbs/route.tsx</file>
-<data-source>DB: vocabulary + verbDetails</data-source>
-<displays>
-- Verbs by conjugation family (-ω, -άω, -μαι, irregular) with paradigm tables
-- Conjugation family badges
-- Collapsible sections for verb lists
-</displays>
-<user-actions>
-- Browse families
-- Expand/collapse verb lists
-- Tap verb → detail page
-</user-actions>
-<engagement>Discovery mode, understand verb patterns</engagement>
-</route>
-
-<route path="/learn/verbs/:verbId">
-<purpose>Full verb conjugation detail page</purpose>
-<file>src/routes/learn/verbs/$verbId/route.tsx</file>
-<data-source>DB: vocabulary, verbDetails, verbConjugations, verbImperatives</data-source>
-<displays>
-- Verb header (lemma, English, conjugation family badge)
-- Suppletive indicator (if different stems across tenses)
-- Stem insight (present/aorist/future stem changes)
-- Tense navigator (tabs: present, aorist, future, past continuous)
-- Paradigm tables (6 forms: sg1-3, pl1-3)
-- Imperative table (imperfective/perfective × singular/plural)
-</displays>
-<user-actions>
-- Switch between tenses
-- Study stem changes
-- Back to verb list
-</user-actions>
-<engagement>Deep study mode, understand verb patterns</engagement>
-</route>
-
-<route path="/reference">
-<purpose>Reference section hub - visual overview of grammar topics</purpose>
-<file>src/routes/reference/index.tsx</file>
-<displays>
-- Header: "Reference" with subtitle "Grammar patterns and paradigms"
-- Section cards with icons linking to each of 8 tabs
-- Colour-coded borders by topic (ocean, olive, honey, terracotta)
-</displays>
-<engagement>Progressive disclosure - browse overview, then dive into specifics</engagement>
+<route path="/learn/nouns/:subject  ·  /learn/verbs/:verbId">
+<purpose>Noun browser by subject · full verb conjugation detail</purpose>
+<file>src/routes/learn/nouns/$subject.tsx · src/routes/learn/verbs/$verbId.tsx</file>
+<data-source>DB: noun-browser and verb queries</data-source>
 </route>
 
 <route path="/reference/:tab">
-<purpose>Grammar reference lookup</purpose>
-<file>src/routes/reference/$tab.tsx</file>
-<data-source>Static: hardcoded grammar content + DB for patterns</data-source>
-<tabs>
-- cases: Case system foundation (nominative, accusative, genitive)
-- pronouns: Pronoun paradigms, decision guides, indefinite reference
-- articles: Article paradigms, gender agreement, movable nu
-- nouns: Noun declensions by gender (masculine, feminine, neuter)
-- adjectives: Adjective agreement patterns
-- prepositions: Preposition + case combinations
-- verbs: Conjugation patterns, tense overview
-- patterns: Greek-specific constructions (μου αρέσει, με λένε)
-</tabs>
-<note>8 tabs total. Articles tab component is nouns-articles.tsx (combines article paradigms with noun gender context).</note>
-<displays>
-- Tab navigation bar
-- Paradigm tables
-- Decision guides (flowcharts)
-- Usage examples
-- Pattern explanations
-</displays>
-<engagement>Just-in-time reference when stuck</engagement>
+<purpose>Grammar reference by topic</purpose>
+<file>src/routes/reference/$tab.tsx, sections in reference/components/</file>
+<content>Each tab's *.content.llm carries the grammar copy</content>
 </route>
 
-<route path="/search">
-<purpose>Fuzzy vocabulary search</purpose>
-<file>src/routes/search.tsx</file>
-<data-source>DB: vocabulary (via ekrina)</data-source>
-<displays>
-- Search input (autofocus)
-- Results list with Greek, English, word type, tags
-- Fuzzy matching (tolerates typos, ranked by relevance)
-- Color-coded left borders by word type (verb=ocean, noun=olive, phrase=terracotta, adverb=honey)
-</displays>
-<user-actions>
-- Type query (Greek, English, or tag name)
-- View matching results inline
-- Clear search to reset
-</user-actions>
-<engagement>Quick lookup utility</engagement>
-<target-ux>
-**Mobile:** Bottom drawer that slides up from nav tap
-- Search input at top of drawer
-- Results below, scrollable
-- Swipe down or tap outside to dismiss
-
-**Desktop:** Autocomplete dropdown from nav
-- Click "Search" in nav → popover appears below
-- Type to filter results inline
-- Click result or press Escape to dismiss
-
-**Future enhancement:** Selecting a word shows forms (conjugations, declensions)
-</target-ux>
+<route path="/reference/verbs/:band">
+<purpose>Verb reference by frequency band</purpose>
+<file>src/routes/reference/verbs/$band.tsx</file>
 </route>
 
-<route path="/progress">
-<purpose>Analytics and progress tracking</purpose>
-<file>src/routes/progress.tsx</file>
-<data-source>DB: practiceSessions, practiceAttempts, vocabularySkills</data-source>
-<displays>
-- Streak calendar (3-month view, practice days highlighted)
-- Accuracy trend chart (30-day rolling)
-- Time invested (total minutes, session count)
-- Mastered vocabulary count
-</displays>
-<user-actions>
-- View historical practice data
-- Navigate back to dashboard
-</user-actions>
-<engagement>Self-comparison over time — user-accessed competence data, not pushed metrics</engagement>
-</route>
+### Utility
 
-<route path="/support">
-<purpose>About page - project story and support options</purpose>
-<file>src/routes/support.tsx</file>
-<displays>
-- Project backstory (why this app exists)
-- Creator context (learning Greek for family)
-- Support options (Buy Me a Coffee link)
-</displays>
-<engagement>Trust building, personal connection</engagement>
-</route>
+<route path="/search">Vocabulary search — src/routes/search.tsx</route>
+<route path="/progress">Streak calendar and accuracy trends — src/routes/progress.tsx</route>
+<route path="/support">About — src/routes/support.tsx</route>
 
 ## Core Engagement Loop
 
@@ -469,50 +193,73 @@ counts, and consistency tracking all serve the goal of getting enough repetition
 for the behaviour to start becoming automatic. But the *form* of that scaffolding
 matters — it should be informational, never controlling.
 
+Each hook is marked for whether it ships. The design intent below is the brief
+either way — but an unmarked hook reads as a description of the app, and several
+of these describe things that were never built.
+
 <hooks>
-<hook name="due-count" location="dashboard" mechanism="informational">
+<hook name="due-count" location="dashboard" mechanism="informational" status="ships">
 Shows number of items due for review with time estimate. Factual: "12 items (~3 min)".
 No urgency framing, no FOMO language. The count is useful information, not pressure.
 </hook>
-<hook name="practice-calendar" location="dashboard" mechanism="informational">
+<hook name="practice-calendar" location="dashboard" mechanism="informational" status="conflict">
 Weekly grid showing practice days. A passive record of consistency — the user can
 see their pattern without the app evaluating it. No streak counter, no "X days!"
 label. The calendar speaks for itself.
+
+CONFLICT: the grid ships, but the dashboard contradicts the rest of this hook.
+src/routes/index.tsx passes a `streak` count to WeekStreak and renders
+"Day 1! Practice for 7 days to earn a streak freeze." That is a streak counter
+and an "X days!" label. Either the brief or the dashboard should change; this
+file cannot decide which.
 </hook>
-<hook name="short-sessions" location="practice" mechanism="low-friction">
+<hook name="short-sessions" location="practice" mechanism="low-friction" status="ships">
 2-3 minute sessions lower the activation threshold. The user can always do "just
 one drill." Starting is the hard part; most users continue once they begin.
 </hook>
-<hook name="auto-advance" location="speed-drill" mechanism="flow-state">
+<hook name="auto-advance" location="practice drill" mechanism="flow-state" status="ships">
 Correct answers auto-advance, maintaining momentum. Flow produces its own
 dopamine — don't interrupt it with celebrations.
 </hook>
-<hook name="push-notifications" location="system" mechanism="external-prompt">
+<hook name="push-notifications" location="system" mechanism="external-prompt" status="partial">
+NOT SENT. The subscription side is live — /api/push/{subscribe,unsubscribe,snooze,
+log-tap,vapid-key}, and pushSubscriptions carries notification mode, snooze and
+taper-offer state. Nothing calls the senders in src/server/push-notifications.ts,
+so none of the below reaches a learner yet.
+
 Daily reminders for first 2 weeks, tapering to every-other-day by week 3.
 Content is informational: "Your Greek is waiting" not "Don't break your streak!"
 Includes one-tap "Not today" that triggers no guilt. Around day 14, offer:
 "You seem to have this — want fewer reminders?"
 </hook>
-<hook name="lapsed-user-recovery" location="dashboard" mechanism="reduced-friction">
+<hook name="lapsed-user-recovery" location="dashboard" mechanism="reduced-friction" status="partial">
+LapsedUserCta ships, alongside FirstTimeUserCta and AllCaughtUpCta. The
+"Just 5 items" tiny action does not exist anywhere in the codebase.
+
 Users returning after 7+ days see warm, no-guilt messaging. "Your vocabulary is
 still here." For large queues (15+ items): "Just 5 items" as default tiny action.
 After longer gaps: show what they'd built before the break, offer a lighter
 re-entry session. Never reset or penalise progress.
 </hook>
-<hook name="post-session-acknowledgement" location="drill-summary" mechanism="informational">
+<hook name="post-session-acknowledgement" location="drill-summary" mechanism="informational" status="ships">
 Describes what happened: items practised, time spent, which items took the most
 effort. No person-praise ("You're amazing!"), no evaluation ("Great session!").
 When sessions are hard, reframe the struggle: "These 3 forms took the most effort.
 That's where durable learning happens." Offer a fork: 2-3 genuinely different next
 steps as low-key links, not one dominant CTA.
 </hook>
-<hook name="consistency-milestones" location="dashboard" mechanism="informational">
+<hook name="consistency-milestones" location="dashboard" mechanism="informational" status="not-implemented">
+Nothing ships. Written as the replacement for a confetti modal that has since
+been removed, so this describes neither the old behaviour nor the current one.
+
 Quiet inline text at natural breakpoints. "You've been practising for a week."
 Period. No confetti, no modal, no forced interaction. The user feels whatever they
 feel about it without the app directing the emotion. These appear as part of the
 normal dashboard flow, not as interruptions.
 </hook>
-<hook name="evening-reminder" location="system" mechanism="external-prompt">
+<hook name="evening-reminder" location="system" mechanism="external-prompt" status="not-implemented">
+There is no scheduler. See push-notifications above.
+
 Push notification at 8pm UTC for users who haven't practised today (first few
 weeks only). Content: "Your review queue has X items" — factual, no streak
 mention, no loss framing. Tapers as the habit forms.
@@ -569,33 +316,36 @@ As the user accumulates practice data (weeks 3-10), introduce:
 anxiety about missed days without loss-framing. The framing matters: "miss a day,
 keep your streak" is protective; "don't lose your streak" is controlling.</motivation-note>
 </feature>
-<feature name="evening-reminder" status="implemented">
-<current>Push notification at 8pm UTC for users who haven't practised</current>
+<feature name="evening-reminder" status="partial">
+<current>Subscription plumbing is live; nothing sends.</current>
 <details>
-- Cron trigger in wrangler.toml (0 20 * * *)
-- Checks users with active streaks who haven't practised today
+- /api/push/{subscribe,unsubscribe,snooze,log-tap,vapid-key} all work
+- src/server/push-notifications.ts holds the senders and has no caller
+- There is no cron. The app runs on Nitro; the wrangler.toml this once
+  referenced does not exist.
 </details>
 <motivation-note>Appropriate at Stage 1 but needs reframing. Current copy "Don't
 lose your X-day streak!" is loss-framed — replace with informational: "Your review
 queue has X items." Should taper after week 3 as the habit forms.</motivation-note>
 </feature>
-<feature name="milestones" status="needs-rework">
-<current>Celebration modal at 7, 30, 100, 365 days with confetti</current>
+<feature name="milestones" status="not-implemented">
+<current>Nothing ships. No MilestoneCelebration component, no /api/milestones,
+no milestonesAchieved table.</current>
 <details>
-- MilestoneCelebration component shows confetti + message
-- Persisted to milestonesAchieved table via /api/milestones
-- Only shows once per milestone per user
+- This entry once described a confetti modal as implemented; it was removed
+  and the note was not. The motivation guidance below still stands as the
+  design brief should milestones be built.
 </details>
 <motivation-note>Confetti + modal combines two universal anti-patterns. Replace with
 quiet inline text on dashboard: "You've been practising for a week." No modal, no
 confetti, no forced interaction. Persist the milestone data (useful for analytics)
 but change the presentation.</motivation-note>
 </feature>
-<feature name="post-session-messages" status="needs-rework">
-<current>Variable encouragement messages with icons based on accuracy</current>
+<feature name="post-session-messages" status="not-implemented">
+<current>The summary screen reports counts and accuracy plainly. No tiered
+icons, no praise copy.</current>
 <details>
-- Trophy/Flame/Sparkles icons tiered by accuracy
-- Messages like "You're on fire!", "Great session!", "You showed up — that's what matters!"
+- src/routes/practice/components/engines/shells.tsx renders the summary
 </details>
 <motivation-note>Person-praise and app-as-judge. Replace with informational
 acknowledgement: describe what happened (items practised, time, effort distribution),
@@ -611,23 +361,32 @@ as passive data the user can glance at.</motivation-note>
 
 ## Data Tables
 
+21 tables, from `src/server/db/schema-{auth,language,practice}.ts`.
+
 <tables>
-<table name="users">User accounts (id, code, username, displayName, passwordHash, freezeCount, lastFreezeUsedAt, freezeUsedForDate, consecutiveDaysAtEarn)</table>
-<table name="passkeys">WebAuthn credentials (userId, credentialId, publicKey, counter, transports, deviceType, backedUp, lastUsedAt)</table>
-<table name="authChallenges">WebAuthn challenge storage (challenge, type, userId, expiresAt) - 5min TTL</table>
-<table name="vocabulary">All Greek words/phrases (greekText, englishTranslation, wordType, gender, metadata, declensionPattern)</table>
-<table name="tags">Vocabulary categorisation (slug, name, description)</table>
-<table name="tagSections">UI display organisation (tagId, section, displayOrder)</table>
-<table name="vocabularyTags">Many-to-many vocab↔tag join table</table>
-<table name="verbDetails">Verb metadata (conjugationFamily, stems, isSuppletive, notes)</table>
-<table name="verbConjugations">Full verb paradigms by tense (vocabId, tense, person, form)</table>
-<table name="verbImperatives">Imperative forms (vocabId, aspect, number, form)</table>
-<table name="practiceSessions">Session metadata (userId, sessionType, category, timestamps)</table>
-<table name="practiceAttempts">Practice history (sessionId, vocabId, isCorrect, timeTaken)</table>
-<table name="weakAreas">Pattern-based weak spots (userId, areaType, identifier, errorCount)</table>
-<table name="vocabularySkills">SRS state per user per word (easeFactor, intervalDays, reviewCount, nextReviewAt)</table>
-<table name="pushSubscriptions">Push notification endpoints (userId, endpoint, keys)</table>
-<table name="milestonesAchieved">Milestone celebrations shown (userId, milestoneType, achievedAt)</table>
+<table name="users">Accounts (code, username, displayName, passwordHash, freeze state)</table>
+<table name="passkeys">WebAuthn credentials</table>
+<table name="authChallenges">WebAuthn challenge storage, 5min TTL</table>
+<table name="pushSubscriptions">Push endpoints, notification mode, snooze/taper state</table>
+<table name="notificationLogs">What was sent, and whether it was tapped</table>
+
+<table name="vocabulary">All Greek words and phrases (greekText, englishTranslation, wordType, cefrLevel, frequencyRank)</table>
+<table name="nounDetails">Gender and declension pattern</table>
+<table name="adjectiveDetails">Declension pattern</table>
+<table name="nominalForms">Declined noun and adjective forms by case and number</table>
+<table name="verbDetails">Conjugation family, stems, suppletion</table>
+<table name="verbConjugations">Full paradigms by tense and person</table>
+<table name="verbImperatives">Imperatives by aspect and number</table>
+<table name="vocabularyOpposites">Antonym pairs, for the opposites drill</table>
+<table name="tags">Vocabulary categorisation</table>
+<table name="vocabularyTags">Many-to-many vocab↔tag join</table>
+
+<table name="practiceSessions">Session metadata</table>
+<table name="practiceAttempts">Per-answer history (isCorrect, timeTaken)</table>
+<table name="vocabProgress">SRS state per user per word</table>
+<table name="userProgress">Streak and aggregate state</table>
+<table name="drillDailyResults">Per-drill per-day rollup</table>
+<table name="drillProgress">Per-drill SRS-ish state, the source of the rust score</table>
 </tables>
 
 ## User State

@@ -7,6 +7,7 @@ Audit feedback and implementation plan for `src/routes/practice/cases/` (`index.
 ## 1. LLM Context Files
 
 ### Issues
+
 - **Missing `.content.llm` Files:**
   - Only `nominative/noun.content.llm` exists.
   - Missing context files for `nominative/{article,adjective,phrase}`, `accusative/{noun,article,adjective,phrase}`, `genitive/{noun,article,adjective,phrase}`, and `review/{nouns,articles,adjectives,phrases}`.
@@ -15,6 +16,7 @@ Audit feedback and implementation plan for `src/routes/practice/cases/` (`index.
   - Lines 61–63 describe typing/selecting M/F/N, whereas `noun.tsx` uses single-select gender option chips (`Masculine (ο)`, `Feminine (η)`, `Neuter (το)`).
 
 ### Actions
+
 - [ ] Update `nominative/noun.content.llm` to reflect the dynamic SRS seeder pool architecture.
 - [ ] Add consolidated case-level context documentation (`nominative.content.llm`, `accusative.content.llm`, `genitive.content.llm`, `cases-review.content.llm`).
 
@@ -23,6 +25,7 @@ Audit feedback and implementation plan for `src/routes/practice/cases/` (`index.
 ## 2. Design Guidelines, Contrast & Bugs
 
 ### Issues
+
 - **Navigation Self-Loop (High):**
   - `cases/index.tsx:139`: `<GroupSection title="The case system" returnTo={Route.fullPath}>` passes `returnTo="/practice/cases/"`, creating an infinite loop when clicking "← back". Should be `returnTo="/practice"`.
 - **Palette & Contrast Violations:**
@@ -42,6 +45,7 @@ Audit feedback and implementation plan for `src/routes/practice/cases/` (`index.
   - `nominative/noun.tsx:37`: `drillId="nominative-nouns"` mismatches loader/index (`"articles-noun-genders"`).
 
 ### Actions
+
 - [ ] Fix navigation self-loop in `cases/index.tsx:139` to `returnTo="/practice"`.
 - [ ] Set `colorTheme="ocean"` on `nominative/noun.tsx`.
 - [ ] Align gender table headers in `review/articles.tsx` to `gender-*` tokens.
@@ -54,8 +58,10 @@ Audit feedback and implementation plan for `src/routes/practice/cases/` (`index.
 ## 3. Tailwind & Component Architecture
 
 ### Issues
+
 - Template string concatenations in `review/articles.tsx:224`.
 - Ad-hoc dimension selector style maps in `review/phrases.tsx:34-53`.
 
 ### Actions
+
 - [ ] Refactor review dimension chips to use a shared `tv()` variant across case review drills.

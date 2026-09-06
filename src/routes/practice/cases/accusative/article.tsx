@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import type { SimpleListItem } from "../../components/engines/deck";
 import { Drill } from "../../components/engines/drill";
-import { ParadigmTable } from "../../components/ParadigmTable";
+import { GENDER_COLUMNS, Paradigm } from "../../components/paradigm";
 
 // Articles in Target (accusative): τον · τη(ν) · το · τους · τις · τα
 // Forward: "the (m, sg, target)" → type "ton" (matchPhonetic → τον)
@@ -54,8 +54,8 @@ const FORMS: SimpleListItem[] = [
 ];
 
 const PARADIGM_ROWS = [
-	{ label: "Acc sg", forms: ["τον", "τη(ν)", "το"] as [string, string, string] },
-	{ label: "Acc pl", forms: ["τους", "τις", "τα"] as [string, string, string] },
+	{ label: "Acc sg", forms: ["τον", "τη(ν)", "το"] },
+	{ label: "Acc pl", forms: ["τους", "τις", "τα"] },
 ];
 
 export const Route = createFileRoute("/practice/cases/accusative/article")({
@@ -69,10 +69,11 @@ function ArticleTargetDrill() {
 			drillId="articles-article-target"
 			items={FORMS}
 			subtitle="Accusative articles"
-			colorTheme="terracotta"
 			forwardDesc="Gender + number → article (Target)"
 			reverseDesc="Article → recall gender + number (self-assess)"
-			configExtras={<ParadigmTable rows={PARADIGM_ROWS} />}
+			configExtras={
+				<Paradigm className="my-8 mb-12" columns={GENDER_COLUMNS} rows={PARADIGM_ROWS} />
+			}
 		/>
 	);
 }

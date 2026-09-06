@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import type { SimpleListItem } from "../../components/engines/deck";
 import { Drill } from "../../components/engines/drill";
-import { ParadigmTable } from "../../components/ParadigmTable";
+import { GENDER_COLUMNS, Paradigm } from "../../components/paradigm";
 
 // Articles in Owner (genitive): του · της · του · των · των · των
 // Forward: "of the (m, sg)" → type "tou" (matchPhonetic → του)
@@ -54,8 +54,8 @@ const FORMS: SimpleListItem[] = [
 ];
 
 const PARADIGM_ROWS = [
-	{ label: "Gen sg", forms: ["του", "της", "του"] as [string, string, string] },
-	{ label: "Gen pl", forms: ["των", "των", "των"] as [string, string, string] },
+	{ label: "Gen sg", forms: ["του", "της", "του"] },
+	{ label: "Gen pl", forms: ["των", "των", "των"] },
 ];
 
 export const Route = createFileRoute("/practice/cases/genitive/article")({
@@ -69,10 +69,11 @@ function ArticleOwnerDrill() {
 			drillId="articles-article-owner"
 			items={FORMS}
 			subtitle="Genitive articles"
-			colorTheme="olive"
 			forwardDesc="Gender + number → article (Owner)"
 			reverseDesc="Article → recall gender + number (self-assess)"
-			configExtras={<ParadigmTable rows={PARADIGM_ROWS} />}
+			configExtras={
+				<Paradigm className="my-8 mb-12" columns={GENDER_COLUMNS} rows={PARADIGM_ROWS} />
+			}
 		/>
 	);
 }

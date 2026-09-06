@@ -34,7 +34,8 @@ const RULES: Rule[] = [
 		// imported freely — it never produces anything a learner sees.
 		name: "no-transliteration-import",
 		pattern: "greekTo(Phonetic|Pronunciation)",
-		allow: /^(src\/components\/(GreekText|Pronunciation|GreekGloss)\.tsx|src\/lib\/greek-|scripts\/)/,
+		allow:
+			/^(src\/components\/(GreekText|Pronunciation|GreekGloss)\.tsx|src\/lib\/greek-|scripts\/)/,
 		why: "import the components instead — GreekText, Pronunciation, GreekGloss",
 	},
 	{
@@ -94,5 +95,7 @@ for (const [name, found] of byRule) {
 	}
 }
 
-console.log(`\n${violations.length} violations across ${new Set(violations.map((v) => v.file)).size} files`);
+console.log(
+	`\n${violations.length} violations across ${new Set(violations.map((v) => v.file)).size} files`,
+);
 process.exit(1);

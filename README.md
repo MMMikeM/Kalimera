@@ -2,7 +2,7 @@
 
 A Greek learning app for intermediate learners building procedural fluency — drilling grammar and vocabulary until responses become automatic.
 
-**Stack:** React Router 7 · Cloudflare Workers · Turso (libsql) · Drizzle ORM · Tailwind CSS v4
+**Stack:** TanStack Start (TanStack Router + Nitro) · Turso (libsql) · Drizzle ORM · Tailwind CSS v4
 
 ---
 
@@ -19,70 +19,57 @@ A Greek learning app for intermediate learners building procedural fluency — d
 
 ### Prerequisites
 
-- Node.js 22+
+- Node.js 26+ (see `engines` in package.json)
 - pnpm
-- Docker (for local database)
-- Wrangler CLI (`pnpm exec wrangler`)
 
 ### Local development
 
 ```bash
 pnpm install
-
-# Start local libsql database (Docker)
-docker run -p 8080:8080 ghcr.io/tursodatabase/libsql-server
-
-# Set up schema and seed data
-make db-setup
-
-# Start dev server
-make dev
+cp .env.example .env     # fill in Turso credentials
+pnpm dev
 ```
 
-Copy `.env.example` to `.env` and fill in Turso credentials for production database access.
+There is no local database. `.env` holds **production** Turso credentials and
+both the app and drizzle-kit load it directly, so `make db-push` and
+`make db-seed` act on production. Use `make db-push-local` if you only need to
+try a schema change against a throwaway file DB.
+
+Seeding is an idempotent additive upsert — it adds and updates rows and never
+deletes — so re-running it against production is safe.
 
 ## Commands
 
-All commands go through the Makefile — direct `pnpm` database commands skip `.env` and hit local instead of Turso.
+`.env` holds **production** Turso credentials, and drizzle-kit auto-loads it. Every
+database command below therefore hits production unless its name says `local`.
+There is no local Docker database.
 
 ### Development
 
-| Command        | Description                   |
-| -------------- | ----------------------------- |
-| `make dev`     | Start development server      |
-| `make build`   | Build for production          |
-| `make preview` | Preview with Wrangler locally |
+| Command        | Description                                              |
+| -------------- | -------------------------------------------------------- |
+| `make dev`     | Start the Vite dev server                                |
+| `make build`   | Build for production                                     |
+| `make preview` | Serve the built output (`node .output/server/index.mjs`) |
 
-### Local database (Docker libsql on port 8080)
+### Database (Turso — production)
 
-| Command          | Description         |
-| ---------------- | ------------------- |
-| `make db-push`   | Push schema         |
-| `make db-seed`   | Seed data           |
-| `make db-setup`  | Push + seed         |
-| `make db-studio` | Open Drizzle Studio |
+| Command              | Description                                                     |
+| -------------------- | --------------------------------------------------------------- |
+| `make db-push`       | Push schema **to production**                                   |
+| `make db-seed`       | Seed **production** — idempotent additive upsert, never deletes |
+| `make db-setup`      | `db-push` then `db-seed`                                        |
+| `make db-studio`     | Open Drizzle Studio against **production**                      |
+| `make db-push-local` | Push schema to a local file DB (`local.db`), no Docker, no prod |
 
-### Production database (Turso)
+`pnpm db:seed` alone does **not** load `.env`; `make db-seed` passes it explicitly.
 
-| Command               | Description         |
-| --------------------- | ------------------- |
-| `make prod-db-push`   | Push schema         |
-| `make prod-db-seed`   | Seed data           |
-| `make prod-db-setup`  | Push + seed         |
-| `make prod-db-studio` | Open Drizzle Studio |
-
-### Deployment
-
-| Command           | Description                            |
-| ----------------- | -------------------------------------- |
-| `make deploy`     | Build and deploy to Cloudflare Workers |
-| `make deploy-dry` | Dry run                                |
-| `make logs`       | Tail worker logs                       |
-
-### Linting
+### Code quality
 
 ```bash
-pnpm lint:fix && pnpm lint:unused && pnpm lint:types && pnpm lint:dupes
+pnpm typecheck && pnpm lint && pnpm lint:ls && pnpm lint:greek && pnpm test --run
+pnpm lint:unused        # knip
+pnpm duplicates:llm     # jscpd, LLM-readable output
 ```
 
 ## Architecture
@@ -91,8 +78,8 @@ pnpm lint:fix && pnpm lint:unused && pnpm lint:types && pnpm lint:dupes
 src/
   components/        # Custom components (tailwind-variants)
   components/ui/     # ShadCN components
-  routes/            # React Router 7 routes
-  db.server/         # Drizzle schema and queries
+  routes/            # TanStack Router file-based routes
+  server/db/         # Drizzle schema and queries
   scripts/           # Seed scripts
 docs/
   user-flows.llm     # Route map, user journeys, data tables
@@ -100,28 +87,39 @@ docs/
 
 **Path alias:** `@/` → `./src/`
 
-**Route types:** Run `pnpm react-router typegen` after changing loaders.
+**Route types:** generated into `src/routeTree.gen.ts` by the Vite plugin; `Route.useLoaderData()` is typed from the loader with no separate codegen step.
 
 ## Routes
 
 ```
-/                    Dashboard
-/practice            Drill browser (grouped: articles · pronouns · verbs · blocks)
-/practice/vocab/*    DB-driven production drills (articles, pronouns, verbs, nouns)
-/practice/memory/*   Paradigm recall drills (articles, pronouns, possessives, contractions, noun-genders, numbers, days-of-week, aorist-stems, imperatives, chunks)
-/practice/review     Weakest drills + SRS vocabulary review
-/practice/vocabulary New vocabulary learning (SRS intro)
-/learn               Content browser hub
-/learn/conversations Themed dialogues
-/learn/phrases       Common expressions
-/learn/nouns         Noun browser
-/learn/verbs         Verb browser with paradigm tables
-/reference           Grammar reference hub
-/reference/:tab      Grammar reference (cases, pronouns, articles, nouns, adjectives, prepositions, verbs, patterns)
-/search              Fuzzy vocabulary search
-/progress            Analytics
-/try                 Anonymous drill (conversion)
+/                                 Dashboard
+/login  /register  /try           Auth, and the anonymous try-before-signup drill
+
+/practice                         Drill browser — four group cards
+/practice/cases                   Doer · Target · Owner · Review
+/practice/pronouns                Object forms, placement, possessives
+/practice/verbs                   Present · Past · Future & Modal · Mixed tenses
+/practice/blocks                  Survival phrases, numbers, days, opposites
+/practice/blocks/question-words   ποιος / πόσος agreement
+/practice/review                  Drills gone rusty
+
+/learn                            Content browser hub
+/learn/conversations/:tab         Themed dialogues
+/learn/phrases/:tab               Common expressions
+/learn/nouns  /:subject           Noun browser
+/learn/verbs  /:verbId            Verb browser and conjugation detail
+/learn/essentials/:subtab         Numbers, colours, time, position, frequency
+
+/reference                        Grammar reference hub
+/reference/:tab                   cases · pronouns · articles · nouns · adjectives · prepositions · patterns
+/reference/verbs  /:band          Verbs, by frequency band
+
+/search  /progress  /support      Search · analytics · about
 ```
+
+The individual drills are not listed here. They are owned by the per-group
+catalogues under `src/routes/practice/*/drills.data.ts`, and a list kept in this
+file would drift from them.
 
 ## Environment variables
 
@@ -130,4 +128,4 @@ docs/
 | `TURSO_DATABASE_URL` | Turso database URL |
 | `TURSO_AUTH_TOKEN`   | Turso auth token   |
 
-Set as Cloudflare Worker secrets: `make secrets-set-turso`
+Both live in `.env`, which drizzle-kit and the app load directly.

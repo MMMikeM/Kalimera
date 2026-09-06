@@ -1,8 +1,9 @@
+import { cn } from "tailwind-variants";
+
 import { type ContentColorScheme, ContentSection } from "@/components/ContentSection";
-import { cn } from "@/lib/utils";
+import { GreekText } from "@/components/GreekText";
 
 import type { PhraseItem, PhrasesLoaderData } from "../$tab";
-import { GreekText } from "@/components/GreekText";
 
 export type { PhraseItem, PhrasesLoaderData };
 
@@ -14,9 +15,6 @@ const textColors: Record<ContentColorScheme, string> = {
 	honey: "text-honey-800",
 	navy: "text-navy-800",
 	slate: "text-slate-800",
-	masculine: "text-navy-800",
-	feminine: "text-sunset-800",
-	neuter: "text-slate-700",
 	stone: "text-stone-800",
 };
 

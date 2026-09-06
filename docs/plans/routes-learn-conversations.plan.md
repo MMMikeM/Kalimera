@@ -7,6 +7,7 @@ Audit feedback and implementation plan for `src/routes/learn/conversations/` (`i
 ## 1. LLM Context Files
 
 ### Issues
+
 - **`src/routes/learn/conversations/content.llm`:**
   - Lines 15 & 328 claim dialogues are hardcoded in `$tab.tsx` rather than modularised in `tabs/arriving.tsx`, `tabs/food.tsx`, `tabs/requests.tsx`, `tabs/smalltalk.tsx`.
   - Lines 21–23 document modes as `"Study mode"` and `"Speak mode"`, whereas the implementation uses `"read"` and `"roleplay"`.
@@ -14,6 +15,7 @@ Audit feedback and implementation plan for `src/routes/learn/conversations/` (`i
   - Context documentation omits the component layer in `conversation-shell.tsx`.
 
 ### Actions
+
 - [x] Update `content.llm` to reflect the `tabs/*.tsx` file structure and TanStack Start route params (`$tab`). Added a File Structure block; corrected the Data Source claim and the "Adding New Tabs" steps 2–4. Step 1 (`VALID_TABS` in `$tab.tsx`) was already correct and kept.
 - [x] Update mode documentation to `read` and `roleplay`. Documented as value + UI label pairs (`read` = "Study", `roleplay` = "Speak") — the toggle really does render "Study"/"Speak", so a straight rename would have made the doc wrong.
 - [x] Add `"shopkeeper"` to the documented speaker roles. Added to both the `DialogueLine` interface block and the Speaker Role Conventions table, with a pointer to `SpeakerRole` in `src/components/SpeakerBadge.tsx`.
@@ -24,6 +26,7 @@ Audit feedback and implementation plan for `src/routes/learn/conversations/` (`i
 ## 2. Design Guidelines & Contrast
 
 ### Issues
+
 - **Palette Token Violations:**
   - `components/conversation-shell.tsx:79`: Uses non-standard `border-amber-200` (should use `border-honey-200` or `border-honey-300`).
   - `components/conversation-shell.tsx:83, 89`: Uses raw Tailwind `text-red-600` and `text-green-600` instead of semantic feedback tokens `text-incorrect` and `text-correct`.
@@ -39,6 +42,7 @@ Audit feedback and implementation plan for `src/routes/learn/conversations/` (`i
     - `requests`: tab sets `terracotta`, hero uses `honey`.
 
 ### Actions
+
 - [x] Replace `border-amber-200` with `border-honey-200`. Done as part of the `LearningTips` refactor — the divider above the mistake block is now `border-honey-200`.
 - [x] Replace `text-red-600` / `text-green-600` with `text-incorrect` / `text-correct`. Resolved by the `MistakeComparison` adoption — that shared component already ships `text-incorrect` / `text-correct`; the hand-rolled ✗/✓ spans are gone.
 - [x] Refactor `LearningTips` to compose `<CollapsibleSection>` and `<MistakeComparison>`. `LearningTips` is now `<CollapsibleSection title="Learning Tips" colorScheme="honey" defaultOpen>`; the `commonMistake` prop shape (`wrong`/`right`) is mapped to `MistakeComparison`'s `wrong`/`correct` internally so the four tabs are untouched. `MistakeComparison` is given `title=""` and the local `<h4>` heading is kept, so "Common Mistake" stays a peer of the "Patterns"/"Cultural Tips" headings instead of being promoted to its `h3 text-lg font-bold`. Note: the inner panel is now `CollapsibleSection`'s cream content surface rather than the honey-100 panel — an intended visual change.
@@ -51,9 +55,11 @@ Audit feedback and implementation plan for `src/routes/learn/conversations/` (`i
 ## 3. Tailwind & Component Architecture
 
 ### Issues
+
 - **Context Prop Drilling:**
   - `ScenarioCard` requires `mode: ConversationMode` as a prop, causing all 4 tabs to pass `mode={mode}` 18 times despite `useConversationContext` being available.
 
 ### Actions
+
 - [x] Update `ScenarioCard` to read `mode` from `useConversationContext()` internally when not explicitly provided as an override prop. `mode` is now optional (`mode ?? contextMode`); all 18 `mode={mode}` props and the four now-redundant `useConversationContext()` calls/imports removed from the tabs.
 - [x] Refactor `ConversationModeToggle` and `ScenarioCard` states using `tv()`. **`ScenarioCard`: not applicable (already correct)** — it renders a single static `<Card variant="bordered" padding="lg" className="border-stone-200">` with no variant states; `tv()` would be pure indirection. **`ConversationModeToggle`: out of scope** — it lives in `src/components/` (shared, read-only for this plan); the exact `tv()` diff is reported to the orchestrator instead.
