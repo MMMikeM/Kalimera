@@ -18,7 +18,7 @@ const rustColor = (score: number) => {
 	return "text-stone-500";
 };
 
-export const PracticeCTA = ({ rustyDrills }: { rustyDrills: DrillRust[] }) => {
+export const RustyDrillsCta = ({ rustyDrills }: { rustyDrills: DrillRust[] }) => {
 	const known = rustyDrills.filter((d) => DRILL_REGISTRY[d.drillId]);
 	const shown = known.slice(0, MAX_SHOWN);
 	const hasMore = known.length > MAX_SHOWN;
