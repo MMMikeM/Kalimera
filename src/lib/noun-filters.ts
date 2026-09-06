@@ -1,4 +1,7 @@
-export type NounGender = "masculine" | "feminine" | "neuter";
+import type { Gender } from "@/server/db/enums";
+
+/** Alias kept for the noun-browser call sites; the canonical name is Gender. */
+export type NounGender = Gender;
 
 export interface BrowsableNoun {
 	id: number;
@@ -49,8 +52,6 @@ export const filterNouns = (
 	if (levels.length === 0) return [...nouns];
 	const wanted = new Set<string>(levels);
 	return nouns.filter((noun) =>
-		isUnlevelled(noun.cefrLevel)
-			? wanted.has("unlevelled")
-			: wanted.has(noun.cefrLevel as string),
+		isUnlevelled(noun.cefrLevel) ? wanted.has("unlevelled") : wanted.has(noun.cefrLevel as string),
 	);
 };

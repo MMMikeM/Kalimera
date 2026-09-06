@@ -1,9 +1,9 @@
 import { Temporal } from "@js-temporal/polyfill";
 import { ChevronLeft, ChevronRight, Snowflake } from "lucide-react";
 import { useState } from "react";
+import { cn } from "tailwind-variants";
 
 import { eachDayOfMonth, formatMonthYear, mondayBasedDayOfWeek, today } from "@/lib/time";
-import { cn } from "@/lib/utils";
 
 interface StreakCalendarProps {
 	practiceDates: string[];

@@ -1,11 +1,11 @@
 import { SearchX } from "lucide-react";
+import { cn } from "tailwind-variants";
 
+import { GreekText } from "@/components/GreekText";
 import { formatNounWithArticle } from "@/lib/greek-grammar";
-import { cn } from "@/lib/utils";
 import type { VocabularySearchGraphRow } from "@/server/db/queries/vocabulary";
 
 import { Badge } from "./ui/badge";
-import { GreekText } from "@/components/GreekText";
 
 interface SearchResultsProps {
 	results: VocabularySearchGraphRow[];

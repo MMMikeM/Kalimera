@@ -1,10 +1,19 @@
-type Gender = "masculine" | "feminine" | "neuter";
+import { SCHEME } from "@/constants/grammar-palette";
+import type { Gender } from "@/server/db/enums";
+
 type Person = "first" | "second" | "third";
 
+/** A gender chip claims a gender, so it takes the reserved gender tokens. */
 export const GENDER_STYLE: Record<Gender, { selectorBg: string; selectorText: string }> = {
-	masculine: { selectorBg: "bg-navy-100", selectorText: "text-navy-text" },
-	feminine: { selectorBg: "bg-sunset-100", selectorText: "text-sunset-text" },
-	neuter: { selectorBg: "bg-slate-100", selectorText: "text-slate-text" },
+	masculine: {
+		selectorBg: SCHEME["gender-masculine"].bg,
+		selectorText: SCHEME["gender-masculine"].text,
+	},
+	feminine: {
+		selectorBg: SCHEME["gender-feminine"].bg,
+		selectorText: SCHEME["gender-feminine"].text,
+	},
+	neuter: { selectorBg: SCHEME["gender-neuter"].bg, selectorText: SCHEME["gender-neuter"].text },
 };
 
 /** Shared CATEGORIES list for drills covering singular (by gender) + plural. */

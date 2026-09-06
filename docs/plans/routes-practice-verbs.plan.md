@@ -7,6 +7,7 @@ Audit feedback and implementation plan for `src/routes/practice/verbs/` (`index.
 ## 1. LLM Context Files
 
 ### Issues
+
 - **`imperatives.content.llm`:**
   - Line 25 and line 31 duplicate `κοιτάζω`.
   - Missing `βρίσκω` (`Βρες!`) which is implemented in code.
@@ -18,6 +19,7 @@ Audit feedback and implementation plan for `src/routes/practice/verbs/` (`index.
   - No `.content.llm` files for `present/`, `future/`, `past/aorist-formation.tsx`, `ladder.tsx`, `modal-constructions.tsx`, or `tense-recognition.tsx`.
 
 ### Actions
+
 - [ ] Fix verb inventories in `imperatives.content.llm` and `past/aorist-stems.content.llm`.
 - [ ] Add missing context documentation for remaining verb drills.
 
@@ -26,6 +28,7 @@ Audit feedback and implementation plan for `src/routes/practice/verbs/` (`index.
 ## 2. Design Guidelines, Contrast & Bugs
 
 ### Issues
+
 - **Critical Filter Bug in `imperatives.tsx:131-134` (High):**
   - Selecting the category chip `"All 15"` (`id: "full"`) displays only 10 items because items 1–5 have `category: "tier-a"` while items 6–15 have `category: "full"`.
 - **Duplicate Drill ID in `verbs/index.tsx:69-74`:**
@@ -46,6 +49,7 @@ Audit feedback and implementation plan for `src/routes/practice/verbs/` (`index.
   - `modal-constructions.tsx:192, 380`: `milisi` / `argisi` → `milisei` / `argisei`.
 
 ### Actions
+
 - [ ] Fix category filtering in `imperatives.tsx` so "All 15" includes Tier A items.
 - [ ] Fix duplicate drill ID in `verbs/index.tsx:69`.
 - [ ] Add explicit `backTo="/practice/verbs"` across all verb drills.
@@ -57,4 +61,5 @@ Audit feedback and implementation plan for `src/routes/practice/verbs/` (`index.
 ## 3. Tailwind & Component Architecture
 
 ### Actions
+
 - [ ] Extend `<Drill>` theme palette in `drill.tsx` to support `navy` (`verb-active`), `slate` (`verb-contracted`), and `sunset` (`verb-deponent`).

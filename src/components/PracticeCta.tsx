@@ -1,10 +1,9 @@
 import { Link, getRouteApi } from "@tanstack/react-router";
 import { Zap } from "lucide-react";
 
-import { drillHrefForTopic } from "@/lib/practice-links";
-
 import { Card } from "@/components/Card";
 import { Button } from "@/components/ui/button";
+import { drillHrefForTopic } from "@/lib/practice-links";
 
 const rootRoute = getRouteApi("__root__");
 

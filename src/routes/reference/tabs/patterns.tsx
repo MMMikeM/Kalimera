@@ -1,13 +1,13 @@
 import { Heart, UserCircle } from "lucide-react";
 
-import { TeachingCard } from "@/components/cards";
+import { TeachingCard } from "@/components/cards/TeachingCard";
+import { GreekText } from "@/components/GreekText";
 import { QuickTest } from "@/components/QuickTest";
 import { ReferenceHero } from "@/components/ReferenceHero";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { type GrammarScheme, SCHEME } from "@/constants/grammar-palette";
 
 import type { PatternItem, PatternsData } from "../$tab";
-import { GreekText } from "@/components/GreekText";
 
 const ParadigmCard = ({
 	title,

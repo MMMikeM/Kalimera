@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
+import { cn } from "tailwind-variants";
 
 import { type GrammarScheme, SCHEME } from "@/constants/grammar-palette";
-import { cn } from "@/lib/utils";
 
 interface CalloutProps {
 	scheme: GrammarScheme;

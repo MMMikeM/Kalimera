@@ -7,9 +7,10 @@
 
 import type { AdjectiveDeclensionPattern } from "@/server/db/enums";
 
-export type Case = "nominative" | "accusative" | "genitive";
 export type Num = "singular" | "plural";
-export type Gender = "masculine" | "feminine" | "neuter";
+import type { Gender, NominalCase as Case } from "@/server/db/enums";
+
+export type { Gender, NominalCase as Case } from "@/server/db/enums";
 
 type GenderTriple = Record<Gender, string>;
 type CaseSuffix = Record<Num, GenderTriple>;
@@ -20,7 +21,12 @@ interface AdjectiveParadigm {
 	example: string;
 	stripChars: number; // chars to slice off lemma to get stem
 	stressed: SuffixTable;
-	unstressed: SuffixTable;
+	/**
+	 * Omit when the stem-stressed forms are identical to the suffix-stressed
+	 * ones — as they are for -ύς, where stem-stressed adjectives are vanishingly
+	 * rare, and for indeclinables, which have no suffix at all.
+	 */
+	unstressed?: SuffixTable;
 }
 
 // ─── -ος / -η / -ο ────────────────────────────────────────────────────
@@ -119,20 +125,6 @@ const US_IA_U: AdjectiveParadigm = {
 		},
 	},
 	// Stem-stressed -ύς adjectives are vanishingly rare; use stressed variants regardless.
-	unstressed: {
-		nominative: {
-			singular: { masculine: "ύς", feminine: "ιά", neuter: "ύ" },
-			plural: { masculine: "ιοί", feminine: "ιές", neuter: "ιά" },
-		},
-		accusative: {
-			singular: { masculine: "ύ", feminine: "ιά", neuter: "ύ" },
-			plural: { masculine: "ιούς", feminine: "ιές", neuter: "ιά" },
-		},
-		genitive: {
-			singular: { masculine: "ιού", feminine: "ιάς", neuter: "ιού" },
-			plural: { masculine: "ιών", feminine: "ιών", neuter: "ιών" },
-		},
-	},
 };
 
 // ─── -ής / -ής / -ές  (3rd-declension type) ──────────────────────────
@@ -180,20 +172,6 @@ const INDECLINABLE: AdjectiveParadigm = {
 	example: "μπλε",
 	stripChars: 0,
 	stressed: {
-		nominative: {
-			singular: { masculine: "", feminine: "", neuter: "" },
-			plural: { masculine: "", feminine: "", neuter: "" },
-		},
-		accusative: {
-			singular: { masculine: "", feminine: "", neuter: "" },
-			plural: { masculine: "", feminine: "", neuter: "" },
-		},
-		genitive: {
-			singular: { masculine: "", feminine: "", neuter: "" },
-			plural: { masculine: "", feminine: "", neuter: "" },
-		},
-	},
-	unstressed: {
 		nominative: {
 			singular: { masculine: "", feminine: "", neuter: "" },
 			plural: { masculine: "", feminine: "", neuter: "" },

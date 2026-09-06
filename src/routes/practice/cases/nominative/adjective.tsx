@@ -193,7 +193,6 @@ function AdjectiveAgreementDrill() {
 			drillId="adjectives-agreement"
 			items={ITEMS}
 			subtitle="60 forms / timed"
-			colorTheme="ocean"
 			forwardDesc="English + gender → adjective form"
 			reverseLabel="Greek → gender"
 			reverseDesc="Adjective form → select gender"

@@ -32,7 +32,6 @@ function NounOwnerDrill() {
 			drillId="nominal-noun-owner"
 			items={items}
 			subtitle={`${items.length} nouns / timed`}
-			colorTheme="olive"
 			forwardDesc="English → article + noun (Owner form)"
 			reverseLabel="Greek → gender"
 			reverseDesc="Phrase → select gender"

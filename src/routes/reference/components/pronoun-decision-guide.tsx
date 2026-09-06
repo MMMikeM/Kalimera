@@ -1,4 +1,4 @@
-import { NavigatorCard, NavigatorCell } from "@/components/cards";
+import { NavigatorCard, NavigatorCell } from "@/components/cards/NavigatorCard";
 import { GreekText } from "@/components/GreekText";
 
 interface PronounOption {
@@ -82,49 +82,73 @@ export const PronounDecisionGuide = () => (
 								<tr>
 									<td className="px-2 py-1.5 text-xs text-stone-600">me / my</td>
 									<td className="px-2 py-1.5">
-										<GreekText tone="default" size="sm">με</GreekText>
+										<GreekText tone="default" size="sm">
+											με
+										</GreekText>
 									</td>
 									<td className="px-2 py-1.5">
-										<GreekText tone="default" size="sm">μου</GreekText>
+										<GreekText tone="default" size="sm">
+											μου
+										</GreekText>
 									</td>
 									<td className="px-2 py-1.5">
-										<GreekText tone="default" size="sm">εμένα</GreekText>
+										<GreekText tone="default" size="sm">
+											εμένα
+										</GreekText>
 									</td>
 								</tr>
 								<tr>
 									<td className="px-2 py-1.5 text-xs text-stone-600">you / your</td>
 									<td className="px-2 py-1.5">
-										<GreekText tone="default" size="sm">σε</GreekText>
+										<GreekText tone="default" size="sm">
+											σε
+										</GreekText>
 									</td>
 									<td className="px-2 py-1.5">
-										<GreekText tone="default" size="sm">σου</GreekText>
+										<GreekText tone="default" size="sm">
+											σου
+										</GreekText>
 									</td>
 									<td className="px-2 py-1.5">
-										<GreekText tone="default" size="sm">εσένα</GreekText>
+										<GreekText tone="default" size="sm">
+											εσένα
+										</GreekText>
 									</td>
 								</tr>
 								<tr>
 									<td className="px-2 py-1.5 text-xs text-stone-600">him / his</td>
 									<td className="px-2 py-1.5">
-										<GreekText tone="default" size="sm">τον</GreekText>
+										<GreekText tone="default" size="sm">
+											τον
+										</GreekText>
 									</td>
 									<td className="px-2 py-1.5">
-										<GreekText tone="default" size="sm">του</GreekText>
+										<GreekText tone="default" size="sm">
+											του
+										</GreekText>
 									</td>
 									<td className="px-2 py-1.5">
-										<GreekText tone="default" size="sm">αυτόν</GreekText>
+										<GreekText tone="default" size="sm">
+											αυτόν
+										</GreekText>
 									</td>
 								</tr>
 								<tr>
 									<td className="px-2 py-1.5 text-xs text-stone-600">her</td>
 									<td className="px-2 py-1.5">
-										<GreekText tone="default" size="sm">την</GreekText>
+										<GreekText tone="default" size="sm">
+											την
+										</GreekText>
 									</td>
 									<td className="px-2 py-1.5">
-										<GreekText tone="default" size="sm">της</GreekText>
+										<GreekText tone="default" size="sm">
+											της
+										</GreekText>
 									</td>
 									<td className="px-2 py-1.5">
-										<GreekText tone="default" size="sm">αυτήν</GreekText>
+										<GreekText tone="default" size="sm">
+											αυτήν
+										</GreekText>
 									</td>
 								</tr>
 							</tbody>
@@ -132,9 +156,18 @@ export const PronounDecisionGuide = () => (
 					</div>
 				</div>
 				<strong>Quick test:</strong> Can you insert "to" before it? → Use{" "}
-				<GreekText tone="default" size="sm">μου/σου</GreekText>. Is there a preposition before it? → Use{" "}
-				<GreekText tone="default" size="sm">εμένα/εσένα</GreekText>. Otherwise → Use{" "}
-				<GreekText tone="default" size="sm">με/σε</GreekText>.
+				<GreekText tone="default" size="sm">
+					μου/σου
+				</GreekText>
+				. Is there a preposition before it? → Use{" "}
+				<GreekText tone="default" size="sm">
+					εμένα/εσένα
+				</GreekText>
+				. Otherwise → Use{" "}
+				<GreekText tone="default" size="sm">
+					με/σε
+				</GreekText>
+				.
 			</>
 		}
 	>
@@ -149,7 +182,11 @@ export const PronounDecisionGuide = () => (
 						<div className="space-y-0.5 text-sm text-stone-600">
 							{option.examples.map((ex) => (
 								<div key={ex.greek}>
-									<GreekText tone="inherit" size="sm" className="rounded border border-stone-200 bg-white px-2 py-1 font-semibold text-stone-800">
+									<GreekText
+										tone="inherit"
+										size="sm"
+										className="rounded border border-stone-200 bg-white px-2 py-1 font-semibold text-stone-800"
+									>
 										{ex.greek}
 									</GreekText>
 									<span className="text-stone-600"> = {ex.english}</span>

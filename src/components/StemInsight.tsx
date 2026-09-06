@@ -1,9 +1,8 @@
 import { AlertTriangle } from "lucide-react";
-
-import { type ColorScheme, colorStyles } from "@/lib/colors";
-import { cn } from "@/lib/utils";
+import { cn } from "tailwind-variants";
 
 import { GreekText } from "@/components/GreekText";
+import { type ColorScheme, colorStyles } from "@/lib/colors";
 
 interface StemInsightProps {
 	isSuppletive: boolean;

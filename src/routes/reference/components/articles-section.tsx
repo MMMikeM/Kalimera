@@ -1,13 +1,15 @@
 import type React from "react";
+import { cn } from "tailwind-variants";
 
-import { Callout, LookupCard, NextStepCard } from "@/components/cards";
+import { Callout } from "@/components/cards/Callout";
+import { LookupCard } from "@/components/cards/LookupCard";
+import { NextStepCard } from "@/components/cards/NextStepCard";
+import { GreekText } from "@/components/GreekText";
 import { ARTICLE_AGREEMENT_QUICK_REF } from "@/constants/agreement";
-import { cn } from "@/lib/utils";
 
 import { BandHeading } from "./BandHeading";
 import { CaseTableGrid } from "./case-table";
 import { HomographCallout } from "./homograph-callout";
-import { GreekText } from "@/components/GreekText";
 
 interface UsageNote {
 	before?: string;
@@ -138,8 +140,11 @@ export const ArticlesSection: React.FC = () => {
 							</GreekText>
 							<p className="mt-1 text-sm text-stone-500 italic">he is a doctor</p>
 							<p className="mt-4 max-w-prose text-sm leading-relaxed text-stone-600">
-								Professions after <GreekText tone="default" size="sm">είμαι</GreekText> take no
-								article at all.
+								Professions after{" "}
+								<GreekText tone="default" size="sm">
+									είμαι
+								</GreekText>{" "}
+								take no article at all.
 							</p>
 						</div>
 					</LookupCard>
@@ -162,8 +167,11 @@ export const ArticlesSection: React.FC = () => {
 
 				<Callout scheme="neutral" title="The -ν on τη(ν) / δε(ν) / μη(ν)">
 					<p className="leading-relaxed text-stone-700">
-						Native speakers sometimes drop the <GreekText tone="default" size="sm">-ν</GreekText> on
-						certain articles depending on what sound follows it, in order to improve the flow of
+						Native speakers sometimes drop the{" "}
+						<GreekText tone="default" size="sm">
+							-ν
+						</GreekText>{" "}
+						on certain articles depending on what sound follows it, in order to improve the flow of
 						pronunciation.
 					</p>
 					<p className="leading-relaxed text-stone-700">
@@ -173,17 +181,33 @@ export const ArticlesSection: React.FC = () => {
 					<div className="space-y-3 border-t border-stone-200 pt-3 text-sm text-stone-600">
 						<p>
 							A hard stop like /p/, /b/, /k/ or /g/ keeps the{" "}
-							<GreekText tone="default" size="sm">-ν</GreekText>, which naturally blends into it:{" "}
-							<GreekText tone="accent" size="sm">την πόρτα</GreekText> flows out as
-							&ldquo;tim&#8209;bórta&rdquo;.
+							<GreekText tone="default" size="sm">
+								-ν
+							</GreekText>
+							, which naturally blends into it:{" "}
+							<GreekText tone="accent" size="sm">
+								την πόρτα
+							</GreekText>{" "}
+							flows out as &ldquo;tim&#8209;bórta&rdquo;.
 						</p>
 						<p>
 							A sound you can stretch out drops it:{" "}
-							<GreekText tone="accent" size="sm">τη μητέρα</GreekText> flows out as
-							&ldquo;ti&#8209;mitéra&rdquo;, a <GreekText tone="default" size="sm">ν</GreekText>{" "}
+							<GreekText tone="accent" size="sm">
+								τη μητέρα
+							</GreekText>{" "}
+							flows out as &ldquo;ti&#8209;mitéra&rdquo;, a{" "}
+							<GreekText tone="default" size="sm">
+								ν
+							</GreekText>{" "}
 							would only clog the μ. The negatives{" "}
-							<GreekText tone="default" size="sm">δεν</GreekText> and{" "}
-							<GreekText tone="default" size="sm">μην</GreekText> follow the same rule.
+							<GreekText tone="default" size="sm">
+								δεν
+							</GreekText>{" "}
+							and{" "}
+							<GreekText tone="default" size="sm">
+								μην
+							</GreekText>{" "}
+							follow the same rule.
 						</p>
 						<div className="grid gap-4 md:grid-cols-2">
 							{NU_RULE_COLUMNS.map((column) => (
@@ -194,12 +218,7 @@ export const ArticlesSection: React.FC = () => {
 										column.keeps ? "border-navy-200" : "border-stone-200",
 									)}
 								>
-									<div
-										className={cn(
-											"px-4 py-2.5",
-											column.keeps ? "bg-navy-100" : "bg-stone-100",
-										)}
-									>
+									<div className={cn("px-4 py-2.5", column.keeps ? "bg-navy-100" : "bg-stone-100")}>
 										<div
 											className={cn(
 												"font-semibold",
@@ -229,12 +248,31 @@ export const ArticlesSection: React.FC = () => {
 							))}
 						</div>
 						<p>
-							Masculine <GreekText tone="default" size="sm">τον</GreekText> is the odd one out: it
-							keeps its <GreekText tone="default" size="sm">-ν</GreekText> everywhere,{" "}
-							<GreekText tone="accent" size="sm">τον φίλο</GreekText>, never{" "}
-							<GreekText tone="incorrect" size="sm">το φίλο</GreekText>, because the{" "}
-							<GreekText tone="default" size="sm">-ν</GreekText> is all that separates it from
-							neuter <GreekText tone="default" size="sm">το</GreekText>.
+							Masculine{" "}
+							<GreekText tone="default" size="sm">
+								τον
+							</GreekText>{" "}
+							is the odd one out: it keeps its{" "}
+							<GreekText tone="default" size="sm">
+								-ν
+							</GreekText>{" "}
+							everywhere,{" "}
+							<GreekText tone="accent" size="sm">
+								τον φίλο
+							</GreekText>
+							, never{" "}
+							<GreekText tone="incorrect" size="sm">
+								το φίλο
+							</GreekText>
+							, because the{" "}
+							<GreekText tone="default" size="sm">
+								-ν
+							</GreekText>{" "}
+							is all that separates it from neuter{" "}
+							<GreekText tone="default" size="sm">
+								το
+							</GreekText>
+							.
 						</p>
 					</div>
 				</Callout>

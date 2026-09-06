@@ -123,7 +123,11 @@ const sendNotification = async (
 				quickSessionUrl: "/practice?size=quick",
 			} as PushPayload & { userId?: number; quickSessionUrl?: string },
 			vapid,
-			{ ttl: 86400, timeoutMs: SEND_TIMEOUT_MS, ...(options.topic ? { topic: options.topic } : {}) },
+			{
+				ttl: 86400,
+				timeoutMs: SEND_TIMEOUT_MS,
+				...(options.topic ? { topic: options.topic } : {}),
+			},
 		);
 		return delivered ? "delivered" : "gone";
 	} catch (error) {

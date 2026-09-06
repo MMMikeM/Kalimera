@@ -1,10 +1,11 @@
 import { AGREEMENT_PARADIGMS } from "@/constants/agreement";
+import type { NominalCase } from "@/server/db/enums";
 import type { NounDeclensionPattern } from "@/server/db/enums";
 
 import { retainsNu } from "./greek-grammar";
 import { typedKeys } from "./object";
 
-type Case = "nominative" | "accusative" | "genitive";
+type Case = NominalCase;
 type Number = "singular" | "plural";
 
 interface DeclinedForm {
@@ -136,8 +137,7 @@ const shiftStressToPenult = (phrase: string): string => {
 	// Synizesis: an unstressed ι/υ running straight into another vowel is a glide,
 	// so ήλιος is ή-λιος and already paroxytone — shifting it would give ηλίου.
 	const nuclei = [...word.matchAll(NUCLEUS)].filter(
-		(m, i, all) =>
-			!(/^[ιυ]$/.test(m[0]!) && all[i + 1]?.index === m.index + 1),
+		(m, i, all) => !(/^[ιυ]$/.test(m[0]!) && all[i + 1]?.index === m.index + 1),
 	);
 	if (nuclei.length < 2) return word;
 	const accentedAt = nuclei.findIndex((m) => TONOS_CHARS.test(m[0]!));
@@ -199,9 +199,7 @@ const applyEnding = (
 		cleanEnding === "ων" ||
 		(pattern === "masc-os" && (cleanEnding === "ου" || cleanEnding === "ους"));
 
-	return enforceThreeSyllableRule(
-		shouldShiftToPenult ? shiftStressToPenult(result) : result,
-	);
+	return enforceThreeSyllableRule(shouldShiftToPenult ? shiftStressToPenult(result) : result);
 };
 
 const mapArticleForAccusative = (article: string, noun: string): string => {

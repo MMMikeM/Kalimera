@@ -135,37 +135,37 @@ export const ConfigShell = ({
 			)}
 
 			{!forwardOnly && (
-			<fieldset className="mb-8">
-				<legend className="mb-3 text-xs tracking-widest text-muted-foreground uppercase">
-					Mode
-				</legend>
-				<div className="space-y-2">
-					<button
-						type="button"
-						onClick={() => setMode("forward")}
-						className={`w-full rounded-lg border px-4 py-3 text-left transition-colors ${
-							mode === "forward"
-								? "border-terracotta bg-terracotta-50 text-terracotta-text"
-								: "border-border text-foreground hover:border-stone-400"
-						}`}
-					>
-						<span className="block text-sm font-medium">{forwardLabel}</span>
-						<span className="text-xs text-muted-foreground">{forwardDesc}</span>
-					</button>
-					<button
-						type="button"
-						onClick={() => setMode("reverse")}
-						className={`w-full rounded-lg border px-4 py-3 text-left transition-colors ${
-							mode === "reverse"
-								? "border-terracotta bg-terracotta-50 text-terracotta-text"
-								: "border-border text-foreground hover:border-stone-400"
-						}`}
-					>
-						<span className="block text-sm font-medium">{reverseLabel}</span>
-						<span className="text-xs text-muted-foreground">{reverseDesc}</span>
-					</button>
-				</div>
-			</fieldset>
+				<fieldset className="mb-8">
+					<legend className="mb-3 text-xs tracking-widest text-muted-foreground uppercase">
+						Mode
+					</legend>
+					<div className="space-y-2">
+						<button
+							type="button"
+							onClick={() => setMode("forward")}
+							className={`w-full rounded-lg border px-4 py-3 text-left transition-colors ${
+								mode === "forward"
+									? "border-terracotta bg-terracotta-50 text-terracotta-text"
+									: "border-border text-foreground hover:border-stone-400"
+							}`}
+						>
+							<span className="block text-sm font-medium">{forwardLabel}</span>
+							<span className="text-xs text-muted-foreground">{forwardDesc}</span>
+						</button>
+						<button
+							type="button"
+							onClick={() => setMode("reverse")}
+							className={`w-full rounded-lg border px-4 py-3 text-left transition-colors ${
+								mode === "reverse"
+									? "border-terracotta bg-terracotta-50 text-terracotta-text"
+									: "border-border text-foreground hover:border-stone-400"
+							}`}
+						>
+							<span className="block text-sm font-medium">{reverseLabel}</span>
+							<span className="text-xs text-muted-foreground">{reverseDesc}</span>
+						</button>
+					</div>
+				</fieldset>
 			)}
 
 			<fieldset className="mb-8">

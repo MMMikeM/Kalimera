@@ -13,10 +13,17 @@ import {
 	Venus,
 } from "lucide-react";
 
-export type Case = "nominative" | "accusative" | "genitive";
-export type Gender = "masculine" | "feminine" | "neuter";
+import { SCHEME } from "@/constants/grammar-palette";
+import type { Gender, NominalCase as Case } from "@/server/db/enums";
+
+export type { Gender, NominalCase as Case } from "@/server/db/enums";
+
 type Num = "singular" | "plural";
 type Person = "first" | "second" | "third";
+
+/** Number and person are not global grammar axes, so they stay neutral. */
+const caseScheme = (c: Case) => SCHEME[`case-${c}`];
+const genderScheme = (g: Gender) => SCHEME[`gender-${g}`];
 
 interface ChipSpec {
 	icon: LucideIcon;
@@ -30,19 +37,19 @@ export const CASE_CHIP: Record<Case, ChipSpec> = {
 		icon: CircleDot,
 		label: "NOM",
 		longLabel: "nominative",
-		colorText: "text-ocean-text",
+		colorText: caseScheme("nominative").text,
 	},
 	accusative: {
 		icon: Target,
 		label: "ACC",
 		longLabel: "accusative",
-		colorText: "text-terracotta-text",
+		colorText: caseScheme("accusative").text,
 	},
 	genitive: {
 		icon: Link2,
 		label: "GEN",
 		longLabel: "genitive",
-		colorText: "text-olive-text",
+		colorText: caseScheme("genitive").text,
 	},
 };
 
@@ -51,19 +58,19 @@ export const GENDER_CHIP: Record<Gender, ChipSpec> = {
 		icon: Mars,
 		label: "M",
 		longLabel: "masculine",
-		colorText: "text-navy-text",
+		colorText: genderScheme("masculine").text,
 	},
 	feminine: {
 		icon: Venus,
 		label: "F",
 		longLabel: "feminine",
-		colorText: "text-sunset-text",
+		colorText: genderScheme("feminine").text,
 	},
 	neuter: {
 		icon: Circle,
 		label: "N",
 		longLabel: "neuter",
-		colorText: "text-slate-text",
+		colorText: genderScheme("neuter").text,
 	},
 };
 
@@ -103,8 +110,7 @@ export const PERSON_CHIP: Record<Person, ChipSpec> = {
 	},
 };
 
-/** Saturated colour variants for large serif prompts — the -text tokens read
- *  dull at 44px. These keep the palette but push chroma up for hero display. */
+/** Saturated variants for large serif prompts — see `heroText` in the palette. */
 export const HERO_TEXT: {
 	gender: Record<Gender, string>;
 	case: Record<Case, string>;
@@ -112,14 +118,14 @@ export const HERO_TEXT: {
 	person: Record<Person, string>;
 } = {
 	gender: {
-		masculine: "text-navy-700",
-		feminine: "text-sunset-700",
-		neuter: "text-slate-600",
+		masculine: genderScheme("masculine").heroText,
+		feminine: genderScheme("feminine").heroText,
+		neuter: genderScheme("neuter").heroText,
 	},
 	case: {
-		nominative: "text-ocean-700",
-		accusative: "text-terracotta-700",
-		genitive: "text-olive-700",
+		nominative: caseScheme("nominative").heroText,
+		accusative: caseScheme("accusative").heroText,
+		genitive: caseScheme("genitive").heroText,
 	},
 	number: {
 		singular: "text-stone-500",
@@ -133,7 +139,7 @@ export const HERO_TEXT: {
 };
 
 export const CASE_BAR: Record<Case, { bar: string; bg: string }> = {
-	nominative: { bar: "bg-ocean", bg: "bg-ocean-100" },
-	accusative: { bar: "bg-terracotta", bg: "bg-terracotta-100" },
-	genitive: { bar: "bg-olive", bg: "bg-olive-100" },
+	nominative: { bar: caseScheme("nominative").bar, bg: caseScheme("nominative").bg },
+	accusative: { bar: caseScheme("accusative").bar, bg: caseScheme("accusative").bg },
+	genitive: { bar: caseScheme("genitive").bar, bg: caseScheme("genitive").bg },
 };

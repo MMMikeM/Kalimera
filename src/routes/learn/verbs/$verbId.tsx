@@ -5,6 +5,7 @@ import { ArrowLeft } from "lucide-react";
 import { z } from "zod";
 
 import { Card } from "@/components/Card";
+import { GreekText } from "@/components/GreekText";
 import { ImperativeTable } from "@/components/ImperativeTable";
 import { SectionHeading } from "@/components/SectionHeading";
 import { StemInsight } from "@/components/StemInsight";
@@ -12,7 +13,6 @@ import { TenseNavigator } from "@/components/TenseNavigator";
 import { Badge } from "@/components/ui/badge";
 import type { VerbConjugationGraphRow } from "@/server/db/queries/vocabulary";
 import { fetchVerbWithConjugationRelations } from "@/server/db/queries/vocabulary";
-import { GreekText } from "@/components/GreekText";
 
 type ParadigmForms = {
 	sg1: string;

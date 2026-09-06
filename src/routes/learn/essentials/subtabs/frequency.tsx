@@ -1,12 +1,12 @@
 import { Lightbulb } from "lucide-react";
 
 import { ContentSection } from "@/components/ContentSection";
+import { GreekText } from "@/components/GreekText";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 import type { EssentialsLoaderData } from "../$subtab";
 import { EssentialsBackLink } from "./essentials-back-link";
 import { ExampleList } from "./example-list";
-import { GreekText } from "@/components/GreekText";
 
 interface Props {
 	data: EssentialsLoaderData;
@@ -71,7 +71,9 @@ export function FrequencySubtab({ data }: Props) {
 							<div key={greek} className="px-3 py-2.5">
 								<div className="flex items-center justify-between gap-3">
 									<div className="min-w-0">
-										<GreekText tone="accent" size="lg">{greek}</GreekText>
+										<GreekText tone="accent" size="lg">
+											{greek}
+										</GreekText>
 										<div className="text-xs text-stone-500">
 											{adverb?.englishTranslation ?? greek}
 										</div>
@@ -115,11 +117,15 @@ export function FrequencySubtab({ data }: Props) {
 					<p className="mb-2 text-sm font-medium text-honey-text">Grammar pattern</p>
 					<div className="space-y-1.5 text-sm">
 						<div>
-							<GreekText tone="accent" size="lg">ποτέ δεν + verb</GreekText>
+							<GreekText tone="accent" size="lg">
+								ποτέ δεν + verb
+							</GreekText>
 							<span className="ml-2 text-xs text-stone-500">= never do X</span>
 						</div>
 						<div>
-							<GreekText tone="accent" size="lg">Ποτέ δεν τρώω κρέας.</GreekText>
+							<GreekText tone="accent" size="lg">
+								Ποτέ δεν τρώω κρέας.
+							</GreekText>
 							<div className="text-xs text-stone-500">I never eat meat.</div>
 						</div>
 					</div>
