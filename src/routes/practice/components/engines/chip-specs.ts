@@ -13,108 +13,50 @@ import {
 	Venus,
 } from "lucide-react";
 
-import { SCHEME } from "@/constants/grammar-palette";
-import type { Gender, NominalCase as Case } from "@/server/db/enums";
+import { caseScheme, genderScheme } from "@/constants/grammar-palette";
+import type { Gender, GrammaticalNumber, NominalCase as Case } from "@/server/db/enums";
+
+import type { Person } from "./drill-constants";
 
 export type { Gender, NominalCase as Case } from "@/server/db/enums";
 
-type Num = "singular" | "plural";
-type Person = "first" | "second" | "third";
-
-/** Number and person are not global grammar axes, so they stay neutral. */
-const caseScheme = (c: Case) => SCHEME[`case-${c}`];
-const genderScheme = (g: Gender) => SCHEME[`gender-${g}`];
-
+/** Colour is absent on purpose: it comes from the palette at the point of use. */
 interface ChipSpec {
 	icon: LucideIcon;
-	label: string;
 	longLabel: string;
-	colorText: string;
 }
 
 export const CASE_CHIP: Record<Case, ChipSpec> = {
-	nominative: {
-		icon: CircleDot,
-		label: "NOM",
-		longLabel: "nominative",
-		colorText: caseScheme("nominative").text,
-	},
-	accusative: {
-		icon: Target,
-		label: "ACC",
-		longLabel: "accusative",
-		colorText: caseScheme("accusative").text,
-	},
-	genitive: {
-		icon: Link2,
-		label: "GEN",
-		longLabel: "genitive",
-		colorText: caseScheme("genitive").text,
-	},
+	nominative: { icon: CircleDot, longLabel: "nominative" },
+	accusative: { icon: Target, longLabel: "accusative" },
+	genitive: { icon: Link2, longLabel: "genitive" },
 };
 
 export const GENDER_CHIP: Record<Gender, ChipSpec> = {
-	masculine: {
-		icon: Mars,
-		label: "M",
-		longLabel: "masculine",
-		colorText: genderScheme("masculine").text,
-	},
-	feminine: {
-		icon: Venus,
-		label: "F",
-		longLabel: "feminine",
-		colorText: genderScheme("feminine").text,
-	},
-	neuter: {
-		icon: Circle,
-		label: "N",
-		longLabel: "neuter",
-		colorText: genderScheme("neuter").text,
-	},
+	masculine: { icon: Mars, longLabel: "masculine" },
+	feminine: { icon: Venus, longLabel: "feminine" },
+	neuter: { icon: Circle, longLabel: "neuter" },
 };
 
-export const NUMBER_CHIP: Record<Num, ChipSpec> = {
-	singular: {
-		icon: Dot,
-		label: "SG",
-		longLabel: "singular",
-		colorText: "text-muted-foreground",
-	},
-	plural: {
-		icon: MoreHorizontal,
-		label: "PL",
-		longLabel: "plural",
-		colorText: "text-muted-foreground",
-	},
+export const NUMBER_CHIP: Record<GrammaticalNumber, ChipSpec> = {
+	singular: { icon: Dot, longLabel: "singular" },
+	plural: { icon: MoreHorizontal, longLabel: "plural" },
 };
 
 export const PERSON_CHIP: Record<Person, ChipSpec> = {
-	first: {
-		icon: User,
-		label: "1ST",
-		longLabel: "first person",
-		colorText: "text-terracotta-text",
-	},
-	second: {
-		icon: UserCheck,
-		label: "2ND",
-		longLabel: "second person",
-		colorText: "text-terracotta-text",
-	},
-	third: {
-		icon: Users,
-		label: "3RD",
-		longLabel: "third person",
-		colorText: "text-terracotta-text",
-	},
+	first: { icon: User, longLabel: "first person" },
+	second: { icon: UserCheck, longLabel: "second person" },
+	third: { icon: Users, longLabel: "third person" },
 };
+
+const NUMBER_HERO = "text-stone-500";
+const PERSON_HERO = "text-terracotta-700";
 
 /** Saturated variants for large serif prompts — see `heroText` in the palette. */
 export const HERO_TEXT: {
 	gender: Record<Gender, string>;
 	case: Record<Case, string>;
-	number: Record<Num, string>;
+	number: Record<GrammaticalNumber, string>;
 	person: Record<Person, string>;
 } = {
 	gender: {
@@ -127,19 +69,6 @@ export const HERO_TEXT: {
 		accusative: caseScheme("accusative").heroText,
 		genitive: caseScheme("genitive").heroText,
 	},
-	number: {
-		singular: "text-stone-500",
-		plural: "text-stone-500",
-	},
-	person: {
-		first: "text-terracotta-700",
-		second: "text-terracotta-700",
-		third: "text-terracotta-700",
-	},
-};
-
-export const CASE_BAR: Record<Case, { bar: string; bg: string }> = {
-	nominative: { bar: caseScheme("nominative").bar, bg: caseScheme("nominative").bg },
-	accusative: { bar: caseScheme("accusative").bar, bg: caseScheme("accusative").bg },
-	genitive: { bar: caseScheme("genitive").bar, bg: caseScheme("genitive").bg },
+	number: { singular: NUMBER_HERO, plural: NUMBER_HERO },
+	person: { first: PERSON_HERO, second: PERSON_HERO, third: PERSON_HERO },
 };

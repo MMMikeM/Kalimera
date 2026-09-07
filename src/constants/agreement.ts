@@ -1,7 +1,7 @@
 // Article-Noun Agreement Paradigms
 // Shows how articles and noun endings must match in gender, case, and number
 
-import type { Gender } from "@/server/db/enums";
+import type { Gender, GrammaticalNumber } from "@/server/db/enums";
 
 export type Case = "nom" | "acc" | "gen" | "voc";
 
@@ -1103,4 +1103,4 @@ export const ARTICLE_AGREEMENT_QUICK_REF = {
 		feminine: { nom: "οι", acc: "τις", gen: "των", voc: "—" },
 		neuter: { nom: "τα", acc: "τα", gen: "των", voc: "—" },
 	},
-} as const satisfies Record<"singular" | "plural", Record<Gender, Record<Case, string>>>;
+} as const satisfies Record<GrammaticalNumber, Record<Gender, Record<Case, string>>>;

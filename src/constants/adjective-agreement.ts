@@ -5,15 +5,17 @@
 // At runtime we detect whether the stem retains any tonos char; if yes, use the
 // unstressed variant; else use the stressed variant. Single tonos per word.
 
-import type { AdjectiveDeclensionPattern } from "@/server/db/enums";
-
-export type Num = "singular" | "plural";
-import type { Gender, NominalCase as Case } from "@/server/db/enums";
+import type {
+	AdjectiveDeclensionPattern,
+	Gender,
+	GrammaticalNumber,
+	NominalCase as Case,
+} from "@/server/db/enums";
 
 export type { Gender, NominalCase as Case } from "@/server/db/enums";
 
 type GenderTriple = Record<Gender, string>;
-type CaseSuffix = Record<Num, GenderTriple>;
+type CaseSuffix = Record<GrammaticalNumber, GenderTriple>;
 type SuffixTable = Record<Case, CaseSuffix>;
 
 interface AdjectiveParadigm {

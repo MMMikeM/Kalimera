@@ -5,7 +5,7 @@ import { CollapsibleSection } from "@/components/CollapsibleSection";
 import { GreekText } from "@/components/GreekText";
 import { MistakeComparison } from "@/components/MistakeComparison";
 import { SectionHeading } from "@/components/SectionHeading";
-import { type GrammarScheme, SCHEME } from "@/constants/grammar-palette";
+import { caseScheme, genderScheme } from "@/constants/grammar-palette";
 import {
 	COMPOUND_CONTRAST_PAIRS,
 	OTHER_PREPOSITIONS,
@@ -14,18 +14,14 @@ import {
 	SE_CONTRACTIONS,
 	TIME_EXPRESSIONS,
 } from "@/constants/prepositions";
+import { type Gender, genders } from "@/server/db/enums";
 
 import { PrepositionNavigator } from "./preposition-navigator";
 
-const CONTRACTION_GENDER_SCHEME: Record<string, GrammarScheme> = {
-	neuter: "gender-neuter",
-	feminine: "gender-feminine",
-	masculine: "gender-masculine",
-};
+const byGender = (a: { gender: Gender }, b: { gender: Gender }) =>
+	genders.indexOf(a.gender) - genders.indexOf(b.gender);
 
-const GENDER_ORDER = ["masculine", "feminine", "neuter"];
-const byGender = (a: { gender: string }, b: { gender: string }) =>
-	GENDER_ORDER.indexOf(a.gender) - GENDER_ORDER.indexOf(b.gender);
+const ACCUSATIVE = caseScheme("accusative");
 
 const SeCard: React.FC = () => {
 	const singular = SE_CONTRACTIONS.formulas.filter((f) => f.number === "singular").sort(byGender);
@@ -43,8 +39,8 @@ const SeCard: React.FC = () => {
 			{/* Key before the coloured forms, not after — the reader needs it to read them. */}
 			<div className="mb-8 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs">
 				<span className="text-stone-500">Colour shows gender:</span>
-				{GENDER_ORDER.map((gender) => {
-					const style = SCHEME[CONTRACTION_GENDER_SCHEME[gender] ?? "neutral"];
+				{genders.map((gender) => {
+					const style = genderScheme(gender);
 					return (
 						<span key={gender} className="flex items-center gap-1.5">
 							<span className={`h-2 w-2 rounded-full ${style.badgeBg}`} />
@@ -67,7 +63,7 @@ const SeCard: React.FC = () => {
 						<div className="grid grid-cols-3 gap-3">
 							{forms.map((f) => {
 								const [from, to] = f.formula.split(" = ");
-								const gStyle = SCHEME[CONTRACTION_GENDER_SCHEME[f.gender] ?? "neutral"];
+								const gStyle = genderScheme(f.gender);
 								return (
 									<div
 										key={f.formula}
@@ -296,9 +292,7 @@ export const PrepositionsSection: React.FC = () => (
 									key={item.greek}
 									className={cn(
 										"rounded-lg border p-3",
-										tinted
-											? "border-case-accusative-300 bg-case-accusative-100"
-											: "border-stone-200 bg-white",
+										tinted ? `${ACCUSATIVE.border} ${ACCUSATIVE.bg}` : "border-stone-200 bg-white",
 									)}
 								>
 									<div className="mb-1 flex items-baseline gap-2">
@@ -317,7 +311,7 @@ export const PrepositionsSection: React.FC = () => (
 					return (
 						<div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
 							<div className="space-y-2">
-								<p className="text-xs font-semibold tracking-widest text-case-accusative-text uppercase">
+								<p className={`text-xs font-semibold tracking-widest uppercase ${ACCUSATIVE.text}`}>
 									σε — contracts
 								</p>
 								{col(contracts, true)}

@@ -5,8 +5,12 @@ const DB_IMPORT_MESSAGE =
 
 const ARBITRARY_VALUE_PATTERN = "-\\[([^\\[\\]]*?)\\](?!:)";
 
-// Role tokens without a step suffix are broken — `text-case-nominative` has no
-// CSS variable. Role tokens MUST have an explicit step (`-50`..`-950`) or `-text`.
+// Role tokens are named in src/constants/grammar-palette.ts; everything else
+// reads SCHEME. That file and GreekText are exempted in the overrides below.
+// The plugin matches each whitespace-split chunk with its variants attached, so
+// the utility is anchored to the start, a variant `:` or the important `!`.
+const ROLE_TOKEN_PATTERN =
+	"(?:^|[:!])(?:bg|text|border|ring|fill|stroke|divide|outline|accent)-(?:case|gender)-(?:nominative|accusative|genitive|masculine|feminine|neuter)";
 
 export default defineConfig({
 	plugins: ["eslint", "typescript", "unicorn", "oxc", "react", "import", "jsx-a11y"],
@@ -14,11 +18,13 @@ export default defineConfig({
 		"eslint-plugin-better-tailwindcss",
 		{ name: "react-compiler", specifier: "eslint-plugin-react-hooks" },
 		"./oxlint-plugins/greek-rendering.ts",
+		"./oxlint-plugins/tailwind-classes.ts",
 	],
 	categories: { correctness: "error" },
 	ignorePatterns: ["dist/**", ".claude/**"],
 	rules: {
 		"greek/no-phonetic-render": "error",
+		"tw/no-interpolated-class": "error",
 		"import/first": "warn",
 		"@typescript-eslint/no-explicit-any": ["error"],
 		"no-unused-vars": ["error"],
@@ -37,11 +43,11 @@ export default defineConfig({
 						message:
 							"Arbitrary-value utility escapes the design system. Prefer a token; add an eslint-disable comment with a reason if truly necessary.",
 					},
-					// {
-					// 	pattern: ROLE_TOKEN_MISSING_STEP_PATTERN,
-					// 	message:
-					// 		"Grammar role token is missing a step suffix — use e.g. `text-gender-masculine-text` or consume SCHEME[scheme].text. Bare `text-gender-masculine` has no CSS variable and renders unstyled.",
-					// },
+					{
+						pattern: ROLE_TOKEN_PATTERN,
+						message:
+							"Reserved grammar role token written by hand. Read it from `SCHEME`, `caseScheme()` or `genderScheme()` in src/constants/grammar-palette.ts — that file is the only place a role picks a colour.",
+					},
 				],
 			},
 		],
@@ -77,6 +83,14 @@ export default defineConfig({
 			files: ["src/routes/search.tsx"],
 			rules: {
 				"jsx-a11y/no-autofocus": ["off"],
+			},
+		},
+		{
+			// The two files allowed to name a role token: the palette itself, and
+			// GreekText's six tones, spelled out so Tailwind's scanner can see them.
+			files: ["src/constants/grammar-palette.ts", "src/components/GreekText.tsx"],
+			rules: {
+				"better-tailwindcss/no-restricted-classes": "off",
 			},
 		},
 		{
@@ -155,16 +169,11 @@ export default defineConfig({
 								message:
 									"Arbitrary-value utility under /reference/ — prefer a token; add an eslint-disable comment with a reason if genuinely needed.",
 							},
-							// {
-							// 	pattern: REFERENCE_BASE_PALETTE_PATTERN,
-							// 	message:
-							// 		"Base-palette grammar colour under /reference/ — use role tokens (bg-case-*, bg-gender-*) or a neutral/decision scheme (stone/honey).",
-							// },
-							// {
-							// 	pattern: ROLE_TOKEN_MISSING_STEP_PATTERN,
-							// 	message:
-							// 		"Grammar role token is missing a step suffix — use e.g. `text-gender-masculine-text` or consume SCHEME[scheme].text. Bare `text-gender-masculine` has no CSS variable and renders unstyled.",
-							// },
+							{
+								pattern: ROLE_TOKEN_PATTERN,
+								message:
+									"Reserved grammar role token written by hand under /reference/ — read it from `SCHEME`, `caseScheme()` or `genderScheme()` in src/constants/grammar-palette.ts.",
+							},
 						],
 					},
 				],

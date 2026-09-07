@@ -1,21 +1,26 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import type { Gender } from "@/server/db/enums";
+import { genderScheme } from "@/constants/grammar-palette";
+import {
+	type Gender,
+	type GrammaticalNumber,
+	genders,
+	grammaticalNumbers,
+} from "@/server/db/enums";
 
 import { GENDER_CHIP, HERO_TEXT, NUMBER_CHIP, PERSON_CHIP } from "../components/engines/chip-specs";
 import type { DrillForm } from "../components/engines/deck";
 import { Drill, type DimensionSpec } from "../components/engines/drill";
-import { GENDER_STYLE, PERSON_LABELS } from "../components/engines/drill-constants";
+import { PERSON_LABELS, type Person, persons } from "../components/engines/drill-constants";
 import { ForwardPromptCard } from "../components/engines/forward-prompt-card";
+import { dimensionFor } from "../components/engines/reverse/multi-select";
 import { NUMBER_COLUMNS, Paradigm, type ParadigmRow } from "../components/paradigm";
 
-type Person = "first" | "second" | "third";
-type Num = "singular" | "plural";
 type DimKey = "person" | "number" | "gender";
 
 interface ObjectPronoun extends DrillForm {
 	person: Person;
-	number: Num;
+	number: GrammaticalNumber;
 	gender: Gender | "";
 }
 
@@ -127,28 +132,19 @@ const PARADIGM_ROWS: ParadigmRow[] = [
 
 const PronounParadigm = () => <Paradigm columns={NUMBER_COLUMNS} rows={PARADIGM_ROWS} />;
 
+const dim = dimensionFor<DimKey>();
+
+const local = () => ({ bg: "bg-terracotta-100", text: "text-terracotta-text" });
+
 const DIMENSIONS: DimensionSpec<DimKey>[] = [
-	{
-		key: "person",
-		values: ["first", "second", "third"] as const,
-		label: (v) => PERSON_LABELS[v as Person],
-		selectorStyle: () => ({ bg: "bg-terracotta-100", text: "text-terracotta-text" }),
-	},
-	{
-		key: "number",
-		values: ["singular", "plural"] as const,
-		selectorStyle: () => ({ bg: "bg-terracotta-100", text: "text-terracotta-text" }),
-	},
-	{
+	dim({ key: "person", values: persons, label: (v) => PERSON_LABELS[v], selectorStyle: local }),
+	dim({ key: "number", values: grammaticalNumbers, selectorStyle: local }),
+	dim({
 		key: "gender",
-		values: ["masculine", "feminine", "neuter"] as const,
-		selectorStyle: (v) => {
-			const s = GENDER_STYLE[v as Gender];
-			return { bg: s.selectorBg, text: s.selectorText };
-		},
+		values: genders,
+		selectorStyle: genderScheme,
 		shown: (sel) => sel.person === "third",
-		required: (sel) => sel.person === "third",
-	},
+	}),
 ];
 
 export const Route = createFileRoute("/practice/pronouns/object")({

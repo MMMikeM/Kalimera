@@ -1,3 +1,4 @@
+import type { CaseRoleName } from "@/constants/grammar-palette";
 import type { FileRoutesByTo } from "@/routeTree.gen";
 
 export type DrillCategory =
@@ -9,7 +10,7 @@ export type DrillCategory =
 	| "pronouns"
 	| "blocks";
 
-export type CaseRole = "doer" | "target" | "owner" | "mixed" | null;
+type CaseRole = CaseRoleName | "mixed" | null;
 
 /**
  * One drill, named once — the drill screen, its group's index and the review
