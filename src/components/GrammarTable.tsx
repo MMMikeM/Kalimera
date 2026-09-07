@@ -1,7 +1,7 @@
 import type React from "react";
 import { cn, tv } from "tailwind-variants";
 
-import { type GrammarScheme, SCHEME } from "@/constants/grammar-palette";
+import { GENDER_SCHEME, type GrammarScheme, SCHEME } from "@/constants/grammar-palette";
 
 export interface ColumnDef {
 	key: string;
@@ -61,16 +61,19 @@ const grammarTable = tv({
 	},
 });
 
-export const CASE_ROW_DEFS: RowDef[] = [
-	{ key: "nom", label: "Doer", sublabel: "Nominative", scheme: "case-nominative" },
-	{ key: "acc", label: "Target", sublabel: "Accusative", scheme: "case-accusative" },
-	{ key: "gen", label: "Owner", sublabel: "Genitive", scheme: "case-genitive" },
-];
+/** Iterate `CASE_ROW_DEFS`; look one up by key here. */
+export const CASE_ROW_BY_KEY = {
+	nom: { key: "nom", label: "Doer", sublabel: "Nominative", scheme: "case-nominative" },
+	acc: { key: "acc", label: "Target", sublabel: "Accusative", scheme: "case-accusative" },
+	gen: { key: "gen", label: "Owner", sublabel: "Genitive", scheme: "case-genitive" },
+} as const satisfies Record<string, RowDef>;
+
+export const CASE_ROW_DEFS: RowDef[] = Object.values(CASE_ROW_BY_KEY);
 
 export const GENDER_COLUMN_DEFS: ColumnDef[] = [
-	{ key: "masculine", label: "M", scheme: "gender-masculine" },
-	{ key: "feminine", label: "F", scheme: "gender-feminine" },
-	{ key: "neuter", label: "N", scheme: "gender-neuter" },
+	{ key: "masculine", label: "M", scheme: GENDER_SCHEME.masculine },
+	{ key: "feminine", label: "F", scheme: GENDER_SCHEME.feminine },
+	{ key: "neuter", label: "N", scheme: GENDER_SCHEME.neuter },
 ];
 
 export const GrammarTable: React.FC<GrammarTableProps> = ({

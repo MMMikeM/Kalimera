@@ -1,16 +1,14 @@
 import { AGREEMENT_PARADIGMS } from "@/constants/agreement";
-import type { NominalCase } from "@/server/db/enums";
-import type { NounDeclensionPattern } from "@/server/db/enums";
+import type { GrammaticalNumber, NominalCase, NounDeclensionPattern } from "@/server/db/enums";
 
 import { retainsNu } from "./greek-grammar";
 import { typedKeys } from "./object";
 
 type Case = NominalCase;
-type Number = "singular" | "plural";
 
 interface DeclinedForm {
 	case: Case;
-	number: Number;
+	number: GrammaticalNumber;
 	article: string;
 	noun: string;
 	full: string;
@@ -215,7 +213,7 @@ const _declineNounForms = (
 	lemma: string,
 	pattern: NounDeclensionPattern,
 	getForms: (paradigm: (typeof AGREEMENT_PARADIGMS)[0]) => ParadigmForms,
-	number: "singular" | "plural",
+	number: GrammaticalNumber,
 ): DeclinedForm[] => {
 	const paradigm = AGREEMENT_PARADIGMS.find((p) => p.id === pattern);
 	if (!paradigm) {
