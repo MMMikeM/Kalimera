@@ -7,14 +7,25 @@ import { ReverseFeedback, SelectorButton } from "../shells";
 
 type Selected<K extends string> = Partial<Record<K, string>>;
 
-export interface DimensionSpec<K extends string> {
+/**
+ * `label` and `selectorStyle` are methods, not function-typed properties: methods
+ * stay bivariant under `strictFunctionTypes`, so a spec written for a narrow `V`
+ * remains assignable to `DimensionSpec<K>` without a cast.
+ */
+export interface DimensionSpec<K extends string, V extends string = string> {
 	key: K;
-	values: readonly string[];
-	label?: (v: string) => string;
-	selectorStyle: (v: string) => { bg: string; text: string };
-	shown?: (selected: Selected<K>) => boolean;
-	required?: (selected: Selected<K>) => boolean;
+	values: readonly V[];
+	label?(v: V): string;
+	selectorStyle(v: V): { bg: string; text: string };
+	shown?(selected: Selected<K>): boolean;
+	required?(selected: Selected<K>): boolean;
 }
+
+/** Curried so `K` can be given for the whole drill while `V` infers per dimension. */
+export const dimensionFor =
+	<K extends string>() =>
+	<V extends string>(spec: DimensionSpec<K, V>): DimensionSpec<K> =>
+		spec;
 
 interface MultiSelectReverseProps<K extends string> {
 	dimensions: DimensionSpec<K>[];

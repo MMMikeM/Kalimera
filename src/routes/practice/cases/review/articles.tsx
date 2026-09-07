@@ -1,9 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import type { Gender, NominalCase } from "@/server/db/enums";
+import { caseScheme, genderScheme } from "@/constants/grammar-palette";
+import {
+	type Gender,
+	type GrammaticalNumber,
+	type NominalCase,
+	genders,
+	grammaticalNumbers,
+	nominalCases,
+} from "@/server/db/enums";
 
 import {
-	CASE_BAR,
 	CASE_CHIP,
 	GENDER_CHIP,
 	HERO_TEXT,
@@ -11,18 +18,16 @@ import {
 } from "../../components/engines/chip-specs";
 import type { DrillForm } from "../../components/engines/deck";
 import { Drill, type DimensionSpec } from "../../components/engines/drill";
-import { GENDER_STYLE } from "../../components/engines/drill-constants";
 import { ForwardPromptCard } from "../../components/engines/forward-prompt-card";
+import { dimensionFor } from "../../components/engines/reverse/multi-select";
 import { GENDER_COLUMNS, Paradigm } from "../../components/paradigm";
-
-type Num = "singular" | "plural";
 
 type DimKey = "case" | "gender" | "number";
 
 interface Article extends DrillForm {
 	case: NominalCase;
 	gender: Gender;
-	number: Num;
+	number: GrammaticalNumber;
 }
 
 const ARTICLES: Article[] = [
@@ -172,9 +177,6 @@ const ARTICLES: Article[] = [
 	},
 ];
 
-const caseText = (c: NominalCase) => CASE_CHIP[c].colorText;
-const caseBg = (c: NominalCase) => CASE_BAR[c].bg;
-
 const PARADIGM_ROWS: { label: string; caseKey: NominalCase; forms: string[] }[] = [
 	{ label: "Nom sg", caseKey: "nominative", forms: ["ο", "η", "το"] },
 	{ label: "Acc sg", caseKey: "accusative", forms: ["τον", "την", "το"] },
@@ -191,25 +193,16 @@ const ArticleParadigm = () => (
 	/>
 );
 
+const dim = dimensionFor<DimKey>();
+
 const DIMENSIONS: DimensionSpec<DimKey>[] = [
-	{
-		key: "gender",
-		values: ["masculine", "feminine", "neuter"] as const,
-		selectorStyle: (v) => {
-			const s = GENDER_STYLE[v as Gender];
-			return { bg: s.selectorBg, text: s.selectorText };
-		},
-	},
+	dim({ key: "gender", values: genders, selectorStyle: genderScheme }),
 	{
 		key: "number",
-		values: ["singular", "plural"] as const,
+		values: grammaticalNumbers,
 		selectorStyle: () => ({ bg: "bg-terracotta-100", text: "text-terracotta-text" }),
 	},
-	{
-		key: "case",
-		values: ["nominative", "accusative", "genitive"] as const,
-		selectorStyle: (v) => ({ bg: caseBg(v as NominalCase), text: caseText(v as NominalCase) }),
-	},
+	dim({ key: "case", values: nominalCases, selectorStyle: caseScheme }),
 ];
 
 export const Route = createFileRoute("/practice/cases/review/articles")({

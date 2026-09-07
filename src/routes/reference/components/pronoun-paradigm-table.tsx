@@ -1,13 +1,11 @@
 import { type ColumnDef, GrammarTable, type RowDef } from "@/components/GrammarTable";
 import { GreekText } from "@/components/GreekText";
-import { CASE_SCHEME, type GrammarScheme } from "@/constants/grammar-palette";
+import { CASE_KEY, CASE_SCHEME } from "@/constants/grammar-palette";
 import type { PronounForm, PronounParadigm } from "@/constants/pronouns";
 import type { CaseName } from "@/constants/recognition";
 import type { NominalCase } from "@/server/db/enums";
 
-/** `case-nominative` → the GreekText tone of the same name. */
 type CaseVariant = NominalCase;
-const toneOf = (scheme: GrammarScheme): CaseVariant => scheme.replace("case-", "") as CaseVariant;
 
 const PRONOUN_COLUMNS: ColumnDef[] = [
 	{ key: "singular", label: "Singular" },
@@ -34,7 +32,7 @@ interface PronounParadigmTableProps {
 
 export const PronounParadigmTable = ({ data, caseName, note }: PronounParadigmTableProps) => {
 	const scheme = caseName ? CASE_SCHEME[caseName] : undefined;
-	const variant = scheme ? toneOf(scheme) : "accent";
+	const variant: CaseVariant | "accent" = caseName ? CASE_KEY[caseName] : "accent";
 
 	const rows: RowDef[] = data.map((row) => ({
 		key: row.person,

@@ -17,7 +17,7 @@ import {
 	type AgreementExample,
 	COMMON_ADJECTIVES,
 } from "@/constants/adjectives";
-import { GENDER_SCHEME, SCHEME } from "@/constants/grammar-palette";
+import { GENDER_PANEL, GENDER_SCHEME, caseScheme, genderScheme } from "@/constants/grammar-palette";
 import type { Gender } from "@/server/db/enums";
 
 import { CaseTableGrid } from "./case-table";
@@ -72,12 +72,12 @@ const AgreementExamplesCard: React.FC = () => {
 			<div className="grid gap-6 md:grid-cols-2">
 				<CaseExampleGroup
 					label="Doer (Nominative)"
-					labelClass="text-case-nominative-text"
+					labelClass={caseScheme("nominative").text}
 					examples={nomExamples}
 				/>
 				<CaseExampleGroup
 					label="Target (Accusative)"
-					labelClass="text-case-accusative-text"
+					labelClass={caseScheme("accusative").text}
 					examples={accExamples}
 				/>
 			</div>
@@ -87,17 +87,9 @@ const AgreementExamplesCard: React.FC = () => {
 
 // Full paradigm display for a single adjective pattern
 const AdjectiveParadigmCard: React.FC<{ paradigm: AdjectiveParadigm }> = ({ paradigm }) => {
-	const genderStyles = {
-		masculine: { border: "border-gender-masculine-300", bg: "bg-gender-masculine-100/40" },
-		feminine: { border: "border-gender-feminine-300", bg: "bg-gender-feminine-100/40" },
-		neuter: { border: "border-gender-neuter-300", bg: "bg-gender-neuter-100/40" },
-	};
-
 	const renderGenderTable = (gender: Gender, forms: AdjectiveParadigm["masculine"]) => {
-		const style = genderStyles[gender];
+		const style = GENDER_PANEL[gender];
 		const genderLabel = gender.charAt(0).toUpperCase() + gender.slice(1);
-		const variant =
-			gender === "masculine" ? "masculine" : gender === "feminine" ? "feminine" : "neuter";
 
 		const columns: ColumnDef[] = [
 			{ key: "singular", label: "Singular" },
@@ -110,10 +102,10 @@ const AdjectiveParadigmCard: React.FC<{ paradigm: AdjectiveParadigm }> = ({ para
 			const sg = forms.singular[ri];
 			const pl = forms.plural[ri];
 			return [
-				<GreekText key={`${row.key}-sg`} tone={variant} size="sm">
+				<GreekText key={`${row.key}-sg`} tone={gender} size="sm">
 					{sg?.form ?? "—"}
 				</GreekText>,
-				<GreekText key={`${row.key}-pl`} tone={variant} size="sm">
+				<GreekText key={`${row.key}-pl`} tone={gender} size="sm">
 					{pl?.form ?? "—"}
 				</GreekText>,
 			];
@@ -121,9 +113,7 @@ const AdjectiveParadigmCard: React.FC<{ paradigm: AdjectiveParadigm }> = ({ para
 
 		return (
 			<div className={`rounded-lg ${style.bg} ${style.border} border p-3`}>
-				<div className={`mb-2 text-xs font-medium ${SCHEME[GENDER_SCHEME[gender]].text}`}>
-					{genderLabel}
-				</div>
+				<div className={`mb-2 text-xs font-medium ${genderScheme(gender).text}`}>{genderLabel}</div>
 				<GrammarTable columns={columns} rows={rows} cells={cells} scheme={GENDER_SCHEME[gender]} />
 			</div>
 		);
@@ -144,15 +134,15 @@ const AdjectiveParadigmCard: React.FC<{ paradigm: AdjectiveParadigm }> = ({ para
 			<div className="space-y-4">
 				<div className="flex items-baseline gap-2 text-sm">
 					<span className="text-stone-600">Example:</span>
-					<GreekText tone="inherit" size="base" className="font-semibold text-gender-masculine">
+					<GreekText tone="masculine" size="base" weight="semibold">
 						{paradigm.example.masculine}
 					</GreekText>
 					<span className="text-stone-400">/</span>
-					<GreekText tone="inherit" size="base" className="font-semibold text-gender-feminine">
+					<GreekText tone="feminine" size="base" weight="semibold">
 						{paradigm.example.feminine}
 					</GreekText>
 					<span className="text-stone-400">/</span>
-					<GreekText tone="inherit" size="base" className="font-semibold text-gender-neuter">
+					<GreekText tone="neuter" size="base" weight="semibold">
 						{paradigm.example.neuter}
 					</GreekText>
 					<span className="text-stone-500">= {paradigm.example.english}</span>
@@ -210,13 +200,13 @@ export const AdjectivesSection: React.FC = () => {
 			>
 				<div className="space-y-1">
 					<div>
-						<GreekText tone="inherit" size="base" className="font-semibold text-gender-masculine">
+						<GreekText tone="masculine" size="base" weight="semibold">
 							ο καλός φίλος
 						</GreekText>
 						<span className="ml-2 text-sm text-stone-600">(all masculine nominative)</span>
 					</div>
 					<div>
-						<GreekText tone="inherit" size="base" className="font-semibold text-gender-masculine">
+						<GreekText tone="masculine" size="base" weight="semibold">
 							τον καλό φίλο
 						</GreekText>
 						<span className="ml-2 text-sm text-stone-600">
@@ -245,7 +235,7 @@ export const AdjectivesSection: React.FC = () => {
 				</p>
 				<div className="mt-2 space-y-1 text-sm">
 					<div>
-						<GreekText tone="inherit" size="sm" className="font-semibold text-gender-neuter">
+						<GreekText tone="neuter" size="sm" weight="semibold">
 							το μεγάλο αυτοκίνητο του γιατρού
 						</GreekText>
 						<span className="ml-2 text-stone-500">the doctor's big car</span>
