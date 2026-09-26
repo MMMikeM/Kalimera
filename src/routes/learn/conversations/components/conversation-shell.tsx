@@ -67,7 +67,6 @@ export const LearningTips: React.FC<LearningTipsProps> = ({ patterns, tips, comm
 			<div className="mt-4 border-t border-honey-200 pt-4">
 				<h4 className="mb-2 font-semibold text-honey-text">Common Mistake</h4>
 				<MistakeComparison
-					title=""
 					mistakes={[
 						{
 							wrong: commonMistake.wrong,

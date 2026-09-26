@@ -241,7 +241,6 @@ export const PrepositionsSection: React.FC = () => (
 						correct: m.right,
 						explanation: m.rule,
 					}))}
-					title=""
 					cardClassName="bg-transparent"
 				/>
 			</div>
