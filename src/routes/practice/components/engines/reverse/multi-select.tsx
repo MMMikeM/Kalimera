@@ -79,7 +79,7 @@ export function MultiSelectReverse<K extends string>({ dimensions }: MultiSelect
 				}
 			}
 			recordAttempt(isCorrect, timeTaken, {
-				prompt: currentForm.greek,
+				prompt: currentForm.reverseGreek ?? currentForm.greek,
 				correctAnswer: currentForm.label,
 				userAnswer: Object.values(sel).join(","),
 			});
@@ -101,7 +101,7 @@ export function MultiSelectReverse<K extends string>({ dimensions }: MultiSelect
 		<>
 			<div className="pt-2">
 				<GreekText as="p" size="8xl" className="font-sans">
-					{currentForm.greek}
+					{currentForm.reverseGreek ?? currentForm.greek}
 				</GreekText>
 			</div>
 

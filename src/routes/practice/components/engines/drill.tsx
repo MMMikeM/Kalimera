@@ -214,7 +214,7 @@ function DrillInner<K extends string, T extends DrillForm>(
 		const logData =
 			mode === "forward"
 				? { prompt: form.label, correctAnswer: form.greek, userAnswer: "" }
-				: { prompt: form.greek, correctAnswer: form.label, userAnswer: "" };
+				: { prompt: form.reverseGreek ?? form.greek, correctAnswer: form.label, userAnswer: "" };
 		drillActions.recordAttempt(false, drillActions.getEffectiveTimeLimit(), logData, true);
 	};
 

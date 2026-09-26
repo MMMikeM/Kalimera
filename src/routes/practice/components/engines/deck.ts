@@ -14,6 +14,8 @@ export interface DrillForm {
 	label: string;
 	/** A second answer the forward grader also accepts, e.g. την alongside τη. Never shown. */
 	acceptAlso?: string;
+	/** What reverse mode shows in place of `greek`, e.g. the noun without the article that gives its gender away. */
+	reverseGreek?: string;
 	vocabId?: number;
 	bucket?: DrillBucket;
 }
@@ -32,7 +34,6 @@ export interface Attempt<T extends DrillForm> {
 export interface SimpleListItem extends DrillForm {
 	english?: string;
 	category?: string;
-	reverseGreek?: string;
 	dimension?: string;
 	context?: string;
 	detail?: string;

@@ -13,7 +13,7 @@ export const Route = createFileRoute("/practice/cases/nominative/noun")({
 		items: await getNounDrillItemsFn({
 			data: {
 				grammaticalCase: "nominative",
-				drillId: "articles-noun-genders",
+				drillId: "nominative-nouns",
 				stripArticleForReverse: true,
 			},
 		}),
