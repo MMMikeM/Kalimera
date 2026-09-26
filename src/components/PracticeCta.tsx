@@ -8,24 +8,21 @@ import { drillHrefForTopic } from "@/lib/practice-links";
 const rootRoute = getRouteApi("__root__");
 
 interface PracticeCTAProps {
-	title?: string;
-	description?: string;
+	title: string;
+	description: string;
 	/** Resolved to a drill route, and to /register for logged-out readers. */
-	topic?: string;
-	/** Overrides the topic lookup when a tab needs a specific drill. */
-	drillHref?: string;
+	topic: string;
 	ctaLabel?: string;
 }
 
 export const PracticeCTA = ({
-	title = "Ready to practice?",
-	description = "Turn knowledge into fluency with timed retrieval drills.",
+	title,
+	description,
 	topic,
-	drillHref,
 	ctaLabel = "Try a Drill",
 }: PracticeCTAProps) => {
 	const { auth } = rootRoute.useRouteContext();
-	const href = drillHref ?? drillHrefForTopic(topic, Boolean(auth?.userId));
+	const href = drillHrefForTopic(topic, Boolean(auth?.userId));
 
 	return (
 		<Card className="border-terracotta/20 bg-terracotta/5">
