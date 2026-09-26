@@ -14,12 +14,10 @@ Note: "patterns" tab (μου αρέσει, με λένε) has moved to /referenc
 
 ## Data Source
 
-DB queries via `getPhrasesData()` in `data.server.ts`:
-- `getVocabBySection("phrases")` - Main phrase content
-- `getVocabBySection("reference")` - Days, months
-- `getVocabBySection("verbs")` - Likes construction
-
-Content grouped by tags, then mapped to tab structure.
+`PHRASE_TABS` in `$tab.tsx` is the single record for every tab: nav label and
+icon, hero copy, and the tag each section reads. `loadPhrases` runs
+`getVocabBySlug("phrases", ["phrase"])`, groups by tag, and returns only the
+requested tab's tags. `components/shared.tsx` renders any tab from its record.
 
 ## Tab: survival
 
@@ -105,20 +103,12 @@ Conversational fillers: well, you know, I mean.
 ## Tab: time
 
 <tab id="time" route="/learn/phrases/time">
-<purpose>Days, months, and telling time</purpose>
-<hero greek="Τι ώρα είναι;" title="Master time expressions">
-Essential for making plans, scheduling, and understanding when things happen.
+<purpose>Telling time</purpose>
+<hero greek="Τι ώρα είναι;" title="Telling time">
+How to ask and tell time in Greek: essential patterns for scheduling and understanding when things happen.
 </hero>
 
-<section name="Days of the Week" tag="days-of-week" source="reference">
-Δευτέρα, Τρίτη, Τετάρτη, Πέμπτη, Παρασκευή, Σάββατο, Κυριακή
-</section>
-
-<section name="Months of the Year" tag="months" source="reference">
-Ιανουάριος through Δεκέμβριος (collapsible by default).
-</section>
-
-<section name="Telling Time" tag="time-telling">
+<section name="Telling Time" tag="time-telling" layout="time">
 <categories>
 - basic: Hour structure (Είναι + time, Η ώρα είναι + time)
 - fractions: Minutes and quarter/half expressions
@@ -128,7 +118,7 @@ Essential for making plans, scheduling, and understanding when things happen.
 </section>
 </tab>
 
-Note: Question words are in /learn/essentials.
+Note: Question words, days and months are in /learn/essentials.
 Note: Patterns (μου αρέσει, με λένε) have moved to /reference/patterns.
 
 ## Tag to Section Mapping
@@ -145,8 +135,6 @@ command            → requests     → Commands
 opinions           → opinions     → Opinions & Feelings
 discourse-markers  → connectors   → Discourse Markers
 discourse-filler   → connectors   → Fillers & Connectors
-days-of-week       → time         → Days of the Week
-months             → time         → Months of the Year
 time-telling       → time         → Telling Time
 ```
 
