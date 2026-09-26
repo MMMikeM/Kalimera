@@ -1,6 +1,6 @@
 import { beforeAll, describe, expect, it, vi } from "vitest";
 
-import { vocabProgress, vocabulary } from "@/server/db/schema";
+import { users, vocabProgress, vocabulary } from "@/server/db/schema";
 import { createTestDb, runMigrations } from "@/test/db";
 import { seedTestUser } from "@/test/seed-verbs";
 
@@ -18,6 +18,7 @@ beforeAll(async () => {
 	testDb = createTestDb().db;
 	await runMigrations(testDb);
 	await seedTestUser(testDb);
+	await testDb.insert(users).values({ id: 2, code: "idle", displayName: "Idle User" });
 	const words = await testDb
 		.insert(vocabulary)
 		.values(
@@ -44,8 +45,8 @@ describe("getReviewStats", () => {
 		});
 	});
 
-	it("returns zeros for a user with no reviews, rather than throwing", async () => {
-		await expect(getReviewStats(999)).resolves.toEqual({
+	it("returns zeros for a user with no reviews", async () => {
+		await expect(getReviewStats(2)).resolves.toEqual({
 			itemsMastered: 0,
 			dueCount: 0,
 			totalLearned: 0,

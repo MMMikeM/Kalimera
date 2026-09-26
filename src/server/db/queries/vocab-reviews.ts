@@ -1,4 +1,4 @@
-import { and, count, eq, inArray, isNotNull, lt, sql } from "drizzle-orm";
+import { and, count, eq, gte, inArray, isNotNull, lt, lte } from "drizzle-orm";
 
 import { nowIso, toISOString } from "@/lib/time";
 import { reviewStateAfterAttempt } from "@/server/srs";
@@ -13,20 +13,29 @@ const MASTERED_INTERVAL_DAYS = 21;
 export const getReviewStats = async (userId: number) => {
 	const now = nowIso();
 
-	const [stats] = await db
-		.select({
-			itemsMastered: count(
-				sql`case when ${vocabProgress.intervalDays} >= ${MASTERED_INTERVAL_DAYS} then 1 end`,
-			),
-			dueCount: count(sql`case when ${vocabProgress.nextReviewAt} <= ${now} then 1 end`),
-			totalLearned: count(),
-			totalVocab: sql`(select count(*) from ${vocabulary})`.mapWith(Number),
-		})
-		.from(vocabProgress)
-		.where(eq(vocabProgress.userId, userId));
+	const stats = await db.query.users.findFirst({
+		where: { id: userId },
+		columns: {},
+		extras: {
+			itemsMastered: (user) =>
+				db.$count(
+					vocabProgress,
+					and(
+						eq(vocabProgress.userId, user.id),
+						gte(vocabProgress.intervalDays, MASTERED_INTERVAL_DAYS),
+					),
+				),
+			dueCount: (user) =>
+				db.$count(
+					vocabProgress,
+					and(eq(vocabProgress.userId, user.id), lte(vocabProgress.nextReviewAt, now)),
+				),
+			totalLearned: (user) => db.$count(vocabProgress, eq(vocabProgress.userId, user.id)),
+			totalVocab: () => db.$count(vocabulary),
+		},
+	});
 
-	// An aggregate without GROUP BY always yields one row; this only narrows the type.
-	if (!stats) throw new Error(`Review stats aggregate returned no row for user ${userId}`);
+	if (!stats) throw new Error(`No user ${userId}`);
 
 	const { totalVocab, ...counts } = stats;
 	return { ...counts, newAvailable: totalVocab - counts.totalLearned };
