@@ -41,7 +41,7 @@ export const LapsedUserCTA = ({
 	const { greeting, message, emphasis } = getMessage();
 
 	return (
-		<div className="bg-linear-to-brrom-ocean-50 rounded-2xl border border-ocean-200 to-ocean-100 p-6">
+		<div className="rounded-2xl border border-ocean-200 bg-linear-to-br from-ocean-50 to-ocean-100 p-6">
 			<p className="font-serif text-2xl text-ocean-text">{greeting}</p>
 			<p className="mt-1 text-stone-600">{message}</p>
 			<p className="mt-1 font-medium text-stone-700">{emphasis}</p>

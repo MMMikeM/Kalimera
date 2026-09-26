@@ -280,17 +280,7 @@ export const AdjectivesSection: React.FC = () => {
 				colorScheme="terracotta"
 				defaultOpen={false}
 			>
-				<MistakeComparison
-					mistakes={ADJECTIVE_MISTAKES.filter(
-						(m) => m.correct !== m.wrong || m.explanation.includes("correct"),
-					).map((m) => ({
-						wrong: m.wrong,
-						correct: m.correct,
-						explanation: m.explanation,
-						category: m.category as "gender" | "case" | "number",
-					}))}
-					title=""
-				/>
+				<MistakeComparison mistakes={ADJECTIVE_MISTAKES} />
 			</CollapsibleSection>
 		</section>
 	);
