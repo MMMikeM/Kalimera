@@ -1,4 +1,6 @@
-import type { Gender } from "@/server/db/enums";
+import { type Gender, cefrLevels } from "@/server/db/enums";
+
+import { isCefrLevel } from "./cefr";
 
 /** Alias kept for the noun-browser call sites; the canonical name is Gender. */
 export type NounGender = Gender;
@@ -16,10 +18,8 @@ export interface BrowsableNoun {
 	forms: Record<string, { form: string; article: string | null }>;
 }
 
-export const CEFR_LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"] as const;
-
 /** Selectable values. No "all" pseudo-level: selecting nothing already means all. */
-export const LEVELS = [...CEFR_LEVELS, "unlevelled"] as const;
+export const LEVELS = [...cefrLevels, "unlevelled"] as const;
 export type LevelFilter = (typeof LEVELS)[number];
 
 /**
@@ -41,8 +41,7 @@ export const PER_GROUP_VISIBLE = 5;
  * has no CHECK constraint, so a junk value must leave the word reachable rather
  * than filtered into nothing.
  */
-export const isUnlevelled = (level: string | null): boolean =>
-	level === null || !(CEFR_LEVELS as readonly string[]).includes(level);
+export const isUnlevelled = (level: string | null): boolean => !isCefrLevel(level);
 
 /** An empty selection means no filtering, not an empty result. */
 export const filterNouns = (

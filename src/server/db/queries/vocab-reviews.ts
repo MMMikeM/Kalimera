@@ -1,40 +1,44 @@
-import { and, count, eq, sql } from "drizzle-orm";
+import { and, eq, gte, lte } from "drizzle-orm";
 
 import { nowIso, toISOString } from "@/lib/time";
 import { reviewStateAfterAttempt } from "@/server/srs";
 
 import { db } from "../index";
-import { vocabProgress } from "../schema";
+import { vocabProgress, vocabulary } from "../schema";
 import type { DbTransaction } from "./transaction-client";
+
+/** A word counts as mastered once its review interval reaches three weeks. */
+const MASTERED_INTERVAL_DAYS = 21;
 
 export const getReviewStats = async (userId: number) => {
 	const now = nowIso();
-	const masteredThresholdDays = 21;
 
-	const [stats] = await db.query.vocabProgress.findMany({
-		where: {
-			userId,
-		},
+	const stats = await db.query.users.findFirst({
+		where: { id: userId },
+		columns: {},
 		extras: {
-			mastered: (t, { sql }) =>
-				sql<number>`COUNT(CASE WHEN ${t.intervalDays} >= ${masteredThresholdDays} THEN 1 END)`,
-			due: (t, { sql }) => sql<number>`COUNT(CASE WHEN ${t.nextReviewAt} <= ${now} THEN 1 END)`,
-			learned: count(),
-			total: sql<number>`(SELECT COUNT(*) FROM vocabulary)`,
+			itemsMastered: (user) =>
+				db.$count(
+					vocabProgress,
+					and(
+						eq(vocabProgress.userId, user.id),
+						gte(vocabProgress.intervalDays, MASTERED_INTERVAL_DAYS),
+					),
+				),
+			dueCount: (user) =>
+				db.$count(
+					vocabProgress,
+					and(eq(vocabProgress.userId, user.id), lte(vocabProgress.nextReviewAt, now)),
+				),
+			totalLearned: (user) => db.$count(vocabProgress, eq(vocabProgress.userId, user.id)),
+			totalVocab: () => db.$count(vocabulary),
 		},
 	});
 
-	if (!stats) throw new Error("FUck");
+	if (!stats) throw new Error(`No user ${userId}`);
 
-	const totalLearned = stats.learned;
-	const totalVocab = stats.total;
-
-	return {
-		itemsMastered: stats.mastered,
-		dueCount: stats.due,
-		totalLearned,
-		newAvailable: totalVocab - totalLearned,
-	};
+	const { totalVocab, ...counts } = stats;
+	return { ...counts, newAvailable: totalVocab - counts.totalLearned };
 };
 
 type ReviewStateInput = {

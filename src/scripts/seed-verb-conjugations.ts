@@ -11,8 +11,7 @@ import type { Db, NewVerbConjugation, NewVerbImperative } from "../server/db/typ
 import { generateConjugations } from "./generate-conjugations";
 import { FULL_VERB_CONJUGATIONS } from "./seed-data/vocabulary/verb-conjugations";
 import { VERB_STEMS } from "./seed-data/vocabulary/verb-stems";
-
-const BATCH_SIZE = 100;
+import { inBatches } from "./seed-pipeline";
 
 export async function seedVerbConjugations(db: Db) {
 	console.log("Seeding verb conjugations (idempotent mode)...\n");
@@ -128,16 +127,15 @@ export async function seedVerbConjugations(db: Db) {
 	}
 
 	if (allFullConjugationRows.length > 0) {
-		for (let i = 0; i < allFullConjugationRows.length; i += BATCH_SIZE) {
-			const batch = allFullConjugationRows.slice(i, i + BATCH_SIZE);
-			await db
+		await inBatches(allFullConjugationRows, (batch) =>
+			db
 				.insert(verbConjugations)
 				.values(batch)
 				.onConflictDoUpdate({
 					target: [verbConjugations.vocabId, verbConjugations.tense, verbConjugations.person],
 					set: { form: sql`excluded.form`, stem: sql`excluded.stem` },
-				});
-		}
+				}),
+		);
 		upsertedConjugations += allFullConjugationRows.length;
 	}
 

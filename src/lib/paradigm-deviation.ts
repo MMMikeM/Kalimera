@@ -1,3 +1,5 @@
+import { stripTonos } from "@/lib/greek-letters";
+
 const PERSON_ENDINGS = [
 	"ομαι",
 	"εσαι",
@@ -36,11 +38,7 @@ const PERSON_ENDINGS = [
 	"ηκα",
 ] as const;
 
-const plain = (s: string): string =>
-	s
-		.normalize("NFD")
-		.replace(/[̀-ͯ]/g, "")
-		.toLowerCase();
+const plain = (s: string): string => stripTonos(s, { keepDiaeresis: false }).toLowerCase();
 
 /** Whatever is left once a person ending comes off — the part that should hold still. */
 const stemOf = (form: string): string => {

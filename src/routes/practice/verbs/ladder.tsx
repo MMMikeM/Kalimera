@@ -1,12 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { getTenseLadderQuestionsFn } from "@/server/fns/verbs";
+import { getVerbDrillQuestionsFn } from "@/server/fns/verbs";
 
 import { VocabDrillPage } from "../components/engines/vocab-drill";
 
 export const Route = createFileRoute("/practice/verbs/ladder")({
 	loader: async () => {
-		const questions = await getTenseLadderQuestionsFn({ data: { limit: 30 } });
+		const questions = await getVerbDrillQuestionsFn({
+			data: { drillId: "verbs-tense-ladder", limit: 30 },
+		});
 		if (questions.length === 0) throw new Error("No questions available");
 		return { questions };
 	},
