@@ -15,14 +15,12 @@ interface SelectOption {
 
 interface SingleSelectReverseProps {
 	options: SelectOption[];
-	getCorrectId: (form: Record<string, unknown>) => string;
 	renderGreek?: (form: DrillForm) => ReactNode;
 	getExplanation?: (form: DrillForm) => ReactNode;
 }
 
 export function SingleSelectReverse({
 	options,
-	getCorrectId,
 	renderGreek,
 	getExplanation,
 }: SingleSelectReverseProps) {
@@ -47,7 +45,7 @@ export function SingleSelectReverse({
 			if (phase !== "active" || !currentForm) return;
 			setSelected(id);
 			const timeTaken = performance.now() - startedAt.current;
-			const correctId = getCorrectId(currentForm as unknown as Record<string, unknown>);
+			const correctId = currentForm.dimension ?? "";
 			const isCorrect = correctId === id;
 			recordAttempt(isCorrect, timeTaken, {
 				prompt: currentForm.reverseGreek ?? currentForm.greek,
@@ -55,7 +53,7 @@ export function SingleSelectReverse({
 				userAnswer: id,
 			});
 		},
-		[phase, currentForm, getCorrectId, recordAttempt],
+		[phase, currentForm, recordAttempt],
 	);
 
 	if (!currentForm) return null;

@@ -194,7 +194,6 @@ function AdjectiveAgreementTargetDrill() {
 			reverse={{
 				kind: "single-select",
 				options: GENDER_DIMENSION_OPTIONS,
-				getCorrectId: (item) => String(item.dimension ?? ""),
 			}}
 		/>
 	);

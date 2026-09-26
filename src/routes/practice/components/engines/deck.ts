@@ -16,6 +16,8 @@ export interface DrillForm {
 	acceptAlso?: string;
 	/** What reverse mode shows in place of `greek`, e.g. the noun without the article that gives its gender away. */
 	reverseGreek?: string;
+	/** The id of the correct option in a single-select reverse card, e.g. the gender. */
+	dimension?: string;
 	vocabId?: number;
 	bucket?: DrillBucket;
 }
@@ -34,7 +36,6 @@ export interface Attempt<T extends DrillForm> {
 export interface SimpleListItem extends DrillForm {
 	english?: string;
 	category?: string;
-	dimension?: string;
 	context?: string;
 	detail?: string;
 }

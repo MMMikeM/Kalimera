@@ -151,7 +151,6 @@ function HowManyPhraseDrill() {
 			reverse={{
 				kind: "single-select",
 				options: REVERSE_OPTIONS,
-				getCorrectId: (form) => String(form.dimension ?? ""),
 			}}
 		/>
 	);

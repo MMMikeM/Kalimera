@@ -85,7 +85,6 @@ interface SelfAssessStrategy {
 interface SingleSelectStrategy {
 	kind: "single-select";
 	options: Array<{ id: string; label: string; selectorBg: string; selectorText: string }>;
-	getCorrectId: (form: Record<string, unknown>) => string;
 	renderGreek?: (form: DrillForm) => React.ReactNode;
 	getExplanation?: (form: DrillForm) => React.ReactNode;
 }
@@ -301,7 +300,6 @@ function DrillInner<K extends string, T extends DrillForm>(
 					{reverse.kind === "single-select" && (
 						<SingleSelectReverse
 							options={reverse.options}
-							getCorrectId={reverse.getCorrectId}
 							renderGreek={reverse.renderGreek}
 							getExplanation={reverse.getExplanation}
 						/>
