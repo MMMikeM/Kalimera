@@ -8,11 +8,10 @@ import {
 	grammaticalNumbers,
 } from "@/server/db/enums";
 
-import { GENDER_CHIP, HERO_TEXT, NUMBER_CHIP, PERSON_CHIP } from "../components/engines/chip-specs";
 import type { DrillForm } from "../components/engines/deck";
 import { Drill, type DimensionSpec } from "../components/engines/drill";
 import { PERSON_LABELS, type Person, persons } from "../components/engines/drill-constants";
-import { ForwardPromptCard } from "../components/engines/forward-prompt-card";
+import { ForwardPromptCard, personFacets } from "../components/engines/forward-prompt-card";
 import { dimensionFor } from "../components/engines/reverse/multi-select";
 import { NUMBER_COLUMNS, Paradigm, type ParadigmRow } from "../components/paradigm";
 
@@ -145,29 +144,9 @@ function PossessivesDrill() {
 			sessionSize={10}
 			forwardPrompt={(form) => {
 				const english = ENGLISH[form.id] ?? "";
-				const person = PERSON_CHIP[form.person];
-				const number = NUMBER_CHIP[form.number];
-				const gender = form.gender ? GENDER_CHIP[form.gender] : null;
-				const facets = [
-					{
-						icon: person.icon,
-						label: person.longLabel,
-						colorText: "text-olive-700",
-					},
-					{
-						icon: number.icon,
-						label: number.longLabel,
-						colorText: HERO_TEXT.number[form.number],
-					},
-				];
-				if (gender && form.gender) {
-					facets.push({
-						icon: gender.icon,
-						label: gender.longLabel,
-						colorText: HERO_TEXT.gender[form.gender],
-					});
-				}
-				return <ForwardPromptCard facets={facets} gloss={`"${english}"`} />;
+				return (
+					<ForwardPromptCard facets={personFacets(form, "text-olive-700")} gloss={`"${english}"`} />
+				);
 			}}
 		/>
 	);
