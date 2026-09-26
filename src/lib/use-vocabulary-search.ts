@@ -13,18 +13,19 @@ interface UseVocabularySearchOptions {
 
 export const useVocabularySearch = (options: UseVocabularySearchOptions = {}) => {
 	const { enabled = true } = options;
-	const [vocabulary, setVocabulary] = useState<VocabularySearchGraphRow[]>(EMPTY_VOCABULARY);
-	const [isLoading, setIsLoading] = useState(false);
+	// null until the first fetch settles; loading is derived from that, not tracked separately.
+	const [loaded, setLoaded] = useState<VocabularySearchGraphRow[] | null>(null);
 	const [searchTerm, setSearchTerm] = useState("");
 
 	useEffect(() => {
-		if (!enabled || vocabulary.length > 0) return;
-		setIsLoading(true);
+		if (!enabled || loaded !== null) return;
 		getSearchVocabularyFn()
-			.then((v) => setVocabulary(v ?? EMPTY_VOCABULARY))
-			.catch(() => setVocabulary(EMPTY_VOCABULARY))
-			.finally(() => setIsLoading(false));
-	}, [enabled, vocabulary.length]);
+			.then((v) => setLoaded(v ?? EMPTY_VOCABULARY))
+			.catch(() => setLoaded(EMPTY_VOCABULARY));
+	}, [enabled, loaded]);
+
+	const vocabulary = loaded ?? EMPTY_VOCABULARY;
+	const isLoading = enabled && loaded === null;
 
 	const fuzzySearch = createFuzzySearch(vocabulary, vocabularySearchFields);
 
