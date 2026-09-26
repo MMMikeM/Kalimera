@@ -1,6 +1,6 @@
 import { cefrRank } from "./cefr";
 
-export interface NounExample {
+interface NounExample {
 	lemma: string;
 	english: string;
 	/** Keyed `${case}_${number}`, matching the nominal_forms rows. */
