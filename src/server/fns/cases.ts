@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
-import type { DrillQuestion } from "@/lib/drill/generate-questions";
+import type { DrillQuestion } from "@/lib/drill/types";
 import { requireAuth } from "@/server/auth/session";
 import { getDrillVocabPool } from "@/server/db/queries/drill-pool";
 import { getVocabularyWithNominalForms } from "@/server/db/queries/nominal-forms";

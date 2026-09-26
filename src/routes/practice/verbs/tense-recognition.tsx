@@ -32,7 +32,6 @@ function TenseRecognitionDrill() {
 			reverse={{
 				kind: "single-select",
 				options: TENSE_DIMENSION_OPTIONS,
-				getCorrectId: (item) => String(item.dimension ?? ""),
 			}}
 			questions={questions}
 		/>

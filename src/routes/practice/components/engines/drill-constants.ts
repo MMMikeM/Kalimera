@@ -38,7 +38,7 @@ export const PERSON_LABELS: Record<Person, string> = {
 };
 
 /** Page-local axes, so their selectors claim no role colour. */
-const NEUTRAL = { selectorBg: "bg-stone-100", selectorText: "text-stone-800" };
+export const NEUTRAL = { selectorBg: "bg-stone-100", selectorText: "text-stone-800" };
 
 /** Shared DIMENSION_OPTIONS for reverse-mode tense selectors, anchored to time words. */
 export const TENSE_DIMENSION_OPTIONS = [

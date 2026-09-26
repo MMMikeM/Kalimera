@@ -85,7 +85,6 @@ interface SelfAssessStrategy {
 interface SingleSelectStrategy {
 	kind: "single-select";
 	options: Array<{ id: string; label: string; selectorBg: string; selectorText: string }>;
-	getCorrectId: (form: Record<string, unknown>) => string;
 	renderGreek?: (form: DrillForm) => React.ReactNode;
 	getExplanation?: (form: DrillForm) => React.ReactNode;
 }
@@ -97,17 +96,19 @@ interface MultiSelectStrategy<K extends string> {
 
 export type { DimensionSpec };
 
-export type ReverseStrategy<K extends string = string> =
+type ReverseStrategy<K extends string = string> =
 	| SelfAssessStrategy
 	| SingleSelectStrategy
 	| MultiSelectStrategy<K>;
 
 // ─── Props ─────────────────────────────────────────────────────────────────────
 
+type ShellProps = Omit<ConfigShellProps, "selectorBg" | "selectorText" | "children">;
+
 export interface DrillProps<
 	K extends string = string,
 	T extends DrillForm = DrillForm,
-> extends Omit<ConfigShellProps, "selectorBg" | "selectorText" | "children" | "title"> {
+> extends Omit<ShellProps, "title"> {
 	drillId: string;
 	/** Omit it — the name comes from the catalogue entry. Pass it only for a drill
 	 *  with no entry, such as the anonymous /try drill. */
@@ -125,31 +126,28 @@ export interface DrillProps<
 
 // ─── Inner drill (reads from store) ───────────────────────────────────────────
 
-function DrillInner<K extends string, T extends DrillForm>(
-	props: Omit<DrillProps<K, T>, "drillId" | "items" | "sessionSize" | "onComplete"> & {
-		/** Both already resolved by <Drill>, so the shells can rely on them. */
-		title: string;
-		theme: { bar: string; selectorBg: string; selectorText: string };
-	},
-) {
-	const {
-		theme,
-		// oxlint-disable-next-line no-unused-vars
-		colorTheme,
-		reverse = { kind: "self-assess" },
-		forwardPrompt,
-		configExtras,
-		autoStart,
-		// oxlint-disable-next-line no-unused-vars
-		defaultMode,
-		...rest
-	} = props;
+interface DrillInnerProps<K extends string, T extends DrillForm> extends Pick<
+	DrillProps<K, T>,
+	"reverse" | "forwardPrompt" | "configExtras" | "autoStart"
+> {
+	/** Title and theme are already resolved by <Drill>, so the shells can rely on them. */
+	shell: ShellProps;
+	theme: { bar: string; selectorBg: string; selectorText: string };
+}
 
+function DrillInner<K extends string, T extends DrillForm>({
+	shell,
+	theme,
+	reverse = { kind: "self-assess" },
+	forwardPrompt,
+	configExtras,
+	autoStart,
+}: DrillInnerProps<K, T>) {
 	const phase = useDrillStore((s) => s.phase);
 	const mode = useDrillStore((s) => s.mode);
 	const cardIndex = useDrillStore((s) => s.cardIndex);
 	const deck = useDrillStore((s) => s.deck);
-	const lastAttempt = useDrillStore((s) => s.lastAttempt);
+	const lastAttempt = useDrillStore((s) => s.attempts.at(-1));
 	const { advance, startDrill } = drillActions;
 
 	const currentForm = deck[cardIndex];
@@ -186,21 +184,14 @@ function DrillInner<K extends string, T extends DrillForm>(
 		return () => window.removeEventListener("keydown", handler);
 	}, [phase, lastAttempt, advance]);
 
-	// Timing ref for forward submit
-	const activeStartedAt = useRef(0);
-	useEffect(() => {
-		if (phase === "active") activeStartedAt.current = performance.now();
-	}, [phase, cardIndex]);
-
 	const handleForwardSubmit = () => {
 		const { deck, cardIndex, input, phase } = useDrillStore.getState();
 		const form = deck[cardIndex];
 		if (!form || phase !== "active") return;
-		const timeTaken = performance.now() - activeStartedAt.current;
 		const primary = matchPhonetic(input.trim(), form.greek).isCorrect;
 		const alternate =
 			!primary && form.acceptAlso ? matchPhonetic(input.trim(), form.acceptAlso).isCorrect : false;
-		drillActions.recordAttempt(primary || alternate, timeTaken, {
+		drillActions.recordAttempt(primary || alternate, {
 			prompt: form.label,
 			correctAnswer: form.greek,
 			userAnswer: input.trim(),
@@ -214,8 +205,8 @@ function DrillInner<K extends string, T extends DrillForm>(
 		const logData =
 			mode === "forward"
 				? { prompt: form.label, correctAnswer: form.greek, userAnswer: "" }
-				: { prompt: form.greek, correctAnswer: form.label, userAnswer: "" };
-		drillActions.recordAttempt(false, drillActions.getEffectiveTimeLimit(), logData, true);
+				: { prompt: form.reverseGreek ?? form.greek, correctAnswer: form.label, userAnswer: "" };
+		drillActions.recordAttempt(false, logData, true);
 	};
 
 	useForwardKeyboard({ phase, mode, onSubmit: handleForwardSubmit });
@@ -230,7 +221,7 @@ function DrillInner<K extends string, T extends DrillForm>(
 
 	if (phase === "config") {
 		return (
-			<ConfigShell {...rest} selectorBg={theme.selectorBg} selectorText={theme.selectorText}>
+			<ConfigShell {...shell} selectorBg={theme.selectorBg} selectorText={theme.selectorText}>
 				{configExtras}
 			</ConfigShell>
 		);
@@ -239,7 +230,7 @@ function DrillInner<K extends string, T extends DrillForm>(
 	// ── Complete ──────────────────────────────────────────────────────────────
 
 	if (phase === "complete") {
-		return <SummaryScreen backTo={props.backTo} />;
+		return <SummaryScreen backTo={shell.backTo} />;
 	}
 
 	// ── Error (should be unreachable — pool must be validated before startDrill) ─
@@ -256,7 +247,7 @@ function DrillInner<K extends string, T extends DrillForm>(
 	// ── Active / Feedback ─────────────────────────────────────────────────────
 
 	return (
-		<DrillShell progress={progress} barColor={barColor} backTo={props.backTo}>
+		<DrillShell progress={progress} barColor={barColor} backTo={shell.backTo}>
 			{mode === "forward" ? (
 				<>
 					<div>
@@ -266,7 +257,7 @@ function DrillInner<K extends string, T extends DrillForm>(
 						) : (
 							<>
 								<p className="mb-3 text-xs tracking-widest text-muted-foreground uppercase">
-									{props.title}
+									{shell.title}
 								</p>
 								{currentForm && (
 									<>
@@ -301,7 +292,6 @@ function DrillInner<K extends string, T extends DrillForm>(
 					{reverse.kind === "single-select" && (
 						<SingleSelectReverse
 							options={reverse.options}
-							getCorrectId={reverse.getCorrectId}
 							renderGreek={reverse.renderGreek}
 							getExplanation={reverse.getExplanation}
 						/>
@@ -317,26 +307,44 @@ function DrillInner<K extends string, T extends DrillForm>(
 
 // ─── Public <Drill> ────────────────────────────────────────────────────────────
 
-export function Drill<K extends string = string, T extends DrillForm = DrillForm>(
-	props: DrillProps<K, T>,
-) {
+export function Drill<K extends string = string, T extends DrillForm = DrillForm>({
+	drillId,
+	items,
+	colorTheme = "terracotta",
+	defaultMode,
+	sessionSize,
+	onComplete,
+	reverse,
+	forwardPrompt,
+	configExtras,
+	autoStart,
+	...shell
+}: DrillProps<K, T>) {
 	const { auth } = rootRoute.useRouteContext();
-	const title = props.title ?? drillTitle(props.drillId) ?? props.drillId;
-	const theme = themeFor(props.drillId, props.colorTheme ?? "terracotta");
+	const title = shell.title ?? drillTitle(drillId) ?? drillId;
 
 	// Initialize store once per mount with this drill's config
 	useState(() => {
 		const config: DrillStoreConfig = {
-			drillId: props.drillId,
-			items: props.items,
+			drillId,
+			items,
 			userId: auth?.userId ?? 0,
-			sessionSize: props.sessionSize,
-			defaultMode: props.defaultMode,
-			onComplete: props.onComplete,
+			sessionSize,
+			defaultMode,
+			onComplete,
 			sessionCallbacks: SESSION_CALLBACKS,
 		};
 		drillActions.initialize(config);
 	});
 
-	return <DrillInner {...props} title={title} theme={theme} />;
+	return (
+		<DrillInner
+			shell={{ ...shell, title }}
+			theme={themeFor(drillId, colorTheme)}
+			reverse={reverse}
+			forwardPrompt={forwardPrompt}
+			configExtras={configExtras}
+			autoStart={autoStart}
+		/>
+	);
 }

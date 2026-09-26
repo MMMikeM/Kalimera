@@ -328,7 +328,6 @@ function FutureFormationDrill() {
 			items={ITEMS}
 			backTo="/practice/verbs"
 			subtitle="40 rules / timed"
-			colorTheme="terracotta"
 			forwardDesc="Present (English) → θα form"
 			reverseDesc="θα form → present verb (self-assess)"
 			categories={CATEGORIES}
