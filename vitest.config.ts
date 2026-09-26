@@ -1,5 +1,9 @@
-import { defineConfig } from "vitest/config";
+import { defineConfig } from "vite-plus";
 
+// Kept apart from vite.config.ts on purpose: tests must not load the app's
+// plugins (TanStack Start, nitro, PWA). Under Vitest they start Vite servers
+// that stop the run from exiting, and evaluate CommonJS React through the SSR
+// module runner.
 export default defineConfig({
 	resolve: {
 		tsconfigPaths: true,

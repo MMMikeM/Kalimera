@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 
 import corpus from "@/lib/__fixtures__/pronunciation-corpus.json";
 import { greekToPronunciation } from "@/lib/greek-phonetic";

@@ -36,9 +36,12 @@ export const Paradigm = ({ columns, rows, caption, children, className }: Paradi
 			align="center"
 			rowHeaderLabel="Form"
 			columns={[...columns]}
-			rows={rows.map(
-				(r): RowDef => ({ key: r.label, label: r.label, scheme: r.scheme, schemeVariant: "text" }),
-			)}
+			rows={rows.map((r): RowDef => ({
+				key: r.label,
+				label: r.label,
+				scheme: r.scheme,
+				schemeVariant: "text",
+			}))}
 			cells={rows.map((r) =>
 				r.forms.map((form, i) => (
 					<GreekText key={`${r.label}-${columns[i]?.key ?? i}`}>{form}</GreekText>

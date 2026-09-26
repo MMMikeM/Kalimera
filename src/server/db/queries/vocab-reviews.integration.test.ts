@@ -1,4 +1,4 @@
-import { beforeAll, describe, expect, it, vi } from "vitest";
+import { beforeAll, describe, expect, it, vi } from "vite-plus/test";
 
 import { users, vocabProgress, vocabulary } from "@/server/db/schema";
 import { createTestDb, runMigrations } from "@/test/db";

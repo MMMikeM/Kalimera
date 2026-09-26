@@ -16,8 +16,13 @@ const config: KnipConfig = {
 		// TanStack Start client entry — resolved by the framework, not by an import.
 		"src/main.tsx",
 	],
-	// Imported from src/index.css via @import, which knip does not follow.
-	ignoreDependencies: ["tw-animate-css"],
+	ignoreDependencies: [
+		// Imported from src/index.css via @import, which knip does not follow.
+		"tw-animate-css",
+		// Loaded as an aliased `{ name, specifier }` jsPlugin in vite.config.ts's
+		// lint block; knip's Vite+ lint parsing only reads plain string entries.
+		"eslint-plugin-react-hooks",
+	],
 	// System tools shelled out to by scripts/harvest-greek-corpus.ts and
 	// scripts/lint-greek.ts, not npm packages.
 	ignoreBinaries: ["fd", "rg"],
