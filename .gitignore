@@ -50,9 +50,6 @@ screenshots/practice/
 playwright-report/
 test-results/
 
-# Mobile audit output
-scripts/mobile-audit-output/
-
 # Code duplicate reports
 reports/
 
