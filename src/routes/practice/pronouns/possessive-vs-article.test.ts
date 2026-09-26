@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 
 import { PHRASES, type Role } from "./possessive-vs-article.data";
 
