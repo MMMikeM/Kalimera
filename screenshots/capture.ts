@@ -11,64 +11,68 @@ const isMobile = process.argv.includes("--mobile");
 const OUTPUT_DIR = join(process.cwd(), "screenshots", isMobile ? "mobile" : "desktop");
 const VIEWPORT = isMobile ? { width: 375, height: 812 } : { width: 1280, height: 720 };
 
-const PAGES = [
+const tabs = (base: string, ids: string[]) =>
+	ids.map((id) => ({ route: `${base}/${id}`, name: `${base.slice(1)}/${id}` }));
+
+const ALL_PAGES = [
 	{ route: "/", name: "homepage" },
+	{ route: "/progress", name: "progress" },
+	{ route: "/search", name: "search" },
 
 	// Practice
-	{ route: "/practice/memory", name: "practice/memory" },
-	{ route: "/practice/speed", name: "practice/speed" },
+	{ route: "/practice", name: "practice/index" },
 	{ route: "/practice/review", name: "practice/review" },
-	{ route: "/practice/vocabulary", name: "practice/vocabulary" },
+	{ route: "/practice/cases", name: "practice/cases" },
+	{ route: "/practice/verbs", name: "practice/verbs" },
+	{ route: "/practice/pronouns", name: "practice/pronouns" },
+	{ route: "/practice/blocks", name: "practice/blocks" },
 
-	// Learn - Landing
+	// Learn
 	{ route: "/learn", name: "learn/index" },
+	{ route: "/learn/verbs", name: "learn/verbs" },
+	{ route: "/learn/nouns", name: "learn/nouns" },
+	...tabs("/learn/conversations", ["arriving", "food", "smalltalk", "requests"]),
+	...tabs("/learn/phrases", [
+		"survival",
+		"responses",
+		"requests",
+		"opinions",
+		"connectors",
+		"time",
+	]),
+	...tabs("/learn/essentials", ["numbers", "position", "time", "frequency", "colours"]),
 
-	// Learn - Conversations
-	{
-		route: "/learn/conversations/arriving",
-		name: "learn/conversations/arriving",
-	},
-	{ route: "/learn/conversations/food", name: "learn/conversations/food" },
-	{
-		route: "/learn/conversations/smalltalk",
-		name: "learn/conversations/smalltalk",
-	},
-	{
-		route: "/learn/conversations/requests",
-		name: "learn/conversations/requests",
-	},
-
-	// Learn - Phrases
-	{ route: "/learn/phrases/survival", name: "learn/phrases/survival" },
-	{ route: "/learn/phrases/responses", name: "learn/phrases/responses" },
-	{ route: "/learn/phrases/requests", name: "learn/phrases/requests" },
-	{ route: "/learn/phrases/opinions", name: "learn/phrases/opinions" },
-	{ route: "/learn/phrases/connectors", name: "learn/phrases/connectors" },
-	{ route: "/learn/phrases/time", name: "learn/phrases/time" },
-
-	// Learn - Vocabulary
-	{ route: "/learn/vocabulary/nouns", name: "learn/vocabulary/nouns" },
-	{ route: "/learn/vocabulary/verbs", name: "learn/vocabulary/verbs" },
-	{
-		route: "/learn/vocabulary/essentials",
-		name: "learn/vocabulary/essentials",
-	},
-
-	// Reference - Landing
+	// Reference
 	{ route: "/reference", name: "reference/index" },
-
-	// Reference - Tabs
-	{ route: "/reference/cases", name: "reference/cases" },
-	{ route: "/reference/pronouns", name: "reference/pronouns" },
-	{ route: "/reference/articles", name: "reference/articles" },
-	{ route: "/reference/adjectives", name: "reference/adjectives" },
-	{ route: "/reference/prepositions", name: "reference/prepositions" },
-	{ route: "/reference/verbs", name: "reference/verbs" },
-	{ route: "/reference/patterns", name: "reference/patterns" },
-
-	// Search
-	{ route: "/search", name: "search" },
+	...tabs("/reference", [
+		"cases",
+		"pronouns",
+		"articles",
+		"nouns",
+		"adjectives",
+		"prepositions",
+		"patterns",
+	]),
+	...tabs("/reference/verbs", ["present", "past", "past-continuous", "future"]),
 ];
+
+// `--route /reference/cases` captures just that page instead of the full set.
+const routeArg = process.argv[process.argv.indexOf("--route") + 1];
+const PAGES =
+	process.argv.includes("--route") && routeArg
+		? [{ route: routeArg, name: routeArg.slice(1).replaceAll("/", "-") || "homepage" }]
+		: ALL_PAGES;
+
+// The app scrolls inside .app-main within a fixed .app-shell, so Playwright's
+// fullPage only sees the viewport. Unpinning the shell lets the document grow
+// to the content's height; the fixed mobile nav is hidden so it isn't stamped
+// over the middle of the page.
+const FLATTEN_CSS = `
+	.app-shell { position: static !important; inset: auto !important; height: auto !important; overflow: visible !important; }
+	.app-main { overflow: visible !important; height: auto !important; flex: none !important; }
+	html, body { overflow: visible !important; height: auto !important; }
+	nav.fixed { display: none !important; }
+`;
 
 const takeScreenshots = async () => {
 	await mkdir(OUTPUT_DIR, { recursive: true });
@@ -102,6 +106,7 @@ const takeScreenshots = async () => {
 
 		try {
 			await page.goto(url, { waitUntil: "networkidle" });
+			await page.addStyleTag({ content: FLATTEN_CSS });
 			await page.screenshot({ path: filename, fullPage: true });
 			console.log(`✓ ${name}.png`);
 		} catch (error) {
