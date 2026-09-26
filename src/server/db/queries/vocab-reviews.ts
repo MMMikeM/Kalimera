@@ -4,37 +4,32 @@ import { nowIso, toISOString } from "@/lib/time";
 import { reviewStateAfterAttempt } from "@/server/srs";
 
 import { db } from "../index";
-import { vocabProgress } from "../schema";
+import { vocabProgress, vocabulary } from "../schema";
 import type { DbTransaction } from "./transaction-client";
+
+/** A word counts as mastered once its review interval reaches three weeks. */
+const MASTERED_INTERVAL_DAYS = 21;
 
 export const getReviewStats = async (userId: number) => {
 	const now = nowIso();
-	const masteredThresholdDays = 21;
 
-	const [stats] = await db.query.vocabProgress.findMany({
-		where: {
-			userId,
-		},
-		extras: {
-			mastered: (t, { sql }) =>
-				sql<number>`COUNT(CASE WHEN ${t.intervalDays} >= ${masteredThresholdDays} THEN 1 END)`,
-			due: (t, { sql }) => sql<number>`COUNT(CASE WHEN ${t.nextReviewAt} <= ${now} THEN 1 END)`,
-			learned: count(),
-			total: sql<number>`(SELECT COUNT(*) FROM vocabulary)`,
-		},
-	});
+	const [stats] = await db
+		.select({
+			itemsMastered: count(
+				sql`case when ${vocabProgress.intervalDays} >= ${MASTERED_INTERVAL_DAYS} then 1 end`,
+			),
+			dueCount: count(sql`case when ${vocabProgress.nextReviewAt} <= ${now} then 1 end`),
+			totalLearned: count(),
+			totalVocab: sql`(select count(*) from ${vocabulary})`.mapWith(Number),
+		})
+		.from(vocabProgress)
+		.where(eq(vocabProgress.userId, userId));
 
-	if (!stats) throw new Error("FUck");
+	// An aggregate without GROUP BY always yields one row; this only narrows the type.
+	if (!stats) throw new Error(`Review stats aggregate returned no row for user ${userId}`);
 
-	const totalLearned = stats.learned;
-	const totalVocab = stats.total;
-
-	return {
-		itemsMastered: stats.mastered,
-		dueCount: stats.due,
-		totalLearned,
-		newAvailable: totalVocab - totalLearned,
-	};
+	const { totalVocab, ...counts } = stats;
+	return { ...counts, newAvailable: totalVocab - counts.totalLearned };
 };
 
 /** Due review counts per user for push-notification targeting. */
