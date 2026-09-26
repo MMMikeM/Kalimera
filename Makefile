@@ -22,10 +22,10 @@ db-push:
 db-studio:
 	pnpm db:studio
 
-# db:seed does not load .env by itself. Seeding is an idempotent additive
-# upsert, so re-running against prod only adds and updates rows.
+# db:seed loads .env explicitly (tsx does not). Seeding is an idempotent
+# additive upsert, so re-running against prod only adds and updates rows.
 db-seed:
-	node --env-file=.env --import tsx src/scripts/seed.ts
+	pnpm db:seed
 
 db-setup: db-push db-seed
 
