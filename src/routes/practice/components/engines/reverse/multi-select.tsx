@@ -1,11 +1,14 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 
 import { GreekText } from "@/components/GreekText";
 
+import { useCardState } from "../drill-hooks";
 import { drillActions, useDrillStore } from "../drill-store";
 import { ReverseFeedback, SelectorButton } from "../shells";
 
 type Selected<K extends string> = Partial<Record<K, string>>;
+
+const NOTHING_SELECTED = {};
 
 /**
  * `label` and `selectorStyle` are methods, not function-typed properties: methods
@@ -38,11 +41,7 @@ export function MultiSelectReverse<K extends string>({ dimensions }: MultiSelect
 	const { recordAttempt } = drillActions;
 	const currentForm = deck[cardIndex] as (typeof deck)[number] & Record<K, string>;
 
-	const [selected, setSelected] = useState<Selected<K>>({});
-
-	useEffect(() => {
-		if (phase === "active") setSelected({});
-	}, [phase, cardIndex]);
+	const [selected, setSelected] = useCardState<Selected<K>>(NOTHING_SELECTED);
 
 	const isRequired = (spec: DimensionSpec<K>, sel: Selected<K>) => {
 		if (spec.required) return spec.required(sel);

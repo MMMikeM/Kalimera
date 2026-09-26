@@ -1,6 +1,32 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import type { DrillMode, Phase } from "./deck";
+import { useDrillStore } from "./drill-store";
+
+type Update<T> = T | ((prev: T) => T);
+
+/**
+ * State owned by the card on screen. Each newly presented card starts from `initial`,
+ * keyed on the store's `cardStartedAt` rather than reset from an effect.
+ * Pass a stable `initial` (a module constant), since a fresh object resets identity every render.
+ */
+export const useCardState = <T>(initial: T) => {
+	const cardStartedAt = useDrillStore((s) => s.cardStartedAt);
+	const [held, setHeld] = useState({ at: cardStartedAt, value: initial });
+	const value = held.at === cardStartedAt ? held.value : initial;
+	const setValue = useCallback(
+		(update: Update<T>) =>
+			setHeld((prev) => {
+				const current = prev.at === cardStartedAt ? prev.value : initial;
+				return {
+					at: cardStartedAt,
+					value: update instanceof Function ? update(current) : update,
+				};
+			}),
+		[cardStartedAt, initial],
+	);
+	return [value, setValue] as const;
+};
 
 export const useCountdown = (durationMs: number, isRunning: boolean, onTimeout: () => void) => {
 	const [progress, setProgress] = useState(1);
@@ -19,7 +45,6 @@ export const useCountdown = (durationMs: number, isRunning: boolean, onTimeout: 
 			}
 			return;
 		}
-		setProgress(1);
 		startRef.current = performance.now();
 		const tick = (now: number) => {
 			const rem = Math.max(0, 1 - (now - startRef.current) / durationMs);
