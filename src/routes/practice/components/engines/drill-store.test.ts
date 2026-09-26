@@ -1,6 +1,6 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import type { DrillForm } from "./deck";
+import type { DrillForm, SessionSize } from "./deck";
 import { drillActions, useDrillStore } from "./drill-store";
 
 const form = (id: string): DrillForm => ({
@@ -54,7 +54,7 @@ describe("session cap", () => {
 		// Answer all wrong — remediation splices each card back into the deck,
 		// growing it past 10. Without the cap the session would run > 10 questions.
 		for (let i = 0; i < 10; i++) {
-			drillActions.recordAttempt(false, 1000, log(i));
+			drillActions.recordAttempt(false, log(i));
 			drillActions.advance();
 		}
 
@@ -71,7 +71,7 @@ describe("session cap", () => {
 
 		for (let i = 0; i < 10; i++) {
 			const isCorrect = i % 2 === 0; // 5 correct, 5 wrong
-			drillActions.recordAttempt(isCorrect, 1000, {
+			drillActions.recordAttempt(isCorrect, {
 				prompt: `q${i}`,
 				correctAnswer: "greek",
 				userAnswer: isCorrect ? "greek" : "",
@@ -93,7 +93,7 @@ describe("session cap", () => {
 		await flushMicrotasks();
 
 		for (let i = 0; i < 10; i++) {
-			drillActions.recordAttempt(true, 500, log(i));
+			drillActions.recordAttempt(true, log(i));
 			drillActions.advance();
 		}
 
@@ -165,11 +165,58 @@ describe("getEffectiveTimeLimit", () => {
 	});
 });
 
+// ─── Card timing ──────────────────────────────────────────────────────────────
+
+describe("card timing", () => {
+	const now = vi.spyOn(performance, "now");
+	afterEach(() => now.mockReset());
+
+	const lastTime = () => useDrillStore.getState().attempts.at(-1)?.timeTaken;
+
+	it("times each answer from when its card became active", () => {
+		now.mockReturnValue(1000);
+		setup(10);
+		now.mockReturnValue(3500);
+		drillActions.recordAttempt(true, log(0));
+		expect(lastTime()).toBe(2500);
+
+		now.mockReturnValue(4000);
+		drillActions.advance();
+		now.mockReturnValue(4700);
+		drillActions.recordAttempt(false, log(1));
+		expect(lastTime()).toBe(700);
+	});
+
+	it("records a timeout as the full time limit", () => {
+		now.mockReturnValue(0);
+		setup(10);
+		now.mockReturnValue(99_999);
+		drillActions.recordAttempt(false, log(0), true);
+		expect(lastTime()).toBe(drillActions.getEffectiveTimeLimit());
+	});
+
+	it("restarts the clock for a retry of mistakes", () => {
+		now.mockReturnValue(0);
+		setup(10);
+		drillActions.recordAttempt(false, log(0));
+		const mistakes = useDrillStore.getState().attempts;
+		now.mockReturnValue(10_000);
+		drillActions.retryMistakes(mistakes);
+		now.mockReturnValue(10_300);
+		drillActions.recordAttempt(true, log(0));
+		expect(lastTime()).toBe(300);
+	});
+});
+
 // ─── Remediation and pruning ──────────────────────────────────────────────────
 
 describe("remediation", () => {
 	/** A known deck, bypassing the shuffle in buildWeightedDeck. */
-	const startWithDeck = (ids: string[], uniquePoolSize = new Set(ids).size, sessionSize = 10) => {
+	const startWithDeck = (
+		ids: string[],
+		uniquePoolSize = new Set(ids).size,
+		sessionSize: SessionSize = 10,
+	) => {
 		drillActions.initialize({ drillId: "d", items: ids.map(form), userId: 0, sessionSize });
 		drillActions.startDrill();
 		useDrillStore.setState({ deck: ids.map(form), cardIndex: 0, uniquePoolSize });
@@ -180,7 +227,7 @@ describe("remediation", () => {
 		return deck[cardIndex]?.id;
 	};
 	const answer = (isCorrect: boolean) => {
-		drillActions.recordAttempt(isCorrect, 1000, log(0));
+		drillActions.recordAttempt(isCorrect, log(0));
 		drillActions.advance();
 	};
 

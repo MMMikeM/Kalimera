@@ -148,7 +148,7 @@ function DrillInner<K extends string, T extends DrillForm>(
 	const mode = useDrillStore((s) => s.mode);
 	const cardIndex = useDrillStore((s) => s.cardIndex);
 	const deck = useDrillStore((s) => s.deck);
-	const lastAttempt = useDrillStore((s) => s.lastAttempt);
+	const lastAttempt = useDrillStore((s) => s.attempts.at(-1));
 	const { advance, startDrill } = drillActions;
 
 	const currentForm = deck[cardIndex];
@@ -185,21 +185,14 @@ function DrillInner<K extends string, T extends DrillForm>(
 		return () => window.removeEventListener("keydown", handler);
 	}, [phase, lastAttempt, advance]);
 
-	// Timing ref for forward submit
-	const activeStartedAt = useRef(0);
-	useEffect(() => {
-		if (phase === "active") activeStartedAt.current = performance.now();
-	}, [phase, cardIndex]);
-
 	const handleForwardSubmit = () => {
 		const { deck, cardIndex, input, phase } = useDrillStore.getState();
 		const form = deck[cardIndex];
 		if (!form || phase !== "active") return;
-		const timeTaken = performance.now() - activeStartedAt.current;
 		const primary = matchPhonetic(input.trim(), form.greek).isCorrect;
 		const alternate =
 			!primary && form.acceptAlso ? matchPhonetic(input.trim(), form.acceptAlso).isCorrect : false;
-		drillActions.recordAttempt(primary || alternate, timeTaken, {
+		drillActions.recordAttempt(primary || alternate, {
 			prompt: form.label,
 			correctAnswer: form.greek,
 			userAnswer: input.trim(),
@@ -214,7 +207,7 @@ function DrillInner<K extends string, T extends DrillForm>(
 			mode === "forward"
 				? { prompt: form.label, correctAnswer: form.greek, userAnswer: "" }
 				: { prompt: form.reverseGreek ?? form.greek, correctAnswer: form.label, userAnswer: "" };
-		drillActions.recordAttempt(false, drillActions.getEffectiveTimeLimit(), logData, true);
+		drillActions.recordAttempt(false, logData, true);
 	};
 
 	useForwardKeyboard({ phase, mode, onSubmit: handleForwardSubmit });
