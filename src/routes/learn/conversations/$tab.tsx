@@ -1,5 +1,4 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
-import { Link, useLocation } from "@tanstack/react-router";
+import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 import { ChevronLeft, DoorOpen, Hand, MessageCircle, Utensils } from "lucide-react";
 import type React from "react";
 
@@ -8,9 +7,8 @@ import type { ConversationMode } from "@/components/DialogueExchange";
 import type { NavTab } from "@/components/NavTabs";
 import { NavTabs } from "@/components/NavTabs";
 import { usePersistedState } from "@/lib/hooks/use-persisted-state";
-import { validateTab } from "@/lib/validate-tab";
 
-import { ConversationProvider } from "./components/conversation-shell";
+import { ConversationModeProvider } from "./components/conversation-shell";
 import { ArrivingTab } from "./tabs/arriving";
 import { FoodTab } from "./tabs/food";
 import { RequestsTab } from "./tabs/requests";
@@ -46,46 +44,31 @@ const CONVERSATION_TABS: NavTab[] = [
 ];
 
 export const Route = createFileRoute("/learn/conversations/$tab")({
-	beforeLoad: (x) => {
-		if (!VALID_TABS.some((tab) => tab === x.params.tab)) {
-			throw redirect({ to: "/learn/conversations/$tab", params: { tab: "arriving" } });
-		}
+	beforeLoad: ({ params }) => {
+		const tab = VALID_TABS.find((t) => t === params.tab);
+		if (!tab) throw redirect({ to: "/learn/conversations/$tab", params: { tab: "arriving" } });
+		return { tab };
 	},
-	loader: ({ params }) => ({ tab: validateTab(params.tab as string, VALID_TABS) }),
-	component: () => (
-		<ConversationsLayout>
-			<TabRoute />
-		</ConversationsLayout>
-	),
+	loader: ({ context: { tab } }) => ({ tab }),
+	component: ConversationsPage,
 });
 
-function TabRoute() {
+const TAB_CONTENT = {
+	arriving: ArrivingTab,
+	food: FoodTab,
+	smalltalk: SmalltalkTab,
+	requests: RequestsTab,
+} satisfies Record<(typeof VALID_TABS)[number], React.FC>;
+
+function ConversationsPage() {
 	const { tab } = Route.useLoaderData();
-
-	switch (tab) {
-		case "arriving":
-			return <ArrivingTab />;
-		case "food":
-			return <FoodTab />;
-		case "smalltalk":
-			return <SmalltalkTab />;
-		case "requests":
-			return <RequestsTab />;
-		default:
-			return null;
-	}
-}
-
-function ConversationsLayout({ children }: { children: React.ReactNode }) {
-	const location = useLocation();
-	const pathSegments = location.pathname.split("/").filter(Boolean);
-	const activeTab = pathSegments[2] || "arriving";
+	const TabContent = TAB_CONTENT[tab];
 
 	const [rawMode, setMode] = usePersistedState<string>("conversation-mode", "read");
 	const mode: ConversationMode = rawMode === "roleplay" ? "roleplay" : "read";
 
 	return (
-		<ConversationProvider value={{ mode, setMode: setMode as (mode: ConversationMode) => void }}>
+		<ConversationModeProvider value={mode}>
 			<div className="space-y-4">
 				<Link
 					to="/learn"
@@ -97,14 +80,14 @@ function ConversationsLayout({ children }: { children: React.ReactNode }) {
 
 				<NavTabs
 					tabs={CONVERSATION_TABS}
-					activeTab={activeTab}
+					activeTab={tab}
 					buildUrl={(tabId) => `/learn/conversations/${tabId}`}
 				/>
 
 				<ConversationModeToggle mode={mode} onModeChange={setMode} />
 
-				{children}
+				<TabContent />
 			</div>
-		</ConversationProvider>
+		</ConversationModeProvider>
 	);
 }
