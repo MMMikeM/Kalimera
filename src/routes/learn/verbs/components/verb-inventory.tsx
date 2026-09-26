@@ -6,6 +6,7 @@ import { cn } from "tailwind-variants";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
 import { GreekText } from "@/components/GreekText";
 import { type AoristClass, classifyAorist } from "@/lib/aorist-class";
+import { stripTonos } from "@/lib/greek-letters";
 import { deviatingPersons } from "@/lib/paradigm-deviation";
 import type { VerbInventoryRow } from "@/server/db/queries/vocabulary";
 
@@ -207,11 +208,7 @@ const VerbTable: React.FC<{
 	);
 };
 
-const plain = (s: string) =>
-	s
-		.normalize("NFD")
-		.replace(/[̀-ͯ]/g, "")
-		.toLowerCase();
+const plain = (s: string) => stripTonos(s, { keepDiaeresis: false }).toLowerCase();
 
 /** Thirty-four verbs is a list; five sets of six is something you can actually work through. */
 const irregularGroup = (verb: ClassifiedVerb): string => {
