@@ -108,9 +108,6 @@ export default defineConfig({
 			"react-compiler/immutability": "error",
 			"react-compiler/set-state-in-render": "error",
 			"react-compiler/refs": "error",
-			// New in the Oxlint bundled by Vite+; off so the toolchain migration does
-			// not change what lint reports. Enabling it is a separate decision.
-			"react/set-state-in-effect": "off",
 			"better-tailwindcss/no-restricted-classes": [
 				"warn",
 				{

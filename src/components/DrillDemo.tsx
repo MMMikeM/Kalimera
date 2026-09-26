@@ -41,8 +41,10 @@ export const DrillDemo = () => {
 				break;
 
 			case "reset":
-				setTypedChars(0);
-				timer = setTimeout(() => setPhase("typing"), RESET_PAUSE);
+				timer = setTimeout(() => {
+					setTypedChars(0);
+					setPhase("typing");
+				}, RESET_PAUSE);
 				break;
 		}
 
@@ -50,7 +52,11 @@ export const DrillDemo = () => {
 	}, [phase, typedChars]);
 
 	const displayText =
-		phase === "transform" || phase === "success" ? GREEK : GREEKLISH.slice(0, typedChars);
+		phase === "transform" || phase === "success"
+			? GREEK
+			: phase === "reset"
+				? ""
+				: GREEKLISH.slice(0, typedChars);
 
 	const showCursor = phase === "typing";
 	const showSuccess = phase === "success";
