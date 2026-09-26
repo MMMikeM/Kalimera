@@ -12,8 +12,6 @@ export const SPEEDMAP = {
 
 export type SpeedId = "fast" | "medium" | "relaxed";
 
-export const MEDIUM_SPEED_MS = 6000;
-
 // Speed tiers are calibrated for typing a single form. Multi-word phrases get a
 // per-extra-word surcharge so the pressure stays on retrieval, not typing speed.
 const EXTRA_WORD_FACTOR = 0.35;
