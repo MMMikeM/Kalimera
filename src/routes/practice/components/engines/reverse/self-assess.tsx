@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
-
 import { GreekText } from "@/components/GreekText";
 import { Button } from "@/components/ui/button";
 
+import { useCardState } from "../drill-hooks";
 import { drillActions, useDrillStore } from "../drill-store";
 import { ReverseFeedback } from "../shells";
 
@@ -13,11 +12,7 @@ export function SelfAssessReverse() {
 	const { recordAttempt } = drillActions;
 	const currentForm = deck[cardIndex];
 
-	const [revealedAnswer, setRevealedAnswer] = useState(false);
-
-	useEffect(() => {
-		if (phase === "active") setRevealedAnswer(false);
-	}, [phase, cardIndex]);
+	const [revealedAnswer, setRevealedAnswer] = useCardState(false);
 
 	const handleSelfAssess = (isCorrect: boolean) => {
 		if (!currentForm) return;

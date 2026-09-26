@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useState, type ReactNode } from "react";
+import { useCallback, type ReactNode } from "react";
 
 import { GreekText } from "@/components/GreekText";
 
 import type { DrillForm } from "../deck";
+import { useCardState } from "../drill-hooks";
 import { drillActions, useDrillStore } from "../drill-store";
 import { ReverseFeedback, SelectorButton } from "../shells";
 
@@ -30,11 +31,7 @@ export function SingleSelectReverse({
 	const { recordAttempt } = drillActions;
 	const currentForm = deck[cardIndex];
 
-	const [selected, setSelected] = useState<string | null>(null);
-
-	useEffect(() => {
-		if (phase === "active") setSelected(null);
-	}, [phase, cardIndex]);
+	const [selected, setSelected] = useCardState<string | null>(null);
 
 	const handleSelect = useCallback(
 		(id: string) => {
@@ -48,7 +45,7 @@ export function SingleSelectReverse({
 				userAnswer: id,
 			});
 		},
-		[phase, currentForm, recordAttempt],
+		[phase, currentForm, recordAttempt, setSelected],
 	);
 
 	if (!currentForm) return null;
