@@ -33,7 +33,7 @@ export const getVerbDrillQuestionsFn = createServerFn({ method: "GET" })
 		}),
 	)
 	.handler(async ({ data: { drillId, limit } }) => {
-		const { userId } = requireAuth();
+		const { userId } = await requireAuth();
 		switch (drillId) {
 			case "verbs-tense-ladder":
 				return getTenseLadderQuestions(userId, limit);

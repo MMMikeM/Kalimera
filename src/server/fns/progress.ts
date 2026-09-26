@@ -12,7 +12,7 @@ import { listCompletedPracticeSessionsForStreak } from "@/server/db/queries/prac
 import { getReviewStats } from "@/server/db/queries/vocab-reviews";
 
 export const getProgressDataFn = createServerFn({ method: "GET" }).handler(async () => {
-	const { userId } = requireAuth();
+	const { userId } = await requireAuth();
 
 	const [stats, calendarDates, accuracyTrends, timeInvested, completedSessions] = await Promise.all(
 		[
