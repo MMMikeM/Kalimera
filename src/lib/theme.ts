@@ -53,8 +53,15 @@ export const setThemePreference = (preference: ThemePreference) => {
 	}
 
 	const dark = preference === "dark" || (preference === "system" && matchMedia(DARK_QUERY).matches);
-	document.documentElement.classList.toggle("dark", dark);
-	document.querySelector('meta[name="theme-color"]')?.setAttribute("content", themeColorFor(dark));
+	const applyTheme = () => {
+		document.documentElement.classList.toggle("dark", dark);
+		document.querySelector('meta[name="theme-color"]')?.setAttribute("content", themeColorFor(dark));
+	};
+
+	// Cross-fading softens a whole-screen luminance jump; reduced-motion users get the instant swap.
+	const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+	if (!reduceMotion && "startViewTransition" in document) document.startViewTransition(applyTheme);
+	else applyTheme();
 
 	for (const listener of listeners) listener();
 };
