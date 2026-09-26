@@ -2,13 +2,13 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import type { SimpleListItem } from "../../components/engines/deck";
 import { Drill } from "../../components/engines/drill";
-import { GENDER_DIMENSION_OPTIONS } from "../../components/engines/drill-constants";
+import { GENDER_DIMENSION_OPTIONS, NEUTRAL } from "../../components/engines/drill-constants";
 
 // Adjective three-form agreement in Owner (genitive).
 // Singular: m -ου · f -ης/-ας · n -ου
 // Plural:   -ων for all three genders
 // Forward: "good · masculine" → type "kalou" / "good · plural" → type "kalon"
-// Reverse: show Greek form → tap gender chip (note: pl -ων is gender-ambiguous)
+// Reverse: show Greek form → tap gender chip, or "plural" for -ων, which is the same in all three genders
 
 interface AdjGroup {
 	id: string;
@@ -130,8 +130,15 @@ const ITEMS: SimpleListItem[] = ADJECTIVES.flatMap((adj) => [
 		greek: adj.plural,
 		label: `${adj.english} · plural`,
 		category: "plural",
+		dimension: "plural",
 	},
 ]);
+
+// -ων claims no gender, so its chip takes the neutral palette, not a gender token.
+const REVERSE_OPTIONS = [
+	...GENDER_DIMENSION_OPTIONS,
+	{ id: "plural", label: "Plural · any gender", ...NEUTRAL },
+];
 
 const CATEGORIES = [
 	{ id: "masculine", label: "Masculine (-ου)" },
@@ -153,11 +160,11 @@ function AdjectiveAgreementOwnerDrill() {
 			subtitle="40 forms / timed"
 			forwardDesc="English + gender → adjective form (Owner)"
 			reverseLabel="Greek → gender"
-			reverseDesc="Adjective form → select gender"
+			reverseDesc="Adjective form → select gender, or plural"
 			categories={CATEGORIES}
 			reverse={{
 				kind: "single-select",
-				options: GENDER_DIMENSION_OPTIONS,
+				options: REVERSE_OPTIONS,
 			}}
 		/>
 	);
