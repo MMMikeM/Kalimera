@@ -45,6 +45,7 @@ export function MobileHeader({
 							render={
 								<button
 									type="button"
+									aria-label="Account menu"
 									className={`rounded-lg p-2 shadow-none ring-0 outline-transparent transition-colors outline-none ${
 										isOpen
 											? "bg-terracotta/10 text-terracotta"

@@ -6,6 +6,7 @@ import { getNounsForParadigmReference } from "@/server/db/queries/noun-paradigms
 import { getVocabBySlug } from "@/server/db/queries/vocabulary";
 import type { Vocabulary } from "@/server/db/types";
 
+import { groupVocabByTag } from "../components/vocab-by-tag";
 import { ReferenceNav } from "./components/reference-nav";
 import { AdjectivesTab } from "./tabs/adjectives";
 import { CasesTab } from "./tabs/cases";
@@ -26,16 +27,8 @@ const loadPatterns = createServerFn().handler(async () => {
 		getVocabBySlug("verbs", [...PATTERN_VERB_WORD_TYPES]),
 	]);
 
-	const toSlugMap = (tags: typeof phraseTags): Record<string, Vocabulary[]> =>
-		Object.fromEntries(
-			tags.map((t) => [
-				t.slug,
-				t.vocabularyTags.map((vt) => vt.vocabulary).filter((v) => v !== null),
-			]),
-		);
-
-	const phrases = toSlugMap(phraseTags);
-	const verbs = toSlugMap(verbTags);
+	const phrases = groupVocabByTag(phraseTags);
+	const verbs = groupVocabByTag(verbTags);
 
 	return {
 		likesConstruction: {

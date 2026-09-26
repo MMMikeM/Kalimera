@@ -4,7 +4,6 @@ import { cn } from "tailwind-variants";
 const variantStyles = {
 	default: "",
 	bordered: "border border-stone-200 shadow-none",
-	shadow: "shadow-lg border-0",
 	elevated: "shadow-md border border-stone-100",
 };
 
@@ -16,7 +15,7 @@ const paddingStyles = {
 };
 
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
-	variant?: "default" | "bordered" | "shadow" | "elevated";
+	variant?: "default" | "bordered" | "elevated";
 	padding?: "none" | "sm" | "md" | "lg";
 	hover?: boolean;
 	children: ReactNode;

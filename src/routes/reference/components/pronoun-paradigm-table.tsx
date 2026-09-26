@@ -5,14 +5,12 @@ import type { PronounForm, PronounParadigm } from "@/constants/pronouns";
 import type { CaseName } from "@/constants/recognition";
 import type { NominalCase } from "@/server/db/enums";
 
-type CaseVariant = NominalCase;
-
 const PRONOUN_COLUMNS: ColumnDef[] = [
 	{ key: "singular", label: "Singular" },
 	{ key: "plural", label: "Plural" },
 ];
 
-const PronounCell = ({ form, variant }: { form: PronounForm; variant: CaseVariant | "accent" }) => (
+const PronounCell = ({ form, variant }: { form: PronounForm; variant: NominalCase }) => (
 	<div className="flex flex-col gap-0.5">
 		<GreekText tone={variant} size="sm">
 			{form.greek}
@@ -26,13 +24,13 @@ const PronounCell = ({ form, variant }: { form: PronounForm; variant: CaseVarian
 
 interface PronounParadigmTableProps {
 	data: PronounParadigm[];
-	caseName?: CaseName;
+	caseName: CaseName;
 	note?: string;
 }
 
 export const PronounParadigmTable = ({ data, caseName, note }: PronounParadigmTableProps) => {
-	const scheme = caseName ? CASE_SCHEME[caseName] : undefined;
-	const variant: CaseVariant | "accent" = caseName ? CASE_KEY[caseName] : "accent";
+	const scheme = CASE_SCHEME[caseName];
+	const variant = CASE_KEY[caseName];
 
 	const rows: RowDef[] = data.map((row) => ({
 		key: row.person,
