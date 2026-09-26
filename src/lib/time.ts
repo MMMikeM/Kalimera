@@ -50,7 +50,7 @@ export const diffInHours = (a: Temporal.Instant, b: Temporal.Instant): number =>
 
 export const startOfDayUTC = (d: Temporal.PlainDate): Temporal.Instant => toInstant(d);
 
-export const endOfDayUTC = (d: Temporal.PlainDate): Temporal.Instant =>
+const endOfDayUTC = (d: Temporal.PlainDate): Temporal.Instant =>
 	d.add({ days: 1 }).toZonedDateTime("UTC").subtract({ nanoseconds: 1 }).toInstant();
 
 /** End of tomorrow UTC */
