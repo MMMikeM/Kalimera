@@ -1,6 +1,6 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import type React from "react";
-import { cn } from "tailwind-variants";
+import { createFileRoute, notFound } from "@tanstack/react-router";
+
+import { NavTabs } from "@/components/NavTabs";
 
 import {
 	FutureNaSection,
@@ -30,32 +30,12 @@ export const Route = createFileRoute("/reference/verbs/$band")({
 	component: VerbBand,
 });
 
-const BandNav: React.FC<{ active: Band }> = ({ active }) => (
-	<div className="flex w-full items-center gap-1 rounded-lg bg-muted p-1">
-		{VERB_BANDS.map((band) => (
-			<Link
-				key={band.id}
-				to="/reference/verbs/$band"
-				params={{ band: band.id }}
-				className={cn(
-					"flex flex-1 items-center justify-center rounded-md border-b-2 border-transparent px-3 py-1.5 text-sm font-medium whitespace-nowrap transition-colors",
-					active === band.id
-						? "border-b-stone-400 bg-card text-foreground shadow-sm"
-						: "text-stone-600 hover:text-foreground",
-				)}
-			>
-				{band.label}
-			</Link>
-		))}
-	</div>
-);
-
 function VerbBand() {
 	const { band } = Route.useLoaderData();
 
 	return (
 		<div className="space-y-8">
-			<BandNav active={band} />
+			<NavTabs tabs={VERB_BANDS} activeTab={band} buildUrl={(id) => `/reference/verbs/${id}`} />
 
 			{band === "present" && <PresentTenseSection />}
 			{band === "past" && <PastTenseSection />}

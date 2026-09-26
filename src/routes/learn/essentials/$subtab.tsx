@@ -4,6 +4,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { hasNumericValue, hasTimeRange } from "@/server/db/metadata";
 import { getVocabBySlug } from "@/server/db/queries/vocabulary";
 
+import { groupVocabByTag } from "../../components/vocab-by-tag";
 import { ColoursSubtab } from "./subtabs/colours";
 import { FrequencySubtab } from "./subtabs/frequency";
 import { NumbersSubtab } from "./subtabs/numbers";
@@ -14,12 +15,8 @@ const VALID_SUBTABS = ["numbers", "position", "time", "frequency", "colours"] as
 type SubtabId = (typeof VALID_SUBTABS)[number];
 
 const loader = createServerFn().handler(async () => {
-	const tags = await getVocabBySlug("reference", ["noun", "adverb", "adjective"]);
-	const reference = Object.fromEntries(
-		tags.map((t) => [
-			t.slug,
-			t.vocabularyTags.map((vt) => vt.vocabulary).filter((v) => v !== null),
-		]),
+	const reference = groupVocabByTag(
+		await getVocabBySlug("reference", ["noun", "adverb", "adjective"]),
 	);
 
 	return {

@@ -18,11 +18,11 @@ renders the matching tab component from `tabs/`.
 
 ```
 src/routes/learn/conversations/
-├── $tab.tsx                        # Route, VALID_TABS, CONVERSATION_TABS, layout + mode state
+├── $tab.tsx                        # Route, VALID_TABS, CONVERSATION_TABS, TAB_CONTENT, mode state
 ├── index.tsx                       # beforeLoad redirect to the `arriving` tab
 ├── content.llm                     # This file
-├── components/conversation-shell.tsx  # ConversationProvider, useConversationContext,
-│                                   #   ScenarioCard, LearningTips
+├── components/conversation-shell.tsx  # ConversationModeProvider, ScenarioCard,
+│                                   #   LearningTips
 └── tabs/
     ├── arriving.tsx
     ├── food.tsx
@@ -37,10 +37,11 @@ database-driven. This allows precise control over dialogue flow and cultural not
 
 ## Component Layer (`components/conversation-shell.tsx`)
 
-- **`ConversationProvider`** - React context supplying `{ mode, setMode }`; mounted by the
-  layout in `$tab.tsx` and read via `useConversationContext()`.
-- **`ScenarioCard`** - `Card` wrapper around `DialogueScenario`; takes `title`, `description`,
-  `formality`, `dialogue`, and an optional `mode` override (defaults to the context mode).
+- **`ConversationModeProvider`** - React context supplying the current `mode`; mounted by
+  the page in `$tab.tsx`, which owns the toggle and its setter.
+- **`ScenarioCard`** - `Card` with the scenario title, formality badge and description above
+  a `DialogueExchange`; takes `title`, `description`, `formality`, `dialogue`, and reads
+  `mode` from context.
 - **`LearningTips`** - `CollapsibleSection` (honey, open by default) rendering `patterns`,
   `tips`, and an optional `commonMistake` via the shared `MistakeComparison` component.
 
@@ -363,5 +364,5 @@ To add a new conversation topic:
 2. Create `tabs/<id>.tsx` with its dialogue constants (follow existing naming:
    `SCENARIO_NAME: DialogueLine[]`)
 3. Build the tab component from `ConversationHero`, `ScenarioCard`s, and `LearningTips`
-4. Add a case to the `TabRoute` switch in `$tab.tsx`
+4. Add the tab component to `TAB_CONTENT` in `$tab.tsx`
 5. Update this documentation

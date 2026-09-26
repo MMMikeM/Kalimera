@@ -9,21 +9,34 @@ import { type GrammarScheme, SCHEME } from "@/constants/grammar-palette";
 
 import type { PatternItem, PatternsData } from "../$tab";
 
+const PatternRow = ({ item }: { item: PatternItem }) => (
+	<div className="flex items-baseline gap-2 rounded border border-stone-200 bg-card p-2">
+		<GreekText tone="accent" size="lg">
+			{item.greekText}
+		</GreekText>
+		<span className="text-sm text-stone-600">{item.englishTranslation}</span>
+	</div>
+);
+
+/** Titled columns contrast two forms; a bare item list just flows across two columns. */
+type ParadigmBody =
+	| { columns: { title: string; items: PatternItem[] }[]; items?: never }
+	| { items: PatternItem[]; columns?: never };
+
 const ParadigmCard = ({
 	title,
 	subtitle,
 	icon,
 	patternNote,
-	columns,
 	scheme,
+	...body
 }: {
 	title: string;
 	subtitle: string;
 	icon: React.ReactNode;
 	patternNote: string;
-	columns: { title: string; items: PatternItem[] }[];
 	scheme: GrammarScheme;
-}) => {
+} & ParadigmBody) => {
 	const style = SCHEME[scheme];
 
 	return (
@@ -47,26 +60,26 @@ const ParadigmCard = ({
 					<strong>Pattern:</strong> {patternNote}
 				</AlertDescription>
 			</Alert>
-			<div className="grid gap-6 md:grid-cols-2">
-				{columns.map((col) => (
-					<div key={col.title}>
-						<h5 className={`font-semibold ${style.text} mb-3`}>{col.title}</h5>
-						<div className="space-y-2">
-							{col.items.map((item) => (
-								<div
-									key={item.id}
-									className="flex items-baseline gap-2 rounded border border-stone-200 bg-card p-2"
-								>
-									<GreekText tone="accent" size="lg">
-										{item.greekText}
-									</GreekText>
-									<span className="text-sm text-stone-600">{item.englishTranslation}</span>
-								</div>
-							))}
+			{body.columns ? (
+				<div className="grid gap-6 md:grid-cols-2">
+					{body.columns.map((col) => (
+						<div key={col.title}>
+							<h5 className={`font-semibold ${style.text} mb-3`}>{col.title}</h5>
+							<div className="space-y-2">
+								{col.items.map((item) => (
+									<PatternRow key={item.id} item={item} />
+								))}
+							</div>
 						</div>
-					</div>
-				))}
-			</div>
+					))}
+				</div>
+			) : (
+				<div className="grid gap-3 md:grid-cols-2">
+					{body.items.map((item) => (
+						<PatternRow key={item.id} item={item} />
+					))}
+				</div>
+			)}
 		</TeachingCard>
 	);
 };
@@ -133,38 +146,14 @@ export function PatternsTab({ data }: { data: PatternsData }) {
 			/>
 
 			{nameConstruction.length > 0 && (
-				<TeachingCard
+				<ParadigmCard
+					title="Name Construction"
+					subtitle={`με λένε = my name is (lit. "they call me")`}
+					icon={<UserCircle size={20} />}
+					patternNote={`[Pronoun] λένε + name - literally "they call me..."`}
 					scheme="neutral"
-					eyebrow="Pattern"
-					title={
-						<span className="flex items-center gap-2">
-							<span className="inline-flex items-center justify-center rounded-md bg-stone-200 p-1.5 text-stone-800">
-								<UserCircle size={20} />
-							</span>
-							Name Construction
-						</span>
-					}
-					description={`με λένε = my name is (lit. "they call me")`}
-				>
-					<Alert variant="info" className="mb-4">
-						<AlertDescription>
-							<strong>Pattern:</strong> [Pronoun] λένε + name - literally "they call me..."
-						</AlertDescription>
-					</Alert>
-					<div className="grid gap-3 md:grid-cols-2">
-						{nameConstruction.map((name) => (
-							<div
-								key={name.id}
-								className="flex items-baseline gap-2 rounded border border-stone-200 bg-card p-2"
-							>
-								<GreekText tone="accent" size="lg">
-									{name.greekText}
-								</GreekText>
-								<span className="text-sm text-stone-600">{name.englishTranslation}</span>
-							</div>
-						))}
-					</div>
-				</TeachingCard>
+					items={nameConstruction}
+				/>
 			)}
 
 			<QuickTest
