@@ -127,7 +127,6 @@ function WhichPhraseDrill() {
 			reverse={{
 				kind: "single-select",
 				options: GENDER_DIMENSION_OPTIONS,
-				getCorrectId: (form) => String(form.dimension ?? ""),
 			}}
 		/>
 	);

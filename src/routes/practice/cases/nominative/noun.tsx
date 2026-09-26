@@ -42,7 +42,6 @@ function NounGendersDrill() {
 			reverse={{
 				kind: "single-select",
 				options: DIMENSION_OPTIONS,
-				getCorrectId: (item) => String(item.dimension ?? ""),
 			}}
 		/>
 	);

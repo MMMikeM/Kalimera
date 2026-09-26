@@ -18,7 +18,7 @@ interface VocabDrillPageProps {
 	reverse?: ReverseStrategy;
 }
 
-const toForm = (q: DrillQuestion): DrillForm & { dimension?: string } => ({
+const toForm = (q: DrillQuestion): DrillForm => ({
 	id: q.id,
 	greek: q.correctGreek,
 	label: q.prompt,
