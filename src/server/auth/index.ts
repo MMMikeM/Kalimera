@@ -72,7 +72,7 @@ const createWebAuthn = ({ rpName, rpID, origin }: WebAuthnConfig) => {
 			expectedChallenge: string,
 		) => {
 			const challengeRecord = await findChallenge(expectedChallenge, "registration");
-			if (!challengeRecord) {
+			if (!challengeRecord || challengeRecord.userId !== userId) {
 				throw new Error("Challenge not found or expired");
 			}
 

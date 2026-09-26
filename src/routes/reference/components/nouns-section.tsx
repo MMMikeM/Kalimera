@@ -14,6 +14,7 @@ import { GreekText } from "@/components/GreekText";
 import { SectionHeading } from "@/components/SectionHeading";
 import { AGREEMENT_PARADIGMS, type AgreementParadigm } from "@/constants/agreement";
 import { GENDER_SCHEME, SCHEME } from "@/constants/grammar-palette";
+import { stripTonos } from "@/lib/greek-letters";
 import type { Gender, GrammaticalNumber } from "@/server/db/enums";
 
 import type { NounsData } from "../$tab";
@@ -106,16 +107,12 @@ interface SentenceFrame {
 	english: string;
 }
 
-const ROLE_SENTENCES: Array<{ paradigmId: string; frames: Record<RoleCase, SentenceFrame> }> = [
-	{
-		paradigmId: "masc-os",
-		frames: {
-			nom: { suffix: " μιλάει", english: "the friend speaks" },
-			acc: { prefix: "βλέπω ", english: "I see the friend" },
-			gen: { prefix: "το σπίτι ", english: "the friend's house" },
-		},
-	},
-];
+/** Sentence frames around ο φίλος, the masc-os example the case guide uses. */
+const FRIEND_FRAMES: Record<RoleCase, SentenceFrame> = {
+	nom: { suffix: " μιλάει", english: "the friend speaks" },
+	acc: { prefix: "βλέπω ", english: "I see the friend" },
+	gen: { prefix: "το σπίτι ", english: "the friend's house" },
+};
 
 const sentenceFor = (paradigm: AgreementParadigm, caseKey: RoleCase, frame: SentenceFrame) =>
 	`${frame.prefix ?? ""}${formFor(paradigm, "singular", caseKey)?.full ?? ""}${frame.suffix ?? ""}`;
@@ -129,15 +126,14 @@ const CASE_QUESTIONS: Record<RoleCase, string> = {
 /** Three example words per pattern keeps new material inside the working-memory ceiling. */
 const EXAMPLES_SHOWN = 3;
 
-const stripTonos = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "");
-
 /** An example has to actually show the ending it illustrates. Pluralia tantum are
  * assigned a pattern for declension purposes but do not demonstrate it — λεφτά is
  * a neut-o noun, yet a column headed "-ο / λεφτά" teaches nothing. Tonos-blind
  * because endings carry stress the lemma may not (σπίτι against -ί). */
 const demonstratesPattern = (lemma: string, paradigm: AgreementParadigm): boolean => {
 	const ending = formFor(paradigm, "singular", "nom")?.ending?.replace(/^-/, "");
-	return ending ? stripTonos(lemma).endsWith(stripTonos(ending)) : true;
+	const bare = { keepDiaeresis: false };
+	return ending ? stripTonos(lemma, bare).endsWith(stripTonos(ending, bare)) : true;
 };
 
 /** Real corpus nouns for a pattern, falling back to the paradigm's own example —
@@ -155,8 +151,7 @@ const countFor = (data: NounsData | null, paradigm: AgreementParadigm): number |
 
 const CaseGuide = () => {
 	const friend = getParadigms(["masc-os"])[0];
-	const frames = ROLE_SENTENCES[0]?.frames;
-	if (!friend || !frames) return null;
+	if (!friend) return null;
 
 	return (
 		<TeachingCard
@@ -174,7 +169,7 @@ const CaseGuide = () => {
 				{ROLE_CASES.map((caseKey) => {
 					const meta = CASE_ROW_BY_KEY[caseKey];
 					const style = SCHEME[meta.scheme];
-					const frame = frames[caseKey];
+					const frame = FRIEND_FRAMES[caseKey];
 					return (
 						<div key={caseKey} className="flex items-start gap-3">
 							<span

@@ -36,12 +36,7 @@ interface TabHeroProps<T extends string = string> {
 	children: ReactNode;
 	icon?: ReactNode;
 	greekPhrase?: string;
-	expandedExample?: {
-		label: string;
-		content: ReactNode;
-	};
 	colorScheme?: TabHeroColorScheme;
-	className?: string;
 }
 
 export const TabHero = <T extends string>({
@@ -49,9 +44,7 @@ export const TabHero = <T extends string>({
 	children,
 	icon = <Lightbulb size={24} />,
 	greekPhrase,
-	expandedExample,
 	colorScheme = "ocean",
-	className,
 }: TabHeroProps<T>) => {
 	const styles = colorStyles[colorScheme];
 
@@ -59,7 +52,7 @@ export const TabHero = <T extends string>({
 		<Card
 			variant="elevated"
 			padding="md"
-			className={cn(styles.bgMuted, "border-2", styles.border, "sm:p-6", className)}
+			className={cn(styles.bgMuted, "border-2", styles.border, "sm:p-6")}
 		>
 			<div className="space-y-3 sm:space-y-4">
 				<div className="flex h-12 items-stretch gap-3 sm:h-14 sm:gap-4">
@@ -81,14 +74,6 @@ export const TabHero = <T extends string>({
 					</div>
 				</div>
 				<div className="text-sm leading-relaxed text-slate-text">{children}</div>
-				{expandedExample && (
-					<div className={cn("p-3 sm:p-4 rounded-lg border bg-cream-dark", styles.borderMuted)}>
-						<div className={cn("text-sm font-medium mb-1.5", styles.text)}>
-							{expandedExample.label}
-						</div>
-						{expandedExample.content}
-					</div>
-				)}
 			</div>
 		</Card>
 	);

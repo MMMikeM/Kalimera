@@ -1,7 +1,7 @@
 import type React from "react";
 
 import { type ColumnDef, GrammarTable, type RowDef } from "@/components/GrammarTable";
-import type { GrammarScheme } from "@/constants/grammar-palette";
+import { type GrammarScheme, SCHEME } from "@/constants/grammar-palette";
 
 interface VerbForm {
 	stem: string;
@@ -22,11 +22,9 @@ interface ParadigmTableProps {
 	meaning: string;
 	infinitive?: string;
 	forms: ParadigmForms;
+	/** Colours the table frame and, for stem + ending forms, the ending. */
 	scheme?: GrammarScheme;
-	className?: string;
 	formClassName?: string;
-	endingClassName?: string;
-	fadeStem?: boolean;
 }
 
 const PERSON_ROWS: RowDef[] = [
@@ -42,16 +40,15 @@ const VERB_COLUMNS: ColumnDef[] = [
 
 const VerbCell: React.FC<{
 	form: VerbForm | string;
-	fadeStem: boolean;
 	formClassName: string;
 	endingClassName: string;
-}> = ({ form, fadeStem, formClassName, endingClassName }) => (
+}> = ({ form, formClassName, endingClassName }) => (
 	<span className="font-mono text-sm sm:text-base">
 		{typeof form === "string" ? (
 			<span className={formClassName}>{form}</span>
 		) : (
 			<>
-				<span className={fadeStem ? "text-stone-600" : "text-stone-700"}>{form.stem}</span>
+				<span className="text-stone-600">{form.stem}</span>
 				<span className={endingClassName}>{form.ending}</span>
 			</>
 		)}
@@ -64,11 +61,9 @@ export const ParadigmTable: React.FC<ParadigmTableProps> = ({
 	infinitive,
 	forms,
 	scheme,
-	className,
 	formClassName = "text-stone-800 font-semibold",
-	endingClassName = "text-terracotta font-bold",
-	fadeStem = true,
 }) => {
+	const endingClassName = `${scheme ? SCHEME[scheme].text : "text-terracotta"} font-bold`;
 	const cells = (
 		[
 			["sg1", "pl1"],
@@ -80,7 +75,6 @@ export const ParadigmTable: React.FC<ParadigmTableProps> = ({
 			<VerbCell
 				key={person}
 				form={forms[person]}
-				fadeStem={fadeStem}
 				formClassName={formClassName}
 				endingClassName={endingClassName}
 			/>
@@ -88,7 +82,7 @@ export const ParadigmTable: React.FC<ParadigmTableProps> = ({
 	);
 
 	return (
-		<div className={className}>
+		<div>
 			<div className="mb-2 px-1">
 				<span className="font-mono text-lg font-semibold text-stone-800 sm:text-xl">
 					{infinitive || (stem ? `${stem}-` : "")}

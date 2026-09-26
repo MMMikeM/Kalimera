@@ -1,8 +1,7 @@
-import { useEffect, useRef, useState } from "react";
-
 import { GreekText } from "@/components/GreekText";
 import { Button } from "@/components/ui/button";
 
+import { useCardState } from "../drill-hooks";
 import { drillActions, useDrillStore } from "../drill-store";
 import { ReverseFeedback } from "../shells";
 
@@ -13,21 +12,12 @@ export function SelfAssessReverse() {
 	const { recordAttempt } = drillActions;
 	const currentForm = deck[cardIndex];
 
-	const [revealedAnswer, setRevealedAnswer] = useState(false);
-	const startedAt = useRef(0);
-
-	useEffect(() => {
-		if (phase === "active") {
-			setRevealedAnswer(false);
-			startedAt.current = performance.now();
-		}
-	}, [phase, cardIndex]);
+	const [revealedAnswer, setRevealedAnswer] = useCardState(false);
 
 	const handleSelfAssess = (isCorrect: boolean) => {
 		if (!currentForm) return;
-		const timeTaken = performance.now() - startedAt.current;
-		recordAttempt(isCorrect, timeTaken, {
-			prompt: currentForm.greek,
+		recordAttempt(isCorrect, {
+			prompt: currentForm.reverseGreek ?? currentForm.greek,
 			correctAnswer: currentForm.label,
 			userAnswer: isCorrect ? "self:correct" : "self:wrong",
 		});
@@ -39,7 +29,7 @@ export function SelfAssessReverse() {
 		<>
 			<div>
 				<GreekText as="p" size="4xl">
-					{currentForm.greek}
+					{currentForm.reverseGreek ?? currentForm.greek}
 				</GreekText>
 			</div>
 

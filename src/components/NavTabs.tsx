@@ -9,8 +9,6 @@ const navTabsVariants = tv({
 		list: "flex h-auto w-full scrollbar-none items-center gap-1 overflow-x-auto rounded-lg bg-muted p-1 text-muted-foreground",
 		trigger:
 			"relative flex h-[calc(100%-1px)] min-w-max flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-3 py-1.5 text-sm font-medium whitespace-nowrap transition-[color,box-shadow] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
-		badge:
-			"absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full text-xs text-white",
 	},
 });
 
@@ -42,22 +40,6 @@ const triggerStateVariants = tv({
 	},
 });
 
-const badgeColorVariants = tv({
-	base: "absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full text-xs text-white",
-	variants: {
-		color: {
-			ocean: "bg-ocean",
-			olive: "bg-olive",
-			honey: "bg-honey",
-			terracotta: "bg-terracotta",
-			neutral: "bg-muted-foreground",
-		},
-	},
-	defaultVariants: {
-		color: "terracotta",
-	},
-});
-
 type TabColor = "ocean" | "olive" | "honey" | "terracotta" | "neutral";
 
 interface NavTab {
@@ -65,17 +47,15 @@ interface NavTab {
 	label: string;
 	icon?: ReactNode;
 	color?: TabColor;
-	badge?: number | string;
 }
 
 interface NavTabsProps {
-	tabs: NavTab[];
+	tabs: readonly NavTab[];
 	activeTab: string;
 	buildUrl: (tabId: string) => string;
-	className?: string;
 }
 
-const NavTabs = ({ tabs, activeTab, buildUrl, className }: NavTabsProps) => {
+const NavTabs = ({ tabs, activeTab, buildUrl }: NavTabsProps) => {
 	const { root, list, trigger } = navTabsVariants();
 	const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -119,7 +99,7 @@ const NavTabs = ({ tabs, activeTab, buildUrl, className }: NavTabsProps) => {
 	);
 
 	return (
-		<div className={root({ className })}>
+		<div className={root()}>
 			<div className="relative overflow-hidden rounded-lg">
 				<motion.div
 					className="pointer-events-none absolute top-0 bottom-0 left-0 z-10 w-6 bg-gradient-to-r from-stone-400/25 to-transparent"
@@ -139,11 +119,6 @@ const NavTabs = ({ tabs, activeTab, buildUrl, className }: NavTabsProps) => {
 							>
 								<div className="flex h-4 items-center justify-center">{tab.icon}</div>
 								<span>{tab.label}</span>
-								{tab.badge !== undefined && tab.badge !== 0 && (
-									<span className={badgeColorVariants({ color })}>
-										{typeof tab.badge === "number" && tab.badge > 99 ? "99+" : tab.badge}
-									</span>
-								)}
 							</Link>
 						);
 					})}

@@ -181,7 +181,6 @@ function VerbDetailPage() {
 
 			{isSuppletive && verb.verbDetails && (
 				<StemInsight
-					isSuppletive={true}
 					stems={{
 						present: verb.verbDetails.presentStem,
 						aorist: verb.verbDetails.aoristStem,

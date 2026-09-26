@@ -16,22 +16,9 @@ export interface DialogueLine {
 	note?: string; // Optional context note
 }
 
-type ColorScheme = "olive" | "terracotta" | "ocean" | "honey";
-
-const speakerBubbleStyles: Record<SpeakerRole, string> = {
-	you: "bg-cream-dark",
-	host: "bg-stone-50",
-	friend: "bg-stone-50",
-	waiter: "bg-stone-50",
-	shopkeeper: "bg-stone-50",
-	stranger: "bg-stone-50",
-};
-
 interface DialogueExchangeProps {
 	lines: DialogueLine[];
-	colorScheme?: ColorScheme;
-	mode?: ConversationMode;
-	className?: string;
+	mode: ConversationMode;
 }
 
 interface RevealableTextProps {
@@ -61,12 +48,7 @@ const RevealableText: React.FC<RevealableTextProps> = ({ text, isHidden, onRevea
 	);
 };
 
-const DialogueExchange: React.FC<DialogueExchangeProps> = ({
-	lines,
-	colorScheme: _colorScheme,
-	mode = "read",
-	className,
-}) => {
+export const DialogueExchange: React.FC<DialogueExchangeProps> = ({ lines, mode }) => {
 	const [revealedLines, setRevealedLines] = useState<Set<number>>(new Set());
 
 	const revealLine = (idx: number) => {
@@ -88,7 +70,7 @@ const DialogueExchange: React.FC<DialogueExchangeProps> = ({
 	};
 
 	return (
-		<div className={cn("space-y-3", className)}>
+		<div className="space-y-3">
 			{lines.map((line, idx) => (
 				<motion.div
 					key={line.greek}
@@ -100,8 +82,9 @@ const DialogueExchange: React.FC<DialogueExchangeProps> = ({
 					<div
 						className={cn(
 							"max-w-bubble p-3 rounded-lg",
-							speakerBubbleStyles[line.speaker],
-							line.speaker === "you" ? "rounded-br-none" : "rounded-bl-none",
+							line.speaker === "you"
+								? "bg-cream-dark rounded-br-none"
+								: "bg-stone-50 rounded-bl-none",
 						)}
 					>
 						<SpeakerBadge role={line.speaker} className="mb-2" />
@@ -133,51 +116,3 @@ const DialogueExchange: React.FC<DialogueExchangeProps> = ({
 		</div>
 	);
 };
-
-export type Formality = "formal" | "informal" | "mixed";
-
-interface DialogueScenarioProps {
-	title: string;
-	description?: string;
-	dialogue: DialogueLine[];
-	colorScheme?: ColorScheme;
-	mode?: ConversationMode;
-	formality?: Formality;
-	className?: string;
-}
-
-const formalityLabels: Record<Formality, { text: string; className: string }> = {
-	formal: { text: "Formal", className: "bg-stone-100 text-stone-600" },
-	informal: { text: "Informal", className: "bg-olive-100 text-olive-700" },
-	mixed: { text: "Mixed", className: "bg-ocean-100 text-ocean-700" },
-};
-
-export const DialogueScenario: React.FC<DialogueScenarioProps> = ({
-	title,
-	description,
-	dialogue,
-	colorScheme,
-	mode,
-	formality,
-	className,
-}) => (
-	<div className={cn("space-y-4", className)}>
-		<div>
-			<div className="flex items-center gap-2">
-				<h4 className="font-semibold text-stone-800">{title}</h4>
-				{formality && (
-					<span
-						className={cn(
-							"text-xs px-2 py-0.5 rounded-full font-medium",
-							formalityLabels[formality].className,
-						)}
-					>
-						{formalityLabels[formality].text}
-					</span>
-				)}
-			</div>
-			{description && <p className="mt-1 text-sm text-stone-600">{description}</p>}
-		</div>
-		<DialogueExchange lines={dialogue} colorScheme={colorScheme} mode={mode} />
-	</div>
-);

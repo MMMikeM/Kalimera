@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { getTenseRecognitionQuestionsFn } from "@/server/fns/verbs";
+import { getVerbDrillQuestionsFn } from "@/server/fns/verbs";
 
 import { TENSE_DIMENSION_OPTIONS } from "../components/engines/drill-constants";
 import { VocabDrillPage } from "../components/engines/vocab-drill";
@@ -9,7 +9,9 @@ import { VocabDrillPage } from "../components/engines/vocab-drill";
 // in reverse mode, which is the whole drill.
 export const Route = createFileRoute("/practice/verbs/tense-recognition")({
 	loader: async () => {
-		const questions = await getTenseRecognitionQuestionsFn({ data: { limit: 30 } });
+		const questions = await getVerbDrillQuestionsFn({
+			data: { drillId: "verbs-tense-recognition", limit: 30 },
+		});
 		if (questions.length === 0) throw new Error("No questions available");
 		return { questions };
 	},
@@ -30,7 +32,6 @@ function TenseRecognitionDrill() {
 			reverse={{
 				kind: "single-select",
 				options: TENSE_DIMENSION_OPTIONS,
-				getCorrectId: (item) => String(item.dimension ?? ""),
 			}}
 			questions={questions}
 		/>

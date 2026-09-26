@@ -33,6 +33,7 @@ export const GlobalSearch = ({ children }: GlobalSearchProps) => {
 				render={
 					<button
 						type="button"
+						aria-label="Search"
 						className="rounded-md outline-none focus-visible:ring-2 focus-visible:ring-terracotta-300"
 					/>
 				}

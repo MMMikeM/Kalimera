@@ -142,7 +142,6 @@ function HowManyPhraseDrill() {
 			drillId="blocks-qw-how-many-phrase"
 			items={HOW_MANY_PHRASES}
 			subtitle={`${HOW_MANY_PHRASES.length} phrases / timed`}
-			colorTheme="terracotta"
 			backTo="/practice/blocks/question-words/"
 			forwardDesc="English → πόσος + noun, agreeing"
 			reverseLabel="Greek → gender"
@@ -151,7 +150,6 @@ function HowManyPhraseDrill() {
 			reverse={{
 				kind: "single-select",
 				options: REVERSE_OPTIONS,
-				getCorrectId: (form) => String(form.dimension ?? ""),
 			}}
 		/>
 	);
