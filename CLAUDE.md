@@ -10,8 +10,8 @@
 # Production (Turso) — drizzle-kit auto-loads `.env`; these hit PROD
 pnpm db:push        # or db:studio, db:generate, db:migrate
 
-# Seeding needs the env passed explicitly — `pnpm db:seed` does NOT load `.env`
-node --env-file=.env --import tsx src/scripts/seed.ts
+# Seeding: tsx does not auto-load `.env`, so the script passes it explicitly
+pnpm db:seed        # node --env-file=.env --import tsx src/scripts/seed.ts
 
 # Local schema only — a `file:` URL makes drizzle.config.ts drop the auth token,
 # so drizzle-kit uses the embedded @tursodatabase/database driver (no Docker)
