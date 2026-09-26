@@ -1,3 +1,4 @@
+import { cefrRank } from "./cefr";
 import type { BrowsableNoun, NounGender } from "./noun-filters";
 
 export type { BrowsableNoun, NounGender } from "./noun-filters";
@@ -8,14 +9,7 @@ export interface NounSubjectGroup {
 	nouns: BrowsableNoun[];
 }
 
-const CEFR_ORDER = ["A1", "A2", "B1", "B2", "C1", "C2"];
 const UNRANKED = Number.MAX_SAFE_INTEGER;
-
-/** Anything that is not a CEFR code sorts last — 190 rows store `cefr_level` as "0". */
-const cefrOrder = (level: string | null): number => {
-	const index = level === null ? -1 : CEFR_ORDER.indexOf(level);
-	return index === -1 ? UNRANKED : index;
-};
 
 type GroupableRow = {
 	id: number;
@@ -51,7 +45,7 @@ type GroupableRow = {
  */
 export const groupNounsBySubject = (rows: readonly GroupableRow[]): NounSubjectGroup[] => {
 	const byPriority = [...rows].sort((a, b) => {
-		const cefr = cefrOrder(a.cefrLevel) - cefrOrder(b.cefrLevel);
+		const cefr = cefrRank(a.cefrLevel) - cefrRank(b.cefrLevel);
 		return cefr !== 0 ? cefr : (a.frequencyRank ?? UNRANKED) - (b.frequencyRank ?? UNRANKED);
 	});
 
