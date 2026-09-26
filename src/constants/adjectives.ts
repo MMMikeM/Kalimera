@@ -316,13 +316,6 @@ export const ADJECTIVE_MISTAKES: AdjectiveMistake[] = [
 			"Gender mismatch: βιβλίο is neuter, so the adjective needs neuter ending -ό (not masculine -ός)",
 		category: "gender",
 	},
-	{
-		wrong: "θέλω το κρύο νερό",
-		correct: "θέλω το κρύο νερό",
-		explanation:
-			"This is actually correct! Neuter accusative = nominative, so το κρύο νερό stays the same",
-		category: "case",
-	},
 ];
 
 // Quick reference: adjective endings by gender for -ος/-η/-ο pattern
