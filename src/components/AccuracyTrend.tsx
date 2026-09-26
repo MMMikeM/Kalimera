@@ -130,6 +130,7 @@ export const AccuracyTrend = ({ data, className }: AccuracyTrendProps) => {
 				viewBox={`0 0 ${chartWidth + CHART_PADDING.left + CHART_PADDING.right} ${CHART_HEIGHT}`}
 				className="h-auto w-full"
 				preserveAspectRatio="xMidYMid meet"
+				// eslint-disable-next-line jsx-a11y/prefer-tag-over-role -- inline SVG chart; role="img" is what exposes its aria-label
 				role="img"
 				aria-label="Accuracy trend chart showing 7-day rolling average"
 			>
