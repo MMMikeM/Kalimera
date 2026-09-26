@@ -58,7 +58,7 @@ const InventoryTabs: React.FC<{
 				onClick={() => onChange(id)}
 				className={cn(
 					"flex-1 rounded-md px-3 py-1.5 text-sm font-medium whitespace-nowrap transition-colors",
-					active === id ? "bg-white text-foreground shadow-sm" : "text-stone-600",
+					active === id ? "bg-card text-foreground shadow-sm" : "text-stone-600",
 				)}
 			>
 				{label}

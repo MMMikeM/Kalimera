@@ -185,7 +185,7 @@ export const PronounDecisionGuide = () => (
 									<GreekText
 										tone="inherit"
 										size="sm"
-										className="rounded border border-stone-200 bg-white px-2 py-1 font-semibold text-stone-800"
+										className="rounded border border-stone-200 bg-card px-2 py-1 font-semibold text-stone-800"
 									>
 										{ex.greek}
 									</GreekText>

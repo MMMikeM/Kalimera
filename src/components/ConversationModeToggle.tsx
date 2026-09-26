@@ -12,7 +12,7 @@ const modeToggleVariants = tv({
 	},
 	variants: {
 		active: {
-			true: { button: "bg-white text-stone-800 shadow-sm" },
+			true: { button: "bg-card text-stone-800 shadow-sm" },
 			false: { button: "text-stone-600 hover:bg-stone-50 hover:text-stone-800" },
 		},
 	},

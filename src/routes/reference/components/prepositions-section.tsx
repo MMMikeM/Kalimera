@@ -67,7 +67,7 @@ const SeCard: React.FC = () => {
 								return (
 									<div
 										key={f.formula}
-										className="rounded-lg border border-navy-200 bg-white py-4 text-center"
+										className="rounded-lg border border-navy-200 bg-card py-4 text-center"
 									>
 										<div className="mb-2 text-xs text-stone-400">{from}</div>
 										<span className={cn("font-serif text-3xl font-bold", gStyle.text)}>{to}</span>
@@ -94,7 +94,7 @@ const SeCard: React.FC = () => {
 			</div>
 
 			{/* When σε stays σε */}
-			<div className="rounded-lg border border-navy-200 bg-white p-4">
+			<div className="rounded-lg border border-navy-200 bg-card p-4">
 				<p className="mb-1.5 text-xs font-semibold text-navy-text">
 					{SE_CONTRACTIONS.noArticle.title}
 				</p>
@@ -106,7 +106,7 @@ const SeCard: React.FC = () => {
 							<GreekText
 								tone="inherit"
 								size="sm"
-								className="rounded border border-stone-200 bg-white px-2 py-1 font-medium font-semibold text-stone-800"
+								className="rounded border border-stone-200 bg-card px-2 py-1 font-medium font-semibold text-stone-800"
 							>
 								{ex.greek}
 							</GreekText>{" "}
@@ -221,7 +221,7 @@ export const PrepositionsSection: React.FC = () => (
 				{PREPOSITION_PRONOUN_INFO.examples.map((ex) => (
 					<div
 						key={ex.greek}
-						className="rounded-full border border-stone-200 bg-white px-3 py-1.5 text-sm"
+						className="rounded-full border border-stone-200 bg-card px-3 py-1.5 text-sm"
 					>
 						<GreekText tone="default" size="sm" className="font-medium text-stone-800">
 							{ex.greek}
@@ -255,7 +255,7 @@ export const PrepositionsSection: React.FC = () => (
 			defaultOpen={false}
 		>
 			<div className="space-y-4">
-				<div className="space-y-3 rounded-lg border border-stone-200 bg-white p-4">
+				<div className="space-y-3 rounded-lg border border-stone-200 bg-card p-4">
 					<p className="text-xs font-semibold tracking-widest text-stone-400 uppercase">
 						The pattern
 					</p>
@@ -292,7 +292,7 @@ export const PrepositionsSection: React.FC = () => (
 									key={item.greek}
 									className={cn(
 										"rounded-lg border p-3",
-										tinted ? `${ACCUSATIVE.border} ${ACCUSATIVE.bg}` : "border-stone-200 bg-white",
+										tinted ? `${ACCUSATIVE.border} ${ACCUSATIVE.bg}` : "border-stone-200 bg-card",
 									)}
 								>
 									<div className="mb-1 flex items-baseline gap-2">

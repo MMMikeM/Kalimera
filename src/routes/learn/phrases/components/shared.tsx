@@ -29,7 +29,7 @@ const PhraseItemDisplay: React.FC<{
 			tone="inherit"
 			className={cn(
 				"text-lg font-semibold",
-				variant === "highlighted" && "rounded border border-stone-200 bg-white px-2 py-1",
+				variant === "highlighted" && "rounded border border-stone-200 bg-card px-2 py-1",
 				textColors[colorScheme],
 			)}
 		>
