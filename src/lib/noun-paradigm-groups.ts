@@ -1,4 +1,6 @@
-export interface NounExample {
+import { cefrRank } from "./cefr";
+
+interface NounExample {
 	lemma: string;
 	english: string;
 	/** Keyed `${case}_${number}`, matching the nominal_forms rows. */
@@ -17,18 +19,7 @@ export interface NounPatternGroup {
  */
 const CANDIDATES_PER_PATTERN = 6;
 
-const CEFR_ORDER = ["A1", "A2", "B1", "B2", "C1", "C2"];
 const UNRANKED = Number.MAX_SAFE_INTEGER;
-
-/**
- * Anything that is not a CEFR code sorts last. Ordering on the raw string would
- * put the 190 rows currently stored as `"0"` ahead of every A1 word, because "0"
- * precedes "A" lexically — junk data must not outrank real classification.
- */
-const cefrOrder = (level: string | null): number => {
-	const index = level === null ? -1 : CEFR_ORDER.indexOf(level);
-	return index === -1 ? UNRANKED : index;
-};
 
 /** Shape of a paradigm-reference row; structural so this stays free of the db import. */
 export type GroupableNoun = {
@@ -56,7 +47,7 @@ export const groupNounsByPattern = (
 	// Same priority order the drill pool uses: teach the earliest, commonest words
 	// first, and sink the unclassified rather than letting them sort high.
 	const byPriority = declinable.toSorted((a, b) => {
-		const cefr = cefrOrder(a.cefrLevel) - cefrOrder(b.cefrLevel);
+		const cefr = cefrRank(a.cefrLevel) - cefrRank(b.cefrLevel);
 		return cefr !== 0 ? cefr : (a.frequencyRank ?? UNRANKED) - (b.frequencyRank ?? UNRANKED);
 	});
 

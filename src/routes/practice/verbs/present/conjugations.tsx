@@ -378,7 +378,7 @@ const ENDINGS: SimpleListItem[] = [
 		label: PRONOUNS.pl3.pronoun,
 		category: "past",
 	},
-].map<SimpleListItem>((item) => ({ ...item, acceptAlso: item.label }));
+];
 
 const CATEGORIES = [
 	{ id: "present", label: "Present" },

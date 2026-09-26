@@ -1,103 +1,132 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
-import { Link, useLocation } from "@tanstack/react-router";
+import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { ChevronLeft, Clock, Hand, Heart, Link2, MessageCircle, Sparkles } from "lucide-react";
-import type React from "react";
+import { z } from "zod";
 
-import type { NavTab } from "@/components/NavTabs";
 import { NavTabs } from "@/components/NavTabs";
-import { validateTab } from "@/lib/validate-tab";
 import { getVocabBySlug } from "@/server/db/queries/vocabulary";
-import type { Vocabulary } from "@/server/db/types";
 
-import { ConnectorsTab } from "./tabs/connectors-tab";
-import { OpinionsTab } from "./tabs/opinions-tab";
-import { RequestsTab } from "./tabs/requests-tab";
-import { ResponsesTab } from "./tabs/responses-tab";
-import { SurvivalTab } from "./tabs/survival-tab";
-import { TimeTab } from "./tabs/time-tab";
-
-export type PhraseItem = Vocabulary;
+import { groupVocabByTag } from "../../components/vocab-by-tag";
+import { type PhraseTabConfig, PhraseTabContent } from "./components/shared";
 
 const VALID_TABS = ["survival", "responses", "requests", "opinions", "connectors", "time"] as const;
+type PhraseTabId = (typeof VALID_TABS)[number];
 
-export const Route = createFileRoute("/learn/phrases/$tab")({
-	beforeLoad: (x) => {
-		if (!VALID_TABS.some((tab) => tab === x.params.tab)) {
-			throw redirect({ to: "/learn/phrases/$tab", params: { tab: "survival" } });
-		}
+const PHRASE_TABS: Record<PhraseTabId, PhraseTabConfig> = {
+	survival: {
+		label: "Survival",
+		Icon: Sparkles,
+		navColor: "terracotta",
+		hero: {
+			title: "Start with the basics",
+			greekPhrase: "Γεια σας!",
+			colorScheme: "honey",
+			body: `These phrases will get you through most situations. Practice them until they're automatic — when someone says "Γεια σας", your response should be instant.`,
+		},
+		sections: [
+			{ tag: "essential", title: "Essential Greetings", colorScheme: "honey", alwaysShow: true },
+			{ tag: "survival", title: "Survival Phrases", colorScheme: "terracotta" },
+		],
 	},
-	loader: async ({ params }) => {
-		const tab = validateTab(params.tab as string, VALID_TABS);
-		const data = (await loader()) as PhrasesLoaderData;
-		return { tab, data };
+	responses: {
+		label: "Responses",
+		Icon: MessageCircle,
+		navColor: "ocean",
+		hero: {
+			title: "Keep the conversation flowing",
+			greekPhrase: "Ναι, βέβαια!",
+			colorScheme: "terracotta",
+			body: "Quick responses that show you're following along. These short phrases buy you time while you process and keep the conversation natural.",
+		},
+		sections: [
+			{ tag: "responses", title: "Common Responses", colorScheme: "terracotta", alwaysShow: true },
+			{ tag: "social-phrase", title: "Social Phrases", colorScheme: "olive" },
+		],
 	},
-	component: () => (
-		<PhrasesLayout>
-			<TabRoute />
-		</PhrasesLayout>
-	),
+	requests: {
+		label: "Requests",
+		Icon: Hand,
+		navColor: "olive",
+		hero: {
+			title: "Ask politely, get results",
+			greekPhrase: "Παρακαλώ...",
+			colorScheme: "olive",
+			body: `Adding "παρακαλώ" (please) to any request makes it more polite. Greeks appreciate the effort — politeness goes a long way!`,
+		},
+		sections: [
+			{ tag: "request", title: "Polite Requests", colorScheme: "terracotta" },
+			{ tag: "command", title: "Commands", colorScheme: "olive" },
+		],
+	},
+	opinions: {
+		label: "Opinions",
+		Icon: Heart,
+		navColor: "terracotta",
+		hero: {
+			title: "Sharing opinions",
+			greekPhrase: "Νομίζω ότι...",
+			colorScheme: "terracotta",
+			body: `Move past "yes" and "no" into real conversation. These phrases let you agree, disagree, and share what you actually think.`,
+		},
+		sections: [
+			{ tag: "opinions", title: "Opinions & Feelings", colorScheme: "olive", alwaysShow: true },
+		],
+	},
+	connectors: {
+		label: "Connectors",
+		Icon: Link2,
+		navColor: "honey",
+		hero: {
+			title: "The glue of natural speech",
+			greekPhrase: "Λοιπόν...",
+			colorScheme: "ocean",
+			body: "Greeks use connectors constantly — mastering them will make your Greek sound much more fluent. These small words hold conversations together.",
+		},
+		sections: [
+			{ tag: "discourse-markers", title: "Discourse Markers", colorScheme: "olive" },
+			{ tag: "discourse-filler", title: "Fillers & Connectors", colorScheme: "ocean" },
+		],
+	},
+	time: {
+		label: "Time",
+		Icon: Clock,
+		navColor: "ocean",
+		hero: {
+			title: "Telling time",
+			greekPhrase: "Τι ώρα είναι;",
+			colorScheme: "ocean",
+			body: "How to ask and tell time in Greek — essential patterns for scheduling and understanding when things happen.",
+		},
+		sections: [{ tag: "time-telling", layout: "time" }],
+	},
+};
+
+const NAV_TABS = VALID_TABS.map((id) => {
+	const { label, Icon, navColor } = PHRASE_TABS[id];
+	return { id, label, icon: <Icon size={16} />, color: navColor };
 });
 
-function TabRoute() {
-	const { tab, data } = Route.useLoaderData();
+const loadPhrases = createServerFn()
+	.validator(z.enum(VALID_TABS))
+	.handler(async ({ data: tab }) => {
+		const phrases = groupVocabByTag(await getVocabBySlug("phrases", ["phrase"]));
+		return Object.fromEntries(
+			PHRASE_TABS[tab].sections.map(({ tag }) => [tag, phrases[tag] ?? []]),
+		);
+	});
 
-	switch (tab) {
-		case "survival":
-			return <SurvivalTab data={data} />;
-		case "responses":
-			return <ResponsesTab data={data} />;
-		case "requests":
-			return <RequestsTab data={data} />;
-		case "opinions":
-			return <OpinionsTab data={data} />;
-		case "connectors":
-			return <ConnectorsTab data={data} />;
-		case "time":
-			return <TimeTab data={data} />;
-		default:
-			return null;
-	}
-}
+export const Route = createFileRoute("/learn/phrases/$tab")({
+	beforeLoad: ({ params }) => {
+		const tab = VALID_TABS.find((t) => t === params.tab);
+		if (!tab) throw redirect({ to: "/learn/phrases/$tab", params: { tab: "survival" } });
+		return { tab };
+	},
+	loader: async ({ context: { tab } }) => ({ tab, phrases: await loadPhrases({ data: tab }) }),
+	component: PhrasesPage,
+});
 
-const PHRASES_TABS: NavTab[] = [
-	{
-		id: "survival",
-		label: "Survival",
-		icon: <Sparkles size={16} />,
-		color: "terracotta",
-	},
-	{
-		id: "responses",
-		label: "Responses",
-		icon: <MessageCircle size={16} />,
-		color: "ocean",
-	},
-	{
-		id: "requests",
-		label: "Requests",
-		icon: <Hand size={16} />,
-		color: "olive",
-	},
-	{
-		id: "opinions",
-		label: "Opinions",
-		icon: <Heart size={16} />,
-		color: "terracotta",
-	},
-	{
-		id: "connectors",
-		label: "Connectors",
-		icon: <Link2 size={16} />,
-		color: "honey",
-	},
-	{ id: "time", label: "Time", icon: <Clock size={16} />, color: "ocean" },
-];
-
-function PhrasesLayout({ children }: { children: React.ReactNode }) {
-	const location = useLocation();
-	const pathSegments = location.pathname.split("/").filter(Boolean);
-	const activeTab = pathSegments[2] || "survival";
+function PhrasesPage() {
+	const { tab, phrases } = Route.useLoaderData();
 
 	return (
 		<div className="space-y-4">
@@ -111,69 +140,8 @@ function PhrasesLayout({ children }: { children: React.ReactNode }) {
 				</Link>
 			</div>
 
-			<NavTabs
-				tabs={PHRASES_TABS}
-				activeTab={activeTab}
-				buildUrl={(tabId) => `/learn/phrases/${tabId}`}
-			/>
-			{children}
+			<NavTabs tabs={NAV_TABS} activeTab={tab} buildUrl={(tabId) => `/learn/phrases/${tabId}`} />
+			<PhraseTabContent config={PHRASE_TABS[tab]} phrases={phrases} />
 		</div>
 	);
 }
-
-export const loader = createServerFn().handler(async () => {
-	const [phraseTags, referenceTags, verbTags] = await Promise.all([
-		getVocabBySlug("phrases", ["phrase"]),
-		getVocabBySlug("reference", ["noun", "adverb", "adjective"]),
-		getVocabBySlug("verbs", ["verb"]),
-	]);
-
-	const toSlugMap = (tags: typeof phraseTags) =>
-		Object.fromEntries(
-			tags.map((t) => [
-				t.slug,
-				t.vocabularyTags.map((vt) => vt.vocabulary).filter((v) => v !== null),
-			]),
-		);
-
-	const phrases = toSlugMap(phraseTags);
-	const reference = toSlugMap(referenceTags);
-	const verbs = toSlugMap(verbTags);
-
-	return {
-		survival: {
-			essential: phrases.essential ?? [],
-			survival: phrases.survival ?? [],
-		},
-		responses: {
-			responses: phrases.responses ?? [],
-			socialPhrases: phrases["social-phrase"] ?? [],
-		},
-		requests: {
-			requests: phrases.request ?? [],
-			commands: phrases.command ?? [],
-		},
-		opinions: {
-			opinions: phrases.opinions ?? [],
-		},
-		connectors: {
-			discourseMarkers: phrases["discourse-markers"] ?? [],
-			discourseFillers: phrases["discourse-filler"] ?? [],
-		},
-		time: {
-			daysOfWeek: reference["days-of-week"] ?? [],
-			months: reference.months ?? [],
-			timeTelling: phrases["time-telling"] ?? [],
-		},
-		patterns: {
-			likesConstruction: {
-				singular: verbs["likes-singular"] ?? [],
-				plural: verbs["likes-plural"] ?? [],
-			},
-			nameConstruction: phrases["name-construction"] ?? [],
-		},
-	};
-});
-
-/** Inferred type for phrases loader data */
-export type PhrasesLoaderData = Awaited<ReturnType<typeof loader>>;

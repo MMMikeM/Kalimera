@@ -28,7 +28,6 @@ function ReviewDrill() {
 			drillId="blocks-qw-review"
 			items={REVIEW_ITEMS}
 			subtitle={`${REVIEW_ITEMS.length} forms mixed — mixing is harder, and sticks better`}
-			colorTheme="terracotta"
 			backTo="/practice/blocks/question-words/"
 			forwardDesc="English → Greek"
 			reverseDesc="Greek → recall meaning (self-assess)"

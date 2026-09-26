@@ -41,17 +41,14 @@ node_modules
 
 # Playwright MCP screenshots
 .playwright-mcp/
-screenshots/mobile/
-screenshots/desktop/
-screenshots/practice/
+
+# Screenshot output: every subdirectory of screenshots/ holds generated PNGs
+screenshots/*/
 
 # pnpm build approvals
 .pnpm-approvals
 playwright-report/
 test-results/
-
-# Mobile audit output
-scripts/mobile-audit-output/
 
 # Code duplicate reports
 reports/

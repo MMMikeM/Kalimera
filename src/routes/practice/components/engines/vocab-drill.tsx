@@ -1,24 +1,16 @@
 import { useMemo } from "react";
 
-import type { DrillQuestion } from "@/lib/drill/generate-questions";
+import type { DrillQuestion } from "@/lib/drill/types";
 
 import type { DrillForm } from "./deck";
-import { Drill, type ReverseStrategy } from "./drill";
+import { Drill, type DrillProps } from "./drill";
 
-interface VocabDrillPageProps {
-	drillId: string;
-	backTo?: string;
+type VocabDrillPageProps = Omit<DrillProps, "items" | "subtitle"> & {
 	questions: DrillQuestion[];
-	title?: string;
 	subtitle?: string;
-	forwardLabel?: string;
-	forwardDesc?: string;
-	reverseLabel?: string;
-	reverseDesc?: string;
-	reverse?: ReverseStrategy;
-}
+};
 
-const toForm = (q: DrillQuestion): DrillForm & { dimension?: string } => ({
+const toForm = (q: DrillQuestion): DrillForm => ({
 	id: q.id,
 	greek: q.correctGreek,
 	label: q.prompt,
@@ -27,34 +19,17 @@ const toForm = (q: DrillQuestion): DrillForm & { dimension?: string } => ({
 	dimension: q.dimension,
 });
 
-export function VocabDrillPage({
-	drillId,
-	backTo,
-	questions,
-	title,
-	subtitle,
-	forwardLabel,
-	forwardDesc = "English meaning → Greek",
-	reverseLabel,
-	reverseDesc = "Greek → recall meaning (self-assess)",
-	reverse,
-}: VocabDrillPageProps) {
+export function VocabDrillPage({ questions, ...props }: VocabDrillPageProps) {
 	const items = useMemo(() => questions.map(toForm), [questions]);
 
 	return (
 		<Drill
-			drillId={drillId}
-			items={items}
-			title={title}
-			subtitle={subtitle ?? "Rapid-fire production"}
-			colorTheme="terracotta"
+			subtitle="Rapid-fire production"
 			sessionSize={20}
-			backTo={backTo}
-			forwardLabel={forwardLabel}
-			forwardDesc={forwardDesc}
-			reverseLabel={reverseLabel}
-			reverseDesc={reverseDesc}
-			reverse={reverse}
+			forwardDesc="English meaning → Greek"
+			reverseDesc="Greek → recall meaning (self-assess)"
+			{...props}
+			items={items}
 		/>
 	);
 }

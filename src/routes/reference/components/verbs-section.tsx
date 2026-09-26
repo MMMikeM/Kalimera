@@ -9,7 +9,7 @@ import { TeachingCard } from "@/components/cards/TeachingCard";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
 import { type ColumnDef, GrammarTable, type RowDef } from "@/components/GrammarTable";
 import { GreekText } from "@/components/GreekText";
-import { ParadigmTable } from "@/components/ParadigmTable";
+import { type ParadigmForms, ParadigmTable } from "@/components/ParadigmTable";
 import { SectionHeading } from "@/components/SectionHeading";
 import { type GrammarScheme, SCHEME } from "@/constants/grammar-palette";
 import {
@@ -136,12 +136,29 @@ interface PatternMeta {
 	ending: string;
 	displayName: string;
 	scheme: GrammarScheme;
+	/** Dictionary forms shown in the "Which pattern?" key. */
+	examples: string[];
 }
 
 const PATTERN_META: Record<PatternKey, PatternMeta> = {
-	active: { ending: "-ω", displayName: "Active", scheme: "verb-active" },
-	contracted: { ending: "-άω/-ώ", displayName: "Contracted", scheme: "verb-contracted" },
-	deponent: { ending: "-μαι", displayName: "Deponent", scheme: "verb-deponent" },
+	active: {
+		ending: "-ω",
+		displayName: "Active",
+		scheme: "verb-active",
+		examples: ["κάνω", "θέλω", "βλέπω"],
+	},
+	contracted: {
+		ending: "-άω/-ώ",
+		displayName: "Contracted",
+		scheme: "verb-contracted",
+		examples: ["μιλάω", "αγαπάω"],
+	},
+	deponent: {
+		ending: "-μαι",
+		displayName: "Deponent",
+		scheme: "verb-deponent",
+		examples: ["έρχομαι", "θυμάμαι"],
+	},
 };
 
 const PERSON_ROW_DEFS: RowDef[] = [
@@ -335,9 +352,7 @@ const PatternSection: React.FC<{
 					meaning={pattern.canonical.meaning}
 					infinitive={pattern.canonical.infinitive}
 					forms={pattern.canonical.forms}
-					endingClassName={`${style.text} font-bold`}
 					scheme={meta.scheme}
-					fadeStem={true}
 				/>
 			</div>
 
@@ -359,34 +374,17 @@ const PatternSection: React.FC<{
 	);
 };
 
-interface PatternRow {
-	ending: string;
-	name: string;
-	examples: string[];
-	scheme: GrammarScheme;
-}
-
-const PATTERN_ROWS: PatternRow[] = [
-	{ ending: "-ω", name: "Active", examples: ["κάνω", "θέλω", "βλέπω"], scheme: "verb-active" },
-	{
-		ending: "-άω/-ώ",
-		name: "Contracted",
-		examples: ["μιλάω", "αγαπάω"],
-		scheme: "verb-contracted",
-	},
-	{ ending: "-μαι", name: "Deponent", examples: ["έρχομαι", "θυμάμαι"], scheme: "verb-deponent" },
-];
-
 const PatternIdentifier: React.FC = () => (
 	<NavigatorCard
 		title="Which pattern?"
 		subtitle="Look at the verb's dictionary form (1st person singular)"
 	>
-		{PATTERN_ROWS.map((row) => {
+		{PATTERN_ORDER.map((key) => {
+			const row = PATTERN_META[key];
 			const style = SCHEME[row.scheme];
 			return (
 				<NavigatorCell
-					key={row.ending}
+					key={key}
 					className={cn(style.bg, style.border, "flex items-center gap-3 border-2 sm:gap-4")}
 				>
 					<GreekText
@@ -396,7 +394,7 @@ const PatternIdentifier: React.FC = () => (
 					>
 						{row.ending}
 					</GreekText>
-					<span className="font-semibold text-stone-800">{row.name}</span>
+					<span className="font-semibold text-stone-800">{row.displayName}</span>
 					<div className="ml-auto hidden gap-2 sm:flex">
 						{row.examples.map((ex) => (
 							<span
@@ -415,6 +413,26 @@ const PatternIdentifier: React.FC = () => (
 			);
 		})}
 	</NavigatorCard>
+);
+
+/** Honey call-out for forms no rule predicts. */
+const MemoriseCard: React.FC<{
+	title: string;
+	description: string;
+	children: React.ReactNode;
+}> = ({ title, description, children }) => (
+	<Card variant="bordered" padding="lg" className="border-2 border-honey-300 bg-honey-50">
+		<div className="mb-4 flex items-start gap-3">
+			<div className="rounded-xl bg-honey-200 p-2.5">
+				<AlertCircle size={20} className="text-honey-text" />
+			</div>
+			<div>
+				<h3 className="text-lg font-bold text-honey-text">{title}</h3>
+				<p className="text-sm text-stone-600">{description}</p>
+			</div>
+		</div>
+		{children}
+	</Card>
 );
 
 const CONSONANT_RULES = [
@@ -464,31 +482,46 @@ const AoristExamples: React.FC<{
 );
 
 const AoristPatternCard: React.FC<{
+	title: string;
+	badge: string;
+	description: string;
+	scheme: GrammarScheme;
+	paradigm: { infinitive: string; meaning: string; forms: ParadigmForms };
+	examples: readonly { greek: string; english: string }[];
+	children?: React.ReactNode;
+}> = ({ title, badge, description, scheme, paradigm, examples, children }) => (
+	<TeachingCard
+		scheme={scheme}
+		title={title}
+		badge={<span className={`font-mono text-base ${SCHEME[scheme].text}`}>{badge}</span>}
+		description={description}
+	>
+		<div className="rounded-lg border border-stone-200 bg-white p-4 shadow-sm">
+			<ParadigmTable
+				infinitive={paradigm.infinitive}
+				meaning={paradigm.meaning}
+				forms={paradigm.forms}
+				scheme={scheme}
+			/>
+		</div>
+		<AoristExamples examples={examples} />
+		{children}
+	</TeachingCard>
+);
+
+const FormationPatternCard: React.FC<{
 	pattern: (typeof AORIST_FORMATION_PATTERNS)[keyof typeof AORIST_FORMATION_PATTERNS];
 	scheme: GrammarScheme;
-}> = ({ pattern, scheme }) => {
-	const style = SCHEME[scheme];
-	return (
-		<TeachingCard
-			scheme={scheme}
-			title={`Aorist ${pattern.label}`}
-			badge={<span className={`font-mono text-base ${style.text}`}>{pattern.label}</span>}
-			description={pattern.description}
-		>
-			<div className="rounded-lg border border-stone-200 bg-white p-4 shadow-sm">
-				<ParadigmTable
-					infinitive={pattern.canonical.infinitive}
-					meaning={pattern.canonical.meaning}
-					forms={pattern.canonical.forms}
-					endingClassName={`${style.text} font-bold`}
-					scheme={scheme}
-					fadeStem={true}
-				/>
-			</div>
-			<AoristExamples examples={pattern.canonical.examples} />
-		</TeachingCard>
-	);
-};
+}> = ({ pattern, scheme }) => (
+	<AoristPatternCard
+		title={`Aorist ${pattern.label}`}
+		badge={pattern.label}
+		description={pattern.description}
+		scheme={scheme}
+		paradigm={pattern.canonical}
+		examples={pattern.canonical.examples}
+	/>
+);
 
 /** Fixed columns so the eye can run straight down "becomes" instead of hunting for it. */
 const AoristFinder: React.FC = () => (
@@ -499,6 +532,7 @@ const AoristFinder: React.FC = () => (
 		description="Find how your verb ends in the present on the left. The past ending is in the middle."
 	>
 		<div className="overflow-hidden rounded-lg border border-stone-200 bg-white">
+			{/* eslint-disable-next-line better-tailwindcss/no-restricted-classes -- fixed finder columns, no token fit */}
 			<div className="grid grid-cols-[1fr_auto] items-baseline gap-x-6 border-b border-stone-100 px-4 py-2 text-xs tracking-widest text-stone-400 uppercase sm:grid-cols-[13rem_5rem_1fr]">
 				<span>Present</span>
 				<span className="hidden sm:block">Past</span>
@@ -507,6 +541,7 @@ const AoristFinder: React.FC = () => (
 			{AORIST_FINDER.map((row) => (
 				<div
 					key={row.ending}
+					// eslint-disable-next-line better-tailwindcss/no-restricted-classes -- fixed finder columns, no token fit
 					className="grid grid-cols-[1fr_auto] items-baseline gap-x-6 gap-y-1 border-b border-stone-100 px-4 py-3 last:border-b-0 sm:grid-cols-[13rem_5rem_1fr]"
 				>
 					<GreekText tone="default" size="sm" className="text-stone-600">
@@ -568,8 +603,6 @@ const AoristExceptions: React.FC = () => (
 
 export const PastTenseSection: React.FC = () => {
 	const activeStyle = SCHEME["verb-active"];
-	const contractedStyle = SCHEME["verb-contracted"];
-	const deponentStyle = SCHEME["verb-deponent"];
 
 	return (
 		<section id="past-tense" className="space-y-6">
@@ -694,63 +727,36 @@ export const PastTenseSection: React.FC = () => {
 				</p>
 
 				<div className="space-y-6">
-					{/* Aorist paradigms — all patterns */}
-					<AoristPatternCard pattern={AORIST_FORMATION_PATTERNS.sa} scheme="verb-active" />
-					<AoristPatternCard pattern={AORIST_FORMATION_PATTERNS.psa} scheme="verb-active" />
-					<AoristPatternCard pattern={AORIST_FORMATION_PATTERNS.ksa} scheme="verb-active" />
+					<FormationPatternCard pattern={AORIST_FORMATION_PATTERNS.sa} scheme="verb-active" />
+					<FormationPatternCard pattern={AORIST_FORMATION_PATTERNS.psa} scheme="verb-active" />
+					<FormationPatternCard pattern={AORIST_FORMATION_PATTERNS.ksa} scheme="verb-active" />
 
-					{/* -άω aorist (-ησα) */}
-					<TeachingCard
-						scheme="verb-contracted"
+					<AoristPatternCard
 						title="Aorist: -άω verbs"
-						badge={<span className={`font-mono text-base ${contractedStyle.text}`}>-ησα</span>}
+						badge="-ησα"
 						description={PAST_TENSE_PATTERNS.aorist_contracted.description}
-					>
-						<div className="rounded-lg border border-stone-200 bg-white p-4 shadow-sm">
-							<ParadigmTable
-								infinitive={PAST_TENSE_PATTERNS.aorist_contracted.canonical.infinitive}
-								meaning={PAST_TENSE_PATTERNS.aorist_contracted.canonical.meaning}
-								forms={PAST_TENSE_PATTERNS.aorist_contracted.canonical.forms}
-								endingClassName={`${contractedStyle.text} font-bold`}
-								scheme="verb-contracted"
-								fadeStem={true}
-							/>
-						</div>
-						<AoristExamples
-							examples={[
-								{ greek: "Μίλησα μαζί του χθες.", english: "I spoke with him yesterday." },
-								{ greek: "Μιλήσαμε για ώρες.", english: "We talked for hours." },
-							]}
-						/>
-					</TeachingCard>
+						scheme="verb-contracted"
+						paradigm={PAST_TENSE_PATTERNS.aorist_contracted.canonical}
+						examples={[
+							{ greek: "Μίλησα μαζί του χθες.", english: "I spoke with him yesterday." },
+							{ greek: "Μιλήσαμε για ώρες.", english: "We talked for hours." },
+						]}
+					/>
 
-					{/* -θηκα aorist */}
-					<AoristPatternCard pattern={AORIST_FORMATION_PATTERNS.thika} scheme="verb-deponent" />
+					<FormationPatternCard pattern={AORIST_FORMATION_PATTERNS.thika} scheme="verb-deponent" />
 
-					{/* Suppletive (έρχομαι) */}
-					<TeachingCard
-						scheme="verb-deponent"
+					<AoristPatternCard
 						title="Aorist: suppletive verbs"
-						badge={<span className={`font-mono text-base ${deponentStyle.text}`}>new stem</span>}
+						badge="new stem"
 						description="Stem changes completely — endings are identical to regular aorist."
+						scheme="verb-deponent"
+						paradigm={PAST_TENSE_PATTERNS.aorist_deponent.canonical}
+						examples={[
+							{ greek: "Ήρθα νωρίς.", english: "I arrived early." },
+							{ greek: "Πότε ήρθες;", english: "When did you arrive?" },
+							{ greek: "Ήρθαμε μαζί.", english: "We came together." },
+						]}
 					>
-						<div className="rounded-lg border border-stone-200 bg-white p-4 shadow-sm">
-							<ParadigmTable
-								infinitive={PAST_TENSE_PATTERNS.aorist_deponent.canonical.infinitive}
-								meaning={PAST_TENSE_PATTERNS.aorist_deponent.canonical.meaning}
-								forms={PAST_TENSE_PATTERNS.aorist_deponent.canonical.forms}
-								endingClassName={`${deponentStyle.text} font-bold`}
-								scheme="verb-deponent"
-								fadeStem={true}
-							/>
-						</div>
-						<AoristExamples
-							examples={[
-								{ greek: "Ήρθα νωρίς.", english: "I arrived early." },
-								{ greek: "Πότε ήρθες;", english: "When did you arrive?" },
-								{ greek: "Ήρθαμε μαζί.", english: "We came together." },
-							]}
-						/>
 						<p className="mt-3 px-1 text-xs text-stone-500">
 							Find the aorist stem (listed below), then add the same{" "}
 							<GreekText tone="default" size="sm">
@@ -758,24 +764,15 @@ export const PastTenseSection: React.FC = () => {
 							</GreekText>
 							.
 						</p>
-					</TeachingCard>
+					</AoristPatternCard>
 				</div>
 			</CollapsibleSection>
 
 			{/* Stems that break the rules */}
-			<Card variant="bordered" padding="lg" className="border-2 border-honey-300 bg-honey-50">
-				<div className="mb-4 flex items-start gap-3">
-					<div className="rounded-xl bg-honey-200 p-2.5">
-						<AlertCircle size={20} className="text-honey-text" />
-					</div>
-					<div>
-						<h3 className="text-lg font-bold text-honey-text">Stems that break the rules</h3>
-						<p className="text-sm text-stone-600">
-							These aorist stems cannot be predicted — the rules above don't apply. Memorise them as
-							units.
-						</p>
-					</div>
-				</div>
+			<MemoriseCard
+				title="Stems that break the rules"
+				description="These aorist stems cannot be predicted — the rules above don't apply. Memorise them as units."
+			>
 				<div className="space-y-3">
 					{(["suppletive", "irregular"] as const).map((cat) => (
 						<div key={cat}>
@@ -804,15 +801,12 @@ export const PastTenseSection: React.FC = () => {
 						</div>
 					))}
 				</div>
-			</Card>
+			</MemoriseCard>
 		</section>
 	);
 };
 
 export const PastContinuousSection: React.FC = () => {
-	const activeStyle = SCHEME["verb-active"];
-	const contractedStyle = SCHEME["verb-contracted"];
-
 	return (
 		<section id="past-continuous" className="space-y-6">
 			<SectionHeading
@@ -837,9 +831,7 @@ export const PastContinuousSection: React.FC = () => {
 								infinitive={PAST_TENSE_PATTERNS.past_continuous_active.canonical.infinitive}
 								meaning={PAST_TENSE_PATTERNS.past_continuous_active.canonical.meaning}
 								forms={PAST_TENSE_PATTERNS.past_continuous_active.canonical.forms}
-								endingClassName={`${activeStyle.text} font-bold`}
 								scheme="verb-active"
-								fadeStem={true}
 							/>
 						</div>
 						<div>
@@ -848,9 +840,7 @@ export const PastContinuousSection: React.FC = () => {
 								infinitive={PAST_TENSE_PATTERNS.past_continuous_contracted.canonical.infinitive}
 								meaning={PAST_TENSE_PATTERNS.past_continuous_contracted.canonical.meaning}
 								forms={PAST_TENSE_PATTERNS.past_continuous_contracted.canonical.forms}
-								endingClassName={`${contractedStyle.text} font-bold`}
 								scheme="verb-contracted"
-								fadeStem={true}
 							/>
 						</div>
 					</div>
@@ -1042,6 +1032,13 @@ const FutureTenseSection: React.FC = () => (
 	</section>
 );
 
+const NA_EXAMPLES = [
+	{ greek: "Θέλω να φάω.", english: "I want to eat." },
+	{ greek: "Πρέπει να πάω.", english: "I have to go." },
+	{ greek: "Μπορώ να έρθω.", english: "I can come." },
+	{ greek: "Ξέρω να μαγειρεύω.", english: "I know how to cook." },
+];
+
 const NaConstructionsSection: React.FC = () => (
 	<section id="na-constructions" className="space-y-4">
 		<SectionHeading
@@ -1056,30 +1053,14 @@ const NaConstructionsSection: React.FC = () => (
 			description="Where English uses an infinitive (I want to eat), Greek uses να + a conjugated verb in the same form as the future minus θα."
 		>
 			<div className="space-y-2">
-				<div className="rounded-lg border border-honey-200 bg-honey-50 p-3">
-					<GreekText tone="default" size="base" className="text-sm text-stone-800">
-						Θέλω να φάω.
-					</GreekText>
-					<p className="text-xs text-stone-500">I want to eat.</p>
-				</div>
-				<div className="rounded-lg border border-honey-200 bg-honey-50 p-3">
-					<GreekText tone="default" size="base" className="text-sm text-stone-800">
-						Πρέπει να πάω.
-					</GreekText>
-					<p className="text-xs text-stone-500">I have to go.</p>
-				</div>
-				<div className="rounded-lg border border-honey-200 bg-honey-50 p-3">
-					<GreekText tone="default" size="base" className="text-sm text-stone-800">
-						Μπορώ να έρθω.
-					</GreekText>
-					<p className="text-xs text-stone-500">I can come.</p>
-				</div>
-				<div className="rounded-lg border border-honey-200 bg-honey-50 p-3">
-					<GreekText tone="default" size="base" className="text-sm text-stone-800">
-						Ξέρω να μαγειρεύω.
-					</GreekText>
-					<p className="text-xs text-stone-500">I know how to cook.</p>
-				</div>
+				{NA_EXAMPLES.map((ex) => (
+					<div key={ex.greek} className="rounded-lg border border-honey-200 bg-honey-50 p-3">
+						<GreekText tone="default" size="base" className="text-sm text-stone-800">
+							{ex.greek}
+						</GreekText>
+						<p className="text-xs text-stone-500">{ex.english}</p>
+					</div>
+				))}
 			</div>
 			<p className="mt-4 text-sm text-stone-600">
 				Both verbs conjugate to match the subject:{" "}
@@ -1159,32 +1140,18 @@ export const PresentTenseSection: React.FC = () => (
 		{/* Pattern families */}
 		<div className="space-y-6">
 			<PatternComparison />
-			{VERB_PATTERNS.active && (
-				<PatternSection patternKey="active" pattern={VERB_PATTERNS.active} />
-			)}
-			{VERB_PATTERNS.contracted && (
-				<PatternSection patternKey="contracted" pattern={VERB_PATTERNS.contracted} />
-			)}
-			{VERB_PATTERNS.deponent && (
-				<PatternSection patternKey="deponent" pattern={VERB_PATTERNS.deponent} />
-			)}
+			{PATTERN_ORDER.map((key) => {
+				const pattern = VERB_PATTERNS[key];
+				return pattern && <PatternSection key={key} patternKey={key} pattern={pattern} />;
+			})}
 		</div>
 
 		{/* Other high-frequency irregulars — all Tier 1, must memorise */}
 		{otherIrregulars.length > 0 && (
-			<Card variant="bordered" padding="lg" className="border-2 border-honey-300 bg-honey-50">
-				<div className="mb-4 flex items-start gap-3">
-					<div className="rounded-xl bg-honey-200 p-2.5">
-						<AlertCircle size={20} className="text-honey-text" />
-					</div>
-					<div>
-						<h3 className="text-lg font-bold text-honey-text">Other high-frequency verbs</h3>
-						<p className="text-sm text-stone-600">
-							These don't follow the 3 patterns — you'll use all of them constantly. Memorise as
-							units.
-						</p>
-					</div>
-				</div>
+			<MemoriseCard
+				title="Other high-frequency verbs"
+				description="These don't follow the 3 patterns — you'll use all of them constantly. Memorise as units."
+			>
 				<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 					{otherIrregulars.map((verb) => (
 						<div
@@ -1205,7 +1172,7 @@ export const PresentTenseSection: React.FC = () => (
 						</div>
 					))}
 				</div>
-			</Card>
+			</MemoriseCard>
 		)}
 
 		{/* Cross-link to vocabulary */}

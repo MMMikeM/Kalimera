@@ -1,128 +1,45 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
+import { typedKeys } from "@/lib/object";
 import { requireAuth } from "@/server/auth/session";
 
+import type { ConjugationDrill } from "./verbs.server";
 import {
 	getTenseLadderQuestions,
 	getTenseRecognitionQuestions,
 	getVerbConjugationQuestions,
 } from "./verbs.server";
 
-async function getVerbDrillQuestionsImpl(userId: number, limit: number) {
-	return getVerbConjugationQuestions(userId, limit, "present", "db-verb-", 3500, "verbs-present");
-}
-
-async function getPresentSg1QuestionsImpl(userId: number, limit: number) {
-	return getVerbConjugationQuestions(
-		userId,
-		limit,
-		"present",
-		"db-verb-sg1-",
-		3000,
-		"verbs-vocabulary-sg1",
-		["sg1"],
-	);
-}
-
-async function getAoristDrillQuestionsImpl(userId: number, limit: number) {
-	return getVerbConjugationQuestions(
-		userId,
-		limit,
-		"aorist",
-		"db-verb-aorist-",
-		4500,
-		"verbs-aorist-conjugation",
-	);
-}
-
-async function getAoristSg1QuestionsImpl(userId: number, limit: number) {
-	return getVerbConjugationQuestions(
-		userId,
-		limit,
-		"aorist",
-		"db-verb-aor-sg1-",
-		4000,
-		"verbs-aorist-sg1",
-		["sg1"],
-	);
-}
-
-async function getFutureSg1QuestionsImpl(userId: number, limit: number) {
-	return getVerbConjugationQuestions(
-		userId,
-		limit,
-		"future",
-		"db-verb-fut-sg1-",
-		4000,
-		"verbs-future-sg1",
-		["sg1"],
-	);
-}
-
-async function getFutureDrillQuestionsImpl(userId: number, limit: number) {
-	return getVerbConjugationQuestions(
-		userId,
-		limit,
-		"future",
-		"db-verb-future-",
-		4500,
-		"verbs-future-conjugation",
-	);
-}
+/** Conjugation drills differ only in tense, question id prefix and which persons they ask for. */
+const CONJUGATION_DRILLS = {
+	"verbs-present": { tense: "present", idPrefix: "db-verb-" },
+	"verbs-vocabulary-sg1": { tense: "present", idPrefix: "db-verb-sg1-", persons: ["sg1"] },
+	"verbs-aorist-conjugation": { tense: "aorist", idPrefix: "db-verb-aorist-" },
+	"verbs-aorist-sg1": { tense: "aorist", idPrefix: "db-verb-aor-sg1-", persons: ["sg1"] },
+	"verbs-future-conjugation": { tense: "future", idPrefix: "db-verb-future-" },
+	"verbs-future-sg1": { tense: "future", idPrefix: "db-verb-fut-sg1-", persons: ["sg1"] },
+} as const satisfies Record<string, ConjugationDrill>;
 
 export const getVerbDrillQuestionsFn = createServerFn({ method: "GET" })
-	.validator(z.object({ limit: z.number() }))
-	.handler(async ({ data }) => {
-		const { userId } = requireAuth();
-		return getVerbDrillQuestionsImpl(userId, data.limit);
-	});
-
-export const getPresentSg1QuestionsFn = createServerFn({ method: "GET" })
-	.validator(z.object({ limit: z.number() }))
-	.handler(async ({ data }) => {
-		const { userId } = requireAuth();
-		return getPresentSg1QuestionsImpl(userId, data.limit);
-	});
-
-export const getAoristDrillQuestionsFn = createServerFn({ method: "GET" })
-	.validator(z.object({ limit: z.number() }))
-	.handler(async ({ data }) => {
-		const { userId } = requireAuth();
-		return getAoristDrillQuestionsImpl(userId, data.limit);
-	});
-
-export const getAoristSg1QuestionsFn = createServerFn({ method: "GET" })
-	.validator(z.object({ limit: z.number() }))
-	.handler(async ({ data }) => {
-		const { userId } = requireAuth();
-		return getAoristSg1QuestionsImpl(userId, data.limit);
-	});
-
-export const getFutureDrillQuestionsFn = createServerFn({ method: "GET" })
-	.validator(z.object({ limit: z.number() }))
-	.handler(async ({ data }) => {
-		const { userId } = requireAuth();
-		return getFutureDrillQuestionsImpl(userId, data.limit);
-	});
-
-export const getFutureSg1QuestionsFn = createServerFn({ method: "GET" })
-	.validator(z.object({ limit: z.number() }))
-	.handler(async ({ data }) => {
-		const { userId } = requireAuth();
-		return getFutureSg1QuestionsImpl(userId, data.limit);
-	});
-
-export const getTenseLadderQuestionsFn = createServerFn({ method: "GET" })
-	.validator(z.object({ limit: z.number() }))
-	.handler(async ({ data }) => {
-		const { userId } = requireAuth();
-		return getTenseLadderQuestions(userId, data.limit);
-	});
-
-export const getTenseRecognitionQuestionsFn = createServerFn({ method: "GET" })
-	.validator(z.object({ limit: z.number() }))
-	.handler(async ({ data }) => {
-		const { userId } = requireAuth();
-		return getTenseRecognitionQuestions(userId, data.limit);
+	.validator(
+		z.object({
+			drillId: z.enum([
+				...typedKeys(CONJUGATION_DRILLS),
+				"verbs-tense-ladder",
+				"verbs-tense-recognition",
+			]),
+			limit: z.number(),
+		}),
+	)
+	.handler(async ({ data: { drillId, limit } }) => {
+		const { userId } = await requireAuth();
+		switch (drillId) {
+			case "verbs-tense-ladder":
+				return getTenseLadderQuestions(userId, limit);
+			case "verbs-tense-recognition":
+				return getTenseRecognitionQuestions(userId, limit);
+			default:
+				return getVerbConjugationQuestions(userId, drillId, limit, CONJUGATION_DRILLS[drillId]);
+		}
 	});

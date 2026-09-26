@@ -1,5 +1,5 @@
 import type { DrillEntry } from "@/constants/drills";
-import type { DrillLink } from "@/routes/practice/components/group-section";
+import type { DrillLink } from "@/routes/practice/components/drill-index";
 
 export const BLOCK_DRILLS: DrillEntry[] = [
 	{

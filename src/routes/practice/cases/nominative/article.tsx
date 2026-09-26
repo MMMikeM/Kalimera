@@ -1,79 +1,23 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import type { SimpleListItem } from "../../components/engines/deck";
-import { Drill } from "../../components/engines/drill";
-import { GENDER_COLUMNS, Paradigm } from "../../components/paradigm";
+import { CaseArticleDrill } from "../components/article-drill";
 
 // Articles in Doer (nominative): ο · η · το · οι · οι · τα
 // Forward: "the (m, sg)" → type "o" (matchPhonetic → ο)
 // Pure grid drill. No reverse-dimension chip — plural masc/fem are both οι, ambiguous.
 
-const FORMS: SimpleListItem[] = [
-	{
-		id: "m-sg",
-		greek: "ο",
-		english: "the (m, sg)",
-		label: "the (m, sg)",
-		category: "singular",
-	},
-	{
-		id: "f-sg",
-		greek: "η",
-		english: "the (f, sg)",
-		label: "the (f, sg)",
-		category: "singular",
-	},
-	{
-		id: "n-sg",
-		greek: "το",
-		english: "the (n, sg)",
-		label: "the (n, sg)",
-		category: "singular",
-	},
-	{
-		id: "m-pl",
-		greek: "οι",
-		english: "the (m, pl)",
-		label: "the (m, pl)",
-		category: "plural",
-	},
-	{
-		id: "f-pl",
-		greek: "οι",
-		english: "the (f, pl)",
-		label: "the (f, pl)",
-		category: "plural",
-	},
-	{
-		id: "n-pl",
-		greek: "τα",
-		english: "the (n, pl)",
-		label: "the (n, pl)",
-		category: "plural",
-	},
-];
-
 export const Route = createFileRoute("/practice/cases/nominative/article")({
 	component: ArticleDoerDrill,
 });
 
-const PARADIGM_ROWS = [
-	{ label: "Nom sg", forms: ["ο", "η", "το"] },
-	{ label: "Nom pl", forms: ["οι", "οι", "τα"] },
-];
-
 function ArticleDoerDrill() {
 	return (
-		<Drill
-			backTo={"/practice/cases/"}
+		<CaseArticleDrill
 			drillId="articles-article-doer"
-			items={FORMS}
+			grammaticalCase="nominative"
 			subtitle="Nominative articles"
 			forwardDesc="Gender + number → article (Doer)"
-			reverseDesc="Article → recall gender + number (self-assess)"
-			configExtras={
-				<Paradigm className="my-8 mb-12" columns={GENDER_COLUMNS} rows={PARADIGM_ROWS} />
-			}
+			prompt={(gender, number) => `the (${gender}, ${number})`}
 		/>
 	);
 }

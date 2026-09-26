@@ -71,7 +71,8 @@ interface DrillState {
 	cardIndex: number;
 	input: string;
 	attempts: Attempt<DrillForm>[];
-	lastAttempt: Attempt<DrillForm> | null;
+	/** performance.now() when the current card became answerable. */
+	cardStartedAt: number;
 
 	sessionId: number | null;
 	isReDrill: boolean;
@@ -100,7 +101,7 @@ export const useDrillStore = create<DrillState>()(() => ({
 	cardIndex: 0,
 	input: "",
 	attempts: [],
-	lastAttempt: null,
+	cardStartedAt: 0,
 	sessionId: null,
 	isReDrill: false,
 	uniquePoolSize: 0,
@@ -112,7 +113,6 @@ export const useDrillStore = create<DrillState>()(() => ({
 
 type DrillActions = {
 	initialize: (config: DrillStoreConfig) => void;
-	getCurrentForm: () => DrillForm | undefined;
 	getEffectiveTimeLimit: () => number;
 	setMode: (mode: DrillMode) => void;
 	setSessionSize: (sessionSize: SessionSize | number) => void;
@@ -120,12 +120,8 @@ type DrillActions = {
 	setActiveSpeedId: (activeSpeedId: SpeedId) => void;
 	setInput: (input: string) => void;
 	startDrill: () => void;
-	recordAttempt: (
-		isCorrect: boolean,
-		timeTaken: number,
-		log: LogPayload,
-		timedOut?: boolean,
-	) => void;
+	/** Times the answer from `cardStartedAt`; a timeout counts as the full limit. */
+	recordAttempt: (isCorrect: boolean, log: LogPayload, timedOut?: boolean) => void;
 	advance: () => void;
 	resetToConfig: () => void;
 	retryMistakes: (mistakes: Attempt<DrillForm>[]) => void;
@@ -142,10 +138,6 @@ export const drillActions: DrillActions = {
 			sessionSize,
 			mode: defaultMode,
 		});
-	},
-	getCurrentForm: () => {
-		const { deck, cardIndex } = s();
-		return deck[cardIndex];
 	},
 	getEffectiveTimeLimit: () => {
 		const { activeSpeedId, mode, deck, cardIndex } = s();
@@ -177,7 +169,7 @@ export const drillActions: DrillActions = {
 			cardIndex: 0,
 			input: "",
 			attempts: [],
-			lastAttempt: null,
+			cardStartedAt: performance.now(),
 			phase: "active",
 			sessionId: null,
 			isReDrill: false,
@@ -194,10 +186,11 @@ export const drillActions: DrillActions = {
 				.catch(() => {});
 		}
 	},
-	recordAttempt: (isCorrect, timeTaken, log, timedOut = false) => {
+	recordAttempt: (isCorrect, log, timedOut = false) => {
 		const {
 			deck,
 			cardIndex,
+			cardStartedAt,
 			sessionSize,
 			uniquePoolSize,
 			userId,
@@ -210,6 +203,9 @@ export const drillActions: DrillActions = {
 		} = s();
 		const currentForm = deck[cardIndex];
 		if (!currentForm) return;
+		const timeTaken = timedOut
+			? drillActions.getEffectiveTimeLimit()
+			: performance.now() - cardStartedAt;
 		const attempt: Attempt<DrillForm> = {
 			form: currentForm,
 			isCorrect,
@@ -218,38 +214,32 @@ export const drillActions: DrillActions = {
 			userInput: log.userAnswer,
 		};
 
+		const { id } = currentForm;
+		const remCount = remediationCounts[id] ?? 0;
 		// Remediation: on wrong answer, re-insert within session (max 3 times per word).
 		// Skip if no room to space it at least 2 positions ahead — avoids back-to-back repeats near end.
-		const remCount = remediationCounts[currentForm.id] ?? 0;
-		const alreadySeen = firstPresented[currentForm.id] ?? false;
+		const remediate = !isCorrect && remCount < 3 && cardIndex + 2 <= deck.length - 1;
+		// Prune re-intros on first correct answer — but only when the pool has enough
+		// unique words to fill the session. Small pools need every re-intro.
+		const prune = isCorrect && !firstPresented[id] && uniquePoolSize >= sessionSize;
 
-		if (!isCorrect && remCount < 3 && cardIndex + 2 <= deck.length - 1) {
+		let nextDeck = deck;
+		if (remediate) {
 			const insertAt = Math.min(cardIndex + 5, deck.length);
-			const newDeck = [...deck];
-			newDeck.splice(insertAt, 0, currentForm);
-			set((prev) => ({
-				deck: newDeck,
-				firstPresented: { ...prev.firstPresented, [currentForm.id]: true },
-				remediationCounts: { ...prev.remediationCounts, [currentForm.id]: remCount + 1 },
-				lastAttempt: attempt,
-				attempts: [...prev.attempts, attempt],
-				phase: "feedback",
-			}));
-		} else {
-			// Prune re-intros on first correct answer — but only when the pool has enough
-			// unique words to fill the session. Small pools need every re-intro.
-			const prunedDeck =
-				isCorrect && !alreadySeen && uniquePoolSize >= sessionSize
-					? deck.filter((card, idx) => idx <= cardIndex || card.id !== currentForm.id)
-					: deck;
-			set((prev) => ({
-				deck: prunedDeck,
-				firstPresented: { ...prev.firstPresented, [currentForm.id]: true },
-				lastAttempt: attempt,
-				attempts: [...prev.attempts, attempt],
-				phase: "feedback",
-			}));
+			nextDeck = [...deck.slice(0, insertAt), currentForm, ...deck.slice(insertAt)];
+		} else if (prune) {
+			nextDeck = deck.filter((card, idx) => idx <= cardIndex || card.id !== id);
 		}
+
+		set((prev) => ({
+			deck: nextDeck,
+			firstPresented: { ...prev.firstPresented, [id]: true },
+			remediationCounts: remediate
+				? { ...prev.remediationCounts, [id]: remCount + 1 }
+				: prev.remediationCounts,
+			attempts: [...prev.attempts, attempt],
+			phase: "feedback",
+		}));
 		if (userId && !isReDrill && sessionCallbacks) {
 			sessionCallbacks.recordAttempt({
 				userId,
@@ -294,7 +284,7 @@ export const drillActions: DrillActions = {
 			});
 			return;
 		}
-		set({ cardIndex: next, input: "", phase: "active" });
+		set({ cardIndex: next, input: "", phase: "active", cardStartedAt: performance.now() });
 	},
 
 	resetToConfig: () =>
@@ -304,7 +294,6 @@ export const drillActions: DrillActions = {
 			cardIndex: 0,
 			input: "",
 			attempts: [],
-			lastAttempt: null,
 			sessionId: null,
 			isReDrill: false,
 			firstPresented: {},
@@ -318,7 +307,7 @@ export const drillActions: DrillActions = {
 			cardIndex: 0,
 			input: "",
 			attempts: [],
-			lastAttempt: null,
+			cardStartedAt: performance.now(),
 			phase: "active",
 			isReDrill: true,
 			sessionId: null,

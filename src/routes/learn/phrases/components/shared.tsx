@@ -1,11 +1,41 @@
-import { cn } from "tailwind-variants";
+import type { LucideIcon } from "lucide-react";
 
-import { type ContentColorScheme, ContentSection } from "@/components/ContentSection";
+import {
+	type ContentColorScheme,
+	ContentSection,
+	TwoColumnList,
+} from "@/components/ContentSection";
 import { GreekText } from "@/components/GreekText";
+import type { NavTab } from "@/components/NavTabs";
+import { TabHero } from "@/components/TabHero";
+import type { Vocabulary } from "@/server/db/types";
 
-import type { PhraseItem, PhrasesLoaderData } from "../$tab";
+import { TimeTellingSection } from "./time-telling-section";
 
-export type { PhraseItem, PhrasesLoaderData };
+export type PhraseItem = Vocabulary;
+
+type PhraseSectionConfig =
+	| {
+			tag: string;
+			title: string;
+			colorScheme: ContentColorScheme;
+			alwaysShow?: boolean;
+			layout?: "list";
+	  }
+	| { tag: string; layout: "time" };
+
+export interface PhraseTabConfig {
+	label: string;
+	Icon: LucideIcon;
+	navColor: NonNullable<NavTab["color"]>;
+	hero: {
+		title: string;
+		greekPhrase: string;
+		colorScheme: "ocean" | "terracotta" | "olive" | "honey";
+		body: string;
+	};
+	sections: PhraseSectionConfig[];
+}
 
 const textColors: Record<ContentColorScheme, string> = {
 	ocean: "text-ocean-800",
@@ -18,38 +48,7 @@ const textColors: Record<ContentColorScheme, string> = {
 	stone: "text-stone-800",
 };
 
-const PhraseItemDisplay: React.FC<{
-	greek: string;
-	english: string;
-	variant?: "default" | "highlighted";
-	colorScheme?: ContentColorScheme;
-}> = ({ greek, english, variant = "default", colorScheme = "honey" }) => (
-	<div className="grid grid-cols-2 items-center gap-x-4 py-2.5 pl-3">
-		<GreekText
-			tone="inherit"
-			className={cn(
-				"text-lg font-semibold",
-				variant === "highlighted" && "rounded border border-stone-200 bg-white px-2 py-1",
-				textColors[colorScheme],
-			)}
-		>
-			{greek}
-		</GreekText>
-		<span className="text-sm text-stone-500">{english}</span>
-	</div>
-);
-
-const PhraseSection: React.FC<{
-	title: string;
-	colorScheme: ContentColorScheme;
-	children: React.ReactNode;
-}> = ({ title, colorScheme, children }) => (
-	<ContentSection title={title} colorScheme={colorScheme}>
-		<div className="divide-y divide-stone-200/60">{children}</div>
-	</ContentSection>
-);
-
-export function PhraseList({
+const PhraseList = ({
 	title,
 	colorScheme,
 	phrases,
@@ -59,18 +58,55 @@ export function PhraseList({
 	colorScheme: ContentColorScheme;
 	phrases: PhraseItem[];
 	alwaysShow?: boolean;
-}) {
+}) => {
 	if (!alwaysShow && phrases.length === 0) return null;
 	return (
-		<PhraseSection title={title} colorScheme={colorScheme}>
-			{phrases.map((phrase) => (
-				<PhraseItemDisplay
-					key={phrase.id}
-					greek={phrase.greekText}
-					english={phrase.englishTranslation}
-					colorScheme={colorScheme}
-				/>
-			))}
-		</PhraseSection>
+		<ContentSection title={title} colorScheme={colorScheme}>
+			<TwoColumnList
+				items={phrases.map((p) => ({
+					id: p.id,
+					primary: p.greekText,
+					secondary: p.englishTranslation,
+				}))}
+				renderPrimary={(item) => (
+					<GreekText tone="inherit" className={`text-lg font-semibold ${textColors[colorScheme]}`}>
+						{item.primary}
+					</GreekText>
+				)}
+			/>
+		</ContentSection>
 	);
-}
+};
+
+export const PhraseTabContent = ({
+	config,
+	phrases,
+}: {
+	config: PhraseTabConfig;
+	phrases: Record<string, PhraseItem[]>;
+}) => (
+	<div className="space-y-6">
+		<TabHero
+			title={config.hero.title}
+			greekPhrase={config.hero.greekPhrase}
+			colorScheme={config.hero.colorScheme}
+			icon={<config.Icon size={18} />}
+		>
+			{config.hero.body}
+		</TabHero>
+
+		{config.sections.map((section) =>
+			section.layout === "time" ? (
+				<TimeTellingSection key={section.tag} items={phrases[section.tag] ?? []} />
+			) : (
+				<PhraseList
+					key={section.tag}
+					title={section.title}
+					colorScheme={section.colorScheme}
+					phrases={phrases[section.tag] ?? []}
+					alwaysShow={section.alwaysShow}
+				/>
+			),
+		)}
+	</div>
+);

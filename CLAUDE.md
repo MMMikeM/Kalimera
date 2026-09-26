@@ -10,8 +10,8 @@
 # Production (Turso) — drizzle-kit auto-loads `.env`; these hit PROD
 pnpm db:push        # or db:studio, db:generate, db:migrate
 
-# Seeding needs the env passed explicitly — `pnpm db:seed` does NOT load `.env`
-node --env-file=.env --import tsx src/scripts/seed.ts
+# Seeding: tsx does not auto-load `.env`, so the script passes it explicitly
+pnpm db:seed        # node --env-file=.env --import tsx src/scripts/seed.ts
 
 # Local schema only — a `file:` URL makes drizzle.config.ts drop the auth token,
 # so drizzle-kit uses the embedded @tursodatabase/database driver (no Docker)
@@ -31,7 +31,7 @@ The seeders (vocab + verb conjugations) are **idempotent additive upserts**. Re-
 
 ## Screenshots
 
-`pnpm screenshots` (desktop 1280×720) or `pnpm screenshots --mobile` (375×812) — Playwright script at `screenshots/capture.ts`. Requires dev server running; `BASE_URL` env overrides `http://localhost:5173`. Logs in via `screenshots/login.ts`, captures ~30 fixed routes as full-page PNGs to `screenshots/desktop/` or `screenshots/mobile/`. For a single ad-hoc page, write a one-off Playwright script reusing `loginWithCredentials`.
+`pnpm screenshots` (desktop 1280×720) or `pnpm screenshots --mobile` (375×812) — Playwright script at `screenshots/capture.ts`. Requires dev server running; `BASE_URL` env overrides `http://localhost:5173`. Logs in via `screenshots/login.ts`, captures ~40 fixed routes as full-page PNGs to `screenshots/desktop/` or `screenshots/mobile/`. Add `--route /reference/cases` to capture one page. It unpins `.app-shell` before each shot, since the fixed shell otherwise clips full-page captures to the viewport.
 
 ---
 

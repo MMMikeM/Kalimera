@@ -73,7 +73,6 @@ function WhichFormsDrill() {
 			drillId="blocks-qw-which-forms"
 			items={WHICH_FORMS}
 			subtitle={`${WHICH_FORMS.length} forms / timed`}
-			colorTheme="terracotta"
 			backTo="/practice/blocks/question-words/"
 			forwardDesc="English → Greek"
 			reverseDesc="Greek → recall meaning (self-assess)"

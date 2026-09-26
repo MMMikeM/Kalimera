@@ -62,7 +62,7 @@ There is no local Docker database.
 | `make db-studio`     | Open Drizzle Studio against **production**                      |
 | `make db-push-local` | Push schema to a local file DB (`local.db`), no Docker, no prod |
 
-`pnpm db:seed` alone does **not** load `.env`; `make db-seed` passes it explicitly.
+`pnpm db:seed` and `make db-seed` both load `.env` explicitly, so both hit **production**.
 
 ### Code quality
 

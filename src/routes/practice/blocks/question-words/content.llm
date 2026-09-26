@@ -57,7 +57,7 @@ masculine / feminine / neuter on every item.
 
 Forward is production: English → ποιος agreeing with its noun (ποιον καφέ, ποια μέρα, ποιο σπίτι).
 Reverse is **not** self-assess — it is a single-select on gender (`GENDER_DIMENSION_OPTIONS`,
-`getCorrectId` reads `form.dimension`). The learner sees the phrase and picks he-/she-/it-word,
+the correct option is `form.dimension`). The learner sees the phrase and picks he-/she-/it-word,
 which tests the agreement signal rather than the gloss.
 
 Target items carry a disambiguating label ("which coffee? (you want it)") because the English is

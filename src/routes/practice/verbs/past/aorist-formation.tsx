@@ -223,7 +223,6 @@ function AoristFormationDrill() {
 			items={ITEMS}
 			backTo="/practice/verbs"
 			subtitle="25 rules / timed"
-			colorTheme="terracotta"
 			forwardDesc="Present (English) → aorist sg1"
 			reverseDesc="Aorist form → present verb (self-assess)"
 			categories={CATEGORIES}
