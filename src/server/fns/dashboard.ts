@@ -5,11 +5,7 @@ import { calculateDaysUntilNextFreeze, getFreezeStatus } from "@/lib/streak";
 import { diffInDays, fromISOString, mondayBasedDayOfWeek, toPlainDate, today } from "@/lib/time";
 import { requireAuth } from "@/server/auth/session";
 import { getSchemaRust, RUST_THRESHOLD_VALUE } from "@/server/db/queries/analytics/drill-stats";
-import { getPushSubscriptionByUserId } from "@/server/db/queries/notifications/push-subscriptions";
-import {
-	getLastPracticeDate,
-	listCompletedPracticeSessionsForStreak,
-} from "@/server/db/queries/practice-sessions";
+import { listCompletedPracticeSessionsForStreak } from "@/server/db/queries/practice-sessions";
 import { getUserById } from "@/server/db/queries/users";
 import { getReviewStats } from "@/server/db/queries/vocab-reviews";
 
@@ -21,18 +17,18 @@ type Stats = {
 };
 
 export const getDashboardDataFn = createServerFn({ method: "GET" }).handler(async () => {
-	const { userId } = requireAuth();
+	const { userId } = await requireAuth();
 
-	const [rawStats, user, lastPracticeDate, completedSessions, rustyDrills] = await Promise.all([
+	const [rawStats, user, completedSessions, rustyDrills] = await Promise.all([
 		getReviewStats(userId),
 		getUserById(userId),
-		getLastPracticeDate(userId),
 		listCompletedPracticeSessionsForStreak(userId),
 		getSchemaRust(userId),
 	]);
 	const completedDates = completedSessions.flatMap((s) =>
 		s.completedAt ? [fromISOString(s.completedAt)] : [],
 	);
+	const lastPracticeDate = completedDates[0];
 
 	const todayDate = today();
 	const daysSinceLastPractice = lastPracticeDate
@@ -59,8 +55,6 @@ export const getDashboardDataFn = createServerFn({ method: "GET" }).handler(asyn
 	const freezeStatus = user ? getFreezeStatus(user) : { status: "none" as const, freezeCount: 0 };
 	const daysUntilNextFreeze = user ? calculateDaysUntilNextFreeze(stats.streak, user) : 7;
 
-	const pushSub = await getPushSubscriptionByUserId(userId);
-
 	// Top rusty drills for dashboard CTA
 	const notablyRusty = rustyDrills.filter((d) => d.rustScore > RUST_THRESHOLD_VALUE);
 
@@ -72,7 +66,6 @@ export const getDashboardDataFn = createServerFn({ method: "GET" }).handler(asyn
 		freezeStatus,
 		daysUntilNextFreeze: daysUntilNextFreeze as number | null,
 		daysSinceLastPractice,
-		taperOfferPending: pushSub?.taperOfferPending ?? false,
 		rustyDrills: notablyRusty,
 		rustyDrillCount: notablyRusty.length,
 	};

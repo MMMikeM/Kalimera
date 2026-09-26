@@ -80,6 +80,6 @@ export const getNominalReviewQuestionsFn = createServerFn({ method: "GET" })
 		}),
 	)
 	.handler(async ({ data }) => {
-		const { userId } = requireAuth();
+		const { userId } = await requireAuth();
 		return getNominalReviewQuestionsImpl(userId, data.wordType, data.drillId, data.limit);
 	});
