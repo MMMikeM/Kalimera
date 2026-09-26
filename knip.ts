@@ -6,7 +6,6 @@ const config: KnipConfig = {
 		"!src/routes/**/components/**",
 		"!src/routes/**/engines/**",
 		"src/scripts/*.ts",
-		"service-worker/sw.ts",
 		"scripts/*.ts",
 	],
 	project: ["src/**/*.{ts,tsx}", "service-worker/**/*.ts", "scripts/**/*.ts"],
@@ -17,12 +16,11 @@ const config: KnipConfig = {
 		// TanStack Start client entry — resolved by the framework, not by an import.
 		"src/main.tsx",
 	],
-	ignoreDependencies: [
-		"@vitejs/plugin-react",
-		"tw-animate-css",
-		// Used by vite-plugin-babel via string refs in vite.config.ts; knip
-		// doesn't follow that indirection.
-	],
+	// Imported from src/index.css via @import, which knip does not follow.
+	ignoreDependencies: ["tw-animate-css"],
+	// System tools shelled out to by scripts/harvest-greek-corpus.ts and
+	// scripts/lint-greek.ts, not npm packages.
+	ignoreBinaries: ["fd", "rg"],
 	ignoreExportsUsedInFile: false,
 };
 
