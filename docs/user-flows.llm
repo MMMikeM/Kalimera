@@ -36,7 +36,6 @@ kept in this file would drift from them.
 /progress                  Analytics (streak calendar, accuracy trends)
 /support                   About page
 
-/api/push/*                subscribe · unsubscribe · snooze · log-tap · vapid-key
 /api/webauthn/*            register-options · register-verify · auth-options · auth-verify
 ```
 
@@ -221,11 +220,10 @@ one drill." Starting is the hard part; most users continue once they begin.
 Correct answers auto-advance, maintaining momentum. Flow produces its own
 dopamine — don't interrupt it with celebrations.
 </hook>
-<hook name="push-notifications" location="system" mechanism="external-prompt" status="partial">
-NOT SENT. The subscription side is live — /api/push/{subscribe,unsubscribe,snooze,
-log-tap,vapid-key}, and pushSubscriptions carries notification mode, snooze and
-taper-offer state. Nothing calls the senders in src/server/push-notifications.ts,
-so none of the below reaches a learner yet.
+<hook name="push-notifications" location="system" mechanism="external-prompt" status="not-implemented">
+Removed. The unused senders, /api/push/* routes, service-worker push handlers and
+dashboard taper offer were deleted; only the pushSubscriptions and notificationLogs
+tables remain in the schema.
 
 Daily reminders for first 2 weeks, tapering to every-other-day by week 3.
 Content is informational: "Your Greek is waiting" not "Don't break your streak!"
@@ -316,11 +314,10 @@ As the user accumulates practice data (weeks 3-10), introduce:
 anxiety about missed days without loss-framing. The framing matters: "miss a day,
 keep your streak" is protective; "don't lose your streak" is controlling.</motivation-note>
 </feature>
-<feature name="evening-reminder" status="partial">
-<current>Subscription plumbing is live; nothing sends.</current>
+<feature name="evening-reminder" status="not-implemented">
+<current>Nothing ships. The unused push plumbing was removed.</current>
 <details>
-- /api/push/{subscribe,unsubscribe,snooze,log-tap,vapid-key} all work
-- src/server/push-notifications.ts holds the senders and has no caller
+- Only the pushSubscriptions and notificationLogs tables remain
 - There is no cron. The app runs on Nitro; the wrangler.toml this once
   referenced does not exist.
 </details>

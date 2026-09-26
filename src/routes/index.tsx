@@ -21,16 +21,11 @@ export const Route = createFileRoute("/")({
 		return getDashboardDataFn();
 	},
 	staleTime: 30_000,
-	// TODO: action needs to be converted to a server function for TSR
 	component: DashboardRoute,
 });
 
 function DashboardRoute() {
 	const data = Route.useLoaderData();
-
-	const handleTaperResponse = (_mode: "reduce" | "always") => {
-		// Will be implemented as a server function
-	};
 
 	if (!data) {
 		return <LandingPage />;
@@ -43,7 +38,6 @@ function DashboardRoute() {
 		freezeStatus,
 		daysUntilNextFreeze,
 		daysSinceLastPractice,
-		taperOfferPending,
 		rustyDrills,
 		rustyDrillCount,
 	} = data;
@@ -79,32 +73,6 @@ function DashboardRoute() {
 		<div className="space-y-6 pb-8">
 			{/* Primary CTA Section */}
 			<section>{renderCTA()}</section>
-
-			{/* Taper offer — shown when user consistently practises before notification fires */}
-			{taperOfferPending && (
-				<section>
-					<div className="rounded-md border border-stone-200 bg-amber-50 px-4 py-3 text-sm text-stone-600">
-						<p>You've been practising before your reminder arrives. Want fewer nudges?</p>
-						<div className="mt-2 flex gap-3">
-							<button
-								type="button"
-								onClick={() => handleTaperResponse("reduce")}
-								className="text-ocean-700 underline underline-offset-2"
-							>
-								Yes, reduce reminders
-							</button>
-							<span className="text-stone-400">·</span>
-							<button
-								type="button"
-								onClick={() => handleTaperResponse("always")}
-								className="text-stone-500 underline underline-offset-2"
-							>
-								I rely on these, keep them coming
-							</button>
-						</div>
-					</div>
-				</section>
-			)}
 
 			{/* Week View + Freeze Status */}
 			<section className="space-y-3">
