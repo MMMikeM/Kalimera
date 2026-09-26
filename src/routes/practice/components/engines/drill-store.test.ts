@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vite-plus/test";
 
 import type { DrillForm } from "./deck";
 import { drillActions, useDrillStore } from "./drill-store";

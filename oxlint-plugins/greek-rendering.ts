@@ -9,9 +9,9 @@
  * `matchPhonetic` is deliberately not restricted: it grades answers and never
  * produces anything a learner sees.
  *
- * The allowlist lives in `oxlint.config.ts` as an `overrides` block that turns
- * this rule off for the component and lib files — the same shape the config
- * already uses for `no-restricted-imports`. Keeping it there rather than
+ * The allowlist lives in the `lint` block of `vite.config.ts` as an `overrides`
+ * entry that turns this rule off for the component and lib files — the same
+ * shape the config already uses for `no-restricted-imports`. Keeping it there rather than
  * matching filenames in here avoids depending on `context.filename`, which is
  * not something to rely on while the JS plugin API is alpha.
  *

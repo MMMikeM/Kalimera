@@ -20,6 +20,9 @@ const config: KnipConfig = {
 	ignoreDependencies: [
 		"@vitejs/plugin-react",
 		"tw-animate-css",
+		// Loaded as an aliased `{ name, specifier }` jsPlugin in vite.config.ts's
+		// lint block; knip's Vite+ lint parsing only reads plain string entries.
+		"eslint-plugin-react-hooks",
 		// Used by vite-plugin-babel via string refs in vite.config.ts; knip
 		// doesn't follow that indirection.
 	],

@@ -58,3 +58,4 @@ reports/
 
 # Personal lesson notes, not project source
 sundry.txt
+.vitest/

@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 
 import { enrichNoun, inferDeclensionPattern } from "./noun-seed-enrichment";
 import { NOUNS } from "./nouns";
