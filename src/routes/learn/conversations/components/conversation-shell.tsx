@@ -1,30 +1,20 @@
 import { Lightbulb } from "lucide-react";
 import type React from "react";
 import { createContext, useContext } from "react";
+import { cn } from "tailwind-variants";
 
 import { Card } from "@/components/Card";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
 import {
 	type ConversationMode,
 	type DialogueLine,
-	DialogueScenario,
-	type Formality,
+	DialogueExchange,
 } from "@/components/DialogueExchange";
 import { MistakeComparison } from "@/components/MistakeComparison";
 
-type ConversationContext = {
-	mode: ConversationMode;
-	setMode: (mode: ConversationMode) => void;
-};
+const ConversationModeCtx = createContext<ConversationMode>("read");
 
-const ConversationCtx = createContext<ConversationContext>({
-	mode: "read",
-	setMode: () => {},
-});
-
-export const useConversationContext = () => useContext(ConversationCtx);
-
-export const ConversationProvider = ConversationCtx.Provider;
+export const ConversationModeProvider = ConversationModeCtx.Provider;
 
 export interface LearningTipsProps {
 	patterns?: LearningTip;
@@ -80,24 +70,41 @@ export const LearningTips: React.FC<LearningTipsProps> = ({ patterns, tips, comm
 	</CollapsibleSection>
 );
 
+type Formality = "formal" | "informal" | "mixed";
+
+const formalityLabels: Record<Formality, { text: string; className: string }> = {
+	formal: { text: "Formal", className: "bg-stone-100 text-stone-600" },
+	informal: { text: "Informal", className: "bg-olive-100 text-olive-700" },
+	mixed: { text: "Mixed", className: "bg-ocean-100 text-ocean-700" },
+};
+
 export const ScenarioCard: React.FC<{
 	title: string;
 	description: string;
 	formality: Formality;
 	dialogue: DialogueLine[];
-	mode?: ConversationMode;
-}> = ({ title, description, formality, dialogue, mode }) => {
-	const { mode: contextMode } = useConversationContext();
+}> = ({ title, description, formality, dialogue }) => {
+	const mode = useContext(ConversationModeCtx);
 
 	return (
 		<Card variant="bordered" padding="lg" className="border-stone-200">
-			<DialogueScenario
-				title={title}
-				description={description}
-				formality={formality}
-				dialogue={dialogue}
-				mode={mode ?? contextMode}
-			/>
+			<div className="space-y-4">
+				<div>
+					<div className="flex items-center gap-2">
+						<h4 className="font-semibold text-stone-800">{title}</h4>
+						<span
+							className={cn(
+								"text-xs px-2 py-0.5 rounded-full font-medium",
+								formalityLabels[formality].className,
+							)}
+						>
+							{formalityLabels[formality].text}
+						</span>
+					</div>
+					<p className="mt-1 text-sm text-stone-600">{description}</p>
+				</div>
+				<DialogueExchange lines={dialogue} mode={mode} />
+			</div>
 		</Card>
 	);
 };
