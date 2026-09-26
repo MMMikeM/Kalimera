@@ -164,7 +164,7 @@ export const StreakCalendar = ({
 								<span
 									className={cn(
 										"absolute bottom-0.5 left-1/2 -translate-x-1/2 size-1 rounded-full",
-										status === "streak" ? "bg-white/70" : "bg-olive-400",
+										status === "streak" ? "bg-card/70" : "bg-olive-400",
 									)}
 								/>
 							)}

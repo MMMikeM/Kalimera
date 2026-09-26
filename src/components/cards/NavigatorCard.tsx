@@ -40,5 +40,5 @@ interface NavigatorCellProps {
 }
 
 export const NavigatorCell = ({ className, children }: NavigatorCellProps) => (
-	<div className={cn("rounded-lg border border-honey-300 bg-white p-3", className)}>{children}</div>
+	<div className={cn("rounded-lg border border-honey-300 bg-card p-3", className)}>{children}</div>
 );

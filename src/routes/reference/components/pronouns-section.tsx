@@ -74,7 +74,7 @@ const PronounExamplePills = ({
 			{examples.map((ex) => (
 				<div
 					key={ex.greek}
-					className={`rounded-full border ${borderColor} bg-white px-3 py-1.5 text-sm`}
+					className={`rounded-full border ${borderColor} bg-card px-3 py-1.5 text-sm`}
 				>
 					<GreekText tone="default" size="sm" className={textColor}>
 						{ex.greek}
@@ -142,7 +142,7 @@ export const PronounsSection: React.FC = () => {
 		<section id="pronouns" className="space-y-16">
 			{/* BAND 1 — THE SPLIT (pronouns-specific angle, not a cases recap) */}
 			<div className="space-y-6">
-				<Card variant="bordered" padding="lg" className="border-stone-200 bg-white">
+				<Card variant="bordered" padding="lg" className="border-stone-200 bg-card">
 					<div className="space-y-1">
 						<div className="text-xs font-semibold tracking-widest text-stone-500 uppercase">
 							The split
@@ -233,7 +233,7 @@ export const PronounsSection: React.FC = () => {
 				/>
 
 				{/* Weak vs strong comparison */}
-				<Card variant="bordered" padding="lg" className="border-stone-200 bg-white">
+				<Card variant="bordered" padding="lg" className="border-stone-200 bg-card">
 					<div className="space-y-1">
 						<div className="text-xs font-semibold tracking-widest text-stone-500 uppercase">
 							Weak vs strong
@@ -338,7 +338,7 @@ export const PronounsSection: React.FC = () => {
 							{EMPHATIC_PRONOUN_EXAMPLES.map((ex) => (
 								<div
 									key={ex.greek}
-									className="rounded-full border border-stone-200 bg-white px-3 py-1.5 text-sm"
+									className="rounded-full border border-stone-200 bg-card px-3 py-1.5 text-sm"
 								>
 									<GreekText tone="inherit" size="sm" className={caseScheme("accusative").text}>
 										{ex.greek}
@@ -358,7 +358,7 @@ export const PronounsSection: React.FC = () => {
 					title="Ready-made phrases"
 					lede="High-frequency chunks with pronouns already baked in. Memorise whole, don't decompose."
 				/>
-				<Card variant="bordered" padding="lg" className="border-stone-200 bg-white">
+				<Card variant="bordered" padding="lg" className="border-stone-200 bg-card">
 					<div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
 						{typedEntries(phraseGroups).map(([category, phrases]) => (
 							<div key={category}>
@@ -398,7 +398,7 @@ export const PronounsSection: React.FC = () => {
 					title="Someone, nothing, everyone"
 					lede="Memorise these as whole words. The prefix pattern is interesting but not drillable."
 				/>
-				<Card variant="bordered" padding="lg" className="border-stone-200 bg-white">
+				<Card variant="bordered" padding="lg" className="border-stone-200 bg-card">
 					<div className="grid gap-x-6 gap-y-1.5 sm:grid-cols-2 md:grid-cols-3">
 						{[
 							{ greek: "κάτι", english: "something" },
@@ -428,7 +428,7 @@ export const PronounsSection: React.FC = () => {
 				colorScheme="stone"
 				defaultOpen={false}
 			>
-				<Card variant="bordered" padding="md" className="border-stone-200 bg-white">
+				<Card variant="bordered" padding="md" className="border-stone-200 bg-card">
 					<h4 className="mb-1 font-bold text-stone-800">{PRONOUN_PATTERNS.doubleObject.title}</h4>
 					<p className="mb-4 text-sm text-stone-600">{PRONOUN_PATTERNS.doubleObject.explanation}</p>
 					<div className="mb-4 space-y-1 rounded-lg border border-stone-200 bg-stone-50 p-3 text-sm">
@@ -443,7 +443,7 @@ export const PronounsSection: React.FC = () => {
 							<GreekText
 								tone="inherit"
 								size="lg"
-								className="rounded border border-stone-200 bg-white px-2 py-1 font-semibold text-stone-800"
+								className="rounded border border-stone-200 bg-card px-2 py-1 font-semibold text-stone-800"
 							>
 								{PRONOUN_PATTERNS.doubleObject.contrast.greek}
 							</GreekText>
@@ -461,7 +461,7 @@ export const PronounsSection: React.FC = () => {
 								<GreekText
 									tone="inherit"
 									size="lg"
-									className="rounded border border-stone-200 bg-white px-2 py-1 font-semibold text-stone-800"
+									className="rounded border border-stone-200 bg-card px-2 py-1 font-semibold text-stone-800"
 								>
 									{ex.greek}
 								</GreekText>

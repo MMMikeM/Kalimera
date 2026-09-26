@@ -110,6 +110,8 @@ tints, match chroma — `ocean-200` / `olive-200` / `cream-200` is the tested tr
 
 Use these for any text content. Contrast ratios are calculated against cream backgrounds and tinted backgrounds (e.g. `bg-honey-100`, `bg-case-accusative-100`).
 
+Dark mode redefines every token under `:root.dark` in `src/index.css` (the remapping rule is in the comment above that block). There the `-text` tokens sit at L 0.88 and measure 10:1+ on their dark `-100` tints and 8.5:1+ on `-300`. Components need no `dark:` classes: use the tokens and both themes follow.
+
 | Token                                         | OKLCH Value            | On Cream | On Tinted BG |
 | --------------------------------------------- | ---------------------- | -------- | ------------ |
 | `terracotta-text` (`--color-terracotta-text`) | `oklch(0.31 0.05 40)`  | 10:1+    | 10:1+        |

@@ -80,7 +80,7 @@ function ReviewPage() {
 											<Link
 												key={d.drillId}
 												to={meta.to}
-												className="flex items-center gap-4 rounded-xl border border-stone-200 bg-white px-4 py-3 transition-colors hover:border-stone-300 hover:bg-stone-50"
+												className="flex items-center gap-4 rounded-xl border border-stone-200 bg-card px-4 py-3 transition-colors hover:border-stone-300 hover:bg-stone-50"
 											>
 												<div className="min-w-0 flex-1">
 													<p className="text-sm font-medium text-stone-800">{meta.title}</p>

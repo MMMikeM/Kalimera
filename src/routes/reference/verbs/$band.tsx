@@ -40,7 +40,7 @@ const BandNav: React.FC<{ active: Band }> = ({ active }) => (
 				className={cn(
 					"flex flex-1 items-center justify-center rounded-md border-b-2 border-transparent px-3 py-1.5 text-sm font-medium whitespace-nowrap transition-colors",
 					active === band.id
-						? "border-b-stone-400 bg-white text-foreground shadow-sm"
+						? "border-b-stone-400 bg-card text-foreground shadow-sm"
 						: "text-stone-600 hover:text-foreground",
 				)}
 			>

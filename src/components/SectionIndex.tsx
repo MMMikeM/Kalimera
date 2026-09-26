@@ -37,7 +37,7 @@ const tintFor = (index: number): string =>
 	GROUP_TINTS[index % GROUP_TINTS.length] ?? GROUP_TINTS[0];
 
 const TopicIcon = ({ children }: { children: ReactNode }) => (
-	<div className="flex size-10 items-center justify-center rounded-lg bg-white/70">{children}</div>
+	<div className="flex size-10 items-center justify-center rounded-lg bg-card/70">{children}</div>
 );
 
 export const SectionIndex = ({

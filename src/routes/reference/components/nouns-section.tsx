@@ -232,7 +232,7 @@ const ViewToggle = ({ mode, onChange }: { mode: ViewMode; onChange: (mode: ViewM
 				type="button"
 				onClick={() => onChange(m)}
 				className={`px-3 py-1.5 transition-colors ${
-					mode === m ? "bg-stone-700 text-white" : "bg-white text-stone-600 hover:bg-stone-50"
+					mode === m ? "bg-stone-700 text-cream" : "bg-card text-stone-600 hover:bg-stone-50"
 				}`}
 			>
 				{m === "endings" ? "Endings" : "Full forms"}

@@ -55,7 +55,7 @@ const ParadigmCard = ({
 							{col.items.map((item) => (
 								<div
 									key={item.id}
-									className="flex items-baseline gap-2 rounded border border-stone-200 bg-white p-2"
+									className="flex items-baseline gap-2 rounded border border-stone-200 bg-card p-2"
 								>
 									<GreekText tone="accent" size="lg">
 										{item.greekText}
@@ -155,7 +155,7 @@ export function PatternsTab({ data }: { data: PatternsData }) {
 						{nameConstruction.map((name) => (
 							<div
 								key={name.id}
-								className="flex items-baseline gap-2 rounded border border-stone-200 bg-white p-2"
+								className="flex items-baseline gap-2 rounded border border-stone-200 bg-card p-2"
 							>
 								<GreekText tone="accent" size="lg">
 									{name.greekText}
