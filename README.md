@@ -66,6 +66,11 @@ There is no local Docker database.
 
 ### Code quality
 
+`dev`, `build`, `test`, `lint` and `format` run through [Vite+](https://viteplus.dev)
+(`vp`), which bundles Vite, Vitest, Oxlint and Oxfmt. Lint and format settings,
+including the custom rules in `oxlint-plugins/`, live in `vite.config.ts`; tests
+read `vitest.config.ts`. `typecheck` (tsgo), knip, jscpd and ls-lint run on their own.
+
 ```bash
 pnpm typecheck && pnpm lint && pnpm lint:ls && pnpm lint:greek && pnpm test --run
 pnpm lint:unused        # knip
