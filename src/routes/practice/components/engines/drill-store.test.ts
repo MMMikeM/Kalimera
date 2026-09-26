@@ -164,3 +164,74 @@ describe("getEffectiveTimeLimit", () => {
 		expect(drillActions.getEffectiveTimeLimit()).toBe(6000);
 	});
 });
+
+// ─── Remediation and pruning ──────────────────────────────────────────────────
+
+describe("remediation", () => {
+	/** A known deck, bypassing the shuffle in buildWeightedDeck. */
+	const startWithDeck = (ids: string[], uniquePoolSize = new Set(ids).size, sessionSize = 10) => {
+		drillActions.initialize({ drillId: "d", items: ids.map(form), userId: 0, sessionSize });
+		drillActions.startDrill();
+		useDrillStore.setState({ deck: ids.map(form), cardIndex: 0, uniquePoolSize });
+	};
+	const deckIds = () => useDrillStore.getState().deck.map((f) => f.id);
+	const currentId = () => {
+		const { deck, cardIndex } = useDrillStore.getState();
+		return deck[cardIndex]?.id;
+	};
+	const answer = (isCorrect: boolean) => {
+		drillActions.recordAttempt(isCorrect, 1000, log(0));
+		drillActions.advance();
+	};
+
+	it("re-inserts a missed card five places ahead", () => {
+		startWithDeck(["a", "b", "c", "d", "e", "f", "g", "h"]);
+		answer(false);
+		expect(deckIds()).toEqual(["a", "b", "c", "d", "e", "a", "f", "g", "h"]);
+		expect(useDrillStore.getState().remediationCounts).toEqual({ a: 1 });
+	});
+
+	it("re-inserts at the end when fewer than five cards remain", () => {
+		startWithDeck(["a", "b", "c", "d"]);
+		answer(false);
+		expect(deckIds()).toEqual(["a", "b", "c", "d", "a"]);
+	});
+
+	it("skips remediation when there is no room to space the repeat", () => {
+		startWithDeck(["a", "b"]);
+		answer(false);
+		expect(deckIds()).toEqual(["a", "b"]);
+		expect(useDrillStore.getState().remediationCounts).toEqual({});
+	});
+
+	it("re-inserts a word at most three times", () => {
+		const ids = Array.from({ length: 30 }, (_, i) => (i % 2 === 0 ? "a" : `w${i}`));
+		startWithDeck(ids, 16, 30);
+		for (let miss = 0; miss < 4; miss++) {
+			while (currentId() !== "a") answer(true);
+			answer(false);
+		}
+		expect(useDrillStore.getState().remediationCounts.a).toBe(3);
+	});
+
+	it("drops later re-intros of a word answered right first time when the pool is large", () => {
+		startWithDeck(["a", "b", "a", "c"], 10, 10);
+		answer(true);
+		expect(deckIds()).toEqual(["a", "b", "c"]);
+	});
+
+	it("keeps re-intros when the pool is smaller than the session", () => {
+		startWithDeck(["a", "b", "a", "c"], 3, 10);
+		answer(true);
+		expect(deckIds()).toEqual(["a", "b", "a", "c"]);
+	});
+
+	it("keeps re-intros of a word that has already been seen", () => {
+		startWithDeck(["a", "b", "c", "d", "e", "f", "g", "h"], 10, 10);
+		answer(false);
+		while (currentId() !== "a") answer(true);
+		useDrillStore.setState({ deck: [...useDrillStore.getState().deck, form("a")] });
+		answer(true);
+		expect(deckIds().filter((id) => id === "a")).toHaveLength(3);
+	});
+});
