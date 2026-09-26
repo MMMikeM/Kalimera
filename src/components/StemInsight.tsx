@@ -4,14 +4,13 @@ import { cn } from "tailwind-variants";
 import { GreekText } from "@/components/GreekText";
 import { type ColorScheme, colorStyles } from "@/lib/colors";
 
+/** Rendered only for suppletive verbs, where the stems cannot be derived from each other. */
 interface StemInsightProps {
-	isSuppletive: boolean;
 	stems: {
 		present?: string | null;
 		aorist?: string | null;
 		future?: string | null;
 	};
-	className?: string;
 }
 
 type StemColor = Extract<ColorScheme, "ocean" | "terracotta" | "olive">;
@@ -62,11 +61,7 @@ const Arrow = () => (
 	</div>
 );
 
-export const StemInsight = ({ isSuppletive, stems, className }: StemInsightProps) => {
-	if (!isSuppletive) {
-		return null;
-	}
-
+export const StemInsight = ({ stems }: StemInsightProps) => {
 	const hasPresent = stems.present != null;
 	const hasAorist = stems.aorist != null;
 	const hasFuture = stems.future != null;
@@ -79,7 +74,7 @@ export const StemInsight = ({ isSuppletive, stems, className }: StemInsightProps
 	const honey = colorStyles.honey;
 
 	return (
-		<div className={cn("rounded-lg border-2 p-4", honey.borderMuted, honey.bg, className)}>
+		<div className={cn("rounded-lg border-2 p-4", honey.borderMuted, honey.bg)}>
 			<div className="mb-3 flex items-center gap-2">
 				<AlertTriangle size={18} className={honey.text} />
 				<h4 className={cn("font-semibold", honey.text)}>Suppletive Verb</h4>
