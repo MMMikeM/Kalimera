@@ -1,5 +1,5 @@
 import { Temporal } from "@js-temporal/polyfill";
-import { and, eq, gte, inArray, lt } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 
 import { fromISOString, nowIso } from "@/lib/time";
 
@@ -60,39 +60,5 @@ export const listCompletedPracticeSessionsForStreak = async (userId: number) => 
 		orderBy: { completedAt: "desc" },
 		limit: 365,
 		columns: { completedAt: true },
-	});
-};
-
-export const getUserIdsPracticedInRange = async (
-	userIds: number[],
-	rangeStart: string,
-	rangeEnd: string,
-) => {
-	if (userIds.length === 0) return new Set<number>();
-
-	const rows = await db
-		.selectDistinct({ userId: practiceSessions.userId })
-		.from(practiceSessions)
-		.where(
-			and(
-				inArray(practiceSessions.userId, userIds),
-				gte(practiceSessions.startedAt, rangeStart),
-				lt(practiceSessions.startedAt, rangeEnd),
-			),
-		);
-
-	return new Set(rows.map((r) => r.userId));
-};
-
-export const listPracticeSessionsSinceForUsers = async (userIds: number[], since: string) => {
-	if (userIds.length === 0) return [];
-
-	return await db.query.practiceSessions.findMany({
-		where: {
-			userId: { in: userIds },
-			startedAt: { gte: since },
-		},
-		columns: { userId: true, startedAt: true },
-		orderBy: { startedAt: "desc" },
 	});
 };

@@ -1,4 +1,4 @@
-import { and, count, eq, inArray, isNotNull, lt, sql } from "drizzle-orm";
+import { and, count, eq, sql } from "drizzle-orm";
 
 import { nowIso, toISOString } from "@/lib/time";
 import { reviewStateAfterAttempt } from "@/server/srs";
@@ -35,22 +35,6 @@ export const getReviewStats = async (userId: number) => {
 		totalLearned,
 		newAvailable: totalVocab - totalLearned,
 	};
-};
-
-/** Due review counts per user for push-notification targeting. */
-export const listDueVocabularyCountsByUser = async (now: string, userIds?: number[]) => {
-	if (userIds && userIds.length === 0) return [];
-	const base = and(isNotNull(vocabProgress.nextReviewAt), lt(vocabProgress.nextReviewAt, now));
-	const where = userIds === undefined ? base : and(base, inArray(vocabProgress.userId, userIds));
-
-	return await db
-		.select({
-			userId: vocabProgress.userId,
-			dueCount: count().as("due_count"),
-		})
-		.from(vocabProgress)
-		.where(where)
-		.groupBy(vocabProgress.userId);
 };
 
 type ReviewStateInput = {

@@ -5,7 +5,6 @@ import { calculateDaysUntilNextFreeze, getFreezeStatus } from "@/lib/streak";
 import { diffInDays, fromISOString, mondayBasedDayOfWeek, toPlainDate, today } from "@/lib/time";
 import { requireAuth } from "@/server/auth/session";
 import { getSchemaRust, RUST_THRESHOLD_VALUE } from "@/server/db/queries/analytics/drill-stats";
-import { getPushSubscriptionByUserId } from "@/server/db/queries/notifications/push-subscriptions";
 import {
 	getLastPracticeDate,
 	listCompletedPracticeSessionsForStreak,
@@ -59,8 +58,6 @@ export const getDashboardDataFn = createServerFn({ method: "GET" }).handler(asyn
 	const freezeStatus = user ? getFreezeStatus(user) : { status: "none" as const, freezeCount: 0 };
 	const daysUntilNextFreeze = user ? calculateDaysUntilNextFreeze(stats.streak, user) : 7;
 
-	const pushSub = await getPushSubscriptionByUserId(userId);
-
 	// Top rusty drills for dashboard CTA
 	const notablyRusty = rustyDrills.filter((d) => d.rustScore > RUST_THRESHOLD_VALUE);
 
@@ -72,7 +69,6 @@ export const getDashboardDataFn = createServerFn({ method: "GET" }).handler(asyn
 		freezeStatus,
 		daysUntilNextFreeze: daysUntilNextFreeze as number | null,
 		daysSinceLastPractice,
-		taperOfferPending: pushSub?.taperOfferPending ?? false,
 		rustyDrills: notablyRusty,
 		rustyDrillCount: notablyRusty.length,
 	};
