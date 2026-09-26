@@ -23,9 +23,6 @@ export const toInstant = (d: Temporal.PlainDate): Temporal.Instant =>
 
 // --- Epoch-seconds ↔ Instant (DB boundary) ------------------------------
 
-export const fromEpochSeconds = (n: number): Temporal.Instant =>
-	Temporal.Instant.fromEpochMilliseconds(n * 1000);
-
 export const toEpochSeconds = (i: Temporal.Instant): number =>
 	Math.floor(i.epochMilliseconds / 1000);
 
@@ -52,9 +49,6 @@ export const startOfDayUTC = (d: Temporal.PlainDate): Temporal.Instant => toInst
 
 export const endOfDayUTC = (d: Temporal.PlainDate): Temporal.Instant =>
 	d.add({ days: 1 }).toZonedDateTime("UTC").subtract({ nanoseconds: 1 }).toInstant();
-
-/** End of tomorrow UTC */
-export const endOfTomorrowUTC = (): Temporal.Instant => endOfDayUTC(today().add({ days: 1 }));
 
 // --- Month enumeration ---------------------------------------------------
 

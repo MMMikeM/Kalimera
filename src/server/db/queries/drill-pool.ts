@@ -157,5 +157,3 @@ export const getDrillVocabPool = async (options: DrillPoolOptions) => {
 
 	return { allIds: entries.flatMap(([, ids]) => ids), bucketMap };
 };
-
-export type DrillPool = Awaited<ReturnType<typeof getDrillVocabPool>>;
