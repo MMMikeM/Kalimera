@@ -16,7 +16,7 @@ export const ExamplePills = ({
 		{examples.map((ex) => (
 			<div
 				key={ex.greek}
-				className={`rounded-full border ${borderClassName} bg-white px-3 py-1.5 text-sm`}
+				className={`rounded-full border ${borderClassName} bg-card px-3 py-1.5 text-sm`}
 			>
 				<GreekText tone="inherit" size="sm" className={greekClassName}>
 					{ex.greek}

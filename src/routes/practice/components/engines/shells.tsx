@@ -449,7 +449,7 @@ export const SummaryScreen = ({ backTo }: { backTo?: string }) => {
 					</p>
 					<div className="space-y-2">
 						{mistakeEntries.map(({ attempt: a, count }) => (
-							<div key={a.form.id} className="rounded-lg border bg-white p-3">
+							<div key={a.form.id} className="rounded-lg border bg-card p-3">
 								<div className="flex items-baseline gap-2">
 									<GreekGloss greek={a.form.greek} size="lg" />
 									<span className="text-xs text-muted-foreground">{a.form.label}</span>

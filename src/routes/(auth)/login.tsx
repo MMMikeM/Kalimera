@@ -210,7 +210,7 @@ const LoginRoute = () => {
 								<span className="w-full border-t border-stone-200" />
 							</div>
 							<div className="relative flex justify-center text-xs uppercase">
-								<span className="bg-white px-2 text-stone-500">or</span>
+								<span className="bg-card px-2 text-stone-500">or</span>
 							</div>
 						</div>
 

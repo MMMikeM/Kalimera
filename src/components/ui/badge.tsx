@@ -13,9 +13,9 @@ const badgeVariants = tv({
 			warning: "border-transparent bg-honey-200 text-honey-text",
 			error: "border-transparent bg-incorrect-light text-incorrect",
 			destructive:
-				"border-transparent bg-destructive text-white focus-visible:ring-destructive/20 dark:bg-destructive/60 dark:focus-visible:ring-destructive/40 [a&]:hover:bg-destructive/90",
+				"border-transparent bg-destructive text-white focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 [a&]:hover:bg-destructive/90",
 			outline:
-				"border-stone-300 bg-white text-stone-700 [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
+				"border-stone-300 bg-card text-stone-700 [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
 		},
 		size: {
 			xs: "px-1.5 py-0.5 text-xs",

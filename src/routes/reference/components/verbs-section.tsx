@@ -346,7 +346,7 @@ const PatternSection: React.FC<{
 				) : undefined
 			}
 		>
-			<div className="rounded-lg border border-stone-200 bg-white p-4 shadow-sm">
+			<div className="rounded-lg border border-stone-200 bg-card p-4 shadow-sm">
 				<ParadigmTable
 					stem={pattern.canonical.stem}
 					meaning={pattern.canonical.meaning}
@@ -400,7 +400,7 @@ const PatternIdentifier: React.FC = () => (
 							<span
 								key={ex}
 								className={cn(
-									"rounded-md border bg-white px-2 py-1 font-mono text-sm",
+									"rounded-md border bg-card px-2 py-1 font-mono text-sm",
 									style.border,
 									style.text,
 								)}
@@ -496,7 +496,7 @@ const AoristPatternCard: React.FC<{
 		badge={<span className={`font-mono text-base ${SCHEME[scheme].text}`}>{badge}</span>}
 		description={description}
 	>
-		<div className="rounded-lg border border-stone-200 bg-white p-4 shadow-sm">
+		<div className="rounded-lg border border-stone-200 bg-card p-4 shadow-sm">
 			<ParadigmTable
 				infinitive={paradigm.infinitive}
 				meaning={paradigm.meaning}
@@ -531,7 +531,7 @@ const AoristFinder: React.FC = () => (
 		title="Find your verb's ending"
 		description="Find how your verb ends in the present on the left. The past ending is in the middle."
 	>
-		<div className="overflow-hidden rounded-lg border border-stone-200 bg-white">
+		<div className="overflow-hidden rounded-lg border border-stone-200 bg-card">
 			{/* eslint-disable-next-line better-tailwindcss/no-restricted-classes -- fixed finder columns, no token fit */}
 			<div className="grid grid-cols-[1fr_auto] items-baseline gap-x-6 border-b border-stone-100 px-4 py-2 text-xs tracking-widest text-stone-400 uppercase sm:grid-cols-[13rem_5rem_1fr]">
 				<span>Present</span>
@@ -579,7 +579,7 @@ const AoristExceptions: React.FC = () => (
 	>
 		<div className="grid gap-3 sm:grid-cols-2">
 			{AORIST_EXCEPTIONS.map((group) => (
-				<div key={group.title} className="rounded-lg border border-stone-200 bg-white p-4">
+				<div key={group.title} className="rounded-lg border border-stone-200 bg-card p-4">
 					<p className="mb-1 text-sm font-medium text-stone-800">{group.title}</p>
 					<p className="mb-3 text-xs text-stone-500">{group.detail}</p>
 					<div className="space-y-1">
@@ -683,7 +683,7 @@ export const PastTenseSection: React.FC = () => {
 					title="Consonant collision"
 					description="When the stem's final consonant meets σ, they merge. Vowel stems just add σ directly."
 				>
-					<div className="divide-y divide-stone-100 overflow-hidden rounded-lg border border-stone-200 bg-white">
+					<div className="divide-y divide-stone-100 overflow-hidden rounded-lg border border-stone-200 bg-card">
 						{CONSONANT_RULES.map((rule) => (
 							<div key={rule.note} className="grid grid-rule items-center gap-4 px-4 py-3">
 								<div className="flex flex-wrap gap-1.5">
@@ -781,7 +781,7 @@ export const PastTenseSection: React.FC = () => {
 									? "Suppletive — completely different stem"
 									: "Irregular — follows rules loosely"}
 							</p>
-							<div className="divide-y divide-honey-100 rounded-lg border border-honey-200 bg-white">
+							<div className="divide-y divide-honey-100 rounded-lg border border-honey-200 bg-card">
 								{IRREGULAR_AORIST_STEMS.filter((s) => s.category === cat).map((s) => (
 									<div
 										key={s.present}
@@ -815,7 +815,7 @@ export const PastContinuousSection: React.FC = () => {
 			/>
 
 			<div className="space-y-4">
-				<div className="rounded-lg border border-stone-200 bg-white p-4">
+				<div className="rounded-lg border border-stone-200 bg-card p-4">
 					<p className="mb-3 text-sm text-stone-600">
 						Use the <strong>present stem</strong> with the same -α -ες -ε -αμε -ατε -αν endings. For
 						-άω verbs, insert{" "}
@@ -1156,7 +1156,7 @@ export const PresentTenseSection: React.FC = () => (
 					{otherIrregulars.map((verb) => (
 						<div
 							key={verb.infinitive}
-							className="rounded-lg border border-honey-200 bg-white p-4 shadow-sm"
+							className="rounded-lg border border-honey-200 bg-card p-4 shadow-sm"
 						>
 							<ParadigmTable
 								infinitive={verb.infinitive}

@@ -3,6 +3,7 @@ import { BarChart3, ChevronDown, Info, LogOut, Search } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 import { SearchResults } from "@/components/SearchResults";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,
@@ -72,7 +73,7 @@ export const Header = ({ isAuthenticated, currentSection = "", onLogout }: Heade
 							onChange={(e) => setSearchTerm(e.target.value)}
 							onFocus={handleSearchFocus}
 							onBlur={handleSearchBlur}
-							className="w-full rounded-full border border-transparent bg-stone-100 py-2 pr-4 pl-10 text-sm transition-all placeholder:text-stone-500 focus:border-stone-300 focus:bg-white focus:ring-2 focus:ring-terracotta-300 focus:outline-none"
+							className="w-full rounded-full border border-transparent bg-stone-100 py-2 pr-4 pl-10 text-sm transition-all placeholder:text-stone-500 focus:border-stone-300 focus:bg-card focus:ring-2 focus:ring-terracotta-300 focus:outline-none"
 						/>
 						{isSearchOpen && searchTerm.length > 0 && (
 							<div className="absolute top-full right-0 left-0 z-50 mt-2 max-h-page overflow-hidden rounded-md border bg-popover p-0 text-popover-foreground shadow-md">
@@ -110,6 +111,7 @@ export const Header = ({ isAuthenticated, currentSection = "", onLogout }: Heade
 							</Link>
 						);
 					})}
+					<ThemeToggle />
 					{isAuthenticated ? (
 						<DropdownMenu>
 							<DropdownMenuTrigger className="flex items-center gap-1 rounded-lg px-3 py-2 text-sm text-stone-600 transition-colors hover:bg-stone-100 hover:text-stone-800">

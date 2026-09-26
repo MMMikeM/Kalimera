@@ -13,6 +13,7 @@ import { useRegisterSW } from "virtual:pwa-register/react";
 import { Header } from "@/components/Header";
 import { MobileHeader } from "@/components/MobileHeader";
 import { MobileNav } from "@/components/MobileNav";
+import { themeInitScript } from "@/lib/theme";
 import { type RouterContext } from "@/router";
 import type { AuthSession } from "@/server/auth/session";
 import { getServerAuthFn, logoutFn } from "@/server/fns/auth";
@@ -33,6 +34,8 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 			{ name: "apple-mobile-web-app-capable", content: "yes" },
 			{ name: "apple-mobile-web-app-status-bar-style", content: "black-translucent" },
 			{ name: "apple-mobile-web-app-title", content: "καλημέρα" },
+			// The app ships its own dark theme; stop the Dark Reader extension re-darkening it.
+			{ name: "darkreader-lock" },
 			{ title: "Kalimera" },
 		],
 		links: [
@@ -60,9 +63,11 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 
 function RootComponent() {
 	return (
-		<html lang="en">
+		<html lang="en" suppressHydrationWarning>
 			<head>
 				<HeadContent />
+				{/* After HeadContent so the theme-color meta exists when the script runs */}
+				<script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
 			</head>
 			<body className="font-sans text-stone-800 antialiased">
 				<RootBody />

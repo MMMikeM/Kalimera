@@ -55,8 +55,8 @@ const LevelToggles = ({
 					onClick={() => onToggle(level)}
 					className={`rounded-full border px-2.5 py-1 text-xs transition-colors ${
 						on
-							? "border-stone-700 bg-stone-700 text-white"
-							: "border-stone-200 bg-white text-stone-600 hover:bg-stone-50"
+							? "border-stone-700 bg-stone-700 text-cream"
+							: "border-stone-200 bg-card text-stone-600 hover:bg-stone-50"
 					}`}
 				>
 					{level === "unlevelled" ? "Unlevelled" : level}
@@ -103,7 +103,7 @@ const NounBlock = ({
 					<span className="ml-1.5 font-normal text-stone-400">{nouns.length}</span>
 				</h2>
 			)}
-			<div className="overflow-hidden rounded-lg border border-stone-200 bg-white">
+			<div className="overflow-hidden rounded-lg border border-stone-200 bg-card">
 				<NounList rows={visible} />
 				{hidden > 0 && (
 					<button

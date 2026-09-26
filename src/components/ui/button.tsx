@@ -7,10 +7,10 @@ export const buttonVariants = tv({
 		variant: {
 			primary: "bg-terracotta text-white shadow-terracotta-200 hover:bg-terracotta-600",
 			secondary:
-				"border border-stone-200 bg-white/80 text-stone-700 shadow-stone-100 backdrop-blur-sm hover:border-stone-300 hover:bg-white",
+				"border border-stone-200 bg-card/80 text-stone-700 shadow-stone-100 backdrop-blur-sm hover:border-stone-300 hover:bg-card",
 			outline:
-				"border-2 border-stone-300 bg-white/50 text-stone-700 hover:border-stone-400 hover:bg-stone-50",
-			ghost: "text-stone-700 backdrop-blur-sm hover:bg-white/60",
+				"border-2 border-stone-300 bg-card/50 text-stone-700 hover:border-stone-400 hover:bg-stone-50",
+			ghost: "text-stone-700 backdrop-blur-sm hover:bg-card/60",
 		},
 		size: {
 			sm: "px-3 py-1.5 text-sm",
