@@ -96,7 +96,7 @@ interface MultiSelectStrategy<K extends string> {
 
 export type { DimensionSpec };
 
-export type ReverseStrategy<K extends string = string> =
+type ReverseStrategy<K extends string = string> =
 	| SelfAssessStrategy
 	| SingleSelectStrategy
 	| MultiSelectStrategy<K>;
