@@ -2,8 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
 import { adjacentCefrPool } from "@/lib/cefr";
-import type { DrillQuestion } from "@/lib/drill/generate-questions";
-import type { DrillBucket } from "@/lib/drill/types";
+import type { DrillBucket, DrillQuestion } from "@/lib/drill/types";
 import { typedEntries } from "@/lib/object";
 import { requireAuth } from "@/server/auth/session";
 import { getDrillVocabPool } from "@/server/db/queries/drill-pool";

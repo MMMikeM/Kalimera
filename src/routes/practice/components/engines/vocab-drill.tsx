@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-import type { DrillQuestion } from "@/lib/drill/generate-questions";
+import type { DrillQuestion } from "@/lib/drill/types";
 
 import type { DrillForm } from "./deck";
 import { Drill, type ReverseStrategy } from "./drill";
