@@ -11,8 +11,8 @@ Read it as the implementer. The app has one learner, who has temporal lobe epile
 
 Two principles sit under every rule:
 
-1. **Working memory is tighter than folk psychology assumes.** Cap genuinely new content at 3 learning units per screen. A learning unit is a vocabulary card or a paradigm row being introduced, not every visual element; the elements inside one bounded card count as a single chunk. Cowan's 4 is the general ceiling, and 3 is a stipulated safety margin for this profile, not a derived constant; it is cheap to honour because an under-filled screen costs a tap while an overloaded one costs encoding. Review content is exempt, since familiar items chunk semantically. In paradigm tables the ceiling counts deviations, not cells (see the tables section).
-2. **Salience is zero-sum.** Every emphasised element competes with every other for encoding resources, and boosting one measurably reduces memory for everything else on screen. Emphasis is spent, not free. One focal point per screen.
+1. **Working memory is tighter than folk psychology assumes.** Cap genuinely new content at 3 learning units per screen. A learning unit is a vocabulary card being introduced, or in a paradigm table the pattern plus each cell that deviates from it; it is never every visual element, and the elements inside one bounded card count as a single chunk. Cowan's 4 is the general ceiling, and 3 is a stipulated safety margin for this profile, not a derived constant; it is cheap to honour because an under-filled screen costs a tap while an overloaded one costs encoding. Review content is exempt, since familiar items chunk semantically. In paradigm tables the ceiling counts deviations, not cells (see the tables section).
+2. **Salience is zero-sum.** Every emphasised element competes with every other for attention at encoding, and boosting one can reduce memory for what surrounds it (the isolation literature finds this cost inconsistently, so treat it as likely rather than guaranteed). Emphasis is spent, not free. One focal point per screen.
 
 ## The numbers
 
@@ -33,18 +33,18 @@ In a personal app under active development the threat is not a redesign initiati
 
 - A refactor of a shipped screen must render established elements in their established positions. Treat position as part of the component's contract.
 - Never restyle or rearrange a shipped screen as a side effect of unrelated work. When a layout change is genuinely worth its relearning cost, batch such changes and make them rarely and deliberately.
-- Never reorder content by frequency or recency on learning surfaces.
-- Paged card presentation, not infinite scroll. Position is a retrieval cue; scrolling destroys it and adds attention drift.
+- Never reorder the structure of a learning surface (sections, tables, rows, tabs) by frequency or recency. The order in which a drill serves its items is a scheduling decision, not layout, and is governed by the drill-flow section.
+- Card sequences (drills, vocabulary sets) are paged, never infinite scroll: position is a retrieval cue that scrolling destroys. Reference pages may scroll, provided their section order is fixed and long tables are grouped (see tables).
 
 Evidence note (contested): do not assume contextual cueing runs on extra-hippocampal systems and is therefore robust for this profile. Classic amnesia work found it impaired with broad medial temporal damage, later work found it intact when damage was confined to the hippocampus proper, and TLE typically involves the wider medial temporal lobe. Hold layout consistency as cheap insurance, not compensation.
 
 ### Contiguity: one learning unit, one bounded region
 
-Put every element of a learning unit inside one visibly bounded card: word, transliteration (this app uses greeklish, not IPA), example sentence, translation, and image when present. Containment must be explicit for this profile: a visible border or background delineation, not just whitespace.
+Put every element of a learning unit inside one visibly bounded card: word, pronunciation gloss (rendered by `<Pronunciation>`; not IPA, and never the reversible matching spelling from `greekToPhonetic`, see CLAUDE.md), example sentence, translation, and image when present. Containment must be explicit for this profile: a visible border or background delineation, not just whitespace.
 
 - No translation on a different screen from its word.
 - No tap-to-reveal on a first encounter with an item. A gated reveal is a retrieval demand, and first exposure must be errorless (see drill flow).
-- No pronunciation carried only by an audio affordance with no visible transliteration.
+- No pronunciation carried only by an audio affordance with no visible gloss.
 - 8-16px of clear space between elements inside the card. Contained, not crushed.
 
 Contiguity applies within table rows too: a gloss pushed to the far margin by `justify-between` is the same failure as a translation on another screen (see tables).
@@ -78,10 +78,10 @@ For Greek: case and gender are global, recurring wherever nouns, articles, adjec
 
 Every value of a global axis gets a named token keyed to the grammatical role, not the colour:
 
-- `--case-nominative-*` (full tonal scale), `--case-accusative-*`, `--case-genitive-*`
-- `--gender-masculine-*`, `--gender-feminine-*`, `--gender-neuter-*`
+- `--color-case-nominative-*` (full tonal scale), `--color-case-accusative-*`, `--color-case-genitive-*`
+- `--color-gender-masculine-*`, `--color-gender-feminine-*`, `--color-gender-neuter-*`
 
-Same colour, same meaning, every time, on every page that teaches the axis. Role-keyed naming does not mechanically prevent misuse (a token is just a named value unless a lint rule enforces it), but it makes misapplication conspicuous in review, which is most of its value.
+They live in the `@theme static` block of `src/index.css`, and `src/constants/grammar-palette.ts` is the only place that maps a grammar role to a token. Same colour, same meaning, every time, on every page that teaches the axis, and in both themes: dark mode remaps lightness but never hue, so check any new token in both. Role-keyed naming does not mechanically prevent misuse (a token is just a named value unless a lint rule enforces it), but it makes misapplication conspicuous in review, which is most of its value.
 
 Use the tonal scale for intensity: subtle (background tints, cell washes), default (labels, chips, concept cards), strong (focus states, errors, focal signalling). Role constant, intensity contextual. Signalling intensity on task-relevant features goes up for this profile, never down, and always via heavier variants of the reserved tokens; never invent extra palettes, and strip decorative non-reserved colour from the surround.
 
@@ -91,11 +91,9 @@ Hard rule: a grammar colour used as fill, background or border around Greek gram
 
 Forbidden: a feminine-rose background behind a non-feminine example; a nominative-blue tint on a card holding a non-nominative example; a genitive-green border around an explanation of something else; any grammar colour applied because it looks nice with the content.
 
-Fine: grammar colours on navigation, buttons, illustrations, empty states, error toasts and loading spinners, anything not wrapped around Greek grammatical content; a grammar colour as a link colour or an icon fill far from grammatical examples.
+Also forbidden: grammar tokens on anything that makes no grammatical claim at all (navigation, buttons, links, empty states, toasts, spinners). Every appearance of a role colour rehearses its meaning; spending it on chrome dilutes the association the learner is building. Chrome uses the base palette (`cream`, `terracotta`, `ocean`, `olive` and the rest), which asserts nothing. CLAUDE.md states the same rule; if the two ever disagree, CLAUDE.md wins and this file is stale.
 
-Context test for ambiguous cases: would the learner plausibly read the colour as encoding the grammatical value of nearby content? If yes, don't.
-
-One specific collision: a CTA inside a grammar card that uses a grammar colour reads as part of the grammatical system. Give it a different colour, or make it neutral whenever it sits inside a coloured grammar card.
+Do not reason from hue: `ocean` and `case-nominative` sit near the same hue but are different tokens with different jobs. Context test for base-palette colours near Greek content: would the learner plausibly read the colour as encoding the grammatical value of that content? If yes, move it further away or go neutral stone. A CTA inside a coloured grammar card is the common collision; make it neutral.
 
 ### Per-axis cap: roughly 4
 
@@ -129,15 +127,19 @@ Colouring only the outlier of an axis (the feminine variants that decline differ
 
 ### Per-page key, near the top, always
 
-Wherever an axis is deployed, establish the colour-to-role key visibly near the top. Good examples in the app: the Cases concept cards (Doer, Target, Owner, each with its colour), the "Which Pattern?" selector on Verbs before any paradigm tables, the coloured section headers on Pronouns. Bad: the bottom-of-page legend Prepositions currently uses, seen only after the confusion it should have prevented. The key sits at default intensity and never outranks the screen's focal element; on drill screens keep it compact.
+Wherever an axis is deployed, establish the colour-to-role key visibly near the top. Good examples in the app: the Cases concept cards (Doer, Target, Owner, each with its colour), the "Which Pattern?" selector on Verbs before any paradigm tables, the coloured section headers on Pronouns. Bad: a legend at the bottom of the page, seen only after the confusion it should have prevented (Prepositions shipped this way and was fixed; its key now sits above the coloured forms). The key sits at default intensity and never outranks the screen's focal element; on drill screens keep it compact.
 
 ## Typography
 
-Legibility, not desirable difficulty. Choose fonts for legibility at target sizes, keep the typographic palette small, and use weight and italics as systematic signals: stressed syllables bold, loanwords italic, the target morpheme heavier. Sans Forgetica and disfluent fonts failed to replicate across multiple independent labs; harder-to-read aids frustration, not retention. Size above the legibility threshold buys nothing except the feeling of importance.
+Legibility, not desirable difficulty. Choose fonts for legibility at target sizes, keep the typographic palette small, and give each typographic signal one job. Weight marks the deviating cell or target morpheme (see tables). Stress is underlined in the pronunciation gloss, never bolded, because bold is already spoken for in paradigm tables; `<Pronunciation>` does this itself. Italics are free for loanwords. Sans Forgetica and disfluent fonts failed to replicate across multiple independent labs; harder-to-read aids frustration, not retention. Size above the legibility threshold buys nothing except the feeling of importance.
 
 ## Motion
 
-One good use: procedural animation of morphology, an infinitive animating into its conjugated form. Give it pause, replay and scrub, and segment long sequences into chunks. All other motion, transitions, micro-interactions, polish, is attention capture without encoding benefit, and for this profile is actively harmful rather than neutral. No interface motion beyond the bare minimum needed for affordance signalling, and no ambient motion ever.
+One good use: procedural animation of morphology, an infinitive animating into its conjugated form. Give it pause, replay and scrub, and segment long sequences into chunks. Everything else is attention capture without encoding benefit. The harm is competition with the focal element, so the rule scales with where the motion is and who started it:
+
+- **Never, anywhere:** ambient or looping motion (pulses, shimmer, auto-playing backgrounds), motion on progress metrics, and anything that plays without the learner acting. Flashing faster than three times a second is out regardless (WCAG 2.3.1); photosensitivity is uncommon in TLE, so this is cheap insurance rather than a known trigger.
+- **Not on learning surfaces** (cards, drills, paradigm tables, any screen with a learning unit in view): transitions and micro-interactions beyond the bare minimum needed for affordance signalling. For this profile they are actively harmful rather than neutral.
+- **Allowed in chrome:** a brief (500ms or less), one-shot transition the learner triggered, which settles to a static state before attention returns to content and honours `prefers-reduced-motion`. The theme toggle's sunset icon and the page cross-fade on a theme switch are the examples. A short fade over an unavoidable whole-screen luminance change is comfort, not decoration. This carve-out is a stipulated judgement, not derived from the literature: it earns no encoding benefit and is permitted only because it cannot compete with a focal element.
 
 A live example of the failure: the streak indicator in `WeekStreak.tsx` currently pulses via `animate-pulse`, decorative motion on a progress metric, tripping this rule and progress-display honesty at once. Strip it.
 
@@ -200,7 +202,7 @@ Built around the two documented risks of this profile: accelerated long-term for
 
 Never demand retrieval on a first encounter. Stage every new item:
 
-1. **First exposure:** the full card visible at once (word, transliteration, translation, example; image when available), zero retrieval demand.
+1. **First exposure:** the full card visible at once (word, pronunciation gloss, translation, example; image when available), zero retrieval demand.
 2. **Second exposure:** cued recall. Prompt with the translation or a gapped example sentence (the image, once images exist); produce the word.
 3. **Third exposure:** recognition. Choose the correct form among plausible alternatives.
 4. **Free recall** only after multiple successful cued and recognition rounds.
@@ -243,7 +245,7 @@ A streak can be seven days of re-encounters at intervals too short to measure re
 
 - **Layout drift.** Refactors that move established elements, restyles folded into unrelated work, frequency-based reordering. Disrupts the spatial associations doing silent work.
 - **"Calm minimalist pale everything" as ADHD-friendly.** Inverts the requirement: loud target, quiet surround.
-- **Grammar colours as decoration around non-matching content.** The colour becomes a lie and the system breaks.
+- **Grammar colours as decoration**, whether around non-matching content (the colour becomes a lie) or on chrome that makes no claim (the association dilutes). Either way the system breaks.
 - **Flex rows where a table is meant.** Ragged columns destroy the vertical comparison that is the only reason to use a table.
 - **Encoding the same fact twice** (bolding the irregular cells and listing them above the table). Two channels for one fact read as two facts.
 - **Colour keys at the bottom of the page.** Seen only after the confusion they should have prevented.
@@ -256,13 +258,13 @@ A streak can be seven days of re-encounters at intervals too short to measure re
 
 1. Does this element need to be this visually loud, given that salience is zero-sum?
 2. Is every decoration doing encoding work, or is it just there?
-3. Is this colour making a grammatical claim about the content it wraps? If yes, is the claim accurate? If it is not making a claim, is it a grammar token misused as decoration near grammatical content?
+3. Is this colour making a grammatical claim about the content it wraps? If yes, is the claim accurate? If it is not making a claim, it must not be a grammar token at all, and a base-palette colour must not be mistakable for one.
 4. If a global axis is deployed, is it the reserved token at the right intensity, not an invented colour?
 5. Is the colour key visible near the top of the page?
 6. Will this layout be identical for the learner next month?
 7. Are there more than 3 new learning units in the perceptual frame?
 8. If it is a table: do the columns align, is there an anchor cell, and are derivable cells receded so only deviations count against the ceiling?
-9. If motion is involved: is it procedural? If not, cut it.
+9. If motion is involved: is it procedural, or a learner-triggered one-shot in chrome that honours reduced motion? If neither, cut it.
 10. Does the first exposure demand retrieval, or show everything first?
 11. If the answer to "why is this here" is "because it looks nicer": it is decoration. Reconsider.
 
