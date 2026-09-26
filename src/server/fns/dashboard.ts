@@ -21,7 +21,7 @@ type Stats = {
 };
 
 export const getDashboardDataFn = createServerFn({ method: "GET" }).handler(async () => {
-	const { userId } = requireAuth();
+	const { userId } = await requireAuth();
 
 	const [rawStats, user, lastPracticeDate, completedSessions, rustyDrills] = await Promise.all([
 		getReviewStats(userId),

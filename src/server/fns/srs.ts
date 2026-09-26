@@ -16,7 +16,7 @@ import {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export const startSessionFn = createServerFn({ method: "POST" }).handler(async () => {
-	const { userId } = requireAuth();
+	const { userId } = await requireAuth();
 	const row: PracticeSessionInsert = { userId };
 	const session = await startSession(row);
 	return { success: true, session };
@@ -36,7 +36,7 @@ export const recordAttemptFn = createServerFn({ method: "POST" })
 		}),
 	)
 	.handler(async ({ data }) => {
-		const { userId } = requireAuth();
+		const { userId } = await requireAuth();
 		const attempt = await recordAttempt({
 			userId,
 			sessionId: data.sessionId,
@@ -60,7 +60,7 @@ export const completeSessionFn = createServerFn({ method: "POST" })
 		}),
 	)
 	.handler(async ({ data }) => {
-		const { userId } = requireAuth();
+		const { userId } = await requireAuth();
 		const session = await completeSession(data);
 
 		const attempts = await listSessionVocabAttempts(data.sessionId);

@@ -3,30 +3,19 @@ import "@tanstack/react-start";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { createWebAuthnFromRequest } from "@/server/auth";
-
-interface RegisterOptionsBody {
-	userId: number;
-	username: string;
-}
+import { getAuthSession } from "@/server/auth/session";
 
 export const Route = createFileRoute("/api/webauthn/register-options")({
 	server: {
 		handlers: {
 			POST: async ({ request }) => {
 				try {
-					const body = (await request.json()) as RegisterOptionsBody;
-					const { userId, username } = body;
-
-					if (!userId || !username) {
-						return Response.json(
-							{ error: "Missing required fields: userId, username" },
-							{ status: 400 },
-						);
-					}
+					const auth = await getAuthSession();
+					if (!auth) return Response.json({ error: "Not signed in" }, { status: 401 });
 
 					const webauthn = createWebAuthnFromRequest(request);
 
-					const options = await webauthn.generateRegistrationOptions(userId, username);
+					const options = await webauthn.generateRegistrationOptions(auth.userId, auth.username);
 
 					return Response.json(options);
 				} catch (error) {
