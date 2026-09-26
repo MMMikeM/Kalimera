@@ -1,10 +1,6 @@
-import { adjacentCefrPool } from "@/lib/cefr";
 import type { DrillQuestion } from "@/lib/drill/generate-questions";
-import type { DrillBucket } from "@/lib/drill/types";
-import { typedEntries } from "@/lib/object";
 import type { PersonNumber } from "@/server/db/enums";
 import { getDrillVocabPool } from "@/server/db/queries/drill-pool";
-import { ensureUserProgress } from "@/server/db/queries/user-progress";
 import {
 	getVerbsWithConjugationsForTense,
 	getVerbsWithConjugationsForTenses,
@@ -42,25 +38,8 @@ type LadderTense = keyof typeof LADDER_TENSES;
 
 const LADDER_TENSE_LIST = ["present", "aorist", "future"] as const;
 
-const drawVerbPool = async (userId: number, drillId: string, limit: number) => {
-	const { currentCefrLevel } = await ensureUserProgress(userId);
-
-	const pool = await getDrillVocabPool({
-		userId,
-		drillId,
-		wordTypes: ["verb"],
-		cefrPool: adjacentCefrPool(currentCefrLevel),
-		limit,
-	});
-
-	const entries = typedEntries(pool);
-	const bucketMap = new Map<number, DrillBucket>();
-	for (const [bucket, ids] of entries) {
-		for (const id of ids) bucketMap.set(id, bucket);
-	}
-
-	return { allIds: entries.flatMap(([, ids]) => ids), bucketMap };
-};
+const drawVerbPool = (userId: number, drillId: string, limit: number) =>
+	getDrillVocabPool({ userId, drillId, wordTypes: ["verb"], limit });
 
 const assertEnough = (questions: DrillQuestion[], limit: number) => {
 	if (questions.length < limit) {
@@ -80,14 +59,18 @@ const sg1ByTense = (conjugations: Array<{ tense: string; person: string; form: s
 	return forms;
 };
 
+/** What distinguishes one conjugation drill from another. */
+export interface ConjugationDrill {
+	tense: "present" | "aorist" | "past_continuous" | "future";
+	idPrefix: string;
+	persons?: readonly PersonNumber[];
+}
+
 export const getVerbConjugationQuestions = async (
 	userId: number,
-	limit: number,
-	tense: "present" | "aorist" | "past_continuous" | "future",
-	idPrefix: string,
-	timeLimit: number,
 	drillId: string,
-	persons?: PersonNumber[],
+	limit: number,
+	{ tense, idPrefix, persons }: ConjugationDrill,
 ): Promise<DrillQuestion[]> => {
 	const { allIds, bucketMap } = await drawVerbPool(userId, drillId, limit);
 	const vocabRows = await getVerbsWithConjugationsForTense(allIds, tense);
@@ -121,7 +104,6 @@ export const getVerbConjugationQuestions = async (
 				id: `${idPrefix}${vocab.id}-${conj.person}`,
 				prompt,
 				correctGreek: conj.form,
-				timeLimit,
 				vocabId: vocab.id,
 				bucket: bucketMap.get(vocab.id),
 			});
@@ -162,7 +144,6 @@ export const getTenseLadderQuestions = async (
 				id: `db-verb-ladder-${vocab.id}-${step.tense}`,
 				prompt: `${step.from} → ${target.timeWord} (${target.label})`,
 				correctGreek: step.to,
-				timeLimit: 4500,
 				vocabId: vocab.id,
 				bucket: bucketMap.get(vocab.id),
 			});
@@ -194,7 +175,6 @@ export const getTenseRecognitionQuestions = async (
 				id: `db-verb-tense-${vocab.id}-${tense}`,
 				prompt: `${vocab.englishTranslation} · ${target.timeWord} (${target.label})`,
 				correctGreek: form,
-				timeLimit: 4000,
 				vocabId: vocab.id,
 				bucket: bucketMap.get(vocab.id),
 				dimension: target.dimension,

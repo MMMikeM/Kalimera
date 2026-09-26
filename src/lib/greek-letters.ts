@@ -1,5 +1,6 @@
 /**
- * Greek text primitives shared by the two Latin-rendering conventions.
+ * Greek text primitives: accent handling for the declension and conjugation
+ * builders, and the normalisation shared by the two Latin-rendering conventions.
  *
  * `greek-transliteration.ts` maps Greek to a reversible keyboard spelling for
  * answer matching; `greek-phonetic.ts` maps it to a pronunciation gloss for
@@ -18,6 +19,38 @@ const COMBINING_MARKS = `[${String.fromCharCode(0x300)}-${String.fromCharCode(0x
  * the digraph maps (it matches nothing in them), then is dropped from output.
  */
 export const DIGRAPH_BREAK = String.fromCharCode(0);
+
+const TONOS_MARK = new RegExp(ACUTE, "g");
+const ALL_MARKS = new RegExp(COMBINING_MARKS, "g");
+
+/**
+ * Remove the tonos: Άλφα → Αλφα, ρωτάω → ρωταω.
+ *
+ * The diaeresis survives by default (ΐ → ϊ), because ϊ is a separate syllable
+ * that stress placement has to count. Pass `keepDiaeresis: false` for a bare
+ * comparison key, where ταΐζω and τάισα should both begin ται-.
+ *
+ * Each precomposed letter maps to one precomposed letter, so indices into the
+ * input still line up with the output.
+ */
+export const stripTonos = (text: string, { keepDiaeresis = true } = {}): string =>
+	text
+		.normalize("NFD")
+		.replace(keepDiaeresis ? TONOS_MARK : ALL_MARKS, "")
+		.normalize("NFC");
+
+const WITH_TONOS: Record<string, string> = {
+	α: "ά",
+	ε: "έ",
+	η: "ή",
+	ι: "ί",
+	ο: "ό",
+	υ: "ύ",
+	ω: "ώ",
+};
+
+/** The accented form of a lowercase vowel (α → ά), or undefined for anything else. */
+export const withTonos = (vowel: string): string | undefined => WITH_TONOS[vowel];
 
 // A vowel pair is two sounds, not one, when the second vowel carries a
 // diaeresis (ταΐζω, τάϊσα, τρόλεϊ) or the first carries the accent (Μάιος).
@@ -39,7 +72,7 @@ export const stripGreekDiacritics = (text: string): string =>
 		.normalize("NFD")
 		.replace(DIAERESIS_PAIR, `$1${DIGRAPH_BREAK}$3`)
 		.replace(ACCENTED_PAIR, `$1${DIGRAPH_BREAK}$2`)
-		.replace(new RegExp(COMBINING_MARKS, "g"), "");
+		.replace(ALL_MARKS, "");
 
 /**
  * Word-initial γκ/μπ/ντ are realised as g/b/d; medial as ng/mb/nd.
