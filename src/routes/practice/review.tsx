@@ -9,7 +9,7 @@ import { requireAuth } from "@/server/auth/session";
 import { getSchemaRust } from "@/server/db/queries/analytics/drill-stats";
 
 const getReviewDrillsFn = createServerFn({ method: "GET" }).handler(async () => {
-	const { userId } = requireAuth();
+	const { userId } = await requireAuth();
 	const rust = await getSchemaRust(userId);
 	return rust.filter((d) => DRILL_REGISTRY[d.drillId]);
 });

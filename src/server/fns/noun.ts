@@ -73,7 +73,7 @@ export const getNounDrillItemsFn = createServerFn({ method: "GET" })
 		}),
 	)
 	.handler(async ({ data }) => {
-		const { userId } = requireAuth();
+		const { userId } = await requireAuth();
 		return getNounDrillItemsImpl(userId, data.grammaticalCase, data.drillId, {
 			stripArticleForReverse: data.stripArticleForReverse,
 		});

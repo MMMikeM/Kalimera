@@ -2,7 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 
 import { loginSchema, passwordSetupSchema, registerSchema } from "@/lib/validators/auth";
 import { verifyPassword, hashPassword } from "@/server/auth/password";
-import { clearSessionCookie, getServerSession, setSessionCookie } from "@/server/auth/session";
+import { clearAuthSession, getAuthSession, setAuthSession } from "@/server/auth/session";
 import {
 	createUserWithPassword,
 	findUserByUsername,
@@ -35,7 +35,7 @@ export const loginFn = createServerFn({ method: "POST" })
 		const isValid = await verifyPassword(passwordHash, password);
 		if (!isValid) return { success: false as const, error: "Invalid password" };
 
-		setSessionCookie(user.id, user.username || user.code);
+		await setAuthSession({ userId: user.id, username: user.username || user.code });
 		return { success: true as const };
 	});
 
@@ -43,9 +43,10 @@ export const setupPasswordFn = createServerFn({ method: "POST" })
 	.validator(passwordSetupSchema)
 	.handler(async ({ data }) => {
 		const { newPassword, userId, username } = data;
+		if (await getUserPasswordHash(Number(userId))) throw new Error("Password already set");
 		const hash = await hashPassword(newPassword);
 		await setUserPassword(Number(userId), hash, username);
-		setSessionCookie(Number(userId), username.toLowerCase());
+		await setAuthSession({ userId: Number(userId), username: username.toLowerCase() });
 		return { success: true as const };
 	});
 
@@ -62,13 +63,13 @@ export const registerFn = createServerFn({ method: "POST" })
 		if (!newUser) return { success: false as const, error: "Failed to create account" };
 
 		const finalUsername = newUser.username ?? username;
-		setSessionCookie(newUser.id, finalUsername);
+		await setAuthSession({ userId: newUser.id, username: finalUsername });
 		return { success: true as const, userId: newUser.id, username: finalUsername };
 	});
 
 export const logoutFn = createServerFn({ method: "POST" }).handler(async () => {
-	clearSessionCookie();
+	await clearAuthSession();
 	return { success: true as const };
 });
 
-export const getServerAuthFn = createServerFn().handler(() => getServerSession());
+export const getServerAuthFn = createServerFn().handler(() => getAuthSession());

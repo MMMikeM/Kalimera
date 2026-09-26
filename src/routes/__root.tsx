@@ -14,7 +14,7 @@ import { Header } from "@/components/Header";
 import { MobileHeader } from "@/components/MobileHeader";
 import { MobileNav } from "@/components/MobileNav";
 import { type RouterContext } from "@/router";
-import type { AuthSession } from "@/server/auth/cookie";
+import type { AuthSession } from "@/server/auth/session";
 import { getServerAuthFn, logoutFn } from "@/server/fns/auth";
 
 import "@/index.css";
