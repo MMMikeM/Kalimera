@@ -25,17 +25,12 @@ export const getProgressDataFn = createServerFn({ method: "GET" }).handler(async
 	);
 	const completedDates = completedSessions.map((s) => fromISOString(s.completedAt!));
 
-	const accuracyData = accuracyTrends.map((d) => ({
-		date: d.date,
-		accuracy: d.accuracy / 100,
-	}));
-
 	return {
 		userId,
 		currentStreak: streakLengthFromCompletedSessionDates(completedDates),
 		practiceDates: calendarDates.map((d) => d.date),
-		accuracyData,
+		accuracyData: accuracyTrends.map(({ date, accuracy }) => ({ date, accuracy })),
 		timeInvested,
-		masteredCount: Number(stats.itemsMastered),
+		masteredCount: stats.itemsMastered,
 	};
 });
