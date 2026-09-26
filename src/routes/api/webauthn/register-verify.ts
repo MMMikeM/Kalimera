@@ -4,9 +4,9 @@ import type { RegistrationResponseJSON } from "@simplewebauthn/server";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { createWebAuthnFromRequest } from "@/server/auth";
+import { getAuthSession } from "@/server/auth/session";
 
 interface RegisterVerifyBody {
-	userId: number;
 	response: RegistrationResponseJSON;
 	challenge: string;
 }
@@ -16,19 +16,22 @@ export const Route = createFileRoute("/api/webauthn/register-verify")({
 		handlers: {
 			POST: async ({ request }) => {
 				try {
-					const body = (await request.json()) as RegisterVerifyBody;
-					const { userId, response, challenge } = body;
+					const auth = await getAuthSession();
+					if (!auth) return Response.json({ error: "Not signed in" }, { status: 401 });
 
-					if (!userId || !response || !challenge) {
+					const body = (await request.json()) as RegisterVerifyBody;
+					const { response, challenge } = body;
+
+					if (!response || !challenge) {
 						return Response.json(
-							{ error: "Missing required fields: userId, response, challenge" },
+							{ error: "Missing required fields: response, challenge" },
 							{ status: 400 },
 						);
 					}
 
 					const webauthn = createWebAuthnFromRequest(request);
 
-					const result = await webauthn.verifyRegistration(userId, response, challenge);
+					const result = await webauthn.verifyRegistration(auth.userId, response, challenge);
 
 					return Response.json(result);
 				} catch (error) {
