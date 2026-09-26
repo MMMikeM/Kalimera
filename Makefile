@@ -22,10 +22,10 @@ db-push:
 db-studio:
 	pnpm db:studio
 
-# db:seed does not load .env by itself. Seeding is an idempotent additive
-# upsert, so re-running against prod only adds and updates rows.
+# db:seed loads .env explicitly (tsx does not). Seeding is an idempotent
+# additive upsert, so re-running against prod only adds and updates rows.
 db-seed:
-	node --env-file=.env --import tsx src/scripts/seed.ts
+	pnpm db:seed
 
 db-setup: db-push db-seed
 
@@ -49,14 +49,19 @@ help:
 	@echo "Available targets:"
 	@echo ""
 	@echo "Development:"
-	@echo "  dev              - Start development server"
-	@echo "  build            - Build for production"
-	@echo "  preview          - Serve production build locally"
+	@echo "  dev               - Start development server"
+	@echo "  build             - Build for production"
+	@echo "  preview           - Serve production build locally"
 	@echo ""
 	@echo "Database (Turso — .env holds PRODUCTION credentials):"
-	@echo "  db-push          - Push schema to production"
-	@echo "  db-seed          - Seed production (vocab + verb conjugations; idempotent)"
-	@echo "  db-setup         - Push schema and seed production"
-	@echo "  db-studio        - Open Drizzle Studio (production)"
-	@echo "  db-push-local    - Push schema to a local file DB (no Docker, no prod)"
+	@echo "  db-push           - Push schema to production"
+	@echo "  db-seed           - Seed production (vocab + verb conjugations; idempotent)"
+	@echo "  db-setup          - Push schema and seed production"
+	@echo "  db-studio         - Open Drizzle Studio (production)"
+	@echo "  db-push-local     - Push schema to a local file DB (no Docker, no prod)"
 
+	@echo ""
+	@echo "Code quality:"
+	@echo "  duplicates        - Run jscpd duplicate detection"
+	@echo "  duplicates-report - Run jscpd and open the HTML report"
+	@echo "  duplicates-llm    - Run jscpd and print an LLM-readable clone summary"

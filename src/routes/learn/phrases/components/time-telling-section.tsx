@@ -1,11 +1,9 @@
-import { Clock } from "lucide-react";
 import { cn } from "tailwind-variants";
 
 import { ContentSection, TwoColumnList } from "@/components/ContentSection";
 import { GreekText } from "@/components/GreekText";
-import { TabHero } from "@/components/TabHero";
 
-import type { PhraseItem, PhrasesLoaderData } from "../components/shared";
+import type { PhraseItem } from "./shared";
 
 type TimeListItem = {
 	id: string | number;
@@ -70,7 +68,7 @@ const TimeSubsection = ({
 	);
 };
 
-const TimeTellingSection = ({ items }: { items: PhraseItem[] }) => {
+export const TimeTellingSection = ({ items }: { items: PhraseItem[] }) => {
 	if (items.length === 0) return null;
 
 	const basic = items.filter((i) => (i.metadata as Record<string, unknown>)?.category === "basic");
@@ -148,25 +146,5 @@ const TimeTellingSection = ({ items }: { items: PhraseItem[] }) => {
 				className="border-t-2 border-ocean-400 bg-ocean-50 py-4"
 			/>
 		</ContentSection>
-	);
-};
-
-export const TimeTab = ({ data }: { data: PhrasesLoaderData }) => {
-	const { timeTelling } = data.time;
-
-	return (
-		<div className="space-y-6">
-			<TabHero
-				title="Telling time"
-				greekPhrase="Τι ώρα είναι;"
-				colorScheme="ocean"
-				icon={<Clock size={18} />}
-			>
-				How to ask and tell time in Greek — essential patterns for scheduling and understanding when
-				things happen.
-			</TabHero>
-
-			<TimeTellingSection items={timeTelling} />
-		</div>
 	);
 };

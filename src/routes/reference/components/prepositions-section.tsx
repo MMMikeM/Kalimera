@@ -16,6 +16,8 @@ import {
 } from "@/constants/prepositions";
 import { type Gender, genders } from "@/server/db/enums";
 
+import { BandHeading } from "./BandHeading";
+import { ExamplePills } from "./example-pills";
 import { PrepositionNavigator } from "./preposition-navigator";
 
 const byGender = (a: { gender: Gender }, b: { gender: Gender }) =>
@@ -134,13 +136,13 @@ export const PrepositionsSection: React.FC = () => (
 
 		{/* No contraction — από/με/για + μέχρι/πριν/μετά/χωρίς/προς merged */}
 		<div className="border-t-2 border-stone-900 pt-8">
-			<div className="mb-1 text-xs font-semibold tracking-widest text-stone-400 uppercase">
-				No contraction
-			</div>
-			<h3 className="mb-1 font-serif text-2xl text-stone-900">The rest</h3>
-			<p className="mb-5 text-sm text-stone-500">
-				Use accusative forms on what follows. Nothing transforms.
-			</p>
+			<BandHeading
+				tone="quiet"
+				kicker="No contraction"
+				title="The rest"
+				lede="Use accusative forms on what follows. Nothing transforms."
+				className="mb-5"
+			/>
 			<div className="space-y-3">
 				{[
 					{
@@ -184,10 +186,7 @@ export const PrepositionsSection: React.FC = () => (
 
 		{/* Time expressions — plain section */}
 		<div className="border-t border-stone-200 pt-6">
-			<div className="mb-1 text-xs font-semibold tracking-widest text-stone-400 uppercase">
-				Time
-			</div>
-			<h3 className="mb-4 font-serif text-xl text-stone-900">Time expressions</h3>
+			<BandHeading tone="quiet" size="md" kicker="Time" title="Time expressions" className="mb-4" />
 			<div className="grid gap-6 sm:grid-cols-3">
 				{TIME_EXPRESSIONS.patterns.map((p) => (
 					<div key={p.pattern}>
@@ -210,26 +209,19 @@ export const PrepositionsSection: React.FC = () => (
 
 		{/* Pronouns — plain section */}
 		<div className="border-t border-stone-200 pt-6">
-			<div className="mb-1 text-xs font-semibold tracking-widest text-stone-400 uppercase">
-				With pronouns
-			</div>
-			<h3 className="mb-1 font-serif text-xl text-stone-900">Prepositions with pronouns</h3>
-			<p className="mb-4 text-sm text-stone-500">
-				Weak forms (με, σε) go before verbs only. After a preposition, use the long emphatic forms.
-			</p>
-			<div className="flex flex-wrap gap-2">
-				{PREPOSITION_PRONOUN_INFO.examples.map((ex) => (
-					<div
-						key={ex.greek}
-						className="rounded-full border border-stone-200 bg-card px-3 py-1.5 text-sm"
-					>
-						<GreekText tone="default" size="sm" className="font-medium text-stone-800">
-							{ex.greek}
-						</GreekText>
-						<span className="ml-1 text-stone-500">({ex.english})</span>
-					</div>
-				))}
-			</div>
+			<BandHeading
+				tone="quiet"
+				size="md"
+				kicker="With pronouns"
+				title="Prepositions with pronouns"
+				lede="Weak forms (με, σε) go before verbs only. After a preposition, use the long emphatic forms."
+				className="mb-4"
+			/>
+			<ExamplePills
+				examples={PREPOSITION_PRONOUN_INFO.examples}
+				greekClassName="font-medium text-stone-800"
+				englishClassName="text-stone-500"
+			/>
 		</div>
 
 		{/* Common mistakes — collapsible */}
@@ -241,7 +233,6 @@ export const PrepositionsSection: React.FC = () => (
 						correct: m.right,
 						explanation: m.rule,
 					}))}
-					title=""
 					cardClassName="bg-transparent"
 				/>
 			</div>

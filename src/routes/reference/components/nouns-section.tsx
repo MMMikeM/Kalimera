@@ -107,16 +107,12 @@ interface SentenceFrame {
 	english: string;
 }
 
-const ROLE_SENTENCES: Array<{ paradigmId: string; frames: Record<RoleCase, SentenceFrame> }> = [
-	{
-		paradigmId: "masc-os",
-		frames: {
-			nom: { suffix: " μιλάει", english: "the friend speaks" },
-			acc: { prefix: "βλέπω ", english: "I see the friend" },
-			gen: { prefix: "το σπίτι ", english: "the friend's house" },
-		},
-	},
-];
+/** Sentence frames around ο φίλος, the masc-os example the case guide uses. */
+const FRIEND_FRAMES: Record<RoleCase, SentenceFrame> = {
+	nom: { suffix: " μιλάει", english: "the friend speaks" },
+	acc: { prefix: "βλέπω ", english: "I see the friend" },
+	gen: { prefix: "το σπίτι ", english: "the friend's house" },
+};
 
 const sentenceFor = (paradigm: AgreementParadigm, caseKey: RoleCase, frame: SentenceFrame) =>
 	`${frame.prefix ?? ""}${formFor(paradigm, "singular", caseKey)?.full ?? ""}${frame.suffix ?? ""}`;
@@ -155,8 +151,7 @@ const countFor = (data: NounsData | null, paradigm: AgreementParadigm): number |
 
 const CaseGuide = () => {
 	const friend = getParadigms(["masc-os"])[0];
-	const frames = ROLE_SENTENCES[0]?.frames;
-	if (!friend || !frames) return null;
+	if (!friend) return null;
 
 	return (
 		<TeachingCard
@@ -174,7 +169,7 @@ const CaseGuide = () => {
 				{ROLE_CASES.map((caseKey) => {
 					const meta = CASE_ROW_BY_KEY[caseKey];
 					const style = SCHEME[meta.scheme];
-					const frame = frames[caseKey];
+					const frame = FRIEND_FRAMES[caseKey];
 					return (
 						<div key={caseKey} className="flex items-start gap-3">
 							<span

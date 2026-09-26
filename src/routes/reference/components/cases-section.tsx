@@ -10,6 +10,58 @@ import { CASE_ROLES, CASE_TRIGGERS } from "@/constants/recognition";
 
 import { BandHeading } from "./BandHeading";
 
+const CASE_NOTES: Array<{ key: string; body: React.ReactNode }> = [
+	{
+		key: "word-order",
+		body: (
+			<>
+				<strong className="text-stone-800">Word order is flexible in Greek</strong> because the
+				ending carries the job. <em>"Ο σκύλος δάγκωσε τον άντρα"</em> and{" "}
+				<em>"Τον άντρα δάγκωσε ο σκύλος"</em> both mean the dog bit the man — the{" "}
+				<GreekText tone="accent" size="sm" className="inline">
+					-ς
+				</GreekText>{" "}
+				and{" "}
+				<GreekText tone="accent" size="sm" className="inline">
+					-ν
+				</GreekText>{" "}
+				do the work English word order does.
+			</>
+		),
+	},
+	{
+		key: "start-here",
+		body: (
+			<>
+				<strong className="text-stone-800">Start with Doer and Target.</strong> They cover most of
+				what you'll hear and say. Owner comes up with possession and a few prepositions.
+			</>
+		),
+	},
+	{
+		key: "prepositions",
+		body: (
+			<>
+				<strong className="text-stone-800">Every everyday preposition pulls Target.</strong> After{" "}
+				<GreekText tone="accent" size="sm" className="inline">
+					σε, με, για, από, χωρίς, σαν
+				</GreekText>
+				, there is no case decision to make.
+			</>
+		),
+	},
+	{
+		key: "linking-verbs",
+		body: (
+			<>
+				<strong className="text-stone-800">After είναι, both sides stay nominative.</strong> Linking
+				verbs (είναι, γίνομαι) identify rather than act — <em>η Χρυσάνθη είναι η μητέρα</em> keeps
+				both nouns as Doer. Nothing is being acted on, so accusative never applies.
+			</>
+		),
+	},
+];
+
 export const CasesSection: React.FC = () => {
 	const triggersByCase = CASE_ROLES.map((role) => ({
 		...role,
@@ -40,45 +92,16 @@ export const CasesSection: React.FC = () => {
 						);
 					})}
 				</div>
-				<Card variant="bordered" padding="md" className="border-stone-200 bg-stone-50/60">
-					<p className="text-sm leading-relaxed text-stone-700">
-						<strong className="text-stone-800">Word order is flexible in Greek</strong> because the
-						ending carries the job. <em>"Ο σκύλος δάγκωσε τον άντρα"</em> and{" "}
-						<em>"Τον άντρα δάγκωσε ο σκύλος"</em> both mean the dog bit the man — the{" "}
-						<GreekText tone="accent" size="sm" className="inline">
-							-ς
-						</GreekText>{" "}
-						and{" "}
-						<GreekText tone="accent" size="sm" className="inline">
-							-ν
-						</GreekText>{" "}
-						do the work English word order does.
-					</p>
-				</Card>
-				<Card variant="bordered" padding="md" className="border-stone-200 bg-stone-50/60">
-					<p className="text-sm text-stone-700">
-						<strong className="text-stone-800">Start with Doer and Target.</strong> They cover most
-						of what you'll hear and say. Owner comes up with possession and a few prepositions.
-					</p>
-				</Card>
-				<Card variant="bordered" padding="md" className="border-stone-200 bg-stone-50/60">
-					<p className="text-sm leading-relaxed text-stone-700">
-						<strong className="text-stone-800">Every everyday preposition pulls Target.</strong>{" "}
-						After{" "}
-						<GreekText tone="accent" size="sm" className="inline">
-							σε, με, για, από, χωρίς, σαν
-						</GreekText>
-						, there is no case decision to make.
-					</p>
-				</Card>
-				<Card variant="bordered" padding="md" className="border-stone-200 bg-stone-50/60">
-					<p className="text-sm leading-relaxed text-stone-700">
-						<strong className="text-stone-800">After είναι, both sides stay nominative.</strong>{" "}
-						Linking verbs (είναι, γίνομαι) identify rather than act —{" "}
-						<em>η Χρυσάνθη είναι η μητέρα</em> keeps both nouns as Doer. Nothing is being acted on,
-						so accusative never applies.
-					</p>
-				</Card>
+				{CASE_NOTES.map((note) => (
+					<Card
+						key={note.key}
+						variant="bordered"
+						padding="md"
+						className="border-stone-200 bg-stone-50/60"
+					>
+						<p className="text-sm leading-relaxed text-stone-700">{note.body}</p>
+					</Card>
+				))}
 			</div>
 
 			{/* BAND 2 — REFERENCE (lookup tables) */}
