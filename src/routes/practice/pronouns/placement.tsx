@@ -14,7 +14,6 @@ function CliticPlacementDrill() {
 			items={PLACEMENTS}
 			subtitle="17 sentences / timed"
 			sessionSize={20}
-			colorTheme="terracotta"
 			forwardLabel="Put it in order"
 			forwardDesc="The words are given — only the order is yours"
 			forwardOnly

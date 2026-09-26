@@ -167,7 +167,6 @@ function NumbersDrill() {
 			drillId="blocks-numbers"
 			items={NUMBERS}
 			subtitle="28 forms / timed"
-			colorTheme="terracotta"
 			backTo="/practice/blocks"
 			forwardDesc="Digit → Greek word"
 			reverseDesc="Greek word → digit (self-assess)"

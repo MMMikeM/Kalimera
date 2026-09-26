@@ -118,7 +118,6 @@ function WhichPhraseDrill() {
 			drillId="blocks-qw-which-phrase"
 			items={WHICH_PHRASES}
 			subtitle={`${WHICH_PHRASES.length} phrases / timed`}
-			colorTheme="terracotta"
 			backTo="/practice/blocks/question-words/"
 			forwardDesc="English → ποιος + noun, agreeing"
 			reverseLabel="Greek → gender"
@@ -127,7 +126,6 @@ function WhichPhraseDrill() {
 			reverse={{
 				kind: "single-select",
 				options: GENDER_DIMENSION_OPTIONS,
-				getCorrectId: (form) => String(form.dimension ?? ""),
 			}}
 		/>
 	);

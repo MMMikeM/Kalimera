@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import { useCallback, type ReactNode } from "react";
 
 import { GreekText } from "@/components/GreekText";
 
 import type { DrillForm } from "../deck";
+import { useCardState } from "../drill-hooks";
 import { drillActions, useDrillStore } from "../drill-store";
 import { ReverseFeedback, SelectorButton } from "../shells";
 
@@ -15,14 +16,12 @@ interface SelectOption {
 
 interface SingleSelectReverseProps {
 	options: SelectOption[];
-	getCorrectId: (form: Record<string, unknown>) => string;
 	renderGreek?: (form: DrillForm) => ReactNode;
 	getExplanation?: (form: DrillForm) => ReactNode;
 }
 
 export function SingleSelectReverse({
 	options,
-	getCorrectId,
 	renderGreek,
 	getExplanation,
 }: SingleSelectReverseProps) {
@@ -32,30 +31,21 @@ export function SingleSelectReverse({
 	const { recordAttempt } = drillActions;
 	const currentForm = deck[cardIndex];
 
-	const [selected, setSelected] = useState<string | null>(null);
-	const startedAt = useRef(0);
-
-	useEffect(() => {
-		if (phase === "active") {
-			setSelected(null);
-			startedAt.current = performance.now();
-		}
-	}, [phase, cardIndex]);
+	const [selected, setSelected] = useCardState<string | null>(null);
 
 	const handleSelect = useCallback(
 		(id: string) => {
 			if (phase !== "active" || !currentForm) return;
 			setSelected(id);
-			const timeTaken = performance.now() - startedAt.current;
-			const correctId = getCorrectId(currentForm as unknown as Record<string, unknown>);
+			const correctId = currentForm.dimension ?? "";
 			const isCorrect = correctId === id;
-			recordAttempt(isCorrect, timeTaken, {
-				prompt: currentForm.greek,
+			recordAttempt(isCorrect, {
+				prompt: currentForm.reverseGreek ?? currentForm.greek,
 				correctAnswer: correctId,
 				userAnswer: id,
 			});
 		},
-		[phase, currentForm, getCorrectId, recordAttempt],
+		[phase, currentForm, recordAttempt, setSelected],
 	);
 
 	if (!currentForm) return null;
@@ -64,7 +54,7 @@ export function SingleSelectReverse({
 		<>
 			<div>
 				<GreekText as="p" size="4xl">
-					{renderGreek ? renderGreek(currentForm) : currentForm.greek}
+					{renderGreek ? renderGreek(currentForm) : (currentForm.reverseGreek ?? currentForm.greek)}
 				</GreekText>
 			</div>
 

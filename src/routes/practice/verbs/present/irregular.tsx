@@ -141,7 +141,6 @@ function PresentIrregularDrill() {
 			reverse={{
 				kind: "single-select",
 				options: PERSON_DIMENSION_OPTIONS,
-				getCorrectId: (item) => String(item.dimension ?? ""),
 			}}
 		/>
 	);

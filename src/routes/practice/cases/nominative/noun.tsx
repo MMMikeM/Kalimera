@@ -13,7 +13,7 @@ export const Route = createFileRoute("/practice/cases/nominative/noun")({
 		items: await getNounDrillItemsFn({
 			data: {
 				grammaticalCase: "nominative",
-				drillId: "articles-noun-genders",
+				drillId: "nominative-nouns",
 				stripArticleForReverse: true,
 			},
 		}),
@@ -42,7 +42,6 @@ function NounGendersDrill() {
 			reverse={{
 				kind: "single-select",
 				options: DIMENSION_OPTIONS,
-				getCorrectId: (item) => String(item.dimension ?? ""),
 			}}
 		/>
 	);

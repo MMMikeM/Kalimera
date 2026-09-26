@@ -1,4 +1,4 @@
-import type { DrillQuestion } from "@/lib/drill/generate-questions";
+import type { DrillQuestion } from "@/lib/drill/types";
 import type { PersonNumber } from "@/server/db/enums";
 import { getDrillVocabPool } from "@/server/db/queries/drill-pool";
 import {

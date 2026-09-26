@@ -7,7 +7,7 @@ import { GENDER_DIMENSION_OPTIONS } from "../../components/engines/drill-constan
 // Adjective three-form agreement in Target (accusative).
 // Singular: m -ο · f -η/-α · n -ο
 // Plural:   m -ους · f -ες · n -α
-// Forward: "good (m, target)" → type "kalo" / "good (m, pl, target)" → type "kalous"
+// Forward: "good · masculine" → type "kalo" / "good · masculine plural" → type "kalous"
 // Reverse: show Greek form → tap gender chip
 
 interface AdjGroup {
@@ -128,48 +128,42 @@ const ITEMS: SimpleListItem[] = ADJECTIVES.flatMap((adj) => [
 	{
 		id: `${adj.id}-m`,
 		greek: adj.masculine,
-		english: `${adj.english} (m, target)`,
-		label: "masculine",
+		label: `${adj.english} · masculine`,
 		category: "masculine",
 		dimension: "masculine",
 	},
 	{
 		id: `${adj.id}-f`,
 		greek: adj.feminine,
-		english: `${adj.english} (f, target)`,
-		label: "feminine",
+		label: `${adj.english} · feminine`,
 		category: "feminine",
 		dimension: "feminine",
 	},
 	{
 		id: `${adj.id}-n`,
 		greek: adj.neuter,
-		english: `${adj.english} (n, target)`,
-		label: "neuter",
+		label: `${adj.english} · neuter`,
 		category: "neuter",
 		dimension: "neuter",
 	},
 	{
 		id: `${adj.id}-pl-m`,
 		greek: adj.pluralMasc,
-		english: `${adj.english} (m, pl, target)`,
-		label: "plural m",
+		label: `${adj.english} · masculine plural`,
 		category: "plural",
 		dimension: "masculine",
 	},
 	{
 		id: `${adj.id}-pl-f`,
 		greek: adj.pluralFem,
-		english: `${adj.english} (f, pl, target)`,
-		label: "plural f",
+		label: `${adj.english} · feminine plural`,
 		category: "plural",
 		dimension: "feminine",
 	},
 	{
 		id: `${adj.id}-pl-n`,
 		greek: adj.pluralNeut,
-		english: `${adj.english} (n, pl, target)`,
-		label: "plural n",
+		label: `${adj.english} · neuter plural`,
 		category: "plural",
 		dimension: "neuter",
 	},
@@ -200,7 +194,6 @@ function AdjectiveAgreementTargetDrill() {
 			reverse={{
 				kind: "single-select",
 				options: GENDER_DIMENSION_OPTIONS,
-				getCorrectId: (item) => String(item.dimension ?? ""),
 			}}
 		/>
 	);

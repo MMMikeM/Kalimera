@@ -1,18 +1,14 @@
-export const SPEEDS = [
-	{ id: "fast", label: "Fast · 4s", timeLimit: 4000 },
-	{ id: "medium", label: "Medium · 6s", timeLimit: 6000 },
-	{ id: "relaxed", label: "Relaxed · 8s", timeLimit: 8000 },
-] as const satisfies { id: SpeedId; label: string; timeLimit: number }[];
+import { typedEntries } from "@/lib/object";
 
 export const SPEEDMAP = {
 	fast: { label: "Fast · 4s", timeLimit: 4000 },
 	medium: { label: "Medium · 6s", timeLimit: 6000 },
 	relaxed: { label: "Relaxed · 8s", timeLimit: 8000 },
-} as const satisfies Record<SpeedId, { label: string; timeLimit: number }>;
+} as const;
 
-export type SpeedId = "fast" | "medium" | "relaxed";
+export type SpeedId = keyof typeof SPEEDMAP;
 
-export const MEDIUM_SPEED_MS = 6000;
+export const SPEEDS = typedEntries(SPEEDMAP).map(([id, speed]) => ({ id, ...speed }));
 
 // Speed tiers are calibrated for typing a single form. Multi-word phrases get a
 // per-extra-word surcharge so the pressure stays on retrieval, not typing speed.

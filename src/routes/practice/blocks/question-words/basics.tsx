@@ -29,7 +29,6 @@ function BasicsDrill() {
 			drillId="blocks-qw-basics"
 			items={BASICS}
 			subtitle="5 words that never change / timed"
-			colorTheme="terracotta"
 			backTo="/practice/blocks/question-words/"
 			forwardDesc="English → Greek"
 			reverseDesc="Greek → recall meaning (self-assess)"

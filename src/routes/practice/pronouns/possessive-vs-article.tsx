@@ -131,7 +131,6 @@ function PossessiveVsArticleDrill() {
 			reverse={{
 				kind: "single-select",
 				options: ROLE_OPTIONS,
-				getCorrectId: (item) => String(item.dimension ?? ""),
 				renderGreek: highlightPivot,
 				getExplanation: explainRole,
 			}}

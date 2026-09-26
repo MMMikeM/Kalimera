@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { caseScheme, genderScheme } from "@/constants/grammar-palette";
+import { getArticle } from "@/lib/greek-grammar";
 import {
 	type Gender,
 	type GrammaticalNumber,
@@ -21,6 +22,7 @@ import { Drill, type DimensionSpec } from "../../components/engines/drill";
 import { ForwardPromptCard } from "../../components/engines/forward-prompt-card";
 import { dimensionFor } from "../../components/engines/reverse/multi-select";
 import { GENDER_COLUMNS, Paradigm } from "../../components/paradigm";
+import { GENDER_ABBR, NUMBER_ABBR, articleParadigmRow } from "../components/article-drill";
 
 type DimKey = "case" | "gender" | "number";
 
@@ -30,168 +32,24 @@ interface Article extends DrillForm {
 	number: GrammaticalNumber;
 }
 
-const ARTICLES: Article[] = [
-	{
-		id: "nom-m-sg",
-		case: "nominative",
-		gender: "masculine",
-		number: "singular",
-		greek: "ο",
-		label: "masculine / singular / nominative",
-	},
-	{
-		id: "nom-f-sg",
-		case: "nominative",
-		gender: "feminine",
-		number: "singular",
-		greek: "η",
-		label: "feminine / singular / nominative",
-	},
-	{
-		id: "nom-n-sg",
-		case: "nominative",
-		gender: "neuter",
-		number: "singular",
-		greek: "το",
-		label: "neuter / singular / nominative",
-	},
-	{
-		id: "acc-m-sg",
-		case: "accusative",
-		gender: "masculine",
-		number: "singular",
-		greek: "τον",
-		label: "masculine / singular / accusative",
-	},
-	{
-		id: "acc-f-sg",
-		case: "accusative",
-		gender: "feminine",
-		number: "singular",
-		greek: "την",
-		label: "feminine / singular / accusative",
-	},
-	{
-		id: "acc-n-sg",
-		case: "accusative",
-		gender: "neuter",
-		number: "singular",
-		greek: "το",
-		label: "neuter / singular / accusative",
-	},
-	{
-		id: "gen-m-sg",
-		case: "genitive",
-		gender: "masculine",
-		number: "singular",
-		greek: "του",
-		label: "masculine / singular / genitive",
-	},
-	{
-		id: "gen-f-sg",
-		case: "genitive",
-		gender: "feminine",
-		number: "singular",
-		greek: "της",
-		label: "feminine / singular / genitive",
-	},
-	{
-		id: "gen-n-sg",
-		case: "genitive",
-		gender: "neuter",
-		number: "singular",
-		greek: "του",
-		label: "neuter / singular / genitive",
-	},
-	{
-		id: "nom-m-pl",
-		case: "nominative",
-		gender: "masculine",
-		number: "plural",
-		greek: "οι",
-		label: "masculine / plural / nominative",
-	},
-	{
-		id: "nom-f-pl",
-		case: "nominative",
-		gender: "feminine",
-		number: "plural",
-		greek: "οι",
-		label: "feminine / plural / nominative",
-	},
-	{
-		id: "nom-n-pl",
-		case: "nominative",
-		gender: "neuter",
-		number: "plural",
-		greek: "τα",
-		label: "neuter / plural / nominative",
-	},
-	{
-		id: "acc-m-pl",
-		case: "accusative",
-		gender: "masculine",
-		number: "plural",
-		greek: "τους",
-		label: "masculine / plural / accusative",
-	},
-	{
-		id: "acc-f-pl",
-		case: "accusative",
-		gender: "feminine",
-		number: "plural",
-		greek: "τις",
-		label: "feminine / plural / accusative",
-	},
-	{
-		id: "acc-n-pl",
-		case: "accusative",
-		gender: "neuter",
-		number: "plural",
-		greek: "τα",
-		label: "neuter / plural / accusative",
-	},
-	{
-		id: "gen-m-pl",
-		case: "genitive",
-		gender: "masculine",
-		number: "plural",
-		greek: "των",
-		label: "masculine / plural / genitive",
-	},
-	{
-		id: "gen-f-pl",
-		case: "genitive",
-		gender: "feminine",
-		number: "plural",
-		greek: "των",
-		label: "feminine / plural / genitive",
-	},
-	{
-		id: "gen-n-pl",
-		case: "genitive",
-		gender: "neuter",
-		number: "plural",
-		greek: "των",
-		label: "neuter / plural / genitive",
-	},
-];
-
-const PARADIGM_ROWS: { label: string; caseKey: NominalCase; forms: string[] }[] = [
-	{ label: "Nom sg", caseKey: "nominative", forms: ["ο", "η", "το"] },
-	{ label: "Acc sg", caseKey: "accusative", forms: ["τον", "την", "το"] },
-	{ label: "Gen sg", caseKey: "genitive", forms: ["του", "της", "του"] },
-	{ label: "Nom pl", caseKey: "nominative", forms: ["οι", "οι", "τα"] },
-	{ label: "Acc pl", caseKey: "accusative", forms: ["τους", "τις", "τα"] },
-	{ label: "Gen pl", caseKey: "genitive", forms: ["των", "των", "των"] },
-];
-
-const ArticleParadigm = () => (
-	<Paradigm
-		columns={GENDER_COLUMNS}
-		rows={PARADIGM_ROWS.map((r) => ({ ...r, scheme: `case-${r.caseKey}` as const }))}
-	/>
+const ARTICLES: Article[] = grammaticalNumbers.flatMap((number) =>
+	nominalCases.flatMap((grammaticalCase) =>
+		genders.map((gender) => ({
+			id: `${grammaticalCase.slice(0, 3)}-${GENDER_ABBR[gender]}-${NUMBER_ABBR[number]}`,
+			case: grammaticalCase,
+			gender,
+			number,
+			greek: getArticle(gender, number, grammaticalCase),
+			label: `${gender} / ${number} / ${grammaticalCase}`,
+		})),
+	),
 );
+
+const PARADIGM_ROWS = grammaticalNumbers.flatMap((number) =>
+	nominalCases.map((grammaticalCase) => articleParadigmRow(grammaticalCase, number)),
+);
+
+const ArticleParadigm = () => <Paradigm columns={GENDER_COLUMNS} rows={PARADIGM_ROWS} />;
 
 const dim = dimensionFor<DimKey>();
 

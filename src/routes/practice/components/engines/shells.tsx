@@ -236,11 +236,9 @@ export const DrillShell = ({
 	const sessionSize = useDrillStore((s) => s.sessionSize);
 	const deck = useDrillStore((s) => s.deck);
 	const remediationCounts = useDrillStore((s) => s.remediationCounts);
-	const firstPresented = useDrillStore((s) => s.firstPresented);
 
 	const currentForm = deck[cardIndex];
 	const remCount = currentForm ? (remediationCounts[currentForm.id] ?? 0) : 0;
-	const isRemediation = remCount > 0 && currentForm && firstPresented[currentForm.id];
 
 	return (
 		<div className="flex flex-col">
@@ -265,7 +263,7 @@ export const DrillShell = ({
 					<span className="rounded bg-stone-100 px-1.5 py-0.5 font-mono text-xs text-stone-400">
 						{currentForm.bucket ?? "—"}
 					</span>
-					{isRemediation && (
+					{remCount > 0 && (
 						<span className="rounded bg-amber-100 px-1.5 py-0.5 font-mono text-xs text-amber-600">
 							remediation ×{remCount}
 						</span>
@@ -320,14 +318,13 @@ export const ForwardInput = ({
 // ─── FeedbackDisplay ───────────────────────────────────────────────────────────
 
 export const FeedbackDisplay = () => {
-	const lastAttempt = useDrillStore((s) => s.lastAttempt);
+	const lastAttempt = useDrillStore((s) => s.attempts.at(-1));
 	const phase = useDrillStore((s) => s.phase);
 	const { advance } = drillActions;
 
 	if (phase !== "feedback" || !lastAttempt) return null;
 
 	const { form } = lastAttempt;
-	const fullForm = form.acceptAlso;
 	const showContinue = !lastAttempt.isCorrect;
 
 	const inner = (
@@ -337,13 +334,7 @@ export const FeedbackDisplay = () => {
 			>
 				{lastAttempt.isCorrect ? "Correct" : lastAttempt.timedOut ? "Time's up" : "Incorrect"}
 			</p>
-			{fullForm && <GreekGloss greek={fullForm} size="2xl" className="mt-1" />}
-			<GreekGloss
-				greek={form.greek}
-				size="2xl"
-				label={fullForm ? "ending" : undefined}
-				className="mt-1"
-			/>
+			<GreekGloss greek={form.greek} size="2xl" className="mt-1" />
 			{showContinue && (
 				<p className="mt-3 text-xs text-stone-500">Press Enter or tap to continue</p>
 			)}
@@ -368,7 +359,7 @@ export const FeedbackDisplay = () => {
 // ─── ReverseFeedback ───────────────────────────────────────────────────────────
 
 export const ReverseFeedback = ({ detail }: { detail?: React.ReactNode }) => {
-	const lastAttempt = useDrillStore((s) => s.lastAttempt);
+	const lastAttempt = useDrillStore((s) => s.attempts.at(-1));
 	const phase = useDrillStore((s) => s.phase);
 	const { advance } = drillActions;
 
@@ -457,37 +448,27 @@ export const SummaryScreen = ({ backTo }: { backTo?: string }) => {
 						These caught you — that's where lasting learning happens.
 					</p>
 					<div className="space-y-2">
-						{mistakeEntries.map(({ attempt: a, count }) => {
-							const fullGreek = a.form.acceptAlso;
-							return (
-								<div key={a.form.id} className="rounded-lg border bg-white p-3">
-									{fullGreek ? (
-										<div className="space-y-0.5">
-											<GreekGloss greek={fullGreek} size="lg" />
-											<GreekGloss greek={a.form.greek} size="sm" label="ending" />
-										</div>
-									) : (
-										<div className="flex items-baseline gap-2">
-											<GreekGloss greek={a.form.greek} size="lg" />
-											<span className="text-xs text-muted-foreground">{a.form.label}</span>
-										</div>
-									)}
-									{a.userInput !== undefined && (
-										<p className="mt-1 text-xs text-muted-foreground">
-											you typed:{" "}
-											<span className="font-mono text-incorrect">
-												{a.userInput.trim() === "" ? "—" : a.userInput}
-											</span>
-											{count > 1 && (
-												<span className="ml-2 rounded bg-incorrect/10 px-1.5 py-0.5 text-incorrect">
-													×{count}
-												</span>
-											)}
-										</p>
-									)}
+						{mistakeEntries.map(({ attempt: a, count }) => (
+							<div key={a.form.id} className="rounded-lg border bg-white p-3">
+								<div className="flex items-baseline gap-2">
+									<GreekGloss greek={a.form.greek} size="lg" />
+									<span className="text-xs text-muted-foreground">{a.form.label}</span>
 								</div>
-							);
-						})}
+								{a.userInput !== undefined && (
+									<p className="mt-1 text-xs text-muted-foreground">
+										you typed:{" "}
+										<span className="font-mono text-incorrect">
+											{a.userInput.trim() === "" ? "—" : a.userInput}
+										</span>
+										{count > 1 && (
+											<span className="ml-2 rounded bg-incorrect/10 px-1.5 py-0.5 text-incorrect">
+												×{count}
+											</span>
+										)}
+									</p>
+								)}
+							</div>
+						))}
 					</div>
 				</div>
 			)}
