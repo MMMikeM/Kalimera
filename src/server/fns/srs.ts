@@ -8,6 +8,7 @@ import { listSessionVocabAttempts, recordAttempt } from "@/server/db/queries/pra
 import {
 	type PracticeSessionInsert,
 	completeSession,
+	isSessionOwnedBy,
 	startSession,
 } from "@/server/db/queries/practice-sessions";
 
@@ -37,6 +38,9 @@ export const recordAttemptFn = createServerFn({ method: "POST" })
 	)
 	.handler(async ({ data }) => {
 		const { userId } = await requireAuth();
+		if (data.sessionId !== undefined && !(await isSessionOwnedBy(data.sessionId, userId))) {
+			throw new Error("Practice session not found");
+		}
 		const attempt = await recordAttempt({
 			userId,
 			sessionId: data.sessionId,
@@ -61,7 +65,8 @@ export const completeSessionFn = createServerFn({ method: "POST" })
 	)
 	.handler(async ({ data }) => {
 		const { userId } = await requireAuth();
-		const session = await completeSession(data);
+		const session = await completeSession(userId, data);
+		if (!session) throw new Error("Practice session not found");
 
 		const attempts = await listSessionVocabAttempts(data.sessionId);
 		if (attempts.length === 0) return { success: true, session };

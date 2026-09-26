@@ -18,7 +18,7 @@ export const startSession = async (data: PracticeSessionInsert) => {
 	return session;
 };
 
-export const completeSession = async (input: CompleteSessionInput) => {
+export const completeSession = async (userId: number, input: CompleteSessionInput) => {
 	const { sessionId, ...patch } = input;
 	const [session] = await db
 		.update(practiceSessions)
@@ -26,10 +26,18 @@ export const completeSession = async (input: CompleteSessionInput) => {
 			...patch,
 			completedAt: nowIso(),
 		})
-		.where(eq(practiceSessions.id, sessionId))
+		.where(and(eq(practiceSessions.id, sessionId), eq(practiceSessions.userId, userId)))
 		.returning();
 
 	return session;
+};
+
+export const isSessionOwnedBy = async (sessionId: number, userId: number) => {
+	const session = await db.query.practiceSessions.findFirst({
+		where: { id: sessionId, userId },
+		columns: { id: true },
+	});
+	return session !== undefined;
 };
 
 export const getLastPracticeDate = async (userId: number): Promise<Temporal.Instant | null> => {
