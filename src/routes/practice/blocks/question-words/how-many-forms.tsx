@@ -63,7 +63,6 @@ function HowManyFormsDrill() {
 			drillId="blocks-qw-how-many-forms"
 			items={HOW_MANY_FORMS}
 			subtitle={`${HOW_MANY_FORMS.length} forms / timed`}
-			colorTheme="terracotta"
 			backTo="/practice/blocks/question-words/"
 			forwardDesc="English → Greek"
 			reverseDesc="Greek → recall meaning (self-assess)"

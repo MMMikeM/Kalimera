@@ -281,7 +281,6 @@ function ImperfectStativeDrill() {
 			categories={CATEGORIES}
 			backTo="/practice/verbs"
 			subtitle="was · had · wanted · knew · could"
-			colorTheme="terracotta"
 			forwardDesc="English → Greek past form"
 			reverseLabel="Greek → person"
 			reverseDesc="Past form → select person"

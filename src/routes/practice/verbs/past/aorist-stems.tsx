@@ -116,7 +116,6 @@ function AoristStemsDrill() {
 			items={AORIST_STEMS}
 			backTo="/practice/verbs"
 			subtitle="15 irregular stems / timed"
-			colorTheme="terracotta"
 			forwardDesc="Present (English) → aorist sg1"
 			reverseDesc="Aorist form → present verb (self-assess)"
 			categories={CATEGORIES}
