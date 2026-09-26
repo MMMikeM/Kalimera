@@ -12,6 +12,7 @@ export interface DrillForm {
 	id: string;
 	greek: string;
 	label: string;
+	/** A second answer the forward grader also accepts, e.g. την alongside τη. Never shown. */
 	acceptAlso?: string;
 	vocabId?: number;
 	bucket?: DrillBucket;
