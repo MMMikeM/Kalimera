@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useState, type ReactNode } from "react";
 
 import { GreekText } from "@/components/GreekText";
 
@@ -31,23 +31,18 @@ export function SingleSelectReverse({
 	const currentForm = deck[cardIndex];
 
 	const [selected, setSelected] = useState<string | null>(null);
-	const startedAt = useRef(0);
 
 	useEffect(() => {
-		if (phase === "active") {
-			setSelected(null);
-			startedAt.current = performance.now();
-		}
+		if (phase === "active") setSelected(null);
 	}, [phase, cardIndex]);
 
 	const handleSelect = useCallback(
 		(id: string) => {
 			if (phase !== "active" || !currentForm) return;
 			setSelected(id);
-			const timeTaken = performance.now() - startedAt.current;
 			const correctId = currentForm.dimension ?? "";
 			const isCorrect = correctId === id;
-			recordAttempt(isCorrect, timeTaken, {
+			recordAttempt(isCorrect, {
 				prompt: currentForm.reverseGreek ?? currentForm.greek,
 				correctAnswer: correctId,
 				userAnswer: id,

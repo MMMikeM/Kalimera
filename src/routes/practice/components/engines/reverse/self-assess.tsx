@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { GreekText } from "@/components/GreekText";
 import { Button } from "@/components/ui/button";
@@ -14,19 +14,14 @@ export function SelfAssessReverse() {
 	const currentForm = deck[cardIndex];
 
 	const [revealedAnswer, setRevealedAnswer] = useState(false);
-	const startedAt = useRef(0);
 
 	useEffect(() => {
-		if (phase === "active") {
-			setRevealedAnswer(false);
-			startedAt.current = performance.now();
-		}
+		if (phase === "active") setRevealedAnswer(false);
 	}, [phase, cardIndex]);
 
 	const handleSelfAssess = (isCorrect: boolean) => {
 		if (!currentForm) return;
-		const timeTaken = performance.now() - startedAt.current;
-		recordAttempt(isCorrect, timeTaken, {
+		recordAttempt(isCorrect, {
 			prompt: currentForm.reverseGreek ?? currentForm.greek,
 			correctAnswer: currentForm.label,
 			userAnswer: isCorrect ? "self:correct" : "self:wrong",

@@ -236,11 +236,9 @@ export const DrillShell = ({
 	const sessionSize = useDrillStore((s) => s.sessionSize);
 	const deck = useDrillStore((s) => s.deck);
 	const remediationCounts = useDrillStore((s) => s.remediationCounts);
-	const firstPresented = useDrillStore((s) => s.firstPresented);
 
 	const currentForm = deck[cardIndex];
 	const remCount = currentForm ? (remediationCounts[currentForm.id] ?? 0) : 0;
-	const isRemediation = remCount > 0 && currentForm && firstPresented[currentForm.id];
 
 	return (
 		<div className="flex flex-col">
@@ -265,7 +263,7 @@ export const DrillShell = ({
 					<span className="rounded bg-stone-100 px-1.5 py-0.5 font-mono text-xs text-stone-400">
 						{currentForm.bucket ?? "—"}
 					</span>
-					{isRemediation && (
+					{remCount > 0 && (
 						<span className="rounded bg-amber-100 px-1.5 py-0.5 font-mono text-xs text-amber-600">
 							remediation ×{remCount}
 						</span>
@@ -320,7 +318,7 @@ export const ForwardInput = ({
 // ─── FeedbackDisplay ───────────────────────────────────────────────────────────
 
 export const FeedbackDisplay = () => {
-	const lastAttempt = useDrillStore((s) => s.lastAttempt);
+	const lastAttempt = useDrillStore((s) => s.attempts.at(-1));
 	const phase = useDrillStore((s) => s.phase);
 	const { advance } = drillActions;
 
@@ -361,7 +359,7 @@ export const FeedbackDisplay = () => {
 // ─── ReverseFeedback ───────────────────────────────────────────────────────────
 
 export const ReverseFeedback = ({ detail }: { detail?: React.ReactNode }) => {
-	const lastAttempt = useDrillStore((s) => s.lastAttempt);
+	const lastAttempt = useDrillStore((s) => s.attempts.at(-1));
 	const phase = useDrillStore((s) => s.phase);
 	const { advance } = drillActions;
 

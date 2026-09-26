@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { GreekText } from "@/components/GreekText";
 
@@ -39,13 +39,9 @@ export function MultiSelectReverse<K extends string>({ dimensions }: MultiSelect
 	const currentForm = deck[cardIndex] as (typeof deck)[number] & Record<K, string>;
 
 	const [selected, setSelected] = useState<Selected<K>>({});
-	const startedAt = useRef(0);
 
 	useEffect(() => {
-		if (phase === "active") {
-			setSelected({});
-			startedAt.current = performance.now();
-		}
+		if (phase === "active") setSelected({});
 	}, [phase, cardIndex]);
 
 	const isRequired = (spec: DimensionSpec<K>, sel: Selected<K>) => {
@@ -69,7 +65,6 @@ export function MultiSelectReverse<K extends string>({ dimensions }: MultiSelect
 		(sel: Selected<K>) => {
 			if (phase !== "active" || !currentForm) return;
 			if (!allRequiredSelected(sel)) return;
-			const timeTaken = performance.now() - startedAt.current;
 			let isCorrect = true;
 			for (const d of dimensions) {
 				if (!isRequired(d, sel)) continue;
@@ -78,14 +73,14 @@ export function MultiSelectReverse<K extends string>({ dimensions }: MultiSelect
 					break;
 				}
 			}
-			recordAttempt(isCorrect, timeTaken, {
+			recordAttempt(isCorrect, {
 				prompt: currentForm.reverseGreek ?? currentForm.greek,
 				correctAnswer: currentForm.label,
 				userAnswer: Object.values(sel).join(","),
 			});
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[phase, currentForm, allRequiredSelected, startedAt, dimensions, recordAttempt],
+		[phase, currentForm, allRequiredSelected, dimensions, recordAttempt],
 	);
 
 	// Auto-submit when all dimensions selected
