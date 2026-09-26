@@ -1,62 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import type { SimpleListItem } from "../../components/engines/deck";
-import { Drill } from "../../components/engines/drill";
-import { GENDER_COLUMNS, Paradigm } from "../../components/paradigm";
+import { CaseArticleDrill } from "../components/article-drill";
 
 // Articles in Target (accusative): τον · τη(ν) · το · τους · τις · τα
 // Forward: "the (m, sg, target)" → type "ton" (matchPhonetic → τον)
-
-const FORMS: SimpleListItem[] = [
-	{
-		id: "m-sg",
-		greek: "τον",
-		english: "the (m, sg, target)",
-		label: "the (m, sg, target)",
-		category: "singular",
-	},
-	{
-		id: "f-sg",
-		greek: "τη",
-		english: "the (f, sg, target)",
-		label: "the (f, sg, target)",
-		category: "singular",
-		acceptAlso: "την",
-	},
-	{
-		id: "n-sg",
-		greek: "το",
-		english: "the (n, sg, target)",
-		label: "the (n, sg, target)",
-		category: "singular",
-	},
-	{
-		id: "m-pl",
-		greek: "τους",
-		english: "the (m, pl, target)",
-		label: "the (m, pl, target)",
-		category: "plural",
-	},
-	{
-		id: "f-pl",
-		greek: "τις",
-		english: "the (f, pl, target)",
-		label: "the (f, pl, target)",
-		category: "plural",
-	},
-	{
-		id: "n-pl",
-		greek: "τα",
-		english: "the (n, pl, target)",
-		label: "the (n, pl, target)",
-		category: "plural",
-	},
-];
-
-const PARADIGM_ROWS = [
-	{ label: "Acc sg", forms: ["τον", "τη(ν)", "το"] },
-	{ label: "Acc pl", forms: ["τους", "τις", "τα"] },
-];
+// Feminine singular is drilled as τη, its form before most consonants; την is accepted too.
 
 export const Route = createFileRoute("/practice/cases/accusative/article")({
 	component: ArticleTargetDrill,
@@ -64,16 +12,13 @@ export const Route = createFileRoute("/practice/cases/accusative/article")({
 
 function ArticleTargetDrill() {
 	return (
-		<Drill
-			backTo={"/practice/cases/"}
+		<CaseArticleDrill
 			drillId="articles-article-target"
-			items={FORMS}
+			grammaticalCase="accusative"
 			subtitle="Accusative articles"
 			forwardDesc="Gender + number → article (Target)"
-			reverseDesc="Article → recall gender + number (self-assess)"
-			configExtras={
-				<Paradigm className="my-8 mb-12" columns={GENDER_COLUMNS} rows={PARADIGM_ROWS} />
-			}
+			prompt={(gender, number) => `the (${gender}, ${number}, target)`}
+			overrides={{ "f-sg": { greek: "τη", acceptAlso: "την", shown: "τη(ν)" } }}
 		/>
 	);
 }

@@ -1,62 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import type { SimpleListItem } from "../../components/engines/deck";
-import { Drill } from "../../components/engines/drill";
-import { GENDER_COLUMNS, Paradigm } from "../../components/paradigm";
+import { CaseArticleDrill } from "../components/article-drill";
 
 // Articles in Owner (genitive): του · της · του · των · των · των
 // Forward: "of the (m, sg)" → type "tou" (matchPhonetic → του)
 // Plural collapses to των across all genders.
-
-const FORMS: SimpleListItem[] = [
-	{
-		id: "m-sg",
-		greek: "του",
-		english: "of the (m, sg)",
-		label: "of the (m, sg)",
-		category: "singular",
-	},
-	{
-		id: "f-sg",
-		greek: "της",
-		english: "of the (f, sg)",
-		label: "of the (f, sg)",
-		category: "singular",
-	},
-	{
-		id: "n-sg",
-		greek: "του",
-		english: "of the (n, sg)",
-		label: "of the (n, sg)",
-		category: "singular",
-	},
-	{
-		id: "m-pl",
-		greek: "των",
-		english: "of the (m, pl)",
-		label: "of the (m, pl)",
-		category: "plural",
-	},
-	{
-		id: "f-pl",
-		greek: "των",
-		english: "of the (f, pl)",
-		label: "of the (f, pl)",
-		category: "plural",
-	},
-	{
-		id: "n-pl",
-		greek: "των",
-		english: "of the (n, pl)",
-		label: "of the (n, pl)",
-		category: "plural",
-	},
-];
-
-const PARADIGM_ROWS = [
-	{ label: "Gen sg", forms: ["του", "της", "του"] },
-	{ label: "Gen pl", forms: ["των", "των", "των"] },
-];
 
 export const Route = createFileRoute("/practice/cases/genitive/article")({
 	component: ArticleOwnerDrill,
@@ -64,16 +12,12 @@ export const Route = createFileRoute("/practice/cases/genitive/article")({
 
 function ArticleOwnerDrill() {
 	return (
-		<Drill
-			backTo={"/practice/cases/"}
+		<CaseArticleDrill
 			drillId="articles-article-owner"
-			items={FORMS}
+			grammaticalCase="genitive"
 			subtitle="Genitive articles"
 			forwardDesc="Gender + number → article (Owner)"
-			reverseDesc="Article → recall gender + number (self-assess)"
-			configExtras={
-				<Paradigm className="my-8 mb-12" columns={GENDER_COLUMNS} rows={PARADIGM_ROWS} />
-			}
+			prompt={(gender, number) => `of the (${gender}, ${number})`}
 		/>
 	);
 }
