@@ -1,7 +1,6 @@
-import { Temporal } from "@js-temporal/polyfill";
 import { and, eq } from "drizzle-orm";
 
-import { fromISOString, nowIso } from "@/lib/time";
+import { nowIso } from "@/lib/time";
 
 import { db } from "../index";
 import { practiceSessions } from "../schema";
@@ -38,16 +37,6 @@ export const isSessionOwnedBy = async (sessionId: number, userId: number) => {
 		columns: { id: true },
 	});
 	return session !== undefined;
-};
-
-export const getLastPracticeDate = async (userId: number): Promise<Temporal.Instant | null> => {
-	const result = await db.query.practiceSessions.findFirst({
-		where: { userId, NOT: { completedAt: { isNull: true } } },
-		orderBy: { completedAt: "desc" },
-		columns: { completedAt: true },
-	});
-
-	return result?.completedAt != null ? fromISOString(result.completedAt) : null;
 };
 
 /**

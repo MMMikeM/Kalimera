@@ -5,10 +5,7 @@ import { calculateDaysUntilNextFreeze, getFreezeStatus } from "@/lib/streak";
 import { diffInDays, fromISOString, mondayBasedDayOfWeek, toPlainDate, today } from "@/lib/time";
 import { requireAuth } from "@/server/auth/session";
 import { getSchemaRust, RUST_THRESHOLD_VALUE } from "@/server/db/queries/analytics/drill-stats";
-import {
-	getLastPracticeDate,
-	listCompletedPracticeSessionsForStreak,
-} from "@/server/db/queries/practice-sessions";
+import { listCompletedPracticeSessionsForStreak } from "@/server/db/queries/practice-sessions";
 import { getUserById } from "@/server/db/queries/users";
 import { getReviewStats } from "@/server/db/queries/vocab-reviews";
 
@@ -22,16 +19,16 @@ type Stats = {
 export const getDashboardDataFn = createServerFn({ method: "GET" }).handler(async () => {
 	const { userId } = await requireAuth();
 
-	const [rawStats, user, lastPracticeDate, completedSessions, rustyDrills] = await Promise.all([
+	const [rawStats, user, completedSessions, rustyDrills] = await Promise.all([
 		getReviewStats(userId),
 		getUserById(userId),
-		getLastPracticeDate(userId),
 		listCompletedPracticeSessionsForStreak(userId),
 		getSchemaRust(userId),
 	]);
 	const completedDates = completedSessions.flatMap((s) =>
 		s.completedAt ? [fromISOString(s.completedAt)] : [],
 	);
+	const lastPracticeDate = completedDates[0];
 
 	const todayDate = today();
 	const daysSinceLastPractice = lastPracticeDate
