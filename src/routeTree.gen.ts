@@ -12,11 +12,6 @@ import { Route as authLoginRouteImport } from "./routes/(auth)/login";
 import { Route as authRegisterRouteImport } from "./routes/(auth)/register";
 import { Route as rootRouteImport } from "./routes/__root";
 import { Route as ApiErrorsRouteImport } from "./routes/api/errors";
-import { Route as ApiPushLogTapRouteImport } from "./routes/api/push/log-tap";
-import { Route as ApiPushSnoozeRouteImport } from "./routes/api/push/snooze";
-import { Route as ApiPushSubscribeRouteImport } from "./routes/api/push/subscribe";
-import { Route as ApiPushUnsubscribeRouteImport } from "./routes/api/push/unsubscribe";
-import { Route as ApiPushVapidKeyRouteImport } from "./routes/api/push/vapid-key";
 import { Route as ApiWebauthnAuthOptionsRouteImport } from "./routes/api/webauthn/auth-options";
 import { Route as ApiWebauthnAuthVerifyRouteImport } from "./routes/api/webauthn/auth-verify";
 import { Route as ApiWebauthnRegisterOptionsRouteImport } from "./routes/api/webauthn/register-options";
@@ -334,31 +329,6 @@ const ApiWebauthnAuthOptionsRoute = ApiWebauthnAuthOptionsRouteImport.update({
 	path: "/api/webauthn/auth-options",
 	getParentRoute: () => rootRouteImport,
 } as any);
-const ApiPushVapidKeyRoute = ApiPushVapidKeyRouteImport.update({
-	id: "/api/push/vapid-key",
-	path: "/api/push/vapid-key",
-	getParentRoute: () => rootRouteImport,
-} as any);
-const ApiPushUnsubscribeRoute = ApiPushUnsubscribeRouteImport.update({
-	id: "/api/push/unsubscribe",
-	path: "/api/push/unsubscribe",
-	getParentRoute: () => rootRouteImport,
-} as any);
-const ApiPushSubscribeRoute = ApiPushSubscribeRouteImport.update({
-	id: "/api/push/subscribe",
-	path: "/api/push/subscribe",
-	getParentRoute: () => rootRouteImport,
-} as any);
-const ApiPushSnoozeRoute = ApiPushSnoozeRouteImport.update({
-	id: "/api/push/snooze",
-	path: "/api/push/snooze",
-	getParentRoute: () => rootRouteImport,
-} as any);
-const ApiPushLogTapRoute = ApiPushLogTapRouteImport.update({
-	id: "/api/push/log-tap",
-	path: "/api/push/log-tap",
-	getParentRoute: () => rootRouteImport,
-} as any);
 const PracticeBlocksQuestionWordsIndexRoute = PracticeBlocksQuestionWordsIndexRouteImport.update({
 	id: "/blocks/question-words/",
 	path: "/blocks/question-words/",
@@ -562,11 +532,6 @@ export interface FileRoutesByFullPath {
 	"/learn/": typeof LearnIndexRoute;
 	"/practice/": typeof PracticeIndexRoute;
 	"/reference/": typeof ReferenceIndexRoute;
-	"/api/push/log-tap": typeof ApiPushLogTapRoute;
-	"/api/push/snooze": typeof ApiPushSnoozeRoute;
-	"/api/push/subscribe": typeof ApiPushSubscribeRoute;
-	"/api/push/unsubscribe": typeof ApiPushUnsubscribeRoute;
-	"/api/push/vapid-key": typeof ApiPushVapidKeyRoute;
 	"/api/webauthn/auth-options": typeof ApiWebauthnAuthOptionsRoute;
 	"/api/webauthn/auth-verify": typeof ApiWebauthnAuthVerifyRoute;
 	"/api/webauthn/register-options": typeof ApiWebauthnRegisterOptionsRoute;
@@ -650,11 +615,6 @@ export interface FileRoutesByTo {
 	"/learn": typeof LearnIndexRoute;
 	"/practice": typeof PracticeIndexRoute;
 	"/reference": typeof ReferenceIndexRoute;
-	"/api/push/log-tap": typeof ApiPushLogTapRoute;
-	"/api/push/snooze": typeof ApiPushSnoozeRoute;
-	"/api/push/subscribe": typeof ApiPushSubscribeRoute;
-	"/api/push/unsubscribe": typeof ApiPushUnsubscribeRoute;
-	"/api/push/vapid-key": typeof ApiPushVapidKeyRoute;
 	"/api/webauthn/auth-options": typeof ApiWebauthnAuthOptionsRoute;
 	"/api/webauthn/auth-verify": typeof ApiWebauthnAuthVerifyRoute;
 	"/api/webauthn/register-options": typeof ApiWebauthnRegisterOptionsRoute;
@@ -741,11 +701,6 @@ export interface FileRoutesById {
 	"/learn/": typeof LearnIndexRoute;
 	"/practice/": typeof PracticeIndexRoute;
 	"/reference/": typeof ReferenceIndexRoute;
-	"/api/push/log-tap": typeof ApiPushLogTapRoute;
-	"/api/push/snooze": typeof ApiPushSnoozeRoute;
-	"/api/push/subscribe": typeof ApiPushSubscribeRoute;
-	"/api/push/unsubscribe": typeof ApiPushUnsubscribeRoute;
-	"/api/push/vapid-key": typeof ApiPushVapidKeyRoute;
 	"/api/webauthn/auth-options": typeof ApiWebauthnAuthOptionsRoute;
 	"/api/webauthn/auth-verify": typeof ApiWebauthnAuthVerifyRoute;
 	"/api/webauthn/register-options": typeof ApiWebauthnRegisterOptionsRoute;
@@ -833,11 +788,6 @@ export interface FileRouteTypes {
 		| "/learn/"
 		| "/practice/"
 		| "/reference/"
-		| "/api/push/log-tap"
-		| "/api/push/snooze"
-		| "/api/push/subscribe"
-		| "/api/push/unsubscribe"
-		| "/api/push/vapid-key"
 		| "/api/webauthn/auth-options"
 		| "/api/webauthn/auth-verify"
 		| "/api/webauthn/register-options"
@@ -921,11 +871,6 @@ export interface FileRouteTypes {
 		| "/learn"
 		| "/practice"
 		| "/reference"
-		| "/api/push/log-tap"
-		| "/api/push/snooze"
-		| "/api/push/subscribe"
-		| "/api/push/unsubscribe"
-		| "/api/push/vapid-key"
 		| "/api/webauthn/auth-options"
 		| "/api/webauthn/auth-verify"
 		| "/api/webauthn/register-options"
@@ -1011,11 +956,6 @@ export interface FileRouteTypes {
 		| "/learn/"
 		| "/practice/"
 		| "/reference/"
-		| "/api/push/log-tap"
-		| "/api/push/snooze"
-		| "/api/push/subscribe"
-		| "/api/push/unsubscribe"
-		| "/api/push/vapid-key"
 		| "/api/webauthn/auth-options"
 		| "/api/webauthn/auth-verify"
 		| "/api/webauthn/register-options"
@@ -1100,11 +1040,6 @@ export interface RootRouteChildren {
 	ReferenceTabRoute: typeof ReferenceTabRoute;
 	LearnIndexRoute: typeof LearnIndexRoute;
 	ReferenceIndexRoute: typeof ReferenceIndexRoute;
-	ApiPushLogTapRoute: typeof ApiPushLogTapRoute;
-	ApiPushSnoozeRoute: typeof ApiPushSnoozeRoute;
-	ApiPushSubscribeRoute: typeof ApiPushSubscribeRoute;
-	ApiPushUnsubscribeRoute: typeof ApiPushUnsubscribeRoute;
-	ApiPushVapidKeyRoute: typeof ApiPushVapidKeyRoute;
 	ApiWebauthnAuthOptionsRoute: typeof ApiWebauthnAuthOptionsRoute;
 	ApiWebauthnAuthVerifyRoute: typeof ApiWebauthnAuthVerifyRoute;
 	ApiWebauthnRegisterOptionsRoute: typeof ApiWebauthnRegisterOptionsRoute;
@@ -1448,41 +1383,6 @@ declare module "@tanstack/react-router" {
 			path: "/api/webauthn/auth-options";
 			fullPath: "/api/webauthn/auth-options";
 			preLoaderRoute: typeof ApiWebauthnAuthOptionsRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/api/push/vapid-key": {
-			id: "/api/push/vapid-key";
-			path: "/api/push/vapid-key";
-			fullPath: "/api/push/vapid-key";
-			preLoaderRoute: typeof ApiPushVapidKeyRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/api/push/unsubscribe": {
-			id: "/api/push/unsubscribe";
-			path: "/api/push/unsubscribe";
-			fullPath: "/api/push/unsubscribe";
-			preLoaderRoute: typeof ApiPushUnsubscribeRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/api/push/subscribe": {
-			id: "/api/push/subscribe";
-			path: "/api/push/subscribe";
-			fullPath: "/api/push/subscribe";
-			preLoaderRoute: typeof ApiPushSubscribeRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/api/push/snooze": {
-			id: "/api/push/snooze";
-			path: "/api/push/snooze";
-			fullPath: "/api/push/snooze";
-			preLoaderRoute: typeof ApiPushSnoozeRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/api/push/log-tap": {
-			id: "/api/push/log-tap";
-			path: "/api/push/log-tap";
-			fullPath: "/api/push/log-tap";
-			preLoaderRoute: typeof ApiPushLogTapRouteImport;
 			parentRoute: typeof rootRouteImport;
 		};
 		"/practice/blocks/question-words/": {
@@ -1897,11 +1797,6 @@ const rootRouteChildren: RootRouteChildren = {
 	ReferenceTabRoute: ReferenceTabRoute,
 	LearnIndexRoute: LearnIndexRoute,
 	ReferenceIndexRoute: ReferenceIndexRoute,
-	ApiPushLogTapRoute: ApiPushLogTapRoute,
-	ApiPushSnoozeRoute: ApiPushSnoozeRoute,
-	ApiPushSubscribeRoute: ApiPushSubscribeRoute,
-	ApiPushUnsubscribeRoute: ApiPushUnsubscribeRoute,
-	ApiPushVapidKeyRoute: ApiPushVapidKeyRoute,
 	ApiWebauthnAuthOptionsRoute: ApiWebauthnAuthOptionsRoute,
 	ApiWebauthnAuthVerifyRoute: ApiWebauthnAuthVerifyRoute,
 	ApiWebauthnRegisterOptionsRoute: ApiWebauthnRegisterOptionsRoute,
