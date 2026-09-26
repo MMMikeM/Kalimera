@@ -31,7 +31,7 @@ The seeders (vocab + verb conjugations) are **idempotent additive upserts**. Re-
 
 ## Screenshots
 
-`pnpm screenshots` (desktop 1280×720) or `pnpm screenshots --mobile` (375×812) — Playwright script at `screenshots/capture.ts`. Requires dev server running; `BASE_URL` env overrides `http://localhost:5173`. Logs in via `screenshots/login.ts`, captures ~30 fixed routes as full-page PNGs to `screenshots/desktop/` or `screenshots/mobile/`. For a single ad-hoc page, write a one-off Playwright script reusing `loginWithCredentials`.
+`pnpm screenshots` (desktop 1280×720) or `pnpm screenshots --mobile` (375×812) — Playwright script at `screenshots/capture.ts`. Requires dev server running; `BASE_URL` env overrides `http://localhost:5173`. Logs in via `screenshots/login.ts`, captures ~40 fixed routes as full-page PNGs to `screenshots/desktop/` or `screenshots/mobile/`. Add `--route /reference/cases` to capture one page. It unpins `.app-shell` before each shot, since the fixed shell otherwise clips full-page captures to the viewport.
 
 ---
 
