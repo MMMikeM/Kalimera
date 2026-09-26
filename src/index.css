@@ -548,6 +548,22 @@
 	--color-sidebar-border: oklch(0.34 0 56);
 }
 
+::view-transition-old(root),
+::view-transition-new(root) {
+	animation-duration: 250ms;
+}
+
+/* The toggle runs its own sunset animation; keep the page cross-fade from ghosting it. */
+.theme-toggle {
+	view-transition-name: theme-toggle;
+}
+::view-transition-old(theme-toggle) {
+	display: none;
+}
+::view-transition-new(theme-toggle) {
+	animation: none;
+}
+
 :root {
 	--radius: 0.625rem;
 }
