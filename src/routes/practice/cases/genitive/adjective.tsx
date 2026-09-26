@@ -7,7 +7,7 @@ import { GENDER_DIMENSION_OPTIONS } from "../../components/engines/drill-constan
 // Adjective three-form agreement in Owner (genitive).
 // Singular: m -ου · f -ης/-ας · n -ου
 // Plural:   -ων for all three genders
-// Forward: "good (m, owner)" → type "kalou" / "good (pl, owner)" → type "kalon"
+// Forward: "good · masculine" → type "kalou" / "good · plural" → type "kalon"
 // Reverse: show Greek form → tap gender chip (note: pl -ων is gender-ambiguous)
 
 interface AdjGroup {
@@ -106,24 +106,21 @@ const ITEMS: SimpleListItem[] = ADJECTIVES.flatMap((adj) => [
 	{
 		id: `${adj.id}-m`,
 		greek: adj.masculine,
-		english: `${adj.english} (m, owner)`,
-		label: "masculine",
+		label: `${adj.english} · masculine`,
 		category: "masculine",
 		dimension: "masculine",
 	},
 	{
 		id: `${adj.id}-f`,
 		greek: adj.feminine,
-		english: `${adj.english} (f, owner)`,
-		label: "feminine",
+		label: `${adj.english} · feminine`,
 		category: "feminine",
 		dimension: "feminine",
 	},
 	{
 		id: `${adj.id}-n`,
 		greek: adj.neuter,
-		english: `${adj.english} (n, owner)`,
-		label: "neuter",
+		label: `${adj.english} · neuter`,
 		category: "neuter",
 		dimension: "neuter",
 	},
@@ -131,8 +128,7 @@ const ITEMS: SimpleListItem[] = ADJECTIVES.flatMap((adj) => [
 	{
 		id: `${adj.id}-pl`,
 		greek: adj.plural,
-		english: `${adj.english} (pl, owner — all genders)`,
-		label: "plural",
+		label: `${adj.english} · plural`,
 		category: "plural",
 	},
 ]);
