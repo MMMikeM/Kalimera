@@ -1,12 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { getFutureDrillQuestionsFn } from "@/server/fns/verbs";
+import { getVerbDrillQuestionsFn } from "@/server/fns/verbs";
 
 import { VocabDrillPage } from "../../components/engines/vocab-drill";
 
 export const Route = createFileRoute("/practice/verbs/future/conjugation")({
 	loader: async () => {
-		const questions = await getFutureDrillQuestionsFn({ data: { limit: 30 } });
+		const questions = await getVerbDrillQuestionsFn({
+			data: { drillId: "verbs-future-conjugation", limit: 30 },
+		});
 		if (questions.length === 0) throw new Error("No questions available");
 		return { questions };
 	},

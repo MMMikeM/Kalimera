@@ -1,8 +1,7 @@
 import { sql } from "drizzle-orm";
 
 import { tags, vocabularyTags } from "../server/db/schema";
-import type { Db, NewAdjectiveDetails } from "../server/db/types";
-import type { NewNominalForm, NewVocabularyTag } from "../server/db/types";
+import type { Db, NewVocabularyTag } from "../server/db/types";
 import {
 	CONTENT_TAGS,
 	LESSON_SEED_CATEGORIES,
@@ -11,16 +10,13 @@ import {
 } from "./seed-data";
 import { seedOpposites } from "./seed-opposites";
 import {
-	BATCH_SIZE,
-	type NounDetailRecord,
 	type SeedAccumulators,
-	type VerbDetailRecord,
-	type VocabWithTags,
 	batchInsertAdjectiveDetails,
 	batchInsertNounDetails,
 	batchInsertVerbDetails,
 	batchUpsertNominalForms,
-	runSeedCategory,
+	inBatches,
+	seedCategory,
 } from "./seed-pipeline";
 import { seedVerbConjugations } from "./seed-verb-conjugations";
 
@@ -49,51 +45,38 @@ export async function seed(db: Db) {
 			},
 		})
 		.returning();
-	console.log(`Upserted ${insertedTags.length} tags.`);
-
-	console.log("Updated tag section metadata.\n");
-
-	const vocabTagLinks: NewVocabularyTag[] = [];
-	const tagDisplayOrderById = new Map<number, number>();
-	const allNounDetails: NounDetailRecord[] = [];
-	const allAdjectiveDetails: NewAdjectiveDetails[] = [];
-	const allNominalForms: NewNominalForm[] = [];
+	console.log(`Upserted ${insertedTags.length} tags.\n`);
 
 	const ctx: SeedAccumulators = {
 		tagMap: new Map(insertedTags.map((t) => [t.slug, t.id])),
-		vocabTagLinks,
-		tagDisplayOrderById,
-		allNounDetails,
-		allAdjectiveDetails,
-		allNominalForms,
+		vocabTagLinks: [],
+		tagDisplayOrderById: new Map(),
+		allNounDetails: [],
+		allAdjectiveDetails: [],
+		allNominalForms: [],
+		allVerbDetails: [],
 	};
 
-	const run = (categoryName: string, items: VocabWithTags[]) =>
-		runSeedCategory(db, categoryName, items, ctx);
-
-	const allVerbDetails: VerbDetailRecord[] = [];
-
-	const categories = [...VOCAB_SEED_CATEGORIES, ...LESSON_SEED_CATEGORIES];
-	for (const { name, items } of categories) {
-		allVerbDetails.push(...(await run(name, items)));
+	for (const { name, items } of [...VOCAB_SEED_CATEGORIES, ...LESSON_SEED_CATEGORIES]) {
+		await seedCategory(db, name, items, ctx);
 	}
 
-	console.log(`\nInserting ${allNounDetails.length} noun details...`);
-	await batchInsertNounDetails(db, allNounDetails);
+	console.log(`\nInserting ${ctx.allNounDetails.length} noun details...`);
+	await batchInsertNounDetails(db, ctx.allNounDetails);
 
-	console.log(`\nInserting ${allAdjectiveDetails.length} adjective details...`);
-	await batchInsertAdjectiveDetails(db, allAdjectiveDetails);
+	console.log(`\nInserting ${ctx.allAdjectiveDetails.length} adjective details...`);
+	await batchInsertAdjectiveDetails(db, ctx.allAdjectiveDetails);
 
-	console.log(`\nUpserting ${allNominalForms.length} nominal forms...`);
-	await batchUpsertNominalForms(db, allNominalForms);
+	console.log(`\nUpserting ${ctx.allNominalForms.length} nominal forms...`);
+	await batchUpsertNominalForms(db, ctx.allNominalForms);
 
-	console.log(`\nInserting ${allVerbDetails.length} verb details...`);
-	await batchInsertVerbDetails(db, allVerbDetails);
+	console.log(`\nInserting ${ctx.allVerbDetails.length} verb details...`);
+	await batchInsertVerbDetails(db, ctx.allVerbDetails);
 
 	console.log("Creating vocabulary-tag associations...");
-	if (vocabTagLinks.length > 0) {
+	if (ctx.vocabTagLinks.length > 0) {
 		const uniqueLinks = new Map<string, NewVocabularyTag>();
-		for (const link of vocabTagLinks) {
+		for (const link of ctx.vocabTagLinks) {
 			const key = `${link.vocabularyId}-${link.tagId}`;
 			if (!uniqueLinks.has(key)) {
 				uniqueLinks.set(key, link);
@@ -102,16 +85,15 @@ export async function seed(db: Db) {
 
 		const linksArray = Array.from(uniqueLinks.values());
 
-		for (let i = 0; i < linksArray.length; i += BATCH_SIZE) {
-			const batch = linksArray.slice(i, i + BATCH_SIZE);
-			await db
+		await inBatches(linksArray, (batch) =>
+			db
 				.insert(vocabularyTags)
 				.values(batch)
 				.onConflictDoUpdate({
 					target: [vocabularyTags.vocabularyId, vocabularyTags.tagId],
 					set: { displayOrder: sql`excluded.display_order` },
-				});
-		}
+				}),
+		);
 		console.log(`Processed ${linksArray.length} vocabulary-tag associations.`);
 	}
 

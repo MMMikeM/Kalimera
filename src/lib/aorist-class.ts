@@ -1,3 +1,5 @@
+import { stripTonos } from "@/lib/greek-letters";
+
 /**
  * Which bucket a verb falls into for learning purposes, judged on the aorist:
  * the present is regular for nearly every Greek verb, so it is the past that
@@ -13,11 +15,7 @@ export type AoristClass =
 	| "deponent"
 	| "irregular";
 
-const plain = (s: string): string =>
-	s
-		.normalize("NFD")
-		.replace(/[̀-ͯ]/g, "")
-		.toLowerCase();
+const plain = (s: string): string => stripTonos(s, { keepDiaeresis: false }).toLowerCase();
 
 /**
  * Present stem back to its last stable vowel: every trailing consonant can merge

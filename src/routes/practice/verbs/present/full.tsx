@@ -6,7 +6,9 @@ import { VocabDrillPage } from "../../components/engines/vocab-drill";
 
 export const Route = createFileRoute("/practice/verbs/present/full")({
 	loader: async () => {
-		const questions = await getVerbDrillQuestionsFn({ data: { limit: 30 } });
+		const questions = await getVerbDrillQuestionsFn({
+			data: { drillId: "verbs-present", limit: 30 },
+		});
 		if (questions.length === 0) throw new Error("No questions available");
 		return { questions };
 	},

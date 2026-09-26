@@ -1,13 +1,10 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
-import { adjacentCefrPool } from "@/lib/cefr";
-import type { DrillBucket, DrillQuestion } from "@/lib/drill/types";
-import { typedEntries } from "@/lib/object";
+import type { DrillQuestion } from "@/lib/drill/types";
 import { requireAuth } from "@/server/auth/session";
 import { getDrillVocabPool } from "@/server/db/queries/drill-pool";
 import { getVocabularyWithNominalForms } from "@/server/db/queries/nominal-forms";
-import { ensureUserProgress } from "@/server/db/queries/user-progress";
 
 const CASE_LABEL: Record<string, string> = {
 	nominative: "Doer",
@@ -29,23 +26,12 @@ async function getNominalReviewQuestionsImpl(
 	drillId: string,
 	limit: number,
 ): Promise<DrillQuestion[]> {
-	const { currentCefrLevel } = await ensureUserProgress(userId);
-
-	const pool = await getDrillVocabPool({
+	const { allIds, bucketMap } = await getDrillVocabPool({
 		userId,
 		drillId,
 		wordTypes: [wordType],
-		cefrPool: adjacentCefrPool(currentCefrLevel),
 		limit,
 	});
-
-	const entries = typedEntries(pool);
-	const allIds = entries.flatMap(([, ids]) => ids);
-
-	const bucketMap = new Map<number, DrillBucket>();
-	for (const [bucket, ids] of entries) {
-		for (const id of ids) bucketMap.set(id, bucket);
-	}
 
 	const rows = await getVocabularyWithNominalForms(wordType, allIds);
 
@@ -79,6 +65,6 @@ export const getNominalReviewQuestionsFn = createServerFn({ method: "GET" })
 		}),
 	)
 	.handler(async ({ data }) => {
-		const { userId } = requireAuth();
+		const { userId } = await requireAuth();
 		return getNominalReviewQuestionsImpl(userId, data.wordType, data.drillId, data.limit);
 	});

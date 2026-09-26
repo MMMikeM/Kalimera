@@ -1,7 +1,6 @@
-import { Temporal } from "@js-temporal/polyfill";
-import { and, eq, gte, inArray, lt } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 
-import { fromISOString, nowIso } from "@/lib/time";
+import { nowIso } from "@/lib/time";
 
 import { db } from "../index";
 import { practiceSessions } from "../schema";
@@ -18,7 +17,7 @@ export const startSession = async (data: PracticeSessionInsert) => {
 	return session;
 };
 
-export const completeSession = async (input: CompleteSessionInput) => {
+export const completeSession = async (userId: number, input: CompleteSessionInput) => {
 	const { sessionId, ...patch } = input;
 	const [session] = await db
 		.update(practiceSessions)
@@ -26,20 +25,18 @@ export const completeSession = async (input: CompleteSessionInput) => {
 			...patch,
 			completedAt: nowIso(),
 		})
-		.where(eq(practiceSessions.id, sessionId))
+		.where(and(eq(practiceSessions.id, sessionId), eq(practiceSessions.userId, userId)))
 		.returning();
 
 	return session;
 };
 
-export const getLastPracticeDate = async (userId: number): Promise<Temporal.Instant | null> => {
-	const result = await db.query.practiceSessions.findFirst({
-		where: { userId, NOT: { completedAt: { isNull: true } } },
-		orderBy: { completedAt: "desc" },
-		columns: { completedAt: true },
+export const isSessionOwnedBy = async (sessionId: number, userId: number) => {
+	const session = await db.query.practiceSessions.findFirst({
+		where: { id: sessionId, userId },
+		columns: { id: true },
 	});
-
-	return result?.completedAt != null ? fromISOString(result.completedAt) : null;
+	return session !== undefined;
 };
 
 /**
@@ -52,39 +49,5 @@ export const listCompletedPracticeSessionsForStreak = async (userId: number) => 
 		orderBy: { completedAt: "desc" },
 		limit: 365,
 		columns: { completedAt: true },
-	});
-};
-
-export const getUserIdsPracticedInRange = async (
-	userIds: number[],
-	rangeStart: string,
-	rangeEnd: string,
-) => {
-	if (userIds.length === 0) return new Set<number>();
-
-	const rows = await db
-		.selectDistinct({ userId: practiceSessions.userId })
-		.from(practiceSessions)
-		.where(
-			and(
-				inArray(practiceSessions.userId, userIds),
-				gte(practiceSessions.startedAt, rangeStart),
-				lt(practiceSessions.startedAt, rangeEnd),
-			),
-		);
-
-	return new Set(rows.map((r) => r.userId));
-};
-
-export const listPracticeSessionsSinceForUsers = async (userIds: number[], since: string) => {
-	if (userIds.length === 0) return [];
-
-	return await db.query.practiceSessions.findMany({
-		where: {
-			userId: { in: userIds },
-			startedAt: { gte: since },
-		},
-		columns: { userId: true, startedAt: true },
-		orderBy: { startedAt: "desc" },
 	});
 };
