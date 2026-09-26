@@ -16,8 +16,8 @@ const triggerStateVariants = tv({
 	base: "",
 	variants: {
 		active: {
-			true: "border-b-2 bg-white text-foreground shadow-sm dark:border-input dark:bg-input/30",
-			false: "text-foreground dark:text-muted-foreground",
+			true: "border-b-2 bg-card text-foreground shadow-sm",
+			false: "text-foreground",
 		},
 		color: {
 			ocean: "",
@@ -28,11 +28,11 @@ const triggerStateVariants = tv({
 		},
 	},
 	compoundVariants: [
-		{ active: true, color: "ocean", class: "border-b-ocean dark:border-ocean" },
-		{ active: true, color: "olive", class: "border-b-olive dark:border-olive" },
-		{ active: true, color: "honey", class: "border-b-honey dark:border-honey" },
-		{ active: true, color: "terracotta", class: "border-b-terracotta dark:border-terracotta" },
-		{ active: true, color: "neutral", class: "border-b-stone-400 dark:border-stone-500" },
+		{ active: true, color: "ocean", class: "border-b-ocean" },
+		{ active: true, color: "olive", class: "border-b-olive" },
+		{ active: true, color: "honey", class: "border-b-honey" },
+		{ active: true, color: "terracotta", class: "border-b-terracotta" },
+		{ active: true, color: "neutral", class: "border-b-stone-400" },
 	],
 	defaultVariants: {
 		active: false,

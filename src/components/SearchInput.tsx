@@ -17,7 +17,7 @@ const searchInputVariants = tv({
 });
 
 const searchInputFieldVariants = tv({
-	base: "w-full rounded-lg border border-stone-300 bg-white text-stone-900 transition-colors placeholder:text-stone-600 focus:border-terracotta focus:ring-2 focus:ring-terracotta-300 focus:ring-offset-0 focus:outline-none",
+	base: "w-full rounded-lg border border-stone-300 bg-card text-stone-900 transition-colors placeholder:text-stone-600 focus:border-terracotta focus:ring-2 focus:ring-terracotta-300 focus:ring-offset-0 focus:outline-none",
 	variants: {
 		size: {
 			sm: "py-1.5 pr-8 pl-8 text-sm",

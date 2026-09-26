@@ -149,7 +149,7 @@ function VerbDetailPage() {
 				Verbs
 			</Link>
 
-			<Card variant="bordered" padding="lg" className="bg-white">
+			<Card variant="bordered" padding="lg" className="bg-card">
 				<div className="flex flex-wrap items-start justify-between gap-4">
 					<div>
 						<GreekText tone="accent" size="2xl" weight="bold">

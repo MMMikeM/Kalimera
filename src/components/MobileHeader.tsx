@@ -3,6 +3,7 @@ import { BarChart3, Info, LogOut, Search, User } from "lucide-react";
 import { useState } from "react";
 
 import { GlobalSearch } from "@/components/GlobalSearch";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import {
 	Popover,
 	PopoverContent,
@@ -39,6 +40,7 @@ export function MobileHeader({
 						</span>
 					)}
 				</GlobalSearch>
+				<ThemeToggle size={20} />
 				{isAuthenticated && (
 					<Popover open={isOpen} onOpenChange={setIsOpen}>
 						<PopoverTrigger

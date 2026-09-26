@@ -10,7 +10,7 @@ import { type GrammarScheme, SCHEME } from "@/constants/grammar-palette";
 import type { PatternItem, PatternsData } from "../$tab";
 
 const PatternRow = ({ item }: { item: PatternItem }) => (
-	<div className="flex items-baseline gap-2 rounded border border-stone-200 bg-white p-2">
+	<div className="flex items-baseline gap-2 rounded border border-stone-200 bg-card p-2">
 		<GreekText tone="accent" size="lg">
 			{item.greekText}
 		</GreekText>

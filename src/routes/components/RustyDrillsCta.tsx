@@ -42,7 +42,7 @@ export const RustyDrillsCta = ({ rustyDrills }: { rustyDrills: DrillRust[] }) =>
 							<Link
 								key={drill.drillId}
 								to={meta.to}
-								className="flex items-center justify-between rounded-xl bg-white/70 px-4 py-3 transition-colors hover:bg-white/90"
+								className="flex items-center justify-between rounded-xl bg-card/70 px-4 py-3 transition-colors hover:bg-card/90"
 							>
 								<div>
 									<p className="text-sm font-medium text-stone-800">{meta.title}</p>

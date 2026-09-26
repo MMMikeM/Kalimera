@@ -286,7 +286,7 @@ export const MemoriseSection: React.FC<{
 							</div>
 							<p className="text-xs text-stone-500">{group.blurb}</p>
 						</div>
-						<div className="bg-white px-4 py-2">
+						<div className="bg-card px-4 py-2">
 							<VerbTable verbs={members} showFuture paradigms={paradigms} />
 						</div>
 					</div>
@@ -316,7 +316,7 @@ export const RulesSection: React.FC<{ verbs: ClassifiedVerb[] }> = ({ verbs }) =
 				const members = verbs.filter((v) => v.klass === group.klass);
 				if (members.length === 0) return null;
 				return (
-					<div key={group.klass} className="rounded-xl border border-stone-200 bg-white">
+					<div key={group.klass} className="rounded-xl border border-stone-200 bg-card">
 						<div className="flex items-baseline gap-3 border-b border-stone-100 px-4 py-2.5">
 							<GreekText tone="default" size="sm" className="text-stone-600">
 								{group.label}
