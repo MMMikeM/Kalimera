@@ -27,7 +27,7 @@ export function SelfAssessReverse() {
 		if (!currentForm) return;
 		const timeTaken = performance.now() - startedAt.current;
 		recordAttempt(isCorrect, timeTaken, {
-			prompt: currentForm.greek,
+			prompt: currentForm.reverseGreek ?? currentForm.greek,
 			correctAnswer: currentForm.label,
 			userAnswer: isCorrect ? "self:correct" : "self:wrong",
 		});
@@ -39,7 +39,7 @@ export function SelfAssessReverse() {
 		<>
 			<div>
 				<GreekText as="p" size="4xl">
-					{currentForm.greek}
+					{currentForm.reverseGreek ?? currentForm.greek}
 				</GreekText>
 			</div>
 

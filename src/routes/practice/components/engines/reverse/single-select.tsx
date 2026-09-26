@@ -50,7 +50,7 @@ export function SingleSelectReverse({
 			const correctId = getCorrectId(currentForm as unknown as Record<string, unknown>);
 			const isCorrect = correctId === id;
 			recordAttempt(isCorrect, timeTaken, {
-				prompt: currentForm.greek,
+				prompt: currentForm.reverseGreek ?? currentForm.greek,
 				correctAnswer: correctId,
 				userAnswer: id,
 			});
@@ -64,7 +64,7 @@ export function SingleSelectReverse({
 		<>
 			<div>
 				<GreekText as="p" size="4xl">
-					{renderGreek ? renderGreek(currentForm) : currentForm.greek}
+					{renderGreek ? renderGreek(currentForm) : (currentForm.reverseGreek ?? currentForm.greek)}
 				</GreekText>
 			</div>
 
