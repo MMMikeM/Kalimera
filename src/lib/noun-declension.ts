@@ -2,6 +2,7 @@ import { AGREEMENT_PARADIGMS } from "@/constants/agreement";
 import type { GrammaticalNumber, NominalCase, NounDeclensionPattern } from "@/server/db/enums";
 
 import { retainsNu } from "./greek-grammar";
+import { stripTonos, withTonos } from "./greek-letters";
 import { typedKeys } from "./object";
 
 type Case = NominalCase;
@@ -60,38 +61,6 @@ const getStemFromLemma = (lemma: string, pattern: NounDeclensionPattern): string
 };
 
 const TONOS_CHARS = /[άέήίόύώΐΰΆΈΉΊΌΎΏ]/;
-const TONOS_MAP: Record<string, string> = {
-	Ά: "Α",
-	Έ: "Ε",
-	Ή: "Η",
-	Ί: "Ι",
-	Ό: "Ο",
-	Ύ: "Υ",
-	Ώ: "Ω",
-	ά: "α",
-	ε: "ε",
-	έ: "ε",
-	η: "η",
-	ή: "η",
-	ί: "ι",
-	ό: "ο",
-	ύ: "υ",
-	ώ: "ω",
-	ΐ: "ϊ",
-	ΰ: "ϋ",
-};
-const ADD_TONOS_MAP: Record<string, string> = {
-	α: "ά",
-	ε: "έ",
-	η: "ή",
-	ι: "ί",
-	ο: "ό",
-	υ: "ύ",
-	ω: "ώ",
-};
-const stripTonos = (s: string): string =>
-	s.replace(/[άέήίόύώΐΰΆΈΉΊΌΎΏ]/g, (m) => TONOS_MAP[m] ?? m);
-
 const NUCLEUS = /(αι|ει|οι|ου|αυ|ευ|υι|[αεηιουωάέήίόύώΆΈΉΊΌΎΏϊϋΐΰ])/g;
 
 /** Nuclei of a word, with synizesis collapsed (ήλιος is ή-λιος, two syllables). */
@@ -152,7 +121,7 @@ const shiftStressToPenult = (phrase: string): string => {
 const addTonosToLastVowel = (s: string): string => {
 	for (let i = s.length - 1; i >= 0; i--) {
 		const ch = s[i];
-		const accented = ch ? ADD_TONOS_MAP[ch] : undefined;
+		const accented = ch ? withTonos(ch) : undefined;
 		if (accented) return s.slice(0, i) + accented + s.slice(i + 1);
 	}
 	return s;

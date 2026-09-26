@@ -4,7 +4,7 @@ import type { AuthenticationResponseJSON } from "@simplewebauthn/server";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { createWebAuthnFromRequest } from "@/server/auth";
-import { createAuthCookie } from "@/server/auth/cookie";
+import { setAuthSession } from "@/server/auth/session";
 import { getUserById } from "@/server/db/queries/users";
 
 interface AuthVerifyBody {
@@ -33,9 +33,9 @@ export const Route = createFileRoute("/api/webauthn/auth-verify")({
 					const user = await getUserById(result.userId);
 					const username = user?.username || "user";
 
-					const cookie = createAuthCookie({ userId: result.userId, username });
+					await setAuthSession({ userId: result.userId, username });
 
-					return Response.json({ ...result, username }, { headers: { "Set-Cookie": cookie } });
+					return Response.json({ ...result, username });
 				} catch (error) {
 					console.error("WebAuthn auth verify error:", error);
 					const message = error instanceof Error ? error.message : "Authentication failed";

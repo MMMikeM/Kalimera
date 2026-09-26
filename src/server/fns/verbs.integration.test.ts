@@ -29,15 +29,11 @@ beforeAll(async () => {
 
 const getQuestions = async (limit: number, persons: PersonNumber[] = ["sg1"]) => {
 	const { getVerbConjugationQuestions } = await import("./verbs.server");
-	return getVerbConjugationQuestions(
-		1,
-		limit,
-		"present",
-		"int-",
-		3000,
-		"verbs-vocabulary-sg1",
+	return getVerbConjugationQuestions(1, "verbs-vocabulary-sg1", limit, {
+		tense: "present",
+		idPrefix: "int-",
 		persons,
-	);
+	});
 };
 
 // ─── Tests ────────────────────────────────────────────────────────────────────

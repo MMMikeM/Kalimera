@@ -29,5 +29,3 @@ export const getNounsWithFormsAndSubjects = async () =>
 			},
 		},
 	});
-
-export type NounBrowserRow = Awaited<ReturnType<typeof getNounsWithFormsAndSubjects>>[number];

@@ -12,7 +12,8 @@ type PracticeDate = {
 
 type AccuracyTrend = {
 	date: string;
-	accuracy: number; // 0-100
+	/** Fraction correct, 0 to 1. */
+	accuracy: number;
 	totalAttempts: number;
 	correctAttempts: number;
 };
@@ -77,8 +78,7 @@ export const getAccuracyTrends = async (userId: number, days: number): Promise<A
 		date: r.date,
 		totalAttempts: r.totalAttempts,
 		correctAttempts: r.correctAttempts ?? 0,
-		accuracy:
-			r.totalAttempts > 0 ? Math.round(((r.correctAttempts ?? 0) / r.totalAttempts) * 100) : 0,
+		accuracy: r.totalAttempts > 0 ? (r.correctAttempts ?? 0) / r.totalAttempts : 0,
 	}));
 };
 

@@ -14,6 +14,7 @@ import { GreekText } from "@/components/GreekText";
 import { SectionHeading } from "@/components/SectionHeading";
 import { AGREEMENT_PARADIGMS, type AgreementParadigm } from "@/constants/agreement";
 import { GENDER_SCHEME, SCHEME } from "@/constants/grammar-palette";
+import { stripTonos } from "@/lib/greek-letters";
 import type { Gender, GrammaticalNumber } from "@/server/db/enums";
 
 import type { NounsData } from "../$tab";
@@ -129,15 +130,14 @@ const CASE_QUESTIONS: Record<RoleCase, string> = {
 /** Three example words per pattern keeps new material inside the working-memory ceiling. */
 const EXAMPLES_SHOWN = 3;
 
-const stripTonos = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "");
-
 /** An example has to actually show the ending it illustrates. Pluralia tantum are
  * assigned a pattern for declension purposes but do not demonstrate it — λεφτά is
  * a neut-o noun, yet a column headed "-ο / λεφτά" teaches nothing. Tonos-blind
  * because endings carry stress the lemma may not (σπίτι against -ί). */
 const demonstratesPattern = (lemma: string, paradigm: AgreementParadigm): boolean => {
 	const ending = formFor(paradigm, "singular", "nom")?.ending?.replace(/^-/, "");
-	return ending ? stripTonos(lemma).endsWith(stripTonos(ending)) : true;
+	const bare = { keepDiaeresis: false };
+	return ending ? stripTonos(lemma, bare).endsWith(stripTonos(ending, bare)) : true;
 };
 
 /** Real corpus nouns for a pattern, falling back to the paradigm's own example —

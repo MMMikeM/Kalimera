@@ -1,32 +1,13 @@
 import type { ConjugationFamily } from "../lib/greek-grammar";
+import { stripTonos, withTonos } from "../lib/greek-letters";
 import type { VerbConjugationSeed } from "../types/seed";
 
 // ─── Greek accent utilities ────────────────────────────────────────────────────
 
-const ACUTE: Record<string, string> = {
-	α: "ά",
-	ε: "έ",
-	η: "ή",
-	ι: "ί",
-	ο: "ό",
-	υ: "ύ",
-	ω: "ώ",
-};
-
-const stripAccents = (s: string): string =>
-	s
-		.replace(/ά/g, "α")
-		.replace(/έ/g, "ε")
-		.replace(/ή/g, "η")
-		.replace(/ί/g, "ι")
-		.replace(/ό/g, "ο")
-		.replace(/ύ/g, "υ")
-		.replace(/ώ/g, "ω");
-
 /**
  * Syllable nuclei character positions (left to right).
  * Diphthongs αι/ει/οι/αυ/ευ/ου → index of their SECOND vowel (which takes written accent).
- * Input must be unaccented (stripAccents first).
+ * Input must be unaccented (stripTonos first).
  */
 const nucleiPositions = (plain: string): number[] => {
 	const pos: number[] = [];
@@ -54,7 +35,7 @@ const accentAt = (plain: string, k: number): string => {
 	if (k < 0 || k >= npos.length) return plain;
 	const idx = npos[k]!;
 	const ch = plain[idx]!.toLowerCase();
-	return plain.slice(0, idx) + (ACUTE[ch] ?? ch) + plain.slice(idx + 1);
+	return plain.slice(0, idx) + (withTonos(ch) ?? ch) + plain.slice(idx + 1);
 };
 
 /**
@@ -69,10 +50,10 @@ const accentAntepenult = (plain: string): string => {
 
 /**
  * Find which nucleus index (from start, 0-indexed) is accented in the accented string.
- * Since stripAccents is a 1-to-1 char mapping, indices align.
+ * Since stripTonos is a 1-to-1 char mapping, indices align.
  */
 const accentedNucleusIndex = (accented: string): number => {
-	const plain = stripAccents(accented);
+	const plain = stripTonos(accented);
 	const npos = nucleiPositions(plain);
 	for (let k = 0; k < npos.length; k++) {
 		if (/[άέήίόύώ]/.test(accented[npos[k]!]!)) return k;
@@ -89,8 +70,8 @@ type Forms = { sg1: string; sg2: string; sg3: string; pl1: string; pl2: string; 
 const conjugateOmega = (lemma: string, aoristStem: string): VerbConjugationSeed[] => {
 	// Present stem = lemma strip -ω
 	const presentStemAccented = lemma.replace(/ω$/, "");
-	const presentStem = stripAccents(presentStemAccented);
-	const aStem = stripAccents(aoristStem);
+	const presentStem = stripTonos(presentStemAccented);
+	const aStem = stripTonos(aoristStem);
 
 	// Future: accent on same nucleus as in the lemma (present sg1)
 	const fNuc = accentedNucleusIndex(lemma);
@@ -149,10 +130,10 @@ const conjugateAo = (lemma: string, aoristStem: string): VerbConjugationSeed[] =
 	// lemma ends in "άω" (-άω type) or "ώ" (-ώ contracted type)
 	const isAoType = lemma.endsWith("άω");
 	const rootStripped = isAoType
-		? stripAccents(lemma).replace(/αω$/, "") // "ρωτα" → "ρωτ"
-		: stripAccents(lemma).replace(/ω$/, ""); // "προσπαθω" → "προσπαθ"
+		? stripTonos(lemma).replace(/αω$/, "") // "ρωτα" → "ρωτ"
+		: stripTonos(lemma).replace(/ω$/, ""); // "προσπαθω" → "προσπαθ"
 
-	const aStem = stripAccents(aoristStem);
+	const aStem = stripTonos(aoristStem);
 
 	// Present forms
 	const presentForms: Forms = isAoType
@@ -217,10 +198,10 @@ const conjugateAo = (lemma: string, aoristStem: string): VerbConjugationSeed[] =
 
 const conjugateAmai = (lemma: string, aoristStem: string): VerbConjugationSeed[] => {
 	// lemma ends in "άμαι": rootStem = strip "άμαι"
-	const rootStem = stripAccents(lemma).replace(/αμαι$/, "");
+	const rootStem = stripTonos(lemma).replace(/αμαι$/, "");
 
 	// aoristStem convention: pass root before -ήθηκα (e.g. "κοιμ" → κοιμήθηκα)
-	const aRoot = stripAccents(aoristStem);
+	const aRoot = stripTonos(aoristStem);
 
 	return [
 		{

@@ -40,7 +40,16 @@ const GREEK_FREQUENCY_LOOKUP = _require("./seed-data/frequency-lookup.json") as 
 	number
 >;
 
-export const BATCH_SIZE = 100;
+const BATCH_SIZE = 100;
+
+/** Run `write` over `rows` in slices of BATCH_SIZE, one after another, collecting each result. */
+export async function inBatches<T, R>(rows: T[], write: (batch: T[]) => Promise<R>): Promise<R[]> {
+	const results: R[] = [];
+	for (let i = 0; i < rows.length; i += BATCH_SIZE) {
+		results.push(await write(rows.slice(i, i + BATCH_SIZE)));
+	}
+	return results;
+}
 
 export type VerbDetailRecord = {
 	vocabId: number;
@@ -67,6 +76,7 @@ export type SeedAccumulators = {
 	allNounDetails: NounDetailRecord[];
 	allAdjectiveDetails: NewAdjectiveDetails[];
 	allNominalForms: NewNominalForm[];
+	allVerbDetails: VerbDetailRecord[];
 };
 
 export const isDeclensionPattern = (value: unknown): value is NounDeclensionPattern =>
@@ -208,10 +218,8 @@ export async function batchInsertVocab(
 
 	const enriched = items.map(enrichWithFrequencyRank);
 
-	for (let i = 0; i < enriched.length; i += BATCH_SIZE) {
-		const batch = enriched.slice(i, i + BATCH_SIZE);
-
-		const rows = await db
+	const batches = await inBatches(enriched, (batch) =>
+		db
 			.insert(vocabulary)
 			.values(batch)
 			.onConflictDoUpdate({
@@ -222,11 +230,10 @@ export async function batchInsertVocab(
 					cefrLevel: sql`CASE WHEN excluded.cefr_level IS NOT NULL THEN excluded.cefr_level ELSE ${vocabulary.cefrLevel} END`,
 				},
 			})
-			.returning({ id: vocabulary.id, greekText: vocabulary.greekText });
-
-		for (const row of rows) {
-			resultMap.set(row.greekText, row.id);
-		}
+			.returning({ id: vocabulary.id, greekText: vocabulary.greekText }),
+	);
+	for (const row of batches.flat()) {
+		resultMap.set(row.greekText, row.id);
 	}
 
 	console.log(
@@ -236,21 +243,14 @@ export async function batchInsertVocab(
 	return resultMap;
 }
 
-export async function batchInsertVerbDetails(db: Db, details: VerbDetailRecord[]) {
-	if (details.length === 0) return;
+export const batchInsertVerbDetails = (db: Db, details: VerbDetailRecord[]) =>
+	inBatches(details, (batch) =>
+		db.insert(verbDetails).values(batch).onConflictDoNothing({ target: verbDetails.vocabId }),
+	);
 
-	for (let i = 0; i < details.length; i += BATCH_SIZE) {
-		const batch = details.slice(i, i + BATCH_SIZE);
-		await db.insert(verbDetails).values(batch).onConflictDoNothing({ target: verbDetails.vocabId });
-	}
-}
-
-export async function batchInsertNounDetails(db: Db, details: NounDetailRecord[]) {
-	if (details.length === 0) return;
-
-	for (let i = 0; i < details.length; i += BATCH_SIZE) {
-		const batch = details.slice(i, i + BATCH_SIZE);
-		await db
+export const batchInsertNounDetails = (db: Db, details: NounDetailRecord[]) =>
+	inBatches(details, (batch) =>
+		db
 			.insert(nounDetails)
 			.values(batch)
 			.onConflictDoUpdate({
@@ -259,31 +259,23 @@ export async function batchInsertNounDetails(db: Db, details: NounDetailRecord[]
 					gender: sql`excluded.gender`,
 					declensionPattern: sql`excluded.declension_pattern`,
 				},
-			});
-	}
-}
+			}),
+	);
 
-export async function batchInsertAdjectiveDetails(db: Db, details: NewAdjectiveDetails[]) {
-	if (details.length === 0) return;
-
-	for (let i = 0; i < details.length; i += BATCH_SIZE) {
-		const batch = details.slice(i, i + BATCH_SIZE);
-		await db
+export const batchInsertAdjectiveDetails = (db: Db, details: NewAdjectiveDetails[]) =>
+	inBatches(details, (batch) =>
+		db
 			.insert(adjectiveDetails)
 			.values(batch)
 			.onConflictDoUpdate({
 				target: adjectiveDetails.vocabId,
 				set: { pattern: sql`excluded.pattern` },
-			});
-	}
-}
+			}),
+	);
 
-export async function batchUpsertNominalForms(db: Db, rows: NewNominalForm[]) {
-	if (rows.length === 0) return;
-
-	for (let i = 0; i < rows.length; i += BATCH_SIZE) {
-		const batch = rows.slice(i, i + BATCH_SIZE);
-		await db
+export const batchUpsertNominalForms = (db: Db, rows: NewNominalForm[]) =>
+	inBatches(rows, (batch) =>
+		db
 			.insert(nominalForms)
 			.values(batch)
 			.onConflictDoUpdate({
@@ -298,22 +290,20 @@ export async function batchUpsertNominalForms(db: Db, rows: NewNominalForm[]) {
 					article: sql`excluded.article`,
 					gender: sql`excluded.gender`,
 				},
-			});
-	}
-}
+			}),
+	);
 
-async function processCategory(
+/** Upsert one category's vocabulary, then queue its tags and detail rows on `ctx`. */
+export async function seedCategory(
 	db: Db,
 	categoryName: string,
 	items: VocabWithTags[],
 	ctx: SeedAccumulators,
-): Promise<VerbDetailRecord[]> {
+) {
 	console.log(`Seeding ${categoryName}...`);
 
 	const vocabItems = items.map((item) => item.vocab);
 	const idMap = await batchInsertVocab(db, vocabItems);
-
-	const verbDetailsToInsert: VerbDetailRecord[] = [];
 
 	for (const item of items) {
 		const vocabId = idMap.get(item.vocab.greekText);
@@ -332,7 +322,7 @@ async function processCategory(
 		}
 
 		if (item.verbDetail) {
-			verbDetailsToInsert.push({
+			ctx.allVerbDetails.push({
 				vocabId,
 				conjugationFamily: item.verbDetail.conjugationFamily,
 			});
@@ -358,15 +348,4 @@ async function processCategory(
 			ctx.allAdjectiveDetails.push({ vocabId, pattern: item.adjectivePattern });
 		}
 	}
-
-	return verbDetailsToInsert;
-}
-
-export function runSeedCategory(
-	db: Db,
-	categoryName: string,
-	items: VocabWithTags[],
-	ctx: SeedAccumulators,
-): Promise<VerbDetailRecord[]> {
-	return processCategory(db, categoryName, items, ctx);
 }

@@ -2,7 +2,6 @@ import type { DrillBucket } from "@/lib/drill/types";
 import { shuffle } from "@/lib/shuffle";
 
 export type DrillMode = "forward" | "reverse";
-export type { DrillBucket };
 export type Phase = "config" | "active" | "feedback" | "complete" | "error";
 
 export const SESSION_SIZES = [10, 20, 30] as const;
