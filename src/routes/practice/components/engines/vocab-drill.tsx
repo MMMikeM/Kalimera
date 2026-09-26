@@ -47,7 +47,6 @@ export function VocabDrillPage({
 			items={items}
 			title={title}
 			subtitle={subtitle ?? "Rapid-fire production"}
-			colorTheme="terracotta"
 			sessionSize={20}
 			backTo={backTo}
 			forwardLabel={forwardLabel}

@@ -49,7 +49,6 @@ function OppositesDrill() {
 			drillId="blocks-opposites"
 			items={items}
 			subtitle={`${items.length} cards / timed`}
-			colorTheme="terracotta"
 			backTo="/practice/blocks"
 			forwardDesc="Greek word → its opposite"
 			reverseDesc="Greek word → recall its opposite (self-assess)"

@@ -156,7 +156,6 @@ function PronounsDrill() {
 		<Drill<DimKey, ObjectPronoun>
 			drillId="pronouns-object"
 			subtitle="10 forms / timed"
-			colorTheme="terracotta"
 			forwardDesc="e.g. he sees me → με"
 			reverseDesc="e.g. με → 1st / singular"
 			items={PRONOUNS}
