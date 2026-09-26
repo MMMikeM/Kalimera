@@ -1,12 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { getAoristSg1QuestionsFn } from "@/server/fns/verbs";
+import { getVerbDrillQuestionsFn } from "@/server/fns/verbs";
 
 import { VocabDrillPage } from "../../components/engines/vocab-drill";
 
 export const Route = createFileRoute("/practice/verbs/past/aorist-vocabulary")({
 	loader: async () => {
-		const questions = await getAoristSg1QuestionsFn({ data: { limit: 30 } });
+		const questions = await getVerbDrillQuestionsFn({
+			data: { drillId: "verbs-aorist-sg1", limit: 30 },
+		});
 		if (questions.length === 0) throw new Error("No questions available");
 		return { questions };
 	},

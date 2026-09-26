@@ -1,21 +1,21 @@
 import { sql } from "drizzle-orm";
 
+import { adjacentCefrPool } from "@/lib/cefr";
 import type { DrillBucket } from "@/lib/drill/types";
+import { typedEntries } from "@/lib/object";
 import { shuffle } from "@/lib/shuffle";
 import { formatISO, nowIso, today } from "@/lib/time";
 
 import type { CefrLevel, WordType } from "../enums";
 import { db } from "../index";
+import { ensureUserProgress } from "./user-progress";
 
 interface DrillPoolOptions {
 	userId: number;
 	drillId: string;
 	wordTypes: WordType[];
-	cefrPool: CefrLevel[];
 	limit: number;
 }
-
-export type DrillPool = Record<DrillBucket, number[]>;
 
 /** Length-normalised ms/char + offset. Comparable across short (πάω) and long (Καταλαβαίνουν) words. */
 const slowness = (ms: number, answer: string) => 1 + ms / Math.max(answer.length, 3);
@@ -44,13 +44,13 @@ const median = (nums: number[]): number => {
  *           OR drillProgress exists AND nextReviewAt > now.
  * tier2/tier3 sorted slowest-per-char first within bucket (automatisation signal).
  */
-export const getDrillVocabPool = async ({
+const rankDrillPool = async ({
 	cefrPool,
 	drillId,
 	userId,
 	wordTypes,
 	limit,
-}: DrillPoolOptions): Promise<DrillPool> => {
+}: DrillPoolOptions & { cefrPool: CefrLevel[] }): Promise<Record<DrillBucket, number[]>> => {
 	const now = nowIso();
 	const todayStr = formatISO(today());
 	const primaryCefr = cefrPool[0];
@@ -114,16 +114,6 @@ export const getDrillVocabPool = async ({
 	const medianSlowness = (c: Candidate): number =>
 		median(c.practiceAttempts.slice(0, 5).map((a) => slowness(a.timeTaken ?? 0, a.correctAnswer)));
 
-	// tier2/tier3: slowest-per-char first (surface automation gaps), then CEFR, then frequency
-	const sortSlow = (a: Candidate, b: Candidate) => {
-		const diff = medianSlowness(b) - medianSlowness(a);
-		if (diff !== 0) return diff;
-		const aPrimary = a.cefrLevel === primaryCefr ? 0 : 1;
-		const bPrimary = b.cefrLevel === primaryCefr ? 0 : 1;
-		if (aPrimary !== bPrimary) return aPrimary - bPrimary;
-		return (a.frequencyRank ?? 999999) - (b.frequencyRank ?? 999999);
-	};
-
 	// inProgress/new/tier1: no per-drill RT signal yet — CEFR + frequency only
 	const sortCefrFreq = (a: Candidate, b: Candidate) => {
 		const aPrimary = a.cefrLevel === primaryCefr ? 0 : 1;
@@ -131,6 +121,10 @@ export const getDrillVocabPool = async ({
 		if (aPrimary !== bPrimary) return aPrimary - bPrimary;
 		return (a.frequencyRank ?? 999999) - (b.frequencyRank ?? 999999);
 	};
+
+	// tier2/tier3: slowest-per-char first (surface automation gaps), then CEFR, then frequency
+	const sortSlow = (a: Candidate, b: Candidate) =>
+		medianSlowness(b) - medianSlowness(a) || sortCefrFreq(a, b);
 
 	const processBucket = (bucket: Candidate[], sortFn: typeof sortCefrFreq) =>
 		shuffle(bucket)
@@ -146,3 +140,22 @@ export const getDrillVocabPool = async ({
 		new: processBucket(buckets.new, sortCefrFreq),
 	};
 };
+
+/**
+ * The drill pool at the user's CEFR band (current level plus the next), flattened
+ * to priority order with a reverse lookup so each question can be tagged with its bucket.
+ */
+export const getDrillVocabPool = async (options: DrillPoolOptions) => {
+	const { currentCefrLevel } = await ensureUserProgress(options.userId);
+	const pool = await rankDrillPool({ ...options, cefrPool: adjacentCefrPool(currentCefrLevel) });
+
+	const entries = typedEntries(pool);
+	const bucketMap = new Map<number, DrillBucket>();
+	for (const [bucket, ids] of entries) {
+		for (const id of ids) bucketMap.set(id, bucket);
+	}
+
+	return { allIds: entries.flatMap(([, ids]) => ids), bucketMap };
+};
+
+export type DrillPool = Awaited<ReturnType<typeof getDrillVocabPool>>;
