@@ -1,6 +1,7 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 
 import { NavTabs } from "@/components/NavTabs";
+import { pageTitle } from "@/lib/page-title";
 
 import {
 	FutureNaSection,
@@ -27,6 +28,15 @@ export const Route = createFileRoute("/reference/verbs/$band")({
 		}
 		return { band };
 	},
+	head: ({ params }) => ({
+		meta: [
+			{
+				title: pageTitle(
+					`Verbs: ${VERB_BANDS.find((b) => b.id === params.band)?.label ?? "Reference"}`,
+				),
+			},
+		],
+	}),
 	component: VerbBand,
 });
 

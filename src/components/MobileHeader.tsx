@@ -32,7 +32,7 @@ export function MobileHeader({
 						<span
 							className={`flex items-center justify-center rounded-lg p-2 transition-colors ${
 								isActive
-									? "bg-terracotta/10 text-terracotta"
+									? "bg-terracotta/10 text-terracotta-700 dark:text-terracotta-text"
 									: "text-stone-500 hover:text-stone-700"
 							}`}
 						>
@@ -50,7 +50,7 @@ export function MobileHeader({
 									aria-label="Account menu"
 									className={`rounded-lg p-2 shadow-none ring-0 outline-transparent transition-colors outline-none ${
 										isOpen
-											? "bg-terracotta/10 text-terracotta"
+											? "bg-terracotta/10 text-terracotta-700 dark:text-terracotta-text"
 											: "text-stone-500 hover:text-stone-700"
 									}`}
 								/>

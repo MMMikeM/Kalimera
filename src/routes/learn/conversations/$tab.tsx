@@ -1,7 +1,8 @@
-import { createFileRoute, Link, redirect } from "@tanstack/react-router";
-import { ChevronLeft, DoorOpen, Hand, MessageCircle, Utensils } from "lucide-react";
+import { createFileRoute, redirect } from "@tanstack/react-router";
+import { DoorOpen, Hand, MessageCircle, Utensils } from "lucide-react";
 import type React from "react";
 
+import { BackLink } from "@/components/BackLink";
 import { ConversationModeToggle } from "@/components/ConversationModeToggle";
 import type { ConversationMode } from "@/components/DialogueExchange";
 import type { NavTab } from "@/components/NavTabs";
@@ -70,13 +71,7 @@ function ConversationsPage() {
 	return (
 		<ConversationModeProvider value={mode}>
 			<div className="space-y-4">
-				<Link
-					to="/learn"
-					className="flex items-center gap-1 text-stone-600 transition-colors hover:text-stone-800"
-				>
-					<ChevronLeft size={20} />
-					<span className="font-medium">Convos</span>
-				</Link>
+				<BackLink to="/learn">Learn</BackLink>
 
 				<NavTabs
 					tabs={CONVERSATION_TABS}

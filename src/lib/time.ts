@@ -43,10 +43,6 @@ export const diffInDays = (a: Temporal.PlainDate, b: Temporal.PlainDate): number
 export const diffInHours = (a: Temporal.Instant, b: Temporal.Instant): number =>
 	Math.trunc(Number(a.since(b, { largestUnit: "hours" }).hours));
 
-// --- Day boundaries (UTC) ------------------------------------------------
-
-export const startOfDayUTC = (d: Temporal.PlainDate): Temporal.Instant => toInstant(d);
-
 // --- Month enumeration ---------------------------------------------------
 
 export const eachDayOfMonth = (d: Temporal.PlainDate): Temporal.PlainDate[] => {

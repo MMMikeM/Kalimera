@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { type CaseRoleName, ROLE_SCHEME, SCHEME } from "@/constants/grammar-palette";
+
 import type { SimpleListItem } from "../../components/engines/deck";
 import { Drill } from "../../components/engines/drill";
 import { PHRASES as TARGET } from "../accusative/phrase";
@@ -25,32 +27,16 @@ const ITEMS: SimpleListItem[] = [
 	...tagCase(OWNER, "owner", "owner"),
 ];
 
-const CATEGORIES = [
+const CATEGORIES: Array<{ id: CaseRoleName; label: string }> = [
 	{ id: "doer", label: "Doer" },
 	{ id: "target", label: "Target" },
 	{ id: "owner", label: "Owner" },
 ];
 
-const DIMENSION_OPTIONS = [
-	{
-		id: "doer",
-		label: "Doer",
-		selectorBg: "bg-ocean-100",
-		selectorText: "text-ocean-text",
-	},
-	{
-		id: "target",
-		label: "Target",
-		selectorBg: "bg-terracotta-100",
-		selectorText: "text-terracotta-text",
-	},
-	{
-		id: "owner",
-		label: "Owner",
-		selectorBg: "bg-olive-100",
-		selectorText: "text-olive-text",
-	},
-];
+const DIMENSION_OPTIONS = CATEGORIES.map(({ id, label }) => {
+	const scheme = SCHEME[ROLE_SCHEME[id]];
+	return { id, label, selectorBg: scheme.bg, selectorText: scheme.text };
+});
 
 export const Route = createFileRoute("/practice/cases/review/phrases")({
 	component: AllPhrasesDrill,
@@ -61,7 +47,7 @@ function AllPhrasesDrill() {
 		<Drill
 			drillId="nominal-all-phrases"
 			items={ITEMS}
-			subtitle="45 noun phrases / mixed case / timed"
+			subtitle={`${ITEMS.length} noun phrases / mixed case / timed`}
 			colorTheme="honey"
 			forwardDesc="English → article + adjective + noun (any case)"
 			reverseLabel="Greek → case"

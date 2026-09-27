@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, notFound } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 
 import { hasNumericValue, hasTimeRange } from "@/server/db/metadata";
@@ -45,7 +45,7 @@ export const Route = createFileRoute("/learn/essentials/$subtab")({
 		const subtab = params.subtab as string;
 
 		if (!VALID_SUBTABS.includes(subtab as SubtabId)) {
-			throw new Response("Not Found", { status: 404 });
+			throw notFound();
 		}
 
 		const essentialsData = await loader();
