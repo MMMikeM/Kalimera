@@ -1,13 +1,14 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, notFound } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 
 import { groupNounsByPattern } from "@/lib/noun-paradigm-groups";
+import { pageTitle } from "@/lib/page-title";
 import { getNounsForParadigmReference } from "@/server/db/queries/noun-paradigms";
 import { getVocabBySlug } from "@/server/db/queries/vocabulary";
 import type { Vocabulary } from "@/server/db/types";
 
 import { groupVocabByTag } from "../components/vocab-by-tag";
-import { ReferenceNav } from "./components/reference-nav";
+import { REFERENCE_TABS, ReferenceNav } from "./components/reference-nav";
 import { AdjectivesTab } from "./tabs/adjectives";
 import { CasesTab } from "./tabs/cases";
 import { NounsTab } from "./tabs/nouns";
@@ -60,9 +61,7 @@ type TabId = (typeof VALID_TABS)[number];
 
 export const Route = createFileRoute("/reference/$tab")({
 	loader: async ({ params: { tab } }) => {
-		if (!VALID_TABS.includes(tab as TabId)) {
-			throw new Response("Not Found", { status: 404 });
-		}
+		if (!VALID_TABS.includes(tab as TabId)) throw notFound();
 
 		// Each DB-backed tab loads only its own data.
 		const patterns = tab === "patterns" ? await loadPatterns() : null;
@@ -70,6 +69,11 @@ export const Route = createFileRoute("/reference/$tab")({
 
 		return { tab: tab as TabId, patterns, nouns };
 	},
+	head: ({ params }) => ({
+		meta: [
+			{ title: pageTitle(REFERENCE_TABS.find((t) => t.id === params.tab)?.label ?? "Reference") },
+		],
+	}),
 	component: TabRoute,
 });
 

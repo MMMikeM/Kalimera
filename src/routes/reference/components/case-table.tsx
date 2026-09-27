@@ -1,6 +1,7 @@
 import type React from "react";
 import { cn } from "tailwind-variants";
 
+import { Card } from "@/components/Card";
 import {
 	CASE_ROW_DEFS,
 	type ColumnDef,
@@ -8,6 +9,7 @@ import {
 	GrammarTable,
 } from "@/components/GrammarTable";
 import { GreekText } from "@/components/GreekText";
+import { ARTICLE_AGREEMENT_QUICK_REF } from "@/constants/agreement";
 import { GENDER_SCHEME, SCHEME } from "@/constants/grammar-palette";
 import type { Gender } from "@/server/db/enums";
 
@@ -32,7 +34,7 @@ const HERO_GENDER_COLUMNS: ColumnDef[] = GENDERS.map((gender) => {
 				className={cn(
 					"inline-block rounded-full px-2.5 py-0.5 text-xs font-semibold capitalize",
 					style.badgeBg,
-					style.text,
+					style.badgeText,
 				)}
 			>
 				<span className="sm:hidden">{gender.charAt(0)}</span>
@@ -97,4 +99,10 @@ export const CaseTableGrid: React.FC<{
 		<CaseTable label="Singular" data={data.singular} hero={hero} />
 		<CaseTable label="Plural" data={data.plural} hero={hero} />
 	</div>
+);
+
+export const ArticleParadigm: React.FC = () => (
+	<Card variant="bordered" padding="lg">
+		<CaseTableGrid data={ARTICLE_AGREEMENT_QUICK_REF} hero />
+	</Card>
 );

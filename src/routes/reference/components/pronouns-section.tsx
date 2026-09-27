@@ -4,7 +4,7 @@ import { Card } from "@/components/Card";
 import { LookupCard } from "@/components/cards/LookupCard";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
 import { GreekText } from "@/components/GreekText";
-import { CASE_SCHEME, SCHEME, caseScheme } from "@/constants/grammar-palette";
+import { CASE_KEY, CASE_SCHEME, SCHEME, caseScheme } from "@/constants/grammar-palette";
 import {
 	EMPHATIC_PRONOUNS,
 	EMPHATIC_PRONOUN_EXAMPLES,
@@ -38,13 +38,13 @@ const ParadigmLookup = ({
 	handle: string;
 	rule: string;
 	paradigm: PronounParadigm[];
-	examples?: Array<{ greek: string; english: string }>;
+	examples?: Array<{ greek: string; english: string; marked: string }>;
 	note?: string;
 }) => {
 	const scheme = CASE_SCHEME[caseName];
 	const style = SCHEME[scheme];
 	return (
-		<LookupCard scheme={scheme} chip={caseName} eyebrow={handle}>
+		<LookupCard scheme={scheme} chip={handle} eyebrow={caseName}>
 			<div className="space-y-4 px-5 pt-4 pb-4">
 				<p className="text-sm leading-relaxed text-stone-600">{rule}</p>
 				<PronounParadigmTable data={paradigm} caseName={caseName} note={note} />
@@ -53,7 +53,7 @@ const ParadigmLookup = ({
 						<div className="mb-2 text-sm font-medium text-stone-600">Examples:</div>
 						<ExamplePills
 							examples={examples}
-							greekClassName={style.text}
+							tone={CASE_KEY[caseName]}
 							borderClassName={style.border}
 						/>
 					</div>
@@ -151,7 +151,6 @@ export const PronounsSection: React.FC = () => {
 			<div className="space-y-6">
 				<Card variant="bordered" padding="lg" className="border-stone-200 bg-card">
 					<BandHeading
-						kicker="The split"
 						title={'One English "me", three Greek forms.'}
 						lede="English packs every job into one word. Greek picks a different form depending on what the pronoun is doing — which is where case shows up."
 					/>
@@ -177,7 +176,7 @@ export const PronounsSection: React.FC = () => {
 										<span className="ml-1 text-stone-500 italic">({item.translation})</span>
 									</div>
 									<span
-										className={`justify-self-start rounded-full px-2.5 py-1 text-xs font-semibold tracking-widest uppercase sm:justify-self-end ${style.badgeBg} ${style.text}`}
+										className={`justify-self-start rounded-full px-2.5 py-1 text-xs font-semibold tracking-widest uppercase sm:justify-self-end ${style.badgeBg} ${style.badgeText}`}
 									>
 										{item.role}
 									</span>
@@ -198,7 +197,6 @@ export const PronounsSection: React.FC = () => {
 			{/* BAND 2 — PARADIGMS (lookup containers — same idiom as cases triggers) */}
 			<div className="space-y-8">
 				<BandHeading
-					kicker="Paradigms"
 					title="All the forms"
 					lede="Full tables for each role. Object and possessive are the daily drivers."
 				/>
@@ -235,9 +233,8 @@ export const PronounsSection: React.FC = () => {
 				{/* Weak vs strong comparison */}
 				<Card variant="bordered" padding="lg" className="border-stone-200 bg-card">
 					<BandHeading
-						as="h4"
+						as="h3"
 						size="md"
-						kicker="Weak vs strong"
 						title="με vs εμένα — same meaning, different jobs"
 						lede="The target form has a short (weak) version that clips onto verbs and a long (strong) version that survives on its own. Same case, different stress."
 					/>
@@ -304,10 +301,7 @@ export const PronounsSection: React.FC = () => {
 						<div className="mb-2 text-xs font-semibold tracking-wide text-stone-500 uppercase">
 							More strong-form phrases
 						</div>
-						<ExamplePills
-							examples={EMPHATIC_PRONOUN_EXAMPLES}
-							greekClassName={caseScheme("accusative").text}
-						/>
+						<ExamplePills examples={EMPHATIC_PRONOUN_EXAMPLES} tone="accusative" />
 					</div>
 				</Card>
 			</div>
@@ -315,7 +309,6 @@ export const PronounsSection: React.FC = () => {
 			{/* BAND 3 — PRODUCTION (open by default) */}
 			<div className="space-y-4">
 				<BandHeading
-					kicker="Production"
 					title="Ready-made phrases"
 					lede="High-frequency chunks with pronouns already baked in. Memorise whole, don't decompose."
 				/>
@@ -345,7 +338,6 @@ export const PronounsSection: React.FC = () => {
 			{/* BAND 4 — NAVIGATION (retrieval scaffold) */}
 			<div className="space-y-4">
 				<BandHeading
-					kicker="Decide"
 					title="Which form do I need?"
 					lede="Use this once you've seen the forms. It's a lookup, not a lesson."
 				/>
@@ -355,7 +347,6 @@ export const PronounsSection: React.FC = () => {
 			{/* BAND 5 — INDEFINITES (core chunks only) */}
 			<div className="space-y-4">
 				<BandHeading
-					kicker="Indefinites"
 					title="Someone, nothing, everyone"
 					lede="Memorise these as whole words. The prefix pattern is interesting but not drillable."
 				/>
@@ -436,7 +427,6 @@ export const PronounsSection: React.FC = () => {
 			{/* CLITIC PLACEMENT — where weak object pronouns sit */}
 			<div id="clitic-placement" className="space-y-4">
 				<BandHeading
-					kicker="Where they sit"
 					title="Weak pronouns hug the verb."
 					lede={
 						<>

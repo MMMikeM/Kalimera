@@ -396,14 +396,12 @@ const Handoff = () => (
 	<div className="grid gap-3 md:grid-cols-2">
 		<NextStepCard
 			to="/reference/pronouns"
-			kicker="Continue"
 			title="Pronouns"
 			description="The same cases in the words you'll say most"
 			emphasis
 		/>
 		<NextStepCard
 			to="/reference/articles"
-			kicker="Review"
 			title="Articles"
 			description="The definite article paradigm across cases"
 		/>
