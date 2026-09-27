@@ -1,11 +1,11 @@
-import { db } from "../index";
+import { db, inTransaction } from "../index";
 import { practiceAttempts } from "../schema";
 import { applyReviewStateAfterAttempt } from "./vocab-reviews";
 
 type RecordAttemptInput = typeof practiceAttempts.$inferInsert;
 
 export const recordAttempt = async (input: RecordAttemptInput) => {
-	return await db.transaction(async (tx) => {
+	return await inTransaction(async (tx) => {
 		const [attempt] = await tx.insert(practiceAttempts).values(input).returning();
 
 		if (input.vocabId) {
