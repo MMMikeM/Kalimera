@@ -34,12 +34,12 @@ const PAGES = [
 
 // The /try deck is shuffled, so the answer is looked up from the visible prompt.
 const TRY_ANSWERS: ReadonlyArray<readonly [prompt: string, greeklish: string]> = [
-	["you (object", "se"],
-	["me (object", "me"],
-	["your (singular)", "sou"],
-	["him", "ton"],
-	["her", "tin"],
-	["my", "mou"],
+	["she sees me", "me"],
+	["I see you", "se"],
+	["your house", "sou"],
+	["I see him", "ton"],
+	["I see her", "tin"],
+	["my house", "mou"],
 	["I want", "thelw"],
 	["I have", "exw"],
 ];
@@ -64,7 +64,7 @@ const openPage = async (page: Page, route: string) => {
 
 const startTryDrill = async (page: Page) => {
 	await openPage(page, "/try");
-	await page.getByRole("button", { name: /start drill/i }).click();
+	await page.getByRole("button", { name: /^start$/i }).click();
 	await page.waitForTimeout(500);
 };
 
