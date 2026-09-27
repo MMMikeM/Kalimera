@@ -9,27 +9,35 @@ routes/example/
 ├── route.tsx           # Layout route with loader + beforeLoad
 ├── index.tsx           # Default child route
 ├── $tab.tsx            # Dynamic routes
-├── loader.server.ts    # Server-only queries + server functions
 └── components/         # Route-specific components
 ```
+
+Server-only code (queries, server functions, auth) lives under `src/server/`, not beside routes.
 
 ## Key Patterns
 
 **Route file:**
 
 ```typescript
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, notFound } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/example")({
-  loader: async ({ context }) => {
-    return await getData(context.userId);
+import { pageTitle } from "@/lib/page-title";
+
+export const Route = createFileRoute("/example/$slug")({
+  loader: async ({ params }) => {
+    const item = await getItemFn({ data: { slug: params.slug } });
+    if (!item) throw notFound();
+    return item;
   },
+  head: ({ loaderData }) => ({ meta: [{ title: pageTitle(loaderData?.title ?? "Example") }] }),
   component: function ExamplePage() {
     const data = Route.useLoaderData();
     return <div>{data.title}</div>;
   },
 });
 ```
+
+**Errors and 404s**: the router's `defaultErrorComponent` and `defaultNotFoundComponent` (`src/router.tsx`, from `src/components/StatusPage.tsx`) render inside the app shell, so a failing page keeps the header and nav. Throw `notFound()` for an unknown param; don't throw a `Response`, which surfaces as a 500. The document itself is the root route's `shellComponent`.
 
 **Server functions** (mutations from client):
 
@@ -39,7 +47,8 @@ import { createServerFn } from "@tanstack/react-start";
 export const doThingFn = createServerFn({ method: "POST" })
 	.validator(z.object({ id: z.number() }))
 	.handler(async ({ data }) => {
-		return await db.doThing(data.id);
+		// `db` is only importable inside src/server/db/queries/; call a query helper.
+		return await doThing(data.id);
 	});
 
 // In component:
@@ -73,16 +82,15 @@ const { auth } = Route.useRouteContext();
 // auth: { userId: number; username: string } | null
 ```
 
-**Auth guard** (copy from practice/route.tsx):
+**Auth guard** (copy from practice/route.tsx). The root route loads the session into context, so a child route only checks it:
 
 ```typescript
-beforeLoad: async () => {
-  const request = getRequest();
-  const auth = getAuthSession(request);
-  if (!auth?.userId) throw redirect({ to: "/" });
-  return { userId: auth.userId };
+beforeLoad: async ({ context }) => {
+  if (!context.auth?.userId) throw redirect({ to: "/" });
 },
 ```
+
+Server functions check auth themselves with `requireAuth()` from `@/server/auth/session`; a route guard doesn't protect a direct call to the endpoint.
 
 ## Co-located non-route files
 

@@ -352,5 +352,5 @@ const { tab } = tabs()
 | `cva("base", { variants: {...} })`               | `tv({ base: "base", variants: {...} })`                         |
 | `import { clsx } from "clsx"`                    | `import { cx } from "tailwind-variants"`                        |
 | `twMerge(clsx(...))`                             | `cn(...)` from `tailwind-variants`                              |
-| Custom `cn()` in `utils.ts`                      | `cn()` from `tailwind-variants` (re-exported via `~/lib/utils`) |
+| Custom `cn()` in `utils.ts`                      | `cn()` imported directly from `tailwind-variants`               |
 | `VariantProps` from CVA                          | `VariantProps` from `tailwind-variants`                         |

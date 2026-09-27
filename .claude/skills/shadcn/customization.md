@@ -8,7 +8,7 @@ Components reference semantic CSS variable tokens. Change the variables to chang
 - Color variables and OKLCH format
 - Dark mode setup
 - Changing the theme (presets, CSS variables)
-- Adding custom colors (Tailwind v3 and v4)
+- Adding custom colors (Tailwind v4)
 - Border radius
 - Customizing components (variants, className, wrappers)
 - Checking for updates
@@ -17,7 +17,7 @@ Components reference semantic CSS variable tokens. Change the variables to chang
 
 ## How It Works
 
-1. CSS variables defined in `:root` (light) and `.dark` (dark mode).
+1. In this project the colour variables are defined as `--color-*` inside the `@theme` block of `src/index.css` (light), with dark values in the `:root.dark` block.
 2. Tailwind maps them to utilities: `bg-primary`, `text-muted-foreground`, etc.
 3. Components use these utilities — changing a variable changes all components that reference it.
 
@@ -45,19 +45,13 @@ Every color follows the `name` / `name-foreground` convention. The base variable
 
 Colors use OKLCH: `--primary: oklch(0.205 0 0)` where values are lightness (0–1), chroma (0 = gray), and hue (0–360).
 
+In this project each variable carries Tailwind's `--color-` prefix (`--color-primary`), and several point into the base palette rather than holding a literal (`--color-primary: var(--color-terracotta)`, `--color-destructive: var(--color-incorrect)`). `--destructive-foreground` and `--surface` are not defined here.
+
 ---
 
 ## Dark Mode
 
-Class-based toggle via `.dark` on the root element. In Next.js, use `next-themes`:
-
-```tsx
-import { ThemeProvider } from "next-themes";
-
-<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-	{children}
-</ThemeProvider>;
-```
+Class-based toggle via `.dark` on the root element. There is no theme provider: `themeInitScript` in `src/lib/theme.ts` runs inline in `<head>` (from `RootDocument` in `src/routes/__root.tsx`) and sets `.dark` on `<html>` before first paint, from the stored preference or else `prefers-color-scheme`. `src/index.css` declares the variant with `@custom-variant dark (&:is(.dark *));` and remaps every ramp in `:root.dark`. `ThemeToggle` changes it through `setThemePreference` in the same file.
 
 ---
 
@@ -65,58 +59,40 @@ import { ThemeProvider } from "next-themes";
 
 ```bash
 # Apply a preset code from ui.shadcn.com.
-npx shadcn@latest init --preset a2r6bw --force
+pnpm dlx shadcn@latest init --preset a2r6bw --force
 
 # Switch to a named preset.
-npx shadcn@latest init --preset radix-nova --force
-npx shadcn@latest init --reinstall  # update existing components to match
+pnpm dlx shadcn@latest init --preset radix-nova --force
+pnpm dlx shadcn@latest init --reinstall  # update existing components to match
 
 # Use a custom theme URL.
-npx shadcn@latest init --preset "https://ui.shadcn.com/init?base=radix&style=nova&theme=blue&..." --force
+pnpm dlx shadcn@latest init --preset "https://ui.shadcn.com/init?base=radix&style=nova&theme=blue&..." --force
 ```
 
-Or edit CSS variables directly in `globals.css`.
+Or edit CSS variables directly in `src/index.css`.
 
 ---
 
 ## Adding Custom Colors
 
-Add variables to the file at `tailwindCssFile` from `npx shadcn@latest info` (typically `globals.css`). Never create a new CSS file for this.
+Add variables to the file at `tailwindCssFile` from `pnpm dlx shadcn@latest info` (`src/index.css` here). Never create a new CSS file for this.
+
+Check the base palette first: most needs are already met by `cream`, `terracotta`, `ocean`, `olive`, `honey`, `navy`, `slate`, `sunset` or `stone` (see `docs/design-guidelines.md`).
 
 ```css
-/* 1. Define in the global CSS file. */
-:root {
-	--warning: oklch(0.84 0.16 84);
-	--warning-foreground: oklch(0.28 0.07 46);
-}
-.dark {
-	--warning: oklch(0.41 0.11 46);
-	--warning-foreground: oklch(0.99 0.02 95);
+/* 1. Define the light value in the @theme block of src/index.css. */
+@theme {
+	--color-warning: oklch(0.84 0.16 84);
+	--color-warning-foreground: oklch(0.28 0.07 46);
 }
 ```
 
 ```css
-/* 2a. Register with Tailwind v4 (@theme inline). */
-@theme inline {
-	--color-warning: var(--warning);
-	--color-warning-foreground: var(--warning-foreground);
+/* 2. Give it a dark value in the :root.dark block of the same file. */
+:root.dark {
+	--color-warning: oklch(0.41 0.11 46);
+	--color-warning-foreground: oklch(0.99 0.02 95);
 }
-```
-
-When `tailwindVersion` is `"v3"` (check via `npx shadcn@latest info`), register in `tailwind.config.js` instead:
-
-```js
-// 2b. Register with Tailwind v3 (tailwind.config.js).
-module.exports = {
-	theme: {
-		extend: {
-			colors: {
-				warning: "oklch(var(--warning) / <alpha-value>)",
-				"warning-foreground": "oklch(var(--warning-foreground) / <alpha-value>)",
-			},
-		},
-	},
-};
 ```
 
 ```tsx
@@ -154,7 +130,7 @@ Prefer these approaches in order:
 
 ### 3. Add a new variant
 
-Edit the component source to add a variant via `cva`:
+Edit the component source to add a variant via `tv()` (this project uses `tailwind-variants`, not `cva`):
 
 ```tsx
 // components/ui/button.tsx
@@ -169,7 +145,7 @@ Compose shadcn/ui primitives into higher-level components:
 export function ConfirmDialog({ title, description, onConfirm, children }) {
 	return (
 		<AlertDialog>
-			<AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
+			<AlertDialogTrigger render={children} />
 			<AlertDialogContent>
 				<AlertDialogHeader>
 					<AlertDialogTitle>{title}</AlertDialogTitle>
@@ -190,14 +166,13 @@ export function ConfirmDialog({ title, description, onConfirm, children }) {
 ## Checking for Updates
 
 ```bash
-npx shadcn@latest add button --diff
+pnpm dlx shadcn@latest add button --diff
 ```
 
 To preview exactly what would change before updating, use `--dry-run` and `--diff`:
 
 ```bash
-npx shadcn@latest add button --dry-run        # see all affected files
-npx shadcn@latest add button --diff button.tsx # see the diff for a specific file
+pnpm dlx shadcn@latest add button --dry-run        # see all affected files
+pnpm dlx shadcn@latest add button --diff button.tsx # see the diff for a specific file
 ```
 
-See [Updating Components in SKILL.md](./SKILL.md#updating-components) for the full smart merge workflow.

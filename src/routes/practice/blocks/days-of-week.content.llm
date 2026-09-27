@@ -7,7 +7,8 @@ Drill English day → Greek day name and reverse. Completely arbitrary, must be 
 Implemented as 14 items in `days-of-week.tsx` — 7 days plus 7 time expressions — under two
 categories, Days and Time expressions. Colour theme: olive. Returns to `/practice/blocks`.
 
-Target: 3 seconds.
+Timing is the learner's 4 / 6 / 8 s choice, plus 35% per extra word for the multi-word time
+expressions (`src/routes/practice/components/drill-speeds.ts`).
 
 ## The 7 forms
 

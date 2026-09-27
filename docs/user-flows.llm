@@ -11,9 +11,9 @@ kept in this file would drift from them.
 ```
 /                          Dashboard (home)
 /login  /register          Sign in (password or passkey) · create account
-/try                       Anonymous drill, 8 pronoun questions (conversion flow)
+/try                       Anonymous drill, 8 prompts: 6 pronouns plus θέλω, έχω (conversion flow)
 
-/practice                  Drill browser — four group cards
+/practice                  Drill browser, a four-row list of groups
 /practice/cases            Case drills, sectioned Doer · Target · Owner · Review
 /practice/pronouns         Object forms, placement, possessives
 /practice/verbs            Present · Past · Future & Modal · Mixed tenses
@@ -21,21 +21,22 @@ kept in this file would drift from them.
 /practice/blocks/question-words   ποιος / πόσος agreement, own sub-index
 /practice/review           Drills gone rusty, grouped by category
 
-/learn                     Learn landing (section cards)
+/learn                     Learn landing (SectionIndex)
 /learn/conversations/:tab  Themed dialogues
 /learn/phrases/:tab        Common expressions
 /learn/nouns  /:subject    Noun browser by subject
 /learn/verbs  /:verbId     Verb browser · full conjugation detail
 /learn/essentials/:subtab  Numbers, colours, time, position, frequency
 
-/reference                 Reference landing (section cards)
+/reference                 Reference landing (SectionIndex)
 /reference/:tab            Grammar reference by topic
-/reference/verbs  /:band   Verb reference, by frequency band
+/reference/verbs  /:band   Verb reference, by tense band
 
 /search                    Vocabulary search
 /progress                  Analytics (streak calendar, accuracy trends)
 /support                   About page
 
+/api/errors                Client error log (POST), called by the error pages
 /api/webauthn/*            register-options · register-verify · auth-options · auth-verify
 ```
 
@@ -63,7 +64,7 @@ colour: `doer`/`target`/`owner` take the reserved case tokens, `mixed` and `null
 take the base palette and claim nothing.
 
 <route path="/practice">
-<purpose>Drill browser — four cards, one per group</purpose>
+<purpose>Drill browser: a four-row list, one row per group</purpose>
 <file>src/routes/practice/index.tsx</file>
 <note>An auth guard on practice/route.tsx redirects logged-out visitors to /</note>
 </route>
@@ -89,11 +90,13 @@ take the base palette and claim nothing.
 <file>src/routes/index.tsx</file>
 <data-source>DB: vocabProgress / drillProgress via the dashboard server fns</data-source>
 <displays>
-- Due count with time estimate
+- Contextual practice CTA: first-time, all-caught-up, lapsed, or rusty drills.
+  The rusty-drills CTA reads "N drills to review" and lists up to three, each
+  with how rusty it is and days since last practice. No time estimate.
 - Weekly streak grid (Mon-Sun) and freeze indicator
-- Contextual practice CTA: first-time, all-caught-up, lapsed, or rusty drills
 - Mastered / learning counts
 </displays>
+<note>Logged-out visitors get LandingPage here instead of the dashboard</note>
 </route>
 
 <route path="/login">
@@ -114,14 +117,19 @@ take the base palette and claim nothing.
 <route path="/try">
 <purpose>Anonymous drill for try-before-signup</purpose>
 <file>src/routes/try.tsx</file>
-<data-source>Static: 8 hardcoded pronoun questions</data-source>
+<data-source>Static: 8 hardcoded prompts, 6 pronouns (each with a hint line) plus θέλω and έχω</data-source>
+<displays>
+- Intro: prompt count, 6 seconds a prompt (medium speed), Greeklish explained
+- The drill, ending on the drill's SummaryScreen with an account pitch below it
+  ("Create a free account", "Sign in")
+</displays>
 <note>The only drill with no catalogue entry; it passes its own title to &lt;Drill&gt;</note>
 </route>
 
 ### Learn and reference
 
 <route path="/learn">
-<purpose>Section cards into conversations, phrases, nouns, verbs, essentials</purpose>
+<purpose>SectionIndex into conversations, phrases, nouns, verbs, essentials: a ruled, Greek-first list with no icons or tints. /reference and /learn/essentials use the same component.</purpose>
 <file>src/routes/learn/index.tsx</file>
 </route>
 
@@ -149,8 +157,9 @@ take the base palette and claim nothing.
 </route>
 
 <route path="/reference/verbs/:band">
-<purpose>Verb reference by frequency band</purpose>
+<purpose>Verb reference by tense band: present, past, past-continuous, future (Future &amp; να)</purpose>
 <file>src/routes/reference/verbs/$band.tsx</file>
+<note>/reference/verbs redirects to /reference/verbs/present; an unknown band is a 404</note>
 </route>
 
 ### Utility
@@ -158,11 +167,24 @@ take the base palette and claim nothing.
 <route path="/search">Vocabulary search — src/routes/search.tsx</route>
 <route path="/progress">Streak calendar and accuracy trends — src/routes/progress.tsx</route>
 <route path="/support">About — src/routes/support.tsx</route>
+<route path="/api/errors">POST-only client error log, which the error pages report to: src/routes/api/errors.ts</route>
+
+### Not found and errors
+
+src/components/StatusPage.tsx, wired as the router defaults in src/router.tsx and on
+the root route in src/routes/__root.tsx.
+
+- An unknown page, an unknown /reference tab or an unknown verb band renders
+  NotFound ("There's no page here.") inside the app shell, with a 404 status.
+- A page that fails to load renders RouteError ("Couldn't load this page.", with
+  Try again and Go home) inside the shell, so the header and navigation still work.
+- If the shell itself fails, RootError ("Kalimera couldn't load.") renders without
+  the header and navigation.
 
 ## Core Engagement Loop
 
 ```
-Open app → Dashboard (due count + practice history) → Practice (2-3 min) → See what you practised → Decide what's next or stop
+Open app → Dashboard (drills to review + practice history) → Practice (2-3 min) → See what you practised → Decide what's next or stop
 ```
 
 The loop centres on the activity and its real output. The streak calendar is a
@@ -197,20 +219,26 @@ either way — but an unmarked hook reads as a description of the app, and sever
 of these describe things that were never built.
 
 <hooks>
-<hook name="due-count" location="dashboard" mechanism="informational" status="ships">
+<hook name="due-count" location="dashboard" mechanism="informational" status="partial">
+RustyDrillsCta ships a count of drills, not items: "N drills to review", listing
+up to three with how rusty each is and days since last practice. There is no
+time estimate.
+
 Shows number of items due for review with time estimate. Factual: "12 items (~3 min)".
 No urgency framing, no FOMO language. The count is useful information, not pressure.
 </hook>
-<hook name="practice-calendar" location="dashboard" mechanism="informational" status="conflict">
+<hook name="practice-calendar" location="dashboard" mechanism="informational" status="ships">
 Weekly grid showing practice days. A passive record of consistency — the user can
 see their pattern without the app evaluating it. No streak counter, no "X days!"
 label. The calendar speaks for itself.
 
-CONFLICT: the grid ships, but the dashboard contradicts the rest of this hook.
-src/routes/index.tsx passes a `streak` count to WeekStreak and renders
-"Day 1! Practice for 7 days to earn a streak freeze." That is a streak counter
-and an "X days!" label. Either the brief or the dashboard should change; this
-file cannot decide which.
+WeekStreak takes only `weekData` and `todayPracticed`; the grid carries no
+counter. PRODUCT.md ("Streaks stay inside the app") settles the earlier conflict:
+the dashboard week row and freezes are allowed in the app, never sold outside it.
+The freeze copy below the grid still counts days, and on day one with no freeze
+src/routes/index.tsx shows "Day 1! Practice for 7 days to earn a streak freeze."
+The grid's days are derived from the streak length (a TODO in
+src/server/fns/dashboard.ts), not read from practice history.
 </hook>
 <hook name="short-sessions" location="practice" mechanism="low-friction" status="ships">
 2-3 minute sessions lower the activation threshold. The user can always do "just
@@ -239,7 +267,14 @@ still here." For large queues (15+ items): "Just 5 items" as default tiny action
 After longer gaps: show what they'd built before the break, offer a lighter
 re-entry session. Never reset or penalise progress.
 </hook>
-<hook name="post-session-acknowledgement" location="drill-summary" mechanism="informational" status="ships">
+<hook name="post-session-acknowledgement" location="drill-summary" mechanism="informational" status="partial">
+SummaryScreen (src/routes/practice/components/engines/shells.tsx) ships "X of Y
+correct", accuracy and average seconds per answer, and "Missed this round": the
+missed forms, slowest first, with what was typed and how many times. Its actions
+are "Drill the N you missed", "Practice again" and a Back link. There is no
+struggle reframe, and both actions repeat the same drill, so there is no fork of
+genuinely different next steps.
+
 Describes what happened: items practised, time spent, which items took the most
 effort. No person-praise ("You're amazing!"), no evaluation ("Great session!").
 When sessions are hard, reframe the struggle: "These 3 forms took the most effort.
@@ -321,9 +356,10 @@ keep your streak" is protective; "don't lose your streak" is controlling.</motiv
 - There is no cron. The app runs on Nitro; the wrangler.toml this once
   referenced does not exist.
 </details>
-<motivation-note>Appropriate at Stage 1 but needs reframing. Current copy "Don't
-lose your X-day streak!" is loss-framed — replace with informational: "Your review
-queue has X items." Should taper after week 3 as the habit forms.</motivation-note>
+<motivation-note>Appropriate at Stage 1 but needs reframing. The removed version's
+copy, "Don't lose your X-day streak!", was loss-framed. If it is rebuilt, use
+informational copy: "Your review queue has X items." Should taper after week 3 as
+the habit forms.</motivation-note>
 </feature>
 <feature name="milestones" status="not-implemented">
 <current>Nothing ships. No MilestoneCelebration component, no /api/milestones,
@@ -339,8 +375,8 @@ confetti, no forced interaction. Persist the milestone data (useful for analytic
 but change the presentation.</motivation-note>
 </feature>
 <feature name="post-session-messages" status="not-implemented">
-<current>The summary screen reports counts and accuracy plainly. No tiered
-icons, no praise copy.</current>
+<current>The summary screen reports the score, accuracy, average time per
+answer and the missed forms, plainly. No tiered icons, no praise copy.</current>
 <details>
 - src/routes/practice/components/engines/shells.tsx renders the summary
 </details>
@@ -349,8 +385,9 @@ acknowledgement: describe what happened (items practised, time, effort distribut
 offer the fork (2-3 next steps), and when sessions were hard, use the struggle
 reframe instead of hollow encouragement.</motivation-note>
 </feature>
-<feature name="tomorrow-hook" status="implemented">
-<current>Dashboard shows "Tomorrow: X items" with calendar icon</current>
+<feature name="tomorrow-hook" status="not-implemented">
+<current>Nothing ships. Neither the dashboard nor the summary screen shows a
+"Tomorrow: X items" count.</current>
 <motivation-note>Informational — shows what's coming without pressure. Acceptable
 as passive data the user can glance at.</motivation-note>
 </feature>
@@ -388,7 +425,11 @@ as passive data the user can glance at.</motivation-note>
 
 ## User State
 
-- Session in localStorage (`greek-authenticated-user`) as JSON: `{userId, username}`
+- Session in an HTTP-only cookie (`session`), sealed with SESSION_SECRET, 30-day
+  max age, holding `{userId, username}` (src/server/auth/session.ts). The root
+  route's beforeLoad reads it on every navigation and passes it on as `context.auth`
+- Passkey sign-in and registration also write `greek-authenticated-user` to
+  localStorage (src/lib/auth-storage.ts). It is a legacy mirror; nothing reads it
 - Authentication via username/password or WebAuthn passkey
 - Existing users without passwords prompted to set one on first login
 - Registration creates new account with password, optional passkey setup
@@ -400,7 +441,7 @@ as passive data the user can glance at.</motivation-note>
 **Mobile:**
 ```
 ┌─────────────────────────────────────────┐
-│  [Ellinika]                   [🔍] [👤] │  ← Header: logo, search, profile
+│  [Kalimera]           [🔍] [theme] [👤] │  ← Header: logo, search, theme, account
 ├─────────────────────────────────────────┤
 │                                         │
 │            [Page Content]               │
@@ -412,23 +453,26 @@ as passive data the user can glance at.</motivation-note>
 
 **Desktop (header):**
 ```
-[Ellinika]     [Practice] [Learn] [Reference] [🔍 Search] [Account ▾]
+[Kalimera]  [🔍 Search...]  [Practice] [Learn] [Reference] [theme] [Account ▾]
 ```
 
 ### Mobile Navigation (Implemented)
 
 **Mobile header (top bar):**
 ```
-[Ellinika]                    [🔍] [👤]
+[Kalimera]            [🔍] [theme] [👤]
 ```
 - Logo → Home
-- Search icon → opens search drawer
-- Profile icon → opens account drawer (Progress, About, Sign Out)
+- Search icon → opens a search popover with results inline
+- Theme toggle
+- Account icon → opens the account menu (Progress, About, Sign out); logged
+  out, a "Sign in" link takes its place
 
 **Mobile bottom nav (4 items):**
 ```
 [🏠 Home] [⚡ Practice] [📖 Learn] [📋 Reference]
 ```
+- Logged out, the Practice tab goes to /try, since /practice needs an account
 
 This follows the Instagram/Duolingo pattern of minimal top bar + bottom nav.
 
@@ -475,7 +519,7 @@ Search only exists in the header. On mobile:
 #### Option C: Search in Header (Sticky)
 ```
 ┌─────────────────────────────────────────┐
-│  [Ellinika]                       [🔍]  │  ← Sticky mini-header
+│  [Kalimera]                       [🔍]  │  ← Sticky mini-header
 ├─────────────────────────────────────────┤
 │            [Page Content]               │
 │                                         │
@@ -519,46 +563,49 @@ Swipe down anywhere → Search overlay
 
 **Current mobile nav (implemented):**
 ```
-Top bar:    [Ellinika]              [🔍] [👤]
+Top bar:    [Kalimera]      [🔍] [theme] [👤]
 Bottom nav: [🏠 Home] [⚡ Practice] [📖 Learn] [📋 Reference]
 ```
 
-- Search icon in header opens search drawer
-- Profile icon in header opens account drawer (authenticated only)
-- Unauthenticated users see "Sign In" link instead of profile icon
+- Search icon in header opens a search popover
+- Account icon in header opens the account menu (authenticated only)
+- Unauthenticated users see a "Sign in" link instead of the account icon, and
+  their Practice tab goes to /try
 
 **During active drills:** Consider hiding search to prevent "cheating" (separate feature)
 
 ### Desktop Navigation
 
-Desktop has more space. Proposed structure:
+Desktop has more space. Current structure (src/components/Header.tsx), with a
+search box between the logo and the links that shows results in a dropdown:
 
 **Authenticated:**
 ```
-[Ellinika]                    [Practice ←CTA] [Learn] [Reference] [Search] [User ▾]
-                                                                            └── Progress
-                                                                                Settings
-                                                                                About
-                                                                                ────────
-                                                                                Sign Out
+[Kalimera]  [🔍 Search...]  [Practice ←CTA] [Learn] [Reference] [theme] [Account ▾]
+                                                                          └── Progress
+                                                                              About
+                                                                              ────────
+                                                                              Sign out
 ```
 
 **Unauthenticated:**
 ```
-[Ellinika]                    [Learn] [Reference] [Search] [Sign In] [Try a Drill ←CTA]
+[Kalimera]  [🔍 Search...]  [Learn] [Reference] [theme] [Sign in] [Try a drill ←CTA]
 ```
+
+"Try a drill" is hidden while on /try.
 
 ### Routes by Nav Location
 
 | Route | Mobile | Desktop | Notes |
 |-------|--------|---------|-------|
 | `/` | Home (bottom nav) | Logo tap | Dashboard/home |
-| `/practice/speed` | Practice (bottom nav) | Practice (CTA) | Primary action |
+| `/practice` | Practice (bottom nav) | Practice (CTA) | Primary action (authenticated) |
 | `/learn` | Learn (bottom nav) | Learn | Landing page → subsections |
 | `/reference` | Reference (bottom nav) | Reference | Landing page → tabs |
-| `/search` | Search icon (header) | Search | Vocabulary search |
-| `/progress` | Profile drawer | User menu | Analytics (authenticated) |
-| `/support` | Profile drawer | User menu | About page |
-| `/try` | — | Try a Drill (unauth) | Conversion CTA |
-| `/login` | Sign In (header) | Sign In (unauth) | Auth |
-| `/register` | — | Via /try flow | Account creation |
+| `/search` | Not linked | Not linked | Vocabulary search page; both header searches show results inline instead |
+| `/progress` | Account menu | Account menu | Analytics (authenticated) |
+| `/support` | Account menu | Account menu | About page |
+| `/try` | Practice (bottom nav, unauth) | Try a drill (unauth) | Conversion CTA |
+| `/login` | Sign in (header) | Sign in (unauth) | Auth |
+| `/register` | Via /try flow or /login | Via /try flow or /login | Account creation |

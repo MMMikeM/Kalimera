@@ -36,16 +36,19 @@ $ARGUMENTS
 
 7. **Add grammar notes** for the lesson objective pattern
 
-8. **Create the file** at: `src/scripts/seed-data/vocabulary/lessons/YYYY-MM-DD-topic-slug.ts`
+8. **Set `cefrLevel`** (`A1`–`C2`) on every verb, noun, adverb and adjective; the types require it. Phrases may omit it
+
+9. **Create the file** at: `src/scripts/seed-data/vocabulary/lessons/YYYY-MM-DD-topic-slug.ts`
    - Import `createLesson` from `@/types/lesson-builder`
    - Export as `LESSON_YYYY_MM_DD = createLesson({ ... })`
 
-9. **Update the index** at: `src/scripts/seed-data/vocabulary/lessons/index.ts`
-   - Add import: `import { LESSON_YYYY_MM_DD } from "./YYYY-MM-DD-topic-slug"`
-   - Add to export block
-   - Add to LESSONS object with date key: `"YYYY-MM-DD": LESSON_YYYY_MM_DD`
+10. **Don't edit the index.** `src/scripts/seed-data/vocabulary/lessons/index.ts` discovers lessons itself:
+    - It reads its own directory for files matching `^\d{4}-\d{2}-\d{2}.*\.ts$`, sorted by name
+    - It takes the date from the first 10 characters of the filename and loads the export named `LESSON_` + that date with `-` replaced by `_`
+    - So the filename date and the export name must agree (keep `meta.date` the same too). A mismatched export name loads as `undefined` and `pnpm db:seed` throws; `pnpm typecheck` does not catch it
+    - `LESSONS` is keyed by date, so a second file with the same date replaces the first; one lesson file per date
 
-10. **Type-check** with `pnpm typecheck`
+11. **Type-check** with `pnpm typecheck`
 
 ## Reference format
 
@@ -61,16 +64,16 @@ export const LESSON_YYYY_MM_DD = createLesson({
     source: "Source reference",
   },
   verbs: [
-    { lemma: "λέμμα", english: "english", conjugationFamily: "-ω" },
+    { lemma: "λέμμα", english: "english", conjugationFamily: "-ω", cefrLevel: "A1" },
   ],
   nouns: [
-    { lemma: "λέμμα", gender: "masculine", english: "english" },
+    { lemma: "λέμμα", gender: "masculine", english: "english", cefrLevel: "A1" },
   ],
   adverbs: [
-    { lemma: "λέμμα", english: "english" },
+    { lemma: "λέμμα", english: "english", cefrLevel: "A1" },
   ],
   adjectives: [
-    { lemma: "λέμμα", english: "english" },
+    { lemma: "λέμμα", english: "english", cefrLevel: "A1" },
   ],
   phrases: [
     { text: "multi-word phrase", english: "english", metadata: { ... } },

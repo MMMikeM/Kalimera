@@ -10,6 +10,8 @@ Common expressions organised by communicative function.
 
 Tabs: survival, responses, requests, opinions, connectors, time
 
+`/learn/phrases` and any unknown `:tab` redirect to `/learn/phrases/survival`.
+
 Note: "patterns" tab (μου αρέσει, με λένε) has moved to /reference/patterns
 
 ## Data Source
@@ -118,7 +120,7 @@ How to ask and tell time in Greek: essential patterns for scheduling and underst
 </section>
 </tab>
 
-Note: Question words, days and months are in /learn/essentials.
+Note: Days and months are in /learn/essentials/time. Question words are drilled at /practice/blocks/question-words.
 Note: Patterns (μου αρέσει, με λένε) have moved to /reference/patterns.
 
 ## Tag to Section Mapping

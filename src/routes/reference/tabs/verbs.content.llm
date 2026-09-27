@@ -12,44 +12,41 @@ Greek verb endings show who's doing the action, so you often don't need separate
 
 ---
 
-## Voice: Who Does the Action?
+## Routing (not a tabs/ file)
 
-<section name="voice-explanation">
-<title>Greek verbs show not just WHO (the endings) but also the DIRECTION of action</title>
+Verbs is its own route family, not a `tabs/*.tsx` file and not in `VALID_TABS` of `$tab.tsx`. The "Verbs" entry in `REFERENCE_TABS` links to /reference/verbs.
 
-### Active: Subject DOES the action
-- βλέπω τον φίλο = I see the friend
-- Action flows FROM me TO the friend
+```
+/reference/verbs          route.tsx   layout: ReferenceNav (active "verbs"), ReferenceHero, <Outlet />, PracticeCTA
+/reference/verbs/         index.tsx   redirects to /reference/verbs/present
+/reference/verbs/$band    $band.tsx   NavTabs over VERB_BANDS; unknown band → notFound()
+```
 
-### Passive: Subject RECEIVES the action
-- βλέπομαι από τον φίλο = I am seen by the friend
-- Action flows TO me FROM the friend
+| Band id           | Tab label        | Component (components/verbs-section.tsx) |
+|-------------------|------------------|------------------------------------------|
+| `present`         | Present          | `PresentTenseSection`                    |
+| `past`            | Past             | `PastTenseSection`                       |
+| `past-continuous` | Continuous past  | `PastContinuousSection`                  |
+| `future`          | Future & να      | `FutureNaSection`                        |
 
-### The -μαι Marker
-The -μαι ending is the passive marker:
-- βλέπω (I see) → βλέπομαι (I am seen)
-- ακούω (I hear) → ακούομαι (I am heard)
+<hero component="ReferenceHero" file="src/routes/reference/verbs/route.tsx">
+<title>Three patterns, thousands of verbs.</title>
+</hero>
 
-### Deponent: Passive form, active meaning
-Some verbs ONLY exist in -μαι form, but their meaning is active:
-- έρχομαι = I come (not "I am come-d")
-- θυμάμαι = I remember (not "I am remembered")
-- κοιμάμαι = I sleep (not "I am slept")
-
-<etymology>
-Why "deponent"? From Latin deponere (to put aside) - these verbs have "set aside" their active forms.
-</etymology>
-
-</section>
+Colour: the three families use the page-local `verb-active` (navy), `verb-contracted` (slate) and `verb-deponent` (sunset) schemes from `@/constants/grammar-palette`. They are not case or gender tokens.
 
 ---
 
-## Start Here: είμαι (to be)
+## Band: present
 
-<paradigm name="eimai" highlight="true">
+<section name="present" heading='SectionHeading "Verb Conjugation" (subtitle "Present tense — the ending shows who is doing the action")'>
+
+### Start Here: είμαι (to be)
+
+<paradigm name="eimai" highlight="true" eyebrow="Start here">
 <verb>είμαι</verb>
-<meaning>to be</meaning>
-<note>The most common Greek verb. Memorize it first. You'll use it in every conversation.</note>
+<meaning>am, is, are</meaning>
+<note>The most common Greek verb. Memorise it first.</note>
 <note>3rd person is the same for singular and plural</note>
 
 | Person       | Singular  | Plural    |
@@ -60,44 +57,32 @@ Why "deponent"? From Latin deponere (to put aside) - these verbs have "set aside
 
 </paradigm>
 
----
+### Pattern Identifier
 
-## Pattern Power
-
-<insight>
-Learn just **3 ending patterns** and you can conjugate thousands of verbs.
-The endings tell you WHO is doing the action.
-</insight>
-
-<note name="negation">
-**Negation:** Add δεν before the verb: Δεν μιλάω (I don't speak)
-</note>
-
----
-
-## Pattern Identifier
-
-<decision-guide name="pattern-identifier">
+<decision-guide name="pattern-identifier" component="PatternIdentifier">
 <question>Which pattern? Look at the verb's dictionary form (1st person singular)</question>
 
 | Ending    | Pattern Name | Examples                |
 |-----------|--------------|-------------------------|
 | -ω        | Active       | κάνω, θέλω, βλέπω       |
-| -άω/-ώ    | Contracted   | μιλάω, αγαπάω, ρωτάω    |
+| -άω/-ώ    | Contracted   | μιλάω, αγαπάω           |
 | -μαι      | Deponent     | έρχομαι, θυμάμαι        |
 
 </decision-guide>
 
----
+<note name="negation">
+**Negation:** put δεν before any verb: Δεν μιλάω (I don't speak)
+</note>
 
-## Pattern 1: Active -ω
+### Side by Side: "Same slots, different endings"
 
-<paradigm name="active" color="ocean">
+`PatternComparison`: one table, person rows (I, you, he/she, we, you all, they) x the three canonical verbs, stem neutral and ending in the family colour.
+
+### Pattern 1: Active -ω
+
+<paradigm name="active" scheme="verb-active">
 <pattern>-ω</pattern>
-<title>Standard Active</title>
 <description>Most Greek verbs follow this pattern. Learn the endings once, apply them to thousands of verbs.</description>
-
-### Canonical: κάνω (do, make)
 
 | Person | Singular      | Plural        |
 |--------|---------------|---------------|
@@ -105,28 +90,15 @@ The endings tell you WHO is doing the action.
 | 2nd    | κάν**εις**    | κάν**ετε**    |
 | 3rd    | κάν**ει**     | κάν**ουν**    |
 
-### Same Pattern
-- θέλω (want)
-- έχω (have)
-- βλέπω (see)
-
-### In Context
-- Τι κάνεις; = How are you? (What do you do?)
-- Κάνει κρύο. = It's cold. (It makes cold)
-- Κάνουμε διάλειμμα. = We're taking a break.
-
+Same pattern (collapsible): θέλω, έχω, βλέπω, δουλεύω, μένω, ακούω, παίρνω, ξέρω
+See it in action (collapsible): Τι κάνεις; · Κάνει κρύο. · Κάνουμε διάλειμμα.
 </paradigm>
 
----
+### Pattern 2: Contracted -άω/-ώ
 
-## Pattern 2: Contracted -άω/-ώ
-
-<paradigm name="contracted" color="terracotta">
+<paradigm name="contracted" scheme="verb-contracted">
 <pattern>-άω/-ώ</pattern>
-<title>Contracted</title>
-<description>The α contracts with endings. Two forms exist - both are correct.</description>
-
-### Canonical: μιλάω (speak)
+<description>Stress falls on the ending, not the stem. Both -άω and -ώ spellings are correct: μιλάω = μιλώ.</description>
 
 | Person | Singular      | Plural        |
 |--------|---------------|---------------|
@@ -134,27 +106,16 @@ The endings tell you WHO is doing the action.
 | 2nd    | μιλ**άς**     | μιλ**άτε**    |
 | 3rd    | μιλ**άει**    | μιλ**άνε**    |
 
-### Same Pattern
-- αγαπάω (love)
-- ρωτάω (ask)
-- περνάω (pass)
-
-### In Context
-- Μιλάς ελληνικά; = Do you speak Greek?
-- Δεν μιλάμε πολύ. = We don't speak much.
-
+Same pattern: αγαπάω, ρωτάω, περνάω
+See it in action: Μιλάς ελληνικά; · Δεν μιλάμε πολύ.
+Footer: the -ώ variant (μπορώ, οδηγώ) has different endings, shown in "Other high-frequency verbs".
 </paradigm>
 
----
+### Pattern 3: Deponent -μαι
 
-## Pattern 3: Deponent -μαι
-
-<paradigm name="deponent" color="olive">
+<paradigm name="deponent" scheme="verb-deponent">
 <pattern>-μαι</pattern>
-<title>Deponent</title>
-<description>Look passive but have active meaning. Two sub-patterns: -ομαι and -άμαι.</description>
-
-### Canonical: έρχομαι (come)
+<description>These verbs end in -μαι but have active meaning. Two variants: -ομαι (έρχομαι) and -άμαι (θυμάμαι). Memorise as units.</description>
 
 | Person | Singular        | Plural          |
 |--------|-----------------|-----------------|
@@ -162,47 +123,108 @@ The endings tell you WHO is doing the action.
 | 2nd    | έρχ**εσαι**     | έρχ**εστε**     |
 | 3rd    | έρχ**εται**     | έρχ**ονται**    |
 
-### Same Pattern
-- γίνομαι (become)
-- κάθομαι (sit)
-
-### In Context
-- Έρχομαι αύριο. = I'm coming tomorrow.
-- Πότε έρχεσαι; = When are you coming?
-- Δεν θυμάμαι. = I don't remember.
-
+Same pattern: γίνομαι, θυμάμαι, κάθομαι
+See it in action: Έρχομαι αύριο. · Πότε έρχεσαι; · Δεν θυμάμαι.
 </paradigm>
+
+### Other High-Frequency Verbs (MemoriseCard, honey)
+
+<section name="irregulars">
+<note>These don't follow the 3 patterns. Memorise as units. Rows are IRREGULAR_VERBS minus είμαι.</note>
+
+| Verb  | Forms (sg1 sg2 sg3 / pl1 pl2 pl3)                       | Note                              |
+|-------|---------------------------------------------------------|-----------------------------------|
+| μπορώ | μπορώ μπορείς μπορεί / μπορούμε μπορείτε μπορούν        | Always followed by να             |
+| λέω   | λέω λές λέει / λέμε λέτε λένε                           | "τα λέμε" = see you later         |
+| τρώω  | τρώω τρώς τρώει / τρώμε τρώτε τρώνε                     |                                   |
+| πάω   | πάω πάς πάει / πάμε πάτε πάνε                           | Alternative regular form: πηγαίνω |
+
+</section>
+
+Cross-link card: "Browse all verbs, irregulars first" → /learn/verbs.
+</section>
 
 ---
 
-## Other Irregular Verbs
+## Band: past (aorist)
 
-<section name="irregulars">
-<note>These common verbs don't follow patterns. You'll learn them naturally through frequent exposure.</note>
+<section name="past" heading='SectionHeading "Past Tense" (subtitle "Αόριστος — the completed past. One action, finished.")'>
 
-### λέω (say, tell)
-| Person | Singular | Plural |
-|--------|----------|--------|
-| 1st    | λέω      | λέμε   |
-| 2nd    | λές      | λέτε   |
-| 3rd    | λέει     | λένε   |
-<note>"τα λέμε" = see you later</note>
+### Find your verb's ending (AoristFinder, eyebrow "Start here")
 
-### τρώω (eat)
-| Person | Singular | Plural |
-|--------|----------|--------|
-| 1st    | τρώω     | τρώμε  |
-| 2nd    | τρώς     | τρώτε  |
-| 3rd    | τρώει    | τρώνε  |
+Keyed on the visible present ending (AORIST_FINDER):
 
-### πάω (go)
-| Person | Singular | Plural |
-|--------|----------|--------|
-| 1st    | πάω      | πάμε   |
-| 2nd    | πάς      | πάτε   |
-| 3rd    | πάει     | πάνε   |
-<note>Alternative regular form: πηγαίνω</note>
+| Present ending        | Past  | Example            |
+|-----------------------|-------|--------------------|
+| -πω -βω -φω -εύω      | -ψα   | γράφω → έγραψα     |
+| -κω -γω -χω -χνω      | -ξα   | ανοίγω → άνοιξα    |
+| -νω -ώνω              | -σα   | κλείνω → έκλεισα   |
+| vowel + -ω            | -σα   | ακούω → άκουσα     |
+| -άω -ώ                | -ησα  | μιλάω → μίλησα     |
+| -ομαι -άμαι           | -θηκα | θυμάμαι → θυμήθηκα |
 
+### Where the endings stop helping (AoristExceptions, eyebrow "Learn as pairs")
+
+- -ζω goes both ways: αγοράζω → αγόρασα, αλλάζω → άλλαξα, παίζω → έπαιξα
+- A handful keep no pattern at all: βλέπω → είδα, λέω → είπα, τρώω → έφαγα
+
+### Same endings, different stems (AoristComparison)
+
+κάνω → έκανα, μιλάω → μίλησα, έρχομαι → ήρθα side by side. -α, -ες, -ε, -αμε, -ατε, -αν in every column; deponents carry -θηκ- (or a suppletive stem like ήρθ-) in front.
+
+### Forming the aorist
+
+- Rule 1, the augment: aorist stress falls on the 3rd syllable from the end; if the stem is too short, add ε-. γράφω → έγραψα (2 syllables, add ε-); δουλεύω → δούλεψα (3 syllables, no ε-).
+- Rule 2, consonant collision (CONSONANT_RULES):
+
+| Stem ends in      | + σ → | Example          |
+|-------------------|-------|------------------|
+| π β φ (labials)   | ψ     | γράφω → έγραψα   |
+| κ γ χ (velars)    | ξ     | ψάχνω → έψαξα    |
+| τ δ θ ζ (dentals) | σ     | αρχίζω → άρχισα  |
+| vowel ν ρ         | σ     | ακούω → άκουσα   |
+
+### Full paradigms (6) (collapsible)
+
+Aorist -σα (ακούω), -ψα (δουλεύω), -ξα (ψάχνω), -άω verbs -ησα (μιλάω), -θηκα (θυμάμαι), suppletive new stem (έρχομαι → ήρθα). Each card: ParadigmTable plus example sentences.
+
+### Stems that break the rules (MemoriseCard)
+
+IRREGULAR_AORIST_STEMS:
+- Suppletive: τρώω → έφαγα, πίνω → ήπια, βλέπω → είδα, πηγαίνω / πάω → πήγα, λέω → είπα, έρχομαι → ήρθα
+- Irregular: κάνω → έκανα, παίρνω → πήρα, φεύγω → έφυγα, βρίσκω → βρήκα, δίνω → έδωσα, μαθαίνω → έμαθα
+</section>
+
+---
+
+## Band: past-continuous (imperfect)
+
+<section name="past-continuous" heading='SectionHeading "Continuous Past" (subtitle "Παρατατικός — the past that was still running. Ongoing or repeated.")'>
+Present stem + the same -α -ες -ε -αμε -ατε -αν endings; -άω verbs insert -ούσ- instead.
+
+| Person | δουλεύω (-ω) | μιλάω (-άω) |
+|--------|--------------|-------------|
+| 1st sg | δούλευα      | μιλούσα     |
+| 2nd sg | δούλευες     | μιλούσες    |
+| 3rd sg | δούλευε      | μιλούσε     |
+| 1st pl | δουλεύαμε    | μιλούσαμε   |
+| 2nd pl | δουλεύατε    | μιλούσατε   |
+
+Then the contrast: Αόριστος (Έφαγα χθες.) vs Παρατατικός (Έτρωγα κάθε μέρα.), and `AspectComparison` "μίλησα or μιλούσα?" (Χθες μίλησα με τη Μαρία, once; Κάθε μέρα μιλούσα με τη Μαρία, a habit).
+</section>
+
+---
+
+## Band: future (Future & να)
+
+<section name="future" heading='SectionHeading "Future Tense" (subtitle "θα + the same stem you use after να")'>
+- The rule, θα + subjunctive: drop the augment from the aorist and prepend θα. γράφω → έγραψα → θα γράψω; τρώω → έφαγα → θα φάω. Negation: δεν θα φάω.
+- "θα does all the work" (FUTURE_UNCHANGED): είμαι, ξέρω, έχω, κάνω, περιμένω never shorten.
+- "Past first, then future" ladder (FUTURE_LADDER): present / past / future columns, e.g. βλέπω / είδα / θα δω, λέω / είπα / θα πω, τρώω / έφαγα / θα φάω.
+- "The -αίνω family" (FUTURE_AINO): βγαίνω, μπαίνω, ανεβαίνω, κατεβαίνω; past in -ηκα, future short (θα βγω).
+- θα υπάρχει / θα υπάρχουν; ίσως takes the short form but never θα.
+
+Then SectionHeading "να-constructions": Modal + να + verb (Θέλω να φάω. Πρέπει να πάω. Μπορώ να έρθω. Ξέρω να μαγειρεύω.). Both verbs agree with the subject; δεν goes before the modal.
 </section>
 
 ---
@@ -210,151 +232,27 @@ The endings tell you WHO is doing the action.
 ## Cross-Links
 
 <navigation>
-- Browse all verbs by conjugation family: /learn/verbs
-- Practice verb conjugation: /practice/verbs/present
+- Browse all verbs: /learn/verbs (card at the end of the present band)
+- PracticeCTA "Practice verbs" (topic "verbs", label "Open verb drills") on every band → /practice/verbs (logged-out readers go to /register; see `src/lib/practice-links.ts`)
 </navigation>
-
----
-
-## Past Tense
-
-Greek has two past tenses. Both use the same endings; only the stem changes.
-
-### Aorist vs Imperfect
-
-| Tense     | Think of it as | Example  | English                          |
-|-----------|----------------|----------|----------------------------------|
-| Aorist    | snapshot       | έγραψα   | I wrote (one completed action)   |
-| Imperfect | video          | έγραφα   | I was writing / used to write    |
-
-### Past Endings (shared)
-
-| Person | Singular | Plural |
-|--------|----------|--------|
-| 1st    | -α       | -αμε   |
-| 2nd    | -ες      | -ατε   |
-| 3rd    | -ε       | -αν    |
-
-Worked on κάνω: έκανα · έκανες · έκανε · κάναμε · κάνατε · έκαναν
-
-### Aorist Stem Fusion
-
-<decision-guide name="aorist-fusion">
-<question>Aorist adds σ to the stem. That σ fuses with the stem's final consonant:</question>
-
-| Stem ends in       | + σ → | Examples                              |
-|--------------------|-------|---------------------------------------|
-| π / β / φ / ευ     | ψ     | γράφω → έγραψα, κόβω → έκοψα          |
-| κ / γ / χ / ζ*     | ξ     | ανοίγω → άνοιξα, αλλάζω → άλλαξα      |
-| vowel / ζ*         | σ     | ακούω → άκουσα, διαβάζω → διάβασα     |
-
-</decision-guide>
-
-**Notes:**
-- ζ is ambiguous — most -ίζω / -άζω verbs take σ (αγοράζω → αγόρασα), but a few take ξ (αλλάζω → άλλαξα). Memorise per verb.
-- -νω verbs don't follow a clean rule — ν drops or mutates unpredictably. They live in the "irregular stems" material.
-
-### The έ- Prefix
-
-Short verbs add an **έ-** so the stress can land two syllables from the end — but it drops when the ending is long enough to carry its own stress:
-
-| With έ-                   | Without έ-        |
-|---------------------------|-------------------|
-| έγραψα · έγραψες · έγραψε | γράψαμε · γράψατε |
-
-Same for imperfect: έγραφα vs γράφαμε.
-
-### Deponent Aorist (-μαι verbs)
-
-Deponent verbs (those ending -μαι) form the aorist with a **-θηκα** marker — no stem fusion, no σ:
-
-| -μαι → -θηκα              | Variants                    |
-|----------------------------|------------------------------|
-| λυπάμαι → λυπήθηκα         | χρειάζομαι → χρειά**στ**ηκα (-ζομαι drops ζ)  |
-| θυμάμαι → θυμήθηκα         | σκέφτομαι → σκέ**φτ**ηκα (-φτομαι)           |
-| φοβάμαι → φοβήθηκα         | χαίρομαι → χάρ**ηκα** (loses -θ-)            |
-
-### Group 2 Aorist (-άω / -ώ verbs)
-
-Contracted verbs form the aorist with a -ησα or -εσα marker — no stem fusion:
-
-| -άω → -ησα            | -ώ → -εσα             |
-|------------------------|------------------------|
-| μιλάω → μίλησα         | μπορώ → μπόρεσα        |
-| ρωτάω → ρώτησα         | οδηγώ → οδήγησα*       |
-| αγαπάω → αγάπησα       |                        |
-
-*Some -ώ verbs actually take -ησα — memorise per verb.
-
-### Group 1 Imperfect
-
-For -ω verbs, the imperfect uses the present stem + past endings (no σ fusion):
-
-<paradigm name="g1-imperfect" color="neutral">
-<verb>γράφω</verb>
-<meaning>write (was writing / used to write)</meaning>
-
-| Person | Singular  | Plural    |
-|--------|-----------|-----------|
-| 1st    | έγραφα    | γράφαμε   |
-| 2nd    | έγραφες   | γράφατε   |
-| 3rd    | έγραφε    | έγραφαν   |
-
-</paradigm>
-
-### Group 2 Imperfect
-
-Contracted verbs (μιλάω, αγαπάω) insert -ούσα- before the endings:
-
-<paradigm name="g2-imperfect" color="neutral">
-<verb>μιλάω</verb>
-<meaning>was speaking / used to speak</meaning>
-
-| Person | Singular    | Plural        |
-|--------|-------------|---------------|
-| 1st    | μιλούσα     | μιλούσαμε     |
-| 2nd    | μιλούσες    | μιλούσατε     |
-| 3rd    | μιλούσε     | μιλούσαν      |
-
-</paradigm>
-
-### είμαι · Past (irregular)
-
-<paradigm name="eimai-past" color="olive">
-<verb>είμαι</verb>
-<meaning>was / were</meaning>
-<note>Only an imperfect past exists; no aorist (being is a state, not a completed act)</note>
-<note>3rd person is the same for singular and plural</note>
-
-| Person | Singular  | Plural     |
-|--------|-----------|------------|
-| 1st    | ήμουν     | ήμασταν    |
-| 2nd    | ήσουν     | ήσασταν    |
-| 3rd    | ήταν      | ήταν       |
-
-</paradigm>
-
----
-
-## Scope Note
-
-Future tense coming soon.
 
 ---
 
 ## Data Source
 
-Static content from: `@/constants/verbs`
-- VERB_PATTERNS (active, contracted, deponent)
-- VERB_CONJUGATIONS
-- IRREGULAR_VERBS
+Static content from `@/constants/verbs`:
+- VERB_PATTERNS (active, contracted, deponent), IRREGULAR_VERBS
+- AORIST_FINDER, AORIST_EXCEPTIONS, AORIST_FORMATION_PATTERNS, PAST_TENSE_PATTERNS, IRREGULAR_AORIST_STEMS
+- FUTURE_LADDER, FUTURE_UNCHANGED, FUTURE_AINO
+
+Section-local in `components/verbs-section.tsx`: PATTERN_META, USAGE_EXAMPLES, CONSONANT_RULES, NA_EXAMPLES.
 
 ## Verification
 
 - [x] greek-first: Greek verb forms prominent
 - [x] paradigm-tables: Person (rows) x Number (columns) reveals patterns
-- [x] progressive-disclosure: Same-pattern verbs and context collapsible
+- [x] progressive-disclosure: same-pattern lists, usage examples and full aorist paradigms collapsible
 - [x] function-first-labels: "Active", "Contracted", "Deponent" with endings
 - [x] frequency-priority: είμαι promoted as most important
 - [x] contextual-examples: Usage examples for each pattern
-- [x] decision-guides: Pattern identifier included
+- [x] decision-guides: Pattern identifier and aorist finder included

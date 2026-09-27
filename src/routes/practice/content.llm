@@ -1,126 +1,149 @@
 # Practice Section Content
 
-Timed retrieval drills organised by grammatical structure. The practice surface is the production-skill engine of the app — Skill Acquisition Theory (DeKeyser) procedural-fluency training. Drills push learners from explicit knowledge → procedural skill → automatisation.
+Timed retrieval drills organised by grammatical structure. The practice surface is the production-skill engine of the app: Skill Acquisition Theory (DeKeyser) procedural-fluency training, pushing learners from explicit knowledge to procedural skill to automatisation.
+
+Every route under `/practice` needs a session: `route.tsx` `beforeLoad` redirects a logged-out visitor to `/`. The anonymous drill is `/try` (`src/routes/try.tsx`), which reuses `<Drill>`.
 
 ## Route Structure
 
 ```
-/practice                                       Section landing — drill registry
-/practice/articles/{paradigm,context,…}         Article paradigm + per-case article drills
-/practice/articles/noun-{genders,target,owner}  Per-case noun drills
-/practice/adjectives/{agreement,…-target,…-owner}  Per-case adjective agreement drills
-/practice/nominal/{phrase-doer,phrase-target,phrase-owner}  Phrase-builder capstones
-/practice/nominal/{all-nouns,all-adjectives}    DB-driven cross-case review drills
-/practice/pronouns/{object,possessives}         Pronoun paradigms
-/practice/verbs/{present,conjugation-endings,…} Verb drills
-/practice/blocks/{chunks,numbers,days-of-week}  Building blocks
+/practice                                        Landing: four group links
+/practice/review                                 Drills due for review, by category
+/practice/cases                                  Case-system index (4 phases)
+/practice/cases/{nominative,accusative,genitive}/{article,noun,adjective,phrase}
+/practice/cases/review/{articles,nouns,adjectives,phrases}
+/practice/pronouns                               Pronoun index (flat list)
+/practice/pronouns/{object,placement,possessives,possessive-vs-article}
+/practice/verbs                                  Verb index (4 phases)
+/practice/verbs/present/{vocabulary,conjugations,irregular,eimai,full}
+/practice/verbs/past/{aorist-vocabulary,aorist-stems,aorist-formation,imperfect-stative,aorist-conjugation}
+/practice/verbs/future/{vocabulary,formation,conjugation}
+/practice/verbs/{modal-constructions,imperatives,ladder,tense-recognition}
+/practice/blocks                                 Building-blocks index (flat list)
+/practice/blocks/{chunks,numbers,days-of-week,opposites}
+/practice/blocks/question-words                  Question-words index (4 phases)
+/practice/blocks/question-words/{basics,which-forms,which-phrase,how-many-forms,how-many-phrase,review}
 ```
+
+Route segments use grammatical terms (`nominative`); drill titles and phase labels use the learner handles (Doer / Target / Owner).
 
 ## Landing Page
 
 <route path="/practice">
-<purpose>Drill registry hub — surfaces every drill grouped by word class + case-phase</purpose>
+<purpose>Hub: one link per drill group; no drills are listed here</purpose>
 <file>src/routes/practice/index.tsx</file>
-<source-of-truth>src/routes/practice/drills.ts — DRILLS array, GROUP_META, GROUP_ORDER</source-of-truth>
 <displays>
-- Four top-level sections rendered in `GROUP_ORDER`:
-  - **Articles, nouns & adjectives** (group: nominal)
-  - **Pronouns** (group: pronouns)
-  - **Verbs** (group: verbs)
-  - **Building blocks** (group: blocks)
-- Each section's drills can be tagged with a `phase` field. Consecutive drills sharing a phase render under a phase sub-header.
-- Phase headers carry colour accent + left border via `PHASE_TINT`:
-  - **Doer** → ocean (nominative)
-  - **Target** → terracotta (accusative)
-  - **Owner** → olive (genitive)
-  - **Present** / **Past** / **Commands** → no tint (verbs)
-  - **Review** → muted neutral (cross-case mixed drills)
-- Drills without a phase render as ungrouped rows.
+- A ruled list built from `SECTIONS`, each row a serif label plus a one-line thesis:
+  - The case system → /practice/cases
+  - Pronouns → /practice/pronouns
+  - Verbs → /practice/verbs
+  - Building blocks → /practice/blocks
 </displays>
 </route>
 
-## Section: Articles, nouns & adjectives
+<route path="/practice/review">
+<purpose>Drills whose rust score says they need attention</purpose>
+<file>src/routes/practice/review.tsx</file>
+<displays>
+- Loader `getReviewDrillsFn` calls `getSchemaRust(userId)` (`src/server/db/queries/analytics/drill-stats.ts`) and keeps drills found in `DRILL_REGISTRY`.
+- Rows grouped under `DRILL_CATEGORY_LABELS` (`src/constants/drills.ts`): title, rust bar, days since and accuracy. "All caught up" state when empty.
+</displays>
+</route>
 
-Case is the primary axis. Each case-phase contains four drill types: Article → Noun → Adjective → Phrase. A Review tier at the end mixes cases.
+## Drill catalogue
+
+<source-of-truth>
+Each group owns its entries in `practice/<group>/drills.data.ts`: `cases` → `CASE_PHASES`, `verbs` → `VERB_PHASES`, `pronouns` → `PRONOUN_DRILLS`, `blocks` → `BLOCK_DRILLS` (plus `QUESTION_WORDS_LINK`, a link row that records nothing), `blocks/question-words` → `QUESTION_WORD_PHASES`.
+`drill-catalogue.data.ts` derives `DRILL_REGISTRY` (keyed by drill id) and `drillTitle(drillId)` from those lists; never author entries there. A `DrillEntry` (`src/constants/drills.ts`) has `id` (the `drillId` attempts are recorded under), `to`, `title`, `greek` sample, `minutes`, `category`, `caseRole`.
+</source-of-truth>
+
+Group indexes render `DrillIndex` (`components/drill-index.tsx`) with `phases` or a flat `drills` list. Phase headers take `PHASE_TINT`: Doer / Target / Owner use the reserved case tokens via `SCHEME["case-nominative" | "case-accusative" | "case-genitive"]`; Review and every other phase (verb tenses, question-word phases) are muted neutral.
+
+## Section: The case system
+
+`CASE_PHASES`, rendered by `cases/index.tsx`. Each role phase has the same four drills, Article → Noun → Adjective → Phrase, then a Review phase mixes cases.
 
 ```
-DOER (ocean)
-  Article (Doer)         → ο · η · το · οι · τα           hand-curated, 6 forms
-  Noun (Doer)            → ο φίλος · η μέρα · το σπίτι     DB-driven (SRS pool, nominative sg)
-  Adjective agreement    → καλός · καλή · καλό            hand-curated, 60 forms (sg + pl)
-  Doer phrase            → ο καλός φίλος                  hand-curated capstone, 30 items (sg + pl)
-
-TARGET (terracotta)
-  Article (Target)       → τον · τη · το · τους · τις · τα
-  Noun (Target)          → τον φίλο · τη μέρα · το σπίτι   DB-driven (SRS pool, accusative sg)
-  Adjective (Target)     → καλό · καλή · καλό             hand-curated, 60 forms (sg + pl)
-  Target phrase          → τον καλό φίλο                  capstone, 30 items (sg + pl)
-
-OWNER (olive)
-  Article (Owner)        → του · της · του · των
-  Noun (Owner)           → του φίλου · της μέρας · του σπιτιού  DB-driven (SRS pool, genitive sg)
-  Adjective (Owner)      → καλού · καλής · καλού          hand-curated, 40 forms (sg + pl; pl all genders share -ων)
-  Owner phrase           → του καλού φίλου                capstone, 30 items (sg + pl)
-
-REVIEW (neutral)
-  All articles           → existing 18-form DimensionalDrill
-  All nouns              → DB-driven, queries vocabulary + nominal_forms
-  All adjectives         → DB-driven, queries vocabulary + nominal_forms
-  All article + noun     → server-driven mixed-case article+noun pairs
+DOER     Article (Doer)      ο · η · το · οι · τα                 generated from getArticle
+         Noun (Doer)         ο φίλος · η θάλασσα · το σπίτι       DB, SRS pool
+         Adjective (Doer)    καλός · καλή · καλό                  hand-curated, 60 forms
+         Phrase (Doer)       ο καλός φίλος                        hand-curated, 30 phrases
+TARGET   Article / Noun / Adjective (60) / Phrase (30)            τον · τη · το · τους · τις · τα
+OWNER    Article / Noun / Adjective (40) / Phrase (30)            του · της · του · των
+REVIEW   All articles        18 forms, multi-select reverse (gender, number, case)
+         All nouns           DB, every nominal_forms cell, VocabDrillPage
+         All adjectives      DB, every nominal_forms cell, VocabDrillPage
+         All phrases         the three phrase lists combined, reverse = pick the case
 ```
 
 <engine-notes>
-- Hand-curated drills use `SimpleListDrill` engine with `colorTheme` matching the case (ocean/terracotta/olive).
-- Phrase capstones use `SimpleListDrill` with multi-word Greek strings; `matchPhonetic` accepts whitespace-separated input.
-- DB-driven per-case noun drills (`noun-genders`, `noun-target`, `noun-owner`) use `getNounDrillItems()` in `drills/articles/data.server.ts` — SRS pool via `getDrillVocabPoolWithFallback` + `adjacentCefrPool`, queries `nominal_forms` for the relevant case singular. Cold-start users fall back to CEFR-band vocabulary.
-- DB-driven review drills (`all-nouns`, `all-adjectives`) have route-level loaders that query `nominal_forms` via `getNominalFormsForDrill`, build `DrillQuestion[]`, pass to `VocabDrillPage` via `initialQuestions` prop.
+- Articles: `cases/components/article-drill.tsx` (`CaseArticleDrill`) builds the six cells from `getArticle` (`src/lib/greek-grammar.ts`), with per-cell `overrides` (Target f-sg drills τη and accepts την via `acceptAlso`) and a `Paradigm` table as `configExtras`.
+- Nouns: loader calls `getNounDrillItemsFn` (`src/server/fns/noun.ts`): pool from `getDrillVocabPool` (`src/server/db/queries/drill-pool.ts`, CEFR band via `adjacentCefrPool`, limit 50), singular form of the case from `getVocabularyWithNominalForms`. Reverse is single-select on gender; only Doer strips the article for reverse.
+- Adjectives: Owner has 40 forms because plural -ων is one item for all genders (reverse option "Plural · any gender", `NEUTRAL`).
+- Review nouns / adjectives: loader calls `getNominalReviewQuestionsFn` (`src/server/fns/cases.ts`, limit 45), one question per `nominal_forms` cell with a "(Doer, sg, m)" style hint.
+- Review phrases imports `PHRASES` from the three phrase routes and re-tags each item by case.
+- `themeFor` in `engines/drill.tsx`: a drill whose `caseRole` is doer / target / owner takes the reserved case tokens for its bar and selectors; `mixed` and `null` use the `colorTheme` prop (base palette, default terracotta).
 </engine-notes>
 
 ## Section: Pronouns
 
-Function-word grids — kept separate from Nominal section because the cognitive task is paradigm recall, not case morphology applied to semantic content.
+`PRONOUN_DRILLS`, a flat list on `pronouns/index.tsx`:
 
-- Object pronouns: με, σε, τον, την, μας, σας…
-- Possessives: μου, σου, του, της, μας…
-
-Both use `DimensionalDrill` engine.
+- Object pronouns (`object.tsx`) and Possessive pronouns (`possessives.tsx`): hand-curated paradigms, `ForwardPromptCard` prompts, multi-select reverse, `Paradigm` table before the session, `sessionSize={10}`.
+- Pronoun placement (`placement.tsx`): forward-only word ordering; items and categories in `placement.data.ts`; `sessionSize={20}`.
+- Whose, or of the? (`possessive-vs-article.tsx`): ο πατέρας του against ο πατέρας του παιδιού; items in `possessive-vs-article.data.ts`; opens in reverse, single-select on the word's role.
 
 ## Section: Verbs
 
-Tense as primary axis. Phase headers: Present / Past / Commands.
+`VERB_PHASES`, four phases on `verbs/index.tsx` (route segments shown):
 
 ```
-PRESENT
-  Basic verbs · Conjugations · Irregular verbs · είμαι · present
-
-PAST
-  Conjugations · Irregular verbs · είμαι · past · Past ↔ present
-
-COMMANDS
-  Imperatives
+PRESENT          present/vocabulary* · present/conjugations · present/irregular · present/eimai · present/full*
+PAST             past/aorist-vocabulary* · past/aorist-stems · past/aorist-formation · present/conjugations · past/imperfect-stative · past/aorist-conjugation*
+FUTURE & MODAL   future/vocabulary* · future/formation · future/conjugation* · modal-constructions · imperatives
+MIXED TENSES     ladder* · tense-recognition*
 ```
 
-Past-tense conjugation drill is server-driven (queries verb_conjugations). Other verb drills are hand-curated SimpleListDrill content.
+`*` = DB-driven: loader calls `getVerbDrillQuestionsFn` (`src/server/fns/verbs.ts`, queries in `verbs.server.ts`) and renders `VocabDrillPage`. The vocabulary drills ask sg1 only; Which tense? reverses to a single-select on `TENSE_DIMENSION_OPTIONS`. Conjugation endings is one `DrillEntry` (`CONJUGATION_ENDINGS`) listed under both Present and Past. The rest are hand-curated item lists inside each route file.
 
 ## Section: Building blocks
 
-Heterogeneous grab-bag. Currently no phase structure.
+`BLOCK_DRILLS` plus `QUESTION_WORDS_LINK`, a flat list on `blocks/index.tsx`: Survival phrases (`chunks`), Numbers, Days & time, Opposites, Question words. Opposites is DB-driven (`getOppositePairsFn`); the rest are hand-curated. Question words is a sub-group with its own index and six drills. Each has a `*.content.llm` beside its route.
 
-- Survival phrases · Numbers · Days & time
+## Drill engine
+
+<engine-notes>
+Files in `components/engines/`:
+- `drill.tsx`: `<Drill>`, the engine every drill uses. Props include `drillId`, `items`, `title` (omit it; the catalogue title is used), `colorTheme`, `defaultMode`, `reverse` (`self-assess` by default, `single-select`, `multi-select`), `forwardPrompt`, `configExtras`, `autoStart`, `sessionSize` (10 / 20 / 30, or an exact count such as /try's), `speed` (preselects a speed; the only way to set one when `autoStart` skips the config screen), `onComplete`, `summaryFooter`, plus `ConfigShell` copy props (`subtitle`, `forwardDesc`, `reverseDesc`, `categories`, `forwardOnly`, `referenceHref`, `backTo`).
+- `vocab-drill.tsx`: `VocabDrillPage` maps server `DrillQuestion[]` to forms and renders `<Drill>` with `sessionSize={20}`.
+- `shells.tsx`: `ConfigShell` (filter, mode, card count, speed, Begin), `DrillShell` (top bar), `ForwardInput`, `FeedbackDisplay` and `ReverseFeedback` (both inside `FeedbackFrame`), `SummaryScreen`.
+- `drill-hooks.ts`: `useCountdown`, `useForwardKeyboard`, `useContinueKeyboard`, `useCardState`. `drill-store.ts`: zustand `useDrillStore` and `drillActions`.
+- `deck.ts`: `DrillForm`, `SimpleListItem`, `SESSION_SIZES`, `buildWeightedDeck` (interleaves SRS buckets; a new word reappears about five cards later).
+- `reverse/`: `SelfAssessReverse`, `SingleSelectReverse`, `MultiSelectReverse`. `drill-constants.ts` and `chip-specs.ts`: shared selector options (gender ones take the reserved gender tokens; person and tense ones are `NEUTRAL`) and prompt chips.
+
+Behaviour:
+- Top bar (`DrillShell`): Exit link, the drill title as the page `h1`, "N of M". Bucket and "remediation ×N" chips show only for a logged-in user (`userId > 0`), so never on /try.
+- Timing: the learner's Fast 4 s / Medium 6 s (default) / Relaxed 8 s choice (`drill-speeds.ts`). In forward mode each extra word in the answer adds 35% (`scaleTimeLimitForPhrase`). A timeout records a miss.
+- Grading: `matchPhonetic` (`src/lib/greek-transliteration.ts`) against `greek`, then `acceptAlso`. It accepts the answer with or without a leading article and strips terminal `;` `?` `!` `.` on both sides.
+- Keys: a blank Enter is ignored and records nothing. Enter or Space continues after any feedback; a correct answer also advances by itself after 1200 ms, a wrong one waits (or tap the feedback block). Keys pressed in another control (header search, a focused button or link) are left to that control; the answer input submits through its own form and still continues on Enter or Space.
+- Remediation: a missed card is re-inserted about five cards later, at most three times per word.
+- `SummaryScreen`: "N of M correct" as the `h1`, with accuracy and average time; "Missed this round" lists each missed word and what was typed; "Drill the N you missed" (a re-drill that records no attempts) then "Practice again". Focus moves to the first action button. `summaryFooter` renders below the actions. With `autoStart`, "Practice again" restarts at once instead of returning to config.
+- Attempts are recorded through `src/server/fns/srs.ts` (`startSessionFn`, `recordAttemptFn`, `completeSessionFn`) only for a logged-in user.
+</engine-notes>
 
 ## Educational principle
 
-Each phase mirrors the production-skill operation a learner performs at speed:
-- Bare form (Article) — function-word retrieval
-- Single-class application (Noun, Adjective) — morphology
-- Phrase integration (Phrase capstone) — full noun-phrase production
+Each case phase mirrors the production-skill operation a learner performs at speed:
+- Bare form (Article): function-word retrieval
+- Single-class application (Noun, Adjective): morphology
+- Phrase integration (Phrase): full noun-phrase production
 
-Asymmetric content reflects honest priority. Owner has fewer drills than Doer because Owner forms appear less in casual speech. Don't symmetrise where frequency disagrees.
+Asymmetric content reflects honest priority. Don't symmetrise where frequency disagrees: `how-many-phrase` leaves out genitive πόσου/πόσης because it is rare in modern speech.
 
 ## Data sources
 
-- **Hand-curated drill content**: lives inside each drill file's `tsx` (e.g. `articles/article-doer.tsx`).
-- **Vocabulary + cases**: seeded into `vocabulary` + `nominal_forms` via `src/scripts/seed.ts`. Enrichment in `noun-seed-enrichment.ts` calls `declineNoun` to populate all (case × number) cells; `adjective-seed-enrichment.ts` calls `declineAdjective` for (case × number × gender) cells.
-- **Verb conjugations**: seeded inside the same `seed.ts` pipeline (calls `seedVerbConjugations()` at the end).
+- **Hand-curated drill content**: inside each route file (e.g. `cases/nominative/adjective.tsx`) or a sibling `*.data.ts` (`pronouns/placement.data.ts`, `pronouns/possessive-vs-article.data.ts`).
+- **Vocabulary + cases**: seeded into `vocabulary` + `nominal_forms` via `src/scripts/seed.ts`. `src/scripts/seed-data/vocabulary/noun-seed-enrichment.ts` calls `declineNoun` for every (case × number) cell; `adjective-seed-enrichment.ts` calls `declineAdjective` for (case × number × gender).
+- **Verb conjugations and opposites**: the same `seed.ts` calls `seedVerbConjugations()` and `seedOpposites()`.
 
 See `src/server/db/CLAUDE.md` for query patterns.

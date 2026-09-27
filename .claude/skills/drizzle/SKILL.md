@@ -5,7 +5,7 @@ description: Drizzle v1 ORM for this project — schema, migrations, queries. Re
 
 # Drizzle ORM Skill
 
-This project uses **Drizzle ORM v1.0.0-beta.20** with **Turso (libSQL)**. All Drizzle code MUST follow the v1 API — not the legacy v0 API.
+This project uses **Drizzle ORM v1.0.0-rc.4** with **Turso** over its HTTP serverless driver. All Drizzle code MUST follow the v1 API, not the legacy v0 API.
 
 Your task: $ARGUMENTS
 
@@ -15,24 +15,34 @@ Before starting, read the reference docs in this skill directory:
 
 ## Project context
 
-- **Driver**: `@libsql/client` (HTTP client for Turso)
-- **ORM import**: `drizzle-orm/libsql`
+- **Driver**: `@tursodatabase/serverless` (`connect()`, HTTP), not `@libsql/client`
+- **ORM import**: `drizzle-orm/tursodatabase-serverless`
 - **Schema column imports**: `drizzle-orm/sqlite-core`
 - **Config dialect**: `turso`
-- **Env vars**: `TURSO_DATABASE_URL`, `TURSO_AUTH_TOKEN`
+- **Env vars**: `TURSO_DATABASE_URL` is required, and a missing one fails with "TURSO_DATABASE_URL is not set". `TURSO_AUTH_TOKEN` is sent only when set. The app always talks to Turso over HTTP, and the driver rejects `file:` URLs; only drizzle-kit accepts `file:./local.db` (see `drizzle.config.ts`).
 
 ## File conventions for this project
 
 ```
-src/db.server/
-  index.ts             ← `createDb` / `db` proxy (AsyncLocalStorage); import `db` only from queries (see oxlint)
-  schema.ts            ← Table definitions
+src/server/db/
+  index.ts             ← server-only: shared `db`, `inTransaction`, `DbTransaction`
+  retry.ts             ← `withReadRetry`: retries a read once after a transport failure
+  schema.ts            ← Re-exports schema-auth.ts, schema-language.ts, schema-practice.ts
+  columns.ts, enums.ts ← Shared column helpers and enums
   relations.ts         ← defineRelations
   types.ts             ← Shared `typeof table.$inferSelect` / `$inferInsert` aliases (prefer reusing these)
-  queries/*.ts         ← All reads/writes; thin DAL — query only, infer types
+  queries/*.ts         ← All reads/writes; thin DAL, query only, infer types
 drizzle.config.ts
 drizzle/               ← Generated migrations (drizzle-kit output)
 ```
+
+A lint rule in `vite.config.ts` allows importing `@/server/db` only from `src/server/db/queries/` and scripts. Application code calls a query helper.
+
+## Connections
+
+- `db` is one shared connection for the whole process, wrapped in `withReadRetry`. Reads (`all`, `get`, `values`, `prepare`) are retried once when the failure is a transport one: a dead keep-alive socket, or a Turso session that expired while Fly had the machine suspended. Writes are never retried, because a write that failed in transit may still have landed.
+- Every query has a 30 s default timeout (`defaultQueryTimeout`).
+- Transactions run through `inTransaction` on a connection of their own. See Transactions below.
 
 ## Performance rules (Turso = remote DB, 100-400ms per round-trip)
 
@@ -130,7 +140,7 @@ const [user] = await db.select().from(users).where(eq(users.id, userId)).limit(1
    - Query `where` uses object syntax `{ id: 1 }`, not function syntax `(t, { eq }) => eq(t.id, 1)`
    - Query `orderBy` uses object syntax `{ id: "asc" }`, not function syntax
 
-2. **Use the `drizzle()` factory** from `drizzle-orm/libsql` — pass `{ client }` or `{ connection: { url, authToken } }`
+2. **Don't open connections in app code.** `src/server/db/index.ts` builds the client with `connect()` from `@tursodatabase/serverless` and passes it to `drizzle()` from `drizzle-orm/tursodatabase-serverless`. Everything else uses `db` or `inTransaction`.
 
 3. **Pass `relations`** to `drizzle()`, not `schema`:
 
@@ -144,19 +154,19 @@ const [user] = await db.select().from(users).where(eq(users.id, userId)).limit(1
    const db = drizzle({ client, casing: "snake_case" });
    ```
 
-5. **For migrations**, use `drizzle-kit push` during development, `drizzle-kit generate` + `drizzle-kit migrate` for production
+5. **For schema changes**, this repo pushes: `pnpm db:push` (drizzle-kit loads `.env`, which points at production Turso). `pnpm db:generate` and `pnpm db:migrate` exist for migration files. For a local schema only: `TURSO_DATABASE_URL=file:./local.db pnpm exec drizzle-kit push`, or `make db-push-local`.
 
-6. **Schema changes** — after modifying schema.ts, always run `npx drizzle-kit generate` to create a migration, then remind the user to apply it
+6. **Schema changes hit production.** After modifying a `schema-*.ts` file, tell the user and let them run `pnpm db:push`; never push unprompted. pnpm only, never `npx`.
 
 7. **Don't import from legacy packages** — validators come from `drizzle-orm/zod`, `drizzle-orm/valibot`, etc. (not `drizzle-zod`, `drizzle-valibot`)
 
-8. **Types: prefer table inference, not guessed package exports** — In v1 beta, use `typeof myTable.$inferSelect` and `typeof myTable.$inferInsert` (or the aliases in `src/db.server/types.ts`). Do **not** assume `InferInsertModel` / `InferUpdateModel` exist on the main `drizzle-orm` entry; for partial update payloads use `Pick<Row, "colA" | "colB">` where `Row` is the table’s `$inferSelect` type (or a small explicit type).
+8. **Types: prefer table inference, not guessed package exports** — In v1, use `typeof myTable.$inferSelect` and `typeof myTable.$inferInsert` (or the aliases in `src/server/db/types.ts`). Do **not** assume `InferInsertModel` / `InferUpdateModel` exist on the main `drizzle-orm` entry; for partial update payloads use `Pick<Row, "colA" | "colB">` where `Row` is the table’s `$inferSelect` type (or a small explicit type).
 
 9. **Zod vs DAL** — Use `createInsertSchema` / `createUpdateSchema` where you need **runtime validation** (forms, actions, external input). For internal mutation helpers that only receive already-validated data, `$inferInsert` / shared types are enough; avoid duplicating the same shape in both Zod and manual interfaces.
 
 10. **No casual `.select(`** — treat `db.select(` / `tx.select(` as a red flag unless you are in one of the explicit escape hatches (aggregates, impossible-via-relations joins, `selectDistinct`). Ordinary reads belong on `db.query`.
 
-11. **Inserts and composite inputs** — If an object mixes **table columns** with **side-effect fields** (e.g. SRS skill type, weak-area keys not on the row), destructure the extras and pass only the insert shape to `.values({ ... })`. Never spread a superset into `insert().values()`.
+11. **Inserts and composite inputs** — If an object mixes **table columns** with **side-effect fields** (values the function needs that aren't columns on the row), destructure the extras and pass only the insert shape to `.values({ ... })`. Never spread a superset into `insert().values()`.
 
 12. **Return types: infer from the function, do not hand-model rows** — Omit redundant `: Promise<...>` annotations on query helpers when TypeScript can infer them from `await db.query…` / `.returning()`. When a **route, loader, or another module** needs the result type, export an alias derived from the query — not a duplicate interface:
     - Whole value: `export type Thing = Awaited<ReturnType<typeof getThing>>`
@@ -210,7 +220,26 @@ Routes import `ThingWithOwner` / `ThingRow` from the query module — they do **
 
 ### Transactions
 
-Use **`db.transaction(async (tx) => { ... })` once** at the **orchestrating** function (e.g. one public mutation that does insert + related updates). Inside that callback, use **`tx`** (not `db`) for every query. **Internal helpers** should take `tx` as the first argument (`async (tx, input) => ...` or similar) — they must **not** call `db.transaction` again for the same logical unit; nested `tx.transaction()` is only for intentional savepoints. See `v1-reference.md` § Transactions for `tx.rollback()`, return values, relational `tx.query.*` inside transactions, and PostgreSQL-only options (`PgTransactionConfig`).
+Use **`inTransaction(async (tx) => { ... })`** from `@/server/db` **once** at the **orchestrating** function (e.g. one public mutation that does insert + related updates). Don't call `db.transaction` in this repo.
+
+`inTransaction` opens a connection for that transaction alone and closes it afterwards, so statements from concurrent requests on the shared `db` can't land inside it. It skips the read retry, because a retried read opens a fresh session, which would run outside the transaction. A failure to close is logged, not thrown, because the transaction has already committed or rolled back by then.
+
+```typescript
+import { type DbTransaction, inTransaction } from "../index";
+
+export const recordAttempt = async (input: RecordAttemptInput) =>
+	await inTransaction(async (tx) => {
+		const [attempt] = await tx.insert(practiceAttempts).values(input).returning();
+		await applyReviewState(tx, attempt);
+		return attempt;
+	});
+
+const applyReviewState = async (tx: DbTransaction, attempt: Attempt) => {
+	/* tx.query / tx.update, never db */
+};
+```
+
+Inside the callback, use **`tx`** (not `db`) for every query. **Internal helpers** take `tx: DbTransaction` as the first argument and must **not** start another transaction for the same logical unit; nested `tx.transaction()` is only for intentional savepoints. See `v1-reference.md` § Transactions for `tx.rollback()`, return values and relational `tx.query.*` inside transactions.
 
 ### Simple counts with `db.$count()`
 

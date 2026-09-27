@@ -13,7 +13,7 @@ Common traps that feel productive but don't build retrieval speed.
 - Elaborate topic organisation
 
 **Why it fails:**
-The user already knows the grammar. Organising it elaborately doesn't make retrieval faster. It just feels productive to the developer.
+The user has already met this grammar; what's missing is speed, not a map. Organising it elaborately doesn't make retrieval faster. It just feels productive to the developer.
 
 **The trap:** Building curriculum structures is procrastination disguised as productivity. The user doesn't need a map of Greek grammar. They need to produce Greek faster.
 
@@ -153,7 +153,7 @@ The core loop is: prompt → timer → input → feedback → repeat. Build that
 - Encouraging users to "review" before drilling
 
 **Why it fails:**
-The user already knows the grammar. More study reinforces declarative knowledge, not procedural speed. Study mode is a comfortable avoidance of the hard work of drilling.
+Study builds declarative knowledge, not procedural speed. The conceptual base the user does need is carried by plain-English handles (Doer, Target, Owner) on the drill and reference surfaces themselves, not by a separate study phase. Study mode is a comfortable avoidance of the hard work of drilling.
 
 **The trap:** Study feels productive. It's easier than failing under time pressure. Users gravitate toward it.
 

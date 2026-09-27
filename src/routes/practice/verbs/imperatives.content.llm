@@ -13,23 +13,26 @@ Regular imperative formation (-ε or -σε ending) is learnable as a rule. These
 
 ## Phase 3 core set
 
-| English     | Imperative sg | Present     | Notes |
-|-------------|---------------|-------------|-------|
-| Come!       | Έλα!          | έρχομαι     | Suppletive — completely different stem |
-| Say! / Tell!| Πες!          | λέω         | Irregular |
-| Give!       | Δώσε!         | δίνω        | Semi-irregular |
-| Bring!      | Φέρε!         | φέρνω       | Irregular |
-| Do! / Make! | Κάνε!         | κάνω        | Regular pattern but high-frequency anchor |
-| Go!         | Πήγαινε!      | πηγαίνω     | Imperfective form used; πήγαινε not πήγε |
-| Take!       | Πάρε!         | παίρνω      | Irregular |
-| See! / Look!| Κοίτα!        | κοιτάζω     | Truncated form used in speech |
-| Eat!        | Φάε!          | τρώω        | Suppletive |
-| Drink!      | Πιες!         | πίνω        | Suppletive |
-| Write!      | Γράψε!        | γράφω       | Regular -ψε |
-| Read!       | Διάβασε!      | διαβάζω     | Regular -σε |
-| Listen!     | Άκουσε!       | ακούω       | Regular -σε |
-| Look!       | Κοίτα! / Κοίταξε! | κοιτάζω | Two acceptable forms |
-| Wait!       | Περίμενε!     | περιμένω    | Regular |
+Implemented as 15 items in `imperatives.tsx`. Every `greek` string keeps its `!`, which
+`matchPhonetic` strips before comparing.
+
+| English prompt (`label`) | Imperative sg | Present     | Category | Notes |
+|--------------------------|---------------|-------------|----------|-------|
+| Come!                    | Έλα!          | έρχομαι     | tier-a   | Suppletive — completely different stem |
+| Say! / Tell me!          | Πες!          | λέω         | tier-a   | Irregular |
+| Give!                    | Δώσε!         | δίνω        | tier-a   | Semi-irregular |
+| Bring!                   | Φέρε!         | φέρνω       | tier-a   | Irregular |
+| Do it! / Make it!        | Κάνε!         | κάνω        | tier-a   | Regular pattern but high-frequency anchor |
+| Take! / Pick up!         | Πάρε!         | παίρνω      | tier-b   | Irregular |
+| Eat!                     | Φάε!          | τρώω        | tier-b   | Suppletive |
+| Drink!                   | Πιες!         | πίνω        | tier-b   | Suppletive |
+| Look! / Watch!           | Κοίτα!        | κοιτάζω     | tier-b   | Truncated form used in speech; Κοίταξε! is not accepted |
+| Wait!                    | Περίμενε!     | περιμένω    | tier-b   | Regular |
+| Write!                   | Γράψε!        | γράφω       | tier-b   | Regular -ψε |
+| Read!                    | Διάβασε!      | διαβάζω     | tier-b   | Regular -σε |
+| Listen!                  | Άκουσε!       | ακούω       | tier-b   | Regular -σε |
+| Go!                      | Πήγαινε!      | πηγαίνω     | tier-b   | Imperfective form used; πήγαινε not πήγε |
+| Find!                    | Βρες!         | βρίσκω      | tier-b   | Irregular |
 
 ## Plural imperatives (secondary)
 
@@ -40,18 +43,19 @@ Greek adds -τε for plural/formal imperatives. Drill singular first; introduce 
 **Forward**: English command → Greek imperative (singular)
   - "Come! →?" → "Έλα!"
 
-**Reverse**: Greek imperative → English
-  - "Πες! →?" → "Say! / Tell!"
+**Reverse**: Greek imperative → English, self-assess
+  - "Πες! →?" → "Say! / Tell me!"
 
-## Grouping suggestion
+## Grouping
 
-- Phase A: Έλα, Πες, Δώσε, Φέρε, Κάνε (5 most frequent)
-- Phase B: All 15
+Filter categories: "Tier A (5)" (`tier-a`: Έλα, Πες, Δώσε, Φέρε, Κάνε) and "Tier B (10)"
+(`tier-b`: the rest). The config screen's "All" button drills all 15.
 
 ## Time limits
 
-Forward: 4 seconds
-Reverse: 3 seconds
+No per-drill limit. Timing is the learner's Fast 4 s / Medium 6 s / Relaxed 8 s choice on the config
+screen, plus 35% for each extra word in a forward answer (`src/routes/practice/components/drill-speeds.ts`).
+Every answer here is one word, so the surcharge never applies.
 
 ## Notes
 

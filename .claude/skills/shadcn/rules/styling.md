@@ -10,7 +10,7 @@ See [customization.md](../customization.md) for theming, CSS variables, and addi
 - No space-x-_ / space-y-_
 - Prefer size-_ over w-_ h-\* when equal
 - Prefer truncate shorthand
-- No manual dark: color overrides
+- `dark:` only where a step doesn't flip
 - Use cn() for conditional classes
 - No manual z-index on overlay components
 
@@ -33,6 +33,8 @@ See [customization.md](../customization.md) for theming, CSS variables, and addi
 	<p className="text-muted-foreground">Secondary text</p>
 </div>
 ```
+
+In this project the semantic tokens are mapped onto the base palette in `src/index.css`, and the base palette scales (`cream`, `terracotta`, `ocean`, `olive`, `honey`, `navy`, `slate`, `sunset`, `stone`) are equally valid for chrome: `text-stone-600`, `bg-terracotta-600`. The reserved grammar role tokens (`case-*`, `gender-*`) assert a grammatical value about the Greek they wrap, so use them only for that, and only via `src/constants/grammar-palette.ts`. Never use a raw Tailwind hue such as `blue` or `gray`.
 
 ---
 
@@ -130,9 +132,11 @@ Use `gap-*` instead. `space-y-4` → `flex flex-col gap-4`. `space-x-2` → `fle
 
 ---
 
-## No manual dark: color overrides
+## `dark:` only where a step doesn't flip
 
-Use semantic tokens — they handle light/dark via CSS variables. `bg-background text-foreground` not `bg-white dark:bg-gray-950`.
+Dark mode is the `.dark` class on `<html>`. The `:root.dark` block in `src/index.css` remaps each ramp: light tints become dark tints and dark text shades become light text, so `bg-card`, `bg-terracotta-100` or `text-stone-800` need no override. `bg-background text-foreground` not `bg-white dark:bg-gray-950`.
+
+Mid steps keep their light-mode value so solid fills under white text keep their contrast. Where such a step is used as text, add a `dark:` override, and only there: `text-terracotta-700 dark:text-terracotta-text` (`MobileNav`), `text-terracotta-700 dark:text-terracotta` (`LandingPage` headline).
 
 ---
 
@@ -149,7 +153,7 @@ Use the `cn()` utility from the project for conditional or merged class names. D
 **Correct:**
 
 ```tsx
-import { cn } from "@/lib/utils"
+import { cn } from "tailwind-variants"
 
 <div className={cn("flex items-center", isActive ? "bg-primary text-primary-foreground" : "bg-muted")}>
 ```

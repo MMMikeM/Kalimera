@@ -2,7 +2,7 @@
 
 A Greek learning app for intermediate learners building procedural fluency — drilling grammar and vocabulary until responses become automatic.
 
-**Stack:** TanStack Start (TanStack Router + Nitro) · Turso (libsql) · Drizzle ORM · Tailwind CSS v4
+**Stack:** TanStack Start (TanStack Router + Nitro) · Turso (`@tursodatabase/serverless`) · Drizzle ORM · Tailwind CSS v4
 
 ---
 
@@ -100,7 +100,7 @@ docs/
 /                                 Dashboard
 /login  /register  /try           Auth, and the anonymous try-before-signup drill
 
-/practice                         Drill browser — four group cards
+/practice                         Drill browser — a list of the four groups
 /practice/cases                   Doer · Target · Owner · Review
 /practice/pronouns                Object forms, placement, possessives
 /practice/verbs                   Present · Past · Future & Modal · Mixed tenses
@@ -117,7 +117,7 @@ docs/
 
 /reference                        Grammar reference hub
 /reference/:tab                   cases · pronouns · articles · nouns · adjectives · prepositions · patterns
-/reference/verbs  /:band          Verbs, by frequency band
+/reference/verbs  /:band          Verbs, by tense: present · past · continuous past · future
 
 /search  /progress  /support      Search · analytics · about
 ```
@@ -128,9 +128,10 @@ file would drift from them.
 
 ## Environment variables
 
-| Variable             | Description        |
-| -------------------- | ------------------ |
-| `TURSO_DATABASE_URL` | Turso database URL |
-| `TURSO_AUTH_TOKEN`   | Turso auth token   |
+| Variable             | Description                                                                 |
+| -------------------- | --------------------------------------------------------------------------- |
+| `TURSO_DATABASE_URL` | Turso database URL. Required; the app fails at startup without it          |
+| `TURSO_AUTH_TOKEN`   | Turso auth token. Sent only when set                                        |
+| `SESSION_SECRET`     | Seals the login session cookie. Required, at least 32 characters            |
 
-Both live in `.env`, which drizzle-kit and the app load directly.
+They live in `.env`, which drizzle-kit and the app load directly. `.env.example` is the template.

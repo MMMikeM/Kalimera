@@ -4,26 +4,27 @@
 
 Drill high-frequency phrases as atomic units. Do not decompose into grammar. Prompt with English → produce full Greek phrase from memory.
 
-Target: 3 seconds for social phrases, 5 seconds for longer openers.
+Timing is the learner's 4 / 6 / 8 s choice plus 35% for each extra word in the answer
+(`src/routes/practice/components/drill-speeds.ts`), so longer phrases get more time automatically.
 
 ## Implemented set — 24 items in `chunks.tsx`
 
 Three categories, filterable in the drill: Social (11) · Survival (5) · Starters (8).
 
 ### Social (`category: "social"`)
-| English | Greek | label |
-|---------|-------|-------|
-| Hello / Hi | Γεια σου | greeting |
-| Hello (formal) | Γεια σας | greeting |
-| Good morning | Καλημέρα | greeting |
-| Good evening | Καλησπέρα | greeting |
-| Good night | Καληνύχτα | greeting |
-| Goodbye | Αντίο | parting |
-| See you later | Τα λέμε | parting |
-| Thank you | Ευχαριστώ | politeness |
-| Please / You're welcome | Παρακαλώ | politeness |
-| Excuse me / Sorry | Συγγνώμη | politeness |
-| How are you? | Τι κάνεις | social |
+| English | Greek |
+|---------|-------|
+| Hello / Hi | Γεια σου |
+| Hello (formal) | Γεια σας |
+| Good morning | Καλημέρα |
+| Good evening | Καλησπέρα |
+| Good night | Καληνύχτα |
+| Goodbye | Αντίο |
+| See you later | Τα λέμε |
+| Thank you | Ευχαριστώ |
+| Please / You're welcome | Παρακαλώ |
+| Excuse me / Sorry | Συγγνώμη |
+| How are you? | Τι κάνεις; |
 
 Informal and formal greeting are **separate items** (`hello` / `hello-formal`), not one item with
 two accepted answers.
@@ -33,21 +34,21 @@ two accepted answers.
 |---------|-------|
 | I don't understand | Δεν καταλαβαίνω |
 | I don't know | Δεν ξέρω |
-| Can you speak more slowly? | Μπορείτε να μιλάτε πιο αργά |
-| How do you say...? | Πώς λέγεται |
-| What does ... mean? | Τι σημαίνει |
+| Can you speak more slowly? | Μπορείτε να μιλάτε πιο αργά; |
+| How do you say...? | Πώς λέγεται; |
+| What does ... mean? | Τι σημαίνει; |
 
 ### Starters (`category: "starters"`) — frames, not full sentences
 | English prompt | Greek opener |
 |----------------|--------------|
-| My name is... | Με λένε |
-| I would like... | Θα ήθελα |
-| Where is...? | Πού είναι |
-| How much is...? | Πόσο κάνει |
-| Can I... | Μπορώ να |
-| I need to... | Πρέπει να |
-| I want to... | Θέλω να |
-| Do you have...? | Έχετε |
+| My name is... (opener) | Με λένε |
+| I would like... (opener) | Θα ήθελα |
+| Where is...? | Πού είναι; |
+| How much is...? | Πόσο κάνει; |
+| Can I... (opener) | Μπορώ να |
+| I need to... (opener) | Πρέπει να |
+| I want to... (opener) | Θέλω να |
+| Do you have...? | Έχετε; |
 
 ### Punctuation
 
@@ -77,8 +78,8 @@ are lowest priority, as the learner may already have them from tutor work.
 
 - Sentence starters are frames — drill just the opener chunk ("Θα ήθελα"), not a full sentence
 - Γεια is not seeded as an alternative to Αντίο; if a variant is wanted, use `acceptAlso`
-- `greeklish` is hand-written here, not derived. It is learner-facing, so it must spell what a
-  learner would say — Συγγνώμη is "signomi" [siɣnomi], Πώς λέγεται is "pos legetai". If a card is
-  unpassable, fix the matcher, never the content: the engine serves the Greek, not the reverse
-- If learner's tutor work has covered these already, this drill surfaces which are NOT yet automatic
+- There is no `greeklish` field: it is derived, never stored. The typed answer is graded by
+  `matchPhonetic` against `greek`, and feedback shows the Greek with its derived pronunciation
+  (`<GreekGloss>`). Συγγνώμη is said [siɣnomi], so "signomi" must pass; if a card is unpassable,
+  fix the matcher, never the content
 - If learner's tutor work has covered these already, this drill surfaces which are NOT yet automatic vs which can be deprioritised

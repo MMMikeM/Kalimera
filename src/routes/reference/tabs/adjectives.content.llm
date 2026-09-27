@@ -12,6 +12,16 @@ Adjectives agree with their noun in gender, case, and number. The adjective endi
 
 ---
 
+## Hero
+
+<hero component="ReferenceHero" file="tabs/adjectives.tsx">
+<title>The noun's grammar, copied.</title>
+</hero>
+
+Below the hero, `AdjectivesSection` opens with a SectionHeading "Adjectives" (subtitle "Words that describe nouns. They must agree in gender, case, and number.").
+
+---
+
 ## Core Rule: Adjectives Copy the Noun
 
 <insight name="agreement-rule" highlight="true">
@@ -33,6 +43,11 @@ Look at the article. The adjective uses the same gender, case, and number as the
 Greek adjectives usually come BEFORE the noun:
 - ο καλός φίλος (the good friend)
 - NOT: *ο φίλος καλός
+</rule>
+
+<rule name="own-noun" title="Adjective follows its own noun">
+When a genitive is nearby, the adjective still agrees with the noun it describes, not the nearest word:
+- το μεγάλο αυτοκίνητο του γιατρού (the doctor's big car): μεγάλο is neuter nominative, agreeing with αυτοκίνητο, not γιατρού
 </rule>
 
 ---
@@ -66,15 +81,16 @@ Greek adjectives usually come BEFORE the noun:
 
 <examples name="agreement-examples">
 <title>Article + Adjective + Noun</title>
+<note>Only the Nom and Acc examples render, labelled "Doer (Nominative)" and "Target (Accusative)"; each phrase is coloured by its gender. The Gen rows in ADJECTIVE_AGREEMENT_EXAMPLES are not shown.</note>
 
-### Nominative (subject)
+### Doer (Nominative)
 | Greek                     | English          | Gender    |
 |---------------------------|------------------|-----------|
 | ο καλός φίλος             | the good friend  | masculine |
 | η μεγάλη πόλη             | the big city     | feminine  |
 | το καινούριο αυτοκίνητο   | the new car      | neuter    |
 
-### Accusative (object)
+### Target (Accusative)
 | Greek                     | English                    | Gender    |
 |---------------------------|----------------------------|-----------|
 | τον καλό φίλο             | the good friend (object)   | masculine |
@@ -91,7 +107,7 @@ Greek adjectives usually come BEFORE the noun:
 <pattern>-ος, -η, -ο</pattern>
 <title>Standard adjectives</title>
 <example>καλός / καλή / καλό = good</example>
-<tip>Most adjectives follow this pattern. Masculine like -ος nouns, feminine like -η nouns, neuter like -ο nouns.</tip>
+<tip>Most adjectives follow this pattern. The masculine looks like -ος nouns, feminine like -η nouns, neuter like -ο nouns.</tip>
 
 ### Masculine
 | Case | Singular | Plural |
@@ -121,7 +137,7 @@ Greek adjectives usually come BEFORE the noun:
 ## High-Frequency Adjectives
 
 <vocabulary name="common-adjectives">
-<note>All follow the -ος/-η/-ο pattern</note>
+<note>Most follow -ος/-η/-ο; a vowel before -ος takes -α in the feminine (νέα, παλιά, ωραία, κρύα)</note>
 
 | Greek     | English       |
 |-----------|---------------|
@@ -193,18 +209,13 @@ Greek adjectives usually come BEFORE the noun:
 | η πόλη μεγάλη            | η μεγάλη πόλη           | Adjectives come before the noun            |
 | το καλός βιβλίο          | το καλό βιβλίο          | βιβλίο is neuter - use -ό ending           |
 
-<note>
-θέλω το κρύο νερό - This is correct!
-Neuter accusative = nominative, so το κρύο νερό stays the same.
-</note>
-
 </mistakes>
 
 ---
 
 ## Navigation
 
-<practice>Build fluency with timed retrieval drills: /practice</practice>
+<practice>PracticeCTA topic "adjectives" → /practice/cases/review/adjectives (logged-out readers go to /register; see `src/lib/practice-links.ts`)</practice>
 
 ---
 
@@ -220,7 +231,7 @@ Static content from: `@/constants/adjectives`
 - [x] greek-first: Greek forms prominent in all paradigms
 - [x] paradigm-tables: Gender x Case tables reveal patterns
 - [x] progressive-disclosure: Other patterns and mistakes collapsible
-- [x] function-first-labels: "Words that describe" title
+- [x] function-first-labels: agreement examples labelled Doer / Target first
 - [x] frequency-priority: "very common" / "common" / "less common" markers
 - [x] no-redundancy: Tables show forms clearly
 - [x] contextual-examples: Full article + adjective + noun examples
