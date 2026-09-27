@@ -1,4 +1,4 @@
-import { SearchX } from "lucide-react";
+import { Loader2, SearchX } from "lucide-react";
 import { cn } from "tailwind-variants";
 
 import { GreekText } from "@/components/GreekText";
@@ -20,13 +20,20 @@ const displayGreek = (result: VocabularySearchGraphRow): string => {
 	return result.greekText;
 };
 
+export const SearchLoading = () => (
+	<output className="flex justify-center py-6">
+		<Loader2 size={18} className="text-muted-foreground motion-safe:animate-spin" aria-hidden="true" />
+		<span className="sr-only">Searching</span>
+	</output>
+);
+
 export const SearchResults = ({ results, searchTerm, compact = false }: SearchResultsProps) => {
 	if (searchTerm && results.length === 0) {
 		return (
-			<div className="flex flex-col items-center py-8 text-stone-500">
-				<SearchX size={24} className="mb-2 text-stone-300" />
+			<div className="flex flex-col items-center py-8 text-muted-foreground">
+				<SearchX size={24} className="mb-2" aria-hidden="true" />
 				<p className="text-sm">No results for "{searchTerm}"</p>
-				<p className="mt-1 text-xs text-stone-400">Try a different spelling or search term</p>
+				<p className="mt-1 text-xs">Try a different spelling or search term</p>
 			</div>
 		);
 	}

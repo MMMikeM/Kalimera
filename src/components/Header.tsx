@@ -2,9 +2,9 @@ import { Link } from "@tanstack/react-router";
 import { BarChart3, ChevronDown, Info, LogOut, Search } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-import { SearchResults } from "@/components/SearchResults";
+import { SearchLoading, SearchResults } from "@/components/SearchResults";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { Button } from "@/components/ui/button";
+import { ButtonLink } from "@/components/ui/button";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -79,7 +79,7 @@ export const Header = ({ isAuthenticated, currentSection = "", onLogout }: Heade
 							<div className="absolute top-full right-0 left-0 z-50 mt-2 max-h-page overflow-hidden rounded-md border bg-popover p-0 text-popover-foreground shadow-md">
 								<div className="max-h-page overflow-y-auto p-3">
 									{isLoading ? (
-										<div className="py-4 text-center text-sm text-stone-400">Loading...</div>
+										<SearchLoading />
 									) : (
 										<SearchResults results={results} searchTerm={searchTerm} compact />
 									)}
@@ -142,7 +142,7 @@ export const Header = ({ isAuthenticated, currentSection = "", onLogout }: Heade
 										className="flex cursor-pointer items-center gap-2"
 									>
 										<LogOut size={16} strokeWidth={1.5} />
-										Sign Out
+										Sign out
 									</DropdownMenuItem>
 								</DropdownMenuContent>
 							</DropdownMenuPositioner>
@@ -153,13 +153,13 @@ export const Header = ({ isAuthenticated, currentSection = "", onLogout }: Heade
 								to="/login"
 								className="px-4 py-2 text-sm font-medium text-stone-600 transition-colors hover:text-stone-800"
 							>
-								Sign In
+								Sign in
 							</Link>
-							<Link to="/try">
-								<Button variant="primary" size="sm">
-									Try a Drill
-								</Button>
-							</Link>
+							{currentSection !== "try" && (
+								<ButtonLink to="/try" size="sm">
+									Try a drill
+								</ButtonLink>
+							)}
 						</>
 					)}
 				</nav>
