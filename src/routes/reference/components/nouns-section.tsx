@@ -1,65 +1,36 @@
-import { useState } from "react";
+import type React from "react";
 
+import { Card } from "@/components/Card";
 import { NextStepCard } from "@/components/cards/NextStepCard";
 import { TeachingCard } from "@/components/cards/TeachingCard";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
 import {
-	CASE_ROW_BY_KEY,
 	CASE_ROW_DEFS,
 	type ColumnDef,
+	type ColumnGroup,
 	GrammarTable,
-	type RowDef,
+	type RowGroup,
 } from "@/components/GrammarTable";
 import { GreekText } from "@/components/GreekText";
-import { SectionHeading } from "@/components/SectionHeading";
 import { AGREEMENT_PARADIGMS, type AgreementParadigm } from "@/constants/agreement";
-import { GENDER_SCHEME, SCHEME } from "@/constants/grammar-palette";
+import { GENDER_SCHEME } from "@/constants/grammar-palette";
 import { stripTonos } from "@/lib/greek-letters";
-import type { Gender, GrammaticalNumber } from "@/server/db/enums";
+import { declineNoun } from "@/lib/noun-declension";
+import {
+	type Gender,
+	type GrammaticalNumber,
+	genders,
+	type NounDeclensionPattern,
+	nounDeclensionPatterns,
+} from "@/server/db/enums";
 
 import type { NounsData } from "../$tab";
+import { BandHeading } from "./BandHeading";
+import { GenderChip } from "./case-table";
 
-/** Matches both `RowDef.key` and `AgreementPattern["case"]`, which is what lets
- * the table look cells up by key instead of by row position. */
-type CaseKey = "nom" | "acc" | "gen" | "voc";
-type RoleCase = Exclude<CaseKey, "voc">;
-type ViewMode = "endings" | "full";
+type RoleCase = "nom" | "acc" | "gen";
 
-const ROLE_CASES: RoleCase[] = ["nom", "acc", "gen"];
-
-/** Sits outside the Doer/Target/Owner system, so it hides behind the toggle. */
-const VOCATIVE_ROW: RowDef = { key: "voc", label: "Calling", sublabel: "Vocative" };
-
-/** Derived from AGREEMENT_PARADIGMS: hand-kept copies drifted from the generator. */
-const paradigmsByGender = (gender: Gender): AgreementParadigm[] =>
-	AGREEMENT_PARADIGMS.filter((p) => p.gender === gender);
-
-const GENDER_PATTERNS: Record<Gender, readonly string[]> = {
-	masculine: paradigmsByGender("masculine").map((p) => p.id),
-	feminine: paradigmsByGender("feminine").map((p) => p.id),
-	neuter: paradigmsByGender("neuter").map((p) => p.id),
-};
-
-/** Two paradigms can share a label (`-η` covers both regular and archaic), and a
- * repeated ending in the hint list reads as a bug. */
-const endingsFor = (gender: Gender): string =>
-	[...new Set(paradigmsByGender(gender).map((p) => p.pattern))].join(", ");
-
-/**
- * The four commonest patterns in the seeded corpus — fem-a 99, neut-o 91,
- * masc-os 71, neut-i 52 — which is also all three genders. fem-i is next at 32
- * and stays out for a second reason: its plural endings are stored accented, so
- * an Endings cell would read `-η → -ές` and teach αγάπη → *αγαπές.
- */
-const ESSENTIAL_IDS = ["masc-os", "fem-a", "neut-o", "neut-i"] as const;
-
-const GENDER_HINTS: Record<Gender, { endings: string; hint: string }> = {
-	masculine: { endings: endingsFor("masculine"), hint: "Male people, -ος words" },
-	feminine: { endings: endingsFor("feminine"), hint: "Female people, αγάπη / ζωή" },
-	neuter: { endings: endingsFor("neuter"), hint: "Diminutives, result nouns" },
-};
-
-const getParadigms = (ids: readonly string[]): AgreementParadigm[] =>
+const byId = (ids: readonly string[]): AgreementParadigm[] =>
 	ids
 		.map((id) => AGREEMENT_PARADIGMS.find((p) => p.id === id))
 		.filter((p): p is AgreementParadigm => p !== undefined);
@@ -67,16 +38,222 @@ const getParadigms = (ids: readonly string[]): AgreementParadigm[] =>
 const formFor = (paradigm: AgreementParadigm, number: GrammaticalNumber, caseKey: string) =>
 	(number === "singular" ? paradigm.forms : paradigm.pluralForms).find((f) => f.case === caseKey);
 
-const cellValue = (
-	paradigm: AgreementParadigm,
-	number: GrammaticalNumber,
-	caseKey: string,
-	mode: ViewMode,
-) => {
-	const form = formFor(paradigm, number, caseKey);
-	if (!form) return "—";
-	return mode === "endings" ? form.ending : form.full;
+/** `example` reads "φίλος (friend)"; tables want the word alone. */
+const lemmaOf = (paradigm: AgreementParadigm) => paradigm.example.split(" (")[0] ?? paradigm.example;
+
+const splitArticle = (full: string): [article: string, word: string] => {
+	const [article = "", ...word] = full.split(" ");
+	return [article, word.join(" ")];
 };
+
+const capitalise = (text: string) => `${text.charAt(0).toUpperCase()}${text.slice(1)}`;
+
+interface GenderMove {
+	gender: Gender;
+	rule: React.ReactNode;
+	/** The one case whose ending this gender changes in a way worth learning first. */
+	movesFor: Exclude<RoleCase, "nom">;
+	ids: readonly string[];
+}
+
+// `agreement.test.ts` holds every paradigm of each gender to its rule, so these
+// sentences stay true as patterns are added.
+const GENDER_MOVES: GenderMove[] = [
+	{
+		gender: "masculine",
+		rule: (
+			<>
+				Drops the <GreekText size="sm">-ς</GreekText> when it's the Target.
+			</>
+		),
+		movesFor: "acc",
+		ids: ["masc-os", "masc-as", "masc-is", "masc-es"],
+	},
+	{
+		gender: "feminine",
+		rule: (
+			<>
+				Adds a <GreekText size="sm">-ς</GreekText> when it's the Owner.
+			</>
+		),
+		movesFor: "gen",
+		ids: ["fem-a", "fem-i", "fem-si"],
+	},
+	{
+		gender: "neuter",
+		rule: "Doer and Target are the same word. Only the Owner changes.",
+		movesFor: "gen",
+		ids: ["neut-o", "neut-i", "neut-ma"],
+	},
+];
+
+/** Where two forms of one word part company. Stress-blind, because όνομα → ονόματος
+ * moves the tonos without changing the stem. */
+const divergeAt = (a: string, b: string): number => {
+	const [x, y] = [stripTonos(a), stripTonos(b)];
+	let i = 0;
+	while (i < x.length && x[i] === y[i]) i++;
+	return i;
+};
+
+const BoldFrom = ({ word, at }: { word: string; at: number }) => (
+	<>
+		{word.slice(0, at)}
+		<span className="font-bold">{word.slice(at)}</span>
+	</>
+);
+
+/** The weight goes on what changed: the letters the new form gains, or, when it
+ * only loses some (φίλος → φίλο), the letters the Doer gives up. */
+const MoveRow = ({ paradigm, movesFor }: { paradigm: AgreementParadigm; movesFor: RoleCase }) => {
+	const doer = formFor(paradigm, "singular", "nom");
+	const moved = formFor(paradigm, "singular", movesFor);
+	if (!doer || !moved) return null;
+
+	const [doerArticle, doerWord] = splitArticle(doer.full);
+	const [movedArticle, movedWord] = splitArticle(moved.full);
+	const at = divergeAt(doerWord, movedWord);
+	const gains = movedWord.length > at;
+
+	return (
+		<tr className="border-t border-stone-200/70">
+			<td className="py-1.5 pr-2">
+				<GreekText size="sm" tone="muted">
+					{paradigm.pattern}
+				</GreekText>
+			</td>
+			<td className="py-1.5 pr-2">
+				<GreekText size="sm" className="sm:text-base">
+					{doerArticle} {gains ? doerWord : <BoldFrom word={doerWord} at={at} />}
+				</GreekText>
+			</td>
+			<td className="py-1.5 pr-2 text-stone-400" aria-hidden="true">
+				→
+			</td>
+			<td className="py-1.5">
+				<GreekText size="sm" className="sm:text-base">
+					{movedArticle} {gains ? <BoldFrom word={movedWord} at={at} /> : movedWord}
+				</GreekText>
+			</td>
+		</tr>
+	);
+};
+
+const MOVE_TARGET_LABEL: Record<Exclude<RoleCase, "nom">, string> = {
+	acc: "Target",
+	gen: "Owner",
+};
+
+const GenderMoveCard = ({ move }: { move: GenderMove }) => (
+	<TeachingCard
+		scheme={GENDER_SCHEME[move.gender]}
+		title={capitalise(move.gender)}
+		description={move.rule}
+	>
+		<table className="w-full table-fixed text-left">
+			<thead>
+				<tr className="text-xs text-stone-500">
+					<th className="w-11 pb-1">
+						<span className="sr-only">Ending</span>
+					</th>
+					<th className="pb-1 font-normal">Doer</th>
+					<th className="w-6 pb-1">
+						<span className="sr-only">becomes</span>
+					</th>
+					<th className="pb-1 font-normal">{MOVE_TARGET_LABEL[move.movesFor]}</th>
+				</tr>
+			</thead>
+			<tbody>
+				{byId(move.ids).map((paradigm) => (
+					<MoveRow key={paradigm.id} paradigm={paradigm} movesFor={move.movesFor} />
+				))}
+			</tbody>
+		</table>
+	</TeachingCard>
+);
+
+const Bold = ({ children }: { children: string }) => (
+	<span className="font-bold">{children}</span>
+);
+
+// Greek here stays neutral with weight on the morpheme: the cards above carry gender
+// colour, and case colour beside them would put both axes in one view.
+const NOUN_NOTES: Array<{ key: string; body: React.ReactNode }> = [
+	{
+		key: "look-alikes",
+		body: (
+			<>
+				<strong className="text-stone-800">A few neuters dress as masculines.</strong>{" "}
+				<GreekText>το μέρος</GreekText> and <GreekText>το κρέας</GreekText> end like{" "}
+				<GreekText>φίλος</GreekText> and <GreekText>πατέρας</GreekText> but take{" "}
+				<GreekText>το</GreekText>. When the ending and the article disagree, trust the article.
+			</>
+		),
+	},
+	{
+		key: "plural-match",
+		body: (
+			<>
+				<strong className="text-stone-800">In the plural, Doer and Target match</strong>, except
+				for masculines in <GreekText>-ος</GreekText>:{" "}
+				<GreekText>
+					οι φίλ<Bold>οι</Bold>
+				</GreekText>{" "}
+				but{" "}
+				<GreekText>
+					τους φίλ<Bold>ους</Bold>
+				</GreekText>
+				.
+			</>
+		),
+	},
+	{
+		key: "plural-owner",
+		body: (
+			<>
+				<strong className="text-stone-800">
+					Every plural Owner ends in <GreekText>-ων</GreekText>
+				</strong>
+				, whatever the gender:{" "}
+				<GreekText>
+					των φίλ<Bold>ων</Bold>
+				</GreekText>
+				,{" "}
+				<GreekText>
+					των γυναικ<Bold>ών</Bold>
+				</GreekText>
+				,{" "}
+				<GreekText>
+					των παιδι<Bold>ών</Bold>
+				</GreekText>
+				.
+			</>
+		),
+	},
+	{
+		key: "calling",
+		body: (
+			<>
+				<strong className="text-stone-800">Calling someone</strong> uses the Target form without
+				its article: <GreekText>Γιάννη!</GreekText>, <GreekText>πατέρα!</GreekText> Nouns in{" "}
+				<GreekText>-ος</GreekText> usually switch to <GreekText>-ε</GreekText> instead:{" "}
+				<GreekText>
+					φίλ<Bold>ε</Bold>!
+				</GreekText>
+			</>
+		),
+	},
+];
+
+/**
+ * The four commonest patterns in the seeded corpus — fem-a 99, neut-o 91,
+ * masc-os 71, neut-i 52 — which is also all three genders. fem-i is next at 32
+ * and stays out for a second reason: its plural endings are stored accented, so
+ * an endings-only cell would read `-η → -ές` and teach αγάπη → *αγαπές.
+ */
+const CORE_IDS: readonly string[] = ["masc-os", "fem-a", "neut-o", "neut-i"];
+
+type Emphasis = "anchor" | "changed" | "same";
 
 /**
  * Three weights, not two. The nominative is the anchor the learner already knows
@@ -87,40 +264,119 @@ const cellValue = (
  * Receding the predictable cells is also what keeps this grid inside the
  * working-memory ceiling: the ceiling counts deviations, not cells.
  */
-const cellEmphasis = (
+const emphasisFor = (
 	paradigm: AgreementParadigm,
 	number: GrammaticalNumber,
 	caseKey: string,
-): { tone: "default" | "muted"; weight: "normal" | "medium" | "semibold" } => {
-	if (caseKey === "nom") return { tone: "default", weight: "medium" };
-	const nominative = formFor(paradigm, number, "nom");
-	const current = formFor(paradigm, number, caseKey);
-	return current?.ending === nominative?.ending
-		? { tone: "muted", weight: "normal" }
-		: { tone: "default", weight: "semibold" };
+): Emphasis => {
+	if (caseKey === "nom") return "anchor";
+	return formFor(paradigm, number, caseKey)?.ending === formFor(paradigm, number, "nom")?.ending
+		? "same"
+		: "changed";
 };
 
-/** The paradigm owns the noun phrase; only the frame around it is authored here. */
-interface SentenceFrame {
-	prefix?: string;
-	suffix?: string;
-	english: string;
-}
+/**
+ * Article, stem and ending, with the weight on the ending. A phone has no room for
+ * four columns of full forms, so below `sm` the cell falls back to the ending alone
+ * and the column header supplies the word.
+ */
+const NounForm = ({
+	paradigm,
+	number,
+	caseKey,
+}: {
+	paradigm: AgreementParadigm;
+	number: GrammaticalNumber;
+	caseKey: string;
+}) => {
+	const form = formFor(paradigm, number, caseKey);
+	if (!form) return <span className="text-stone-300">—</span>;
 
-/** Sentence frames around ο φίλος, the masc-os example the case guide uses. */
-const FRIEND_FRAMES: Record<RoleCase, SentenceFrame> = {
-	nom: { suffix: " μιλάει", english: "the friend speaks" },
-	acc: { prefix: "βλέπω ", english: "I see the friend" },
-	gen: { prefix: "το σπίτι ", english: "the friend's house" },
+	const [article, word] = splitArticle(form.full);
+	// Endings are stored without the stress their word may carry (μαθητής against -ης),
+	// so the split is by length, which a precomposed tonos leaves unchanged.
+	const stem = word.slice(0, word.length - form.ending.replace(/^-/, "").length);
+	const ending = word.slice(stem.length);
+	const emphasis = emphasisFor(paradigm, number, caseKey);
+
+	return (
+		<GreekText
+			size="sm"
+			tone={emphasis === "same" ? "muted" : "default"}
+			weight={emphasis === "anchor" ? "medium" : "normal"}
+		>
+			<span className="hidden text-muted-foreground sm:inline">{article} </span>
+			<span className="hidden sm:inline">{stem}</span>
+			<span className="sm:hidden">-</span>
+			<span className={emphasis === "changed" ? "font-semibold" : undefined}>{ending}</span>
+		</GreekText>
+	);
 };
 
-const sentenceFor = (paradigm: AgreementParadigm, caseKey: RoleCase, frame: SentenceFrame) =>
-	`${frame.prefix ?? ""}${formFor(paradigm, "singular", caseKey)?.full ?? ""}${frame.suffix ?? ""}`;
+/** One gender chip over each run of same-gender columns, so φίλος's column says
+ * masculine once and the two neuter patterns share a single neuter. */
+const genderGroups = (paradigms: AgreementParadigm[]): ColumnGroup[] => {
+	const runs: Array<{ gender: Gender; first: string; span: number }> = [];
+	for (const p of paradigms) {
+		const last = runs.at(-1);
+		if (last?.gender === p.gender) last.span += 1;
+		else runs.push({ gender: p.gender, first: p.id, span: 1 });
+	}
+	return runs.map((run) => ({
+		key: run.first,
+		label: (
+			<span className="block border-b-2 border-stone-200 pb-1.5">
+				<GenderChip gender={run.gender} />
+			</span>
+		),
+		span: run.span,
+	}));
+};
 
-const CASE_QUESTIONS: Record<RoleCase, string> = {
-	nom: "Who does it?",
-	acc: "Who/what receives?",
-	gen: "Whose is it?",
+/** Singular above plural in one table, so a column reads straight down from φίλος to
+ * φίλοι. Side by side puts them at different x and turns the derivation into a
+ * cross-table saccade. Do not "improve" into a grid. */
+const NounTable = ({
+	paradigms,
+	showGender = true,
+}: {
+	paradigms: AgreementParadigm[];
+	/** Off under a heading that already names the one gender every column shares. */
+	showGender?: boolean;
+}) => {
+	const columns: ColumnDef[] = paradigms.map((p) => ({
+		key: p.id,
+		label: (
+			<GreekText size="xs" weight="semibold" className="sm:text-sm">
+				{lemmaOf(p)}
+			</GreekText>
+		),
+	}));
+
+	// Keyed off `row.key`, never row position: CASE_ROW_DEFS is a shared export and
+	// reordering it used to silently mislabel every cell on this page.
+	const groups: RowGroup[] = (["singular", "plural"] as const).map((number) => ({
+		label: capitalise(number),
+		rows: CASE_ROW_DEFS,
+		cells: CASE_ROW_DEFS.map((row) =>
+			paradigms.map((p) => (
+				<NounForm key={p.id} paradigm={p} number={number} caseKey={row.key} />
+			)),
+		),
+	}));
+
+	return (
+		<div className="-mx-4 overflow-x-auto px-4">
+			{/* Even columns from sm up; phones size them to content so γυναίκα gets
+			    the room it needs. */}
+			<GrammarTable
+				className="sm:table-fixed"
+				columns={columns}
+				columnGroups={showGender ? genderGroups(paradigms) : undefined}
+				groups={groups}
+			/>
+		</div>
+	);
 };
 
 /** Three example words per pattern keeps new material inside the working-memory ceiling. */
@@ -136,295 +392,137 @@ const demonstratesPattern = (lemma: string, paradigm: AgreementParadigm): boolea
 	return ending ? stripTonos(lemma, bare).endsWith(stripTonos(ending, bare)) : true;
 };
 
-/** Real corpus nouns for a pattern, falling back to the paradigm's own example —
+const isDeclensionPattern = (id: string): id is NounDeclensionPattern =>
+	(nounDeclensionPatterns as readonly string[]).includes(id);
+
+/** It also has to decline the way its column does. μπαμπάς is filed under masc-as
+ * for its singular, but its plural is μπαμπάδες, not *μπαμπές: shown beside
+ * πατέρας it would teach the wrong plural. The seed hand-writes every such noun's
+ * forms, so a stored form the pattern does not generate marks one. The citation
+ * form is skipped, because the seed always stores the lemma there. */
+const followsPattern = (
+	example: { lemma: string; forms: Record<string, { form: string } | undefined> },
+	paradigm: AgreementParadigm,
+): boolean => {
+	if (!isDeclensionPattern(paradigm.id)) return false;
+	try {
+		return declineNoun(example.lemma, paradigm.id).every(
+			(generated) =>
+				(generated.case === "nominative" && generated.number === "singular") ||
+				example.forms[`${generated.case}_${generated.number}`]?.form === generated.noun,
+		);
+	} catch {
+		return false;
+	}
+};
+
+/** Real corpus nouns for a pattern, falling back to the paradigm's own word —
  * masc-es and fem-psi have a single noun each, and archaic patterns may have none. */
 const examplesFor = (data: NounsData | null, paradigm: AgreementParadigm): string[] => {
 	const examples = (data?.byPattern[paradigm.id]?.examples ?? [])
+		.filter((e) => demonstratesPattern(e.lemma, paradigm) && followsPattern(e, paradigm))
 		.map((e) => e.lemma)
-		.filter((lemma) => demonstratesPattern(lemma, paradigm))
 		.slice(0, EXAMPLES_SHOWN);
-	return examples.length > 0 ? examples : [paradigm.example];
+	return examples.length > 0 ? examples : [lemmaOf(paradigm)];
 };
 
-const countFor = (data: NounsData | null, paradigm: AgreementParadigm): number | null =>
-	data?.byPattern[paradigm.id]?.count ?? null;
-
-const CaseGuide = () => {
-	const friend = getParadigms(["masc-os"])[0];
-	if (!friend) return null;
-
-	return (
-		<TeachingCard
-			scheme="neutral"
-			eyebrow="Concept"
-			title="Which case should I use?"
-			description="The job the noun does in the sentence decides its case."
-			footer={
-				<p className="text-sm text-stone-500">
-					All prepositions (σε, με, για, από…) take accusative.
-				</p>
-			}
-		>
-			<div className="space-y-3">
-				{ROLE_CASES.map((caseKey) => {
-					const meta = CASE_ROW_BY_KEY[caseKey];
-					const style = SCHEME[meta.scheme];
-					const frame = FRIEND_FRAMES[caseKey];
-					return (
-						<div key={caseKey} className="flex items-start gap-3">
-							<span
-								className={`shrink-0 rounded px-2 py-1 text-xs font-semibold ${style.bg} ${style.text}`}
-							>
-								<span className="block leading-tight">{meta.label}</span>
-								<span className="block text-xs font-normal">{meta.sublabel}</span>
-							</span>
-							<div>
-								<span className="text-sm font-medium">{CASE_QUESTIONS[caseKey]}</span>
-								<div className="text-sm text-stone-500">
-									<GreekText tone="accent" size="sm">
-										{sentenceFor(friend, caseKey, frame)}
-									</GreekText>{" "}
-									({frame.english})
-								</div>
-							</div>
-						</div>
-					);
-				})}
-			</div>
-		</TeachingCard>
-	);
-};
-
-const GenderHints = () => (
-	<TeachingCard
-		scheme="neutral"
-		eyebrow="Spotting gender"
-		title="Recognise gender by ending"
-		description="The ending tells you the gender → the gender tells you how it declines."
-	>
-		<div className="grid grid-cols-3 gap-3 text-sm">
-			{(["masculine", "feminine", "neuter"] as const).map((gender) => (
-				<div key={gender} className="space-y-1">
-					<div className="flex items-center gap-1.5">
-						<span className={`h-2.5 w-2.5 rounded-full ${SCHEME[GENDER_SCHEME[gender]].badgeBg}`} />
-						<span className={`font-medium capitalize ${SCHEME[GENDER_SCHEME[gender]].text}`}>
-							{gender}
-						</span>
-					</div>
-					<div className="text-xs text-stone-600">{GENDER_HINTS[gender].endings}</div>
-					<div className="text-xs text-stone-500">{GENDER_HINTS[gender].hint}</div>
-				</div>
-			))}
-		</div>
-	</TeachingCard>
-);
-
-const ViewToggle = ({ mode, onChange }: { mode: ViewMode; onChange: (mode: ViewMode) => void }) => (
-	<div className="flex overflow-hidden rounded-lg border border-stone-200 text-xs">
-		{(["endings", "full"] as const).map((m) => (
-			<button
-				key={m}
-				type="button"
-				onClick={() => onChange(m)}
-				className={`px-3 py-1.5 transition-colors ${
-					mode === m ? "bg-stone-700 text-cream" : "bg-card text-stone-600 hover:bg-stone-50"
-				}`}
-			>
-				{m === "endings" ? "Endings" : "Full forms"}
-			</button>
-		))}
-	</div>
-);
-
-const NounEndingsTable = ({
-	paradigms,
-	number,
-	mode = "endings",
-	includeVocative = false,
-	columnLabels,
-}: {
-	paradigms: AgreementParadigm[];
-	number: GrammaticalNumber;
-	mode?: ViewMode;
-	includeVocative?: boolean;
-	columnLabels?: (paradigm: AgreementParadigm) => React.ReactNode;
-}) => {
-	const columns: ColumnDef[] = paradigms.map((p) => ({
-		key: p.id,
-		label: columnLabels ? columnLabels(p) : p.pattern,
-		scheme: GENDER_SCHEME[p.gender],
-	}));
-
-	const rows = includeVocative ? [...CASE_ROW_DEFS, VOCATIVE_ROW] : CASE_ROW_DEFS;
-
-	// Keyed off `row.key`, never row position: CASE_ROW_DEFS is a shared export and
-	// reordering it used to silently mislabel every cell on this page.
-	const cells = rows.map((row) =>
-		paradigms.map((p) => {
-			const { tone, weight } = cellEmphasis(p, number, row.key);
+const PatternWords = ({ gender, data }: { gender: Gender; data: NounsData | null }) => (
+	<ul className="divide-y divide-stone-200 border-y border-stone-200 text-sm">
+		{AGREEMENT_PARADIGMS.filter((p) => p.gender === gender).map((p) => {
+			const count = data?.byPattern[p.id]?.count ?? null;
 			return (
-				<GreekText key={p.id} size="sm" tone={tone} weight={weight}>
-					{cellValue(p, number, row.key, mode)}
-				</GreekText>
+				<li key={p.id} className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5 py-2">
+					<GreekText size="sm" weight="semibold" className="w-20 shrink-0">
+						{p.pattern}
+					</GreekText>
+					<GreekText size="sm">{examplesFor(data, p).join(", ")}</GreekText>
+					{count !== null && (
+						<span className="text-xs text-stone-500">
+							{count} {count === 1 ? "noun" : "nouns"} in the course
+						</span>
+					)}
+					{p.tip && <span className="basis-full text-xs text-stone-500 italic">{p.tip}</span>}
+				</li>
 			);
-		}),
-	);
-
-	return (
-		<div className="-mx-4 overflow-x-auto px-4">
-			{/* table-fixed so the singular and plural grids share column widths and a
-			    column reads straight down across both. */}
-			<GrammarTable className="table-fixed" columns={columns} rows={rows} cells={cells} />
-		</div>
-	);
-};
-
-const NumberBlock = ({
-	label,
-	...tableProps
-}: { label: string } & Parameters<typeof NounEndingsTable>[0]) => (
-	<div className="space-y-1.5">
-		<p className="text-xs font-semibold tracking-wide text-stone-500 uppercase">{label}</p>
-		<NounEndingsTable {...tableProps} />
-	</div>
+		})}
+	</ul>
 );
 
-const EssentialPatterns = ({ data }: { data: NounsData | null }) => {
-	const [mode, setMode] = useState<ViewMode>("endings");
-	const paradigms = getParadigms(ESSENTIAL_IDS);
-
-	// Ground each ending in a word the learner will actually meet.
-	const columnLabels = (p: AgreementParadigm) => (
-		<span className="block leading-tight">
-			<span className="block">{p.pattern}</span>
-			<GreekText size="xs" tone="muted" weight="normal">
-				{examplesFor(data, p)[0] ?? p.example}
-			</GreekText>
-		</span>
-	);
-
-	return (
-		<TeachingCard
-			scheme="neutral"
-			eyebrow="The core"
-			title="Essential patterns"
-			badge={<ViewToggle mode={mode} onChange={setMode} />}
-			description="The patterns you'll encounter most. Learn these first."
-			footer={
-				<div className="space-y-1">
-					<p className="text-sm font-medium text-stone-700">
-						Feminine &amp; neuter: Doer = Target. Only Owner changes.
-					</p>
-					<p className="text-sm text-stone-600">
-						Masculine is the only family where Target differs from Doer — in singular and plural
-						alike.
-					</p>
-				</div>
-			}
-		>
-			{/* Stacked, not side by side: singular → plural has to read straight down a
-			    fixed column. Side by side puts φίλος and φίλοι at different x and turns
-			    the derivation into a cross-table saccade. Do not "improve" into a grid. */}
-			<div className="space-y-5">
-				<NumberBlock
-					label="Singular"
-					paradigms={paradigms}
-					number="singular"
-					mode={mode}
-					includeVocative={mode === "full"}
-					columnLabels={columnLabels}
-				/>
-				{/* No vocative row: the plural vocative is identical to the plural
-				    nominative in every paradigm, so the row would only repeat itself. */}
-				<NumberBlock
-					label="Plural"
-					paradigms={paradigms}
-					number="plural"
-					mode={mode}
-					columnLabels={columnLabels}
-				/>
-			</div>
-		</TeachingCard>
-	);
-};
-
-const GenderVariants = ({ gender, data }: { gender: Gender; data: NounsData | null }) => {
-	const paradigms = getParadigms(GENDER_PATTERNS[gender]);
-	if (paradigms.length === 0) return null;
-
-	const title = `${gender.charAt(0).toUpperCase()}${gender.slice(1)} variants`;
-
-	return (
-		<TeachingCard
-			scheme={GENDER_SCHEME[gender]}
-			eyebrow="Variants"
-			title={title}
-			badge={GENDER_HINTS[gender].endings}
-			footer={
-				<div className="space-y-1.5 text-xs text-stone-600">
-					{paradigms.map((p) => {
-						const count = countFor(data, p);
-						return (
-							<div key={p.id} className="flex flex-wrap items-baseline gap-x-2">
-								<GreekText size="sm" tone={gender}>
-									{p.pattern}
-								</GreekText>
-								<GreekText size="xs" tone="muted">
-									{examplesFor(data, p).join(", ")}
-								</GreekText>
-								{count !== null && (
-									<span className="text-stone-400">
-										{count} {count === 1 ? "noun" : "nouns"} in this course
-									</span>
-								)}
-								{p.tip && <span className="basis-full text-stone-500 italic">{p.tip}</span>}
-							</div>
-						);
-					})}
-				</div>
-			}
-		>
-			<div className="space-y-5">
-				<NumberBlock label="Singular" paradigms={paradigms} number="singular" mode="endings" />
-				<NumberBlock label="Plural" paradigms={paradigms} number="plural" mode="endings" />
-			</div>
-		</TeachingCard>
-	);
-};
-
-const Handoff = () => (
-	<div className="grid gap-3 md:grid-cols-2">
-		<NextStepCard
-			to="/reference/pronouns"
-			title="Pronouns"
-			description="The same cases in the words you'll say most"
-			emphasis
-		/>
-		<NextStepCard
-			to="/reference/articles"
-			title="Articles"
-			description="The definite article paradigm across cases"
-		/>
-	</div>
-);
-
-const MorePatterns = ({ data }: { data: NounsData | null }) => (
-	<CollapsibleSection title="More patterns" colorScheme="stone" defaultOpen={false}>
-		<div className="space-y-4 p-4">
-			<GenderVariants gender="masculine" data={data} />
-			<GenderVariants gender="feminine" data={data} />
-			<GenderVariants gender="neuter" data={data} />
+const OtherPatterns = ({ data }: { data: NounsData | null }) => (
+	<CollapsibleSection
+		title="Every pattern in the course"
+		subtitle="with words that follow each"
+		colorScheme="stone"
+	>
+		<div className="space-y-12 p-4">
+			{genders.map((gender) => {
+				const rest = AGREEMENT_PARADIGMS.filter(
+					(p) => p.gender === gender && !CORE_IDS.includes(p.id),
+				);
+				return (
+					<div key={gender} className="space-y-5">
+						<BandHeading as="h3" size="md" tone="quiet" title={capitalise(gender)} />
+						{rest.length > 0 ? <NounTable paradigms={rest} showGender={false} /> : null}
+						<PatternWords gender={gender} data={data} />
+					</div>
+				);
+			})}
 		</div>
 	</CollapsibleSection>
 );
 
 export const NounsSection = ({ data = null }: { data?: NounsData | null }) => (
-	<section id="nouns" className="space-y-6">
-		<SectionHeading title="How Noun Endings Change" subtitle="Patterns by gender and case" />
-		<CaseGuide />
-		<GenderHints />
-		<EssentialPatterns data={data} />
-		<MorePatterns data={data} />
-		<Handoff />
+	<section id="nouns" className="space-y-16">
+		<div className="space-y-8">
+			<h2 className="sr-only">What each gender changes</h2>
+			<div className="grid gap-4 lg:grid-cols-3 lg:items-stretch">
+				{GENDER_MOVES.map((move) => (
+					<GenderMoveCard key={move.gender} move={move} />
+				))}
+			</div>
+			<ul className="divide-y divide-stone-200 border-y border-stone-200">
+				{NOUN_NOTES.map((note) => (
+					<li key={note.key} className="py-4 leading-relaxed text-stone-700">
+						{note.body}
+					</li>
+				))}
+			</ul>
+		</div>
+
+		<div className="space-y-8">
+			<BandHeading
+				title="Look it up"
+				lede="The four patterns behind most nouns you'll meet. Bold endings are the ones that differ from the Doer; the faint ones are the Doer again."
+			/>
+			<Card variant="bordered" padding="lg" className="px-4 sm:px-6">
+				<NounTable paradigms={byId(CORE_IDS)} />
+			</Card>
+			<OtherPatterns data={data} />
+		</div>
+
+		<div className="space-y-6 border-t border-stone-200 pt-12">
+			<BandHeading
+				title="Nouns sorted. Now describe them."
+				lede="Adjectives copy every ending on this page, so there is less new to learn than it looks."
+			/>
+			<div className="grid gap-3 md:grid-cols-3">
+				<NextStepCard
+					to="/reference/adjectives"
+					title="Adjectives"
+					description="The same endings, copied onto the describing word"
+					emphasis
+				/>
+				<NextStepCard
+					to="/reference/articles"
+					title="Articles"
+					description="The article that travels with each form"
+				/>
+				<NextStepCard
+					to="/learn/nouns"
+					title="Browse nouns"
+					description="Every noun in the course, by subject"
+				/>
+			</div>
+		</div>
 	</section>
 );

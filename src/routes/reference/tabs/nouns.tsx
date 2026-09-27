@@ -1,29 +1,24 @@
-import { CASE_ROW_BY_KEY } from "@/components/GrammarTable";
+import { GreekText } from "@/components/GreekText";
 import { PracticeCTA } from "@/components/PracticeCta";
 import { ReferenceHero } from "@/components/ReferenceHero";
-import { AGREEMENT_PARADIGMS } from "@/constants/agreement";
 
 import type { NounsData } from "../$tab";
 import { NounsSection } from "../components/nouns-section";
 
-/** One noun across the three roles, so the colour key is visible above the fold. */
-const HERO_DEMO = (() => {
-	const friend = AGREEMENT_PARADIGMS.find((p) => p.id === "masc-os");
-	const full = (caseKey: string) => friend?.forms.find((f) => f.case === caseKey)?.full ?? "";
-	return Object.values(CASE_ROW_BY_KEY).map((row) => ({
-		greek: full(row.key),
-		label: row.label,
-		scheme: row.scheme,
-	}));
-})();
-
 export function NounsTab({ data = null }: { data?: NounsData | null }) {
 	return (
-		<div className="space-y-12">
+		<div className="space-y-10">
 			<ReferenceHero
-				title="Endings by gender."
-				thesis="Noun endings fall into three gender families. Learn the family, and you know how the word behaves."
-				demo={HERO_DEMO}
+				title={
+					<>
+						Masculine drops a{" "}
+						<GreekText tone="inherit" size="4xl" className="leading-tight sm:text-5xl">
+							ς
+						</GreekText>
+						. Feminine gains one.
+					</>
+				}
+				thesis="A noun's ending tells you its gender, and its gender tells you where the ending changes. Learn those two steps and most of a noun table is the word you already know."
 			/>
 			<NounsSection data={data} />
 			<PracticeCTA

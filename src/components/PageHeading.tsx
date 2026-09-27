@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { cn } from "tailwind-variants";
 
 interface PageHeadingProps {
-	title: string;
+	title: ReactNode;
 	children?: ReactNode;
 	className?: string;
 }
