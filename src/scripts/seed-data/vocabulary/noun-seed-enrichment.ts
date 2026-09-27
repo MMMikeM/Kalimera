@@ -78,6 +78,19 @@ const IRREGULAR_FORMS: Record<string, Partial<Record<CaseNumberKey, NominalFormC
 	// the stem stress instead.
 	ομάδα: { genitive_plural: { form: "ομάδων", article: "των" } },
 	εικόνα: { genitive_plural: { form: "εικόνων", article: "των" } },
+	// Imparisyllable masculines: a stressed -άς and the -τζής trade suffix add a
+	// syllable in the plural. Their singular is regular, so the pattern stays
+	// masc-as / masc-is and only the plural is written out.
+	μπαμπάς: {
+		nominative_plural: { form: "μπαμπάδες", article: "οι" },
+		accusative_plural: { form: "μπαμπάδες", article: "τους" },
+		genitive_plural: { form: "μπαμπάδων", article: "των" },
+	},
+	ταξιτζής: {
+		nominative_plural: { form: "ταξιτζήδες", article: "οι" },
+		accusative_plural: { form: "ταξιτζήδες", article: "τους" },
+		genitive_plural: { form: "ταξιτζήδων", article: "των" },
+	},
 	// Imparisyllable -ούς: adds a syllable in the plural.
 	παππούς: {
 		accusative_singular: { form: "παππού", article: "τον" },

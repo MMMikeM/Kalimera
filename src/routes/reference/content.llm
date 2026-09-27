@@ -126,11 +126,12 @@ Cases explain the SYSTEM, the other tabs show it in ACTION. See tabs/cases.conte
 - NounsSection (components/nouns-section.tsx)
 </components>
 <displays>
-- Hero: "Endings by gender." with a demo of ο φίλος across Doer / Target / Owner
-- "Which case should I use?" case guide, gender hints by ending
-- Essential patterns (masc-os, fem-a, neut-o, neut-i) with an Endings / Full forms toggle; vocative only under Full forms
-- "More patterns" (collapsible): variants per gender with corpus counts
-- NextStepCards to Pronouns (emphasis), Articles
+- Hero: "Masculine drops a ς. Feminine gains one."
+- Three gender TeachingCards: each gender's endings and its one move (masculine loses -ς for the Target, feminine adds -ς for the Owner, neuter keeps its Target), rows derived from AGREEMENT_PARADIGMS
+- Ruled notes: neuter look-alikes, plural Doer = Target except -ος, plural Owner in -ων, calling someone (vocative)
+- "Look it up": masc-os, fem-a, neut-o, neut-i in one table, singular and plural as row groups, full forms with weighted endings (endings alone below sm)
+- "Every pattern in the course" (collapsible): remaining patterns per gender, with corpus words and counts
+- NextStepCards to Adjectives (emphasis), Articles, /learn/nouns
 - PracticeCTA topic "nouns" → /practice/cases/review/nouns
 </displays>
 </tab>
@@ -138,23 +139,18 @@ Cases explain the SYSTEM, the other tabs show it in ACTION. See tabs/cases.conte
 ## Tab: pronouns
 
 <tab route="/reference/pronouns">
-<purpose>Pronouns as cases in action: the words you'll use most</purpose>
+<purpose>Pronouns as cases in action: which word for which job, and where it goes</purpose>
 <file>src/routes/reference/tabs/pronouns.tsx</file>
 <components>
 - PronounsSection (components/pronouns-section.tsx)
-- PronounParadigmTable (components/pronoun-paradigm-table.tsx)
-- PronounDecisionGuide (components/pronoun-decision-guide.tsx)
-- HomographCallout, ExamplePills
+- HomographCallout
 </components>
 <displays>
-- Hero: "The words that carry half your sentences."
-- "One English "me", three Greek forms." (με / μου / εμένα)
-- "All the forms": LookupCards led by the learner handle (chip Target / Owner / Doer, eyebrow = grammar term); "Article or pronoun?" callout; weak vs strong table
-- "Ready-made phrases" (open)
-- "Which form do I need?" decision guide
-- "Someone, nothing, everyone" indefinites (open)
-- "Two-pronoun word order (advanced)" (the only collapsible)
-- "Weak pronouns hug the verb." clitic placement
+- Hero: "Every “me” has its own word."
+- Three case TeachingCards: με (Target · short), μου (Owner, "my" and "to me"), εμένα (Target · long); ruled notes: which one, μας/σας double duty, the dropped Doer, formal σας
+- "Short pronouns hug the verb." (#clitic-placement): an aligned slot table where commands move the pronoun past the verb; two-pronoun order and possessive placement as notes
+- "Look it up": one table of Doer / Target · short / Owner / Target · long by person, singular and plural as row groups; "Article or pronoun?" callout; indefinites grid; phrases to learn whole
+- NextStepCards to Patterns (emphasis), Prepositions, Cases
 - PracticeCTA topic "pronouns" → /practice/pronouns
 </displays>
 </tab>
@@ -248,7 +244,7 @@ Serif band heading with optional lede; sizes lg / md, tones default / quiet
 </component>
 
 <component file="components/case-table.tsx">
-CaseTableGrid (case rows x gender columns, singular and plural) and the shared ArticleParadigm
+CaseTableGrid (case rows x gender columns, singular and plural), the shared ArticleParadigm, and the HeaderChip / GenderChip column pills
 </component>
 
 <component file="components/cases-section.tsx">
@@ -264,19 +260,11 @@ Article usage LookupCards, ArticleParadigm, -ν rule, homograph callout, next st
 </component>
 
 <component file="components/nouns-section.tsx">
-Case guide, gender hints, essential patterns with Endings / Full forms toggle, variants per gender
+Gender cards and notes, the core-pattern lookup, every other pattern per gender, next steps
 </component>
 
 <component file="components/pronouns-section.tsx">
-Pronoun bands: the split, paradigm LookupCards, weak vs strong, phrases, decision guide, indefinites, clitic placement
-</component>
-
-<component file="components/pronoun-paradigm-table.tsx">
-Person x singular/plural table for one pronoun paradigm
-</component>
-
-<component file="components/pronoun-decision-guide.tsx">
-NavigatorCard: "Which "me/you" do I use?"
+Pronoun bands: the three words for "me", placement slots, the combined form table, indefinites, phrases, next steps
 </component>
 
 <component file="components/example-pills.tsx">

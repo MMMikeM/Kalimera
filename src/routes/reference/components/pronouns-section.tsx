@@ -1,79 +1,419 @@
 import type React from "react";
+import { Fragment } from "react";
+import { cn } from "tailwind-variants";
 
 import { Card } from "@/components/Card";
-import { LookupCard } from "@/components/cards/LookupCard";
-import { CollapsibleSection } from "@/components/CollapsibleSection";
+import { NextStepCard } from "@/components/cards/NextStepCard";
+import { TeachingCard } from "@/components/cards/TeachingCard";
+import { type ColumnDef, GrammarTable, type RowDef } from "@/components/GrammarTable";
 import { GreekText } from "@/components/GreekText";
-import { CASE_KEY, CASE_SCHEME, SCHEME, caseScheme } from "@/constants/grammar-palette";
+import { MarkedGreek } from "@/components/MarkedGreek";
+import { CASE_KEY, CASE_SCHEME, SCHEME } from "@/constants/grammar-palette";
 import {
 	EMPHATIC_PRONOUNS,
-	EMPHATIC_PRONOUN_EXAMPLES,
 	OBJECT_PRONOUNS,
-	OBJECT_PRONOUN_EXAMPLES,
 	POSSESSIVE_PRONOUNS,
-	POSSESSIVE_PRONOUN_EXAMPLES,
-	PRONOUN_PATTERNS,
+	PRONOUN_JOBS,
 	PRONOUN_PHRASES,
 	type PronounParadigm,
 	SUBJECT_PRONOUNS,
 } from "@/constants/pronouns";
-import type { CaseName } from "@/constants/recognition";
 import { typedEntries } from "@/lib/object";
+import type { GrammaticalNumber, NominalCase } from "@/server/db/enums";
 
 import { BandHeading } from "./BandHeading";
-import { ExamplePills } from "./example-pills";
+import { HeaderChip } from "./case-table";
 import { HomographCallout } from "./homograph-callout";
-import { PronounDecisionGuide } from "./pronoun-decision-guide";
-import { PronounParadigmTable } from "./pronoun-paradigm-table";
 
-const ParadigmLookup = ({
-	caseName,
-	handle,
-	rule,
-	paradigm,
-	examples,
-	note,
-}: {
-	caseName: CaseName;
-	handle: string;
-	rule: string;
-	paradigm: PronounParadigm[];
-	examples?: Array<{ greek: string; english: string; marked: string }>;
-	note?: string;
-}) => {
-	const scheme = CASE_SCHEME[caseName];
-	const style = SCHEME[scheme];
-	return (
-		<LookupCard scheme={scheme} chip={handle} eyebrow={caseName}>
-			<div className="space-y-4 px-5 pt-4 pb-4">
-				<p className="text-sm leading-relaxed text-stone-600">{rule}</p>
-				<PronounParadigmTable data={paradigm} caseName={caseName} note={note} />
-				{examples ? (
-					<div className={`border-t ${style.border} pt-4`}>
-						<div className="mb-2 text-sm font-medium text-stone-600">Examples:</div>
-						<ExamplePills
-							examples={examples}
-							tone={CASE_KEY[caseName]}
-							borderClassName={style.border}
-						/>
-					</div>
+const NOTE_LEAD = "text-stone-800";
+
+const PRONOUN_NOTES: Array<{ key: string; body: React.ReactNode }> = [
+	{
+		key: "which",
+		body: (
+			<>
+				<strong className={NOTE_LEAD}>Not sure which?</strong> A preposition in front means{" "}
+				<GreekText tone="accusative">εμένα</GreekText>. If English could say “to” (tell{" "}
+				<em>to</em> me), it's <GreekText tone="genitive">μου</GreekText>. Otherwise,{" "}
+				<GreekText tone="accusative">με</GreekText>.
+			</>
+		),
+	},
+	{
+		key: "double-duty",
+		body: (
+			<>
+				<strong className={NOTE_LEAD}>
+					<GreekText>μας</GreekText> and <GreekText>σας</GreekText> do double duty.
+				</strong>{" "}
+				One word covers Target and Owner:{" "}
+				<MarkedGreek greek="μας βλέπει" marked="μας" tone="accusative" /> (he sees us),{" "}
+				<MarkedGreek greek="το σπίτι μας" marked="μας" tone="genitive" /> (our house).
+			</>
+		),
+	},
+	{
+		key: "doer",
+		body: (
+			<>
+				<strong className={NOTE_LEAD}>The Doer usually drops out.</strong> The verb ending
+				already says who: <GreekText>θέλω</GreekText> is “I want”.{" "}
+				<GreekText tone="nominative">εγώ</GreekText> and{" "}
+				<GreekText tone="nominative">εσύ</GreekText> come back for contrast:{" "}
+				<MarkedGreek greek="εγώ θέλω τσάι, εσύ;" marked={["εγώ", "εσύ"]} tone="nominative" /> (I
+				want tea; and you?)
+			</>
+		),
+	},
+	{
+		key: "formal",
+		body: (
+			<>
+				<strong className={NOTE_LEAD}>Formal “you” is plural.</strong> With strangers and
+				elders, use <GreekText>σας</GreekText>:{" "}
+				<MarkedGreek greek="σας ευχαριστώ" marked="σας" tone="accusative" /> (thank you),{" "}
+				<MarkedGreek greek="η γνώμη σας" marked="σας" tone="genitive" /> (your opinion).
+			</>
+		),
+	},
+];
+
+interface Clitic {
+	greek: string;
+	caseKey: NominalCase;
+}
+
+const ME: Clitic = { greek: "με", caseKey: "accusative" };
+const TO_ME: Clitic = { greek: "μου", caseKey: "genitive" };
+const IT: Clitic = { greek: "το", caseKey: "accusative" };
+
+interface Placement {
+	lead?: string;
+	before?: Clitic[];
+	verb: string;
+	after?: Clitic[];
+	english: string;
+}
+
+// Laid out as slots so the rule is visible in the alignment: the pronoun column
+// never moves, whatever stands in front of it, until a command pushes it past
+// the verb into a column of its own.
+const STATEMENTS: Placement[] = [
+	{ before: [ME], verb: "βλέπει", english: "he sees me" },
+	{ lead: "θα", before: [ME], verb: "δει", english: "he will see me" },
+	{ lead: "δεν", before: [ME], verb: "βλέπει", english: "he doesn't see me" },
+	{ lead: "θέλω να", before: [ME], verb: "δεις", english: "I want you to see me" },
+	{ before: [TO_ME, IT], verb: "δίνει", english: "he gives it to me" },
+];
+
+const COMMANDS: Placement[] = [
+	{ verb: "δες", after: [ME], english: "look at me" },
+	{ verb: "δώσε", after: [TO_ME, IT], english: "give it to me" },
+];
+
+const Clitics = ({ clitics }: { clitics?: Clitic[] }) =>
+	clitics ? (
+		<GreekText size="lg">
+			{clitics.map((clitic, i) => (
+				<Fragment key={clitic.greek}>
+					{i > 0 ? " " : null}
+					<GreekText tone={clitic.caseKey} size="lg">
+						{clitic.greek}
+					</GreekText>
+				</Fragment>
+			))}
+		</GreekText>
+	) : null;
+
+const GREEK_CELL = "pt-2.5 pb-1 sm:pb-2.5";
+
+/** A phone has no room for a fifth column, so there the English drops to a line of
+ * its own under the pronoun and verb. */
+const PlacementRow = ({ row }: { row: Placement }) => (
+	<>
+		<tr className="border-t border-stone-200">
+			<td className={cn(GREEK_CELL, "pr-2 text-right whitespace-nowrap")}>
+				{row.lead ? (
+					<GreekText size="lg" tone="muted">
+						{row.lead}
+					</GreekText>
 				) : null}
-			</div>
-		</LookupCard>
+			</td>
+			<td className={cn(GREEK_CELL, "pr-3 whitespace-nowrap")}>
+				<Clitics clitics={row.before} />
+			</td>
+			<td className={cn(GREEK_CELL, "pr-3")}>
+				<GreekText size="lg">{row.verb}</GreekText>
+			</td>
+			<td className={cn(GREEK_CELL, "pr-3 whitespace-nowrap")}>
+				<Clitics clitics={row.after} />
+			</td>
+			<td className="hidden py-2.5 text-sm text-stone-500 italic sm:table-cell">{row.english}</td>
+		</tr>
+		<tr className="sm:hidden">
+			<td aria-hidden="true" />
+			<td colSpan={3} className="pb-2.5 text-xs text-stone-500 italic">
+				{row.english}
+			</td>
+		</tr>
+	</>
+);
+
+const PlacementTable = () => (
+	<Card variant="bordered" padding="lg" className="overflow-x-auto px-4 sm:px-6">
+		<table className="w-full text-left">
+			<thead>
+				<tr className="text-xs text-stone-500">
+					<th className="pr-2 pb-2">
+						<span className="sr-only">Before</span>
+					</th>
+					<th className="pr-3 pb-2 font-normal">Pronoun</th>
+					<th className="pr-3 pb-2 font-normal">Verb</th>
+					<th className="pr-3 pb-2">
+						<span className="sr-only">Pronoun after the verb</span>
+					</th>
+					<th className="hidden pb-2 sm:table-cell">
+						<span className="sr-only">English</span>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				{STATEMENTS.map((row) => (
+					<PlacementRow key={row.english} row={row} />
+				))}
+				<tr>
+					<th
+						colSpan={5}
+						scope="rowgroup"
+						className="pt-6 pb-2 text-left text-xs font-semibold tracking-widest text-stone-500 uppercase"
+					>
+						Commands put it after
+					</th>
+				</tr>
+				{COMMANDS.map((row) => (
+					<PlacementRow key={row.english} row={row} />
+				))}
+			</tbody>
+		</table>
+	</Card>
+);
+
+const PLACEMENT_NOTES: Array<{ key: string; body: React.ReactNode }> = [
+	{
+		key: "two",
+		body: (
+			<>
+				<strong className={NOTE_LEAD}>With two, the person comes first:</strong>{" "}
+				<GreekText>
+					<GreekText tone="genitive">μου</GreekText> <GreekText tone="accusative">το</GreekText>
+				</GreekText>
+				, never the other way round.
+			</>
+		),
+	},
+	{
+		key: "my",
+		body: (
+			<>
+				<strong className={NOTE_LEAD}>“My” goes after the noun</strong>, and the article stays:{" "}
+				<MarkedGreek greek="το σπίτι μου" marked="μου" tone="genitive" />,{" "}
+				<MarkedGreek greek="η μητέρα σου" marked="σου" tone="genitive" />.
+			</>
+		),
+	},
+];
+
+type ColumnWeight = "receded" | "scanned" | "plain";
+
+interface PronounColumn {
+	key: string;
+	paradigm: PronounParadigm[];
+	caseKey: NominalCase;
+	handle: string;
+	/** Tells apart the two Target columns, which share a case. */
+	form?: "short" | "long";
+	note: string;
+	/** The two short-form columns are the ones scanned daily; the Doer is usually dropped. */
+	weight: ColumnWeight;
+}
+
+const PRONOUN_COLUMNS: PronounColumn[] = [
+	{
+		key: "doer",
+		paradigm: SUBJECT_PRONOUNS,
+		caseKey: "nominative",
+		handle: "Doer",
+		note: "usually dropped",
+		weight: "receded",
+	},
+	{
+		key: "target",
+		paradigm: OBJECT_PRONOUNS,
+		caseKey: "accusative",
+		handle: "Target",
+		form: "short",
+		note: "before the verb",
+		weight: "scanned",
+	},
+	{
+		key: "owner",
+		paradigm: POSSESSIVE_PRONOUNS,
+		caseKey: "genitive",
+		handle: "Owner",
+		note: "my, to me",
+		weight: "scanned",
+	},
+	{
+		key: "strong",
+		paradigm: EMPHATIC_PRONOUNS,
+		caseKey: "accusative",
+		handle: "Target",
+		form: "long",
+		note: "after a preposition",
+		weight: "plain",
+	},
+];
+
+// Four pills do not fit across a phone, so there the handle is plain text in its
+// case colour, and the short/long qualifier moves to the line beneath.
+const columnDefs: ColumnDef[] = PRONOUN_COLUMNS.map((column) => {
+	const scheme = `case-${column.caseKey}` as const;
+	return {
+		key: column.key,
+		label: (
+			<span className="flex flex-col items-start gap-1">
+				<span className={cn("text-xs font-semibold sm:hidden", SCHEME[scheme].text)}>
+					{column.handle}
+				</span>
+				<HeaderChip scheme={scheme} className="hidden sm:inline-block">
+					{column.handle}
+					{column.form ? ` · ${column.form}` : null}
+				</HeaderChip>
+				<span className="text-xs font-normal text-stone-500">
+					<span className="sm:hidden">{column.form}</span>
+					<span className="hidden sm:inline">{column.note}</span>
+				</span>
+			</span>
+		),
+	};
+});
+
+const THIRD_PERSON_GENDER: Record<string, string> = {
+	"3rd m": "masculine",
+	"3rd f": "feminine",
+	"3rd n": "neuter",
+};
+
+/** Rows are named by the English Doer. Plural "they" is one English word for three
+ * Greek rows, so those carry their gender beneath. */
+const personRows = (number: GrammaticalNumber): RowDef[] =>
+	SUBJECT_PRONOUNS.map((row) => ({
+		key: row.person,
+		label: row[number].english,
+		sublabel: number === "plural" ? THIRD_PERSON_GENDER[row.person] : undefined,
+	}));
+
+const PronounCell = ({
+	column,
+	index,
+	number,
+}: {
+	column: PronounColumn;
+	index: number;
+	number: GrammaticalNumber;
+}) => {
+	const form = column.paradigm[index]?.[number];
+	if (!form) return <span className="text-stone-300">—</span>;
+	return (
+		<GreekText
+			size="sm"
+			tone={column.weight === "receded" ? "muted" : "default"}
+			weight={column.weight === "scanned" ? "semibold" : "normal"}
+		>
+			{form.greek}
+		</GreekText>
 	);
 };
 
-const groupPhrasesByCategory = () => {
-	const groups: Record<string, typeof PRONOUN_PHRASES> = {};
-	for (const phrase of PRONOUN_PHRASES) {
-		const category = phrase.category;
-		if (!groups[category]) {
-			groups[category] = [];
-		}
-		groups[category]?.push(phrase);
-	}
-	return groups;
-};
+const PronounTable = () => (
+	<Card variant="bordered" padding="lg" className="space-y-4 px-4 sm:px-6">
+		<div className="-mx-4 overflow-x-auto px-4">
+			<GrammarTable
+				className="sm:table-fixed"
+				columns={columnDefs}
+				groups={(["singular", "plural"] as const).map((number) => ({
+					label: number === "singular" ? "Singular" : "Plural",
+					rows: personRows(number),
+					cells: SUBJECT_PRONOUNS.map((_, index) =>
+						PRONOUN_COLUMNS.map((column) => (
+							<PronounCell key={column.key} column={column} index={index} number={number} />
+						)),
+					),
+				}))}
+				rowHeaderLabel="Person"
+			/>
+		</div>
+		<p className="text-sm text-stone-600">
+			After a preposition, <GreekText size="sm">εμένα</GreekText> and{" "}
+			<GreekText size="sm">εσένα</GreekText> often lose their first{" "}
+			<GreekText size="sm">ε</GreekText>: <GreekText size="sm">για μένα</GreekText>,{" "}
+			<GreekText size="sm">χωρίς σένα</GreekText>.
+		</p>
+	</Card>
+);
+
+const INDEFINITE_COLUMNS: ColumnDef[] = [
+	{ key: "some", label: "some" },
+	{ key: "none", label: "no, any" },
+	{ key: "every", label: "every" },
+];
+
+// Three kinds of thing across three quantities: laid out as a grid, the κάπ- of the
+// "some" column and the όλ- of the "every" column show without being taught.
+const INDEFINITES: Array<{ key: string; forms: Array<[greek: string, english: string]> }> = [
+	{
+		key: "thing",
+		forms: [
+			["κάτι", "something"],
+			["τίποτα", "nothing, anything"],
+			["όλα", "everything"],
+		],
+	},
+	{
+		key: "person",
+		forms: [
+			["κάποιος", "someone"],
+			["κανένας", "no one, anyone"],
+			["όλοι", "everyone"],
+		],
+	},
+	{
+		key: "place",
+		forms: [
+			["κάπου", "somewhere"],
+			["πουθενά", "nowhere, anywhere"],
+			["παντού", "everywhere"],
+		],
+	},
+];
+
+const IndefinitesTable = () => (
+	<GrammarTable
+		columns={INDEFINITE_COLUMNS}
+		rows={INDEFINITES.map((row) => ({ key: row.key, label: row.key }))}
+		cells={INDEFINITES.map((row) =>
+			row.forms.map(([greek, english]) => (
+				<span key={greek} className="block">
+					<GreekText size="base" weight="medium" className="block">
+						{greek}
+					</GreekText>
+					<span className="text-xs text-stone-500">{english}</span>
+				</span>
+			)),
+		)}
+		rowHeaderLabel="Kind"
+	/>
+);
 
 const CATEGORY_LABELS: Record<string, string> = {
 	requests: "Requests",
@@ -83,389 +423,151 @@ const CATEGORY_LABELS: Record<string, string> = {
 	family: "Family",
 };
 
-// One English "me" → three Greek forms. The pronouns-specific angle:
-// English uses one word, Greek splits the job across cases (and weak/strong).
-const ME_SPLIT = [
-	{
-		caseName: "Accusative" as const,
-		role: "Target",
-		greek: "με",
-		job: "before the verb",
-		example: "με βλέπεις",
-		translation: "you see me",
-	},
-	{
-		caseName: "Genitive" as const,
-		role: "Owner",
-		greek: "μου",
-		job: "after the noun, or 'to me'",
-		example: "μου λέει",
-		translation: "tells me",
-	},
-	{
-		caseName: "Accusative" as const,
-		role: "Target (strong)",
-		greek: "εμένα",
-		job: "after a preposition, or for emphasis",
-		example: "για εμένα",
-		translation: "for me",
-	},
-];
+const phrasesByCategory = () => {
+	const groups: Record<string, typeof PRONOUN_PHRASES> = {};
+	for (const phrase of PRONOUN_PHRASES) {
+		(groups[phrase.category] ??= []).push(phrase);
+	}
+	return groups;
+};
 
-const CLITIC_RULES: Array<{
-	rule: string;
-	greek: string;
-	english: string;
-	also?: { greek: string; english: string };
-}> = [
-	{ rule: "1. Default — before the verb", greek: "Με βλέπει.", english: "He sees me." },
-	{ rule: "2. Imperative — after the verb", greek: "Δες με!", english: "Look at me!" },
-	{
-		rule: "3. After θα or να",
-		greek: "Θα με δει.",
-		english: "He will see me.",
-		also: { greek: "Θέλω να με δεις.", english: "I want you to see me." },
-	},
-	{ rule: "4. After δεν", greek: "Δεν με βλέπει.", english: "He doesn't see me." },
-];
-
-/** One weak or strong pair: singular · plural, both in the Target colour. */
-const AccusativePair = ({ singular, plural }: { singular: string; plural: string }) => (
-	<>
-		<GreekText tone="inherit" size="sm" className={caseScheme("accusative").text}>
-			{singular}
-		</GreekText>
-		<span className="text-stone-400"> · </span>
-		<GreekText tone="inherit" size="sm" className={caseScheme("accusative").text}>
-			{plural}
-		</GreekText>
-	</>
+const Phrases = () => (
+	<div className="grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
+		{typedEntries(phrasesByCategory()).map(([category, phrases]) => (
+			<div key={category}>
+				<h4 className="mb-1 text-xs font-semibold tracking-widest text-stone-500 uppercase">
+					{CATEGORY_LABELS[category] ?? category}
+				</h4>
+				<ul className="divide-y divide-stone-200 border-y border-stone-200">
+					{phrases.map((phrase) => (
+						<li key={phrase.greek} className="flex flex-wrap items-baseline gap-x-3 py-1.5">
+							<GreekText weight="medium">{phrase.greek}</GreekText>
+							<span className="text-sm text-stone-600">{phrase.english}</span>
+						</li>
+					))}
+				</ul>
+			</div>
+		))}
+	</div>
 );
 
-export const PronounsSection: React.FC = () => {
-	const phraseGroups = groupPhrasesByCategory();
+const RuledNotes = ({ notes }: { notes: Array<{ key: string; body: React.ReactNode }> }) => (
+	<ul className="divide-y divide-stone-200 border-y border-stone-200">
+		{notes.map((note) => (
+			<li key={note.key} className="py-4 leading-relaxed text-stone-700">
+				{note.body}
+			</li>
+		))}
+	</ul>
+);
 
-	return (
-		<section id="pronouns" className="space-y-16">
-			{/* BAND 1 — THE SPLIT (pronouns-specific angle, not a cases recap) */}
-			<div className="space-y-6">
-				<Card variant="bordered" padding="lg" className="border-stone-200 bg-card">
-					<BandHeading
-						title={'One English "me", three Greek forms.'}
-						lede="English packs every job into one word. Greek picks a different form depending on what the pronoun is doing — which is where case shows up."
-					/>
-					<ul className="mt-5 space-y-3">
-						{ME_SPLIT.map((item) => {
-							const scheme = CASE_SCHEME[item.caseName];
-							const style = SCHEME[scheme];
-							return (
-								<li
-									key={item.greek}
-									// eslint-disable-next-line better-tailwindcss/no-restricted-classes -- fixed form column
-									className="grid items-baseline gap-x-5 gap-y-1 sm:grid-cols-[6rem_1fr_auto]"
-								>
-									<GreekText tone="accent" size="2xl" className={`leading-none ${style.text}`}>
-										{item.greek}
-									</GreekText>
-									<div className="text-sm text-stone-700">
-										<span className="text-stone-500">{item.job}</span>
-										<span className="mx-2 text-stone-300">·</span>
-										<GreekText tone="accent" size="sm" className={style.text}>
-											{item.example}
-										</GreekText>
-										<span className="ml-1 text-stone-500 italic">({item.translation})</span>
-									</div>
-									<span
-										className={`justify-self-start rounded-full px-2.5 py-1 text-xs font-semibold tracking-widest uppercase sm:justify-self-end ${style.badgeBg} ${style.badgeText}`}
-									>
-										{item.role}
-									</span>
+export const PronounsSection: React.FC = () => (
+	<section id="pronouns" className="space-y-16">
+		<div className="space-y-8">
+			<h2 className="sr-only">Three words for “me”</h2>
+			<div className="grid gap-4 md:grid-cols-3 md:items-stretch">
+				{PRONOUN_JOBS.map((job) => (
+					<TeachingCard
+						key={job.greek}
+						scheme={CASE_SCHEME[job.caseName]}
+						title={
+							<GreekText tone="inherit" size="3xl">
+								{job.greek}
+							</GreekText>
+						}
+						badge={job.handle}
+						description={job.job}
+					>
+						<ul className="space-y-2">
+							{job.examples.map((example) => (
+								<li key={example.greek}>
+									<MarkedGreek
+										greek={example.greek}
+										marked={example.marked}
+										tone={CASE_KEY[job.caseName]}
+										size="xl"
+										className="block leading-snug"
+									/>
+									<p className="text-xs text-stone-600 italic">{example.english}</p>
 								</li>
-							);
-						})}
-					</ul>
-				</Card>
-				<Card variant="bordered" padding="md" className="border-stone-200 bg-stone-50/60">
-					<p className="text-sm text-stone-700">
-						<strong className="text-stone-800">Target and Owner are the daily drivers.</strong>{" "}
-						Subject pronouns (εγώ, εσύ…) exist but Greek usually drops them — the verb ending
-						already tells you who.
-					</p>
-				</Card>
+							))}
+						</ul>
+					</TeachingCard>
+				))}
 			</div>
+			<RuledNotes notes={PRONOUN_NOTES} />
+		</div>
 
-			{/* BAND 2 — PARADIGMS (lookup containers — same idiom as cases triggers) */}
-			<div className="space-y-8">
+		<div id="clitic-placement" className="scroll-mt-24 space-y-6">
+			<BandHeading
+				title="Short pronouns hug the verb."
+				lede={
+					<>
+						English puts them after the verb (I see <em>him</em>). Greek puts them right in front
+						of it. <GreekText size="sm">θα</GreekText>, <GreekText size="sm">να</GreekText> and{" "}
+						<GreekText size="sm">δεν</GreekText> stay outside; only a command moves the pronoun past the
+						verb.
+					</>
+				}
+			/>
+			<PlacementTable />
+			<RuledNotes notes={PLACEMENT_NOTES} />
+		</div>
+
+		<div className="space-y-8">
+			<BandHeading
+				title="Look it up"
+				lede="Every form in one place. The two bold columns are the ones you'll reach for daily."
+			/>
+			<PronounTable />
+			<HomographCallout id="article-or-pronoun" />
+
+			<div className="space-y-3">
 				<BandHeading
-					title="All the forms"
-					lede="Full tables for each role. Object and possessive are the daily drivers."
-				/>
-
-				{/* Tier 1: Object + Possessive */}
-				<div className="grid gap-6 lg:grid-cols-2">
-					<ParadigmLookup
-						caseName="Accusative"
-						handle="Target"
-						rule="Goes BEFORE the verb — σε βλέπω = I see you."
-						paradigm={OBJECT_PRONOUNS}
-						examples={OBJECT_PRONOUN_EXAMPLES}
-					/>
-					<ParadigmLookup
-						caseName="Genitive"
-						handle="Owner"
-						rule="Goes AFTER the noun — το σπίτι μου = my house."
-						paradigm={POSSESSIVE_PRONOUNS}
-						examples={POSSESSIVE_PRONOUN_EXAMPLES}
-						note="Neuter uses the same form as masculine (του)"
-					/>
-				</div>
-
-				<HomographCallout id="article-or-pronoun" />
-
-				{/* Tier 2: Subject (demoted) */}
-				<ParadigmLookup
-					caseName="Nominative"
-					handle="Doer"
-					rule="Usually dropped — the verb ending already shows who. Use only for emphasis or contrast."
-					paradigm={SUBJECT_PRONOUNS}
-				/>
-
-				{/* Weak vs strong comparison */}
-				<Card variant="bordered" padding="lg" className="border-stone-200 bg-card">
-					<BandHeading
-						as="h3"
-						size="md"
-						title="με vs εμένα — same meaning, different jobs"
-						lede="The target form has a short (weak) version that clips onto verbs and a long (strong) version that survives on its own. Same case, different stress."
-					/>
-					<div className="mt-4 overflow-x-auto">
-						<table className="w-full text-sm">
-							<thead>
-								<tr className="border-b border-stone-200">
-									<th className="py-2 pr-4 text-left text-xs font-medium tracking-wide text-stone-500 uppercase">
-										English
-									</th>
-									<th className="px-2 py-2 text-left text-xs font-medium tracking-wide text-stone-500 uppercase">
-										Weak (before verb)
-									</th>
-									<th className="px-2 py-2 text-left text-xs font-medium tracking-wide text-stone-500 uppercase">
-										Strong (after prep / emphasis)
-									</th>
-								</tr>
-							</thead>
-							<tbody>
-								{OBJECT_PRONOUNS.map((obj, i) => {
-									const strong = EMPHATIC_PRONOUNS[i];
-									if (!strong) return null;
-									return (
-										<tr key={obj.person} className="border-b border-stone-100 align-top">
-											<td className="py-2 pr-4 text-stone-600">
-												{obj.singular.english} / {obj.plural.english}
-											</td>
-											<td className="px-2 py-2">
-												<AccusativePair singular={obj.singular.greek} plural={obj.plural.greek} />
-											</td>
-											<td className="px-2 py-2">
-												<AccusativePair
-													singular={strong.singular.greek}
-													plural={strong.plural.greek}
-												/>
-											</td>
-										</tr>
-									);
-								})}
-							</tbody>
-						</table>
-					</div>
-					<div className="mt-4 grid gap-3 sm:grid-cols-2">
-						<div className="rounded-md border border-stone-200 bg-stone-50 p-3">
-							<div className="mb-1 text-xs font-semibold tracking-wide text-stone-500 uppercase">
-								Weak example
-							</div>
-							<GreekText tone="accent" size="lg" className="block text-stone-800">
-								με βλέπεις
-							</GreekText>
-							<p className="mt-0.5 text-xs text-stone-500 italic">you see me</p>
-						</div>
-						<div className="rounded-md border border-stone-200 bg-stone-50 p-3">
-							<div className="mb-1 text-xs font-semibold tracking-wide text-stone-500 uppercase">
-								Strong example
-							</div>
-							<GreekText tone="accent" size="lg" className="block text-stone-800">
-								για εμένα
-							</GreekText>
-							<p className="mt-0.5 text-xs text-stone-500 italic">for me (after preposition)</p>
-						</div>
-					</div>
-					<div className="mt-4">
-						<div className="mb-2 text-xs font-semibold tracking-wide text-stone-500 uppercase">
-							More strong-form phrases
-						</div>
-						<ExamplePills examples={EMPHATIC_PRONOUN_EXAMPLES} tone="accusative" />
-					</div>
-				</Card>
-			</div>
-
-			{/* BAND 3 — PRODUCTION (open by default) */}
-			<div className="space-y-4">
-				<BandHeading
-					title="Ready-made phrases"
-					lede="High-frequency chunks with pronouns already baked in. Memorise whole, don't decompose."
-				/>
-				<Card variant="bordered" padding="lg" className="border-stone-200 bg-card">
-					<div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-						{typedEntries(phraseGroups).map(([category, phrases]) => (
-							<div key={category}>
-								<h4 className="mb-2 text-xs font-semibold tracking-wide text-stone-500 uppercase">
-									{CATEGORY_LABELS[category] || category}
-								</h4>
-								<div className="space-y-1.5">
-									{phrases.map((phrase) => (
-										<div key={phrase.greek} className="flex items-baseline gap-2 text-sm">
-											<GreekText tone="accent" size="sm" className="font-medium text-stone-800">
-												{phrase.greek}
-											</GreekText>
-											<span className="text-stone-600">{phrase.english}</span>
-										</div>
-									))}
-								</div>
-							</div>
-						))}
-					</div>
-				</Card>
-			</div>
-
-			{/* BAND 4 — NAVIGATION (retrieval scaffold) */}
-			<div className="space-y-4">
-				<BandHeading
-					title="Which form do I need?"
-					lede="Use this once you've seen the forms. It's a lookup, not a lesson."
-				/>
-				<PronounDecisionGuide />
-			</div>
-
-			{/* BAND 5 — INDEFINITES (core chunks only) */}
-			<div className="space-y-4">
-				<BandHeading
+					as="h3"
+					size="md"
+					tone="quiet"
 					title="Someone, nothing, everyone"
-					lede="Memorise these as whole words. The prefix pattern is interesting but not drillable."
+					lede="Learn these as whole words."
 				/>
-				<Card variant="bordered" padding="lg" className="border-stone-200 bg-card">
-					<div className="grid gap-x-6 gap-y-1.5 sm:grid-cols-2 md:grid-cols-3">
-						{[
-							{ greek: "κάτι", english: "something" },
-							{ greek: "τίποτα", english: "nothing / anything" },
-							{ greek: "όλα", english: "everything" },
-							{ greek: "κάποιος", english: "someone" },
-							{ greek: "κανένας", english: "no one / anyone" },
-							{ greek: "όλοι", english: "everyone" },
-							{ greek: "κάπου", english: "somewhere" },
-							{ greek: "πουθενά", english: "nowhere / anywhere" },
-							{ greek: "παντού", english: "everywhere" },
-						].map((item) => (
-							<div key={item.greek} className="flex items-baseline gap-2 text-sm">
-								<GreekText tone="accent" size="sm" className="font-medium text-stone-800">
-									{item.greek}
-								</GreekText>
-								<span className="text-stone-600">{item.english}</span>
-							</div>
-						))}
-					</div>
-				</Card>
+				<IndefinitesTable />
 			</div>
 
-			{/* COLLAPSED — Two-pronoun ordering (Phase 3-4 material) */}
-			<CollapsibleSection
-				title="Two-pronoun word order (advanced)"
-				colorScheme="stone"
-				defaultOpen={false}
-			>
-				<Card variant="bordered" padding="md" className="border-stone-200 bg-card">
-					<h4 className="mb-1 font-bold text-stone-800">{PRONOUN_PATTERNS.doubleObject.title}</h4>
-					<p className="mb-4 text-sm text-stone-600">{PRONOUN_PATTERNS.doubleObject.explanation}</p>
-					<div className="mb-4 space-y-1 rounded-lg border border-stone-200 bg-stone-50 p-3 text-sm">
-						<div className="flex items-center gap-2">
-							<span className="w-16 text-stone-600">English:</span>
-							<span className="text-stone-700">
-								{PRONOUN_PATTERNS.doubleObject.contrast.english}
-							</span>
-						</div>
-						<div className="flex items-center gap-2">
-							<span className="w-16 text-stone-600">Greek:</span>
-							<GreekText
-								tone="inherit"
-								size="lg"
-								className="rounded border border-stone-200 bg-card px-2 py-1 font-semibold text-stone-800"
-							>
-								{PRONOUN_PATTERNS.doubleObject.contrast.greek}
-							</GreekText>
-							<span className="text-stone-600">
-								({PRONOUN_PATTERNS.doubleObject.contrast.literal})
-							</span>
-						</div>
-					</div>
-					<div className="flex flex-wrap gap-2">
-						{PRONOUN_PATTERNS.doubleObject.examples.map((ex) => (
-							<div
-								key={ex.greek}
-								className="rounded-lg border border-stone-200 bg-stone-50 px-3 py-2"
-							>
-								<GreekText
-									tone="inherit"
-									size="lg"
-									className="rounded border border-stone-200 bg-card px-2 py-1 font-semibold text-stone-800"
-								>
-									{ex.greek}
-								</GreekText>
-								<span className="ml-2 text-sm text-stone-600">({ex.literal})</span>
-							</div>
-						))}
-					</div>
-				</Card>
-			</CollapsibleSection>
-
-			{/* CLITIC PLACEMENT — where weak object pronouns sit */}
-			<div id="clitic-placement" className="space-y-4">
+			<div className="space-y-3">
 				<BandHeading
-					title="Weak pronouns hug the verb."
-					lede={
-						<>
-							English puts object pronouns after the verb (I see <em>him</em>). Greek puts them
-							before — except in commands. Four rules cover almost everything.
-						</>
-					}
+					as="h3"
+					size="md"
+					tone="quiet"
+					title="Phrases to learn whole"
+					lede="The pronoun is already in place. Say each one as a single word."
 				/>
-
-				<div className="grid gap-3 sm:grid-cols-2">
-					{CLITIC_RULES.map((rule) => (
-						<Card
-							key={rule.rule}
-							variant="bordered"
-							padding="md"
-							className="border-terracotta-200 bg-terracotta-50"
-						>
-							<p className="mb-1 text-xs font-semibold text-terracotta-text">{rule.rule}</p>
-							<GreekText tone="accent" size="xl" className="text-stone-900">
-								{rule.greek}
-							</GreekText>
-							<p className="mt-1 text-xs text-stone-500">{rule.english}</p>
-							{rule.also && (
-								<>
-									<GreekText tone="accent" size="sm" className="mt-2 text-stone-800">
-										{rule.also.greek}
-									</GreekText>
-									<p className="text-xs text-stone-500">{rule.also.english}</p>
-								</>
-							)}
-						</Card>
-					))}
-				</div>
-
-				<p className="text-sm text-stone-600">
-					Rule of thumb: the pronoun sits next to the verb. Whatever signals tense or mood (θα, να,
-					δεν) goes outside, the pronoun goes inside. Imperatives are the one exception.
-				</p>
+				<Phrases />
 			</div>
-		</section>
-	);
-};
+		</div>
+
+		<div className="space-y-6 border-t border-stone-200 pt-12">
+			<BandHeading
+				title="You have the words. Now build with them."
+				lede="Two everyday constructions are built almost entirely out of these pronouns."
+			/>
+			<div className="grid gap-3 md:grid-cols-3">
+				<NextStepCard
+					to="/reference/patterns"
+					title="Patterns"
+					description="“I like” and “my name is”, built on these pronouns"
+					emphasis
+				/>
+				<NextStepCard
+					to="/reference/prepositions"
+					title="Prepositions"
+					description="Where the long forms come in"
+				/>
+				<NextStepCard
+					to="/reference/cases"
+					title="Cases"
+					description="What Doer, Target and Owner mean"
+				/>
+			</div>
+		</div>
+	</section>
+);

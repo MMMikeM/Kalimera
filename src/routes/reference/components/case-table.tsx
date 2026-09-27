@@ -10,7 +10,7 @@ import {
 } from "@/components/GrammarTable";
 import { GreekText } from "@/components/GreekText";
 import { ARTICLE_AGREEMENT_QUICK_REF } from "@/constants/agreement";
-import { GENDER_SCHEME, SCHEME } from "@/constants/grammar-palette";
+import { GENDER_SCHEME, type GrammarScheme, SCHEME } from "@/constants/grammar-palette";
 import type { Gender } from "@/server/db/enums";
 
 interface GenderData {
@@ -22,27 +22,39 @@ interface GenderData {
 const GENDERS: Gender[] = ["masculine", "feminine", "neuter"];
 const CASES = ["nom", "acc", "gen"] as const;
 
+/** A column header pill in a grammar colour. */
+export const HeaderChip: React.FC<{
+	scheme: GrammarScheme;
+	className?: string;
+	children: React.ReactNode;
+}> = ({ scheme, className, children }) => (
+	<span
+		className={cn(
+			"inline-block rounded-full px-2.5 py-0.5 text-xs font-semibold",
+			SCHEME[scheme].badgeBg,
+			SCHEME[scheme].badgeText,
+			className,
+		)}
+	>
+		{children}
+	</span>
+);
+
+/** Narrow screens get the initial; the full word needs a column wider than a phone gives. */
+export const GenderChip: React.FC<{ gender: Gender }> = ({ gender }) => (
+	<HeaderChip scheme={GENDER_SCHEME[gender]}>
+		<span className="capitalize sm:hidden">{gender.charAt(0)}</span>
+		<span className="hidden capitalize sm:inline">{gender}</span>
+	</HeaderChip>
+);
+
 // Case colour on row headers, gender colour on column chips, cells neutral: the
 // reader learns to read a cell as the intersection of its row and column. Colouring
 // the cells too would layer both axes on one element and muddy each.
-const HERO_GENDER_COLUMNS: ColumnDef[] = GENDERS.map((gender) => {
-	const style = SCHEME[GENDER_SCHEME[gender]];
-	return {
-		key: gender,
-		label: (
-			<span
-				className={cn(
-					"inline-block rounded-full px-2.5 py-0.5 text-xs font-semibold capitalize",
-					style.badgeBg,
-					style.badgeText,
-				)}
-			>
-				<span className="sm:hidden">{gender.charAt(0)}</span>
-				<span className="hidden sm:inline">{gender}</span>
-			</span>
-		),
-	};
-});
+const HERO_GENDER_COLUMNS: ColumnDef[] = GENDERS.map((gender) => ({
+	key: gender,
+	label: <GenderChip gender={gender} />,
+}));
 
 const CaseTable: React.FC<{ label: string; data: GenderData; hero?: boolean }> = ({
 	label,

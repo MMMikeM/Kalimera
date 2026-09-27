@@ -21,7 +21,7 @@ interface TeachingCardProps {
 	eyebrow?: string;
 	title: ReactNode;
 	badge?: ReactNode;
-	description?: string;
+	description?: ReactNode;
 	footer?: ReactNode;
 	className?: string;
 	children?: ReactNode;

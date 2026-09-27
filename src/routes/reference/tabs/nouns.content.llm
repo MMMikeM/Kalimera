@@ -1,8 +1,8 @@
 # Nouns Reference Content
 
 > The per-paradigm tables under "Noun Paradigms by Gender" are reference data for
-> `AGREEMENT_PARADIGMS`, not the page layout: the page renders them as endings grids
-> (see "Page Structure"). Where this file disagrees with `components/nouns-section.tsx`,
+> `AGREEMENT_PARADIGMS`, not the page layout: the page renders them as case × pattern
+> grids (see "Page Structure"). Where this file disagrees with `components/nouns-section.tsx`,
 > the code is the truth.
 
 Noun declensions by gender and case - how Greek nouns change their endings.
@@ -13,42 +13,45 @@ Show how Greek nouns decline according to gender, case, and number. The ending p
 
 ## Key Insight
 
-Greek nouns change their endings to show grammatical function (case) and number. Learn the pattern by gender and the system becomes predictable.
+The ending gives away the gender, and each gender makes one move in the singular: masculine drops its -ς for the Target, feminine adds a -ς for the Owner, neuter keeps its Doer form for the Target. Most of a noun table is the dictionary form left alone. `src/constants/agreement.test.ts` holds every paradigm to these rules and to the plural and vocative notes below.
 
 ---
 
 ## Page Structure
 
 <page file="tabs/nouns.tsx">
-1. ReferenceHero "Endings by gender." with a `demo`: ο φίλος / τον φίλο / του φίλου, each coloured and labelled by its case row (Doer, Target, Owner), from `CASE_ROW_BY_KEY` and the masc-os paradigm.
-2. `NounsSection`: SectionHeading "How Noun Endings Change" (subtitle "Patterns by gender and case").
-3. `CaseGuide` (eyebrow "Concept", "Which case should I use?"): Doer / Target / Owner badges with the grammar term beneath, a question each (Who does it? / Who/what receives? / Whose is it?) and a frame around ο φίλος: ο φίλος μιλάει, βλέπω τον φίλο, το σπίτι του φίλου. Footer: all prepositions (σε, με, για, από…) take accusative.
-4. `GenderHints` (eyebrow "Spotting gender", "Recognise gender by ending").
-5. `EssentialPatterns` (eyebrow "The core", "Essential patterns"): masc-os, fem-a, neut-o, neut-i as columns (header shows the ending plus a corpus example word), case rows, singular grid stacked above plural. An Endings / Full forms toggle; Full forms adds a "Calling" (Vocative) row to the singular grid only. Footer: feminine and neuter Doer = Target, only Owner changes; masculine is the only family where Target differs.
-6. "More patterns" (collapsible): one `GenderVariants` card per gender with every paradigm of that gender, endings only, footer listing each pattern's examples, corpus count ("N nouns in this course") and tip.
-7. Handoff NextStepCards: Pronouns (emphasis) → /reference/pronouns; Articles → /reference/articles.
-8. PracticeCTA "Practice nouns".
+1. ReferenceHero "Masculine drops a ς. Feminine gains one." Thesis: the ending tells you the gender, the gender tells you where the ending changes. No demo.
+2. Band 1 (sr-only h2 "What each gender changes"): three gender TeachingCards (`GENDER_MOVES` in `components/nouns-section.tsx`), then a ruled notes list (`NOUN_NOTES`). See "What Each Gender Changes".
+3. Band 2 "Look it up": the four core patterns (masc-os, fem-a, neut-o, neut-i) in one `GrammarTable` inside a bordered Card. Case rows (Doer / Target / Owner), one column per pattern headed by its word (φίλος, γυναίκα, βιβλίο, παιδί), a gender chip over each run of same-gender columns (one "neuter" spans βιβλίο and παιδί), Singular and Plural as row groups under one header.
+4. "Every pattern in the course" (the only collapsible): per gender, a grid of that gender's remaining patterns (no chips; the heading names the gender), then a ruled list of every pattern of that gender with up to three corpus words, the corpus count ("N nouns in the course") and the paradigm's tip. An example word must end in the pattern's ending and decline the way the pattern does: a noun whose stored forms the pattern does not generate (μπαμπάς, filed under -ας for its singular but plural μπαμπάδες) is counted but never shown.
+5. Band 3 "Nouns sorted. Now describe them.": NextStepCards to Adjectives (emphasis), Articles, and /learn/nouns.
+6. PracticeCTA "Practice nouns".
 
-Cell emphasis has three weights: the nominative is medium, a cell whose ending differs from the nominative is semibold, a cell identical to it is muted.
+Cells render article, stem and ending, with three weights on the ending: the Doer is medium, an ending that differs from the Doer is semibold, one identical to it is muted. Below `sm` a cell shows the ending alone and the column header supplies the word; columns size to content there and are fixed-width from `sm` up.
 </page>
 
 ---
 
-## Gender Detection
+## What Each Gender Changes
 
-<quick-reference name="gender-hints">
-<title>Recognise gender by ending</title>
+<teaching-cards source="GENDER_MOVES in components/nouns-section.tsx">
+One TeachingCard per gender, tinted in that gender's scheme. Each row is a paradigm: its ending, the Doer, an arrow, and the form the rule is about. Rows are derived from `AGREEMENT_PARADIGMS`, and the bold falls where the two forms part company (stress-blind): on the letters the new form gains, or when it only loses some, on the letters the Doer gives up.
 
-| Gender    | Endings (derived)               | Hint |
-|-----------|---------------------------------|------|
-| Masculine | -ος, -ας, -ης, -ές              | Male people, -ος words |
-| Feminine  | -α, -η, -ση, -ξη, -ψη, -η (πόλη) | Female people, αγάπη / ζωή |
-| Neuter    | -ο, -ι, -μα, -ος, -ας           | Diminutives, result nouns |
+| Card      | Rule                                                        | Rows (paradigm ids)                  | Shows           |
+|-----------|-------------------------------------------------------------|--------------------------------------|-----------------|
+| Masculine | Drops the -ς when it's the Target.                          | masc-os, masc-as, masc-is, masc-es   | ο φίλο**ς** → τον φίλο |
+| Feminine  | Adds a -ς when it's the Owner.                              | fem-a, fem-i, fem-si                 | η ζωή → της ζωή**ς** |
+| Neuter    | Doer and Target are the same word. Only the Owner changes.  | neut-o, neut-i, neut-ma              | το όνομα → του ονόμα**τος** |
 
-Ending lists are derived from `AGREEMENT_PARADIGMS` — adding a declension pattern
-updates this table with no edit here.
+</teaching-cards>
 
-</quick-reference>
+<notes source="NOUN_NOTES">
+Greek in the notes stays neutral with weight on the morpheme: the cards carry gender colour, and case colour beside them would put both axes in one view.
+- A few neuters dress as masculines: το μέρος, το κρέας. When ending and article disagree, trust the article.
+- In the plural, Doer and Target match, except masculines in -ος: οι φίλοι but τους φίλους.
+- Every plural Owner ends in -ων: των φίλων, των γυναικών, των παιδιών.
+- Calling someone uses the Target form without its article (Γιάννη!, πατέρα!); -ος nouns usually switch to -ε (φίλε!).
+</notes>
 
 ---
 
@@ -72,7 +75,7 @@ updates this table with no edit here.
 <paradigm name="masculine-as" frequency="common">
 <pattern>-ας</pattern>
 <example>πατέρας (father)</example>
-<tip>Many family words: πατέρας, άντρας, παππούς</tip>
+<tip>When the -άς itself is stressed, the plural adds a syllable instead: μπαμπάς → μπαμπάδες</tip>
 
 | Case | Singular | Plural |
 |------|----------|--------|
@@ -86,6 +89,7 @@ updates this table with no edit here.
 <paradigm name="masculine-is" frequency="common">
 <pattern>-ης</pattern>
 <example>μαθητής (student)</example>
+<tip>Words in -τζής add a syllable in the plural instead: ταξιτζής → ταξιτζήδες</tip>
 
 | Case | Singular | Plural |
 |------|----------|--------|
@@ -115,8 +119,6 @@ updates this table with no edit here.
 <paradigm name="feminine-a" frequency="very common">
 <pattern>-α</pattern>
 <example>γυναίκα (woman/wife)</example>
-<tip>Vocative = Nominative for feminine nouns</tip>
-
 | Case | Singular | Plural |
 |------|----------|--------|
 | Nom  | η γυναίκα | οι γυναίκες |
@@ -159,7 +161,6 @@ updates this table with no edit here.
 <paradigm name="neuter-o" frequency="very common">
 <pattern>-ο</pattern>
 <example>βιβλίο (book)</example>
-<tip>Nom = Acc = Voc (neuter simplification!)</tip>
 
 | Case | Singular | Plural |
 |------|----------|--------|
@@ -186,7 +187,7 @@ updates this table with no edit here.
 <paradigm name="neuter-ma" frequency="common">
 <pattern>-μα</pattern>
 <example>όνομα (name)</example>
-<tip>Ancient Greek pattern, Nom = Acc = Voc</tip>
+<tip>Adds -τ- everywhere but the singular Doer and Target: ονόματος, ονόματα</tip>
 
 | Case | Singular | Plural |
 |------|----------|--------|
@@ -242,17 +243,16 @@ Membership is a hand-kept list in `DECLENSION_BY_LEMMA`
 
 ## Vocative
 
-Not given a section of its own. The curriculum guidance is that the vocative earns
-incidental exposure, not drilling, so it appears only as a fourth row of the
-essential-patterns table under the **Full forms** toggle, and only in the singular
-— the plural vocative is identical to the plural nominative in all 15 paradigms,
-so a plural row would merely repeat the one above it.
+Not given a section or a table row. The curriculum guidance is that the vocative earns
+incidental exposure, not drilling, so it is the last of the notes under the gender cards:
+the Target form without its article, except -ος nouns, which usually end in -ε. The rule
+holds for all 15 paradigms (`agreement.test.ts`); masc-os is the one exception.
 
 ---
 
 ## Navigation
 
-<next>NextStepCards: Pronouns (emphasis) → /reference/pronouns; Articles → /reference/articles</next>
+<next heading="Nouns sorted. Now describe them.">NextStepCards: Adjectives (emphasis) → /reference/adjectives; Articles → /reference/articles; Browse nouns → /learn/nouns</next>
 <practice>PracticeCTA topic "nouns" → /practice/cases/review/nouns (logged-out visitors get /register; see `src/lib/practice-links.ts`)</practice>
 
 ---
@@ -261,8 +261,8 @@ so a plural row would merely repeat the one above it.
 
 Endings and articles (the rules) are static:
 - `@/constants/agreement` (AGREEMENT_PARADIGMS) — 15 paradigms
-- `GENDER_HINTS` is local to `components/nouns-section.tsx`, derived from
-  AGREEMENT_PARADIGMS. There is no `@/constants/nouns`.
+- `GENDER_MOVES` and `NOUN_NOTES` are local to `components/nouns-section.tsx`; the
+  card rows are derived from AGREEMENT_PARADIGMS. There is no `@/constants/nouns`.
 
 Example words and per-pattern counts are **loaded from the database** by
 `loadNouns` in `routes/reference/$tab.tsx`, grouped by `groupNounsByPattern`
@@ -272,9 +272,11 @@ Example words and per-pattern counts are **loaded from the database** by
 ## Verification
 
 - [x] greek-first: Greek forms prominent in all paradigms
-- [x] paradigm-tables: Case (rows) x pattern (columns), singular and plural stacked
-- [x] progressive-disclosure: variant patterns collapsible
+- [x] paradigm-tables: Case (rows) x pattern (columns), singular and plural as row groups under one header
+- [x] progressive-disclosure: only "Every pattern in the course" is collapsible
 - [x] function-first-labels: Doer / Target / Owner lead, grammar terms as sublabels
 - [x] frequency-priority: per-pattern counts come from the corpus, not a static label
-- [x] no-redundancy: colour lives on the row and column headers only; cells are neutral
+- [x] no-redundancy: each gender is named once per view (a chip spans same-gender columns); cells are neutral
+- [x] colour-honesty: gender colour on the gender cards, case colour only on the lookup's row headers
+- [x] rules-tested: every rule the page states is checked against AGREEMENT_PARADIGMS in agreement.test.ts
 - [x] contextual-examples: example words are real corpus nouns, ordered by CEFR then frequency
