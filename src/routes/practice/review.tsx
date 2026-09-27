@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { ChevronRight } from "lucide-react";
 
+import { BackLink } from "@/components/BackLink";
 import { GreekText } from "@/components/GreekText";
 import { DRILL_CATEGORY_LABELS, type DrillCategory } from "@/constants/drills";
 import { DRILL_REGISTRY } from "@/routes/practice/drill-catalogue.data";
@@ -46,9 +47,9 @@ function ReviewPage() {
 
 	return (
 		<div className="mx-auto max-w-sm px-4 py-6">
-			<Link to="/" className="mb-6 inline-block text-xs text-stone-400 hover:text-stone-600">
-				← back
-			</Link>
+			<BackLink to="/" className="mb-4">
+				Home
+			</BackLink>
 			<h2 className="mb-1 font-serif text-2xl text-navy-text">Review</h2>
 			<p className="mb-6 text-sm text-muted-foreground">
 				{drills.length === 0

@@ -1,8 +1,8 @@
+import { BackLink } from "@/components/BackLink";
 import { ContentSection } from "@/components/ContentSection";
 import { GreekText } from "@/components/GreekText";
 
 import type { EssentialsLoaderData } from "../$subtab";
-import { EssentialsBackLink } from "./essentials-back-link";
 
 interface Props {
 	data: EssentialsLoaderData;
@@ -60,7 +60,7 @@ export function NumbersSubtab({ data }: Props) {
 
 	return (
 		<div className="space-y-6">
-			<EssentialsBackLink />
+			<BackLink to="/learn/essentials">Essentials</BackLink>
 
 			{/* Units + Tens Paired Layout */}
 			<ContentSection
