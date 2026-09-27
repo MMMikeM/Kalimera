@@ -37,6 +37,9 @@ export const inTransaction = async <T>(run: (tx: DbTransaction) => Promise<T>) =
 	try {
 		return await connection.transaction(run);
 	} finally {
-		await connection.$client.close();
+		// The transaction has already committed or rolled back; a failed close must not report it as failed.
+		await connection.$client
+			.close()
+			.catch((error) => console.warn("[db] closing a transaction connection failed:", error));
 	}
 };
