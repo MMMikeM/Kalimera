@@ -6,15 +6,15 @@ How to surface features and why they work.
 
 ## Quick Reference: What's Hidden
 
-| Feature           | On Landing | In-App            | Gap                 |
-| ----------------- | ---------- | ----------------- | ------------------- |
-| Timed drills      | Yes        | Yes               | None                |
-| SRS               | Yes        | Partial           | Explain "why"       |
-| Streaks           | Yes        | Yes               | Missing freeze info |
-| **Greeklish**     | No         | Placeholder only  | **Critical**        |
-| **Notifications** | No         | Tiny icon         | **High**            |
-| **Freezes**       | No         | Shows when earned | **High**            |
-| Milestones        | No         | Surprise only     | Keep as surprise    |
+| Feature       | On Landing    | In-App                   | Gap                       |
+| ------------- | ------------- | ------------------------ | ------------------------- |
+| Timed drills  | Yes           | Yes                      | None                      |
+| SRS           | Yes           | Partial                  | Explain "why"             |
+| Streaks       | No, by design | Yes                      | None: they stay in-app    |
+| Greeklish     | Yes           | Placeholder only         | Explain in-app            |
+| Notifications | No            | Not built                | Not built                 |
+| Freezes       | No, by design | Always shown on dashboard | None                     |
+| Milestones    | No            | Not built                | Keep as surprise if built |
 
 ---
 
@@ -36,20 +36,17 @@ How to surface features and why they work.
 
 > "Type with your normal keyboard. We understand Greek sounds."
 
-### 2. Push Notifications
+### 2. Push Notifications (not built)
 
-**What:** 8pm reminder if you haven't practiced and have an active streak.
+**What:** Nothing ships. The push plumbing was removed; only the `pushSubscriptions` and `notificationLogs` tables remain in the schema, and there is no scheduler.
 
-**Where:** `src/lib/push-notifications.ts`, `wrangler.toml` cron
+**If built:** a reminder for users who haven't practised today, worded as information ("Your review queue has X items"), never as loss ("Don't lose your streak").
 
-**Why it works:**
+**Why it would work:**
 
 - Fogg Behavior Model: Trigger + Ability + Motivation = Behavior
-- Loss aversion: "Don't lose your X-day streak"
 
-**Marketing:**
-
-> "We'll remind you before your streak breaks."
+**Marketing:** None.
 
 ### 3. Streak Freezes
 
@@ -62,13 +59,11 @@ How to surface features and why they work.
 - Reduces anxiety without removing motivation
 - Earning (not buying) maintains intrinsic motivation
 
-**Marketing:**
-
-> "Miss a day without losing everything."
+**Marketing:** None. Freezes, like streaks, stay inside the app and are never sold on the landing page or in marketing copy.
 
 ### 4. Timed Production Drills
 
-**What:** 3.5-5s per question. Type Greek, no multiple choice.
+**What:** 4, 6 or 8 seconds per question (Fast, Medium, Relaxed), stretched for multi-word phrases. Type Greek, no multiple choice.
 
 **Why it works:**
 
@@ -76,9 +71,9 @@ How to surface features and why they work.
 - Laufer & Goldstein (2004): Production > recognition
 - Roediger & Karpicke (2006): Retrieval > re-study
 
-**Marketing (already on landing):**
+**Marketing (on landing):**
 
-> "Recognition isn't fluency. Retrieval is."
+> "The drills here make you produce it: a few seconds on the clock, your normal keyboard, nothing to pick from."
 
 ### 5. Spaced Repetition
 
@@ -99,28 +94,22 @@ How to surface features and why they work.
 
 ### Greeklish Input
 
-| Context               | Copy                                                                     |
-| --------------------- | ------------------------------------------------------------------------ |
-| Landing feature card  | "3.5 seconds. Your normal keyboard. Pure retrieval."                     |
-| Try drill intro       | "Type Greek with your normal keyboard. We understand phonetic spelling." |
-| First question helper | "Tip: Type 'thelo' or 'θέλω' — both work"                                |
+| Context                           | Copy                                                                                                                                  |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| Landing "Timed drills"            | "Three speeds, from four to eight seconds a prompt. You type the answer in Greeklish, and the usual spellings all count: thelo and thelw are both θέλω." |
+| Landing demo caption              | "Type what you'd say in Greeklish. It's marked as Greek."                                                                             |
+| Try drill intro                   | "Type the Greek in Greeklish, Latin letters on your normal keyboard: thelo counts as θέλω."                                            |
+| Drill input placeholder           | "greeklish..."                                                                                                                        |
+| First question helper (not built) | "Tip: Type 'thelo' or 'θέλω' — both work"                                                                                             |
 
 ### Streak Freezes
 
 | Context                 | Copy                                                  |
 | ----------------------- | ----------------------------------------------------- |
-| Dashboard (streak 1-6)  | "X days to earn a streak freeze"                      |
-| Dashboard (available)   | "X freeze(s) ready — miss a day, keep your streak"    |
+| Dashboard (no freeze)   | "X days to earn a streak freeze"                      |
+| Dashboard (available)   | "X freeze(s) ready: miss a day, keep your streak"     |
 | Dashboard (just used)   | "Streak protected! Freeze saved your streak."         |
 | First streak (streak=1) | "Day 1! Practice for 7 days to earn a streak freeze." |
-
-### Push Notifications
-
-| Context             | Copy                                              |
-| ------------------- | ------------------------------------------------- |
-| Inline ask headline | "Stay on track"                                   |
-| Inline ask body     | "Get a reminder at 8pm if you haven't practiced." |
-| CTA                 | "Enable Reminders" / "Not now"                    |
 
 ---
 

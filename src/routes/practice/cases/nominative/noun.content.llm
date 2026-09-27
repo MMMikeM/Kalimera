@@ -10,61 +10,33 @@ Prompt: English word → type Greek article + noun (e.g. "house → το σπί�
 
 The articles paradigm drill teaches the FORMS of ο/η/το across cases. This drill teaches WHICH article applies to which noun. They are different skills. You need both: the form AND the assignment.
 
-## Core noun set
+## Item source
 
-### Masculine (ο)
-| English | Greek (nom sg) |
-|---------|----------------|
-| man | ο άντρας |
-| friend (m) | ο φίλος |
-| coffee | ο καφές |
-| road / street | ο δρόμος |
-| time / weather | ο καιρός |
-| father | ο πατέρας |
-| son | ο γιος |
-| dog | ο σκύλος |
-| month | ο μήνας |
-| world | ο κόσμος |
-| bread | ο άρτος / το ψωμί (neut — use as contrast item) |
+Route `/practice/cases/nominative/noun`, drill id `nominative-nouns`, catalogue title "Noun (Doer)"
+(`cases/drills.data.ts`). There is no hand-written noun list: the loader calls
+`getNounDrillItemsFn({ grammaticalCase: "nominative", drillId, stripArticleForReverse: true })`
+(`src/server/fns/noun.ts`), which takes up to 50 nouns from the learner's SRS pool
+(`getDrillVocabPool`, CEFR band via `adjacentCefrPool`) and reads each one's nominative singular
+from `nominal_forms`. Each item: `greek` = article + noun (το σπίτι), `label` = English gloss,
+`dimension` = gender, `reverseGreek` = the noun without its article, `bucket` = SRS bucket.
 
-### Feminine (η)
-| English | Greek (nom sg) |
-|---------|----------------|
-| woman | η γυναίκα |
-| friend (f) | η φίλη |
-| sea | η θάλασσα |
-| door | η πόρτα |
-| city | η πόλη |
-| mother | η μητέρα |
-| daughter | η κόρη |
-| language | η γλώσσα |
-| night | η νύχτα |
-| family | η οικογένεια |
-
-### Neuter (το)
-| English | Greek (nom sg) |
-|---------|----------------|
-| house | το σπίτι |
-| child | το παιδί |
-| book | το βιβλίο |
-| car | το αυτοκίνητο |
-| water | το νερό |
-| name | το όνομα |
-| food | το φαγητό |
-| restaurant | το εστιατόριο |
-| hotel | το ξενοδοχείο |
-| morning | το πρωί |
+To change which nouns appear, change the vocabulary seed (`src/scripts/seed-data/vocabulary/nouns.ts`)
+or the pool query, not this file.
 
 ## Drill format
 
 **Forward**: English → type `article + noun` (e.g. "house" → "το σπίτι")
-**Gender selector**: Allow filtering by gender (drill only feminine, or only masculine vs neuter, etc.) — useful for targeted practice
-**Reverse**: Greek noun (no article) → type correct article, or select M/F/N
+**Gender filter**: not implemented. Items carry `category` = gender, but the route passes no
+`categories`, so the config screen shows no filter
+**Reverse**: Greek noun (no article) → single-select Masculine (ο) / Feminine (η) / Neuter (το),
+coloured with the reserved gender tokens (`GENDER_STYLE`)
 
 ## Notes
 
-- Accept both nominative article and noun (ο φίλος) in forward mode
-- Do NOT drill genitive or accusative forms here — that is the case-transform grammar drill
+- `matchPhonetic` accepts the answer with or without a leading article, so forward mode does not
+  currently enforce the article: "spiti" passes for το σπίτι
+- Do NOT drill genitive or accusative forms here: those are Noun (Target) and Noun (Owner)
+  (`cases/accusative/noun.tsx`, `cases/genitive/noun.tsx`), built by the same server function
 - Neuter nouns in -ι and -ο are the most learnable as a pattern, but still worth drilling explicitly for the common set
 - Masculine -ος endings are common but not universal — don't let learner over-generalise
 - Include a few "traps": nouns that look like they should be one gender but aren't (ο καφές looks like it should be neuter but is masculine)

@@ -47,13 +47,14 @@ database-driven. This allows precise control over dialogue flow and cultural not
 
 ## Display Modes
 
-Conversations support two modes (toggled in layout via `ConversationModeToggle`, persisted
-across tabs in `conversation-mode`):
+Conversations support two modes (toggled in `$tab.tsx` via `ConversationModeToggle`, persisted
+across tabs by `usePersistedState` under the key `conversation-mode`):
 - **`read`** (UI label "Study"): Full dialogue visible with translations
 - **`roleplay`** (UI label "Speak"): Greek hidden for "you" lines, English hidden on all lines - tap to reveal
 
 ## Dialogue Line Structure
 
+`DialogueLine` and `ConversationMode` are exported from `src/components/DialogueExchange.tsx`;
 `SpeakerRole` is defined in `src/components/SpeakerBadge.tsx`.
 
 ```typescript

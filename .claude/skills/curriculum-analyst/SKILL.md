@@ -70,7 +70,7 @@ Run through these five questions:
 
 - Grammar pedagogy (user isn't a beginner)
 - Cognitive load from new content (user knows the content)
-- Scaffolding (user needs pressure, not support)
+- Teaching scaffolding (plain-English handles such as Doer/Target/Owner are `greek-curriculum-expert`'s call; judge only whether the drill applies pressure)
 - Complete coverage (volume > coverage)
 - Perfect sequencing (topic selection matters little)
 

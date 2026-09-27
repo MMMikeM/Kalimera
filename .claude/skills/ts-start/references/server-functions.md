@@ -107,9 +107,11 @@ src/utils/
 
 ### Example
 
+In this repo, query helpers like this live in `src/server/db/queries/`, the only place a lint rule (`vite.config.ts`) lets code import `db`; server functions live in `src/server/fns/` and call them.
+
 ```tsx
 // users.server.ts - Server-only helpers
-import { db } from "~/db";
+import { db } from "@/db";
 
 export async function findUserById(id: string) {
 	return db.query.users.findFirst({ where: eq(users.id, id) });
@@ -134,7 +136,7 @@ Server functions can be statically imported in any file, including client compon
 
 ```tsx
 // ✅ Safe - build process handles environment shaking
-import { getUser } from "~/utils/users.functions";
+import { getUser } from "@/utils/users.functions";
 
 function UserProfile({ id }) {
 	const { data } = useQuery({
@@ -151,7 +153,7 @@ The build process replaces server function implementations with RPC stubs in cli
 >
 > ```tsx
 > // ❌ Can cause bundler issues
-> const { getUser } = await import("~/utils/users.functions");
+> const { getUser } = await import("@/utils/users.functions");
 > ```
 
 ## Parameters & Validation

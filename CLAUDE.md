@@ -25,6 +25,8 @@ TURSO_DATABASE_URL=file:./local.db pnpm exec drizzle-kit push
 
 The seeders (vocab + verb conjugations) are **idempotent additive upserts**. Re-running against prod is safe — only adds/updates rows, never deletes.
 
+**Connections:** the app shares one Turso connection (`db`, with a one-shot retry for reads). Transactions go through `inTransaction`, which gives each its own connection. See `src/server/db/CLAUDE.md`.
+
 **Git:** `git mv` rename/move (keep history), `git rm` delete. Never commit without approval.
 
 ---
@@ -46,6 +48,7 @@ The seeders (vocab + verb conjugations) are **idempotent additive upserts**. Re-
 - Self-documenting; comments only for non-obvious logic
 - Queen's English (colour, favourite)
 - Read loader data with `Route.useLoaderData()`; it is typed from the loader
+- Reuse the shared components before writing new UI (`src/components/README.md`): `ButtonLink` for navigation that looks like a button, `BackLink`, `PageHeading`, `StatusPage`, `Verdict`, `MarkedGreek`, `SectionIndex`
 - Path alias: `@/` → `./src/`
 - The Vite plugin regenerates `src/routeTree.gen.ts`; there is no separate typegen script
 
@@ -53,13 +56,17 @@ The seeders (vocab + verb conjugations) are **idempotent additive upserts**. Re-
 
 ## Routes
 
-Default **page routes** (loader + action + component) with `<Form>` and `useFetcher`.
+TanStack Start with file-based routing; `src/routes/CLAUDE.md` has the patterns.
 
-**Resource routes** (no component) only for: webhooks, polling endpoints, background jobs.
+Default **page routes**: a file route with a `loader` and a component. Mutations are `createServerFn` functions in `src/server/fns/*`, called from components.
 
-**`prefix()` is URL namespacing only** — it does not create a parent route. If `..` should land on `/practice/cases`, then `cases` must be an actual `route()` parent with drills as children, not a `prefix("cases", [...])`. Flat prefix routes are siblings of `practice`, not children of `cases`.
+**Endpoints** (a file route with `server.handlers`, e.g. `/api/errors`) only for: webhooks, polling endpoints, background jobs.
 
-**Colocate data with its owner** — don't create a central registry file that combines unrelated data from multiple modules. Each route/component owns its own data; a combined view (e.g. `drill-lookup.ts`) is derived from the owners, not the primary source. A god file that knows about cases, pronouns, verbs, AND blocks is the wrong abstraction.
+**Nesting comes from the file tree.** A folder without a `route.tsx` adds path segments but no parent route, so `..` from `practice/cases/accusative/noun` does not land on `/practice/cases`. Drills pass an explicit `backTo` instead.
+
+**Colocate data with its owner** — don't create a central registry file that combines unrelated data from multiple modules. Each route/component owns its own data; a combined view (e.g. `practice/drill-catalogue.data.ts`) is derived from the owners, not the primary source. A god file that knows about cases, pronouns, verbs, AND blocks is the wrong abstraction.
+
+**Router devtools ship to production on purpose** (`TanStackRouterDevtoolsInProd` in `__root.tsx`). Don't remove, gate or flag the badge.
 
 ---
 
@@ -70,10 +77,14 @@ Default **page routes** (loader + action + component) with `<Form>` and `useFetc
 | File                                         | Purpose                                                |
 | -------------------------------------------- | ------------------------------------------------------ |
 | `docs/user-flows.llm`                        | Route map, user journeys, data tables — **read first** |
+| `src/routes/reference/content.llm`           | Reference index and tabs                               |
 | `src/routes/reference/tabs/*.content.llm`    | Grammar topics                                         |
+| `src/routes/learn/content.llm`               | Learn index                                            |
 | `src/routes/learn/phrases/content.llm`       | Phrase tabs                                            |
 | `src/routes/learn/conversations/content.llm` | Conversation tabs                                      |
 | `src/routes/learn/essentials/content.llm`    | Essentials subtabs                                     |
+| `src/routes/practice/content.llm`            | Practice routes and the drill engine                   |
+| `src/routes/practice/**/*.content.llm`       | Individual drill groups                                |
 
 ---
 
@@ -138,6 +149,9 @@ Two practical notes:
 - Never put opacity on a `-text` token — it breaks AAA. `docs/design-guidelines.md` has the
   full palette, the AAA variants and the component-level assignments; read it before
   choosing a colour.
+- Feedback text uses `text-correct-text` / `text-incorrect-text`; the bare `correct` /
+  `incorrect` tokens are for bars, borders and icons. Text on a scheme's `badgeBg` chip
+  uses that scheme's `badgeText`, never `text`.
 
 ---
 
@@ -147,14 +161,14 @@ Two vocabularies in use — both correct, different contexts:
 
 | Grammatical term | Learner label | Role token          | Route segment  |
 | ---------------- | ------------- | ------------------- | -------------- |
-| Nominative       | Doer          | `case-nominative-*` | `nominative-*` |
-| Accusative       | Target        | `case-accusative-*` | `accusative-*` |
-| Genitive         | Owner         | `case-genitive-*`   | `genitive-*`   |
+| Nominative       | Doer          | `case-nominative-*` | `nominative/*` |
+| Accusative       | Target        | `case-accusative-*` | `accusative/*` |
+| Genitive         | Owner         | `case-genitive-*`   | `genitive/*`   |
 
 The role tokens are their own scales, **not** `ocean` / `terracotta` / `olive` — see
 "Colour — Two Palettes" above.
 
-**Routes use grammatical terms** (`practice/cases/accusative-noun`). **UI uses learner labels** ("Target", "Doer", "Owner") — never assume the learner knows "accusative". Verb conjugations use **uncontracted forms** (αγαπάω, μιλάω) not contracted (αγαπώ, μιλώ).
+**Routes use grammatical terms** (`practice/cases/accusative/noun`). **UI uses learner labels** ("Target", "Doer", "Owner") — never assume the learner knows "accusative". Verb conjugations use **uncontracted forms** (αγαπάω, μιλάω) not contracted (αγαπώ, μιλώ).
 
 ---
 
@@ -207,6 +221,6 @@ Fixed shell, scroll inside `.app-main`:
 
 CSS classes (in `src/index.css`):
 
-- `.app-shell` — fixed, inset-0, overflow hidden
+- `.app-shell` — fixed to the top and sides, `height: 100dvh`, overflow hidden
 - `.app-main` — flex-1, overflow-y auto (scroll container)
 - `.safe-area-pb` — padding for mobile safe area

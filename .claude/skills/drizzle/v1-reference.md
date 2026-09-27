@@ -1,48 +1,35 @@
-# Drizzle ORM v1 Reference (beta.19)
+# Drizzle ORM v1 Reference (rc.4)
 
 ## Installation
 
 ```bash
-npm i drizzle-orm@beta @libsql/client
-npm i -D drizzle-kit@beta
+pnpm add drizzle-orm@1.0.0-rc.4 @tursodatabase/serverless
+pnpm add -D drizzle-kit@1.0.0-rc.4
 ```
 
 ---
 
-## Driver Setup (Turso/libSQL)
+## Driver Setup (Turso serverless)
 
-### Using connection config
-
-```typescript
-import { drizzle } from "drizzle-orm/libsql";
-
-const db = drizzle({
-	connection: {
-		url: process.env.TURSO_DATABASE_URL!,
-		authToken: process.env.TURSO_AUTH_TOKEN!,
-	},
-});
-```
-
-### Using existing client
+This is how `src/server/db/index.ts` builds the one shared client. App code never repeats it; it imports `db` or `inTransaction` from there.
 
 ```typescript
-import { createClient } from "@libsql/client";
-import { drizzle } from "drizzle-orm/libsql";
+import { connect } from "@tursodatabase/serverless";
+import { drizzle } from "drizzle-orm/tursodatabase-serverless";
 
-const client = createClient({
-	url: process.env.TURSO_DATABASE_URL!,
-	authToken: process.env.TURSO_AUTH_TOKEN,
-});
-const db = drizzle({ client });
-```
-
-### With relations
-
-```typescript
 import { relations } from "./relations";
-const db = drizzle({ client, relations });
+import { withReadRetry } from "./retry";
+
+const client = connect({
+	url: required("TURSO_DATABASE_URL"),
+	defaultQueryTimeout: 30_000,
+	...(process.env.TURSO_AUTH_TOKEN ? { authToken: process.env.TURSO_AUTH_TOKEN } : {}),
+});
+
+export const db = drizzle({ client: withReadRetry(client), relations });
 ```
+
+Pass `relations` (not `schema`) so the relational Query API is available. The serverless driver speaks HTTP and rejects `file:` URLs. drizzle-kit is the only thing that uses the local-file stack.
 
 ### With casing
 
@@ -50,7 +37,7 @@ const db = drizzle({ client, relations });
 const db = drizzle({ client, casing: "snake_case" });
 ```
 
-Driver sub-imports: `/libsql`, `/libsql/node`, `/libsql/web`, `/libsql/http`, `/libsql/ws`, `/libsql/wasm`.
+Turso-family driver sub-imports in rc.4: `/tursodatabase-serverless` (HTTP, what this app uses), `/tursodatabase` (embedded), `/tursodatabase-sync`. The `/libsql` family also exists, but this repo doesn't use it.
 
 ---
 
@@ -365,7 +352,7 @@ await db.query.posts.findMany({
 
 A **SQL transaction** groups one or more statements into a single logical unit: either the whole group **commits** or it **rolls back** (undone) together.
 
-Drizzle runs statements inside a transaction via `db.transaction()`. Use the **`tx`** (transaction) client for all operations inside the callback — not the outer `db` — so everything participates in the same transaction.
+Drizzle runs statements inside a transaction via `.transaction()`. **In this repo, call `inTransaction(run)` from `@/server/db`**, not `db.transaction()`. It runs the same `.transaction()` on a connection of its own and closes it afterwards. The examples below show the upstream `db.transaction` shape; the callback and `tx` API are identical. Use the **`tx`** (transaction) client for all operations inside the callback, not the outer `db`, so everything participates in the same transaction.
 
 For reads inside a transaction, prefer **`tx.query`** (same rules as outside: `.select(` is almost always wrong). Some examples below use **`tx.select(...)`** to match upstream Drizzle docs; in this codebase, reach for `tx.query` first.
 
@@ -388,7 +375,7 @@ await db.transaction(async (tx) => {
 
 ### Passing `tx` to helpers (multi-step mutations)
 
-For one **atomic** unit of work (e.g. insert a row and update related tables), call **`db.transaction` once** in the public function and pass **`tx`** into private helpers. Helpers use `tx.insert` / `tx.query` / `tx.update` — they do **not** start another `db.transaction` for the same operation. That keeps a single commit/rollback boundary and matches how this repo structures `src/db.server/queries/*`.
+For one **atomic** unit of work (e.g. insert a row and update related tables), call **`inTransaction` once** in the public function and pass **`tx`** into private helpers typed `tx: DbTransaction`. Helpers use `tx.insert` / `tx.query` / `tx.update`; they do **not** start another transaction for the same operation. That keeps a single commit/rollback boundary and matches `src/server/db/queries/practice-attempts.ts`.
 
 ### Nested transactions (savepoints)
 
@@ -477,7 +464,7 @@ await db.transaction(async (tx) => {
 
 ### Dialect-specific transaction options (PostgreSQL)
 
-The second argument configures the transaction for **PostgreSQL**-family drivers (e.g. `drizzle-orm/node-postgres`). **libSQL / SQLite** (this project’s default stack) does not expose the same surface; use driver-specific docs for behaviour and supported options.
+The second argument configures the transaction for **PostgreSQL**-family drivers (e.g. `drizzle-orm/node-postgres`). **SQLite on Turso** (this project's stack) does not expose the same surface; use driver-specific docs for behaviour and supported options.
 
 ```typescript
 await db.transaction(
@@ -545,27 +532,27 @@ const [stats] = await db.all<{ total: number; active: number }>(sql`
 // drizzle.config.ts
 import { defineConfig } from "drizzle-kit";
 
+const url = process.env.TURSO_DATABASE_URL ?? "file:./local.db";
+const isLocalFile = url.startsWith("file:");
+
 export default defineConfig({
+	schema: ["./src/server/db/schema.ts", "./src/server/db/relations.ts"],
 	out: "./drizzle",
-	schema: "./src/lib/schema.ts",
 	dialect: "turso",
-	dbCredentials: {
-		url: process.env.TURSO_DATABASE_URL!,
-		authToken: process.env.TURSO_AUTH_TOKEN!,
-	},
+	dbCredentials: isLocalFile ? { url } : { url, authToken: process.env.TURSO_AUTH_TOKEN },
 });
 ```
 
 ### Commands
 
 ```bash
-npx drizzle-kit generate   # Generate migration SQL files
-npx drizzle-kit migrate    # Apply migrations
-npx drizzle-kit push       # Push schema directly (dev)
-npx drizzle-kit pull       # Introspect DB → generate schema
-npx drizzle-kit up         # Upgrade migration folder format to v1
-npx drizzle-kit check      # Detect non-commutative migrations
-npx drizzle-kit studio     # Open Drizzle Studio GUI
+pnpm db:generate                  # drizzle-kit generate: migration SQL files
+pnpm db:migrate                   # drizzle-kit migrate: apply migrations
+pnpm db:push                      # drizzle-kit push: push schema directly (this repo's workflow; hits prod)
+pnpm db:studio                    # drizzle-kit studio
+pnpm exec drizzle-kit pull        # Introspect DB → generate schema
+pnpm exec drizzle-kit up          # Upgrade migration folder format to v1
+pnpm exec drizzle-kit check       # Detect non-commutative migrations
 ```
 
 `drizzle-kit drop` is **removed** in v1.
@@ -586,7 +573,7 @@ drizzle/
     snapshot.json
 ```
 
-Run `npx drizzle-kit up` to upgrade from the old flat format.
+Run `pnpm exec drizzle-kit up` to upgrade from the old flat format.
 
 ---
 

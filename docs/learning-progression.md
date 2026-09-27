@@ -189,7 +189,7 @@ Adjectives must match the noun in gender and case.
 
 #### 9. Prepositions
 
-**Location, direction, purpose—all take accusative.**
+**Location, direction, purpose: the everyday prepositions all take accusative.**
 
 | Preposition | Meaning   | Example                       |
 | ----------- | --------- | ----------------------------- |
@@ -200,7 +200,7 @@ Adjectives must match the noun in gender and case.
 
 **Why here:** Prepositions require knowing accusative forms. The σε contractions (στον, στην, στο) build on article knowledge.
 
-**Key insight:** All prepositions take accusative. No exceptions. This simplifies things.
+**Key insight:** Every everyday preposition takes accusative, so after σε, με, για, από or χωρίς there is no case decision to make. A few formal prepositions take genitive.
 
 ---
 

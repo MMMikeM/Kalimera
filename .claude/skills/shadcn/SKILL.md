@@ -14,12 +14,14 @@ Components are added as source code via the CLI.
 
 ## Project Context
 
-- **Base**: `base` (React Aria primitives) — use `render`, NOT `asChild`
+- **Base**: `base` (`@base-ui/react` primitives): use `render`, NOT `asChild`
 - **Package manager**: pnpm
-- **Alias**: `~/` (not `@/`) — check imports after adding components
-- **Tailwind**: v4 (`@theme inline` blocks, not `tailwind.config.js`)
-- **Framework**: Vite SPA (TanStack Start)
-- **Icon library**: Check `components.json` after init
+- **Alias**: `@/` → `./src/` (`components.json` aliases, `tsconfig.json`)
+- **Tailwind**: v4 (`@theme` and `@theme static` blocks in `src/index.css`, not `tailwind.config.js`)
+- **Framework**: SSR app on TanStack Start (Nitro Node server), built with Vite
+- **Icon library**: `lucide` (`components.json`)
+- **`cn`**: import from `tailwind-variants`. There is no `src/lib/utils.ts`, although `components.json` still points `aliases.utils` at `@/lib/utils`
+- **Button**: `src/components/ui/button.tsx` is the project's own `tv()` button, not the shadcn one. `variant` defaults to `primary` (also `secondary`, `outline`, `ghost`); sizes `sm`, `md`, `lg`. For navigation use `ButtonLink` (built with `createLink` from TanStack Router), never a `<Button>` inside a `<Link>`
 
 Run `pnpm dlx shadcn@latest info --json` to get current project context.
 
@@ -30,8 +32,8 @@ Run `pnpm dlx shadcn@latest info --json` to get current project context.
 - **`className` for layout, not styling.** Never override component colors/typography.
 - **`gap-*` not `space-x/y-*`.** Use `flex` + `gap-*` or `flex flex-col gap-*`.
 - **`size-*` when width = height.** `size-10` not `w-10 h-10`.
-- **Semantic colors only.** `bg-primary`, `text-muted-foreground` — never `bg-blue-500`.
-- **No manual `dark:` overrides.** Semantic tokens handle light/dark.
+- **Project colour tokens only.** The shadcn semantic tokens (`bg-card`, `text-muted-foreground`) and the base palette scales (`cream`, `terracotta`, `ocean`, `olive`, `honey`, `navy`, `slate`, `sunset`, `stone`) for chrome. Reserved grammar role tokens (`case-*`, `gender-*`) only for grammatical claims, read from `src/constants/grammar-palette.ts` (the linter flags hand-written role tokens). Never a raw Tailwind hue such as `bg-blue-500`. See the Two Palettes section of CLAUDE.md.
+- **`dark:` only where a step doesn't flip.** `:root.dark` in `src/index.css` remaps light tints and dark text shades, so most classes need no override; mid steps keep their value, so use `dark:` only there (e.g. `text-terracotta-700 dark:text-terracotta-text` in `MobileNav`).
 - **Use `cn()` for conditional classes.**
 
 ### Forms → [forms.md](./rules/forms.md)
@@ -67,7 +69,7 @@ Run `pnpm dlx shadcn@latest info --json` to get current project context.
 1. **Search first** — `pnpm dlx shadcn@latest search -q "..."` before writing custom UI
 2. **Get docs** — `pnpm dlx shadcn@latest docs <component>` for API and examples
 3. **Add** — `pnpm dlx shadcn@latest add button card dialog`
-4. **Fix imports** — after adding, replace `@/` with `~/` in all added files
+4. **Fix imports**: after adding, replace `import { cn } from "@/lib/utils"` with `import { cn } from "tailwind-variants"` in all added files
 5. **Verify** — read added files, check for missing sub-components, wrong composition, rule violations
 
 ## Quick Reference
