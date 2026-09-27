@@ -34,6 +34,8 @@ interface SchemeClasses {
 	bg: string;
 	border: string;
 	badgeBg: string;
+	/** Text on `badgeBg`. The gender `-text` tokens are too light for their own -300 chip. */
+	badgeText: string;
 	text: string;
 	/** Saturated fill for progress bars and solid chips. */
 	bar: string;
@@ -46,6 +48,7 @@ export const SCHEME: Record<GrammarScheme, SchemeClasses> = {
 		bg: "bg-case-nominative-100",
 		border: "border-case-nominative-300",
 		badgeBg: "bg-case-nominative-400",
+		badgeText: "text-case-nominative-text",
 		text: "text-case-nominative-text",
 		bar: "bg-case-nominative-700",
 		heroText: "text-case-nominative-700",
@@ -54,6 +57,7 @@ export const SCHEME: Record<GrammarScheme, SchemeClasses> = {
 		bg: "bg-case-accusative-100",
 		border: "border-case-accusative-300",
 		badgeBg: "bg-case-accusative-400",
+		badgeText: "text-case-accusative-text",
 		text: "text-case-accusative-text",
 		bar: "bg-case-accusative-700",
 		heroText: "text-case-accusative-700",
@@ -62,6 +66,7 @@ export const SCHEME: Record<GrammarScheme, SchemeClasses> = {
 		bg: "bg-case-genitive-100",
 		border: "border-case-genitive-300",
 		badgeBg: "bg-case-genitive-400",
+		badgeText: "text-case-genitive-text",
 		text: "text-case-genitive-text",
 		bar: "bg-case-genitive-700",
 		heroText: "text-case-genitive-700",
@@ -70,6 +75,7 @@ export const SCHEME: Record<GrammarScheme, SchemeClasses> = {
 		bg: "bg-gender-masculine-100",
 		border: "border-gender-masculine-200",
 		badgeBg: "bg-gender-masculine-300",
+		badgeText: "text-gender-masculine-950",
 		text: "text-gender-masculine-text",
 		bar: "bg-gender-masculine-700",
 		heroText: "text-gender-masculine-700",
@@ -78,6 +84,7 @@ export const SCHEME: Record<GrammarScheme, SchemeClasses> = {
 		bg: "bg-gender-feminine-100",
 		border: "border-gender-feminine-200",
 		badgeBg: "bg-gender-feminine-300",
+		badgeText: "text-gender-feminine-950",
 		text: "text-gender-feminine-text",
 		bar: "bg-gender-feminine-700",
 		heroText: "text-gender-feminine-700",
@@ -86,6 +93,7 @@ export const SCHEME: Record<GrammarScheme, SchemeClasses> = {
 		bg: "bg-gender-neuter-100",
 		border: "border-gender-neuter-200",
 		badgeBg: "bg-gender-neuter-300",
+		badgeText: "text-gender-neuter-950",
 		text: "text-gender-neuter-text",
 		bar: "bg-gender-neuter-700",
 		heroText: "text-gender-neuter-700",
@@ -94,6 +102,7 @@ export const SCHEME: Record<GrammarScheme, SchemeClasses> = {
 		bg: "bg-navy-100",
 		border: "border-navy-300",
 		badgeBg: "bg-navy-300",
+		badgeText: "text-navy-text",
 		text: "text-navy-text",
 		bar: "bg-navy",
 		heroText: "text-navy-700",
@@ -102,6 +111,7 @@ export const SCHEME: Record<GrammarScheme, SchemeClasses> = {
 		bg: "bg-slate-100",
 		border: "border-slate-300",
 		badgeBg: "bg-slate-300",
+		badgeText: "text-slate-text",
 		text: "text-slate-text",
 		bar: "bg-slate",
 		heroText: "text-slate-600",
@@ -110,6 +120,7 @@ export const SCHEME: Record<GrammarScheme, SchemeClasses> = {
 		bg: "bg-sunset-100",
 		border: "border-sunset-300",
 		badgeBg: "bg-sunset-300",
+		badgeText: "text-sunset-text",
 		text: "text-sunset-text",
 		bar: "bg-sunset",
 		heroText: "text-sunset-700",
@@ -118,6 +129,7 @@ export const SCHEME: Record<GrammarScheme, SchemeClasses> = {
 		bg: "bg-honey-50",
 		border: "border-honey-200",
 		badgeBg: "bg-honey-200",
+		badgeText: "text-honey-text",
 		text: "text-honey-text",
 		bar: "bg-honey",
 		heroText: "text-honey-700",
@@ -126,6 +138,7 @@ export const SCHEME: Record<GrammarScheme, SchemeClasses> = {
 		bg: "bg-stone-50/60",
 		border: "border-stone-200",
 		badgeBg: "bg-stone-200",
+		badgeText: "text-stone-700",
 		text: "text-stone-700",
 		bar: "bg-stone-400",
 		heroText: "text-stone-500",

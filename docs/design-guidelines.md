@@ -218,7 +218,9 @@ Feedback states use dedicated semantic tokens:
 | Incorrect | `--color-incorrect` | `oklch(0.58 0.21 27)`                        | `--color-incorrect-light` | `oklch(0.94 0.03 18)`  |
 | Hint      | `--color-hint`      | `var(--color-honey)` (`oklch(0.76 0.12 82)`) | `--color-hint-light`      | `oklch(0.96 0.06 96)`  |
 
-Feedback states are applied using standard Tailwind utility classes (e.g. `text-correct`, `bg-correct-light`, `text-incorrect`, `bg-incorrect-light`, `text-hint`, `bg-hint-light`).
+Text uses the `-text` variants, the same rule as the base palette: `--color-correct-text` (`oklch(0.42 0.12 149)`, 7.6:1 on cream) and `--color-incorrect-text` (`oklch(0.45 0.17 27)`, 7.7:1). The role tokens themselves are for bars, borders and icons; `text-correct` on cream is 3.1:1 and fails even AA.
+
+Feedback states are applied using standard Tailwind utility classes (e.g. `text-correct-text`, `bg-correct-light`, `text-incorrect-text`, `bg-incorrect-light`, `bg-correct` for the drill timer bar).
 
 ---
 
@@ -414,7 +416,7 @@ Use `MistakeComparison` (`src/components/MistakeComparison.tsx`) for wrong vs co
 />
 ```
 
-- Explicit "Wrong:" / "Correct:" badges using `text-incorrect` / `AlertCircle` and `text-correct` / `CheckCircle`
+- Explicit "Wrong:" / "Correct:" badges using `text-incorrect-text` / `AlertCircle` and `text-correct-text` / `CheckCircle`
 - Never relies on colour alone for accessibility
 - Supports `list` (default) and `grid` layouts
 
@@ -515,8 +517,8 @@ Opacity modifiers are fine for backgrounds since they do not affect text contras
 | Subtitles / descriptions    | `text-slate-text`                                                | Subtle, supporting            |
 | Teaching cards & Callouts   | `SCHEME[scheme]` (`bg`, `border`, `badgeBg`, `text`)             | Semantic grammar mapping      |
 | Decision navigators & tests | `bg-honey-50`, `border-honey-300`, `text-honey-text`             | Hints, warmth, navigation     |
-| Feedback — Correct          | `text-correct` / `bg-correct-light`                              | Unambiguous positive feedback |
-| Feedback — Incorrect        | `text-incorrect` / `bg-incorrect-light`                          | Unambiguous error feedback    |
+| Feedback — Correct          | `text-correct-text` / `bg-correct-light`                         | Unambiguous positive feedback |
+| Feedback — Incorrect        | `text-incorrect-text` / `bg-incorrect-light`                     | Unambiguous error feedback    |
 | Decorative icons            | Base colour (e.g. `text-honey`, `text-terracotta`)               | Visual accent only            |
 | Text labels & inline badges | `-text` variant (e.g. `text-honey-text`, `text-terracotta-text`) | AAA compliance                |
 

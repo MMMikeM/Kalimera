@@ -25,19 +25,19 @@ export const MistakeComparison = ({ mistakes, cardClassName }: MistakeComparison
 				className={cardClassName ?? "bg-cream-dark"}
 			>
 				<div className="mb-1 flex items-start gap-2">
-					<span className="w-16 shrink-0 text-xs font-semibold tracking-wide text-incorrect uppercase">
+					<span className="w-16 shrink-0 text-xs font-semibold tracking-wide text-incorrect-text uppercase">
 						Wrong:
 					</span>
-					<AlertCircle className="mt-0.5 shrink-0 text-incorrect" size={14} aria-hidden="true" />
+					<AlertCircle className="mt-0.5 shrink-0 text-incorrect-text" size={14} aria-hidden="true" />
 					<GreekText tone="incorrect" size="sm" className="font-medium line-through">
 						{mistake.wrong}
 					</GreekText>
 				</div>
 				<div className="mb-2 flex items-start gap-2">
-					<span className="w-16 shrink-0 text-xs font-semibold tracking-wide text-correct uppercase">
+					<span className="w-16 shrink-0 text-xs font-semibold tracking-wide text-correct-text uppercase">
 						Correct:
 					</span>
-					<CheckCircle className="mt-0.5 shrink-0 text-correct" size={14} aria-hidden="true" />
+					<CheckCircle className="mt-0.5 shrink-0 text-correct-text" size={14} aria-hidden="true" />
 					<GreekText tone="correct" size="sm" className="font-medium">
 						{mistake.correct}
 					</GreekText>
