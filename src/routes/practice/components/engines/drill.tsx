@@ -7,8 +7,9 @@ import { matchPhonetic } from "@/lib/greek-transliteration";
 import { DRILL_REGISTRY, drillTitle } from "@/routes/practice/drill-catalogue.data";
 import { startSessionFn, recordAttemptFn, completeSessionFn } from "@/server/fns/srs";
 
+import type { SpeedId } from "../drill-speeds";
 import { type DrillForm, type DrillMode, type SessionSize } from "./deck";
-import { useCountdown, useForwardKeyboard } from "./drill-hooks";
+import { useContinueKeyboard, useCountdown, useForwardKeyboard } from "./drill-hooks";
 import {
 	type DrillSessionCallbacks,
 	type DrillStoreConfig,
@@ -120,15 +121,19 @@ export interface DrillProps<
 	forwardPrompt?: (form: T) => React.ReactNode;
 	configExtras?: React.ReactNode;
 	autoStart?: boolean;
-	sessionSize?: SessionSize;
+	/** One of the picker's sizes, or the exact count for a fixed set such as /try. */
+	sessionSize?: SessionSize | number;
+	/** Preselects the speed; a drill that skips its config screen has no other way to set it. */
+	speed?: SpeedId;
 	onComplete?: (stats: SessionStats<DrillForm>) => void;
+	summaryFooter?: React.ReactNode;
 }
 
 // ─── Inner drill (reads from store) ───────────────────────────────────────────
 
 interface DrillInnerProps<K extends string, T extends DrillForm> extends Pick<
 	DrillProps<K, T>,
-	"reverse" | "forwardPrompt" | "configExtras" | "autoStart"
+	"reverse" | "forwardPrompt" | "configExtras" | "autoStart" | "summaryFooter"
 > {
 	/** Title and theme are already resolved by <Drill>, so the shells can rely on them. */
 	shell: ShellProps;
@@ -142,6 +147,7 @@ function DrillInner<K extends string, T extends DrillForm>({
 	forwardPrompt,
 	configExtras,
 	autoStart,
+	summaryFooter,
 }: DrillInnerProps<K, T>) {
 	const phase = useDrillStore((s) => s.phase);
 	const mode = useDrillStore((s) => s.mode);
@@ -171,23 +177,13 @@ function DrillInner<K extends string, T extends DrillForm>({
 		return () => clearTimeout(t);
 	}, [phase, lastAttempt, advance]);
 
-	// Enter/Space to advance on wrong answer
-	useEffect(() => {
-		if (phase !== "feedback" || lastAttempt?.isCorrect) return;
-		const handler = (e: KeyboardEvent) => {
-			if (e.key === "Enter" || e.key === " ") {
-				e.preventDefault();
-				advance();
-			}
-		};
-		window.addEventListener("keydown", handler);
-		return () => window.removeEventListener("keydown", handler);
-	}, [phase, lastAttempt, advance]);
+	useContinueKeyboard({ enabled: phase === "feedback", inputRef, onContinue: advance });
 
 	const handleForwardSubmit = () => {
 		const { deck, cardIndex, input, phase } = useDrillStore.getState();
 		const form = deck[cardIndex];
-		if (!form || phase !== "active") return;
+		// A stray Enter must not record a miss in the learner's history; the timer ends an unanswered card.
+		if (!form || phase !== "active" || input.trim() === "") return;
 		const primary = matchPhonetic(input.trim(), form.greek).isCorrect;
 		const alternate =
 			!primary && form.acceptAlso ? matchPhonetic(input.trim(), form.acceptAlso).isCorrect : false;
@@ -230,7 +226,14 @@ function DrillInner<K extends string, T extends DrillForm>({
 	// ── Complete ──────────────────────────────────────────────────────────────
 
 	if (phase === "complete") {
-		return <SummaryScreen backTo={shell.backTo} />;
+		// A drill that skipped its config screen on the way in skips it on the way round again.
+		return (
+			<SummaryScreen
+				backTo={shell.backTo}
+				onRepeat={autoStart ? startDrill : drillActions.resetToConfig}
+				footer={summaryFooter}
+			/>
+		);
 	}
 
 	// ── Error (should be unreachable — pool must be validated before startDrill) ─
@@ -247,7 +250,12 @@ function DrillInner<K extends string, T extends DrillForm>({
 	// ── Active / Feedback ─────────────────────────────────────────────────────
 
 	return (
-		<DrillShell progress={progress} barColor={barColor} backTo={shell.backTo}>
+		<DrillShell
+			title={shell.title}
+			progress={progress}
+			barColor={barColor}
+			backTo={shell.backTo}
+		>
 			{mode === "forward" ? (
 				<>
 					<div>
@@ -255,32 +263,27 @@ function DrillInner<K extends string, T extends DrillForm>({
 							// The store holds DrillForm; T is only known to the caller.
 							forwardPrompt(currentForm as T)
 						) : (
-							<>
-								<p className="mb-3 text-xs tracking-widest text-muted-foreground uppercase">
-									{shell.title}
-								</p>
-								{currentForm && (
-									<>
-										{"context" in currentForm && (
-											<GreekText
-												as="p"
-												size="3xl"
-												weight="semibold"
-												tone="inherit"
-												className="mb-4 text-stone-800"
-											>
-												{(currentForm as DrillForm & { context?: string }).context}
-											</GreekText>
-										)}
-										<p className="text-3xl font-medium text-foreground">{currentForm.label}</p>
-										{"detail" in currentForm && (
-											<p className="mt-1 text-xl text-stone-600">
-												{(currentForm as DrillForm & { detail?: string }).detail}
-											</p>
-										)}
-									</>
-								)}
-							</>
+							currentForm && (
+								<>
+									{"context" in currentForm && (
+										<GreekText
+											as="p"
+											size="3xl"
+											weight="semibold"
+											tone="inherit"
+											className="mb-4 text-stone-800"
+										>
+											{(currentForm as DrillForm & { context?: string }).context}
+										</GreekText>
+									)}
+									<p className="text-3xl font-medium text-foreground">{currentForm.label}</p>
+									{"detail" in currentForm && (
+										<p className="mt-1 text-xl text-stone-600">
+											{(currentForm as DrillForm & { detail?: string }).detail}
+										</p>
+									)}
+								</>
+							)
 						)}
 					</div>
 					<ForwardInput inputRef={inputRef} onSubmit={handleForwardSubmit} />
@@ -313,11 +316,13 @@ export function Drill<K extends string = string, T extends DrillForm = DrillForm
 	colorTheme = "terracotta",
 	defaultMode,
 	sessionSize,
+	speed,
 	onComplete,
 	reverse,
 	forwardPrompt,
 	configExtras,
 	autoStart,
+	summaryFooter,
 	...shell
 }: DrillProps<K, T>) {
 	const { auth } = rootRoute.useRouteContext();
@@ -331,6 +336,7 @@ export function Drill<K extends string = string, T extends DrillForm = DrillForm
 			userId: auth?.userId ?? 0,
 			sessionSize,
 			defaultMode,
+			speed,
 			onComplete,
 			sessionCallbacks: SESSION_CALLBACKS,
 		};
@@ -345,6 +351,7 @@ export function Drill<K extends string = string, T extends DrillForm = DrillForm
 			forwardPrompt={forwardPrompt}
 			configExtras={configExtras}
 			autoStart={autoStart}
+			summaryFooter={summaryFooter}
 		/>
 	);
 }
