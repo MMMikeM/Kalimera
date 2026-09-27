@@ -8,11 +8,14 @@ import {
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsInProd } from "@tanstack/react-router-devtools";
 /// <reference types="vite/client" />
+import type { ReactNode } from "react";
 import { useRegisterSW } from "virtual:pwa-register/react";
 
+import { GreekText } from "@/components/GreekText";
 import { Header } from "@/components/Header";
 import { MobileHeader } from "@/components/MobileHeader";
 import { MobileNav } from "@/components/MobileNav";
+import { NotFound, RootError } from "@/components/StatusPage";
 import { themeInitScript } from "@/lib/theme";
 import { type RouterContext } from "@/router";
 import type { AuthSession } from "@/server/auth/session";
@@ -50,18 +53,19 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 			},
 		],
 	}),
+	shellComponent: RootDocument,
 	component: () => (
 		<>
 			<TanStackRouterDevtoolsInProd />
 
-			<RootComponent />
+			<RootBody />
 		</>
 	),
-	errorComponent: ErrorBoundary,
-	notFoundComponent: () => <p>notfound</p>,
+	errorComponent: RootError,
+	notFoundComponent: NotFound,
 });
 
-function RootComponent() {
+function RootDocument({ children }: { children: ReactNode }) {
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<head>
@@ -70,7 +74,7 @@ function RootComponent() {
 				<script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
 			</head>
 			<body className="font-sans text-stone-800 antialiased">
-				<RootBody />
+				{children}
 				<Scripts />
 			</body>
 		</html>
@@ -120,36 +124,14 @@ function RootBody() {
 					<footer className="mt-12 hidden border-t border-stone-200 py-12 md:block">
 						<div className="flex items-center justify-between text-sm text-stone-600">
 							<p>Patterns over memorisation. Once you see the structure, the language clicks.</p>
-							<p className="font-serif text-terracotta-text">Ελληνικά</p>
+							<GreekText as="p" tone="accent" className="font-serif">
+								Ελληνικά
+							</GreekText>
 						</div>
 					</footer>
 				</div>
 			</main>
 			<MobileNav />
-		</div>
-	);
-}
-
-function ErrorBoundary({ error }: { error: Error }) {
-	const errorMessage = error instanceof Error ? error.message : "Unknown error";
-	// Drizzle puts the SQL in `message` and the reason the database rejected it in `cause`.
-	const cause = error?.cause instanceof Error ? error.cause.message : undefined;
-
-	return (
-		<div className="flex min-h-screen items-center justify-center bg-cream p-6">
-			<div className="max-w-2xl text-center">
-				<h1 className="mb-4 font-serif text-3xl text-terracotta">Something went wrong</h1>
-				{cause && <p className="mb-4 font-medium text-stone-700">{cause}</p>}
-				<pre className="mb-6 max-h-64 overflow-auto rounded-lg bg-stone-100 p-3 text-left text-xs whitespace-pre-wrap text-stone-500">
-					{errorMessage}
-				</pre>
-				<a
-					href="/"
-					className="inline-block rounded-xl bg-terracotta px-6 py-3 font-medium text-white transition-colors hover:bg-terracotta-dark"
-				>
-					Go Home
-				</a>
-			</div>
 		</div>
 	);
 }

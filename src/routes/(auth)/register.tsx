@@ -72,7 +72,7 @@ const RegisterRoute = () => {
 					<div className="space-y-6">
 						<div className="text-center">
 							<KeyRound size={48} className="mx-auto mb-3 text-terracotta" />
-							<h2 className="text-xl font-medium">Set Up Passkey</h2>
+							<h2 className="text-xl font-medium">Set up a passkey</h2>
 							<p className="mt-1 text-sm text-stone-500">
 								Use Face ID, Touch ID, or your device PIN for faster sign-in next time.
 							</p>
@@ -104,7 +104,7 @@ const RegisterRoute = () => {
 									onClick={handleComplete}
 									disabled={passkey.state === "loading"}
 								>
-									Skip for Now
+									Skip for now
 								</Button>
 								<Button
 									variant="primary"
@@ -112,7 +112,7 @@ const RegisterRoute = () => {
 									onClick={passkey.register}
 									disabled={passkey.state === "loading"}
 								>
-									{passkey.state === "loading" ? "Setting up..." : "Set Up Passkey"}
+									{passkey.state === "loading" ? "Setting up..." : "Set up passkey"}
 									{passkey.state !== "loading" && <KeyRound size={16} />}
 								</Button>
 							</div>

@@ -19,7 +19,7 @@ export const LapsedUserCTA = ({
 	const getMessage = () => {
 		if (wasProtectedByFreeze && streak > 0) {
 			return {
-				greeting: "Welcome back!",
+				greeting: "Welcome back.",
 				message: `Your freeze protected your ${streak}-day streak.`,
 				emphasis: "Pick up where you left off.",
 			};
@@ -32,7 +32,7 @@ export const LapsedUserCTA = ({
 			};
 		}
 		return {
-			greeting: "Welcome back!",
+			greeting: "Welcome back.",
 			message: `It's been ${daysSinceLastPractice} days.`,
 			emphasis: "Your words are ready when you are.",
 		};

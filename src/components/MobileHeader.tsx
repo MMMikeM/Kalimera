@@ -92,7 +92,7 @@ export function MobileHeader({
 									className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm transition-colors hover:bg-stone-100"
 								>
 									<LogOut size={16} strokeWidth={1.5} className="text-stone-500" />
-									<span className="text-stone-800">Sign Out</span>
+									<span className="text-stone-800">Sign out</span>
 								</button>
 							</PopoverContent>
 						</PopoverPositioner>
@@ -101,9 +101,9 @@ export function MobileHeader({
 				{!isAuthenticated && (
 					<Link
 						to="/login"
-						className="px-3 py-1.5 text-sm font-medium text-stone-600 hover:text-stone-800"
+						className="inline-flex min-h-11 items-center px-3 text-sm font-medium text-stone-600 hover:text-stone-800"
 					>
-						Sign In
+						Sign in
 					</Link>
 				)}
 			</div>
