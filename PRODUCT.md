@@ -69,7 +69,7 @@ All values are hex. When writing new CSS, convert to `oklch()` — the palette w
 | Terracotta | `--color-terracotta`       | `#C4663F` | Primary interactive (buttons, CTAs, focus rings) |
 | Olive      | `--color-olive`            | `#8A9A78` | Secondary accents, genitive grammar              |
 | Ocean      | `--color-ocean`            | `#4A7C8F` | Tertiary, nominative grammar, stable/calm        |
-| Honey      | `--color-honey`            | `#D4A853` | Highlights, hints, vocative grammar              |
+| Honey      | `--color-honey`            | `#D4A853` | Highlights, hints                                |
 | Navy       | `--color-navy`             | `#3B5478` | Headings, scholarly emphasis                     |
 | Sunset     | `--color-sunset`           | `#B6557E` | Feminine gender indicator                        |
 | Slate      | `--color-slate`            | `#66817C` | Secondary accents, neuter gender                 |
@@ -97,7 +97,6 @@ This is the app's most distinctive design decision and must never be broken. The
 | Nominative (subject)  | `--color-case-nominative`  | `#4A7C8F` | Stable, foundational — ocean as anchor |
 | Accusative (object)   | `--color-case-accusative`  | `#C4663F` | Action target — terracotta as energy   |
 | Genitive (possession) | `--color-case-genitive`    | `#8A9A78` | Connection, relation — olive as bond   |
-| Vocative (address)    | `--color-case-vocative`    | `#D4A853` | Attention-getting — honey as call      |
 | Masculine gender      | `--color-gender-masculine` | `#1A2838` | Navy family — dark, grounded           |
 | Feminine gender       | `--color-gender-feminine`  | `#6B2A45` | Sunset family — warm rose              |
 | Neuter gender         | `--color-gender-neuter`    | `#1A2D2A` | Slate family — neutral, balanced       |
@@ -233,7 +232,7 @@ This is a PWA. Mobile is not a fallback — it is the primary delivery surface.
 
 These are non-negotiable. Do not implement them even if they seem like improvements:
 
-- **No streaks.** No "you're on a 7-day streak!" UI. Not now, not ever.
+- **Streaks stay inside the app.** The logged-in dashboard's week row and freezes, and the `/progress` calendar, are allowed. Streaks are never sold as a feature: not on the landing page, not in marketing copy.
 - **No experience points or levelling.** No XP, no levels, no "you've unlocked X".
 - **No leaderboards.** This is a personal practice tool.
 - **No celebration animations.** No confetti, no fireworks, no score-pop animations on correct answers.
