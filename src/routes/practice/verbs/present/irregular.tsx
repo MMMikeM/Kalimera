@@ -25,7 +25,7 @@ interface VerbDef {
 	lemma: string;
 	categoryLabel: string;
 	gloss: string; // verb meaning, e.g. "have"
-	forms: Record<Person, { greek: string; greeklish: string }>;
+	forms: Record<Person, { greek: string }>;
 }
 
 const VERBS: VerbDef[] = [
@@ -35,12 +35,12 @@ const VERBS: VerbDef[] = [
 		categoryLabel: "έχω · have",
 		gloss: "have",
 		forms: {
-			sg1: { greek: "έχω", greeklish: "echo" },
-			sg2: { greek: "έχεις", greeklish: "echeis" },
-			sg3: { greek: "έχει", greeklish: "echei" },
-			pl1: { greek: "έχουμε", greeklish: "echoume" },
-			pl2: { greek: "έχετε", greeklish: "echete" },
-			pl3: { greek: "έχουν", greeklish: "echoun" },
+			sg1: { greek: "έχω" },
+			sg2: { greek: "έχεις" },
+			sg3: { greek: "έχει" },
+			pl1: { greek: "έχουμε" },
+			pl2: { greek: "έχετε" },
+			pl3: { greek: "έχουν" },
 		},
 	},
 	{
@@ -49,12 +49,12 @@ const VERBS: VerbDef[] = [
 		categoryLabel: "πάω · go",
 		gloss: "go",
 		forms: {
-			sg1: { greek: "πάω", greeklish: "pao" },
-			sg2: { greek: "πας", greeklish: "pas" },
-			sg3: { greek: "πάει", greeklish: "paei" },
-			pl1: { greek: "πάμε", greeklish: "pame" },
-			pl2: { greek: "πάτε", greeklish: "pate" },
-			pl3: { greek: "πάνε", greeklish: "pane" },
+			sg1: { greek: "πάω" },
+			sg2: { greek: "πας" },
+			sg3: { greek: "πάει" },
+			pl1: { greek: "πάμε" },
+			pl2: { greek: "πάτε" },
+			pl3: { greek: "πάνε" },
 		},
 	},
 	{
@@ -63,12 +63,12 @@ const VERBS: VerbDef[] = [
 		categoryLabel: "λέω · say",
 		gloss: "say",
 		forms: {
-			sg1: { greek: "λέω", greeklish: "leo" },
-			sg2: { greek: "λες", greeklish: "les" },
-			sg3: { greek: "λέει", greeklish: "leei" },
-			pl1: { greek: "λέμε", greeklish: "leme" },
-			pl2: { greek: "λέτε", greeklish: "lete" },
-			pl3: { greek: "λένε", greeklish: "lene" },
+			sg1: { greek: "λέω" },
+			sg2: { greek: "λες" },
+			sg3: { greek: "λέει" },
+			pl1: { greek: "λέμε" },
+			pl2: { greek: "λέτε" },
+			pl3: { greek: "λένε" },
 		},
 	},
 	{
@@ -77,12 +77,12 @@ const VERBS: VerbDef[] = [
 		categoryLabel: "τρώω · eat",
 		gloss: "eat",
 		forms: {
-			sg1: { greek: "τρώω", greeklish: "troo" },
-			sg2: { greek: "τρως", greeklish: "tros" },
-			sg3: { greek: "τρώει", greeklish: "troei" },
-			pl1: { greek: "τρώμε", greeklish: "trome" },
-			pl2: { greek: "τρώτε", greeklish: "trote" },
-			pl3: { greek: "τρώνε", greeklish: "trone" },
+			sg1: { greek: "τρώω" },
+			sg2: { greek: "τρως" },
+			sg3: { greek: "τρώει" },
+			pl1: { greek: "τρώμε" },
+			pl2: { greek: "τρώτε" },
+			pl3: { greek: "τρώνε" },
 		},
 	},
 	{
@@ -91,12 +91,12 @@ const VERBS: VerbDef[] = [
 		categoryLabel: "ακούω · hear",
 		gloss: "hear",
 		forms: {
-			sg1: { greek: "ακούω", greeklish: "akouo" },
-			sg2: { greek: "ακούς", greeklish: "akous" },
-			sg3: { greek: "ακούει", greeklish: "akouei" },
-			pl1: { greek: "ακούμε", greeklish: "akoume" },
-			pl2: { greek: "ακούτε", greeklish: "akoute" },
-			pl3: { greek: "ακούν", greeklish: "akoun" },
+			sg1: { greek: "ακούω" },
+			sg2: { greek: "ακούς" },
+			sg3: { greek: "ακούει" },
+			pl1: { greek: "ακούμε" },
+			pl2: { greek: "ακούτε" },
+			pl3: { greek: "ακούν" },
 		},
 	},
 ];

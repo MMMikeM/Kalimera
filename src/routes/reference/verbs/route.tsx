@@ -16,7 +16,6 @@ function VerbsLayout() {
 
 			<div className="space-y-8">
 				<ReferenceHero
-					eyebrow="Verbs"
 					title="Three patterns, thousands of verbs."
 					thesis="Greek verb endings show who's doing the action, so pronouns often disappear. Learn three ending families, and you can conjugate most verbs you meet."
 				/>

@@ -1,8 +1,8 @@
-import { Link, getRouteApi } from "@tanstack/react-router";
+import { getRouteApi } from "@tanstack/react-router";
 import { Zap } from "lucide-react";
 
 import { Card } from "@/components/Card";
-import { Button } from "@/components/ui/button";
+import { ButtonLink } from "@/components/ui/button";
 import { drillHrefForTopic } from "@/lib/practice-links";
 
 const rootRoute = getRouteApi("__root__");
@@ -19,7 +19,7 @@ export const PracticeCTA = ({
 	title,
 	description,
 	topic,
-	ctaLabel = "Try a Drill",
+	ctaLabel = "Try a drill",
 }: PracticeCTAProps) => {
 	const { auth } = rootRoute.useRouteContext();
 	const href = drillHrefForTopic(topic, Boolean(auth?.userId));
@@ -34,9 +34,9 @@ export const PracticeCTA = ({
 					<h3 className="mb-1 font-medium text-stone-800">{title}</h3>
 					<p className="text-sm text-stone-600">{description}</p>
 				</div>
-				<Link to={href} className="flex-shrink-0">
-					<Button variant="primary">{ctaLabel}</Button>
-				</Link>
+				<ButtonLink to={href} className="flex-shrink-0">
+					{ctaLabel}
+				</ButtonLink>
 			</div>
 		</Card>
 	);

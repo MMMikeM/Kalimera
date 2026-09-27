@@ -1180,7 +1180,7 @@ export const PresentTenseSection: React.FC = () => (
 			<div className="flex items-center gap-2">
 				<BookOpen size={16} className="text-stone-800" />
 				<span className="text-sm text-stone-700">
-					Browse all verbs organised by conjugation family
+					Browse all verbs, irregulars first
 				</span>
 			</div>
 			<Link

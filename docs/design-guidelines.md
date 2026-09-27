@@ -11,7 +11,7 @@ Research-backed design principles for effective language learning interfaces.
 **Application:**
 
 - Use cream (`--color-cream`: `oklch(0.98 0 78)`) as the primary background for reading and study areas
-- Reserve terracotta (`--color-terracotta`: `oklch(0.61 0.13 42)`) for interactive elements and emphasis
+- Reserve terracotta (`--color-terracotta`: `oklch(0.61 0.13 42)`) for interactive elements and emphasis. Primary buttons fill with `terracotta-600` (`oklch(0.58 0.13 37)`), because white on the base `-500` is 3.99:1, under AA
 - Never use warm colours as large background fills
 
 ### 2. Maximum 3–4 Colours Per Context
@@ -72,7 +72,7 @@ These colours fail WCAG AA for body text on light backgrounds. Use only for:
 
 | Token                               | OKLCH Value            | Contrast | Use                                  |
 | ----------------------------------- | ---------------------- | -------- | ------------------------------------ |
-| `terracotta` (`--color-terracotta`) | `oklch(0.61 0.13 42)`  | ~3.9:1   | Primary actions, emphasis            |
+| `terracotta` (`--color-terracotta`) | `oklch(0.61 0.13 42)`  | ~3.9:1   | Interactive accents, emphasis; primary buttons use `-600` |
 | `sunset` (`--color-sunset`)         | `oklch(0.58 0.13 355)` | ~4.1:1   | Feminine accents, deponent verbs     |
 | `olive` (`--color-olive`)           | `oklch(0.66 0.05 128)` | ~4.2:1   | Secondary accent, nature, connection |
 | `ocean` (`--color-ocean`)           | `oklch(0.56 0.06 224)` | ~4.1:1   | Tertiary accent, stability, calm     |
@@ -110,7 +110,7 @@ tints, match chroma — `ocean-200` / `olive-200` / `cream-200` is the tested tr
 
 Use these for any text content. Contrast ratios are calculated against cream backgrounds and tinted backgrounds (e.g. `bg-honey-100`, `bg-case-accusative-100`).
 
-Dark mode redefines every token under `:root.dark` in `src/index.css` (the remapping rule is in the comment above that block). There the `-text` tokens sit at L 0.88 and measure 10:1+ on their dark `-100` tints and 8.5:1+ on `-300`. Components need no `dark:` classes: use the tokens and both themes follow.
+Dark mode redefines every token under `:root.dark` in `src/index.css` (the remapping rule is in the comment above that block). There the `-text` tokens sit at L 0.88 and measure 10:1+ on their dark `-100` tints and 8.5:1+ on `-300`. Components rarely need `dark:` classes: use the tokens and both themes follow. The exception is a step that doesn't flip. `terracotta-700` keeps its value in dark mode and is too dark there, so the active mobile tab and the landing headline pair it with `dark:text-terracotta` or `dark:text-terracotta-text`.
 
 | Token                                         | OKLCH Value            | On Cream | On Tinted BG |
 | --------------------------------------------- | ---------------------- | -------- | ------------ |
@@ -150,10 +150,12 @@ export const CASE_SCHEME: Record<CaseName, GrammarScheme> = {
 	Genitive: "case-genitive",
 };
 
-// "case-nominative": { bg: "bg-case-nominative-100", border: "border-case-nominative-300", badgeBg: "bg-case-nominative-400", text: "text-case-nominative-text" }
-// "case-accusative": { bg: "bg-case-accusative-100", border: "border-case-accusative-300", badgeBg: "bg-case-accusative-400", text: "text-case-accusative-text" }
-// "case-genitive":   { bg: "bg-case-genitive-100",   border: "border-case-genitive-300",   badgeBg: "bg-case-genitive-400",   text: "text-case-genitive-text" }
+// "case-nominative": { bg: "bg-case-nominative-100", border: "border-case-nominative-300", badgeBg: "bg-case-nominative-400", badgeText: "text-case-nominative-text", text: "text-case-nominative-text", bar: "bg-case-nominative-700", heroText: "text-case-nominative-700" }
+// "case-accusative": { bg: "bg-case-accusative-100", border: "border-case-accusative-300", badgeBg: "bg-case-accusative-400", badgeText: "text-case-accusative-text", text: "text-case-accusative-text", bar: "bg-case-accusative-700", heroText: "text-case-accusative-700" }
+// "case-genitive":   { bg: "bg-case-genitive-100",   border: "border-case-genitive-300",   badgeBg: "bg-case-genitive-400",   badgeText: "text-case-genitive-text",   text: "text-case-genitive-text",   bar: "bg-case-genitive-700",   heroText: "text-case-genitive-700" }
 ```
+
+Every scheme carries all seven keys, and all are required. `badgeText` is the text colour on `badgeBg`; set a pill's text with it, not with `text`. `bar` is the saturated fill for progress bars and solid chips. `heroText` is higher-chroma text for large serif display, where the `-text` tokens read dull.
 
 ```typescript
 // src/components/GrammarTable.tsx
@@ -184,10 +186,12 @@ export const GENDER_SCHEME: Record<Gender, GrammarScheme> = {
 	neuter: "gender-neuter",
 };
 
-// "gender-masculine": { bg: "bg-gender-masculine-100", border: "border-gender-masculine-200", badgeBg: "bg-gender-masculine-300", text: "text-gender-masculine-text" }
-// "gender-feminine":  { bg: "bg-gender-feminine-100",  border: "border-gender-feminine-200",  badgeBg: "bg-gender-feminine-300",  text: "text-gender-feminine-text" }
-// "gender-neuter":    { bg: "bg-gender-neuter-100",    border: "border-gender-neuter-200",    badgeBg: "bg-gender-neuter-300",    text: "text-gender-neuter-text" }
+// "gender-masculine": { bg: "bg-gender-masculine-100", border: "border-gender-masculine-200", badgeBg: "bg-gender-masculine-300", badgeText: "text-gender-masculine-950", text: "text-gender-masculine-text", bar: "bg-gender-masculine-700", heroText: "text-gender-masculine-700" }
+// "gender-feminine":  { bg: "bg-gender-feminine-100",  border: "border-gender-feminine-200",  badgeBg: "bg-gender-feminine-300",  badgeText: "text-gender-feminine-950",  text: "text-gender-feminine-text",  bar: "bg-gender-feminine-700",  heroText: "text-gender-feminine-700" }
+// "gender-neuter":    { bg: "bg-gender-neuter-100",    border: "border-gender-neuter-200",    badgeBg: "bg-gender-neuter-300",    badgeText: "text-gender-neuter-950",    text: "text-gender-neuter-text",    bar: "bg-gender-neuter-700",    heroText: "text-gender-neuter-700" }
 ```
+
+Gender `badgeText` is the `-950` step, not `-text`: the gender `-text` tokens are too light on their own `-300` chip.
 
 ```typescript
 // src/components/GrammarTable.tsx
@@ -202,11 +206,11 @@ export const GENDER_COLUMN_DEFS: ColumnDef[] = [
 
 Verb schemes encode local structural axes that do not claim global grammatical role. They map to base palette colours chosen not to collide with case/gender role tokens:
 
-| Verb Scheme       | Palette Key | Classes (`bg` / `border` / `badgeBg` / `text`)                            |
-| ----------------- | ----------- | ------------------------------------------------------------------------- |
-| `verb-active`     | Navy        | `bg-navy-100`, `border-navy-300`, `bg-navy-300`, `text-navy-text`         |
-| `verb-contracted` | Slate       | `bg-slate-100`, `border-slate-300`, `bg-slate-300`, `text-slate-text`     |
-| `verb-deponent`   | Sunset      | `bg-sunset-100`, `border-sunset-300`, `bg-sunset-300`, `text-sunset-text` |
+| Verb Scheme       | Palette Key | Classes (`bg` / `border` / `badgeBg` / `badgeText` / `text` / `bar` / `heroText`)                                          |
+| ----------------- | ----------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `verb-active`     | Navy        | `bg-navy-100`, `border-navy-300`, `bg-navy-300`, `text-navy-text`, `text-navy-text`, `bg-navy`, `text-navy-700`            |
+| `verb-contracted` | Slate       | `bg-slate-100`, `border-slate-300`, `bg-slate-300`, `text-slate-text`, `text-slate-text`, `bg-slate`, `text-slate-600`     |
+| `verb-deponent`   | Sunset      | `bg-sunset-100`, `border-sunset-300`, `bg-sunset-300`, `text-sunset-text`, `text-sunset-text`, `bg-sunset`, `text-sunset-700` |
 
 ### Learning Feedback
 
@@ -218,7 +222,9 @@ Feedback states use dedicated semantic tokens:
 | Incorrect | `--color-incorrect` | `oklch(0.58 0.21 27)`                        | `--color-incorrect-light` | `oklch(0.94 0.03 18)`  |
 | Hint      | `--color-hint`      | `var(--color-honey)` (`oklch(0.76 0.12 82)`) | `--color-hint-light`      | `oklch(0.96 0.06 96)`  |
 
-Feedback states are applied using standard Tailwind utility classes (e.g. `text-correct`, `bg-correct-light`, `text-incorrect`, `bg-incorrect-light`, `text-hint`, `bg-hint-light`).
+Text uses the `-text` variants, the same rule as the base palette: `--color-correct-text` (`oklch(0.42 0.12 149)`, 7.6:1 on cream) and `--color-incorrect-text` (`oklch(0.45 0.17 27)`, 7.7:1). The role tokens themselves are for bars, borders and icons; `text-correct` on cream is 3.1:1 and fails even AA.
+
+Feedback states are applied using standard Tailwind utility classes (e.g. `text-correct-text`, `bg-correct-light`, `text-incorrect-text`, `bg-incorrect-light`, `bg-correct` for the drill timer bar).
 
 ---
 
@@ -235,8 +241,8 @@ Feedback states are applied using standard Tailwind utility classes (e.g. `text-
 
 | Context           | Font         | Size / Utility                               |
 | ----------------- | ------------ | -------------------------------------------- |
-| Page titles       | Serif        | 2.5–3rem (`font-serif`)                      |
-| Section headings  | Serif / Sans | 1.5–2rem (`font-serif text-2xl` / `text-xl`) |
+| Page titles       | Serif        | 2.25rem, 3rem from `sm` (`PageHeading`: `font-serif text-4xl sm:text-5xl`) |
+| Section headings  | Serif / Sans | 1.25–1.5rem (`font-serif text-2xl` / `text-xl`) |
 | Body text         | Sans         | 1rem (`font-sans`)                           |
 | Greek vocabulary  | Sans         | `<GreekText size="…">`                       |
 | Paradigm tables   | Sans         | `<GreekText size="base">` in a `td`          |
@@ -338,13 +344,13 @@ Use `TeachingCard` (`src/components/cards/TeachingCard.tsx`) for prominent gramm
 	title="Accusative Case"
 	badge="Target"
 	description="The direct recipient of an action."
-	footer={<p className="text-xs text-stone-500">Always used after prepositions.</p>}
+	footer={<p className="text-xs text-stone-500">Used after everyday prepositions.</p>}
 >
 	<p>Grammar content here...</p>
 </TeachingCard>
 ```
 
-- Bound directly to `SCHEME[scheme]` for border, background, badge, and text styling
+- Bound directly to `SCHEME[scheme]` for border, background and text styling; the badge takes `badgeBg` with `badgeText`
 - Includes eyebrow, serif heading (`font-serif text-3xl`), optional pill badge, description, flexible children content, and optional footer
 
 ### Callouts
@@ -353,7 +359,7 @@ Use `Callout` (`src/components/cards/Callout.tsx`) for compact grammar notes and
 
 ```tsx
 <Callout scheme="decision" title="Key Rule" footer="Applies to all regular nouns.">
-	All prepositions in modern Greek take the accusative case.
+	Everyday prepositions in modern Greek take the accusative case.
 </Callout>
 ```
 
@@ -371,7 +377,7 @@ Use `CollapsibleSection` (`src/components/CollapsibleSection.tsx`) for progressi
 ```
 
 - Built on `@base-ui/react/collapsible` with smooth motion transitions
-- Available `colorScheme` values: `ocean | terracotta | sunset | olive | honey | navy | slate | stone | masculine | feminine | neuter` (default: `stone`)
+- Available `colorScheme` values: `ocean | terracotta | sunset | olive | honey | navy | slate | stone` (default: `stone`). These are base-palette chrome from `src/lib/colors.ts`; a grammatical claim goes through `SCHEME`, never here
 - Includes `focus-visible:ring-2 focus-visible:ring-stone-900/30` on triggers for accessibility
 
 ### Decision Trees / Quick Tests
@@ -409,14 +415,22 @@ Use `MistakeComparison` (`src/components/MistakeComparison.tsx`) for wrong vs co
 			explanation: "Prepositions require the accusative case.",
 		},
 	]}
-	title="Common Preposition Mistakes"
-	layout="list"
 />
 ```
 
-- Explicit "Wrong:" / "Correct:" badges using `text-incorrect` / `AlertCircle` and `text-correct` / `CheckCircle`
+- Props: `mistakes` and an optional `cardClassName` (default `bg-cream-dark`); one card per mistake, stacked
+- Explicit "Wrong:" / "Correct:" labels in `text-incorrect-text` / `text-correct-text`, each with an `AlertCircle` / `CheckCircle` icon; the Greek renders through `<GreekText tone="incorrect">` (struck through) and `<GreekText tone="correct">`
 - Never relies on colour alone for accessibility
-- Supports `list` (default) and `grid` layouts
+
+### Page Chrome, Status and Drill Feedback
+
+- **`ButtonLink`** (`src/components/ui/button.tsx`): navigation styled as a button, with `Button`'s `variant` and `size`. Never put a `<Button>` inside a `<Link>`; that is two tab stops and invalid HTML. Both default to `primary`.
+- **`BackLink`** (`src/components/BackLink.tsx`): the back link. Label it with where it goes ("Learn", "Exit"), never with the current page's name.
+- **`PageHeading`** (`src/components/PageHeading.tsx`): set every page title with it, with the lede as children.
+- **`StatusPage`** (`src/components/StatusPage.tsx`): exports `RouteError`, `RootError` and `NotFound`. A failed page and a 404 render inside the app shell, so the header and navigation still work; only `RootError`, for when the shell itself fails, renders without them.
+- **`Verdict`** (`src/components/Verdict.tsx`): the drill verdict line, "Correct", "Incorrect" or "Time's up", in `text-correct-text` / `text-incorrect-text`. Drills and the landing demo share it.
+- **`MarkedGreek`** (`src/components/MarkedGreek.tsx`): colours only the case-bearing words of a phrase and leaves the rest neutral. The data names those words in a `marked` field, verbatim and in reading order.
+- **`SectionIndex`** (`src/components/SectionIndex.tsx`): the Greek-first ruled table of contents for section landings (`/learn`, `/learn/essentials`, `/reference`). No cards and no tints: a coloured slab beside the case colours reads as a grammatical claim.
 
 ---
 
@@ -499,7 +513,7 @@ Opacity modifiers are fine for backgrounds since they do not affect text contras
 
 **Enforcement options:**
 
-1. **Pre-commit check:** `rg "text-[a-z]+-text/\d+" --type tsx`
+1. **Pre-commit check:** `rg "text-[a-z-]+-text/\d+" -g '*.tsx'`
 2. **ESLint rule:** Custom rule to flag the pattern
 3. **Code review:** Check for `/XX` on `-text` colour classes
 
@@ -511,12 +525,12 @@ Opacity modifiers are fine for backgrounds since they do not affect text contras
 
 | Element                     | Colour Token / Pattern                                           | Rationale                     |
 | --------------------------- | ---------------------------------------------------------------- | ----------------------------- |
-| Section h2/h3/h4 headings   | `text-navy-text`                                                 | Scholarly, hierarchical       |
-| Subtitles / descriptions    | `text-slate-text`                                                | Subtle, supporting            |
-| Teaching cards & Callouts   | `SCHEME[scheme]` (`bg`, `border`, `badgeBg`, `text`)             | Semantic grammar mapping      |
-| Decision navigators & tests | `bg-honey-50`, `border-honey-300`, `text-honey-text`             | Hints, warmth, navigation     |
-| Feedback — Correct          | `text-correct` / `bg-correct-light`                              | Unambiguous positive feedback |
-| Feedback — Incorrect        | `text-incorrect` / `bg-incorrect-light`                          | Unambiguous error feedback    |
+| Page titles, section headings | `text-stone-900` (`PageHeading`, `BandHeading`); the older `SectionHeading` still sets `text-navy-text` | Neutral; colour stays free for grammar |
+| Index group labels, ledes   | `text-stone-600` (`SectionIndex` groups, `BandHeading` lede); `SectionHeading` subtitle is `text-slate-text` | Subtle, supporting            |
+| Teaching cards & Callouts   | `SCHEME[scheme]` (`bg`, `border`, `text`; badges `badgeBg` with `badgeText`) | Semantic grammar mapping      |
+| Decision navigators & tests | `NavigatorCard`: `bg-honey-50`, `border-honey-300`; `QuickTest` (honey): `bg-honey-100`, `border-honey-400`; `SCHEME.decision`: `bg-honey-50`, `border-honey-200`; text `text-honey-text` in all three | Hints, warmth, navigation     |
+| Feedback — Correct          | `text-correct-text` / `bg-correct-light`                         | Unambiguous positive feedback |
+| Feedback — Incorrect        | `text-incorrect-text` / `bg-incorrect-light`                     | Unambiguous error feedback    |
 | Decorative icons            | Base colour (e.g. `text-honey`, `text-terracotta`)               | Visual accent only            |
 | Text labels & inline badges | `-text` variant (e.g. `text-honey-text`, `text-terracotta-text`) | AAA compliance                |
 

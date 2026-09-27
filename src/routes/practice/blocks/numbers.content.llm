@@ -4,7 +4,7 @@
 
 Drill digit → Greek number word and reverse. Numbers are 100% arbitrary — no derivation possible, must be recalled from memory. Also presented in /learn/essentials as reference; this is the timed production drill.
 
-Target: 3 seconds digit → word.
+Timing is the learner's 4 / 6 / 8 s choice (`src/routes/practice/components/drill-speeds.ts`).
 
 Implemented as 28 items in `numbers.tsx` under three categories: 1–10, 11–20, Decades.
 Colour theme: terracotta. Returns to `/practice/blocks`.
@@ -56,8 +56,9 @@ See "Forms deliberately not seeded" below.
 
 ## Drill format
 
-**Forward**: digit display → type Greek word
-**Reverse**: Greek word → type digit (fast recognition)
+**Forward**: English number word (`label`, e.g. "one") → type the Greek word ("English word →
+Greek word" on the config screen). The digit sits in `english`, which never reaches the screen.
+**Reverse**: Greek word → recall the number, self-assess
 
 No paradigm table. Sequential or random order. Could add: number reading in context ("I am __ years old" → "Έχω πέντε χρόνια").
 
@@ -74,4 +75,4 @@ direction ambiguous.
 ## Notes
 
 - Build order: Set A → Set B → Set C
-- Real-world anchors to show after correct answer: "Κάνει πέντε ευρώ" / "Έχω τριάντα χρόνια" — bridges number recall to sentence production
+- Not implemented: real-world anchors to show after a correct answer: "Κάνει πέντε ευρώ" / "Έχω τριάντα χρόνια" — bridges number recall to sentence production

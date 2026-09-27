@@ -3,7 +3,7 @@ import { type ReactNode, useEffect, useRef, useState } from "react";
 
 import { GreekText } from "@/components/GreekText";
 import { SearchInput } from "@/components/SearchInput";
-import { SearchResults } from "@/components/SearchResults";
+import { SearchLoading, SearchResults } from "@/components/SearchResults";
 import {
 	Popover,
 	PopoverContent,
@@ -80,7 +80,7 @@ const SearchContent = () => {
 			</div>
 			<div className="max-h-page min-h-0 flex-1 overflow-y-auto bg-cream-dark p-3">
 				{isLoading ? (
-					<div className="py-8 text-center text-sm text-stone-400">Loading...</div>
+					<SearchLoading />
 				) : showEmptyState ? (
 					<SearchEmptyState onQuickSearch={handleQuickSearch} />
 				) : (

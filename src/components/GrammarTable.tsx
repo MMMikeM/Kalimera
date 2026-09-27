@@ -36,9 +36,9 @@ const grammarTable = tv({
 		headerRow: "border-b",
 		colHeader: "px-2 py-2 text-left text-xs font-medium text-stone-500",
 		bodyRow: "border-b",
-		rowHeader: "w-20 border-l-2 py-2 pr-2 pl-2 text-xs font-semibold",
+		rowHeader: "w-20 border-l-2 py-2 pr-2 pl-2 text-left text-xs font-semibold",
 		rowLabel: "block leading-tight",
-		rowSublabel: "block text-xs font-normal opacity-70",
+		rowSublabel: "block text-xs font-normal",
 		cell: "px-2 py-2",
 	},
 	variants: {
@@ -113,7 +113,8 @@ export const GrammarTable: React.FC<GrammarTableProps> = ({
 					const isLast = ri === rows.length - 1;
 					return (
 						<tr key={row.key} className={isLast ? "" : bodyRow({ class: borderColor })}>
-							<td
+							<th
+								scope="row"
 								className={rowHeader({
 									class: style
 										? row.schemeVariant === "text"
@@ -126,7 +127,7 @@ export const GrammarTable: React.FC<GrammarTableProps> = ({
 							>
 								<span className={rowLabel()}>{row.label}</span>
 								{row.sublabel && <span className={rowSublabel()}>{row.sublabel}</span>}
-							</td>
+							</th>
 							{(cells[ri] ?? []).map((cellContent, ci) => (
 								<td key={columns[ci]?.key ?? ci} className={cell()}>
 									{cellContent}

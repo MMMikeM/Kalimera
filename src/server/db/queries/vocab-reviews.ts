@@ -3,9 +3,8 @@ import { and, eq, gte, lte } from "drizzle-orm";
 import { nowIso, toISOString } from "@/lib/time";
 import { reviewStateAfterAttempt } from "@/server/srs";
 
-import { db } from "../index";
+import { type DbTransaction, db } from "../index";
 import { vocabProgress, vocabulary } from "../schema";
-import type { DbTransaction } from "./transaction-client";
 
 /** A word counts as mastered once its review interval reaches three weeks. */
 const MASTERED_INTERVAL_DAYS = 21;

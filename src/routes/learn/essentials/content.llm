@@ -5,23 +5,42 @@ Building block vocabulary: numbers, colours, position, frequency, and time expre
 ## Route Structure
 
 ```
-/learn/essentials           → Landing page (5 section cards)
+/learn/essentials           → Landing page (SectionIndex, two groups)
 /learn/essentials/:subtab   → Individual subtab content
 ```
 
-Subtabs: numbers, position, time, frequency, colours
+Subtabs: numbers, position, time, frequency, colours. For any other `:subtab` the loader throws `notFound()` (`VALID_SUBTABS` in `$subtab.tsx`), which renders the 404 inside the app shell.
+
+## Landing Page
+
+<route path="/learn/essentials">
+<file>index.tsx</file>
+<displays>
+- `BackLink` to /learn, then the shared `SectionIndex` (`src/components/SectionIndex.tsx`): title "Essentials", lede "Numbers, colours, time and position words you'll need constantly in everyday Greek."
+- Ruled rows, each led by the Greek name, then the English label and description. No cards, icons or tints.
+  - Counting and describing:
+    - Αριθμοί / Numbers: "Count, tell the time, give prices"
+    - Χρώματα / Colours: "Describe what you see"
+  - Time and place:
+    - Χρόνος / Time: "Times of day, days and months"
+    - Συχνότητα / Frequency: "How often things happen"
+    - Θέση / Position: "Give and understand directions"
+- Document title via `pageTitle("Essentials")`.
+</displays>
+</route>
 
 ## Data Source
 
-DB query via `getEssentialsData()` in `data.server.ts`:
-- `getVocabBySection("reference")` - All reference vocabulary
+The `$subtab.tsx` loader (a `createServerFn`) calls `getVocabBySlug("reference", ["noun", "adverb", "adjective"])` from `src/server/db/queries/vocabulary.ts`, then keys the rows by tag slug with `groupVocabByTag` (`src/routes/components/vocab-by-tag.ts`). The same `EssentialsLoaderData` object is passed to whichever subtab renders.
 
 Content grouped by tags:
-- `number` → numbers subtab
+- `number` → numbers subtab (sorted by `metadata.numericValue`)
 - `position` → position subtab
-- `time-of-day`, `days-of-week`, `months` → time subtab
+- `time-of-day` (with `metadata.timeRange`), `days-of-week`, `months` → time subtab
 - `frequency` → frequency subtab
 - `color` → colours subtab
+
+Every subtab page opens with the shared `BackLink` to /learn/essentials, then its `ContentSection`s.
 
 ## Subtab: numbers
 
@@ -47,12 +66,13 @@ Examples: τριάντα δύο (32), πενήντα πέντε (55), ενενή
 
 <section name="Usage" colorScheme="terracotta">
 Context examples:
-- Telling time: στις τρεις, στις δέκα και μισή
-- Money: πέντε ευρώ, δύο κιλά
-- Ages: είμαι τριάντα δύο χρονών
+- Telling Time: στις τρεις, στις δέκα και μισή (note: στις = at, feminine accusative)
+- Money & Quantities: πέντε ευρώ, δύο κιλά, τρία μπουκάλια νερό
+- Talking About Age: είμαι τριάντα δύο χρονών, πόσων χρονών είσαι;
 
 Gender agreement callout: 1, 3, 4 change form by gender.
-Grid showing ένας/μία/ένα, τρεις/τρεις/τρία, τέσσερις/τέσσερις/τέσσερα.
+Grid showing ένας/μία/ένα, τρεις/τρεις/τρία, τέσσερις/τέσσερις/τέσσερα,
+then ένας καφές, μία μπύρα, ένα νερό.
 Note: Numbers 2 and 5+ don't change for gender.
 </section>
 </subtab>
@@ -89,7 +109,10 @@ Key verbs: στρίψε (turn), πήγαινε (go), έλα (come).
 <section name="Relative Position" colorScheme="olive">
 Describing where things are:
 - μπροστά από την τράπεζα (in front of the bank)
+- πίσω από το σούπερ μάρκετ (behind the supermarket)
 - κοντά στο σταθμό (near the station)
+- μακριά από εδώ (far from here)
+- ανάμεσα στα δέντρα (between the trees)
 - απέναντι από την εκκλησία (across from the church)
 
 Preposition patterns:
@@ -117,7 +140,10 @@ Examples: στις δύο το μεσημέρι, στις οκτώ το βράδ
 </section>
 
 <section name="Days of the Week" colorScheme="ocean" tag="days-of-week">
-Monday through Sunday in order.
+Monday through Sunday in order. Each row is a `CalendarName`: an article chip
+derived from the noun's gender (`getArticle` + `genderScheme`), then the Greek.
+The article is not stored in `greek_text`; the chip is what shows Σάββατο as
+the one neuter day.
 
 Grammar callout: Days use feminine accusative.
 - την Τρίτη (on Tuesday - specific)
@@ -128,7 +154,7 @@ Note: την = accusative of η (feminine).
 </section>
 
 <section name="Months of the Year" colorScheme="olive" tag="months">
-January through December in order.
+January through December in order, as `CalendarName` rows with a gender article chip.
 
 Grammar callout: Months use masculine accusative.
 - τον Ιούλιο (in July)
@@ -145,7 +171,7 @@ Note: τον = accusative of ο (masculine).
 <purpose>How often things happen</purpose>
 <file>subtabs/frequency.tsx</file>
 
-<section name="Frequency Spectrum" colorScheme="olive">
+<section name="Frequency" colorScheme="olive">
 Visual spectrum from ποτέ (0%) to πάντα (100%):
 ποτέ → σχεδόν ποτέ → σπάνια → πότε πότε → κάπου κάπου → καμιά φορά → μερικές φορές → συχνά → πολλές φορές → συνήθως → σχεδόν πάντα → πάντα
 
@@ -204,7 +230,8 @@ Shade descriptors:
 - απαλό (soft/pale)
 - φωτεινό (bright)
 
-Examples with swatches: σκούρο μπλε, ανοιχτό πράσινο, απαλό ροζ.
+Examples with swatches: σκούρο μπλε, ανοιχτό πράσινο, έντονο κόκκινο, απαλό ροζ.
+"In context" callout: Θέλω το σκούρο μπλε. Έχετε απαλό ροζ;
 </section>
 
 <section name="Usage" colorScheme="terracotta">
@@ -212,6 +239,7 @@ Sentence examples:
 - θέλω το κόκκινο (I want the red one)
 - η κόκκινη τσάντα (the red bag)
 - το μπλε αυτοκίνητο (the blue car)
+- τα πράσινα μάτια (the green eyes)
 
 Agreement callout - two categories:
 
@@ -239,7 +267,7 @@ position       → position   → Opposites
 time-of-day    → time       → Times of Day
 days-of-week   → time       → Days of the Week
 months         → time       → Months of the Year
-frequency      → frequency  → Frequency Spectrum
+frequency      → frequency  → Frequency
 color          → colours    → Basic Colours
 ```
 

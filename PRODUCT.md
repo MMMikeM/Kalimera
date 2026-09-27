@@ -36,7 +36,7 @@ The λ (lambda) mark anchors the identity: spare, precise, unmistakably Greek.
 - Generic SaaS dashboards: cards everywhere, gradients, hero metrics
 - "Learning app" defaults: rounded icons above every heading, emoji as UX, progress bars that feel like slot machines
 
-**What makes it memorable:** The colour system encodes grammar. Nominative is ocean-blue. Accusative is terracotta. Genitive is olive. A returning user starts to _feel_ the cases before they read the labels. That's the design's secret — it teaches through repetition of visual pattern, not through decoration.
+**What makes it memorable:** The colour system encodes grammar. Nominative, Accusative and Genitive each have their own reserved colour scale (`case-nominative`, `case-accusative`, `case-genitive`), used for nothing else. A returning user starts to _feel_ the cases before they read the labels. That's the design's secret — it teaches through repetition of visual pattern, not through decoration.
 
 ---
 
@@ -56,72 +56,32 @@ The λ (lambda) mark anchors the identity: spare, precise, unmistakably Greek.
 
 ## Colour System
 
+Two palettes, and they are not interchangeable. The values live in `src/index.css`, and `docs/design-guidelines.md` has the full tables, contrast figures and component assignments; treat those two as the source of truth. This section only says what each palette is for.
+
 ### Base Palette
 
-All values are hex. When writing new CSS, convert to `oklch()` — the palette was authored in hex but OKLCH is perceptually uniform and should be used for any new tokens.
+`cream`, `terracotta`, `sunset`, `olive`, `ocean`, `honey`, `navy`, `slate` and `stone`, authored in `oklch()`. They are for everything that makes no grammatical claim: navigation, chrome, buttons, section grouping and page-local axes (`verb-active` is navy, `verb-contracted` slate, `verb-deponent` sunset, `decision` honey). The base palette asserts no case or gender, even where a hue sits close to a case colour: `ocean` and `case-nominative` are both near hue 223 but are separate tokens with separate jobs.
 
-| Name       | Default token              | Hex       | Role                                             |
-| ---------- | -------------------------- | --------- | ------------------------------------------------ |
-| Cream      | `--color-cream`            | `#FAF8F5` | Primary background                               |
-| Cream Dark | `--color-cream-dark`       | `#F1ECE3` | Secondary surface, alt background                |
-| Foreground | `--color-foreground`       | `#1C1917` | Primary body text                                |
-| Muted      | `--color-muted-foreground` | `#57534E` | Secondary text, captions                         |
-| Terracotta | `--color-terracotta`       | `#C4663F` | Primary interactive (buttons, CTAs, focus rings) |
-| Olive      | `--color-olive`            | `#8A9A78` | Secondary accents, genitive grammar              |
-| Ocean      | `--color-ocean`            | `#4A7C8F` | Tertiary, nominative grammar, stable/calm        |
-| Honey      | `--color-honey`            | `#D4A853` | Highlights, hints                                |
-| Navy       | `--color-navy`             | `#3B5478` | Headings, scholarly emphasis                     |
-| Sunset     | `--color-sunset`           | `#B6557E` | Feminine gender indicator                        |
-| Slate      | `--color-slate`            | `#66817C` | Secondary accents, neuter gender                 |
+### Grammar Role Tokens
 
-### AAA Text Variants
-
-These are the **only** colours permitted for body text. Never use the accent colours (`terracotta`, `olive`, `ocean`, `honey`, etc.) directly on text — only their `-text` variants. No opacity modifiers (`/80`, `/70`) on these; they exist to enforce 7:1+ contrast without tricks.
-
-| Token                     | Hex       | Contrast on cream |
-| ------------------------- | --------- | ----------------- |
-| `--color-terracotta-text` | `#5C2D14` | ~10:1             |
-| `--color-olive-text`      | `#2A3622` | ~12:1             |
-| `--color-ocean-text`      | `#14333F` | ~11:1             |
-| `--color-honey-text`      | `#4A3508` | ~11:1             |
-| `--color-navy-text`       | `#1A2838` | ~12:1             |
-| `--color-sunset-text`     | `#6B2A45` | ~10:1             |
-| `--color-slate-text`      | `#1A2D2A` | ~11:1             |
-
-### Grammar Semantic Colours
+`case-nominative-*`, `case-accusative-*`, `case-genitive-*`, `gender-masculine-*`, `gender-feminine-*` and `gender-neuter-*` are reserved scales in `@theme static`. Applying one asserts that the Greek it wraps has that case or gender; if the assertion would be false, use the base palette or neutral stone. `src/constants/grammar-palette.ts` is the only place that maps a grammar role to a token.
 
 This is the app's most distinctive design decision and must never be broken. The colour-case mapping is load-bearing: users learn the associations through repetition. Introducing a new colour for a case, or swapping assignments, would actively harm learning.
 
-| Grammatical concept   | Colour token               | Hex       | Rationale                              |
-| --------------------- | -------------------------- | --------- | -------------------------------------- |
-| Nominative (subject)  | `--color-case-nominative`  | `#4A7C8F` | Stable, foundational — ocean as anchor |
-| Accusative (object)   | `--color-case-accusative`  | `#C4663F` | Action target — terracotta as energy   |
-| Genitive (possession) | `--color-case-genitive`    | `#8A9A78` | Connection, relation — olive as bond   |
-| Masculine gender      | `--color-gender-masculine` | `#1A2838` | Navy family — dark, grounded           |
-| Feminine gender       | `--color-gender-feminine`  | `#6B2A45` | Sunset family — warm rose              |
-| Neuter gender         | `--color-gender-neuter`    | `#1A2D2A` | Slate family — neutral, balanced       |
-
 **Rule:** Never use gender and case colour simultaneously on the same element. Choose one semantic layer per component — this is the 3-4 colour-per-context constraint in practice.
 
-### Feedback States
+### Text and Contrast
 
-| State     | Border / text     | Background | Usage                             |
-| --------- | ----------------- | ---------- | --------------------------------- |
-| Correct   | `#16A34A`         | `#DCFCE7`  | Drill answers, confirmations      |
-| Incorrect | `#DC2626`         | `#FEE2E2`  | Drill errors, validation failures |
-| Hint      | `#D4A853` (honey) | `#FEF3C7`  | Hints, partial reveals            |
+- Text uses the `-text` tokens (`terracotta-text`, `ocean-text` and so on), never a base accent directly and never with an opacity modifier.
+- Feedback follows the same rule: `correct` / `incorrect` for bars, borders and icons, their `-light` tokens for backgrounds, and `correct-text` / `incorrect-text` for words. Hints use honey.
+- Primary buttons fill with `terracotta-600`, not the base `-500`: white on `-500` is 3.99:1, under AA.
+- Grammar pills set their text with the scheme's `badgeText`, not `text`. The gender `-text` tokens are too light on their own `-300` chip, so gender badges use the `-950` step.
 
 ### Dark Mode
 
 Dark mode exists and is fully implemented. Light is the _designed-first_ experience; dark should maintain the same semantic meanings with adjusted values.
 
-| Light token         | Dark equivalent         |
-| ------------------- | ----------------------- |
-| Cream `#FAF8F5`     | `#1C1917` (stone-950)   |
-| Body text `#1C1917` | `#FAFAF9`               |
-| Card surface        | `#292524`               |
-| Terracotta primary  | `#D4805E` (lighter)     |
-| Border              | `rgba(250,250,249,0.1)` |
+The colour ramps are remapped under `:root.dark` in `src/index.css`, and the aliases built on them follow. Tints become dark tints, text shades become light text, and mid accents keep their value, so the terracotta primary button is the same colour in both themes. Hue never changes: a case or gender colour means the same thing in either theme.
 
 ---
 
@@ -143,24 +103,27 @@ Dark mode exists and is fully implemented. Light is the _designed-first_ experie
 
 This is a product UI (fixed rem), not a marketing page (fluid clamp):
 
-| Role               | Size             | Font               | Weight | Colour           |
-| ------------------ | ---------------- | ------------------ | ------ | ---------------- |
-| Page title (h1)    | 2.5rem           | Serif              | 600    | Navy text        |
-| Section title (h2) | 1.75rem          | Serif              | 600    | Navy text        |
-| Subsection (h3)    | 1.25rem          | Serif or bold sans | 600    | Foreground       |
-| Body text          | 1rem             | Sans               | 400    | Foreground       |
-| Greek content      | 1.1em (relative) | Sans               | 400    | Foreground       |
-| Labels / captions  | 0.875rem         | Sans               | 400    | Muted foreground |
+| Role               | Size                             | Font  | Weight | Colour           |
+| ------------------ | -------------------------------- | ----- | ------ | ---------------- |
+| Page title (h1)    | 2.25rem, 3rem from `sm`          | Serif | 400    | `stone-900`      |
+| Section title (h2) | 1.5rem                           | Serif | 400    | `stone-900`      |
+| Subsection (h3)    | 1.25rem                          | Serif | 400    | `stone-900`      |
+| Body text          | 1rem                             | Sans  | 400    | Foreground       |
+| Greek content      | `<GreekText size>`, per call site | Sans  | 400    | Foreground       |
+| Labels / captions  | 0.875rem                         | Sans  | 400    | Muted foreground |
+
+Page titles use `PageHeading` (`src/components/PageHeading.tsx`); the landing hero, `/progress`, the sign-in pages, the noun subject pages and the drill header still set their own `h1`. Section headings come from `BandHeading` (`src/routes/reference/components/BandHeading.tsx`), `text-2xl` by default and `text-xl` at `size="md"`. The older `SectionHeading` is still used in a few reference sections and the verb detail page, and sets `font-bold text-navy-text`.
 
 ### Greek Text Rules
 
 Greek characters are visually denser than Latin. The `.greek-text` class applies:
 
-- `font-size: 1.1em` — scale up relative to surrounding Latin
 - `line-height: relaxed` (~1.625)
 - `letter-spacing: 0.01em`
 
-Always apply `.greek-text` (or `lang="el"`) to Greek content. Never render Greek at the same visual size as Latin labels.
+It sets no font size: `<GreekText>` takes an explicit `size`, chosen per call site, with no automatic scale-up over Latin.
+
+Never apply `.greek-text` or `lang="el"` by hand. Render Greek through `<GreekText>` (all Greek script; it owns `lang="el"`, the class, size and tone), `<Pronunciation>` (the pronunciation gloss) or `<GreekGloss>` (the two paired). `pnpm lint:greek` enforces it.
 
 ---
 

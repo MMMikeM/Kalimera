@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 
+import { BackLink } from "@/components/BackLink";
 import { GreekText } from "@/components/GreekText";
 import { SCHEME } from "@/constants/grammar-palette";
 import type { FileRoutesByTo } from "@/routeTree.gen";
@@ -63,9 +64,9 @@ export function DrillIndex({
 	return (
 		<div className="mx-auto max-w-2xl">
 			<section>
-				<Link to={backTo} className="mb-4 inline-block text-xs text-stone-400 hover:text-stone-600">
-					← back
-				</Link>
+				<BackLink to={backTo} className="mb-2">
+					Back
+				</BackLink>
 				<header className="mb-6">
 					<h3 className="font-serif text-2xl font-semibold text-navy-text">{title}</h3>
 					{subtitle && <p className="mt-1 text-sm text-muted-foreground">{subtitle}</p>}

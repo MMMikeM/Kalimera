@@ -12,9 +12,19 @@ Some Greek constructions work differently than English. Learn these patterns and
 
 ---
 
+## Hero
+
+<hero component="ReferenceHero" file="tabs/patterns.tsx">
+<title>Constructions that don't translate.</title>
+</hero>
+
+Each construction is a `ParadigmCard` (a TeachingCard with eyebrow "Pattern", `scheme="neutral"`, an icon badge and an info Alert holding the pattern note). Its rows are DB vocabulary, so the tables below show the shape, not a fixed list. Each quick test is a `QuickTest`.
+
+---
+
 ## Likes Construction (μου αρέσει / αρέσουν)
 
-<pattern name="likes-construction" color="ocean">
+<pattern name="likes-construction" scheme="neutral" source="verbs tags likes-singular, likes-plural">
 <title>Likes Construction</title>
 <subtitle>μου αρέσει / αρέσουν</subtitle>
 
@@ -51,6 +61,7 @@ The thing liked is the SUBJECT!
 
 <decision-guide name="likes-test">
 <intro>Choose the correct verb form based on what is liked.</intro>
+<note>QuickTest colorScheme="ocean"</note>
 
 ### One thing is liked (singular subject) → αρέσει
 | Greek                   | English               |
@@ -74,7 +85,7 @@ Remember: the thing liked is the **subject**, so the verb agrees with it!
 
 ## Name Construction (με λένε)
 
-<pattern name="name-construction" color="ocean">
+<pattern name="name-construction" scheme="neutral" source="phrases tag name-construction" render="only when the tag has rows">
 <title>Name Construction</title>
 <subtitle>με λένε = my name is (lit. "they call me")</subtitle>
 
@@ -97,6 +108,7 @@ Remember: the thing liked is the **subject**, so the verb agrees with it!
 
 <decision-guide name="hedging-test">
 <intro>Both soften what you say, but they live in different sentences.</intro>
+<note>QuickTest colorScheme="olive"; static copy in `tabs/patterns.tsx`</note>
 
 ### You are saying something — maybe, possibly → ίσως
 
@@ -120,9 +132,7 @@ Remember: the thing liked is the **subject**, so the verb agrees with it!
 
 ---
 
----
-
-## Pattern Logic
+## Pattern Logic (background, not rendered)
 
 <insight>
 Both constructions flip the English perspective:
@@ -152,11 +162,11 @@ More patterns to be documented as identified:
 
 ## Data Source
 
-Dynamic content from database:
-- `getVocabBySection("phrases")` - name-construction tag
-- `getVocabBySection("verbs")` - likes-singular, likes-plural tags
+Dynamic content from database, loaded only when the tab is `patterns` by `loadPatterns` (a `createServerFn`) in `src/routes/reference/$tab.tsx`:
+- `getVocabBySlug("phrases", ["phrase"])`, grouped by tag with `groupVocabByTag`: `name-construction`
+- `getVocabBySlug("verbs", PATTERN_VERB_WORD_TYPES)` (`["verb", "phrase"]`), grouped by tag: `likes-singular`, `likes-plural`
 
-See: `src/routes/reference/data.server.ts`
+The QuickTest examples and the ίσως / μήπως test are static JSX in `tabs/patterns.tsx`. This tab has no PracticeCTA.
 
 ## Verification
 

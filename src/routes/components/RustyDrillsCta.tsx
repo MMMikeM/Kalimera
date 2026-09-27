@@ -13,7 +13,7 @@ const rustLabel = (score: number) => {
 };
 
 const rustColor = (score: number) => {
-	if (score >= 8) return "text-incorrect";
+	if (score >= 8) return "text-incorrect-text";
 	if (score >= 4) return "text-honey-text";
 	return "text-stone-500";
 };

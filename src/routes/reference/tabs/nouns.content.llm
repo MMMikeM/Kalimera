@@ -1,8 +1,9 @@
 # Nouns Reference Content
 
-> **This is a design spec, not a description of what the page currently renders.**
-> Where it disagrees with `components/nouns-section.tsx`, the code is the truth.
-> Several boxes in the Verification list below were ticked while unimplemented.
+> The per-paradigm tables under "Noun Paradigms by Gender" are reference data for
+> `AGREEMENT_PARADIGMS`, not the page layout: the page renders them as endings grids
+> (see "Page Structure"). Where this file disagrees with `components/nouns-section.tsx`,
+> the code is the truth.
 
 Noun declensions by gender and case - how Greek nouns change their endings.
 
@@ -16,33 +17,38 @@ Greek nouns change their endings to show grammatical function (case) and number.
 
 ---
 
-## Gender Detection (Hero Element)
+## Page Structure
+
+<page file="tabs/nouns.tsx">
+1. ReferenceHero "Endings by gender." with a `demo`: ο φίλος / τον φίλο / του φίλου, each coloured and labelled by its case row (Doer, Target, Owner), from `CASE_ROW_BY_KEY` and the masc-os paradigm.
+2. `NounsSection`: SectionHeading "How Noun Endings Change" (subtitle "Patterns by gender and case").
+3. `CaseGuide` (eyebrow "Concept", "Which case should I use?"): Doer / Target / Owner badges with the grammar term beneath, a question each (Who does it? / Who/what receives? / Whose is it?) and a frame around ο φίλος: ο φίλος μιλάει, βλέπω τον φίλο, το σπίτι του φίλου. Footer: all prepositions (σε, με, για, από…) take accusative.
+4. `GenderHints` (eyebrow "Spotting gender", "Recognise gender by ending").
+5. `EssentialPatterns` (eyebrow "The core", "Essential patterns"): masc-os, fem-a, neut-o, neut-i as columns (header shows the ending plus a corpus example word), case rows, singular grid stacked above plural. An Endings / Full forms toggle; Full forms adds a "Calling" (Vocative) row to the singular grid only. Footer: feminine and neuter Doer = Target, only Owner changes; masculine is the only family where Target differs.
+6. "More patterns" (collapsible): one `GenderVariants` card per gender with every paradigm of that gender, endings only, footer listing each pattern's examples, corpus count ("N nouns in this course") and tip.
+7. Handoff NextStepCards: Pronouns (emphasis) → /reference/pronouns; Articles → /reference/articles.
+8. PracticeCTA "Practice nouns".
+
+Cell emphasis has three weights: the nominative is medium, a cell whose ending differs from the nominative is semibold, a cell identical to it is muted.
+</page>
+
+---
+
+## Gender Detection
 
 <quick-reference name="gender-hints">
-<title>Spot gender by ending</title>
+<title>Recognise gender by ending</title>
 
-| Gender    | Common Endings | Tip |
-|-----------|----------------|-----|
-| Masculine | -ος, -ας, -ης, -ές | Most words for male people |
-| Feminine  | -α, -η, -ση, -ξη, -ψη, -η (πόλη) | Female people, abstract nouns (-η) |
-| Neuter    | -ο, -ι, -μα, -ος, -ας | Diminutives (-ι, -άκι), result nouns (-μα); -ος/-ας look masculine but are not (το μέρος, το κρέας) |
+| Gender    | Endings (derived)               | Hint |
+|-----------|---------------------------------|------|
+| Masculine | -ος, -ας, -ης, -ές              | Male people, -ος words |
+| Feminine  | -α, -η, -ση, -ξη, -ψη, -η (πόλη) | Female people, αγάπη / ζωή |
+| Neuter    | -ο, -ι, -μα, -ος, -ας           | Diminutives, result nouns |
 
 Ending lists are derived from `AGREEMENT_PARADIGMS` — adding a declension pattern
 updates this table with no edit here.
 
 </quick-reference>
-
----
-
-## Core Insight
-
-<insight>
-Greek nouns change their endings to show:
-- **Case**: nominative (subject), accusative (object), genitive (possession)
-- **Number**: singular / plural
-
-The article changes along with the noun and helps identify the gender.
-</insight>
 
 ---
 
@@ -222,7 +228,7 @@ The article changes along with the noun and helps identify the gender.
 <example>πόλη (city)</example>
 <note>Cannot be inferred from the ending: πόλη takes -εις but αγάπη takes -ες.
 Membership is a hand-kept list in `DECLENSION_BY_LEMMA`
-(`scripts/seed-data/vocabulary/noun-seed-enrichment.ts`).</note>
+(`src/scripts/seed-data/vocabulary/noun-seed-enrichment.ts`).</note>
 
 | Case | Singular | Plural |
 |------|----------|--------|
@@ -246,9 +252,8 @@ so a plural row would merely repeat the one above it.
 
 ## Navigation
 
-<previous>See article forms first: /reference/articles</previous>
-<practice>Build fluency with timed retrieval drills: /practice/cases/review/nouns
-(auth-gated — logged-out visitors get /register instead)</practice>
+<next>NextStepCards: Pronouns (emphasis) → /reference/pronouns; Articles → /reference/articles</next>
+<practice>PracticeCTA topic "nouns" → /practice/cases/review/nouns (logged-out visitors get /register; see `src/lib/practice-links.ts`)</practice>
 
 ---
 

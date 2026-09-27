@@ -2,6 +2,7 @@ import { Fragment } from "react";
 import { cn } from "tailwind-variants";
 
 import { GreekText } from "@/components/GreekText";
+import { PageHeading } from "@/components/PageHeading";
 import { type GrammarScheme, SCHEME } from "@/constants/grammar-palette";
 
 interface ReferenceHeroDemoItem {
@@ -12,20 +13,16 @@ interface ReferenceHeroDemoItem {
 }
 
 interface ReferenceHeroProps {
-	eyebrow: string;
 	title: string;
 	thesis: string;
 	demo?: ReferenceHeroDemoItem[];
 }
 
-export const ReferenceHero = ({ eyebrow, title, thesis, demo }: ReferenceHeroProps) => (
+export const ReferenceHero = ({ title, thesis, demo }: ReferenceHeroProps) => (
 	<header className="space-y-5">
-		<p className="text-xs font-semibold tracking-widest text-stone-500 uppercase">{eyebrow}</p>
-
-		<div className="space-y-3">
-			<h1 className="font-serif text-4xl leading-tight text-stone-900 sm:text-5xl">{title}</h1>
-			<p className="max-w-2xl text-base leading-relaxed text-stone-700">{thesis}</p>
-		</div>
+		<PageHeading title={title}>
+			<p>{thesis}</p>
+		</PageHeading>
 
 		{demo && demo.length > 0 ? (
 			<div className="flex flex-wrap items-start gap-x-5 gap-y-4 pt-1">

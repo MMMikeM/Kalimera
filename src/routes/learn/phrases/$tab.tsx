@@ -1,8 +1,9 @@
-import { createFileRoute, Link, redirect } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
-import { ChevronLeft, Clock, Hand, Heart, Link2, MessageCircle, Sparkles } from "lucide-react";
+import { Clock, Hand, Heart, Link2, MessageCircle, Sparkles } from "lucide-react";
 import { z } from "zod";
 
+import { BackLink } from "@/components/BackLink";
 import { NavTabs } from "@/components/NavTabs";
 import { getVocabBySlug } from "@/server/db/queries/vocabulary";
 
@@ -130,15 +131,7 @@ function PhrasesPage() {
 
 	return (
 		<div className="space-y-4">
-			<div className="flex items-center">
-				<Link
-					to="/learn"
-					className="flex items-center gap-1 text-stone-600 transition-colors hover:text-stone-800"
-				>
-					<ChevronLeft size={20} />
-					<span className="font-medium">Phrases</span>
-				</Link>
-			</div>
+			<BackLink to="/learn">Learn</BackLink>
 
 			<NavTabs tabs={NAV_TABS} activeTab={tab} buildUrl={(tabId) => `/learn/phrases/${tabId}`} />
 			<PhraseTabContent config={PHRASE_TABS[tab]} phrases={phrases} />

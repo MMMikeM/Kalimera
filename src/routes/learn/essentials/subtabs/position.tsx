@@ -1,8 +1,8 @@
+import { BackLink } from "@/components/BackLink";
 import { ContentSection } from "@/components/ContentSection";
 import { GreekText } from "@/components/GreekText";
 
 import type { EssentialsLoaderData } from "../$subtab";
-import { EssentialsBackLink } from "./essentials-back-link";
 import { ExampleList } from "./example-list";
 
 interface Props {
@@ -40,7 +40,7 @@ export function PositionSubtab({ data }: Props) {
 
 	return (
 		<div className="space-y-6">
-			<EssentialsBackLink />
+			<BackLink to="/learn/essentials">Essentials</BackLink>
 
 			{/* Opposites Grid */}
 			<ContentSection title="Opposites" subtitle="Position words come in pairs" colorScheme="ocean">

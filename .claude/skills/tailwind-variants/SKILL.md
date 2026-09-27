@@ -19,14 +19,13 @@ This project uses `tailwind-variants` as the **single styling utility**, replaci
 - `clsx` → use `cx()` from `tailwind-variants`
 - `tailwind-merge` → built into `tv()` and `cn()`
 
-`cn` is re-exported from `~/lib/utils` for compatibility with shadcn components:
+There is no `src/lib/utils.ts`; code imports `cn` straight from the package:
 
 ```typescript
-// ~/lib/utils.ts
-export { cn } from "tailwind-variants";
+import { cn } from "tailwind-variants";
 ```
 
-Import `tv`, `VariantProps`, `cx` directly from `tailwind-variants`. Import `cn` from `~/lib/utils`.
+Import `tv`, `VariantProps`, `cx` and `cn` directly from `tailwind-variants`. shadcn components added by the CLI arrive with `import { cn } from "@/lib/utils"` (`components.json` still names that path); rewrite it to `tailwind-variants`.
 
 ## Key rules
 

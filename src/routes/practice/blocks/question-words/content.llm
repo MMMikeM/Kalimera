@@ -1,6 +1,8 @@
 # Question Words — Drill Group
 
-Six drills behind `/practice/blocks/question-words`, listed by `index.tsx` in four phases. Every
+Six drills behind `/practice/blocks/question-words`, listed by `index.tsx` in the four phases of
+`QUESTION_WORD_PHASES` (`drills.data.ts`). The blocks index reaches this page through
+`QUESTION_WORDS_LINK`, a link row with no catalogue entry of its own. Every
 drill uses terracotta and returns to this index via `backTo="/practice/blocks/question-words/"`.
 
 ## Why the split
@@ -110,11 +112,12 @@ Subtitle says the quiet part out loud: "mixing is harder, and sticks better".
 
 - `WHICH_FORMS`, `HOW_MANY_FORMS` and `BASICS` are exported so `review.tsx` can compose them.
   `WHICH_PHRASES` and `HOW_MANY_PHRASES` are exported for symmetry but currently unused elsewhere.
-- Every item builds `greeklish` from `greekToPhonetic(greek)` — none are hand-written, so the typed
-  answer and the displayed pronunciation cannot drift apart.
-- Drill `greek` strings carry no terminal `;` — the Greek question mark is not stripped before
-  phonetic comparison, so it would make correct answers fail. The "?" in the English gloss carries
-  the question cue instead.
-- The two paradigm tables share `components/paradigm.tsx` (`QuestionWordParadigm`); it takes a
-  caption, column headers, gender rows and a footnote as children, so it handles both the 4-column
-  ποιος table and the 2-column πόσος table.
+- No item has a `greeklish` field: greeklish is derived, never stored. `matchPhonetic` grades the
+  typed answer against `greek`, and feedback derives the pronunciation from the same string, so the
+  two cannot drift apart.
+- Drill `greek` strings carry no terminal `;`; the "?" in the English label carries the question
+  cue. A `;` would still pass: `matchPhonetic` strips terminal `;` and `?` from both sides.
+- The two paradigm tables share `components/paradigm.tsx` (`QuestionWordParadigm`), a wrapper over
+  the practice-wide `Paradigm` (`src/routes/practice/components/paradigm.tsx`). It takes a caption,
+  column headers, gender rows and a footnote as children, so it handles both the 4-column ποιος
+  table and the 2-column πόσος table.
