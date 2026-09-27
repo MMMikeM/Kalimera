@@ -46,14 +46,14 @@ export function SelfAssessReverse() {
 						<Button
 							variant="outline"
 							onClick={() => handleSelfAssess(false)}
-							className="flex-1 border-incorrect/30 text-incorrect hover:bg-incorrect/5"
+							className="flex-1 border-incorrect/30 text-incorrect-text hover:bg-incorrect/5"
 						>
 							Missed it
 						</Button>
 						<Button
 							variant="outline"
 							onClick={() => handleSelfAssess(true)}
-							className="flex-1 border-correct/30 text-correct hover:bg-correct/5"
+							className="flex-1 border-correct/30 text-correct-text hover:bg-correct/5"
 						>
 							Got it
 						</Button>

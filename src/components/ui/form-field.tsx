@@ -48,7 +48,7 @@ export function FormField({
 				aria-invalid={!!error}
 			/>
 			{error && (
-				<p id={errorId} className="text-sm text-incorrect">
+				<p id={errorId} className="text-sm text-incorrect-text">
 					{error}
 				</p>
 			)}
