@@ -40,67 +40,67 @@ const IMPERATIVES: SimpleListItem[] = [
 		id: "pare",
 		greek: "Πάρε!",
 		label: "Take! / Pick up!",
-		category: "full",
+		category: "tier-b",
 	},
 	{
 		id: "fate",
 		greek: "Φάε!",
 		label: "Eat!",
-		category: "full",
+		category: "tier-b",
 	},
 	{
 		id: "pies",
 		greek: "Πιες!",
 		label: "Drink!",
-		category: "full",
+		category: "tier-b",
 	},
 	{
 		id: "koita",
 		greek: "Κοίτα!",
 		label: "Look! / Watch!",
-		category: "full",
+		category: "tier-b",
 	},
 	{
 		id: "perimene",
 		greek: "Περίμενε!",
 		label: "Wait!",
-		category: "full",
+		category: "tier-b",
 	},
 	{
 		id: "grapso",
 		greek: "Γράψε!",
 		label: "Write!",
-		category: "full",
+		category: "tier-b",
 	},
 	{
 		id: "diavase",
 		greek: "Διάβασε!",
 		label: "Read!",
-		category: "full",
+		category: "tier-b",
 	},
 	{
 		id: "akouso",
 		greek: "Άκουσε!",
 		label: "Listen!",
-		category: "full",
+		category: "tier-b",
 	},
 	{
 		id: "pigaine",
 		greek: "Πήγαινε!",
 		label: "Go!",
-		category: "full",
+		category: "tier-b",
 	},
 	{
 		id: "vres",
 		greek: "Βρες!",
 		label: "Find!",
-		category: "full",
+		category: "tier-b",
 	},
 ];
 
 const CATEGORIES = [
 	{ id: "tier-a", label: "Tier A (5)" },
-	{ id: "full", label: "All 15" },
+	{ id: "tier-b", label: "Tier B (10)" },
 ];
 
 export const Route = createFileRoute("/practice/verbs/imperatives")({

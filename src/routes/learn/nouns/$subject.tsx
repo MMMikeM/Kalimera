@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, notFound } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 
@@ -29,7 +29,7 @@ const subjectLoader = createServerFn()
 export const Route = createFileRoute("/learn/nouns/$subject")({
 	loader: async ({ params }) => {
 		const { group } = await subjectLoader({ data: params.subject });
-		if (!group) throw new Response("Not Found", { status: 404 });
+		if (!group) throw notFound();
 		return { group };
 	},
 	component: NounSubjectPage,

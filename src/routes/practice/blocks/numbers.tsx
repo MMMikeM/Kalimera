@@ -168,7 +168,7 @@ function NumbersDrill() {
 			items={NUMBERS}
 			subtitle="28 forms / timed"
 			backTo="/practice/blocks"
-			forwardDesc="Digit → Greek word"
+			forwardDesc="English word → Greek word"
 			reverseDesc="Greek word → digit (self-assess)"
 			categories={CATEGORIES}
 		/>

@@ -7,9 +7,9 @@ export const buttonVariants = tv({
 	variants: {
 		variant: {
 			// -600, not the base -500: white on -500 is 3.99:1, under AA for button-sized text.
-			primary: "bg-terracotta-600 text-white shadow-terracotta-200 hover:bg-terracotta-700",
+			primary: "bg-terracotta-600 text-white hover:bg-terracotta-700",
 			secondary:
-				"border border-stone-200 bg-card text-stone-700 shadow-stone-100 hover:border-stone-300",
+				"border border-stone-200 bg-card text-stone-700 hover:border-stone-300",
 			outline:
 				"border-2 border-stone-300 bg-card/50 text-stone-700 hover:border-stone-400 hover:bg-stone-50",
 			ghost: "text-stone-700 hover:bg-card/60",
@@ -29,12 +29,12 @@ export const buttonVariants = tv({
 			variant: "secondary",
 			active: true,
 			class:
-				"border-terracotta bg-terracotta-600 text-white shadow-lg shadow-terracotta-300 hover:bg-terracotta-700",
+				"border-terracotta bg-terracotta-600 text-white shadow-md hover:bg-terracotta-700",
 		},
 		{
 			variant: "primary",
 			active: true,
-			class: "shadow-lg shadow-terracotta-300",
+			class: "shadow-md",
 		},
 	],
 	defaultVariants: {

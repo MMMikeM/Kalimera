@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { type IndexGroup, SectionIndex } from "@/components/SectionIndex";
+import { pageTitle } from "@/lib/page-title";
 
 const groups: IndexGroup[] = [
 	{
@@ -36,7 +37,7 @@ const groups: IndexGroup[] = [
 				id: "verbs",
 				label: "Verbs",
 				greek: "Ρήματα",
-				description: "Actions by conjugation family",
+				description: "The irregulars, then the verbs that follow the rules",
 				href: "/learn/verbs",
 			},
 			{
@@ -51,6 +52,7 @@ const groups: IndexGroup[] = [
 ];
 
 export const Route = createFileRoute("/learn/")({
+	head: () => ({ meta: [{ title: pageTitle("Learn") }] }),
 	component: LearnIndex,
 });
 

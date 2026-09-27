@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { type IndexGroup, SectionIndex } from "@/components/SectionIndex";
+import { pageTitle } from "@/lib/page-title";
 
 const groups: IndexGroup[] = [
 	{
@@ -77,6 +78,7 @@ const groups: IndexGroup[] = [
 ];
 
 export const Route = createFileRoute("/reference/")({
+	head: () => ({ meta: [{ title: pageTitle("Reference") }] }),
 	component: ReferenceIndex,
 });
 
