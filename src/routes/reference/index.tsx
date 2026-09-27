@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Brush, Package, Puzzle, Shapes, Tag, UserRound, Waypoints, Zap } from "lucide-react";
 
 import { type IndexGroup, SectionIndex } from "@/components/SectionIndex";
 
@@ -12,7 +11,6 @@ const groups: IndexGroup[] = [
 				label: "Cases",
 				greek: "Πτώσεις",
 				description: "What each ending is for",
-				icon: <Shapes size={20} />,
 				href: "/reference/cases",
 			},
 			{
@@ -20,7 +18,6 @@ const groups: IndexGroup[] = [
 				label: "Pronouns",
 				greek: "Αντωνυμίες",
 				description: "Cases in the words you use most",
-				icon: <UserRound size={20} />,
 				href: "/reference/pronouns",
 			},
 		],
@@ -33,7 +30,6 @@ const groups: IndexGroup[] = [
 				label: "Articles",
 				greek: "Άρθρα",
 				description: "The definite article, case by case",
-				icon: <Tag size={20} />,
 				href: "/reference/articles",
 			},
 			{
@@ -41,7 +37,6 @@ const groups: IndexGroup[] = [
 				label: "Nouns",
 				greek: "Ουσιαστικά",
 				description: "Endings by gender",
-				icon: <Package size={20} />,
 				href: "/reference/nouns",
 			},
 			{
@@ -49,7 +44,6 @@ const groups: IndexGroup[] = [
 				label: "Adjectives",
 				greek: "Επίθετα",
 				description: "The noun's grammar, copied",
-				icon: <Brush size={20} />,
 				href: "/reference/adjectives",
 			},
 		],
@@ -62,7 +56,6 @@ const groups: IndexGroup[] = [
 				label: "Prepositions",
 				greek: "Προθέσεις",
 				description: "Little words, big relationships",
-				icon: <Waypoints size={20} />,
 				href: "/reference/prepositions",
 			},
 			{
@@ -70,7 +63,6 @@ const groups: IndexGroup[] = [
 				label: "Verbs",
 				greek: "Ρήματα",
 				description: "Three patterns, thousands of verbs",
-				icon: <Zap size={20} />,
 				href: "/reference/verbs",
 			},
 			{
@@ -78,7 +70,6 @@ const groups: IndexGroup[] = [
 				label: "Patterns",
 				greek: "Δομές",
 				description: "Constructions that don't translate",
-				icon: <Puzzle size={20} />,
 				href: "/reference/patterns",
 			},
 		],
