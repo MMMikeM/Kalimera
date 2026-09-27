@@ -4,19 +4,17 @@ Connect grammar and vocabulary to real-world Greek usage.
 
 ## Current state
 
-- Reference and learn content files have no real-world capability markers
-- Content teaches forms and patterns but doesn't connect them to what the user can now do
-- No "you could use this to..." moments
+- The cases page has one: "The endings, not the order, say who did what" (`src/routes/reference/components/cases-section.tsx`)
+- Other reference and learn content teaches forms and patterns without connecting them to what the user can now do
 
 ## Target state
 
 - **Sparse, genuine domain bridges** in reference and learn content. Once per topic section, not per item.
 - Connect practice to the living language:
-  - Cases: "Greek case endings do what English word order does."
   - Verbs/aorist: "This is the default narrative tense -- every news headline uses it."
   - Conversations/food: "These phrases are sufficient for ordering at a taverna."
   - Pronouns: "You'll hear these in every single Greek conversation."
-- **Infrequent enough to be genuinely interesting.** Once a week max in drills. In reference content, one per topic page.
+- **Infrequent enough to be genuinely interesting.** One per topic page. Not in drills: nothing in the drill flow could carry them without becoming noise.
 - **Specific to what was actually learned**, not generic ("Learning Greek is great for your brain!").
 
 ## Files likely involved
