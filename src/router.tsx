@@ -1,5 +1,6 @@
 import { createRouter } from "@tanstack/react-router";
 
+import { NotFound, RouteError } from "./components/StatusPage";
 import { routeTree } from "./routeTree.gen";
 import type { AuthSession } from "./server/auth/session";
 
@@ -12,7 +13,8 @@ export function getRouter() {
 		routeTree,
 		scrollRestoration: true,
 		context: { auth: null } satisfies RouterContext,
-		defaultNotFoundComponent: () => <p>Not found</p>,
+		defaultErrorComponent: RouteError,
+		defaultNotFoundComponent: NotFound,
 		defaultStaleTime: Infinity,
 	});
 }

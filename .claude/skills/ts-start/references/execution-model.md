@@ -190,13 +190,12 @@ const secret = getSecret(); // ❌ Throws error
 
 ### Module-Level `process.env` Reads
 
-Reading `process.env` at module scope is wrong for **two** reasons, not one:
+Reading `process.env` at module scope in a module the client can reach is wrong because the value can be inlined into the client bundle.
 
-1. **Security:** the value can be inlined into the client bundle.
-2. **Runtime correctness:** on Cloudflare Workers and other edge SSR runtimes, env is injected per-request. Module-level code runs at module load, before the env exists, so the read evaluates to `undefined` even on the server.
+On edge runtimes such as Cloudflare Workers there is a second failure: env is injected per request, so a module-load read is `undefined` even on the server. That does not apply to this app. It runs on Nitro's Node server (`NITRO_PRESET=node-server` in the Dockerfile, deployed to Fly; `pnpm preview` runs `node .output/server/index.mjs`), where `process.env` is populated before any module loads. A module marked `import "@tanstack/react-start/server-only"` may therefore read env at load: `src/server/db/index.ts` is such a module, and it builds the shared Turso connection at module load.
 
 ```tsx
-// ❌ Leaks to client AND is undefined under Worker SSR
+// ❌ Leaks to client when this module is client-reachable
 const apiKey = process.env.SECRET_KEY;
 
 // ✅ Wrap in a server-only function — read happens per call, on the server
@@ -250,6 +249,14 @@ function CurrentTime() {
 
 	return <div>{time || "Loading..."}</div>;
 }
+```
+
+The same applies to any client-only preference, such as `prefers-reduced-motion`: it must not change the first client render, or that render will not match the server HTML. Gate it with `useHydrated()` from `@tanstack/react-router` so the first render uses the server's default. `src/components/DrillDemo.tsx` does this:
+
+```tsx
+const prefersReducedMotion = useReducedMotion();
+const hydrated = useHydrated();
+const reduceMotion = hydrated && prefersReducedMotion === true;
 ```
 
 ## Manual vs API-Driven Environment Detection
@@ -325,8 +332,8 @@ Always verify server-only code isn't included in client bundles:
 
 ```bash
 # Analyze client bundle
-npm run build
-# Check dist/client for any server-only imports
+pnpm build
+# Nitro writes client assets to .output/public: check them for any server-only imports
 ```
 
 ### Environment Variable Strategy

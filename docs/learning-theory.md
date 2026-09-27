@@ -36,7 +36,7 @@ The system-first versus function-first debate has been examined directly. **Walt
 
 ## Cognitive load demands progressive disclosure
 
-**John Sweller's Cognitive Load Theory** provides clear guidance on paradigm presentation. Working memory can hold approximately **7±2 items** for storage but can only process **2-4 elements simultaneously**. Grammatical paradigms are "high element interactivity" material—forms must be understood in relation to each other across case, number, and gender dimensions.
+**John Sweller's Cognitive Load Theory** provides clear guidance on paradigm presentation. Working memory holds about **4 chunks** (Cowan's estimate; Miller's 7±2 has not held up) and can only process **2-4 elements simultaneously**. Grammatical paradigms are "high element interactivity" material—forms must be understood in relation to each other across case, number, and gender dimensions.
 
 **The Isolated Elements Effect** (Pollock, Chandler, & Sweller, 2002) directly addresses paradigm tables: when material is highly interactive, learners benefit from initial presentation of **isolated elements** (individual forms without full paradigm context) followed later by integrated presentation. Students given isolated-elements-first instruction outperformed those given full tables twice.
 

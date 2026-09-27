@@ -1,8 +1,11 @@
-import { Link } from "@tanstack/react-router";
 import type React from "react";
+import { useEffect, useRef } from "react";
 
+import { BackLink } from "@/components/BackLink";
 import { GreekGloss } from "@/components/GreekGloss";
+import { PageHeading } from "@/components/PageHeading";
 import { Button } from "@/components/ui/button";
+import { Verdict } from "@/components/Verdict";
 
 import { SPEEDS } from "../drill-speeds";
 import { SESSION_SIZES } from "./deck";
@@ -29,10 +32,12 @@ export const SelectorButton = ({
 		type="button"
 		onClick={onClick}
 		disabled={disabled}
-		className={`rounded-lg border px-3 py-2 text-sm font-medium transition-colors disabled:opacity-40 ${
+		aria-pressed={selected}
+		// The picked answer stays at full strength during feedback: opacity on a -text token breaks AAA.
+		className={`min-h-11 rounded-lg border px-3 py-2 text-sm font-medium transition-colors disabled:cursor-default ${
 			selected
 				? `${selectedBg} ${selectedText} border-transparent`
-				: "border-border bg-transparent text-foreground hover:border-stone-400"
+				: "border-border bg-transparent text-foreground hover:border-stone-400 disabled:opacity-40"
 		}`}
 	>
 		{label}
@@ -84,18 +89,15 @@ export const ConfigShell = ({
 
 	return (
 		<div className="mx-auto max-w-sm px-6 py-8">
-			<Link
-				to={backTo ?? ".."}
-				className="mb-6 inline-block text-xs text-stone-400 hover:text-stone-600"
-			>
-				← back
-			</Link>
+			<BackLink to={backTo ?? ".."} className="mb-4">
+				Back
+			</BackLink>
 			<h2 className="mb-1 font-serif text-2xl text-navy-text">{title}</h2>
 			<p className="mb-2 text-sm text-muted-foreground">{subtitle}</p>
 			{referenceHref ? (
 				<a
 					href={referenceHref}
-					className="mb-6 inline-block text-xs text-muted-foreground underline-offset-2 hover:text-foreground hover:underline"
+					className="mb-6 inline-flex min-h-11 items-center text-sm text-muted-foreground underline-offset-2 hover:text-foreground hover:underline"
 				>
 					{referenceLabel ?? "Reference →"}
 				</a>
@@ -209,10 +211,7 @@ export const ConfigShell = ({
 				</div>
 			</fieldset>
 
-			<Button
-				onClick={startDrill}
-				className="w-full bg-terracotta text-cream hover:bg-terracotta-dark"
-			>
+			<Button onClick={startDrill} className="w-full">
 				Begin
 			</Button>
 		</div>
@@ -222,11 +221,13 @@ export const ConfigShell = ({
 // ─── DrillShell ────────────────────────────────────────────────────────────────
 
 export const DrillShell = ({
+	title,
 	progress,
 	barColor,
 	backTo,
 	children,
 }: {
+	title: string;
 	progress: number;
 	barColor: string;
 	backTo?: string;
@@ -236,41 +237,45 @@ export const DrillShell = ({
 	const sessionSize = useDrillStore((s) => s.sessionSize);
 	const deck = useDrillStore((s) => s.deck);
 	const remediationCounts = useDrillStore((s) => s.remediationCounts);
+	// Scheduling state is for the account holder watching their own SRS, not for a visitor on /try.
+	const showScheduling = useDrillStore((s) => s.userId > 0);
 
 	const currentForm = deck[cardIndex];
 	const remCount = currentForm ? (remediationCounts[currentForm.id] ?? 0) : 0;
 
 	return (
 		<div className="flex flex-col">
-			<div className="h-1 overflow-hidden bg-stone-200">
-				<div
-					className={`h-full transition-colors duration-200 ${barColor}`}
-					style={{ width: `${progress * 100}%` }}
-				/>
+			<div className="mx-auto w-full max-w-sm px-6" aria-hidden="true">
+				<div className="h-1 overflow-hidden rounded-full bg-stone-200">
+					<div
+						className={`h-full transition-colors duration-200 ${barColor}`}
+						style={{ width: `${progress * 100}%` }}
+					/>
+				</div>
 			</div>
-			<div className="flex items-center justify-between px-4 pt-2">
-				<Link to={backTo ?? ".."} className="text-xs text-stone-300 hover:text-stone-500">
-					←
-				</Link>
-				<span className="text-xs text-stone-400 tabular-nums">
-					{cardIndex + 1}
-					<span className="mx-0.5 text-stone-300">/</span>
-					{sessionSize}
+			<div className="mx-auto flex w-full max-w-sm items-center justify-between gap-4 px-6">
+				<BackLink to={backTo ?? ".."}>Exit</BackLink>
+				<h1 className="min-w-0 truncate text-sm text-muted-foreground">{title}</h1>
+				<span className="shrink-0 text-sm text-muted-foreground tabular-nums">
+					<span className="sr-only">Card </span>
+					{cardIndex + 1} of {sessionSize}
 				</span>
 			</div>
-			{currentForm && (
-				<div className="flex gap-2 px-4 pt-1">
-					<span className="rounded bg-stone-100 px-1.5 py-0.5 font-mono text-xs text-stone-400">
-						{currentForm.bucket ?? "—"}
-					</span>
+			{showScheduling && currentForm && (
+				<div className="mx-auto flex w-full max-w-sm gap-2 px-6">
+					{currentForm.bucket && (
+						<span className="rounded bg-stone-100 px-1.5 py-0.5 font-mono text-xs text-stone-600">
+							{currentForm.bucket}
+						</span>
+					)}
 					{remCount > 0 && (
-						<span className="rounded bg-amber-100 px-1.5 py-0.5 font-mono text-xs text-amber-600">
+						<span className="rounded bg-honey-100 px-1.5 py-0.5 font-mono text-xs text-honey-text">
 							remediation ×{remCount}
 						</span>
 					)}
 				</div>
 			)}
-			<div className="mx-auto flex max-w-sm flex-col gap-10 px-6 pt-4 pb-6">{children}</div>
+			<div className="mx-auto flex w-full max-w-sm flex-col gap-10 px-6 pt-4 pb-6">{children}</div>
 		</div>
 	);
 };
@@ -308,103 +313,106 @@ export const ForwardInput = ({
 				autoCorrect="off"
 				autoCapitalize="off"
 				spellCheck={false}
-				className={`w-full border-b-2 border-stone-200 bg-transparent pb-2 text-3xl text-foreground caret-terracotta transition-colors outline-none placeholder:text-stone-300 focus:border-terracotta [&::-webkit-search-cancel-button]:hidden ${phase !== "active" ? "opacity-50" : ""}`}
+				aria-label="Your answer, in Latin letters"
+				className={`w-full border-b-2 border-stone-200 bg-transparent pb-2 text-3xl text-foreground caret-terracotta transition-colors outline-none placeholder:text-stone-500 focus:border-terracotta [&::-webkit-search-cancel-button]:hidden ${phase !== "active" ? "text-muted-foreground" : ""}`}
 			/>
-			{phase === "active" && <p className="mt-2 text-xs text-stone-400">enter to check</p>}
+			{phase === "active" && (
+				<p className="mt-2 text-xs text-muted-foreground pointer-coarse:hidden">Enter to check</p>
+			)}
 		</form>
 	);
 };
 
 // ─── FeedbackDisplay ───────────────────────────────────────────────────────────
 
-export const FeedbackDisplay = () => {
+const ContinueHint = () => (
+	<p className="mt-3 text-xs text-muted-foreground">
+		<span className="pointer-coarse:hidden">Press Enter or tap to continue</span>
+		<span className="hidden pointer-coarse:inline">Tap to continue</span>
+	</p>
+);
+
+/**
+ * The live region is always mounted so the verdict is announced when it appears.
+ * After a wrong answer the whole block is the tap target that moves on.
+ */
+const FeedbackFrame = ({ className, children }: { className: string; children: React.ReactNode }) => {
 	const lastAttempt = useDrillStore((s) => s.attempts.at(-1));
 	const phase = useDrillStore((s) => s.phase);
-	const { advance } = drillActions;
 
-	if (phase !== "feedback" || !lastAttempt) return null;
+	if (phase !== "feedback" || !lastAttempt) return <div aria-live="polite" />;
 
-	const { form } = lastAttempt;
-	const showContinue = !lastAttempt.isCorrect;
-
-	const inner = (
-		<>
-			<p
-				className={`text-sm font-medium ${lastAttempt.isCorrect ? "text-correct" : "text-incorrect"}`}
-			>
-				{lastAttempt.isCorrect ? "Correct" : lastAttempt.timedOut ? "Time's up" : "Incorrect"}
-			</p>
-			<GreekGloss greek={form.greek} size="2xl" className="mt-1" />
-			{showContinue && (
-				<p className="mt-3 text-xs text-stone-500">Press Enter or tap to continue</p>
+	return (
+		<div aria-live="polite" className={className}>
+			{lastAttempt.isCorrect ? (
+				children
+			) : (
+				<button
+					type="button"
+					className="block w-full cursor-pointer text-left select-text"
+					onPointerDown={(e) => e.preventDefault()}
+					onClick={drillActions.advance}
+				>
+					{children}
+					<ContinueHint />
+				</button>
 			)}
-		</>
+		</div>
 	);
+};
 
-	if (showContinue) {
-		return (
-			<button
-				type="button"
-				className="mt-5 block w-full cursor-pointer text-left select-text"
-				onPointerDown={(e) => e.preventDefault()}
-				onClick={advance}
-			>
-				{inner}
-			</button>
-		);
-	}
-	return <div className="mt-5">{inner}</div>;
+export const FeedbackDisplay = () => {
+	const lastAttempt = useDrillStore((s) => s.attempts.at(-1));
+	return (
+		<FeedbackFrame className="mt-5">
+			{lastAttempt && (
+				<>
+					<Verdict isCorrect={lastAttempt.isCorrect} timedOut={lastAttempt.timedOut} />
+					<GreekGloss greek={lastAttempt.form.greek} size="2xl" className="mt-1" />
+				</>
+			)}
+		</FeedbackFrame>
+	);
 };
 
 // ─── ReverseFeedback ───────────────────────────────────────────────────────────
 
 export const ReverseFeedback = ({ detail }: { detail?: React.ReactNode }) => {
 	const lastAttempt = useDrillStore((s) => s.attempts.at(-1));
-	const phase = useDrillStore((s) => s.phase);
-	const { advance } = drillActions;
-
-	if (phase !== "feedback" || !lastAttempt) return null;
-
-	const showContinue = !lastAttempt.isCorrect;
-
-	const inner = (
-		<>
-			<p
-				className={`text-sm font-medium ${lastAttempt.isCorrect ? "text-correct" : "text-incorrect"}`}
-			>
-				{lastAttempt.isCorrect ? "Correct" : lastAttempt.timedOut ? "Time's up" : "Incorrect"}
-			</p>
-			{!lastAttempt.isCorrect && (
-				<p className="mt-1 text-sm text-muted-foreground">{lastAttempt.form.label}</p>
+	return (
+		<FeedbackFrame className="pt-4">
+			{lastAttempt && (
+				<>
+					<Verdict isCorrect={lastAttempt.isCorrect} timedOut={lastAttempt.timedOut} />
+					{!lastAttempt.isCorrect && (
+						<p className="mt-1 text-sm text-muted-foreground">{lastAttempt.form.label}</p>
+					)}
+					{!lastAttempt.isCorrect && detail && (
+						<div className="mt-2 text-sm text-muted-foreground">{detail}</div>
+					)}
+				</>
 			)}
-			{!lastAttempt.isCorrect && detail && (
-				<div className="mt-2 text-sm text-muted-foreground">{detail}</div>
-			)}
-			{showContinue && (
-				<p className="mt-3 text-xs text-stone-500">Press Enter or tap to continue</p>
-			)}
-		</>
+		</FeedbackFrame>
 	);
-
-	if (showContinue) {
-		return (
-			<button
-				type="button"
-				className="block w-full cursor-pointer pt-4 text-left select-text"
-				onClick={advance}
-			>
-				{inner}
-			</button>
-		);
-	}
-	return <div className="pt-4">{inner}</div>;
 };
 
 // ─── SummaryScreen ─────────────────────────────────────────────────────────────
 
-export const SummaryScreen = ({ backTo }: { backTo?: string }) => {
+export const SummaryScreen = ({
+	backTo,
+	onRepeat,
+	footer,
+}: {
+	backTo?: string;
+	onRepeat: () => void;
+	footer?: React.ReactNode;
+}) => {
 	const attempts = useDrillStore((s) => s.attempts);
-	const { resetToConfig, retryMistakes } = drillActions;
+	const { retryMistakes } = drillActions;
+	const actionsRef = useRef<HTMLDivElement>(null);
+
+	// The answer input that held focus is gone; put the keyboard on the next action.
+	useEffect(() => actionsRef.current?.querySelector("button")?.focus(), []);
 
 	const correct = attempts.filter((a) => a.isCorrect).length;
 	const total = attempts.length;
@@ -429,65 +437,63 @@ export const SummaryScreen = ({ backTo }: { backTo?: string }) => {
 	const allMistakes = mistakeEntries.map((m) => m.attempt);
 
 	return (
-		<div className="mx-auto max-w-xs px-6 py-8">
-			<h2 className="mb-8 font-serif text-2xl text-navy-text">Done</h2>
-			<div className="mb-10 space-y-6">
-				<div>
-					<p className="font-serif text-4xl text-foreground tabular-nums">
-						{correct} <span className="text-stone-300">/</span> {total}
-					</p>
-					<p className="mt-1 text-sm text-muted-foreground">
-						{accuracy}% correct · {(avgTime / 1000).toFixed(1)}s avg
-					</p>
-				</div>
-			</div>
+		<div className="mx-auto max-w-sm px-6 py-8">
+			<PageHeading title={`${correct} of ${total} correct`} className="mb-10">
+				<p className="text-sm text-muted-foreground tabular-nums">
+					{accuracy}% · {(avgTime / 1000).toFixed(1)}s average per answer
+				</p>
+			</PageHeading>
 
 			{mistakeEntries.length > 0 && (
-				<div className="mb-10">
-					<p className="mb-3 text-center text-sm text-stone-600 italic">
-						These caught you — that's where lasting learning happens.
-					</p>
-					<div className="space-y-2">
+				<section className="mb-10">
+					<h2 className="mb-3 text-sm font-medium text-foreground">Missed this round</h2>
+					<ul className="space-y-2">
 						{mistakeEntries.map(({ attempt: a, count }) => (
-							<div key={a.form.id} className="rounded-lg border bg-card p-3">
-								<div className="flex items-baseline gap-2">
+							<li key={a.form.id} className="rounded-lg border bg-card p-3">
+								<div className="flex flex-wrap items-baseline gap-x-2">
 									<GreekGloss greek={a.form.greek} size="lg" />
 									<span className="text-xs text-muted-foreground">{a.form.label}</span>
 								</div>
 								{a.userInput !== undefined && (
 									<p className="mt-1 text-xs text-muted-foreground">
-										you typed:{" "}
-										<span className="font-mono text-incorrect">
-											{a.userInput.trim() === "" ? "—" : a.userInput}
-										</span>
+										You typed{" "}
+										{a.userInput.trim() === "" ? (
+											<span className="italic">nothing</span>
+										) : (
+											<span className="font-mono text-incorrect-text">{a.userInput}</span>
+										)}
 										{count > 1 && (
-											<span className="ml-2 rounded bg-incorrect/10 px-1.5 py-0.5 text-incorrect">
+											<span className="ml-2 rounded bg-incorrect/10 px-1.5 py-0.5 text-incorrect-text">
 												×{count}
 											</span>
 										)}
 									</p>
 								)}
-							</div>
+							</li>
 						))}
-					</div>
-				</div>
+					</ul>
+				</section>
 			)}
 
-			<div className="mb-3 space-y-2">
+			<div ref={actionsRef} className="space-y-2">
 				{allMistakes.length > 0 && (
-					<Button onClick={() => retryMistakes(allMistakes)} variant="outline" className="w-full">
-						Drill mistakes ({allMistakes.length})
+					<Button onClick={() => retryMistakes(allMistakes)} className="w-full">
+						Drill the {allMistakes.length} you missed
 					</Button>
 				)}
-				<Button onClick={resetToConfig} className="w-full">
+				<Button
+					onClick={onRepeat}
+					variant={allMistakes.length > 0 ? "secondary" : "primary"}
+					className="w-full"
+				>
 					Practice again
 				</Button>
 			</div>
 
-			<div className="text-center">
-				<Link to={backTo ?? ".."} className="text-xs text-stone-500 underline hover:text-stone-700">
-					← back
-				</Link>
+			{footer}
+
+			<div className="mt-6 text-center">
+				<BackLink to={backTo ?? ".."}>Back</BackLink>
 			</div>
 		</div>
 	);

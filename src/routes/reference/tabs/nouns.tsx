@@ -21,7 +21,6 @@ export function NounsTab({ data = null }: { data?: NounsData | null }) {
 	return (
 		<div className="space-y-12">
 			<ReferenceHero
-				eyebrow="Nouns"
 				title="Endings by gender."
 				thesis="Noun endings fall into three gender families. Learn the family, and you know how the word behaves."
 				demo={HERO_DEMO}

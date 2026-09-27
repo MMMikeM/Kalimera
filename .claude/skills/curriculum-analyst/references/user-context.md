@@ -4,7 +4,7 @@
 
 - **Study duration:** 1+ year of Greek
 - **Vocabulary:** 100+ words known
-- **Grammar:** Understands rules (cases, conjugations, agreement)
+- **Grammar:** Has met the rules (cases, conjugations, agreement) but does not reliably command the metalanguage: "nominative", "accusative", "genitive", "subject", "direct object", "case" are not safely internalised
 - **Weekly tutor:** Conversation practice with Konstantina via Preply
 - **Input method:** Types in greeklish, expects conversion to Greek script
 
@@ -15,8 +15,8 @@ Knowledge hasn't become automatic. Sentence construction is effortful.
 The user can:
 
 - Recognise Greek when reading/hearing it
-- Apply grammar rules when given time to think
-- Understand explanations of why something is correct
+- Apply familiar patterns when given time to think
+- Follow an explanation framed in plain-English handles ("the doer", "the target", "the owner")
 
 The user struggles to:
 
@@ -28,13 +28,15 @@ The user struggles to:
 
 | Stage       | Description                     | User's Status |
 | ----------- | ------------------------------- | ------------- |
-| Declarative | "I know the rule"               | ✓ Complete    |
+| Declarative | "I know the rule"               | ~ Shaky       |
 | Procedural  | Apply without conscious thought | ✗ Stuck here  |
 | Automatic   | Produce at conversational speed | ✗ Blocked     |
 
-**This is a procedural gap, not a knowledge gap.**
+**This is a procedural gap, sitting on a shaky conceptual base.**
 
-The user knows that accusative changes ο→τον. They can explain it. They can identify correct usage. But when speaking, they can't apply it fast enough.
+The user has seen ο become τον many times and can often produce it given time. But they cannot be relied on to map "accusative" to "the thing the action touches", or "nominative" to "subject", so a prompt or error message phrased in those terms may not land. When speaking, they can't apply the pattern fast enough.
+
+The app therefore leads with plain-English functional handles (Doer, Target, Owner) and attaches the Greek grammar terms as labels bound to those handles, never as prior knowledge (PRODUCT.md, Users; `greek-curriculum-expert`).
 
 ## What the App Must Do
 
@@ -43,7 +45,7 @@ The user knows that accusative changes ο→τον. They can explain it. They ca
 The user doesn't need:
 
 - More vocabulary
-- Better grammar explanations
+- Longer grammar explanations in metalanguage
 - Recognition practice
 - Careful, untimed exercises
 
@@ -79,11 +81,11 @@ The app does NOT replace the tutor for:
 - Cultural context
 - Personalised correction
 
-## Two-Stage Input Model (Planned)
+## Two-Stage Input Model
 
 To handle greeklish input:
 
-1. **Stage 1: Phonetic production** - User types greeklish, system accepts if phonetically correct
-2. **Stage 2: Spelling correction** - If phonetics correct but spelling wrong, prompt for correct Greek spelling
+1. **Stage 1: Phonetic production** (shipped) - User types greeklish, system accepts if phonetically correct. This is `matchPhonetic` in `src/lib/greek-transliteration.ts`, used by the drill engine: it accepts the usual variant spellings (`thelo` and `thelw` both match θέλω), ignores terminal punctuation, and accepts a noun typed without its article
+2. **Stage 2: Spelling correction** (planned, not built) - If phonetics correct but spelling wrong, prompt for correct Greek spelling
 
 This separates the retrieval skill (can you produce the word?) from the orthographic skill (can you spell it?).

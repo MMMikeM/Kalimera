@@ -176,7 +176,7 @@ const CaseGuide = () => {
 								className={`shrink-0 rounded px-2 py-1 text-xs font-semibold ${style.bg} ${style.text}`}
 							>
 								<span className="block leading-tight">{meta.label}</span>
-								<span className="block text-xs font-normal opacity-70">{meta.sublabel}</span>
+								<span className="block text-xs font-normal">{meta.sublabel}</span>
 							</span>
 							<div>
 								<span className="text-sm font-medium">{CASE_QUESTIONS[caseKey]}</span>
@@ -396,14 +396,12 @@ const Handoff = () => (
 	<div className="grid gap-3 md:grid-cols-2">
 		<NextStepCard
 			to="/reference/pronouns"
-			kicker="Continue"
 			title="Pronouns"
 			description="The same cases in the words you'll say most"
 			emphasis
 		/>
 		<NextStepCard
 			to="/reference/articles"
-			kicker="Review"
 			title="Articles"
 			description="The definite article paradigm across cases"
 		/>

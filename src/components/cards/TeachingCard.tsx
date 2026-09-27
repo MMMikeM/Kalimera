@@ -59,7 +59,7 @@ export const TeachingCard = ({
 			<div className={titleRow()}>
 				<h3 className={titleSlot({ class: style.text })}>{title}</h3>
 				{badge ? (
-					<span className={badgeSlot({ class: cn(style.badgeBg, style.text) })}>{badge}</span>
+					<span className={badgeSlot({ class: cn(style.badgeBg, style.badgeText) })}>{badge}</span>
 				) : null}
 			</div>
 

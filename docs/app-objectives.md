@@ -8,11 +8,11 @@
 
 ## The Diagnosis
 
-You have explicit knowledge that hasn't become procedural skill. You know the rules; you can't apply them at speed.
+You have explicit knowledge that hasn't become procedural skill. You know some of the rules, less securely than it feels; you can't apply them at speed.
 
 | Stage       | Description                       | Status    |
 | ----------- | --------------------------------- | --------- |
-| Declarative | "I know accusative changes ο→τον" | ✓ Done    |
+| Declarative | "I know ο→τον for the Target"     | ~ Shaky   |
 | Procedural  | Apply without conscious thought   | ✗ Stuck   |
 | Automatic   | Produce at conversational speed   | ✗ Blocked |
 

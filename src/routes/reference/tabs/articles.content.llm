@@ -14,7 +14,15 @@ Gender detection lives on the Nouns tab — the ending tells you the gender, the
 
 ---
 
-## Usage vs English (Hero Element)
+## Hero
+
+<hero component="ReferenceHero" file="tabs/nouns-articles.tsx">
+<title>Six forms. The hard part is knowing when.</title>
+</hero>
+
+## Usage vs English (first band: "Where Greek and English disagree")
+
+Two LookupCards side by side: chip "Greek adds it" / eyebrow "English doesn't" (scheme `decision`), and chip "Greek drops it" / eyebrow "English keeps it" (scheme `neutral`).
 
 <insight name="article-usage" highlight="true">
 <title>Greek adds it — English doesn't</title>
@@ -40,9 +48,10 @@ Gender detection lives on the Nouns tab — the ending tells you the gender, the
 
 ---
 
-## Article Quick Lookup (Expanded by Default)
+## Every Form, and How It's Spelled (Lookup band)
 
-<paradigm name="article-paradigm" default="expanded">
+<paradigm name="article-paradigm" component="ArticleParadigm">
+Rendered by the shared `ArticleParadigm` in `components/case-table.tsx` (the Cases tab uses the same component). Case colour on row headers, gender colour on column chips, cells neutral. Band lede points to Prepositions for the σε fusions (στο, στη, στον).
 
 ### Singular
 
@@ -64,38 +73,27 @@ Gender detection lives on the Nouns tab — the ending tells you the gender, the
 
 ---
 
-## Quick Win: The -ν Rule
+## The -ν Rule (Movable Nu)
 
-<insight name="nu-rule" highlight="true">
-<title>When uncertain, use the -ν form</title>
-<explanation>
-You'll never be wrong if you keep the final -ν on τον/την/στον/στην.
-Native speakers sometimes drop it, but keeping it is never wrong.
-</explanation>
-<example>τον φίλο or τη φίλη - both correct!</example>
-</insight>
-
----
-
-## The -ν Rule (Movable Nu) - Detailed
-
-<section name="movable-nu">
-<title>Fine-tuning: when to keep or drop final -ν</title>
+<section name="movable-nu" component="Callout">
+<title>The -ν on τη(ν) / δε(ν) / μη(ν)</title>
 
 <rule>
-Keep the -ν before vowels and the κ, π, τ family (ξ, ψ, γκ, μπ, ντ) - the hard
+Native speakers sometimes drop the -ν depending on the sound that follows. It is
+dropped more often than kept, but keeping it is never wrong.
+
+Keep the -ν before vowels and the κ, π, τ family (ξ, ψ, γκ, μπ, ντ): the hard
 stops the ν blends into (την πόρτα flows out as "tim-bórta").
 Drop the -ν before stretchable sounds (β, γ, δ, ζ, θ, λ, μ, ν, ρ, σ, φ, χ).
 
 The rule is not article-specific: the negatives δεν and μην follow it too.
 δεν πάω (before π) but δε θέλω (before θ).
 
-Exception: masculine τον keeps its -ν everywhere (τον φίλο, never το φίλο) -
-the -ν is all that separates it from neuter το. The sound rule governs
-feminine τη(ν)/στη(ν) and the negatives.
+Exception: masculine τον keeps its -ν everywhere (τον φίλο, never το φίλο);
+the -ν is all that separates it from neuter το.
 </rule>
 
-### Keep the -ν (minimal pairs with the drop column)
+### Keep the -ν (bold final ν)
 - την άνοιξη (before vowel)
 - στην πόρτα (before π)
 - δεν πάω (before π)
@@ -136,24 +134,10 @@ it means possessive.
 
 ---
 
-## Common Gender Mistakes (Collapsible)
-
-<mistakes expandable="true" default="collapsed">
-
-| Wrong              | Correct            | Why                                      |
-|--------------------|--------------------|------------------------------------------|
-| τα άνθρωπο         | τον άνθρωπο        | άνθρωπος is masculine, not neuter plural |
-| ο μητέρα μου       | η μητέρα μου       | μητέρα is feminine, not masculine        |
-| η βιβλίο           | το βιβλίο          | βιβλίο is neuter, not feminine           |
-
-</mistakes>
-
----
-
 ## Navigation
 
-<next>See noun declension patterns: /reference/nouns</next>
-<practice>Build fluency with timed retrieval drills: /practice/articles/context</practice>
+<next heading="You can read articles. Now read nouns.">NextStepCards: Nouns (emphasis) → /reference/nouns; Cases → /reference/cases</next>
+<practice>PracticeCTA topic "articles" → /practice/cases/review/articles (logged-out readers go to /register; see `src/lib/practice-links.ts`)</practice>
 
 ---
 
@@ -162,7 +146,8 @@ it means possessive.
 Static content from:
 - `@/constants/agreement` (ARTICLE_AGREEMENT_QUICK_REF)
 - `@/constants/homographs` (HOMOGRAPH_ROWS - shared with the Pronouns tab)
-- `articles-section.tsx` locals (GREEK_ADDS, GREEK_DROPS, the movable-ν examples)
+- `articles-section.tsx` locals: GREEK_ADDS (the "Greek adds it" LookupCard rows) and NU_RULE_COLUMNS (the movable-ν examples). The single "Greek drops it" row (είναι γιατρός) is inline JSX.
+- The article paradigm is the shared `ArticleParadigm` from `components/case-table.tsx`; the homograph table is `HomographCallout` from `components/homograph-callout.tsx`.
 
 Gender hints are NOT here — they live in `nouns-section.tsx` (GENDER_HINTS).
 
@@ -170,7 +155,6 @@ Gender hints are NOT here — they live in `nouns-section.tsx` (GENDER_HINTS).
 
 - [x] greek-first: Greek forms prominent in article paradigm
 - [x] paradigm-tables: Case (rows) x Gender (columns) reveals patterns
-- [x] progressive-disclosure: Detailed -ν rule and mistakes collapsible
 - [x] function-first-labels: Focus on agreement function
 - [x] no-redundancy: the paradigm is a lookup card, not the hero — Cases and Nouns already show these forms in context
 - [x] contextual-examples: -ν rule examples show real usage

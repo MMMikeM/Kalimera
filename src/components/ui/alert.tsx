@@ -14,7 +14,7 @@ const alertVariants = tv({
 			success:
 				"border-olive-400 bg-olive-100 text-olive-text *:data-[slot=alert-description]:text-olive-text *:data-[slot=alert-title]:text-olive-text [&>svg]:text-olive",
 			error:
-				"bg-incorrect-100 border-incorrect-400 text-incorrect *:data-[slot=alert-description]:text-incorrect *:data-[slot=alert-title]:text-incorrect [&>svg]:text-incorrect",
+				"bg-incorrect-100 border-incorrect-400 text-incorrect-text *:data-[slot=alert-description]:text-incorrect-text *:data-[slot=alert-title]:text-incorrect-text [&>svg]:text-incorrect-text",
 			purple:
 				"border-terracotta-400 bg-terracotta-100 text-terracotta-text *:data-[slot=alert-description]:text-terracotta-text *:data-[slot=alert-title]:text-terracotta-text [&>svg]:text-terracotta",
 		},

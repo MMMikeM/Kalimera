@@ -5,10 +5,9 @@ import { Callout } from "@/components/cards/Callout";
 import { LookupCard } from "@/components/cards/LookupCard";
 import { NextStepCard } from "@/components/cards/NextStepCard";
 import { GreekText } from "@/components/GreekText";
-import { ARTICLE_AGREEMENT_QUICK_REF } from "@/constants/agreement";
 
 import { BandHeading } from "./BandHeading";
-import { CaseTableGrid } from "./case-table";
+import { ArticleParadigm } from "./case-table";
 import { HomographCallout } from "./homograph-callout";
 
 interface UsageNote {
@@ -120,7 +119,6 @@ export const ArticlesSection: React.FC = () => {
 			{/* BAND 1 — CONCEPT (forming the article is a lookup; deploying it is the skill) */}
 			<div className="space-y-6">
 				<BandHeading
-					kicker="Usage"
 					title="Where Greek and English disagree"
 					lede="Greek puts an article where English refuses one, in front of countries, abstract nouns, whole categories, even your own friend."
 				/>
@@ -154,16 +152,11 @@ export const ArticlesSection: React.FC = () => {
 			{/* BAND 2 — LOOKUP (the form tables and the spelling rules) */}
 			<div className="space-y-6">
 				<BandHeading
-					kicker="Lookup"
 					title="Every form, and how it's spelled"
 					lede="The preposition σε fuses with these forms (στο, στη, στον…). See Prepositions for the full breakdown."
 				/>
 
-				<LookupCard scheme="neutral" chip="Forms" eyebrow="Gender across, case down">
-					<div className="px-5 pt-5 pb-5">
-						<CaseTableGrid data={ARTICLE_AGREEMENT_QUICK_REF} hero />
-					</div>
-				</LookupCard>
+				<ArticleParadigm />
 
 				<Callout scheme="neutral" title="The -ν on τη(ν) / δε(ν) / μη(ν)">
 					<p className="leading-relaxed text-stone-700">
@@ -283,21 +276,18 @@ export const ArticlesSection: React.FC = () => {
 			{/* BAND 3 — HANDOFF */}
 			<div className="space-y-6 border-t border-stone-200 pt-12">
 				<BandHeading
-					kicker="Next"
 					title="You can read articles. Now read nouns."
 					lede="The article signals gender and case. Nouns carry their own endings that reinforce the signal."
 				/>
 				<div className="grid gap-3 md:grid-cols-2">
 					<NextStepCard
 						to="/reference/nouns"
-						kicker="Continue"
 						title="Nouns"
 						description="How noun endings change across gender and case"
 						emphasis
 					/>
 					<NextStepCard
 						to="/reference/cases"
-						kicker="Review"
 						title="Cases"
 						description="What each case is for"
 					/>

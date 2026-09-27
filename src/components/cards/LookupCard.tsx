@@ -6,9 +6,9 @@ import { type GrammarScheme, SCHEME } from "@/constants/grammar-palette";
 interface LookupCardProps {
 	/** Grammar scheme driving tint + chip colour. */
 	scheme: GrammarScheme;
-	/** Label inside the coloured chip (grammar term — e.g. "Accusative"). */
+	/** The lead label, inside the coloured chip: a learner handle ("Target triggers") or a plain claim ("Greek adds it"). */
 	chip: string;
-	/** Small caps label next to the chip (plain-English role — e.g. "Target", "Target triggers"). */
+	/** Secondary small caps label beside the chip, e.g. the grammar term ("Accusative"). */
 	eyebrow?: string;
 	/** Body slot. Consumer renders paradigm, trigger list, etc. */
 	children: ReactNode;
@@ -37,13 +37,13 @@ export const LookupCard = ({ scheme, chip, eyebrow, children, className }: Looku
 					className={cn(
 						"rounded-full px-3 py-0.5 text-xs font-semibold tracking-wider uppercase",
 						style.badgeBg,
-						style.text,
+						style.badgeText,
 					)}
 				>
 					{chip}
 				</span>
 				{eyebrow ? (
-					<span className="text-xs font-semibold tracking-wider text-stone-500 uppercase">
+					<span className="text-xs font-semibold tracking-wider text-stone-600 uppercase">
 						{eyebrow}
 					</span>
 				) : null}

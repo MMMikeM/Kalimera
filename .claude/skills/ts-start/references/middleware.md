@@ -208,7 +208,7 @@ const loggingMiddleware = createMiddleware({ type: "function" })
 Server function middleware has the following methods:
 
 - `middleware`: Add a middleware to the chain.
-- `inputValidator`: Modify the data object before it is passed to this middleware and any nested middleware and eventually the server function.
+- `validator`: Modify the data object before it is passed to this middleware and any nested middleware and eventually the server function. (`inputValidator` still exists but is deprecated in the installed `@tanstack/start-client-core`.)
 - `client`: Define client-side logic that the middleware will execute on the client before (and after) the server function calls into the server to execute the function.
 - `server`: Define server-side logic that the middleware will execute on the server before (and after) the server function is executed.
 
@@ -230,13 +230,12 @@ const loggingMiddleware = createMiddleware({ type: "function" }).client(
 );
 ```
 
-### The `.inputValidator` method
+### The `.validator` method
 
-The `inputValidator` method is used to modify the data object before it is passed to this middleware, nested middleware, and ultimately the server function. This method should receive a function that takes the data object and returns a validated (and optionally modified) data object. It's common to use a validation library like `zod` to do this.
+The `validator` method is used to modify the data object before it is passed to this middleware, nested middleware, and ultimately the server function. This method should receive a function that takes the data object and returns a validated (and optionally modified) data object, or a schema. It's common to use a validation library like `zod` to do this; a Zod schema is passed directly, with no adapter (as in `src/server/fns/auth.ts`).
 
 ```tsx
 import { createMiddleware } from "@tanstack/react-start";
-import { zodValidator } from "@tanstack/zod-adapter";
 import { z } from "zod";
 
 const mySchema = z.object({
@@ -244,7 +243,7 @@ const mySchema = z.object({
 });
 
 const workspaceMiddleware = createMiddleware({ type: "function" })
-	.validator(zodValidator(mySchema))
+	.validator(mySchema)
 	.server(({ next, data }) => {
 		console.log("Workspace ID:", data.workspaceId);
 		return next();

@@ -166,7 +166,7 @@ const CommonAdjectivesCard: React.FC = () => (
 		scheme="neutral"
 		eyebrow="Vocabulary"
 		title="High-frequency adjectives"
-		description="All follow the -ος / -η / -ο pattern."
+		description="Most follow -ος / -η / -ο. A vowel before -ος takes -α in the feminine instead."
 	>
 		<div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm sm:grid-cols-3 md:grid-cols-4">
 			{COMMON_ADJECTIVES.map((adj) => (

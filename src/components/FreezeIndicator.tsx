@@ -74,7 +74,7 @@ export const FreezeIndicator = ({
 					<>
 						<Snowflake className={iconVariants({ status })} />
 						<span className={textVariants({ status })}>
-							{freezeCount} {formatPlural(freezeCount, "freeze", "freezes")} ready — miss a day,
+							{freezeCount} {formatPlural(freezeCount, "freeze", "freezes")} ready: miss a day,
 							keep your streak
 						</span>
 					</>

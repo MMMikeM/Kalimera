@@ -1,7 +1,8 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
-import { ChevronLeft, ChevronRight, Package } from "lucide-react";
+import { ChevronRight, Package } from "lucide-react";
 
+import { BackLink } from "@/components/BackLink";
 import { Card } from "@/components/Card";
 import { GreekText } from "@/components/GreekText";
 import { TabHero } from "@/components/TabHero";
@@ -30,13 +31,7 @@ function NounSubjectsPage() {
 
 	return (
 		<div className="space-y-6">
-			<Link
-				to="/learn"
-				className="inline-flex items-center gap-1 text-sm text-stone-600 transition-colors hover:text-stone-800"
-			>
-				<ChevronLeft size={16} />
-				<span>Learn</span>
-			</Link>
+			<BackLink to="/learn">Learn</BackLink>
 
 			<TabHero
 				title="Everyday nouns"

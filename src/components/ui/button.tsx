@@ -1,3 +1,4 @@
+import { createLink } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { tv } from "tailwind-variants";
 
@@ -5,12 +6,13 @@ export const buttonVariants = tv({
 	base: "inline-flex transform items-center justify-center gap-2 rounded-xl font-medium shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus:ring-2 focus:ring-terracotta-400 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50",
 	variants: {
 		variant: {
-			primary: "bg-terracotta text-white shadow-terracotta-200 hover:bg-terracotta-600",
+			// -600, not the base -500: white on -500 is 3.99:1, under AA for button-sized text.
+			primary: "bg-terracotta-600 text-white hover:bg-terracotta-700",
 			secondary:
-				"border border-stone-200 bg-card/80 text-stone-700 shadow-stone-100 backdrop-blur-sm hover:border-stone-300 hover:bg-card",
+				"border border-stone-200 bg-card text-stone-700 hover:border-stone-300",
 			outline:
 				"border-2 border-stone-300 bg-card/50 text-stone-700 hover:border-stone-400 hover:bg-stone-50",
-			ghost: "text-stone-700 backdrop-blur-sm hover:bg-card/60",
+			ghost: "text-stone-700 hover:bg-card/60",
 		},
 		size: {
 			sm: "px-3 py-1.5 text-sm",
@@ -27,24 +29,27 @@ export const buttonVariants = tv({
 			variant: "secondary",
 			active: true,
 			class:
-				"border-terracotta bg-terracotta text-white shadow-lg shadow-terracotta-300 hover:bg-terracotta-600",
+				"border-terracotta bg-terracotta-600 text-white shadow-md hover:bg-terracotta-700",
 		},
 		{
 			variant: "primary",
 			active: true,
-			class: "shadow-lg shadow-terracotta-300",
+			class: "shadow-md",
 		},
 	],
 	defaultVariants: {
-		variant: "secondary",
+		variant: "primary",
 		size: "md",
 		active: false,
 	},
 });
 
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+type ButtonStyle = {
 	variant?: "primary" | "secondary" | "outline" | "ghost";
 	size?: "sm" | "md" | "lg";
+};
+
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, ButtonStyle {
 	active?: boolean;
 	children: ReactNode;
 }
@@ -63,3 +68,18 @@ export const Button: React.FC<ButtonProps> = ({
 		</button>
 	);
 };
+
+const ButtonAnchor = ({
+	variant,
+	size,
+	className,
+	children,
+	...props
+}: React.ComponentPropsWithRef<"a"> & ButtonStyle) => (
+	<a className={buttonVariants({ variant, size, className })} {...props}>
+		{children}
+	</a>
+);
+
+/** Navigation styled as a button. A `<Button>` inside a `<Link>` is two tab stops and invalid HTML. */
+export const ButtonLink = createLink(ButtonAnchor);

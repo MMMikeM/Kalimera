@@ -1,9 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Link } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
-import { ArrowLeft } from "lucide-react";
 import { z } from "zod";
 
+import { BackLink } from "@/components/BackLink";
 import { Card } from "@/components/Card";
 import { GreekText } from "@/components/GreekText";
 import { ImperativeTable } from "@/components/ImperativeTable";
@@ -141,13 +140,7 @@ function VerbDetailPage() {
 
 	return (
 		<div className="space-y-6">
-			<Link
-				to="/learn/verbs"
-				className="inline-flex items-center gap-1.5 text-sm text-ocean-text hover:underline"
-			>
-				<ArrowLeft size={14} />
-				Verbs
-			</Link>
+			<BackLink to="/learn/verbs">Verbs</BackLink>
 
 			<Card variant="bordered" padding="lg" className="bg-card">
 				<div className="flex flex-wrap items-start justify-between gap-4">

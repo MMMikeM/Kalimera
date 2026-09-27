@@ -43,11 +43,11 @@ export const OBJECT_PRONOUNS: PronounParadigm[] = [
 ];
 
 export const OBJECT_PRONOUN_EXAMPLES = [
-	{ greek: "με βλέπεις;", english: "do you see me?" },
-	{ greek: "σε αγαπώ", english: "I love you" },
-	{ greek: "τον ξέρω", english: "I know him" },
-	{ greek: "μας περιμένουν", english: "they're waiting for us" },
-	{ greek: "σας ευχαριστώ", english: "thank you (formal)" },
+	{ greek: "με βλέπεις;", marked: "με", english: "do you see me?" },
+	{ greek: "σε αγαπώ", marked: "σε", english: "I love you" },
+	{ greek: "τον ξέρω", marked: "τον", english: "I know him" },
+	{ greek: "μας περιμένουν", marked: "μας", english: "they're waiting for us" },
+	{ greek: "σας ευχαριστώ", marked: "σας", english: "thank you (formal)" },
 ];
 
 // Possessive pronouns - go AFTER the noun!
@@ -82,11 +82,11 @@ export const POSSESSIVE_PRONOUNS: PronounParadigm[] = [
 // Note: Neuter singular uses the same form as masculine (του)
 
 export const POSSESSIVE_PRONOUN_EXAMPLES = [
-	{ greek: "το σπίτι μου", english: "my house" },
-	{ greek: "η μητέρα σου", english: "your mother" },
-	{ greek: "ο φίλος του", english: "his friend" },
-	{ greek: "το σπίτι μας", english: "our house" },
-	{ greek: "τα παιδιά τους", english: "their children" },
+	{ greek: "το σπίτι μου", marked: "μου", english: "my house" },
+	{ greek: "η μητέρα σου", marked: "σου", english: "your mother" },
+	{ greek: "ο φίλος του", marked: "του", english: "his friend" },
+	{ greek: "το σπίτι μας", marked: "μας", english: "our house" },
+	{ greek: "τα παιδιά τους", marked: "τους", english: "their children" },
 ];
 
 // Subject pronouns - often omitted because verb endings show person
@@ -148,11 +148,11 @@ export const EMPHATIC_PRONOUNS: PronounParadigm[] = [
 ];
 
 export const EMPHATIC_PRONOUN_EXAMPLES = [
-	{ greek: "για μένα", english: "for me" },
-	{ greek: "με σένα", english: "with you" },
-	{ greek: "για αυτόν", english: "for him" },
-	{ greek: "για μας", english: "for us" },
-	{ greek: "για αυτό", english: "that's why / for this reason" },
+	{ greek: "για μένα", marked: "μένα", english: "for me" },
+	{ greek: "με σένα", marked: "σένα", english: "with you" },
+	{ greek: "για αυτόν", marked: "αυτόν", english: "for him" },
+	{ greek: "για μας", marked: "μας", english: "for us" },
+	{ greek: "για αυτό", marked: "αυτό", english: "that's why / for this reason" },
 ];
 
 // Key patterns to understand

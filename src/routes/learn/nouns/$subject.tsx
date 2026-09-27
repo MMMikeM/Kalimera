@@ -1,8 +1,8 @@
-import { Link, createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, notFound } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
-import { ChevronLeft } from "lucide-react";
 import { useState } from "react";
 
+import { BackLink } from "@/components/BackLink";
 import { groupNounsBySubject } from "@/lib/noun-browser-groups";
 import {
 	type BrowsableNoun,
@@ -29,7 +29,7 @@ const subjectLoader = createServerFn()
 export const Route = createFileRoute("/learn/nouns/$subject")({
 	loader: async ({ params }) => {
 		const { group } = await subjectLoader({ data: params.subject });
-		if (!group) throw new Response("Not Found", { status: 404 });
+		if (!group) throw notFound();
 		return { group };
 	},
 	component: NounSubjectPage,
@@ -155,13 +155,7 @@ function NounSubjectPage() {
 
 	return (
 		<div className="space-y-5">
-			<Link
-				to="/learn/nouns"
-				className="inline-flex items-center gap-1 text-sm text-stone-600 transition-colors hover:text-stone-800"
-			>
-				<ChevronLeft size={16} />
-				<span>Nouns</span>
-			</Link>
+			<BackLink to="/learn/nouns">Nouns</BackLink>
 
 			<div>
 				<h1 className="font-serif text-3xl text-stone-900">{group.title}</h1>

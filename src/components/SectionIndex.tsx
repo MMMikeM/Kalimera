@@ -1,15 +1,15 @@
-import type { ReactNode } from "react";
+import { Link } from "@tanstack/react-router";
+import { ChevronRight } from "lucide-react";
 
-import { SectionCard } from "@/components/SectionCard";
+import { GreekText } from "@/components/GreekText";
+import { PageHeading } from "@/components/PageHeading";
 
 interface IndexTopic {
 	id: string;
 	label: string;
-	/** Section name in Greek — the card leads with it, the English follows. */
+	/** Section name in Greek — the row leads with it, the English follows. */
 	greek: string;
 	description: string;
-	/** A bare icon; the chip around it belongs to this component. */
-	icon: ReactNode;
 	href: string;
 }
 
@@ -19,27 +19,9 @@ export interface IndexGroup {
 }
 
 /**
- * Positional, not semantic. The tint separates one group from the next and says
- * nothing about the Greek on the cards, so it stays off the reserved `case-*`
- * and `gender-*` tokens — see "Colour — Two Palettes" in CLAUDE.md.
- *
- * All three sit on the -200 step, which shares a lightness and a chroma across
- * these ramps; honey would have been half again as saturated and pulled the eye
- * to whichever group happened to draw it.
+ * A table of contents, not a card grid. Groups carry no tint: a blue or green slab
+ * beside the Doer and Owner colours reads as a grammatical claim it isn't making.
  */
-const GROUP_TINTS = [
-	"border-ocean-300 bg-ocean-200 text-ocean-800",
-	"border-olive-300 bg-olive-200 text-olive-800",
-	"border-cream-300 bg-cream-200 text-cream-800",
-] as const;
-
-const tintFor = (index: number): string =>
-	GROUP_TINTS[index % GROUP_TINTS.length] ?? GROUP_TINTS[0];
-
-const TopicIcon = ({ children }: { children: ReactNode }) => (
-	<div className="flex size-10 items-center justify-center rounded-lg bg-card/70">{children}</div>
-);
-
 export const SectionIndex = ({
 	title,
 	lede,
@@ -49,29 +31,36 @@ export const SectionIndex = ({
 	lede: string;
 	groups: IndexGroup[];
 }) => (
-	<div className="space-y-6">
-		<div>
-			<h1 className="text-2xl font-bold text-stone-800">{title}</h1>
-			<p className="mt-1 text-stone-600">{lede}</p>
-		</div>
+	<div className="space-y-10">
+		<PageHeading title={title}>
+			<p>{lede}</p>
+		</PageHeading>
 
-		{groups.map((group, index) => (
+		{groups.map((group) => (
 			<section key={group.title}>
-				<h2 className="mb-3 text-xs font-semibold tracking-wide text-stone-500 uppercase">
-					{group.title}
-				</h2>
-				<div className="grid gap-3">
+				<h2 className="mb-1 text-sm font-semibold text-stone-600">{group.title}</h2>
+				<ul className="divide-y divide-stone-200 border-y border-stone-200">
 					{group.topics.map((topic) => (
-						<SectionCard
-							key={topic.id}
-							section={{
-								...topic,
-								icon: <TopicIcon>{topic.icon}</TopicIcon>,
-								color: tintFor(index),
-							}}
-						/>
+						<li key={topic.id}>
+							<Link to={topic.href} className="group flex min-h-11 items-center gap-4 py-4">
+								<div className="min-w-0 flex-1">
+									<p className="flex flex-wrap items-baseline gap-x-3">
+										<GreekText size="2xl" className="group-hover:text-terracotta-text">
+											{topic.greek}
+										</GreekText>
+										<span className="text-stone-700">{topic.label}</span>
+									</p>
+									<p className="mt-0.5 text-sm text-muted-foreground">{topic.description}</p>
+								</div>
+								<ChevronRight
+									size={18}
+									aria-hidden="true"
+									className="shrink-0 text-stone-500 transition-transform group-hover:translate-x-0.5"
+								/>
+							</Link>
+						</li>
 					))}
-				</div>
+				</ul>
 			</section>
 		))}
 	</div>

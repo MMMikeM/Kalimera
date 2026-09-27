@@ -17,7 +17,7 @@ You are an expert in TanStack Start. Before writing any code, load the relevant 
 | File                                           | When to load                                                                                   |
 | ---------------------------------------------- | ---------------------------------------------------------------------------------------------- |
 | `references/execution-model.md`                | **Always load first.** Isomorphic-by-default, where code runs, env vars, hydration mismatches  |
-| `references/server-functions.md`               | createServerFn, inputValidator, Zod, errors, redirects, CSRF, cookies, caching headers         |
+| `references/server-functions.md`               | createServerFn, validator, Zod, errors, redirects, CSRF, cookies, caching headers              |
 | `references/middleware.md`                     | createMiddleware, auth middleware, context passing, server fn middleware vs request middleware |
 | `references/routing.md`                        | File-based routing, \_\_root.tsx, createFileRoute, nested routes, route tree gen               |
 | `references/code-execution-patterns.md`        | createServerOnlyFn, createClientOnlyFn, createIsomorphicFn, ClientOnly component               |
@@ -32,7 +32,7 @@ You are an expert in TanStack Start. Before writing any code, load the relevant 
 **Route loaders run on BOTH server and client.** This is the most common source of bugs.
 
 ```tsx
-// ❌ WRONG — process.env leaks to client, undefined under Worker SSR
+// ❌ WRONG: the loader also runs in the browser, so process.env leaks to the client
 export const Route = createFileRoute("/users")({
 	loader: () => {
 		const secret = process.env.API_KEY; // exposed!
@@ -51,7 +51,7 @@ export const Route = createFileRoute("/users")({
 });
 ```
 
-Also: **never read `process.env` at module scope** — it's wrong for two reasons: (1) leaks to client bundle, (2) on Cloudflare Workers, env is injected per-request, so module-scope reads evaluate to `undefined`.
+Also: **don't read `process.env` at module scope in a module the client can reach**, because the value can be inlined into the client bundle. This app runs on Nitro's Node server (`NITRO_PRESET=node-server` in the Dockerfile, deployed to Fly; `pnpm preview` runs `node .output/server/index.mjs`), so `process.env` is populated when a server module loads; per-request env injection (Cloudflare Workers and other edge runtimes) does not apply here. The sanctioned exception is a file marked `import "@tanstack/react-start/server-only"`: `src/server/db/index.ts` is one, and it builds the shared Turso connection at module load.
 
 ---
 
@@ -308,6 +308,8 @@ function TimeZoneDisplay() {
 }
 ```
 
+A client-only preference (`prefers-reduced-motion`, viewport width, anything in `localStorage`) must not change the first client render, or it will not match the server HTML and hydration mismatches. Gate it behind `useHydrated()` so the first render uses the server's default, as `src/components/DrillDemo.tsx` does with `const reduceMotion = hydrated && prefersReducedMotion === true;`.
+
 ---
 
 ## Import Protection
@@ -332,7 +334,7 @@ Dev: warns and mocks violations. Build: hard error.
 
 ```
 src/routes/
-├── __root.tsx           # Always rendered — html/head/body shell
+├── __root.tsx           # Always rendered: html/head/body shell + app shell
 ├── index.tsx            # /
 ├── about.tsx            # /about
 ├── posts.tsx            # /posts layout
@@ -343,29 +345,32 @@ src/routes/
 
 ### Root Route
 
-```tsx
-// src/routes/__root.tsx
-import { createRootRoute, HeadContent, Outlet, Scripts } from "@tanstack/react-router";
+This repo puts the document in `shellComponent` and the app shell (header, nav, `.app-shell` / `.app-main`) in `component`. The shell is always server-rendered and wraps the root `component`, `errorComponent` and `notFoundComponent`, so a failure in the app shell itself still gets a valid document.
 
-export const Route = createRootRoute({
-	head: () => ({
-		meta: [
-			{ charSet: "utf-8" },
-			{ name: "viewport", content: "width=device-width, initial-scale=1" },
-		],
-		links: [{ rel: "icon", href: "/favicon.ico" }],
-	}),
-	component: RootComponent,
+```tsx
+// src/routes/__root.tsx (abridged)
+import { createRootRouteWithContext, HeadContent, Outlet, Scripts } from "@tanstack/react-router";
+import type { ReactNode } from "react";
+
+import { NotFound, RootError } from "@/components/StatusPage";
+import { type RouterContext } from "@/router";
+
+export const Route = createRootRouteWithContext<RouterContext>()({
+	head: () => ({ meta: [{ charSet: "utf-8" }, { title: "Kalimera" }] }),
+	shellComponent: RootDocument, // <html>/<head>/<body>
+	component: RootBody, // app shell around <Outlet />
+	errorComponent: RootError, // the app shell itself failed
+	notFoundComponent: NotFound,
 });
 
-function RootComponent() {
+function RootDocument({ children }: { children: ReactNode }) {
 	return (
-		<html lang="en">
+		<html lang="en" suppressHydrationWarning>
 			<head>
 				<HeadContent />
 			</head>
 			<body>
-				<Outlet />
+				{children}
 				<Scripts />
 			</body>
 		</html>
@@ -373,12 +378,21 @@ function RootComponent() {
 }
 ```
 
+Errors and 404s in child routes render **inside** the app shell: `src/router.tsx` sets `defaultErrorComponent: RouteError` and `defaultNotFoundComponent: NotFound`, so the header and navigation keep working. For a param that doesn't name a real page, `throw notFound()` from the loader rather than rendering a fallback (see `src/routes/reference/$tab.tsx`):
+
+```tsx
+loader: async ({ params: { tab } }) => {
+	if (!VALID_TABS.includes(tab as TabId)) throw notFound();
+	// ...
+},
+```
+
 ### File Route with Loader
 
 ```tsx
 // src/routes/posts.$postId.tsx
 import { createFileRoute } from "@tanstack/react-router";
-import { getPost } from "~/utils/posts.functions";
+import { getPost } from "@/utils/posts.functions";
 
 export const Route = createFileRoute("/posts/$postId")({
 	loader: ({ params }) => getPost({ data: { id: params.postId } }),
@@ -453,7 +467,7 @@ Dynamic routes (`/posts/$id`) are excluded from auto-discovery but can be reache
 
 | ❌ Wrong                                    | ✅ Right                                         |
 | ------------------------------------------- | ------------------------------------------------ |
-| `process.env.X` at module scope             | Read inside `.handler()` or `createServerOnlyFn` |
+| `process.env.X` at module scope             | Read in `.handler()`, or a `server-only` file    |
 | Sensitive logic in route `loader`           | Move to `createServerFn`                         |
 | Different server/client render output       | Use `useHydrated` or `ClientOnly`                |
 | Auth only in route `beforeLoad`             | Also enforce in every server function            |

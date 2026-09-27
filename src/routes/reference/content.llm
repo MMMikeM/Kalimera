@@ -1,148 +1,161 @@
 # Reference Section Content
 
-Grammar reference for understanding how Greek works: cases, pronouns, articles, verbs, adjectives, prepositions, and patterns.
+Grammar reference for understanding how Greek works: cases, articles, nouns, pronouns, adjectives, prepositions, verbs and patterns. Public: no auth guard.
 
 ## Route Structure
 
 ```
-/reference                    Landing page with section cards
-/reference/:tab               Grammar reference by topic
+/reference                    Landing page (SectionIndex)
+/reference/:tab               $tab.tsx: cases, articles, nouns, pronouns, adjectives, prepositions, patterns
+/reference/verbs              verbs/route.tsx layout (own route family, not a :tab)
+/reference/verbs/             redirects to /reference/verbs/present
+/reference/verbs/:band        present, past, past-continuous, future
 ```
+
+`$tab.tsx` checks `VALID_TABS`; any other `:tab` throws `notFound()` (404). Its `head` sets the document title with `pageTitle()` (`@/lib/page-title`) from the tab's `REFERENCE_TABS` label, e.g. "Cases · Kalimera". The verbs routes and the landing page set no title of their own. Unknown verb bands also throw `notFound()`.
+
+Every tab page renders `ReferenceNav` (a `NavTabs` bar over `REFERENCE_TABS`) above its content.
 
 ## Landing Page
 
 <route path="/reference">
-<purpose>Section hub - visual overview of all grammar reference topics</purpose>
+<purpose>Section hub: a Greek-first table of contents for the grammar topics</purpose>
 <file>src/routes/reference/index.tsx</file>
 <displays>
-- Header: "Reference" with subtitle "Grammar patterns and paradigms"
-- Section cards (8 items):
-  - Cases: "The framework for understanding Greek grammar"
-  - Pronouns: "Cases in action - the words you'll use most"
-  - Articles: "Article paradigms and gender agreement"
-  - Nouns: "Noun declensions by gender"
-  - Adjectives: "Agreement patterns that follow the noun"
-  - Prepositions: "Connecting words and their case requirements"
-  - Verbs: "Conjugation patterns and verb families"
-  - Patterns: "Greek-specific constructions like μου αρέσει"
-- Each card links to /reference/{section}
+- Shared `SectionIndex` (`src/components/SectionIndex.tsx`): title "Reference", lede "Grammar patterns and paradigms"
+- Ruled rows, each led by the Greek name, then the English label and description. No cards, icons or tints.
+  - The case system:
+    - Πτώσεις / Cases: "What each ending is for"
+    - Αντωνυμίες / Pronouns: "Cases in the words you use most"
+  - Words that agree:
+    - Άρθρα / Articles: "The definite article, case by case"
+    - Ουσιαστικά / Nouns: "Endings by gender"
+    - Επίθετα / Adjectives: "The noun's grammar, copied"
+  - Building sentences:
+    - Προθέσεις / Prepositions: "Little words, big relationships"
+    - Ρήματα / Verbs: "Three patterns, thousands of verbs"
+    - Δομές / Patterns: "Constructions that don't translate"
+- Each row links to /reference/{section}
 </displays>
-<note>
-Cards use colour-coded borders matching tab colours (ocean, olive, honey, terracotta).
-</note>
 </route>
 
 ## Tabs
 
+`REFERENCE_TABS` in `components/reference-nav.tsx`, in nav order:
+
 ```
-cases        → Case system foundation (nominative, accusative, genitive)
-pronouns     → Pronoun paradigms and decision guides
-articles     → Article paradigms and gender agreement
-nouns        → Noun declensions by gender (masculine, feminine, neuter)
+cases        → What each case is for (Doer / Target / Owner)
+articles     → When to use the article, and every form it takes
+nouns        → Noun endings by gender and case
+pronouns     → Pronoun paradigms, placement and decision guide
 adjectives   → Adjective agreement patterns
-prepositions → Preposition + case combinations
-verbs        → Verb conjugation patterns
-patterns     → Greek-specific constructions (moved from phrases)
+prepositions → Preposition + case combinations, σε contraction
+verbs        → Conjugation by band (/reference/verbs/$band)
+patterns     → Greek-specific constructions
 ```
 
 ## Data Source
 
 Static content from constants:
-- `@/constants/recognition` - Case rules and examples
-- `@/constants/pronouns` - Pronoun paradigms
-- `@/constants/agreement` - Article and noun paradigms
-- `@/constants/adjectives` - Adjective paradigms
-- `@/constants/prepositions` - Preposition data
-- `@/constants/verbs` - Verb patterns
+- `@/constants/recognition` - CASE_ROLES, CASE_TRIGGERS
+- `@/constants/agreement` - ARTICLE_AGREEMENT_QUICK_REF, AGREEMENT_PARADIGMS
+- `@/constants/homographs` - HOMOGRAPH_ROWS (article or pronoun?)
+- `@/constants/pronouns` - pronoun paradigms, examples, phrases
+- `@/constants/adjectives` - adjective paradigms, examples, mistakes
+- `@/constants/prepositions` - preposition data
+- `@/constants/verbs` - verb patterns, aorist and future tables
+- `@/constants/grammar-palette` - SCHEME, CASE_SCHEME, GENDER_SCHEME (colour)
+
+Database, loaded in `$tab.tsx` only for the tab that needs it:
+- `loadPatterns` (patterns): `getVocabBySlug` for the phrases and verbs sections, grouped by tag with `groupVocabByTag`
+- `loadNouns` (nouns): `getNounsForParadigmReference`, grouped by `groupNounsByPattern`
+
+Every page title is a `ReferenceHero` (title + thesis, optional `demo`). It has no eyebrow. Band headings are `BandHeading` (title + optional lede, no kicker); hand-offs are `NextStepCard` (title + description, optional `emphasis`, no kicker).
+
+Practice CTAs are `PracticeCTA` with a `topic`; `drillHrefForTopic` in `src/lib/practice-links.ts` maps it. Logged-out visitors always go to /register; topics without a drill fall back to /practice.
 
 ---
 
 ## Tab: cases
 
 <tab route="/reference/cases">
-<purpose>Case system foundation - the framework for Greek grammar</purpose>
+<purpose>What each case is for: the three roles a word can play</purpose>
 <file>src/routes/reference/tabs/cases.tsx</file>
 <components>
 - CasesSection (components/cases-section.tsx)
+- ArticleParadigm (components/case-table.tsx)
 </components>
 <displays>
-- Hero: "Foundation of Greek grammar" - Ποιος; Τι; Ποιου;
-- The Four Questions (nominative, accusative, genitive)
-- Quick spot-check patterns (collapsible)
-- Vocative (collapsible - for calling someone)
-- Navigation to /reference/pronouns
+- Hero: "One word, many roles."
+- Three TeachingCards (Doer / Target / Owner, grammar term as badge), each with a MarkedGreek example: only the marked words carry the case colour
+- Ruled notes list: flexible word order, start with Doer and Target, everyday prepositions pull Target, both sides of είναι are Doer
+- "Look it up" band: the shared ArticleParadigm, then "Trigger words that pull a case" as LookupCards (chip "Target triggers" / "Owner triggers", eyebrow = case name)
+- "Picked the case. Now what?": NextStepCards to Articles (emphasis), Pronouns, Nouns
+- No PracticeCTA
 </displays>
 <note>
-Split from cases-pronouns. Cases explain the SYSTEM, pronouns show it in ACTION.
-</note>
-</tab>
-
-## Tab: pronouns
-
-<tab route="/reference/pronouns">
-<purpose>Pronouns as cases in action - the words you'll use most</purpose>
-<file>src/routes/reference/tabs/pronouns.tsx</file>
-<components>
-- PronounsSection (components/pronouns-section.tsx)
-- PronounDecisionGuide (components/pronoun-decision-guide.tsx)
-- PronounParadigmTable (components/pronoun-paradigm-table.tsx)
-</components>
-<displays>
-- Hero: "Pronouns in action" - με, σε, μου, σου
-- Decision guide: "Which 'me/you' do I use?"
-- Four paradigm tables:
-  - Nominative (subject) - often dropped!
-  - Genitive (possessive) - μου, σου, του
-  - Accusative (object) - με, σε, τον
-  - Emphatic - after prepositions
-- Double object pattern
-- Common phrases with pronouns (collapsible)
-- Practice CTA linking to /practice/pronouns/object
-</displays>
-<note>
-Split from cases-pronouns. Progressive disclosure - cases first, then pronouns.
+Cases explain the SYSTEM, the other tabs show it in ACTION. See tabs/cases.content.llm.
 </note>
 </tab>
 
 ## Tab: articles
 
 <tab route="/reference/articles">
-<purpose>Article paradigms and noun agreement</purpose>
+<purpose>When to reach for the definite article, and every form it takes</purpose>
 <file>src/routes/reference/tabs/nouns-articles.tsx</file>
 <components>
 - ArticlesSection (components/articles-section.tsx)
-- AgreementSection (components/agreement-section.tsx)
+- ArticleParadigm (components/case-table.tsx)
+- HomographCallout (components/homograph-callout.tsx)
 </components>
 <displays>
-- Hero: "Articles and nouns" - ο, η, το → τον, την, το
-- Key insight: "When uncertain, use the -ν form"
-- Gender hints (endings → gender)
-- Article quick lookup table (singular/plural × gender × case)
-- Noun paradigms by gender (carousel)
-- Movable nu rule (-ν)
-- Common agreement mistakes (collapsible)
-- Practice CTA linking to /practice/articles/context
+- Hero: "Six forms. The hard part is knowing when."
+- "Where Greek and English disagree": LookupCards "Greek adds it" / "Greek drops it"
+- "Every form, and how it's spelled": ArticleParadigm, the -ν rule Callout, "Article or pronoun?" callout
+- "You can read articles. Now read nouns.": NextStepCards to Nouns (emphasis), Cases
+- PracticeCTA topic "articles" → /practice/cases/review/articles
 </displays>
 </tab>
 
 ## Tab: nouns
 
 <tab route="/reference/nouns">
-<purpose>Noun declension patterns by gender</purpose>
+<purpose>Noun endings by gender and case</purpose>
 <file>src/routes/reference/tabs/nouns.tsx</file>
 <components>
 - NounsSection (components/nouns-section.tsx)
 </components>
 <displays>
-- Hero: Gender detection hints (spot gender by ending)
-- Core insight: nouns change endings for case and number
-- Noun paradigms by gender:
-  - Masculine: -ος, -ας, -ης, -ές patterns
-  - Feminine: -α, -η, -ση/-ξη patterns
-  - Neuter: -ο, -ι, -μα patterns
-- Vocative changes (collapsible)
-- Common noun mistakes (collapsible)
-- Practice CTA linking to /practice/nominal/all-nouns
+- Hero: "Endings by gender." with a demo of ο φίλος across Doer / Target / Owner
+- "Which case should I use?" case guide, gender hints by ending
+- Essential patterns (masc-os, fem-a, neut-o, neut-i) with an Endings / Full forms toggle; vocative only under Full forms
+- "More patterns" (collapsible): variants per gender with corpus counts
+- NextStepCards to Pronouns (emphasis), Articles
+- PracticeCTA topic "nouns" → /practice/cases/review/nouns
+</displays>
+</tab>
+
+## Tab: pronouns
+
+<tab route="/reference/pronouns">
+<purpose>Pronouns as cases in action: the words you'll use most</purpose>
+<file>src/routes/reference/tabs/pronouns.tsx</file>
+<components>
+- PronounsSection (components/pronouns-section.tsx)
+- PronounParadigmTable (components/pronoun-paradigm-table.tsx)
+- PronounDecisionGuide (components/pronoun-decision-guide.tsx)
+- HomographCallout, ExamplePills
+</components>
+<displays>
+- Hero: "The words that carry half your sentences."
+- "One English "me", three Greek forms." (με / μου / εμένα)
+- "All the forms": LookupCards led by the learner handle (chip Target / Owner / Doer, eyebrow = grammar term); "Article or pronoun?" callout; weak vs strong table
+- "Ready-made phrases" (open)
+- "Which form do I need?" decision guide
+- "Someone, nothing, everyone" indefinites (open)
+- "Two-pronoun word order (advanced)" (the only collapsible)
+- "Weak pronouns hug the verb." clitic placement
+- PracticeCTA topic "pronouns" → /practice/pronouns
 </displays>
 </tab>
 
@@ -155,15 +168,12 @@ Split from cases-pronouns. Progressive disclosure - cases first, then pronouns.
 - AdjectivesSection (components/adjectives-section.tsx)
 </components>
 <displays>
-- Hero: "Words that describe" - ο καλός, η καλή, το καλό
-- Key insight: "Adjectives copy the noun"
-- Adjective endings quick reference
-- Agreement examples (article + adjective + noun)
-- Main paradigm (-ος/-η/-ο pattern)
-- Common adjectives list
-- Other patterns (collapsible)
-- Common mistakes (collapsible)
-- Practice CTA linking to /practice
+- Hero: "The noun's grammar, copied."
+- "Adjectives copy the noun" concept card
+- Callouts: word order; adjective follows its own noun
+- Endings quick reference, agreement examples (Doer and Target), main -ος/-η/-ο paradigm, high-frequency adjectives
+- Other patterns and common mistakes (collapsible)
+- PracticeCTA topic "adjectives" → /practice/cases/review/adjectives
 </displays>
 </tab>
 
@@ -177,38 +187,32 @@ Split from cases-pronouns. Progressive disclosure - cases first, then pronouns.
 - PrepositionNavigator (components/preposition-navigator.tsx)
 </components>
 <displays>
-- Hero: "Connect words and ideas" - σε, από, για, με
-- Decision guide: "Which preposition do I need?"
-- The Big Four prepositions (σε, από, για, με)
-- The σε contraction story (σε + article → στο/στην/στον)
-- Prepositions with pronouns (emphatic forms)
-- Time expressions
-- Common mistakes
-- Other prepositions (collapsible)
-- Compound prepositions (collapsible)
-- Practice CTA linking to /practice
+- Hero: "Little words, big relationships."
+- Decision navigator: "Which preposition do I need?"
+- The σε story: σε + article contraction, all six forms coloured by gender
+- "The rest" (open): με, για, από, μετά, πριν, μέχρι, χωρίς, προς
+- Time expressions, prepositions with pronouns
+- Common mistakes and compound prepositions (collapsible)
+- PracticeCTA topic "prepositions": no drill exists, so it goes to /practice
 </displays>
 </tab>
 
 ## Tab: verbs
 
-<tab route="/reference/verbs">
-<purpose>Verb conjugation patterns and system</purpose>
-<file>src/routes/reference/tabs/verbs.tsx</file>
+<tab route="/reference/verbs/$band">
+<purpose>Verb conjugation system, band by band</purpose>
+<file>src/routes/reference/verbs/route.tsx (layout), src/routes/reference/verbs/$band.tsx</file>
 <components>
-- VerbsSection (components/verbs-section.tsx)
+- PresentTenseSection, PastTenseSection, PastContinuousSection, FutureNaSection (components/verbs-section.tsx)
 </components>
 <displays>
-- Hero: "Verb conjugation patterns" - κάνω, κάνεις, κάνει...
-- Start here: είμαι (to be) - most important verb
-- Pattern identifier: "Which pattern?" (-ω, -άω, -μαι)
-- Three pattern sections:
-  - Active -ω (κάνω family)
-  - Contracted -άω (μιλάω family)
-  - Deponent -μαι (έρχομαι family)
-- Other irregular verbs
-- Cross-link to /learn/verbs for browsing
-- Practice CTA linking to /practice/verbs/present
+- Hero (in the layout): "Three patterns, thousands of verbs."
+- NavTabs over the bands: Present · Past · Continuous past · Future & να
+- Present: είμαι, pattern identifier, the three families (-ω, -άω/-ώ, -μαι), other high-frequency verbs, link to /learn/verbs
+- Past: aorist finder, exceptions, formation rules, full paradigms (collapsible), stems that break the rules
+- Continuous past: imperfect paradigms and the aorist vs imperfect contrast
+- Future & να: θα + subjunctive, ladders, να-constructions
+- PracticeCTA topic "verbs" → /practice/verbs (in the layout, so on every band)
 </displays>
 <note>
 This explains the conjugation SYSTEM. Verb vocabulary browsing is at /learn/verbs.
@@ -221,19 +225,13 @@ This explains the conjugation SYSTEM. Verb vocabulary browsing is at /learn/verb
 <purpose>Greek-specific sentence constructions</purpose>
 <file>src/routes/reference/tabs/patterns.tsx</file>
 <displays>
-- Hero: "Greek sentence patterns" - Μου αρέσει...
-- Likes construction (μου αρέσει / μου αρέσουν)
-  - Pattern explanation: thing liked is SUBJECT
-  - Paradigm table
-  - Quick test: αρέσει or αρέσουν?
-- Name construction (με λένε)
-  - Pattern explanation: literally "they call me"
-  - Paradigm with all pronoun forms
-- Future: more patterns as identified
+- Hero: "Constructions that don't translate."
+- Likes construction (μου αρέσει / μου αρέσουν), rows from the database
+- Quick test: αρέσει or αρέσουν?
+- Name construction (με λένε), rows from the database; hidden when there are none
+- Quick test: ίσως or μήπως?
+- No PracticeCTA
 </displays>
-<note>
-Moved from /learn/phrases/patterns. These are grammar patterns, not phrase collections.
-</note>
 </tab>
 
 ---
@@ -241,48 +239,64 @@ Moved from /learn/phrases/patterns. These are grammar patterns, not phrase colle
 ## Component Library
 
 <components>
+<component file="components/reference-nav.tsx">
+REFERENCE_TABS and ReferenceNav (NavTabs over REFERENCE_TABS)
+</component>
+
+<component file="components/BandHeading.tsx">
+Serif band heading with optional lede; sizes lg / md, tones default / quiet
+</component>
+
+<component file="components/case-table.tsx">
+CaseTableGrid (case rows x gender columns, singular and plural) and the shared ArticleParadigm
+</component>
+
 <component file="components/cases-section.tsx">
-Case system overview with nominative/accusative/genitive explanations
-</component>
-
-<component file="components/pronouns-section.tsx">
-Full pronoun paradigm tables with PronounParadigmTable component
-</component>
-
-<component file="components/pronoun-paradigm-table.tsx">
-Reusable table for displaying pronoun forms by person/number
-</component>
-
-<component file="components/pronoun-decision-guide.tsx">
-Flowchart for choosing correct pronoun form
+Doer / Target / Owner TeachingCards, notes, "Look it up" band, next steps
 </component>
 
 <component file="components/articles-section.tsx">
-Article paradigm display
+Article usage LookupCards, ArticleParadigm, -ν rule, homograph callout, next steps
 </component>
 
-<component file="components/agreement-section.tsx">
-Article paradigm table and gender agreement rules
+<component file="components/homograph-callout.tsx">
+"Article or pronoun?" table, shown on both the Articles and Pronouns tabs
 </component>
 
 <component file="components/nouns-section.tsx">
-Noun declension paradigms by gender with vocative changes
+Case guide, gender hints, essential patterns with Endings / Full forms toggle, variants per gender
+</component>
+
+<component file="components/pronouns-section.tsx">
+Pronoun bands: the split, paradigm LookupCards, weak vs strong, phrases, decision guide, indefinites, clitic placement
+</component>
+
+<component file="components/pronoun-paradigm-table.tsx">
+Person x singular/plural table for one pronoun paradigm
+</component>
+
+<component file="components/pronoun-decision-guide.tsx">
+NavigatorCard: "Which "me/you" do I use?"
+</component>
+
+<component file="components/example-pills.tsx">
+Wrapping "greek (english)" chips; with a `tone`, colours only each example's `marked` words
 </component>
 
 <component file="components/adjectives-section.tsx">
-Adjective agreement patterns mirroring article paradigms
+Adjective agreement patterns built on CaseTableGrid and per-gender tables
 </component>
 
 <component file="components/prepositions-section.tsx">
-Preposition usage with PrepositionNavigator for browsing
+Navigator, σε contraction card, the rest, time, pronouns, mistakes, compounds
 </component>
 
 <component file="components/preposition-navigator.tsx">
-Interactive navigator for exploring preposition combinations
+NavigatorCard: "Which preposition do I need?"
 </component>
 
 <component file="components/verbs-section.tsx">
-Verb family paradigms and conjugation patterns
+The four verb band sections
 </component>
 </components>
 
@@ -290,12 +304,14 @@ Verb family paradigms and conjugation patterns
 
 ## Navigation Order
 
-Tabs appear in this order (conceptual dependency):
-1. cases - Framework for understanding Greek
-2. pronouns - Cases in action (most frequent words)
-3. articles - Same patterns applied to nouns
-4. nouns - Noun declensions by gender
+Tabs appear in `REFERENCE_TABS` order (conceptual dependency):
+1. cases - Framework: what each ending is for
+2. articles - The Cases tab reads the case off the article, so articles come next
+3. nouns - Noun endings by gender
+4. pronouns - Cases in the words you use most
 5. adjectives - Agreement following article/noun patterns
 6. prepositions - Combines with articles/pronouns
 7. verbs - Separate system (conjugation)
 8. patterns - Special constructions
+
+The landing page groups the same topics differently (pronouns sit with cases under "The case system").

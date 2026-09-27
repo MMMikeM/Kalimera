@@ -6,7 +6,7 @@ Drill a Greek word → the word that means its opposite. Antonym pairs give each
 retrieval route: the learner who cannot recall μικρός cold can often reach it from μεγάλος.
 Both directions of every pair are drilled, so neither member is only ever the prompt.
 
-Target: 3 seconds.
+Timing is the learner's 4 / 6 / 8 s choice (`src/routes/practice/components/drill-speeds.ts`).
 
 ## Item source — NOT hardcoded
 
@@ -33,7 +33,7 @@ Constraints enforced by the seed layer:
 - A pair whose lemma is missing from vocabulary is skipped with a warning, so the live card count
   can be lower than the seed-file pair count
 
-At time of writing the seed file holds 48 pairs across four bands — adjectives, adverbs, verbs,
+At time of writing the seed file holds 49 pairs across four bands — adjectives, adverbs, verbs,
 nouns — which the loader expands to two cards per pair. The subtitle renders the live count
 (`${items.length} cards`), so it never drifts from the data.
 
@@ -44,9 +44,11 @@ Each pair produces two cards, one per direction:
 | Field | Value |
 |-------|-------|
 | `greek` | the **target** word — what the learner types |
-| `greeklish` | `greekToPhonetic(target)` — derived, never hand-written |
 | `label` | `source Greek — source gloss` |
 | `sourceGreek` / `sourceEnglish` | the prompt word, rendered by `forwardPrompt` |
+
+There is no `greeklish` field: greeklish is derived, never stored, and `matchPhonetic` grades the
+typed answer against `greek`.
 
 Glosses are cleaned with `cleanGloss`, which strips a leading `I ` so verb entries read
 "remember / forget" rather than "I remember / I forget".

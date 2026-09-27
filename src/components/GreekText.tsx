@@ -34,8 +34,8 @@ const greekTextVariants = tv({
 			default: "text-foreground",
 			muted: "text-muted-foreground",
 			accent: "text-terracotta-text",
-			correct: "text-correct",
-			incorrect: "text-incorrect",
+			correct: "text-correct-text",
+			incorrect: "text-incorrect-text",
 			// Gender is a global grammar axis, so it gets reserved role tokens
 			// rather than a colour chosen per call site. Named here because
 			// Tailwind cannot see a class built as `text-gender-${g}`.
