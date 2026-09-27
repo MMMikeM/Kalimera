@@ -138,7 +138,6 @@ export const PrepositionsSection: React.FC = () => (
 		<div className="border-t-2 border-stone-900 pt-8">
 			<BandHeading
 				tone="quiet"
-				kicker="No contraction"
 				title="The rest"
 				lede="Use accusative forms on what follows. Nothing transforms."
 				className="mb-5"
@@ -186,7 +185,7 @@ export const PrepositionsSection: React.FC = () => (
 
 		{/* Time expressions — plain section */}
 		<div className="border-t border-stone-200 pt-6">
-			<BandHeading tone="quiet" size="md" kicker="Time" title="Time expressions" className="mb-4" />
+			<BandHeading tone="quiet" size="md" title="Time expressions" className="mb-4" />
 			<div className="grid gap-6 sm:grid-cols-3">
 				{TIME_EXPRESSIONS.patterns.map((p) => (
 					<div key={p.pattern}>
@@ -212,7 +211,6 @@ export const PrepositionsSection: React.FC = () => (
 			<BandHeading
 				tone="quiet"
 				size="md"
-				kicker="With pronouns"
 				title="Prepositions with pronouns"
 				lede="Weak forms (με, σε) go before verbs only. After a preposition, use the long emphatic forms."
 				className="mb-4"

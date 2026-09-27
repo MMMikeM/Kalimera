@@ -46,7 +46,7 @@ const ParadigmCard = ({
 			title={
 				<span className="flex items-center gap-2">
 					<span
-						className={`inline-flex items-center justify-center rounded-md p-1.5 ${style.badgeBg} ${style.text}`}
+						className={`inline-flex items-center justify-center rounded-md p-1.5 ${style.badgeBg} ${style.badgeText}`}
 					>
 						{icon}
 					</span>
@@ -90,7 +90,6 @@ export function PatternsTab({ data }: { data: PatternsData }) {
 	return (
 		<div className="space-y-6">
 			<ReferenceHero
-				eyebrow="Patterns"
 				title="Constructions that don't translate."
 				thesis="Some Greek sentences don't map to English word-for-word. These patterns are the shortcuts — learn the shape, not the literal translation."
 			/>
