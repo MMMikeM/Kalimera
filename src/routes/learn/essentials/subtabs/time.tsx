@@ -1,10 +1,10 @@
+import { BackLink } from "@/components/BackLink";
 import { ContentSection } from "@/components/ContentSection";
 import { GreekText } from "@/components/GreekText";
 import { genderScheme } from "@/constants/grammar-palette";
 import { type Gender, getArticle } from "@/lib/greek-grammar";
 
 import type { EssentialsLoaderData } from "../$subtab";
-import { EssentialsBackLink } from "./essentials-back-link";
 
 /**
  * The article is derived from the noun's gender rather than baked into
@@ -84,7 +84,7 @@ export function TimeSubtab({ data }: Props) {
 
 	return (
 		<div className="space-y-6">
-			<EssentialsBackLink />
+			<BackLink to="/learn/essentials">Essentials</BackLink>
 
 			{/* Times of Day */}
 			<ContentSection title="Times of Day" subtitle="Οι ώρες της ημέρας" colorScheme="honey">

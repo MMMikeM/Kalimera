@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
-import { ArrowLeft, Calendar, Clock, Target, TrendingUp } from "lucide-react";
+import { Calendar, Clock, Target, TrendingUp } from "lucide-react";
 
+import { BackLink } from "@/components/BackLink";
 import { AccuracyTrend } from "@/components/AccuracyTrend";
 import { Card } from "@/components/Card";
 import { StreakCalendar } from "@/components/StreakCalendar";
@@ -53,13 +54,9 @@ function ProgressPage() {
 
 	return (
 		<div className="mx-auto max-w-2xl">
-			<Link
-				to="/"
-				className="mb-4 inline-flex items-center gap-2 text-sm text-stone-500 hover:text-stone-700"
-			>
-				<ArrowLeft size={14} />
-				<span>Back</span>
-			</Link>
+			<BackLink to="/" className="mb-4">
+				Home
+			</BackLink>
 
 			<h1 className="mb-1 font-serif text-2xl text-terracotta">Your Progress</h1>
 			<p className="mb-6 text-sm text-stone-600">Track your Greek learning journey</p>

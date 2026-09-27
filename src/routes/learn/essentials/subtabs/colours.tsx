@@ -1,8 +1,8 @@
+import { BackLink } from "@/components/BackLink";
 import { ContentSection } from "@/components/ContentSection";
 import { GreekText } from "@/components/GreekText";
 
 import type { EssentialsLoaderData } from "../$subtab";
-import { EssentialsBackLink } from "./essentials-back-link";
 import { ExampleList } from "./example-list";
 
 interface Props {
@@ -83,7 +83,7 @@ export function ColoursSubtab({ data }: Props) {
 
 	return (
 		<div className="space-y-6">
-			<EssentialsBackLink />
+			<BackLink to="/learn/essentials">Essentials</BackLink>
 
 			{/* Basic Colours */}
 			<ContentSection title="Basic Colours" subtitle="Τα βασικά χρώματα" colorScheme="ocean">

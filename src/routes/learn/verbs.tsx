@@ -1,10 +1,10 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
-import { ChevronLeft } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
 import { cn } from "tailwind-variants";
 
+import { BackLink } from "@/components/BackLink";
 import { TabHero } from "@/components/TabHero";
 import { fetchVerbParadigms, fetchVerbsForInventory } from "@/server/db/queries/vocabulary";
 
@@ -75,13 +75,7 @@ function VerbsPage() {
 
 	return (
 		<div className="space-y-4">
-			<Link
-				to="/learn"
-				className="inline-flex items-center gap-1 text-sm text-stone-600 transition-colors hover:text-stone-800"
-			>
-				<ChevronLeft size={16} />
-				<span>Learn</span>
-			</Link>
+			<BackLink to="/learn">Learn</BackLink>
 
 			<TabHero title="Verbs" greekPhrase="είδα, ήπια, πήγα" colorScheme="olive">
 				Which verbs you have to memorise, and which come free with a rule.
