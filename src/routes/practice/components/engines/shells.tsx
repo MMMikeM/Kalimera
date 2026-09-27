@@ -275,7 +275,7 @@ export const DrillShell = ({
 					)}
 				</div>
 			)}
-			<div className="mx-auto flex max-w-sm flex-col gap-10 px-6 pt-4 pb-6">{children}</div>
+			<div className="mx-auto flex w-full max-w-sm flex-col gap-10 px-6 pt-4 pb-6">{children}</div>
 		</div>
 	);
 };

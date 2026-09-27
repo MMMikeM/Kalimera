@@ -36,7 +36,7 @@ const CASE_NOTES: Array<{ key: string; body: React.ReactNode }> = [
 		body: (
 			<>
 				<strong className="text-stone-800">Start with Doer and Target.</strong> They cover most of
-				what you'll hear and say. Owner comes up with possession and a few prepositions.
+				what you'll hear and say. Owner comes up with possession and a few formal prepositions.
 			</>
 		),
 	},
