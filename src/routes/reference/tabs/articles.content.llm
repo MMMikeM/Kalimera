@@ -149,7 +149,7 @@ Static content from:
 - `articles-section.tsx` locals: GREEK_ADDS (the "Greek adds it" LookupCard rows) and NU_RULE_COLUMNS (the movable-ν examples). The single "Greek drops it" row (είναι γιατρός) is inline JSX.
 - The article paradigm is the shared `ArticleParadigm` from `components/case-table.tsx`; the homograph table is `HomographCallout` from `components/homograph-callout.tsx`.
 
-Gender hints are NOT here — they live in `nouns-section.tsx` (GENDER_HINTS).
+Gender recognition is NOT here — the Nouns tab teaches it (`GENDER_MOVES` in `nouns-section.tsx`).
 
 ## Verification
 

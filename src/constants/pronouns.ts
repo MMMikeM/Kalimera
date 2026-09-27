@@ -1,5 +1,7 @@
+import type { CaseName } from "./recognition";
+
 // Form structure with optional shortened/variant form
-export interface PronounForm {
+interface PronounForm {
 	greek: string;
 	alt?: string; // optional shortened/colloquial variant
 	english: string;
@@ -42,14 +44,6 @@ export const OBJECT_PRONOUNS: PronounParadigm[] = [
 	},
 ];
 
-export const OBJECT_PRONOUN_EXAMPLES = [
-	{ greek: "με βλέπεις;", marked: "με", english: "do you see me?" },
-	{ greek: "σε αγαπώ", marked: "σε", english: "I love you" },
-	{ greek: "τον ξέρω", marked: "τον", english: "I know him" },
-	{ greek: "μας περιμένουν", marked: "μας", english: "they're waiting for us" },
-	{ greek: "σας ευχαριστώ", marked: "σας", english: "thank you (formal)" },
-];
-
 // Possessive pronouns - go AFTER the noun!
 export const POSSESSIVE_PRONOUNS: PronounParadigm[] = [
 	{
@@ -80,14 +74,6 @@ export const POSSESSIVE_PRONOUNS: PronounParadigm[] = [
 ];
 
 // Note: Neuter singular uses the same form as masculine (του)
-
-export const POSSESSIVE_PRONOUN_EXAMPLES = [
-	{ greek: "το σπίτι μου", marked: "μου", english: "my house" },
-	{ greek: "η μητέρα σου", marked: "σου", english: "your mother" },
-	{ greek: "ο φίλος του", marked: "του", english: "his friend" },
-	{ greek: "το σπίτι μας", marked: "μας", english: "our house" },
-	{ greek: "τα παιδιά τους", marked: "τους", english: "their children" },
-];
 
 // Subject pronouns - often omitted because verb endings show person
 export const SUBJECT_PRONOUNS: PronounParadigm[] = [
@@ -147,66 +133,50 @@ export const EMPHATIC_PRONOUNS: PronounParadigm[] = [
 	},
 ];
 
-export const EMPHATIC_PRONOUN_EXAMPLES = [
-	{ greek: "για μένα", marked: "μένα", english: "for me" },
-	{ greek: "με σένα", marked: "σένα", english: "with you" },
-	{ greek: "για αυτόν", marked: "αυτόν", english: "for him" },
-	{ greek: "για μας", marked: "μας", english: "for us" },
-	{ greek: "για αυτό", marked: "αυτό", english: "that's why / for this reason" },
-];
+/** An example whose `marked` words carry the case colour; the rest stays neutral. */
+interface MarkedExample {
+	greek: string;
+	marked: string;
+	english: string;
+}
 
-// Key patterns to understand
-export const PRONOUN_PATTERNS = {
-	objectWordOrder: {
-		title: "Object pronouns go BEFORE the verb",
-		wrong: "Βλέπω σε",
-		correct: "Σε βλέπω",
-		english: "I see you",
-		explanation: "Unlike English, the object pronoun comes first",
+export interface PronounJob {
+	greek: string;
+	caseName: CaseName;
+	/** The learner handle, plus short or long where two forms share a case. */
+	handle: string;
+	job: string;
+	examples: MarkedExample[];
+}
+
+// English "me" does three jobs; Greek gives each its own word. μου is the one that
+// surprises: it covers "to me" as well as "my".
+export const PRONOUN_JOBS: PronounJob[] = [
+	{
+		greek: "με",
+		caseName: "Accusative",
+		handle: "Target · short",
+		job: "The action lands on me. It sits right before the verb.",
+		examples: [{ greek: "με βλέπει", marked: "με", english: "he sees me" }],
 	},
-	possessiveWordOrder: {
-		title: "Possessives go AFTER the noun",
-		wrong: "μου σπίτι",
-		correct: "το σπίτι μου",
-		english: "my house",
-		explanation: "Always: article + noun + possessive",
-	},
-	doubleObject: {
-		title: '"Give me it" word order',
-		explanation: "Greek puts the person before the thing",
-		contrast: {
-			english: "give it to me",
-			greek: "δώσε μου το",
-			literal: "give to-me it",
-		},
+	{
+		greek: "μου",
+		caseName: "Genitive",
+		handle: "Owner",
+		job: "“My”, and also “to me”. After a noun it owns; before a verb it receives.",
 		examples: [
-			{
-				greek: "δώσε μου το",
-				english: "give it to me",
-				literal: "give to-me it",
-			},
-			{
-				greek: "πες μου το",
-				english: "tell it to me",
-				literal: "tell to-me it",
-			},
-			{
-				greek: "φέρε της το",
-				english: "bring it to her",
-				literal: "bring to-her it",
-			},
+			{ greek: "το σπίτι μου", marked: "μου", english: "my house" },
+			{ greek: "μου λέει", marked: "μου", english: "he tells me" },
 		],
 	},
-	formalYou: {
-		title: "Formal 'you' = plural forms",
-		examples: [
-			{ greek: "σας ευχαριστώ", english: "thank you (formal)" },
-			{ greek: "σας παρακαλώ", english: "please (formal)" },
-			{ greek: "η γνώμη σας", english: "your opinion (formal)" },
-		],
-		explanation: "Use σας/εσάς with people you don't know well, elders, or in formal situations",
+	{
+		greek: "εμένα",
+		caseName: "Accusative",
+		handle: "Target · long",
+		job: "After a preposition, or when “me” carries the stress.",
+		examples: [{ greek: "για εμένα", marked: "εμένα", english: "for me" }],
 	},
-};
+];
 
 // Common phrases using pronouns - for family context
 export const PRONOUN_PHRASES = [

@@ -1,257 +1,111 @@
 # Pronouns Reference Content
 
-Cases in action - the words you'll use most frequently in Greek.
+Cases in action: the words you'll use most frequently in Greek.
 
 ## Purpose
 
-Show pronouns as the practical application of cases. High-frequency forms that demonstrate how cases work in daily speech.
+Show pronouns as the practical application of cases. The forms are a lookup; the skills are picking the right word for the job and putting it in the right place.
 
 ## Key Insight
 
-English packs every job into one word ("me"). Greek picks a different form depending on what the pronoun is doing, which is where case shows up.
+English uses one "me" for three jobs. Greek gives each job its own word (με, μου, εμένα), and each word a fixed place in the sentence. μου is the surprise: it covers "to me" as well as "my".
 
 ---
 
 ## Hero
 
 <hero component="ReferenceHero" file="tabs/pronouns.tsx">
-<title>The words that carry half your sentences.</title>
+<title>Every “me” has its own word.</title>
+<thesis>English uses one “me” for three jobs. Greek gives each job its own word, and each word a fixed place in the sentence. Get the word and the place right, and the rest is a lookup.</thesis>
 </hero>
 
-## The Split (first band)
+## Three Words for "Me" (first band)
 
-<insight name="me-split" heading='One English "me", three Greek forms.'>
-ME_SPLIT rows (local to `components/pronouns-section.tsx`), each with a role badge in its case colour:
+<teaching-cards source="PRONOUN_JOBS in @/constants/pronouns">
+Same idiom as the Cases tab's three roles: one TeachingCard per word, tinted in its case scheme, the Greek form as the title, the learner handle as the badge. Examples are MarkedGreek, so only the pronoun carries the case colour. The cards are the page's colour key.
 
-| Form  | Role badge      | Job                                   | Example    |
-|-------|-----------------|---------------------------------------|------------|
-| με    | Target          | before the verb                       | με βλέπεις (you see me) |
-| μου   | Owner           | after the noun, or "to me"            | μου λέει (tells me) |
-| εμένα | Target (strong) | after a preposition, or for emphasis  | για εμένα (for me) |
+| Title | Badge          | Scheme          | Job                                                              | Examples |
+|-------|----------------|-----------------|------------------------------------------------------------------|----------|
+| με    | Target · short | case-accusative | The action lands on me. It sits right before the verb.           | με βλέπει (he sees me) |
+| μου   | Owner          | case-genitive   | “My”, and also “to me”. After a noun it owns; before a verb it receives. | το σπίτι μου (my house), μου λέει (he tells me) |
+| εμένα | Target · long  | case-accusative | After a preposition, or when “me” carries the stress.            | για εμένα (for me) |
 
-Followed by a note card: "Target and Owner are the daily drivers." Subject pronouns (εγώ, εσύ…) exist but Greek usually drops them.
-</insight>
+</teaching-cards>
 
----
-
-## Pronoun Paradigms (band: "All the forms")
-
-Each paradigm is a `ParadigmLookup`: a LookupCard whose `chip` is the learner handle (Target / Owner / Doer) and whose `eyebrow` is the grammar term (Accusative / Genitive / Nominative), wrapping a `PronounParadigmTable` (person rows x singular/plural columns). Example pills (`ExamplePills`) colour only the pronoun, via each example's `marked` field.
-
-### Target (Accusative) - Object Pronouns
-
-<paradigm name="accusative-pronouns" chip="Target" eyebrow="Accusative">
-<rule>Goes BEFORE the verb: σε βλέπω = I see you.</rule>
-
-| Person | Singular      | Plural        |
-|--------|---------------|---------------|
-| 1st    | με (me)       | μας (us)      |
-| 2nd    | σε (you)      | σας (you pl.) |
-| 3rd m  | τον (him/it)  | τους (them)   |
-| 3rd f  | την (her/it)  | τις (them)    |
-| 3rd n  | το (it)       | τα (them)     |
-
-<examples>
-- με βλέπεις; = do you see me?
-- σε αγαπώ = I love you
-- τον ξέρω = I know him
-- μας περιμένουν = they're waiting for us
-- σας ευχαριστώ = thank you (formal)
-</examples>
-</paradigm>
-
-### Owner (Genitive) - Possessive Pronouns
-
-<paradigm name="genitive-pronouns" chip="Owner" eyebrow="Genitive">
-<rule>Goes AFTER the noun: το σπίτι μου = my house.</rule>
-<note>Neuter uses the same form as masculine (του)</note>
-
-| Person | Singular     | Plural        |
-|--------|--------------|---------------|
-| 1st    | μου (my)     | μας (our)     |
-| 2nd    | σου (your)   | σας (your pl.)|
-| 3rd m  | του (his)    | τους (their)  |
-| 3rd f  | της (her)    | τους (their)  |
-| 3rd n  | του (its)    | τους (their)  |
-
-<examples>
-- το σπίτι μου = my house
-- η μητέρα σου = your mother
-- ο φίλος του = his friend
-- το σπίτι μας = our house
-- τα παιδιά τους = their children
-</examples>
-</paradigm>
-
-Between Owner and Doer sits the shared "Article or pronoun?" callout (see below).
-
-### Doer (Nominative) - Subject Pronouns
-
-<paradigm name="nominative-pronouns" chip="Doer" eyebrow="Nominative">
-<rule>Usually dropped: the verb ending already shows who. Use only for emphasis or contrast. No example pills.</rule>
-
-| Person | Singular       | Plural         |
-|--------|----------------|----------------|
-| 1st    | εγώ (I)        | εμείς (we)     |
-| 2nd    | εσύ (you)      | εσείς (you pl.)|
-| 3rd m  | αυτός (he)     | αυτοί (they)   |
-| 3rd f  | αυτή (she)     | αυτές (they)   |
-| 3rd n  | αυτό (it)      | αυτά (they)    |
-</paradigm>
-
-### Weak vs Strong (Target forms)
-
-<paradigm name="weak-strong" heading="με vs εμένα — same meaning, different jobs">
-<rule>The Target form has a short (weak) version that clips onto verbs and a long (strong) version that stands on its own: after a preposition, or for emphasis. The table pairs OBJECT_PRONOUNS with EMPHATIC_PRONOUNS row by row, both in the Target colour.</rule>
-
-| English           | Weak (before verb) | Strong (after prep / emphasis) |
-|-------------------|--------------------|--------------------------------|
-| me / us           | με · μας           | εμένα · εμάς                   |
-| you / you (pl.)   | σε · σας           | εσένα · εσάς                   |
-| him/it / them     | τον · τους         | αυτόν · αυτούς                 |
-| her/it / them     | την · τις          | αυτήν · αυτές                  |
-| it / them         | το · τα            | αυτό · αυτά                    |
-
-Then a weak example (με βλέπεις) beside a strong one (για εμένα), and "More strong-form phrases" pills:
-<examples>
-- για μένα = for me
-- με σένα = with you
-- για αυτόν = for him
-- για μας = for us
-- για αυτό = that's why / for this reason
-</examples>
-</paradigm>
+<notes source="PRONOUN_NOTES in components/pronouns-section.tsx">
+Ruled list under the cards, pronouns in their case colour:
+- Not sure which? A preposition in front means εμένα; if English could say "to", μου; otherwise με.
+- μας and σας do double duty: one word for Target and Owner (μας βλέπει, το σπίτι μας).
+- The Doer usually drops out: θέλω is "I want"; εγώ and εσύ come back for contrast (εγώ θέλω τσάι, εσύ;).
+- Formal "you" is plural: σας ευχαριστώ, η γνώμη σας.
+</notes>
 
 ---
 
-## Article or Pronoun? (Shared with the Articles tab)
-
-<insight name="article-or-pronoun" highlight="true" component="HomographCallout">
-<title>Article or pronoun?</title>
-<explanation>
-Every third-person pronoun is spelled like a definite article — eight forms in total.
-The form never tells you which one you are reading. Its neighbour does: a noun after it
-means article, a verb after it means object pronoun, and a noun before it means
-possessive.
-</explanation>
-
-| Form | Before a noun ("the") | Before a verb (him/her/it) | After a noun (his/her/their) |
-|------|-----------------------|----------------------------|------------------------------|
-| τον  | τον φίλο              | τον ξέρω                   | —                            |
-| την  | την πόρτα             | την ακούω                  | —                            |
-| το   | το σπίτι              | το θέλω                    | —                            |
-| τους | τους φίλους           | τους ξέρω                  | το σπίτι τους                |
-| τις  | τις μέρες             | τις βλέπω                  | —                            |
-| τα   | τα παιδιά             | τα βλέπω                   | —                            |
-| του (m) | του φίλου          | του λέω                    | ο φίλος του                  |
-| του (n) | του σπιτιού        | του δίνω γάλα              | το χρώμα του                 |
-| της  | της Μαρίας            | της λέω                    | η μητέρα της                 |
-
-</insight>
-
----
-
-## Ready-made Phrases (open band)
-
-<phrases heading="Ready-made phrases" source="PRONOUN_PHRASES, grouped by category">
-
-### Requests
-- πες μου = tell me
-- δώσε μου = give me
-- περίμενέ με = wait for me
-- βοήθησέ με = help me
-- άκουσέ με = listen to me
-
-### Opinions
-- μ' αρέσει = I like it
-- δε μ' αρέσει = I don't like it
-- μου φαίνεται = it seems to me
-
-### Questions
-- τι σου φαίνεται; = what do you think?
-- πώς σε λένε; = what's your name?
-
-### Answers
-- με λένε... = my name is... (they call me)
-
-### Family
-- σ' αγαπώ = I love you
-- μου λείπεις = I miss you
-
-</phrases>
-
----
-
-## Decision Guide (band: "Which form do I need?")
-
-<decision-guide name="pronoun-selection" component="PronounDecisionGuide">
-<question>Which "me/you" do I use?</question>
-<note>Placed after the forms on purpose: "Use this once you've seen the forms. It's a lookup, not a lesson."</note>
-
-```
-με / σε        → someone does something TO you (direct object): σε βλέπω, με ακούς;
-μου / σου      → MY/YOUR (possession) or TO me/you (indirect object): το σπίτι μου, μου λέει, σου δίνω
-εμένα / εσένα  → after prepositions (για, με, από, σε) or for EMPHASIS: για μένα, με σένα, εμένα μου αρέσει!
-```
-
-Footer: a comparison table (English x Object / Possessive / Emphatic for me, you, him, her) and a quick test: can you insert "to"? use μου/σου; preposition before it? use εμένα/εσένα; otherwise με/σε.
-</decision-guide>
-
----
-
-## Indefinites (open band: "Someone, nothing, everyone")
-
-<section name="indefinites">
-Memorise as whole words; the prefix pattern is not drilled. Nine core items, inline in `pronouns-section.tsx`:
-
-| Greek   | English            |
-|---------|--------------------|
-| κάτι    | something          |
-| τίποτα  | nothing / anything |
-| όλα     | everything         |
-| κάποιος | someone            |
-| κανένας | no one / anyone    |
-| όλοι    | everyone           |
-| κάπου   | somewhere          |
-| πουθενά | nowhere / anywhere |
-| παντού  | everywhere         |
-
-</section>
-
----
-
-## Double Object Pattern (Collapsible)
-
-<pattern name="double-object" expandable="true" default="collapsed" heading="Two-pronoun word order (advanced)">
-<title>"Give me it" word order</title>
-<explanation>Greek puts the person before the thing</explanation>
-
-| English          | Greek       | Literal        |
-|------------------|-------------|----------------|
-| give it to me    | δώσε μου το | give to-me it  |
-| tell it to me    | πες μου το  | tell to-me it  |
-| bring it to her  | φέρε της το | bring to-her it|
-
-</pattern>
-
----
-
-## Clitic Placement (band: "Weak pronouns hug the verb.")
+## Placement (band: "Short pronouns hug the verb.")
 
 <section name="clitic-placement" anchor="#clitic-placement">
-Greek puts object pronouns before the verb, except in commands. Four rules (CLITIC_RULES):
-1. Default, before the verb: Με βλέπει.
-2. Imperative, after the verb: Δες με!
-3. After θα or να: Θα με δει. / Θέλω να με δεις.
-4. After δεν: Δεν με βλέπει.
+The practice placement drill links here (`practice/pronouns/placement.tsx`), so the band keeps `id="clitic-placement"`.
 
-Rule of thumb: whatever signals tense or mood (θα, να, δεν) goes outside, the pronoun goes inside. Imperatives are the one exception.
+An aligned slot table in a bordered Card (STATEMENTS and COMMANDS, local to the section). Columns: lead-in (muted, right-aligned) · pronoun · verb · pronoun after the verb · English. The pronoun column never moves, whatever stands in front of it; under "Commands put it after" the pronoun lands in the fourth column instead. Pronouns carry their case colour.
+
+| Lead-in | Pronoun | Verb   | After  | English |
+|---------|---------|--------|--------|---------|
+|         | με      | βλέπει |        | he sees me |
+| θα      | με      | δει    |        | he will see me |
+| δεν     | με      | βλέπει |        | he doesn't see me |
+| θέλω να | με      | δεις   |        | I want you to see me |
+|         | μου το  | δίνει  |        | he gives it to me |
+| *Commands put it after* |||||
+|         |         | δες    | με     | look at me |
+|         |         | δώσε   | μου το | give it to me |
+
+Below `sm` the English column is hidden and each row's English drops to a line beneath it.
+
+Notes: with two, the person comes first (μου το); "my" goes after the noun and the article stays (το σπίτι μου, η μητέρα σου).
 </section>
+
+---
+
+## Look it up
+
+<paradigm name="pronoun-forms" component="PronounTable">
+One GrammarTable, Singular and Plural as row groups under one header. Rows are named by the English Doer (I, you, he, she, it / we, you (pl.), they ×3 with the gender beneath). Columns, each a chip in its case colour with a line beneath:
+
+| Column         | Source             | Beneath              | Weight |
+|----------------|--------------------|----------------------|--------|
+| Doer           | SUBJECT_PRONOUNS   | usually dropped      | muted  |
+| Target · short | OBJECT_PRONOUNS    | before the verb      | semibold |
+| Owner          | POSSESSIVE_PRONOUNS| my, to me            | semibold |
+| Target · long  | EMPHATIC_PRONOUNS  | after a preposition  | normal |
+
+Below `sm` the chips become case-coloured text and the line beneath shows only short / long. The four paradigms are read row by row, so `pronouns.test.ts` checks they list the same persons in the same order.
+
+Footnote: after a preposition εμένα and εσένα often lose their first ε (για μένα, χωρίς σένα).
+</paradigm>
+
+Then the shared "Article or pronoun?" callout (`HomographCallout`, id `article-or-pronoun`), also on the Articles tab.
+
+<section name="indefinites" heading="Someone, nothing, everyone">
+A 3×3 GrammarTable: rows thing / person / place, columns some / no, any / every. Laid out as a grid, the κάπ- of "some" and the όλ- of "every" show without being taught.
+
+|        | some    | no, any | every  |
+|--------|---------|---------|--------|
+| thing  | κάτι    | τίποτα  | όλα    |
+| person | κάποιος | κανένας | όλοι   |
+| place  | κάπου   | πουθενά | παντού |
+
+</section>
+
+<phrases heading="Phrases to learn whole" source="PRONOUN_PHRASES, grouped by category">
+Ruled lists per category (Requests, Opinions, Questions, Answers, Family), neutral Greek: πες μου, δώσε μου, περίμενέ με, βοήθησέ με, άκουσέ με · μ' αρέσει, δε μ' αρέσει, μου φαίνεται · τι σου φαίνεται;, πώς σε λένε; · με λένε... · σ' αγαπώ, μου λείπεις.
+</phrases>
 
 ---
 
 ## Navigation
 
+<next heading="You have the words. Now build with them.">NextStepCards: Patterns (emphasis) → /reference/patterns; Prepositions → /reference/prepositions; Cases → /reference/cases</next>
 <practice>PracticeCTA "Practice pronouns" (topic "pronouns", label "Open pronoun drills") → /practice/pronouns (logged-out readers go to /register; see `src/lib/practice-links.ts`)</practice>
 
 ---
@@ -260,17 +114,18 @@ Rule of thumb: whatever signals tense or mood (θα, να, δεν) goes outside,
 
 Static content from `@/constants/pronouns`:
 - OBJECT_PRONOUNS, POSSESSIVE_PRONOUNS, SUBJECT_PRONOUNS, EMPHATIC_PRONOUNS
-- OBJECT_PRONOUN_EXAMPLES, POSSESSIVE_PRONOUN_EXAMPLES, EMPHATIC_PRONOUN_EXAMPLES (each `{ greek, marked, english }`)
-- PRONOUN_PATTERNS (only `doubleObject` is rendered), PRONOUN_PHRASES
+- PRONOUN_JOBS (the three cards, examples shaped `{ greek, marked, english }`)
+- PRONOUN_PHRASES
 
-Section-local: ME_SPLIT, CLITIC_RULES, the indefinites list. Homograph rows from `@/constants/homographs` via `HomographCallout`.
+Section-local: PRONOUN_NOTES, STATEMENTS / COMMANDS and PLACEMENT_NOTES, PRONOUN_COLUMNS, the indefinites grid. Homograph rows from `@/constants/homographs` via `HomographCallout`.
 
 ## Verification
 
-- [x] greek-first: Greek forms prominent in all paradigms
-- [x] paradigm-tables: Person (rows) x Number (columns) reveals patterns
-- [x] progressive-disclosure: only two-pronoun word order is collapsible
-- [x] function-first-labels: learner handle leads (chip), grammar term follows (eyebrow)
-- [x] frequency-priority: Target and Owner first, Doer demoted
-- [x] colour-honesty: example pills colour only the pronoun
-- [x] decision-guides: "Which form do I need?" after the forms
+- [x] greek-first: the Greek form is each card's title
+- [x] paradigm-tables: Person (rows) x role (columns), singular and plural under one header
+- [x] structure-is-pedagogy: placement is taught by column alignment, not a list of rules
+- [x] no-redundancy: the me / μου / εμένα split is taught once, in the cards; the table is the lookup
+- [x] function-first-labels: learner handle leads (Doer / Target / Owner), short / long qualifies
+- [x] frequency-priority: the short Target and Owner columns carry the weight, the Doer recedes
+- [x] colour-honesty: only the pronoun in an example carries the case colour
+- [x] progressive-disclosure: nothing is collapsed; the page is short enough not to need it

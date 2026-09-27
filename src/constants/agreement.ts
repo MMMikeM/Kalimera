@@ -106,7 +106,7 @@ export const AGREEMENT_PARADIGMS: AgreementParadigm[] = [
 		title: "Masculine -ας words",
 		example: "πατέρας (father)",
 		frequency: "common",
-		tip: "Many family words: πατέρας, άντρας, παππούς",
+		tip: "When the -άς itself is stressed, the plural adds a syllable instead: μπαμπάς → μπαμπάδες",
 		forms: [
 			{
 				case: "nom",
@@ -175,6 +175,7 @@ export const AGREEMENT_PARADIGMS: AgreementParadigm[] = [
 		title: "Masculine -ης words",
 		example: "μαθητής (student)",
 		frequency: "common",
+		tip: "Words in -τζής add a syllable in the plural instead: ταξιτζής → ταξιτζήδες",
 		forms: [
 			{
 				case: "nom",
@@ -316,7 +317,6 @@ export const AGREEMENT_PARADIGMS: AgreementParadigm[] = [
 		title: "Feminine -α words",
 		example: "γυναίκα (woman/wife)",
 		frequency: "very common",
-		tip: "Vocative = Nominative for feminine nouns",
 		forms: [
 			{
 				case: "nom",
@@ -385,7 +385,6 @@ export const AGREEMENT_PARADIGMS: AgreementParadigm[] = [
 		title: "Feminine -η words",
 		example: "ζωή (life)",
 		frequency: "very common",
-		tip: "Vocative = Nominative for feminine nouns",
 		forms: [
 			{
 				case: "nom",
@@ -750,7 +749,6 @@ export const AGREEMENT_PARADIGMS: AgreementParadigm[] = [
 		title: "Neuter -ο words",
 		example: "βιβλίο (book)",
 		frequency: "very common",
-		tip: "Nom = Acc = Voc (neuter simplification!)",
 		forms: [
 			{
 				case: "nom",
@@ -819,7 +817,6 @@ export const AGREEMENT_PARADIGMS: AgreementParadigm[] = [
 		title: "Neuter -ι words",
 		example: "παιδί (child)",
 		frequency: "common",
-		tip: "Nom = Acc = Voc (neuter simplification!)",
 		forms: [
 			{
 				case: "nom",
@@ -888,7 +885,7 @@ export const AGREEMENT_PARADIGMS: AgreementParadigm[] = [
 		title: "Neuter -μα words",
 		example: "όνομα (name)",
 		frequency: "common",
-		tip: "Ancient Greek pattern, Nom = Acc = Voc",
+		tip: "Adds -τ- everywhere but the singular Doer and Target: ονόματος, ονόματα",
 		forms: [
 			{
 				case: "nom",

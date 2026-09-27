@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, type ReactNode } from "react";
 import { cn } from "tailwind-variants";
 
 import { GreekText } from "@/components/GreekText";
@@ -13,7 +13,7 @@ interface ReferenceHeroDemoItem {
 }
 
 interface ReferenceHeroProps {
-	title: string;
+	title: ReactNode;
 	thesis: string;
 	demo?: ReferenceHeroDemoItem[];
 }
