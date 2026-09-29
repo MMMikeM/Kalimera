@@ -87,15 +87,17 @@ number does not give you balanced weight:
 
 | Token   | `-100`                 | `-200`                 |
 | ------- | ---------------------- | ---------------------- |
-| `ocean` | `oklch(0.94 0.01 225)` | `oklch(0.88 0.03 224)` |
-| `olive` | `oklch(0.94 0.01 132)` | `oklch(0.88 0.03 131)` |
+| `ocean` | `oklch(0.94 0.01 225)` | `oklch(0.87 0.03 219)` |
+| `olive` | `oklch(0.94 0.01 132)` | `oklch(0.91 0.02 127)` |
 | `cream` | `oklch(0.94 0.01 82)`  | `oklch(0.88 0.03 75)`  |
 | `honey` | `oklch(0.94 0.04 94)`  | `oklch(0.88 0.07 92)`  |
 
 `honey` carries roughly four times the chroma of the others at every step, so a set that
 mixes it with `ocean` and `olive` will pull the eye to the honey group. At the `-100` step
 `ocean` and `olive` are chroma `0.01` and read as grey. For a balanced set of sibling
-tints, match chroma — `ocean-200` / `olive-200` / `cream-200` is the tested trio.
+tints, match chroma and lightness. `ocean-200` / `olive-200` / `cream-200` used to be a
+matched trio, but the January tints restored on 2026-09-29 put `olive-200` at L 0.91 against
+`ocean-200` at 0.87, so check the pair before relying on it.
 
 ### Text-Safe Variants (AAA Compliant)
 
@@ -105,13 +107,13 @@ Dark mode redefines every token under `:root.dark` in `src/index.css` (the remap
 
 | Token                                         | OKLCH Value            | On Cream | On Tinted BG |
 | --------------------------------------------- | ---------------------- | -------- | ------------ |
-| `terracotta-text` (`--color-terracotta-text`) | `oklch(0.31 0.05 40)`  | 10:1+    | 10:1+        |
-| `sunset-text` (`--color-sunset-text`)         | `oklch(0.31 0.05 358)` | 10:1+    | 10:1+        |
+| `terracotta-text` (`--color-terracotta-text`) | `oklch(0.35 0.08 47)`  | 11:1     | 9.7:1        |
+| `sunset-text` (`--color-sunset-text`)         | `oklch(0.39 0.1 357)`  | 9.6:1    | 8.5:1        |
 | `olive-text` (`--color-olive-text`)           | `oklch(0.31 0.05 131)` | 12:1+    | 12:1+        |
 | `ocean-text` (`--color-ocean-text`)           | `oklch(0.31 0.05 223)` | 11:1+    | 11:1+        |
 | `honey-text` (`--color-honey-text`)           | `oklch(0.34 0.07 81)`  | 11:1+    | 11:1+        |
-| `navy-text` (`--color-navy-text`)             | `oklch(0.31 0.05 255)` | 12:1+    | 12:1+        |
-| `slate-text` (`--color-slate-text`)           | `oklch(0.31 0.05 182)` | 11:1+    | 11:1+        |
+| `navy-text` (`--color-navy-text`)             | `oklch(0.27 0.04 252)` | 14:1     | 12:1         |
+| `slate-text` (`--color-slate-text`)           | `oklch(0.28 0.03 183)` | 13:1     | 11:1         |
 
 **Critical:** These colours are intentionally calibrated to maintain AAA compliance on tinted backgrounds.
 
@@ -147,7 +149,7 @@ The shapes are symmetric on purpose. A one-sided arrow would claim the action fl
 
 ### Colour is open for the redesign
 
-Colour no longer encodes case. The reserved `case-*` and `gender-*` scales in `@theme static` are legacy: current pages still read them through `SCHEME`, `caseScheme()` and `genderScheme()`, and the lint that keeps role tokens inside `grammar-palette.ts` stays until the redesign retires them. Add no new case colour, and no new page-local colour axis; new grammar display uses `<GrammarMark>`.
+Colour no longer encodes case, and no lint or rule restricts where a colour may appear. The case scales were removed on 2026-09-29; pages built before the marks lost their case colour until they are redesigned. The `gender-*` scales stay: `<GrammarMark>` uses their `-700` steps.
 
 ## Feedback Colours
 
@@ -374,12 +376,10 @@ Use `MistakeComparison` (`src/components/MistakeComparison.tsx`) for wrong vs co
 ## Don'ts
 
 1. **Don't use accent colours for body text** — Base accents fail contrast requirements; always use their `-text` variants
-2. **Don't encode grammar in colour** — Case and number are shapes on a `<GrammarMark>`; colour marks gender only, and only on the mark
-3. **Don't add to the legacy role tokens** — `case-*` / `gender-*` scales stay only until the redesign replaces the pages that use them
-4. **Don't hand-roll Greek markup** — No raw `lang="el"` spans and no `greek-text` class at call sites; use `<GreekText>`. `pnpm lint:greek` enforces it
-5. **Don't use SVG noise/grain textures** — They create visual artefacts
-6. **Don't use opacity modifiers on text colours** — Breaks AAA contrast (see below)
-7. **Don't use coloured shadows** — Use neutral shadows only (`shadow-sm`, `shadow-md`), never `shadow-{color}-*`
+2. **Don't hand-roll Greek markup** — No raw `lang="el"` spans and no `greek-text` class at call sites; use `<GreekText>`. `pnpm lint:greek` enforces it
+3. **Don't use SVG noise/grain textures** — They create visual artefacts
+4. **Don't use opacity modifiers on text colours** — Breaks AAA contrast (see below)
+5. **Don't use coloured shadows** — Use neutral shadows only (`shadow-sm`, `shadow-md`), never `shadow-{color}-*`
 
 ---
 
@@ -402,7 +402,7 @@ Tailwind's opacity modifier syntax (`text-honey-text/80`) reduces contrast:
 
 ### Why This Happens
 
-The `-text` colour variants are carefully calibrated to achieve 10:1+ contrast ratios on tinted backgrounds. Any opacity reduction (even `/90`) can drop below the 7:1 AAA threshold:
+The `-text` colour variants are calibrated to at least 8.5:1 on their own tints, most of them 10:1 or more. Any opacity reduction (even `/90`) can drop below the 7:1 AAA threshold:
 
 | Original Contrast | With /80 | With /70 |
 | ----------------- | -------- | -------- |

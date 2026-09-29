@@ -3,6 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { SectionIndex } from "@/components/SectionIndex";
 import { pageTitle } from "@/lib/page-title";
 
+import { GUIDE_TONE } from "./components/guide-tone";
 import { GUIDES } from "./guides.data";
 
 export const Route = createFileRoute("/guides/")({
@@ -24,6 +25,7 @@ function GuidesIndex() {
 						greek: guide.greek,
 						description: guide.description,
 						href: `/guides/${guide.slug}`,
+						greekClass: GUIDE_TONE[guide.tone].accent,
 					})),
 				},
 			]}

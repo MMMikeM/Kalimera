@@ -8,10 +8,8 @@
 /*
  * Mediterranean Colour Palette for Greek Learning
  *
- * Design principles (see /docs/design-guidelines.md + visual-memory-design skill):
- * - Base palette = brand + non-grammatical UI
- * - Grammar role tokens (case, gender) = reserved scales; use wherever colour
- *   asserts a grammatical value about adjacent Greek content
+ * Design principles (see /docs/design-guidelines.md):
+ * - Grammar is drawn by <GrammarMark>, not carried by colour
  * - Cool backgrounds for focus, warm accents for emphasis
  * - AAA contrast (7:1) for extended reading
  */
@@ -34,9 +32,9 @@
 
 	/* === TERRACOTTA — Primary Accent === */
 	--color-terracotta-50: oklch(0.98 0.01 49);
-	--color-terracotta-100: oklch(0.94 0.01 44);
-	--color-terracotta-200: oklch(0.88 0.03 42);
-	--color-terracotta-300: oklch(0.79 0.05 42);
+	--color-terracotta-100: oklch(0.94 0.02 63);
+	--color-terracotta-200: oklch(0.88 0.04 60);
+	--color-terracotta-300: oklch(0.79 0.07 54);
 	--color-terracotta-400: oklch(0.7 0.1 47);
 	--color-terracotta-500: oklch(0.61 0.13 42);
 	--color-terracotta-600: oklch(0.58 0.13 37);
@@ -47,13 +45,13 @@
 	--color-terracotta: var(--color-terracotta-500);
 	--color-terracotta-light: var(--color-terracotta-400);
 	--color-terracotta-dark: var(--color-terracotta-700);
-	--color-terracotta-text: oklch(0.31 0.05 40);
+	--color-terracotta-text: oklch(0.35 0.08 47);
 
 	/* === SUNSET — Feminine Accent (dusty rose) === */
 	--color-sunset-50: oklch(0.97 0.01 355);
 	--color-sunset-100: oklch(0.94 0.01 357);
-	--color-sunset-200: oklch(0.88 0.03 357);
-	--color-sunset-300: oklch(0.79 0.05 357);
+	--color-sunset-200: oklch(0.9 0.04 358);
+	--color-sunset-300: oklch(0.81 0.08 1);
 	--color-sunset-400: oklch(0.58 0.13 355);
 	--color-sunset-500: oklch(0.53 0.12 356);
 	--color-sunset-600: oklch(0.47 0.11 357);
@@ -64,13 +62,13 @@
 	--color-sunset: var(--color-sunset-400);
 	--color-sunset-light: var(--color-sunset-300);
 	--color-sunset-dark: var(--color-sunset-600);
-	--color-sunset-text: oklch(0.31 0.05 358);
+	--color-sunset-text: oklch(0.39 0.1 357);
 
 	/* === OLIVE — Secondary (silvery olive leaf) === */
 	--color-olive-50: oklch(0.98 0.01 132);
 	--color-olive-100: oklch(0.94 0.01 132);
-	--color-olive-200: oklch(0.88 0.03 131);
-	--color-olive-300: oklch(0.79 0.05 131);
+	--color-olive-200: oklch(0.91 0.02 127);
+	--color-olive-300: oklch(0.83 0.03 126);
 	--color-olive-400: oklch(0.66 0.05 128);
 	--color-olive-500: oklch(0.6 0.06 131);
 	--color-olive-600: oklch(0.51 0.05 131);
@@ -86,8 +84,8 @@
 	/* === OCEAN — Tertiary (formerly Aegean) === */
 	--color-ocean-50: oklch(0.98 0.01 229);
 	--color-ocean-100: oklch(0.94 0.01 225);
-	--color-ocean-200: oklch(0.88 0.03 224);
-	--color-ocean-300: oklch(0.79 0.05 225);
+	--color-ocean-200: oklch(0.87 0.03 219);
+	--color-ocean-300: oklch(0.77 0.04 219);
 	--color-ocean-400: oklch(0.65 0.06 223);
 	--color-ocean-500: oklch(0.56 0.06 224);
 	--color-ocean-600: oklch(0.49 0.05 232);
@@ -132,13 +130,13 @@
 	--color-navy: var(--color-navy-700);
 	--color-navy-light: var(--color-navy-500);
 	--color-navy-dark: var(--color-navy-800);
-	--color-navy-text: oklch(0.31 0.05 255);
+	--color-navy-text: oklch(0.27 0.04 252);
 
 	/* === SLATE — Secondary Accents === */
 	--color-slate-50: oklch(0.98 0.01 177);
-	--color-slate-100: oklch(0.94 0.01 181);
-	--color-slate-200: oklch(0.88 0.03 181);
-	--color-slate-300: oklch(0.79 0.05 182);
+	--color-slate-100: oklch(0.92 0.01 174);
+	--color-slate-200: oklch(0.84 0.02 180);
+	--color-slate-300: oklch(0.74 0.03 182);
 	--color-slate-400: oklch(0.58 0.03 183);
 	--color-slate-500: oklch(0.54 0.04 181);
 	--color-slate-600: oklch(0.46 0.03 186);
@@ -149,7 +147,7 @@
 	--color-slate: var(--color-slate-400);
 	--color-slate-light: var(--color-slate-300);
 	--color-slate-dark: var(--color-slate-600);
-	--color-slate-text: oklch(0.31 0.05 182);
+	--color-slate-text: oklch(0.28 0.03 183);
 
 	/* Neutral */
 	--color-stone-warm: oklch(0.55 0.01 58);
@@ -225,61 +223,17 @@
 	--color-sidebar-ring: var(--color-terracotta);
 }
 
-/* === GRAMMAR ROLE TOKENS ===
+/* === GENDER SCALES ===
  *
- * Reserved role-keyed scales. Use these — NOT base palette — wherever colour
- * claims a grammatical value about adjacent Greek content.
- *
- * Case taught on cases/nouns/articles/adjectives/pronouns (5 surfaces).
- * Gender taught on nouns/articles/adjectives/agreement (4 surfaces).
- *
- * Rule: grammar colour as fill/background/border around Greek content
- * asserts that content's grammatical value. If assertion false, DO NOT USE —
- * reach for base palette or neutral stone instead.
+ * <GrammarMark> takes its gender colour from the -700 steps, and pages built
+ * before the marks tint Greek and panels by gender with the rest.
  *
  * `static` keeps the full scale emitted even if a specific shade isn't yet
  * referenced by a utility class — callers can reach these via var() in
  * arbitrary CSS without tripping the JIT scanner.
  */
 @theme static {
-	/* Case: Nominative. -50 intentionally omitted — too soft to carry signal; -100 is the minimum visible tint. */
-	--color-case-nominative-100: oklch(0.94 0.02 223);
-	--color-case-nominative-200: oklch(0.91 0.03 223);
-	--color-case-nominative-300: oklch(0.88 0.05 223);
-	--color-case-nominative-400: oklch(0.82 0.07 223);
-	--color-case-nominative-500: oklch(0.82 0.07 223);
-	--color-case-nominative-600: oklch(0.82 0.08 223);
-	--color-case-nominative-700: oklch(0.57 0.07 223);
-	--color-case-nominative-800: oklch(0.47 0.06 223);
-	--color-case-nominative-900: oklch(0.41 0.05 223);
-	--color-case-nominative-950: oklch(0.37 0.04 223);
-	--color-case-nominative-text: oklch(0.34 0.06 223);
 
-	/* Case: Accusative */
-	--color-case-accusative-100: oklch(0.94 0.02 60);
-	--color-case-accusative-200: oklch(0.91 0.03 60);
-	--color-case-accusative-300: oklch(0.88 0.05 60);
-	--color-case-accusative-400: oklch(0.82 0.07 60);
-	--color-case-accusative-500: oklch(0.82 0.07 60);
-	--color-case-accusative-600: oklch(0.82 0.08 60);
-	--color-case-accusative-700: oklch(0.58 0.07 60);
-	--color-case-accusative-800: oklch(0.48 0.06 60);
-	--color-case-accusative-900: oklch(0.42 0.05 60);
-	--color-case-accusative-950: oklch(0.38 0.04 60);
-	--color-case-accusative-text: oklch(0.35 0.08 60);
-
-	/* Case: Genitive */
-	--color-case-genitive-100: oklch(0.94 0.02 127);
-	--color-case-genitive-200: oklch(0.91 0.03 127);
-	--color-case-genitive-300: oklch(0.87 0.05 127);
-	--color-case-genitive-400: oklch(0.82 0.07 127);
-	--color-case-genitive-500: oklch(0.82 0.07 127);
-	--color-case-genitive-600: oklch(0.82 0.08 127);
-	--color-case-genitive-700: oklch(0.57 0.07 127);
-	--color-case-genitive-800: oklch(0.47 0.06 127);
-	--color-case-genitive-900: oklch(0.41 0.05 127);
-	--color-case-genitive-950: oklch(0.38 0.04 127);
-	--color-case-genitive-text: oklch(0.34 0.09 127);
 
 	/* Gender: Masculine */
 	--color-gender-masculine-100: oklch(0.94 0.03 268);
@@ -293,7 +247,6 @@
 	--color-gender-masculine-900: oklch(0.42 0.11 268);
 	--color-gender-masculine-950: oklch(0.38 0.09 268);
 	--color-gender-masculine-text: oklch(0.47 0.12 268);
-
 	/* Gender: Feminine */
 	--color-gender-feminine-100: oklch(0.94 0.03 2);
 	--color-gender-feminine-200: oklch(0.91 0.05 2);
@@ -306,7 +259,6 @@
 	--color-gender-feminine-900: oklch(0.43 0.11 2);
 	--color-gender-feminine-950: oklch(0.39 0.09 2);
 	--color-gender-feminine-text: oklch(0.49 0.18 2);
-
 	/* Gender: Neuter */
 	--color-gender-neuter-100: oklch(0.93 0.06 171);
 	--color-gender-neuter-200: oklch(0.9 0.08 171);
@@ -322,9 +274,6 @@
 
 	/* Short aliases → AAA text variant. Default role colour = AAA text tone.
 	 * Use scale tokens (-100, -300, -700, …) for fills/borders/chips. */
-	--color-case-nominative: var(--color-case-nominative-text);
-	--color-case-accusative: var(--color-case-accusative-text);
-	--color-case-genitive: var(--color-case-genitive-text);
 	--color-gender-masculine: var(--color-gender-masculine-text);
 	--color-gender-feminine: var(--color-gender-feminine-text);
 	--color-gender-neuter: var(--color-gender-neuter-text);
@@ -335,10 +284,11 @@
  * Ramps are remapped rather than swapped: tints (light steps) become dark
  * tints, text shades (dark steps) become light text, and mid accents keep
  * their value so solid fills under white text keep their light-mode contrast.
- * Hue never changes — a case or gender colour must still mean the same thing.
+ * Hue never changes — a gender colour must still mean the same thing.
  *
  * Rule, applied to each light value when a ramp changes:
- *   - L > 0.77 or L <= 0.45 → L' = 1.2 − L; otherwise L is unchanged
+ *   - tints (-50 to -300) → L' = 1.2 − L
+ *   - other steps: L > 0.77 or L <= 0.45 → L' = 1.2 − L; otherwise L is unchanged
  *   - chroma capped at 0.06 where L' < 0.45, so dark tints stay quiet
  *   - `-text` tokens → L 0.88, chroma capped at 0.1 (AAA on the dark tints)
  *   - stone (Tailwind default) → L' = 1.19 − L; cream-50 page is L 0.19
@@ -362,9 +312,9 @@
 	--color-cream-900: oklch(0.8 0.04 45);
 	--color-cream-950: oklch(0.94 0.03 39);
 	--color-terracotta-50: oklch(0.22 0.01 49);
-	--color-terracotta-100: oklch(0.26 0.01 44);
-	--color-terracotta-200: oklch(0.32 0.03 42);
-	--color-terracotta-300: oklch(0.41 0.05 42);
+	--color-terracotta-100: oklch(0.26 0.02 63);
+	--color-terracotta-200: oklch(0.32 0.04 60);
+	--color-terracotta-300: oklch(0.41 0.06 54);
 	--color-terracotta-400: oklch(0.7 0.1 47);
 	--color-terracotta-500: oklch(0.61 0.13 42);
 	--color-terracotta-600: oklch(0.58 0.13 37);
@@ -372,11 +322,11 @@
 	--color-terracotta-800: oklch(0.77 0.09 30);
 	--color-terracotta-900: oklch(0.82 0.08 30);
 	--color-terracotta-950: oklch(0.95 0.05 29);
-	--color-terracotta-text: oklch(0.88 0.05 40);
+	--color-terracotta-text: oklch(0.88 0.08 47);
 	--color-sunset-50: oklch(0.23 0.01 355);
 	--color-sunset-100: oklch(0.26 0.01 357);
-	--color-sunset-200: oklch(0.32 0.03 357);
-	--color-sunset-300: oklch(0.41 0.05 357);
+	--color-sunset-200: oklch(0.3 0.04 358);
+	--color-sunset-300: oklch(0.39 0.06 1);
 	--color-sunset-400: oklch(0.58 0.13 355);
 	--color-sunset-500: oklch(0.53 0.12 356);
 	--color-sunset-600: oklch(0.47 0.11 357);
@@ -384,11 +334,11 @@
 	--color-sunset-800: oklch(0.83 0.08 356);
 	--color-sunset-900: oklch(0.86 0.07 355);
 	--color-sunset-950: oklch(0.97 0.05 359);
-	--color-sunset-text: oklch(0.88 0.05 358);
+	--color-sunset-text: oklch(0.88 0.1 357);
 	--color-olive-50: oklch(0.22 0.01 132);
 	--color-olive-100: oklch(0.26 0.01 132);
-	--color-olive-200: oklch(0.32 0.03 131);
-	--color-olive-300: oklch(0.41 0.05 131);
+	--color-olive-200: oklch(0.29 0.02 127);
+	--color-olive-300: oklch(0.37 0.03 126);
 	--color-olive-400: oklch(0.66 0.05 128);
 	--color-olive-500: oklch(0.6 0.06 131);
 	--color-olive-600: oklch(0.51 0.05 131);
@@ -399,8 +349,8 @@
 	--color-olive-text: oklch(0.88 0.05 131);
 	--color-ocean-50: oklch(0.22 0.01 229);
 	--color-ocean-100: oklch(0.26 0.01 225);
-	--color-ocean-200: oklch(0.32 0.03 224);
-	--color-ocean-300: oklch(0.41 0.05 225);
+	--color-ocean-200: oklch(0.33 0.03 219);
+	--color-ocean-300: oklch(0.43 0.04 219);
 	--color-ocean-400: oklch(0.65 0.06 223);
 	--color-ocean-500: oklch(0.56 0.06 224);
 	--color-ocean-600: oklch(0.49 0.05 232);
@@ -432,11 +382,11 @@
 	--color-navy-800: oklch(0.82 0.05 256);
 	--color-navy-900: oklch(0.86 0.04 257);
 	--color-navy-950: oklch(0.93 0.03 259);
-	--color-navy-text: oklch(0.88 0.05 255);
+	--color-navy-text: oklch(0.88 0.04 252);
 	--color-slate-50: oklch(0.22 0.01 177);
-	--color-slate-100: oklch(0.26 0.01 181);
-	--color-slate-200: oklch(0.32 0.03 181);
-	--color-slate-300: oklch(0.41 0.05 182);
+	--color-slate-100: oklch(0.28 0.01 174);
+	--color-slate-200: oklch(0.36 0.02 180);
+	--color-slate-300: oklch(0.46 0.03 182);
 	--color-slate-400: oklch(0.58 0.03 183);
 	--color-slate-500: oklch(0.54 0.04 181);
 	--color-slate-600: oklch(0.46 0.03 186);
@@ -444,40 +394,7 @@
 	--color-slate-800: oklch(0.85 0.02 185);
 	--color-slate-900: oklch(0.88 0.01 183);
 	--color-slate-950: oklch(0.97 0.01 196);
-	--color-slate-text: oklch(0.88 0.05 182);
-	--color-case-nominative-100: oklch(0.26 0.02 223);
-	--color-case-nominative-200: oklch(0.29 0.03 223);
-	--color-case-nominative-300: oklch(0.32 0.05 223);
-	--color-case-nominative-400: oklch(0.38 0.06 223);
-	--color-case-nominative-500: oklch(0.38 0.06 223);
-	--color-case-nominative-600: oklch(0.38 0.06 223);
-	--color-case-nominative-700: oklch(0.57 0.07 223);
-	--color-case-nominative-800: oklch(0.47 0.06 223);
-	--color-case-nominative-900: oklch(0.79 0.05 223);
-	--color-case-nominative-950: oklch(0.83 0.04 223);
-	--color-case-nominative-text: oklch(0.88 0.06 223);
-	--color-case-accusative-100: oklch(0.26 0.02 60);
-	--color-case-accusative-200: oklch(0.29 0.03 60);
-	--color-case-accusative-300: oklch(0.32 0.05 60);
-	--color-case-accusative-400: oklch(0.38 0.06 60);
-	--color-case-accusative-500: oklch(0.38 0.06 60);
-	--color-case-accusative-600: oklch(0.38 0.06 60);
-	--color-case-accusative-700: oklch(0.58 0.07 60);
-	--color-case-accusative-800: oklch(0.48 0.06 60);
-	--color-case-accusative-900: oklch(0.78 0.05 60);
-	--color-case-accusative-950: oklch(0.82 0.04 60);
-	--color-case-accusative-text: oklch(0.88 0.08 60);
-	--color-case-genitive-100: oklch(0.26 0.02 127);
-	--color-case-genitive-200: oklch(0.29 0.03 127);
-	--color-case-genitive-300: oklch(0.33 0.05 127);
-	--color-case-genitive-400: oklch(0.38 0.06 127);
-	--color-case-genitive-500: oklch(0.38 0.06 127);
-	--color-case-genitive-600: oklch(0.38 0.06 127);
-	--color-case-genitive-700: oklch(0.57 0.07 127);
-	--color-case-genitive-800: oklch(0.47 0.06 127);
-	--color-case-genitive-900: oklch(0.79 0.05 127);
-	--color-case-genitive-950: oklch(0.82 0.04 127);
-	--color-case-genitive-text: oklch(0.88 0.09 127);
+	--color-slate-text: oklch(0.88 0.03 183);
 	--color-gender-masculine-100: oklch(0.26 0.03 268);
 	--color-gender-masculine-200: oklch(0.29 0.04 268);
 	--color-gender-masculine-300: oklch(0.32 0.06 268);

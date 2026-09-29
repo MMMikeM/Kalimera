@@ -63,7 +63,7 @@ Pick the single visually loudest element per screen: the target word, the active
 
 ## The colour system
 
-**Superseded for case and number (2026-09-29).** Grammar is now drawn by `<GrammarMark>`: end shape = case, one or two lines = number, and colour's only grammatical job is gender, on the mark. CLAUDE.md ("Grammar Marks, Not Grammar Colour") and `docs/design-guidelines.md` ("Grammar Marks") hold the current rules. The `case-*` / `gender-*` role tokens described below are legacy, kept only until the redesign replaces the pages that use them; add no new case colour. The general findings below (the per-axis cap of about four values, one focal point, colour following the concept, keys near the top) still apply to the marks and to any colour the redesign introduces.
+**Superseded for case and number (2026-09-29).** Grammar is now drawn by `<GrammarMark>`: end shape = case, one or two lines = number, and colour's only grammatical job is gender, on the mark. CLAUDE.md ("Grammar Marks, Not Grammar Colour") and `docs/design-guidelines.md` ("Grammar Marks") hold the current rules. The `case-*` scales described below were removed; the `gender-*` scales remain for the marks, and the lint that once confined role tokens to `grammar-palette.ts` is gone. The general findings below (the per-axis cap of about four values, one focal point, colour following the concept, keys near the top) still apply to the marks and to any colour the redesign introduces.
 
 Colour earns its place when it encodes something the learner must internalise. It fails when it is affective, decorative, or layered on a signal that already carries the same information. Work through these subsections as a checklist; each catches a specific failure mode.
 

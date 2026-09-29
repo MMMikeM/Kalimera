@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { ChevronRight } from "lucide-react";
+import { cn } from "tailwind-variants";
 
 import { GreekText } from "@/components/GreekText";
 import { PageHeading } from "@/components/PageHeading";
@@ -11,6 +12,8 @@ interface IndexTopic {
 	greek: string;
 	description: string;
 	href: string;
+	/** Colour for the Greek name, when a section has an identifying colour of its own. */
+	greekClass?: string;
 }
 
 export interface IndexGroup {
@@ -18,10 +21,7 @@ export interface IndexGroup {
 	topics: IndexTopic[];
 }
 
-/**
- * A table of contents, not a card grid. Groups carry no tint: a blue or green slab
- * beside the Doer and Owner colours reads as a grammatical claim it isn't making.
- */
+/** A table of contents, not a card grid. */
 export const SectionIndex = ({
 	title,
 	lede,
@@ -45,7 +45,7 @@ export const SectionIndex = ({
 							<Link to={topic.href} className="group flex min-h-11 items-center gap-4 py-4">
 								<div className="min-w-0 flex-1">
 									<p className="flex flex-wrap items-baseline gap-x-3">
-										<GreekText size="2xl" className="group-hover:text-terracotta-text">
+										<GreekText size="2xl" className={cn("group-hover:text-terracotta-text", topic.greekClass)}>
 											{topic.greek}
 										</GreekText>
 										<span className="text-stone-700">{topic.label}</span>

@@ -97,7 +97,7 @@ export const GrammarMark = ({
 			data-plural={plural || undefined}
 			className={cn("relative inline-block min-w-7.5 pb-4 text-center whitespace-nowrap", className)}
 		>
-			<GreekText size={size} tone="inherit">
+			<GreekText size={size} tone="inherit" weight="inherit">
 				{children}
 			</GreekText>
 			{/* Inset 2px from each end of the phrase, so two marked phrases a space apart

@@ -1,7 +1,9 @@
+import { cellWith, mark } from "@/lib/guide-marks";
 import type { Guide } from "@/types/guide";
 
 export const NO_DOER_GUIDE: Guide = {
 	slug: "no-doer",
+	tone: "terracotta",
 	title: "Sentences without a doer",
 	greek: "Χωρίς υποκείμενο",
 	description: "There is, it's raining, you must",
@@ -17,17 +19,28 @@ export const NO_DOER_GUIDE: Guide = {
 					{ label: "Meaning" },
 				],
 				rows: [
-					[{ text: "υπάρχει ένα βιβλιοπωλείο", weight: "anchor" }, "there is a bookshop"],
-					[{ text: "υπάρχουν πολλά πάρκα", weight: "deviate" }, "there are many parks"],
-					["δεν υπάρχει βιβλιοθήκη", "there's no library"],
-					["θα υπάρχουν πολλά πάρκα", "there will be many parks"],
+					[
+						{ text: "υπάρχει ένα βιβλιοπωλείο", weight: "anchor", marks: [mark("ένα βιβλιοπωλείο", "nominative", "neuter")] },
+						"there is a bookshop",
+					],
+					[
+						{ text: "υπάρχουν πολλά πάρκα", weight: "deviate", marks: [mark("πολλά πάρκα", "nominative", "neuter", true)] },
+						"there are many parks",
+					],
+					[cellWith("δεν υπάρχει βιβλιοθήκη", mark("βιβλιοθήκη", "nominative", "feminine")), "there's no library"],
+					[cellWith("θα υπάρχουν πολλά πάρκα", mark("πολλά πάρκα", "nominative", "neuter", true)), "there will be many parks"],
 				],
 			},
 			examples: [
-				{ greek: "Υπάρχει φαγητό πάνω στη φωτιά.", english: "There is food on the fire." },
+				{
+					greek: "Υπάρχει φαγητό πάνω στη φωτιά.",
+					english: "There is food on the fire.",
+					marks: [mark("φαγητό", "nominative", "neuter"), mark("στη φωτιά", "accusative", "feminine")],
+				},
 				{
 					greek: "Θα υπάρχουν πολλά πάρκα στην πόλη μου.",
 					english: "There will be many parks in my city.",
+					marks: [mark("πολλά πάρκα", "nominative", "neuter", true), mark("στην πόλη", "accusative", "feminine")],
 				},
 			],
 			drills: [],
@@ -42,16 +55,20 @@ export const NO_DOER_GUIDE: Guide = {
 					{ label: "Meaning" },
 				],
 				rows: [
-					["κάνει κρύο", "it's cold"],
-					["κάνει ζέστη", "it's hot"],
+					[cellWith("κάνει κρύο", mark("κρύο", "accusative", "neuter")), "it's cold"],
+					[cellWith("κάνει ζέστη", mark("ζέστη", "accusative", "feminine")), "it's hot"],
 					["βρέχει", "it's raining"],
 					["χιονίζει", "it's snowing"],
-					["έχει βροχή", "there's rain"],
+					[cellWith("έχει βροχή", mark("βροχή", "accusative", "feminine")), "there's rain"],
 				],
 			},
 			examples: [
 				{ greek: "Δεν βρέχει.", english: "It isn't raining." },
-				{ greek: "Δεν έχει βροχή.", english: "There's no rain." },
+				{
+					greek: "Δεν έχει βροχή.",
+					english: "There's no rain.",
+					marks: [mark("βροχή", "accusative", "feminine")],
+				},
 			],
 			drills: [],
 		},
@@ -83,11 +100,17 @@ export const NO_DOER_GUIDE: Guide = {
 					{ label: "Meaning" },
 				],
 				rows: [
-					["θα ήθελα έναν καφέ", "I'd like a coffee"],
-					["θα ήθελα να ήμουν αρχιτέκτονας", "I'd like to be an architect"],
+					[cellWith("θα ήθελα έναν καφέ", mark("έναν καφέ", "accusative", "masculine")), "I'd like a coffee"],
+					[cellWith("θα ήθελα να ήμουν αρχιτέκτονας", mark("αρχιτέκτονας", "nominative", "masculine")), "I'd like to be an architect"],
 				],
 			},
-			examples: [{ greek: "Θα ήθελα να ήμουν δάσκαλος.", english: "I'd like to be a teacher." }],
+			examples: [
+				{
+					greek: "Θα ήθελα να ήμουν δάσκαλος.",
+					english: "I'd like to be a teacher.",
+					marks: [mark("δάσκαλος", "nominative", "masculine")],
+				},
+			],
 			drills: [],
 		},
 	],

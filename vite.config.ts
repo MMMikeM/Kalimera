@@ -15,13 +15,6 @@ const DB_IMPORT_MESSAGE =
 
 const ARBITRARY_VALUE_PATTERN = "-\\[([^\\[\\]]*?)\\](?!:)";
 
-// Role tokens are named in src/constants/grammar-palette.ts; everything else
-// reads SCHEME. That file and GreekText are exempted in the overrides below.
-// The plugin matches each whitespace-split chunk with its variants attached, so
-// the utility is anchored to the start, a variant `:` or the important `!`.
-const ROLE_TOKEN_PATTERN =
-	"(?:^|[:!])(?:bg|text|border|ring|fill|stroke|divide|outline|accent)-(?:case|gender)-(?:nominative|accusative|genitive|masculine|feminine|neuter)";
-
 export default defineConfig({
 	resolve: {
 		tsconfigPaths: true,
@@ -117,11 +110,6 @@ export default defineConfig({
 							message:
 								"Arbitrary-value utility escapes the design system. Prefer a token; add an eslint-disable comment with a reason if truly necessary.",
 						},
-						{
-							pattern: ROLE_TOKEN_PATTERN,
-							message:
-								"Reserved grammar role token written by hand. Read it from `SCHEME`, `caseScheme()` or `genderScheme()` in src/constants/grammar-palette.ts — that file is the only place a role picks a colour.",
-						},
 					],
 				},
 			],
@@ -157,14 +145,6 @@ export default defineConfig({
 				files: ["src/routes/search.tsx"],
 				rules: {
 					"jsx-a11y/no-autofocus": ["off"],
-				},
-			},
-			{
-				// The two files allowed to name a role token: the palette itself, and
-				// GreekText's six tones, spelled out so Tailwind's scanner can see them.
-				files: ["src/constants/grammar-palette.ts", "src/components/GreekText.tsx"],
-				rules: {
-					"better-tailwindcss/no-restricted-classes": "off",
 				},
 			},
 			{
@@ -226,12 +206,8 @@ export default defineConfig({
 				},
 			},
 			{
-				// Grammar-discipline guard for the reference surface. Base-palette
-				// grammar colours (ocean/terracotta/olive/sunset/navy/slate) must not
-				// appear — the system relies on reserved role tokens (bg-case-*,
-				// bg-gender-*) to carry grammatical meaning. Arbitrary-value brackets
-				// stay on the global `warn` because layout primitives like
-				// `grid-cols-[7rem_1fr]` are often legitimate.
+				// Arbitrary values are an error under /reference/ and a warning elsewhere,
+				// where layout primitives like `grid-cols-[7rem_1fr]` are often legitimate.
 				files: ["src/routes/reference/**/*.{ts,tsx}"],
 				rules: {
 					"better-tailwindcss/no-restricted-classes": [
@@ -242,11 +218,6 @@ export default defineConfig({
 									pattern: ARBITRARY_VALUE_PATTERN,
 									message:
 										"Arbitrary-value utility under /reference/ — prefer a token; add an eslint-disable comment with a reason if genuinely needed.",
-								},
-								{
-									pattern: ROLE_TOKEN_PATTERN,
-									message:
-										"Reserved grammar role token written by hand under /reference/ — read it from `SCHEME`, `caseScheme()` or `genderScheme()` in src/constants/grammar-palette.ts.",
 								},
 							],
 						},

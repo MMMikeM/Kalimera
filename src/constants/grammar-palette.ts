@@ -3,19 +3,11 @@ import type { Gender, NominalCase } from "@/server/db/enums";
 import type { CaseName } from "./recognition";
 
 /**
- * Semantic scheme keys for the reference card system.
- *
- * Keys name what the card IS — not what colour it uses. Rule: grammar-role
- * keys (case-*, gender-*) may only wrap Greek content whose grammatical
- * value matches. Misapplying a role key is a bug, not a style choice.
- *
- * Grammar roles resolve to reserved role tokens (`bg-case-nominative-*`,
- * `bg-gender-masculine-*`, …) defined in src/index.css. Functional keys
- * resolve to base-palette tokens.
- *
- * Local-axis keys (verb-*) encode page-local structural axes that do not
- * claim grammatical role. They use base-palette colours chosen not to
- * collide with global grammar tokens on the same page.
+ * Scheme keys for the reference card system, named for what the card is rather
+ * than the colour it uses. The gender-* keys resolve to the gender scales in
+ * src/index.css and the rest to the base palette. The case scales were removed,
+ * so the case-* keys name classes that render no colour until their pages are
+ * redesigned.
  */
 export type GrammarScheme =
 	| "case-nominative"
@@ -177,8 +169,7 @@ export const caseScheme = (c: NominalCase) => SCHEME[`case-${c}`];
 
 export const genderScheme = (g: Gender) => SCHEME[GENDER_SCHEME[g]];
 
-// Steps SCHEME does not carry. Spelled out because Tailwind only sees literal
-// class names, and kept here so this file stays the only one naming a role token.
+// Steps SCHEME does not carry, spelled out because Tailwind only sees literal class names.
 
 /** A paradigm panel tints a whole gender block: heavier border, washed fill. */
 export const GENDER_PANEL: Record<Gender, { border: string; bg: string }> = {

@@ -1,7 +1,9 @@
+import { cellWith, mark, markedCell } from "@/lib/guide-marks";
 import type { Guide } from "@/types/guide";
 
 export const SCALES_GUIDE: Guide = {
 	slug: "scales",
+	tone: "stone",
 	title: "Scales: how often, how many, how much",
 	greek: "Πόσο",
 	description: "Never to always, none to many",
@@ -44,17 +46,18 @@ export const SCALES_GUIDE: Guide = {
 					{ label: "Meaning" },
 				],
 				rows: [
-					["δεν υπάρχει κανένα πάρκο", "there isn't a single park"],
-					["δεν υπάρχουν καθόλου τράπεζες", "there aren't any banks"],
-					["υπάρχει ένα βιβλιοπωλείο", "there is a bookshop"],
-					["υπάρχουν μερικά καταστήματα", "there are some shops"],
-					["υπάρχουν πολλά εστιατόρια", "there are many restaurants"],
+					[cellWith("δεν υπάρχει κανένα πάρκο", mark("κανένα πάρκο", "nominative", "neuter")), "there isn't a single park"],
+					[cellWith("δεν υπάρχουν καθόλου τράπεζες", mark("τράπεζες", "nominative", "feminine", true)), "there aren't any banks"],
+					[cellWith("υπάρχει ένα βιβλιοπωλείο", mark("ένα βιβλιοπωλείο", "nominative", "neuter")), "there is a bookshop"],
+					[cellWith("υπάρχουν μερικά καταστήματα", mark("μερικά καταστήματα", "nominative", "neuter", true)), "there are some shops"],
+					[cellWith("υπάρχουν πολλά εστιατόρια", mark("πολλά εστιατόρια", "nominative", "neuter", true)), "there are many restaurants"],
 				],
 			},
 			examples: [
 				{
 					greek: "Στο μικρό μου χωριό δεν υπάρχουν καθόλου τράπεζες, αλλά έχουμε μερικά ΑΤΜ.",
 					english: "In my small village there aren't any banks, but we have some ATMs.",
+					marks: [mark("τράπεζες", "nominative", "feminine", true), mark("μερικά ΑΤΜ", "accusative", "neuter", true)],
 				},
 			],
 			drills: [],
@@ -71,12 +74,18 @@ export const SCALES_GUIDE: Guide = {
 				rows: [
 					[{ text: "πολύ καλός", weight: "anchor" }, "very good"],
 					[{ text: "δουλεύω πολύ", weight: "anchor" }, "I work a lot"],
-					["πολλοί άνθρωποι", "many people"],
-					["πολλές φορές", "many times"],
-					["πολλά δέντρα", "many trees"],
+					[markedCell("πολλοί άνθρωποι", "nominative", "masculine", true), "many people"],
+					[markedCell("πολλές φορές", "accusative", "feminine", true), "many times"],
+					[markedCell("πολλά δέντρα", "nominative", "neuter", true), "many trees"],
 				],
 			},
-			examples: [{ greek: "Υπάρχουν πολλά δέντρα.", english: "There are many trees." }],
+			examples: [
+				{
+					greek: "Υπάρχουν πολλά δέντρα.",
+					english: "There are many trees.",
+					marks: [mark("πολλά δέντρα", "nominative", "neuter", true)],
+				},
+			],
 			drills: [],
 		},
 		{
