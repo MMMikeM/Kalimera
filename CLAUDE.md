@@ -103,11 +103,13 @@ Two transliteration helpers exist with **opposite jobs**. Using the wrong one sh
 **Never import either helper in a component.** Rendering goes through:
 
 - `<GreekText>` — all Greek script. Owns `lang="el"`, the `greek-text` class, size and
-  tone. Greek-ness and grammar colour are separate props (`tone="masculine"`,
-  `tone="genitive"`), never fused.
+  tone. Its gender and case tones (`tone="masculine"`, `tone="genitive"`) are legacy
+  grammar colour; new work marks grammar with `<GrammarMark>`.
 - `<Pronunciation greek={…} />` — the gloss. Derives its own string and underlines the
   stressed run. Underline, not bold: weight is load-bearing in paradigm tables.
 - `<GreekGloss greek={…} />` — the two paired.
+- `<GrammarMark case={…}>` — a Greek phrase with its case, number and gender marked
+  beneath it. See "Grammar Marks, Not Grammar Colour".
 
 `pnpm lint:greek` enforces this.
 
@@ -117,41 +119,38 @@ gloss strips punctuation itself. There is no stored `greeklish` field — it is 
 
 ---
 
-## Colour — Two Palettes
+## Grammar Marks, Not Grammar Colour
 
-Two colour systems exist and they are **not** interchangeable. Reaching for the wrong one
-is the colour equivalent of shipping `pws` to a learner.
+Grammar is shown by `<GrammarMark>`, a line under a Greek phrase:
 
-| Palette                                                     | Tokens                                                                                                                    | Job                                                                                                |
-| ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| **Reserved role tokens** (`@theme static`, `src/index.css`) | `case-nominative-*`, `case-accusative-*`, `case-genitive-*`, `gender-masculine-*`, `gender-feminine-*`, `gender-neuter-*` | **Grammatical claims only.** Applying one asserts that the Greek it wraps has that case or gender. |
-| **Base palette**                                            | `cream`, `terracotta`, `sunset`, `olive`, `ocean`, `honey`, `navy`, `slate`, `stone`                                      | **Everything else.** Nav, chrome, buttons, section grouping, page-local axes. Asserts nothing.     |
+| Channel   | Shows  | Values                                                                        |
+| --------- | ------ | ----------------------------------------------------------------------------- |
+| End shape | Case   | `<->` Doer · `>-<` Target · `o-o` Owner · `!-!` Calling (vocative)            |
+| Lines     | Number | one line = one · two lines = more than one                                    |
+| Colour    | Gender | on the mark only, from `GENDER_MARK`; omit `gender` and the mark claims none |
 
-**The rule:** a colour used as fill, background or border around Greek grammatical content
-asserts that content's grammatical value. If the assertion would be false, use the base
-palette or neutral stone. `src/index.css` states this above the `@theme static` block, and
-`src/constants/grammar-palette.ts` is the only place that should map a grammar role to a
-token.
+```tsx
+<GrammarMark case="accusative" gender="feminine" plural>τις γυναίκες</GrammarMark>
+```
 
-The base palette is **not** off-limits. It is the sanctioned choice for anything that is
-not making a grammatical claim, and `grammar-palette.ts` already uses it that way for
-page-local axes: `verb-active` → `navy`, `verb-contracted` → `slate`, `verb-deponent` →
-`sunset`, `decision` → `honey`.
+Mark the whole phrase, article included. Show only the axes the page teaches: a page about
+case passes no `gender`. Marks are for nouns, articles, adjectives and pronouns; do not give
+them a second meaning on verb pages. A marked phrase never wraps. `/specimens/grammar-mark`
+(dev only) shows every case and edge case, and `e2e/grammar-mark.spec.ts` photographs it.
 
-Do not reason from hue. `ocean` and `case-nominative` are both around hue 223, but they
-are different tokens with different jobs; the same goes for `olive` / `case-genitive`.
+**Colour carries no grammar any more** outside a mark's gender. The palette is open for the
+redesign. The old `case-*` / `gender-*` role tokens are legacy: current pages still read them
+through `src/constants/grammar-palette.ts`, and the lint that keeps them there stays until the
+redesign removes them. Add no new case colour; new grammar display uses `<GrammarMark>`.
 
-Two practical notes:
+What still holds, because it is accessibility rather than grammar:
 
-- Ramps are not calibrated against each other. `honey-100` carries roughly four times the
-  chroma of `ocean-100` or `olive-100`, so a set of sibling tints picked at the same step
-  will not read as balanced. Check chroma, not just step number.
 - Never put opacity on a `-text` token — it breaks AAA. `docs/design-guidelines.md` has the
-  full palette, the AAA variants and the component-level assignments; read it before
-  choosing a colour.
+  palette and contrast figures.
 - Feedback text uses `text-correct-text` / `text-incorrect-text`; the bare `correct` /
-  `incorrect` tokens are for bars, borders and icons. Text on a scheme's `badgeBg` chip
-  uses that scheme's `badgeText`, never `text`.
+  `incorrect` tokens are for bars, borders and icons.
+- Ramps are not calibrated against each other: `honey-100` carries about four times the
+  chroma of `ocean-100`. Check chroma, not just step number.
 
 ---
 
@@ -159,14 +158,12 @@ Two practical notes:
 
 Two vocabularies in use — both correct, different contexts:
 
-| Grammatical term | Learner label | Role token          | Route segment  |
-| ---------------- | ------------- | ------------------- | -------------- |
-| Nominative       | Doer          | `case-nominative-*` | `nominative/*` |
-| Accusative       | Target        | `case-accusative-*` | `accusative/*` |
-| Genitive         | Owner         | `case-genitive-*`   | `genitive/*`   |
-
-The role tokens are their own scales, **not** `ocean` / `terracotta` / `olive` — see
-"Colour — Two Palettes" above.
+| Grammatical term | Learner label | Mark  | Route segment  |
+| ---------------- | ------------- | ----- | -------------- |
+| Nominative       | Doer          | `<->` | `nominative/*` |
+| Accusative       | Target        | `>-<` | `accusative/*` |
+| Genitive         | Owner         | `o-o` | `genitive/*`   |
+| Vocative         | Calling       | `!-!` | —              |
 
 **Routes use grammatical terms** (`practice/cases/accusative/noun`). **UI uses learner labels** ("Target", "Doer", "Owner") — never assume the learner knows "accusative". Verb conjugations use **uncontracted forms** (αγαπάω, μιλάω) not contracted (αγαπώ, μιλώ).
 
@@ -190,7 +187,7 @@ The role tokens are their own scales, **not** `ocean` / `terracotta` / `olive` �
 
 Like well-worn study guide — serious, never intimidating, zero gamification. λ mark anchor: spare, precise, unmistakably Greek.
 
-**Colour encodes grammar.** The reserved `case-*` and `gender-*` role tokens mean one thing each, everywhere. Users feel cases before they read labels. See "Colour — Two Palettes".
+**Marks encode grammar.** Each case has one end shape everywhere, so learners read the case before the label. See "Grammar Marks, Not Grammar Colour".
 
 **Aesthetic:** Editorial reference — university press study guide. Not digital product faking premium.
 
