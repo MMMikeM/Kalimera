@@ -167,15 +167,15 @@ take the base palette and claim nothing.
 ### Guides
 
 <route path="/guides">
-<purpose>SectionIndex of the eight guides, in reading order</purpose>
+<purpose>SectionIndex of the nine guides, in reading order</purpose>
 <file>src/routes/guides/index.tsx</file>
 </route>
 
 <route path="/guides/:guide">
-<purpose>One guide: a key to the grammar marks (when the guide uses them), a contents list, then numbered sections, each with a rule, one table, examples, an optional don't-confuse link and its drills. Each guide has its own base-palette tone for its chrome</purpose>
+<purpose>One guide: a key to the grammar marks (when the guide uses them), a contents list, then numbered sections, each with a rule, one table, examples, an optional don't-confuse link, its drills and any planned drills (stubs for practice not built yet, shown unlinked). Each guide has its own base-palette tone for its chrome</purpose>
 <file>src/routes/guides/$guide.tsx, components in guides/components/</file>
 <data-source>Each guide owns src/routes/guides/&lt;slug&gt;.data.ts; guides.data.ts only orders them. Greek phrases carry `marks`, drawn with &lt;GrammarMark&gt;</data-source>
-<guard>src/routes/guides/guides.test.ts fails on an unknown drill id, a broken don't-confuse link, a mark whose text is missing from its Greek, or a lesson note whose `section` names no real section</guard>
+<guard>src/routes/guides/guides.test.ts fails on an unknown drill id, a broken don't-confuse link, a mark whose text is missing from its Greek, a lesson note whose `section` names no real section, or a planned drill whose id a real drill already has</guard>
 <note>Public, like /reference. Drill links go to /register for a logged-out reader. An unknown guide is a 404</note>
 </route>
 
@@ -619,7 +619,7 @@ search box between the logo and the links that shows results in a dropdown:
 | `/` | Home (bottom nav) | Logo tap | Dashboard/home |
 | `/practice` | Practice (bottom nav) | Practice (CTA) | Primary action (authenticated) |
 | `/learn` | Learn (bottom nav) | Learn | Landing page → subsections |
-| `/guides` | Guides (bottom nav) | Guides | Landing page → eight guides |
+| `/guides` | Guides (bottom nav) | Guides | Landing page → nine guides |
 | `/reference` | Reference (bottom nav) | Reference | Landing page → tabs |
 | `/search` | Not linked | Not linked | Vocabulary search page; both header searches show results inline instead |
 | `/progress` | Account menu | Account menu | Analytics (authenticated) |

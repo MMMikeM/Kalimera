@@ -7,7 +7,7 @@ export const LESSON_2024_04_04 = createLesson({
 	},
 
 	verbs: [
-		{ lemma: "δημιουργώ", english: "I create", conjugationFamily: "-άω/-ώ", cefrLevel: "B1" },
+		{ lemma: "δημιουργώ", english: "I create", conjugationFamily: "-ώ", cefrLevel: "B1" },
 		{
 			lemma: "ενισχύω",
 			english: "I boost/strengthen",
@@ -18,7 +18,7 @@ export const LESSON_2024_04_04 = createLesson({
 		{
 			lemma: "εξοικονομώ",
 			english: "I save (money)",
-			conjugationFamily: "-άω/-ώ",
+			conjugationFamily: "-ώ",
 			cefrLevel: "B1",
 		},
 		{ lemma: "ξοδεύω", english: "I spend", conjugationFamily: "-ω", cefrLevel: "A2" },

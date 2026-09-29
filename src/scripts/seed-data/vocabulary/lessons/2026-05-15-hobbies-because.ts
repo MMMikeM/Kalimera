@@ -71,7 +71,7 @@ export const LESSON_2026_05_15 = createLesson({
 			metadata: { usage: "stating neighbourhood" },
 		},
 		{
-			text: "Είμαι κουρασμένος επειδή έχω πολύ δουλειά αυτή την εβδομάδα.",
+			text: "Είμαι κουρασμένος επειδή έχω πολλή δουλειά αυτή την εβδομάδα.",
 			english: "I am tired because I have a lot of work this week.",
 			metadata: {
 				pattern: "adjective + επειδή + reason",
@@ -105,7 +105,7 @@ export const LESSON_2026_05_15 = createLesson({
 			pattern: "γιατί vs επειδή",
 			examples: [
 				"Γιατί είσαι κουρασμένος; (Why are you tired?)",
-				"Επειδή έχω πολύ δουλειά. (Because I have a lot of work.)",
+				"Επειδή έχω πολλή δουλειά. (Because I have a lot of work.)",
 				"Είμαι κουρασμένος επειδή δουλεύω πολλές ώρες. (I'm tired because I work many hours.)",
 			],
 			explanation:

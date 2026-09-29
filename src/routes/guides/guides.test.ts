@@ -24,6 +24,20 @@ describe("guides", () => {
 		expect(unknown).toEqual([]);
 	});
 
+	it("drops a planned drill once a real drill takes its id", () => {
+		const built = GUIDES.flatMap((g) =>
+			g.sections.flatMap((s) =>
+				(s.plannedDrills ?? []).filter((d) => DRILL_REGISTRY[d.id]).map((d) => `${g.slug}/${s.id}: ${d.id}`),
+			),
+		);
+		expect(built).toEqual([]);
+	});
+
+	it("gives every planned drill a unique id", () => {
+		const ids = GUIDES.flatMap((g) => g.sections.flatMap((s) => (s.plannedDrills ?? []).map((d) => d.id)));
+		expect(new Set(ids).size).toBe(ids.length);
+	});
+
 	it("points every don't-confuse box at a real section", () => {
 		const broken = GUIDES.flatMap((g) =>
 			g.sections

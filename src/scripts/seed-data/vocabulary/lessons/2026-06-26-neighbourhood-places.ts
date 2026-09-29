@@ -9,7 +9,7 @@ export const LESSON_2026_06_26 = createLesson({
 		lessonObjective: "Sing μικρό ελεφαντάκι",
 	},
 
-	verbs: [{ lemma: "πουλάω", english: "I sell", conjugationFamily: "-άω/-ώ", cefrLevel: "A2" }],
+	verbs: [{ lemma: "πουλάω", english: "I sell", conjugationFamily: "-άω", cefrLevel: "A2" }],
 
 	nouns: [
 		// Neighbourhood

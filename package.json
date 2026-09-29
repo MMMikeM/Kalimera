@@ -24,6 +24,7 @@
 		"db:push": "drizzle-kit push",
 		"db:studio": "drizzle-kit studio",
 		"db:seed": "node --env-file=.env --import tsx src/scripts/seed.ts",
+		"db:sql": "node --env-file=.env --import tsx src/scripts/run-sql.ts",
 		"query": "tsx --env-file=.env scripts/query.ts",
 		"screenshots": "tsx screenshots/capture.ts",
 		"test": "vp test",

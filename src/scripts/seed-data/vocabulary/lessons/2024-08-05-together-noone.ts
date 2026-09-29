@@ -41,7 +41,7 @@ export const LESSON_2024_08_05 = createLesson({
 			pattern: "κανένας/καμία/κανένα",
 			examples: ["κανένας δεν ξέρει", "καμία δεν ήρθε"],
 			explanation: "Negative pronoun - changes for gender like adjectives",
-			section: "scales/quantity",
+			section: "scales/some-every",
 		},
 	],
 });

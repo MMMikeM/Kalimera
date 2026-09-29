@@ -21,6 +21,7 @@ TURSO_DATABASE_URL=file:./local.db pnpm exec drizzle-kit push
 # HTTP @tursodatabase/serverless driver, which rejects `file:` URLs.
 
 # Or via the Makefile: make db-push · db-seed · db-setup · db-studio · db-push-local
+# Ad-hoc SQL against prod, in one transaction: make sql path/to/file.sql
 ```
 
 The seeders (vocab + verb conjugations) are **idempotent additive upserts**. Re-running against prod is safe — only adds/updates rows, never deletes.

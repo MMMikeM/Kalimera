@@ -9,7 +9,7 @@ export const LESSON_2024_09_10 = createLesson({
 	verbs: [
 		{ lemma: "υποφέρω", english: "I suffer", conjugationFamily: "-ω", cefrLevel: "B2" },
 		{ lemma: "παιδεύομαι", english: "I struggle", conjugationFamily: "-ομαι", cefrLevel: "B1" },
-		{ lemma: "προσπαθώ", english: "I try", conjugationFamily: "-άω/-ώ", cefrLevel: "A2" },
+		{ lemma: "προσπαθώ", english: "I try", conjugationFamily: "-ώ", cefrLevel: "A2" },
 	],
 
 	nouns: [

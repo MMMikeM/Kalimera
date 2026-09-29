@@ -15,7 +15,7 @@ export const LESSON_2025_03_17 = createLesson({
 			cefrLevel: "A2",
 		},
 		{ lemma: "κόβω", english: "I cut", conjugationFamily: "-ω", cefrLevel: "A1" },
-		{ lemma: "πεινάω", english: "I am hungry", conjugationFamily: "-άω/-ώ", cefrLevel: "A1" },
+		{ lemma: "πεινάω", english: "I am hungry", conjugationFamily: "-άω", cefrLevel: "A1" },
 	],
 
 	nouns: [

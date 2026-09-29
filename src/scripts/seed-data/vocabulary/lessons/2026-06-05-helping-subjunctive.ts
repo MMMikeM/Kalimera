@@ -8,7 +8,7 @@ export const LESSON_2026_06_05 = createLesson({
 		nextLessonObjective: "Sing μικρό ελεφαντάκι",
 	},
 
-	verbs: [{ lemma: "βοηθάω", english: "I help", conjugationFamily: "-άω/-ώ", cefrLevel: "A1" }],
+	verbs: [{ lemma: "βοηθάω", english: "I help", conjugationFamily: "-άω", cefrLevel: "A1" }],
 
 	phrases: [
 		{

@@ -8,8 +8,8 @@ export const LESSON_2024_11_11 = createLesson({
 
 	verbs: [
 		{ lemma: "σχεδιάζω", english: "I plan/sketch", conjugationFamily: "-ω", cefrLevel: "B1" },
-		{ lemma: "συναντώ", english: "I meet", conjugationFamily: "-άω/-ώ", cefrLevel: "A2" },
-		{ lemma: "χρησιμοποιώ", english: "I use", conjugationFamily: "-άω/-ώ", cefrLevel: "B1" },
+		{ lemma: "συναντώ", english: "I meet", conjugationFamily: "-ώ", cefrLevel: "A2" },
+		{ lemma: "χρησιμοποιώ", english: "I use", conjugationFamily: "-ώ", cefrLevel: "B1" },
 		{ lemma: "νομίζω", english: "I think (that)", conjugationFamily: "-ω", cefrLevel: "A1" },
 	],
 

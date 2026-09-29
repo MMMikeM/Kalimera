@@ -124,11 +124,9 @@ const conjugateOmega = (lemma: string, aoristStem: string): VerbConjugationSeed[
 	];
 };
 
-// ── -άω/-ώ ─────────────────────────────────────────────────────────────────────
+// ── -άω and -ώ ──────────────────────────────────────────────────────────────────
 
-const conjugateAo = (lemma: string, aoristStem: string): VerbConjugationSeed[] => {
-	// lemma ends in "άω" (-άω type) or "ώ" (-ώ contracted type)
-	const isAoType = lemma.endsWith("άω");
+const conjugateAo = (lemma: string, aoristStem: string, isAoType: boolean): VerbConjugationSeed[] => {
 	const rootStripped = isAoType
 		? stripTonos(lemma).replace(/αω$/, "") // "ρωτα" → "ρωτ"
 		: stripTonos(lemma).replace(/ω$/, ""); // "προσπαθω" → "προσπαθ"
@@ -268,8 +266,14 @@ export const generateConjugations = (
 	switch (family) {
 		case "-ω":
 			return conjugateOmega(lemma, aoristStem);
-		case "-άω/-ώ":
-			return conjugateAo(lemma, aoristStem);
+		case "-άω":
+		case "-ώ": {
+			const ending = family.slice(1);
+			if (!lemma.endsWith(ending)) {
+				throw new Error(`generateConjugations: "${lemma}" is tagged ${family} but does not end in ${ending}`);
+			}
+			return conjugateAo(lemma, aoristStem, family === "-άω");
+		}
 		case "-άμαι":
 			return conjugateAmai(lemma, aoristStem);
 		default:

@@ -86,6 +86,14 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 				},
 			],
 			drills: [],
+			plannedDrills: [
+				{
+					id: "pronouns-likes",
+					title: "μου αρέσει or μου αρέσουν",
+					greek: "μου αρέσει ο καφές · μου αρέσουν τα πάρκα",
+					tests: "Shows who likes what in English (I like the parks); the answer uses the short word for the one who likes and matches the verb to the thing liked: μου αρέσουν τα πάρκα.",
+				},
+			],
 		},
 		{
 			id: "objects",
@@ -153,6 +161,146 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 				},
 			],
 			drills: [],
+			plannedDrills: [
+				{
+					id: "pronouns-own-alone",
+					title: "δικός μου, μόνος μου",
+					greek: "είναι δικό μου · μόνος μου · μόνη της",
+					tests: "Shows the English and who is meant (by herself); the answer is δικός or μόνος in the right gender with the short word: μόνη της.",
+				},
+			],
+		},
+		{
+			id: "long-forms",
+			title: "I, me, this one: εγώ, εμένα, αυτός",
+			rule: "The verb ending already says who, so εγώ, εσύ and the rest usually drop out: θέλω is I want. They come back for contrast. After για, με, από or χωρίς the short με and σε can't stand, so use the long εμένα and εσένα, often shortened to μένα and σένα: για μένα, not για με. αυτός, αυτή, αυτό mean he, she, it, and also this. For men, or a mix of men and women, the plural is αυτοί; for women only, αυτές; for things, αυτά.",
+			table: {
+				columns: [
+					{ label: "Doer", greek: true },
+					{ label: "After a preposition", greek: true },
+					{ label: "Who" },
+				],
+				rows: [
+					[
+						markedCell("εγώ", "nominative", undefined, false, "anchor"),
+						cellWith("για μένα", mark("μένα", "accusative")),
+						"I, me",
+					],
+					[markedCell("εσύ", "nominative"), cellWith("με σένα", mark("σένα", "accusative")), "you"],
+					[
+						markedCell("αυτός", "nominative", "masculine"),
+						cellWith("από αυτόν", mark("αυτόν", "accusative", "masculine")),
+						"he, him",
+					],
+					[
+						markedCell("αυτή", "nominative", "feminine"),
+						cellWith("με αυτήν", mark("αυτήν", "accusative", "feminine")),
+						"she, her",
+					],
+					[
+						markedCell("εμείς", "nominative", undefined, true),
+						cellWith("χωρίς εμάς", mark("εμάς", "accusative", undefined, true)),
+						"we, us",
+					],
+				],
+			},
+			examples: [
+				{
+					greek: "Εγώ θέλω τσάι, εσύ;",
+					english: "I want tea; and you?",
+					marks: [mark("Εγώ", "nominative"), mark("εσύ", "nominative")],
+				},
+				{
+					greek: "Δεν συμφωνώ με εσένα.",
+					english: "I don't agree with you.",
+					marks: [mark("εσένα", "accusative")],
+				},
+				{
+					greek: "Αυτό είναι για σένα.",
+					english: "This is for you.",
+					marks: [mark("Αυτό", "nominative", "neuter"), mark("σένα", "accusative")],
+				},
+				{
+					greek: "Ποιο είναι αυτό το παιδί;",
+					english: "Who is this child?",
+					marks: [mark("αυτό το παιδί", "nominative", "neuter")],
+				},
+				{
+					greek: "Αυτοί είναι αδέλφια.",
+					english: "These are siblings. (a brother and a sister)",
+					marks: [mark("Αυτοί", "nominative", "masculine", true)],
+				},
+			],
+			confuse: {
+				text: "Before a verb the short form: με βλέπει, he sees me. After a preposition the long one: για μένα, for me.",
+				section: "objects",
+			},
+			drills: [],
+			plannedDrills: [
+				{
+					id: "pronouns-long-forms",
+					title: "After a preposition: για μένα",
+					greek: "για μένα · με σένα · από αυτόν",
+					tests: "Shows a preposition and a person in English (for me); the answer is the preposition with the long form, για μένα, and για με counts as wrong.",
+				},
+			],
+		},
+		{
+			id: "polite",
+			title: "Polite you: σας and the plural verb",
+			rule: "With strangers, older people and in shops, speak to one person as you would to several: the verb takes its you-all ending and the short word is σας. So Γεια σου becomes Γεια σας, and a friend's Θέλεις κάτι; is a stranger's Θέλετε κάτι;",
+			table: {
+				columns: [
+					{ label: "Friendly", greek: true },
+					{ label: "Polite", greek: true },
+					{ label: "Meaning" },
+				],
+				rows: [
+					[
+						cellWith("Γεια σου", mark("σου", "genitive")),
+						cellWith("Γεια σας", mark("σας", "genitive", undefined, true)),
+						"hello",
+					],
+					["Θέλεις κάτι;", "Θέλετε κάτι;", "do you want anything?"],
+					["Καλώς ήρθες", "Καλώς ήρθατε", "welcome"],
+					["Κάτσε", "Καθίστε", "sit down"],
+					[
+						cellWith("Πώς σε λένε;", mark("σε", "accusative")),
+						cellWith("Πώς σας λένε;", mark("σας", "accusative", undefined, true)),
+						"what's your name?",
+					],
+				],
+			},
+			examples: [
+				{
+					greek: "Συγγνώμη, μπορείτε να με βοηθήσετε;",
+					english: "Excuse me, can you help me?",
+					marks: [mark("με", "accusative")],
+				},
+				{
+					greek: "Θέλετε να σας δείξω τον δρόμο;",
+					english: "Do you want me to show you the way?",
+					marks: [mark("σας", "genitive", undefined, true), mark("τον δρόμο", "accusative", "masculine")],
+				},
+				{
+					greek: "Σας ευχαριστώ.",
+					english: "Thank you.",
+					marks: [mark("Σας", "accusative", undefined, true)],
+				},
+			],
+			confuse: {
+				text: "Polite you and you all use the same verb and the same σας: Γεια σας greets one stranger or a group of friends.",
+				section: "forms",
+			},
+			drills: ["blocks-chunks"],
+			plannedDrills: [
+				{
+					id: "pronouns-polite-you",
+					title: "Polite you",
+					greek: "Θέλεις → Θέλετε · Γεια σου → Γεια σας",
+					tests: "Shows a friendly phrase such as Θέλεις κάτι; and asks for the polite form; the answer is Θέλετε κάτι;.",
+				},
+			],
 		},
 	],
 	reference: [{ label: "Pronouns", href: "/reference/pronouns" }],

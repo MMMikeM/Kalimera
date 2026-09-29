@@ -108,7 +108,7 @@ export const LESSON_2025_05_01 = createLesson({
 			metadata: { usage: "professions working together" },
 		},
 		{
-			text: "βοηθός οδοντίατρου",
+			text: "βοηθός οδοντιάτρου",
 			english: "dental assistant",
 			metadata: { pattern: "βοηθός + genitive of profession", usage: "compound job title" },
 		},

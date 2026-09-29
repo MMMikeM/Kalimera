@@ -35,6 +35,14 @@ export const SCALES_GUIDE: Guide = {
 				},
 			],
 			drills: [],
+			plannedDrills: [
+				{
+					id: "scales-frequency",
+					title: "How often",
+					greek: "ποτέ · σπάνια · συχνά · πάντα",
+					tests: "Shows a frequency word in English; the answer is the Greek rung, such as συνήθως for usually.",
+				},
+			],
 		},
 		{
 			id: "quantity",
@@ -61,11 +69,19 @@ export const SCALES_GUIDE: Guide = {
 				},
 			],
 			drills: [],
+			plannedDrills: [
+				{
+					id: "scales-quantity",
+					title: "There is none, some, many",
+					greek: "κανένα πάρκο · μερικά καταστήματα · πολλά εστιατόρια",
+					tests: "Shows a there is or there are sentence in English; the answer is the Greek with the quantity word matching the noun, such as δεν υπάρχει κανένα πάρκο.",
+				},
+			],
 		},
 		{
 			id: "poly-polla",
 			title: "πολύ or πολλά?",
-			rule: "πολύ never changes: it means very or a lot, beside an adjective or a verb. Before a plural noun you need πολλοί, πολλές or πολλά, matching the noun's gender.",
+			rule: "πολύ meaning very or a lot never changes: it sits beside an adjective or a verb. Before a noun it is a different word, the adjective πολύς, πολλή, πολύ, and in the plural πολλοί, πολλές, πολλά. It matches the noun, singular included: πολύ κόσμο, πολλή δουλειά. In casual speech you will also hear πολύ δουλειά; πολλή is the standard form. Two of its forms look like the unchanging πολύ: the it-word, and the he-word as the Target.",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -74,6 +90,8 @@ export const SCALES_GUIDE: Guide = {
 				rows: [
 					[{ text: "πολύ καλός", weight: "anchor" }, "very good"],
 					[{ text: "δουλεύω πολύ", weight: "anchor" }, "I work a lot"],
+					[markedCell("πολύ κόσμο", "accusative", "masculine"), "a lot of people"],
+					[markedCell("πολλή δουλειά", "accusative", "feminine", false, "deviate"), "a lot of work"],
 					[markedCell("πολλοί άνθρωποι", "nominative", "masculine", true), "many people"],
 					[markedCell("πολλές φορές", "accusative", "feminine", true), "many times"],
 					[markedCell("πολλά δέντρα", "nominative", "neuter", true), "many trees"],
@@ -85,8 +103,21 @@ export const SCALES_GUIDE: Guide = {
 					english: "There are many trees.",
 					marks: [mark("πολλά δέντρα", "nominative", "neuter", true)],
 				},
+				{
+					greek: "Είμαι κουρασμένος επειδή έχω πολλή δουλειά αυτή την εβδομάδα.",
+					english: "I am tired because I have a lot of work this week.",
+					marks: [mark("πολλή δουλειά", "accusative", "feminine")],
+				},
 			],
 			drills: [],
+			plannedDrills: [
+				{
+					id: "scales-poly-polla",
+					title: "πολύ or πολλή, πολλά",
+					greek: "πολύ καλός · πολλή δουλειά · πολλά δέντρα",
+					tests: "Shows an English phrase such as a lot of work or very good; the answer is the Greek with πολύ unchanged before an adjective or verb and matching the noun before a noun.",
+				},
+			],
 		},
 		{
 			id: "negatives",
@@ -112,6 +143,14 @@ export const SCALES_GUIDE: Guide = {
 				},
 			],
 			drills: [],
+			plannedDrills: [
+				{
+					id: "scales-double-negative",
+					title: "Saying not twice",
+					greek: "δεν … τίποτα · δεν … πουθενά · ποτέ δεν",
+					tests: "Shows an English sentence with nothing, nowhere, no one or never; the answer is the Greek with δεν before the verb and the nothing-word, such as δεν πήγα πουθενά.",
+				},
+			],
 		},
 		{
 			id: "comparing",
@@ -137,6 +176,48 @@ export const SCALES_GUIDE: Guide = {
 				},
 			],
 			drills: [],
+			plannedDrills: [
+				{
+					id: "scales-comparing",
+					title: "More than: πιο … από",
+					greek: "πιο μεγάλος · πιο ήσυχος από · ψηλότερος",
+					tests: "Shows an English comparison such as quieter than; the answer is the Greek with πιο before the adjective and από after it, the adjective matching its noun.",
+				},
+			],
+		},
+		{
+			id: "some-every",
+			title: "Some, none, every",
+			rule: "Each row is one kind of thing: a thing, a person, a place, a time. Read across and the some-word, the none-word and the every-word line up. Most some-words start κάπ-. In a statement the none-words need δεν before the verb, as in saying not twice. κάποιος and κανένας change like adjectives: κάποια, κάποιο; καμία, κανένα. κάθε, each, stays the same with every noun: κάθε μέρα, κάθε μήνας, κάθε έτος. For whatever, whoever and wherever, Greek has ό,τι, όποιος and όπου.",
+			table: {
+				columns: [
+					{ label: "Some", greek: true },
+					{ label: "None", greek: true },
+					{ label: "Every", greek: true },
+					{ label: "Meaning" },
+				],
+				rows: [
+					["κάτι", "τίποτα", "όλα", "something · nothing · everything"],
+					["κάποιος", "κανένας", "όλοι", "someone · no one · everyone"],
+					["κάπου", "πουθενά", "παντού", "somewhere · nowhere · everywhere"],
+					["κάποτε", "ποτέ", "πάντα", "at some time · never · always"],
+				],
+			},
+			examples: [
+				{ greek: "Έκανα κάτι.", english: "I did something." },
+				{ greek: "Κανένας δεν ξέρει.", english: "No one knows." },
+				{ greek: "Δεν είδα κανέναν πουθενά.", english: "I didn't see anyone anywhere." },
+				{ greek: "Όλοι μαζί.", english: "All together." },
+			],
+			drills: [],
+			plannedDrills: [
+				{
+					id: "scales-some-every",
+					title: "Some, none, every",
+					greek: "κάτι · τίποτα · όλα · κάπου · πουθενά · παντού",
+					tests: "Shows an English word from the grid, such as nowhere or someone; the answer is the Greek word in that row and column.",
+				},
+			],
 		},
 	],
 	reference: [{ label: "Adjectives", href: "/reference/adjectives" }],

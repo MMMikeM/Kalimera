@@ -45,6 +45,14 @@ export const PLACE_GUIDE: Guide = {
 				section: "position",
 			},
 			drills: [],
+			plannedDrills: [
+				{
+					id: "place-se-article",
+					title: "σε + the article",
+					greek: "στο · στη · στον · στους",
+					tests: "Shows σε and a noun with its article; the answer is the joined form, such as στο σπίτι.",
+				},
+			],
 		},
 		{
 			id: "position",
@@ -73,6 +81,14 @@ export const PLACE_GUIDE: Guide = {
 				{ greek: "Πόσο απέχει από εδώ;", english: "How far is it from here?" },
 			],
 			drills: [],
+			plannedDrills: [
+				{
+					id: "place-position",
+					title: "Next to, behind, far from",
+					greek: "δίπλα στο · πίσω από το · μακριά από",
+					tests: "Shows a position in English; the answer is the Greek phrase with σε or από and the article.",
+				},
+			],
 		},
 		{
 			id: "purpose",
@@ -105,6 +121,14 @@ export const PLACE_GUIDE: Guide = {
 				},
 			],
 			drills: [],
+			plannedDrills: [
+				{
+					id: "place-for-from-with",
+					title: "For, from, with",
+					greek: "για · από · με",
+					tests: "Shows an English sentence with one gap; the answer is για, από or με.",
+				},
+			],
 		},
 	],
 	reference: [{ label: "Prepositions", href: "/reference/prepositions" }],

@@ -7,7 +7,7 @@ export const LESSON_2024_06_05 = createLesson({
 	},
 
 	verbs: [
-		{ lemma: "κολυμπάω", english: "I swim", conjugationFamily: "-άω/-ώ", cefrLevel: "A1" },
+		{ lemma: "κολυμπάω", english: "I swim", conjugationFamily: "-άω", cefrLevel: "A1" },
 		{ lemma: "φωτογραφίζω", english: "I photograph", conjugationFamily: "-ω", cefrLevel: "A2" },
 		{ lemma: "ταξιδεύω", english: "I travel", conjugationFamily: "-ω", cefrLevel: "A2" },
 		{ lemma: "χαλαρώνω", english: "I relax", conjugationFamily: "-ω", cefrLevel: "B1" },

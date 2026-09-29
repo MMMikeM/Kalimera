@@ -53,7 +53,7 @@ export const AGREEMENT_GUIDE: Guide = {
 					marks: [mark("καλοκαιρινές διακοπές", "nominative", "feminine", true)],
 				},
 			],
-			drills: ["adjectives-agreement", "adjectives-agreement-target", "nominal-all-adjectives"],
+			drills: ["adjectives-agreement", "adjectives-agreement-target", "adjectives-agreement-owner", "nominal-all-adjectives"],
 		},
 		{
 			id: "numbers",
@@ -143,6 +143,14 @@ export const AGREEMENT_GUIDE: Guide = {
 				},
 			],
 			drills: [],
+			plannedDrills: [
+				{
+					id: "nouns-gender-from-ending",
+					title: "Gender from the ending",
+					greek: "φαρμακείο · θέση · βιβλιοπωλείο",
+					tests: "Shows a noun without its article; the answer is ο, η or το.",
+				},
+			],
 		},
 	],
 	reference: [

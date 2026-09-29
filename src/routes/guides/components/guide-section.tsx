@@ -1,10 +1,10 @@
 import { Link, getRouteApi } from "@tanstack/react-router";
-import { ArrowRight, Zap } from "lucide-react";
+import { ArrowRight, Hourglass, Zap } from "lucide-react";
 import { cn } from "tailwind-variants";
 
 import { ProseWithGreek } from "@/components/ProseWithGreek";
 import { DRILL_REGISTRY } from "@/routes/practice/drill-catalogue.data";
-import type { Guide, GuideSection as GuideSectionData, GuideTone } from "@/types/guide";
+import type { Guide, GuideSection as GuideSectionData, GuideTone, PlannedDrill } from "@/types/guide";
 
 import { resolveSectionRef } from "../guides.data";
 import { GUIDE_TONE } from "./guide-tone";
@@ -42,9 +42,17 @@ const ConfuseBox = ({ guide, section, tone }: { guide: Guide; section: GuideSect
 	);
 };
 
-const PracticeLinks = ({ drillIds, linkClass }: { drillIds: string[]; linkClass: string }) => {
+const PracticeLinks = ({
+	drillIds,
+	planned,
+	linkClass,
+}: {
+	drillIds: string[];
+	planned: PlannedDrill[];
+	linkClass: string;
+}) => {
 	const { auth } = rootRoute.useRouteContext();
-	if (drillIds.length === 0) {
+	if (drillIds.length === 0 && planned.length === 0) {
 		return <p className="text-sm text-stone-500">No drill covers this yet.</p>;
 	}
 	return (
@@ -67,6 +75,17 @@ const PracticeLinks = ({ drillIds, linkClass }: { drillIds: string[]; linkClass:
 					</li>
 				);
 			})}
+			{planned.map((drill) => (
+				<li
+					key={drill.id}
+					title={drill.tests}
+					className="inline-flex min-h-11 items-center gap-1.5 rounded-md border border-dashed border-stone-300 px-3 text-sm text-stone-600"
+				>
+					<Hourglass size={14} aria-hidden="true" />
+					<ProseWithGreek text={drill.title} />
+					<span className="text-xs text-stone-500">· planned</span>
+				</li>
+			))}
 		</ul>
 	);
 };
@@ -119,7 +138,7 @@ export const GuideSection = ({
 				<ConfuseBox guide={guide} section={section} tone={toneName} />
 
 				<footer className="border-t border-stone-200 pt-4">
-					<PracticeLinks drillIds={section.drills} linkClass={tone.link} />
+					<PracticeLinks drillIds={section.drills} planned={section.plannedDrills ?? []} linkClass={tone.link} />
 				</footer>
 			</div>
 		</section>
