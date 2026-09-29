@@ -151,6 +151,7 @@ export const LESSON_2026_07_10 = createLesson({
 			],
 			explanation:
 				"δικός agrees in gender/number with the thing owned (δικός/δική/δικό), then takes the short possessive (μου, σου, του...). Use it for emphasis or standalone 'mine/yours' — plain possession is just noun + μου.",
+			section: "little-words/own-alone",
 		},
 		{
 			pattern: "Weather: verb vs έχει + noun",
@@ -160,12 +161,14 @@ export const LESSON_2026_07_10 = createLesson({
 			],
 			explanation:
 				"Two ways to talk about weather: an impersonal verb (βρέχει) or impersonal έχει + noun (έχει βροχή). Both third person singular, no subject.",
+			section: "no-doer/weather",
 		},
 		{
 			pattern: "επειδή = because",
 			examples: ["Δεν βγαίνω επειδή βρέχει (I'm not going out because it's raining)"],
 			explanation:
 				"επειδή introduces a reason clause and answers γιατί (why). γιατί can also mean 'because' in speech, but επειδή can start a sentence.",
+			section: "joining/when-why",
 		},
 		{
 			pattern: "μου αρέσει / μου αρέσουν",
@@ -178,6 +181,7 @@ export const LESSON_2026_07_10 = createLesson({
 			],
 			explanation:
 				"αρέσω works backwards: the thing liked is the subject, the liker is an indirect pronoun (μου, σου, του, της, μας, σας, τους/τις). Singular thing → αρέσει, plural → αρέσουν, a person you like → αρέσεις.",
+			section: "little-words/likes",
 		},
 		{
 			pattern: "Indirect pronouns with μιλάω",
@@ -189,6 +193,7 @@ export const LESSON_2026_07_10 = createLesson({
 			],
 			explanation:
 				"The same short pronouns (μου, σου, του, της, μας, σας) mark 'to me/you/him...' before verbs of speaking and giving — identical in form to the possessives, but positioned before the verb.",
+			section: "little-words/forms",
 		},
 		{
 			pattern: "υπάρχει/υπάρχουν + μερικά, κανένα, ένα",
@@ -200,6 +205,7 @@ export const LESSON_2026_07_10 = createLesson({
 			],
 			explanation:
 				"υπάρχει (singular) / υπάρχουν (plural) = there is/are. 'Some' with plurals: μερικοί/μερικές/μερικά or κάποιοι/κάποιες/κάποια. 'Not any': κανένας/καμία/κανένα with singular, καθόλου with plural. 'A/an': ένας/μία/ένα. All agree in gender.",
+			section: "scales/quantity",
 		},
 	],
 });

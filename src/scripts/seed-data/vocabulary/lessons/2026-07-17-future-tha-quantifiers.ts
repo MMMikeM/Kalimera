@@ -47,6 +47,7 @@ export const LESSON_2026_07_17 = createLesson({
 			],
 			explanation:
 				"θα before the verb puts it in the future. For είμαι and υπάρχει the verb form doesn't change — θα does all the work. Negative: δεν θα + verb.",
+			section: "verbs/future",
 		},
 		{
 			pattern: "Quantifier ladder with υπάρχει/υπάρχουν",
@@ -59,6 +60,7 @@ export const LESSON_2026_07_17 = createLesson({
 			],
 			explanation:
 				"Singular pairs: ένα (a) with υπάρχει, κανένα (not any) with δεν υπάρχει. Plural pairs: μερικά (some) and πολλά (many) with υπάρχουν, καθόλου with δεν υπάρχουν. All except καθόλου agree in gender.",
+			section: "scales/quantity",
 		},
 	],
 });

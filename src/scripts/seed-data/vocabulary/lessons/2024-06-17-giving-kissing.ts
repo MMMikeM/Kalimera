@@ -85,11 +85,13 @@ export const LESSON_2024_06_17 = createLesson({
 			pattern: "φιλάω conjugation (-άω)",
 			examples: ["φιλάω, φιλάς, φιλάει", "φιλάμε, φιλάτε, φιλάνε"],
 			explanation: "Regular -άω/-ώ family verb",
+			section: "verbs/present",
 		},
 		{
 			pattern: "δίνω + σε construction",
 			examples: ["δίνω σε εμένα", "δίνω στη Μαρία", "δώσ' μου"],
 			explanation: "Give TO someone - σε contracts with article or pronoun",
+			section: "little-words/forms",
 		},
 	],
 });

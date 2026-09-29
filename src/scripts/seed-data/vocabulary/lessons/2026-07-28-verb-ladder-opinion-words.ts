@@ -86,6 +86,7 @@ export const LESSON_2026_07_28 = createLesson({
 			],
 			explanation:
 				"Learn each verb as a set of three. The 'done' form and the θα form share the same shape family — once you know είδα you can predict θα δω. θα + the short form means one single action in the future, not something ongoing.",
+			section: "verbs/ladder",
 		},
 		{
 			pattern: "Everyday verbs that keep their shape",
@@ -98,6 +99,7 @@ export const LESSON_2026_07_28 = createLesson({
 			],
 			explanation:
 				"These five don't switch to a short form in the future — θα simply goes in front of the everyday form. είμαι, έχω, ξέρω describe states, so there is no one-off version of them.",
+			section: "verbs/keep-shape",
 		},
 		{
 			pattern: "Movement verbs in -αίνω",
@@ -109,6 +111,7 @@ export const LESSON_2026_07_28 = createLesson({
 			],
 			explanation:
 				"This family follows one rule: the past ends in -ηκα and the θα form is very short (θα βγω, θα μπω, θα ανέβω, θα κατέβω). Learn all four together — the pattern repeats exactly.",
+			section: "verbs/past-shapes",
 		},
 		{
 			pattern: "Softening what you say",
@@ -120,6 +123,7 @@ export const LESSON_2026_07_28 = createLesson({
 			],
 			explanation:
 				"νομίζω and πιστεύω take ότι before a full sentence. ίσως goes in front of whatever you are unsure about. τότε (then) picks up the result of an 'αν' (if) clause.",
+			section: "joining/thinking",
 		},
 	],
 });

@@ -92,11 +92,13 @@ export const LESSON_2024_07_15 = createLesson({
 			pattern: "Position + σε (contracted)",
 			examples: ["δίπλα στο", "κοντά στη", "μπροστά στον"],
 			explanation: "Position word + σε contracts with article",
+			section: "place/position",
 		},
 		{
 			pattern: "Position + από",
 			examples: ["πίσω από", "μακριά από", "απέναντι από"],
 			explanation: "Some positions use από instead of σε",
+			section: "place/position",
 		},
 	],
 });

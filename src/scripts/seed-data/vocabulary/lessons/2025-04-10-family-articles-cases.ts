@@ -126,6 +126,7 @@ export const LESSON_2025_04_10 = createLesson({
 			],
 			explanation:
 				"Nominative is used for the subject of a sentence — the person or thing doing the action or being described.",
+			section: "roles/articles",
 		},
 		{
 			pattern: "Articles — accusative singular",
@@ -136,6 +137,7 @@ export const LESSON_2025_04_10 = createLesson({
 			],
 			explanation:
 				"Accusative is used for the direct object and after most prepositions. Masculine changes ο → τον, feminine changes η → την, neuter τo stays the same.",
+			section: "roles/articles",
 		},
 		{
 			pattern: "σε + accusative article contractions",
@@ -146,6 +148,7 @@ export const LESSON_2025_04_10 = createLesson({
 			],
 			explanation:
 				"The preposition σε always contracts with the accusative article to form στον/στην/στο. από does NOT contract — it remains από τον, από την, από το.",
+			section: "place/se-contractions",
 		},
 		{
 			pattern: "πώς τον/την/το λένε; — asking names",
@@ -157,6 +160,7 @@ export const LESSON_2025_04_10 = createLesson({
 			],
 			explanation:
 				"λένε literally means 'they call'. The pronoun (σε/τον/την/το) agrees with the gender of the person or thing being named.",
+			section: "little-words/objects",
 		},
 	],
 });

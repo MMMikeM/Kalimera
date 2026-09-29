@@ -85,12 +85,14 @@ export const LESSON_2026_05_29 = createLesson({
 			],
 			explanation:
 				"Each time of day has a matching meal name formed with -ινό/-ιανό. All are neuter.",
+			section: "agreement/gender-families",
 		},
 		{
 			pattern: "Frequency scale",
 			examples: ["ποτέ → σπάνια → μερικές φορές → συνήθως → πάντα"],
 			explanation:
 				"Frequency adverbs from never to always. They usually sit before the verb: συνήθως πάω, ποτέ δεν πάω (ποτέ needs δεν with the verb).",
+			section: "scales/frequency",
 		},
 	],
 });

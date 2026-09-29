@@ -61,6 +61,7 @@ export const LESSON_2023_12_31 = createLesson({
 			pattern: "Comparative with -τερος",
 			examples: ["παλιός → παλιότερος", "βαθύς → βαθύτερος", "ψηλός → ψηλότερος"],
 			explanation: "Alternative to πιο + adjective",
+			section: "scales/comparing",
 		},
 	],
 });

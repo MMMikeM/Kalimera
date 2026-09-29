@@ -66,6 +66,7 @@ export const LESSON_2024_07_01 = createLesson({
 				"κλείνω ραντεβού (I book an appointment)",
 			],
 			explanation: "Context determines meaning",
+			section: "word",
 		},
 	],
 });

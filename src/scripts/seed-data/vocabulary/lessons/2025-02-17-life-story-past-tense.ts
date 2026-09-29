@@ -152,6 +152,7 @@ export const LESSON_2025_02_17 = createLesson({
 			],
 			explanation:
 				"These common verbs all have irregular or unpredictable past tense stems. Memorise as pairs — there is no single rule covering all of them.",
+			section: "verbs/past-shapes",
 		},
 		{
 			pattern: "Imperfect vs simple past",
@@ -163,6 +164,7 @@ export const LESSON_2025_02_17 = createLesson({
 			],
 			explanation:
 				"The imperfect (same form as present) describes ongoing or habitual past actions. The simple past (aorist) describes completed events. Both can appear in the same sentence.",
+			section: "verbs/ongoing-past",
 		},
 		{
 			pattern: "γεννιέμαι → γεννήθηκα (deponent past with -θηκ-)",
@@ -176,6 +178,7 @@ export const LESSON_2025_02_17 = createLesson({
 			],
 			explanation:
 				"γεννιέμαι is deponent — active meaning, passive form. Past uses the -θηκα suffix on the stem γεννη-.",
+			section: "verbs/mai-verbs",
 		},
 		{
 			pattern: "Large numbers recap",
@@ -187,6 +190,7 @@ export const LESSON_2025_02_17 = createLesson({
 			],
 			explanation:
 				"χίλια is neuter (used with a following noun or standalone). For 2,000+ use χιλιάδες (feminine plural). Years are read as full numbers.",
+			section: "essentials",
 		},
 	],
 });

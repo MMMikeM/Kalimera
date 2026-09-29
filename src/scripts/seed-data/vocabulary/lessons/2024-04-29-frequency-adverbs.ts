@@ -60,11 +60,13 @@ export const LESSON_2024_04_29 = createLesson({
 				"συχνά → πολλές φορές → συνήθως → σχεδόν πάντα → πάντα",
 			],
 			explanation: "From never to always",
+			section: "scales/frequency",
 		},
 		{
 			pattern: "ξυπνάω conjugation (-άω)",
 			examples: ["ξυπνάω, ξυπνάς, ξυπνάει", "ξυπνάμε, ξυπνάτε, ξυπνάνε"],
 			explanation: "Regular -άω/-ώ family",
+			section: "verbs/present",
 		},
 	],
 });

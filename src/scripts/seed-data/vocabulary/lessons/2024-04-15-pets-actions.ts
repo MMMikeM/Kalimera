@@ -51,6 +51,7 @@ export const LESSON_2024_04_15 = createLesson({
 			pattern: "Opposite verb pairs",
 			examples: ["ανοίγω ↔ κλείνω", "αρχίζω ↔ τελειώνω", "φεύγω ↔ φτάνω"],
 			explanation: "Learn verbs in pairs",
+			section: "word",
 		},
 	],
 });

@@ -114,6 +114,7 @@ export const LESSON_2025_03_12 = createLesson({
 			],
 			explanation:
 				"Most of these follow regular patterns: -άζω → -αξα, -άω → -ασα, -ώ → -εσα. The key is identifying the stem — the -ω or -άω ending drops and the past suffix attaches.",
+			section: "verbs/past-shapes",
 		},
 		{
 			pattern: "Direct object pronouns — τον/την/το",
@@ -124,6 +125,7 @@ export const LESSON_2025_03_12 = createLesson({
 			],
 			explanation:
 				"When the object is a person previously mentioned, use τον (masc), την (fem), το (neut). For μωρό (neuter) use το, but speakers sometimes use τον colloquially.",
+			section: "little-words/objects",
 		},
 	],
 });

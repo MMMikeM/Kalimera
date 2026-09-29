@@ -238,28 +238,33 @@ export const LESSON_2024_12_09 = createLesson({
 			examples: ["ελληνικός καφές (m)", "ελληνική λεμονάδα (f)", "ελληνικό φαγητό (n)"],
 			explanation:
 				"Nationality adjectives follow standard -ος/-η/-ο pattern for masculine/feminine/neuter",
+			section: "agreement/adjectives",
 		},
 		{
 			pattern: "Adjective plural forms",
 			examples: ["ελληνικοί/ελληνικές/ελληνικά", "καλοί/καλές/καλά"],
 			explanation: "Plural: -οι (m), -ές (f), -ά (n). Note the accent shift in feminine plural.",
+			section: "agreement/adjectives",
 		},
 		{
 			pattern: "Countries take feminine article η",
 			examples: ["η Ελλάδα", "η Κύπρος", "η Αγγλία", "η Γερμανία"],
 			explanation: "Most country names are feminine singular. Exception: ο Καναδάς (masculine)",
+			section: "agreement/gender-families",
 		},
 		{
 			pattern: "Languages are neuter plural adjectives",
 			examples: ["τα ελληνικά", "τα αγγλικά", "τα γερμανικά"],
 			explanation:
 				"Languages use neuter plural of nationality adjective: μιλάω ελληνικά (no article needed with μιλάω)",
+			section: "agreement/gender-families",
 		},
 		{
 			pattern: "Demonym formation",
 			examples: ["Ελλάδα → Έλληνας/Ελληνίδα → ελληνικά", "Κύπρος → Κύπριος/Κύπρια → κυπριακά"],
 			explanation:
 				"Country → Person (m/f) → Language/Adjective. Male demonyms often end in -ος or -ας, female in -α or -ίδα",
+			section: "agreement/gender-families",
 		},
 		{
 			pattern: "είμαι conjugation (present)",
@@ -272,6 +277,7 @@ export const LESSON_2024_12_09 = createLesson({
 				"είναι (they are)",
 			],
 			explanation: "είμαι is irregular. Note: 3rd person singular and plural are identical (είναι)",
+			section: "verbs/eimai",
 		},
 	],
 });

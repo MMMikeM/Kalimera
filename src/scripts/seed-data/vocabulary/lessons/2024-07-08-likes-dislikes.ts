@@ -77,11 +77,13 @@ export const LESSON_2024_07_08 = createLesson({
 			pattern: "αρέσει construction with pronouns",
 			examples: ["μου αρέσει", "σου αρέσει", "του/της αρέσει", "μας/σας/τους αρέσει"],
 			explanation: "Dative-like construction: 'to me is pleasing'",
+			section: "little-words/likes",
 		},
 		{
 			pattern: "πότε vs όταν",
 			examples: ["Πότε θα έρθεις; (when will you come?)", "Όταν έρθεις... (when you come...)"],
 			explanation: "πότε = question word, όταν = conjunction",
+			section: "joining/when-why",
 		},
 	],
 });

@@ -29,6 +29,8 @@ const greekTextVariants = tv({
 			"4xl": "text-4xl",
 			"5xl": "text-5xl leading-none",
 			"8xl": "text-8xl leading-none",
+			// Greek inside a sentence or heading takes the size of the text around it
+			inherit: "",
 		},
 		tone: {
 			default: "text-foreground",

@@ -47,6 +47,7 @@ export const LESSON_2025_02_10 = createLesson({
 			],
 			explanation:
 				"παντρεύομαι is a deponent verb — present ends in -ομαι, past uses the -τηκα ending. Note the stress shift in the 1st/2nd person plural.",
+			section: "verbs/mai-verbs",
 		},
 	],
 });

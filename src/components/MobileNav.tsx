@@ -1,5 +1,5 @@
 import { Link, getRouteApi, useRouterState } from "@tanstack/react-router";
-import { BookOpen, FileText, Home, Zap } from "lucide-react";
+import { BookOpen, Compass, FileText, Home, Zap } from "lucide-react";
 
 const rootRoute = getRouteApi("__root__");
 
@@ -15,6 +15,7 @@ const navItems = (isAuthenticated: boolean) => [
 		sections: ["practice", "try"],
 	},
 	{ id: "learn", label: "Learn", path: "/learn", icon: BookOpen, sections: ["learn"] },
+	{ id: "guides", label: "Guides", path: "/guides", icon: Compass, sections: ["guides"] },
 	{ id: "reference", label: "Reference", path: "/reference", icon: FileText, sections: ["reference"] },
 ];
 

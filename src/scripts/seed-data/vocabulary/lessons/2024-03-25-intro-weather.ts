@@ -67,6 +67,7 @@ export const LESSON_2024_03_25 = createLesson({
 			pattern: "Weather expressions with κάνει",
 			examples: ["κάνει κρύο", "κάνει ζέστη", "κάνει καλό καιρό"],
 			explanation: "Impersonal - κάνει + adjective/noun",
+			section: "no-doer/weather",
 		},
 	],
 });

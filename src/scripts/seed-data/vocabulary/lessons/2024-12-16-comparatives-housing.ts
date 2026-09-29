@@ -121,6 +121,7 @@ export const LESSON_2024_12_16 = createLesson({
 			],
 			explanation:
 				"Greek comparatives are formed with πιο + adjective. The adjective still agrees in gender/number with the noun.",
+			section: "scales/comparing",
 		},
 		{
 			pattern: "Comparison with από",
@@ -129,12 +130,14 @@ export const LESSON_2024_12_16 = createLesson({
 				"Η κουζίνα είναι πιο μεγάλη από το μπάνιο",
 			],
 			explanation: "Use από (than) after the comparative to introduce what you're comparing to.",
+			section: "scales/comparing",
 		},
 		{
 			pattern: "Adjective agreement reminder",
 			examples: ["στενός/στενή/στενό", "ήσυχος/ήσυχη/ήσυχο", "ψηλός/ψηλή/ψηλό"],
 			explanation:
 				"These adjectives follow the standard -ος/-η/-ο pattern. Remember to match gender with the noun.",
+			section: "agreement/adjectives",
 		},
 		{
 			pattern: "πριν + subjunctive",
@@ -144,6 +147,7 @@ export const LESSON_2024_12_16 = createLesson({
 				"πριν κοιμηθώ (before I sleep)",
 			],
 			explanation: "πριν (before) is followed by the subjunctive mood (no να needed).",
+			section: "verbs/short-form",
 		},
 	],
 });

@@ -153,6 +153,7 @@ export const LESSON_2026_05_08 = createLesson({
 			],
 			explanation:
 				"θα ήθελα (I would like) + να ήμουν (to be — imperfect subjunctive) expresses a wish or dream. Used for hypothetical or dream scenarios.",
+			section: "no-doer/wish",
 		},
 		{
 			pattern: "σου αρέσει (do you like)",
@@ -162,6 +163,7 @@ export const LESSON_2026_05_08 = createLesson({
 			],
 			explanation:
 				"αρέσει is impersonal. The person who likes something is expressed with an indirect object pronoun (μου/σου/του/της). The thing liked is the grammatical subject.",
+			section: "little-words/likes",
 		},
 		{
 			pattern: "Masculine/feminine occupation pairs",
@@ -174,6 +176,7 @@ export const LESSON_2026_05_08 = createLesson({
 			],
 			explanation:
 				"Most occupations have distinct masculine and feminine forms. Some (μπαρίστα, υπεύθυνος) use the same word for both genders — only the article changes.",
+			section: "agreement/gender-families",
 		},
 	],
 });

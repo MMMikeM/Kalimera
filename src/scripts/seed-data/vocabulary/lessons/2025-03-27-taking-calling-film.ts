@@ -51,6 +51,7 @@ export const LESSON_2025_03_27 = createLesson({
 			],
 			explanation:
 				"παίρνω has an irregular past stem πήρ-. Very common verb — used for taking, getting, receiving, and idiomatically for making phone calls (πήρα τηλέφωνο).",
+			section: "verbs/past-shapes",
 		},
 		{
 			pattern: "πουθενά — double negative",
@@ -60,6 +61,7 @@ export const LESSON_2025_03_27 = createLesson({
 			],
 			explanation:
 				"Greek uses double negation: δεν + πουθενά is standard and correct — equivalent to English 'not anywhere'. Saying just 'πήγα πουθενά' without δεν is ungrammatical.",
+			section: "scales/negatives",
 		},
 	],
 });

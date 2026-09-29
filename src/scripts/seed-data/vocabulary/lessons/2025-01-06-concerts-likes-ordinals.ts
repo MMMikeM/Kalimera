@@ -112,6 +112,7 @@ export const LESSON_2025_01_06 = createLesson({
 			],
 			explanation:
 				"Greek 'to like' is expressed with αρέσει/αρέσουν — literally 'it pleases me'. Use αρέσει for a singular thing, αρέσουν for plural. The person who likes uses the indirect pronoun (μου/σου/του/της...).",
+			section: "little-words/likes",
 		},
 		{
 			pattern: "Ordinal numbers 7th–10th",
@@ -123,12 +124,14 @@ export const LESSON_2025_01_06 = createLesson({
 			],
 			explanation:
 				"Ordinals agree in gender with the noun they modify, following the -ος/-η/-ο pattern. Used for dates, floors, positions in sequence.",
+			section: "agreement/numbers",
 		},
 		{
 			pattern: "Reduplicated adverb for emphasis",
 			examples: ["μπροστά μπροστά (right at the front, front row)"],
 			explanation:
 				"Repeating an adverb intensifies it. μπροστά = in front; μπροστά μπροστά = right at the very front.",
+			section: "word",
 		},
 	],
 });

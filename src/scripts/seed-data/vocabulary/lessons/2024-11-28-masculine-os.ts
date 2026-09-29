@@ -55,16 +55,19 @@ export const LESSON_2024_11_28 = createLesson({
 				"οι γιατροί → των γιατρών → τους γιατρούς",
 			],
 			explanation: "Regular masculine nouns ending in -ος follow predictable case endings",
+			section: "roles/owner",
 		},
 		{
 			pattern: "Genitive singular -ου",
 			examples: ["του αδερφού μου", "του γιατρού", "του σκύλου"],
 			explanation: "Shows possession: 'of the X' or 'X's'",
+			section: "roles/owner",
 		},
 		{
 			pattern: "Genitive plural -ών",
 			examples: ["των ποταμών", "των ανθρώπων", "των δρόμων"],
 			explanation: "Plural genitive always has accent on -ών",
+			section: "roles/owner",
 		},
 	],
 });

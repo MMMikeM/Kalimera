@@ -24,6 +24,7 @@ export const LESSON_2026_06_05 = createLesson({
 			examples: ["βοηθάω (I help) → να βοηθήσω (to help)"],
 			explanation:
 				"After να, -άω verbs switch to the aorist stem with -ήσ-: βοηθάω → βοηθήσω. Same pattern as μιλάω → να μιλήσω.",
+			section: "verbs/short-form",
 		},
 	],
 });

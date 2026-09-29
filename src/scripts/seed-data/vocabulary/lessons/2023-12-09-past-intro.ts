@@ -67,6 +67,7 @@ export const LESSON_2023_12_09 = createLesson({
 			pattern: "Past passive for birth",
 			examples: ["γεννήθηκα", "γεννήθηκες", "γεννήθηκε"],
 			explanation: "γεννιέμαι (I am born) → γεννήθηκα (I was born)",
+			section: "verbs/mai-verbs",
 		},
 	],
 });

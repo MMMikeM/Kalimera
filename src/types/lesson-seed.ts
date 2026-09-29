@@ -8,9 +8,23 @@ import type { FullVerbSeed, AdverbSeed } from "./seed";
  * Import from this file instead of importing from multiple sources.
  */
 
+/**
+ * Where a note is taught: a guide section (`"verbs/ladder"`), the word's own entry
+ * in Learn (`"word"`), or Learn → Essentials (`"essentials"`). The guides guard
+ * test fails on any value that names no real section.
+ */
+export type GrammarNoteHome = `${string}/${string}` | "word" | "essentials";
+
+export type GrammarNote = {
+	pattern: string;
+	examples: string[];
+	explanation: string;
+	section: GrammarNoteHome;
+};
+
 export type Lesson = {
 	meta: Record<PropertyKey, unknown>;
-	grammarNotes?: Record<PropertyKey, unknown>[];
+	grammarNotes?: GrammarNote[];
 	verbs?: FullVerbSeed[];
 	nouns?: NounSeedInput[];
 	adverbs?: AdverbSeed[];

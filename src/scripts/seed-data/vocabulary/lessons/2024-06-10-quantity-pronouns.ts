@@ -50,11 +50,13 @@ export const LESSON_2024_06_10 = createLesson({
 			pattern: "πολύ vs πολλοί",
 			examples: ["πολύ καλός (very good) - adverb", "πολλοί άνθρωποι (many people) - adjective"],
 			explanation: "πολύ modifies adjectives/verbs, πολλοί/ές/ά modifies nouns",
+			section: "scales/poly-polla",
 		},
 		{
 			pattern: "Similar sounds, different meanings",
 			examples: ["πολύ (a lot)", "πολλοί (many)", "πόλη (city)"],
 			explanation: "Watch the accent and doubled λ",
+			section: "word",
 		},
 	],
 });

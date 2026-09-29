@@ -18,11 +18,13 @@ import { useVocabularySearch } from "@/lib/use-vocabulary-search";
 const NAV_ITEMS_AUTH = [
 	{ id: "practice", label: "Practice", path: "/practice", primary: true },
 	{ id: "learn", label: "Learn", path: "/learn" },
+	{ id: "guides", label: "Guides", path: "/guides" },
 	{ id: "reference", label: "Reference", path: "/reference" },
 ];
 
 const NAV_ITEMS_UNAUTH = [
 	{ id: "learn", label: "Learn", path: "/learn" },
+	{ id: "guides", label: "Guides", path: "/guides" },
 	{ id: "reference", label: "Reference", path: "/reference" },
 ];
 
