@@ -1,7 +1,9 @@
+import { cellWith, mark, markedCell } from "@/lib/guide-marks";
 import type { Guide } from "@/types/guide";
 
 export const AGREEMENT_GUIDE: Guide = {
 	slug: "agreement",
+	tone: "olive",
 	title: "Words that agree",
 	greek: "Συμφωνία",
 	description: "Gender, and the words that copy it",
@@ -20,18 +22,36 @@ export const AGREEMENT_GUIDE: Guide = {
 				],
 				rows: [
 					[
-						{ text: "ελληνικός καφές", weight: "anchor" },
-						"ελληνική λεμονάδα",
-						"ελληνικό φαγητό",
+						markedCell("ελληνικός καφές", "nominative", "masculine", false, "anchor"),
+						markedCell("ελληνική λεμονάδα", "nominative", "feminine"),
+						markedCell("ελληνικό φαγητό", "nominative", "neuter"),
 						"one",
 					],
-					["ελληνικοί καφέδες", "ελληνικές λεμονάδες", "ελληνικά φαγητά", "more than one"],
-					["θορυβώδης", { text: "θορυβώδης", weight: "deviate" }, "θορυβώδες", "one, -ης type"],
+					[
+						markedCell("ελληνικοί καφέδες", "nominative", "masculine", true),
+						markedCell("ελληνικές λεμονάδες", "nominative", "feminine", true),
+						markedCell("ελληνικά φαγητά", "nominative", "neuter", true),
+						"more than one",
+					],
+					[
+						markedCell("θορυβώδης", "nominative", "masculine"),
+						markedCell("θορυβώδης", "nominative", "feminine", false, "deviate"),
+						markedCell("θορυβώδες", "nominative", "neuter"),
+						"one, -ης type",
+					],
 				],
 			},
 			examples: [
-				{ greek: "Οι καρέκλες είναι κόκκινες.", english: "The chairs are red." },
-				{ greek: "καλοκαιρινές διακοπές", english: "summer holidays" },
+				{
+					greek: "Οι καρέκλες είναι κόκκινες.",
+					english: "The chairs are red.",
+					marks: [mark("Οι καρέκλες", "nominative", "feminine", true), mark("κόκκινες", "nominative", "feminine", true)],
+				},
+				{
+					greek: "καλοκαιρινές διακοπές",
+					english: "summer holidays",
+					marks: [mark("καλοκαιρινές διακοπές", "nominative", "feminine", true)],
+				},
 			],
 			drills: ["adjectives-agreement", "adjectives-agreement-target", "nominal-all-adjectives"],
 		},
@@ -47,15 +67,38 @@ export const AGREEMENT_GUIDE: Guide = {
 					{ label: "Number" },
 				],
 				rows: [
-					["ένας", "μία", "ένα", "one"],
-					["τρεις", "τρεις", { text: "τρία", weight: "deviate" }, "three"],
-					["τέσσερις", "τέσσερις", { text: "τέσσερα", weight: "deviate" }, "four"],
-					["έβδομος", "έβδομη", "έβδομο", "seventh"],
+					[markedCell("ένας", "nominative", "masculine"), markedCell("μία", "nominative", "feminine"), markedCell("ένα", "nominative", "neuter"), "one"],
+					[
+						markedCell("τρεις", "nominative", "masculine", true),
+						markedCell("τρεις", "nominative", "feminine", true),
+						markedCell("τρία", "nominative", "neuter", true, "deviate"),
+						"three",
+					],
+					[
+						markedCell("τέσσερις", "nominative", "masculine", true),
+						markedCell("τέσσερις", "nominative", "feminine", true),
+						markedCell("τέσσερα", "nominative", "neuter", true, "deviate"),
+						"four",
+					],
+					[
+						markedCell("έβδομος", "nominative", "masculine"),
+						markedCell("έβδομη", "nominative", "feminine"),
+						markedCell("έβδομο", "nominative", "neuter"),
+						"seventh",
+					],
 				],
 			},
 			examples: [
-				{ greek: "στις τρεις", english: "at three o'clock (hours are feminine)" },
-				{ greek: "τρία παιδιά", english: "three children" },
+				{
+					greek: "στις τρεις",
+					english: "at three o'clock (hours are feminine)",
+					marks: [mark("στις τρεις", "accusative", "feminine", true)],
+				},
+				{
+					greek: "τρία παιδιά",
+					english: "three children",
+					marks: [mark("τρία παιδιά", "nominative", "neuter", true)],
+				},
 			],
 			drills: ["blocks-numbers"],
 		},
@@ -70,18 +113,34 @@ export const AGREEMENT_GUIDE: Guide = {
 					{ label: "Gender" },
 				],
 				rows: [
-					["η Ελλάδα", "countries", "mostly feminine; ο Καναδάς is one exception"],
-					["τα ελληνικά", "languages", "neuter plural"],
-					["το ανθοπωλείο", "shops in -πωλείο", "neuter"],
-					["το πρωινό", "meals", "neuter"],
-					["ο δάσκαλος · η δασκάλα", "most jobs", "a form for each"],
+					[markedCell("η Ελλάδα", "nominative", "feminine"), "countries", "mostly feminine; ο Καναδάς is one exception"],
+					[markedCell("τα ελληνικά", "nominative", "neuter", true), "languages", "neuter plural"],
+					[markedCell("το ανθοπωλείο", "nominative", "neuter"), "shops in -πωλείο", "neuter"],
+					[markedCell("το πρωινό", "nominative", "neuter"), "meals", "neuter"],
+					[
+						cellWith("ο δάσκαλος · η δασκάλα", mark("ο δάσκαλος", "nominative", "masculine"), mark("η δασκάλα", "nominative", "feminine")),
+						"most jobs",
+						"a form for each",
+					],
 					["ο / η μπαρίστα", "some jobs", "one form, the article changes"],
-					["ο χειμώνας · η άνοιξη", "seasons", "no pattern: learn each"],
+					[
+						cellWith("ο χειμώνας · η άνοιξη", mark("ο χειμώνας", "nominative", "masculine"), mark("η άνοιξη", "nominative", "feminine")),
+						"seasons",
+						"no pattern: learn each",
+					],
 				],
 			},
 			examples: [
-				{ greek: "Μιλάω ελληνικά.", english: "I speak Greek. (no article after μιλάω)" },
-				{ greek: "Η μπαρίστα δουλεύει στο καφέ.", english: "The barista works at the café." },
+				{
+					greek: "Μιλάω ελληνικά.",
+					english: "I speak Greek. (no article after μιλάω)",
+					marks: [mark("ελληνικά", "accusative", "neuter", true)],
+				},
+				{
+					greek: "Η μπαρίστα δουλεύει στο καφέ.",
+					english: "The barista works at the café.",
+					marks: [mark("Η μπαρίστα", "nominative", "feminine"), mark("στο καφέ", "accusative", "neuter")],
+				},
 			],
 			drills: [],
 		},

@@ -1,4 +1,4 @@
-/** Base-palette section chrome. A grammatical claim goes through SCHEME, never here. */
+/** Base-palette section chrome. */
 export type ColorScheme =
 	| "ocean"
 	| "terracotta"

@@ -1,7 +1,9 @@
+import { cellWith, mark, markedCell } from "@/lib/guide-marks";
 import type { Guide } from "@/types/guide";
 
 export const ROLES_GUIDE: Guide = {
 	slug: "roles",
+	tone: "terracotta",
 	title: "Who does what",
 	greek: "Ποιος κάνει τι",
 	description: "Doer, Target, Owner, and the article that shows them",
@@ -18,14 +20,22 @@ export const ROLES_GUIDE: Guide = {
 					{ label: "Asks" },
 				],
 				rows: [
-					["Ο Γιάννης τρώει.", "Doer", "who does it?"],
-					["Βλέπω τον Γιάννη.", "Target", "who or what gets it?"],
-					["Το σπίτι του Γιάννη.", "Owner", "whose is it?"],
+					[cellWith("Ο Γιάννης τρώει.", mark("Ο Γιάννης", "nominative", "masculine")), "Doer", "who does it?"],
+					[cellWith("Βλέπω τον Γιάννη.", mark("τον Γιάννη", "accusative", "masculine")), "Target", "who or what gets it?"],
+					[cellWith("Το σπίτι του Γιάννη.", mark("του Γιάννη", "genitive", "masculine")), "Owner", "whose is it?"],
 				],
 			},
 			examples: [
-				{ greek: "Ο άντρας θέλει πορτοκαλάδα.", english: "The man wants orange juice." },
-				{ greek: "Το παιδί τρώει καρπούζι.", english: "The child is eating watermelon." },
+				{
+					greek: "Ο άντρας θέλει πορτοκαλάδα.",
+					english: "The man wants orange juice.",
+					marks: [mark("Ο άντρας", "nominative", "masculine"), mark("πορτοκαλάδα", "accusative", "feminine")],
+				},
+				{
+					greek: "Το παιδί τρώει καρπούζι.",
+					english: "The child is eating watermelon.",
+					marks: [mark("Το παιδί", "nominative", "neuter"), mark("καρπούζι", "accusative", "neuter")],
+				},
 			],
 			drills: ["articles-paradigm"],
 		},
@@ -41,15 +51,43 @@ export const ROLES_GUIDE: Guide = {
 					{ label: "Job" },
 				],
 				rows: [
-					[{ text: "ο άντρας", weight: "anchor" }, { text: "η γυναίκα", weight: "anchor" }, { text: "το παιδί", weight: "anchor" }, "Doer"],
-					[{ text: "τον άντρα", weight: "deviate" }, { text: "τη γυναίκα", weight: "deviate" }, "το παιδί", "Target"],
-					["ένας άντρας", "μία γυναίκα", "ένα παιδί", "Doer, a / an"],
-					[{ text: "έναν άντρα", weight: "deviate" }, "μία γυναίκα", "ένα παιδί", "Target, a / an"],
+					[
+						markedCell("ο άντρας", "nominative", "masculine", false, "anchor"),
+						markedCell("η γυναίκα", "nominative", "feminine", false, "anchor"),
+						markedCell("το παιδί", "nominative", "neuter", false, "anchor"),
+						"Doer",
+					],
+					[
+						markedCell("τον άντρα", "accusative", "masculine", false, "deviate"),
+						markedCell("τη γυναίκα", "accusative", "feminine", false, "deviate"),
+						markedCell("το παιδί", "accusative", "neuter"),
+						"Target",
+					],
+					[
+						markedCell("ένας άντρας", "nominative", "masculine"),
+						markedCell("μία γυναίκα", "nominative", "feminine"),
+						markedCell("ένα παιδί", "nominative", "neuter"),
+						"Doer, a / an",
+					],
+					[
+						markedCell("έναν άντρα", "accusative", "masculine", false, "deviate"),
+						markedCell("μία γυναίκα", "accusative", "feminine"),
+						markedCell("ένα παιδί", "accusative", "neuter"),
+						"Target, a / an",
+					],
 				],
 			},
 			examples: [
-				{ greek: "Η Χρυσάνθη είναι η γυναίκα του.", english: "Chrysanthi is his wife." },
-				{ greek: "Βλέπουν μια ταινία στο σινεμά.", english: "They're watching a film at the cinema." },
+				{
+					greek: "Η Χρυσάνθη είναι η γυναίκα του.",
+					english: "Chrysanthi is his wife.",
+					marks: [mark("Η Χρυσάνθη", "nominative", "feminine"), mark("η γυναίκα", "nominative", "feminine")],
+				},
+				{
+					greek: "Βλέπουν μια ταινία στο σινεμά.",
+					english: "They're watching a film at the cinema.",
+					marks: [mark("μια ταινία", "accusative", "feminine"), mark("στο σινεμά", "accusative", "neuter")],
+				},
 			],
 			drills: ["articles-article-doer", "articles-article-target"],
 		},
@@ -64,19 +102,32 @@ export const ROLES_GUIDE: Guide = {
 					{ label: "Meaning" },
 				],
 				rows: [
-					["ο φίλος", { text: "τον φίλο", weight: "deviate" }, "the friend"],
-					["οι φίλοι", { text: "τους φίλους", weight: "deviate" }, "the friends"],
-					["η Δευτέρα", "τη Δευτέρα", "(on) Monday"],
-					["το πρωί", "το πρωί", "(in) the morning"],
+					[markedCell("ο φίλος", "nominative", "masculine"), markedCell("τον φίλο", "accusative", "masculine", false, "deviate"), "the friend"],
+					[markedCell("οι φίλοι", "nominative", "masculine", true), markedCell("τους φίλους", "accusative", "masculine", true, "deviate"), "the friends"],
+					[markedCell("η Δευτέρα", "nominative", "feminine"), markedCell("τη Δευτέρα", "accusative", "feminine"), "(on) Monday"],
+					[markedCell("το πρωί", "nominative", "neuter"), markedCell("το πρωί", "accusative", "neuter"), "(in) the morning"],
 				],
 			},
 			examples: [
 				{
 					greek: "Έχουν δύο παιδιά, τον Αλέξανδρο και τη Λίζα.",
 					english: "They have two children, Alexandros and Liza.",
+					marks: [
+						mark("δύο παιδιά", "accusative", "neuter", true),
+						mark("τον Αλέξανδρο", "accusative", "masculine"),
+						mark("τη Λίζα", "accusative", "feminine"),
+					],
 				},
-				{ greek: "Βλέπω τρεις ανθρώπους.", english: "I see three people." },
-				{ greek: "Το βράδυ βγαίνουν έξω.", english: "In the evening they go out." },
+				{
+					greek: "Βλέπω τρεις ανθρώπους.",
+					english: "I see three people.",
+					marks: [mark("τρεις ανθρώπους", "accusative", "masculine", true)],
+				},
+				{
+					greek: "Το βράδυ βγαίνουν έξω.",
+					english: "In the evening they go out.",
+					marks: [mark("Το βράδυ", "accusative", "neuter")],
+				},
 			],
 			drills: ["nominal-noun-target", "nominal-phrase-target"],
 		},
@@ -91,18 +142,31 @@ export const ROLES_GUIDE: Guide = {
 					{ label: "Job" },
 				],
 				rows: [
-					[{ text: "ο γιατρός", weight: "anchor" }, "οι γιατροί", "Doer"],
-					["τον γιατρό", "τους γιατρούς", "Target"],
-					[{ text: "του γιατρού", weight: "deviate" }, { text: "των γιατρών", weight: "deviate" }, "Owner"],
+					[markedCell("ο γιατρός", "nominative", "masculine", false, "anchor"), markedCell("οι γιατροί", "nominative", "masculine", true), "Doer"],
+					[markedCell("τον γιατρό", "accusative", "masculine"), markedCell("τους γιατρούς", "accusative", "masculine", true), "Target"],
+					[
+						markedCell("του γιατρού", "genitive", "masculine", false, "deviate"),
+						markedCell("των γιατρών", "genitive", "masculine", true, "deviate"),
+						"Owner",
+					],
 				],
 			},
 			examples: [
 				{
 					greek: "Το ποδήλατο του αδερφού μου είναι κόκκινο.",
 					english: "My brother's bicycle is red.",
+					marks: [mark("Το ποδήλατο", "nominative", "neuter"), mark("του αδερφού", "genitive", "masculine")],
 				},
-				{ greek: "Πόσων χρονών είσαι;", english: "How old are you? (literally: of how many years)" },
-				{ greek: "Ακούω το νερό του ποταμού.", english: "I hear the water of the river." },
+				{
+					greek: "Πόσων χρονών είσαι;",
+					english: "How old are you? (literally: of how many years)",
+					marks: [mark("Πόσων χρονών", "genitive", undefined, true)],
+				},
+				{
+					greek: "Ακούω το νερό του ποταμού.",
+					english: "I hear the water of the river.",
+					marks: [mark("το νερό", "accusative", "neuter"), mark("του ποταμού", "genitive", "masculine")],
+				},
 			],
 			drills: ["nominal-noun-owner", "articles-article-owner", "pronouns-possessive-vs-article"],
 		},

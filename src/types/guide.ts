@@ -5,8 +5,24 @@
  * fails on every note that used it.
  */
 
-/** A deviating form carries the most weight; the anchor is the form the rest derive from. */
-export type GuideCell = string | { text: string; weight: "deviate" | "anchor" };
+import type { Gender, GrammaticalCase } from "@/server/db/enums";
+
+/** A run of Greek inside a cell or example that gets a grammar mark under it. */
+export interface GuideMark {
+	/** Must occur verbatim in the Greek it marks, after any earlier mark. */
+	text: string;
+	case: GrammaticalCase;
+	gender?: Gender;
+	plural?: boolean;
+}
+
+/**
+ * A deviating form carries the most weight; the anchor is the form the rest
+ * derive from. Marks draw the case, number and gender under runs of the text.
+ */
+export type GuideCell =
+	| string
+	| { text: string; weight?: "deviate" | "anchor"; marks?: GuideMark[] };
 
 export interface GuideColumn {
 	label: string;
@@ -21,6 +37,7 @@ export interface GuideTable {
 export interface GuideExample {
 	greek: string;
 	english: string;
+	marks?: GuideMark[];
 }
 
 export interface GuideSection {
@@ -41,8 +58,16 @@ export interface GuideReference {
 	href: string;
 }
 
+/**
+ * Base-palette colour that identifies a guide. A guide that shows gender marks
+ * avoids navy, sunset and slate, which sit close to the masculine, feminine and
+ * neuter mark colours and would read as a gender next to them.
+ */
+export type GuideTone = "terracotta" | "sunset" | "olive" | "ocean" | "honey" | "navy" | "slate" | "stone";
+
 export interface Guide {
 	slug: string;
+	tone: GuideTone;
 	title: string;
 	greek: string;
 	description: string;
@@ -51,9 +76,4 @@ export interface Guide {
 	sections: GuideSection[];
 	/** Full paradigm tables that still live on the reference pages. */
 	reference: GuideReference[];
-}
-
-export interface GuideLessonSource {
-	date: string;
-	topic: string;
 }

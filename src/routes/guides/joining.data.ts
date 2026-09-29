@@ -2,6 +2,7 @@ import type { Guide } from "@/types/guide";
 
 export const JOINING_GUIDE: Guide = {
 	slug: "joining",
+	tone: "slate",
 	title: "Joining ideas: when, why, if",
 	greek: "Σύνδεση",
 	description: "The words that link one idea to the next",

@@ -139,9 +139,9 @@ them a second meaning on verb pages. A marked phrase never wraps. `/specimens/gr
 (dev only) shows every case and edge case, and `e2e/grammar-mark.spec.ts` photographs it.
 
 **Colour carries no grammar any more** outside a mark's gender. The palette is open for the
-redesign. The old `case-*` / `gender-*` role tokens are legacy: current pages still read them
-through `src/constants/grammar-palette.ts`, and the lint that keeps them there stays until the
-redesign removes them. Add no new case colour; new grammar display uses `<GrammarMark>`.
+redesign, with no semantic constraints on it. The case scales are gone: pages built before the
+marks still name `case-*` classes, which now render no colour until those pages are redesigned.
+The `gender-*` scales stay, because the marks use them.
 
 What still holds, because it is accessibility rather than grammar:
 

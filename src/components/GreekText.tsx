@@ -59,6 +59,7 @@ const greekTextVariants = tv({
 			medium: "font-medium",
 			semibold: "font-semibold",
 			bold: "font-bold",
+			inherit: "",
 		},
 	},
 	defaultVariants: {

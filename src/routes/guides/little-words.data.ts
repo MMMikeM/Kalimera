@@ -1,7 +1,9 @@
+import { cellWith, mark, markedCell } from "@/lib/guide-marks";
 import type { Guide } from "@/types/guide";
 
 export const LITTLE_WORDS_GUIDE: Guide = {
 	slug: "little-words",
+	tone: "honey",
 	title: "The little words: μου, σου, του",
 	greek: "Μικρές λέξεις",
 	description: "One set of short words doing three jobs",
@@ -19,13 +21,13 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 					{ label: "Who" },
 				],
 				rows: [
-					[{ text: "μου", weight: "anchor" }, "το σπίτι μου", "μου μιλάς", "I, me"],
-					["σου", "το σπίτι σου", "σου μιλάω", "you"],
-					["του", "το σπίτι του", "του μιλάει", "he, him"],
-					["της", "το σπίτι της", "της μιλάει", "she, her"],
-					["μας", "το σπίτι μας", "μας μιλάει", "we, us"],
-					["σας", "το σπίτι σας", "σας μιλάω", "you all"],
-					["τους", "το σπίτι τους", "τους μιλάει", "they, them"],
+					[markedCell("μου", "genitive", undefined, false, "anchor"), "το σπίτι μου", "μου μιλάς", "I, me"],
+					[markedCell("σου", "genitive"), "το σπίτι σου", "σου μιλάω", "you"],
+					[markedCell("του", "genitive"), "το σπίτι του", "του μιλάει", "he, him"],
+					[markedCell("της", "genitive", "feminine"), "το σπίτι της", "της μιλάει", "she, her"],
+					[markedCell("μας", "genitive", undefined, true), "το σπίτι μας", "μας μιλάει", "we, us"],
+					[markedCell("σας", "genitive", undefined, true), "το σπίτι σας", "σας μιλάω", "you all"],
+					[markedCell("τους", "genitive", undefined, true), "το σπίτι τους", "τους μιλάει", "they, them"],
 				],
 			},
 			examples: [
@@ -45,17 +47,43 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 					{ label: "Meaning" },
 				],
 				rows: [
-					[{ text: "μου αρέσει ο καφές", weight: "anchor" }, "I like coffee"],
-					[{ text: "μου αρέσουν τα πάρκα", weight: "deviate" }, "I like the parks"],
-					["σου αρέσει;", "do you like it?"],
-					["δεν μου αρέσει", "I don't like it"],
-					[{ text: "μου αρέσεις", weight: "deviate" }, "I like you"],
+					[
+						{
+							text: "μου αρέσει ο καφές",
+							weight: "anchor",
+							marks: [mark("μου", "genitive"), mark("ο καφές", "nominative", "masculine")],
+						},
+						"I like coffee",
+					],
+					[
+						{
+							text: "μου αρέσουν τα πάρκα",
+							weight: "deviate",
+							marks: [mark("μου", "genitive"), mark("τα πάρκα", "nominative", "neuter", true)],
+						},
+						"I like the parks",
+					],
+					[cellWith("σου αρέσει;", mark("σου", "genitive")), "do you like it?"],
+					[cellWith("δεν μου αρέσει", mark("μου", "genitive")), "I don't like it"],
+					[{ text: "μου αρέσεις", weight: "deviate", marks: [mark("μου", "genitive")] }, "I like you"],
 				],
 			},
 			examples: [
-				{ greek: "Μου αρέσουν τα παλιά τραγούδια.", english: "I like old songs." },
-				{ greek: "Σου αρέσει η δουλειά σου;", english: "Do you like your job?" },
-				{ greek: "Δεν του αρέσει να κάνει μπάνιο.", english: "He doesn't like having a bath." },
+				{
+					greek: "Μου αρέσουν τα παλιά τραγούδια.",
+					english: "I like old songs.",
+					marks: [mark("Μου", "genitive"), mark("τα παλιά τραγούδια", "nominative", "neuter", true)],
+				},
+				{
+					greek: "Σου αρέσει η δουλειά σου;",
+					english: "Do you like your job?",
+					marks: [mark("Σου", "genitive"), mark("η δουλειά", "nominative", "feminine")],
+				},
+				{
+					greek: "Δεν του αρέσει να κάνει μπάνιο.",
+					english: "He doesn't like having a bath.",
+					marks: [mark("του", "genitive", "masculine")],
+				},
 			],
 			drills: [],
 		},
@@ -69,17 +97,25 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 					{ label: "Meaning" },
 				],
 				rows: [
-					["με βλέπεις;", "can you see me?"],
-					["τον ξυπνάω", "I wake him up"],
-					["την ξέρω", "I know her"],
-					["το θέλω", "I want it"],
-					["τους βλέπω", "I see them"],
-					["πώς τον λένε;", "what's his name?"],
+					[cellWith("με βλέπεις;", mark("με", "accusative")), "can you see me?"],
+					[cellWith("τον ξυπνάω", mark("τον", "accusative", "masculine")), "I wake him up"],
+					[cellWith("την ξέρω", mark("την", "accusative", "feminine")), "I know her"],
+					[cellWith("το θέλω", mark("το", "accusative", "neuter")), "I want it"],
+					[cellWith("τους βλέπω", mark("τους", "accusative", "masculine", true)), "I see them"],
+					[cellWith("πώς τον λένε;", mark("τον", "accusative", "masculine")), "what's his name?"],
 				],
 			},
 			examples: [
-				{ greek: "Τον ξυπνάω και τον ταΐζω.", english: "I wake him up and feed him." },
-				{ greek: "Πώς το λένε στα ελληνικά;", english: "What's it called in Greek?" },
+				{
+					greek: "Τον ξυπνάω και τον ταΐζω.",
+					english: "I wake him up and feed him.",
+					marks: [mark("Τον", "accusative", "masculine"), mark("τον", "accusative", "masculine")],
+				},
+				{
+					greek: "Πώς το λένε στα ελληνικά;",
+					english: "What's it called in Greek?",
+					marks: [mark("το", "accusative", "neuter"), mark("στα ελληνικά", "accusative", "neuter", true)],
+				},
 			],
 			confuse: {
 				text: "Before a verb τον means him: τον βλέπω, I see him. Before a noun it is the article: τον φίλο, the friend.",
@@ -98,15 +134,23 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 				],
 				rows: [
 					["είναι δικό μου", "it's mine"],
-					["η δική σου τσάντα", "your own bag"],
-					["μόνος μου", "by myself (a man)"],
-					["μόνη μου", "by myself (a woman)"],
-					["μόνοι μας", "by ourselves"],
+					[cellWith("η δική σου τσάντα", mark("η δική", "nominative", "feminine")), "your own bag"],
+					[cellWith("μόνος μου", mark("μόνος", "nominative", "masculine")), "by myself (a man)"],
+					[cellWith("μόνη μου", mark("μόνη", "nominative", "feminine")), "by myself (a woman)"],
+					[cellWith("μόνοι μας", mark("μόνοι", "nominative", "masculine", true)), "by ourselves"],
 				],
 			},
 			examples: [
-				{ greek: "Δουλεύω μόνος μου.", english: "I work by myself." },
-				{ greek: "Δουλεύει μόνη της.", english: "She works by herself." },
+				{
+					greek: "Δουλεύω μόνος μου.",
+					english: "I work by myself.",
+					marks: [mark("μόνος", "nominative", "masculine")],
+				},
+				{
+					greek: "Δουλεύει μόνη της.",
+					english: "She works by herself.",
+					marks: [mark("μόνη", "nominative", "feminine")],
+				},
 			],
 			drills: [],
 		},

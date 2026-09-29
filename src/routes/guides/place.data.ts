@@ -1,7 +1,9 @@
+import { cellWith, mark, markedCell } from "@/lib/guide-marks";
 import type { Guide } from "@/types/guide";
 
 export const PLACE_GUIDE: Guide = {
 	slug: "place",
+	tone: "ocean",
 	title: "Place: σε, από, για",
 	greek: "Πού",
 	description: "Where things are, and where you go",
@@ -18,17 +20,25 @@ export const PLACE_GUIDE: Guide = {
 					{ label: "Meaning" },
 				],
 				rows: [
-					["σε + τον → στον", "στον κρεοπώλη", "to the butcher"],
-					["σε + τη → στη", "στη δουλειά", "at work"],
-					["σε + την → στην", "στην Πάφο", "in Paphos"],
-					["σε + το → στο", "στο γραφείο", "at the office"],
-					["σε + τα → στα", "στα εστιατόρια", "to the restaurants"],
-					["σε + τις → στις", "στις τρεις", "at three o'clock"],
+					["σε + τον → στον", markedCell("στον κρεοπώλη", "accusative", "masculine"), "to the butcher"],
+					["σε + τη → στη", markedCell("στη δουλειά", "accusative", "feminine"), "at work"],
+					["σε + την → στην", markedCell("στην Πάφο", "accusative", "feminine"), "in Paphos"],
+					["σε + το → στο", markedCell("στο γραφείο", "accusative", "neuter"), "at the office"],
+					["σε + τα → στα", markedCell("στα εστιατόρια", "accusative", "neuter", true), "to the restaurants"],
+					["σε + τις → στις", markedCell("στις τρεις", "accusative", "feminine", true), "at three o'clock"],
 				],
 			},
 			examples: [
-				{ greek: "Μένω στην Πάφο.", english: "I live in Paphos." },
-				{ greek: "Χθες έδωσα το βιβλίο στη Μαρία.", english: "Yesterday I gave the book to Maria." },
+				{
+					greek: "Μένω στην Πάφο.",
+					english: "I live in Paphos.",
+					marks: [mark("στην Πάφο", "accusative", "feminine")],
+				},
+				{
+					greek: "Χθες έδωσα το βιβλίο στη Μαρία.",
+					english: "Yesterday I gave the book to Maria.",
+					marks: [mark("το βιβλίο", "accusative", "neuter"), mark("στη Μαρία", "accusative", "feminine")],
+				},
 			],
 			confuse: {
 				text: "από never merges with the article: από τον, από την, από το.",
@@ -46,16 +56,20 @@ export const PLACE_GUIDE: Guide = {
 					{ label: "Meaning" },
 				],
 				rows: [
-					["δίπλα στο σπίτι", "next to the house"],
-					["κοντά στην πόλη", "near the town"],
-					["πίσω από τον τοίχο", "behind the wall"],
-					["μπροστά από το σπίτι", "in front of the house"],
-					["μακριά από την πόλη", "far from the town"],
-					["απέναντι από την εκκλησία", "opposite the church"],
+					[cellWith("δίπλα στο σπίτι", mark("στο σπίτι", "accusative", "neuter")), "next to the house"],
+					[cellWith("κοντά στην πόλη", mark("στην πόλη", "accusative", "feminine")), "near the town"],
+					[cellWith("πίσω από τον τοίχο", mark("τον τοίχο", "accusative", "masculine")), "behind the wall"],
+					[cellWith("μπροστά από το σπίτι", mark("το σπίτι", "accusative", "neuter")), "in front of the house"],
+					[cellWith("μακριά από την πόλη", mark("την πόλη", "accusative", "feminine")), "far from the town"],
+					[cellWith("απέναντι από την εκκλησία", mark("την εκκλησία", "accusative", "feminine")), "opposite the church"],
 				],
 			},
 			examples: [
-				{ greek: "Ποια ταβέρνα είναι κοντά;", english: "Which taverna is near?" },
+				{
+					greek: "Ποια ταβέρνα είναι κοντά;",
+					english: "Which taverna is near?",
+					marks: [mark("Ποια ταβέρνα", "nominative", "feminine")],
+				},
 				{ greek: "Πόσο απέχει από εδώ;", english: "How far is it from here?" },
 			],
 			drills: [],
@@ -70,19 +84,24 @@ export const PLACE_GUIDE: Guide = {
 					{ label: "Meaning" },
 				],
 				rows: [
-					["πάω για ψώνια", "I go shopping"],
-					["πάω για ύπνο", "I go to sleep"],
-					["είμαι από τη Νότια Αφρική", "I'm from South Africa"],
-					["δουλεύω από το σπίτι", "I work from home"],
-					["με το αυτοκίνητο", "by car"],
-					["με τους φίλους μου", "with my friends"],
+					[cellWith("πάω για ψώνια", mark("ψώνια", "accusative", "neuter", true)), "I go shopping"],
+					[cellWith("πάω για ύπνο", mark("ύπνο", "accusative", "masculine")), "I go to sleep"],
+					[cellWith("είμαι από τη Νότια Αφρική", mark("τη Νότια Αφρική", "accusative", "feminine")), "I'm from South Africa"],
+					[cellWith("δουλεύω από το σπίτι", mark("το σπίτι", "accusative", "neuter")), "I work from home"],
+					[cellWith("με το αυτοκίνητο", mark("το αυτοκίνητο", "accusative", "neuter")), "by car"],
+					[cellWith("με τους φίλους μου", mark("τους φίλους", "accusative", "masculine", true)), "with my friends"],
 				],
 			},
 			examples: [
-				{ greek: "Για φαγητό πάμε στα εστιατόρια.", english: "For food we go to restaurants." },
+				{
+					greek: "Για φαγητό πάμε στα εστιατόρια.",
+					english: "For food we go to restaurants.",
+					marks: [mark("φαγητό", "accusative", "neuter"), mark("στα εστιατόρια", "accusative", "neuter", true)],
+				},
 				{
 					greek: "Με ποιον πηγαίνεις στις συναυλίες;",
 					english: "Who do you go to concerts with?",
+					marks: [mark("ποιον", "accusative", "masculine"), mark("στις συναυλίες", "accusative", "feminine", true)],
 				},
 			],
 			drills: [],

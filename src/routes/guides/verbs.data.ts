@@ -2,6 +2,7 @@ import type { Guide } from "@/types/guide";
 
 export const VERBS_GUIDE: Guide = {
 	slug: "verbs",
+	tone: "navy",
 	title: "Verbs: now · done · not yet",
 	greek: "Ρήματα",
 	description: "Every verb as three forms",

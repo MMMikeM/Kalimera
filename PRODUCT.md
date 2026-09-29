@@ -62,7 +62,7 @@ The values live in `src/index.css`, and `docs/design-guidelines.md` has the full
 
 Case, number and gender are shown by `<GrammarMark>` (see `docs/design-guidelines.md`, "Grammar Marks"). Colour's only grammatical job is gender, on the mark itself. Everything else about colour is open for the redesign.
 
-The reserved `case-*` and `gender-*` scales in `@theme static` are legacy. Current pages still read them through `src/constants/grammar-palette.ts`, and the lint keeping them there stays until the redesign retires them; add no new case colour.
+The case scales are gone: pages built before the marks still name `case-*` classes, which render no colour until those pages are redesigned. The `gender-*` scales stay, because the marks use them. No lint or rule restricts where any colour may appear.
 
 ### Base Palette
 

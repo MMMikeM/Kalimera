@@ -33,6 +33,28 @@ describe("guides", () => {
 		expect(broken).toEqual([]);
 	});
 
+	// A mark whose text is missing from its Greek is dropped without a trace
+	it("finds every mark's text in its Greek, in order", () => {
+		const lost: string[] = [];
+		const check = (where: string, text: string, marks: { text: string }[] = []) => {
+			let cursor = 0;
+			for (const m of marks) {
+				const at = text.indexOf(m.text, cursor);
+				if (at === -1) lost.push(`${where}: "${m.text}" in "${text}"`);
+				else cursor = at + m.text.length;
+			}
+		};
+		for (const g of GUIDES) {
+			for (const s of g.sections) {
+				for (const e of s.examples ?? []) check(`${g.slug}/${s.id}`, e.greek, e.marks);
+				for (const row of s.table?.rows ?? []) {
+					for (const cell of row) if (typeof cell !== "string") check(`${g.slug}/${s.id}`, cell.text, cell.marks);
+				}
+			}
+		}
+		expect(lost).toEqual([]);
+	});
+
 	it("gives every table row one cell per column", () => {
 		const ragged = GUIDES.flatMap((g) =>
 			g.sections

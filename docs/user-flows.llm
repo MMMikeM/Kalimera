@@ -172,10 +172,10 @@ take the base palette and claim nothing.
 </route>
 
 <route path="/guides/:guide">
-<purpose>One guide: a contents list, then numbered sections, each with a rule, one table, lesson examples, an optional don't-confuse link and its drills</purpose>
+<purpose>One guide: a key to the grammar marks (when the guide uses them), a contents list, then numbered sections, each with a rule, one table, examples, an optional don't-confuse link and its drills. Each guide has its own base-palette tone for its chrome</purpose>
 <file>src/routes/guides/$guide.tsx, components in guides/components/</file>
-<data-source>Each guide owns src/routes/guides/&lt;slug&gt;.data.ts; guides.data.ts only orders them. "From lessons on …" comes from the `section` on each lesson grammar note, read server-side by src/server/fns/guides.server.ts</data-source>
-<guard>src/routes/guides/guides.test.ts fails on an unknown drill id, a broken don't-confuse link, or a lesson note whose `section` names no real section</guard>
+<data-source>Each guide owns src/routes/guides/&lt;slug&gt;.data.ts; guides.data.ts only orders them. Greek phrases carry `marks`, drawn with &lt;GrammarMark&gt;</data-source>
+<guard>src/routes/guides/guides.test.ts fails on an unknown drill id, a broken don't-confuse link, a mark whose text is missing from its Greek, or a lesson note whose `section` names no real section</guard>
 <note>Public, like /reference. Drill links go to /register for a logged-out reader. An unknown guide is a 404</note>
 </route>
 

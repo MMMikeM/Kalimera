@@ -1,6 +1,6 @@
 /**
- * Rejects a class completed by interpolation, which picks a token without going
- * through `src/constants/grammar-palette.ts`.
+ * Rejects a class completed by interpolation. Tailwind only generates classes it
+ * can see written out, so `text-${tone}` ships no CSS at all.
  *
  * Template literals only, so `"bg-" + role`, `clsx()` and `.join()` pass. Joining
  * whole classes stays legal: `${scheme.bg} ${scheme.text}` is not flagged.
@@ -32,7 +32,7 @@ const noInterpolatedClass = {
 					if (!match) continue;
 
 					context.report({
-						message: `Tailwind class "${match[1]}-…" is being completed by interpolation, which picks a token without going through the palette. Read the finished class from SCHEME, caseScheme() or genderScheme() in src/constants/grammar-palette.ts. (It would also never be emitted: Tailwind only generates classes it can see written out.)`,
+						message: `Tailwind class "${match[1]}-…" is being completed by interpolation, and Tailwind only generates classes it can see written out, so it would never be emitted. Write the whole class out, for example in a lookup object.`,
 						node,
 					});
 					return;
