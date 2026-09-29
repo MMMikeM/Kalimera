@@ -87,16 +87,16 @@ export const GuideSection = ({
 		<section
 			id={section.id}
 			aria-labelledby={`${section.id}-title`}
-			className="scroll-mt-6 overflow-hidden rounded-lg border border-stone-300"
+			className="-mx-6 scroll-mt-6 overflow-hidden border-y border-stone-300 sm:mx-0 sm:rounded-lg sm:border-x"
 		>
-			<header className={cn("border-b px-4 py-3 sm:px-6", tone.header)}>
+			<header className={cn("border-b px-6 py-3", tone.header)}>
 				<h2 id={`${section.id}-title`} className="font-serif text-2xl text-stone-900">
 					<span className={cn("mr-2", tone.columnLabel)}>{position}.</span>
 					<ProseWithGreek text={section.title} />
 				</h2>
 			</header>
 
-			<div className="space-y-5 p-4 sm:p-6">
+			<div className="space-y-5 px-6 py-5 sm:py-6">
 				<p className="max-w-2xl leading-relaxed text-stone-700">
 					<ProseWithGreek text={section.rule} />
 				</p>
