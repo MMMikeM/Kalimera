@@ -46,21 +46,25 @@ export const LESSON_2024_06_05 = createLesson({
 			pattern: "-ω verb conjugation",
 			examples: ["πηγαίνω, πηγαίνεις, πηγαίνει", "πηγαίνουμε, πηγαίνετε, πηγαίνουν"],
 			explanation: "Regular -ω family pattern",
+			section: "verbs/present",
 		},
 		{
 			pattern: "-άω verb conjugation",
 			examples: ["κολυμπάω, κολυμπάς, κολυμπάει", "κολυμπάμε, κολυμπάτε, κολυμπάνε"],
 			explanation: "Regular -άω/-ώ family pattern",
+			section: "verbs/present",
 		},
 		{
 			pattern: "Irregular πάω",
 			examples: ["πάω, πας, πάει", "πάμε, πάτε, πάνε"],
 			explanation: "Short form of πηγαίνω - irregular",
+			section: "verbs/present",
 		},
 		{
 			pattern: "Irregular τρώω",
 			examples: ["τρώω, τρως, τρώει", "τρώμε, τρώτε, τρώνε"],
 			explanation: "Irregular verb - note the ω throughout",
+			section: "verbs/present",
 		},
 	],
 });

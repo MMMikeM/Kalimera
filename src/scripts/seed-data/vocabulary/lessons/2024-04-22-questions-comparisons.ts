@@ -94,6 +94,7 @@ export const LESSON_2024_04_22 = createLesson({
 			pattern: "Comparatives with πιο",
 			examples: ["πιο μεγάλος", "πιο όμορφος", "πιο ψηλός"],
 			explanation: "πιο + adjective = more + adjective",
+			section: "scales/comparing",
 		},
 	],
 });

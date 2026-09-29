@@ -161,6 +161,7 @@ export const LESSON_2024_12_30 = createLesson({
 			examples: ["στην Πάφο (before Π)", "στην Αθήνα (before Α)", "στη Λεμεσό (before Λ)"],
 			explanation:
 				"Use στην before words starting with vowels or certain consonants. The -ν helps avoid vowel hiatus.",
+			section: "place/se-contractions",
 		},
 		{
 			pattern: "Accusative plural for direct objects",
@@ -170,6 +171,7 @@ export const LESSON_2024_12_30 = createLesson({
 			],
 			explanation:
 				"Direct objects of verbs like βλέπω, έχω take accusative. Masculine plural: -ους ending.",
+			section: "roles/target",
 		},
 		{
 			pattern: "Adjective patterns: -ος/-η/-ο vs -ης/-ης/-ες",
@@ -179,6 +181,7 @@ export const LESSON_2024_12_30 = createLesson({
 			],
 			explanation:
 				"Most adjectives follow -ος/-η/-ο. Some use -ης/-ης/-ες where masculine and feminine are identical.",
+			section: "agreement/adjectives",
 		},
 		{
 			pattern: "γι'αυτό for giving reasons",
@@ -187,6 +190,7 @@ export const LESSON_2024_12_30 = createLesson({
 			],
 			explanation:
 				"γι'αυτό (= για αυτό) means 'that's why' or 'for this reason'. Connects cause to effect.",
+			section: "joining/when-why",
 		},
 	],
 });

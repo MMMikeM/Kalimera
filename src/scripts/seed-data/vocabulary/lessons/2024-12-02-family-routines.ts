@@ -129,16 +129,19 @@ export const LESSON_2024_12_02 = createLesson({
 			pattern: "Accusative with names as direct objects",
 			examples: ["Έχουν δύο παιδιά, τον Αλέξανδρο και τη Λίζα"],
 			explanation: "Names take accusative when they're the object of a verb",
+			section: "roles/target",
 		},
 		{
 			pattern: "Age expressions",
 			examples: ["είναι είκοσι οχτώ χρονών", "Πόσων χρονών είσαι;"],
 			explanation: "χρονών is genitive plural - literally 'of X years'",
+			section: "roles/owner",
 		},
 		{
 			pattern: "Time expressions take accusative",
 			examples: ["τη Δευτέρα", "το πρωί", "το σαββατοκύριακο"],
 			explanation: "Days, parts of day use accusative article",
+			section: "roles/target",
 		},
 	],
 });

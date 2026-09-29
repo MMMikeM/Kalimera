@@ -145,12 +145,14 @@ export const LESSON_2026_06_26 = createLesson({
 			],
 			explanation:
 				"για introduces the purpose; σε + accusative (contracted στο/στη/στα) gives the destination. Plural places take στα (neuter) or στις (feminine).",
+			section: "place/purpose",
 		},
 		{
 			pattern: "ή ... ή ... (either ... or ...)",
 			examples: ["πάμε ή στα σχολεία ή στα πανεπιστήμια"],
 			explanation:
 				"Single ή means 'or'. Doubled ή ... ή ... means 'either ... or ...'. Note the accent: ή (or) vs η (the, feminine article).",
+			section: "joining/either-or",
 		},
 		{
 			pattern: "-πωλείο = shop that sells X",
@@ -160,6 +162,7 @@ export const LESSON_2026_06_26 = createLesson({
 			],
 			explanation:
 				"From πουλάω (to sell) / πωλητής (seller). The suffix -πωλείο names the shop by what it sells. All -πωλείο shops are neuter.",
+			section: "agreement/gender-families",
 		},
 	],
 });

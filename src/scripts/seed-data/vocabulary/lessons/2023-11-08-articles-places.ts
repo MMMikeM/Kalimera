@@ -25,11 +25,13 @@ export const LESSON_2023_11_08 = createLesson({
 			pattern: "Definite articles",
 			examples: ["ο (masculine)", "η (feminine)", "το (neuter)"],
 			explanation: "The - specific item",
+			section: "roles/articles",
 		},
 		{
 			pattern: "Indefinite articles",
 			examples: ["ένας (masculine)", "μία/μια (feminine)", "ένα (neuter)"],
 			explanation: "A/an - non-specific item",
+			section: "roles/articles",
 		},
 	],
 });

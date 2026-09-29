@@ -131,6 +131,7 @@ export const LESSON_2025_05_01 = createLesson({
 			],
 			explanation:
 				"The adjective μόνος/μόνη/μόνο agrees with the gender of the subject, then adds the possessive pronoun. It means both 'alone' and 'by oneself (without help)'.",
+			section: "little-words/own-alone",
 		},
 		{
 			pattern: "Common-gender professions (ο/η + same form)",
@@ -143,6 +144,7 @@ export const LESSON_2025_05_01 = createLesson({
 			],
 			explanation:
 				"Many professional nouns use the same form for both genders — only the article changes (ο for male, η for female). Others have distinct male/female forms: νοσηλευτής/νοσηλεύτρια, φοιτητής/φοιτήτρια.",
+			section: "agreement/gender-families",
 		},
 	],
 });

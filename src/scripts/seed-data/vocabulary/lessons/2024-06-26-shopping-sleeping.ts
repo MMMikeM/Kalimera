@@ -80,11 +80,13 @@ export const LESSON_2024_06_26 = createLesson({
 			pattern: "γίνομαι conjugation (-ομαι)",
 			examples: ["γίνομαι, γίνεσαι, γίνεται", "γινόμαστε, γίνεστε, γίνονται"],
 			explanation: "Deponent verb - passive form, active meaning",
+			section: "verbs/mai-verbs",
 		},
 		{
 			pattern: "έρχομαι conjugation (-ομαι)",
 			examples: ["έρχομαι, έρχεσαι, έρχεται", "ερχόμαστε, έρχεστε, έρχονται"],
 			explanation: "Note: ερχόσαστε is alternative form for έρχεστε",
+			section: "verbs/mai-verbs",
 		},
 	],
 });

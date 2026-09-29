@@ -47,6 +47,7 @@ export const LESSON_2024_05_06 = createLesson({
 			pattern: "ακούω conjugation",
 			examples: ["ακούω, ακούς, ακούει", "ακούμε, ακούτε, ακούν"],
 			explanation: "Regular -ω verb",
+			section: "verbs/present",
 		},
 	],
 });

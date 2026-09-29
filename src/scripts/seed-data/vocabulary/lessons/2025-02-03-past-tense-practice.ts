@@ -114,6 +114,7 @@ export const LESSON_2025_02_03 = createLesson({
 			],
 			explanation:
 				"Deponent verbs (those ending in -μαι in the present) form the past with the -θηκα ending. The stem changes: κοιμ-άμαι → κοιμ-ήθηκα.",
+			section: "verbs/mai-verbs",
 		},
 		{
 			pattern: "Regular past — ξύπνησα (ξυπνώ)",
@@ -127,6 +128,7 @@ export const LESSON_2025_02_03 = createLesson({
 			],
 			explanation:
 				"ξυπνώ forms a regular past with -σα. Stress shifts: ξύπν-ησα (stress on penultimate in sg/3rd pl), ξυπν-ήσ-αμε (stress on -ήσ- in 1st/2nd pl).",
+			section: "verbs/past-shapes",
 		},
 		{
 			pattern: "Past tense pairs — present → simple past",
@@ -140,6 +142,7 @@ export const LESSON_2025_02_03 = createLesson({
 			],
 			explanation:
 				"A set of very common verbs with irregular past stems. These appear constantly in everyday speech and are worth drilling individually.",
+			section: "verbs/past-shapes",
 		},
 		{
 			pattern: "καθόλου in questions and negatives",
@@ -149,6 +152,7 @@ export const LESSON_2025_02_03 = createLesson({
 			],
 			explanation:
 				"καθόλου means 'at all' and intensifies a question or negation. In questions it implies mild surprise or genuine curiosity; with δεν it means 'not at all'.",
+			section: "scales/negatives",
 		},
 	],
 });

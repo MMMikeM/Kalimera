@@ -182,6 +182,7 @@ export const LESSON_2025_01_16 = createLesson({
 			],
 			explanation:
 				"The simple future in Greek is formed with θα + the present tense form. The verb does not change — only θα is added before it.",
+			section: "verbs/future",
 		},
 		{
 			pattern: "Past time expressions",
@@ -195,6 +196,7 @@ export const LESSON_2025_01_16 = createLesson({
 			],
 			explanation:
 				"Greek has several dedicated adverbs for past time. πριν + time period means 'ago'. Note the spelling variants (χτες/χθές etc.) — both are correct.",
+			section: "essentials",
 		},
 		{
 			pattern: "περασμένος / προηγούμενος + time noun",
@@ -205,12 +207,14 @@ export const LESSON_2025_01_16 = createLesson({
 			],
 			explanation:
 				"Both περασμένος and προηγούμενος mean 'previous/last' but attach to the noun they modify and must agree in gender and case.",
+			section: "essentials",
 		},
 		{
 			pattern: "Past tense of πηγαίνω (irregular)",
 			examples: ["πήγα, πήγες, πήγε, πήγαμε, πήγατε, πήγαν"],
 			explanation:
 				"The past tense of πηγαίνω (to go) is irregular — it uses πήγ- as the stem. Completely different from the present tense stem.",
+			section: "verbs/past-shapes",
 		},
 	],
 });

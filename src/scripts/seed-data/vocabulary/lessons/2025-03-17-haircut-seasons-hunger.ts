@@ -94,6 +94,7 @@ export const LESSON_2025_03_17 = createLesson({
 			],
 			explanation:
 				"κουρεύομαι is deponent — reflexive meaning (getting cut, not doing the cutting). Past uses -τηκα suffix. Compare: κόβω (active, I cut something) vs κουρεύομαι (I get myself cut).",
+			section: "verbs/mai-verbs",
 		},
 		{
 			pattern: "πεινάω — hunger conjugation",
@@ -107,6 +108,7 @@ export const LESSON_2025_03_17 = createLesson({
 			],
 			explanation:
 				"πεινάω follows the -άω/-ώ contracted pattern. It describes a state rather than an action — equivalent to 'I am hungry', not 'I hunger'.",
+			section: "verbs/present",
 		},
 		{
 			pattern: "πρέπει / έπρεπε — impersonal obligation",
@@ -118,6 +120,7 @@ export const LESSON_2025_03_17 = createLesson({
 			],
 			explanation:
 				"πρέπει is impersonal — it doesn't change for person. Always followed by να + verb. Past form: έπρεπε (unchanged across all persons).",
+			section: "no-doer/must",
 		},
 		{
 			pattern: "Four seasons",
@@ -129,6 +132,7 @@ export const LESSON_2025_03_17 = createLesson({
 			],
 			explanation:
 				"Seasons have three different genders. χειμώνας and άνοιξη take the article in a different way — το καλοκαίρι/φθινόπωρο are neuter.",
+			section: "agreement/gender-families",
 		},
 	],
 });

@@ -139,6 +139,7 @@ export const LESSON_2026_05_19 = createLesson({
 			examples: ["πολύ δέντρα ✗ → πολλά δέντρα ✓ (many trees)"],
 			explanation:
 				"πολύ is the invariable adverb (very/much). Before a plural noun you need the adjective πολλοί/πολλές/πολλά agreeing in gender: πολλά δέντρα (neuter plural).",
+			section: "scales/poly-polla",
 		},
 		{
 			pattern: "υπάρχει / υπάρχουν (there is / there are)",
@@ -148,6 +149,7 @@ export const LESSON_2026_05_19 = createLesson({
 			],
 			explanation:
 				"υπάρχει with singular nouns, υπάρχουν with plural — the verb agrees with what exists.",
+			section: "no-doer/there-is",
 		},
 		{
 			pattern: "πορτοκαλί vs πορτοκάλι",
@@ -157,6 +159,7 @@ export const LESSON_2026_05_19 = createLesson({
 			],
 			explanation:
 				"Accent position changes the meaning. The colour πορτοκαλί never changes form (indeclinable), like μπλε and ροζ.",
+			section: "word",
 		},
 	],
 });

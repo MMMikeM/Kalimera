@@ -79,6 +79,7 @@ export const LESSON_2025_01_27 = createLesson({
 			],
 			explanation:
 				"βλέπω has a completely irregular past: είδα. The stem changes entirely (βλεπ- → ειδ-). This is one of the most common irregular past tenses.",
+			section: "verbs/past-shapes",
 		},
 		{
 			pattern: "Regular simple past — δοκίμασα (δοκιμάζω)",
@@ -92,6 +93,7 @@ export const LESSON_2025_01_27 = createLesson({
 			],
 			explanation:
 				"Verbs ending in -ζω typically form the past by replacing -ζω with -σα. The stem vowel may shift (δοκιμάζ- → δοκίμασ-).",
+			section: "verbs/past-shapes",
 		},
 		{
 			pattern: "Simple past — μπόρεσα (μπορώ)",
@@ -105,6 +107,7 @@ export const LESSON_2025_01_27 = createLesson({
 			],
 			explanation:
 				"μπορώ (can/to be able) forms its past with -εσ- infix: μπόρεσα. Stress shifts in the 1st/2nd person plural.",
+			section: "verbs/past-shapes",
 		},
 		{
 			pattern: "Key irregular past forms summary",
@@ -116,6 +119,7 @@ export const LESSON_2025_01_27 = createLesson({
 			],
 			explanation:
 				"These four verbs have irregular past tense stems. They are extremely common and worth memorising as individual forms rather than by rule.",
+			section: "verbs/past-shapes",
 		},
 	],
 });

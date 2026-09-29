@@ -110,6 +110,7 @@ export const LESSON_2026_05_15 = createLesson({
 			],
 			explanation:
 				"γιατί is used for questions (why?). επειδή introduces a reason clause (because). Both words look similar — γιατί can also mean 'because' in informal speech, but επειδή is the formal connector.",
+			section: "joining/when-why",
 		},
 		{
 			pattern: "πρέπει να (must / have to)",
@@ -120,6 +121,7 @@ export const LESSON_2026_05_15 = createLesson({
 			],
 			explanation:
 				"πρέπει is impersonal (no subject pronoun needed). It is followed by να + verb in the subjunctive. Past form is έπρεπε.",
+			section: "no-doer/must",
 		},
 		{
 			pattern: "hobby: να + verb vs noun",
@@ -129,6 +131,7 @@ export const LESSON_2026_05_15 = createLesson({
 			],
 			explanation:
 				"In Greek you can express a hobby with να + verb (infinitive-like) or with the activity noun. Both are natural; the noun form is slightly more formal.",
+			section: "word",
 		},
 	],
 });

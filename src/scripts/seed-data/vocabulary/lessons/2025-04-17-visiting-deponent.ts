@@ -37,6 +37,7 @@ export const LESSON_2025_04_17 = createLesson({
 			],
 			explanation:
 				"επισκέπτομαι is deponent — active meaning but passive-form ending (-ομαι). It means 'to visit someone' and cannot be used in the active voice.",
+			section: "verbs/mai-verbs",
 		},
 		{
 			pattern: "επισκέφτηκα — simple past",
@@ -50,6 +51,7 @@ export const LESSON_2025_04_17 = createLesson({
 			],
 			explanation:
 				"Past tense uses the -τηκα suffix (the deponent past ending). The stem changes from επισκεπτ- to επισκεφτ- (π → φ before τ).",
+			section: "verbs/mai-verbs",
 		},
 	],
 });

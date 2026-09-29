@@ -28,6 +28,8 @@ kept in this file would drift from them.
 /learn/verbs  /:verbId     Verb browser · full conjugation detail
 /learn/essentials/:subtab  Numbers, colours, time, position, frequency
 
+/guides                    Guides landing (SectionIndex)
+/guides/:guide             One guide: sections that each end in a drill
 /reference                 Reference landing (SectionIndex)
 /reference/:tab            Grammar reference by topic
 /reference/verbs  /:band   Verb reference, by tense band
@@ -160,6 +162,21 @@ take the base palette and claim nothing.
 <purpose>Verb reference by tense band: present, past, past-continuous, future (Future &amp; να)</purpose>
 <file>src/routes/reference/verbs/$band.tsx</file>
 <note>/reference/verbs redirects to /reference/verbs/present; an unknown band is a 404</note>
+</route>
+
+### Guides
+
+<route path="/guides">
+<purpose>SectionIndex of the eight guides, in reading order</purpose>
+<file>src/routes/guides/index.tsx</file>
+</route>
+
+<route path="/guides/:guide">
+<purpose>One guide: a contents list, then numbered sections, each with a rule, one table, lesson examples, an optional don't-confuse link and its drills</purpose>
+<file>src/routes/guides/$guide.tsx, components in guides/components/</file>
+<data-source>Each guide owns src/routes/guides/&lt;slug&gt;.data.ts; guides.data.ts only orders them. "From lessons on …" comes from the `section` on each lesson grammar note, read server-side by src/server/fns/guides.server.ts</data-source>
+<guard>src/routes/guides/guides.test.ts fails on an unknown drill id, a broken don't-confuse link, or a lesson note whose `section` names no real section</guard>
+<note>Public, like /reference. Drill links go to /register for a logged-out reader. An unknown guide is a 404</note>
 </route>
 
 ### Utility
@@ -447,13 +464,13 @@ as passive data the user can glance at.</motivation-note>
 │            [Page Content]               │
 │                                         │
 ├─────────────────────────────────────────┤
-│  [Home] [Practice] [Learn] [Reference]  │  ← Bottom nav: 4 items
+│ [Home] [Practice] [Learn] [Guides] [Ref]│  ← Bottom nav: 5 items
 └─────────────────────────────────────────┘
 ```
 
 **Desktop (header):**
 ```
-[Kalimera]  [🔍 Search...]  [Practice] [Learn] [Reference] [theme] [Account ▾]
+[Kalimera]  [🔍 Search...]  [Practice] [Learn] [Guides] [Reference] [theme] [Account ▾]
 ```
 
 ### Mobile Navigation (Implemented)
@@ -468,9 +485,9 @@ as passive data the user can glance at.</motivation-note>
 - Account icon → opens the account menu (Progress, About, Sign out); logged
   out, a "Sign in" link takes its place
 
-**Mobile bottom nav (4 items):**
+**Mobile bottom nav (5 items):**
 ```
-[🏠 Home] [⚡ Practice] [📖 Learn] [📋 Reference]
+[🏠 Home] [⚡ Practice] [📖 Learn] [🧭 Guides] [📋 Reference]
 ```
 - Logged out, the Practice tab goes to /try, since /practice needs an account
 
@@ -564,7 +581,7 @@ Swipe down anywhere → Search overlay
 **Current mobile nav (implemented):**
 ```
 Top bar:    [Kalimera]      [🔍] [theme] [👤]
-Bottom nav: [🏠 Home] [⚡ Practice] [📖 Learn] [📋 Reference]
+Bottom nav: [🏠 Home] [⚡ Practice] [📖 Learn] [🧭 Guides] [📋 Reference]
 ```
 
 - Search icon in header opens a search popover
@@ -581,7 +598,7 @@ search box between the logo and the links that shows results in a dropdown:
 
 **Authenticated:**
 ```
-[Kalimera]  [🔍 Search...]  [Practice ←CTA] [Learn] [Reference] [theme] [Account ▾]
+[Kalimera]  [🔍 Search...]  [Practice ←CTA] [Learn] [Guides] [Reference] [theme] [Account ▾]
                                                                           └── Progress
                                                                               About
                                                                               ────────
@@ -590,7 +607,7 @@ search box between the logo and the links that shows results in a dropdown:
 
 **Unauthenticated:**
 ```
-[Kalimera]  [🔍 Search...]  [Learn] [Reference] [theme] [Sign in] [Try a drill ←CTA]
+[Kalimera]  [🔍 Search...]  [Learn] [Guides] [Reference] [theme] [Sign in] [Try a drill ←CTA]
 ```
 
 "Try a drill" is hidden while on /try.
@@ -602,6 +619,7 @@ search box between the logo and the links that shows results in a dropdown:
 | `/` | Home (bottom nav) | Logo tap | Dashboard/home |
 | `/practice` | Practice (bottom nav) | Practice (CTA) | Primary action (authenticated) |
 | `/learn` | Learn (bottom nav) | Learn | Landing page → subsections |
+| `/guides` | Guides (bottom nav) | Guides | Landing page → eight guides |
 | `/reference` | Reference (bottom nav) | Reference | Landing page → tabs |
 | `/search` | Not linked | Not linked | Vocabulary search page; both header searches show results inline instead |
 | `/progress` | Account menu | Account menu | Analytics (authenticated) |

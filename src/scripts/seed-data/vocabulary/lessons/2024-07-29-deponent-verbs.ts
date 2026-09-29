@@ -82,11 +82,13 @@ export const LESSON_2024_07_29 = createLesson({
 			pattern: "Deponent verb conjugation (-μαι)",
 			examples: ["-μαι, -σαι, -ται", "-όμαστε, -στε, -ο(υ)νται"],
 			explanation: "Passive form endings but active meaning (I come, I sit, etc.)",
+			section: "verbs/mai-verbs",
 		},
 		{
 			pattern: "Imperative of deponent verbs",
 			examples: ["έρχομαι → έλα/ελάτε", "κάθομαι → κάτσε/καθίστε"],
 			explanation: "Irregular imperative forms - must memorize",
+			section: "verbs/commands",
 		},
 	],
 });

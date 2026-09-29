@@ -165,12 +165,6 @@ The app's job is to make you faster at producing correct Greek, not to teach you
 
 ## What the App Should NOT Do
 
-### ❌ More Grammar Explanations
-
-You don't need another way to read about the accusative case. You understand it. The app should assume knowledge and drill production.
-
-**If you must have reference material:** Hide it behind a "?" icon. Never surface it proactively. The default path should be production, not study.
-
 ### ❌ Recognition-Only Flashcards
 
 Traditional flashcards (Greek → English, or multiple choice) build recognition, not production. They feel productive because you get them "right," but they don't transfer to speaking.
@@ -182,12 +176,6 @@ Traditional flashcards (Greek → English, or multiple choice) build recognition
 Slow, careful practice builds accuracy at the expense of automaticity. You need the opposite.
 
 **Every drill should have time pressure.** If it doesn't feel slightly rushed, it's not building speed.
-
-### ❌ Elaborate Curriculum Organisation
-
-You've spent time building curriculum structures, learning progressions, skill trees. This is procrastination disguised as productivity.
-
-**The curriculum is simple:** Practice producing Greek faster. That's it. Topic selection matters far less than volume and speed of practice.
 
 ### ❌ Perfect UI Before Function
 
@@ -284,10 +272,6 @@ The best version of this app is one that makes you uncomfortable—timers that f
 ### Measure What Matters
 
 Response time is the metric. Accuracy matters, but speed matters more for your specific problem. You're accurate when you have time; you need to be accurate when you don't.
-
-### Less Is More
-
-Every feature that isn't timed production practice is a distraction. Resist the urge to add curriculum views, grammar browsers, fancy visualisations. Build the drill engine first. Make it relentless. Use it for 90 days. Then decide what else you need.
 
 ---
 

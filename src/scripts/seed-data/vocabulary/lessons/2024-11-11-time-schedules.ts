@@ -109,16 +109,19 @@ export const LESSON_2024_11_11 = createLesson({
 			examples: ["στις μία", "στις δύο", "στις τρεις"],
 			explanation:
 				"στις + accusative feminine plural (hours are feminine). Exception: στη μία (singular)",
+			section: "essentials",
 		},
 		{
 			pattern: "και (past) vs παρά (to)",
 			examples: ["τρεις και δέκα = 3:10", "τέσσερις παρά δέκα = 3:50"],
 			explanation: "και adds minutes, παρά subtracts from next hour",
+			section: "essentials",
 		},
 		{
 			pattern: "Numbers 1, 3, 4 forms",
 			examples: ["μία/ένα/ένας", "τρεις/τρία", "τέσσερις/τέσσερα"],
 			explanation: "These numbers change form based on gender",
+			section: "agreement/numbers",
 		},
 	],
 });
