@@ -27,6 +27,8 @@ export type GuideCell =
 export interface GuideColumn {
 	label: string;
 	greek?: boolean;
+	/** Colours the header and the column's forms; the guide's `key` says what it means. */
+	tone?: GuideTone;
 }
 
 export interface GuideTable {
@@ -74,6 +76,8 @@ export interface Guide {
 	/** The whole guide in one sentence, shown above its contents. */
 	idea: string;
 	sections: GuideSection[];
+	/** What the column colours mean on this guide, shown near the top. */
+	key?: { label: string; tone: GuideTone }[];
 	/** Full paradigm tables that still live on the reference pages. */
 	reference: GuideReference[];
 }

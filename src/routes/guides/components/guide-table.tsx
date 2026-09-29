@@ -3,6 +3,7 @@ import { cn, tv } from "tailwind-variants";
 import { ProseWithGreek } from "@/components/ProseWithGreek";
 import type { GuideCell, GuideTable as GuideTableData } from "@/types/guide";
 
+import { GUIDE_TONE } from "./guide-tone";
 import { MarkedPhrase } from "./marked-phrase";
 
 // Three weights, so a regular grid still has somewhere for the eye to land: the
@@ -36,7 +37,10 @@ export const GuideTable = ({ table }: { table: GuideTableData }) => {
 						<th
 							key={column.label}
 							scope="col"
-							className="px-3 py-2 text-xs font-medium whitespace-nowrap text-stone-600 first:pl-0"
+							className={cn(
+								"px-3 py-2 text-xs font-medium whitespace-nowrap text-stone-600 first:pl-0",
+								column.tone && ["font-semibold", GUIDE_TONE[column.tone].accent],
+							)}
 						>
 							<ProseWithGreek text={column.label} />
 						</th>
@@ -48,7 +52,8 @@ export const GuideTable = ({ table }: { table: GuideTableData }) => {
 					<tr key={row.map((cell) => cellParts(cell).text).join("|")} className="border-b border-stone-200">
 						{row.map((cell, i) => {
 							const { text, weight, marks } = cellParts(cell);
-							const className = cellText({ weight });
+							const tone = table.columns[i]?.tone;
+							const className = cn(cellText({ weight }), tone && GUIDE_TONE[tone].accent);
 							return (
 								<td key={table.columns[i]?.label ?? i} className="px-3 py-2 align-baseline first:pl-0">
 									{table.columns[i]?.greek ? (
