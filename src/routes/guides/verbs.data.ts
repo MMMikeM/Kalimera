@@ -3,10 +3,10 @@ import type { Guide } from "@/types/guide";
 export const VERBS_GUIDE: Guide = {
 	slug: "verbs",
 	tone: "stone",
-	title: "Verbs: present, past, future",
+	title: "Verbs in the present, past and future",
 	greek: "Ρήματα",
 	description: "Every verb as present, simple past and simple future",
-	idea: "Learn every verb as three forms: present, simple past and simple future. The simple past and the simple future share one shape, so knowing one gives you the other.",
+	idea: "Learn every verb as three forms: present, simple past and simple future. The simple past and the simple future are built on the same stem, so knowing one gives you the other.",
 	key: [
 		{ label: "Present", tone: "olive" },
 		{ label: "Simple past", tone: "terracotta" },
@@ -18,7 +18,7 @@ export const VERBS_GUIDE: Guide = {
 			id: "ladder",
 			tone: "navy",
 			title: "Every verb has three forms",
-			rule: "The present is the everyday form. The simple past is one finished event. The simple future is θα plus a short form, and that short form has the same shape as the simple past: know είδα and you can predict θα δω.",
+			rule: "The present is the everyday form. The simple past is one finished event. The simple future is θα plus a short form, and that short form is built on the same stem as the simple past: know είδα and you can predict θα δω.",
 			table: {
 				columns: [
 					{ label: "Present", greek: true, tone: "olive" },
@@ -44,7 +44,7 @@ export const VERBS_GUIDE: Guide = {
 		{
 			id: "eimai",
 			tone: "sunset",
-			title: "είμαι: am, was, will be",
+			title: "είμαι in the present, past and future",
 			rule: "είμαι is the verb you will use most, and it follows no pattern. Every past form starts with ή-. The future is θα in front of the present form, because είμαι has no short form.",
 			table: {
 				columns: [
@@ -68,12 +68,12 @@ export const VERBS_GUIDE: Guide = {
 				],
 			},
 			examples: [
-				{ greek: "Ήμουν στην Ολλανδία πρόπερσι.", english: "I was in Holland two years ago." },
+				{ greek: "Ήμουν στην Ολλανδία πρόπερσι.", english: "I was in Holland the year before last." },
 				{ greek: "Προχτές ήταν Τετάρτη.", english: "The day before yesterday was Wednesday." },
 				{ greek: "Αύριο θα είναι Σάββατο.", english: "Tomorrow will be Saturday." },
 			],
 			confuse: {
-				text: "ήταν (was) and όταν (when) sound almost the same. Ή- means was, like ήμουν and ήσουν; ό- means when, like πότε and τότε.",
+				text: "ήταν (was) and όταν (when) rhyme. The ή- of was is the ή- of ήμουν and ήσουν; όταν belongs with πότε and τότε.",
 				section: "joining/when-why",
 			},
 			drills: ["verbs-eimai-present", "verbs-eimai-past", "verbs-eimai-future"],
@@ -81,8 +81,8 @@ export const VERBS_GUIDE: Guide = {
 		{
 			id: "keep-shape",
 			tone: "slate",
-			title: "Verbs that keep their shape",
-			rule: "A few everyday verbs have no separate short form, so θα goes straight in front of the everyday form. έχω, θέλω and ξέρω describe a state, which has no one-off version; κάνω and περιμένω simply have a short form identical to the present. Their past is still a form of its own.",
+			title: "Verbs with no separate short form",
+			rule: "A few everyday verbs have no separate short form, so θα goes straight in front of the present. έχω, θέλω and ξέρω describe a state, which has no one-off version; κάνω and περιμένω have a short form identical to the present. Their past is still a form of its own.",
 			table: {
 				columns: [
 					{ label: "Present", greek: true, tone: "olive" },
@@ -101,7 +101,7 @@ export const VERBS_GUIDE: Guide = {
 			examples: [
 				{
 					greek: "Περίμενα πολύ, αλλά θα περιμένω κι άλλο.",
-					english: "I waited a lot, but I'll wait some more.",
+					english: "I've waited a long time, but I'll wait a bit longer.",
 				},
 			],
 			drills: ["verbs-imperfect-stative"],
@@ -109,7 +109,7 @@ export const VERBS_GUIDE: Guide = {
 		{
 			id: "present",
 			tone: "olive",
-			title: "Present: the endings",
+			title: "Present endings",
 			rule: "Most verbs end in -ω and share one set of endings. Verbs in -άω share a second set. A small family of short verbs shares a third, shown here by πάω and τρώω. ακούω, λέω and κλαίω belong to it too, not to the -ω set: ακούς, ακούει and λες, λέει, not ακούεις. πάω has a longer form, πηγαίνω, which takes the -ω endings: πηγαίνεις, πηγαίνει. Both are everyday Greek.",
 			table: {
 				columns: [
@@ -135,7 +135,7 @@ export const VERBS_GUIDE: Guide = {
 				],
 			},
 			examples: [
-				{ greek: "Ακούω μουσική.", english: "I listen to music." },
+				{ greek: "Με ακούς;", english: "Can you hear me?" },
 				{ greek: "Πεινάω.", english: "I'm hungry." },
 				{ greek: "Πάω σινεμά.", english: "I go to the cinema." },
 				{ greek: "Με ποιον πηγαίνεις στις συναυλίες;", english: "Who do you go to concerts with?" },
@@ -150,8 +150,8 @@ export const VERBS_GUIDE: Guide = {
 		{
 			id: "o-verbs",
 			tone: "sunset",
-			title: "Verbs in -ώ: μπορώ, μπορείς",
-			rule: "Some verbs end in a stressed -ώ and take a set of endings of their own, stressed on the ending throughout: μπορώ, οδηγώ, τηλεφωνώ, προσπαθώ, συμφωνώ. Not every -ώ belongs here: μιλώ is a shorter way of saying μιλάω, and keeps the -άω endings, μιλάς and μιλάει.",
+			title: "Verbs in -ώ, like μπορώ",
+			rule: "Some verbs end in a stressed -ώ and take their own endings, stressed on the ending throughout: μπορώ, οδηγώ, τηλεφωνώ, προσπαθώ, συμφωνώ. Not every -ώ belongs here: μιλώ is a shorter way of saying μιλάω, and keeps the -άω endings, μιλάς and μιλάει.",
 			table: {
 				columns: [
 					{ label: "Who" },
@@ -177,7 +177,7 @@ export const VERBS_GUIDE: Guide = {
 			id: "past-shapes",
 			tone: "terracotta",
 			title: "Simple past, by family",
-			rule: "The simple past endings are the same for almost every verb: -α, -ες, -ε, -αμε, -ατε, -αν. είμαι is the exception, with ήμουν. What changes is the stem, and stems come in families, so learn the family rather than the verb. Most -ζω verbs take -σ-, but some take -ξ-: άλλαξα, έπαιξα. Most -άω verbs take -ησ-, but some take -ασ- (γέλασα, ξέχασα, πείνασα) or -εσ- (φόρεσα). The -αίνω verbs of going in, out, up and down take -ηκ- (βγήκα, μπήκα, ανέβηκα); others shorten the stem: έμαθα, κατάλαβα. A past too short to carry its stress gains an έ- in front: έβαλα, έδωσα.",
+			rule: "The simple past endings are the same for almost every verb: -α, -ες, -ε, -αμε, -ατε, -αν. είμαι is the exception, with ήμουν. What changes is the stem, and stems come in families. Most -ζω verbs take -σ-, but some take -ξ-: άλλαξα, έπαιξα. Most -άω verbs take -ησ-, but some take -ασ- (γέλασα, ξέχασα, πείνασα) or -εσ- (φόρεσα). The -αίνω verbs of going in, out, up and down take -ηκ- (βγήκα, μπήκα, ανέβηκα); others shorten the stem: έμαθα, κατάλαβα. A past too short to carry its stress gains an έ- in front: έβαλα, έδωσα.",
 			table: {
 				columns: [
 					{ label: "Present", greek: true, tone: "olive" },
@@ -206,8 +206,8 @@ export const VERBS_GUIDE: Guide = {
 					english: "Yesterday I put the keys in the bag.",
 				},
 				{
-					greek: "Βγήκα έξω και μετά μπήκα στο σπίτι.",
-					english: "I went out and then I went into the house.",
+					greek: "Μπήκα στο λεωφορείο και κατέβηκα στο κέντρο.",
+					english: "I got on the bus and got off in the centre.",
 				},
 				{ greek: "Τι έφαγες χθες το βράδυ;", english: "What did you eat last night?" },
 			],
@@ -221,8 +221,8 @@ export const VERBS_GUIDE: Guide = {
 		{
 			id: "past-families",
 			tone: "terracotta",
-			title: "Simple past: families by consonant",
-			rule: "For most other verbs, the sound before the ending decides the simple past, and the simple future follows it: δούλεψα, θα δουλέψω. Most verbs in -εύω, -φω, -πω and -βω take -ψ-: δούλεψα, έγραψα, έλειψα, έκοψα. Most with κ, γ or χ, and the -χνω verbs, take -ξ-: έτρεξα, άνοιξα, έψαξα. -ώνω verbs take -ωσ-: πλήρωσα. Some other -νω verbs take -σ- (έκλεισα, έφτασα), but many do not: πήγα (πάω or πηγαίνω), έμεινα (μένω), έφερα (φέρνω). Most -ώ verbs take -ησ-, as most -άω verbs do (οδήγησα); a few take -εσ-: μπόρεσα, κάλεσα. Some -άω verbs take -ασ- instead: πέρασα, ξέχασα, γέλασα. A few break their family: βλέπω → είδα, φεύγω → έφυγα, βρίσκω → βρήκα. The stress sits three syllables from the end, so it moves one syllable towards the ending in the we and you all forms (δοκίμασα, δοκιμάσαμε), and an added έ- drops away: έκανα, κάναμε.",
+			title: "Simple past families by consonant",
+			rule: "For most other verbs, the sound before the ending decides the simple past, and the simple future follows it: δούλεψα, θα δουλέψω. Most verbs in -εύω, -φω, -πω and -βω take -ψ-: δούλεψα, έγραψα, έλειψα, έκοψα. Most with κ, γ or χ, and the -χνω verbs, take -ξ-: έτρεξα, άνοιξα, έψαξα. -ώνω verbs take -ωσ-: πλήρωσα. Some other -νω verbs take -σ- (έκλεισα, έφτασα), but many do not: πήγα (πάω or πηγαίνω), έμεινα (μένω), έφερα (φέρνω). Most -ώ verbs take -ησ-, as most -άω verbs do (οδήγησα); a few take -εσ-: μπόρεσα, κάλεσα. A few break their family: βλέπω → είδα, φεύγω → έφυγα, βρίσκω → βρήκα. The stress sits three syllables from the end, so it moves one syllable towards the ending in the we and you all forms (δοκίμασα, δοκιμάσαμε), and an added έ- drops away: έκανα, κάναμε.",
 			table: {
 				columns: [
 					{ label: "Present", greek: true, tone: "olive" },
@@ -242,15 +242,16 @@ export const VERBS_GUIDE: Guide = {
 				],
 			},
 			examples: [
-				{ greek: "Έψαξα για δουλειά για δύο χρόνια.", english: "I searched for work for two years." },
+				{ greek: "Πλήρωσα τον λογαριασμό κι έφυγα.", english: "I paid the bill and left." },
+				{ greek: "Έψαξα παντού τα κλειδιά μου.", english: "I looked everywhere for my keys." },
 			],
 			drills: ["verbs-aorist-formation", "verbs-future-formation"],
 		},
 		{
 			id: "future",
 			tone: "ocean",
-			title: "Simple future: θα with the short form",
-			rule: "For one action still to come, put θα in front of the short form, the one shaped like the simple past. θα with the present form is the future continuous instead: θα διαβάζω is I'll be reading. To say not, δεν comes before θα: δεν θα φάω.",
+			title: "Simple future with θα and the short form",
+			rule: "For one action still to come, put θα in front of the short form, the one built on the simple past's stem. θα with the present form is the future continuous instead: θα διαβάζω is I'll be reading. To say not, δεν comes before θα: δεν θα φάω.",
 			table: {
 				columns: [
 					{ label: "Simple past", greek: true, tone: "terracotta" },
@@ -273,15 +274,15 @@ export const VERBS_GUIDE: Guide = {
 					greek: "Αύριο θα πάρω τηλέφωνο τον φίλο μου.",
 					english: "Tomorrow I'll phone my friend.",
 				},
-				{ greek: "Δεν θα υπάρχει κανένα αυτοκίνητο.", english: "There won't be a single car." },
+				{ greek: "Δεν θα αργήσω.", english: "I won't be late." },
 			],
 			drills: ["verbs-future-formation", "verbs-future-sg1", "verbs-future-conjugation"],
 		},
 		{
 			id: "short-form",
 			tone: "ocean",
-			title: "After να: the short form or the present",
-			rule: "The simple future's short form is not only for the future. After να it names one action: θέλω να φάω, I want to eat. For something ongoing or habitual, να takes the present instead: μου αρέσει να τρώω, I like eating. πριν takes the short form for one action too: πριν πάω για ύπνο. So do όταν and αν when they point to the future: Όταν έρθεις, when you come. To say not, put μην after να: να μην πεις. After a verb of seeing or hearing, να with the present describes an action in progress: ακούω τον σκύλο να τραγουδάει, I hear the dog singing.",
+			title: "The short form or the present after να",
+			rule: "After να the short form names one action: θέλω να φάω, I want to eat. For something ongoing or habitual, να takes the present instead: μου αρέσει να τρώω, I like eating. πριν takes the short form for one action too: πριν πάω για ύπνο. So do όταν and αν when they point to the future: Όταν έρθεις, when you come. To say not, put μην after να: να μην πεις. After a verb of seeing or hearing, να with the present describes an action in progress: ακούω τον σκύλο να τραγουδάει, I hear the dog singing.",
 			table: {
 				columns: [
 					{ label: "One action", greek: true, tone: "ocean" },
@@ -313,7 +314,7 @@ export const VERBS_GUIDE: Guide = {
 			id: "mai-verbs",
 			tone: "stone",
 			title: "Verbs ending in -μαι",
-			rule: "Some verbs end in -μαι yet have an ordinary meaning: έρχομαι (I come), κάθομαι (I sit), παντρεύομαι (I get married). They take their own endings. Many make the past with -θηκα or -τηκα; a few, like έρχομαι → ήρθα, are one of a kind. In the past and future a π before the τ turns into φ: επισκέπτομαι → επισκέφτηκα. Most make the simple future from the past, dropping -ηκα for -ώ: σκέφτηκα → θα σκεφτώ, χάρηκα → θα χαρώ. έρχομαι and κάθομαι go their own way: ήρθα → θα έρθω, κάθισα → θα καθίσω. The past continuous ends in -όμουν: σκεφτόμουν, I was thinking.",
+			rule: "Some everyday verbs end in -μαι and take their own endings: έρχομαι (I come), κάθομαι (I sit), παντρεύομαι (I get married). Many make the past with -θηκα or -τηκα, and most of those make the simple future by dropping -ηκα for -ώ: σκέφτηκα → θα σκεφτώ, χάρηκα → θα χαρώ. In the past and future a π before the τ turns into φ: επισκέπτομαι → επισκέφτηκα. έρχομαι and κάθομαι go their own way: ήρθα → θα έρθω, κάθισα → θα καθίσω. The past continuous ends in -όμουν: σκεφτόμουν, I was thinking.",
 			table: {
 				columns: [
 					{ label: "Who" },
@@ -340,14 +341,15 @@ export const VERBS_GUIDE: Guide = {
 			examples: [
 				{ greek: "Πού γεννήθηκες;", english: "Where were you born?" },
 				{ greek: "Κουρεύτηκα.", english: "I got a haircut." },
+				{ greek: "Θα το σκεφτώ.", english: "I'll think about it." },
 			],
 			drills: ["verbs-conjugation-endings"],
 		},
 		{
 			id: "amai-verbs",
 			tone: "stone",
-			title: "Verbs in -άμαι: θυμάμαι",
-			rule: "A few -μαι verbs end in a stressed -άμαι: θυμάμαι (I remember), κοιμάμαι (I sleep), φοβάμαι (I'm afraid). The ending carries the stress, and its vowel changes in the we and they forms: θυμόμαστε, θυμούνται. Two smaller sets are stressed on the ending too: -ιέμαι, as in γεννιέμαι (I am born), and -ούμαι, as in ασχολούμαι (I deal with), whose you form is ασχολείσαι. The past takes -ήθηκα (θυμήθηκα, κοιμήθηκα), and the simple future drops -ηκα for -ώ, as most -μαι verbs do: θα θυμηθώ, θα κοιμηθώ.",
+			title: "Verbs in -άμαι, like θυμάμαι",
+			rule: "A few -μαι verbs end in a stressed -άμαι: θυμάμαι (I remember), κοιμάμαι (I sleep), φοβάμαι (I'm afraid). The ending's vowel changes in the we and they forms: θυμόμαστε, θυμούνται. Two smaller sets are stressed on the ending too: -ιέμαι, as in γεννιέμαι (I am born), and -ούμαι, as in ασχολούμαι (I deal with), whose you form is ασχολείσαι. The past takes -ήθηκα (θυμήθηκα, κοιμήθηκα), and the simple future drops -ηκα for -ώ, as most -μαι verbs do: θα θυμηθώ, θα κοιμηθώ.",
 			table: {
 				columns: [
 					{ label: "Who" },
@@ -381,8 +383,8 @@ export const VERBS_GUIDE: Guide = {
 		{
 			id: "ongoing-past",
 			tone: "honey",
-			title: "Past continuous: was doing, used to do",
-			rule: "The simple past is for one finished event. For something ongoing or habitual in the past, use the past continuous: σπούδασα is I studied, σπούδαζα is I was studying or I used to study. Build it from the present stem with the simple past's endings: σπουδάζω → σπούδαζα, παίζω → έπαιζα. As in the simple past, the stress sits three syllables from the end, and a short verb gains έ- to carry it. τρώω, λέω and ακούω add a γ: έτρωγα, έλεγα, άκουγα. Verbs in -άω and -ώ usually take -ούσα instead: μιλάω → μιλούσα, μπορώ → μπορούσα.",
+			title: "Past continuous for was doing and used to do",
+			rule: "For something ongoing or habitual in the past, use the past continuous rather than the simple past: σπούδασα is I studied, σπούδαζα is I was studying or I used to study. Build it from the present stem with the simple past's endings: σπουδάζω → σπούδαζα, παίζω → έπαιζα. As in the simple past, the stress sits three syllables from the end, and a short verb gains έ- to carry it. τρώω, λέω and ακούω add a γ: έτρωγα, έλεγα, άκουγα. Verbs in -άω and -ώ usually take -ούσα instead: μιλάω → μιλούσα, μπορώ → μπορούσα.",
 			table: {
 				columns: [
 					{ label: "Simple past", greek: true, tone: "terracotta" },
@@ -402,7 +404,10 @@ export const VERBS_GUIDE: Guide = {
 					greek: "Σπούδαζα αρχιτεκτονική, αλλά απέτυχα.",
 					english: "I was studying architecture, but I failed.",
 				},
-				{ greek: "Έπαιζα με τους φίλους μου.", english: "I used to play with my friends." },
+				{
+					greek: "Όταν ήμουν παιδί, έπαιζα ποδόσφαιρο.",
+					english: "When I was a child, I used to play football.",
+				},
 			],
 			drills: ["verbs-tense-recognition", "verbs-imperfect-stative"],
 		},
@@ -410,7 +415,7 @@ export const VERBS_GUIDE: Guide = {
 			id: "commands",
 			tone: "navy",
 			title: "Commands",
-			rule: "A command has its own short form. There is one form for one person and another for several people, which is also the polite form. Most are built from the simple future's short form plus -ε, with the stress moving back: θα δώσω → δώσε, θα ακούσω → άκουσε. The other form ends in -τε: δώστε, ακούστε. To tell someone not to do something, use μην with the everyday form, or with the short form for one action: μην ξεχάσεις. Like δεν, μην often drops its ν before a consonant, and keeps it before a vowel and before κ, π, τ, ξ, ψ, μπ, ντ, γκ, τσ, τζ; keeping it is widely accepted. For let's, put ας in front of the we form of the short form: ας κάνουμε, ας μιλήσουμε.",
+			rule: "A command has two forms: one for one person, and one for several people, which is also the polite form. Most one-person commands are the short form plus -ε, with the stress moving back: θα δώσω → δώσε, θα ακούσω → άκουσε. The other form ends in -τε: δώστε, ακούστε. For don't, put μην before the you form: the present (μην φωνάζεις) or, for one action, the short form (μην ξεχάσεις). Like δεν, μην keeps its ν before a vowel and before κ, π, τ, ξ, ψ, μπ, ντ, γκ, τσ, τζ, and often drops it before other consonants, though keeping it is widely accepted. For let's, put ας in front of the we form of the short form: ας κάνουμε, ας μιλήσουμε.",
 			table: {
 				columns: [
 					{ label: "One person", greek: true },
@@ -435,8 +440,8 @@ export const VERBS_GUIDE: Guide = {
 		{
 			id: "command-aspect",
 			tone: "honey",
-			title: "Commands: one-off or ongoing",
-			rule: "Most commands are for one action and come from the short form. A one-syllable short form gives a one-syllable command: θα πω → πες, θα δω → δες, θα βγω → βγες, θα πιω → πιες. φέρε follows the usual pattern (θα φέρω), while κοίτα, from κοιτάζω, is one to learn as it is. To tell someone to keep doing something, or to do it as a habit, the command comes from the present instead: φάε is eat this now, τρώγε is keep eating, or eat as a rule.",
+			title: "One-off and ongoing commands",
+			rule: "Most commands are for one action and come from the short form. A one-syllable short form gives a one-syllable command: θα πω → πες, θα δω → δες, θα βγω → βγες, θα πιω → πιες. φέρε is regular, from θα φέρω; κοίτα, from κοιτάζω, you learn as it is. To tell someone to keep doing something, or to do it as a habit, build the command from the present instead: φάε is eat this now, τρώγε is keep eating, or eat as a rule.",
 			table: {
 				columns: [
 					{ label: "One-off", greek: true, tone: "ocean" },
@@ -452,6 +457,10 @@ export const VERBS_GUIDE: Guide = {
 					["δώσε", "δίνε", "give"],
 				],
 			},
+			examples: [
+				{ greek: "Πες μου τι έγινε.", english: "Tell me what happened." },
+				{ greek: "Πίνε πολύ νερό.", english: "Drink plenty of water." },
+			],
 			drills: ["verbs-imperatives"],
 			plannedDrills: [
 				{

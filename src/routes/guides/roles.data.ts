@@ -7,12 +7,12 @@ export const ROLES_GUIDE: Guide = {
 	title: "Who does what",
 	greek: "Ποιος κάνει τι",
 	description: "Doer, Target, Owner, and the article that shows them",
-	idea: "A Greek noun changes its article and ending to show its job in the sentence: the Doer does it, the Target has it done to it, the Owner owns something. The ending, not the word order, tells you who did what.",
+	idea: "A Greek noun changes its article and ending to show its job in the sentence. The Doer does it, the Target has it done to it, the Owner owns something. The ending tells you who did what, whatever the word order.",
 	sections: [
 		{
 			id: "overview",
 			title: "Three jobs a noun can do",
-			rule: "Every noun in a sentence is doing one of three jobs, and you can see which from the article in front of it. After είναι and γίνομαι (become) nothing is acted on, so both sides take the Doer form: η Χρυσάνθη είναι η μητέρα.",
+			rule: "A noun in a sentence does one of three jobs, and its article and ending usually show which. After είμαι (be) and γίνομαι (become) nothing is acted on, so both sides take the Doer form: η Χρυσάνθη είναι η μητέρα.",
 			table: {
 				columns: [
 					{ label: "Example", greek: true },
@@ -28,7 +28,7 @@ export const ROLES_GUIDE: Guide = {
 			examples: [
 				{
 					greek: "Ο άντρας θέλει πορτοκαλάδα.",
-					english: "The man wants orange juice.",
+					english: "The man wants orangeade.",
 					marks: [mark("Ο άντρας", "nominative", "masculine"), mark("πορτοκαλάδα", "accusative", "feminine")],
 				},
 				{
@@ -37,17 +37,17 @@ export const ROLES_GUIDE: Guide = {
 					marks: [mark("Το παιδί", "nominative", "neuter"), mark("καρπούζι", "accusative", "neuter")],
 				},
 				{
-					greek: "Η Χρυσάνθη είναι η μητέρα.",
-					english: "Chrysanthi is the mother.",
-					marks: [mark("Η Χρυσάνθη", "nominative", "feminine"), mark("η μητέρα", "nominative", "feminine")],
+					greek: "Ο γιος μου θέλει να γίνει γιατρός.",
+					english: "My son wants to be a doctor.",
+					marks: [mark("Ο γιος", "nominative", "masculine"), mark("γιατρός", "nominative", "masculine")],
 				},
 			],
 			drills: ["articles-paradigm", "nominal-phrase-doer", "nominal-all-phrases"],
 		},
 		{
 			id: "articles",
-			title: "The article: ο, η, το",
-			rule: "The article shows gender and job at once. For the Target only the masculine and feminine change: ο becomes τον, η becomes τη or την; το stays το. For a or an, use ένας, μία, ένα. The -ν of την, δεν and μην usually drops before β, γ, δ, ζ, θ, λ, μ, ν, ρ, σ, φ and χ, and stays before a vowel, before κ, π, τ, ξ and ψ, and before μπ, ντ, γκ, τσ and τζ: την πόρτα but τη μητέρα, δεν πάω but δε θέλω, την μπάλα. Keeping it is widely accepted, especially with δεν. τον keeps it, even before φ: τον φίλο, since το φίλο would read as neuter.",
+			title: "The article ο, η, το",
+			rule: "The article shows gender and job at once. For the Target only the masculine and feminine change; το stays το. The -ν of την, δεν and μην stays before a vowel, before κ, π, τ, ξ and ψ, and before μπ, ντ, γκ, τσ and τζ: την πόρτα, δεν πάω, την μπάλα. Before any other consonant it usually drops: τη μητέρα, δε θέλω. Keeping it is widely accepted, especially with δεν. τον keeps it even before φ, since το φίλο would read as neuter.",
 			table: {
 				columns: [
 					{ label: "Masculine", greek: true },
@@ -84,9 +84,9 @@ export const ROLES_GUIDE: Guide = {
 			},
 			examples: [
 				{
-					greek: "Η Χρυσάνθη είναι η γυναίκα του.",
-					english: "Chrysanthi is his wife.",
-					marks: [mark("Η Χρυσάνθη", "nominative", "feminine"), mark("η γυναίκα", "nominative", "feminine")],
+					greek: "Ο Νίκος περιμένει τον φίλο του.",
+					english: "Nikos is waiting for his friend.",
+					marks: [mark("Ο Νίκος", "nominative", "masculine"), mark("τον φίλο", "accusative", "masculine")],
 				},
 				{
 					greek: "Βλέπουν μια ταινία στο σινεμά.",
@@ -103,8 +103,8 @@ export const ROLES_GUIDE: Guide = {
 		},
 		{
 			id: "target",
-			title: "The Target: objects, names and times",
-			rule: "Whatever the verb acts on takes the Target form, and so does a name used that way. Days and times of day take it too: τη Δευτέρα means on Monday, την επόμενη εβδομάδα next week. Months are masculine, so they take τον: τον Ιούλιο, in July. After κάθε there is no article: κάθε Τρίτη, every Tuesday.",
+			title: "The Target for objects, names and times",
+			rule: "Whatever the verb acts on takes the Target form, names included. So do times: τη Δευτέρα, on Monday; την επόμενη εβδομάδα, next week. Months are masculine, so they take τον: τον Ιούλιο, in July. After κάθε there is no article: κάθε Τρίτη, every Tuesday.",
 			table: {
 				columns: [
 					{ label: "Doer form", greek: true },
@@ -130,9 +130,9 @@ export const ROLES_GUIDE: Guide = {
 					],
 				},
 				{
-					greek: "Βλέπω τρεις ανθρώπους.",
-					english: "I see three people.",
-					marks: [mark("τρεις ανθρώπους", "accusative", "masculine", true)],
+					greek: "Το Σάββατο βλέπω τους φίλους μου.",
+					english: "On Saturday I'm seeing my friends.",
+					marks: [mark("Το Σάββατο", "accusative", "neuter"), mark("τους φίλους", "accusative", "masculine", true)],
 				},
 				{
 					greek: "Το βράδυ βγαίνουν έξω.",
@@ -149,8 +149,8 @@ export const ROLES_GUIDE: Guide = {
 		},
 		{
 			id: "owner",
-			title: "The Owner: whose",
-			rule: "The Owner comes after the thing owned: το σπίτι του Γιάννη, the house of Yannis. Masculine nouns in -ος end in -ου. In the plural every noun ends in -ων, but the stress does not always move onto it: των γιατρών, yet των ανθρώπων.",
+			title: "The Owner",
+			rule: "The Owner comes after the thing owned: το σπίτι του Γιάννη, Yannis's house. Masculine nouns in -ος end in -ου. In the plural every noun ends in -ων, but the stress is not always on it: των γιατρών, yet των ανθρώπων.",
 			table: {
 				columns: [
 					{ label: "One", greek: true },
@@ -179,13 +179,13 @@ export const ROLES_GUIDE: Guide = {
 					marks: [mark("Πόσων χρονών", "genitive", undefined, true)],
 				},
 				{
-					greek: "Ακούω το νερό του ποταμού.",
-					english: "I hear the water of the river.",
-					marks: [mark("το νερό", "accusative", "neuter"), mark("του ποταμού", "genitive", "masculine")],
+					greek: "Ξέρεις το όνομα του φίλου της;",
+					english: "Do you know her friend's name?",
+					marks: [mark("το όνομα", "accusative", "neuter"), mark("του φίλου", "genitive", "masculine")],
 				},
 			],
 			confuse: {
-				text: "This shows only masculines in -ος. How the other families make their Owner is in Nouns: της γυναίκας, του παιδιού, του ονόματος.",
+				text: "This shows only masculines in -ος. How the other families make their Owner is in the nouns guide: της γυναίκας, του παιδιού, του ονόματος.",
 				section: "nouns/owner",
 			},
 			drills: ["nominal-noun-owner", "articles-article-owner", "pronouns-possessive-vs-article", "nominal-phrase-owner"],

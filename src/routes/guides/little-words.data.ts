@@ -4,15 +4,15 @@ import type { Guide } from "@/types/guide";
 export const LITTLE_WORDS_GUIDE: Guide = {
 	slug: "little-words",
 	tone: "honey",
-	title: "The little words: μου, σου, του",
+	title: "The little words μου, σου, του",
 	greek: "Μικρές λέξεις",
 	description: "One set of short words doing three jobs",
 	idea: "The short words μου, σου, του and the rest do three jobs: my, to me, and the one who likes. After a noun they say whose it is; before a verb they say who it is for.",
 	sections: [
 		{
 			id: "forms",
-			title: "One set of forms, three jobs",
-			rule: "Learn the forms once. After a noun they mean my, your, his. Before a verb they mean to me, to you, to him. With αρέσει they name who likes it. When an adjective comes before the noun, the short word often follows the adjective: το αγαπημένο μου χρώμα. A word stressed on its third-last syllable takes a second accent before the short word: η εκπαίδευση, but την εκπαίδευσή μας.",
+			title: "The same forms for my, to me and who likes",
+			rule: "After a noun, μου, σου, του mean my, your, his. Before a verb they mean to me, to you, to him. With αρέσει they name who likes it. When an adjective comes before the noun, the short word often follows the adjective: το αγαπημένο μου χρώμα. A word stressed on its third-last syllable takes a second accent before the short word: η εκπαίδευση, but την εκπαίδευσή μας.",
 			table: {
 				columns: [
 					{ label: "Form", greek: true },
@@ -31,7 +31,7 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 				],
 			},
 			examples: [
-				{ greek: "Δώσε μου.", english: "Give me." },
+				{ greek: "Πού είναι τα κλειδιά μου;", english: "Where are my keys?", marks: [mark("μου", "genitive")] },
 				{ greek: "Σου μιλάω.", english: "I'm talking to you." },
 				{ greek: "Μου λείπεις.", english: "I miss you. (literally: you are missing to me)" },
 				{
@@ -49,8 +49,8 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 		},
 		{
 			id: "likes",
-			title: "Liking works backwards: μου αρέσει",
-			rule: "In Greek the thing you like does the pleasing, and you are the one it pleases. So the verb agrees with the thing: αρέσει for one thing, αρέσουν for several, αρέσεις when the thing is you. μου φαίνεται (it seems to me) and μου λείπεις (I miss you) work the same way, but νοιάζει takes the Target form: δε με νοιάζει. In speech μου often shortens to μ' before αρέσει, and the short word drops out when it's clear who is meant: Άρεσε;",
+			title: "Liking with μου αρέσει",
+			rule: "In Greek the thing you like is the Doer, and you take the short word: μου αρέσει is literally it pleases me. So the verb agrees with the thing: αρέσει for one thing, αρέσουν for several, αρέσεις when the thing is you. μου φαίνεται (it seems to me) and μου λείπεις (I miss you) work the same way, but νοιάζει takes the Target form: δε με νοιάζει. In speech μου often shortens to μ' before αρέσει, and the short word drops out when it's clear who is meant: Άρεσε;",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -71,7 +71,7 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 							weight: "deviate",
 							marks: [mark("μου", "genitive"), mark("τα πάρκα", "nominative", "neuter", true)],
 						},
-						"I like the parks",
+						"I like parks",
 					],
 					[cellWith("σου αρέσει;", mark("σου", "genitive")), "do you like it?"],
 					[cellWith("δεν μου αρέσει", mark("μου", "genitive")), "I don't like it"],
@@ -112,8 +112,8 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 		},
 		{
 			id: "objects",
-			title: "Him, her, it: τον, την, το",
-			rule: "Once a person or thing has been mentioned, a short Target word stands in for it before the verb: με for me, σε for you, τον for him, την for her, το for it, μας for us, σας for you all, and for them τους, τις or τα, copying the gender of the noun they stand for: τους for masculine nouns or a mix, τις for feminine, τα for neuter.",
+			title: "τον, την, το for him, her and it",
+			rule: "A short Target word before the verb stands for me, you, him, her, it, us or them. For it, τον, την or το copy the gender of the noun: ο καφές, τον πίνω, I'm drinking it. For them, τους is for masculine nouns or a mix, τις for feminine, τα for neuter.",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -145,7 +145,7 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 				},
 			],
 			confuse: {
-				text: "τον, την, τους, τις and τα look like the article. Before a verb they mean him, her or them: τον βλέπω, I see him; τις βλέπω, I see them. Before a noun they are the article: τον φίλο, τις μέρες. After a noun, του, της and τους mean his, her and their: ο φίλος του, το σπίτι τους.",
+				text: "τον, την, το, τους, τις and τα are also the article. Before a verb they mean him, her, it or them: τον βλέπω, I see him. Before a noun they mean the: τον φίλο. After a noun, του, της and τους mean his, her and their: ο φίλος του.",
 				section: "roles/articles",
 			},
 			drills: ["pronouns-object", "pronouns-placement"],
@@ -195,8 +195,8 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 		},
 		{
 			id: "long-forms",
-			title: "I, me, this one: εγώ, εμένα, αυτός",
-			rule: "The verb ending already says who, so εγώ, εσύ and the rest usually drop out: θέλω is I want. They come back for contrast. After για, με, από or χωρίς the short με and σε can't stand, so use the long εμένα and εσένα, often shortened to μένα and σένα: για μένα, not για με. αυτός, αυτή, αυτό mean he, she, it, and also this. For men, or a mix of men and women, the plural is αυτοί; for women only, αυτές; for things, αυτά.",
+			title: "The long forms εγώ, εμένα and αυτός",
+			rule: "The verb ending already says who, so εγώ, εσύ and the rest usually drop out: θέλω is I want. They come back for contrast. After για, με, από or χωρίς the short με and σε can't stand, so use the long εμένα and εσένα, often shortened to μένα and σένα: για μένα, not για με. αυτός, αυτή, αυτό mean he, she, it, and also this. For people the plural is αυτοί for men or a mix, αυτές for women only; for things it copies the noun, so αυτά for neuter ones.",
 			table: {
 				columns: [
 					{ label: "Doer", greek: true },
@@ -234,8 +234,8 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 					marks: [mark("Εγώ", "nominative"), mark("εσύ", "nominative")],
 				},
 				{
-					greek: "Δεν συμφωνώ με εσένα.",
-					english: "I don't agree with you.",
+					greek: "Χωρίς εσένα δεν πάω.",
+					english: "I'm not going without you.",
 					marks: [mark("εσένα", "accusative")],
 				},
 				{
@@ -250,7 +250,7 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 				},
 				{
 					greek: "Αυτοί είναι αδέλφια.",
-					english: "These are siblings. (a brother and a sister)",
+					english: "They're brother and sister.",
 					marks: [mark("Αυτοί", "nominative", "masculine", true)],
 				},
 			],
@@ -262,7 +262,7 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 			plannedDrills: [
 				{
 					id: "pronouns-long-forms",
-					title: "After a preposition: για μένα",
+					title: "Long forms after a preposition",
 					greek: "για μένα · με σένα · από αυτόν",
 					tests: "Shows a preposition and a person in English (for me); the answer is the preposition with the long form, για μένα, and για με counts as wrong.",
 				},
@@ -270,8 +270,8 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 		},
 		{
 			id: "polite",
-			title: "Polite you: σας and the plural verb",
-			rule: "With strangers, older people and in shops, speak to one person as you would to several: the verb takes its you-all ending and the short word is σας. So Γεια σου becomes Γεια σας, and a friend's Θέλεις κάτι; is a stranger's Θέλετε κάτι;",
+			title: "Polite you with σας and the plural verb",
+			rule: "With strangers, older people and in shops, speak to one person as you would to several: the verb takes its you-all ending and the short word is σας.",
 			table: {
 				columns: [
 					{ label: "Friendly", greek: true },
@@ -371,7 +371,7 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 			plannedDrills: [
 				{
 					id: "pronouns-two-together",
-					title: "Two short words: μου το δίνει",
+					title: "Two short words together",
 					greek: "μου το δίνει · του το δίνω · σου τα φέρνω",
 					tests: "Shows a sentence in English with a person and a thing (he gives it to me); the answer puts both short words before the verb, person first: μου το δίνει.",
 				},

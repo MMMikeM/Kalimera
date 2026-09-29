@@ -4,15 +4,15 @@ import type { Guide } from "@/types/guide";
 export const NOUNS_GUIDE: Guide = {
 	slug: "nouns",
 	tone: "ocean",
-	title: "Nouns: one and more than one",
+	title: "Noun endings and plurals",
 	greek: "Ουσιαστικά",
 	description: "Endings by family, plurals, and the Owner",
-	idea: "A noun's ending tells you its family, and the family tells you every other form it takes: its Target, its Owner and its plural.",
+	idea: "A noun's ending usually tells you its family, and the family gives you its other forms: its Target, its Owner and its plural.",
 	sections: [
 		{
 			id: "families",
-			title: "Families: masculine -ος",
-			rule: "The ending of the dictionary form puts a noun in a family, and each family has its own set of endings. Masculines in -ος are the biggest family, and the one whose plural Target differs from its plural Doer: οι φίλοι, but τους φίλους. The other families follow.",
+			title: "Masculine nouns in -ος",
+			rule: "Masculines in -ος are the biggest family, and the one whose plural Target differs from its plural Doer: οι φίλοι, but τους φίλους.",
 			table: {
 				columns: [
 					{ label: "Job" },
@@ -29,8 +29,8 @@ export const NOUNS_GUIDE: Guide = {
 		},
 		{
 			id: "families-as-is",
-			title: "Families: masculine -ας and -ης",
-			rule: "Masculines in -ας and -ης drop the -ς for the Target and the Owner. Their plural ends in -ες for the Doer and the Target alike.",
+			title: "Masculine nouns in -ας and -ης",
+			rule: "Masculines in -ας and -ης drop the -ς for the Target and the Owner of one. Their plural ends in -ες for the Doer and the Target alike.",
 			table: {
 				columns: [
 					{ label: "Job" },
@@ -50,8 +50,8 @@ export const NOUNS_GUIDE: Guide = {
 		},
 		{
 			id: "families-a-i",
-			title: "Families: feminine -α and -η",
-			rule: "Feminines keep one word for the Doer and the Target, and add a -ς for the Owner. Their plural ends in -ες for the Doer and the Target alike. A few in -η take -εις instead.",
+			title: "Feminine nouns in -α and -η",
+			rule: "Feminines use one form for the Doer and the Target, and add -ς for the Owner of one. Their plural ends in -ες for the Doer and the Target alike. A few in -η take -εις instead.",
 			table: {
 				columns: [
 					{ label: "Job" },
@@ -68,15 +68,15 @@ export const NOUNS_GUIDE: Guide = {
 				],
 			},
 			confuse: {
-				text: "η πόλη takes -εις in the plural, not -ες: οι πόλεις. The ending does not tell you which nouns do this.",
+				text: "η πόλη ends like η ζωή, but its plural is οι πόλεις.",
 				section: "extra-syllable",
 			},
 			drills: ["nominative-nouns", "nominal-all-nouns"],
 		},
 		{
 			id: "families-o-i",
-			title: "Families: neuter -ο and -ι",
-			rule: "Neuters use one word for the Doer and the Target, in the one and in the more than one. Nouns in -ο take -α in the plural, and most nouns in -ι add -α: τα παιδιά. The Owner ends in -ου.",
+			title: "Neuter nouns in -ο and -ι",
+			rule: "Neuters use one form for the Doer and the Target, one and more than one alike. Nouns in -ο swap it for -α in the plural, and most nouns in -ι add -α: τα παιδιά. The Owner of one ends in -ου.",
 			table: {
 				columns: [
 					{ label: "Job" },
@@ -96,8 +96,8 @@ export const NOUNS_GUIDE: Guide = {
 		},
 		{
 			id: "families-ma",
-			title: "Families: neuter -μα",
-			rule: "Neuters in -μα add -τ- everywhere except the one Doer and Target, and when the stress sits three syllables from the end it moves forward: το όνομα, τα ονόματα, but το χρώμα, τα χρώματα.",
+			title: "Neuter nouns in -μα",
+			rule: "Neuters in -μα add -τ- to every form except the Doer and Target of one. When the stress sits three syllables from the end, it moves one syllable towards the end: το όνομα, τα ονόματα, but το χρώμα, τα χρώματα.",
 			table: {
 				columns: [
 					{ label: "Job" },
@@ -114,7 +114,7 @@ export const NOUNS_GUIDE: Guide = {
 		},
 		{
 			id: "extra-syllable",
-			title: "Plurals with a new ending: καφέδες, πόλεις",
+			title: "Plurals with a new ending, like καφέδες and πόλεις",
 			rule: "Some nouns, mostly in -άς, -ά, -ές, -ούς and -τζής, add -δ- and a syllable in the plural. A few feminines in -η, such as πόλη, take -εις instead of -ες. Nothing in the ending tells you which: αγάπη gives αγάπες.",
 			table: {
 				columns: [
@@ -144,7 +144,7 @@ export const NOUNS_GUIDE: Guide = {
 		{
 			id: "never-change",
 			title: "Nouns that never change",
-			rule: "Many words borrowed from other languages keep one form for every job, one and more than one alike. Only the article changes. Most of them are neuter. Not every borrowed word works this way: ο καφές becomes οι καφέδες.",
+			rule: "Many borrowed words keep one form for every job, one and more than one alike, and only the article changes. Most are neuter. Not every borrowed word works this way: ο καφές becomes οι καφέδες.",
 			table: {
 				columns: [
 					{ label: "One", greek: true },
@@ -205,9 +205,9 @@ export const NOUNS_GUIDE: Guide = {
 					marks: [mark("διακοπές", "accusative", "feminine", true)],
 				},
 				{
-					greek: "για τα ψώνια πάμε στο μίνι μάρκετ",
-					english: "for the shopping we go to the minimarket",
-					marks: [mark("τα ψώνια", "accusative", "neuter", true), mark("στο μίνι μάρκετ", "accusative", "neuter")],
+					greek: "κάνω τα ψώνια στο σούπερ μάρκετ",
+					english: "I do the shopping at the supermarket",
+					marks: [mark("τα ψώνια", "accusative", "neuter", true), mark("στο σούπερ μάρκετ", "accusative", "neuter")],
 				},
 			],
 			drills: [],
@@ -223,7 +223,7 @@ export const NOUNS_GUIDE: Guide = {
 		{
 			id: "owner",
 			title: "The Owner in every family",
-			rule: "Each family makes its Owner its own way. Masculines in -ας and -ης drop the -ς: του πατέρα. Feminines add a -ς: της γυναίκας, της πόλης. Most neuters end in -ου, as in του παιδιού; -μα nouns take -ματος (του ονόματος) and -ος neuters take -ους (του λάθους). In the plural every noun that changes ends in -ων. In some nouns the stress moves forward: ο οδοντίατρος, του οδοντιάτρου.",
+			rule: "Masculines in -ος and most neuters end in -ου: του φίλου, του παιδιού. Masculines in -ας and -ης drop the -ς: του πατέρα. Feminines add -ς: της γυναίκας, της πόλης. Neuters in -μα take -ματος (του ονόματος), and neuters in -ος take -ους (του λάθους). In the plural every noun that changes ends in -ων. In some nouns the stress moves one syllable towards the end: ο οδοντίατρος, του οδοντιάτρου.",
 			table: {
 				columns: [
 					{ label: "Doer", greek: true },
@@ -266,7 +266,7 @@ export const NOUNS_GUIDE: Guide = {
 				},
 			],
 			confuse: {
-				text: "What the Owner means, and where it sits after the thing owned, is in Who does what: το σπίτι του Γιάννη.",
+				text: "The Owner goes after the thing it owns: το σπίτι του Γιάννη.",
 				section: "roles/owner",
 			},
 			drills: ["nominal-noun-owner", "nominal-all-nouns"],
@@ -302,7 +302,7 @@ export const NOUNS_GUIDE: Guide = {
 		{
 			id: "calling",
 			title: "Calling someone",
-			rule: "To call one person, use the Target form without its article: Γιάννη!, πατέρα!. Masculines in -ος usually end in -ε instead: φίλε!, κύριε. Short first names in -ος keep -ο: Γιώργο!, Νίκο!. To call more than one, use the Doer form: φίλοι!, παιδιά!.",
+			rule: "To call one person, use the Target form without its article: Γιάννη, πατέρα. Masculines in -ος usually end in -ε instead: φίλε, κύριε. Short first names in -ος keep -ο: Γιώργο, Νίκο. To call more than one, use the Doer form without its article: φίλοι, παιδιά.",
 			table: {
 				columns: [
 					{ label: "Doer", greek: true },

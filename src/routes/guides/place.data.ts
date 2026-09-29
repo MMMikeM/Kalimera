@@ -4,15 +4,15 @@ import type { Guide } from "@/types/guide";
 export const PLACE_GUIDE: Guide = {
 	slug: "place",
 	tone: "ocean",
-	title: "Place: σε, από, για",
+	title: "Place with σε, από and για",
 	greek: "Πού",
-	description: "Where things are, and where you go",
+	description: "Position and direction with σε and από",
 	idea: "Two small words do most of the work: σε for at, in and to, and από for from. σε joins onto the article after it; από never does.",
 	sections: [
 		{
 			id: "se-contractions",
-			title: "σε joins the article: στο, στη, στον",
-			rule: "σε means at, in or to, and it merges with the article after it. Feminine στη keeps an extra -ν before a vowel and before sounds like κ, π and τ: στην Αθήνα, στην Πάφο, but στη Λεμεσό. Only the article merges: before μια or ένα, meaning a, and before a word with no article, σε stays a separate word: σε μια λίμνη, σε λίγο, in a bit.",
+			title: "σε joined to the article",
+			rule: "σε means at, in or to, and merges with the article after it. στη becomes στην before a vowel and before sounds like κ, π and τ: στην Αθήνα, στην Πάφο, but στη Λεμεσό. Before μια or ένα, meaning a, or a word with no article, σε stays whole: σε μια λίμνη, σε λίγο, in a bit.",
 			table: {
 				columns: [
 					{ label: "Joins", greek: true },
@@ -26,7 +26,7 @@ export const PLACE_GUIDE: Guide = {
 					["σε + το → στο", markedCell("στο γραφείο", "accusative", "neuter"), "at the office"],
 					["σε + τα → στα", markedCell("στα εστιατόρια", "accusative", "neuter", true), "to the restaurants"],
 					["σε + τις → στις", markedCell("στις τρεις", "accusative", "feminine", true), "at three o'clock"],
-					["σε + τους → στους", markedCell("στους φίλους", "accusative", "masculine", true), "to the friends"],
+					["σε + τους → στους", markedCell("στους δρόμους", "accusative", "masculine", true), "in the streets"],
 					[{ text: "σε + μια → σε μια", weight: "deviate" }, cellWith("σε μια λίμνη", mark("μια λίμνη", "accusative", "feminine")), "at a lake"],
 				],
 			},
@@ -64,7 +64,7 @@ export const PLACE_GUIDE: Guide = {
 		{
 			id: "position",
 			title: "Next to, behind, far from",
-			rule: "A position word needs a partner to link it to the place. Some take σε, like δίπλα στο σπίτι; others take από, like πίσω από τον τοίχο. Learn each with its partner.",
+			rule: "Before a place, a position word needs a partner: σε, as in δίπλα στο σπίτι, or από, as in πίσω από τον τοίχο. Learn each with its partner. πάνω takes either, and the meaning changes: πάνω στο τραπέζι is on the table, πάνω από το τραπέζι above it.",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -85,8 +85,13 @@ export const PLACE_GUIDE: Guide = {
 			},
 			examples: [
 				{
+					greek: "Το κινητό σου είναι κάτω από τον καναπέ.",
+					english: "Your phone is under the sofa.",
+					marks: [mark("Το κινητό", "nominative", "neuter"), mark("τον καναπέ", "accusative", "masculine")],
+				},
+				{
 					greek: "Ποια ταβέρνα είναι κοντά;",
-					english: "Which taverna is near?",
+					english: "Which taverna is nearby?",
 					marks: [mark("Ποια ταβέρνα", "nominative", "feminine")],
 				},
 				{ greek: "Πόσο απέχει από εδώ;", english: "How far is it from here?" },
@@ -103,7 +108,7 @@ export const PLACE_GUIDE: Guide = {
 		},
 		{
 			id: "purpose",
-			title: "For, from, with: για, από, με",
+			title: "για, από and με",
 			rule: "για gives the purpose: πάω για ψώνια, I go shopping. Before a length of time it means for: για δύο χρόνια. από gives where from. με gives how, or who with.",
 			table: {
 				columns: [
@@ -112,7 +117,7 @@ export const PLACE_GUIDE: Guide = {
 				],
 				rows: [
 					[cellWith("πάω για ψώνια", mark("ψώνια", "accusative", "neuter", true)), "I go shopping"],
-					[cellWith("πάω για ύπνο", mark("ύπνο", "accusative", "masculine")), "I go to sleep"],
+					[cellWith("πάω για ύπνο", mark("ύπνο", "accusative", "masculine")), "I'm off to bed"],
 					[cellWith("για δύο χρόνια", mark("δύο χρόνια", "accusative", "neuter", true)), "for two years"],
 					[cellWith("είμαι από τη Νότια Αφρική", mark("τη Νότια Αφρική", "accusative", "feminine")), "I'm from South Africa"],
 					[cellWith("δουλεύω από το σπίτι", mark("το σπίτι", "accusative", "neuter")), "I work from home"],
@@ -145,7 +150,7 @@ export const PLACE_GUIDE: Guide = {
 		{
 			id: "position-pairs",
 			title: "Inside and outside, left and right",
-			rule: "Most position words come in pairs of opposites. On their own they need no partner: έλα μέσα, στρίψε αριστερά. Before a place they take a partner, σε or από, just like δίπλα and πίσω: μέσα στη λάσπη, but έξω από το σπίτι.",
+			rule: "Most position words come in pairs of opposites. On their own they need no partner: έλα μέσα, στρίψε αριστερά. Before a place they take σε or από: μέσα στη λάσπη, but έξω από το σπίτι.",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -171,7 +176,7 @@ export const PLACE_GUIDE: Guide = {
 				},
 				{
 					greek: "Γι' αυτό δεν βγαίνω έξω από το σπίτι.",
-					english: "That's why I don't go out of the house.",
+					english: "That's why I don't leave the house.",
 					marks: [mark("το σπίτι", "accusative", "neuter")],
 				},
 			],
@@ -188,7 +193,7 @@ export const PLACE_GUIDE: Guide = {
 		{
 			id: "without-until",
 			title: "Without, until, towards, like",
-			rule: "A few more words link a noun the way σε and από do, and with an article after them the noun takes the Target form: χωρίς, without; μέχρι, until; προς, towards; σαν, like. μετά από with a length of time means after: μετά από δύο χρόνια.",
+			rule: "These link a noun the way σε and από do: χωρίς, without; μέχρι, until; προς, towards; σαν, like. With an article, the noun after them takes the Target form. μετά από before a length of time means after: μετά από δύο χρόνια.",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
