@@ -25,7 +25,7 @@ function GuidesIndex() {
 						greek: guide.greek,
 						description: guide.description,
 						href: `/guides/${guide.slug}`,
-						greekClass: GUIDE_TONE[guide.tone].accent,
+						accentClass: GUIDE_TONE[guide.tone].bar,
 					})),
 				},
 			]}

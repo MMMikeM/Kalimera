@@ -119,7 +119,7 @@ Dark mode redefines every token under `:root.dark` in `src/index.css` (the remap
 
 ### Ink Variants (colourful text on the page)
 
-The `-text` shades are dark enough to pass AAA on `-100` tints, which leaves little room for colour. Text set straight on the cream page can be lighter and far more saturated and still hold 7:1, so each accent also has an `-ink` shade: the lightest, most chromatic value that passes AAA on cream and on its own `-50`. Use `-ink` for coloured words on the page (guide names, section numbers, coloured table columns) and `-text` for words on a tint. In dark mode `-ink` takes the colour's dark `-text` value.
+The `-text` shades are dark enough to pass AAA on `-100` tints, which leaves little room for colour. Text set straight on the cream page can be lighter and far more saturated and still hold 7:1, so each accent also has an `-ink` shade: the lightest, most chromatic value that passes AAA on cream and on its own `-50`. Use `-ink` for the few coloured words on the page (section numbers) and `-text` for words on a tint. The guides carry their colour in backgrounds instead: a wash behind each section card, tinted table columns, and a tinted key. In dark mode `-ink` takes the colour's dark `-text` value.
 
 | Token             | Light                  | Chroma vs `-text` |
 | ----------------- | ---------------------- | ----------------- |

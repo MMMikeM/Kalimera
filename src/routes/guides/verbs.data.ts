@@ -2,27 +2,27 @@ import type { Guide } from "@/types/guide";
 
 export const VERBS_GUIDE: Guide = {
 	slug: "verbs",
-	tone: "sunset",
-	title: "Verbs: now · done · not yet",
+	tone: "stone",
+	title: "Verbs: present, past, future",
 	greek: "Ρήματα",
-	description: "Every verb as three forms",
-	idea: "Learn every verb as three forms: what is happening now, what is done, and what is not done yet. The done form and the not-yet form share one shape, so knowing one gives you the other.",
+	description: "Every verb as present, simple past and simple future",
+	idea: "Learn every verb as three forms: present, simple past and simple future. The simple past and the simple future share one shape, so knowing one gives you the other.",
 	key: [
-		{ label: "Now", tone: "olive" },
-		{ label: "Done", tone: "terracotta" },
-		{ label: "Not yet", tone: "ocean" },
-		{ label: "Ongoing past", tone: "honey" },
+		{ label: "Present", tone: "olive" },
+		{ label: "Simple past", tone: "terracotta" },
+		{ label: "Simple future", tone: "ocean" },
+		{ label: "Continuous, past or future", tone: "honey" },
 	],
 	sections: [
 		{
 			id: "ladder",
 			title: "Every verb has three forms",
-			rule: "Now is the everyday form. Done is the past. Not yet is θα plus a short form, and the short form has the same shape as the past: know είδα and you can predict θα δω.",
+			rule: "The present is the everyday form. The simple past is one finished event. The simple future is θα plus a short form, and that short form has the same shape as the simple past: know είδα and you can predict θα δω.",
 			table: {
 				columns: [
-					{ label: "Now", greek: true, tone: "olive" },
-					{ label: "Done", greek: true, tone: "terracotta" },
-					{ label: "Not yet", greek: true, tone: "ocean" },
+					{ label: "Present", greek: true, tone: "olive" },
+					{ label: "Simple past", greek: true, tone: "terracotta" },
+					{ label: "Simple future", greek: true, tone: "ocean" },
 					{ label: "Meaning" },
 				],
 				rows: [
@@ -47,9 +47,9 @@ export const VERBS_GUIDE: Guide = {
 			table: {
 				columns: [
 					{ label: "Who" },
-					{ label: "Now", greek: true, tone: "olive" },
-					{ label: "Done", greek: true, tone: "terracotta" },
-					{ label: "Not yet", greek: true, tone: "ocean" },
+					{ label: "Present", greek: true, tone: "olive" },
+					{ label: "Past", greek: true, tone: "terracotta" },
+					{ label: "Future", greek: true, tone: "ocean" },
 				],
 				rows: [
 					[
@@ -82,9 +82,9 @@ export const VERBS_GUIDE: Guide = {
 			rule: "A few everyday verbs have no separate short form, so θα goes straight in front of the everyday form. έχω, θέλω and ξέρω describe a state, which has no one-off version; κάνω and περιμένω simply have a short form identical to the present. Their past is still a form of its own.",
 			table: {
 				columns: [
-					{ label: "Now", greek: true, tone: "olive" },
-					{ label: "Done", greek: true, tone: "terracotta" },
-					{ label: "Not yet", greek: true, tone: "ocean" },
+					{ label: "Present", greek: true, tone: "olive" },
+					{ label: "Past", greek: true, tone: "terracotta" },
+					{ label: "Future", greek: true, tone: "ocean" },
 					{ label: "Meaning" },
 				],
 				rows: [
@@ -105,7 +105,7 @@ export const VERBS_GUIDE: Guide = {
 		},
 		{
 			id: "present",
-			title: "Now: the present endings",
+			title: "Present: the endings",
 			rule: "Most verbs end in -ω and share one set of endings. Verbs in -άω share a second set. A few short verbs, like πάω and τρώω, follow neither: learn them whole.",
 			table: {
 				columns: [
@@ -144,13 +144,13 @@ export const VERBS_GUIDE: Guide = {
 		},
 		{
 			id: "past-shapes",
-			title: "Done: the past, by family",
-			rule: "The past endings are the same for every verb: -α, -ες, -ε, -αμε, -ατε, -αν. What changes is the stem, and stems come in families, so learn the family rather than the verb. A past too short to carry its stress gains an έ- in front: έβαλα, έδωσα.",
+			title: "Simple past, by family",
+			rule: "The simple past endings are the same for every verb: -α, -ες, -ε, -αμε, -ατε, -αν. What changes is the stem, and stems come in families, so learn the family rather than the verb. A past too short to carry its stress gains an έ- in front: έβαλα, έδωσα.",
 			table: {
 				columns: [
-					{ label: "Now", greek: true, tone: "olive" },
-					{ label: "Done", greek: true, tone: "terracotta" },
-					{ label: "Not yet", greek: true, tone: "ocean" },
+					{ label: "Present", greek: true, tone: "olive" },
+					{ label: "Simple past", greek: true, tone: "terracotta" },
+					{ label: "Simple future", greek: true, tone: "ocean" },
 					{ label: "Family" },
 				],
 				rows: [
@@ -185,13 +185,13 @@ export const VERBS_GUIDE: Guide = {
 		},
 		{
 			id: "future",
-			title: "Not yet: θα with the short form",
-			rule: "For one action still to come, put θα in front of the short form, the one shaped like the past. θα with the everyday form means something ongoing instead: θα διαβάζω is I'll be reading.",
+			title: "Simple future: θα with the short form",
+			rule: "For one action still to come, put θα in front of the short form, the one shaped like the simple past. θα with the present form is the future continuous instead: θα διαβάζω is I'll be reading.",
 			table: {
 				columns: [
-					{ label: "Done", greek: true, tone: "terracotta" },
-					{ label: "Not yet, once", greek: true, tone: "ocean" },
-					{ label: "Not yet, ongoing", greek: true, tone: "ocean" },
+					{ label: "Simple past", greek: true, tone: "terracotta" },
+					{ label: "Simple future", greek: true, tone: "ocean" },
+					{ label: "Future continuous", greek: true, tone: "honey" },
 				],
 				rows: [
 					["έβαλα", { text: "θα βάλω", weight: "anchor" }, "θα βάζω"],
@@ -216,7 +216,7 @@ export const VERBS_GUIDE: Guide = {
 		{
 			id: "short-form",
 			title: "The same short form after να, πριν and ίσως",
-			rule: "The short form is not only for the future. After να, πριν and ίσως you use it too, so one form does four jobs.",
+			rule: "The simple future's short form is not only for the future. After να, πριν and ίσως you use it too, so one form does four jobs.",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true, tone: "ocean" },
@@ -242,8 +242,8 @@ export const VERBS_GUIDE: Guide = {
 			table: {
 				columns: [
 					{ label: "Who" },
-					{ label: "Now", greek: true, tone: "olive" },
-					{ label: "Done", greek: true, tone: "terracotta" },
+					{ label: "Present", greek: true, tone: "olive" },
+					{ label: "Simple past", greek: true, tone: "terracotta" },
 				],
 				rows: [
 					[
@@ -270,12 +270,12 @@ export const VERBS_GUIDE: Guide = {
 		},
 		{
 			id: "ongoing-past",
-			title: "The other past: was doing, used to do",
-			rule: "The done form is for one finished event. For something ongoing or habitual in the past, use the ongoing past: σπούδασα is I studied, σπούδαζα is I was studying or I used to study.",
+			title: "Past continuous: was doing, used to do",
+			rule: "The simple past is for one finished event. For something ongoing or habitual in the past, use the past continuous: σπούδασα is I studied, σπούδαζα is I was studying or I used to study.",
 			table: {
 				columns: [
-					{ label: "Done, once", greek: true, tone: "terracotta" },
-					{ label: "Ongoing past", greek: true, tone: "honey" },
+					{ label: "Simple past", greek: true, tone: "terracotta" },
+					{ label: "Past continuous", greek: true, tone: "honey" },
 					{ label: "Meaning" },
 				],
 				rows: [
@@ -321,7 +321,7 @@ export const VERBS_GUIDE: Guide = {
 	reference: [
 		{ label: "Present", href: "/reference/verbs/present" },
 		{ label: "Past", href: "/reference/verbs/past" },
-		{ label: "Continuous past", href: "/reference/verbs/past-continuous" },
+		{ label: "Past continuous", href: "/reference/verbs/past-continuous" },
 		{ label: "Future", href: "/reference/verbs/future" },
 	],
 };

@@ -17,7 +17,7 @@ const ConfuseBox = ({ guide, section }: { guide: Guide; section: GuideSectionDat
 	if (!section.confuse) return null;
 	const target = resolveSectionRef(section.confuse.section, guide);
 	return (
-		<aside className={cn("rounded-md border p-4 text-sm text-stone-700", GUIDE_TONE[guide.tone].panel)}>
+		<aside className={cn("rounded-md p-4 text-sm text-stone-700", GUIDE_TONE[guide.tone].column)}>
 			<p className="mb-1 font-semibold text-stone-900">Don't confuse</p>
 			<p>
 				<ProseWithGreek text={section.confuse.text} />
@@ -85,7 +85,7 @@ export const GuideSection = ({
 		<section
 			id={section.id}
 			aria-labelledby={`${section.id}-title`}
-			className="scroll-mt-6 space-y-5 rounded-lg border border-stone-300 p-4 sm:p-6"
+			className={cn("scroll-mt-6 space-y-5 rounded-lg border p-4 sm:p-6", tone.panel)}
 		>
 			<header className="space-y-2">
 				<span aria-hidden="true" className={cn("block h-1 w-10 rounded-full", tone.bar)} />

@@ -5,6 +5,7 @@
  * fails on every note that used it.
  */
 
+import type { ColorScheme } from "@/lib/colors";
 import type { Gender, GrammaticalCase } from "@/server/db/enums";
 
 /** A run of Greek inside a cell or example that gets a grammar mark under it. */
@@ -65,7 +66,7 @@ export interface GuideReference {
  * avoids navy, sunset and slate, which sit close to the masculine, feminine and
  * neuter mark colours and would read as a gender next to them.
  */
-export type GuideTone = "terracotta" | "sunset" | "olive" | "ocean" | "honey" | "navy" | "slate" | "stone";
+export type GuideTone = ColorScheme;
 
 export interface Guide {
 	slug: string;

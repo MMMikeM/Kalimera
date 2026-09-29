@@ -27,7 +27,7 @@ export const GuidePage = ({ guide }: { guide: Guide }) => {
 				<PageHeading
 					title={
 						<>
-							<GreekText size="inherit" tone="inherit" className={cn("mr-3", tone.accent)}>
+							<GreekText size="inherit" tone="muted" className="mr-3">
 								{guide.greek}
 							</GreekText>
 							<ProseWithGreek text={guide.title} />
@@ -48,9 +48,9 @@ export const GuidePage = ({ guide }: { guide: Guide }) => {
 						<li
 							key={entry.label}
 							className={cn(
-								"rounded-full border px-3 py-1 text-sm font-semibold",
-								GUIDE_TONE[entry.tone].panel,
-								GUIDE_TONE[entry.tone].accent,
+								"rounded-md px-3 py-1.5 text-sm font-semibold",
+								GUIDE_TONE[entry.tone].column,
+								GUIDE_TONE[entry.tone].columnLabel,
 							)}
 						>
 							{entry.label}
