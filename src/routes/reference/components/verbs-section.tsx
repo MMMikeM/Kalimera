@@ -117,17 +117,16 @@ const SamePatternList: React.FC<{
 	verbs: Array<{ infinitive: string; meaning: string }>;
 	textClass: string;
 }> = ({ verbs, textClass }) => (
-	<div className="divide-y divide-stone-100">
+	<ul className="grid grid-cols-2 gap-x-4 gap-y-3 sm:grid-cols-3 lg:grid-cols-4">
 		{verbs.map((v) => (
-			<div key={v.infinitive} className="flex items-baseline gap-2 py-2 first:pt-0 last:pb-0">
+			<li key={v.infinitive} className="flex min-w-0 flex-col">
 				<GreekText tone="default" size="base" className={`${textClass} font-semibold`}>
 					{v.infinitive}
 				</GreekText>
-				<span className="text-sm text-stone-600">({v.meaning})</span>
-				<span className="ml-auto text-xs text-stone-400">same endings</span>
-			</div>
+				<span className="text-sm text-stone-600">{v.meaning}</span>
+			</li>
 		))}
-	</div>
+	</ul>
 );
 
 type PatternKey = "active" | "contracted" | "deponent";
