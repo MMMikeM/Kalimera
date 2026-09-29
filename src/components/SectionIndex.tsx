@@ -12,8 +12,8 @@ interface IndexTopic {
 	greek: string;
 	description: string;
 	href: string;
-	/** Colour for the Greek name, when a section has an identifying colour of its own. */
-	greekClass?: string;
+	/** A strip of colour beside the row, when a section has an identifying colour of its own. */
+	accentClass?: string;
 }
 
 export interface IndexGroup {
@@ -43,9 +43,12 @@ export const SectionIndex = ({
 					{group.topics.map((topic) => (
 						<li key={topic.id}>
 							<Link to={topic.href} className="group flex min-h-11 items-center gap-4 py-4">
+								{topic.accentClass ? (
+									<span aria-hidden="true" className={cn("w-1.5 self-stretch rounded-full", topic.accentClass)} />
+								) : null}
 								<div className="min-w-0 flex-1">
 									<p className="flex flex-wrap items-baseline gap-x-3">
-										<GreekText size="2xl" className={cn("group-hover:text-terracotta-text", topic.greekClass)}>
+										<GreekText size="2xl" className="group-hover:text-terracotta-text">
 											{topic.greek}
 										</GreekText>
 										<span className="text-stone-700">{topic.label}</span>
