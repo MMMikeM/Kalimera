@@ -16,13 +16,13 @@ Research-backed design principles for effective language learning interfaces.
 
 ### 2. Maximum 3–4 Colours Per Context
 
-**Research:** Colour-coding aids retention, but too many colours increase cognitive load and reverse the benefit.
+**Research:** Colour-coding aids retention, but too many colours increase cognitive load and reverse the benefit. Colour also runs out: only about four values per axis stay discriminable, and case and gender used to compete for the same few.
 
 **Application:**
 
-- Show case colours OR gender colours, never both simultaneously
+- Grammar is shown by shape, not colour: see "Grammar Marks" below. Colour's one grammatical job is gender, on a mark
 - Limit visible accent colours to 3–4 in any single view
-- Use progressive disclosure: start without colour coding, add as concepts are introduced
+- Use progressive disclosure: show only the grammatical axes a page teaches
 
 ### 3. AAA Contrast for Extended Reading
 
@@ -73,23 +73,14 @@ These colours fail WCAG AA for body text on light backgrounds. Use only for:
 | Token                               | OKLCH Value            | Contrast | Use                                  |
 | ----------------------------------- | ---------------------- | -------- | ------------------------------------ |
 | `terracotta` (`--color-terracotta`) | `oklch(0.61 0.13 42)`  | ~3.9:1   | Interactive accents, emphasis; primary buttons use `-600` |
-| `sunset` (`--color-sunset`)         | `oklch(0.58 0.13 355)` | ~4.1:1   | Feminine accents, deponent verbs     |
+| `sunset` (`--color-sunset`)         | `oklch(0.58 0.13 355)` | ~4.1:1   | Warm secondary accent                |
 | `olive` (`--color-olive`)           | `oklch(0.66 0.05 128)` | ~4.2:1   | Secondary accent, nature, connection |
 | `ocean` (`--color-ocean`)           | `oklch(0.56 0.06 224)` | ~4.1:1   | Tertiary accent, stability, calm     |
 | `honey` (`--color-honey`)           | `oklch(0.76 0.12 82)`  | ~3.2:1   | Highlights, hints, decision trees    |
-| `navy` (`--color-navy`)             | `oklch(0.44 0.07 257)` | ~5.8:1   | Headings, active verbs, scholarly    |
-| `slate` (`--color-slate`)           | `oklch(0.58 0.03 183)` | ~4.0:1   | Secondary accents, contracted verbs  |
+| `navy` (`--color-navy`)             | `oklch(0.44 0.07 257)` | ~5.8:1   | Headings, scholarly                  |
+| `slate` (`--color-slate`)           | `oklch(0.58 0.03 183)` | ~4.0:1   | Secondary accents                    |
 
-### Choosing a Tint for a Non-Grammatical Surface
-
-The base palette is the **correct** choice for any surface that is not making a grammatical
-claim — navigation, section grouping, chrome, page-local axes. It is not a fallback to feel
-guilty about; `grammar-palette.ts` uses it deliberately for `verb-active` (navy),
-`verb-contracted` (slate), `verb-deponent` (sunset) and `decision` (honey).
-
-Do not reason from hue when deciding whether a colour is "the case colour". `ocean` and
-`case-nominative` both sit near hue 223, and `olive` and `case-genitive` near 127–131, but
-they are separate tokens with separate jobs.
+### Choosing Sibling Tints
 
 **The ramps are not calibrated against each other.** Picking sibling tints at the same step
 number does not give you balanced weight:
@@ -108,7 +99,7 @@ tints, match chroma — `ocean-200` / `olive-200` / `cream-200` is the tested tr
 
 ### Text-Safe Variants (AAA Compliant)
 
-Use these for any text content. Contrast ratios are calculated against cream backgrounds and tinted backgrounds (e.g. `bg-honey-100`, `bg-case-accusative-100`).
+Use these for any text content. Contrast ratios are calculated against cream backgrounds and tinted backgrounds (e.g. `bg-honey-100`).
 
 Dark mode redefines every token under `:root.dark` in `src/index.css` (the remapping rule is in the comment above that block). There the `-text` tokens sit at L 0.88 and measure 10:1+ on their dark `-100` tints and 8.5:1+ on `-300`. Components rarely need `dark:` classes: use the tokens and both themes follow. The exception is a step that doesn't flip. `terracotta-700` keeps its value in dark mode and is too dark there, so the active mobile tab and the landing headline pair it with `dark:text-terracotta` or `dark:text-terracotta-text`.
 
@@ -126,93 +117,39 @@ Dark mode redefines every token under `:root.dark` in `src/index.css` (the remap
 
 ---
 
-## Grammar Semantic Colours
+## Grammar Marks
 
-### Cases
+Case, number and gender are drawn under the Greek by `<GrammarMark>` (`src/components/GrammarMark.tsx`), not carried by colour:
 
-Each Greek case has a reserved role scale in `src/index.css` (`@theme static`, hues 223, 60, 127). Only Nominative, Accusative, and Genitive have role tokens; there is no vocative token. Learner labels (Doer, Target, Owner) are taught alongside grammatical names:
+| Channel   | Shows  | Values                                                                               |
+| --------- | ------ | ------------------------------------------------------------------------------------ |
+| End shape | Case   | `<->` Doer (nominative) · `>-<` Target (accusative) · `o-o` Owner (genitive) · `!-!` Calling (vocative) |
+| Lines     | Number | one line = one · two lines = more than one                                           |
+| Colour    | Gender | the gender's `-700` step, from `GENDER_MARK` in `src/constants/grammar-palette.ts`   |
 
-| Case       | Learner Label | Hue | Role Token Scale                   | Text Token (Verbatim OKLCH)                            | Rationale                         |
-| ---------- | ------------- | --- | ---------------------------------- | ------------------------------------------------------ | --------------------------------- |
-| Nominative | Doer          | 223 | `--color-case-nominative-100..950` | `--color-case-nominative-text`: `oklch(0.34 0.06 223)` | Subject — stable, foundational    |
-| Accusative | Target        | 60  | `--color-case-accusative-100..950` | `--color-case-accusative-text`: `oklch(0.35 0.08 60)`  | Direct object — action target     |
-| Genitive   | Owner         | 127 | `--color-case-genitive-100..950`   | `--color-case-genitive-text`: `oklch(0.34 0.09 127)`   | Possession — connection, relation |
-
-**Application via `SCHEME` and `GrammarTable`:**
-
-Grammar colour is applied via the `SCHEME` record in `src/constants/grammar-palette.ts` and `GrammarTable` row definitions (`CASE_ROW_DEFS`):
-
-```typescript
-// src/constants/grammar-palette.ts
-export const CASE_SCHEME: Record<CaseName, GrammarScheme> = {
-	Nominative: "case-nominative",
-	Accusative: "case-accusative",
-	Genitive: "case-genitive",
-};
-
-// "case-nominative": { bg: "bg-case-nominative-100", border: "border-case-nominative-300", badgeBg: "bg-case-nominative-400", badgeText: "text-case-nominative-text", text: "text-case-nominative-text", bar: "bg-case-nominative-700", heroText: "text-case-nominative-700" }
-// "case-accusative": { bg: "bg-case-accusative-100", border: "border-case-accusative-300", badgeBg: "bg-case-accusative-400", badgeText: "text-case-accusative-text", text: "text-case-accusative-text", bar: "bg-case-accusative-700", heroText: "text-case-accusative-700" }
-// "case-genitive":   { bg: "bg-case-genitive-100",   border: "border-case-genitive-300",   badgeBg: "bg-case-genitive-400",   badgeText: "text-case-genitive-text",   text: "text-case-genitive-text",   bar: "bg-case-genitive-700",   heroText: "text-case-genitive-700" }
+```tsx
+<GrammarMark case="accusative" gender="feminine" plural>τις γυναίκες</GrammarMark>
 ```
 
-Every scheme carries all seven keys, and all are required. `badgeText` is the text colour on `badgeBg`; set a pill's text with it, not with `text`. `bar` is the saturated fill for progress bars and solid chips. `heroText` is higher-chroma text for large serif display, where the `-text` tokens read dull.
+The shapes are symmetric on purpose. A one-sided arrow would claim the action flows left to right, and case exists precisely because word order does not decide who does what: «Τον Γιάννη βλέπει η Μαρία» puts the Target first.
 
-```typescript
-// src/components/GrammarTable.tsx
-export const CASE_ROW_DEFS: RowDef[] = [
-	{ key: "nom", label: "Doer", sublabel: "Nominative", scheme: "case-nominative" },
-	{ key: "acc", label: "Target", sublabel: "Accusative", scheme: "case-accusative" },
-	{ key: "gen", label: "Owner", sublabel: "Genitive", scheme: "case-genitive" },
-];
-```
+**Rules:**
 
-### Gender
+- Mark the whole phrase, article included, never a bare ending. A one-letter ending is too short to carry two end shapes.
+- Show only the axes the page teaches. A page about case passes no `gender`, and the mark is neutral stone.
+- Marks are for nouns, articles, adjectives and pronouns. Do not reuse the shapes for another meaning on verb pages.
+- A marked phrase never wraps; a line break moves the phrase and its mark together.
+- Filled end shapes are the default: they hold their shape at text size. `outlined` suits large display.
 
-Gender colours use reserved role tokens (`@theme static`, hues 268, 2, 171) applied through the `SCHEME` record:
+**Geometry** lives in `src/components/grammar-mark-geometry.ts`. Every end shape is 9px tall; each line runs in under its end shape so none stops short; a pair of lines mirrors about the centre. Every edge sits on the half-pixel grid, which is a whole pixel on a 2× screen, so lines render as solid rows. The vocative is an exclamation mark whose bar stops at the lower plural line and whose dot hangs below the shared height. A mark is never narrower than 30px and is inset 2px from each end of its phrase, so neighbouring marks keep a gap.
 
-| Gender    | Hue | Role Token Scale                    | Text Token (Verbatim OKLCH)                             |
-| --------- | --- | ----------------------------------- | ------------------------------------------------------- |
-| Masculine | 268 | `--color-gender-masculine-100..950` | `--color-gender-masculine-text`: `oklch(0.47 0.12 268)` |
-| Feminine  | 2   | `--color-gender-feminine-100..950`  | `--color-gender-feminine-text`: `oklch(0.49 0.18 2)`    |
-| Neuter    | 171 | `--color-gender-neuter-100..950`    | `--color-gender-neuter-text`: `oklch(0.51 0.1 171)`     |
+**Checks:** `/specimens/grammar-mark` (dev only) shows every case, gender and number and the layouts that break marks. `e2e/grammar-mark.spec.ts` photographs it and checks the no-wrap, width and symmetry rules; `grammar-mark-geometry.test.ts` checks the geometry.
 
-**Application via `SCHEME` and `GrammarTable`:**
+### Colour is open for the redesign
 
-```typescript
-// src/constants/grammar-palette.ts
-export const GENDER_SCHEME: Record<Gender, GrammarScheme> = {
-	masculine: "gender-masculine",
-	feminine: "gender-feminine",
-	neuter: "gender-neuter",
-};
+Colour no longer encodes case. The reserved `case-*` and `gender-*` scales in `@theme static` are legacy: current pages still read them through `SCHEME`, `caseScheme()` and `genderScheme()`, and the lint that keeps role tokens inside `grammar-palette.ts` stays until the redesign retires them. Add no new case colour, and no new page-local colour axis; new grammar display uses `<GrammarMark>`.
 
-// "gender-masculine": { bg: "bg-gender-masculine-100", border: "border-gender-masculine-200", badgeBg: "bg-gender-masculine-300", badgeText: "text-gender-masculine-950", text: "text-gender-masculine-text", bar: "bg-gender-masculine-700", heroText: "text-gender-masculine-700" }
-// "gender-feminine":  { bg: "bg-gender-feminine-100",  border: "border-gender-feminine-200",  badgeBg: "bg-gender-feminine-300",  badgeText: "text-gender-feminine-950",  text: "text-gender-feminine-text",  bar: "bg-gender-feminine-700",  heroText: "text-gender-feminine-700" }
-// "gender-neuter":    { bg: "bg-gender-neuter-100",    border: "border-gender-neuter-200",    badgeBg: "bg-gender-neuter-300",    badgeText: "text-gender-neuter-950",    text: "text-gender-neuter-text",    bar: "bg-gender-neuter-700",    heroText: "text-gender-neuter-700" }
-```
-
-Gender `badgeText` is the `-950` step, not `-text`: the gender `-text` tokens are too light on their own `-300` chip.
-
-```typescript
-// src/components/GrammarTable.tsx
-export const GENDER_COLUMN_DEFS: ColumnDef[] = [
-	{ key: "masculine", label: "M", scheme: "gender-masculine" },
-	{ key: "feminine", label: "F", scheme: "gender-feminine" },
-	{ key: "neuter", label: "N", scheme: "gender-neuter" },
-];
-```
-
-### Verb Schemes
-
-Verb schemes encode local structural axes that do not claim global grammatical role. They map to base palette colours chosen not to collide with case/gender role tokens:
-
-| Verb Scheme       | Palette Key | Classes (`bg` / `border` / `badgeBg` / `badgeText` / `text` / `bar` / `heroText`)                                          |
-| ----------------- | ----------- | -------------------------------------------------------------------------------------------------------------------------- |
-| `verb-active`     | Navy        | `bg-navy-100`, `border-navy-300`, `bg-navy-300`, `text-navy-text`, `text-navy-text`, `bg-navy`, `text-navy-700`            |
-| `verb-contracted` | Slate       | `bg-slate-100`, `border-slate-300`, `bg-slate-300`, `text-slate-text`, `text-slate-text`, `bg-slate`, `text-slate-600`     |
-| `verb-deponent`   | Sunset      | `bg-sunset-100`, `border-sunset-300`, `bg-sunset-300`, `text-sunset-text`, `text-sunset-text`, `bg-sunset`, `text-sunset-700` |
-
-### Learning Feedback
+## Feedback Colours
 
 Feedback states use dedicated semantic tokens:
 
@@ -254,12 +191,12 @@ Never apply `.greek-text` yourself. `<GreekText>` applies it, along with `lang="
 
 ```tsx
 <GreekText size="lg">Καλημέρα</GreekText>
-<GreekText as="td" tone="masculine" size="sm">{form}</GreekText>
+<GreekText as="td" size="sm">{form}</GreekText>
 ```
 
-Greek-ness and grammar colour are separate props. The gender and case tones map to the
-reserved role tokens, so a colour never has to be built as `text-gender-${g}` — which
-Tailwind's extractor cannot see.
+The gender and case `tone` values (`tone="masculine"`, `tone="genitive"`) are legacy: they
+colour Greek by grammar, which `<GrammarMark>` now does instead. Existing pages still use
+them until the redesign; don't reach for them in new work.
 
 Definition in `src/index.css` (no size — `<GreekText>` carries the scale):
 
@@ -377,7 +314,7 @@ Use `CollapsibleSection` (`src/components/CollapsibleSection.tsx`) for progressi
 ```
 
 - Built on `@base-ui/react/collapsible` with smooth motion transitions
-- Available `colorScheme` values: `ocean | terracotta | sunset | olive | honey | navy | slate | stone` (default: `stone`). These are base-palette chrome from `src/lib/colors.ts`; a grammatical claim goes through `SCHEME`, never here
+- Available `colorScheme` values: `ocean | terracotta | sunset | olive | honey | navy | slate | stone` (default: `stone`). These are base-palette chrome from `src/lib/colors.ts`; grammar is shown with `<GrammarMark>`, never here
 - Includes `focus-visible:ring-2 focus-visible:ring-stone-900/30` on triggers for accessibility
 
 ### Decision Trees / Quick Tests
@@ -430,15 +367,15 @@ Use `MistakeComparison` (`src/components/MistakeComparison.tsx`) for wrong vs co
 - **`StatusPage`** (`src/components/StatusPage.tsx`): exports `RouteError`, `RootError` and `NotFound`. A failed page and a 404 render inside the app shell, so the header and navigation still work; only `RootError`, for when the shell itself fails, renders without them.
 - **`Verdict`** (`src/components/Verdict.tsx`): the drill verdict line, "Correct", "Incorrect" or "Time's up", in `text-correct-text` / `text-incorrect-text`. Drills and the landing demo share it.
 - **`MarkedGreek`** (`src/components/MarkedGreek.tsx`): colours only the case-bearing words of a phrase and leaves the rest neutral. The data names those words in a `marked` field, verbatim and in reading order.
-- **`SectionIndex`** (`src/components/SectionIndex.tsx`): the Greek-first ruled table of contents for section landings (`/learn`, `/learn/essentials`, `/reference`). No cards and no tints: a coloured slab beside the case colours reads as a grammatical claim.
+- **`SectionIndex`** (`src/components/SectionIndex.tsx`): the Greek-first ruled table of contents for section landings (`/learn`, `/learn/essentials`, `/reference`). No cards and no tints.
 
 ---
 
 ## Don'ts
 
 1. **Don't use accent colours for body text** — Base accents fail contrast requirements; always use their `-text` variants
-2. **Don't show case AND gender colours together** — Maximum 3–4 colours per context to avoid cognitive overload
-3. **Don't misapply grammar role colours** — Grammar colour on or around Greek content asserts its grammatical value; use base palette or neutral stone for non-grammatical UI
+2. **Don't encode grammar in colour** — Case and number are shapes on a `<GrammarMark>`; colour marks gender only, and only on the mark
+3. **Don't add to the legacy role tokens** — `case-*` / `gender-*` scales stay only until the redesign replaces the pages that use them
 4. **Don't hand-roll Greek markup** — No raw `lang="el"` spans and no `greek-text` class at call sites; use `<GreekText>`. `pnpm lint:greek` enforces it
 5. **Don't use SVG noise/grain textures** — They create visual artefacts
 6. **Don't use opacity modifiers on text colours** — Breaks AAA contrast (see below)
@@ -525,29 +462,14 @@ Opacity modifiers are fine for backgrounds since they do not affect text contras
 
 | Element                     | Colour Token / Pattern                                           | Rationale                     |
 | --------------------------- | ---------------------------------------------------------------- | ----------------------------- |
-| Page titles, section headings | `text-stone-900` (`PageHeading`, `BandHeading`); the older `SectionHeading` still sets `text-navy-text` | Neutral; colour stays free for grammar |
+| Page titles, section headings | `text-stone-900` (`PageHeading`, `BandHeading`); the older `SectionHeading` still sets `text-navy-text` | Neutral                       |
 | Index group labels, ledes   | `text-stone-600` (`SectionIndex` groups, `BandHeading` lede); `SectionHeading` subtitle is `text-slate-text` | Subtle, supporting            |
-| Teaching cards & Callouts   | `SCHEME[scheme]` (`bg`, `border`, `text`; badges `badgeBg` with `badgeText`) | Semantic grammar mapping      |
+| Teaching cards & Callouts   | `SCHEME[scheme]` (`bg`, `border`, `text`; badges `badgeBg` with `badgeText`) | Legacy grammar mapping, pending the redesign |
 | Decision navigators & tests | `NavigatorCard`: `bg-honey-50`, `border-honey-300`; `QuickTest` (honey): `bg-honey-100`, `border-honey-400`; `SCHEME.decision`: `bg-honey-50`, `border-honey-200`; text `text-honey-text` in all three | Hints, warmth, navigation     |
 | Feedback — Correct          | `text-correct-text` / `bg-correct-light`                         | Unambiguous positive feedback |
 | Feedback — Incorrect        | `text-incorrect-text` / `bg-incorrect-light`                     | Unambiguous error feedback    |
 | Decorative icons            | Base colour (e.g. `text-honey`, `text-terracotta`)               | Visual accent only            |
 | Text labels & inline badges | `-text` variant (e.g. `text-honey-text`, `text-terracotta-text`) | AAA compliance                |
-
-### Semantic Colour Mapping by Grammar Concept
-
-| Concept                     | Scheme / Token                                             | Rationale                             |
-| --------------------------- | ---------------------------------------------------------- | ------------------------------------- |
-| Cases — Nominative (Doer)   | `case-nominative` (`--color-case-nominative-*`, hue 223)   | Subject — foundational, stable        |
-| Cases — Accusative (Target) | `case-accusative` (`--color-case-accusative-*`, hue 60)    | Direct object — action target         |
-| Cases — Genitive (Owner)    | `case-genitive` (`--color-case-genitive-*`, hue 127)       | Possession — connection, relation     |
-| Gender — Masculine          | `gender-masculine` (`--color-gender-masculine-*`, hue 268) | Masculine nouns, articles, adjectives |
-| Gender — Feminine           | `gender-feminine` (`--color-gender-feminine-*`, hue 2)     | Feminine nouns, articles, adjectives  |
-| Gender — Neuter             | `gender-neuter` (`--color-gender-neuter-*`, hue 171)       | Neuter nouns, articles, adjectives    |
-| Verbs — Active (-ω)         | `verb-active` (`--color-navy-*`)                           | Active voice paradigm                 |
-| Verbs — Contracted (-άω)    | `verb-contracted` (`--color-slate-*`)                      | Contracted verb classes               |
-| Verbs — Deponent (-μαι)     | `verb-deponent` (`--color-sunset-*`)                       | Deponent / medio-passive verbs        |
-| Decision / Navigation       | `decision` (`--color-honey-*`)                             | Decision branching, heuristics        |
 
 ---
 

@@ -36,7 +36,7 @@ The λ (lambda) mark anchors the identity: spare, precise, unmistakably Greek.
 - Generic SaaS dashboards: cards everywhere, gradients, hero metrics
 - "Learning app" defaults: rounded icons above every heading, emoji as UX, progress bars that feel like slot machines
 
-**What makes it memorable:** The colour system encodes grammar. Nominative, Accusative and Genitive each have their own reserved colour scale (`case-nominative`, `case-accusative`, `case-genitive`), used for nothing else. A returning user starts to _feel_ the cases before they read the labels. That's the design's secret — it teaches through repetition of visual pattern, not through decoration.
+**What makes it memorable:** Grammar is drawn, not coloured. A line under each Greek phrase ends in a shape that names its case (`<->` Doer, `>-<` Target, `o-o` Owner, `!-!` Calling), doubles for more than one, and takes its colour from the gender. The shapes mean one thing everywhere, so a returning user starts to _feel_ the cases before reading the labels. It teaches through repetition of visual pattern, not through decoration.
 
 ---
 
@@ -56,32 +56,29 @@ The λ (lambda) mark anchors the identity: spare, precise, unmistakably Greek.
 
 ## Colour System
 
-Two palettes, and they are not interchangeable. The values live in `src/index.css`, and `docs/design-guidelines.md` has the full tables, contrast figures and component assignments; treat those two as the source of truth. This section only says what each palette is for.
+The values live in `src/index.css`, and `docs/design-guidelines.md` has the full tables and contrast figures; treat those two as the source of truth.
+
+### Grammar is marked, not coloured
+
+Case, number and gender are shown by `<GrammarMark>` (see `docs/design-guidelines.md`, "Grammar Marks"). Colour's only grammatical job is gender, on the mark itself. Everything else about colour is open for the redesign.
+
+The reserved `case-*` and `gender-*` scales in `@theme static` are legacy. Current pages still read them through `src/constants/grammar-palette.ts`, and the lint keeping them there stays until the redesign retires them; add no new case colour.
 
 ### Base Palette
 
-`cream`, `terracotta`, `sunset`, `olive`, `ocean`, `honey`, `navy`, `slate` and `stone`, authored in `oklch()`. They are for everything that makes no grammatical claim: navigation, chrome, buttons, section grouping and page-local axes (`verb-active` is navy, `verb-contracted` slate, `verb-deponent` sunset, `decision` honey). The base palette asserts no case or gender, even where a hue sits close to a case colour: `ocean` and `case-nominative` are both near hue 223 but are separate tokens with separate jobs.
-
-### Grammar Role Tokens
-
-`case-nominative-*`, `case-accusative-*`, `case-genitive-*`, `gender-masculine-*`, `gender-feminine-*` and `gender-neuter-*` are reserved scales in `@theme static`. Applying one asserts that the Greek it wraps has that case or gender; if the assertion would be false, use the base palette or neutral stone. `src/constants/grammar-palette.ts` is the only place that maps a grammar role to a token.
-
-This is the app's most distinctive design decision and must never be broken. The colour-case mapping is load-bearing: users learn the associations through repetition. Introducing a new colour for a case, or swapping assignments, would actively harm learning.
-
-**Rule:** Never use gender and case colour simultaneously on the same element. Choose one semantic layer per component — this is the 3-4 colour-per-context constraint in practice.
+`cream`, `terracotta`, `sunset`, `olive`, `ocean`, `honey`, `navy`, `slate` and `stone`, authored in `oklch()`, for navigation, chrome, buttons and grouping.
 
 ### Text and Contrast
 
 - Text uses the `-text` tokens (`terracotta-text`, `ocean-text` and so on), never a base accent directly and never with an opacity modifier.
 - Feedback follows the same rule: `correct` / `incorrect` for bars, borders and icons, their `-light` tokens for backgrounds, and `correct-text` / `incorrect-text` for words. Hints use honey.
 - Primary buttons fill with `terracotta-600`, not the base `-500`: white on `-500` is 3.99:1, under AA.
-- Grammar pills set their text with the scheme's `badgeText`, not `text`. The gender `-text` tokens are too light on their own `-300` chip, so gender badges use the `-950` step.
 
 ### Dark Mode
 
 Dark mode exists and is fully implemented. Light is the _designed-first_ experience; dark should maintain the same semantic meanings with adjusted values.
 
-The colour ramps are remapped under `:root.dark` in `src/index.css`, and the aliases built on them follow. Tints become dark tints, text shades become light text, and mid accents keep their value, so the terracotta primary button is the same colour in both themes. Hue never changes: a case or gender colour means the same thing in either theme.
+The colour ramps are remapped under `:root.dark` in `src/index.css`, and the aliases built on them follow. Tints become dark tints, text shades become light text, and mid accents keep their value, so the terracotta primary button is the same colour in both themes. A grammar mark keeps its gender hue in either theme.
 
 ---
 

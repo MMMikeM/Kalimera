@@ -193,3 +193,13 @@ export const GENDER_ROW_BORDER: Record<Gender, string> = {
 	feminine: "border-gender-feminine-500",
 	neuter: "border-gender-neuter-500",
 };
+
+/**
+ * A grammar mark draws in `currentColor`. The -700 step carries the most chroma
+ * per pixel, which a 2px line needs before its hue reads at all.
+ */
+export const GENDER_MARK: Record<Gender, string> = {
+	masculine: "text-gender-masculine-700",
+	feminine: "text-gender-feminine-700",
+	neuter: "text-gender-neuter-700",
+};

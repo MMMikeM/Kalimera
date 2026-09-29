@@ -22,6 +22,7 @@ import { TeachingCard } from "@/components/cards/TeachingCard";
 | --- | --- | --- |
 | Greek on screen | `GreekText`, `Pronunciation`, `GreekGloss` | Never render Greek or a transliteration any other way (`pnpm lint:greek`) |
 | A phrase where only some words carry a case | `MarkedGreek` | Only the `marked` words take the case tone; the rest stays neutral |
+| Case, number or gender of a Greek phrase | `GrammarMark` | Shape is the case, two lines is plural, colour is gender; mark the whole phrase and only the axes the page teaches |
 | A button | `Button` (`ui/button`) | Defaults to `primary`; pass `variant` for anything else |
 | Navigation that looks like a button | `ButtonLink` (`ui/button`) | Never nest a `<Button>` in a `<Link>` |
 | A back link | `BackLink` | Label it with where it goes ("Learn", "Exit"), never the current page |
