@@ -7,12 +7,12 @@ export const NO_DOER_GUIDE: Guide = {
 	title: "Sentences without a doer",
 	greek: "Χωρίς υποκείμενο",
 	description: "There is, it's raining, you must",
-	idea: "Some Greek sentences have nobody doing anything: the verb stands alone in its he / she / it form and never changes for person. Learn each as a fixed frame.",
+	idea: "Some Greek sentences have nobody doing anything. The verb stands alone in its he / she / it form and never changes for person. Learn each as a fixed frame.",
 	sections: [
 		{
 			id: "there-is",
-			title: "There is, there are: υπάρχει",
-			rule: "υπάρχει means there is and υπάρχουν there are: the verb matches whatever exists, which takes the Doer form. For the future, put θα in front: θα υπάρχει. In speech έχει often does the same job, but it stays έχει whatever follows, and what exists takes the Target form: έχει Άγγλους, against υπάρχουν Άγγλοι.",
+			title: "υπάρχει for there is and there are",
+			rule: "υπάρχει means there is and υπάρχουν there are: the verb matches whatever exists, which takes the Doer form. In speech έχει often does the same job, but it stays έχει even for more than one, and what exists takes the Target form: έχει Άγγλους, against υπάρχουν Άγγλοι.",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -65,8 +65,8 @@ export const NO_DOER_GUIDE: Guide = {
 		},
 		{
 			id: "weather",
-			title: "Weather: κάνει, βρέχει, έχει",
-			rule: "Weather has no doer. Use κάνει with a noun for temperature, a verb of its own for rain and snow, or έχει with a noun for there's some.",
+			title: "Weather with κάνει, βρέχει and έχει",
+			rule: "Use κάνει with a noun for heat and cold. For rain and snow use a verb of their own, or έχει with the noun: βρέχει, έχει βροχή.",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -92,7 +92,7 @@ export const NO_DOER_GUIDE: Guide = {
 			plannedDrills: [
 				{
 					id: "no-doer-weather",
-					title: "Weather: κάνει, βρέχει, έχει",
+					title: "Weather with κάνει, βρέχει and έχει",
 					greek: "κάνει κρύο · βρέχει · έχει βροχή",
 					tests: "Shows the weather in English (it's cold); the answer is the Greek frame, κάνει κρύο.",
 				},
@@ -100,8 +100,8 @@ export const NO_DOER_GUIDE: Guide = {
 		},
 		{
 			id: "must",
-			title: "Must: πρέπει να",
-			rule: "πρέπει never changes for person; the verb after να does, and it takes the short form. For had to, use έπρεπε.",
+			title: "πρέπει να",
+			rule: "πρέπει never changes for person; the verb after να does. Use the short form for one action and the present for something ongoing. For had to, use έπρεπε.",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -118,8 +118,8 @@ export const NO_DOER_GUIDE: Guide = {
 		},
 		{
 			id: "wish",
-			title: "I would like: θα ήθελα",
-			rule: "θα ήθελα is the polite I would like. Follow it with a noun, or with να and a verb.",
+			title: "θα ήθελα",
+			rule: "θα ήθελα is the polite I would like. Follow it with the Target form of a noun, or with να and a verb. With να and a past form it wishes for what isn't so: θα ήθελα να ήμουν, I wish I were.",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -127,21 +127,21 @@ export const NO_DOER_GUIDE: Guide = {
 				],
 				rows: [
 					[cellWith("θα ήθελα έναν καφέ", mark("έναν καφέ", "accusative", "masculine")), "I'd like a coffee"],
-					[cellWith("θα ήθελα να ήμουν αρχιτέκτονας", mark("αρχιτέκτονας", "nominative", "masculine")), "I'd like to be an architect"],
+					[cellWith("θα ήθελα να ήμουν αρχιτέκτονας", mark("αρχιτέκτονας", "nominative", "masculine")), "I wish I were an architect"],
 				],
 			},
 			examples: [
 				{
-					greek: "Θα ήθελα να ήμουν δάσκαλος.",
-					english: "I'd like to be a teacher.",
-					marks: [mark("δάσκαλος", "nominative", "masculine")],
+					greek: "Θα ήθελα να κλείσω ένα τραπέζι.",
+					english: "I'd like to book a table.",
+					marks: [mark("ένα τραπέζι", "accusative", "neuter")],
 				},
 			],
 			drills: [],
 			plannedDrills: [
 				{
 					id: "no-doer-would-like",
-					title: "I would like: θα ήθελα",
+					title: "θα ήθελα",
 					greek: "θα ήθελα έναν καφέ · θα ήθελα να",
 					tests: "Shows a request in English (I'd like a coffee); the answer is θα ήθελα with the thing in the Target form: θα ήθελα έναν καφέ.",
 				},
@@ -149,8 +149,8 @@ export const NO_DOER_GUIDE: Guide = {
 		},
 		{
 			id: "its-hard",
-			title: "It's hard to…: είναι δύσκολο να",
-			rule: "For it's hard, it's crazy, it's easy, Greek has no word for it: είναι takes the -ο form of the adjective on its own, είναι δύσκολο, είναι τρελό. Add να and a verb to say what is hard. The -α form ωραία does the same job, and is common in the past: ήταν πολύ ωραία.",
+			title: "είναι δύσκολο να and other it's frames",
+			rule: "Greek has no word for the it in it's hard: είναι takes the -ο form of the adjective, είναι δύσκολο, είναι τρελό. Add να and a verb to say what is hard. The -α form ωραία does the same job, and is common in the past: ήταν πολύ ωραία.",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -179,7 +179,7 @@ export const NO_DOER_GUIDE: Guide = {
 			plannedDrills: [
 				{
 					id: "no-doer-its-adjective",
-					title: "It's hard to: είναι δύσκολο να",
+					title: "είναι δύσκολο να",
 					greek: "είναι δύσκολο · είναι τρελό · ήταν ωραία",
 					tests: "Shows a reaction in English (it's hard to find work); the answer is είναι with the -ο form of the adjective: είναι δύσκολο να βρίσκεις δουλειά.",
 				},

@@ -6,7 +6,7 @@ export const AGREEMENT_GUIDE: Guide = {
 	tone: "olive",
 	title: "Words that agree",
 	greek: "Συμφωνία",
-	description: "Gender, and the words that copy it",
+	description: "Gender and the words that change to match it",
 	idea: "Every noun is masculine, feminine or neuter, and the words around it copy that: the article, the adjective, even some numbers. Learn each noun with its article and the rest follows.",
 	sections: [
 		{
@@ -47,7 +47,7 @@ export const AGREEMENT_GUIDE: Guide = {
 			id: "adjective-jobs",
 			title: "Adjectives change with the job",
 			tone: "honey",
-			rule: "An adjective takes the noun's job as well as its gender. In the -ος, -η, -ο type its ending echoes the article: τον καλό, του καλού, της μεγάλης. It copies the noun it describes, not the nearest word.",
+			rule: "An adjective takes the noun's job as well as its gender. In the -ος, -η, -ο type its ending matches the article's: τον καλό, του καλού, της μεγάλης. It copies the noun it describes, not the nearest word.",
 			table: {
 				columns: [
 					{ label: "Job" },
@@ -64,9 +64,9 @@ export const AGREEMENT_GUIDE: Guide = {
 			},
 			examples: [
 				{
-					greek: "Βλέπω τον καλό φίλο.",
-					english: "I see the good friend.",
-					marks: [mark("τον καλό φίλο", "accusative", "masculine")],
+					greek: "Έχω έναν καλό φίλο στην Αθήνα.",
+					english: "I've got a good friend in Athens.",
+					marks: [mark("έναν καλό φίλο", "accusative", "masculine")],
 				},
 				{
 					greek: "το μεγάλο αυτοκίνητο του γιατρού",
@@ -78,7 +78,7 @@ export const AGREEMENT_GUIDE: Guide = {
 		},
 		{
 			id: "adjective-shapes",
-			title: "Two more shapes: -α and -ύς",
+			title: "Adjectives in -α and -ύς",
 			tone: "stone",
 			rule: "With a vowel before -ος, most adjectives take -α in the feminine instead of -η: ωραία, παλιά, νέα. A few keep -η, such as όγδοη. A small group ends in -ύς, -ιά, -ύ, such as βαρύς and μακρύς. Both change with the job as usual.",
 			table: {
@@ -99,8 +99,8 @@ export const AGREEMENT_GUIDE: Guide = {
 			},
 			examples: [
 				{
-					greek: "την ωραία θάλασσα",
-					english: "the beautiful sea (Target)",
+					greek: "Βλέπουμε την ωραία θάλασσα από το μπαλκόνι.",
+					english: "We can see the lovely sea from the balcony.",
 					marks: [mark("την ωραία θάλασσα", "accusative", "feminine")],
 				},
 				{
@@ -200,9 +200,9 @@ export const AGREEMENT_GUIDE: Guide = {
 		},
 		{
 			id: "describing-yourself",
-			title: "Describing yourself: -μένος",
+			title: "Describing yourself with -μένος",
 			tone: "terracotta",
-			rule: "Words in -μένος, such as κουρασμένος and παντρεμένος, describe a state, and change like καλός. After είμαι they take the speaker's gender: a man is κουρασμένος, a woman κουρασμένη, a group of men or a mixed group κουρασμένοι, and a group of women κουρασμένες.",
+			rule: "Words in -μένος, such as κουρασμένος, describe a state and change like καλός. After είμαι they match whoever is described: κουρασμένος for a man, κουρασμένη for a woman, κουρασμένοι for men or a mixed group, κουρασμένες for women.",
 			table: {
 				columns: [
 					{ label: "A man", greek: true },
@@ -247,7 +247,7 @@ export const AGREEMENT_GUIDE: Guide = {
 			id: "numbers",
 			title: "Numbers that agree",
 			tone: "olive",
-			rule: "Up to a hundred, only one, three and four change with gender, along with ordinals such as έβδομος, which work like adjectives. From two hundred, the hundreds change too, and so does χίλιοι. From two thousand, a thousand is χιλιάδες, a feminine word, so three and four take their feminine form before it, whatever the noun: τέσσερις χιλιάδες ευρώ. A year is read as a whole number, with neuter χίλια and εννιακόσια.",
+			rule: "Up to a hundred, only one, three and four change with gender. From two hundred the hundreds change too, and so does χίλιοι. Words for order, such as έβδομος, change like any adjective. From two thousand, a thousand is χιλιάδες, a feminine word, so three and four go feminine before it whatever the noun: τέσσερις χιλιάδες ευρώ. A year is read as a whole number, with neuter χίλια and εννιακόσια.",
 			table: {
 				columns: [
 					{ label: "Masculine", greek: true },
@@ -314,7 +314,7 @@ export const AGREEMENT_GUIDE: Guide = {
 			id: "gender-endings",
 			title: "Gender from the ending",
 			tone: "honey",
-			rule: "Most nouns give their gender away in their ending: -ος and the other endings in -ς are mostly masculine, -α and -η mostly feminine, and -ο, -ι and -μα neuter, apart from women's names in -ώ such as η Κλειώ. The exceptions are everyday words, so learn each noun with its article and trust the article over the ending. ο καφές is coffee; το καφέ is the café.",
+			rule: "Most nouns give their gender away in their ending: -ος and the other endings in -ς are mostly masculine, -α and -η mostly feminine, and -ο, -ι and -μα neuter, apart from women's names in -ώ such as η Κλειώ. The exceptions are everyday words, so learn each noun with its article. ο καφές is coffee; το καφέ is the café.",
 			table: {
 				columns: [
 					{ label: "Ending" },
@@ -354,14 +354,14 @@ export const AGREEMENT_GUIDE: Guide = {
 				],
 			},
 			confuse: {
-				text: "Sharing a gender is not sharing endings: ο φίλος and ο πατέρας are both masculine, but τους φίλους and τους πατέρες come from different families.",
+				text: "ο φίλος and ο πατέρας are both masculine, but they come from different families: τους φίλους, τους πατέρες.",
 				section: "nouns/families",
 			},
 			drills: [],
 			plannedDrills: [
 				{
 					id: "nouns-gender-exceptions",
-					title: "Gender: the exceptions",
+					title: "Gender exceptions",
 					greek: "Κύπρος · λάθος · κρέας · γάλα",
 					tests: "Shows a noun without its article, mixing regular endings with exceptions such as Κύπρος and κρέας; the answer is ο, η or το.",
 				},
@@ -371,7 +371,7 @@ export const AGREEMENT_GUIDE: Guide = {
 			id: "gender-families",
 			title: "Guessing gender from the word",
 			tone: "ocean",
-			rule: "Some families of words share a gender, which saves learning each one. Endings such as -ση and -ότητα make a noun feminine, and -είο makes it neuter. Many jobs have a masculine and a feminine form; some keep one form and change only the article.",
+			rule: "Some families of words share a gender. Endings such as -ση and -ότητα make a noun feminine, and -είο makes it neuter. Many jobs have a masculine and a feminine form; some keep one form and change only the article.",
 			table: {
 				columns: [
 					{ label: "Examples", greek: true },
@@ -396,7 +396,7 @@ export const AGREEMENT_GUIDE: Guide = {
 						"-ση, -ξη, -ψη",
 						"feminine",
 					],
-					[markedCell("η μητρότητα", "nominative", "feminine"), "-ότητα", "feminine"],
+					[markedCell("η ταυτότητα", "nominative", "feminine"), "-ότητα", "feminine"],
 					[markedCell("το πρωινό", "nominative", "neuter"), "meals", "neuter"],
 					[
 						cellWith("ο δάσκαλος · η δασκάλα", mark("ο δάσκαλος", "nominative", "masculine"), mark("η δασκάλα", "nominative", "feminine")),
@@ -437,7 +437,7 @@ export const AGREEMENT_GUIDE: Guide = {
 			id: "gender-pairs",
 			title: "Pairs of people",
 			tone: "stone",
-			rule: "Many words for people come as a masculine and a feminine pair. The feminine ending varies, so learn both: -ος to -α (θείος, θεία), -ας to -ισσα (γείτονας, γειτόνισσα), -ας to -ίδα (Έλληνας, Ελληνίδα).",
+			rule: "Many words for people come in a masculine and feminine pair. The feminine ending varies, so learn both: -ος becomes -α, and -ας becomes -ισσα or -ίδα.",
 			table: {
 				columns: [
 					{ label: "Masculine", greek: true },
@@ -465,7 +465,7 @@ export const AGREEMENT_GUIDE: Guide = {
 			id: "small-big",
 			title: "Endings that make small or big",
 			tone: "terracotta",
-			rule: "-άκι makes something small and makes it neuter, whatever it was before: ο ελέφαντας, το ελεφαντάκι. -άκος makes it small but keeps a masculine noun masculine. -άρα makes it big, or more so, and makes it feminine. Not every word with these endings is a small or big form: η κιθάρα and ο δράκος are ordinary words.",
+			rule: "-άκι makes something small and makes it neuter, whatever it was before: ο ελέφαντας, το ελεφαντάκι. -άκος makes it small but keeps a masculine noun masculine. -άρα makes it big, or more so, and feminine. Not every word with these endings is a small or big form: η κιθάρα and ο δράκος are ordinary words.",
 			table: {
 				columns: [
 					{ label: "Word", greek: true },
@@ -482,8 +482,8 @@ export const AGREEMENT_GUIDE: Guide = {
 			},
 			examples: [
 				{
-					greek: "Παίρνω έναν υπνάκο.",
-					english: "I take a nap.",
+					greek: "Θα πάρω έναν υπνάκο.",
+					english: "I'm going to have a nap.",
 					marks: [mark("έναν υπνάκο", "accusative", "masculine")],
 				},
 				{

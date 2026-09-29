@@ -4,15 +4,15 @@ import type { Guide } from "@/types/guide";
 export const SCALES_GUIDE: Guide = {
 	slug: "scales",
 	tone: "stone",
-	title: "Scales: how often, how many, how much",
+	title: "How often, how many, how much",
 	greek: "Πόσο",
-	description: "Never to always, none to many",
-	idea: "Several sets of Greek words line up from nothing to everything. Learn each set as a ladder, in order, and choosing the right word means finding the rung you need.",
+	description: "How often, how many and how much, in order",
+	idea: "Several sets of Greek words line up from nothing to everything. Learn each set as a ladder, and choosing a word means finding its rung.",
 	sections: [
 		{
 			id: "frequency",
-			title: "How often: from ποτέ to πάντα",
-			rule: "Frequency words usually sit before the verb. ποτέ also needs δεν: ποτέ δεν πίνω καφέ. σχεδόν, almost, moves either end one rung in: σχεδόν ποτέ, which keeps the δεν, and σχεδόν πάντα. καμιά φορά means sometimes, even though καμιά looks like the none-word.",
+			title: "How often, from ποτέ to πάντα",
+			rule: "Frequency words usually sit before the verb. ποτέ also needs δεν, and so does σχεδόν ποτέ: ποτέ δεν πίνω καφέ. καμιά φορά means sometimes, even though καμιά looks like the none-word.",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -35,13 +35,9 @@ export const SCALES_GUIDE: Guide = {
 				{ greek: "Ποτέ δεν πίνω καφέ.", english: "I never drink coffee." },
 				{
 					greek: "Το πρωί συνήθως πάω στο Lidl για ψώνια.",
-					english: "In the morning I usually go to Lidl for shopping.",
+					english: "In the morning I usually go shopping at Lidl.",
 				},
-				{
-					greek: "Πότε πότε φεύγω από το σπίτι.",
-					english: "Every now and then I leave the house.",
-					marks: [mark("το σπίτι", "accusative", "neuter")],
-				},
+				{ greek: "Πότε πότε τρώμε έξω.", english: "Now and then we eat out." },
 			],
 			confuse: {
 				text: "ποτέ, stressed on the end, means never; πότε, stressed on the start, asks when. Doubled, πότε πότε means now and then.",
@@ -59,8 +55,8 @@ export const SCALES_GUIDE: Guide = {
 		},
 		{
 			id: "quantity",
-			title: "How many: none, some, many",
-			rule: "With υπάρχει and υπάρχουν, pick the rung: ένα for one, κανένα for not a single one, λίγα for a few, μερικά for some, πολλά for many. With a plural, not any is καθόλου. All of them except καθόλου take the noun's gender. λίγος also means a little before a singular: λίγη εξάσκηση. On its own, λίγο means a bit: σε λίγο, in a bit.",
+			title: "How many, from none to many",
+			rule: "With υπάρχει and υπάρχουν, pick the rung and match it to the noun. The exception is καθόλου, not any, which never changes. κανένα and καθόλου both need δεν. Before a singular, λίγος means a little: λίγη εξάσκηση. On its own, λίγο means a bit: σε λίγο, in a bit.",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -100,7 +96,7 @@ export const SCALES_GUIDE: Guide = {
 		{
 			id: "poly-polla",
 			title: "πολύ or πολλά?",
-			rule: "πολύ meaning very or a lot never changes: it sits beside an adjective or a verb. Before a noun it is a different word, the adjective πολύς, πολλή, πολύ, and in the plural πολλοί, πολλές, πολλά. It matches the noun, singular included: πολύ κόσμο, πολλή δουλειά. In casual speech you will also hear πολύ δουλειά; πολλή is the standard form. Two of its forms look like the unchanging πολύ: the it-word, and the he-word as the Target.",
+			rule: "πολύ meaning very or a lot never changes, and sits beside an adjective or a verb. Before a noun it is a different word, the adjective πολύς, πολλή, πολύ, and in the plural πολλοί, πολλές, πολλά. It matches the noun, singular included: πολλή δουλειά. Two of its forms look like the unchanging πολύ: the it-word, and the he-word as the Target, as in πολύ κόσμο. In casual speech you will also hear πολύ δουλειά; πολλή is the standard form.",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -118,9 +114,9 @@ export const SCALES_GUIDE: Guide = {
 			},
 			examples: [
 				{
-					greek: "Υπάρχουν πολλά δέντρα.",
-					english: "There are many trees.",
-					marks: [mark("πολλά δέντρα", "nominative", "neuter", true)],
+					greek: "Η Αθήνα είναι πολύ ωραία, αλλά έχει πολλή κίνηση.",
+					english: "Athens is very nice, but it has a lot of traffic.",
+					marks: [mark("πολλή κίνηση", "accusative", "feminine")],
 				},
 				{
 					greek: "Είμαι κουρασμένος επειδή έχω πολλή δουλειά αυτή την εβδομάδα.",
@@ -140,8 +136,8 @@ export const SCALES_GUIDE: Guide = {
 		},
 		{
 			id: "negatives",
-			title: "Nothing, nowhere, never: saying not twice",
-			rule: "Greek says not twice: δεν goes before the verb and the nothing-word comes after it. δεν πήγα πουθενά is literally I didn't go nowhere, and it is correct. δεν goes in front of the verb and anything attached to it, such as θα or a short object word: δεν θα έρθω, δεν το ξέρω. For not before anything else, such as an adverb, an adjective or a noun, or for no on its own, use όχι: όχι πολύ καλά, not very well. After να and ας, and to forbid something, use μην: να μην πεις.",
+			title: "Saying not twice with δεν",
+			rule: "Greek says not twice: δεν πήγα πουθενά is literally I didn't go nowhere, and it is correct. δεν goes before the verb and anything attached to it, such as θα or a short object word: δεν θα έρθω, δεν το ξέρω. The nothing-word can come after the verb or first, and δεν stays either way: κανένας δεν ξέρει. In a question there is no δεν, and the nothing-word means any: θέλεις τίποτα; For not before an adverb, an adjective or a noun, or for no on its own, use όχι: όχι πολύ καλά, not very well. After να and ας, and to forbid something, use μην: να μην πεις.",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -180,8 +176,8 @@ export const SCALES_GUIDE: Guide = {
 		},
 		{
 			id: "comparing",
-			title: "More than: πιο … από",
-			rule: "To compare, put πιο before the adjective and από before what you compare it with. The adjective still matches its noun. Some adjectives also have a one-word form in -τερος. Two common ones have a form of their own: καλός gives καλύτερος, better, and κακός gives χειρότερος, worse, though πιο καλός is heard too. Put the article in front for the most: ο πιο όμορφος, the most beautiful; ο καλύτερος, the best. οι περισσότεροι means most, as in most people.",
+			title: "Comparing with πιο … από",
+			rule: "To compare, put πιο before the adjective and από before what you compare it with. The adjective still matches its noun. Some adjectives also have a one-word form in -τερος. Two common ones have a form of their own: καλός gives καλύτερος, better, and κακός gives χειρότερος, worse, though πιο καλός is heard too. Put the article in front for the most: ο πιο όμορφος, ο καλύτερος.",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -191,7 +187,7 @@ export const SCALES_GUIDE: Guide = {
 					["πιο μεγάλος", "bigger, older"],
 					["πιο ήσυχος από", "quieter than"],
 					["ψηλότερος", "taller"],
-					["παλιότερος", "older"],
+					["παλιότερος", "older, of things"],
 					[{ text: "καλύτερος", weight: "deviate" }, "better"],
 					[{ text: "χειρότερος", weight: "deviate" }, "worse"],
 					[markedCell("ο πιο όμορφος", "nominative", "masculine"), "the most beautiful"],
@@ -217,14 +213,14 @@ export const SCALES_GUIDE: Guide = {
 				},
 			],
 			confuse: {
-				text: "To say alike rather than more, use σαν: σαν τον λύκο, like the wolf.",
+				text: "For like rather than more than, use σαν: σαν τον λύκο, like the wolf.",
 				section: "place/without-until",
 			},
 			drills: [],
 			plannedDrills: [
 				{
 					id: "scales-comparing",
-					title: "More than: πιο … από",
+					title: "Comparing with πιο … από",
 					greek: "πιο μεγάλος · πιο ήσυχος από · καλύτερος · ο πιο όμορφος",
 					tests: "Shows an English comparison such as quieter than or the most beautiful; the answer is the Greek with πιο before the adjective, από after it, and the article for the most, the adjective matching its noun.",
 				},
@@ -233,7 +229,7 @@ export const SCALES_GUIDE: Guide = {
 		{
 			id: "some-every",
 			title: "Some, none, every",
-			rule: "Each row is one kind of thing: a thing, a person, a place, a time. Read across and the some-word, the none-word and the every-word line up. Most some-words start κάπ-. In a statement the none-words need δεν before the verb, as in saying not twice. κάποιος and κανένας change like adjectives: κάποια, κάποιο; καμία, κανένα. κάθε, each, stays the same with every noun: κάθε μέρα, κάθε μήνας, κάθε έτος. For whatever, whoever and wherever, Greek has ό,τι, όποιος and όπου.",
+			rule: "Most some-words start κάπ-. In a statement the none-words need δεν before the verb, as in saying not twice. κάποιος and κανένας change like adjectives: κάποια, κάποιο; καμία, κανένα. As the Target they are κάποιον and κανέναν. κάθε, each or every, never changes: κάθε μέρα, κάθε μήνα, κάθε πρωί. For whatever, whoever and wherever, Greek has ό,τι, όποιος and όπου.",
 			table: {
 				columns: [
 					{ label: "Some", greek: true },
@@ -249,10 +245,10 @@ export const SCALES_GUIDE: Guide = {
 				],
 			},
 			examples: [
-				{ greek: "Έκανα κάτι.", english: "I did something." },
+				{ greek: "Έχασα κάπου τα κλειδιά μου.", english: "I've lost my keys somewhere." },
 				{ greek: "Κανένας δεν ξέρει.", english: "No one knows." },
 				{ greek: "Δεν είδα κανέναν πουθενά.", english: "I didn't see anyone anywhere." },
-				{ greek: "Όλοι μαζί.", english: "All together." },
+				{ greek: "Σε ψάχνω παντού!", english: "I've been looking for you everywhere!" },
 			],
 			drills: [],
 			plannedDrills: [
@@ -266,7 +262,7 @@ export const SCALES_GUIDE: Guide = {
 		},
 		{
 			id: "all-whole",
-			title: "All, the whole: όλος",
+			title: "όλος for all and the whole",
 			rule: "όλος means all or the whole. It goes before the article, which stays, and it matches the noun like an adjective: όλος, όλη, όλο; όλοι, όλες, όλα. On its own, όλοι means everyone and όλα means everything.",
 			table: {
 				columns: [
@@ -301,7 +297,7 @@ export const SCALES_GUIDE: Guide = {
 			plannedDrills: [
 				{
 					id: "scales-all-whole",
-					title: "All, the whole: όλος",
+					title: "όλος for all and the whole",
 					greek: "όλη τη μέρα · όλο το σπίτι · όλοι οι φίλοι",
 					tests: "Shows an English phrase with all or the whole; the answer is the Greek with όλος matching the noun, before its article.",
 				},
