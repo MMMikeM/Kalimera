@@ -12,7 +12,7 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 		{
 			id: "forms",
 			title: "One set of forms, three jobs",
-			rule: "Learn the forms once. After a noun they mean my, your, his. Before a verb they mean to me, to you, to him. With αρέσει they name who likes it.",
+			rule: "Learn the forms once. After a noun they mean my, your, his. Before a verb they mean to me, to you, to him. With αρέσει they name who likes it. When an adjective comes before the noun, the short word often follows the adjective: το αγαπημένο μου χρώμα. A word stressed on its third-last syllable takes a second accent before the short word: η εκπαίδευση, but την εκπαίδευσή μας.",
 			table: {
 				columns: [
 					{ label: "Form", greek: true },
@@ -34,13 +34,23 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 				{ greek: "Δώσε μου.", english: "Give me." },
 				{ greek: "Σου μιλάω.", english: "I'm talking to you." },
 				{ greek: "Μου λείπεις.", english: "I miss you. (literally: you are missing to me)" },
+				{
+					greek: "Το αγαπημένο μου χρώμα είναι...",
+					english: "My favourite colour is...",
+					marks: [mark("μου", "genitive")],
+				},
+				{
+					greek: "Για την εκπαίδευσή μας πάμε ή στα σχολεία ή στα πανεπιστήμια.",
+					english: "For our education we go either to schools or to universities.",
+					marks: [mark("μας", "genitive", undefined, true)],
+				},
 			],
 			drills: ["pronouns-possessives"],
 		},
 		{
 			id: "likes",
 			title: "Liking works backwards: μου αρέσει",
-			rule: "In Greek the thing you like does the pleasing, and you are the one it pleases. So the verb agrees with the thing: αρέσει for one thing, αρέσουν for several, αρέσεις when the thing is you.",
+			rule: "In Greek the thing you like does the pleasing, and you are the one it pleases. So the verb agrees with the thing: αρέσει for one thing, αρέσουν for several, αρέσεις when the thing is you. μου φαίνεται (it seems to me) and μου λείπεις (I miss you) work the same way, but νοιάζει takes the Target form: δε με νοιάζει. In speech μου often shortens to μ' before αρέσει, and the short word drops out when it's clear who is meant: Άρεσε;",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -66,6 +76,11 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 					[cellWith("σου αρέσει;", mark("σου", "genitive")), "do you like it?"],
 					[cellWith("δεν μου αρέσει", mark("μου", "genitive")), "I don't like it"],
 					[{ text: "μου αρέσεις", weight: "deviate", marks: [mark("μου", "genitive")] }, "I like you"],
+					[cellWith("μ' αρέσει", mark("μ'", "genitive")), "I like it"],
+					["Άρεσε;", "did you like it?"],
+					[cellWith("μου φαίνεται", mark("μου", "genitive")), "it seems to me"],
+					[cellWith("μου λείπεις", mark("μου", "genitive")), "I miss you"],
+					[{ text: "δε με νοιάζει", weight: "deviate", marks: [mark("με", "accusative")] }, "I don't care"],
 				],
 			},
 			examples: [
@@ -98,7 +113,7 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 		{
 			id: "objects",
 			title: "Him, her, it: τον, την, το",
-			rule: "Once a person or thing has been mentioned, a short Target word stands in for it before the verb: με for me, σε for you, τον for him, την for her, το for it, τους for them.",
+			rule: "Once a person or thing has been mentioned, a short Target word stands in for it before the verb: με for me, σε for you, τον for him, την for her, το for it, μας for us, σας for you all, and for them τους, τις or τα, copying the gender of the noun they stand for: τους for masculine nouns or a mix, τις for feminine, τα for neuter.",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -109,7 +124,11 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 					[cellWith("τον ξυπνάω", mark("τον", "accusative", "masculine")), "I wake him up"],
 					[cellWith("την ξέρω", mark("την", "accusative", "feminine")), "I know her"],
 					[cellWith("το θέλω", mark("το", "accusative", "neuter")), "I want it"],
-					[cellWith("τους βλέπω", mark("τους", "accusative", "masculine", true)), "I see them"],
+					[cellWith("μας βλέπει", mark("μας", "accusative", undefined, true)), "he sees us"],
+					[cellWith("σας ευχαριστώ", mark("σας", "accusative", undefined, true)), "thank you (I thank you)"],
+					[cellWith("τους βλέπω", mark("τους", "accusative", "masculine", true)), "I see them (masculine, or a mix)"],
+					[cellWith("τις βλέπω", mark("τις", "accusative", "feminine", true)), "I see them (feminine)"],
+					[cellWith("τα βλέπω", mark("τα", "accusative", "neuter", true)), "I see them (neuter)"],
 					[cellWith("πώς τον λένε;", mark("τον", "accusative", "masculine")), "what's his name?"],
 				],
 			},
@@ -126,7 +145,7 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 				},
 			],
 			confuse: {
-				text: "Before a verb τον means him: τον βλέπω, I see him. Before a noun it is the article: τον φίλο, the friend.",
+				text: "τον, την, τους, τις and τα look like the article. Before a verb they mean him, her or them: τον βλέπω, I see him; τις βλέπω, I see them. Before a noun they are the article: τον φίλο, τις μέρες. After a noun, του, της and τους mean his, her and their: ο φίλος του, το σπίτι τους.",
 				section: "roles/articles",
 			},
 			drills: ["pronouns-object", "pronouns-placement"],
@@ -160,6 +179,10 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 					marks: [mark("μόνη", "nominative", "feminine")],
 				},
 			],
+			confuse: {
+				text: "μόνο meaning only never changes: χθες είδα μόνο youtube, yesterday I only watched YouTube. μόνος is an adjective and agrees: alone (μένει μόνη, she lives alone), the only one (η μόνη λύση), or by myself with a short word after it (μόνος μου, μόνη της, μόνο του).",
+				section: "scales/quantity",
+			},
 			drills: [],
 			plannedDrills: [
 				{
@@ -299,6 +322,58 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 					title: "Polite you",
 					greek: "Θέλεις → Θέλετε · Γεια σου → Γεια σας",
 					tests: "Shows a friendly phrase such as Θέλεις κάτι; and asks for the polite form; the answer is Θέλετε κάτι;.",
+				},
+			],
+		},
+		{
+			id: "where-it-goes",
+			title: "Where the little word goes",
+			rule: "The short word sits right before the verb, with θα, να and δεν in front of both: θα με κοιτάξει, δεν το παίρνει. After a command, unless it starts with μη, it follows the verb instead: δώσε μου, κοίτα με. When two come before the verb, the person goes first: μου το δίνει. A Target already named is often picked up again by the short word: τον φίλο μου τον λένε Γιώργο. με λένε, my name is, is literally they call me.",
+			table: {
+				columns: [
+					{ label: "Greek", greek: true },
+					{ label: "Meaning" },
+				],
+				rows: [
+					[cellWith("θα με κοιτάξει", mark("με", "accusative")), "he will look at me"],
+					[cellWith("δεν το παίρνει", mark("το", "accusative", "neuter")), "he isn't taking it"],
+					[{ text: "δώσε μου", weight: "deviate", marks: [mark("μου", "genitive")] }, "give me"],
+					[{ text: "κοίτα με", weight: "deviate", marks: [mark("με", "accusative")] }, "look at me"],
+					[{ text: "πάρε το", weight: "deviate", marks: [mark("το", "accusative", "neuter")] }, "take it"],
+					[{ text: "άκουσέ μας", weight: "deviate", marks: [mark("μας", "accusative", undefined, true)] }, "listen to us"],
+					[cellWith("μου το δίνει", mark("μου", "genitive"), mark("το", "accusative", "neuter")), "he gives it to me"],
+					[cellWith("με λένε", mark("με", "accusative")), "my name is"],
+				],
+			},
+			examples: [
+				{
+					greek: "Δώσε μου το νερό.",
+					english: "Give me the water.",
+					marks: [mark("μου", "genitive"), mark("το νερό", "accusative", "neuter")],
+				},
+				{
+					greek: "Μπορούμε να του το δώσουμε;",
+					english: "Can we give it to him?",
+					marks: [mark("του", "genitive", "masculine"), mark("το", "accusative", "neuter")],
+				},
+				{
+					greek: "Τον φίλο μου τον λένε Γιώργο.",
+					english: "My friend is called Giorgos.",
+					marks: [mark("Τον φίλο", "accusative", "masculine"), mark("τον", "accusative", "masculine")],
+				},
+				{
+					greek: "Το παιδί το λένε Λουκά.",
+					english: "The child is called Loukas.",
+					marks: [mark("Το παιδί", "accusative", "neuter"), mark("το", "accusative", "neuter")],
+				},
+			],
+			drills: ["pronouns-placement"],
+			plannedDrills: [
+				{
+					id: "pronouns-two-together",
+					title: "Two short words: μου το δίνει",
+					greek: "μου το δίνει · του το δίνω · σου τα φέρνω",
+					tests: "Shows a sentence in English with a person and a thing (he gives it to me); the answer puts both short words before the verb, person first: μου το δίνει.",
 				},
 			],
 		},

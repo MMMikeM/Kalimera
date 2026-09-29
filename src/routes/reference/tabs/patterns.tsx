@@ -179,8 +179,8 @@ export function PatternsTab({ data }: { data: PatternsData }) {
 				]}
 				summary={
 					<>
-						ίσως never opens a question, μήπως never closes a statement. After ίσως the verb takes
-						its short form with no θα: <strong>Ίσως πάω</strong>, not ίσως θα πάω.
+						ίσως makes a statement, μήπως asks a question. After ίσως the verb usually takes its
+						short form with no θα, <strong>Ίσως πάω</strong>, though ίσως θα πάω is also correct.
 					</>
 				}
 			/>

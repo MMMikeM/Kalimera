@@ -12,7 +12,7 @@ export const ROLES_GUIDE: Guide = {
 		{
 			id: "overview",
 			title: "Three jobs a noun can do",
-			rule: "Every noun in a sentence is doing one of three jobs, and you can see which from the article in front of it.",
+			rule: "Every noun in a sentence is doing one of three jobs, and you can see which from the article in front of it. After είναι and γίνομαι (become) nothing is acted on, so both sides take the Doer form: η Χρυσάνθη είναι η μητέρα.",
 			table: {
 				columns: [
 					{ label: "Example", greek: true },
@@ -36,13 +36,18 @@ export const ROLES_GUIDE: Guide = {
 					english: "The child is eating watermelon.",
 					marks: [mark("Το παιδί", "nominative", "neuter"), mark("καρπούζι", "accusative", "neuter")],
 				},
+				{
+					greek: "Η Χρυσάνθη είναι η μητέρα.",
+					english: "Chrysanthi is the mother.",
+					marks: [mark("Η Χρυσάνθη", "nominative", "feminine"), mark("η μητέρα", "nominative", "feminine")],
+				},
 			],
 			drills: ["articles-paradigm", "nominal-phrase-doer", "nominal-all-phrases"],
 		},
 		{
 			id: "articles",
 			title: "The article: ο, η, το",
-			rule: "The article shows gender and job at once. For the Target only the masculine and feminine change: ο becomes τον, η becomes τη; το stays το. For a or an, use ένας, μία, ένα.",
+			rule: "The article shows gender and job at once. For the Target only the masculine and feminine change: ο becomes τον, η becomes τη or την; το stays το. For a or an, use ένας, μία, ένα. The -ν of την, δεν and μην usually drops before β, γ, δ, ζ, θ, λ, μ, ν, ρ, σ, φ and χ, and stays before a vowel, before κ, π, τ, ξ and ψ, and before μπ, ντ, γκ, τσ and τζ: την πόρτα but τη μητέρα, δεν πάω but δε θέλω, την μπάλα. Keeping it is widely accepted, especially with δεν. τον keeps it, even before φ: τον φίλο, since το φίλο would read as neuter.",
 			table: {
 				columns: [
 					{ label: "Masculine", greek: true },
@@ -52,26 +57,26 @@ export const ROLES_GUIDE: Guide = {
 				],
 				rows: [
 					[
-						markedCell("ο άντρας", "nominative", "masculine", false, "anchor"),
-						markedCell("η γυναίκα", "nominative", "feminine", false, "anchor"),
+						markedCell("ο φίλος", "nominative", "masculine", false, "anchor"),
+						markedCell("η μητέρα", "nominative", "feminine", false, "anchor"),
 						markedCell("το παιδί", "nominative", "neuter", false, "anchor"),
 						"Doer",
 					],
 					[
-						markedCell("τον άντρα", "accusative", "masculine", false, "deviate"),
-						markedCell("τη γυναίκα", "accusative", "feminine", false, "deviate"),
+						markedCell("τον φίλο", "accusative", "masculine", false, "deviate"),
+						markedCell("τη μητέρα", "accusative", "feminine", false, "deviate"),
 						markedCell("το παιδί", "accusative", "neuter"),
 						"Target",
 					],
 					[
-						markedCell("ένας άντρας", "nominative", "masculine"),
-						markedCell("μία γυναίκα", "nominative", "feminine"),
+						markedCell("ένας φίλος", "nominative", "masculine"),
+						markedCell("μία μητέρα", "nominative", "feminine"),
 						markedCell("ένα παιδί", "nominative", "neuter"),
 						"Doer, a / an",
 					],
 					[
-						markedCell("έναν άντρα", "accusative", "masculine", false, "deviate"),
-						markedCell("μία γυναίκα", "accusative", "feminine"),
+						markedCell("έναν φίλο", "accusative", "masculine", false, "deviate"),
+						markedCell("μία μητέρα", "accusative", "feminine"),
 						markedCell("ένα παιδί", "accusative", "neuter"),
 						"Target, a / an",
 					],
@@ -88,13 +93,18 @@ export const ROLES_GUIDE: Guide = {
 					english: "They're watching a film at the cinema.",
 					marks: [mark("μια ταινία", "accusative", "feminine"), mark("στο σινεμά", "accusative", "neuter")],
 				},
+				{
+					greek: "Κλείνω την πόρτα.",
+					english: "I close the door.",
+					marks: [mark("την πόρτα", "accusative", "feminine")],
+				},
 			],
 			drills: ["articles-article-doer", "articles-article-target"],
 		},
 		{
 			id: "target",
 			title: "The Target: objects, names and times",
-			rule: "Whatever the verb acts on takes the Target form, and so does a name used that way. Days and times of day take it too: τη Δευτέρα means on Monday.",
+			rule: "Whatever the verb acts on takes the Target form, and so does a name used that way. Days and times of day take it too: τη Δευτέρα means on Monday, την επόμενη εβδομάδα next week. Months are masculine, so they take τον: τον Ιούλιο, in July. After κάθε there is no article: κάθε Τρίτη, every Tuesday.",
 			table: {
 				columns: [
 					{ label: "Doer form", greek: true },
@@ -106,6 +116,7 @@ export const ROLES_GUIDE: Guide = {
 					[markedCell("οι φίλοι", "nominative", "masculine", true), markedCell("τους φίλους", "accusative", "masculine", true, "deviate"), "the friends"],
 					[markedCell("η Δευτέρα", "nominative", "feminine"), markedCell("τη Δευτέρα", "accusative", "feminine"), "(on) Monday"],
 					[markedCell("το πρωί", "nominative", "neuter"), markedCell("το πρωί", "accusative", "neuter"), "(in) the morning"],
+					[markedCell("ο Ιούλιος", "nominative", "masculine"), markedCell("τον Ιούλιο", "accusative", "masculine", false, "deviate"), "(in) July"],
 				],
 			},
 			examples: [
@@ -127,6 +138,11 @@ export const ROLES_GUIDE: Guide = {
 					greek: "Το βράδυ βγαίνουν έξω.",
 					english: "In the evening they go out.",
 					marks: [mark("Το βράδυ", "accusative", "neuter")],
+				},
+				{
+					greek: "Κάθε εβδομάδα δουλεύω σαράντα ώρες.",
+					english: "Every week I work forty hours.",
+					marks: [mark("Κάθε εβδομάδα", "accusative", "feminine"), mark("σαράντα ώρες", "accusative", "feminine", true)],
 				},
 			],
 			drills: ["nominal-noun-target", "nominal-phrase-target", "blocks-days-of-week"],

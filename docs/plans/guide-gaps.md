@@ -6,18 +6,16 @@ Read it in this order: rules the guides state wrongly, then the one missing guid
 
 ## Status
 
-- **Done:**
-  - §1: all four rules are fixed.
-  - §2: the nouns guide is written.
-  - §3: every new section is added.
-  - §5: every unlinked drill is linked.
-  - §6: all data errors are fixed, except the retag below.
-- **Planned drills:** every section with no real drill carries `plannedDrills` stubs. Each stub records the id the real drill will take and what it tests; the guide page shows it unlinked.
-- **Open:**
-  - §4: the extensions, apart from the exceptions that fixing §1 needed.
-  - The `conjugationFamily` retag. `ConjugationFamily` is a union that the conjugation generator and the database read, so a separate `-ώ` value needs a generator branch first.
-  - A re-seed, which the corrected -μαι futures in `verb-conjugations.ts` need. Verb forms upsert on (verb, tense, person), so the re-seed replaces the wrong rows.
-  - Removing the misspelt vocabulary rows by hand. Vocabulary upserts on `greek_text`, so the corrected lesson texts land as new rows beside the misspelt ones: πλήρης απασχόλησης, βοηθός οδοντίατρου, and the two πολύ δουλειά sentences.
+- **Done:** every section, §1 to §6.
+  - Two rounds, on 29 September 2026.
+  - §4 was done in the second round, with new sections wherever an extension outgrew its table.
+  - Where the seeded data contradicted this list, the guides follow the data. For example, most -ώ verbs take -ησ-, and only μπορώ, καλώ and παρακαλώ take -εσ-.
+- **Data:**
+  - The `-άω/-ώ` family is split into `-άω` and `-ώ`; the generator rejects a lemma whose ending contradicts its tag.
+  - Production is re-seeded.
+  - The misspelt vocabulary rows are deleted.
+- **Phone:** every guide table fits a 384px phone.
+- **Planned drills:** sections with no real drill carry `plannedDrills` stubs. The guide page shows each stub unlinked, and the stub records the id the real drill will take. Building those drills is the remaining work.
 
 ## 1. Rules the guides state wrongly
 

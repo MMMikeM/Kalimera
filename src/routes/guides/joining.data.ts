@@ -74,7 +74,7 @@ export const JOINING_GUIDE: Guide = {
 		{
 			id: "thinking",
 			title: "I think that…: νομίζω ότι",
-			rule: "νομίζω and πιστεύω take ότι before a full sentence, as think takes that in English. ίσως goes in front of whatever you are unsure of.",
+			rule: "νομίζω and πιστεύω take ότι before a full sentence, as think takes that in English. ίσως, maybe, goes in front of whatever you are unsure of, in a statement. For a maybe about the future the short form is common, with no θα: ίσως πάω. To ask something softly, by any chance, use μήπως in a question: Μήπως ξέρεις τι ώρα είναι;",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -85,16 +85,20 @@ export const JOINING_GUIDE: Guide = {
 					["πιστεύω ότι θα έρθει", "I believe he'll come"],
 					["έτσι νομίζω", "I think so"],
 					["ίσως αύριο", "maybe tomorrow"],
+					["μήπως ξέρεις;", "do you happen to know?"],
 				],
 			},
-			examples: [{ greek: "Ίσως πάω.", english: "Maybe I'll go." }],
+			examples: [
+				{ greek: "Ίσως πάω.", english: "Maybe I'll go." },
+				{ greek: "Μήπως ξέρεις τι ώρα είναι;", english: "Do you happen to know the time?" },
+			],
 			drills: [],
 			plannedDrills: [
 				{
 					id: "joining-think-that",
 					title: "I think that…",
-					greek: "νομίζω ότι · πιστεύω ότι · ίσως",
-					tests: "Shows an English sentence such as I think it's good; the answer is the Greek with ότι after νομίζω or πιστεύω.",
+					greek: "νομίζω ότι · πιστεύω ότι · ίσως · μήπως",
+					tests: "Shows an English sentence such as I think it's good, maybe tomorrow or do you happen to know?; the answer is the Greek with ότι after νομίζω or πιστεύω, ίσως in a statement, or μήπως in a question.",
 				},
 			],
 		},
@@ -270,6 +274,44 @@ export const JOINING_GUIDE: Guide = {
 					title: "So that: για να",
 					greek: "για να μάθω · για να μην κρυώνουμε",
 					tests: "Shows an English sentence with to, in order to or so that … not; the answer is the Greek with για να, or για να μην, before the verb.",
+				},
+			],
+		},
+		{
+			id: "but-so-also",
+			title: "But, so, also: αλλά, όμως, λοιπόν, επίσης",
+			rule: "αλλά, but, starts the second of two ideas. όμως also means but, and it can come later, after the first word or phrase. λοιπόν means so or well: it moves the talk on. επίσης means also; on its own it answers a good wish, you too.",
+			table: {
+				columns: [
+					{ label: "Greek", greek: true },
+					{ label: "Meaning" },
+				],
+				rows: [
+					["αλλά", "but"],
+					["όμως", "but, though, however"],
+					["λοιπόν", "so, well"],
+					["επίσης", "also, as well; you too"],
+				],
+			},
+			examples: [
+				{
+					greek: "Υπάρχει ένα βιβλιοπωλείο, αλλά δεν υπάρχει βιβλιοθήκη.",
+					english: "There is a bookshop, but there isn't a library.",
+				},
+				{
+					greek: "Στην Ελλάδα όμως ο χειμώνας είναι λίγο πιο ήπιος.",
+					english: "In Greece, though, the winter is a little milder.",
+				},
+				{ greek: "Σήμερα θα γνωρίσουμε λοιπόν μερικά βασικά χρώματα.", english: "So today we will get to know some basic colours." },
+				{ greek: "Καλή σου μέρα! Επίσης!", english: "Have a good day! You too!" },
+			],
+			drills: [],
+			plannedDrills: [
+				{
+					id: "joining-but-so-also",
+					title: "But, so, also",
+					greek: "αλλά · όμως · λοιπόν · επίσης",
+					tests: "Shows two short English ideas joined by but, so or also; the answer is the Greek with αλλά or όμως, λοιπόν or επίσης in its place.",
 				},
 			],
 		},

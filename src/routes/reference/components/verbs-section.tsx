@@ -1020,11 +1020,11 @@ const FutureTenseSection: React.FC = () => (
 					<span className="text-stone-500">— there won't be a single car</span>
 				</p>
 				<p className="pt-2 text-stone-600">
-					ίσως takes the same short form but never θα:{" "}
+					ίσως usually takes the same short form with no θα:{" "}
 					<GreekText tone="accent" size="sm">
 						Ίσως πάω
 					</GreekText>
-					, not ίσως θα πάω.
+					, though ίσως θα πάω is also correct.
 				</p>
 			</div>
 		</TeachingCard>
