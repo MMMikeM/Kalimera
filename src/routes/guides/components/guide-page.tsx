@@ -8,18 +8,13 @@ import { ProseWithGreek } from "@/components/ProseWithGreek";
 import type { Guide } from "@/types/guide";
 
 import { GUIDE_TONE } from "./guide-tone";
+import { usesMarks, sectionTones } from "../guides.data";
 import { GuideSection } from "./guide-section";
 import { MarkKey } from "./mark-key";
 
-const usesMarks = (guide: Guide) =>
-	guide.sections.some(
-		(s) =>
-			s.examples?.some((e) => e.marks?.length) ||
-			s.table?.rows.some((row) => row.some((cell) => typeof cell !== "string" && cell.marks?.length)),
-	);
-
 export const GuidePage = ({ guide }: { guide: Guide }) => {
 	const tone = GUIDE_TONE[guide.tone];
+	const tones = sectionTones(guide);
 	return (
 		<div className="space-y-10">
 			<div className="space-y-2">
@@ -64,7 +59,7 @@ export const GuidePage = ({ guide }: { guide: Guide }) => {
 					{guide.sections.map((section, i) => (
 						<li key={section.id}>
 							<a href={`#${section.id}`} className="flex min-h-11 items-baseline gap-3 py-2 hover:underline">
-								<span className={cn("w-6 shrink-0 text-right text-sm", tone.accent)}>{i + 1}.</span>
+								<span className={cn("w-6 shrink-0 text-right text-sm", GUIDE_TONE[tones[i]!].accent)}>{i + 1}.</span>
 								<span className="text-stone-800">
 									<ProseWithGreek text={section.title} />
 								</span>
@@ -76,7 +71,7 @@ export const GuidePage = ({ guide }: { guide: Guide }) => {
 
 			<div className="space-y-8">
 				{guide.sections.map((section, i) => (
-					<GuideSection key={section.id} guide={guide} section={section} position={i + 1} />
+					<GuideSection key={section.id} guide={guide} section={section} position={i + 1} tone={tones[i]!} />
 				))}
 			</div>
 

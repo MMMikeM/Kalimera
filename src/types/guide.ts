@@ -52,6 +52,8 @@ export interface GuideSection {
 	examples?: GuideExample[];
 	/** A look-alike that lives elsewhere: `"<section>"` in this guide or `"<guide>/<section>"`. */
 	confuse?: { text: string; section: string };
+	/** Colour of the section's header. Omit it and the section takes the next colour in its guide's cycle. */
+	tone?: GuideTone;
 	/** Drill ids from the practice catalogue; empty when no drill covers the section yet. */
 	drills: string[];
 }
