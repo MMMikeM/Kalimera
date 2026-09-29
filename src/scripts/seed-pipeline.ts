@@ -245,7 +245,13 @@ export async function batchInsertVocab(
 
 export const batchInsertVerbDetails = (db: Db, details: VerbDetailRecord[]) =>
 	inBatches(details, (batch) =>
-		db.insert(verbDetails).values(batch).onConflictDoNothing({ target: verbDetails.vocabId }),
+		db
+			.insert(verbDetails)
+			.values(batch)
+			.onConflictDoUpdate({
+				target: verbDetails.vocabId,
+				set: { conjugationFamily: sql`excluded.conjugation_family` },
+			}),
 	);
 
 export const batchInsertNounDetails = (db: Db, details: NounDetailRecord[]) =>

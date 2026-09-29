@@ -12,7 +12,7 @@ export const NO_DOER_GUIDE: Guide = {
 		{
 			id: "there-is",
 			title: "There is, there are: υπάρχει",
-			rule: "υπάρχει means there is and υπάρχουν there are: the verb matches whatever exists. For the future, put θα in front: θα υπάρχει.",
+			rule: "υπάρχει means there is and υπάρχουν there are: the verb matches whatever exists, which takes the Doer form. For the future, put θα in front: θα υπάρχει. In speech έχει often does the same job, but it stays έχει whatever follows, and what exists takes the Target form: έχει Άγγλους, against υπάρχουν Άγγλοι.",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -29,6 +29,11 @@ export const NO_DOER_GUIDE: Guide = {
 					],
 					[cellWith("δεν υπάρχει βιβλιοθήκη", mark("βιβλιοθήκη", "nominative", "feminine")), "there's no library"],
 					[cellWith("θα υπάρχουν πολλά πάρκα", mark("πολλά πάρκα", "nominative", "neuter", true)), "there will be many parks"],
+					[cellWith("υπάρχουν Άγγλοι", mark("Άγγλοι", "nominative", "masculine", true)), "there are English people"],
+					[
+						{ text: "έχει Άγγλους", weight: "deviate", marks: [mark("Άγγλους", "accusative", "masculine", true)] },
+						"there are English people",
+					],
 				],
 			},
 			examples: [
@@ -42,8 +47,21 @@ export const NO_DOER_GUIDE: Guide = {
 					english: "There will be many parks in my city.",
 					marks: [mark("πολλά πάρκα", "nominative", "neuter", true), mark("στην πόλη", "accusative", "feminine")],
 				},
+				{
+					greek: "Έχει Άγγλους στην Πάφο.",
+					english: "There are English people in Paphos.",
+					marks: [mark("Άγγλους", "accusative", "masculine", true), mark("στην Πάφο", "accusative", "feminine")],
+				},
 			],
 			drills: [],
+			plannedDrills: [
+				{
+					id: "no-doer-there-is",
+					title: "υπάρχει or έχει",
+					greek: "υπάρχουν πολλά πάρκα · έχει Άγγλους",
+					tests: "Shows a there is or there are sentence in English and the verb to use; the answer matches the noun to it: υπάρχουν Άγγλοι with the Doer form, έχει Άγγλους with the Target form.",
+				},
+			],
 		},
 		{
 			id: "weather",
@@ -71,6 +89,14 @@ export const NO_DOER_GUIDE: Guide = {
 				},
 			],
 			drills: [],
+			plannedDrills: [
+				{
+					id: "no-doer-weather",
+					title: "Weather: κάνει, βρέχει, έχει",
+					greek: "κάνει κρύο · βρέχει · έχει βροχή",
+					tests: "Shows the weather in English (it's cold); the answer is the Greek frame, κάνει κρύο.",
+				},
+			],
 		},
 		{
 			id: "must",
@@ -112,6 +138,52 @@ export const NO_DOER_GUIDE: Guide = {
 				},
 			],
 			drills: [],
+			plannedDrills: [
+				{
+					id: "no-doer-would-like",
+					title: "I would like: θα ήθελα",
+					greek: "θα ήθελα έναν καφέ · θα ήθελα να",
+					tests: "Shows a request in English (I'd like a coffee); the answer is θα ήθελα with the thing in the Target form: θα ήθελα έναν καφέ.",
+				},
+			],
+		},
+		{
+			id: "its-hard",
+			title: "It's hard to…: είναι δύσκολο να",
+			rule: "For it's hard, it's crazy, it's easy, Greek has no word for it: είναι takes the -ο form of the adjective on its own, είναι δύσκολο, είναι τρελό. Add να and a verb to say what is hard. The -α form ωραία does the same job, and is common in the past: ήταν πολύ ωραία.",
+			table: {
+				columns: [
+					{ label: "Greek", greek: true },
+					{ label: "Meaning" },
+				],
+				rows: [
+					[{ text: "είναι δύσκολο", weight: "anchor", marks: [mark("δύσκολο", "nominative", "neuter")] }, "it's hard"],
+					[cellWith("είναι εύκολο", mark("εύκολο", "nominative", "neuter")), "it's easy"],
+					[cellWith("είναι τρελό", mark("τρελό", "nominative", "neuter")), "it's crazy"],
+					[{ text: "ήταν πολύ ωραία", weight: "deviate" }, "it was very nice"],
+				],
+			},
+			examples: [
+				{
+					greek: "Είναι δύσκολο να βρίσκεις δουλειά.",
+					english: "It's hard to find work.",
+					marks: [mark("δύσκολο", "nominative", "neuter")],
+				},
+				{
+					greek: "Είναι τρελό!",
+					english: "It's crazy!",
+					marks: [mark("τρελό", "nominative", "neuter")],
+				},
+			],
+			drills: [],
+			plannedDrills: [
+				{
+					id: "no-doer-its-adjective",
+					title: "It's hard to: είναι δύσκολο να",
+					greek: "είναι δύσκολο · είναι τρελό · ήταν ωραία",
+					tests: "Shows a reaction in English (it's hard to find work); the answer is είναι with the -ο form of the adjective: είναι δύσκολο να βρίσκεις δουλειά.",
+				},
+			],
 		},
 	],
 	reference: [{ label: "Patterns", href: "/reference/patterns" }],

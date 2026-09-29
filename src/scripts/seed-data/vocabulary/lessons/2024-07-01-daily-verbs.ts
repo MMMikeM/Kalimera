@@ -11,7 +11,7 @@ export const LESSON_2024_07_01 = createLesson({
 		{
 			lemma: "περνάω",
 			english: "I pass/cross/have fun",
-			conjugationFamily: "-άω/-ώ",
+			conjugationFamily: "-άω",
 			cefrLevel: "A1",
 		},
 		{

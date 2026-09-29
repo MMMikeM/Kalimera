@@ -11,8 +11,8 @@ export const VERBS: FullVerbSeed[] = [
 	{ lemma: "φεύγω", english: "I leave", cefrLevel: "A2", conjugationFamily: "-ω" },
 	{ lemma: "αγοράζω", english: "I buy", cefrLevel: "A2", conjugationFamily: "-ω" },
 	{ lemma: "νευριάζω", english: "I get nervous", cefrLevel: "B1", conjugationFamily: "-ω" },
-	{ lemma: "σταματάω", english: "I stop", cefrLevel: "A2", conjugationFamily: "-άω/-ώ" },
-	{ lemma: "ζητάω", english: "I ask for", cefrLevel: "A2", conjugationFamily: "-άω/-ώ" },
+	{ lemma: "σταματάω", english: "I stop", cefrLevel: "A2", conjugationFamily: "-άω" },
+	{ lemma: "ζητάω", english: "I ask for", cefrLevel: "A2", conjugationFamily: "-άω" },
 	{ lemma: "ξεχνάω", english: "I forget", cefrLevel: "A2", conjugationFamily: "-ω" },
 	{ lemma: "χαλαρώνω", english: "I relax", cefrLevel: "B1", conjugationFamily: "-ω" },
 	{ lemma: "μένω", english: "I live/stay", cefrLevel: "A1", conjugationFamily: "-ω" },
@@ -36,21 +36,21 @@ export const VERBS: FullVerbSeed[] = [
 	},
 	{ lemma: "φαίνομαι", english: "I seem/appear", cefrLevel: "A2", conjugationFamily: "-ομαι" },
 
-	// -άω/-ώ family
-	{ lemma: "μιλάω", english: "I speak", cefrLevel: "A1", conjugationFamily: "-άω/-ώ" },
-	{ lemma: "προτιμώ", english: "I prefer", cefrLevel: "A2", conjugationFamily: "-άω/-ώ" },
+	// -άω and -ώ families
+	{ lemma: "μιλάω", english: "I speak", cefrLevel: "A1", conjugationFamily: "-άω" },
+	{ lemma: "προτιμώ", english: "I prefer", cefrLevel: "A2", conjugationFamily: "-ώ" },
 	{
 		lemma: "φταίω",
 		english: "I'm guilty/at fault",
 		cefrLevel: "B1",
-		conjugationFamily: "-άω/-ώ",
+		conjugationFamily: "irregular",
 	},
-	{ lemma: "φοράω", english: "I wear", cefrLevel: "A2", conjugationFamily: "-άω/-ώ" },
-	{ lemma: "αγαπάω", english: "I love", cefrLevel: "A2", conjugationFamily: "-άω/-ώ" },
-	{ lemma: "κοιτάω", english: "I look at/watch", cefrLevel: "A2", conjugationFamily: "-άω/-ώ" },
-	{ lemma: "βοηθάω", english: "I help", cefrLevel: "A2", conjugationFamily: "-άω/-ώ" },
-	{ lemma: "εννοώ", english: "I mean/intend", cefrLevel: "A2", conjugationFamily: "-άω/-ώ" },
-	{ lemma: "ανησυχώ", english: "I worry", cefrLevel: "B1", conjugationFamily: "-άω/-ώ" },
+	{ lemma: "φοράω", english: "I wear", cefrLevel: "A2", conjugationFamily: "-άω" },
+	{ lemma: "αγαπάω", english: "I love", cefrLevel: "A2", conjugationFamily: "-άω" },
+	{ lemma: "κοιτάω", english: "I look at/watch", cefrLevel: "A2", conjugationFamily: "-άω" },
+	{ lemma: "βοηθάω", english: "I help", cefrLevel: "A2", conjugationFamily: "-άω" },
+	{ lemma: "εννοώ", english: "I mean/intend", cefrLevel: "A2", conjugationFamily: "-ώ" },
+	{ lemma: "ανησυχώ", english: "I worry", cefrLevel: "B1", conjugationFamily: "-ώ" },
 
 	// -ομαι family (deponent/passive)
 	{ lemma: "έρχομαι", english: "I come", cefrLevel: "A1", conjugationFamily: "-ομαι" },
@@ -82,9 +82,9 @@ export const VERBS: FullVerbSeed[] = [
 
 	// High-frequency core (top-110 freq corpus, previously unseeded)
 	{ lemma: "ξέρω", english: "I know", cefrLevel: "A1", conjugationFamily: "-ω" },
-	{ lemma: "μπορώ", english: "I can", cefrLevel: "A1", conjugationFamily: "-άω/-ώ" },
-	{ lemma: "ευχαριστώ", english: "I thank", cefrLevel: "A1", conjugationFamily: "-άω/-ώ" },
-	{ lemma: "παρακαλώ", english: "I ask / please", cefrLevel: "A1", conjugationFamily: "-άω/-ώ" },
+	{ lemma: "μπορώ", english: "I can", cefrLevel: "A1", conjugationFamily: "-ώ" },
+	{ lemma: "ευχαριστώ", english: "I thank", cefrLevel: "A1", conjugationFamily: "-ώ" },
+	{ lemma: "παρακαλώ", english: "I ask / please", cefrLevel: "A1", conjugationFamily: "-ώ" },
 	{ lemma: "νομίζω", english: "I think (opinion)", cefrLevel: "A1", conjugationFamily: "-ω" },
 
 	// High-frequency deponents (-μαι family)
@@ -113,16 +113,16 @@ export const VERBS: FullVerbSeed[] = [
 	{ lemma: "γυρίζω", english: "I return/turn", cefrLevel: "A2", conjugationFamily: "-ω" },
 	{ lemma: "λείπω", english: "I am missing/away", cefrLevel: "A2", conjugationFamily: "-ω" },
 	{ lemma: "κλέβω", english: "I steal", cefrLevel: "A2", conjugationFamily: "-ω" },
-	{ lemma: "εξηγώ", english: "I explain", cefrLevel: "A2", conjugationFamily: "-άω/-ώ" },
-	{ lemma: "τραγουδάω", english: "I sing", cefrLevel: "A2", conjugationFamily: "-άω/-ώ" },
-	{ lemma: "συναντάω", english: "I meet", cefrLevel: "A2", conjugationFamily: "-άω/-ώ" },
-	{ lemma: "κρατάω", english: "I hold/keep", cefrLevel: "A2", conjugationFamily: "-άω/-ώ" },
+	{ lemma: "εξηγώ", english: "I explain", cefrLevel: "A2", conjugationFamily: "-ώ" },
+	{ lemma: "τραγουδάω", english: "I sing", cefrLevel: "A2", conjugationFamily: "-άω" },
+	{ lemma: "συναντάω", english: "I meet", cefrLevel: "A2", conjugationFamily: "-άω" },
+	{ lemma: "κρατάω", english: "I hold/keep", cefrLevel: "A2", conjugationFamily: "-άω" },
 
 	// Opposites-drill additions
-	{ lemma: "πουλάω", english: "I sell", cefrLevel: "A2", conjugationFamily: "-άω/-ώ" },
+	{ lemma: "πουλάω", english: "I sell", cefrLevel: "A2", conjugationFamily: "-άω" },
 	{ lemma: "κερδίζω", english: "I win", cefrLevel: "A2", conjugationFamily: "-ω" },
-	{ lemma: "μισώ", english: "I hate", cefrLevel: "A2", conjugationFamily: "-άω/-ώ" },
-	{ lemma: "ξυπνάω", english: "I wake up", cefrLevel: "A2", conjugationFamily: "-άω/-ώ" },
+	{ lemma: "μισώ", english: "I hate", cefrLevel: "A2", conjugationFamily: "-ώ" },
+	{ lemma: "ξυπνάω", english: "I wake up", cefrLevel: "A2", conjugationFamily: "-άω" },
 	{ lemma: "ανοίγω", english: "I open", cefrLevel: "A1", conjugationFamily: "-ω" },
 	{ lemma: "κλείνω", english: "I close/book", cefrLevel: "A1", conjugationFamily: "-ω" },
 	{ lemma: "αρχίζω", english: "I start/begin", cefrLevel: "A2", conjugationFamily: "-ω" },

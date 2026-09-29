@@ -9,7 +9,7 @@ export const LESSON_2025_02_03 = createLesson({
 
 	verbs: [
 		{ lemma: "κοιμάμαι", english: "I sleep", conjugationFamily: "-άμαι", cefrLevel: "A1" },
-		{ lemma: "ξυπνώ", english: "I wake up", conjugationFamily: "-άω/-ώ", cefrLevel: "A1" },
+		{ lemma: "ξυπνώ", english: "I wake up", conjugationFamily: "-ώ", cefrLevel: "A1" },
 		{ lemma: "μαγειρεύω", english: "I cook", conjugationFamily: "-ω", cefrLevel: "A1" },
 		{ lemma: "φτάνω", english: "I arrive", conjugationFamily: "-ω", cefrLevel: "A2" },
 		{ lemma: "μένω", english: "I stay/live", conjugationFamily: "-ω", cefrLevel: "A1" },

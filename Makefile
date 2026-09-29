@@ -1,5 +1,5 @@
 .PHONY: dev build deploy preview help duplicates duplicates-report duplicates-llm \
-	db-push db-studio db-seed db-setup db-push-local
+	db-push db-studio db-seed db-setup db-push-local sql
 
 # Development
 dev:
@@ -28,6 +28,18 @@ db-seed:
 	pnpm db:seed
 
 db-setup: db-push db-seed
+
+# `make sql path/to/file.sql` runs the file against production in one
+# transaction, printing any rows it returns; a failing statement rolls it all back.
+ifeq (sql,$(firstword $(MAKECMDGOALS)))
+SQL_FILE := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
+# The file named after `sql` is an argument, not a target to build.
+$(eval .PHONY: $(SQL_FILE))
+$(eval $(SQL_FILE):;@:)
+endif
+
+sql:
+	pnpm db:sql $(SQL_FILE)
 
 # Schema-only iteration against a local file, no Docker: a file: URL makes
 # drizzle.config.ts drop the auth token and use the embedded driver.
@@ -58,6 +70,7 @@ help:
 	@echo "  db-seed           - Seed production (vocab + verb conjugations; idempotent)"
 	@echo "  db-setup          - Push schema and seed production"
 	@echo "  db-studio         - Open Drizzle Studio (production)"
+	@echo "  sql FILE.sql      - Run a SQL file against production in one transaction"
 	@echo "  db-push-local     - Push schema to a local file DB (no Docker, no prod)"
 
 	@echo ""

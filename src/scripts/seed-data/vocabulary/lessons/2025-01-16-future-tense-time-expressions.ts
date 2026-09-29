@@ -71,12 +71,12 @@ export const LESSON_2025_01_16 = createLesson({
 		{
 			text: "θα χαλαρώνω",
 			english: "I will be relaxing",
-			metadata: { pattern: "θα + present tense", usage: "simple future" },
+			metadata: { pattern: "θα + present tense", usage: "future continuous" },
 		},
 		{
 			text: "θα πηγαίνω",
 			english: "I will be going",
-			metadata: { pattern: "θα + present tense", usage: "simple future" },
+			metadata: { pattern: "θα + present tense", usage: "future continuous" },
 		},
 		// Past time expressions
 		{
@@ -170,7 +170,7 @@ export const LESSON_2025_01_16 = createLesson({
 
 	grammarNotes: [
 		{
-			pattern: "θα + present tense = simple future",
+			pattern: "θα + present tense = future continuous",
 			examples: [
 				"θα χαλαρώνω (I will be relaxing)",
 				"θα θυμάμαι (I will remember)",
@@ -181,7 +181,7 @@ export const LESSON_2025_01_16 = createLesson({
 				"Αύριο θα είναι Σάββατο (Tomorrow will be Saturday)",
 			],
 			explanation:
-				"The simple future in Greek is formed with θα + the present tense form. The verb does not change — only θα is added before it.",
+				"θα + the present form is the future continuous: something that will be ongoing or repeated (θα διαβάζω, I will be reading). For one action still to come, the simple future uses θα + the short form instead: θα διαβάσω, I will read. είμαι has no short form, so θα είναι does both jobs.",
 			section: "verbs/future",
 		},
 		{

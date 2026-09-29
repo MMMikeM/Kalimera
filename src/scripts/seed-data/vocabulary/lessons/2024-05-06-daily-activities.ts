@@ -46,7 +46,7 @@ export const LESSON_2024_05_06 = createLesson({
 		{
 			pattern: "ακούω conjugation",
 			examples: ["ακούω, ακούς, ακούει", "ακούμε, ακούτε, ακούν"],
-			explanation: "Regular -ω verb",
+			explanation: "Not a regular -ω verb: the stem ends in a vowel, so it is ακούς, not ακούεις. λέω (λες, λέει) and κλαίω (κλαις, κλαίει) work the same way.",
 			section: "verbs/present",
 		},
 	],

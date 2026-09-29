@@ -55,7 +55,7 @@ export const LESSON_2024_11_28 = createLesson({
 				"οι γιατροί → των γιατρών → τους γιατρούς",
 			],
 			explanation: "Regular masculine nouns ending in -ος follow predictable case endings",
-			section: "roles/owner",
+			section: "nouns/families",
 		},
 		{
 			pattern: "Genitive singular -ου",
@@ -66,8 +66,8 @@ export const LESSON_2024_11_28 = createLesson({
 		{
 			pattern: "Genitive plural -ών",
 			examples: ["των ποταμών", "των ανθρώπων", "των δρόμων"],
-			explanation: "Plural genitive always has accent on -ών",
-			section: "roles/owner",
+			explanation: "In the plural every noun's Owner ends in -ων, but the stress does not always move onto it: των ποταμών, yet των δρόμων and των ανθρώπων.",
+			section: "nouns/owner",
 		},
 	],
 });

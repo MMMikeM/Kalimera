@@ -13,7 +13,7 @@ export const LESSON_2025_03_10 = createLesson({
 		{
 			lemma: "ερευνώ",
 			english: "I research/investigate",
-			conjugationFamily: "-άω/-ώ",
+			conjugationFamily: "-ώ",
 			cefrLevel: "B1",
 		},
 		{ lemma: "λύνω", english: "I solve/resolve", conjugationFamily: "-ω", cefrLevel: "A2" },

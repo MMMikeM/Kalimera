@@ -4,7 +4,7 @@ export const LESSON_2026_05_08 = createLesson({
 	meta: {
 		date: "2026-05-08",
 		topic: "Occupations and work vocabulary",
-		source: "Weekly lesson - jobs, work hours, dream job, πλήρης/μερικής απασχόλησης",
+		source: "Weekly lesson - jobs, work hours, dream job, πλήρους/μερικής απασχόλησης",
 	},
 
 	verbs: [
@@ -46,9 +46,8 @@ export const LESSON_2026_05_08 = createLesson({
 		{
 			lemma: "υπεύθυνος",
 			gender: "masculine",
-			english: "manager/person in charge",
+			english: "manager/person in charge (η υπεύθυνη — feminine)",
 			cefrLevel: "A2",
-			metadata: { note: "fem same form: η υπεύθυνος" },
 		},
 		{ lemma: "αρχιτέκτονας", gender: "masculine", english: "architect", cefrLevel: "A2" },
 		{
@@ -128,7 +127,7 @@ export const LESSON_2026_05_08 = createLesson({
 			metadata: { usage: "employment type" },
 		},
 		{
-			text: "πλήρης απασχόλησης",
+			text: "πλήρους απασχόλησης",
 			english: "full-time",
 			metadata: { usage: "employment type" },
 		},
@@ -172,10 +171,10 @@ export const LESSON_2026_05_08 = createLesson({
 				"ένας νοσοκόμος / μια νοσοκόμα (nurse)",
 				"ένας φοιτητής / μια φοιτήτρια (student)",
 				"ένας/μια μπαρίστα (barista — same form)",
-				"ένας/μια υπεύθυνος (manager — same form)",
+				"ένας υπεύθυνος / μια υπεύθυνη (manager)",
 			],
 			explanation:
-				"Most occupations have distinct masculine and feminine forms. Some (μπαρίστα, υπεύθυνος) use the same word for both genders — only the article changes.",
+				"Most occupations have distinct masculine and feminine forms. Some (μπαρίστα) use the same word for both genders — only the article changes.",
 			section: "agreement/gender-families",
 		},
 	],

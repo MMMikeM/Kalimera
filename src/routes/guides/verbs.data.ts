@@ -110,7 +110,7 @@ export const VERBS_GUIDE: Guide = {
 			id: "present",
 			tone: "olive",
 			title: "Present: the endings",
-			rule: "Most verbs end in -ω and share one set of endings. Verbs in -άω share a second set. A few short verbs, like πάω and τρώω, follow neither: learn them whole.",
+			rule: "Most verbs end in -ω and share one set of endings. Verbs in -άω share a second set. A small family of short verbs shares a third, shown here by πάω and τρώω. ακούω, λέω and κλαίω belong to it too, not to the -ω set: ακούς, ακούει and λες, λέει, not ακούεις.",
 			table: {
 				columns: [
 					{ label: "Who" },
@@ -147,10 +147,36 @@ export const VERBS_GUIDE: Guide = {
 			],
 		},
 		{
+			id: "o-verbs",
+			tone: "sunset",
+			title: "Verbs in -ώ: μπορώ, μπορείς",
+			rule: "Some verbs end in a stressed -ώ and take a set of endings of their own, stressed on the ending throughout: μπορώ, οδηγώ, τηλεφωνώ, προσπαθώ, συμφωνώ. Not every -ώ belongs here: μιλώ is a shorter way of saying μιλάω, and keeps the -άω endings, μιλάς and μιλάει.",
+			table: {
+				columns: [
+					{ label: "Who" },
+					{ label: "μπορώ", greek: true, tone: "olive" },
+					{ label: "οδηγώ", greek: true, tone: "olive" },
+				],
+				rows: [
+					["I", { text: "μπορώ", weight: "anchor" }, { text: "οδηγώ", weight: "anchor" }],
+					["you", "μπορείς", "οδηγείς"],
+					["he / she / it", "μπορεί", "οδηγεί"],
+					["we", "μπορούμε", "οδηγούμε"],
+					["you all", "μπορείτε", "οδηγείτε"],
+					["they", "μπορούν", "οδηγούν"],
+				],
+			},
+			examples: [
+				{ greek: "Μπορείς να μου πεις;", english: "Can you tell me?" },
+				{ greek: "Μπορείτε να με βοηθήσετε;", english: "Can you help me?" },
+			],
+			drills: ["verbs-conjugation-endings"],
+		},
+		{
 			id: "past-shapes",
 			tone: "terracotta",
 			title: "Simple past, by family",
-			rule: "The simple past endings are the same for every verb: -α, -ες, -ε, -αμε, -ατε, -αν. What changes is the stem, and stems come in families, so learn the family rather than the verb. A past too short to carry its stress gains an έ- in front: έβαλα, έδωσα.",
+			rule: "The simple past endings are the same for almost every verb: -α, -ες, -ε, -αμε, -ατε, -αν. είμαι is the exception, with ήμουν. What changes is the stem, and stems come in families, so learn the family rather than the verb. Most -ζω verbs take -σ-, but some take -ξ-: άλλαξα, έπαιξα. Most -άω verbs take -ησ-, but some take -ασ- (γέλασα, ξέχασα, πείνασα) or -εσ- (φόρεσα). The -αίνω verbs of going in, out, up and down take -ηκ- (βγήκα, μπήκα, ανέβηκα); others shorten the stem: έμαθα, κατάλαβα. A past too short to carry its stress gains an έ- in front: έβαλα, έδωσα.",
 			table: {
 				columns: [
 					{ label: "Present", greek: true, tone: "olive" },
@@ -159,9 +185,12 @@ export const VERBS_GUIDE: Guide = {
 					{ label: "Family" },
 				],
 				rows: [
-					["δοκιμάζω", "δοκίμασα", "θα δοκιμάσω", "-ζω takes -σ-"],
-					["μιλάω", "μίλησα", "θα μιλήσω", "-άω takes -ησ-"],
-					["βγαίνω", "βγήκα", "θα βγω", "-αίνω takes -ηκ-"],
+					["δοκιμάζω", "δοκίμασα", "θα δοκιμάσω", "most -ζω: -σ-"],
+					["παίζω", { text: "έπαιξα", weight: "deviate" }, "θα παίξω", "some -ζω: -ξ-"],
+					["μιλάω", "μίλησα", "θα μιλήσω", "most -άω: -ησ-"],
+					["γελάω", { text: "γέλασα", weight: "deviate" }, "θα γελάσω", "some -άω: -ασ-"],
+					["βγαίνω", "βγήκα", "θα βγω", "motion -αίνω: -ηκ-"],
+					["μαθαίνω", { text: "έμαθα", weight: "deviate" }, "θα μάθω", "other -αίνω: short"],
 					["βάζω", "έβαλα", "θα βάλω", "ζ becomes λ"],
 					["δίνω", "έδωσα", "θα δώσω", "new stem"],
 					["παίρνω", "πήρα", "θα πάρω", "new stem"],
@@ -222,22 +251,26 @@ export const VERBS_GUIDE: Guide = {
 		{
 			id: "short-form",
 			tone: "ocean",
-			title: "The same short form after να, πριν and ίσως",
-			rule: "The simple future's short form is not only for the future. After να, πριν and ίσως you use it too, so one form does four jobs.",
+			title: "After να: the short form or the present",
+			rule: "The simple future's short form is not only for the future. After να it names one action: θέλω να φάω, I want to eat. For something ongoing or habitual, να takes the present instead: μου αρέσει να τρώω, I like eating. πριν takes the short form for one action too: πριν πάω για ύπνο.",
 			table: {
 				columns: [
-					{ label: "Greek", greek: true, tone: "ocean" },
+					{ label: "One action", greek: true, tone: "ocean" },
+					{ label: "Ongoing", greek: true, tone: "olive" },
 					{ label: "Meaning" },
 				],
 				rows: [
-					[{ text: "θα βοηθήσω", weight: "anchor" }, "I'll help"],
-					["μπορώ να βοηθήσω;", "can I help?"],
-					["πρέπει να δουλέψω", "I have to work"],
-					["πριν πάω για ύπνο", "before I go to sleep"],
-					["ίσως πάω", "maybe I'll go"],
+					[{ text: "να φάω", weight: "anchor" }, { text: "να τρώω", weight: "anchor" }, "eat"],
+					["να πιω", "να πίνω", "drink"],
+					["να δουλέψω", "να δουλεύω", "work"],
+					["να βοηθήσω", "να βοηθάω", "help"],
 				],
 			},
 			examples: [
+				{ greek: "Θέλω να φάω.", english: "I want to eat." },
+				{ greek: "Μου αρέσει να τρώω.", english: "I like eating." },
+				{ greek: "Το χόμπι μου είναι να μαγειρεύω.", english: "My hobby is cooking." },
+				{ greek: "Μπορώ να βοηθήσω;", english: "Can I help?" },
 				{ greek: "Διαβάζω πριν πάω για ύπνο.", english: "I read before I go to sleep." },
 			],
 			drills: ["verbs-modal-constructions"],
@@ -274,7 +307,7 @@ export const VERBS_GUIDE: Guide = {
 				{ greek: "Πού γεννήθηκες;", english: "Where were you born?" },
 				{ greek: "Κουρεύτηκα.", english: "I got a haircut." },
 			],
-			drills: [],
+			drills: ["verbs-conjugation-endings"],
 		},
 		{
 			id: "ongoing-past",

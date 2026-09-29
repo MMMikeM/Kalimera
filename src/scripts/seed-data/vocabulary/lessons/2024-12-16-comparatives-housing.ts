@@ -9,7 +9,7 @@ export const LESSON_2024_12_16 = createLesson({
 
 	verbs: [
 		{ lemma: "διαβάζω", english: "I read", conjugationFamily: "-ω", cefrLevel: "A1" },
-		{ lemma: "οδηγώ", english: "I drive", conjugationFamily: "-άω/-ώ", cefrLevel: "A1" },
+		{ lemma: "οδηγώ", english: "I drive", conjugationFamily: "-ώ", cefrLevel: "A1" },
 	],
 
 	nouns: [

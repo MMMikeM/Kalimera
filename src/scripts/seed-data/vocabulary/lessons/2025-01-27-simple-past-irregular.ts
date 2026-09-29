@@ -10,7 +10,7 @@ export const LESSON_2025_01_27 = createLesson({
 	verbs: [
 		{ lemma: "βλέπω", english: "I see/watch", conjugationFamily: "-ω", cefrLevel: "A1" },
 		{ lemma: "δοκιμάζω", english: "I try/taste", conjugationFamily: "-ω", cefrLevel: "A2" },
-		{ lemma: "μπορώ", english: "I can/am able to", conjugationFamily: "-άω/-ώ", cefrLevel: "A1" },
+		{ lemma: "μπορώ", english: "I can/am able to", conjugationFamily: "-ώ", cefrLevel: "A1" },
 		{ lemma: "κάνω", english: "I do/make", conjugationFamily: "-ω", cefrLevel: "A1" },
 		{ lemma: "τρώω", english: "I eat", conjugationFamily: "-ω", cefrLevel: "A1" },
 	],

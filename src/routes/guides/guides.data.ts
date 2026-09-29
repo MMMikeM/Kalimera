@@ -4,6 +4,7 @@ import { AGREEMENT_GUIDE } from "./agreement.data";
 import { JOINING_GUIDE } from "./joining.data";
 import { LITTLE_WORDS_GUIDE } from "./little-words.data";
 import { NO_DOER_GUIDE } from "./no-doer.data";
+import { NOUNS_GUIDE } from "./nouns.data";
 import { PLACE_GUIDE } from "./place.data";
 import { ROLES_GUIDE } from "./roles.data";
 import { SCALES_GUIDE } from "./scales.data";
@@ -12,6 +13,7 @@ import { VERBS_GUIDE } from "./verbs.data";
 /** Every guide in reading order. Each guide owns its own content; this list only orders them. */
 export const GUIDES: Guide[] = [
 	ROLES_GUIDE,
+	NOUNS_GUIDE,
 	VERBS_GUIDE,
 	LITTLE_WORDS_GUIDE,
 	AGREEMENT_GUIDE,

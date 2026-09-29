@@ -6,7 +6,7 @@ export type { Gender, GrammaticalNumber } from "@/server/db/enums";
 /** Local alias kept for this module's callers; the canonical name is GrammaticalCase. */
 export type Case = GrammaticalCase;
 
-export type ConjugationFamily = "-ω" | "-άω/-ώ" | "-ομαι" | "-άμαι" | "irregular";
+export type ConjugationFamily = "-ω" | "-άω" | "-ώ" | "-ομαι" | "-άμαι" | "irregular";
 
 // Definite article lookup table
 // Usage: DEFINITE_ARTICLES[gender][number][case]

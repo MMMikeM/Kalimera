@@ -62,6 +62,14 @@ export const JOINING_GUIDE: Guide = {
 			},
 			examples: [{ greek: "Αν όχι, τότε δεν ξέρω.", english: "If not, then I don't know." }],
 			drills: [],
+			plannedDrills: [
+				{
+					id: "joining-if-then",
+					title: "If … then",
+					greek: "αν βρέχει · αν όχι, τότε",
+					tests: "Shows an English if-sentence; the answer is the Greek with αν opening the condition, τότε optional before the result.",
+				},
+			],
 		},
 		{
 			id: "thinking",
@@ -81,6 +89,14 @@ export const JOINING_GUIDE: Guide = {
 			},
 			examples: [{ greek: "Ίσως πάω.", english: "Maybe I'll go." }],
 			drills: [],
+			plannedDrills: [
+				{
+					id: "joining-think-that",
+					title: "I think that…",
+					greek: "νομίζω ότι · πιστεύω ότι · ίσως",
+					tests: "Shows an English sentence such as I think it's good; the answer is the Greek with ότι after νομίζω or πιστεύω.",
+				},
+			],
 		},
 		{
 			id: "either-or",
@@ -103,6 +119,14 @@ export const JOINING_GUIDE: Guide = {
 				},
 			],
 			drills: [],
+			plannedDrills: [
+				{
+					id: "joining-either-or",
+					title: "Or, either … or",
+					greek: "καφέ ή τσάι · ή … ή",
+					tests: "Shows an English choice with or or either … or; the answer is the Greek with ή, accented, once or doubled.",
+				},
+			],
 		},
 		{
 			id: "before",
@@ -123,6 +147,131 @@ export const JOINING_GUIDE: Guide = {
 				{ greek: "Διαβάζω πριν πάω για ύπνο.", english: "I read before I go to sleep." },
 			],
 			drills: [],
+			plannedDrills: [
+				{
+					id: "joining-before-after",
+					title: "Before and after",
+					greek: "πριν πάω · πριν φάω · μετά το σχολείο",
+					tests: "Shows an English phrase with before or after; the answer is the Greek with πριν and the short form of the verb, or μετά.",
+				},
+			],
+		},
+		{
+			id: "which-how-many",
+			title: "Which, how many, what: ποιος, πόσος, τι",
+			rule: "ποιος asks which or who, and πόσος asks how much or how many. Both change like adjectives to match the noun they ask about: ποιον καφέ, ποια μέρα, ποιο σπίτι; πόση ζάχαρη, πόσα παιδιά. The he-words change for the Target too: ποιος becomes ποιον, and πόσος καιρός becomes πόσο καιρό. τι asks what and does not change; τι είδους asks what kind of. With the accent, πού and πώς ask; without it, που and πως link two ideas.",
+			table: {
+				columns: [
+					{ label: "Masculine", greek: true },
+					{ label: "Feminine", greek: true },
+					{ label: "Neuter", greek: true },
+					{ label: "Meaning" },
+				],
+				rows: [
+					[{ text: "ποιος", weight: "anchor" }, "ποια", "ποιο", "which? who?"],
+					[{ text: "ποιον", weight: "deviate" }, "ποια", "ποιο", "which? as the Target"],
+					["ποιοι", "ποιες", "ποια", "which? more than one"],
+					[{ text: "ποιους", weight: "deviate" }, "ποιες", "ποια", "more than one, as the Target"],
+					[{ text: "πόσος", weight: "anchor" }, "πόση", "πόσο", "how much?"],
+					["πόσοι", "πόσες", "πόσα", "how many?"],
+				],
+			},
+			examples: [
+				{ greek: "Ποιους βλέπετε;", english: "Who do you see?" },
+				{ greek: "Με ποιον πηγαίνεις στις συναυλίες;", english: "Who do you go to concerts with?" },
+				{ greek: "Πόσο κάνει;", english: "How much does it cost?" },
+				{ greek: "Τι είδους;", english: "What kind?" },
+			],
+			confuse: {
+				text: "πού, with the accent, asks where; που, without it, links: ο φίλος που μένει στην Πάφο.",
+				section: "pou",
+			},
+			drills: [
+				"blocks-qw-which-forms",
+				"blocks-qw-which-phrase",
+				"blocks-qw-how-many-forms",
+				"blocks-qw-how-many-phrase",
+				"blocks-qw-review",
+			],
+		},
+		{
+			id: "pou",
+			title: "That, who, which: που",
+			rule: "που, with no accent, joins a second idea to what came before. After a noun it means who, which or that: ο φίλος που μένει στην Πάφο. After a feeling it means that: είμαι χαρούμενος που είναι Παρασκευή. που itself does not change, whatever the noun. Careful writing sometimes uses ο οποίος, η οποία, το οποίο instead, which does match the noun.",
+			table: {
+				columns: [
+					{ label: "Greek", greek: true },
+					{ label: "Meaning" },
+				],
+				rows: [
+					["ο φίλος που μένει στην Πάφο", "the friend who lives in Paphos"],
+					["ο ήλιος που λάμπει", "the sun that shines"],
+					["είμαι χαρούμενος που είναι Παρασκευή", "I'm happy that it's Friday"],
+					["είμαι περήφανος που είμαι Νιγηριανός", "I'm proud to be Nigerian"],
+				],
+			},
+			examples: [
+				{
+					greek: "Μετά το καλοκαίρι έρχεται το φθινόπορο, που αποτελείται από τον Σεπτέμβριο, τον Οκτώβριο και τον Νοέμβριο.",
+					english: "After summer comes autumn, which is made up of September, October and November.",
+				},
+				{
+					greek: "Στη συνέχεια έρχεται το καλοκαίρι, το οποίο περιλαμβάνει τον Ιούνιο, τον Ιούλιο και τον Αύγουστο.",
+					english: "Next comes summer, which includes June, July and August.",
+				},
+			],
+			confuse: {
+				text: "που links; πού, with the accent, asks where.",
+				section: "when-why",
+			},
+			drills: [],
+			plannedDrills: [
+				{
+					id: "joining-pou",
+					title: "That, who, which: που",
+					greek: "ο φίλος που · χαρούμενος που",
+					tests: "Shows two short English ideas joined by who, which or that; the answer is the Greek joined with που, unaccented.",
+				},
+			],
+		},
+		{
+			id: "purpose",
+			title: "So that: για να, για να μην",
+			rule: "για να before a verb says what something is for: in order to, so that. For so that … not, add μην: για να μην. After να the verb follows the usual choice: the short form for one action, the present for something ongoing. για on its own goes before a noun.",
+			table: {
+				columns: [
+					{ label: "Greek", greek: true },
+					{ label: "Meaning" },
+				],
+				rows: [
+					["για να απολαύσουν τον ήλιο", "to enjoy the sun"],
+					["για να μάθω ελληνικά", "to learn Greek"],
+					[{ text: "για να μην κρυώνουμε", weight: "deviate" }, "so that we don't get cold"],
+				],
+			},
+			examples: [
+				{
+					greek: "Το χειμώνα φοράμε ζεστά ρούχα για να μην κρυώνουμε.",
+					english: "In winter we wear warm clothes so that we don't get cold.",
+				},
+				{
+					greek: "Πολλοί τουρίστες έρχονται στην Ελλάδα για να ευχαριστηθούν τον ήλιο.",
+					english: "Many tourists come to Greece to enjoy the sun.",
+				},
+			],
+			confuse: {
+				text: "για before a noun means for; για να needs a verb after it.",
+				section: "place/purpose",
+			},
+			drills: [],
+			plannedDrills: [
+				{
+					id: "joining-purpose",
+					title: "So that: για να",
+					greek: "για να μάθω · για να μην κρυώνουμε",
+					tests: "Shows an English sentence with to, in order to or so that … not; the answer is the Greek with για να, or για να μην, before the verb.",
+				},
+			],
 		},
 	],
 	reference: [],

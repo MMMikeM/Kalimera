@@ -7,7 +7,7 @@ export const LESSON_2023_12_31 = createLesson({
 	},
 
 	verbs: [
-		{ lemma: "απειλώ", english: "I threaten", conjugationFamily: "-άω/-ώ", cefrLevel: "B2" },
+		{ lemma: "απειλώ", english: "I threaten", conjugationFamily: "-ώ", cefrLevel: "B2" },
 		{ lemma: "εμφανίζομαι", english: "I appear", conjugationFamily: "-ομαι", cefrLevel: "B1" },
 		{
 			lemma: "μεταφέρω",

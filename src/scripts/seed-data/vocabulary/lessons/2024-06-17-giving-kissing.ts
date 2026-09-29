@@ -8,10 +8,10 @@ export const LESSON_2024_06_17 = createLesson({
 
 	verbs: [
 		{ lemma: "δίνω", english: "I give", conjugationFamily: "-ω", cefrLevel: "A1" },
-		{ lemma: "φιλάω", english: "I kiss", conjugationFamily: "-άω/-ώ", cefrLevel: "A1" },
-		{ lemma: "γελάω", english: "I laugh", conjugationFamily: "-άω/-ώ", cefrLevel: "A1" },
+		{ lemma: "φιλάω", english: "I kiss", conjugationFamily: "-άω", cefrLevel: "A1" },
+		{ lemma: "γελάω", english: "I laugh", conjugationFamily: "-άω", cefrLevel: "A1" },
 		{ lemma: "φωνάζω", english: "I yell/shout", conjugationFamily: "-ω", cefrLevel: "A2" },
-		{ lemma: "αργώ", english: "I am late", conjugationFamily: "-άω/-ώ", cefrLevel: "A2" },
+		{ lemma: "αργώ", english: "I am late", conjugationFamily: "-ώ", cefrLevel: "A2" },
 	],
 
 	nouns: [

@@ -7,16 +7,16 @@ export const LESSON_2024_04_29 = createLesson({
 	},
 
 	verbs: [
-		{ lemma: "μπορώ", english: "I can", conjugationFamily: "-άω/-ώ", cefrLevel: "A1" },
-		{ lemma: "οδηγώ", english: "I drive", conjugationFamily: "-άω/-ώ", cefrLevel: "A1" },
-		{ lemma: "τηλεφωνώ", english: "I phone/call", conjugationFamily: "-άω/-ώ", cefrLevel: "A1" },
+		{ lemma: "μπορώ", english: "I can", conjugationFamily: "-ώ", cefrLevel: "A1" },
+		{ lemma: "οδηγώ", english: "I drive", conjugationFamily: "-ώ", cefrLevel: "A1" },
+		{ lemma: "τηλεφωνώ", english: "I phone/call", conjugationFamily: "-ώ", cefrLevel: "A1" },
 		{
 			lemma: "λυπάμαι",
 			english: "I feel sorry/am sad",
 			conjugationFamily: "-άμαι",
 			cefrLevel: "A2",
 		},
-		{ lemma: "ξυπνάω", english: "I wake up", conjugationFamily: "-άω/-ώ", cefrLevel: "A1" },
+		{ lemma: "ξυπνάω", english: "I wake up", conjugationFamily: "-άω", cefrLevel: "A1" },
 	],
 
 	nouns: [{ lemma: "πράγμα", gender: "neuter", english: "thing", cefrLevel: "A1" }],

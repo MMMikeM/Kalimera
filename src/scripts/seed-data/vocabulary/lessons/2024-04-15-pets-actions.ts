@@ -12,7 +12,7 @@ export const LESSON_2024_04_15 = createLesson({
 		{ lemma: "τελειώνω", english: "I finish", conjugationFamily: "-ω", cefrLevel: "A1" },
 		{ lemma: "εκπαιδεύω", english: "I train", conjugationFamily: "-ω", cefrLevel: "B1" },
 		{ lemma: "μαθαίνω", english: "I learn/teach", conjugationFamily: "-ω", cefrLevel: "A1" },
-		{ lemma: "μισώ", english: "I hate", conjugationFamily: "-άω/-ώ", cefrLevel: "A1" },
+		{ lemma: "μισώ", english: "I hate", conjugationFamily: "-ώ", cefrLevel: "A1" },
 	],
 
 	nouns: [

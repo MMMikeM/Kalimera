@@ -56,6 +56,22 @@ export interface GuideSection {
 	tone?: GuideTone;
 	/** Drill ids from the practice catalogue; empty when no drill covers the section yet. */
 	drills: string[];
+	/** Practice this section needs that no drill covers yet. */
+	plannedDrills?: PlannedDrill[];
+}
+
+/**
+ * A drill that does not exist yet, kept beside the section it would practise.
+ * Its id is the one the real drill will take; the guard test fails once a drill
+ * with that id is in the catalogue, so building it forces the stub's removal.
+ */
+export interface PlannedDrill {
+	id: string;
+	title: string;
+	/** Sample forms, as a drill list shows them. */
+	greek: string;
+	/** What a card asks and what counts as right. */
+	tests: string;
 }
 
 export interface GuideReference {

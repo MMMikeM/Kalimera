@@ -141,11 +141,11 @@ describe("-ω verbs", () => {
 	});
 });
 
-// ─── -άω/-ώ verbs ─────────────────────────────────────────────────────────────
+// ─── -άω and -ώ verbs────────────────────────────────────────────────────────────
 
-describe("-άω/-ώ verbs", () => {
+describe("-άω and -ώ verbs", () => {
 	it("ρωτάω (-άω type)", () => {
-		const r = generateConjugations("ρωτάω", "ρωτησ", "-άω/-ώ");
+		const r = generateConjugations("ρωτάω", "ρωτησ", "-άω");
 		expect(present(r)).toEqual({
 			sg1: "ρωτάω",
 			sg2: "ρωτάς",
@@ -181,7 +181,7 @@ describe("-άω/-ώ verbs", () => {
 	});
 
 	it("γελάω (-άω type)", () => {
-		const r = generateConjugations("γελάω", "γελασ", "-άω/-ώ");
+		const r = generateConjugations("γελάω", "γελασ", "-άω");
 		expect(present(r).sg1).toBe("γελάω");
 		expect(aorist(r)).toEqual({
 			sg1: "γέλασα",
@@ -195,8 +195,13 @@ describe("-άω/-ώ verbs", () => {
 		expect(future(r).sg1).toBe("θα γελάσω");
 	});
 
+	it("rejects a lemma tagged with the other ending's family", () => {
+		expect(() => generateConjugations("μπορώ", "μπορεσ", "-άω")).toThrow(/does not end in άω/);
+		expect(() => generateConjugations("μιλάω", "μιλησ", "-ώ")).toThrow(/does not end in ώ/);
+	});
+
 	it("προσπαθώ (-ώ contracted type)", () => {
-		const r = generateConjugations("προσπαθώ", "προσπαθησ", "-άω/-ώ");
+		const r = generateConjugations("προσπαθώ", "προσπαθησ", "-ώ");
 		expect(present(r)).toEqual({
 			sg1: "προσπαθώ",
 			sg2: "προσπαθείς",

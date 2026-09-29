@@ -120,9 +120,11 @@ const FAMILY_DISPLAY: Record<
 	string,
 	{ label: string; variant: "primary" | "secondary" | "success" | "warning" }
 > = {
-	omega: { label: "-ω verbs", variant: "primary" },
-	contracted: { label: "-άω contracted", variant: "secondary" },
-	deponent: { label: "-μαι deponent", variant: "success" },
+	"-ω": { label: "-ω verbs", variant: "primary" },
+	"-άω": { label: "-άω verbs", variant: "secondary" },
+	"-ώ": { label: "-ώ verbs", variant: "secondary" },
+	"-ομαι": { label: "-ομαι verbs", variant: "success" },
+	"-άμαι": { label: "-άμαι verbs", variant: "success" },
 	irregular: { label: "Irregular", variant: "warning" },
 };
 

@@ -163,7 +163,7 @@ export const LESSON_2025_02_17 = createLesson({
 				"πήγα στο πανεπιστήμιο (I went to university) — completed action",
 			],
 			explanation:
-				"The imperfect (same form as present) describes ongoing or habitual past actions. The simple past (aorist) describes completed events. Both can appear in the same sentence.",
+				"The imperfect (built on the present stem, with past endings: σπουδάζω → σπούδαζα) describes ongoing or habitual past actions. The simple past (aorist) describes completed events. Both can appear in the same sentence.",
 			section: "verbs/ongoing-past",
 		},
 		{

@@ -146,7 +146,7 @@ export const LESSON_2026_09_29 = createLesson({
 			],
 			explanation:
 				"Αυτοί points at men or a mixed group, αυτές at women only. It follows the people you are pointing at, so αδέλφια takes αυτοί even though the noun is neuter.",
-			section: "word",
+			section: "little-words/long-forms",
 		},
 	],
 });

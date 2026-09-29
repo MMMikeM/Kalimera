@@ -37,7 +37,7 @@ export const ROLES_GUIDE: Guide = {
 					marks: [mark("Το παιδί", "nominative", "neuter"), mark("καρπούζι", "accusative", "neuter")],
 				},
 			],
-			drills: ["articles-paradigm"],
+			drills: ["articles-paradigm", "nominal-phrase-doer", "nominal-all-phrases"],
 		},
 		{
 			id: "articles",
@@ -129,7 +129,7 @@ export const ROLES_GUIDE: Guide = {
 					marks: [mark("Το βράδυ", "accusative", "neuter")],
 				},
 			],
-			drills: ["nominal-noun-target", "nominal-phrase-target"],
+			drills: ["nominal-noun-target", "nominal-phrase-target", "blocks-days-of-week"],
 		},
 		{
 			id: "owner",
@@ -168,7 +168,43 @@ export const ROLES_GUIDE: Guide = {
 					marks: [mark("το νερό", "accusative", "neuter"), mark("του ποταμού", "genitive", "masculine")],
 				},
 			],
-			drills: ["nominal-noun-owner", "articles-article-owner", "pronouns-possessive-vs-article"],
+			confuse: {
+				text: "This shows only masculines in -ος. How the other families make their Owner is in Nouns: της γυναίκας, του παιδιού, του ονόματος.",
+				section: "nouns/owner",
+			},
+			drills: ["nominal-noun-owner", "articles-article-owner", "pronouns-possessive-vs-article", "nominal-phrase-owner"],
+		},
+		{
+			id: "when-article",
+			title: "When Greek uses the article",
+			rule: "Greek puts the article where English leaves it out: before countries, people's names in speech, ideas such as love, a whole kind of thing, and days. It leaves it out for a job after είμαι, and in set activities such as πίνω καφέ. A day loses it after κάθε: κάθε Τρίτη.",
+			table: {
+				columns: [
+					{ label: "Greek", greek: true },
+					{ label: "English" },
+					{ label: "Why" },
+				],
+				rows: [
+					[markedCell("η Ελλάδα", "nominative", "feminine"), "Greece", "a country"],
+					[markedCell("ο Γιάννης", "nominative", "masculine"), "Yannis", "a name"],
+					[cellWith("η αγάπη είναι τυφλή", mark("η αγάπη", "nominative", "feminine")), "love is blind", "an idea"],
+					[cellWith("μου αρέσουν οι γάτες", mark("οι γάτες", "nominative", "feminine", true)), "I like cats", "a whole kind"],
+					[markedCell("το Σάββατο", "accusative", "neuter"), "on Saturday", "a day"],
+					[{ text: "είμαι προγραμματιστής", weight: "deviate", marks: [mark("προγραμματιστής", "nominative", "masculine")] }, "I'm a programmer", "a job, no article"],
+					[{ text: "πίνω καφέ", weight: "deviate", marks: [mark("καφέ", "accusative", "masculine")] }, "I drink coffee", "an activity, no article"],
+					[{ text: "πάω σινεμά", weight: "deviate", marks: [mark("σινεμά", "accusative", "neuter")] }, "I go to the cinema", "an activity, no article"],
+					[{ text: "κάνω σπορ", weight: "deviate", marks: [mark("σπορ", "accusative", "neuter")] }, "I do sport", "an activity, no article"],
+				],
+			},
+			drills: [],
+			plannedDrills: [
+				{
+					id: "articles-with-or-without",
+					title: "With or without the article",
+					greek: "η Ελλάδα · είμαι γιατρός · πάω σινεμά",
+					tests: "A card shows an English phrase, and the Greek counts as right only with the article where Greek uses one and without it where Greek drops it.",
+				},
+			],
 		},
 	],
 	reference: [

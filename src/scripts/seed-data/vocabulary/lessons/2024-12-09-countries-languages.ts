@@ -7,9 +7,9 @@ export const LESSON_2024_12_09 = createLesson({
 	},
 
 	verbs: [
-		{ lemma: "μιλάω", english: "I speak", conjugationFamily: "-άω/-ώ", cefrLevel: "A1" },
-		{ lemma: "συμφωνώ", english: "I agree", conjugationFamily: "-άω/-ώ", cefrLevel: "A2" },
-		{ lemma: "αγαπώ", english: "I love", conjugationFamily: "-άω/-ώ", cefrLevel: "A1" },
+		{ lemma: "μιλάω", english: "I speak", conjugationFamily: "-άω", cefrLevel: "A1" },
+		{ lemma: "συμφωνώ", english: "I agree", conjugationFamily: "-ώ", cefrLevel: "A2" },
+		{ lemma: "αγαπώ", english: "I love", conjugationFamily: "-ώ", cefrLevel: "A1" },
 		{ lemma: "λένε", english: "they call/say", conjugationFamily: "irregular", cefrLevel: "A1" },
 	],
 
@@ -243,7 +243,7 @@ export const LESSON_2024_12_09 = createLesson({
 		{
 			pattern: "Adjective plural forms",
 			examples: ["ελληνικοί/ελληνικές/ελληνικά", "καλοί/καλές/καλά"],
-			explanation: "Plural: -οι (m), -ές (f), -ά (n). Note the accent shift in feminine plural.",
+			explanation: "Plural: -οι (m), -ες (f), -α (n). The stress stays where it is in the singular: καλή → καλές.",
 			section: "agreement/adjectives",
 		},
 		{
