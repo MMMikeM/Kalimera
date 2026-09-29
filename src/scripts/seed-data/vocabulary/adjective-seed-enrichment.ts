@@ -58,6 +58,7 @@ const CITED_ADJECTIVE_FORMS: Record<string, { m: string; f: string; n: string }>
 	εύκολος: { m: "εύκολος", f: "εύκολη", n: "εύκολο" },
 	ωραίος: { m: "ωραίος", f: "ωραία", n: "ωραίο" },
 	σίγουρος: { m: "σίγουρος", f: "σίγουρη", n: "σίγουρο" },
+	όγδοος: { m: "όγδοος", f: "όγδοη", n: "όγδοο" },
 };
 
 const VOWELS = /[αειουάέίόύήώ]$/i;
@@ -71,7 +72,7 @@ function inferAdjectivePattern(lemma: string): AdjectiveDeclensionPattern {
 		const cited = CITED_ADJECTIVE_FORMS[lemma];
 		if (cited) {
 			const f = cited.f;
-			if (f.endsWith("α") || f.endsWith("ά") || f.endsWith("ια")) return "os-ia-o";
+			return f.endsWith("α") || f.endsWith("ά") ? "os-ia-o" : "os-i-o";
 		}
 		const stem = lemma.slice(0, -2);
 		if (VOWELS.test(stem)) return "os-ia-o";
