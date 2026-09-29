@@ -12,7 +12,7 @@ export const PLACE_GUIDE: Guide = {
 		{
 			id: "se-contractions",
 			title: "σε joins the article: στο, στη, στον",
-			rule: "σε means at, in or to, and it merges with the article after it. Feminine στη keeps an extra -ν before a vowel and before sounds like κ, π and τ: στην Αθήνα, στην Πάφο, but στη Λεμεσό.",
+			rule: "σε means at, in or to, and it merges with the article after it. Feminine στη keeps an extra -ν before a vowel and before sounds like κ, π and τ: στην Αθήνα, στην Πάφο, but στη Λεμεσό. Only the article merges: before μια or ένα, meaning a, and before a word with no article, σε stays a separate word: σε μια λίμνη, σε λίγο, in a bit.",
 			table: {
 				columns: [
 					{ label: "Joins", greek: true },
@@ -26,6 +26,8 @@ export const PLACE_GUIDE: Guide = {
 					["σε + το → στο", markedCell("στο γραφείο", "accusative", "neuter"), "at the office"],
 					["σε + τα → στα", markedCell("στα εστιατόρια", "accusative", "neuter", true), "to the restaurants"],
 					["σε + τις → στις", markedCell("στις τρεις", "accusative", "feminine", true), "at three o'clock"],
+					["σε + τους → στους", markedCell("στους φίλους", "accusative", "masculine", true), "to the friends"],
+					[{ text: "σε + μια → σε μια", weight: "deviate" }, cellWith("σε μια λίμνη", mark("μια λίμνη", "accusative", "feminine")), "at a lake"],
 				],
 			},
 			examples: [
@@ -39,6 +41,11 @@ export const PLACE_GUIDE: Guide = {
 					english: "Yesterday I gave the book to Maria.",
 					marks: [mark("το βιβλίο", "accusative", "neuter"), mark("στη Μαρία", "accusative", "feminine")],
 				},
+				{
+					greek: "Μεγάλωσα σε μια μικρή πόλη.",
+					english: "I grew up in a small town.",
+					marks: [mark("μια μικρή πόλη", "accusative", "feminine")],
+				},
 			],
 			confuse: {
 				text: "από never merges with the article: από τον, από την, από το.",
@@ -49,8 +56,8 @@ export const PLACE_GUIDE: Guide = {
 				{
 					id: "place-se-article",
 					title: "σε + the article",
-					greek: "στο · στη · στον · στους",
-					tests: "Shows σε and a noun with its article; the answer is the joined form, such as στο σπίτι.",
+					greek: "στο · στη · στον · στους · σε μια",
+					tests: "Shows σε and a noun with its article; the answer is the joined form, such as στο σπίτι, or σε left whole before μια or no article.",
 				},
 			],
 		},
@@ -70,6 +77,10 @@ export const PLACE_GUIDE: Guide = {
 					[cellWith("μπροστά από το σπίτι", mark("το σπίτι", "accusative", "neuter")), "in front of the house"],
 					[cellWith("μακριά από την πόλη", mark("την πόλη", "accusative", "feminine")), "far from the town"],
 					[cellWith("απέναντι από την εκκλησία", mark("την εκκλησία", "accusative", "feminine")), "opposite the church"],
+					[cellWith("πάνω στο τραπέζι", mark("στο τραπέζι", "accusative", "neuter")), "on the table"],
+					[cellWith("κάτω από το κρεβάτι", mark("το κρεβάτι", "accusative", "neuter")), "under the bed"],
+					[cellWith("ανάμεσα στα δέντρα", mark("στα δέντρα", "accusative", "neuter", true)), "between the trees"],
+					[cellWith("γύρω από το τραπέζι", mark("το τραπέζι", "accusative", "neuter")), "around the table"],
 				],
 			},
 			examples: [
@@ -85,7 +96,7 @@ export const PLACE_GUIDE: Guide = {
 				{
 					id: "place-position",
 					title: "Next to, behind, far from",
-					greek: "δίπλα στο · πίσω από το · μακριά από",
+					greek: "δίπλα στο · πίσω από το · πάνω στο · κάτω από το",
 					tests: "Shows a position in English; the answer is the Greek phrase with σε or από and the article.",
 				},
 			],
@@ -93,7 +104,7 @@ export const PLACE_GUIDE: Guide = {
 		{
 			id: "purpose",
 			title: "For, from, with: για, από, με",
-			rule: "για gives the purpose: πάω για ψώνια, I go shopping. από gives where from. με gives how, or who with.",
+			rule: "για gives the purpose: πάω για ψώνια, I go shopping. Before a length of time it means for: για δύο χρόνια. από gives where from. με gives how, or who with.",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -102,6 +113,7 @@ export const PLACE_GUIDE: Guide = {
 				rows: [
 					[cellWith("πάω για ψώνια", mark("ψώνια", "accusative", "neuter", true)), "I go shopping"],
 					[cellWith("πάω για ύπνο", mark("ύπνο", "accusative", "masculine")), "I go to sleep"],
+					[cellWith("για δύο χρόνια", mark("δύο χρόνια", "accusative", "neuter", true)), "for two years"],
 					[cellWith("είμαι από τη Νότια Αφρική", mark("τη Νότια Αφρική", "accusative", "feminine")), "I'm from South Africa"],
 					[cellWith("δουλεύω από το σπίτι", mark("το σπίτι", "accusative", "neuter")), "I work from home"],
 					[cellWith("με το αυτοκίνητο", mark("το αυτοκίνητο", "accusative", "neuter")), "by car"],
@@ -125,8 +137,95 @@ export const PLACE_GUIDE: Guide = {
 				{
 					id: "place-for-from-with",
 					title: "For, from, with",
-					greek: "για · από · με",
-					tests: "Shows an English sentence with one gap; the answer is για, από or με.",
+					greek: "για · από · με · για δύο χρόνια",
+					tests: "Shows an English sentence with one gap; the answer is για, από or με, with για also for a length of time.",
+				},
+			],
+		},
+		{
+			id: "position-pairs",
+			title: "Inside and outside, left and right",
+			rule: "Most position words come in pairs of opposites. On their own they need no partner: έλα μέσα, στρίψε αριστερά. Before a place they take a partner, σε or από, just like δίπλα and πίσω: μέσα στη λάσπη, but έξω από το σπίτι.",
+			table: {
+				columns: [
+					{ label: "Greek", greek: true },
+					{ label: "Opposite", greek: true },
+					{ label: "Meaning" },
+				],
+				rows: [
+					["μέσα", "έξω", "inside · outside"],
+					["πάνω", "κάτω", "up · down"],
+					["μπροστά", "πίσω", "in front · behind"],
+					["κοντά", "μακριά", "near · far"],
+					["αριστερά", "δεξιά", "left · right"],
+					["εδώ", "εκεί", "here · there"],
+				],
+			},
+			examples: [
+				{ greek: "Στρίψε αριστερά.", english: "Turn left." },
+				{ greek: "Έλα μέσα.", english: "Come inside." },
+				{
+					greek: "Εσύ είσαι μέσα στη λάσπη.",
+					english: "You are in the mud.",
+					marks: [mark("στη λάσπη", "accusative", "feminine")],
+				},
+				{
+					greek: "Γι' αυτό δεν βγαίνω έξω από το σπίτι.",
+					english: "That's why I don't go out of the house.",
+					marks: [mark("το σπίτι", "accusative", "neuter")],
+				},
+			],
+			drills: [],
+			plannedDrills: [
+				{
+					id: "place-position-pairs",
+					title: "Inside and outside",
+					greek: "μέσα · έξω · αριστερά · δεξιά",
+					tests: "Shows a position word in Greek; the answer is its opposite, such as έξω for μέσα.",
+				},
+			],
+		},
+		{
+			id: "without-until",
+			title: "Without, until, towards, like",
+			rule: "A few more words link a noun the way σε and από do, and with an article after them the noun takes the Target form: χωρίς, without; μέχρι, until; προς, towards; σαν, like. μετά από with a length of time means after: μετά από δύο χρόνια.",
+			table: {
+				columns: [
+					{ label: "Greek", greek: true },
+					{ label: "Meaning" },
+				],
+				rows: [
+					[cellWith("χωρίς ζάχαρη", mark("ζάχαρη", "accusative", "feminine")), "without sugar"],
+					[cellWith("μέχρι τις πέντε", mark("τις πέντε", "accusative", "feminine", true)), "until five"],
+					[cellWith("από τις δύο μέχρι τις πέντε", mark("τις δύο", "accusative", "feminine", true), mark("τις πέντε", "accusative", "feminine", true)), "from two until five"],
+					[cellWith("προς τον σταθμό", mark("τον σταθμό", "accusative", "masculine")), "towards the station"],
+					[cellWith("σαν τον λύκο", mark("τον λύκο", "accusative", "masculine")), "like the wolf"],
+					[cellWith("μετά από δύο χρόνια", mark("δύο χρόνια", "accusative", "neuter", true)), "after two years"],
+				],
+			},
+			examples: [
+				{
+					greek: "Το βρήκα μετά από δύο χρόνια.",
+					english: "I found it after two years.",
+					marks: [mark("Το", "accusative", "neuter"), mark("δύο χρόνια", "accusative", "neuter", true)],
+				},
+				{
+					greek: "Ακούω τον σκύλο να τραγουδάει σαν τον λύκο.",
+					english: "I hear the dog singing like the wolf.",
+					marks: [mark("τον σκύλο", "accusative", "masculine"), mark("τον λύκο", "accusative", "masculine")],
+				},
+			],
+			confuse: {
+				text: "σαν says two things are alike; πιο … από says one is more.",
+				section: "scales/comparing",
+			},
+			drills: [],
+			plannedDrills: [
+				{
+					id: "place-without-until",
+					title: "Without, until, towards, like",
+					greek: "χωρίς ζάχαρη · μέχρι τις πέντε · προς τον σταθμό · σαν τον λύκο",
+					tests: "Shows an English phrase with without, until, towards, like or after; the answer is the Greek with χωρίς, μέχρι, προς, σαν or μετά από and the noun in the Target form.",
 				},
 			],
 		},

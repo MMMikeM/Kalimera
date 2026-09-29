@@ -71,7 +71,7 @@ const WORK_CHAT: DialogueLine[] = [
 	},
 	{
 		speaker: "you",
-		greek: "Καλά, πολύ δουλειά όμως",
+		greek: "Καλά, πολλή δουλειά όμως",
 		english: "Good, but a lot of work",
 	},
 	{ speaker: "friend", greek: "Κουράστηκες;", english: "Are you tired?" },
