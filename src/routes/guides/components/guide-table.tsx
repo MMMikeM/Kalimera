@@ -32,7 +32,8 @@ export const GuideTable = ({ table }: { table: GuideTableData }) => {
 	return (
 		// Every cell is padded alike, so a tinted first column needs no special case;
 		// the negative margin lines the first column's text up with the prose above.
-		<div className="-mx-3 overflow-x-auto">
+		// On a phone the card runs edge to edge, and so does the table's scroll.
+		<div className="-mx-6 overflow-x-auto pl-4.5 sm:-mx-3 sm:pl-0">
 			<table className="w-full border-collapse text-left">
 				<thead>
 					<tr className="border-b border-stone-300">
@@ -41,7 +42,7 @@ export const GuideTable = ({ table }: { table: GuideTableData }) => {
 								key={column.label}
 								scope="col"
 								className={cn(
-									"px-3 py-2 text-xs font-medium whitespace-nowrap text-stone-600",
+									"px-1.5 py-2 text-xs font-medium sm:px-3 whitespace-nowrap text-stone-600",
 									tint[i] && ["font-semibold", tint[i].column, tint[i].columnLabel],
 								)}
 							>
@@ -58,17 +59,17 @@ export const GuideTable = ({ table }: { table: GuideTableData }) => {
 								return (
 									<td
 										key={table.columns[i]?.label ?? i}
-										className={cn("px-3 py-2 align-baseline", tint[i]?.column)}
+										className={cn("px-1.5 py-2 align-baseline sm:px-3", tint[i]?.column)}
 									>
 										{table.columns[i]?.greek ? (
 											<MarkedPhrase
 												text={text}
 												marks={marks}
-												size="lg"
-												className={cn(isGrid && "whitespace-nowrap", cellText({ weight }))}
+												size="inherit"
+												className={cn("text-base sm:text-lg", isGrid && "whitespace-nowrap", cellText({ weight }))}
 											/>
 										) : (
-											<span className={cn("block min-w-28 text-sm", cellText({ weight }))}>
+											<span className={cn("block min-w-20 text-sm sm:min-w-28", cellText({ weight }))}>
 												<ProseWithGreek text={text} />
 											</span>
 										)}
