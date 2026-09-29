@@ -2,11 +2,17 @@ import type { Guide } from "@/types/guide";
 
 export const VERBS_GUIDE: Guide = {
 	slug: "verbs",
-	tone: "navy",
+	tone: "sunset",
 	title: "Verbs: now · done · not yet",
 	greek: "Ρήματα",
 	description: "Every verb as three forms",
 	idea: "Learn every verb as three forms: what is happening now, what is done, and what is not done yet. The done form and the not-yet form share one shape, so knowing one gives you the other.",
+	key: [
+		{ label: "Now", tone: "olive" },
+		{ label: "Done", tone: "terracotta" },
+		{ label: "Not yet", tone: "ocean" },
+		{ label: "Ongoing past", tone: "honey" },
+	],
 	sections: [
 		{
 			id: "ladder",
@@ -14,9 +20,9 @@ export const VERBS_GUIDE: Guide = {
 			rule: "Now is the everyday form. Done is the past. Not yet is θα plus a short form, and the short form has the same shape as the past: know είδα and you can predict θα δω.",
 			table: {
 				columns: [
-					{ label: "Now", greek: true },
-					{ label: "Done", greek: true },
-					{ label: "Not yet", greek: true },
+					{ label: "Now", greek: true, tone: "olive" },
+					{ label: "Done", greek: true, tone: "terracotta" },
+					{ label: "Not yet", greek: true, tone: "ocean" },
 					{ label: "Meaning" },
 				],
 				rows: [
@@ -41,9 +47,9 @@ export const VERBS_GUIDE: Guide = {
 			table: {
 				columns: [
 					{ label: "Who" },
-					{ label: "Now", greek: true },
-					{ label: "Done", greek: true },
-					{ label: "Not yet", greek: true },
+					{ label: "Now", greek: true, tone: "olive" },
+					{ label: "Done", greek: true, tone: "terracotta" },
+					{ label: "Not yet", greek: true, tone: "ocean" },
 				],
 				rows: [
 					[
@@ -76,9 +82,9 @@ export const VERBS_GUIDE: Guide = {
 			rule: "A few everyday verbs have no separate short form, so θα goes straight in front of the everyday form. έχω, θέλω and ξέρω describe a state, which has no one-off version; κάνω and περιμένω simply have a short form identical to the present. Their past is still a form of its own.",
 			table: {
 				columns: [
-					{ label: "Now", greek: true },
-					{ label: "Done", greek: true },
-					{ label: "Not yet", greek: true },
+					{ label: "Now", greek: true, tone: "olive" },
+					{ label: "Done", greek: true, tone: "terracotta" },
+					{ label: "Not yet", greek: true, tone: "ocean" },
 					{ label: "Meaning" },
 				],
 				rows: [
@@ -104,10 +110,10 @@ export const VERBS_GUIDE: Guide = {
 			table: {
 				columns: [
 					{ label: "Who" },
-					{ label: "-ω", greek: true },
-					{ label: "-άω", greek: true },
-					{ label: "πάω", greek: true },
-					{ label: "τρώω", greek: true },
+					{ label: "-ω", greek: true, tone: "olive" },
+					{ label: "-άω", greek: true, tone: "olive" },
+					{ label: "πάω", greek: true, tone: "olive" },
+					{ label: "τρώω", greek: true, tone: "olive" },
 				],
 				rows: [
 					[
@@ -142,9 +148,9 @@ export const VERBS_GUIDE: Guide = {
 			rule: "The past endings are the same for every verb: -α, -ες, -ε, -αμε, -ατε, -αν. What changes is the stem, and stems come in families, so learn the family rather than the verb. A past too short to carry its stress gains an έ- in front: έβαλα, έδωσα.",
 			table: {
 				columns: [
-					{ label: "Now", greek: true },
-					{ label: "Done", greek: true },
-					{ label: "Not yet", greek: true },
+					{ label: "Now", greek: true, tone: "olive" },
+					{ label: "Done", greek: true, tone: "terracotta" },
+					{ label: "Not yet", greek: true, tone: "ocean" },
 					{ label: "Family" },
 				],
 				rows: [
@@ -183,9 +189,9 @@ export const VERBS_GUIDE: Guide = {
 			rule: "For one action still to come, put θα in front of the short form, the one shaped like the past. θα with the everyday form means something ongoing instead: θα διαβάζω is I'll be reading.",
 			table: {
 				columns: [
-					{ label: "Done", greek: true },
-					{ label: "Not yet, once", greek: true },
-					{ label: "Not yet, ongoing", greek: true },
+					{ label: "Done", greek: true, tone: "terracotta" },
+					{ label: "Not yet, once", greek: true, tone: "ocean" },
+					{ label: "Not yet, ongoing", greek: true, tone: "ocean" },
 				],
 				rows: [
 					["έβαλα", { text: "θα βάλω", weight: "anchor" }, "θα βάζω"],
@@ -213,7 +219,7 @@ export const VERBS_GUIDE: Guide = {
 			rule: "The short form is not only for the future. After να, πριν and ίσως you use it too, so one form does four jobs.",
 			table: {
 				columns: [
-					{ label: "Greek", greek: true },
+					{ label: "Greek", greek: true, tone: "ocean" },
 					{ label: "Meaning" },
 				],
 				rows: [
@@ -236,8 +242,8 @@ export const VERBS_GUIDE: Guide = {
 			table: {
 				columns: [
 					{ label: "Who" },
-					{ label: "Now", greek: true },
-					{ label: "Done", greek: true },
+					{ label: "Now", greek: true, tone: "olive" },
+					{ label: "Done", greek: true, tone: "terracotta" },
 				],
 				rows: [
 					[
@@ -268,8 +274,8 @@ export const VERBS_GUIDE: Guide = {
 			rule: "The done form is for one finished event. For something ongoing or habitual in the past, use the ongoing past: σπούδασα is I studied, σπούδαζα is I was studying or I used to study.",
 			table: {
 				columns: [
-					{ label: "Done, once", greek: true },
-					{ label: "Ongoing past", greek: true },
+					{ label: "Done, once", greek: true, tone: "terracotta" },
+					{ label: "Ongoing past", greek: true, tone: "honey" },
 					{ label: "Meaning" },
 				],
 				rows: [

@@ -7,6 +7,11 @@ export const JOINING_GUIDE: Guide = {
 	greek: "Σύνδεση",
 	description: "The words that link one idea to the next",
 	idea: "Each question word has a partner that links two ideas and another that points back to them. Learn them as rows: πότε asks when, όταν joins a when, τότε points back to it.",
+	key: [
+		{ label: "Ask", tone: "honey" },
+		{ label: "Link", tone: "sunset" },
+		{ label: "Point back", tone: "navy" },
+	],
 	sections: [
 		{
 			id: "when-why",
@@ -14,9 +19,9 @@ export const JOINING_GUIDE: Guide = {
 			rule: "The question word asks. The linking word joins two ideas inside one sentence. The pointing word refers back to what was just said. γιατί can also mean because in speech, but only επειδή can start a sentence.",
 			table: {
 				columns: [
-					{ label: "Ask", greek: true },
-					{ label: "Link", greek: true },
-					{ label: "Point back", greek: true },
+					{ label: "Ask", greek: true, tone: "honey" },
+					{ label: "Link", greek: true, tone: "sunset" },
+					{ label: "Point back", greek: true, tone: "navy" },
 					{ label: "Meaning" },
 				],
 				rows: [

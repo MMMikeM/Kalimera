@@ -103,7 +103,7 @@ matched trio, but the January tints restored on 2026-09-29 put `olive-200` at L 
 
 Use these for any text content. Contrast ratios are calculated against cream backgrounds and tinted backgrounds (e.g. `bg-honey-100`).
 
-Dark mode redefines every token under `:root.dark` in `src/index.css` (the remapping rule is in the comment above that block). There the `-text` tokens sit at L 0.88 and measure 10:1+ on their dark `-100` tints and 8.5:1+ on `-300`. Components rarely need `dark:` classes: use the tokens and both themes follow. The exception is a step that doesn't flip. `terracotta-700` keeps its value in dark mode and is too dark there, so the active mobile tab and the landing headline pair it with `dark:text-terracotta` or `dark:text-terracotta-text`.
+Dark mode redefines every token under `:root.dark` in `src/index.css` (the remapping rule is in the comment above that block). There the `-text` tokens sit at L 0.82 with as much chroma as each hue can hold there (up to 0.14), and measure 7.6:1 or better even on their dark `-300` tints. Components rarely need `dark:` classes: use the tokens and both themes follow. The exception is a step that doesn't flip. `terracotta-700` keeps its value in dark mode and is too dark there, so the active mobile tab and the landing headline pair it with `dark:text-terracotta` or `dark:text-terracotta-text`.
 
 | Token                                         | OKLCH Value            | On Cream | On Tinted BG |
 | --------------------------------------------- | ---------------------- | -------- | ------------ |
@@ -116,6 +116,20 @@ Dark mode redefines every token under `:root.dark` in `src/index.css` (the remap
 | `slate-text` (`--color-slate-text`)           | `oklch(0.28 0.03 183)` | 13:1     | 11:1         |
 
 **Critical:** These colours are intentionally calibrated to maintain AAA compliance on tinted backgrounds.
+
+### Ink Variants (colourful text on the page)
+
+The `-text` shades are dark enough to pass AAA on `-100` tints, which leaves little room for colour. Text set straight on the cream page can be lighter and far more saturated and still hold 7:1, so each accent also has an `-ink` shade: the lightest, most chromatic value that passes AAA on cream and on its own `-50`. Use `-ink` for coloured words on the page (guide names, section numbers, coloured table columns) and `-text` for words on a tint. In dark mode `-ink` takes the colour's dark `-text` value.
+
+| Token             | Light                  | Chroma vs `-text` |
+| ----------------- | ---------------------- | ----------------- |
+| `terracotta-ink`  | `oklch(0.46 0.12 42)`  | 0.12 vs 0.08      |
+| `sunset-ink`      | `oklch(0.46 0.16 357)` | 0.16 vs 0.10      |
+| `olive-ink`       | `oklch(0.44 0.11 131)` | 0.11 vs 0.05      |
+| `ocean-ink`       | `oklch(0.44 0.07 224)` | 0.07 vs 0.05      |
+| `honey-ink`       | `oklch(0.45 0.08 82)`  | 0.08 vs 0.07      |
+| `navy-ink`        | `oklch(0.44 0.14 257)` | 0.14 vs 0.04      |
+| `slate-ink`       | `oklch(0.44 0.07 182)` | 0.07 vs 0.03      |
 
 ---
 

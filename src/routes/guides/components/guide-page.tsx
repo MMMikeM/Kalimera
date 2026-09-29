@@ -42,6 +42,23 @@ export const GuidePage = ({ guide }: { guide: Guide }) => {
 
 			{usesMarks(guide) ? <MarkKey panelClass={tone.panel} /> : null}
 
+			{guide.key ? (
+				<ul aria-label="What the colours mean" className="flex flex-wrap gap-2">
+					{guide.key.map((entry) => (
+						<li
+							key={entry.label}
+							className={cn(
+								"rounded-full border px-3 py-1 text-sm font-semibold",
+								GUIDE_TONE[entry.tone].panel,
+								GUIDE_TONE[entry.tone].accent,
+							)}
+						>
+							{entry.label}
+						</li>
+					))}
+				</ul>
+			) : null}
+
 			<nav aria-label="Sections">
 				<ol className="divide-y divide-stone-200 border-y border-stone-200">
 					{guide.sections.map((section, i) => (
