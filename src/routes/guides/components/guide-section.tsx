@@ -4,7 +4,7 @@ import { cn } from "tailwind-variants";
 
 import { ProseWithGreek } from "@/components/ProseWithGreek";
 import { DRILL_REGISTRY } from "@/routes/practice/drill-catalogue.data";
-import type { Guide, GuideSection as GuideSectionData } from "@/types/guide";
+import type { Guide, GuideSection as GuideSectionData, GuideTone } from "@/types/guide";
 
 import { resolveSectionRef } from "../guides.data";
 import { GUIDE_TONE } from "./guide-tone";
@@ -13,11 +13,11 @@ import { MarkedPhrase } from "./marked-phrase";
 
 const rootRoute = getRouteApi("__root__");
 
-const ConfuseBox = ({ guide, section }: { guide: Guide; section: GuideSectionData }) => {
+const ConfuseBox = ({ guide, section, tone }: { guide: Guide; section: GuideSectionData; tone: GuideTone }) => {
 	if (!section.confuse) return null;
 	const target = resolveSectionRef(section.confuse.section, guide);
 	return (
-		<aside className={cn("rounded-md p-4 text-sm text-stone-700", GUIDE_TONE[guide.tone].column)}>
+		<aside className={cn("rounded-md p-4 text-sm text-stone-700", GUIDE_TONE[tone].column)}>
 			<p className="mb-1 font-semibold text-stone-900">Don't confuse</p>
 			<p>
 				<ProseWithGreek text={section.confuse.text} />
@@ -29,7 +29,7 @@ const ConfuseBox = ({ guide, section }: { guide: Guide; section: GuideSectionDat
 					hash={target.section.id}
 					className={cn(
 						"mt-2 inline-flex min-h-11 items-center gap-1 font-medium hover:underline",
-						GUIDE_TONE[target.guide.tone].accent,
+						GUIDE_TONE[tone].columnLabel,
 					)}
 				>
 					<span>
@@ -75,49 +75,53 @@ export const GuideSection = ({
 	guide,
 	section,
 	position,
+	tone: toneName,
 }: {
 	guide: Guide;
 	section: GuideSectionData;
 	position: number;
+	tone: GuideTone;
 }) => {
-	const tone = GUIDE_TONE[guide.tone];
+	const tone = GUIDE_TONE[toneName];
 	return (
 		<section
 			id={section.id}
 			aria-labelledby={`${section.id}-title`}
-			className={cn("scroll-mt-6 space-y-5 rounded-lg border p-4 sm:p-6", tone.panel)}
+			className="scroll-mt-6 overflow-hidden rounded-lg border border-stone-300"
 		>
-			<header className="space-y-2">
-				<span aria-hidden="true" className={cn("block h-1 w-10 rounded-full", tone.bar)} />
+			<header className={cn("border-b px-4 py-3 sm:px-6", tone.header)}>
 				<h2 id={`${section.id}-title`} className="font-serif text-2xl text-stone-900">
-					<span className={cn("mr-2", tone.accent)}>{position}.</span>
+					<span className={cn("mr-2", tone.columnLabel)}>{position}.</span>
 					<ProseWithGreek text={section.title} />
 				</h2>
+			</header>
+
+			<div className="space-y-5 p-4 sm:p-6">
 				<p className="max-w-2xl leading-relaxed text-stone-700">
 					<ProseWithGreek text={section.rule} />
 				</p>
-			</header>
 
-			{section.table ? <GuideTable table={section.table} /> : null}
+				{section.table ? <GuideTable table={section.table} /> : null}
 
-			{section.examples && section.examples.length > 0 ? (
-				<ul className="space-y-3">
-					{section.examples.map((example) => (
-						<li key={example.greek} className={cn("border-l-2 pl-3", tone.exampleRule)}>
-							<p>
-								<MarkedPhrase text={example.greek} marks={example.marks} size="lg" />
-							</p>
-							<p className="text-sm text-stone-600">{example.english}</p>
-						</li>
-					))}
-				</ul>
-			) : null}
+				{section.examples && section.examples.length > 0 ? (
+					<ul className="space-y-3">
+						{section.examples.map((example) => (
+							<li key={example.greek} className={cn("border-l-2 pl-3", tone.exampleRule)}>
+								<p>
+									<MarkedPhrase text={example.greek} marks={example.marks} size="lg" />
+								</p>
+								<p className="text-sm text-stone-600">{example.english}</p>
+							</li>
+						))}
+					</ul>
+				) : null}
 
-			<ConfuseBox guide={guide} section={section} />
+				<ConfuseBox guide={guide} section={section} tone={toneName} />
 
-			<footer className="border-t border-stone-200 pt-4">
-				<PracticeLinks drillIds={section.drills} linkClass={tone.link} />
-			</footer>
+				<footer className="border-t border-stone-200 pt-4">
+					<PracticeLinks drillIds={section.drills} linkClass={tone.link} />
+				</footer>
+			</div>
 		</section>
 	);
 };

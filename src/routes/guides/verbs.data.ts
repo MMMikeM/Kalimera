@@ -16,6 +16,7 @@ export const VERBS_GUIDE: Guide = {
 	sections: [
 		{
 			id: "ladder",
+			tone: "navy",
 			title: "Every verb has three forms",
 			rule: "The present is the everyday form. The simple past is one finished event. The simple future is θα plus a short form, and that short form has the same shape as the simple past: know είδα and you can predict θα δω.",
 			table: {
@@ -42,6 +43,7 @@ export const VERBS_GUIDE: Guide = {
 		},
 		{
 			id: "eimai",
+			tone: "sunset",
 			title: "είμαι: am, was, will be",
 			rule: "είμαι is the verb you will use most, and it follows no pattern. Every past form starts with ή-. The future is θα in front of the present form, because είμαι has no short form.",
 			table: {
@@ -78,6 +80,7 @@ export const VERBS_GUIDE: Guide = {
 		},
 		{
 			id: "keep-shape",
+			tone: "slate",
 			title: "Verbs that keep their shape",
 			rule: "A few everyday verbs have no separate short form, so θα goes straight in front of the everyday form. έχω, θέλω and ξέρω describe a state, which has no one-off version; κάνω and περιμένω simply have a short form identical to the present. Their past is still a form of its own.",
 			table: {
@@ -105,6 +108,7 @@ export const VERBS_GUIDE: Guide = {
 		},
 		{
 			id: "present",
+			tone: "olive",
 			title: "Present: the endings",
 			rule: "Most verbs end in -ω and share one set of endings. Verbs in -άω share a second set. A few short verbs, like πάω and τρώω, follow neither: learn them whole.",
 			table: {
@@ -144,6 +148,7 @@ export const VERBS_GUIDE: Guide = {
 		},
 		{
 			id: "past-shapes",
+			tone: "terracotta",
 			title: "Simple past, by family",
 			rule: "The simple past endings are the same for every verb: -α, -ες, -ε, -αμε, -ατε, -αν. What changes is the stem, and stems come in families, so learn the family rather than the verb. A past too short to carry its stress gains an έ- in front: έβαλα, έδωσα.",
 			table: {
@@ -185,6 +190,7 @@ export const VERBS_GUIDE: Guide = {
 		},
 		{
 			id: "future",
+			tone: "ocean",
 			title: "Simple future: θα with the short form",
 			rule: "For one action still to come, put θα in front of the short form, the one shaped like the simple past. θα with the present form is the future continuous instead: θα διαβάζω is I'll be reading.",
 			table: {
@@ -215,6 +221,7 @@ export const VERBS_GUIDE: Guide = {
 		},
 		{
 			id: "short-form",
+			tone: "ocean",
 			title: "The same short form after να, πριν and ίσως",
 			rule: "The simple future's short form is not only for the future. After να, πριν and ίσως you use it too, so one form does four jobs.",
 			table: {
@@ -237,6 +244,7 @@ export const VERBS_GUIDE: Guide = {
 		},
 		{
 			id: "mai-verbs",
+			tone: "stone",
 			title: "Verbs ending in -μαι",
 			rule: "Some verbs end in -μαι yet have an ordinary meaning: έρχομαι (I come), κάθομαι (I sit), παντρεύομαι (I get married). They take their own endings. Many make the past with -θηκα or -τηκα; a few, like έρχομαι → ήρθα, are one of a kind.",
 			table: {
@@ -270,6 +278,7 @@ export const VERBS_GUIDE: Guide = {
 		},
 		{
 			id: "ongoing-past",
+			tone: "honey",
 			title: "Past continuous: was doing, used to do",
 			rule: "The simple past is for one finished event. For something ongoing or habitual in the past, use the past continuous: σπούδασα is I studied, σπούδαζα is I was studying or I used to study.",
 			table: {
@@ -296,6 +305,7 @@ export const VERBS_GUIDE: Guide = {
 		},
 		{
 			id: "commands",
+			tone: "navy",
 			title: "Commands",
 			rule: "A command has its own short form. There is one form for one person and another for several people, which is also the polite form. To tell someone not to do something, use μην with the everyday form.",
 			table: {
