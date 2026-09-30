@@ -13,7 +13,7 @@ export const ProseWithGreek = ({ text }: { text: string }) => {
 	let cursor = 0;
 	for (const match of text.matchAll(GREEK_RUN)) {
 		const start = match.index;
-		parts.push(text.slice(cursor, start), <GreekText key={start} size="inherit" tone="inherit">
+		parts.push(text.slice(cursor, start), <GreekText key={start} size="inherit" tone="inherit" weight="inherit">
 				{match[0]}
 			</GreekText>);
 		cursor = start + match[0].length;

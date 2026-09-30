@@ -3,7 +3,7 @@ import { describe, expect, it } from "vite-plus/test";
 import { DRILL_REGISTRY } from "@/routes/practice/drill-catalogue.data";
 import { countLessons, getLessonNotes } from "@/server/fns/guides.server";
 
-import { GUIDES, resolveSectionRef } from "./guides.data";
+import { GUIDES, resolveSectionRef, sectionExamples } from "./guides.data";
 
 describe("guides", () => {
 	it("gives every guide and every section within it a unique id", () => {
@@ -60,13 +60,25 @@ describe("guides", () => {
 		};
 		for (const g of GUIDES) {
 			for (const s of g.sections) {
-				for (const e of s.examples ?? []) check(`${g.slug}/${s.id}`, e.greek, e.marks);
+				for (const e of sectionExamples(s)) check(`${g.slug}/${s.id}`, e.greek, e.marks);
 				for (const row of s.table?.rows ?? []) {
 					for (const cell of row) if (typeof cell !== "string") check(`${g.slug}/${s.id}`, cell.text, cell.marks);
 				}
 			}
 		}
 		expect(lost).toEqual([]);
+	});
+
+	it("gives every detail within a section a unique label", () => {
+		const repeated = GUIDES.flatMap((g) =>
+			g.sections
+				.filter((s) => {
+					const labels = (s.details ?? []).map((d) => d.label);
+					return new Set(labels).size !== labels.length;
+				})
+				.map((s) => `${g.slug}/${s.id}`),
+		);
+		expect(repeated).toEqual([]);
 	});
 
 	it("gives every table row one cell per column", () => {

@@ -25,10 +25,16 @@ export const GUIDES: Guide[] = [
 
 export const findGuide = (slug: string): Guide | undefined => GUIDES.find((g) => g.slug === slug);
 
+/** A section's core examples and its details' examples together. */
+export const sectionExamples = (section: GuideSection) => [
+	...(section.examples ?? []),
+	...(section.details ?? []).flatMap((d) => d.examples ?? []),
+];
+
 export const usesMarks = (guide: Guide) =>
 	guide.sections.some(
 		(s) =>
-			s.examples?.some((e) => e.marks?.length) ||
+			sectionExamples(s).some((e) => e.marks?.length) ||
 			s.table?.rows.some((row) => row.some((cell) => typeof cell !== "string" && cell.marks?.length)),
 	);
 
