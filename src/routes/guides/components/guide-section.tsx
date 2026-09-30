@@ -4,7 +4,7 @@ import { cn } from "tailwind-variants";
 
 import { ProseWithGreek } from "@/components/ProseWithGreek";
 import { DRILL_REGISTRY } from "@/routes/practice/drill-catalogue.data";
-import type { Guide, GuideSection as GuideSectionData, GuideTone, PlannedDrill } from "@/types/guide";
+import type { Guide, GuideExample, GuideSection as GuideSectionData, GuideTone, PlannedDrill } from "@/types/guide";
 
 import { resolveSectionRef } from "../guides.data";
 import { GUIDE_TONE } from "./guide-tone";
@@ -90,6 +90,20 @@ const PracticeLinks = ({
 	);
 };
 
+const ExampleList = ({ examples, ruleClass }: { examples?: GuideExample[]; ruleClass: string }) =>
+	examples && examples.length > 0 ? (
+		<ul className="space-y-3">
+			{examples.map((example) => (
+				<li key={example.greek} className={cn("border-l-2 pl-3", ruleClass)}>
+					<p>
+						<MarkedPhrase text={example.greek} marks={example.marks} size="lg" />
+					</p>
+					<p className="text-sm text-stone-600">{example.english}</p>
+				</li>
+			))}
+		</ul>
+	) : null;
+
 export const GuideSection = ({
 	guide,
 	section,
@@ -122,18 +136,19 @@ export const GuideSection = ({
 
 				{section.table ? <GuideTable table={section.table} /> : null}
 
-				{section.examples && section.examples.length > 0 ? (
-					<ul className="space-y-3">
-						{section.examples.map((example) => (
-							<li key={example.greek} className={cn("border-l-2 pl-3", tone.exampleRule)}>
-								<p>
-									<MarkedPhrase text={example.greek} marks={example.marks} size="lg" />
-								</p>
-								<p className="text-sm text-stone-600">{example.english}</p>
-							</li>
-						))}
-					</ul>
-				) : null}
+				<ExampleList examples={section.examples} ruleClass={tone.exampleRule} />
+
+				{section.details?.map((detail) => (
+					<div key={detail.label} className="space-y-3 border-t border-stone-200 pt-4">
+						<h3 className="font-semibold text-stone-900">
+							<ProseWithGreek text={detail.label} />
+						</h3>
+						<p className="max-w-2xl leading-relaxed text-stone-700">
+							<ProseWithGreek text={detail.text} />
+						</p>
+						<ExampleList examples={detail.examples} ruleClass={tone.exampleRule} />
+					</div>
+				))}
 
 				<ConfuseBox guide={guide} section={section} tone={toneName} />
 

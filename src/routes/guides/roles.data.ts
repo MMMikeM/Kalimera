@@ -12,7 +12,7 @@ export const ROLES_GUIDE: Guide = {
 		{
 			id: "overview",
 			title: "Three jobs a noun can do",
-			rule: "A noun in a sentence does one of three jobs, and its article and ending usually show which. After είμαι (be) and γίνομαι (become) nothing is acted on, so both sides take the Doer form: η Χρυσάνθη είναι η μητέρα.",
+			rule: "Every noun in a sentence does one of three jobs. The Doer does the action. The Target is what the action is done to. The Owner is who something belongs to. A Greek noun shows its job by changing its article and often its ending: ο Γιάννης, τον Γιάννη, του Γιάννη. Because the job is marked on the word, it stays the same whatever the word order.",
 			table: {
 				columns: [
 					{ label: "Example", greek: true },
@@ -36,10 +36,23 @@ export const ROLES_GUIDE: Guide = {
 					english: "The child is eating watermelon.",
 					marks: [mark("Το παιδί", "nominative", "neuter"), mark("καρπούζι", "accusative", "neuter")],
 				},
+			],
+			details: [
 				{
-					greek: "Ο γιος μου θέλει να γίνει γιατρός.",
-					english: "My son wants to be a doctor.",
-					marks: [mark("Ο γιος", "nominative", "masculine"), mark("γιατρός", "nominative", "masculine")],
+					label: "After είμαι and γίνομαι",
+					text: "είμαι (be) and γίνομαι (become) don't act on anything; they say what someone or something is. So the noun after them is not a Target, and both nouns take the Doer form.",
+					examples: [
+						{
+							greek: "Η Χρυσάνθη είναι η μητέρα.",
+							english: "Chrysanthi is the mother.",
+							marks: [mark("Η Χρυσάνθη", "nominative", "feminine"), mark("η μητέρα", "nominative", "feminine")],
+						},
+						{
+							greek: "Ο γιος μου θέλει να γίνει γιατρός.",
+							english: "My son wants to be a doctor.",
+							marks: [mark("Ο γιος", "nominative", "masculine"), mark("γιατρός", "nominative", "masculine")],
+						},
+					],
 				},
 			],
 			drills: ["articles-paradigm", "nominal-phrase-doer", "nominal-all-phrases"],
@@ -47,7 +60,7 @@ export const ROLES_GUIDE: Guide = {
 		{
 			id: "articles",
 			title: "The article ο, η, το",
-			rule: "The article shows gender and job at once. For the Target only the masculine and feminine change; το stays το. The -ν of την, δεν and μην stays before a vowel, before κ, π, τ, ξ and ψ, and before μπ, ντ, γκ, τσ and τζ: την πόρτα, δεν πάω, την μπάλα. Before any other consonant it usually drops: τη μητέρα, δε θέλω. Keeping it is widely accepted, especially with δεν. τον keeps it even before φ, since το φίλο would read as neuter.",
+			rule: "The article is the word for “the” that comes before a noun: ο, η, το. It shows two things at once: the noun's gender (masculine, feminine or neuter) and its job. For the Doer, whoever does the action, it is ο, η, το. For the Target, what the action is done to, only the masculine and feminine change: ο becomes τον and η becomes τη; το stays το. The word for “a” or “an” works the same way: ένας, μία, ένα, and only ένας changes, to έναν.",
 			table: {
 				columns: [
 					{ label: "Masculine", greek: true },
@@ -93,10 +106,18 @@ export const ROLES_GUIDE: Guide = {
 					english: "They're watching a film at the cinema.",
 					marks: [mark("μια ταινία", "accusative", "feminine"), mark("στο σινεμά", "accusative", "neuter")],
 				},
+			],
+			details: [
 				{
-					greek: "Κλείνω την πόρτα.",
-					english: "I close the door.",
-					marks: [mark("την πόρτα", "accusative", "feminine")],
+					label: "τη or την",
+					text: "The Target article την keeps its -ν before a vowel, before κ, π, τ, ξ and ψ, and before μπ, ντ, γκ, τσ and τζ: την πόρτα, την μπάλα. Before any other consonant it usually drops: τη μητέρα. Keeping it anyway is widely accepted. τον keeps its -ν even before φ, since το φίλο would read as neuter.",
+					examples: [
+						{
+							greek: "Κλείνω την πόρτα.",
+							english: "I close the door.",
+							marks: [mark("την πόρτα", "accusative", "feminine")],
+						},
+					],
 				},
 			],
 			drills: ["articles-article-doer", "articles-article-target"],
@@ -104,7 +125,7 @@ export const ROLES_GUIDE: Guide = {
 		{
 			id: "target",
 			title: "The Target for objects, names and times",
-			rule: "Whatever the verb acts on takes the Target form, names included. So do times: τη Δευτέρα, on Monday; την επόμενη εβδομάδα, next week. Months are masculine, so they take τον: τον Ιούλιο, in July. After κάθε there is no article: κάθε Τρίτη, every Tuesday.",
+			rule: "The Target is what the action is done to, and it takes the Target form: the article changes (ο φίλος becomes τον φίλο, οι φίλοι becomes τους φίλους), and masculine nouns often change their ending too. Whatever the verb acts on takes this form, names included: τον Αλέξανδρο, τη Λίζα. So do times, with no word for on or in: τη Δευτέρα, on Monday; το πρωί, in the morning; την επόμενη εβδομάδα, next week. Months are masculine, so they take τον: τον Ιούλιο, in July.",
 			table: {
 				columns: [
 					{ label: "Doer form", greek: true },
@@ -139,10 +160,18 @@ export const ROLES_GUIDE: Guide = {
 					english: "In the evening they go out.",
 					marks: [mark("Το βράδυ", "accusative", "neuter")],
 				},
+			],
+			details: [
 				{
-					greek: "Κάθε εβδομάδα δουλεύω σαράντα ώρες.",
-					english: "Every week I work forty hours.",
-					marks: [mark("Κάθε εβδομάδα", "accusative", "feminine"), mark("σαράντα ώρες", "accusative", "feminine", true)],
+					label: "After κάθε",
+					text: "After κάθε (every) there is no article: κάθε Τρίτη, every Tuesday.",
+					examples: [
+						{
+							greek: "Κάθε εβδομάδα δουλεύω σαράντα ώρες.",
+							english: "Every week I work forty hours.",
+							marks: [mark("Κάθε εβδομάδα", "accusative", "feminine"), mark("σαράντα ώρες", "accusative", "feminine", true)],
+						},
+					],
 				},
 			],
 			drills: ["nominal-noun-target", "nominal-phrase-target", "blocks-days-of-week"],
@@ -150,7 +179,7 @@ export const ROLES_GUIDE: Guide = {
 		{
 			id: "owner",
 			title: "The Owner",
-			rule: "The Owner comes after the thing owned: το σπίτι του Γιάννη, Yannis's house. Masculine nouns in -ος end in -ου. In the plural every noun ends in -ων, but the stress is not always on it: των γιατρών, yet των ανθρώπων.",
+			rule: "The Owner is who or what something belongs to, like English 's or of. It comes after the thing owned: το σπίτι του Γιάννη, Yannis's house. Masculine nouns in -ος, shown in the table, take του and end in -ου: ο γιατρός, του γιατρού. In the plural the article is των and every noun ends in -ων: των γιατρών.",
 			table: {
 				columns: [
 					{ label: "One", greek: true },
@@ -184,6 +213,12 @@ export const ROLES_GUIDE: Guide = {
 					marks: [mark("το όνομα", "accusative", "neuter"), mark("του φίλου", "genitive", "masculine")],
 				},
 			],
+			details: [
+				{
+					label: "Stress in the plural",
+					text: "The plural always ends in -ων, but the stress is not always on it: των γιατρών, yet των ανθρώπων.",
+				},
+			],
 			confuse: {
 				text: "This shows only masculines in -ος. How the other families make their Owner is in the nouns guide: της γυναίκας, του παιδιού, του ονόματος.",
 				section: "nouns/owner",
@@ -193,7 +228,7 @@ export const ROLES_GUIDE: Guide = {
 		{
 			id: "when-article",
 			title: "When Greek uses the article",
-			rule: "Greek puts the article where English leaves it out: before countries, people's names in speech, ideas such as love, a whole kind of thing, and days. It leaves it out for a job after είμαι, and in set activities such as πίνω καφέ. A day loses it after κάθε: κάθε Τρίτη.",
+			rule: "The article is the word for “the”: ο, η, το and their other forms. Greek puts it where English leaves it out: before countries, people's names in speech, ideas such as love, a whole kind of thing, and days. It also leaves it out in a few set places, listed below the table.",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -212,6 +247,16 @@ export const ROLES_GUIDE: Guide = {
 					[{ text: "κάνω σπορ", weight: "deviate", marks: [mark("σπορ", "accusative", "neuter")] }, "I do sport", "an activity, no article"],
 				],
 			},
+			details: [
+				{
+					label: "Jobs and set activities",
+					text: "A job after είμαι takes no article: είμαι προγραμματιστής, I'm a programmer. Nor do set activities such as πίνω καφέ, πάω σινεμά and κάνω σπορ.",
+				},
+				{
+					label: "After κάθε",
+					text: "A day loses its article after κάθε (every): κάθε Τρίτη, every Tuesday.",
+				},
+			],
 			drills: [],
 			plannedDrills: [
 				{

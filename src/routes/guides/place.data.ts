@@ -12,7 +12,7 @@ export const PLACE_GUIDE: Guide = {
 		{
 			id: "se-contractions",
 			title: "σε joined to the article",
-			rule: "σε means at, in or to, and merges with the article after it. στη becomes στην before a vowel and before sounds like κ, π and τ: στην Αθήνα, στην Πάφο, but στη Λεμεσό. Before μια or ένα, meaning a, or a word with no article, σε stays whole: σε μια λίμνη, σε λίγο, in a bit.",
+			rule: "σε means at, in or to. Before the article, the word for “the”, it loses its ε and merges with it: σε + το → στο. The noun after σε takes the Target form, the one used for what an action is done to, so σε merges with τον and τη rather than ο and η. The table shows every joined form.",
 			table: {
 				columns: [
 					{ label: "Joins", greek: true },
@@ -41,10 +41,22 @@ export const PLACE_GUIDE: Guide = {
 					english: "Yesterday I gave the book to Maria.",
 					marks: [mark("το βιβλίο", "accusative", "neuter"), mark("στη Μαρία", "accusative", "feminine")],
 				},
+			],
+			details: [
 				{
-					greek: "Μεγάλωσα σε μια μικρή πόλη.",
-					english: "I grew up in a small town.",
-					marks: [mark("μια μικρή πόλη", "accusative", "feminine")],
+					label: "στη or στην",
+					text: "στη becomes στην before a vowel and before sounds like κ, π and τ: στην Αθήνα, στην Πάφο, but στη Λεμεσό.",
+				},
+				{
+					label: "Before μια, ένα or no article",
+					text: "Before μια or ένα, meaning a, or a word with no article, σε stays whole: σε μια λίμνη, σε λίγο, in a bit.",
+					examples: [
+						{
+							greek: "Μεγάλωσα σε μια μικρή πόλη.",
+							english: "I grew up in a small town.",
+							marks: [mark("μια μικρή πόλη", "accusative", "feminine")],
+						},
+					],
 				},
 			],
 			confuse: {
@@ -64,7 +76,7 @@ export const PLACE_GUIDE: Guide = {
 		{
 			id: "position",
 			title: "Next to, behind, far from",
-			rule: "Before a place, a position word needs a partner: σε, as in δίπλα στο σπίτι, or από, as in πίσω από τον τοίχο. Learn each with its partner. πάνω takes either, and the meaning changes: πάνω στο τραπέζι is on the table, πάνω από το τραπέζι above it.",
+			rule: "A position word says where something is: δίπλα, next to; πίσω, behind. Before a place, it needs a partner: σε, as in δίπλα στο σπίτι, or από, as in πίσω από τον τοίχο. Learn each with its partner; the table gives the common ones.",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -89,12 +101,36 @@ export const PLACE_GUIDE: Guide = {
 					english: "Your phone is under the sofa.",
 					marks: [mark("Το κινητό", "nominative", "neuter"), mark("τον καναπέ", "accusative", "masculine")],
 				},
+			],
+			details: [
 				{
-					greek: "Ποια ταβέρνα είναι κοντά;",
-					english: "Which taverna is nearby?",
-					marks: [mark("Ποια ταβέρνα", "nominative", "feminine")],
+					label: "πάνω",
+					text: "πάνω takes either partner, and the meaning changes: πάνω στο τραπέζι is on the table, πάνω από το τραπέζι above it.",
+					examples: [
+						{
+							greek: "πάνω στο τραπέζι",
+							english: "on the table",
+							marks: [mark("στο τραπέζι", "accusative", "neuter")],
+						},
+						{
+							greek: "πάνω από το τραπέζι",
+							english: "above the table",
+							marks: [mark("το τραπέζι", "accusative", "neuter")],
+						},
+					],
 				},
-				{ greek: "Πόσο απέχει από εδώ;", english: "How far is it from here?" },
+				{
+					label: "Near and far, with no place after",
+					text: "With no place after it, a position word needs no partner: κοντά alone means nearby. To ask how far away something is, use πόσο απέχει, with από for the starting point.",
+					examples: [
+						{
+							greek: "Ποια ταβέρνα είναι κοντά;",
+							english: "Which taverna is nearby?",
+							marks: [mark("Ποια ταβέρνα", "nominative", "feminine")],
+						},
+						{ greek: "Πόσο απέχει από εδώ;", english: "How far is it from here?" },
+					],
+				},
 			],
 			drills: [],
 			plannedDrills: [
@@ -109,7 +145,7 @@ export const PLACE_GUIDE: Guide = {
 		{
 			id: "purpose",
 			title: "για, από and με",
-			rule: "για gives the purpose: πάω για ψώνια, I go shopping. Before a length of time it means for: για δύο χρόνια. από gives where from. με gives how, or who with.",
+			rule: "Three small words link a noun into the sentence. για gives the purpose: πάω για ψώνια, I go shopping. από gives where from. με gives how, or who with.",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -137,6 +173,12 @@ export const PLACE_GUIDE: Guide = {
 					marks: [mark("ποιον", "accusative", "masculine"), mark("στις συναυλίες", "accusative", "feminine", true)],
 				},
 			],
+			details: [
+				{
+					label: "For a length of time",
+					text: "Before a length of time, για means for: για δύο χρόνια.",
+				},
+			],
 			drills: [],
 			plannedDrills: [
 				{
@@ -150,7 +192,7 @@ export const PLACE_GUIDE: Guide = {
 		{
 			id: "position-pairs",
 			title: "Inside and outside, left and right",
-			rule: "Most position words come in pairs of opposites. On their own they need no partner: έλα μέσα, στρίψε αριστερά. Before a place they take σε or από: μέσα στη λάσπη, but έξω από το σπίτι.",
+			rule: "A position word says where something is: μέσα, inside; αριστερά, left. Most come in pairs of opposites, so learn them in pairs. On their own they need nothing added: έλα μέσα, στρίψε αριστερά.",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -169,15 +211,23 @@ export const PLACE_GUIDE: Guide = {
 			examples: [
 				{ greek: "Στρίψε αριστερά.", english: "Turn left." },
 				{ greek: "Έλα μέσα.", english: "Come inside." },
+			],
+			details: [
 				{
-					greek: "Εσύ είσαι μέσα στη λάσπη.",
-					english: "You are in the mud.",
-					marks: [mark("στη λάσπη", "accusative", "feminine")],
-				},
-				{
-					greek: "Γι' αυτό δεν βγαίνω έξω από το σπίτι.",
-					english: "That's why I don't leave the house.",
-					marks: [mark("το σπίτι", "accusative", "neuter")],
+					label: "Before a place",
+					text: "Before a place, a position word takes a partner, σε or από: μέσα στη λάσπη, but έξω από το σπίτι.",
+					examples: [
+						{
+							greek: "Εσύ είσαι μέσα στη λάσπη.",
+							english: "You are in the mud.",
+							marks: [mark("στη λάσπη", "accusative", "feminine")],
+						},
+						{
+							greek: "Γι' αυτό δεν βγαίνω έξω από το σπίτι.",
+							english: "That's why I don't leave the house.",
+							marks: [mark("το σπίτι", "accusative", "neuter")],
+						},
+					],
 				},
 			],
 			drills: [],
@@ -193,7 +243,7 @@ export const PLACE_GUIDE: Guide = {
 		{
 			id: "without-until",
 			title: "Without, until, towards, like",
-			rule: "These link a noun the way σε and από do: χωρίς, without; μέχρι, until; προς, towards; σαν, like. With an article, the noun after them takes the Target form. μετά από before a length of time means after: μετά από δύο χρόνια.",
+			rule: "Four more small words link a noun into the sentence, the way σε and από do: χωρίς, without; μέχρι, until; προς, towards; σαν, like. With an article, the noun after them takes the Target form, the one used for what an action is done to: προς τον σταθμό, towards the station.",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -210,14 +260,22 @@ export const PLACE_GUIDE: Guide = {
 			},
 			examples: [
 				{
-					greek: "Το βρήκα μετά από δύο χρόνια.",
-					english: "I found it after two years.",
-					marks: [mark("Το", "accusative", "neuter"), mark("δύο χρόνια", "accusative", "neuter", true)],
-				},
-				{
 					greek: "Ακούω τον σκύλο να τραγουδάει σαν τον λύκο.",
 					english: "I hear the dog singing like the wolf.",
 					marks: [mark("τον σκύλο", "accusative", "masculine"), mark("τον λύκο", "accusative", "masculine")],
+				},
+			],
+			details: [
+				{
+					label: "μετά από, after",
+					text: "Before a length of time, μετά από means after: μετά από δύο χρόνια.",
+					examples: [
+						{
+							greek: "Το βρήκα μετά από δύο χρόνια.",
+							english: "I found it after two years.",
+							marks: [mark("Το", "accusative", "neuter"), mark("δύο χρόνια", "accusative", "neuter", true)],
+						},
+					],
 				},
 			],
 			confuse: {

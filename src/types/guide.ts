@@ -43,13 +43,30 @@ export interface GuideExample {
 	marks?: GuideMark[];
 }
 
+/**
+ * An exception, extension or side rule, kept apart from the section's core rule
+ * so the rule stays readable on its own. Its examples illustrate it alone.
+ */
+export interface GuideDetail {
+	label: string;
+	/** English prose, like `rule`. */
+	text: string;
+	examples?: GuideExample[];
+}
+
 export interface GuideSection {
 	id: string;
 	title: string;
-	/** English prose; Greek runs inside it are rendered as Greek automatically. */
+	/**
+	 * The core rule, readable by someone who lands on this section alone: it names
+	 * what it teaches and defines the terms it uses. English prose; Greek runs
+	 * inside it are rendered as Greek automatically.
+	 */
 	rule: string;
 	table?: GuideTable;
+	/** Examples of the core rule. */
 	examples?: GuideExample[];
+	details?: GuideDetail[];
 	/** A look-alike that lives elsewhere: `"<section>"` in this guide or `"<guide>/<section>"`. */
 	confuse?: { text: string; section: string };
 	/** Colour of the section's header. Omit it and the section takes the next colour in its guide's cycle. */

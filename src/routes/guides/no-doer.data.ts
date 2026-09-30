@@ -7,12 +7,12 @@ export const NO_DOER_GUIDE: Guide = {
 	title: "Sentences without a doer",
 	greek: "Χωρίς υποκείμενο",
 	description: "There is, it's raining, you must",
-	idea: "Some Greek sentences have nobody doing anything. The verb stands alone in its he / she / it form and never changes for person. Learn each as a fixed frame.",
+	idea: "Some Greek sentences have nobody doing anything: there is, it's raining, you must, it's hard. The verb stands alone in its he / she / it form and doesn't change for person. θα ήθελα, the polite I would like, sits here too: it does change for person, but like πρέπει it is a fixed frame that leads into a noun or into να and a verb.",
 	sections: [
 		{
 			id: "there-is",
 			title: "υπάρχει for there is and there are",
-			rule: "υπάρχει means there is and υπάρχουν there are: the verb matches whatever exists, which takes the Doer form. In speech έχει often does the same job, but it stays έχει even for more than one, and what exists takes the Target form: έχει Άγγλους, against υπάρχουν Άγγλοι.",
+			rule: "υπάρχει means there is and υπάρχουν means there are. The verb matches whatever exists: υπάρχει for one thing, υπάρχουν for more than one. What exists takes the Doer form, the one for who does the action: υπάρχουν Άγγλοι, there are English people. Put δεν in front for there isn't, and θα for there will be.",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -47,10 +47,18 @@ export const NO_DOER_GUIDE: Guide = {
 					english: "There will be many parks in my city.",
 					marks: [mark("πολλά πάρκα", "nominative", "neuter", true), mark("στην πόλη", "accusative", "feminine")],
 				},
+			],
+			details: [
 				{
-					greek: "Έχει Άγγλους στην Πάφο.",
-					english: "There are English people in Paphos.",
-					marks: [mark("Άγγλους", "accusative", "masculine", true), mark("στην Πάφο", "accusative", "feminine")],
+					label: "έχει in speech",
+					text: "In speech έχει often does the same job as υπάρχει. It stays έχει even for more than one, and what exists takes the Target form, the one for what an action is done to: έχει Άγγλους, against υπάρχουν Άγγλοι.",
+					examples: [
+						{
+							greek: "Έχει Άγγλους στην Πάφο.",
+							english: "There are English people in Paphos.",
+							marks: [mark("Άγγλους", "accusative", "masculine", true), mark("στην Πάφο", "accusative", "feminine")],
+						},
+					],
 				},
 			],
 			drills: [],
@@ -66,7 +74,7 @@ export const NO_DOER_GUIDE: Guide = {
 		{
 			id: "weather",
 			title: "Weather with κάνει, βρέχει and έχει",
-			rule: "Use κάνει with a noun for heat and cold. For rain and snow use a verb of their own, or έχει with the noun: βρέχει, έχει βροχή.",
+			rule: "Greek weather sentences have no word for it: the verb stands alone in its he, she, it form. For heat and cold, use κάνει with a noun: κάνει κρύο, it's cold. Rain and snow have verbs of their own, βρέχει and χιονίζει, or you can use έχει with the noun: έχει βροχή, there's rain.",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -101,7 +109,7 @@ export const NO_DOER_GUIDE: Guide = {
 		{
 			id: "must",
 			title: "πρέπει να",
-			rule: "πρέπει never changes for person; the verb after να does. Use the short form for one action and the present for something ongoing. For had to, use έπρεπε.",
+			rule: "πρέπει να means must or have to. πρέπει never changes for person; the verb after να does: πρέπει να πάω, I must go; πρέπει να φας, you must eat. For one action, use the short form, the one built on the simple past's stem (έφαγα, να φάω). For something ongoing or habitual, use the present.",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -113,13 +121,22 @@ export const NO_DOER_GUIDE: Guide = {
 					[{ text: "έπρεπε να φύγω νωρίς", weight: "deviate" }, "I had to leave early"],
 				],
 			},
-			examples: [{ greek: "Πρέπει να δουλέψω.", english: "I have to work." }],
+			examples: [
+				{ greek: "Πρέπει να δουλέψω.", english: "I have to work." },
+				{ greek: "Πρέπει να διαβάζεις κάθε μέρα.", english: "You must study every day." },
+			],
+			details: [
+				{
+					label: "Had to: έπρεπε",
+					text: "For had to, use έπρεπε, the past of πρέπει. It doesn't change for person either: έπρεπε να φύγω νωρίς, I had to leave early.",
+				},
+			],
 			drills: ["verbs-modal-constructions"],
 		},
 		{
 			id: "wish",
 			title: "θα ήθελα",
-			rule: "θα ήθελα is the polite I would like. Follow it with the Target form of a noun, or with να and a verb. With να and a past form it wishes for what isn't so: θα ήθελα να ήμουν, I wish I were.",
+			rule: "θα ήθελα is the polite I would like. Follow it with a noun in the Target form, the one for what an action is done to: θα ήθελα έναν καφέ. Or follow it with να and a verb.",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -137,6 +154,12 @@ export const NO_DOER_GUIDE: Guide = {
 					marks: [mark("ένα τραπέζι", "accusative", "neuter")],
 				},
 			],
+			details: [
+				{
+					label: "Wishing for what isn't so",
+					text: "With να and a past form, θα ήθελα wishes for what isn't so: θα ήθελα να ήμουν αρχιτέκτονας, I wish I were an architect. After ήμουν (I was), a form of είμαι, the noun says what someone is rather than what an action is done to, so it takes the Doer form, the one for who does the action.",
+				},
+			],
 			drills: [],
 			plannedDrills: [
 				{
@@ -150,7 +173,7 @@ export const NO_DOER_GUIDE: Guide = {
 		{
 			id: "its-hard",
 			title: "είναι δύσκολο να and other it's frames",
-			rule: "Greek has no word for the it in it's hard: είναι takes the -ο form of the adjective, είναι δύσκολο, είναι τρελό. Add να and a verb to say what is hard. The -α form ωραία does the same job, and is common in the past: ήταν πολύ ωραία.",
+			rule: "Greek has no word for the it in it's hard: είναι takes the -ο form of the adjective, the one it has beside a το noun: είναι δύσκολο, είναι τρελό. Add να and a verb to say what is hard.",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -173,6 +196,12 @@ export const NO_DOER_GUIDE: Guide = {
 					greek: "Είναι τρελό!",
 					english: "It's crazy!",
 					marks: [mark("τρελό", "nominative", "neuter")],
+				},
+			],
+			details: [
+				{
+					label: "The -α form",
+					text: "Greek can also use the -α form, the plural of the -ο form, for the same it's … frame: είναι δύσκολα, ήταν πολύ ωραία, it was very nice. Both are correct; ωραία is especially common this way.",
 				},
 			],
 			drills: [],
