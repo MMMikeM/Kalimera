@@ -8,7 +8,7 @@ import { ProseWithGreek } from "@/components/ProseWithGreek";
 import type { Guide } from "@/types/guide";
 
 import { GUIDE_TONE } from "./guide-tone";
-import { usesMarks, sectionTones } from "../guides.data";
+import { usesMarks, usesWeights, sectionTones } from "../guides.data";
 import { GuideSection } from "./guide-section";
 import { MarkKey } from "./mark-key";
 
@@ -52,6 +52,14 @@ export const GuidePage = ({ guide }: { guide: Guide }) => {
 						</li>
 					))}
 				</ul>
+			) : null}
+
+			{usesWeights(guide) ? (
+				<p className="text-sm text-stone-700">
+					In the tables, <span className="font-bold text-stone-950">bold</span> marks the form you would get
+					wrong by following the pattern, and <span className="font-medium text-stone-900">medium</span> marks
+					the form the rest come from.
+				</p>
 			) : null}
 
 			<nav aria-label="Sections">

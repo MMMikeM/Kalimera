@@ -13,7 +13,11 @@ export const AGREEMENT_GUIDE: Guide = {
 			id: "adjectives",
 			title: "Adjectives copy the noun",
 			tone: "terracotta",
-			rule: "An adjective is a describing word, such as καλός (good) or μεγάλος (big). Every noun is masculine, feminine or neuter, and its adjective changes its ending to match.\n\nMost adjectives end in -ος, -η, -ο for one, and -οι, -ες, -α for more than one.\n\nThey copy the noun's gender, not its ending. A feminine noun in -εις still takes -ες, and a masculine noun in -ές still takes -ος.",
+			rule: [
+				"An adjective is a describing word, such as καλός (good) or μεγάλος (big). Every noun is masculine, feminine or neuter, and its adjective changes its ending to match.",
+				"Most adjectives end in -ος, -η, -ο for one, and -οι, -ες, -α for more than one.",
+				"They copy the noun's gender, not its ending. A feminine noun in -εις still takes -ες, and a masculine noun in -ές still takes -ος.",
+			],
 			table: {
 				columns: [
 					{ label: "Gender" },
@@ -21,11 +25,11 @@ export const AGREEMENT_GUIDE: Guide = {
 					{ label: "More than one", greek: true },
 				],
 				rows: [
-					["masculine", markedCell("καλός φίλος", "nominative", "masculine", false, "anchor"), markedCell("καλοί φίλοι", "nominative", "masculine", true)],
+					["masculine", markedCell("καλός φίλος", "nominative", "masculine", false), markedCell("καλοί φίλοι", "nominative", "masculine", true)],
 					["feminine", markedCell("μεγάλη πόλη", "nominative", "feminine"), markedCell("μεγάλες πόλεις", "nominative", "feminine", true)],
 					["neuter", markedCell("καλό παιδί", "nominative", "neuter"), markedCell("καλά παιδιά", "nominative", "neuter", true)],
-					["-ης masculine", markedCell("θορυβώδης", "nominative", "masculine", false, "anchor"), markedCell("θορυβώδεις", "nominative", "masculine", true)],
-					["-ης feminine", markedCell("θορυβώδης", "nominative", "feminine", false, "deviate"), markedCell("θορυβώδεις", "nominative", "feminine", true)],
+					["-ης masculine", markedCell("θορυβώδης", "nominative", "masculine", false), markedCell("θορυβώδεις", "nominative", "masculine", true)],
+					["-ης feminine", markedCell("θορυβώδης", "nominative", "feminine", false), markedCell("θορυβώδεις", "nominative", "feminine", true)],
 					["-ης neuter", markedCell("θορυβώδες", "nominative", "neuter"), markedCell("θορυβώδη", "nominative", "neuter", true)],
 				],
 			},
@@ -58,19 +62,27 @@ export const AGREEMENT_GUIDE: Guide = {
 			id: "adjective-jobs",
 			title: "Adjectives change with the job",
 			tone: "honey",
-			rule: "An adjective takes its noun's job as well as its gender. A noun in a sentence does one of three jobs:\n\n- The Doer _does_ the action. Its form is the plain one you find in the dictionary.\n- The Target is who or what the action is done to.\n- The Owner is who something belongs to.\n\nFor the Target and the Owner, the article and the noun's ending change, and the adjective changes with them. In the -ος, -η, -ο type, the adjective's ending matches the article's.",
+			rule: [
+				"An adjective takes its noun's job as well as its gender. A noun in a sentence does one of three jobs:",
+				[
+					"The Doer _does_ the action. Its form is the plain one you find in the dictionary.",
+					"The Target is who or what the action is done to.",
+					"The Owner is who something belongs to.",
+				],
+				"For the Target and the Owner, the article and the noun's ending change, and the adjective changes with them. In the -ος, -η, -ο type, the adjective's ending matches the article's.",
+			],
 			table: {
 				columns: [
 					{ label: "Job" },
 					{ label: "Phrase", greek: true },
 				],
 				rows: [
-					["Doer", markedCell("ο καλός φίλος", "nominative", "masculine", false, "anchor")],
-					["Target", markedCell("τον καλό φίλο", "accusative", "masculine", false, "deviate")],
+					["Doer", markedCell("ο καλός φίλος", "nominative", "masculine", false)],
+					["Target", markedCell("τον καλό φίλο", "accusative", "masculine", false)],
 					["Owner", markedCell("του καλού φίλου", "genitive", "masculine")],
-					["Doer", markedCell("η μεγάλη πόλη", "nominative", "feminine", false, "anchor")],
+					["Doer", markedCell("η μεγάλη πόλη", "nominative", "feminine", false)],
 					["Target", markedCell("τη μεγάλη πόλη", "accusative", "feminine")],
-					["Owner", markedCell("της μεγάλης πόλης", "genitive", "feminine", false, "deviate")],
+					["Owner", markedCell("της μεγάλης πόλης", "genitive", "feminine", false)],
 				],
 			},
 			examples: [
@@ -99,7 +111,14 @@ export const AGREEMENT_GUIDE: Guide = {
 			id: "adjective-shapes",
 			title: "Adjectives in -α and -ύς",
 			tone: "stone",
-			rule: "Most adjectives end in -ος, -η, -ο for masculine, feminine and neuter: καλός, καλή, καλό. Two groups take -α in the feminine instead of -η:\n\n- With a vowel before -ος, most end in -ος, -α, -ο.\n- A small group ends in -ύς, -ιά, -ύ.\n\nBoth groups change with the noun's job in the sentence, like any adjective. The example shows ωραία as the Target, what the action is done to.",
+			rule: [
+				"Most adjectives end in -ος, -η, -ο for masculine, feminine and neuter: καλός, καλή, καλό. Two groups take -α in the feminine instead of -η:",
+				[
+					"With a vowel before -ος, most end in -ος, -α, -ο.",
+					"A small group ends in -ύς, -ιά, -ύ.",
+				],
+				"Both groups change with the noun's job in the sentence, like any adjective. The example shows ωραία as the Target, what the action is done to.",
+			],
 			table: {
 				columns: [
 					{ label: "Masculine", greek: true },
@@ -108,12 +127,12 @@ export const AGREEMENT_GUIDE: Guide = {
 					{ label: "Meaning" },
 				],
 				rows: [
-					[markedCell("ωραίος", "nominative", "masculine"), markedCell("ωραία", "nominative", "feminine", false, "deviate"), markedCell("ωραίο", "nominative", "neuter"), "nice"],
-					[markedCell("παλιός", "nominative", "masculine"), markedCell("παλιά", "nominative", "feminine", false, "deviate"), markedCell("παλιό", "nominative", "neuter"), "old"],
-					[markedCell("νέος", "nominative", "masculine"), markedCell("νέα", "nominative", "feminine", false, "deviate"), markedCell("νέο", "nominative", "neuter"), "new, young"],
+					[markedCell("ωραίος", "nominative", "masculine"), markedCell("ωραία", "nominative", "feminine", false), markedCell("ωραίο", "nominative", "neuter"), "nice"],
+					[markedCell("παλιός", "nominative", "masculine"), markedCell("παλιά", "nominative", "feminine", false), markedCell("παλιό", "nominative", "neuter"), "old"],
+					[markedCell("νέος", "nominative", "masculine"), markedCell("νέα", "nominative", "feminine", false), markedCell("νέο", "nominative", "neuter"), "new, young"],
 					[markedCell("όγδοος", "nominative", "masculine"), markedCell("όγδοη", "nominative", "feminine"), markedCell("όγδοο", "nominative", "neuter"), "eighth: keeps -η"],
-					[markedCell("βαρύς", "nominative", "masculine"), markedCell("βαριά", "nominative", "feminine", false, "deviate"), markedCell("βαρύ", "nominative", "neuter"), "heavy"],
-					[markedCell("μακρύς", "nominative", "masculine"), markedCell("μακριά", "nominative", "feminine", false, "deviate"), markedCell("μακρύ", "nominative", "neuter"), "long; μακριά also means far"],
+					[markedCell("βαρύς", "nominative", "masculine"), markedCell("βαριά", "nominative", "feminine", false), markedCell("βαρύ", "nominative", "neuter"), "heavy"],
+					[markedCell("μακρύς", "nominative", "masculine"), markedCell("μακριά", "nominative", "feminine", false), markedCell("μακρύ", "nominative", "neuter"), "long; μακριά also means far"],
 				],
 			},
 			examples: [
@@ -159,7 +178,14 @@ export const AGREEMENT_GUIDE: Guide = {
 			id: "colours",
 			title: "Colours that never change",
 			tone: "ocean",
-			rule: "Colours in -ος change like any adjective to match their noun. A handful, the last four in the table, never change. They keep one form whatever the noun:\n\n- masculine, feminine or neuter\n- one or more than one\n- whatever its job in the sentence",
+			rule: [
+				"Colours in -ος change like any adjective to match their noun. A handful, the last four in the table, never change. They keep one form whatever the noun:",
+				[
+					"masculine, feminine or neuter",
+					"one or more than one",
+					"whatever its job in the sentence",
+				],
+			],
 			table: {
 				columns: [
 					{ label: "Masculine", greek: true },
@@ -168,8 +194,8 @@ export const AGREEMENT_GUIDE: Guide = {
 					{ label: "Meaning" },
 				],
 				rows: [
-					[markedCell("κόκκινος", "nominative", "masculine", false, "anchor"), markedCell("κόκκινη", "nominative", "feminine"), markedCell("κόκκινο", "nominative", "neuter"), "red"],
-					[markedCell("μπλε", "nominative", "masculine", false, "deviate"), markedCell("μπλε", "nominative", "feminine", false, "deviate"), markedCell("μπλε", "nominative", "neuter", false, "deviate"), "blue"],
+					[markedCell("κόκκινος", "nominative", "masculine", false), markedCell("κόκκινη", "nominative", "feminine"), markedCell("κόκκινο", "nominative", "neuter"), "red"],
+					[markedCell("μπλε", "nominative", "masculine", false), markedCell("μπλε", "nominative", "feminine", false), markedCell("μπλε", "nominative", "neuter", false), "blue"],
 					[markedCell("ροζ", "nominative", "masculine"), markedCell("ροζ", "nominative", "feminine"), markedCell("ροζ", "nominative", "neuter"), "pink"],
 					[markedCell("γκρι", "nominative", "masculine"), markedCell("γκρι", "nominative", "feminine"), markedCell("γκρι", "nominative", "neuter"), "grey"],
 					[markedCell("καφέ", "nominative", "masculine"), markedCell("καφέ", "nominative", "feminine"), markedCell("καφέ", "nominative", "neuter"), "brown"],
@@ -206,7 +232,10 @@ export const AGREEMENT_GUIDE: Guide = {
 			id: "adjective-alone",
 			title: "An adjective without its noun",
 			tone: "olive",
-			rule: "Leave the noun out and the article and adjective stand for it, as English says _the red one_. They keep the gender and job of the thing you mean.\n\nAfter θέλω (I want), the thing wanted is the Target, what the action is done to, so they take the Target form.",
+			rule: [
+				"Leave the noun out and the article and adjective stand for it, as English says _the red one_. They keep the gender and job of the thing you mean.",
+				"After θέλω (I want), the thing wanted is the Target, what the action is done to, so they take the Target form.",
+			],
 			examples: [
 				{
 					greek: "Θέλω το κόκκινο.",
@@ -238,7 +267,15 @@ export const AGREEMENT_GUIDE: Guide = {
 			id: "describing-yourself",
 			title: "Describing yourself with -μένος",
 			tone: "terracotta",
-			rule: "Words in -μένος describe a state, such as tired or married, and change like any adjective in -ος, -η, -ο. After είμαι (be) they match whoever is described:\n\n- -ος for a man\n- -η for a woman\n- -οι for men, or a mixed group\n- -ες for women",
+			rule: [
+				"Words in -μένος describe a state, such as tired or married, and change like any adjective in -ος, -η, -ο. After είμαι (be) they match whoever is described:",
+				[
+					"-ος for a man",
+					"-η for a woman",
+					"-οι for men, or a mixed group",
+					"-ες for women",
+				],
+			],
 			table: {
 				columns: [
 					{ label: "A man", greek: true },
@@ -246,10 +283,10 @@ export const AGREEMENT_GUIDE: Guide = {
 					{ label: "Meaning" },
 				],
 				rows: [
-					[markedCell("κουρασμένος", "nominative", "masculine"), markedCell("κουρασμένη", "nominative", "feminine", false, "deviate"), "tired"],
-					[markedCell("κρυωμένος", "nominative", "masculine"), markedCell("κρυωμένη", "nominative", "feminine", false, "deviate"), "having a cold"],
-					[markedCell("παντρεμένος", "nominative", "masculine"), markedCell("παντρεμένη", "nominative", "feminine", false, "deviate"), "married"],
-					[markedCell("απασχολημένος", "nominative", "masculine"), markedCell("απασχολημένη", "nominative", "feminine", false, "deviate"), "busy"],
+					[markedCell("κουρασμένος", "nominative", "masculine"), markedCell("κουρασμένη", "nominative", "feminine", false), "tired"],
+					[markedCell("κρυωμένος", "nominative", "masculine"), markedCell("κρυωμένη", "nominative", "feminine", false), "having a cold"],
+					[markedCell("παντρεμένος", "nominative", "masculine"), markedCell("παντρεμένη", "nominative", "feminine", false), "married"],
+					[markedCell("απασχολημένος", "nominative", "masculine"), markedCell("απασχολημένη", "nominative", "feminine", false), "busy"],
 				],
 			},
 			examples: [
@@ -288,7 +325,13 @@ export const AGREEMENT_GUIDE: Guide = {
 			id: "numbers",
 			title: "Numbers that agree",
 			tone: "olive",
-			rule: "Every noun is masculine, feminine or neuter, and a few numbers change to match it. Up to a hundred, only one, three and four change with gender; the rest keep one form.\n\n- One has a form for each gender.\n- Three and four share one form for masculine and feminine, and have another for neuter.",
+			rule: [
+				"Every noun is masculine, feminine or neuter, and a few numbers change to match it. Up to a hundred, only one, three and four change with gender; the rest keep one form.",
+				[
+					"One has a form for each gender.",
+					"Three and four share one form for masculine and feminine, and have another for neuter.",
+				],
+			],
 			table: {
 				columns: [
 					{ label: "Masculine", greek: true },
@@ -297,7 +340,7 @@ export const AGREEMENT_GUIDE: Guide = {
 					{ label: "Number" },
 				],
 				rows: [
-					[markedCell("ένας", "nominative", "masculine"), markedCell("μία", "nominative", "feminine"), markedCell("ένα", "nominative", "neuter"), "one"],
+					[markedCell("ένας", "nominative", "masculine", undefined, "anchor"), markedCell("μία", "nominative", "feminine", undefined, "anchor"), markedCell("ένα", "nominative", "neuter", undefined, "anchor"), "one"],
 					[
 						markedCell("τρεις", "nominative", "masculine", true),
 						markedCell("τρεις", "nominative", "feminine", true),
@@ -383,7 +426,15 @@ export const AGREEMENT_GUIDE: Guide = {
 			id: "gender-endings",
 			title: "Gender from the ending",
 			tone: "honey",
-			rule: "Every Greek noun is masculine, feminine or neuter, and its article shows which: ο, η or το. Most nouns also give their gender away in their ending:\n\n- -ος and the other endings in -ς: mostly masculine\n- -α and -η: mostly feminine\n- -ο, -ι and -μα: neuter\n\nThe exceptions, in the last two rows, are everyday words, so learn each noun with its article.",
+			rule: [
+				"Every Greek noun is masculine, feminine or neuter, and its article shows which: ο, η or το. Most nouns also give their gender away in their ending:",
+				[
+					"-ος and the other endings in -ς: mostly masculine",
+					"-α and -η: mostly feminine",
+					"-ο, -ι and -μα: neuter",
+				],
+				"The exceptions, in the last two rows, are everyday words, so learn each noun with its article.",
+			],
 			table: {
 				columns: [
 					{ label: "Ending" },
@@ -406,12 +457,12 @@ export const AGREEMENT_GUIDE: Guide = {
 					["-ο, -ι", cellWith("το βιβλίο · το παιδί", mark("το βιβλίο", "nominative", "neuter"), mark("το παιδί", "nominative", "neuter")), "neuter"],
 					["-μα", cellWith("το όνομα · το χρώμα", mark("το όνομα", "nominative", "neuter"), mark("το χρώμα", "nominative", "neuter")), "neuter"],
 					[
-						{ text: "-ος, but feminine", weight: "deviate" },
+						{ text: "-ος, but feminine" },
 						cellWith("η Κύπρος · η Αίγυπτος", mark("η Κύπρος", "nominative", "feminine"), mark("η Αίγυπτος", "nominative", "feminine")),
 						"learn each",
 					],
 					[
-						{ text: "-ος, -ας, -α, but neuter", weight: "deviate" },
+						{ text: "-ος, -ας, -α, but neuter" },
 						cellWith(
 							"το λάθος · το κρέας · το γάλα",
 							mark("το λάθος", "nominative", "neuter"),
@@ -462,7 +513,14 @@ export const AGREEMENT_GUIDE: Guide = {
 			id: "gender-families",
 			title: "Guessing gender from the word",
 			tone: "ocean",
-			rule: "Every noun is masculine, feminine or neuter, shown by its article: ο, η or το. Some families of words share a gender, so knowing the family tells you the article. A family can be:\n\n- an ending: -ση and -ότητα make a noun feminine, -είο makes it neuter\n- a kind of word: countries are mostly feminine, languages are neuter plural, meals are neuter\n\nThe table lists the common families.",
+			rule: [
+				"Every noun is masculine, feminine or neuter, shown by its article: ο, η or το. Some families of words share a gender, so knowing the family tells you the article. A family can be:",
+				[
+					"an ending: -ση and -ότητα make a noun feminine, -είο makes it neuter",
+					"a kind of word: countries are mostly feminine, languages are neuter plural, meals are neuter",
+				],
+				"The table lists the common families.",
+			],
 			table: {
 				columns: [
 					{ label: "Examples", greek: true },
@@ -536,7 +594,13 @@ export const AGREEMENT_GUIDE: Guide = {
 			id: "gender-pairs",
 			title: "Pairs of people",
 			tone: "stone",
-			rule: "Many words for people come in a masculine and feminine pair. The feminine ending varies, so learn both:\n\n- -ος becomes -α.\n- -ας becomes -ισσα or -ίδα.",
+			rule: [
+				"Many words for people come in a masculine and feminine pair. The feminine ending varies, so learn both:",
+				[
+					"-ος becomes -α.",
+					"-ας becomes -ισσα or -ίδα.",
+				],
+			],
 			table: {
 				columns: [
 					{ label: "Masculine", greek: true },
@@ -545,8 +609,8 @@ export const AGREEMENT_GUIDE: Guide = {
 				],
 				rows: [
 					[markedCell("ο θείος", "nominative", "masculine"), markedCell("η θεία", "nominative", "feminine"), "uncle, aunt"],
-					[markedCell("ο γείτονας", "nominative", "masculine"), markedCell("η γειτόνισσα", "nominative", "feminine", false, "deviate"), "neighbour"],
-					[markedCell("ο Έλληνας", "nominative", "masculine"), markedCell("η Ελληνίδα", "nominative", "feminine", false, "deviate"), "a Greek"],
+					[markedCell("ο γείτονας", "nominative", "masculine"), markedCell("η γειτόνισσα", "nominative", "feminine", false), "neighbour"],
+					[markedCell("ο Έλληνας", "nominative", "masculine"), markedCell("η Ελληνίδα", "nominative", "feminine", false), "a Greek"],
 					[markedCell("ο Κύπριος", "nominative", "masculine"), markedCell("η Κύπρια", "nominative", "feminine"), "a Cypriot"],
 				],
 			},
@@ -576,7 +640,14 @@ export const AGREEMENT_GUIDE: Guide = {
 			id: "small-big",
 			title: "Endings that make small or big",
 			tone: "terracotta",
-			rule: "Greek adds an ending to a noun to make it small or big, and the ending can change its gender.\n\n- -άκι makes it small, and neuter whatever it was before.\n- -άκος makes it small, and keeps a masculine noun masculine.\n- -άρα makes it big, or more so, and feminine.",
+			rule: [
+				"Greek adds an ending to a noun to make it small or big, and the ending can change its gender.",
+				[
+					"-άκι makes it small, and neuter whatever it was before.",
+					"-άκος makes it small, and keeps a masculine noun masculine.",
+					"-άρα makes it big, or more so, and feminine.",
+				],
+			],
 			table: {
 				columns: [
 					{ label: "Word", greek: true },
@@ -584,11 +655,11 @@ export const AGREEMENT_GUIDE: Guide = {
 					{ label: "Meaning" },
 				],
 				rows: [
-					[markedCell("ο ελέφαντας", "nominative", "masculine"), markedCell("το ελεφαντάκι", "nominative", "neuter", false, "deviate"), "a little elephant"],
+					[markedCell("ο ελέφαντας", "nominative", "masculine"), markedCell("το ελεφαντάκι", "nominative", "neuter", false), "a little elephant"],
 					[markedCell("το κρεβάτι", "nominative", "neuter"), markedCell("το κρεβατάκι", "nominative", "neuter"), "a cot"],
 					[markedCell("ο ύπνος", "nominative", "masculine"), markedCell("ο υπνάκος", "nominative", "masculine"), "a nap"],
 					[markedCell("η φωνή", "nominative", "feminine"), markedCell("η φωνάρα", "nominative", "feminine"), "a big, loud voice"],
-					[markedCell("το ψώνιο", "nominative", "neuter"), markedCell("η ψωνάρα", "nominative", "feminine", false, "deviate"), "a real show-off (slang)"],
+					[markedCell("το ψώνιο", "nominative", "neuter"), markedCell("η ψωνάρα", "nominative", "feminine", false), "a real show-off (slang)"],
 				],
 			},
 			examples: [

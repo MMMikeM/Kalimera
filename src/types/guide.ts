@@ -44,13 +44,20 @@ export interface GuideExample {
 }
 
 /**
+ * English prose for a guide. A string is one paragraph; an array holds blocks in
+ * order, where each string is a paragraph and each nested array is a bulleted
+ * list. Greek runs inside are rendered as Greek automatically, and _word_ is
+ * emphasised.
+ */
+export type GuideText = string | (string | string[])[];
+
+/**
  * An exception, extension or side rule, kept apart from the section's core rule
  * so the rule stays readable on its own. Its examples illustrate it alone.
  */
 export interface GuideDetail {
 	label: string;
-	/** English prose, formatted like `rule`. */
-	text: string;
+	text: GuideText;
 	examples?: GuideExample[];
 }
 
@@ -59,17 +66,15 @@ export interface GuideSection {
 	title: string;
 	/**
 	 * The core rule, readable by someone who lands on this section alone: it names
-	 * what it teaches and defines the terms it uses. English prose; Greek runs
-	 * inside it are rendered as Greek automatically. A blank line starts a new
-	 * paragraph, lines starting "- " form a list, and _word_ is emphasised.
+	 * what it teaches and defines the terms it uses.
 	 */
-	rule: string;
+	rule: GuideText;
 	table?: GuideTable;
 	/** Examples of the core rule. */
 	examples?: GuideExample[];
 	details?: GuideDetail[];
 	/** A look-alike that lives elsewhere: `"<section>"` in this guide or `"<guide>/<section>"`. */
-	confuse?: { text: string; section: string };
+	confuse?: { text: GuideText; section: string };
 	/** Colour of the section's header. Omit it and the section takes the next colour in its guide's cycle. */
 	tone?: GuideTone;
 	/** Drill ids from the practice catalogue; empty when no drill covers the section yet. */

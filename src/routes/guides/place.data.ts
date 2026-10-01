@@ -12,7 +12,10 @@ export const PLACE_GUIDE: Guide = {
 		{
 			id: "se-contractions",
 			title: "σε joined to the article",
-			rule: "σε means at, in or to. Before the article, the word for “the”, σε drops its ε and joins onto it as one word.\n\nThe noun after σε takes the Target form, the one for what an action is done to. So σε joins τον and τη, never ο and η.",
+			rule: [
+				"σε means at, in or to. Before the article, the word for “the”, σε drops its ε and joins onto it as one word.",
+				"The noun after σε takes the Target form, the one for what an action is done to. So σε joins τον and τη, never ο and η.",
+			],
 			table: {
 				columns: [
 					{ label: "σε +", greek: true },
@@ -27,7 +30,7 @@ export const PLACE_GUIDE: Guide = {
 					["τα → στα", markedCell("στα εστιατόρια", "accusative", "neuter", true), "to the restaurants"],
 					["τις → στις", markedCell("στις τρεις", "accusative", "feminine", true), "at three o'clock"],
 					["τους → στους", markedCell("στους δρόμους", "accusative", "masculine", true), "in the streets"],
-					[{ text: "μια → σε μια", weight: "deviate" }, cellWith("σε μια λίμνη", mark("μια λίμνη", "accusative", "feminine")), "at a lake"],
+					[{ text: "μια → σε μια" }, cellWith("σε μια λίμνη", mark("μια λίμνη", "accusative", "feminine")), "at a lake"],
 				],
 			},
 			examples: [
@@ -81,7 +84,10 @@ export const PLACE_GUIDE: Guide = {
 		{
 			id: "position",
 			title: "Next to, behind, far from",
-			rule: "A position word says where something is, such as next to or behind.\n\nBefore a place, it needs a partner: σε or από. Each word has its own, so learn the two together. The table gives the common ones, the σε words first.",
+			rule: [
+				"A position word says where something is, such as next to or behind.",
+				"Before a place, it needs a partner: σε or από. Each word has its own, so learn the two together. The table gives the common ones, the σε words first.",
+			],
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -131,7 +137,10 @@ export const PLACE_GUIDE: Guide = {
 				},
 				{
 					label: "Near and far, with no place after",
-					text: "With no place after it, a position word needs no partner: κοντά alone means nearby.\n\nTo ask how far away something is, use απέχει, is distant, with από for the starting point.",
+					text: [
+						"With no place after it, a position word needs no partner: κοντά alone means nearby.",
+						"To ask how far away something is, use απέχει, is distant, with από for the starting point.",
+					],
 					examples: [
 						{
 							greek: "Ποια ταβέρνα είναι κοντά;",
@@ -155,7 +164,14 @@ export const PLACE_GUIDE: Guide = {
 		{
 			id: "purpose",
 			title: "για, από and με",
-			rule: "Three small words link a noun into the sentence:\n\n- για gives the purpose.\n- από gives where from.\n- με gives how, or who with.",
+			rule: [
+				"Three small words link a noun into the sentence:",
+				[
+					"για gives the purpose.",
+					"από gives where from.",
+					"με gives how, or who with.",
+				],
+			],
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -208,7 +224,10 @@ export const PLACE_GUIDE: Guide = {
 		{
 			id: "position-pairs",
 			title: "Inside and outside, left and right",
-			rule: "A position word says where something is, such as inside or left. Most come in pairs of opposites, so learn them in pairs.\n\nOn their own, they need nothing added.",
+			rule: [
+				"A position word says where something is, such as inside or left. Most come in pairs of opposites, so learn them in pairs.",
+				"On their own, they need nothing added.",
+			],
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -259,7 +278,16 @@ export const PLACE_GUIDE: Guide = {
 		{
 			id: "without-until",
 			title: "Without, until, towards, like",
-			rule: "Four more small words link a noun into the sentence, the way σε and από do:\n\n- χωρίς, without\n- μέχρι, until\n- προς, towards\n- σαν, like\n\nWith an article, the noun after them takes the Target form, the one for what an action is done to.",
+			rule: [
+				"Four more small words link a noun into the sentence, the way σε and από do:",
+				[
+					"χωρίς, without",
+					"μέχρι, until",
+					"προς, towards",
+					"σαν, like",
+				],
+				"With an article, the noun after them takes the Target form, the one for what an action is done to.",
+			],
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },

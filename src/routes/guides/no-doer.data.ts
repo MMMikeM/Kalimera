@@ -12,7 +12,11 @@ export const NO_DOER_GUIDE: Guide = {
 		{
 			id: "there-is",
 			title: "υπάρχει for there is and there are",
-			rule: "υπάρχει means there is and υπάρχουν means there are. The verb matches what exists: υπάρχει for one thing, υπάρχουν for more than one.\n\nWhat exists stays in its plain form, the one in the dictionary (also the Doer form). Nothing is done to it, so it doesn't change.\n\nPut δεν in front for there isn't, and θα for there will be.",
+			rule: [
+				"υπάρχει means there is and υπάρχουν means there are. The verb matches what exists: υπάρχει for one thing, υπάρχουν for more than one.",
+				"What exists stays in its plain form, the one in the dictionary (also the Doer form). Nothing is done to it, so it doesn't change.",
+				"Put δεν in front for there isn't, and θα for there will be.",
+			],
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -20,18 +24,18 @@ export const NO_DOER_GUIDE: Guide = {
 				],
 				rows: [
 					[
-						{ text: "υπάρχει ένα βιβλιοπωλείο", weight: "anchor", marks: [mark("ένα βιβλιοπωλείο", "nominative", "neuter")] },
+						{ text: "υπάρχει ένα βιβλιοπωλείο", marks: [mark("ένα βιβλιοπωλείο", "nominative", "neuter")] },
 						"there is a bookshop",
 					],
 					[
-						{ text: "υπάρχουν πολλά πάρκα", weight: "deviate", marks: [mark("πολλά πάρκα", "nominative", "neuter", true)] },
+						{ text: "υπάρχουν πολλά πάρκα", marks: [mark("πολλά πάρκα", "nominative", "neuter", true)] },
 						"there are many parks",
 					],
 					[cellWith("δεν υπάρχει βιβλιοθήκη", mark("βιβλιοθήκη", "nominative", "feminine")), "there's no library"],
 					[cellWith("θα υπάρχουν πολλά πάρκα", mark("πολλά πάρκα", "nominative", "neuter", true)), "there will be many parks"],
 					[cellWith("υπάρχουν Άγγλοι", mark("Άγγλοι", "nominative", "masculine", true)), "there are English people"],
 					[
-						{ text: "έχει Άγγλους", weight: "deviate", marks: [mark("Άγγλους", "accusative", "masculine", true)] },
+						{ text: "έχει Άγγλους", marks: [mark("Άγγλους", "accusative", "masculine", true)] },
 						"there are English people",
 					],
 				],
@@ -51,7 +55,10 @@ export const NO_DOER_GUIDE: Guide = {
 			details: [
 				{
 					label: "έχει in speech",
-					text: "In speech έχει often does the same job as υπάρχει. It stays έχει even for more than one.\n\nWord for word, έχει is has, so what exists changes to the Target form, the form for what an action is done to.",
+					text: [
+						"In speech έχει often does the same job as υπάρχει. It stays έχει even for more than one.",
+						"Word for word, έχει is has, so what exists changes to the Target form, the form for what an action is done to.",
+					],
 					examples: [
 						{
 							greek: "Έχει Άγγλους στην Πάφο.",
@@ -74,7 +81,15 @@ export const NO_DOER_GUIDE: Guide = {
 		{
 			id: "weather",
 			title: "Weather with κάνει, βρέχει and έχει",
-			rule: "Greek weather sentences have no word for it: the verb stands alone in its he, she, it form. There are three ways to build one:\n\n- For heat and cold: κάνει with a noun.\n- For rain and snow: a verb of their own.\n- Also for rain and snow: έχει with the noun, meaning there is.\n\nWord for word, κάνει is makes and έχει is has, so the noun after them is in the Target form, the form for what an action is done to.",
+			rule: [
+				"Greek weather sentences have no word for it: the verb stands alone in its he, she, it form. There are three ways to build one:",
+				[
+					"For heat and cold: κάνει with a noun.",
+					"For rain and snow: a verb of their own.",
+					"Also for rain and snow: έχει with the noun, meaning there is.",
+				],
+				"Word for word, κάνει is makes and έχει is has, so the noun after them is in the Target form, the form for what an action is done to.",
+			],
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -114,7 +129,10 @@ export const NO_DOER_GUIDE: Guide = {
 		{
 			id: "must",
 			title: "πρέπει να",
-			rule: "πρέπει να means must or have to. πρέπει never changes for person; the verb after να does.\n\nFor one action, use the short form, the one built on the simple past's stem (έφαγα, να φάω). For something ongoing or habitual, use the present.",
+			rule: [
+				"πρέπει να means must or have to. πρέπει never changes for person; the verb after να does.",
+				"For one action, use the short form, the one built on the simple past's stem (έφαγα, να φάω). For something ongoing or habitual, use the present.",
+			],
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -167,7 +185,10 @@ export const NO_DOER_GUIDE: Guide = {
 			details: [
 				{
 					label: "Wishing for what isn't so",
-					text: "With να and a past form, θα ήθελα wishes for what isn't so.\n\nAfter ήμουν, I was (a form of είμαι), the noun says what someone is. Nothing is done to it, so it stays in its plain form, the one in the dictionary (also the Doer form).",
+					text: [
+						"With να and a past form, θα ήθελα wishes for what isn't so.",
+						"After ήμουν, I was (a form of είμαι), the noun says what someone is. Nothing is done to it, so it stays in its plain form, the one in the dictionary (also the Doer form).",
+					],
 					examples: [
 						{
 							greek: "Θα ήθελα να ήμουν αρχιτέκτονας.",
@@ -190,14 +211,17 @@ export const NO_DOER_GUIDE: Guide = {
 		{
 			id: "its-hard",
 			title: "είναι δύσκολο να and other it's frames",
-			rule: "Greek has no word for the it in it's hard. είναι stands alone and takes the -ο form of the adjective, the form it has beside a το noun.\n\nAdd να and a verb to say what is hard.",
+			rule: [
+				"Greek has no word for the it in it's hard. είναι stands alone and takes the -ο form of the adjective, the form it has beside a το noun.",
+				"Add να and a verb to say what is hard.",
+			],
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
 					{ label: "Meaning" },
 				],
 				rows: [
-					[{ text: "είναι δύσκολο", weight: "anchor", marks: [mark("δύσκολο", "nominative", "neuter")] }, "it's hard"],
+					[{ text: "είναι δύσκολο", marks: [mark("δύσκολο", "nominative", "neuter")] }, "it's hard"],
 					[cellWith("είναι εύκολο", mark("εύκολο", "nominative", "neuter")), "it's easy"],
 					[cellWith("είναι τρελό", mark("τρελό", "nominative", "neuter")), "it's crazy"],
 				],

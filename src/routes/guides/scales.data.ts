@@ -12,7 +12,10 @@ export const SCALES_GUIDE: Guide = {
 		{
 			id: "frequency",
 			title: "How often, from ποτέ to πάντα",
-			rule: "Frequency words say how often something happens. The table lists them as a ladder, from never to always.\n\nPick the rung you mean. It usually sits just before the verb.",
+			rule: [
+				"Frequency words say how often something happens. The table lists them as a ladder, from never to always.",
+				"Pick the rung you mean. It usually sits just before the verb.",
+			],
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -50,7 +53,14 @@ export const SCALES_GUIDE: Guide = {
 				},
 			],
 			confuse: {
-				text: "Watch where the stress falls.\n\n- ποτέ, stressed on the end, means never.\n- πότε, stressed on the start, asks when.\n- Doubled, πότε πότε means now and then.",
+				text: [
+					"Watch where the stress falls.",
+					[
+						"ποτέ, stressed on the end, means never.",
+						"πότε, stressed on the start, asks when.",
+						"Doubled, πότε πότε means now and then.",
+					],
+				],
 				section: "joining/when-why",
 			},
 			drills: [],
@@ -66,7 +76,11 @@ export const SCALES_GUIDE: Guide = {
 		{
 			id: "quantity",
 			title: "How many, from none to many",
-			rule: "To say how many of something there are, use υπάρχει, there is, for one thing and υπάρχουν, there are, for more than one. Then pick a quantity word from the table, which runs from none to many.\n\nEvery quantity word but καθόλου changes its ending to match the noun's gender and number, as an adjective does.\n\nThe noun after υπάρχει or υπάρχουν isn't doing anything, so it stays in the plain form (the Doer form).",
+			rule: [
+				"To say how many of something there are, use υπάρχει, there is, for one thing and υπάρχουν, there are, for more than one. Then pick a quantity word from the table, which runs from none to many.",
+				"Every quantity word but καθόλου changes its ending to match the noun's gender and number, as an adjective does.",
+				"The noun after υπάρχει or υπάρχουν isn't doing anything, so it stays in the plain form (the Doer form).",
+			],
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -103,7 +117,10 @@ export const SCALES_GUIDE: Guide = {
 				},
 				{
 					label: "λίγος and λίγο",
-					text: "Before a singular noun, λίγος means a little rather than a few.\n\nOn its own, λίγο means a bit: σε λίγο, in a bit.",
+					text: [
+						"Before a singular noun, λίγος means a little rather than a few.",
+						"On its own, λίγο means a bit: σε λίγο, in a bit.",
+					],
 					examples: [
 						{
 							greek: "Ας κάνουμε λοιπόν λίγη εξάσκηση μαζί.",
@@ -126,17 +143,24 @@ export const SCALES_GUIDE: Guide = {
 		{
 			id: "poly-polla",
 			title: "πολύ or πολλά?",
-			rule: "πολύ works two ways, depending on what it sits beside.\n\n- Beside an adjective or a verb, πολύ means very or a lot, and it never changes.\n- Before a noun, it is a different word, the adjective πολύς, a lot of or many. It matches the noun's gender and number, singular included.\n\nThe adjective's forms are πολύς, πολλή, πολύ, and in the plural πολλοί, πολλές, πολλά.",
+			rule: [
+				"πολύ works two ways, depending on what it sits beside.",
+				[
+					"Beside an adjective or a verb, πολύ means very or a lot, and it never changes.",
+					"Before a noun, it is a different word, the adjective πολύς, a lot of or many. It matches the noun's gender and number, singular included.",
+				],
+				"The adjective's forms are πολύς, πολλή, πολύ, and in the plural πολλοί, πολλές, πολλά.",
+			],
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
 					{ label: "Meaning" },
 				],
 				rows: [
-					[{ text: "πολύ καλός", weight: "anchor" }, "very good"],
-					[{ text: "δουλεύω πολύ", weight: "anchor" }, "I work a lot"],
+					["πολύ καλός", "very good"],
+					["δουλεύω πολύ", "I work a lot"],
 					[markedCell("πολύ κόσμο", "accusative", "masculine"), "a lot of people"],
-					[markedCell("πολλή δουλειά", "accusative", "feminine", false, "deviate"), "a lot of work"],
+					[markedCell("πολλή δουλειά", "accusative", "feminine"), "a lot of work"],
 					[markedCell("πολλοί άνθρωποι", "nominative", "masculine", true), "many people"],
 					[markedCell("πολλές φορές", "accusative", "feminine", true), "many times"],
 					[markedCell("πολλά δέντρα", "nominative", "neuter", true), "many trees"],
@@ -157,7 +181,13 @@ export const SCALES_GUIDE: Guide = {
 			details: [
 				{
 					label: "Forms spelt πολύ",
-					text: "Two forms of the adjective are spelt πολύ, just like the word that never changes:\n\n- The neuter form, for it-words.\n- The masculine Target form, for a he-word that the action is done to.",
+					text: [
+						"Two forms of the adjective are spelt πολύ, just like the word that never changes:",
+						[
+							"The neuter form, for it-words.",
+							"The masculine Target form, for a he-word that the action is done to.",
+						],
+					],
 					examples: [
 						{
 							greek: "Πίνω πολύ νερό το καλοκαίρι.",
@@ -189,7 +219,18 @@ export const SCALES_GUIDE: Guide = {
 		{
 			id: "negatives",
 			title: "Saying not twice with δεν",
-			rule: "δεν means not. It goes before the verb and anything attached to it, such as θα or a short object word.\n\nGreek says not twice. With a nothing-word, the verb still takes δεν:\n\n- τίποτα, nothing\n- πουθενά, nowhere\n- κανένας, no one\n- ποτέ, never\n- καθόλου, not at all\n\nSo δεν πήγα πουθενά is literally I didn't go nowhere, and it is correct.",
+			rule: [
+				"δεν means not. It goes before the verb and anything attached to it, such as θα or a short object word.",
+				"Greek says not twice. With a nothing-word, the verb still takes δεν:",
+				[
+					"τίποτα, nothing",
+					"πουθενά, nowhere",
+					"κανένας, no one",
+					"ποτέ, never",
+					"καθόλου, not at all",
+				],
+				"So δεν πήγα πουθενά is literally I didn't go nowhere, and it is correct.",
+			],
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -225,7 +266,13 @@ export const SCALES_GUIDE: Guide = {
 				},
 				{
 					label: "όχι",
-					text: "Use όχι instead of δεν:\n\n- For not before an adverb, an adjective or a noun.\n- For no on its own.",
+					text: [
+						"Use όχι instead of δεν:",
+						[
+							"For not before an adverb, an adjective or a noun.",
+							"For no on its own.",
+						],
+					],
 					examples: [
 						{ greek: "Όχι πολύ καλά.", english: "Not very well." },
 						{ greek: "Όχι, ευχαριστώ.", english: "No, thank you." },
@@ -233,7 +280,14 @@ export const SCALES_GUIDE: Guide = {
 				},
 				{
 					label: "μην",
-					text: "Use μην instead of δεν:\n\n- After να.\n- After ας.\n- To forbid something.",
+					text: [
+						"Use μην instead of δεν:",
+						[
+							"After να.",
+							"After ας.",
+							"To forbid something.",
+						],
+					],
 					examples: [
 						{ greek: "Προσπαθώ να μην τρώω γλυκά.", english: "I try not to eat sweets." },
 						{ greek: "Ας μην πάμε σήμερα.", english: "Let's not go today." },
@@ -242,7 +296,10 @@ export const SCALES_GUIDE: Guide = {
 				},
 				{
 					label: "δε or δεν, μη or μην",
-					text: "δεν and μην keep their -ν before a vowel and before κ, π, τ, ξ, ψ, μπ, ντ, γκ, τσ and τζ. Before other consonants they often drop it: δεν πάω, but δε θέλω.\n\nThis is the same rule as the article τη or την. Keeping the -ν anyway is widely accepted, especially with δεν.",
+					text: [
+						"δεν and μην keep their -ν before a vowel and before κ, π, τ, ξ, ψ, μπ, ντ, γκ, τσ and τζ. Before other consonants they often drop it: δεν πάω, but δε θέλω.",
+						"This is the same rule as the article τη or την. Keeping the -ν anyway is widely accepted, especially with δεν.",
+					],
 				},
 			],
 			drills: [],
@@ -264,7 +321,10 @@ export const SCALES_GUIDE: Guide = {
 		{
 			id: "comparing",
 			title: "Comparing with πιο … από",
-			rule: "To compare, put πιο, more, before the adjective and από, than, before what you compare it with.\n\nThe adjective still matches its noun's gender and number: πιο μεγάλος, πιο μεγάλη, πιο μεγάλο.",
+			rule: [
+				"To compare, put πιο, more, before the adjective and από, than, before what you compare it with.",
+				"The adjective still matches its noun's gender and number: πιο μεγάλος, πιο μεγάλη, πιο μεγάλο.",
+			],
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -275,8 +335,8 @@ export const SCALES_GUIDE: Guide = {
 					["πιο ήσυχος από", "quieter than"],
 					["ψηλότερος", "taller"],
 					["παλιότερος", "older, of things"],
-					[{ text: "καλύτερος", weight: "deviate" }, "better"],
-					[{ text: "χειρότερος", weight: "deviate" }, "worse"],
+					["καλύτερος", "better"],
+					["χειρότερος", "worse"],
 					[markedCell("ο πιο όμορφος", "nominative", "masculine"), "the most beautiful"],
 					[markedCell("ο καλύτερος", "nominative", "masculine"), "the best"],
 					[markedCell("οι περισσότεροι", "nominative", "masculine", true), "most people"],
@@ -332,7 +392,16 @@ export const SCALES_GUIDE: Guide = {
 		{
 			id: "some-every",
 			title: "Some, none, every",
-			rule: "Greek lines up its words for things, people, places and times in sets of three:\n\n- A some-word: something, someone.\n- A none-word: nothing, no one.\n- An every-word: everything, everyone.\n\nThe table has one row per set. Most some-words start κάπ-.\n\nIn a statement the none-words need δεν, not, before the verb, because Greek says not twice.",
+			rule: [
+				"Greek lines up its words for things, people, places and times in sets of three:",
+				[
+					"A some-word: something, someone.",
+					"A none-word: nothing, no one.",
+					"An every-word: everything, everyone.",
+				],
+				"The table has one row per set. Most some-words start κάπ-.",
+				"In a statement the none-words need δεν, not, before the verb, because Greek says not twice.",
+			],
 			table: {
 				columns: [
 					{ label: "Some", greek: true },
@@ -355,7 +424,10 @@ export const SCALES_GUIDE: Guide = {
 			details: [
 				{
 					label: "κάποιος and κανένας",
-					text: "κάποιος and κανένας change like adjectives: κάποια, κάποιο; καμία, κανένα.\n\nAs the Target, the form for someone the action is done to, they are κάποιον and κανέναν.",
+					text: [
+						"κάποιος and κανένας change like adjectives: κάποια, κάποιο; καμία, κανένα.",
+						"As the Target, the form for someone the action is done to, they are κάποιον and κανέναν.",
+					],
 					examples: [
 						{
 							greek: "Περιμένω κάποιον.",
@@ -375,7 +447,14 @@ export const SCALES_GUIDE: Guide = {
 				},
 				{
 					label: "Whatever, whoever, wherever",
-					text: "Greek has a word for each:\n\n- ό,τι, whatever\n- όποιος, whoever\n- όπου, wherever",
+					text: [
+						"Greek has a word for each:",
+						[
+							"ό,τι, whatever",
+							"όποιος, whoever",
+							"όπου, wherever",
+						],
+					],
 				},
 			],
 			drills: [],
@@ -391,7 +470,10 @@ export const SCALES_GUIDE: Guide = {
 		{
 			id: "all-whole",
 			title: "όλος for all and the whole",
-			rule: "όλος means all or the whole. It goes before the article, and the article stays.\n\nIt matches its noun like an adjective: όλος, όλη, όλο, and in the plural όλοι, όλες, όλα.",
+			rule: [
+				"όλος means all or the whole. It goes before the article, and the article stays.",
+				"It matches its noun like an adjective: όλος, όλη, όλο, and in the plural όλοι, όλες, όλα.",
+			],
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },

@@ -16,7 +16,15 @@ export const JOINING_GUIDE: Guide = {
 		{
 			id: "when-why",
 			title: "Ask, link, point back",
-			rule: "The words for when, why, where and how come in rows of three.\n\n- Ask: the question word, such as when?\n- Link: joins two ideas inside one sentence, as in when I was a child.\n- Point back: refers to what was just said, such as then.\n\nLearn each row together; the table gives all four.",
+			rule: [
+				"The words for when, why, where and how come in rows of three.",
+				[
+					"Ask: the question word, such as when?",
+					"Link: joins two ideas inside one sentence, as in when I was a child.",
+					"Point back: refers to what was just said, such as then.",
+				],
+				"Learn each row together; the table gives all four.",
+			],
 			table: {
 				columns: [
 					{ label: "Ask", greek: true, tone: "honey" },
@@ -25,10 +33,10 @@ export const JOINING_GUIDE: Guide = {
 					{ label: "Meaning" },
 				],
 				rows: [
-					["πότε;", { text: "όταν", weight: "anchor" }, "τότε", "when? · when · then"],
-					["γιατί;", { text: "επειδή", weight: "anchor" }, "γι' αυτό", "why? · because · that's why"],
-					["πού;", { text: "όπου", weight: "anchor" }, "εκεί", "where? · where · there"],
-					["πώς;", { text: "όπως", weight: "anchor" }, "έτσι", "how? · as · like this"],
+					["πότε;", "όταν", "τότε", "when? · when · then"],
+					["γιατί;", "επειδή", "γι' αυτό", "why? · because · that's why"],
+					["πού;", "όπου", "εκεί", "where? · where · there"],
+					["πώς;", "όπως", "έτσι", "how? · as · like this"],
 				],
 			},
 			examples: [
@@ -59,7 +67,10 @@ export const JOINING_GUIDE: Guide = {
 		{
 			id: "if-then",
 			title: "αν … τότε",
-			rule: "αν, if, opens a condition: what has to be true first. τότε, then, picks up the result.\n\nτότε can be left out, just as then can in English.",
+			rule: [
+				"αν, if, opens a condition: what has to be true first. τότε, then, picks up the result.",
+				"τότε can be left out, just as then can in English.",
+			],
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -85,7 +96,15 @@ export const JOINING_GUIDE: Guide = {
 		{
 			id: "thinking",
 			title: "νομίζω ότι, ίσως and μήπως",
-			rule: "Three ways to say what you think or are unsure of.\n\n- νομίζω (I think) and πιστεύω (I believe) take ότι, that, before a full sentence.\n- ίσως, maybe, goes in front of whatever you are unsure of, in a statement.\n- μήπως asks softly, by any chance, in a question.\n\nEnglish can drop that; Greek normally keeps ότι.",
+			rule: [
+				"Three ways to say what you think or are unsure of.",
+				[
+					"νομίζω (I think) and πιστεύω (I believe) take ότι, that, before a full sentence.",
+					"ίσως, maybe, goes in front of whatever you are unsure of, in a statement.",
+					"μήπως asks softly, by any chance, in a question.",
+				],
+				"English can drop that; Greek normally keeps ότι.",
+			],
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -160,7 +179,10 @@ export const JOINING_GUIDE: Guide = {
 		{
 			id: "before",
 			title: "πριν and μετά",
-			rule: "πριν means before, and μετά means after.\n\nWith a verb, πριν takes the short form: the one θα takes for a single action, as in θα πάω, I'll go.",
+			rule: [
+				"πριν means before, and μετά means after.",
+				"With a verb, πριν takes the short form: the one θα takes for a single action, as in θα πάω, I'll go.",
+			],
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -189,7 +211,16 @@ export const JOINING_GUIDE: Guide = {
 		{
 			id: "which-how-many",
 			title: "ποιος, πόσος and τι",
-			rule: "Three words ask which, how much and what.\n\n- ποιος asks which or who.\n- πόσος asks how much or how many.\n- τι asks what, and never changes.\n\nποιος and πόσος change their ending to match the noun they ask about, in gender and in number, as an adjective does: ποιος καφές, ποια μέρα, ποιο σπίτι; πόση ζάχαρη, πόσα παιδιά.\n\nThe masculine forms change again for the Target, what the action is done to or what follows a word such as με.",
+			rule: [
+				"Three words ask which, how much and what.",
+				[
+					"ποιος asks which or who.",
+					"πόσος asks how much or how many.",
+					"τι asks what, and never changes.",
+				],
+				"ποιος and πόσος change their ending to match the noun they ask about, in gender and in number, as an adjective does: ποιος καφές, ποια μέρα, ποιο σπίτι; πόση ζάχαρη, πόσα παιδιά.",
+				"The masculine forms change again for the Target, what the action is done to or what follows a word such as με.",
+			],
 			table: {
 				columns: [
 					{ label: "Masculine", greek: true },
@@ -198,11 +229,11 @@ export const JOINING_GUIDE: Guide = {
 					{ label: "Meaning" },
 				],
 				rows: [
-					[{ text: "ποιος", weight: "anchor" }, "ποια", "ποιο", "which? who?"],
+					[{ text: "ποιος", weight: "anchor" }, { text: "ποια", weight: "anchor" }, { text: "ποιο", weight: "anchor" }, "which? who?"],
 					[{ text: "ποιον", weight: "deviate" }, "ποια", "ποιο", "which? as the Target"],
 					["ποιοι", "ποιες", "ποια", "which? more than one"],
 					[{ text: "ποιους", weight: "deviate" }, "ποιες", "ποια", "more than one, as the Target"],
-					[{ text: "πόσος", weight: "anchor" }, "πόση", "πόσο", "how much?"],
+					["πόσος", { text: "πόση", weight: "deviate" }, "πόσο", "how much?"],
 					["πόσοι", "πόσες", "πόσα", "how many?"],
 				],
 			},
@@ -238,7 +269,14 @@ export const JOINING_GUIDE: Guide = {
 		{
 			id: "pou",
 			title: "που for that, who and which",
-			rule: "που, with no accent, joins a second idea to the first. It never changes, whatever the noun.\n\n- After a noun it means who, which or that, and says more about the noun.\n- After a word for a feeling, such as happy or proud, it means that.\n\nEnglish can drop that; Greek keeps που.",
+			rule: [
+				"που, with no accent, joins a second idea to the first. It never changes, whatever the noun.",
+				[
+					"After a noun it means who, which or that, and says more about the noun.",
+					"After a word for a feeling, such as happy or proud, it means that.",
+				],
+				"English can drop that; Greek keeps που.",
+			],
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -286,7 +324,10 @@ export const JOINING_GUIDE: Guide = {
 		{
 			id: "purpose",
 			title: "για να and για να μην",
-			rule: "για να before a verb says what something is for: to, in order to, so that.\n\nFor so that … not, add μην after να.",
+			rule: [
+				"για να before a verb says what something is for: to, in order to, so that.",
+				"For so that … not, add μην after να.",
+			],
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -295,7 +336,7 @@ export const JOINING_GUIDE: Guide = {
 				rows: [
 					["για να απολαύσουν τον ήλιο", "to enjoy the sun"],
 					["για να μάθω ελληνικά", "to learn Greek"],
-					[{ text: "για να μην κρυώνουμε", weight: "deviate" }, "so that we don't get cold"],
+					["για να μην κρυώνουμε", "so that we don't get cold"],
 				],
 			},
 			examples: [
@@ -311,7 +352,13 @@ export const JOINING_GUIDE: Guide = {
 			details: [
 				{
 					label: "Which verb form after να",
-					text: "The verb form after να depends on the action.\n\n- For one action, use the short form, the one θα takes: θα μάθω, so για να μάθω.\n- For something ongoing or repeated, use the present: για να μην κρυώνουμε.",
+					text: [
+						"The verb form after να depends on the action.",
+						[
+							"For one action, use the short form, the one θα takes: θα μάθω, so για να μάθω.",
+							"For something ongoing or repeated, use the present: για να μην κρυώνουμε.",
+						],
+					],
 				},
 			],
 			confuse: {
@@ -331,7 +378,15 @@ export const JOINING_GUIDE: Guide = {
 		{
 			id: "but-so-also",
 			title: "αλλά, όμως, λοιπόν, επίσης",
-			rule: "Four common words link one idea to the next.\n\n- αλλά, but, starts the second of two ideas.\n- όμως also means but, and it can come later, after the first word or phrase.\n- λοιπόν, so or well, moves the talk on.\n- επίσης means also.",
+			rule: [
+				"Four common words link one idea to the next.",
+				[
+					"αλλά, but, starts the second of two ideas.",
+					"όμως also means but, and it can come later, after the first word or phrase.",
+					"λοιπόν, so or well, moves the talk on.",
+					"επίσης means also.",
+				],
+			],
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
