@@ -1,0 +1,78 @@
+{
+	"projectId": "79047c3e-d747-4936-b665-61b0029e92ce",
+	"shape": "package",
+	"pkg": "kalimera",
+	"globalName": "Kalimera",
+	"buildCmd": "node .design-sync/build-pkg.mjs",
+	"srcDir": "../../src/components",
+	"tsconfig": "../../tsconfig.json",
+	"cssEntry": "styles.css",
+	"guidelinesGlob": [
+		"../../docs/design-guidelines.md"
+	],
+	"docsMap": {
+		"GreekText": "../../.design-sync/groups/greek.md",
+		"Pronunciation": "../../.design-sync/groups/greek.md",
+		"GreekGloss": "../../.design-sync/groups/greek.md",
+		"ProseWithGreek": "../../.design-sync/groups/greek.md",
+		"MarkedGreek": "../../.design-sync/groups/greek.md",
+		"GrammarMark": "../../.design-sync/groups/greek.md",
+		"GrammarTable": "../../.design-sync/groups/tables.md",
+		"ParadigmTable": "../../.design-sync/groups/tables.md",
+		"PageHeading": "../../.design-sync/groups/page.md",
+		"SectionHeading": "../../.design-sync/groups/page.md",
+		"Verdict": "../../.design-sync/groups/page.md",
+		"Card": "../../.design-sync/groups/page.md"
+	},
+	"overrides": {
+		"DropdownMenu": {
+			"cardMode": "column",
+			"viewport": "900x5800"
+		},
+		"Popover": {
+			"cardMode": "column",
+			"viewport": "900x2300"
+		},
+		"NavigatorCard": {
+			"cardMode": "column"
+		},
+		"PageHeading": {
+			"cardMode": "column"
+		},
+		"GrammarTable": {
+			"cardMode": "column"
+		}
+	},
+	"readmeHeader": ".design-sync/conventions.md",
+	"dtsPropsFor": {
+		"Input": "ref?: React.Ref<any>; className?: string; id?: string; style?: React.CSSProperties; type?: string; name?: string; value?: string; defaultValue?: string; placeholder?: string; disabled?: boolean; required?: boolean; readOnly?: boolean; autoComplete?: string; autoFocus?: boolean; inputMode?: \"text\" | \"email\" | \"numeric\" | \"search\"; lang?: string; \"aria-invalid\"?: boolean; \"aria-describedby\"?: string; onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void; onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;",
+		"Label": "ref?: React.Ref<any>; className?: string; id?: string; style?: React.CSSProperties; htmlFor?: string; children?: React.ReactNode;"
+	},
+	"componentSrcMap": {
+		"AlertTitle": null,
+		"AlertDescription": null,
+		"NavigatorCell": null,
+		"DropdownMenuCheckboxItem": null,
+		"DropdownMenuContent": null,
+		"DropdownMenuGroup": null,
+		"DropdownMenuItem": null,
+		"DropdownMenuLabel": null,
+		"DropdownMenuPortal": null,
+		"DropdownMenuPositioner": null,
+		"DropdownMenuRadioGroup": null,
+		"DropdownMenuRadioItem": null,
+		"DropdownMenuSeparator": null,
+		"DropdownMenuShortcut": null,
+		"DropdownMenuSub": null,
+		"DropdownMenuSubContent": null,
+		"DropdownMenuSubTrigger": null,
+		"DropdownMenuTrigger": null,
+		"PopoverArrow": null,
+		"PopoverContent": null,
+		"PopoverPositioner": null,
+		"PopoverTrigger": null,
+		"TabsList": null,
+		"TabsTrigger": null,
+		"TabsContent": null
+	}
+}
