@@ -19,8 +19,8 @@ export const ROLES_GUIDE: Guide = {
 					"The Target is who or what the action is done to.",
 					"The Owner is who something belongs to.",
 				],
-				"A Greek noun shows its job by changing its form: its article and often its ending. Each form is named after its main job, and the marks under the Greek show the form. Because the form is on the word, you can find the job whatever the word order. When the form doesn't show, ask the table's question.",
-				"The Doer form is also the noun's plain form, the one you find in a dictionary. The noun after είμαι, I am, keeps it too: see Linking verbs, below.",
+				"A Greek noun shows its job by changing its form: its article and often its ending. Each form is named after its main job, and the marks under the Greek show the form. Because the form is on the word, you can find the job whatever the word order. Where the form doesn't show, ask the table's question.",
+				"The Doer form is also the noun's plain form, the one you find in a dictionary.",
 			],
 			table: {
 				columns: [
@@ -58,78 +58,21 @@ export const ROLES_GUIDE: Guide = {
 						},
 					],
 				},
-				{
-					label: "When the form doesn't show",
-					text: [
-						"Not every noun shows its form:",
-						[
-							"neuter nouns look the same as Doer and Target: το παιδί, το παιδί",
-							"feminine nouns change only the article, so with μια, or no article, nothing changes",
-						],
-						"Then ask the question instead. The man wants what? Orangeade, so πορτοκαλάδα is the Target.",
-					],
-					examples: [
-						{
-							greek: "Ο άντρας θέλει πορτοκαλάδα.",
-							english: "The man wants orangeade. (πορτοκαλάδα looks like its plain form)",
-							marks: [mark("Ο άντρας", "nominative", "masculine"), mark("πορτοκαλάδα", "accusative", "feminine")],
-						},
-						{
-							greek: "Το παιδί τρώει καρπούζι.",
-							english: "The child is eating watermelon. (both neuter, so ask: the child eats what?)",
-							marks: [mark("Το παιδί", "nominative", "neuter"), mark("καρπούζι", "accusative", "neuter")],
-						},
-					],
-				},
-				{
-					label: "Linking verbs: είμαι and γίνομαι",
-					text: [
-						"είμαι (I am) and γίνομαι (I become) don't act on anything. They link a noun to what it is or becomes, like an equals sign: both sides are the same person or thing.",
-						"Compare βλέπω, I see. I see who? The doctor, who gets seen, so γιατρός takes the Target form. I am what? also has an answer, a doctor, but the doctor is me, not something I act on. So there is no Target, and γιατρός keeps the plain form. It is in the Doer form without being the Doer: the Doer is I, in the verb's ending.",
-						"In sentences you will meet them as είναι, is (from είμαι), and, after να, γίνει, become (from γίνομαι).",
-					],
-					examples: [
-						{
-							greek: "Βλέπω τον γιατρό.",
-							english: "I see the doctor. (changes: the doctor gets seen)",
-							marks: [mark("τον γιατρό", "accusative", "masculine")],
-						},
-						{
-							greek: "Είμαι γιατρός.",
-							english: "I am a doctor. (plain form: the doctor is me)",
-							marks: [mark("γιατρός", "nominative", "masculine")],
-						},
-						{
-							greek: "Η Χρυσάνθη είναι η μητέρα.",
-							english: "Chrysanthi is the mother. (είναι, from είμαι; both sides in the plain form)",
-							marks: [mark("Η Χρυσάνθη", "nominative", "feminine"), mark("η μητέρα", "nominative", "feminine")],
-						},
-						{
-							greek: "Ο γιος μου θέλει να γίνει γιατρός.",
-							english: "My son wants to become a doctor. (γίνει, from γίνομαι)",
-							marks: [mark("Ο γιος", "nominative", "masculine"), mark("μου", "genitive"), mark("γιατρός", "nominative", "masculine")],
-						},
-					],
-				},
 			],
-			confuse: {
-				text: "The Target form is also used where nothing is done to the noun: for times, την Κυριακή, on Sunday, and after a preposition, στην Αθήνα, to Athens. Neither is a Target.",
-				section: "target",
-			},
 			drills: ["articles-paradigm", "nominal-phrase-doer", "nominal-all-phrases"],
 		},
 		{
 			id: "articles",
 			title: "The article ο, η, το",
 			rule: [
-				"The article is the word for “the”: ο, η, το. In the singular it shows the noun's gender (masculine, feminine or neuter) and, except in the neuter, its job. Names take it too: ο Νίκος, τη Μαρία.",
-				"A noun's plain form, the one in the dictionary, is its Doer form. As the Target, what the action is done to, how much changes depends on the gender:",
+				"The article is the word for “the”: ο, η, το. In the singular it shows the noun's gender (masculine, feminine or neuter) and, except in the neuter, its job.",
+				"From the Doer form to the Target form, how much changes depends on the gender:",
 				[
 					"masculine: the article and the ending, which drops its -ς: ο φίλος, τον φίλο",
 					"feminine: only the article: η μητέρα, τη μητέρα",
 					"neuter: nothing: το παιδί, το παιδί",
 				],
-				"So a masculine noun shows its job most clearly, and a neuter noun not at all.",
+				"So a masculine noun shows its job most clearly. Where nothing changes, or there is no article, ask the question instead: the man wants what?",
 			],
 			table: {
 				columns: [
@@ -164,48 +107,12 @@ export const ROLES_GUIDE: Guide = {
 					],
 				},
 				{
-					greek: "Βλέπουν μια ταινία στο σινεμά.",
-					english: "They're watching a film at the cinema. (στο is σε + το; after σε, the Target form)",
-					marks: [mark("μια ταινία", "accusative", "feminine"), mark("στο σινεμά", "accusative", "neuter")],
+					greek: "Ο άντρας θέλει πορτοκαλάδα.",
+					english: "The man wants orangeade. (no article, so nothing shows: the man wants what?)",
+					marks: [mark("Ο άντρας", "nominative", "masculine"), mark("πορτοκαλάδα", "accusative", "feminine")],
 				},
 			],
 			details: [
-				{
-					label: "“A” or “an”: ένας, μια, ένα",
-					text: [
-						"The word for “a” or “an” changes even less: only the masculine, ένας to έναν.",
-						"μια is the everyday “a”. μία, with a stress mark, is the number one, used when the number matters.",
-					],
-					table: {
-						columns: [
-							{ label: "Form" },
-							{ label: "Masculine", greek: true },
-							{ label: "Feminine", greek: true },
-							{ label: "Neuter", greek: true },
-						],
-						rows: [
-							[
-								"Doer",
-								markedCell("ένας φίλος", "nominative", "masculine"),
-								markedCell("μια μητέρα", "nominative", "feminine"),
-								markedCell("ένα παιδί", "nominative", "neuter"),
-							],
-							[
-								"Target",
-								markedCell("έναν φίλο", "accusative", "masculine"),
-								markedCell("μια μητέρα", "accusative", "feminine"),
-								markedCell("ένα παιδί", "accusative", "neuter"),
-							],
-						],
-					},
-					examples: [
-						{
-							greek: "Έχω έναν αδερφό και μια αδερφή.",
-							english: "I have a brother and a sister.",
-							marks: [mark("έναν αδερφό", "accusative", "masculine"), mark("μια αδερφή", "accusative", "feminine")],
-						},
-					],
-				},
 				{
 					label: "τη or την",
 					text: [
@@ -216,8 +123,7 @@ export const ROLES_GUIDE: Guide = {
 							"μπ, ντ, γκ, τσ or τζ, as in την μπάλα",
 						],
 						"Before any other consonant the standard form is τη, though you will often see την kept.",
-						"The same goes for στην, σε + την: στην Αθήνα, but στη Λεμεσό.",
-						"τον and έναν always keep their -ν, or they would look neuter: το, ένα.",
+						"τον always keeps its -ν, or it would look neuter: το.",
 					],
 					examples: [
 						{
@@ -236,10 +142,61 @@ export const ROLES_GUIDE: Guide = {
 			drills: ["articles-article-doer", "articles-article-target"],
 		},
 		{
+			id: "a-an",
+			title: "The article ένας, μια, ένα",
+			rule: [
+				"The word for “a” or “an” is ένας, μια, ένα. It changes even less than “the”: for the Target only the masculine changes, ένας to έναν. Like τον, έναν always keeps its -ν.",
+				"μια is the everyday “a”. μία, with a stress mark, is the number one, used when the number matters.",
+			],
+			table: {
+				columns: [
+					{ label: "Form" },
+					{ label: "Masculine", greek: true },
+					{ label: "Feminine", greek: true },
+					{ label: "Neuter", greek: true },
+				],
+				rows: [
+					[
+						"Doer",
+						markedCell("ένας φίλος", "nominative", "masculine"),
+						markedCell("μια μητέρα", "nominative", "feminine"),
+						markedCell("ένα παιδί", "nominative", "neuter"),
+					],
+					[
+						"Target",
+						markedCell("έναν φίλο", "accusative", "masculine"),
+						markedCell("μια μητέρα", "accusative", "feminine"),
+						markedCell("ένα παιδί", "accusative", "neuter"),
+					],
+				],
+			},
+			examples: [
+				{
+					greek: "Ένας φίλος μου μένει στην Πάφο.",
+					english: "A friend of mine lives in Paphos.",
+					marks: [mark("Ένας φίλος", "nominative", "masculine")],
+				},
+				{
+					greek: "Έχω έναν αδερφό και μια αδερφή.",
+					english: "I have a brother and a sister.",
+					marks: [mark("έναν αδερφό", "accusative", "masculine"), mark("μια αδερφή", "accusative", "feminine")],
+				},
+			],
+			drills: [],
+			plannedDrills: [
+				{
+					id: "articles-indefinite",
+					title: "ένας or έναν",
+					greek: "ένας φίλος · έναν φίλο · μια μητέρα",
+					tests: "A card shows a sentence with a gap before a noun, and the answer is ένας, έναν, μια or ένα, whichever the noun's gender and job need.",
+				},
+			],
+		},
+		{
 			id: "target",
 			title: "The Target form: objects, times, prepositions",
 			rule: [
-				"The Target is what the action is done to. For this job a noun leaves its plain form, the one in the dictionary, which is also the Doer form. The article changes, except in the neuter, and masculine nouns often change their ending too.",
+				"The Target is what the action is done to. For this job a noun leaves its plain form, the Doer form. How much changes depends on its gender, as the article section shows.",
 				"The Target form has three uses:",
 				[
 					"whatever the verb acts on, including names, which change like any other noun",
@@ -303,6 +260,52 @@ export const ROLES_GUIDE: Guide = {
 				},
 			],
 			drills: ["nominal-noun-target", "nominal-phrase-target", "blocks-days-of-week"],
+		},
+		{
+			id: "linking",
+			title: "Linking verbs: είμαι and γίνομαι",
+			rule: [
+				"είμαι (I am) and γίνομαι (I become) don't act on anything. They link a noun to what it is or becomes, like an equals sign: both sides are the same person or thing.",
+				"So there is no Target, and the noun after them keeps its plain form, the Doer form. Compare βλέπω, I see. I see who? The doctor, who gets seen, so γιατρός takes the Target form. I am what? has an answer too, a doctor, but the doctor is me, not something I act on.",
+				"You will meet them as είναι, is (from είμαι), and, after να, γίνει, become (from γίνομαι).",
+			],
+			table: {
+				columns: [
+					{ label: "Greek", greek: true },
+					{ label: "Meaning" },
+					{ label: "Form" },
+				],
+				rows: [
+					[cellWith("βλέπω τον γιατρό", mark("τον γιατρό", "accusative", "masculine")), "I see the doctor", "Target"],
+					[cellWith("είμαι γιατρός", mark("γιατρός", "nominative", "masculine")), "I am a doctor", "plain"],
+					[cellWith("γίνομαι γιατρός", mark("γιατρός", "nominative", "masculine")), "I become a doctor", "plain"],
+				],
+			},
+			examples: [
+				{
+					greek: "Η Χρυσάνθη είναι η μητέρα.",
+					english: "Chrysanthi is the mother. (both sides in the plain form)",
+					marks: [mark("Η Χρυσάνθη", "nominative", "feminine"), mark("η μητέρα", "nominative", "feminine")],
+				},
+				{
+					greek: "Ο γιος μου θέλει να γίνει γιατρός.",
+					english: "My son wants to become a doctor.",
+					marks: [mark("Ο γιος", "nominative", "masculine"), mark("μου", "genitive"), mark("γιατρός", "nominative", "masculine")],
+				},
+			],
+			confuse: {
+				text: "A job after είμαι usually takes no article either: Ο Γιάννης είναι προγραμματιστής, Yannis is a programmer.",
+				section: "when-article",
+			},
+			drills: [],
+			plannedDrills: [
+				{
+					id: "roles-linking-plain",
+					title: "Plain form or Target form",
+					greek: "είμαι γιατρός · βλέπω τον γιατρό",
+					tests: "A card shows βλέπω, είμαι or γίνομαι with a noun to fill in, and the answer is the noun in the Target form after βλέπω and in the plain form after είμαι or γίνομαι.",
+				},
+			],
 		},
 		{
 			id: "owner",

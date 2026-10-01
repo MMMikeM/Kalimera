@@ -31,7 +31,7 @@ export const LESSON_2023_11_08 = createLesson({
 			pattern: "Indefinite articles",
 			examples: ["ένας (masculine)", "μία/μια (feminine)", "ένα (neuter)"],
 			explanation: "A/an - non-specific item",
-			section: "roles/articles",
+			section: "roles/a-an",
 		},
 	],
 });
