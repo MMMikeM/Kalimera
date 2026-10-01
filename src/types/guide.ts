@@ -59,6 +59,7 @@ export type GuideText = string | (string | string[])[];
 export interface GuideDetail {
 	label: string;
 	text: GuideText;
+	table?: GuideTable;
 	examples?: GuideExample[];
 }
 

@@ -86,7 +86,7 @@ export const GrammarMark = ({
 	// An outlined shape is hollow; the mask keeps the lines out of its interior
 	// while still letting them reach the stroke.
 	const maskPaint: Paint = { ...shapePaint, fill: "black", stroke: "white" };
-	const description = [LEARNER_LABEL[grammaticalCase], gender, plural ? "more than one" : undefined]
+	const description = [`${LEARNER_LABEL[grammaticalCase]} form`, gender, plural ? "more than one" : undefined]
 		.filter(Boolean)
 		.join(", ");
 
@@ -131,7 +131,8 @@ export const GrammarMark = ({
 				<BothEnds shapes={shapes} paint={shapePaint} />
 				</svg>
 			</span>
-			<span lang="en" className="sr-only">
+			{/* Unselectable, so copying the Greek doesn't paste the description into it. */}
+			<span lang="en" className="sr-only select-none">
 				{description}
 			</span>
 		</span>

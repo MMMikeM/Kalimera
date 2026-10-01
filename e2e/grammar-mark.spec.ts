@@ -132,11 +132,11 @@ test.describe("grammar mark, rules", () => {
 		expect(new Set(heights)).toEqual(new Set([9]));
 	});
 
-	test("tells a screen reader the job, gender and number", async ({ page }) => {
+	test("tells a screen reader the form, gender and number", async ({ page }) => {
 		await openSpecimens(page);
 		const section = page.getByTestId("filled-many");
-		await expect(section.getByText("Target, feminine, more than one", { exact: true })).toHaveCount(1);
-		await expect(page.getByTestId("neutral").getByText("Owner", { exact: true })).toHaveCount(1);
+		await expect(section.getByText("Target form, feminine, more than one", { exact: true })).toHaveCount(1);
+		await expect(page.getByTestId("neutral").getByText("Owner form", { exact: true })).toHaveCount(1);
 	});
 
 	test("hides the mark itself from assistive technology", async ({ page }) => {

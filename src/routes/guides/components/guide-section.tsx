@@ -147,6 +147,7 @@ export const GuideSection = ({
 							<ProseWithGreek text={detail.label} />
 						</h3>
 						<GuideProse text={detail.text} />
+						{detail.table ? <GuideTable table={detail.table} /> : null}
 						<ExampleList examples={detail.examples} ruleClass={tone.exampleRule} />
 					</div>
 				))}

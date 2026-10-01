@@ -151,17 +151,20 @@ const NOUNS_RAW = {
 		{ lemma: "εγγονός", gender: "masculine", english: "grandson", cefrLevel: "B1" },
 		{ lemma: "εγγονή", gender: "feminine", english: "granddaughter", cefrLevel: "B1" },
 		{ lemma: "σύζυγος", gender: "masculine", english: "spouse", cefrLevel: "A2" },
+		{ lemma: "άνθρωπος", gender: "masculine", english: "human/person", cefrLevel: "A1" },
+		{ lemma: "νάνος", gender: "masculine", english: "dwarf", cefrLevel: "B2" },
+	],
+
+	jobs: [
 		{ lemma: "γιατρός", gender: "masculine", english: "doctor", cefrLevel: "A2" },
 		{ lemma: "κηπουρός", gender: "masculine", english: "gardener", cefrLevel: "B1" },
 		{ lemma: "αρχηγός", gender: "masculine", english: "leader", cefrLevel: "B1" },
-		{ lemma: "άνθρωπος", gender: "masculine", english: "human/person", cefrLevel: "A1" },
 		{ lemma: "κυνηγός", gender: "masculine", english: "hunter", cefrLevel: "B2" },
 		{ lemma: "γεωργός", gender: "masculine", english: "farmer", cefrLevel: "B1" },
 		{ lemma: "οδηγός", gender: "masculine", english: "driver", cefrLevel: "A2" },
 		{ lemma: "βοσκός", gender: "masculine", english: "shepherd", cefrLevel: "B2" },
 		{ lemma: "ηθοποιός", gender: "masculine", english: "actor", cefrLevel: "B1" },
 		{ lemma: "δάσκαλος", gender: "masculine", english: "teacher", cefrLevel: "A2" },
-		{ lemma: "νάνος", gender: "masculine", english: "dwarf", cefrLevel: "B2" },
 	],
 
 	abstract: [
@@ -263,6 +266,7 @@ const themeTagMap: Record<string, string> = {
 	clothing: "clothing",
 	household: "household",
 	people: "people",
+	jobs: "work-study",
 	nature: "nature",
 };
 

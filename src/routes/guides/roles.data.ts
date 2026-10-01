@@ -122,9 +122,14 @@ export const ROLES_GUIDE: Guide = {
 			id: "articles",
 			title: "The article ο, η, το",
 			rule: [
-				"The article is the word for “the”. It shows two things at once: the noun's gender (masculine, feminine or neuter) and its job.",
-				"A noun's plain form, the one in the dictionary, is also its Doer form: the form for the noun that does the action. When the noun is the Target, what the action is done to, only the masculine and feminine articles change; the neuter stays the same.",
-				"The word for “a” or “an” works the same way, but only the masculine changes.",
+				"The article is the word for “the”: ο, η, το. In the singular it shows the noun's gender (masculine, feminine or neuter) and, except in the neuter, its job. Names take it too: ο Νίκος, τη Μαρία.",
+				"A noun's plain form, the one in the dictionary, is its Doer form. As the Target, what the action is done to, how much changes depends on the gender:",
+				[
+					"masculine: the article and the ending, which drops its -ς: ο φίλος, τον φίλο",
+					"feminine: only the article: η μητέρα, τη μητέρα",
+					"neuter: nothing: το παιδί, το παιδί",
+				],
+				"So a masculine noun shows its job most clearly, and a neuter noun not at all.",
 			],
 			table: {
 				columns: [
@@ -142,46 +147,65 @@ export const ROLES_GUIDE: Guide = {
 					],
 					[
 						"Target",
-						markedCell("τον φίλο", "accusative", "masculine", false, 0),
-						markedCell("τη μητέρα", "accusative", "feminine", false, 0),
+						markedCell("τον φίλο", "accusative", "masculine", false),
+						markedCell("τη μητέρα", "accusative", "feminine", false),
 						markedCell("το παιδί", "accusative", "neuter"),
 					],
-					[
-						"Doer, “a”",
-						markedCell("ένας φίλος", "nominative", "masculine"),
-						markedCell("μία μητέρα", "nominative", "feminine"),
-						markedCell("ένα παιδί", "nominative", "neuter"),
-					],
-					[
-						"Target, “a”",
-						markedCell("έναν φίλο", "accusative", "masculine", false, 1),
-						markedCell("μία μητέρα", "accusative", "feminine"),
-						markedCell("ένα παιδί", "accusative", "neuter"),
-					],
-				],
-				notes: [
-					"For the Target, only the masculine and feminine articles change.",
-					"For “a” or “an”, only the masculine changes: ένας becomes έναν.",
 				],
 			},
 			examples: [
 				{
 					greek: "Ο Νίκος περιμένει τον φίλο του.",
-					english: "Nikos is waiting for his friend.",
-					marks: [mark("Ο Νίκος", "nominative", "masculine"), mark("τον φίλο", "accusative", "masculine")],
+					english: "Nikos is waiting for his friend. (no word for “for”: τον φίλο is the Target)",
+					marks: [
+						mark("Ο Νίκος", "nominative", "masculine"),
+						mark("τον φίλο", "accusative", "masculine"),
+						mark("του", "genitive", "masculine"),
+					],
 				},
 				{
 					greek: "Βλέπουν μια ταινία στο σινεμά.",
 					english: "They're watching a film at the cinema. (στο is σε + το; after σε, the Target form)",
 					marks: [mark("μια ταινία", "accusative", "feminine"), mark("στο σινεμά", "accusative", "neuter")],
 				},
-				{
-					greek: "Έχω έναν αδερφό και μία αδερφή.",
-					english: "I have a brother and a sister.",
-					marks: [mark("έναν αδερφό", "accusative", "masculine"), mark("μία αδερφή", "accusative", "feminine")],
-				},
 			],
 			details: [
+				{
+					label: "“A” or “an”: ένας, μια, ένα",
+					text: [
+						"The word for “a” or “an” changes even less: only the masculine, ένας to έναν.",
+						"μια is the everyday “a”. μία, with a stress mark, is the number one, used when the number matters.",
+					],
+					table: {
+						columns: [
+							{ label: "Form" },
+							{ label: "Masculine", greek: true },
+							{ label: "Feminine", greek: true },
+							{ label: "Neuter", greek: true },
+						],
+						rows: [
+							[
+								"Doer",
+								markedCell("ένας φίλος", "nominative", "masculine"),
+								markedCell("μια μητέρα", "nominative", "feminine"),
+								markedCell("ένα παιδί", "nominative", "neuter"),
+							],
+							[
+								"Target",
+								markedCell("έναν φίλο", "accusative", "masculine"),
+								markedCell("μια μητέρα", "accusative", "feminine"),
+								markedCell("ένα παιδί", "accusative", "neuter"),
+							],
+						],
+					},
+					examples: [
+						{
+							greek: "Έχω έναν αδερφό και μια αδερφή.",
+							english: "I have a brother and a sister.",
+							marks: [mark("έναν αδερφό", "accusative", "masculine"), mark("μια αδερφή", "accusative", "feminine")],
+						},
+					],
+				},
 				{
 					label: "τη or την",
 					text: [
@@ -191,8 +215,9 @@ export const ROLES_GUIDE: Guide = {
 							"κ, π, τ, ξ or ψ",
 							"μπ, ντ, γκ, τσ or τζ, as in την μπάλα",
 						],
-						"Before any other consonant it usually drops to τη, though keeping it is widely accepted.",
-						"τον keeps its -ν even before φ, since το φίλο would read as neuter.",
+						"Before any other consonant the standard form is τη, though you will often see την kept.",
+						"The same goes for στην, σε + την: στην Αθήνα, but στη Λεμεσό.",
+						"τον and έναν always keep their -ν, or they would look neuter: το, ένα.",
 					],
 					examples: [
 						{

@@ -31,11 +31,15 @@ export const sectionExamples = (section: GuideSection) => [
 	...(section.details ?? []).flatMap((d) => d.examples ?? []),
 ];
 
+/** A section's own table and its details' tables together. */
+export const sectionTables = (section: GuideSection) =>
+	[section.table, ...(section.details ?? []).map((d) => d.table)].filter((t) => t !== undefined);
+
 export const usesMarks = (guide: Guide) =>
 	guide.sections.some(
 		(s) =>
 			sectionExamples(s).some((e) => e.marks?.length) ||
-			s.table?.rows.some((row) => row.some((cell) => typeof cell !== "string" && cell.marks?.length)),
+			sectionTables(s).some((t) => t.rows.some((row) => row.some((cell) => typeof cell !== "string" && cell.marks?.length))),
 	);
 
 // Navy, sunset and slate sit close to the masculine, feminine and neuter mark
