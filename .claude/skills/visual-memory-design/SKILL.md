@@ -177,6 +177,8 @@ A paradigm grid needs an anchor even when nothing in it is surprising.
 
 With only two weights, a fully regular paradigm greys out entirely and the eye has nowhere to land; the table reads as disabled rather than as "learn row one, the rest follow".
 
+The three levels must be visibly distinct. Medium against semibold, both near-black, reads as one "bold" and erases the anchor (the guides shipped this way and confused the reader). Weights belong to grids of forms only, where there is a pattern to break; a list of phrases beside their meanings stays unweighted. "Deviating" has one meaning everywhere: the form you would get wrong by following the table's pattern, never "important" or "the row this section is about". Say so once near the top of the page, as for a colour key; the guides enforce at most three deviations and one anchor row per weighted table in `guides.test.ts`.
+
 ### The ceiling counts surprises, not cells
 
 A 6×3 paradigm is 18 cells, which looks like a flagrant breach of the 3-unit ceiling. It is not, provided the derivable cells are visibly receded: the learning units are the pattern (one chunk) plus the cells that deviate from it. Keep the deviations at or under the ceiling and the grid is legitimate. This is Von Restorff isolation applied cell-wise, and it is why a table may carry more on screen than a card may.
