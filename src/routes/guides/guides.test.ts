@@ -107,34 +107,28 @@ describe("guides", () => {
 		expect(broken).toEqual([]);
 	});
 
-	// Weight says "this form breaks the pattern", so it needs a grid of forms to have
-	// a pattern, few enough breaks to stand out, and one anchor to break from.
-	describe("table weights", () => {
-		const weighted = GUIDES.flatMap((g) =>
+	// A note marks a form that breaks the table's pattern and says why; marked
+	// too often it stops standing out.
+	describe("table notes", () => {
+		const tables = GUIDES.flatMap((g) =>
 			g.sections.flatMap((s) => {
-				const table = s.table;
-				if (!table) return [];
-				const weightOf = (cell: GuideCell) => (typeof cell === "string" ? undefined : cell.weight);
-				const cells = table.rows.flatMap((row, r) => row.map((cell) => ({ r, weight: weightOf(cell) })));
-				if (!cells.some((c) => c.weight)) return [];
-				return [{ at: `${g.slug}/${s.id}`, table, cells }];
+				if (!s.table) return [];
+				const noteOf = (cell: GuideCell) => (typeof cell === "string" ? undefined : cell.note);
+				const used = s.table.rows.flat().map(noteOf).filter((n) => n !== undefined);
+				return [{ at: `${g.slug}/${s.id}`, notes: s.table.notes ?? [], used }];
 			}),
 		);
 
-		it("only weights tables with two or more Greek columns", () => {
-			expect(weighted.filter((w) => w.table.columns.filter((c) => c.greek).length < 2).map((w) => w.at)).toEqual([]);
+		it("points every marked form at a note that exists", () => {
+			expect(tables.filter((t) => t.used.some((n) => n < 0 || n >= t.notes.length)).map((t) => t.at)).toEqual([]);
 		});
 
-		it("makes at most three forms bold in a table", () => {
-			expect(
-				weighted.filter((w) => w.cells.filter((c) => c.weight === "deviate").length > 3).map((w) => w.at),
-			).toEqual([]);
+		it("uses every note", () => {
+			expect(tables.filter((t) => t.notes.some((_, i) => !t.used.includes(i))).map((t) => t.at)).toEqual([]);
 		});
 
-		it("gives every weighted table one anchor row", () => {
-			expect(
-				weighted.filter((w) => new Set(w.cells.filter((c) => c.weight === "anchor").map((c) => c.r)).size !== 1).map((w) => w.at),
-			).toEqual([]);
+		it("marks at most three forms in a table", () => {
+			expect(tables.filter((t) => t.used.length > 3).map((t) => t.at)).toEqual([]);
 		});
 	});
 

@@ -505,12 +505,15 @@ export const VERBS_GUIDE: Guide = {
 					{ label: "Simple future", greek: true, tone: "ocean" },
 				],
 				rows: [
-					["I", { text: "θυμάμαι", weight: "anchor" }, { text: "θα θυμηθώ", weight: "anchor" }],
+					["I", "θυμάμαι", "θα θυμηθώ"],
 					["you", "θυμάσαι", "θα θυμηθείς"],
 					["he / she", "θυμάται", "θα θυμηθεί"],
-					["we", { text: "θυμόμαστε", weight: "deviate" }, "θα θυμηθούμε"],
+					["we", { text: "θυμόμαστε", note: 0 }, "θα θυμηθούμε"],
 					["you all", "θυμάστε", "θα θυμηθείτε"],
-					["they", { text: "θυμούνται", weight: "deviate" }, "θα θυμηθούν"],
+					["they", { text: "θυμούνται", note: 0 }, "θα θυμηθούν"],
+				],
+				notes: [
+					"The ending's vowel changes in the we and they forms: -όμαστε, -ούνται.",
 				],
 			},
 			examples: [
