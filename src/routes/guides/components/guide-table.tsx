@@ -6,29 +6,37 @@ import type { GuideCell, GuideTable as GuideTableData } from "@/types/guide";
 import { GUIDE_TONE } from "./guide-tone";
 import { MarkedPhrase } from "./marked-phrase";
 
-// Three weights, so a regular grid still has somewhere for the eye to land: the
-// form you would get wrong, the form the rest derive from, and everything else.
+// Three weights a reader can tell apart, so a grid has somewhere for the eye to
+// land: the form you would get wrong, the form the rest derive from, and the
+// predictable rest, receded. A table that weights nothing stays at full strength.
 const cellText = tv({
 	base: "",
 	variants: {
 		weight: {
-			deviate: "font-semibold text-stone-900",
+			deviate: "font-bold text-stone-950",
 			anchor: "font-medium text-stone-900",
-			plain: "text-stone-700",
+			receded: "text-stone-600",
+			plain: "text-stone-800",
 		},
 	},
 });
 
-const cellParts = (cell: GuideCell) =>
-	typeof cell === "string"
-		? { text: cell, weight: "plain" as const, marks: undefined }
-		: { text: cell.text, weight: cell.weight ?? ("plain" as const), marks: cell.marks };
+const cellParts = (cell: GuideCell, weighted: boolean) => {
+	const rest = weighted ? ("receded" as const) : ("plain" as const);
+	return typeof cell === "string"
+		? { text: cell, weight: rest, marks: undefined }
+		: { text: cell.text, weight: cell.weight ?? rest, marks: cell.marks };
+};
+
+export const isWeighted = (table: GuideTableData) =>
+	table.rows.some((row) => row.some((cell) => typeof cell !== "string" && cell.weight));
 
 export const GuideTable = ({ table }: { table: GuideTableData }) => {
 	// A grid of forms is read down its columns, so its cells never wrap; a single
 	// Greek column beside its meaning can wrap between words on a narrow screen.
 	const isGrid = table.columns.filter((c) => c.greek).length > 1;
 	const tint = table.columns.map((c) => (c.tone ? GUIDE_TONE[c.tone] : undefined));
+	const weighted = isWeighted(table);
 	return (
 		// Every cell is padded alike, so a tinted first column needs no special case;
 		// the negative margin lines the first column's text up with the prose above.
@@ -53,9 +61,9 @@ export const GuideTable = ({ table }: { table: GuideTableData }) => {
 				</thead>
 				<tbody>
 					{table.rows.map((row) => (
-						<tr key={row.map((cell) => cellParts(cell).text).join("|")} className="border-b border-stone-200">
+						<tr key={row.map((cell) => cellParts(cell, weighted).text).join("|")} className="border-b border-stone-200">
 							{row.map((cell, i) => {
-								const { text, weight, marks } = cellParts(cell);
+								const { text, weight, marks } = cellParts(cell, weighted);
 								return (
 									<td
 										key={table.columns[i]?.label ?? i}

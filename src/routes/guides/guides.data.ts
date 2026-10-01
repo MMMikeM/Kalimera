@@ -38,6 +38,9 @@ export const usesMarks = (guide: Guide) =>
 			s.table?.rows.some((row) => row.some((cell) => typeof cell !== "string" && cell.marks?.length)),
 	);
 
+export const usesWeights = (guide: Guide) =>
+	guide.sections.some((s) => s.table?.rows.some((row) => row.some((cell) => typeof cell !== "string" && cell.weight === "deviate")));
+
 // Navy, sunset and slate sit close to the masculine, feminine and neuter mark
 // colours, so a guide that shows marks leaves them out of its cycle.
 const CYCLE_WITH_MARKS: GuideTone[] = ["terracotta", "olive", "ocean", "honey", "stone"];

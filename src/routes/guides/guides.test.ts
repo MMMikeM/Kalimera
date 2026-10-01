@@ -2,6 +2,7 @@ import { describe, expect, it } from "vite-plus/test";
 
 import { DRILL_REGISTRY } from "@/routes/practice/drill-catalogue.data";
 import { countLessons, getLessonNotes } from "@/server/fns/guides.server";
+import type { GuideCell, GuideSection } from "@/types/guide";
 
 import { GUIDES, resolveSectionRef, sectionExamples } from "./guides.data";
 
@@ -81,16 +82,60 @@ describe("guides", () => {
 		expect(repeated).toEqual([]);
 	});
 
+	const textsOf = (s: GuideSection) =>
+		[s.rule, ...(s.details ?? []).map((d) => d.text), ...(s.confuse ? [s.confuse.text] : [])].flatMap((t) =>
+			typeof t === "string" ? [t] : t.flat(),
+		);
+
 	// An unmatched _ renders literally instead of as emphasis
 	it("pairs every emphasis marker in guide text", () => {
 		const odd = GUIDES.flatMap((g) =>
 			g.sections.flatMap((s) =>
-				[s.rule, ...(s.details ?? []).map((d) => d.text), s.confuse?.text ?? ""]
+				textsOf(s)
 					.filter((text) => (text.match(/_/g) ?? []).length % 2 !== 0)
 					.map(() => `${g.slug}/${s.id}`),
 			),
 		);
 		expect(odd).toEqual([]);
+	});
+
+	// Paragraphs and lists are array structure; a newline inside a string would render as a space
+	it("keeps newlines out of guide text", () => {
+		const broken = GUIDES.flatMap((g) =>
+			g.sections.filter((s) => textsOf(s).some((text) => text.includes("\n"))).map((s) => `${g.slug}/${s.id}`),
+		);
+		expect(broken).toEqual([]);
+	});
+
+	// Weight says "this form breaks the pattern", so it needs a grid of forms to have
+	// a pattern, few enough breaks to stand out, and one anchor to break from.
+	describe("table weights", () => {
+		const weighted = GUIDES.flatMap((g) =>
+			g.sections.flatMap((s) => {
+				const table = s.table;
+				if (!table) return [];
+				const weightOf = (cell: GuideCell) => (typeof cell === "string" ? undefined : cell.weight);
+				const cells = table.rows.flatMap((row, r) => row.map((cell) => ({ r, weight: weightOf(cell) })));
+				if (!cells.some((c) => c.weight)) return [];
+				return [{ at: `${g.slug}/${s.id}`, table, cells }];
+			}),
+		);
+
+		it("only weights tables with two or more Greek columns", () => {
+			expect(weighted.filter((w) => w.table.columns.filter((c) => c.greek).length < 2).map((w) => w.at)).toEqual([]);
+		});
+
+		it("makes at most three forms bold in a table", () => {
+			expect(
+				weighted.filter((w) => w.cells.filter((c) => c.weight === "deviate").length > 3).map((w) => w.at),
+			).toEqual([]);
+		});
+
+		it("gives every weighted table one anchor row", () => {
+			expect(
+				weighted.filter((w) => new Set(w.cells.filter((c) => c.weight === "anchor").map((c) => c.r)).size !== 1).map((w) => w.at),
+			).toEqual([]);
+		});
 	});
 
 	it("gives every table row one cell per column", () => {
