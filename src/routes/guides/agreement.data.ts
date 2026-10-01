@@ -340,17 +340,17 @@ export const AGREEMENT_GUIDE: Guide = {
 					{ label: "Number" },
 				],
 				rows: [
-					[markedCell("ένας", "nominative", "masculine", undefined, "anchor"), markedCell("μία", "nominative", "feminine", undefined, "anchor"), markedCell("ένα", "nominative", "neuter", undefined, "anchor"), "one"],
+					[markedCell("ένας", "nominative", "masculine"), markedCell("μία", "nominative", "feminine"), markedCell("ένα", "nominative", "neuter"), "one"],
 					[
 						markedCell("τρεις", "nominative", "masculine", true),
 						markedCell("τρεις", "nominative", "feminine", true),
-						markedCell("τρία", "nominative", "neuter", true, "deviate"),
+						markedCell("τρία", "nominative", "neuter", true, 0),
 						"three",
 					],
 					[
 						markedCell("τέσσερις", "nominative", "masculine", true),
 						markedCell("τέσσερις", "nominative", "feminine", true),
-						markedCell("τέσσερα", "nominative", "neuter", true, "deviate"),
+						markedCell("τέσσερα", "nominative", "neuter", true, 0),
 						"four",
 					],
 					[
@@ -371,6 +371,9 @@ export const AGREEMENT_GUIDE: Guide = {
 						markedCell("έβδομο", "nominative", "neuter"),
 						"seventh",
 					],
+				],
+				notes: [
+					"Three and four share one form for masculine and feminine; only the neuter is different.",
 				],
 			},
 			examples: [

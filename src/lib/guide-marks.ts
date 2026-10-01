@@ -14,8 +14,8 @@ export const markedCell = (
 	grammaticalCase: GrammaticalCase,
 	gender?: Gender,
 	plural?: boolean,
-	weight?: "deviate" | "anchor",
-): GuideCell => ({ text, weight, marks: [mark(text, grammaticalCase, gender, plural)] });
+	note?: number,
+): GuideCell => ({ text, note, marks: [mark(text, grammaticalCase, gender, plural)] });
 
 /** A cell with marks under some of its runs. */
 export const cellWith = (text: string, ...marks: GuideMark[]): GuideCell => ({ text, marks });

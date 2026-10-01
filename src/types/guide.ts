@@ -18,12 +18,11 @@ export interface GuideMark {
 }
 
 /**
- * A deviating form carries the most weight; the anchor is the form the rest
- * derive from. Marks draw the case, number and gender under runs of the text.
+ * Marks draw the case, number and gender under runs of the text. `note` points a
+ * form that breaks the table's pattern at the reason, by index into the table's
+ * `notes`.
  */
-export type GuideCell =
-	| string
-	| { text: string; weight?: "deviate" | "anchor"; marks?: GuideMark[] };
+export type GuideCell = string | { text: string; marks?: GuideMark[]; note?: number };
 
 export interface GuideColumn {
 	label: string;
@@ -35,6 +34,8 @@ export interface GuideColumn {
 export interface GuideTable {
 	columns: GuideColumn[];
 	rows: GuideCell[][];
+	/** Why the forms marked with a `note` break the pattern, shown under the table. */
+	notes?: string[];
 }
 
 export interface GuideExample {

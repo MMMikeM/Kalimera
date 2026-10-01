@@ -97,14 +97,14 @@ export const ROLES_GUIDE: Guide = {
 				],
 				rows: [
 					[
-						markedCell("ο φίλος", "nominative", "masculine", false, "anchor"),
-						markedCell("η μητέρα", "nominative", "feminine", false, "anchor"),
-						markedCell("το παιδί", "nominative", "neuter", false, "anchor"),
+						markedCell("ο φίλος", "nominative", "masculine", false),
+						markedCell("η μητέρα", "nominative", "feminine", false),
+						markedCell("το παιδί", "nominative", "neuter", false),
 						"Doer",
 					],
 					[
-						markedCell("τον φίλο", "accusative", "masculine", false, "deviate"),
-						markedCell("τη μητέρα", "accusative", "feminine", false, "deviate"),
+						markedCell("τον φίλο", "accusative", "masculine", false, 0),
+						markedCell("τη μητέρα", "accusative", "feminine", false, 0),
 						markedCell("το παιδί", "accusative", "neuter"),
 						"Target",
 					],
@@ -115,11 +115,15 @@ export const ROLES_GUIDE: Guide = {
 						"Doer, a / an",
 					],
 					[
-						markedCell("έναν φίλο", "accusative", "masculine", false, "deviate"),
+						markedCell("έναν φίλο", "accusative", "masculine", false, 1),
 						markedCell("μία μητέρα", "accusative", "feminine"),
 						markedCell("ένα παιδί", "accusative", "neuter"),
 						"Target, a / an",
 					],
+				],
+				notes: [
+					"For the Target, only the masculine and feminine articles change.",
+					"For “a” or “an”, only the masculine changes: ένας becomes έναν.",
 				],
 			},
 			examples: [

@@ -229,12 +229,16 @@ export const JOINING_GUIDE: Guide = {
 					{ label: "Meaning" },
 				],
 				rows: [
-					[{ text: "ποιος", weight: "anchor" }, { text: "ποια", weight: "anchor" }, { text: "ποιο", weight: "anchor" }, "which? who?"],
-					[{ text: "ποιον", weight: "deviate" }, "ποια", "ποιο", "which? as the Target"],
+					["ποιος", "ποια", "ποιο", "which? who?"],
+					[{ text: "ποιον", note: 0 }, "ποια", "ποιο", "which? as the Target"],
 					["ποιοι", "ποιες", "ποια", "which? more than one"],
-					[{ text: "ποιους", weight: "deviate" }, "ποιες", "ποια", "more than one, as the Target"],
-					["πόσος", { text: "πόση", weight: "deviate" }, "πόσο", "how much?"],
+					[{ text: "ποιους", note: 0 }, "ποιες", "ποια", "more than one, as the Target"],
+					["πόσος", { text: "πόση", note: 1 }, "πόσο", "how much?"],
 					["πόσοι", "πόσες", "πόσα", "how many?"],
+				],
+				notes: [
+					"For the Target, only the masculine changes.",
+					"The feminine is πόση, not πόσα as ποια would suggest.",
 				],
 			},
 			examples: [
