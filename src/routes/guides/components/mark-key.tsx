@@ -12,7 +12,7 @@ interface KeyRow {
 
 const ROWS: KeyRow[] = [
 	{
-		axis: "The ends show the job",
+		axis: "The ends show the form",
 		entries: [
 			{ label: "Doer", mark: { case: "nominative", children: "ο" } },
 			{ label: "Target", mark: { case: "accusative", children: "τον" } },
