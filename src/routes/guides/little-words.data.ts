@@ -12,7 +12,7 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 		{
 			id: "forms",
 			title: "The same forms for my, to me and who likes",
-			rule: "μου, σου, του and the rest are short words for people; the table has all seven. The same form does three jobs. After a noun, μου, σου, του mean my, your, his: το σπίτι μου, my house. Before a verb they mean to me, to you, to him: μου μιλάς, you're talking to me. With αρέσει they name who likes it: σου αρέσει; do you like it?",
+			rule: "μου, σου, του and the rest are short words for people. The table has all seven. The same form does three jobs.\n\n- After a noun, it says whose: my, your, his.\n- Before a verb, it says who it's for: to me, to you, to him.\n- With αρέσει, it names who likes something.",
 			table: {
 				columns: [
 					{ label: "Form", greek: true },
@@ -32,18 +32,22 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 			},
 			examples: [
 				{ greek: "Πού είναι τα κλειδιά μου;", english: "Where are my keys?", marks: [mark("μου", "genitive")] },
-				{ greek: "Σου μιλάω.", english: "I'm talking to you." },
-				{ greek: "Μου λείπεις.", english: "I miss you. (literally: you are missing to me)" },
+				{ greek: "Σου μιλάω.", english: "I'm talking to you.", marks: [mark("Σου", "genitive")] },
+				{
+					greek: "Μου λείπεις.",
+					english: "I miss you. (literally: you are missing to me)",
+					marks: [mark("Μου", "genitive")],
+				},
 				{ greek: "Σου αρέσει;", english: "Do you like it?", marks: [mark("Σου", "genitive")] },
 			],
 			details: [
 				{
 					label: "After an adjective",
-					text: "When an adjective comes before the noun, the short word often follows the adjective: το αγαπημένο μου χρώμα.",
+					text: "When an adjective comes before the noun, the short word often follows the adjective instead.",
 					examples: [
 						{
-							greek: "Το αγαπημένο μου χρώμα είναι...",
-							english: "My favourite colour is...",
+							greek: "Το αγαπημένο μου χρώμα είναι το μπλε.",
+							english: "My favourite colour is blue.",
 							marks: [mark("μου", "genitive")],
 						},
 					],
@@ -52,6 +56,11 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 					label: "A second accent",
 					text: "A word stressed on its third-last syllable takes a second accent, on its last syllable, before the short word: η εκπαίδευση, but την εκπαίδευσή μας.",
 					examples: [
+						{
+							greek: "Το τηλέφωνό μου δεν δουλεύει.",
+							english: "My phone isn't working.",
+							marks: [mark("μου", "genitive")],
+						},
 						{
 							greek: "Για την εκπαίδευσή μας πάμε ή στα σχολεία ή στα πανεπιστήμια.",
 							english: "For our education we go either to schools or to universities.",
@@ -65,7 +74,7 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 		{
 			id: "likes",
 			title: "Liking with μου αρέσει",
-			rule: "In Greek the thing you like is the Doer, the one doing the action, and the person who likes takes a short word before the verb: μου, σου, του and the rest (to me, to you, to him). μου αρέσει is literally it pleases me. So the verb agrees with the thing: αρέσει for one thing, αρέσουν for several, αρέσεις when the thing is you.",
+			rule: "μου αρέσει is literally _it pleases me_. The person who likes takes a short word before the verb: μου, σου, του and the rest (to me, to you, to him). The thing liked takes its plain form (the Doer form).\n\nThe verb agrees with the thing liked:\n\n- one thing: αρέσει\n- several things: αρέσουν\n- you: αρέσεις",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -88,14 +97,9 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 						},
 						"I like parks",
 					],
+					[{ text: "μου αρέσεις", weight: "deviate", marks: [mark("μου", "genitive")] }, "I like you"],
 					[cellWith("σου αρέσει;", mark("σου", "genitive")), "do you like it?"],
 					[cellWith("δεν μου αρέσει", mark("μου", "genitive")), "I don't like it"],
-					[{ text: "μου αρέσεις", weight: "deviate", marks: [mark("μου", "genitive")] }, "I like you"],
-					[cellWith("μ' αρέσει", mark("μ'", "genitive")), "I like it"],
-					["Άρεσε;", "did you like it?"],
-					[cellWith("μου φαίνεται", mark("μου", "genitive")), "it seems to me"],
-					[cellWith("μου λείπεις", mark("μου", "genitive")), "I miss you"],
-					[{ text: "δε με νοιάζει", weight: "deviate", marks: [mark("με", "accusative")] }, "I don't care"],
 				],
 			},
 			examples: [
@@ -118,15 +122,43 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 			details: [
 				{
 					label: "Verbs that work the same way",
-					text: "μου φαίνεται (it seems to me) and μου λείπεις (I miss you) work the same way.",
+					text: "φαίνεται (seems) and λείπει (is missing) work the same way: the person takes the short word, and the verb agrees with the thing.",
+					examples: [
+						{
+							greek: "Μου φαίνεται ότι βρέχει.",
+							english: "It seems to me it's raining.",
+							marks: [mark("Μου", "genitive")],
+						},
+						{
+							greek: "Μου λείπεις.",
+							english: "I miss you. (literally: you are missing to me)",
+							marks: [mark("Μου", "genitive")],
+						},
+						{
+							greek: "Μου λείπουν τα παιδιά.",
+							english: "I miss the children.",
+							marks: [mark("Μου", "genitive"), mark("τα παιδιά", "nominative", "neuter", true)],
+						},
+					],
 				},
 				{
 					label: "With νοιάζει",
-					text: "νοιάζει takes the short Target word instead, με rather than μου: δε με νοιάζει, I don't care. The Target is the person or thing the action is done to.",
+					text: "νοιάζει takes the short Target word instead: με rather than μου. The Target is the person or thing the action is done to.",
+					examples: [
+						{
+							greek: "Δε με νοιάζει τι λένε.",
+							english: "I don't care what they say.",
+							marks: [mark("με", "accusative")],
+						},
+					],
 				},
 				{
 					label: "In speech",
-					text: "μου often shortens to μ' before αρέσει: μ' αρέσει. The short word drops out when it's clear who is meant: Άρεσε; did you like it?",
+					text: "μου often shortens to μ' before αρέσει.\n\nThe short word drops out altogether when it's clear who is meant.",
+					examples: [
+						{ greek: "Μ' αρέσει πολύ.", english: "I like it a lot.", marks: [mark("Μ'", "genitive")] },
+						{ greek: "Άρεσε;", english: "Did you like it?" },
+					],
 				},
 			],
 			drills: [],
@@ -142,7 +174,7 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 		{
 			id: "objects",
 			title: "τον, την, το for him, her and it",
-			rule: "A short Target word before the verb stands for me, you, him, her, it, us or them. The Target is the person or thing the action is done to: με βλέπεις; can you see me? For it, τον, την or το copy the gender of the noun: ο καφές, τον πίνω, I'm drinking it. For them, τους is for masculine nouns or a mix, τις for feminine, τα for neuter.",
+			rule: "A short Target word before the verb stands for me, you, him, her, it, us or them. The Target is the person or thing the action is done to.\n\nFor _it_ and _them_, the word copies the gender of the noun it stands for. For a mix of genders, _them_ is masculine.",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -164,6 +196,11 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 			},
 			examples: [
 				{
+					greek: "Ο καφές είναι κρύος, αλλά τον πίνω.",
+					english: "The coffee is cold, but I'm drinking it.",
+					marks: [mark("Ο καφές", "nominative", "masculine"), mark("τον", "accusative", "masculine")],
+				},
+				{
 					greek: "Τον ξυπνάω και τον ταΐζω.",
 					english: "I wake him up and feed him.",
 					marks: [mark("Τον", "accusative", "masculine"), mark("τον", "accusative", "masculine")],
@@ -183,21 +220,27 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 		{
 			id: "own-alone",
 			title: "Mine, and by myself",
-			rule: "For emphasis, δικός goes before the short word for my, your, his (μου, σου, του and the rest): ο δικός μου καφές, my own coffee; είναι δικό μου, it's mine. δικός takes the gender of the thing owned. μόνος with the short word means by myself, and takes the gender of the person.",
+			rule: "For emphasis, δικός goes before the short word for my, your, his (μου, σου, του and the rest). It means my own, or mine, and takes the gender of the thing owned.\n\nμόνος with the short word means by myself. It takes the gender of the person.",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
 					{ label: "Meaning" },
 				],
 				rows: [
-					["είναι δικό μου", "it's mine"],
+					[cellWith("ο δικός μου καφές", mark("ο δικός", "nominative", "masculine")), "my own coffee"],
 					[cellWith("η δική σου τσάντα", mark("η δική", "nominative", "feminine")), "your own bag"],
+					[cellWith("είναι δικό μου", mark("δικό", "nominative", "neuter")), "it's mine"],
 					[cellWith("μόνος μου", mark("μόνος", "nominative", "masculine")), "by myself (a man)"],
 					[cellWith("μόνη μου", mark("μόνη", "nominative", "feminine")), "by myself (a woman)"],
 					[cellWith("μόνοι μας", mark("μόνοι", "nominative", "masculine", true)), "by ourselves"],
 				],
 			},
 			examples: [
+				{
+					greek: "Αυτή η τσάντα είναι δική σου;",
+					english: "Is this bag yours?",
+					marks: [mark("Αυτή η τσάντα", "nominative", "feminine"), mark("δική", "nominative", "feminine")],
+				},
 				{
 					greek: "Δουλεύω μόνος μου.",
 					english: "I work by myself.",
@@ -226,7 +269,7 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 		{
 			id: "long-forms",
 			title: "The long forms εγώ, εμένα and αυτός",
-			rule: "Beside the short words με and μου, Greek has long forms for people. The Doer forms (the Doer is who does the action) are εγώ, εσύ, αυτός and the rest. The verb ending already says who, so εγώ, εσύ and the rest usually drop out: θέλω is I want. They come back for contrast. After a preposition such as για (for), με (with), από (from) or χωρίς (without), the short με (me) and σε (you) can't stand, so use the long εμένα and εσένα, often shortened to μένα and σένα: για μένα, for me, not για με. αυτός, αυτή, αυτό mean he, she, it.",
+			rule: "Beside the short words such as με and μου, Greek has long forms for people. αυτός, αυτή, αυτό mean he, she, it.\n\nThe plain forms (the Doer forms), εγώ, εσύ and the rest, usually drop out, because the verb ending already says who: θέλω is I want. They come back for contrast.\n\nAfter a preposition such as για (for), με (with), από (from) or χωρίς (without), the short με (me) and σε (you) can't stand. Use the long εμένα and εσένα, often shortened to μένα and σένα: για μένα, not για με.",
 			table: {
 				columns: [
 					{ label: "Doer", greek: true },
@@ -277,7 +320,7 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 			details: [
 				{
 					label: "Also this",
-					text: "αυτός, αυτή, αυτό also mean this. The noun after them keeps its article: αυτό το παιδί, this child.",
+					text: "αυτός, αυτή, αυτό also mean this. The noun after them keeps its article.",
 					examples: [
 						{
 							greek: "Ποιο είναι αυτό το παιδί;",
@@ -288,12 +331,20 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 				},
 				{
 					label: "In the plural",
-					text: "For people the plural is αυτοί for men or a mix, αυτές for women only. For things it copies the noun, so αυτά for neuter ones.",
+					text: "- αυτοί for men, or a mix of people\n- αυτές for women only\n- αυτά for neuter things\n\nFor other things, it copies the gender of the noun.",
 					examples: [
 						{
 							greek: "Αυτοί είναι αδέλφια.",
 							english: "They're brother and sister.",
 							marks: [mark("Αυτοί", "nominative", "masculine", true)],
+						},
+						{
+							greek: "Αυτές είναι οι φίλες μου.",
+							english: "They're my friends. (all women)",
+							marks: [
+								mark("Αυτές", "nominative", "feminine", true),
+								mark("οι φίλες", "nominative", "feminine", true),
+							],
 						},
 					],
 				},
@@ -372,7 +423,7 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 		{
 			id: "where-it-goes",
 			title: "Where the little word goes",
-			rule: "The short words for people, such as με (me), το (it) and μου (to me), sit right before the verb, with θα (will), να (to) and δεν (not) in front of both: θα με κοιτάξει, δεν το παίρνει. After a command they follow the verb instead: δώσε μου, κοίτα με.",
+			rule: "The short words for people, such as με (me), το (it) and μου (to me), sit right before the verb. θα (will), να (to) and δεν (not) go in front of both.\n\nAfter a command they follow the verb instead.",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -381,12 +432,11 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 				rows: [
 					[cellWith("θα με κοιτάξει", mark("με", "accusative")), "he will look at me"],
 					[cellWith("δεν το παίρνει", mark("το", "accusative", "neuter")), "he isn't taking it"],
+					[cellWith("θέλω να το δω", mark("το", "accusative", "neuter")), "I want to see it"],
 					[{ text: "δώσε μου", weight: "deviate", marks: [mark("μου", "genitive")] }, "give me"],
 					[{ text: "κοίτα με", weight: "deviate", marks: [mark("με", "accusative")] }, "look at me"],
 					[{ text: "πάρε το", weight: "deviate", marks: [mark("το", "accusative", "neuter")] }, "take it"],
 					[{ text: "άκουσέ μας", weight: "deviate", marks: [mark("μας", "accusative", undefined, true)] }, "listen to us"],
-					[cellWith("μου το δίνει", mark("μου", "genitive"), mark("το", "accusative", "neuter")), "he gives it to me"],
-					[cellWith("με λένε", mark("με", "accusative")), "my name is"],
 				],
 			},
 			examples: [
@@ -399,12 +449,29 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 			details: [
 				{
 					label: "Commands with μη",
-					text: "A command that starts with μη (don't) keeps the short word before the verb: μη με κοιτάς, don't look at me.",
+					text: "A command that starts with μη (don't) keeps the short word before the verb.",
+					examples: [
+						{
+							greek: "Μη με κοιτάς έτσι.",
+							english: "Don't look at me like that.",
+							marks: [mark("με", "accusative")],
+						},
+					],
 				},
 				{
 					label: "Two together",
-					text: "When two come before the verb, the person goes first: μου το δίνει.",
+					text: "When two come before the verb, the person goes first, then the thing.",
 					examples: [
+						{
+							greek: "Μου το δίνει κάθε πρωί.",
+							english: "He gives it to me every morning.",
+							marks: [mark("Μου", "genitive"), mark("το", "accusative", "neuter")],
+						},
+						{
+							greek: "Σου τα φέρνω αύριο.",
+							english: "I'll bring them to you tomorrow.",
+							marks: [mark("Σου", "genitive"), mark("τα", "accusative", "neuter", true)],
+						},
 						{
 							greek: "Μπορούμε να του το δώσουμε;",
 							english: "Can we give it to him?",
@@ -414,11 +481,18 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 				},
 				{
 					label: "με λένε",
-					text: "με λένε, my name is, is literally they call me.",
+					text: "It means my name is, but is literally _they call me_.",
+					examples: [
+						{
+							greek: "Με λένε Μαρία.",
+							english: "My name is Maria.",
+							marks: [mark("Με", "accusative")],
+						},
+					],
 				},
 				{
 					label: "The Target named twice",
-					text: "A Target (the person or thing the action is done to) already named is often picked up again by the short word: τον φίλο μου τον λένε Γιώργο.",
+					text: "A Target (the person or thing the action is done to) already named is often picked up again by the short word before the verb.",
 					examples: [
 						{
 							greek: "Τον φίλο μου τον λένε Γιώργο.",

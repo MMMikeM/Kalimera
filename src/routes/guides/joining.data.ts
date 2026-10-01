@@ -16,7 +16,7 @@ export const JOINING_GUIDE: Guide = {
 		{
 			id: "when-why",
 			title: "Ask, link, point back",
-			rule: "The words for when, why, where and how come in rows of three. The question word asks: πότε; means when? The link word joins two ideas inside one sentence: όταν ήμουν παιδί, when I was a child. The point-back word refers to what was just said: τότε, then. Learn each row together; the table gives all four.",
+			rule: "The words for when, why, where and how come in rows of three.\n\n- Ask: the question word, such as when?\n- Link: joins two ideas inside one sentence, as in when I was a child.\n- Point back: refers to what was just said, such as then.\n\nLearn each row together; the table gives all four.",
 			table: {
 				columns: [
 					{ label: "Ask", greek: true, tone: "honey" },
@@ -43,7 +43,7 @@ export const JOINING_GUIDE: Guide = {
 			details: [
 				{
 					label: "γιατί for because",
-					text: "In speech γιατί can also mean because, after the idea it explains. Only επειδή can start a sentence.",
+					text: "In speech γιατί can also mean because, but only after the idea it explains. To start a sentence with because, use επειδή.",
 					examples: [
 						{ greek: "Δεν βγαίνω, γιατί βρέχει.", english: "I'm not going out, because it's raining." },
 						{ greek: "Επειδή βρέχει, δεν βγαίνω.", english: "Because it's raining, I'm not going out." },
@@ -59,7 +59,7 @@ export const JOINING_GUIDE: Guide = {
 		{
 			id: "if-then",
 			title: "αν … τότε",
-			rule: "αν, if, opens a condition: what has to be true first. τότε, then, picks up the result. τότε can be left out, just as then can in English.",
+			rule: "αν, if, opens a condition: what has to be true first. τότε, then, picks up the result.\n\nτότε can be left out, just as then can in English.",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -67,6 +67,7 @@ export const JOINING_GUIDE: Guide = {
 				],
 				rows: [
 					["αν όχι, τότε δεν ξέρω", "if not, then I don't know"],
+					["αν βρέχει, τότε δεν βγαίνω", "if it rains, then I don't go out"],
 					["αν βρέχει, δεν βγαίνω", "if it rains, I don't go out"],
 				],
 			},
@@ -84,7 +85,7 @@ export const JOINING_GUIDE: Guide = {
 		{
 			id: "thinking",
 			title: "νομίζω ότι, ίσως and μήπως",
-			rule: "Three ways to say what you think or are unsure of. νομίζω (I think) and πιστεύω (I believe) take ότι, that, before a full sentence. English can drop that; Greek normally keeps ότι. ίσως, maybe, goes in front of whatever you are unsure of, in a statement. To ask softly, by any chance, use μήπως in a question.",
+			rule: "Three ways to say what you think or are unsure of.\n\n- νομίζω (I think) and πιστεύω (I believe) take ότι, that, before a full sentence.\n- ίσως, maybe, goes in front of whatever you are unsure of, in a statement.\n- μήπως asks softly, by any chance, in a question.\n\nEnglish can drop that; Greek normally keeps ότι.",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -102,8 +103,11 @@ export const JOINING_GUIDE: Guide = {
 			details: [
 				{
 					label: "ίσως about the future",
-					text: "For a maybe about the future, ίσως commonly takes the short form with no θα. The short form is the one θα takes for a single action: θα πάω, I'll go, so ίσως πάω, maybe I'll go.",
-					examples: [{ greek: "Ίσως πάω.", english: "Maybe I'll go." }],
+					text: "For a maybe about the future, ίσως commonly takes the short form with no θα. The short form is the one θα takes for a single action.",
+					examples: [
+						{ greek: "Θα πάω.", english: "I'll go." },
+						{ greek: "Ίσως πάω.", english: "Maybe I'll go." },
+					],
 				},
 			],
 			drills: [],
@@ -139,7 +143,7 @@ export const JOINING_GUIDE: Guide = {
 			details: [
 				{
 					label: "ή or η",
-					text: "Mind the accent: ή is or; η, with no accent, is the article, the before a feminine noun.",
+					text: "Mind the accent. ή, with the accent, is or. η, with no accent, is the article: the, before a feminine noun.",
 					examples: [{ greek: "Θα έρθει η Μαρία ή η Ελένη;", english: "Will Maria or Eleni come?" }],
 				},
 			],
@@ -156,7 +160,7 @@ export const JOINING_GUIDE: Guide = {
 		{
 			id: "before",
 			title: "πριν and μετά",
-			rule: "πριν means before. Before a verb it takes the short form, the one θα takes for a single action: θα πάω, so πριν πάω, before I go. μετά means after: μετά το σχολείο, after school.",
+			rule: "πριν means before, and μετά means after.\n\nWith a verb, πριν takes the short form: the one θα takes for a single action, as in θα πάω, I'll go.",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -170,6 +174,7 @@ export const JOINING_GUIDE: Guide = {
 			},
 			examples: [
 				{ greek: "Διαβάζω πριν πάω για ύπνο.", english: "I read before I go to sleep." },
+				{ greek: "Μετά το σχολείο πάμε στο πάρκο.", english: "After school we go to the park." },
 			],
 			drills: [],
 			plannedDrills: [
@@ -184,7 +189,7 @@ export const JOINING_GUIDE: Guide = {
 		{
 			id: "which-how-many",
 			title: "ποιος, πόσος and τι",
-			rule: "ποιος asks which or who, and πόσος asks how much or how many. Both change their ending to match the noun they ask about, in gender and in number, as an adjective does: ποιος καφές, ποια μέρα, ποιο σπίτι; πόση ζάχαρη, πόσα παιδιά. The masculine forms change again for the Target, what the action is done to or what follows a word such as με: ποιος becomes ποιον, ποιοι becomes ποιους. τι asks what and never changes.",
+			rule: "Three words ask which, how much and what.\n\n- ποιος asks which or who.\n- πόσος asks how much or how many.\n- τι asks what, and never changes.\n\nποιος and πόσος change their ending to match the noun they ask about, in gender and in number, as an adjective does: ποιος καφές, ποια μέρα, ποιο σπίτι; πόση ζάχαρη, πόσα παιδιά.\n\nThe masculine forms change again for the Target, what the action is done to or what follows a word such as με.",
 			table: {
 				columns: [
 					{ label: "Masculine", greek: true },
@@ -233,7 +238,7 @@ export const JOINING_GUIDE: Guide = {
 		{
 			id: "pou",
 			title: "που for that, who and which",
-			rule: "που, with no accent, joins a second idea to the first. After a noun it means who, which or that, and says more about the noun: ο φίλος που μένει στην Πάφο, the friend who lives in Paphos. After a word for a feeling, such as χαρούμενος (happy), it means that. English can drop that; Greek keeps που. It never changes, whatever the noun.",
+			rule: "που, with no accent, joins a second idea to the first. It never changes, whatever the noun.\n\n- After a noun it means who, which or that, and says more about the noun.\n- After a word for a feeling, such as happy or proud, it means that.\n\nEnglish can drop that; Greek keeps που.",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -255,7 +260,7 @@ export const JOINING_GUIDE: Guide = {
 			details: [
 				{
 					label: "ο οποίος in careful writing",
-					text: "Careful writing sometimes uses ο οποίος, η οποία, το οποίο instead of που. Unlike που, it does match the noun: το καλοκαίρι, το οποίο.",
+					text: "Careful writing sometimes uses ο οποίος, η οποία, το οποίο instead of που. Unlike που, it does match the noun it refers to.",
 					examples: [
 						{
 							greek: "Στη συνέχεια έρχεται το καλοκαίρι, το οποίο περιλαμβάνει τον Ιούνιο, τον Ιούλιο και τον Αύγουστο.",
@@ -281,7 +286,7 @@ export const JOINING_GUIDE: Guide = {
 		{
 			id: "purpose",
 			title: "για να and για να μην",
-			rule: "για να before a verb says what something is for: to, in order to, so that. For so that … not, add μην: για να μην.",
+			rule: "για να before a verb says what something is for: to, in order to, so that.\n\nFor so that … not, add μην after να.",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -306,7 +311,7 @@ export const JOINING_GUIDE: Guide = {
 			details: [
 				{
 					label: "Which verb form after να",
-					text: "After να, use the short form for one action. It is the one θα takes: θα μάθω, so για να μάθω, to learn. Use the present for something ongoing or repeated: για να μην κρυώνουμε, so that we don't get cold.",
+					text: "The verb form after να depends on the action.\n\n- For one action, use the short form, the one θα takes: θα μάθω, so για να μάθω.\n- For something ongoing or repeated, use the present: για να μην κρυώνουμε.",
 				},
 			],
 			confuse: {
@@ -326,7 +331,7 @@ export const JOINING_GUIDE: Guide = {
 		{
 			id: "but-so-also",
 			title: "αλλά, όμως, λοιπόν, επίσης",
-			rule: "Four common words that link one idea to the next. αλλά, but, starts the second of two ideas. όμως also means but, and it can come later, after the first word or phrase. λοιπόν means so or well, and moves the talk on. επίσης means also.",
+			rule: "Four common words link one idea to the next.\n\n- αλλά, but, starts the second of two ideas.\n- όμως also means but, and it can come later, after the first word or phrase.\n- λοιπόν, so or well, moves the talk on.\n- επίσης means also.",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -349,6 +354,7 @@ export const JOINING_GUIDE: Guide = {
 					english: "In Greece, though, the winter is a little milder.",
 				},
 				{ greek: "Λοιπόν, τι θα φάμε;", english: "So, what shall we eat?" },
+				{ greek: "Μιλάω επίσης λίγα ελληνικά.", english: "I also speak a little Greek." },
 			],
 			details: [
 				{

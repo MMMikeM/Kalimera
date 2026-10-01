@@ -7,6 +7,7 @@ import { DRILL_REGISTRY } from "@/routes/practice/drill-catalogue.data";
 import type { Guide, GuideExample, GuideSection as GuideSectionData, GuideTone, PlannedDrill } from "@/types/guide";
 
 import { resolveSectionRef } from "../guides.data";
+import { GuideProse } from "./guide-prose";
 import { GUIDE_TONE } from "./guide-tone";
 import { GuideTable } from "./guide-table";
 import { MarkedPhrase } from "./marked-phrase";
@@ -19,9 +20,7 @@ const ConfuseBox = ({ guide, section, tone }: { guide: Guide; section: GuideSect
 	return (
 		<aside className={cn("rounded-md p-4 text-sm text-stone-700", GUIDE_TONE[tone].column)}>
 			<p className="mb-1 font-semibold text-stone-900">Don't confuse</p>
-			<p>
-				<ProseWithGreek text={section.confuse.text} />
-			</p>
+			<GuideProse text={section.confuse.text} className="space-y-2 leading-normal" />
 			{target ? (
 				<Link
 					to="/guides/$guide"
@@ -70,7 +69,9 @@ const PracticeLinks = ({
 							)}
 						>
 							<Zap size={14} aria-hidden="true" />
-							<ProseWithGreek text={drill.title} />
+							<span>
+								<ProseWithGreek text={drill.title} />
+							</span>
 						</Link>
 					</li>
 				);
@@ -82,7 +83,9 @@ const PracticeLinks = ({
 					className="inline-flex min-h-11 items-center gap-1.5 rounded-md border border-dashed border-stone-300 px-3 text-sm text-stone-600"
 				>
 					<Hourglass size={14} aria-hidden="true" />
-					<ProseWithGreek text={drill.title} />
+					<span>
+								<ProseWithGreek text={drill.title} />
+							</span>
 					<span className="text-xs text-stone-500">· planned</span>
 				</li>
 			))}
@@ -98,7 +101,9 @@ const ExampleList = ({ examples, ruleClass }: { examples?: GuideExample[]; ruleC
 					<p>
 						<MarkedPhrase text={example.greek} marks={example.marks} size="lg" />
 					</p>
-					<p className="text-sm text-stone-600">{example.english}</p>
+					<p className="text-sm text-stone-600">
+						<ProseWithGreek text={example.english} />
+					</p>
 				</li>
 			))}
 		</ul>
@@ -130,9 +135,7 @@ export const GuideSection = ({
 			</header>
 
 			<div className="space-y-5 px-6 py-5 sm:py-6">
-				<p className="max-w-2xl leading-relaxed text-stone-700">
-					<ProseWithGreek text={section.rule} />
-				</p>
+				<GuideProse text={section.rule} />
 
 				{section.table ? <GuideTable table={section.table} /> : null}
 
@@ -143,9 +146,7 @@ export const GuideSection = ({
 						<h3 className="font-semibold text-stone-900">
 							<ProseWithGreek text={detail.label} />
 						</h3>
-						<p className="max-w-2xl leading-relaxed text-stone-700">
-							<ProseWithGreek text={detail.text} />
-						</p>
+						<GuideProse text={detail.text} />
 						<ExampleList examples={detail.examples} ruleClass={tone.exampleRule} />
 					</div>
 				))}
