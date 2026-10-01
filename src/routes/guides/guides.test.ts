@@ -4,7 +4,7 @@ import { DRILL_REGISTRY } from "@/routes/practice/drill-catalogue.data";
 import { countLessons, getLessonNotes } from "@/server/fns/guides.server";
 import type { GuideCell, GuideSection } from "@/types/guide";
 
-import { GUIDES, resolveSectionRef, sectionExamples } from "./guides.data";
+import { GUIDES, resolveSectionRef, sectionExamples, sectionTables } from "./guides.data";
 
 describe("guides", () => {
 	it("gives every guide and every section within it a unique id", () => {
@@ -62,7 +62,7 @@ describe("guides", () => {
 		for (const g of GUIDES) {
 			for (const s of g.sections) {
 				for (const e of sectionExamples(s)) check(`${g.slug}/${s.id}`, e.greek, e.marks);
-				for (const row of s.table?.rows ?? []) {
+				for (const row of sectionTables(s).flatMap((t) => t.rows)) {
 					for (const cell of row) if (typeof cell !== "string") check(`${g.slug}/${s.id}`, cell.text, cell.marks);
 				}
 			}
@@ -111,12 +111,13 @@ describe("guides", () => {
 	// too often it stops standing out.
 	describe("table notes", () => {
 		const tables = GUIDES.flatMap((g) =>
-			g.sections.flatMap((s) => {
-				if (!s.table) return [];
-				const noteOf = (cell: GuideCell) => (typeof cell === "string" ? undefined : cell.note);
-				const used = s.table.rows.flat().map(noteOf).filter((n) => n !== undefined);
-				return [{ at: `${g.slug}/${s.id}`, notes: s.table.notes ?? [], used }];
-			}),
+			g.sections.flatMap((s) =>
+				sectionTables(s).map((table) => {
+					const noteOf = (cell: GuideCell) => (typeof cell === "string" ? undefined : cell.note);
+					const used = table.rows.flat().map(noteOf).filter((n) => n !== undefined);
+					return { at: `${g.slug}/${s.id}`, notes: table.notes ?? [], used };
+				}),
+			),
 		);
 
 		it("points every marked form at a note that exists", () => {
@@ -135,7 +136,7 @@ describe("guides", () => {
 	it("gives every table row one cell per column", () => {
 		const ragged = GUIDES.flatMap((g) =>
 			g.sections
-				.filter((s) => s.table?.rows.some((row) => row.length !== s.table?.columns.length))
+				.filter((s) => sectionTables(s).some((t) => t.rows.some((row) => row.length !== t.columns.length)))
 				.map((s) => `${g.slug}/${s.id}`),
 		);
 		expect(ragged).toEqual([]);

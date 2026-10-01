@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vite-plus/test";
 
 import { NOUN_SUBJECT_BY_LEMMA, subjectTagsFor } from "./noun-subjects";
+import { NOUN_ITEMS } from "./nouns";
 
 const DAYS = ["Δευτέρα", "Τρίτη", "Τετάρτη", "Πέμπτη", "Παρασκευή", "Σάββατο", "Κυριακή"];
 const MONTHS = [
@@ -65,6 +66,10 @@ describe("noun subjects", () => {
 		["αγάπη", "ideas-feelings"],
 	])("files the former core noun %s under %s", (lemma, subject) => {
 		expect(subjectTagsFor(lemma)).toEqual([subject]);
+	});
+
+	it.each(["γιατρός", "δάσκαλος", "οδηγός", "ηθοποιός"])("files the job %s under work-study, not people", (lemma) => {
+		expect(NOUN_ITEMS.find((item) => item.vocab.greekText === lemma)?.tags).toEqual(["work-study"]);
 	});
 
 	it("assigns every lemma exactly one subject", () => {
