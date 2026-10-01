@@ -49,7 +49,7 @@ export interface GuideExample {
  */
 export interface GuideDetail {
 	label: string;
-	/** English prose, like `rule`. */
+	/** English prose, formatted like `rule`. */
 	text: string;
 	examples?: GuideExample[];
 }
@@ -60,7 +60,8 @@ export interface GuideSection {
 	/**
 	 * The core rule, readable by someone who lands on this section alone: it names
 	 * what it teaches and defines the terms it uses. English prose; Greek runs
-	 * inside it are rendered as Greek automatically.
+	 * inside it are rendered as Greek automatically. A blank line starts a new
+	 * paragraph, lines starting "- " form a list, and _word_ is emphasised.
 	 */
 	rule: string;
 	table?: GuideTable;

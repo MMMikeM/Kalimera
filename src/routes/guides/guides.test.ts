@@ -81,6 +81,18 @@ describe("guides", () => {
 		expect(repeated).toEqual([]);
 	});
 
+	// An unmatched _ renders literally instead of as emphasis
+	it("pairs every emphasis marker in guide text", () => {
+		const odd = GUIDES.flatMap((g) =>
+			g.sections.flatMap((s) =>
+				[s.rule, ...(s.details ?? []).map((d) => d.text), s.confuse?.text ?? ""]
+					.filter((text) => (text.match(/_/g) ?? []).length % 2 !== 0)
+					.map(() => `${g.slug}/${s.id}`),
+			),
+		);
+		expect(odd).toEqual([]);
+	});
+
 	it("gives every table row one cell per column", () => {
 		const ragged = GUIDES.flatMap((g) =>
 			g.sections
