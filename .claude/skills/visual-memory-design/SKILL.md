@@ -21,7 +21,7 @@ Two principles sit under every rule:
 - Gutter between elements inside a card: **8-16px** (a working default; the visual-angle derivation often attached to this figure does not survive the arithmetic).
 - Focal points per screen: **1**.
 - First spaced-repetition review: **1-4 hours** after exposure, not next day (stipulated, and currently blocked on a schema change rather than a constant to tune; see scheduling).
-- Weights in a paradigm table: **3** (deviating, anchor, receded).
+- Marked pattern breaks in a table: **at most 3**, each with its reason.
 
 ## Layout and salience
 
@@ -133,7 +133,7 @@ Wherever an axis is deployed, establish the colour-to-role key visibly near the 
 
 ## Typography
 
-Legibility, not desirable difficulty. Choose fonts for legibility at target sizes, keep the typographic palette small, and give each typographic signal one job. Weight marks the deviating cell or target morpheme (see tables). Stress is underlined in the pronunciation gloss, never bolded, because bold is already spoken for in paradigm tables; `<Pronunciation>` does this itself. Italics are free for loanwords. Sans Forgetica and disfluent fonts failed to replicate across multiple independent labs; harder-to-read aids frustration, not retention. Size above the legibility threshold buys nothing except the feeling of importance.
+Legibility, not desirable difficulty. Choose fonts for legibility at target sizes, keep the typographic palette small, and give each typographic signal one job. Stress is underlined in the pronunciation gloss, never bolded; `<Pronunciation>` does this itself. Pattern breaks in tables are marked with a symbol and a reason, not with weight (see tables). Italics are free for loanwords. Sans Forgetica and disfluent fonts failed to replicate across multiple independent labs; harder-to-read aids frustration, not retention. Size above the legibility threshold buys nothing except the feeling of importance.
 
 ## Motion
 
@@ -167,23 +167,22 @@ The reason to use a table rather than a list is vertical comparison: running the
 
 Keep the gloss in its own column adjacent to the Greek; send only chrome (expand toggles, counts) to the margin. A gloss pushed to the far edge by `justify-between` is the translation-on-another-screen failure at smaller scale.
 
-### Three weights, not two
+### Mark the break, and say why
 
-A paradigm grid needs an anchor even when nothing in it is surprising.
+Mark a form that breaks the table's pattern with a superscript symbol (*, †) and give the reason directly under the table, inside the same card. Every other cell stays at full strength.
 
-- **Deviating cells:** heaviest. The forms you would get wrong.
-- **The anchor cell** (usually 1sg): mid weight. The form you already know and derive the rest from.
-- **Everything predictable:** receded.
+This replaced a three-weight scheme (bold deviation, medium anchor, receded grey), retired in October 2026. In practice the weights carried no explanation, so the reader could see that a form was different but not how or why. Medium and semibold were also too close to tell apart, and greying the predictable cells kept greying out the very forms a section existed to teach; once tagged honestly, weights survived in only four of the guides' 73 tables. The Reference noun tables (`nouns-section.tsx`) still give their plain form a medium weight; treat that as legacy, not the rule.
 
-With only two weights, a fully regular paradigm greys out entirely and the eye has nowhere to land; the table reads as disabled rather than as "learn row one, the rest follow".
-
-The three levels must be visibly distinct. Medium against semibold, both near-black, reads as one "bold" and erases the anchor (the guides shipped this way and confused the reader). Weights belong to grids of forms only, where there is a pattern to break; a list of phrases beside their meanings stays unweighted. "Deviating" has one meaning everywhere: the form you would get wrong by following the table's pattern, never "important" or "the row this section is about". Say so once near the top of the page, as for a colour key; the guides enforce at most three deviations and one anchor row per weighted table in `guides.test.ts`.
+- Mark breaks only in grids of forms, where there is a pattern to break. A list of phrases beside their meanings has none.
+- "Breaks the pattern" means one thing: the form you would get wrong by following what the rest of the table does. Never "important", never "the row this section is about".
+- Marks single out a few forms against a regular background. If most of a table would need one, there is no pattern to break: mark nothing and let the prose carry it.
+- The guides enforce this in `guides.test.ts`: every marked form has a note, every note is used, and at most three forms per table are marked.
 
 ### The ceiling counts surprises, not cells
 
-A 6×3 paradigm is 18 cells, which looks like a flagrant breach of the 3-unit ceiling. It is not, provided the derivable cells are visibly receded: the learning units are the pattern (one chunk) plus the cells that deviate from it. Keep the deviations at or under the ceiling and the grid is legitimate. This is Von Restorff isolation applied cell-wise, and it is why a table may carry more on screen than a card may.
+A 6×3 paradigm is 18 cells, which looks like a flagrant breach of the 3-unit ceiling. It is not, provided the pattern is regular and its breaks are marked: the learning units are the pattern (one chunk) plus the cells that break it. Keep the marked breaks at or under the ceiling and the grid is legitimate. This is Von Restorff isolation applied cell-wise, and it is why a table may carry more on screen than a card may.
 
-Corollary: never encode the same fact twice. If the grid already bolds the irregular forms, do not also list them above it. Two channels for one fact read as two facts, and the redundancy spends exactly the salience the focal-point rule is rationing.
+Corollary: never encode the same fact twice. If the grid already marks the irregular forms with their reason, do not also list them above it. Two channels for one fact read as two facts, and the redundancy spends exactly the salience the focal-point rule is rationing.
 
 ### Long tables need named sub-groups, not scrolling
 
@@ -251,7 +250,7 @@ A streak can be seven days of re-encounters at intervals too short to measure re
 - **"Calm minimalist pale everything" as ADHD-friendly.** Inverts the requirement: loud target, quiet surround.
 - **Grammar colours as decoration**, whether around non-matching content (the colour becomes a lie) or on chrome that makes no claim (the association dilutes). Either way the system breaks.
 - **Flex rows where a table is meant.** Ragged columns destroy the vertical comparison that is the only reason to use a table.
-- **Encoding the same fact twice** (bolding the irregular cells and listing them above the table). Two channels for one fact read as two facts.
+- **Encoding the same fact twice** (marking the irregular cells and listing them above the table). Two channels for one fact read as two facts.
 - **Colour keys at the bottom of the page.** Seen only after the confusion they should have prevented.
 - **Going neutral on an intersection page while a clean separation mechanism is available.** Wastes the global tokens; neutral as a genuine last resort is correct.
 - **Retrieval on first exposure.** The worst case for this profile; see errorless first exposure.
@@ -267,7 +266,7 @@ A streak can be seven days of re-encounters at intervals too short to measure re
 5. Is the colour key visible near the top of the page?
 6. Will this layout be identical for the learner next month?
 7. Are there more than 3 new learning units in the perceptual frame?
-8. If it is a table: do the columns align, is there an anchor cell, and are derivable cells receded so only deviations count against the ceiling?
+8. If it is a table: do the columns align, and are its few pattern breaks marked with their reason so only they count against the ceiling?
 9. If motion is involved: is it procedural, or a learner-triggered one-shot in chrome that honours reduced motion? If neither, cut it.
 10. Does the first exposure demand retrieval, or show everything first?
 11. If the answer to "why is this here" is "because it looks nicer": it is decoration. Reconsider.

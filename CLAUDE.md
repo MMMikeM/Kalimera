@@ -107,7 +107,7 @@ Two transliteration helpers exist with **opposite jobs**. Using the wrong one sh
   tone. Its gender and case tones (`tone="masculine"`, `tone="genitive"`) are legacy
   grammar colour; new work marks grammar with `<GrammarMark>`.
 - `<Pronunciation greek={…} />` — the gloss. Derives its own string and underlines the
-  stressed run. Underline, not bold: weight is load-bearing in paradigm tables.
+  stressed run. Underline, not bold: bold reads as emphasis on the form, not as stress.
 - `<GreekGloss greek={…} />` — the two paired.
 - `<GrammarMark case={…}>` — a Greek phrase with its case, number and gender marked
   beneath it. See "Grammar Marks, Not Grammar Colour".
