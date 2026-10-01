@@ -73,7 +73,7 @@ export const AGREEMENT_GUIDE: Guide = {
 			],
 			table: {
 				columns: [
-					{ label: "Job" },
+					{ label: "Form" },
 					{ label: "Phrase", greek: true },
 				],
 				rows: [

@@ -26,7 +26,7 @@ export const NOUNS_GUIDE: Guide = {
 			],
 			table: {
 				columns: [
-					{ label: "Job" },
+					{ label: "Form" },
 					{ label: "One", greek: true },
 					{ label: "More than one", greek: true },
 				],
@@ -60,7 +60,7 @@ export const NOUNS_GUIDE: Guide = {
 			],
 			table: {
 				columns: [
-					{ label: "Job" },
+					{ label: "Form" },
 					{ label: "One", greek: true },
 					{ label: "More than one", greek: true },
 				],
@@ -97,7 +97,7 @@ export const NOUNS_GUIDE: Guide = {
 			],
 			table: {
 				columns: [
-					{ label: "Job" },
+					{ label: "Form" },
 					{ label: "One", greek: true },
 					{ label: "More than one", greek: true },
 				],
@@ -149,7 +149,7 @@ export const NOUNS_GUIDE: Guide = {
 			],
 			table: {
 				columns: [
-					{ label: "Job" },
+					{ label: "Form" },
 					{ label: "One", greek: true },
 					{ label: "More than one", greek: true },
 				],
@@ -186,7 +186,7 @@ export const NOUNS_GUIDE: Guide = {
 			],
 			table: {
 				columns: [
-					{ label: "Job" },
+					{ label: "Form" },
 					{ label: "One", greek: true },
 					{ label: "More than one", greek: true },
 				],

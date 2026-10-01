@@ -7,20 +7,20 @@ export const ROLES_GUIDE: Guide = {
 	title: "Who does what",
 	greek: "Ποιος κάνει τι",
 	description: "Doer, Target, Owner, and the article that shows them",
-	idea: "A Greek noun changes its article and ending to show its job in the sentence. The Doer does it, the Target has it done to it, the Owner owns something. The ending tells you who did what, whatever the word order.",
+	idea: "A Greek noun changes its article and ending to show its job in the sentence. The Doer does it, the Target has it done to it, the Owner owns something. Where the ending shows, it tells you who did what, whatever the word order.",
 	sections: [
 		{
 			id: "overview",
 			title: "Three jobs a noun can do",
 			rule: [
-				"Every noun in a sentence does one of three jobs.",
+				"Most nouns in a sentence do one of three jobs.",
 				[
 					"The Doer _does_ the action.",
 					"The Target is who or what the action is done to.",
 					"The Owner is who something belongs to.",
 				],
-				"A Greek noun shows its job by changing its article and often its ending. Because the job is marked on the word, it stays the same whatever the word order.",
-				"The Doer form is also the noun's plain form, the one you find in a dictionary. A noun only changes when it takes another job, as a Target or an Owner. These jobs come with action verbs like βλέπω, I see. A few verbs, such as είμαι, I am, only link one noun to another, and the noun after them keeps its plain form: see Linking verbs, below.",
+				"A Greek noun shows its job by changing its form: its article and often its ending. Each form is named after its main job, and the marks under the Greek show the form. Because the form is on the word, you can find the job whatever the word order. When the form doesn't show, ask the table's question.",
+				"The Doer form is also the noun's plain form, the one you find in a dictionary. The noun after είμαι, I am, keeps it too: see Linking verbs, below.",
 			],
 			table: {
 				columns: [
@@ -29,29 +29,63 @@ export const ROLES_GUIDE: Guide = {
 					{ label: "Asks" },
 				],
 				rows: [
-					[cellWith("Ο Γιάννης τρώει.", mark("Ο Γιάννης", "nominative", "masculine")), "Doer", "who does it?"],
-					[cellWith("Βλέπω τον Γιάννη.", mark("τον Γιάννη", "accusative", "masculine")), "Target", "who or what gets it?"],
-					[cellWith("Το σπίτι του Γιάννη.", mark("του Γιάννη", "genitive", "masculine")), "Owner", "whose is it?"],
+					[cellWith("Ο Γιάννης τρώει.", mark("Ο Γιάννης", "nominative", "masculine")), "Doer", "who eats?"],
+					[cellWith("Βλέπω τον Γιάννη.", mark("τον Γιάννη", "accusative", "masculine")), "Target", "I see who?"],
+					[cellWith("Το σπίτι του Γιάννη.", mark("του Γιάννη", "genitive", "masculine")), "Owner", "whose house?"],
 				],
 			},
 			examples: [
 				{
-					greek: "Ο άντρας θέλει πορτοκαλάδα.",
-					english: "The man wants orangeade.",
-					marks: [mark("Ο άντρας", "nominative", "masculine"), mark("πορτοκαλάδα", "accusative", "feminine")],
+					greek: "Ο άντρας θέλει έναν καφέ.",
+					english: "The man wants a coffee.",
+					marks: [mark("Ο άντρας", "nominative", "masculine"), mark("έναν καφέ", "accusative", "masculine")],
 				},
 				{
-					greek: "Το παιδί τρώει καρπούζι.",
-					english: "The child is eating watermelon.",
-					marks: [mark("Το παιδί", "nominative", "neuter"), mark("καρπούζι", "accusative", "neuter")],
+					greek: "Τον Γιάννη βλέπει η Μαρία.",
+					english: "It's Yannis that Maria sees. (τον marks the Target, even first)",
+					marks: [mark("Τον Γιάννη", "accusative", "masculine"), mark("η Μαρία", "nominative", "feminine")],
 				},
 			],
 			details: [
 				{
+					label: "The Doer is often left out",
+					text: "Greek usually leaves out the Doer when it is I, you, we or they, because the verb's ending already says who. Βλέπω τον Γιάννη has no Doer word: the -ω of βλέπω means I.",
+					examples: [
+						{
+							greek: "Βλέπουν μια ταινία.",
+							english: "They're watching a film. (-ουν means they)",
+							marks: [mark("μια ταινία", "accusative", "feminine")],
+						},
+					],
+				},
+				{
+					label: "When the form doesn't show",
+					text: [
+						"Not every noun shows its form:",
+						[
+							"neuter nouns look the same as Doer and Target: το παιδί, το παιδί",
+							"feminine nouns change only the article, so with μια, or no article, nothing changes",
+						],
+						"Then ask the question instead. The man wants what? Orangeade, so πορτοκαλάδα is the Target.",
+					],
+					examples: [
+						{
+							greek: "Ο άντρας θέλει πορτοκαλάδα.",
+							english: "The man wants orangeade. (πορτοκαλάδα looks like its plain form)",
+							marks: [mark("Ο άντρας", "nominative", "masculine"), mark("πορτοκαλάδα", "accusative", "feminine")],
+						},
+						{
+							greek: "Το παιδί τρώει καρπούζι.",
+							english: "The child is eating watermelon. (both neuter, so ask: the child eats what?)",
+							marks: [mark("Το παιδί", "nominative", "neuter"), mark("καρπούζι", "accusative", "neuter")],
+						},
+					],
+				},
+				{
 					label: "Linking verbs: είμαι and γίνομαι",
 					text: [
 						"είμαι (I am) and γίνομαι (I become) don't act on anything. They link a noun to what it is or becomes, like an equals sign: both sides are the same person or thing.",
-						"Try the table's question, who or what gets it? With βλέπω, I see, the doctor gets seen, so γιατρός changes to its Target form. With είμαι nothing is received, so there is no Target. The noun after it is neither a Target nor an Owner, so it stays in the plain form.",
+						"Compare βλέπω, I see. I see who? The doctor, who gets seen, so γιατρός takes the Target form. I am what? also has an answer, a doctor, but the doctor is me, not something I act on. So there is no Target, and γιατρός keeps the plain form. It is in the Doer form without being the Doer: the Doer is I, in the verb's ending.",
 						"In sentences you will meet them as είναι, is (from είμαι), and, after να, γίνει, become (from γίνομαι).",
 					],
 					examples: [
@@ -62,22 +96,26 @@ export const ROLES_GUIDE: Guide = {
 						},
 						{
 							greek: "Είμαι γιατρός.",
-							english: "I am a doctor. (plain form: nothing is received)",
+							english: "I am a doctor. (plain form: the doctor is me)",
 							marks: [mark("γιατρός", "nominative", "masculine")],
 						},
 						{
 							greek: "Η Χρυσάνθη είναι η μητέρα.",
-							english: "Chrysanthi is the mother. (είναι, from είμαι)",
+							english: "Chrysanthi is the mother. (είναι, from είμαι; both sides in the plain form)",
 							marks: [mark("Η Χρυσάνθη", "nominative", "feminine"), mark("η μητέρα", "nominative", "feminine")],
 						},
 						{
 							greek: "Ο γιος μου θέλει να γίνει γιατρός.",
 							english: "My son wants to become a doctor. (γίνει, from γίνομαι)",
-							marks: [mark("Ο γιος", "nominative", "masculine"), mark("γιατρός", "nominative", "masculine")],
+							marks: [mark("Ο γιος", "nominative", "masculine"), mark("μου", "genitive"), mark("γιατρός", "nominative", "masculine")],
 						},
 					],
 				},
 			],
+			confuse: {
+				text: "The Target form is also used where nothing is done to the noun: for times, την Κυριακή, on Sunday, and after a preposition, στην Αθήνα, to Athens. Neither is a Target.",
+				section: "target",
+			},
 			drills: ["articles-paradigm", "nominal-phrase-doer", "nominal-all-phrases"],
 		},
 		{
@@ -90,35 +128,35 @@ export const ROLES_GUIDE: Guide = {
 			],
 			table: {
 				columns: [
+					{ label: "Form" },
 					{ label: "Masculine", greek: true },
 					{ label: "Feminine", greek: true },
 					{ label: "Neuter", greek: true },
-					{ label: "Job" },
 				],
 				rows: [
 					[
+						"Doer",
 						markedCell("ο φίλος", "nominative", "masculine", false),
 						markedCell("η μητέρα", "nominative", "feminine", false),
 						markedCell("το παιδί", "nominative", "neuter", false),
-						"Doer",
 					],
 					[
+						"Target",
 						markedCell("τον φίλο", "accusative", "masculine", false, 0),
 						markedCell("τη μητέρα", "accusative", "feminine", false, 0),
 						markedCell("το παιδί", "accusative", "neuter"),
-						"Target",
 					],
 					[
+						"Doer, “a”",
 						markedCell("ένας φίλος", "nominative", "masculine"),
 						markedCell("μία μητέρα", "nominative", "feminine"),
 						markedCell("ένα παιδί", "nominative", "neuter"),
-						"Doer, a / an",
 					],
 					[
+						"Target, “a”",
 						markedCell("έναν φίλο", "accusative", "masculine", false, 1),
 						markedCell("μία μητέρα", "accusative", "feminine"),
 						markedCell("ένα παιδί", "accusative", "neuter"),
-						"Target, a / an",
 					],
 				],
 				notes: [
@@ -134,7 +172,7 @@ export const ROLES_GUIDE: Guide = {
 				},
 				{
 					greek: "Βλέπουν μια ταινία στο σινεμά.",
-					english: "They're watching a film at the cinema.",
+					english: "They're watching a film at the cinema. (στο is σε + το; after σε, the Target form)",
 					marks: [mark("μια ταινία", "accusative", "feminine"), mark("στο σινεμά", "accusative", "neuter")],
 				},
 				{
@@ -174,15 +212,16 @@ export const ROLES_GUIDE: Guide = {
 		},
 		{
 			id: "target",
-			title: "The Target for objects, names and times",
+			title: "The Target form: objects, times, prepositions",
 			rule: [
 				"The Target is what the action is done to. For this job a noun leaves its plain form, the one in the dictionary, which is also the Doer form. The article changes, except in the neuter, and masculine nouns often change their ending too.",
-				"Three kinds of word take the Target form:",
+				"The Target form has three uses:",
 				[
-					"whatever the verb acts on",
-					"names, which change like any other noun",
+					"whatever the verb acts on, including names, which change like any other noun",
 					"times, with no word for “on” or “in”",
+					"after a preposition, such as σε, με, για or από",
 				],
+				"Only the first is a Target. A time, or a phrase after a preposition, answers when?, where? or how?, and nothing is done to it. They watch what? A film: the Target. They watch where? At the cinema: extra detail.",
 				"Months are masculine, so they take τον.",
 			],
 			table: {
@@ -215,9 +254,9 @@ export const ROLES_GUIDE: Guide = {
 					marks: [mark("Το Σάββατο", "accusative", "neuter"), mark("τους φίλους", "accusative", "masculine", true)],
 				},
 				{
-					greek: "Το βράδυ βγαίνουν έξω.",
-					english: "In the evening they go out.",
-					marks: [mark("Το βράδυ", "accusative", "neuter")],
+					greek: "Πάω στην Αθήνα με τον φίλο μου.",
+					english: "I'm going to Athens with my friend. (Target forms after σε and με, but no Target)",
+					marks: [mark("στην Αθήνα", "accusative", "feminine"), mark("τον φίλο", "accusative", "masculine")],
 				},
 				{
 					greek: "Την επόμενη εβδομάδα πάμε διακοπές.",
@@ -249,18 +288,14 @@ export const ROLES_GUIDE: Guide = {
 			],
 			table: {
 				columns: [
+					{ label: "Form" },
 					{ label: "One", greek: true },
 					{ label: "More than one", greek: true },
-					{ label: "Job" },
 				],
 				rows: [
-					[markedCell("ο γιατρός", "nominative", "masculine", false), markedCell("οι γιατροί", "nominative", "masculine", true), "Doer"],
-					[markedCell("τον γιατρό", "accusative", "masculine"), markedCell("τους γιατρούς", "accusative", "masculine", true), "Target"],
-					[
-						markedCell("του γιατρού", "genitive", "masculine", false),
-						markedCell("των γιατρών", "genitive", "masculine", true),
-						"Owner",
-					],
+					["Doer", markedCell("ο γιατρός", "nominative", "masculine", false), markedCell("οι γιατροί", "nominative", "masculine", true)],
+					["Target", markedCell("τον γιατρό", "accusative", "masculine"), markedCell("τους γιατρούς", "accusative", "masculine", true)],
+					["Owner", markedCell("του γιατρού", "genitive", "masculine", false), markedCell("των γιατρών", "genitive", "masculine", true)],
 				],
 			},
 			examples: [
