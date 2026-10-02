@@ -277,7 +277,7 @@ Keep it before a vowel, which the ν runs into, or a hard stop, which the ν ble
 - κ, π, τ, ξ, ψ: τη**ν** πόρτα, τη**ν** ψυχή
 - γκ, μπ, ντ, τσ, τζ: τη**ν** μπάλα
 
-Drop it before a sound you can stretch out (β, γ, δ, ζ, θ, λ, μ, ν, ρ, σ, φ, χ): τη μητέρα, δε θέλω. Dropping it is the standard, but keeping it is never wrong.
+Drop it before a sound you can stretch out (β, γ, δ, ζ, θ, λ, μ, ν, ρ, σ, φ, χ): τη μητέρα, δε θέλω. Dropping it is the standard, though you will often see it kept.
 
 τον and έναν always keep their -ν, since without it they would look neuter.
 

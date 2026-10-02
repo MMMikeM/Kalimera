@@ -251,7 +251,7 @@ export const SCALES_GUIDE: Guide = {
 			details: [
 				{
 					label: "δε or δεν",
-					text: "δεν follows the same rule as την, set out in Who does what, under the article: the -ν stays before a vowel or a hard stop, δεν πάω, and drops before a sound you can stretch out, δε θέλω. Keeping it is never wrong, and you will often see δεν everywhere.",
+					text: "δεν follows the same rule as την, set out in Who does what, under the article: the -ν stays before a vowel or a hard stop, δεν πάω, and drops before a sound you can stretch out, δε θέλω. Dropping it is the standard, though you will often see δεν kept everywhere.",
 				},
 				{
 					label: "Nothing-word first",
