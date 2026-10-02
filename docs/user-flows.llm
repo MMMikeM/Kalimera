@@ -172,11 +172,11 @@ take the base palette and claim nothing.
 </route>
 
 <route path="/guides/:guide">
-<purpose>One guide: a key to the grammar marks (when the guide uses them), a contents list, then numbered sections, each with a core rule that stands on its own, one table, examples, labelled details for exceptions and side rules (each with its own examples), an optional don't-confuse link, its drills and any planned drills (stubs for practice not built yet, shown unlinked). Each guide has its own base-palette tone for its chrome</purpose>
+<purpose>One guide: a key to the grammar marks (when the guide uses them), a contents list, then numbered sections, each with a core rule that stands on its own, a table, examples, labelled details for exceptions and side rules (each with its own examples, and a table where one helps), an optional don't-confuse link, its drills and any planned drills (stubs for practice not built yet, shown unlinked). Each guide has its own base-palette tone for its chrome</purpose>
 <file>src/routes/guides/$guide.tsx, components in guides/components/</file>
 <data-source>Each guide owns src/routes/guides/&lt;slug&gt;.data.ts; guides.data.ts only orders them. Greek phrases carry `marks`, drawn with &lt;GrammarMark&gt;</data-source>
-<guard>src/routes/guides/guides.test.ts fails on an unknown drill id, a broken don't-confuse link, a mark whose text is missing from its Greek, a lesson note whose `section` names no real section, or a planned drill whose id a real drill already has</guard>
-<note>Public, like /reference. Drill links go to /register for a logged-out reader. An unknown guide is a 404</note>
+<guard>src/routes/guides/guides.test.ts fails on an unknown drill id, a broken don't-confuse link, a mark whose text is missing from its Greek, a lesson note whose `section` names no real section, a planned drill whose id a real drill already has, a repeated detail label, an unpaired emphasis marker, a table row with the wrong number of cells, or a table note that is missing, unused or one of more than three in a table</guard>
+<note>Public, like /reference. Drill links go to /register for a logged-out reader. An unknown guide is a 404. How to write a guide: src/routes/guides/CLAUDE.md</note>
 </route>
 
 ### Utility

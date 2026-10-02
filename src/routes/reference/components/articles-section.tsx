@@ -66,7 +66,7 @@ interface NuRuleColumn {
 const NU_RULE_COLUMNS: NuRuleColumn[] = [
 	{
 		label: "Keep -ν",
-		membership: "short bursts: vowels, and the κ, π, τ family (ξ, ψ, γκ, μπ, ντ)",
+		membership: "a vowel, which the ν runs into, or a hard stop: κ, π, τ, ξ, ψ, γκ, μπ, ντ, τσ, τζ",
 		keeps: true,
 		examples: [
 			["την άνοιξη", "before vowel"],
@@ -160,16 +160,14 @@ export const ArticlesSection: React.FC = () => {
 
 				<Callout scheme="neutral" title="The -ν on τη(ν) / δε(ν) / μη(ν)">
 					<p className="leading-relaxed text-stone-700">
-						Native speakers sometimes drop the{" "}
+						Whether the{" "}
 						<GreekText tone="default" size="sm">
 							-ν
 						</GreekText>{" "}
-						on certain articles depending on what sound follows it, in order to improve the flow of
-						pronunciation.
+						stays depends on the sound that follows it.
 					</p>
 					<p className="leading-relaxed text-stone-700">
-						Although there are more cases where it's dropped than kept, it is not wrong to defer to
-						keeping it.
+						Dropping it is the standard, but keeping it is never wrong, and you will often see it.
 					</p>
 					<div className="space-y-3 border-t border-stone-200 pt-3 text-sm text-stone-600">
 						<p>
