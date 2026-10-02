@@ -149,14 +149,12 @@ export const ROLES_GUIDE: Guide = {
 				{
 					label: "τη or την: when the -ν stays",
 					text: [
-						"την keeps its -ν before a hard stop, a sound that can't be stretched out, because the ν blends into it: την πόρτα is said “tim-bórta”. Before a sound you can stretch out, the ν would only clog it, so it drops: τη μητέρα.",
-						"It stays before:",
+						"The -ν stays before a sound it blends into, as in την πόρτα, said “tim-bórta”:",
 						["a vowel", "a hard stop: κ, π, τ, ξ, ψ, μπ, ντ, γκ, τσ or τζ"],
-						"It drops before a sound you can stretch out:",
+						"It drops before a sound you can stretch out, which the ν would only clog, as in τη μητέρα:",
 						["β, γ, δ, ζ, θ, λ, μ, ν, ρ, σ, φ or χ"],
-						"Dropping it is the standard, but keeping it is never wrong, and you will often see it.",
-						"The same rule covers στην (σε + την) and the negatives δεν and μην.",
-						"τον is the exception. It always keeps its -ν, because the ν is all that tells it apart from the neuter το: τον φίλο, never το φίλο.",
+						"Dropping it is the standard, but keeping it is never wrong. στην, δεν and μην follow the same rule.",
+						"τον is the exception: it always keeps its -ν, or it would look like the neuter το.",
 					],
 					table: {
 						columns: [
@@ -171,11 +169,6 @@ export const ROLES_GUIDE: Guide = {
 						],
 					},
 					examples: [
-						{
-							greek: "Κλείνω την πόρτα.",
-							english: "I close the door.",
-							marks: [mark("την πόρτα", "accusative", "feminine")],
-						},
 						{
 							greek: "Ξέρεις τη Μαρία και την Άννα;",
 							english: "Do you know Maria and Anna?",
