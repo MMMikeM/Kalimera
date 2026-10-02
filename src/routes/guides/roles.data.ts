@@ -252,7 +252,7 @@ export const ROLES_GUIDE: Guide = {
 					"after a preposition, such as σε, με, για or από",
 				],
 				"Only the first is a Target. A time, or a phrase after a preposition, answers some other question, such as when?, how long?, where? or with whom?, and nothing is done to it. They watch what? A film: the Target. They watch where? At the cinema: extra detail.",
-				"Days are feminine, except το Σάββατο, which is neuter. Months are masculine, so they take τον. After κάθε, every, a time takes no article: κάθε εβδομάδα.",
+				"Days are feminine, except το Σάββατο, which is neuter. Months are masculine, so they take τον.",
 			],
 			table: {
 				columns: [
@@ -333,22 +333,23 @@ export const ROLES_GUIDE: Guide = {
 					[
 						cellWith("είμαι γιατρός", mark("γιατρός", "nominative", "masculine")),
 						"I am a doctor",
-						"plain",
+						"Plain",
 					],
 					[
 						cellWith("γίνομαι γιατρός", mark("γιατρός", "nominative", "masculine")),
 						"I become a doctor",
-						"plain",
+						"Plain",
 					],
 				],
 			},
 			examples: [
 				{
-					greek: "Η Χρυσάνθη είναι η μητέρα.",
-					english: "Chrysanthi is the mother. (both sides in the plain form)",
+					greek: "Ο Νίκος είναι ο γιατρός μας.",
+					english: "Nikos is our doctor. (both sides in the plain form)",
 					marks: [
-						mark("Η Χρυσάνθη", "nominative", "feminine"),
-						mark("η μητέρα", "nominative", "feminine"),
+						mark("Ο Νίκος", "nominative", "masculine"),
+						mark("ο γιατρός", "nominative", "masculine"),
+						mark("μας", "genitive"),
 					],
 				},
 				{
@@ -380,7 +381,7 @@ export const ROLES_GUIDE: Guide = {
 			id: "owner",
 			title: "The Owner",
 			rule: [
-				"The Owner is who or what something belongs to, like English 's or “of”. It comes after the thing owned: το σπίτι του Γιάννη, Yannis's house.",
+				"The Owner is who or what something belongs to, like English 's or “of”. It usually comes after the thing owned: το σπίτι του Γιάννη, Yannis's house.",
 				"The table shows masculine nouns in -ος. With one owner they take του and end in -ου. In the plural every noun, whatever its family, takes των and ends in -ων.",
 			],
 			table: {
@@ -409,11 +410,11 @@ export const ROLES_GUIDE: Guide = {
 			},
 			examples: [
 				{
-					greek: "Το ποδήλατο του αδερφού μου είναι κόκκινο.",
-					english: "My brother's bicycle is red.",
+					greek: "Το αυτοκίνητο του γιατρού είναι κόκκινο.",
+					english: "The doctor's car is red.",
 					marks: [
-						mark("Το ποδήλατο", "nominative", "neuter"),
-						mark("του αδερφού", "genitive", "masculine"),
+						mark("Το αυτοκίνητο", "nominative", "neuter"),
+						mark("του γιατρού", "genitive", "masculine"),
 					],
 				},
 				{
@@ -422,11 +423,11 @@ export const ROLES_GUIDE: Guide = {
 					marks: [mark("Πόσων χρονών", "genitive", undefined, true)],
 				},
 				{
-					greek: "Ξέρεις το όνομα του φίλου της;",
-					english: "Do you know her friend's name?",
+					greek: "Ξέρεις τα ονόματα των γιατρών;",
+					english: "Do you know the doctors' names?",
 					marks: [
-						mark("το όνομα", "accusative", "neuter"),
-						mark("του φίλου", "genitive", "masculine"),
+						mark("τα ονόματα", "accusative", "neuter", true),
+						mark("των γιατρών", "genitive", "masculine", true),
 					],
 				},
 			],
@@ -459,7 +460,7 @@ export const ROLES_GUIDE: Guide = {
 					"a whole kind of thing, such as cats in general",
 					"days",
 				],
-				"It also leaves it out in a few set places, listed below the table.",
+				"It also leaves it out in a few set places, below.",
 			],
 			table: {
 				columns: [{ label: "Greek", greek: true }, { label: "English" }, { label: "Why" }],
@@ -477,34 +478,6 @@ export const ROLES_GUIDE: Guide = {
 						"a whole kind",
 					],
 					[markedCell("το Σάββατο", "accusative", "neuter"), "on Saturday", "a day"],
-					[
-						{
-							text: "είμαι προγραμματιστής",
-							marks: [mark("προγραμματιστής", "nominative", "masculine")],
-						},
-						"I'm a programmer",
-						"a job, no article",
-					],
-					[
-						{ text: "πίνω καφέ", marks: [mark("καφέ", "accusative", "masculine")] },
-						"I drink coffee",
-						"an activity, no article",
-					],
-					[
-						{ text: "πάω σινεμά", marks: [mark("σινεμά", "accusative", "neuter")] },
-						"I go to the cinema",
-						"an activity, no article",
-					],
-					[
-						{ text: "κάνω σπορ", marks: [mark("σπορ", "accusative", "neuter")] },
-						"I do sport",
-						"an activity, no article",
-					],
-					[
-						{ text: "κάθε Σάββατο", marks: [mark("κάθε Σάββατο", "accusative", "neuter")] },
-						"every Saturday",
-						"after κάθε, no article",
-					],
 				],
 			},
 			examples: [
@@ -517,14 +490,40 @@ export const ROLES_GUIDE: Guide = {
 			details: [
 				{
 					label: "Where Greek leaves it out",
-					text: [
-						"Greek leaves out the article in a few set places, shown at the foot of the table:",
-						[
-							"a job after είμαι (be)",
-							"set activities, such as drinking coffee or going to the cinema",
-							"a day after κάθε (every)",
+					text: "Greek leaves out the article in a few set places:",
+					table: {
+						columns: [{ label: "Greek", greek: true }, { label: "English" }, { label: "Why" }],
+						rows: [
+							[
+								{
+									text: "είμαι προγραμματιστής",
+									marks: [mark("προγραμματιστής", "nominative", "masculine")],
+								},
+								"I'm a programmer",
+								"a job after είμαι",
+							],
+							[
+								{ text: "πίνω καφέ", marks: [mark("καφέ", "accusative", "masculine")] },
+								"I drink coffee",
+								"a set activity",
+							],
+							[
+								{ text: "πάω σινεμά", marks: [mark("σινεμά", "accusative", "neuter")] },
+								"I go to the cinema",
+								"a set activity",
+							],
+							[
+								{ text: "κάνω σπορ", marks: [mark("σπορ", "accusative", "neuter")] },
+								"I do sport",
+								"a set activity",
+							],
+							[
+								{ text: "κάθε Σάββατο", marks: [mark("κάθε Σάββατο", "accusative", "neuter")] },
+								"every Saturday",
+								"after κάθε, every",
+							],
 						],
-					],
+					},
 					examples: [
 						{
 							greek: "Ο Γιάννης είναι προγραμματιστής.",
