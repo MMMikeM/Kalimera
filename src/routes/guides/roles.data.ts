@@ -19,7 +19,7 @@ export const ROLES_GUIDE: Guide = {
 					"The Target is who or what the action is done to.",
 					"The Owner is who something belongs to.",
 				],
-				"A Greek noun shows its job by changing its article and often its ending. Each form is named after this job, we use marks under the word to show this clearly. Because the form is on the word, you can find the job whatever the word order. Where the form doesn't show, we ask the table's question to understand.",
+				"A Greek noun shows its job by changing its article and often its ending. Each form is named after its main job, and the marks under each word show which form it is. Because the form is on the word, you can find the job whatever the word order. Where the form doesn't show, ask the table's question.",
 				"The Doer form is also the noun's plain form, the one you find in a dictionary.",
 			],
 			table: {
@@ -63,7 +63,7 @@ export const ROLES_GUIDE: Guide = {
 			details: [
 				{
 					label: "The Doer is often left out",
-					text: "Greek usually leaves out the Doer when it is I, you, we or they, because the verb's ending already says who. Βλέπω τον Γιάννη has no Doer word: the -ω of βλέπω means I.",
+					text: "Greek usually leaves out the Doer when it is I, you, we or they, and often he, she or it when it's clear who, because the verb's ending already says which person. Βλέπω τον Γιάννη has no Doer word: the -ω of βλέπω means I.",
 					examples: [
 						{
 							greek: "Βλέπουν μια ταινία.",
@@ -153,7 +153,7 @@ export const ROLES_GUIDE: Guide = {
 						["a vowel", "a hard stop: κ, π, τ, ξ, ψ, μπ, ντ, γκ, τσ or τζ"],
 						"It drops before a sound you can stretch out, which the ν would only clog, as in τη μητέρα:",
 						["β, γ, δ, ζ, θ, λ, μ, ν, ρ, σ, φ or χ"],
-						"Dropping it is the standard, but keeping it is never wrong. στην, δεν and μην follow the same rule.",
+						"Dropping it is the standard, though you will often see it kept. στην (σε + την), δεν (not) and μην (don't) follow the same rule.",
 						"τον is the exception: it always keeps its -ν, or it would look like the neuter το.",
 					],
 					table: {
@@ -239,6 +239,59 @@ export const ROLES_GUIDE: Guide = {
 						"A card shows a sentence with a gap before a noun, and the answer is ένας, έναν, μια or ένα, whichever the noun's gender and job need.",
 				},
 			],
+		},
+		{
+			id: "plural",
+			title: "The article in the plural: οι, τους, τις, τα",
+			rule: [
+				"In the plural, the article changes by gender and job:",
+				[
+					"masculine: οι for the Doer, τους for the Target, and nouns in -ος change their ending too: οι σκύλοι, τους σκύλους",
+					"feminine: οι for the Doer, τις for the Target, and the noun stays the same: οι γάτες, τις γάτες",
+					"neuter: τα for both, and the noun stays the same: τα παιδιά, τα παιδιά",
+				],
+				"So οι can be masculine or feminine. As a Target, τους and τις tell them apart.",
+			],
+			table: {
+				columns: [
+					{ label: "Form" },
+					{ label: "Masculine", greek: true },
+					{ label: "Feminine", greek: true },
+					{ label: "Neuter", greek: true },
+				],
+				rows: [
+					[
+						"Doer",
+						markedCell("οι σκύλοι", "nominative", "masculine", true),
+						markedCell("οι γάτες", "nominative", "feminine", true),
+						markedCell("τα παιδιά", "nominative", "neuter", true),
+					],
+					[
+						"Target",
+						markedCell("τους σκύλους", "accusative", "masculine", true),
+						markedCell("τις γάτες", "accusative", "feminine", true),
+						markedCell("τα παιδιά", "accusative", "neuter", true),
+					],
+				],
+			},
+			examples: [
+				{
+					greek: "Οι σκύλοι βλέπουν τις γάτες.",
+					english: "The dogs see the cats.",
+					marks: [mark("Οι σκύλοι", "nominative", "masculine", true), mark("τις γάτες", "accusative", "feminine", true)],
+				},
+				{
+					greek: "Οι γάτες βλέπουν τους σκύλους.",
+					english: "The cats see the dogs. (both start with οι as the Doer; as the Target they split)",
+					marks: [mark("Οι γάτες", "nominative", "feminine", true), mark("τους σκύλους", "accusative", "masculine", true)],
+				},
+				{
+					greek: "Οι σκύλοι βλέπουν τα παιδιά.",
+					english: "The dogs see the children. (τα παιδιά doesn't change)",
+					marks: [mark("Οι σκύλοι", "nominative", "masculine", true), mark("τα παιδιά", "accusative", "neuter", true)],
+				},
+			],
+			drills: ["articles-article-doer", "articles-article-target"],
 		},
 		{
 			id: "target",
@@ -382,7 +435,7 @@ export const ROLES_GUIDE: Guide = {
 			title: "The Owner",
 			rule: [
 				"The Owner is who or what something belongs to, like English 's or “of”. It usually comes after the thing owned: το σπίτι του Γιάννη, Yannis's house.",
-				"The table shows masculine nouns in -ος. With one owner they take του and end in -ου. In the plural every noun, whatever its family, takes των and ends in -ων.",
+				"The table shows masculine nouns in -ος. With one owner they take του and end in -ου; masculines in -ας and -ης just drop the -ς: του άντρα, του Γιάννη. In the plural every noun, whatever its family, takes των and ends in -ων.",
 			],
 			table: {
 				columns: [
@@ -418,11 +471,6 @@ export const ROLES_GUIDE: Guide = {
 					],
 				},
 				{
-					greek: "Πόσων χρονών είσαι;",
-					english: "How old are you? (literally: of how many years)",
-					marks: [mark("Πόσων χρονών", "genitive", undefined, true)],
-				},
-				{
 					greek: "Ξέρεις τα ονόματα των γιατρών;",
 					english: "Do you know the doctors' names?",
 					marks: [
@@ -452,7 +500,7 @@ export const ROLES_GUIDE: Guide = {
 			id: "when-article",
 			title: "When Greek uses the article",
 			rule: [
-				"The article is the word for “the”: ο, η, το and their other forms. Greek uses it in places where English leaves it out:",
+				"Greek uses the article in places where English leaves it out:",
 				[
 					"countries",
 					"people's names, in speech",
@@ -473,8 +521,8 @@ export const ROLES_GUIDE: Guide = {
 						"an idea",
 					],
 					[
-						cellWith("μου αρέσουν οι γάτες", mark("οι γάτες", "nominative", "feminine", true)),
-						"I like cats",
+						cellWith("οι γάτες κοιμούνται πολύ", mark("οι γάτες", "nominative", "feminine", true)),
+						"cats sleep a lot",
 						"a whole kind",
 					],
 					[markedCell("το Σάββατο", "accusative", "neuter"), "on Saturday", "a day"],

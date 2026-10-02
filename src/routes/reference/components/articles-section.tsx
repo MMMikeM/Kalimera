@@ -167,7 +167,7 @@ export const ArticlesSection: React.FC = () => {
 						stays depends on the sound that follows it.
 					</p>
 					<p className="leading-relaxed text-stone-700">
-						Dropping it is the standard, but keeping it is never wrong, and you will often see it.
+						Dropping it is the standard, though you will often see it kept.
 					</p>
 					<div className="space-y-3 border-t border-stone-200 pt-3 text-sm text-stone-600">
 						<p>
