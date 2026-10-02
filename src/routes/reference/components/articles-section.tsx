@@ -179,7 +179,7 @@ export const ArticlesSection: React.FC = () => {
 							<GreekText tone="accent" size="sm">
 								την πόρτα
 							</GreekText>{" "}
-							flows out as &ldquo;tim&#8209;bórta&rdquo;.
+							usually flows out as &ldquo;tim&#8209;bórta&rdquo;.
 						</p>
 						<p>
 							A sound you can stretch out drops it:{" "}
