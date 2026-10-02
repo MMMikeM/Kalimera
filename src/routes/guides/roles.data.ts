@@ -149,7 +149,7 @@ export const ROLES_GUIDE: Guide = {
 				{
 					label: "τη or την: when the -ν stays",
 					text: [
-						"The -ν stays before a sound it blends into, as in την πόρτα, said “tim-bórta”:",
+						"The -ν stays before a sound it blends into, as in την πόρτα, which usually sounds like “tim-bórta”:",
 						["a vowel", "a hard stop: κ, π, τ, ξ, ψ, μπ, ντ, γκ, τσ or τζ"],
 						"It drops before a sound you can stretch out, which the ν would only clog, as in τη μητέρα:",
 						["β, γ, δ, ζ, θ, λ, μ, ν, ρ, σ, φ or χ"],
@@ -244,15 +244,15 @@ export const ROLES_GUIDE: Guide = {
 			id: "target",
 			title: "The Target form: objects, times, prepositions",
 			rule: [
-				"The Target is what the action is done to. For this job a noun leaves its plain form, the Doer form. How much changes depends on its gender, as the article section shows.",
+				"The Target is what the action is done to. For this job a noun takes its Target form. How much that changes depends on its gender, as the article section shows: a neuter looks the same.",
 				"The Target form has three uses:",
 				[
 					"whatever the verb acts on, including names, which change like any other noun",
-					"times, with no word for “on” or “in”",
+					"times, with no word for “on” or “in”, and lengths of time, such as δύο ώρες, for two hours",
 					"after a preposition, such as σε, με, για or από",
 				],
-				"Only the first is a Target. A time, or a phrase after a preposition, answers when?, where? or how?, and nothing is done to it. They watch what? A film: the Target. They watch where? At the cinema: extra detail.",
-				"Months are masculine, so they take τον.",
+				"Only the first is a Target. A time, or a phrase after a preposition, answers some other question, such as when?, how long?, where? or with whom?, and nothing is done to it. They watch what? A film: the Target. They watch where? At the cinema: extra detail.",
+				"Days are feminine, except το Σάββατο, which is neuter. Months are masculine, so they take τον. After κάθε, every, a time takes no article: κάθε εβδομάδα.",
 			],
 			table: {
 				columns: [
@@ -265,11 +265,6 @@ export const ROLES_GUIDE: Guide = {
 						markedCell("ο φίλος", "nominative", "masculine", false),
 						markedCell("τον φίλο", "accusative", "masculine", false),
 						"the friend",
-					],
-					[
-						markedCell("οι φίλοι", "nominative", "masculine", true),
-						markedCell("τους φίλους", "accusative", "masculine", true),
-						"the friends",
 					],
 					[
 						markedCell("η Δευτέρα", "nominative", "feminine"),
@@ -291,7 +286,7 @@ export const ROLES_GUIDE: Guide = {
 			examples: [
 				{
 					greek: "Έχουν δύο παιδιά, τον Αλέξανδρο και τη Λίζα.",
-					english: "They have two children, Alexandros and Liza.",
+					english: "They have two children, Alexandros and Liza. (the names are the two children, so they take the same Target form)",
 					marks: [
 						mark("δύο παιδιά", "accusative", "neuter", true),
 						mark("τον Αλέξανδρο", "accusative", "masculine"),
@@ -299,46 +294,22 @@ export const ROLES_GUIDE: Guide = {
 					],
 				},
 				{
-					greek: "Το Σάββατο βλέπω τους φίλους μου.",
-					english: "On Saturday I'm seeing my friends.",
+					greek: "Το Σάββατο βλέπω τη γιαγιά μου.",
+					english: "On Saturday I'm seeing my grandmother. (Σάββατο is neuter, so it doesn't change)",
+					marks: [mark("Το Σάββατο", "accusative", "neuter"), mark("τη γιαγιά", "accusative", "feminine")],
+				},
+				{
+					greek: "Κάθε εβδομάδα δουλεύω σαράντα ώρες.",
+					english: "Every week I work forty hours. (σαράντα ώρες answers how long?, so it's a time, not a Target)",
 					marks: [
-						mark("Το Σάββατο", "accusative", "neuter"),
-						mark("τους φίλους", "accusative", "masculine", true),
+						mark("Κάθε εβδομάδα", "accusative", "feminine"),
+						mark("σαράντα ώρες", "accusative", "feminine", true),
 					],
 				},
 				{
 					greek: "Πάω στην Αθήνα με τον φίλο μου.",
-					english:
-						"I'm going to Athens with my friend. (Target forms after σε and με, but no Target)",
-					marks: [
-						mark("στην Αθήνα", "accusative", "feminine"),
-						mark("τον φίλο", "accusative", "masculine"),
-					],
-				},
-				{
-					greek: "Ο Νίκος περιμένει τον φίλο του.",
-					english: "Nikos is waiting for his friend. (no word for “for”: τον φίλο is the Target)",
-					marks: [
-						mark("Ο Νίκος", "nominative", "masculine"),
-						mark("τον φίλο", "accusative", "masculine"),
-						mark("του", "genitive", "masculine"),
-					],
-				},
-			],
-			details: [
-				{
-					label: "After κάθε",
-					text: "After κάθε (every) there is no article.",
-					examples: [
-						{
-							greek: "Κάθε εβδομάδα δουλεύω σαράντα ώρες.",
-							english: "Every week I work forty hours.",
-							marks: [
-								mark("Κάθε εβδομάδα", "accusative", "feminine"),
-								mark("σαράντα ώρες", "accusative", "feminine", true),
-							],
-						},
-					],
+					english: "I'm going to Athens with my friend. (Target forms after σε and με, but no Target)",
+					marks: [mark("στην Αθήνα", "accusative", "feminine"), mark("τον φίλο", "accusative", "masculine")],
 				},
 			],
 			drills: ["nominal-noun-target", "nominal-phrase-target", "blocks-days-of-week"],
