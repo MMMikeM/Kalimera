@@ -345,7 +345,7 @@ export const JOINING_GUIDE: Guide = {
 			},
 			examples: [
 				{
-					greek: "Το χειμώνα φοράμε ζεστά ρούχα για να μην κρυώνουμε.",
+					greek: "Τον χειμώνα φοράμε ζεστά ρούχα για να μην κρυώνουμε.",
 					english: "In winter we wear warm clothes so that we don't get cold.",
 				},
 				{
