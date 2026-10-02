@@ -79,11 +79,12 @@ Rendered by the shared `ArticleParadigm` in `components/case-table.tsx` (the Cas
 <title>The -ν on τη(ν) / δε(ν) / μη(ν)</title>
 
 <rule>
-Native speakers sometimes drop the -ν depending on the sound that follows. It is
-dropped more often than kept, but keeping it is never wrong.
+Whether the -ν stays depends on the sound that follows it. Dropping it is the
+standard, but keeping it is never wrong, and you will often see it.
 
-Keep the -ν before vowels and the κ, π, τ family (ξ, ψ, γκ, μπ, ντ): the hard
-stops the ν blends into (την πόρτα flows out as "tim-bórta").
+Keep the -ν before a vowel, which the ν runs into, and before the hard stops
+κ, π, τ, ξ, ψ, γκ, μπ, ντ, τσ, τζ, which the ν blends into (την πόρτα flows out
+as "tim-bórta").
 Drop the -ν before stretchable sounds (β, γ, δ, ζ, θ, λ, μ, ν, ρ, σ, φ, χ).
 
 The rule is not article-specific: the negatives δεν and μην follow it too.

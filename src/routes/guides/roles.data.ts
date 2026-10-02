@@ -82,11 +82,11 @@ export const ROLES_GUIDE: Guide = {
 				"The article is the word for “the”: ο, η, το. In the singular it shows the noun's gender and, except in neuter, its job.",
 				"From the Doer form to the Target form, how much changes depends on the gender:",
 				[
-					"masculine: the article and the ending, which drops its -ς: ο φίλος, τον φίλο",
-					"feminine: only the article: η μητέρα, τη μητέρα",
+					"masculine: the article and the ending, which drops its -ς: ο σκύλος, τον σκύλο",
+					"feminine: only the article: η γάτα, τη γάτα",
 					"neuter: nothing: το παιδί, το παιδί",
 				],
-				"So a masculine noun shows its job most clearly. Where nothing changes, or there is no article, ask the question instead: the man wants what?",
+				"So a masculine noun shows its job most clearly. Where nothing changes, or there is no article, ask the question instead: the dog sees who?",
 			],
 			table: {
 				columns: [
@@ -98,34 +98,50 @@ export const ROLES_GUIDE: Guide = {
 				rows: [
 					[
 						"Doer",
-						markedCell("ο φίλος", "nominative", "masculine", false),
-						markedCell("η μητέρα", "nominative", "feminine", false),
+						markedCell("ο σκύλος", "nominative", "masculine", false),
+						markedCell("η γάτα", "nominative", "feminine", false),
 						markedCell("το παιδί", "nominative", "neuter", false),
 					],
 					[
 						"Target",
-						markedCell("τον φίλο", "accusative", "masculine", false),
-						markedCell("τη μητέρα", "accusative", "feminine", false),
+						markedCell("τον σκύλο", "accusative", "masculine", false),
+						markedCell("τη γάτα", "accusative", "feminine", false),
 						markedCell("το παιδί", "accusative", "neuter"),
 					],
 				],
 			},
 			examples: [
 				{
-					greek: "Ο Νίκος περιμένει τον φίλο του.",
-					english: "Nikos is waiting for his friend. (no word for “for”: τον φίλο is the Target)",
+					greek: "Ο σκύλος βλέπει τη γάτα.",
+					english: "The dog sees the cat.",
 					marks: [
-						mark("Ο Νίκος", "nominative", "masculine"),
-						mark("τον φίλο", "accusative", "masculine"),
-						mark("του", "genitive", "masculine"),
+						mark("Ο σκύλος", "nominative", "masculine"),
+						mark("τη γάτα", "accusative", "feminine"),
 					],
 				},
 				{
-					greek: "Ο άντρας θέλει πορτοκαλάδα.",
-					english: "The man wants orangeade. (no article, so nothing shows: the man wants what?)",
+					greek: "Η γάτα βλέπει τον σκύλο.",
+					english:
+						"The cat sees the dog. (σκύλος changes its article and ending; γάτα only its article)",
 					marks: [
-						mark("Ο άντρας", "nominative", "masculine"),
-						mark("πορτοκαλάδα", "accusative", "feminine"),
+						mark("Η γάτα", "nominative", "feminine"),
+						mark("τον σκύλο", "accusative", "masculine"),
+					],
+				},
+				{
+					greek: "Το παιδί βλέπει τον σκύλο.",
+					english: "The child sees the dog.",
+					marks: [
+						mark("Το παιδί", "nominative", "neuter"),
+						mark("τον σκύλο", "accusative", "masculine"),
+					],
+				},
+				{
+					greek: "Ο σκύλος βλέπει το παιδί.",
+					english: "The dog sees the child. (το παιδί doesn't change, so ask: the dog sees who?)",
+					marks: [
+						mark("Ο σκύλος", "nominative", "masculine"),
+						mark("το παιδί", "accusative", "neuter"),
 					],
 				},
 			],
@@ -134,10 +150,10 @@ export const ROLES_GUIDE: Guide = {
 					label: "τη or την: when the -ν stays",
 					text: [
 						"την keeps its -ν before a hard stop, a sound that can't be stretched out, because the ν blends into it: την πόρτα is said “tim-bórta”. Before a sound you can stretch out, the ν would only clog it, so it drops: τη μητέρα.",
-						[
-							"keep it before a vowel, and before κ, π, τ, ξ, ψ, μπ, ντ, γκ, τσ or τζ",
-							"drop it before β, γ, δ, ζ, θ, λ, μ, ν, ρ, σ, φ or χ",
-						],
+						"It stays before:",
+						["a vowel", "a hard stop: κ, π, τ, ξ, ψ, μπ, ντ, γκ, τσ or τζ"],
+						"It drops before a sound you can stretch out:",
+						["β, γ, δ, ζ, θ, λ, μ, ν, ρ, σ, φ or χ"],
 						"Dropping it is the standard, but keeping it is never wrong, and you will often see it.",
 						"The same rule covers στην (σε + την) and the negatives δεν and μην.",
 						"τον is the exception. It always keeps its -ν, because the ν is all that tells it apart from the neuter το: τον φίλο, never το φίλο.",
@@ -190,30 +206,33 @@ export const ROLES_GUIDE: Guide = {
 				rows: [
 					[
 						"Doer",
-						markedCell("ένας φίλος", "nominative", "masculine"),
-						markedCell("μια μητέρα", "nominative", "feminine"),
+						markedCell("ένας σκύλος", "nominative", "masculine"),
+						markedCell("μια γάτα", "nominative", "feminine"),
 						markedCell("ένα παιδί", "nominative", "neuter"),
 					],
 					[
 						"Target",
-						markedCell("έναν φίλο", "accusative", "masculine"),
-						markedCell("μια μητέρα", "accusative", "feminine"),
+						markedCell("έναν σκύλο", "accusative", "masculine"),
+						markedCell("μια γάτα", "accusative", "feminine"),
 						markedCell("ένα παιδί", "accusative", "neuter"),
 					],
 				],
 			},
 			examples: [
 				{
-					greek: "Ένας φίλος μου μένει στην Πάφο.",
-					english: "A friend of mine lives in Paphos.",
-					marks: [mark("Ένας φίλος", "nominative", "masculine")],
+					greek: "Ένας σκύλος βλέπει μια γάτα.",
+					english: "A dog sees a cat.",
+					marks: [
+						mark("Ένας σκύλος", "nominative", "masculine"),
+						mark("μια γάτα", "accusative", "feminine"),
+					],
 				},
 				{
-					greek: "Έχω έναν αδερφό και μια αδερφή.",
-					english: "I have a brother and a sister.",
+					greek: "Ένα παιδί έχει έναν σκύλο.",
+					english: "A child has a dog. (ένας becomes έναν)",
 					marks: [
-						mark("έναν αδερφό", "accusative", "masculine"),
-						mark("μια αδερφή", "accusative", "feminine"),
+						mark("Ένα παιδί", "nominative", "neuter"),
+						mark("έναν σκύλο", "accusative", "masculine"),
 					],
 				},
 			],
@@ -222,7 +241,7 @@ export const ROLES_GUIDE: Guide = {
 				{
 					id: "articles-indefinite",
 					title: "ένας or έναν",
-					greek: "ένας φίλος · έναν φίλο · μια μητέρα",
+					greek: "ένας σκύλος · έναν σκύλο · μια γάτα",
 					tests:
 						"A card shows a sentence with a gap before a noun, and the answer is ένας, έναν, μια or ένα, whichever the noun's gender and job need.",
 				},
@@ -304,9 +323,13 @@ export const ROLES_GUIDE: Guide = {
 					],
 				},
 				{
-					greek: "Την επόμενη εβδομάδα πάμε διακοπές.",
-					english: "Next week we're going on holiday.",
-					marks: [mark("Την επόμενη εβδομάδα", "accusative", "feminine")],
+					greek: "Ο Νίκος περιμένει τον φίλο του.",
+					english: "Nikos is waiting for his friend. (no word for “for”: τον φίλο is the Target)",
+					marks: [
+						mark("Ο Νίκος", "nominative", "masculine"),
+						mark("τον φίλο", "accusative", "masculine"),
+						mark("του", "genitive", "masculine"),
+					],
 				},
 			],
 			details: [
