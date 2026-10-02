@@ -48,7 +48,7 @@ export const PLACE_GUIDE: Guide = {
 			details: [
 				{
 					label: "στη or στην",
-					text: "στη becomes στην before a vowel, and before sounds like κ, π and τ: στην Αθήνα, στην Πάφο. Elsewhere it stays στη: στη Λεμεσό.",
+					text: "στη and στην follow the same rule as τη and την, set out in Who does what, under the article: the -ν stays before a vowel or a hard stop, στην Αθήνα, στην Πάφο, and drops before a sound you can stretch out, στη Λεμεσό.",
 				},
 				{
 					label: "Before μια, ένα or no article",
