@@ -258,11 +258,8 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 		},
 		{
 			id: "own-alone",
-			title: "Mine, and by myself",
-			rule: [
-				"For emphasis, δικός goes before the short word for my, your, his (μου, σου, του and the rest). It means my own, or mine, and takes the gender of the thing owned.",
-				"μόνος with the short word means by myself. It takes the gender of the person.",
-			],
+			title: "Mine and my own: δικός μου",
+			rule: "For emphasis, δικός goes before the short word for my, your, his (μου, σου, του and the rest). It means my own, or mine, and takes the gender of the thing owned.",
 			table: {
 				columns: [
 					{ label: "Greek", greek: true },
@@ -278,17 +275,41 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 						"your own bag",
 					],
 					[cellWith("είναι δικό μου", mark("δικό", "nominative", "neuter"), mark("μου", "genitive")), "it's mine"],
+				],
+			},
+			examples: [
+				{
+					greek: "Αυτή η τσάντα είναι δική σου;",
+					english: "Is this bag yours? (δική: τσάντα is feminine)",
+					marks: [mark("Αυτή η τσάντα", "nominative", "feminine"), mark("δική", "nominative", "feminine"), mark("σου", "genitive")],
+				},
+			],
+			drills: [],
+			plannedDrills: [
+				{
+					id: "pronouns-own-alone",
+					title: "δικός μου",
+					greek: "ο δικός μου καφές · είναι δικό μου",
+					tests: "Shows the English (my own, mine); the answer is δικός in the gender of the thing owned, with the short word: η δική σου τσάντα.",
+				},
+			],
+		},
+		{
+			id: "alone",
+			title: "By myself: μόνος μου",
+			rule: "μόνος with the short word for me, you, him (μου, σου, του and the rest) means by myself. It takes the gender and number of the person.",
+			table: {
+				columns: [
+					{ label: "Greek", greek: true },
+					{ label: "Meaning" },
+				],
+				rows: [
 					[cellWith("μόνος μου", mark("μόνος", "nominative", "masculine"), mark("μου", "genitive")), "by myself (a man)"],
 					[cellWith("μόνη μου", mark("μόνη", "nominative", "feminine"), mark("μου", "genitive")), "by myself (a woman)"],
 					[cellWith("μόνοι μας", mark("μόνοι", "nominative", "masculine", true), mark("μας", "genitive", undefined, true)), "by ourselves"],
 				],
 			},
 			examples: [
-				{
-					greek: "Αυτή η τσάντα είναι δική σου;",
-					english: "Is this bag yours?",
-					marks: [mark("Αυτή η τσάντα", "nominative", "feminine"), mark("δική", "nominative", "feminine"), mark("σου", "genitive")],
-				},
 				{
 					greek: "Δουλεύω μόνος μου.",
 					english: "I work by myself.",
@@ -318,10 +339,10 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 			drills: [],
 			plannedDrills: [
 				{
-					id: "pronouns-own-alone",
-					title: "δικός μου, μόνος μου",
-					greek: "είναι δικό μου · μόνος μου · μόνη της",
-					tests: "Shows the English and who is meant (by herself); the answer is δικός or μόνος in the right gender with the short word: μόνη της.",
+					id: "pronouns-alone",
+					title: "μόνος μου",
+					greek: "μόνος μου · μόνη της · μόνοι μας",
+					tests: "Shows the English and who is meant (by herself); the answer is μόνος in that person's gender and number, with the short word: μόνη της.",
 				},
 			],
 		},

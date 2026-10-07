@@ -18,12 +18,12 @@ export const LESSON_2024_08_12 = createLesson({
 		},
 		{
 			text: "είσαι ψώνιο",
-			english: "you're a weirdo/crazy (neuter)",
+			english: "you're a show-off, full of yourself (neuter)",
 			metadata: { register: "slang/playful", usage: "teasing" },
 		},
 		{
 			text: "είσαι ψωνάρα",
-			english: "you're a total weirdo/crazy",
+			english: "you're a total egomaniac, so full of yourself",
 			metadata: { register: "slang/playful", note: "augmentative form" },
 		},
 	],
