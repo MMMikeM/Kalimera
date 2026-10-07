@@ -4,7 +4,7 @@ import { cn } from "tailwind-variants";
 
 import { ProseWithGreek } from "@/components/ProseWithGreek";
 import { DRILL_REGISTRY } from "@/routes/practice/drill-catalogue.data";
-import type { Guide, GuideExample, GuideSection as GuideSectionData, GuideTone, PlannedDrill } from "@/types/guide";
+import type { Guide, GuideExample, GuideSection as GuideSectionData, PlannedDrill, SectionTone } from "@/types/guide";
 
 import { resolveSectionRef } from "../guides.data";
 import { GuideProse } from "./guide-prose";
@@ -14,7 +14,7 @@ import { MarkedPhrase } from "./marked-phrase";
 
 const rootRoute = getRouteApi("__root__");
 
-const ConfuseBox = ({ guide, section, tone }: { guide: Guide; section: GuideSectionData; tone: GuideTone }) => {
+const ConfuseBox = ({ guide, section, tone }: { guide: Guide; section: GuideSectionData; tone: SectionTone }) => {
 	if (!section.confuse) return null;
 	const target = resolveSectionRef(section.confuse.section, guide);
 	return (
@@ -118,7 +118,7 @@ export const GuideSection = ({
 	guide: Guide;
 	section: GuideSectionData;
 	position: number;
-	tone: GuideTone;
+	tone: SectionTone;
 }) => {
 	const tone = GUIDE_TONE[toneName];
 	return (

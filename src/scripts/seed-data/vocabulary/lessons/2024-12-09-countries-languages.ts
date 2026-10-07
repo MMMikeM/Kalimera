@@ -264,7 +264,7 @@ export const LESSON_2024_12_09 = createLesson({
 			examples: ["Ελλάδα → Έλληνας/Ελληνίδα → ελληνικά", "Κύπρος → Κύπριος/Κύπρια → κυπριακά"],
 			explanation:
 				"Country → Person (m/f) → Language/Adjective. Male demonyms often end in -ος or -ας, female in -α or -ίδα",
-			section: "gender/gender-families",
+			section: "gender/gender-pairs",
 		},
 		{
 			pattern: "είμαι conjugation (present)",

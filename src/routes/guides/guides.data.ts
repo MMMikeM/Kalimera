@@ -1,4 +1,4 @@
-import type { Guide, GuideSection, GuideTone } from "@/types/guide";
+import type { Guide, GuideSection, GuideTone, SectionTone } from "@/types/guide";
 
 import { AGREEMENT_GUIDE } from "./agreement.data";
 import { FUTURE_COMMANDS_GUIDE } from "./future-commands.data";
@@ -46,16 +46,11 @@ export const usesMarks = (guide: Guide) =>
 			sectionTables(s).some((t) => t.rows.some((row) => row.some((cell) => typeof cell !== "string" && cell.marks?.length))),
 	);
 
-// Navy, sunset and slate sit close to the masculine, feminine and neuter mark
-// colours, so a guide that shows marks leaves them out of its cycle.
-const CYCLE_WITH_MARKS: GuideTone[] = ["terracotta", "olive", "ocean", "honey", "stone"];
 const CYCLE: GuideTone[] = ["terracotta", "olive", "ocean", "honey", "navy", "slate", "sunset"];
 
 /** Each section's header colour: its own `tone`, or the next colour in the guide's cycle. */
-export const sectionTones = (guide: Guide): GuideTone[] => {
-	const cycle = usesMarks(guide) ? CYCLE_WITH_MARKS : CYCLE;
-	return guide.sections.map((s, i) => s.tone ?? cycle[i % cycle.length]!);
-};
+export const sectionTones = (guide: Guide): SectionTone[] =>
+	guide.sections.map((s, i) => s.tone ?? CYCLE[i % CYCLE.length]!);
 
 /** Resolves `"<section>"` within `from`, or `"<guide>/<section>"` anywhere. */
 export const resolveSectionRef = (

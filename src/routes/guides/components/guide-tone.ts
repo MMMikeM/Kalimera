@@ -1,5 +1,5 @@
 import { colorStyles } from "@/lib/colors";
-import type { GuideTone } from "@/types/guide";
+import type { GuideTone, SectionTone } from "@/types/guide";
 
 interface ToneClasses {
 	/** Section numbers and links. The `-ink` shade holds 7:1 on the page; `-text` is for tints. */
@@ -83,6 +83,44 @@ const toneClasses = (tone: GuideTone): ToneClasses => {
 	};
 };
 
-export const GUIDE_TONE = Object.fromEntries(
-	(Object.keys(OWN) as GuideTone[]).map((tone) => [tone, toneClasses(tone)]),
-) as Record<GuideTone, ToneClasses>;
+// The gender scales have no -ink step; their -text step holds the same contrast.
+const GENDER: Record<Exclude<SectionTone, GuideTone>, ToneClasses> = {
+	"gender-masculine": {
+		accent: "text-gender-masculine-text",
+		bar: "bg-gender-masculine-400",
+		panel: "border-gender-masculine-200 bg-gender-masculine-100",
+		header: "border-gender-masculine-300 bg-gender-masculine-200",
+		column: "bg-gender-masculine-100",
+		columnLabel: "text-gender-masculine-text",
+		exampleRule: "border-gender-masculine-300",
+		link: "hover:border-gender-masculine-400 hover:text-gender-masculine-text",
+	},
+	"gender-feminine": {
+		accent: "text-gender-feminine-text",
+		bar: "bg-gender-feminine-400",
+		panel: "border-gender-feminine-200 bg-gender-feminine-100",
+		header: "border-gender-feminine-300 bg-gender-feminine-200",
+		column: "bg-gender-feminine-100",
+		columnLabel: "text-gender-feminine-text",
+		exampleRule: "border-gender-feminine-300",
+		link: "hover:border-gender-feminine-400 hover:text-gender-feminine-text",
+	},
+	"gender-neuter": {
+		accent: "text-gender-neuter-text",
+		bar: "bg-gender-neuter-400",
+		panel: "border-gender-neuter-200 bg-gender-neuter-100",
+		header: "border-gender-neuter-300 bg-gender-neuter-200",
+		column: "bg-gender-neuter-100",
+		columnLabel: "text-gender-neuter-text",
+		exampleRule: "border-gender-neuter-300",
+		link: "hover:border-gender-neuter-400 hover:text-gender-neuter-text",
+	},
+};
+
+export const GUIDE_TONE: Record<SectionTone, ToneClasses> = {
+	...(Object.fromEntries((Object.keys(OWN) as GuideTone[]).map((tone) => [tone, toneClasses(tone)])) as Record<
+		GuideTone,
+		ToneClasses
+	>),
+	...GENDER,
+};

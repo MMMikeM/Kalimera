@@ -77,12 +77,24 @@ export const JOINING_GUIDE: Guide = {
 					{ label: "Meaning" },
 				],
 				rows: [
-					["αν όχι, τότε δεν ξέρω", "if not, then I don't know"],
 					["αν βρέχει, τότε δεν βγαίνω", "if it rains, then I don't go out"],
 					["αν βρέχει, δεν βγαίνω", "if it rains, I don't go out"],
+					["αν όχι", "if not"],
 				],
 			},
 			examples: [{ greek: "Αν θέλεις, έλα μαζί μας.", english: "If you like, come with us." }],
+			details: [
+				{
+					label: "If, about the future",
+					text: "For one action still to come, αν takes the short form, the one θα takes, and the result usually takes θα. The short form is set out in The short form: future, να and commands.",
+					examples: [
+						{
+							greek: "Αν βρέξει αύριο, δεν θα βγω.",
+							english: "If it rains tomorrow, I won't go out. (βρέξει, the short form of βρέχει)",
+						},
+					],
+				},
+			],
 			drills: [],
 			plannedDrills: [
 				{
@@ -180,8 +192,11 @@ export const JOINING_GUIDE: Guide = {
 			id: "before",
 			title: "πριν and μετά",
 			rule: [
-				"πριν means before, and μετά means after.",
-				"With a verb, πριν takes the short form: the one θα takes for a single action, as in θα πάω, I'll go.",
+				"πριν means before, and μετά means after. They work differently:",
+				[
+					"before a verb, use πριν with the short form, the one θα takes for one action: θα φάω, so πριν φάω",
+					"before a noun, πριν usually adds από, and μετά goes straight in: πριν από το σχολείο, μετά το σχολείο",
+				],
 			],
 			table: {
 				columns: [
@@ -189,22 +204,39 @@ export const JOINING_GUIDE: Guide = {
 					{ label: "Meaning" },
 				],
 				rows: [
-					["πριν πάω για ύπνο", "before I go to sleep"],
 					["πριν φάω", "before I eat"],
+					["πριν πάω για ύπνο", "before I go to bed"],
+					["πριν από το σχολείο", "before school"],
 					["μετά το σχολείο", "after school"],
 				],
 			},
 			examples: [
-				{ greek: "Διαβάζω πριν πάω για ύπνο.", english: "I read before I go to sleep." },
+				{ greek: "Πλένω τα χέρια μου πριν φάω.", english: "I wash my hands before I eat." },
 				{ greek: "Μετά το σχολείο πάμε στο πάρκο.", english: "After school we go to the park." },
 			],
+			details: [
+				{
+					label: "After, with a verb",
+					text: "μετά doesn't go straight before a verb. For after I eat, use αφού with the short form: αφού φάω.",
+					examples: [{ greek: "Αφού φάω, θα πάω για ύπνο.", english: "After I eat, I'll go to bed." }],
+				},
+				{
+					label: "Ago",
+					text: "Before a length of time, πριν από means ago.",
+					examples: [{ greek: "Ήρθα στην Κύπρο πριν από δύο χρόνια.", english: "I came to Cyprus two years ago." }],
+				},
+			],
+			confuse: {
+				text: "μετά από before a length of time means after: μετά από δύο χρόνια, after two years.",
+				section: "place/without-until",
+			},
 			drills: [],
 			plannedDrills: [
 				{
 					id: "joining-before-after",
 					title: "Before and after",
 					greek: "πριν πάω · πριν φάω · μετά το σχολείο",
-					tests: "Shows an English phrase with before or after; the answer is the Greek with πριν and the short form of the verb, or μετά.",
+					tests: "Shows an English phrase with before or after; the answer is πριν with the short form before a verb, πριν από or μετά before a noun, and αφού with the short form for after before a verb.",
 				},
 			],
 		},
@@ -219,37 +251,38 @@ export const JOINING_GUIDE: Guide = {
 					"τι asks what, and never changes.",
 				],
 				"ποιος and πόσος change their ending to match the noun they ask about, in gender and in number, as an adjective does: ποιος καφές, ποια μέρα, ποιο σπίτι; πόση ζάχαρη, πόσα παιδιά.",
-				"The masculine forms change again for the Target, what the action is done to or what follows a word such as με.",
+				"For the Target form, which also follows a word such as με, only the masculine changes: ποιος becomes ποιον.",
 			],
 			table: {
 				columns: [
+					{ label: "Form" },
 					{ label: "Masculine", greek: true },
 					{ label: "Feminine", greek: true },
 					{ label: "Neuter", greek: true },
 					{ label: "Meaning" },
 				],
 				rows: [
-					["ποιος", "ποια", "ποιο", "which? who?"],
-					[{ text: "ποιον", note: 0 }, "ποια", "ποιο", "which? as the Target"],
-					["ποιοι", "ποιες", "ποια", "which? more than one"],
-					[{ text: "ποιους", note: 0 }, "ποιες", "ποια", "more than one, as the Target"],
-					["πόσος", { text: "πόση", note: 1 }, "πόσο", "how much?"],
-					["πόσοι", "πόσες", "πόσα", "how many?"],
+					["Doer", "ποιος", "ποια", "ποιο", "which? who?"],
+					["Target", "ποιον", "ποια", "ποιο", "which? who?"],
+					["Doer", "ποιοι", "ποιες", "ποια", "which? who? (more than one)"],
+					["Target", "ποιους", "ποιες", "ποια", "which? who? (more than one)"],
+					["Doer", "πόσος", { text: "πόση", note: 0 }, "πόσο", "how much?"],
+					["Doer", "πόσοι", "πόσες", "πόσα", "how many?"],
 				],
-				notes: [
-					"For the Target, only the masculine changes.",
-					"The feminine is πόση, not πόσα as ποια would suggest.",
-				],
+				notes: ["The feminine is πόση, not πόσα as ποια would suggest."],
 			},
 			examples: [
-				{ greek: "Ποιους βλέπετε;", english: "Who do you see?" },
-				{ greek: "Με ποιον πηγαίνεις στις συναυλίες;", english: "Who do you go to concerts with?" },
+				{ greek: "Ποιους βλέπετε;", english: "Who do you see? (more than one)" },
+				{
+					greek: "Με ποιον πηγαίνεις στις συναυλίες;",
+					english: "Who do you go to concerts with? (the Target form after με)",
+				},
 				{ greek: "Πόσο κάνει;", english: "How much does it cost?" },
 			],
 			details: [
 				{
-					label: "πόσος as the Target",
-					text: "πόσος changes for the Target the same way: πόσος καιρός becomes πόσο καιρό, how long.",
+					label: "πόσος in the Target form",
+					text: "πόσος takes the Target form the same way. A length of time takes it too, so πόσος καιρός becomes πόσο καιρό, how long.",
 					examples: [{ greek: "Πόσο καιρό μένεις στην Κύπρο;", english: "How long have you lived in Cyprus?" }],
 				},
 				{
@@ -349,20 +382,14 @@ export const JOINING_GUIDE: Guide = {
 					english: "In winter we wear warm clothes so that we don't get cold.",
 				},
 				{
-					greek: "Πολλοί τουρίστες έρχονται στην Ελλάδα για να ευχαριστηθούν τον ήλιο.",
+					greek: "Πολλοί τουρίστες έρχονται στην Ελλάδα για να απολαύσουν τον ήλιο.",
 					english: "Many tourists come to Greece to enjoy the sun.",
 				},
 			],
 			details: [
 				{
 					label: "Which verb form after να",
-					text: [
-						"The verb form after να depends on the action.",
-						[
-							"For one action, use the short form, the one θα takes: θα μάθω, so για να μάθω.",
-							"For something ongoing or repeated, use the present: για να μην κρυώνουμε.",
-						],
-					],
+					text: "The verb after για να follows the same choice as after any να, set out in The short form: future, να and commands.",
 				},
 			],
 			confuse: {

@@ -24,6 +24,7 @@ Section ids are keys: lesson notes point at `"<guide>/<section>"`, so never rena
 - **Don't let grammar fight meaning.** When gender is the point, avoid nouns whose grammatical gender clashes with real-world sex, such as το κορίτσι or το αγόρι. They belong in the gender sections as surprises in their own right.
 - Put the gloss's teaching note in brackets after the translation: "(ένας becomes έναν)".
 - Mark the whole phrase, article included, and only the axes the section teaches. See "Grammar Marks, Not Grammar Colour" in the root `CLAUDE.md`.
+- A section that teaches one gender's nouns takes that gender's tone, such as `tone: "gender-feminine"`, so its header matches its marks. The test fails if it marks any other gender.
 
 ## Drills
 

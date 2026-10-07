@@ -6,12 +6,11 @@ export const FUTURE_COMMANDS_GUIDE: Guide = {
 	title: "The short form: future, να and commands",
 	greek: "Μέλλοντας, να και προστακτική",
 	description: "θα, να and commands, with the short form or the present",
-	idea: "The short form, built on the simple past's stem, follows θα and να for one action, and the present follows them for something ongoing. Commands make the same choice.",
+	idea: "θα and να take the short form for one action and the present for something ongoing. Commands make the same choice.",
 	key: [
 		{ label: "Present", tone: "olive" },
-		{ label: "Simple past", tone: "terracotta" },
-		{ label: "Simple future", tone: "ocean" },
-		{ label: "Continuous, past or future", tone: "honey" },
+		{ label: "Short form", tone: "ocean" },
+		{ label: "Future continuous", tone: "honey" },
 	],
 	sections: [
 		{
@@ -19,49 +18,44 @@ export const FUTURE_COMMANDS_GUIDE: Guide = {
 			tone: "ocean",
 			title: "Simple future with θα and the short form",
 			rule: [
-				"For one action still to come, use the simple future: put θα in front of the short form, the one built on the simple past's stem.",
-				"θα with the present form is the future continuous instead: θα διαβάζω is I'll be reading.",
+				"For one action still to come, use the simple future: θα in front of the short form, as in θα διαβάσω, I'll read. How to find a verb's short form is set out in Verbs and the present, under Every verb has three forms.",
+				"θα with the present is the future continuous instead: θα διαβάζω, I'll be reading.",
+				"For won't, δεν goes in front of θα, as set out in How often, how many, how much, under Saying not twice with δεν.",
 			],
 			table: {
 				columns: [
-					{ label: "Simple past", greek: true, tone: "terracotta" },
 					{ label: "Simple future", greek: true, tone: "ocean" },
 					{ label: "Future continuous", greek: true, tone: "honey" },
+					{ label: "Meaning" },
 				],
 				rows: [
-					["έβαλα", "θα βάλω", "θα βάζω"],
-					["έδωσα", "θα δώσω", "θα δίνω"],
-					["είδα", "θα δω", "θα βλέπω"],
-					["διάβασα", "θα διαβάσω", "θα διαβάζω"],
+					["θα διαβάσω", "θα διαβάζω", "read"],
+					["θα βάλω", "θα βάζω", "put"],
+					["θα δώσω", "θα δίνω", "give"],
+					["θα δω", "θα βλέπω", "see"],
 				],
 			},
 			examples: [
 				{
+					greek: "Αύριο θα διαβάσω το βιβλίο.",
+					english: "Tomorrow I'll read the book. (one action)",
+				},
+				{ greek: "Αύριο θα διαβάζω όλη μέρα.", english: "Tomorrow I'll be reading all day. (going on)" },
+				{
 					greek: "Αύριο θα βάλω το γάλα στο ψυγείο.",
 					english: "Tomorrow I'll put the milk in the fridge.",
-				},
-				{
-					greek: "Αύριο θα πάρω τηλέφωνο τον φίλο μου.",
-					english: "Tomorrow I'll phone my friend.",
-				},
-				{ greek: "Αύριο θα διαβάζω όλη μέρα.", english: "Tomorrow I'll be reading all day." },
-			],
-			details: [
-				{
-					label: "Saying not",
-					text: "To say not, put δεν before θα.",
-					examples: [{ greek: "Δεν θα αργήσω.", english: "I won't be late." }],
 				},
 			],
 			drills: ["verbs-future-formation", "verbs-future-sg1", "verbs-future-conjugation"],
 		},
 		{
 			id: "short-form",
-			tone: "ocean",
+			tone: "sunset",
 			title: "The short form or the present after να",
 			rule: [
-				"After να, the short form names one action. The short form is the one built on the simple past's stem: έφαγα, θα φάω.",
+				"After να, use the short form for one action: the same form θα takes, as in θα φάω, να φάω.",
 				"For something ongoing or habitual, να takes the present instead.",
+				"For not, μην goes after να, as set out in How often, how many, how much, under Saying not twice with δεν.",
 			],
 			table: {
 				columns: [
@@ -77,32 +71,25 @@ export const FUTURE_COMMANDS_GUIDE: Guide = {
 				],
 			},
 			examples: [
-				{ greek: "Θέλω να φάω.", english: "I want to eat." },
-				{ greek: "Μου αρέσει να τρώω.", english: "I like eating." },
-				{ greek: "Το χόμπι μου είναι να μαγειρεύω.", english: "My hobby is cooking." },
-				{ greek: "Μπορώ να βοηθήσω;", english: "Can I help?" },
+				{ greek: "Θέλω να φάω.", english: "I want to eat. (now: one action)" },
+				{ greek: "Μου αρέσει να τρώω.", english: "I like eating. (in general: ongoing)" },
+				{ greek: "Μπορώ να βοηθήσω;", english: "Can I help? (βοηθάω becomes βοηθήσω)" },
 			],
 			details: [
 				{
-					label: "After πριν, όταν and αν",
-					text: "πριν takes the short form for one action too. So do όταν and αν when they point to the future.",
+					label: "After όταν, αν and πριν",
+					text: "όταν and αν take the short form too when they point to the future. πριν does too, as set out in Joining ideas with when, why and if, under πριν and μετά.",
 					examples: [
-						{ greek: "Διαβάζω πριν πάω για ύπνο.", english: "I read before I go to sleep." },
-						{ greek: "Όταν έρθεις, θα φάμε μαζί.", english: "When you come, we'll eat together." },
+						{ greek: "Όταν έρθεις, θα φάμε μαζί.", english: "When you come, we'll eat together. (έρθεις, not έρχεσαι)" },
 					],
-				},
-				{
-					label: "Saying not",
-					text: "To say not, put μην after να.",
-					examples: [{ greek: "Μπορείς να μην το πεις;", english: "Can you not say it?" }],
 				},
 				{
 					label: "After seeing and hearing",
 					text: "After a verb of seeing or hearing, να with the present describes an action in progress.",
 					examples: [
 						{
-							greek: "Ακούω τον σκύλο να τραγουδάει σαν τον λύκο.",
-							english: "I hear the dog singing like the wolf.",
+							greek: "Βλέπω τα παιδιά να παίζουν.",
+							english: "I see the children playing.",
 						},
 					],
 				},
@@ -114,7 +101,7 @@ export const FUTURE_COMMANDS_GUIDE: Guide = {
 			tone: "slate",
 			title: "Verbs with no separate short form",
 			rule: [
-				"Most verbs make the simple future from θα and a short form, the form built on the simple past's stem: είδα, θα δω. A few everyday verbs have no separate short form, so θα goes straight in front of the present.",
+				"A few everyday verbs have no separate short form, so θα and να go straight in front of the present: θα έχω, να έχω. είμαι works the same way.",
 				[
 					"έχω, θέλω and ξέρω describe a state, which has no one-off version.",
 					"κάνω and περιμένω have a short form identical to the present.",
@@ -124,8 +111,8 @@ export const FUTURE_COMMANDS_GUIDE: Guide = {
 			table: {
 				columns: [
 					{ label: "Present", greek: true, tone: "olive" },
-					{ label: "Past", greek: true, tone: "terracotta" },
-					{ label: "Future", greek: true, tone: "ocean" },
+					{ label: "Past", greek: true },
+					{ label: "Future", greek: true, tone: "olive" },
 					{ label: "Meaning" },
 				],
 				rows: [
@@ -151,7 +138,7 @@ export const FUTURE_COMMANDS_GUIDE: Guide = {
 			title: "Commands",
 			rule: [
 				"A command has two forms: one for one person, and one for several people, which is also the polite form.",
-				"Most one-person commands are the short form, the one built on the simple past's stem, plus -ε, with the stress moving back: θα ακούσω → άκουσε. The several-people form ends in -τε.",
+				"Most one-person commands are the short form, the one θα takes, with -ε in place of -ω, with the stress moving back: θα ακούσω → άκουσε. The several-people form ends in -τε.",
 			],
 			table: {
 				columns: [
@@ -160,35 +147,34 @@ export const FUTURE_COMMANDS_GUIDE: Guide = {
 					{ label: "Meaning" },
 				],
 				rows: [
-					["έλα", "ελάτε", "come"],
-					["κάτσε", "καθίστε", "sit"],
+					["άκουσε", "ακούστε", "listen"],
 					["δώσε", "δώστε", "give"],
 					["φάε", "φάτε", "eat"],
-					["άκουσε", "ακούστε", "listen"],
+					[{ text: "έλα", note: 0 }, { text: "ελάτε", note: 0 }, "come"],
+					[{ text: "κάτσε", note: 1 }, "καθίστε", "sit"],
+				],
+				notes: [
+					"έλα and ελάτε, from έρχομαι, don't come from its short form θα έρθω; learn them as they are.",
+					"κάθομαι has two short forms, θα κάτσω and θα καθίσω. κάτσε comes from the first, καθίστε from the second.",
 				],
 			},
 			examples: [
-				{ greek: "Κλείσε την πόρτα, σε παρακαλώ.", english: "Close the door, please." },
-				{ greek: "Σήκω πάνω!", english: "Stand up!" },
-				{ greek: "Καθίστε, παρακαλώ.", english: "Please sit down." },
+				{ greek: "Κλείσε την πόρτα, σε παρακαλώ.", english: "Close the door, please. (θα κλείσω → κλείσε)" },
+				{ greek: "Καθίστε, παρακαλώ.", english: "Please sit down. (to several people, or politely)" },
 			],
 			details: [
 				{
 					label: "Don't",
-					text: "For don't, put μην before the you form: the present, or the short form for one action.",
+					text: "For don't, put μην, or μη before some consonants, in front of the you form: the present, or the short form for one action. When the ν stays is set out in How often, how many, how much, under Saying not twice with δεν.",
 					examples: [
-						{ greek: "Μην φωνάζεις!", english: "Don't shout!" },
-						{ greek: "Μην ξεχάσεις τα κλειδιά σου!", english: "Don't forget your keys!" },
+						{ greek: "Μη φωνάζεις!", english: "Don't shout! (present: stop shouting)" },
+						{ greek: "Μην ξεχάσεις τα κλειδιά σου!", english: "Don't forget your keys! (short form: this once)" },
 					],
-				},
-				{
-					label: "When μην keeps its ν",
-					text: "Like δεν, μην keeps its ν before a vowel and before κ, π, τ, ξ, ψ, μπ, ντ, γκ, τσ, τζ, and often drops it before other consonants, though keeping it is widely accepted.",
 				},
 				{
 					label: "Let's",
 					text: "For let's, put ας in front of the we form of the short form: ας μιλήσουμε.",
-					examples: [{ greek: "Ας κάνουμε λίγη εξάσκηση μαζί.", english: "Let's do a little practice together." }],
+					examples: [{ greek: "Ας μιλήσουμε ελληνικά.", english: "Let's speak Greek. (μιλήσουμε, not μιλάμε)" }],
 				},
 			],
 			drills: ["verbs-imperatives"],
@@ -198,7 +184,7 @@ export const FUTURE_COMMANDS_GUIDE: Guide = {
 			tone: "honey",
 			title: "One-off and ongoing commands",
 			rule: [
-				"Most commands are for one action and come from the short form, the one built on the simple past's stem: θα φάω → φάε.",
+				"A command built on the short form, such as φάε from θα φάω, is for one action.",
 				"To tell someone to keep doing something, or to do it as a habit, build the command from the present instead. φάε is eat this now; τρώγε is keep eating, or eat as a rule.",
 			],
 			table: {
@@ -208,23 +194,24 @@ export const FUTURE_COMMANDS_GUIDE: Guide = {
 					{ label: "Meaning" },
 				],
 				rows: [
-					["φάε", "τρώγε", "eat"],
+					["φάε", { text: "τρώγε", note: 0 }, "eat"],
 					["πιες", "πίνε", "drink"],
-					["πες", "λέγε", "say"],
+					["πες", { text: "λέγε", note: 0 }, "say"],
 					["δες", "βλέπε", "see"],
 					["βγες", "βγαίνε", "go out"],
 					["δώσε", "δίνε", "give"],
 				],
+				notes: ["τρώω and λέω add a γ, as in the past continuous έτρωγα and έλεγα."],
 			},
 			examples: [
-				{ greek: "Πες μου τι έγινε.", english: "Tell me what happened." },
-				{ greek: "Πίνε πολύ νερό.", english: "Drink plenty of water." },
+				{ greek: "Πες μου τι έγινε.", english: "Tell me what happened. (one action)" },
+				{ greek: "Πίνε πολύ νερό.", english: "Drink plenty of water. (as a habit)" },
 			],
 			details: [
 				{
 					label: "One-syllable commands",
 					text: [
-						"A one-syllable short form gives a one-syllable command:",
+						"A one-syllable short form gives a one-syllable command, ending in -ς instead of -ε:",
 						[
 							"θα πω → πες",
 							"θα δω → δες",
@@ -235,7 +222,7 @@ export const FUTURE_COMMANDS_GUIDE: Guide = {
 				},
 				{
 					label: "φέρε and κοίτα",
-					text: "φέρε is regular, from θα φέρω; κοίτα, from κοιτάζω, you learn as it is.",
+					text: "φέρε is the regular one-off command, from θα φέρω; its ongoing form is φέρνε. κοίτα, from κοιτάζω, you learn as it is.",
 				},
 			],
 			drills: ["verbs-imperatives"],

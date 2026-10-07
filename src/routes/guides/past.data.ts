@@ -6,11 +6,11 @@ export const PAST_GUIDE: Guide = {
 	title: "The past",
 	greek: "Το παρελθόν",
 	description: "The simple past's endings and stem, and the past continuous",
-	idea: "The simple past is one finished event; the past continuous is something that was going on or used to happen. The simple past's stem also gives you the short form.",
+	idea: "The simple past is one finished event, and most verbs make it by adding σ to the stem. The past continuous is something that was going on or used to happen.",
 	key: [
 		{ label: "Present", tone: "olive" },
 		{ label: "Simple past", tone: "terracotta" },
-		{ label: "Continuous, past or future", tone: "honey" },
+		{ label: "Past continuous", tone: "honey" },
 	],
 	sections: [
 		{
@@ -50,17 +50,17 @@ export const PAST_GUIDE: Guide = {
 		},
 		{
 			id: "past-shapes",
-			tone: "terracotta",
+			tone: "navy",
 			title: "The simple past stem: add σ",
 			rule: [
 				"Most verbs make their simple past stem by adding σ. ψ and ξ are just σ joined to the sound before it: ψ is a p-sound plus σ, and ξ is a k-sound plus σ.",
 				"So the end of the present stem decides the letter:",
 				[
 					"σ after a vowel, and in place of ζ",
-					"ψ after π, β, φ, or the v sound of -εύω",
-					"ξ after κ, γ or χ",
+					"ψ in place of π, β, φ, or the v sound of -εύω",
+					"ξ in place of κ, γ or χ",
 				],
-				"-άω and -ώ verbs add -ησ-. -ώνω verbs, and some -νω and -χνω verbs, drop the ν first.",
+				"Most -άω and -ώ verbs add -ησ-. -ώνω and -χνω verbs, and some other -νω verbs, drop the ν first.",
 			],
 			table: {
 				columns: [
@@ -94,10 +94,10 @@ export const PAST_GUIDE: Guide = {
 			details: [
 				{
 					label: "Verbs in -νω",
-					text: "Only some -νω verbs add σ: κλείνω → έκλεισα, φτάνω → έφτασα, χάνω → έχασα. Many common ones have a past of their own instead: κάνω → έκανα, μένω → έμεινα.",
+					text: "Only some -νω verbs add σ: κλείνω → έκλεισα, φτάνω → έφτασα, χάνω → έχασα. Many common ones have a past of their own instead, set out in the next section.",
 				},
 				{
-					label: "Exceptions within a sound",
+					label: "Verbs that take a different letter",
 					text: [
 						"A few verbs take a different letter from their neighbours:",
 						[
@@ -112,7 +112,7 @@ export const PAST_GUIDE: Guide = {
 		},
 		{
 			id: "past-own",
-			tone: "terracotta",
+			tone: "sunset",
 			title: "Verbs with a past of their own",
 			rule: [
 				"Some of the most common verbs don't add σ, so learn their past with the verb. Most fall into a few groups:",
@@ -122,7 +122,7 @@ export const PAST_GUIDE: Guide = {
 					"some take no σ, keeping their stem or changing it",
 					"a few are one of a kind",
 				],
-				"Some of these pasts are too short to carry an έ- and do without it: μπήκα, πήρα.",
+				"Unlike a regular past, some of these take no έ- even when short: μπήκα, πήρα.",
 			],
 			table: {
 				columns: [
@@ -158,7 +158,7 @@ export const PAST_GUIDE: Guide = {
 					text: [
 						"The groups hold more verbs than the table shows:",
 						[
-							"-ηκ-: ανεβαίνω → ανέβηκα, κατεβαίνω → κατέβηκα, βρίσκω → βρήκα",
+							"-ηκ-: ανεβαίνω → ανέβηκα, κατεβαίνω → κατέβηκα, and βρίσκω → βρήκα, though it is not an -αίνω verb",
 							"shorter: καταλαβαίνω → κατάλαβα",
 							"no σ: βάζω → έβαλα, φέρνω → έφερα; δίνω → έδωσα changes its stem but keeps the σ",
 							"one of a kind: έρχομαι → ήρθα, φεύγω → έφυγα",
@@ -174,26 +174,31 @@ export const PAST_GUIDE: Guide = {
 			title: "Past continuous for was doing and used to do",
 			rule: [
 				"For something ongoing or habitual in the past, use the past continuous rather than the simple past. σπούδασα is I studied; σπούδαζα is I was studying, or I used to study.",
-				"Build it from the present stem with the simple past's endings (-α, -ες, -ε, -αμε, -ατε, -αν): σπουδάζω → σπούδαζα.",
+				"Build it from the present stem with the simple past's endings: σπουδάζω → σπούδαζα.",
 			],
 			table: {
 				columns: [
-					{ label: "Simple past", greek: true, tone: "terracotta" },
+					{ label: "Present", greek: true, tone: "olive" },
 					{ label: "Past continuous", greek: true, tone: "honey" },
+					{ label: "Simple past", greek: true, tone: "terracotta" },
 					{ label: "Meaning" },
 				],
 				rows: [
-					["σπούδασα", "σπούδαζα", "study"],
-					["έπαιξα", "έπαιζα", "play"],
-					["μίλησα", "μιλούσα", "speak"],
-					["έφαγα", "έτρωγα", "eat"],
-					["μπόρεσα", "μπορούσα", "can"],
+					["σπουδάζω", "σπούδαζα", "σπούδασα", "study"],
+					["παίζω", "έπαιζα", "έπαιξα", "play"],
+					["μιλάω", { text: "μιλούσα", note: 0 }, "μίλησα", "speak"],
+					["μπορώ", { text: "μπορούσα", note: 0 }, "μπόρεσα", "can"],
+					["τρώω", { text: "έτρωγα", note: 1 }, "έφαγα", "eat"],
+				],
+				notes: [
+					"Verbs in -άω and -ώ usually take -ούσα instead.",
+					"τρώω adds a γ, as λέω and ακούω do: έλεγα, άκουγα.",
 				],
 			},
 			examples: [
 				{
 					greek: "Σπούδαζα αρχιτεκτονική, αλλά απέτυχα.",
-					english: "I was studying architecture, but I failed.",
+					english: "I was studying architecture, but I failed. (σπούδαζα went on; απέτυχα happened once)",
 				},
 				{
 					greek: "Όταν ήμουν παιδί, έπαιζα ποδόσφαιρο.",
@@ -204,14 +209,6 @@ export const PAST_GUIDE: Guide = {
 				{
 					label: "Stress and the added έ-",
 					text: "As in the simple past, the stress sits three syllables from the end, and a short verb gains έ- to carry it: παίζω → έπαιζα.",
-				},
-				{
-					label: "τρώω, λέω and ακούω",
-					text: "τρώω, λέω and ακούω add a γ: έτρωγα, έλεγα, άκουγα.",
-				},
-				{
-					label: "Verbs in -άω and -ώ",
-					text: "Verbs in -άω and -ώ usually take -ούσα instead: μιλάω → μιλούσα, μπορώ → μπορούσα.",
 				},
 			],
 			drills: ["verbs-tense-recognition", "verbs-imperfect-stative"],

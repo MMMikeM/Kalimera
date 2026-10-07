@@ -12,7 +12,7 @@ export const GENDER_GUIDE: Guide = {
 		{
 			id: "masculine-endings",
 			title: "Masculine: -ος, -ας, -ης, -ές",
-			tone: "honey",
+			tone: "gender-masculine",
 			rule: [
 				"Every Greek noun is masculine, feminine or neuter, and its article shows which: ο, η or το. The ending usually gives it away too, but a few everyday words break the pattern, so learn each noun with its article.",
 				"Nouns ending in -ς are mostly masculine, and take ο.",
@@ -56,7 +56,7 @@ export const GENDER_GUIDE: Guide = {
 		{
 			id: "feminine-endings",
 			title: "Feminine: -α, -η",
-			tone: "honey",
+			tone: "gender-feminine",
 			rule: "Nouns ending in -α or -η are mostly feminine, and take η.",
 			table: {
 				columns: [{ label: "Ending" }, { label: "Example", greek: true }],
@@ -80,7 +80,7 @@ export const GENDER_GUIDE: Guide = {
 		{
 			id: "neuter-endings",
 			title: "Neuter: -ο, -ι, -μα",
-			tone: "honey",
+			tone: "gender-neuter",
 			rule: "Nouns ending in -ο, -ι or -μα are neuter, and take το.",
 			table: {
 				columns: [{ label: "Ending" }, { label: "Example", greek: true }],
@@ -106,77 +106,77 @@ export const GENDER_GUIDE: Guide = {
 			title: "Guessing gender from the word",
 			tone: "ocean",
 			rule: [
-				"Every noun is masculine, feminine or neuter, shown by its article: ο, η or το. Some families of words share a gender, so knowing the family tells you the article. A family can be:",
-				[
-					"an ending: -ση and -ότητα make a noun feminine, -είο makes it neuter",
-					"a kind of word: countries are mostly feminine, languages are neuter plural, meals are neuter",
-				],
-				"The table lists the common families.",
+				"Some groups of nouns share a gender, so knowing the group tells you the article. A group can be:",
+				["an ending, such as -ση or -είο", "a kind of thing, such as countries or languages"],
+				"The table lists the common groups.",
 			],
 			table: {
 				columns: [
-					{ label: "Examples", greek: true },
-					{ label: "Family" },
+					{ label: "Group" },
 					{ label: "Gender" },
+					{ label: "Examples", greek: true },
+					{ label: "Meaning" },
 				],
 				rows: [
-					[markedCell("η Ελλάδα", "nominative", "feminine"), "countries", "mostly feminine; ο Καναδάς is one exception"],
-					[markedCell("τα ελληνικά", "nominative", "neuter", true), "languages", "neuter plural"],
 					[
-						cellWith("το φαρμακείο · το ανθοπωλείο", mark("το φαρμακείο", "nominative", "neuter"), mark("το ανθοπωλείο", "nominative", "neuter")),
-						"places in -είο, including shops in -πωλείο",
-						"neuter; so is το ψυγείο, the fridge",
-					],
-					[
+						"-ση, -ξη, -ψη",
+						"feminine",
 						cellWith(
 							"η θέση · η απόδειξη · η άποψη",
 							mark("η θέση", "nominative", "feminine"),
 							mark("η απόδειξη", "nominative", "feminine"),
 							mark("η άποψη", "nominative", "feminine"),
 						),
-						"-ση, -ξη, -ψη",
-						"feminine",
+						"place, receipt, opinion",
 					],
-					[markedCell("η ταυτότητα", "nominative", "feminine"), "-ότητα", "feminine"],
-					[markedCell("το πρωινό", "nominative", "neuter"), "meals", "neuter"],
+					["-ότητα", "feminine", markedCell("η ταυτότητα", "nominative", "feminine"), "identity card"],
 					[
-						cellWith("ο δάσκαλος · η δασκάλα", mark("ο δάσκαλος", "nominative", "masculine"), mark("η δασκάλα", "nominative", "feminine")),
-						"most jobs",
-						"a form for each",
+						"-είο, often a place or shop",
+						"neuter",
+						cellWith("το φαρμακείο · το ανθοπωλείο", mark("το φαρμακείο", "nominative", "neuter"), mark("το ανθοπωλείο", "nominative", "neuter")),
+						"chemist's, florist's",
 					],
-					["ο / η μπαρίστα", "some jobs", "one form, the article changes"],
+					["countries", { text: "mostly feminine", note: 0 }, markedCell("η Ελλάδα", "nominative", "feminine"), "Greece"],
+					["languages", "neuter, and plural", markedCell("τα ελληνικά", "nominative", "neuter", true), "Greek"],
 					[
-						cellWith("ο χειμώνας · η άνοιξη", mark("ο χειμώνας", "nominative", "masculine"), mark("η άνοιξη", "nominative", "feminine")),
-						"seasons",
-						"mixed, but each follows its ending",
+						"meals",
+						"neuter",
+						cellWith("το πρωινό · το βραδινό", mark("το πρωινό", "nominative", "neuter"), mark("το βραδινό", "nominative", "neuter")),
+						"breakfast, dinner",
 					],
 				],
+				notes: ["A few are not, such as ο Καναδάς."],
 			},
 			examples: [
 				{
-					greek: "Μιλάω ελληνικά.",
-					english: "I speak Greek. (no article after μιλάω)",
-					marks: [mark("ελληνικά", "accusative", "neuter", true)],
+					greek: "Τα ελληνικά είναι δύσκολα.",
+					english: "Greek is hard. (δύσκολα: τα ελληνικά is neuter plural)",
+					marks: [mark("Τα ελληνικά", "nominative", "neuter", true), mark("δύσκολα", "nominative", "neuter", true)],
+				},
+				{
+					greek: "Το φαρμακείο είναι κλειστό.",
+					english: "The chemist's is closed. (κλειστό: φαρμακείο is neuter)",
+					marks: [mark("Το φαρμακείο", "nominative", "neuter"), mark("κλειστό", "nominative", "neuter")],
 				},
 			],
 			details: [
 				{
-					label: "Jobs",
-					text: "Many jobs have a masculine and a feminine form. Some keep one form and change only the article.",
-					examples: [
-						{
-							greek: "Η μπαρίστα δουλεύει στο καφέ.",
-							english: "The barista works at the café.",
-							marks: [mark("Η μπαρίστα", "nominative", "feminine"), mark("στο καφέ", "accusative", "neuter")],
-						},
+					label: "Seasons",
+					text: [
+						"The seasons don't share a gender. Each follows its own ending:",
+						["ο χειμώνας, winter", "η άνοιξη, spring", "το καλοκαίρι, summer", "το φθινόπωρο, autumn"],
 					],
 				},
 			],
+			confuse: {
+				text: "Words for people, jobs among them, often come in a masculine and feminine pair: ο δάσκαλος, η δασκάλα.",
+				section: "gender-pairs",
+			},
 			drills: [],
 			plannedDrills: [
 				{
 					id: "nouns-gender-from-ending",
-					title: "Gender from the word family",
+					title: "Gender from the word's group",
 					greek: "φαρμακείο · θέση · βιβλιοπωλείο",
 					tests: "Shows a noun without its article; the answer is ο, η or το.",
 				},
@@ -187,11 +187,8 @@ export const GENDER_GUIDE: Guide = {
 			title: "Pairs of people",
 			tone: "stone",
 			rule: [
-				"Many words for people come in a masculine and feminine pair. The feminine ending varies, so learn both:",
-				[
-					"-ος becomes -α.",
-					"-ας becomes -ισσα or -ίδα.",
-				],
+				"Many words for people, jobs among them, come in a masculine and feminine pair. The feminine ending varies, so learn both. Often:",
+				["-ος becomes -α", "-ας becomes -ισσα or -ίδα", "-τής becomes -τρια"],
 			],
 			table: {
 				columns: [
@@ -201,21 +198,35 @@ export const GENDER_GUIDE: Guide = {
 				],
 				rows: [
 					[markedCell("ο θείος", "nominative", "masculine"), markedCell("η θεία", "nominative", "feminine"), "uncle, aunt"],
+					[markedCell("ο δάσκαλος", "nominative", "masculine"), markedCell("η δασκάλα", "nominative", "feminine"), "teacher"],
 					[markedCell("ο γείτονας", "nominative", "masculine"), markedCell("η γειτόνισσα", "nominative", "feminine", false), "neighbour"],
 					[markedCell("ο Έλληνας", "nominative", "masculine"), markedCell("η Ελληνίδα", "nominative", "feminine", false), "a Greek"],
-					[markedCell("ο Κύπριος", "nominative", "masculine"), markedCell("η Κύπρια", "nominative", "feminine"), "a Cypriot"],
+					[markedCell("ο μαθητής", "nominative", "masculine"), markedCell("η μαθήτρια", "nominative", "feminine"), "pupil"],
 				],
 			},
 			examples: [
 				{
 					greek: "Ο Νίκος είναι Έλληνας και η Μαρία είναι Ελληνίδα.",
-					english: "Nikos is Greek, and so is Maria.",
+					english: "Nikos is Greek, and so is Maria. (Ελληνίδα for a woman)",
 					marks: [mark("Έλληνας", "nominative", "masculine"), mark("Ελληνίδα", "nominative", "feminine")],
 				},
 				{
 					greek: "Η θεία μου μένει στην Αθήνα.",
-					english: "My aunt lives in Athens.",
-					marks: [mark("Η θεία", "nominative", "feminine")],
+					english: "My aunt lives in Athens. (θείος becomes θεία)",
+					marks: [mark("Η θεία", "nominative", "feminine"), mark("μου", "genitive")],
+				},
+			],
+			details: [
+				{
+					label: "One word for both",
+					text: ["Some words for people have one form, and only the article changes:", ["ο μπαρίστα, η μπαρίστα", "ο βοηθός, η βοηθός"]],
+					examples: [
+						{
+							greek: "Η μπαρίστα δουλεύει στο καφέ.",
+							english: "The barista works at the café. (only η shows she's a woman)",
+							marks: [mark("Η μπαρίστα", "nominative", "feminine")],
+						},
+					],
 				},
 			],
 			drills: [],
@@ -237,7 +248,7 @@ export const GENDER_GUIDE: Guide = {
 				[
 					"-άκι makes it small, and neuter whatever it was before.",
 					"-άκος makes it small, and keeps a masculine noun masculine.",
-					"-άρα makes it big, or more so, and feminine.",
+					"-άρα makes it big, or stronger, and feminine whatever it was before.",
 				],
 			],
 			table: {
@@ -256,8 +267,13 @@ export const GENDER_GUIDE: Guide = {
 			},
 			examples: [
 				{
+					greek: "Τι ωραίο ελεφαντάκι!",
+					english: "What a lovely little elephant! (ωραίο: ελεφαντάκι is neuter, though ελέφαντας is masculine)",
+					marks: [mark("ωραίο ελεφαντάκι", "nominative", "neuter")],
+				},
+				{
 					greek: "Θα πάρω έναν υπνάκο.",
-					english: "I'm going to have a nap.",
+					english: "I'm going to have a nap. (έναν: υπνάκος stays masculine)",
 					marks: [mark("έναν υπνάκο", "accusative", "masculine")],
 				},
 				{

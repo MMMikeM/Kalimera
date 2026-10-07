@@ -6,12 +6,11 @@ export const VERBS_GUIDE: Guide = {
 	title: "Verbs and the present",
 	greek: "Ρήματα",
 	description: "Every verb's three forms, and the present endings",
-	idea: "Learn every verb as three forms: present, simple past and simple future. The simple past and the simple future are built on the same stem, so knowing one gives you the other.",
+	idea: "Learn every verb as three forms: present, simple past and simple future. Then learn the present's endings, which show who does it and come in a few sets.",
 	key: [
 		{ label: "Present", tone: "olive" },
 		{ label: "Simple past", tone: "terracotta" },
 		{ label: "Simple future", tone: "ocean" },
-		{ label: "Continuous, past or future", tone: "honey" },
 	],
 	sections: [
 		{
@@ -19,13 +18,14 @@ export const VERBS_GUIDE: Guide = {
 			tone: "navy",
 			title: "Every verb has three forms",
 			rule: [
-				"Learn every verb as three forms.",
+				"Learn every verb as three forms:",
 				[
-					"The present is the everyday form.",
-					"The simple past is one finished event.",
-					"The simple future is θα plus a short form.",
+					"the present, the everyday form: γράφω, I write",
+					"the simple past, for one finished event: έγραψα, I wrote",
+					"the simple future, for one event still to come: θα γράψω, I'll write",
 				],
-				"The short form is built on the same stem as the simple past, so the simple past tells you the simple future.",
+				"The simple future is θα plus the verb's short form, here γράψω. For most verbs the short form is built on the simple past's stem, so the simple past tells you the simple future: έγραψα, θα γράψω.",
+				"The commonest verbs change their stem from the present, so learn them as sets of three, as in the rest of the table. A few, such as έχω, have no separate short form; they are set out in The short form: future, να and commands, under Verbs with no separate short form.",
 			],
 			table: {
 				columns: [
@@ -35,6 +35,7 @@ export const VERBS_GUIDE: Guide = {
 					{ label: "Meaning" },
 				],
 				rows: [
+					["γράφω", "έγραψα", "θα γράψω", "write"],
 					["βλέπω", "είδα", "θα δω", "see"],
 					["τρώω", "έφαγα", "θα φάω", "eat"],
 					["πίνω", "ήπια", "θα πιω", "drink"],
@@ -55,7 +56,7 @@ export const VERBS_GUIDE: Guide = {
 			title: "είμαι in the present, past and future",
 			rule: [
 				"είμαι is the verb you will use most, and it follows no pattern. Every past form starts with ή-.",
-				"The future is θα in front of the present form. Most verbs use a short form after θα, one built on the simple past's stem, but είμαι has none.",
+				"It has no short form, the form most verbs take after θα, so its future is θα in front of the present: θα είμαι. έχω works the same way.",
 			],
 			table: {
 				columns: [
@@ -89,12 +90,13 @@ export const VERBS_GUIDE: Guide = {
 			tone: "olive",
 			title: "Present endings",
 			rule: [
-				"The present says what happens now or as a habit. Its ending shows who does it, and there are three sets of endings.",
+				"The present says what happens now or as a habit. Its ending shows who does it. Verbs in -ω take one of three sets of endings:",
 				[
-					"Most verbs end in -ω and share one set.",
-					"Verbs in -άω share a second set.",
-					"A small family of short verbs shares a third, shown here by πάω and τρώω.",
+					"most share the set of γράφω",
+					"verbs in -άω share the set of μιλάω",
+					"a small family of short verbs shares a third, shown here by πάω and τρώω",
 				],
+				"Verbs in a stressed -ώ and verbs in -μαι have sets of their own, in the sections that follow.",
 			],
 			table: {
 				columns: [
@@ -114,7 +116,7 @@ export const VERBS_GUIDE: Guide = {
 				],
 			},
 			examples: [
-				{ greek: "Πεινάω.", english: "I'm hungry." },
+				{ greek: "Πεινάω.", english: "I'm hungry. (-άω, like μιλάω)" },
 				{ greek: "Πάω σινεμά.", english: "I go to the cinema." },
 			],
 			details: [
@@ -126,7 +128,7 @@ export const VERBS_GUIDE: Guide = {
 				{
 					label: "πάω and πηγαίνω",
 					text: "πάω has a longer form, πηγαίνω, which takes the -ω endings: πηγαίνεις, πηγαίνει. Both are everyday Greek.",
-					examples: [{ greek: "Με ποιον πηγαίνεις στις συναυλίες;", english: "Who do you go to concerts with?" }],
+					examples: [{ greek: "Πηγαίνεις συχνά στη θάλασσα;", english: "Do you often go to the sea?" }],
 				},
 			],
 			drills: [
@@ -158,7 +160,7 @@ export const VERBS_GUIDE: Guide = {
 			},
 			examples: [
 				{ greek: "Μπορείς να μου πεις;", english: "Can you tell me?" },
-				{ greek: "Μπορείτε να με βοηθήσετε;", english: "Can you help me?" },
+				{ greek: "Ποιος οδηγεί σήμερα;", english: "Who's driving today? (οδηγεί, like μπορεί)" },
 			],
 			details: [
 				{
@@ -173,8 +175,9 @@ export const VERBS_GUIDE: Guide = {
 			tone: "stone",
 			title: "Verbs ending in -μαι",
 			rule: [
-				"Some everyday verbs end in -μαι and take their own endings: έρχομαι (I come), κάθομαι (I sit), παντρεύομαι (I get married). The table shows them on παντρεύομαι.",
-				"Many make the simple past with -θηκα or -τηκα. Most of those make the simple future by dropping -ηκα for -ώ: σκέφτηκα → θα σκεφτώ, χάρηκα → θα χαρώ.",
+				"Some everyday verbs end in -μαι and take their own endings. The table shows them on παντρεύομαι, I get married. Others are:",
+				["έρχομαι, I come", "κάθομαι, I sit", "σκέφτομαι, I think"],
+				"Most make the simple past in -ηκα, often -θηκα or -τηκα: παντρεύτηκα. Their simple future swaps -ηκα for -ώ: σκέφτηκα → θα σκεφτώ, χάρηκα → θα χαρώ.",
 			],
 			table: {
 				columns: [
@@ -185,29 +188,29 @@ export const VERBS_GUIDE: Guide = {
 				rows: [
 					["I", "παντρεύομαι", "παντρεύτηκα"],
 					["you", "παντρεύεσαι", "παντρεύτηκες"],
-					["he / she", "παντρεύεται", "παντρεύτηκε"],
+					["he / she / it", "παντρεύεται", "παντρεύτηκε"],
 					["we", "παντρευόμαστε", "παντρευτήκαμε"],
 					["you all", "παντρεύεστε", "παντρευτήκατε"],
 					["they", "παντρεύονται", "παντρεύτηκαν"],
 				],
 			},
 			examples: [
-				{ greek: "Πού γεννήθηκες;", english: "Where were you born?" },
-				{ greek: "Κουρεύτηκα.", english: "I got a haircut." },
-				{ greek: "Θα το σκεφτώ.", english: "I'll think about it." },
+				{ greek: "Πού γεννήθηκες;", english: "Where were you born? (γεννιέμαι: -θηκα)" },
+				{ greek: "Κουρεύτηκα.", english: "I got a haircut. (κουρεύομαι: -τηκα)" },
+				{ greek: "Θα το σκεφτώ.", english: "I'll think about it. (σκέφτηκα → θα σκεφτώ)" },
 			],
 			details: [
 				{
 					label: "Stress in the we and you-all forms",
-					text: "The stress cannot sit further back than three syllables from the end. So in the present's we form, and in the simple past's we and you-all forms, the stress moves one syllable towards the ending: παντρευόμαστε, παντρευτήκαμε, παντρευτήκατε.",
+					text: "As in the simple past, the stress cannot sit further back than three syllables from the end. So in the present's we form, and in the simple past's we and you-all forms, it moves one syllable towards the ending: παντρευόμαστε, παντρευτήκαμε, παντρευτήκατε.",
 				},
 				{
 					label: "π becomes φ",
-					text: "In the past and future a π before the τ turns into φ: επισκέπτομαι → επισκέφτηκα.",
+					text: "In the simple past and simple future, a π before τ turns into φ: επισκέπτομαι → επισκέφτηκα.",
 				},
 				{
 					label: "έρχομαι and κάθομαι",
-					text: "έρχομαι and κάθομαι go their own way: ήρθα → θα έρθω, κάθισα → θα καθίσω.",
+					text: "έρχομαι and κάθομαι don't take -ηκα: ήρθα → θα έρθω, κάθισα → θα καθίσω.",
 				},
 				{
 					label: "The past continuous",
@@ -218,15 +221,12 @@ export const VERBS_GUIDE: Guide = {
 		},
 		{
 			id: "amai-verbs",
-			tone: "stone",
+			tone: "slate",
 			title: "Verbs in -άμαι, like θυμάμαι",
 			rule: [
-				"Most verbs whose I form ends in -μαι, like έρχομαι, are stressed before the ending. A few end in a stressed -άμαι instead: θυμάμαι (I remember), κοιμάμαι (I sleep), φοβάμαι (I'm afraid).",
-				[
-					"In the present, the ending's vowel changes in the we and they forms.",
-					"The past takes -ήθηκα: θυμήθηκα, κοιμήθηκα.",
-					"The simple future drops -ηκα for -ώ, as most -μαι verbs do: θα κοιμηθώ.",
-				],
+				"Most verbs whose I form ends in -μαι, like έρχομαι, are stressed before the ending. A few end in a stressed -άμαι instead:",
+				["θυμάμαι, I remember", "κοιμάμαι, I sleep", "φοβάμαι, I'm afraid"],
+				"Their simple past ends in -ήθηκα, so, like other -ηκα pasts, their simple future ends in -ηθώ: κοιμήθηκα, θα κοιμηθώ.",
 			],
 			table: {
 				columns: [
@@ -237,7 +237,7 @@ export const VERBS_GUIDE: Guide = {
 				rows: [
 					["I", "θυμάμαι", "θα θυμηθώ"],
 					["you", "θυμάσαι", "θα θυμηθείς"],
-					["he / she", "θυμάται", "θα θυμηθεί"],
+					["he / she / it", "θυμάται", "θα θυμηθεί"],
 					["we", { text: "θυμόμαστε", note: 0 }, "θα θυμηθούμε"],
 					["you all", "θυμάστε", "θα θυμηθείτε"],
 					["they", { text: "θυμούνται", note: 0 }, "θα θυμηθούν"],
