@@ -19,7 +19,11 @@ const NoteMark = ({ note }: { note: number | undefined }) =>
 export const GuideTable = ({ table }: { table: GuideTableData }) => {
 	// A grid of forms is read down its columns, so its cells never wrap; a single
 	// Greek column beside its meaning can wrap between words on a narrow screen.
-	const isGrid = table.columns.filter((c) => c.greek).length > 1;
+	const greekColumns = table.columns.filter((c) => c.greek).length;
+	const isGrid = greekColumns > 1;
+	// Three Greek columns only fit a phone with smaller text and tighter cells.
+	const isDense = greekColumns > 2;
+	const cellX = isDense ? "px-1 sm:px-3" : "px-1.5 sm:px-3";
 	const tint = table.columns.map((c) => (c.tone ? GUIDE_TONE[c.tone] : undefined));
 	return (
 		<div className="space-y-3">
@@ -35,7 +39,8 @@ export const GuideTable = ({ table }: { table: GuideTableData }) => {
 									key={column.label}
 									scope="col"
 									className={cn(
-										"px-1.5 py-2 text-xs font-medium sm:px-3 whitespace-nowrap text-stone-600",
+										cellX,
+										"py-2 text-xs font-medium whitespace-nowrap text-stone-600",
 										tint[i] && ["font-semibold", tint[i].column, tint[i].columnLabel],
 									)}
 								>
@@ -52,15 +57,21 @@ export const GuideTable = ({ table }: { table: GuideTableData }) => {
 									return (
 										<td
 											key={table.columns[i]?.label ?? i}
-											className={cn("px-1.5 py-2 align-baseline sm:px-3", tint[i]?.column)}
+											className={cn(cellX, "py-2 align-baseline", tint[i]?.column)}
 										>
 											{table.columns[i]?.greek ? (
-												<span className={cn("text-base text-stone-800 sm:text-lg", isGrid && "whitespace-nowrap")}>
+												<span
+													className={cn(
+														"text-stone-800 sm:text-lg",
+														isDense ? "text-sm" : "text-base",
+														isGrid && "whitespace-nowrap",
+													)}
+												>
 													<MarkedPhrase text={text} marks={marks} size="inherit" />
 													<NoteMark note={note} />
 												</span>
 											) : (
-												<span className="block min-w-20 text-sm text-stone-800 sm:min-w-28">
+												<span className={cn("block text-sm text-stone-800 sm:min-w-28", !isDense && "min-w-20")}>
 													<ProseWithGreek text={text} />
 													<NoteMark note={note} />
 												</span>
