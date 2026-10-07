@@ -28,6 +28,11 @@ export const GuideTable = ({ table }: { table: GuideTableData }) => {
 			    On a phone the card runs edge to edge, and so does the table's scroll. */}
 			<div className="-mx-6 overflow-x-auto pl-4.5 sm:-mx-3 sm:pl-0">
 				<table className="w-full border-collapse text-left">
+					{table.caption ? (
+						<caption className="px-1.5 pb-1 text-left text-sm font-semibold text-stone-900 sm:px-3">
+							<ProseWithGreek text={table.caption} />
+						</caption>
+					) : null}
 					<thead>
 						<tr className="border-b border-stone-300">
 							{table.columns.map((column, i) => (

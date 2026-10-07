@@ -32,6 +32,8 @@ export interface GuideColumn {
 }
 
 export interface GuideTable {
+	/** Names the table when a section shows several, one per group. */
+	caption?: string;
 	columns: GuideColumn[];
 	rows: GuideCell[][];
 	/** Why the forms marked with a `note` break the pattern, shown under the table. */
@@ -72,6 +74,8 @@ export interface GuideSection {
 	 */
 	rule: GuideText;
 	table?: GuideTable;
+	/** Several captioned tables in place of `table`, when the section's forms split into groups. */
+	tables?: GuideTable[];
 	/** Examples of the core rule. */
 	examples?: GuideExample[];
 	details?: GuideDetail[];

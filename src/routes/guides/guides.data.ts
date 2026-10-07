@@ -37,7 +37,7 @@ export const sectionExamples = (section: GuideSection) => [
 
 /** A section's own table and its details' tables together. */
 export const sectionTables = (section: GuideSection) =>
-	[section.table, ...(section.details ?? []).map((d) => d.table)].filter((t) => t !== undefined);
+	[section.table, ...(section.tables ?? []), ...(section.details ?? []).map((d) => d.table)].filter((t) => t !== undefined);
 
 export const usesMarks = (guide: Guide) =>
 	guide.sections.some(

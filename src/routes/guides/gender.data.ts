@@ -14,61 +14,51 @@ export const GENDER_GUIDE: Guide = {
 			title: "Gender from the ending",
 			tone: "honey",
 			rule: [
-				"Every Greek noun is masculine, feminine or neuter, and its article shows which: ο, η or το. Most nouns also give their gender away in their ending:",
-				[
-					"-ος and the other endings in -ς: mostly masculine",
-					"-α and -η: mostly feminine",
-					"-ο, -ι and -μα: neuter",
-				],
-				"The exceptions, in the last two rows, are everyday words, so learn each noun with its article.",
+				"Every Greek noun is masculine, feminine or neuter, and its article shows which: ο, η or το. The ending usually gives it away too.",
+				"A few everyday words break the pattern, so learn each noun with its article. The tables mark the common ones.",
 			],
-			table: {
-				columns: [
-					{ label: "Ending" },
-					{ label: "Examples", greek: true },
-					{ label: "Gender" },
-				],
-				rows: [
-					["-ος", cellWith("ο φίλος · ο δρόμος", mark("ο φίλος", "nominative", "masculine"), mark("ο δρόμος", "nominative", "masculine")), "mostly masculine"],
-					[
-						"-ας, -ης, -ές",
-						cellWith(
-							"ο πατέρας · ο μαθητής · ο καφές",
-							mark("ο πατέρας", "nominative", "masculine"),
-							mark("ο μαθητής", "nominative", "masculine"),
-							mark("ο καφές", "nominative", "masculine"),
-						),
-						"mostly masculine",
+			tables: [
+				{
+					caption: "Masculine, ο",
+					columns: [{ label: "Ending" }, { label: "Example", greek: true }],
+					rows: [
+						["-ος", markedCell("ο φίλος", "nominative", "masculine")],
+						["-ας", markedCell("ο πατέρας", "nominative", "masculine")],
+						["-ης", markedCell("ο μαθητής", "nominative", "masculine")],
+						["-ές", markedCell("ο καφές", "nominative", "masculine")],
 					],
-					["-α, -η", cellWith("η μητέρα · η πόλη", mark("η μητέρα", "nominative", "feminine"), mark("η πόλη", "nominative", "feminine")), "mostly feminine"],
-					["-ο, -ι", cellWith("το βιβλίο · το παιδί", mark("το βιβλίο", "nominative", "neuter"), mark("το παιδί", "nominative", "neuter")), "neuter"],
-					["-μα", cellWith("το όνομα · το χρώμα", mark("το όνομα", "nominative", "neuter"), mark("το χρώμα", "nominative", "neuter")), "neuter"],
-					[
-						{ text: "-ος, but feminine" },
-						cellWith("η Κύπρος · η Αίγυπτος", mark("η Κύπρος", "nominative", "feminine"), mark("η Αίγυπτος", "nominative", "feminine")),
-						"learn each",
+				},
+				{
+					caption: "Feminine, η",
+					columns: [{ label: "Ending" }, { label: "Example", greek: true }],
+					rows: [
+						["-α", markedCell("η μητέρα", "nominative", "feminine")],
+						["-η", markedCell("η πόλη", "nominative", "feminine")],
+						["-ος", markedCell("η Κύπρος", "nominative", "feminine", false, 0)],
 					],
-					[
-						{ text: "-ος, -ας, -α, but neuter" },
-						cellWith(
-							"το λάθος · το κρέας · το γάλα",
-							mark("το λάθος", "nominative", "neuter"),
-							mark("το κρέας", "nominative", "neuter"),
-							mark("το γάλα", "nominative", "neuter"),
-						),
-						"learn each",
+					notes: ["Some place names in -ος are feminine: η Κύπρος, η Αίγυπτος."],
+				},
+				{
+					caption: "Neuter, το",
+					columns: [{ label: "Ending" }, { label: "Example", greek: true }],
+					rows: [
+						["-ο", markedCell("το βιβλίο", "nominative", "neuter")],
+						["-ι", markedCell("το παιδί", "nominative", "neuter")],
+						["-μα", markedCell("το όνομα", "nominative", "neuter")],
+						["-ας", markedCell("το κρέας", "nominative", "neuter", false, 0)],
 					],
-				],
-			},
+					notes: ["A few words in -ας, -ος and -α are neuter: το κρέας, το λάθος, το γάλα."],
+				},
+			],
 			examples: [
 				{
 					greek: "Το κρέας είναι νόστιμο.",
-					english: "The meat is tasty. (κρέας ends in -ας, but it is neuter)",
+					english: "The meat is tasty. (νόστιμο, not νόστιμος: κρέας is neuter)",
 					marks: [mark("Το κρέας", "nominative", "neuter"), mark("νόστιμο", "nominative", "neuter")],
 				},
 				{
 					greek: "Η Κύπρος είναι πολύ όμορφη.",
-					english: "Cyprus is very beautiful. (Κύπρος ends in -ος, but it is feminine)",
+					english: "Cyprus is very beautiful. (όμορφη, not όμορφος: Κύπρος is feminine)",
 					marks: [mark("Η Κύπρος", "nominative", "feminine"), mark("όμορφη", "nominative", "feminine")],
 				},
 			],
