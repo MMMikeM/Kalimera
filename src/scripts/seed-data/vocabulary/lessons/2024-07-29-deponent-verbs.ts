@@ -88,7 +88,7 @@ export const LESSON_2024_07_29 = createLesson({
 			pattern: "Imperative of deponent verbs",
 			examples: ["έρχομαι → έλα/ελάτε", "κάθομαι → κάτσε/καθίστε"],
 			explanation: "Irregular imperative forms - must memorize",
-			section: "verbs/commands",
+			section: "future-commands/commands",
 		},
 	],
 });

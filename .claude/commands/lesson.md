@@ -35,7 +35,7 @@ $ARGUMENTS
    - Pattern demonstrations (e.g., "πιο + adjective")
 
 7. **Add grammar notes** for the lesson objective pattern, and give each one a `section` saying where it is taught:
-   - A guide section as `"<guide>/<section>"`, e.g. `"verbs/past-shapes"`. The guides and their section ids live in `src/routes/guides/*.data.ts`
+   - A guide section as `"<guide>/<section>"`, e.g. `"past/past-shapes"`. The guides and their section ids live in `src/routes/guides/*.data.ts`
    - `"word"` when the note is about one word rather than a pattern (its meanings, a fixed chunk, a look-alike spelling)
    - `"essentials"` for telling the time, dates and large numbers
    - Usually a new note belongs to a section that already exists: say which, and whether the guide should gain an example from it. If it fits nowhere, say so and propose a new section rather than forcing it
@@ -84,7 +84,7 @@ export const LESSON_YYYY_MM_DD = createLesson({
     { text: "multi-word phrase", english: "english", metadata: { ... } },
   ],
   grammarNotes: [
-    { pattern: "Pattern name", examples: [...], explanation: "...", section: "verbs/past-shapes" },
+    { pattern: "Pattern name", examples: [...], explanation: "...", section: "past/past-shapes" },
   ],
 });
 ```

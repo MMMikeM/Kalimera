@@ -47,7 +47,7 @@ export const LESSON_2026_07_17 = createLesson({
 			],
 			explanation:
 				"θα before the verb puts it in the future. For είμαι and υπάρχει the verb form doesn't change — θα does all the work. Negative: δεν θα + verb.",
-			section: "verbs/future",
+			section: "future-commands/future",
 		},
 		{
 			pattern: "Quantifier ladder with υπάρχει/υπάρχουν",

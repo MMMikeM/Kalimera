@@ -128,7 +128,7 @@ export const LESSON_2025_02_03 = createLesson({
 			],
 			explanation:
 				"ξυπνώ forms a regular past with -σα. Stress shifts: ξύπν-ησα (stress on penultimate in sg/3rd pl), ξυπν-ήσ-αμε (stress on -ήσ- in 1st/2nd pl).",
-			section: "verbs/past-shapes",
+			section: "past/past-shapes",
 		},
 		{
 			pattern: "Past tense pairs — present → simple past",
@@ -142,7 +142,7 @@ export const LESSON_2025_02_03 = createLesson({
 			],
 			explanation:
 				"A set of very common verbs with irregular past stems. These appear constantly in everyday speech and are worth drilling individually.",
-			section: "verbs/past-shapes",
+			section: "past/past-shapes",
 		},
 		{
 			pattern: "καθόλου in questions and negatives",

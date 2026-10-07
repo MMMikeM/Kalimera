@@ -162,7 +162,7 @@ export const LESSON_2026_06_26 = createLesson({
 			],
 			explanation:
 				"From πουλάω (to sell) / πωλητής (seller). The suffix -πωλείο names the shop by what it sells. All -πωλείο shops are neuter.",
-			section: "agreement/gender-families",
+			section: "gender/gender-families",
 		},
 	],
 });

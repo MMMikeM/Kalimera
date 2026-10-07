@@ -114,7 +114,7 @@ export const LESSON_2025_03_12 = createLesson({
 			],
 			explanation:
 				"Most of these follow regular patterns: -άζω → -αξα, -άω → -ασα, -ώ → -εσα. The key is identifying the stem — the -ω or -άω ending drops and the past suffix attaches.",
-			section: "verbs/past-shapes",
+			section: "past/past-shapes",
 		},
 		{
 			pattern: "Direct object pronouns — τον/την/το",

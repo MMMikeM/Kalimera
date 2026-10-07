@@ -175,7 +175,7 @@ export const LESSON_2026_05_08 = createLesson({
 			],
 			explanation:
 				"Most occupations have distinct masculine and feminine forms. Some (μπαρίστα) use the same word for both genders — only the article changes.",
-			section: "agreement/gender-families",
+			section: "gender/gender-families",
 		},
 	],
 });

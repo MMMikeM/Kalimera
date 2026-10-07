@@ -144,7 +144,7 @@ export const LESSON_2025_05_01 = createLesson({
 			],
 			explanation:
 				"Many professional nouns use the same form for both genders — only the article changes (ο for male, η for female). Others have distinct male/female forms: νοσηλευτής/νοσηλεύτρια, φοιτητής/φοιτήτρια.",
-			section: "agreement/gender-families",
+			section: "gender/gender-families",
 		},
 	],
 });

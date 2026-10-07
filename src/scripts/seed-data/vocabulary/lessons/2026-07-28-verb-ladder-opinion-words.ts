@@ -99,7 +99,7 @@ export const LESSON_2026_07_28 = createLesson({
 			],
 			explanation:
 				"These five don't switch to a short form in the future — θα simply goes in front of the everyday form. είμαι, έχω, ξέρω describe states, so there is no one-off version of them.",
-			section: "verbs/keep-shape",
+			section: "future-commands/keep-shape",
 		},
 		{
 			pattern: "Movement verbs in -αίνω",
@@ -111,7 +111,7 @@ export const LESSON_2026_07_28 = createLesson({
 			],
 			explanation:
 				"This family follows one rule: the past ends in -ηκα and the θα form is very short (θα βγω, θα μπω, θα ανέβω, θα κατέβω). Learn all four together — the pattern repeats exactly.",
-			section: "verbs/past-shapes",
+			section: "past/past-own",
 		},
 		{
 			pattern: "Softening what you say",

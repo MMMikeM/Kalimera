@@ -486,8 +486,8 @@ export const ROLES_GUIDE: Guide = {
 				},
 			],
 			confuse: {
-				text: "This shows only masculines in -ος. How the other families make their Owner is in the nouns guide: της γυναίκας, του παιδιού, του ονόματος.",
-				section: "nouns/owner",
+				text: "This shows only masculines in -ος. How the other families make their Owner is in The Owner and calling forms: της γυναίκας, του παιδιού, του ονόματος.",
+				section: "owner-calling/owner",
 			},
 			drills: [
 				"nominal-noun-owner",

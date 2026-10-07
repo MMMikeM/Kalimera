@@ -182,7 +182,7 @@ export const LESSON_2025_01_16 = createLesson({
 			],
 			explanation:
 				"θα + the present form is the future continuous: something that will be ongoing or repeated (θα διαβάζω, I will be reading). For one action still to come, the simple future uses θα + the short form instead: θα διαβάσω, I will read. είμαι has no short form, so θα είναι does both jobs.",
-			section: "verbs/future",
+			section: "future-commands/future",
 		},
 		{
 			pattern: "Past time expressions",
@@ -214,7 +214,7 @@ export const LESSON_2025_01_16 = createLesson({
 			examples: ["πήγα, πήγες, πήγε, πήγαμε, πήγατε, πήγαν"],
 			explanation:
 				"The past tense of πηγαίνω (to go) is irregular — it uses πήγ- as the stem. Completely different from the present tense stem.",
-			section: "verbs/past-shapes",
+			section: "past/past-own",
 		},
 	],
 });
