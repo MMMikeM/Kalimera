@@ -132,7 +132,7 @@ export const LESSON_2025_03_17 = createLesson({
 			],
 			explanation:
 				"Seasons have three different genders. χειμώνας and άνοιξη take the article in a different way — το καλοκαίρι/φθινόπωρο are neuter.",
-			section: "agreement/gender-families",
+			section: "gender/gender-families",
 		},
 	],
 });

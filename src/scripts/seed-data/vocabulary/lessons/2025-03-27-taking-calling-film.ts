@@ -51,7 +51,7 @@ export const LESSON_2025_03_27 = createLesson({
 			],
 			explanation:
 				"παίρνω has an irregular past stem πήρ-. Very common verb — used for taking, getting, receiving, and idiomatically for making phone calls (πήρα τηλέφωνο).",
-			section: "verbs/past-shapes",
+			section: "past/past-own",
 		},
 		{
 			pattern: "πουθενά — double negative",

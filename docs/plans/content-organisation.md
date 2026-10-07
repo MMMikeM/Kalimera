@@ -245,7 +245,7 @@ The structure breaks down if new notes have nowhere to go. So:
 1. **Type the notes properly.** All 119 already share
    `{ pattern, examples, explanation }`. Give `grammarNotes` that type (it is
    `Record<PropertyKey, unknown>[]` today) and add `section`: either a guide-section
-   id such as `"verbs/past-shapes"`, or `"word"` for single-word notes.
+   id such as `"past/past-shapes"`, or `"word"` for single-word notes.
 2. **Each guide owns its section list** in its own `*.data.ts`, following the
    colocation rule in CLAUDE.md. "Seen in lessons" is derived by scanning the
    notes, never kept as a separate list.

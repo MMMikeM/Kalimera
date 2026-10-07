@@ -67,7 +67,7 @@ export const LESSON_2024_11_28 = createLesson({
 			pattern: "Genitive plural -ών",
 			examples: ["των ποταμών", "των ανθρώπων", "των δρόμων"],
 			explanation: "In the plural every noun's Owner ends in -ων, but the stress does not always move onto it: των ποταμών, yet των δρόμων and των ανθρώπων.",
-			section: "nouns/owner",
+			section: "owner-calling/owner",
 		},
 	],
 });

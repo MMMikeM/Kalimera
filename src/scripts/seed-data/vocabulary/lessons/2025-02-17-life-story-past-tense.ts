@@ -152,7 +152,7 @@ export const LESSON_2025_02_17 = createLesson({
 			],
 			explanation:
 				"These common verbs all have irregular or unpredictable past tense stems. Memorise as pairs — there is no single rule covering all of them.",
-			section: "verbs/past-shapes",
+			section: "past/past-own",
 		},
 		{
 			pattern: "Imperfect vs simple past",
@@ -164,7 +164,7 @@ export const LESSON_2025_02_17 = createLesson({
 			],
 			explanation:
 				"The imperfect (built on the present stem, with past endings: σπουδάζω → σπούδαζα) describes ongoing or habitual past actions. The simple past (aorist) describes completed events. Both can appear in the same sentence.",
-			section: "verbs/ongoing-past",
+			section: "past/ongoing-past",
 		},
 		{
 			pattern: "γεννιέμαι → γεννήθηκα (deponent past with -θηκ-)",

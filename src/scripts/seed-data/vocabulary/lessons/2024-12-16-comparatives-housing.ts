@@ -147,7 +147,7 @@ export const LESSON_2024_12_16 = createLesson({
 				"πριν κοιμηθώ (before I sleep)",
 			],
 			explanation: "πριν (before) is followed by the subjunctive mood (no να needed).",
-			section: "verbs/short-form",
+			section: "future-commands/short-form",
 		},
 	],
 });

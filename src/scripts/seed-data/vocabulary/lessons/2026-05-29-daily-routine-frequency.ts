@@ -85,7 +85,7 @@ export const LESSON_2026_05_29 = createLesson({
 			],
 			explanation:
 				"Each time of day has a matching meal name formed with -ινό/-ιανό. All are neuter.",
-			section: "agreement/gender-families",
+			section: "gender/gender-families",
 		},
 		{
 			pattern: "Frequency scale",

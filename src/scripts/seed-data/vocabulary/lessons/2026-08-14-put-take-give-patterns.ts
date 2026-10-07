@@ -82,7 +82,7 @@ export const LESSON_2026_08_14 = createLesson({
 			],
 			explanation:
 				"Both verbs swap -ζ- for -λ- in the past and the θα form. Once you have θα βάλω, the past is the same shape with έ- in front and -α on the end: έβαλα. Same for βγάζω.",
-			section: "verbs/past-shapes",
+			section: "past/past-own",
 		},
 		{
 			pattern: "Family B — δίνω and παίρνω change the vowel",
@@ -93,7 +93,7 @@ export const LESSON_2026_08_14 = createLesson({
 			],
 			explanation:
 				"The whole stem swaps: δίν- becomes δώσ- (θα δώσω, έδωσα), παίρν- becomes πάρ- for the θα form and πήρ- for the past. Endings stay ordinary: -ω for θα, -α for the past.",
-			section: "verbs/past-shapes",
+			section: "past/past-own",
 		},
 		{
 			pattern: "Where the έ- comes from",
@@ -105,14 +105,14 @@ export const LESSON_2026_08_14 = createLesson({
 			],
 			explanation:
 				"Past forms need the stress on the third syllable from the end. Two-syllable stems are too short, so an έ- is glued on to carry it. πήρα already carries its own stressed πή-, so it needs no extra vowel.",
-			section: "verbs/past-shapes",
+			section: "past/past-endings",
 		},
 		{
 			pattern: "πήρα across all persons",
 			examples: ["πήρα", "πήρες", "πήρε", "πήραμε", "πήρατε", "πήραν"],
 			explanation:
 				"Past endings are the same for every verb in these families: -α, -ες, -ε, -αμε, -ατε, -αν. Learn them once on πήρα and they transfer to έβαλα, έβγαλα, έδωσα.",
-			section: "verbs/past-shapes",
+			section: "past/past-own",
 		},
 		{
 			pattern: "Fixed chunks with βγάζω and παίρνω",
