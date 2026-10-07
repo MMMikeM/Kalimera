@@ -262,7 +262,7 @@ export const GENDER_GUIDE: Guide = {
 					[markedCell("το κρεβάτι", "nominative", "neuter"), markedCell("το κρεβατάκι", "nominative", "neuter"), "a cot"],
 					[markedCell("ο ύπνος", "nominative", "masculine"), markedCell("ο υπνάκος", "nominative", "masculine"), "a nap"],
 					[markedCell("η φωνή", "nominative", "feminine"), markedCell("η φωνάρα", "nominative", "feminine"), "a big, loud voice"],
-					[markedCell("το ψώνιο", "nominative", "neuter"), markedCell("η ψωνάρα", "nominative", "feminine", false), "a real show-off (slang)"],
+					[markedCell("το ψώνιο", "nominative", "neuter"), markedCell("η ψωνάρα", "nominative", "feminine", false), "an egomaniac, full of themselves (slang)"],
 				],
 			},
 			examples: [
@@ -278,7 +278,7 @@ export const GENDER_GUIDE: Guide = {
 				},
 				{
 					greek: "Είσαι ψωνάρα.",
-					english: "You're a real show-off. (playful)",
+					english: "You're so full of yourself. (playful)",
 					marks: [mark("ψωνάρα", "nominative", "feminine")],
 				},
 			],

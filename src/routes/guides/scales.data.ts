@@ -242,10 +242,6 @@ export const SCALES_GUIDE: Guide = {
 			],
 			details: [
 				{
-					label: "δε or δεν",
-					text: "δεν and μην drop their -ν before some sounds, as την does: δε θέλω. The rule is set out in Who does what, under the article.",
-				},
-				{
 					label: "In questions",
 					text: "In a question without δεν, the nothing-word means any.",
 					examples: [
@@ -256,33 +252,6 @@ export const SCALES_GUIDE: Guide = {
 						},
 					],
 				},
-				{
-					label: "όχι",
-					text: [
-						"Use όχι instead of δεν:",
-						[
-							"for not before a word that isn't a verb, such as πολύ or σήμερα",
-							"for no on its own",
-						],
-					],
-					examples: [
-						{ greek: "Όχι πολύ καλά.", english: "Not very well." },
-						{ greek: "Όχι, ευχαριστώ.", english: "No, thank you." },
-					],
-				},
-				{
-					label: "μην",
-					text: [
-						"Use μην instead of δεν:",
-						[
-							"after να",
-							"after ας",
-							"for don't",
-						],
-						"For να μην and for don't, see The short form: future, να and commands.",
-					],
-					examples: [{ greek: "Ας μην πάμε σήμερα.", english: "Let's not go today." }],
-				},
 			],
 			drills: [],
 			plannedDrills: [
@@ -292,6 +261,47 @@ export const SCALES_GUIDE: Guide = {
 					greek: "δεν … τίποτα · δεν … πουθενά · ποτέ δεν",
 					tests: "Shows an English sentence with nothing, nowhere, no one or never; the answer is the Greek with δεν before the verb and the nothing-word, such as δεν πήγα πουθενά.",
 				},
+			],
+		},
+		{
+			id: "not-words",
+			title: "δεν, όχι or μην",
+			rule: [
+				"Greek has three words for not, and each has its own place:",
+				[
+					"δεν before a verb: δεν ξέρω",
+					"όχι before a word that isn't a verb, and for no on its own: όχι σήμερα, όχι",
+					"μην after να and ας, and for don't: ας μην πάμε",
+				],
+				"For να μην and for don't, see The short form: future, να and commands.",
+			],
+			table: {
+				columns: [
+					{ label: "Word" },
+					{ label: "Greek", greek: true },
+					{ label: "Meaning" },
+				],
+				rows: [
+					["δεν", "δεν το ξέρω", "I don't know it"],
+					["όχι", "όχι πολύ καλά", "not very well"],
+					["όχι", "όχι, ευχαριστώ", "no, thank you"],
+					["μην", "ας μην πάμε σήμερα", "let's not go today"],
+				],
+			},
+			examples: [
+				{
+					greek: "Δεν πεινάω. Όχι τώρα.",
+					english: "I'm not hungry. Not now. (δεν before the verb, όχι before τώρα)",
+				},
+			],
+			details: [
+				{
+					label: "δε or δεν",
+					text: "δεν and μην drop their -ν before some sounds, as την does: δε θέλω. The rule is set out in Who does what, under the article.",
+				},
+			],
+			drills: [],
+			plannedDrills: [
 				{
 					id: "scales-ochi-den",
 					title: "όχι or δεν?",

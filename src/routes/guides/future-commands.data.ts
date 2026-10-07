@@ -55,7 +55,7 @@ export const FUTURE_COMMANDS_GUIDE: Guide = {
 			rule: [
 				"After να, use the short form for one action: the same form θα takes, as in θα φάω, να φάω.",
 				"For something ongoing or habitual, να takes the present instead.",
-				"For not, μην goes after να, as set out in How often, how many, how much, under Saying not twice with δεν.",
+				"For not, μην goes after να, as set out in How often, how many, how much, under δεν, όχι or μην.",
 			],
 			table: {
 				columns: [
@@ -165,7 +165,7 @@ export const FUTURE_COMMANDS_GUIDE: Guide = {
 			details: [
 				{
 					label: "Don't",
-					text: "For don't, put μην, or μη before some consonants, in front of the you form: the present, or the short form for one action. When the ν stays is set out in How often, how many, how much, under Saying not twice with δεν.",
+					text: "For don't, put μην, or μη before some consonants, in front of the you form: the present, or the short form for one action. When the ν stays is set out in Who does what, under the article.",
 					examples: [
 						{ greek: "Μη φωνάζεις!", english: "Don't shout! (present: stop shouting)" },
 						{ greek: "Μην ξεχάσεις τα κλειδιά σου!", english: "Don't forget your keys! (short form: this once)" },
