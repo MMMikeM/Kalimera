@@ -138,7 +138,6 @@ export const GuideSection = ({
 				<GuideProse text={section.rule} />
 
 				{section.table ? <GuideTable table={section.table} /> : null}
-				{section.tables?.map((table) => <GuideTable key={table.caption} table={table} />)}
 
 				<ExampleList examples={section.examples} ruleClass={tone.exampleRule} />
 

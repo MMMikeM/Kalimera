@@ -133,15 +133,6 @@ describe("guides", () => {
 		});
 	});
 
-	it("gives a section either one table or several captioned ones", () => {
-		const wrong = GUIDES.flatMap((g) =>
-			g.sections
-				.filter((s) => (s.table && s.tables) || s.tables?.some((t) => !t.caption))
-				.map((s) => `${g.slug}/${s.id}`),
-		);
-		expect(wrong).toEqual([]);
-	});
-
 	it("gives every table row one cell per column", () => {
 		const ragged = GUIDES.flatMap((g) =>
 			g.sections
