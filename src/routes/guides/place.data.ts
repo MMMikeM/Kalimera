@@ -14,7 +14,7 @@ export const PLACE_GUIDE: Guide = {
 			title: "σε joined to the article",
 			rule: [
 				"σε means at, in or to. Before the article, the word for “the”, σε drops its ε and joins onto it as one word.",
-				"The noun after σε takes the Target form, the one for what an action is done to. So σε joins τον and τη, never ο and η.",
+				"The noun after σε takes the Target form, so σε joins τον and τη, never ο and η. It has the form but not the job: nothing is done to it. Who does what explains this under The Target form.",
 			],
 			table: {
 				columns: [
@@ -30,7 +30,6 @@ export const PLACE_GUIDE: Guide = {
 					["τα → στα", markedCell("στα εστιατόρια", "accusative", "neuter", true), "to the restaurants"],
 					["τις → στις", markedCell("στις τρεις", "accusative", "feminine", true), "at three o'clock"],
 					["τους → στους", markedCell("στους δρόμους", "accusative", "masculine", true), "in the streets"],
-					[{ text: "μια → σε μια" }, cellWith("σε μια λίμνη", mark("μια λίμνη", "accusative", "feminine")), "at a lake"],
 				],
 			},
 			examples: [
@@ -41,18 +40,18 @@ export const PLACE_GUIDE: Guide = {
 				},
 				{
 					greek: "Χθες έδωσα το βιβλίο στη Μαρία.",
-					english: "Yesterday I gave the book to Maria.",
+					english: "Yesterday I gave the book to Maria. (the book is the Target; στη Μαρία only has the Target form, after σε)",
 					marks: [mark("το βιβλίο", "accusative", "neuter"), mark("στη Μαρία", "accusative", "feminine")],
 				},
 			],
 			details: [
 				{
 					label: "στη or στην",
-					text: "στη and στην follow the same rule as τη and την, set out in Who does what, under the article: the -ν stays before a vowel or a hard stop, στην Αθήνα, στην Πάφο, and drops before a sound you can stretch out, στη Λεμεσό.",
+					text: "στη and στην follow the τη or την rule, set out in Who does what, under The article ο, η, το.",
 				},
 				{
 					label: "Before μια, ένα or no article",
-					text: "σε stays whole before μια or ένα, the words for “a”, and before a noun with no article. It stays whole in σε λίγο, in a bit, too.",
+					text: "σε stays whole before μια or ένα, the words for “a”, and before a noun with no article.",
 					examples: [
 						{
 							greek: "Μεγάλωσα σε μια μικρή πόλη.",
@@ -86,7 +85,7 @@ export const PLACE_GUIDE: Guide = {
 			title: "Next to, behind, far from",
 			rule: [
 				"A position word says where something is, such as next to or behind.",
-				"Before a place, it needs a partner: σε or από. Each word has its own, so learn the two together. The table gives the common ones, the σε words first.",
+				"Before a place, it needs a partner: σε or από. Most have a usual partner, so learn the two together. The table gives the common ones, the σε words first.",
 			],
 			table: {
 				columns: [
@@ -110,7 +109,7 @@ export const PLACE_GUIDE: Guide = {
 				{
 					greek: "Το κινητό σου είναι κάτω από τον καναπέ.",
 					english: "Your phone is under the sofa.",
-					marks: [mark("Το κινητό", "nominative", "neuter"), mark("τον καναπέ", "accusative", "masculine")],
+					marks: [mark("Το κινητό", "nominative", "neuter"), mark("σου", "genitive"), mark("τον καναπέ", "accusative", "masculine")],
 				},
 				{
 					greek: "Το φαρμακείο είναι δίπλα στην τράπεζα.",
@@ -136,19 +135,9 @@ export const PLACE_GUIDE: Guide = {
 					],
 				},
 				{
-					label: "Near and far, with no place after",
-					text: [
-						"With no place after it, a position word needs no partner: κοντά alone means nearby.",
-						"To ask how far away something is, use απέχει, is distant, with από for the starting point.",
-					],
-					examples: [
-						{
-							greek: "Ποια ταβέρνα είναι κοντά;",
-							english: "Which taverna is nearby?",
-							marks: [mark("Ποια ταβέρνα", "nominative", "feminine")],
-						},
-						{ greek: "Πόσο απέχει από εδώ;", english: "How far is it from here?" },
-					],
+					label: "How far away",
+					text: "To ask how far away something is, use απέχει, is distant, with από for the starting point.",
+					examples: [{ greek: "Πόσο απέχει από εδώ;", english: "How far is it from here?" }],
 				},
 			],
 			drills: [],
@@ -183,7 +172,7 @@ export const PLACE_GUIDE: Guide = {
 					[cellWith("είμαι από τη Νότια Αφρική", mark("τη Νότια Αφρική", "accusative", "feminine")), "I'm from South Africa"],
 					[cellWith("δουλεύω από το σπίτι", mark("το σπίτι", "accusative", "neuter")), "I work from home"],
 					[cellWith("με το αυτοκίνητο", mark("το αυτοκίνητο", "accusative", "neuter")), "by car"],
-					[cellWith("με τους φίλους μου", mark("τους φίλους", "accusative", "masculine", true)), "with my friends"],
+					[cellWith("με τους φίλους μου", mark("τους φίλους", "accusative", "masculine", true), mark("μου", "genitive")), "with my friends"],
 				],
 			},
 			examples: [
@@ -193,9 +182,9 @@ export const PLACE_GUIDE: Guide = {
 					marks: [mark("φαγητό", "accusative", "neuter"), mark("στα εστιατόρια", "accusative", "neuter", true)],
 				},
 				{
-					greek: "Με ποιον πηγαίνεις στις συναυλίες;",
-					english: "Who do you go to concerts with?",
-					marks: [mark("ποιον", "accusative", "masculine"), mark("στις συναυλίες", "accusative", "feminine", true)],
+					greek: "Πάω για καφέ με τη Μαρία.",
+					english: "I'm going for a coffee with Maria.",
+					marks: [mark("καφέ", "accusative", "masculine"), mark("τη Μαρία", "accusative", "feminine")],
 				},
 			],
 			details: [
@@ -211,6 +200,10 @@ export const PLACE_GUIDE: Guide = {
 					],
 				},
 			],
+			confuse: {
+				text: "Before a verb, για να means to or in order to: για να μάθω ελληνικά, to learn Greek.",
+				section: "joining/purpose",
+			},
 			drills: [],
 			plannedDrills: [
 				{
@@ -225,8 +218,7 @@ export const PLACE_GUIDE: Guide = {
 			id: "position-pairs",
 			title: "Inside and outside, left and right",
 			rule: [
-				"A position word says where something is, such as inside or left. Most come in pairs of opposites, so learn them in pairs.",
-				"On their own, they need nothing added.",
+				"Position words such as μέσα (inside) and αριστερά (left) can stand on their own, with nothing added. Most come in pairs of opposites, so learn them in pairs.",
 			],
 			table: {
 				columns: [
@@ -246,25 +238,16 @@ export const PLACE_GUIDE: Guide = {
 			examples: [
 				{ greek: "Στρίψε αριστερά.", english: "Turn left." },
 				{ greek: "Έλα μέσα.", english: "Come inside." },
-			],
-			details: [
 				{
-					label: "Before a place",
-					text: "Before a place, a position word takes a partner: σε or από. Each word has its own.",
-					examples: [
-						{
-							greek: "Εσύ είσαι μέσα στη λάσπη.",
-							english: "You are in the mud.",
-							marks: [mark("στη λάσπη", "accusative", "feminine")],
-						},
-						{
-							greek: "Γι' αυτό δεν βγαίνω έξω από το σπίτι.",
-							english: "That's why I don't leave the house.",
-							marks: [mark("το σπίτι", "accusative", "neuter")],
-						},
-					],
+					greek: "Ποια ταβέρνα είναι κοντά;",
+					english: "Which taverna is nearby?",
+					marks: [mark("Ποια ταβέρνα", "nominative", "feminine")],
 				},
 			],
+			confuse: {
+				text: "Before a place, the same words take σε or από: μέσα στο σπίτι, έξω από το σπίτι.",
+				section: "position",
+			},
 			drills: [],
 			plannedDrills: [
 				{
@@ -286,7 +269,7 @@ export const PLACE_GUIDE: Guide = {
 					"προς, towards",
 					"σαν, like",
 				],
-				"With an article, the noun after them takes the Target form, the one for what an action is done to.",
+				"With an article, the noun after them takes the Target form, as after σε.",
 			],
 			table: {
 				columns: [
@@ -305,7 +288,7 @@ export const PLACE_GUIDE: Guide = {
 				{
 					greek: "Πίνω τον καφέ μου χωρίς ζάχαρη.",
 					english: "I take my coffee without sugar.",
-					marks: [mark("τον καφέ", "accusative", "masculine"), mark("ζάχαρη", "accusative", "feminine")],
+					marks: [mark("τον καφέ", "accusative", "masculine"), mark("μου", "genitive"), mark("ζάχαρη", "accusative", "feminine")],
 				},
 				{
 					greek: "Ακούω τον σκύλο να τραγουδάει σαν τον λύκο.",

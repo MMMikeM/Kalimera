@@ -1,28 +1,21 @@
 import { mark, markedCell } from "@/lib/guide-marks";
 import type { Guide } from "@/types/guide";
 
-const JOB_DEFINITIONS = [
-	"The Doer _does_ the action. Its form is the plain one you find in the dictionary.",
-	"The Target is who or what the action is done to.",
-	"The Owner is who something belongs to.",
-];
-
 export const NOUNS_GUIDE: Guide = {
 	slug: "nouns",
 	tone: "ocean",
 	title: "Noun families",
 	greek: "Ουσιαστικά",
 	description: "The forms each family takes, for one and more than one",
-	idea: "A noun's ending usually tells you its family, and the family gives you its other forms: its Target, its Owner and its plural.",
+	idea: "A noun's ending usually tells you its family, and the family gives you its other forms: its Target and Owner forms, and its plural.",
 	sections: [
 		{
 			id: "families",
 			title: "Masculine nouns in -ος",
 			rule: [
-				"Nouns fall into families by gender and ending. Each family has its own way of changing the plain form for the Target, the Owner and more than one.",
-				"Masculines in -ος are the biggest family, and the one whose plural Target differs from its plural Doer.",
-				"The table shows ο φίλος (friend) in each job:",
-				JOB_DEFINITIONS,
+				"Nouns fall into families by gender and ending. Each family has its own way of changing the plain form, the one in the dictionary, into its Target and Owner forms and its plural.",
+				"Masculines in -ος are the biggest family, and the one whose plural Target form differs from its plural Doer form.",
+				"The table shows ο φίλος (friend) in each form. What the forms are for is set out in Who does what.",
 			],
 			table: {
 				columns: [
@@ -40,12 +33,12 @@ export const NOUNS_GUIDE: Guide = {
 				{
 					greek: "Οι φίλοι μου έρχονται απόψε.",
 					english: "My friends are coming tonight.",
-					marks: [mark("Οι φίλοι", "nominative", "masculine", true)],
+					marks: [mark("Οι φίλοι", "nominative", "masculine", true), mark("μου", "genitive")],
 				},
 				{
 					greek: "Περιμένω τους φίλους μου.",
-					english: "I'm waiting for my friends.",
-					marks: [mark("τους φίλους", "accusative", "masculine", true)],
+					english: "I'm waiting for my friends. (οι φίλοι becomes τους φίλους)",
+					marks: [mark("τους φίλους", "accusative", "masculine", true), mark("μου", "genitive")],
 				},
 			],
 			drills: ["nominative-nouns", "nominal-all-nouns"],
@@ -54,9 +47,8 @@ export const NOUNS_GUIDE: Guide = {
 			id: "families-as-is",
 			title: "Masculine nouns in -ας and -ης",
 			rule: [
-				"A masculine noun in -ας or -ης drops its -ς for the Target and the Owner of one. Its plural ends in -ες for the Doer and the Target alike.",
-				"The table shows ο πατέρας (father) and ο μαθητής (pupil) in each job:",
-				JOB_DEFINITIONS,
+				"A masculine noun in -ας or -ης drops its -ς for the Target and the Owner of one. Most have a plural in -ες, for the Doer and the Target alike.",
+				"The table shows ο πατέρας (father) and ο μαθητής (pupil) in each form.",
 			],
 			table: {
 				columns: [
@@ -76,24 +68,32 @@ export const NOUNS_GUIDE: Guide = {
 			examples: [
 				{
 					greek: "Περιμένω τον πατέρα μου.",
-					english: "I'm waiting for my father.",
-					marks: [mark("τον πατέρα", "accusative", "masculine")],
+					english: "I'm waiting for my father. (πατέρας drops its -ς)",
+					marks: [mark("τον πατέρα", "accusative", "masculine"), mark("μου", "genitive")],
 				},
 				{
-					greek: "Ο δάσκαλος βοηθάει τους μαθητές.",
-					english: "The teacher helps the pupils.",
-					marks: [mark("Ο δάσκαλος", "nominative", "masculine"), mark("τους μαθητές", "accusative", "masculine", true)],
+					greek: "Ο πατέρας του μαθητή περιμένει έξω.",
+					english: "The pupil's father is waiting outside. (μαθητής drops its -ς for the Owner too)",
+					marks: [mark("Ο πατέρας", "nominative", "masculine"), mark("του μαθητή", "genitive", "masculine")],
+				},
+				{
+					greek: "Οι πατέρες περιμένουν τους μαθητές.",
+					english: "The fathers are waiting for the pupils. (-ες for the Doer and the Target alike)",
+					marks: [mark("Οι πατέρες", "nominative", "masculine", true), mark("τους μαθητές", "accusative", "masculine", true)],
 				},
 			],
+			confuse: {
+				text: "ο μπαμπάς ends like ο πατέρας, but its plural is οι μπαμπάδες.",
+				section: "noun-exceptions/extra-syllable",
+			},
 			drills: ["nominative-nouns", "nominal-all-nouns"],
 		},
 		{
 			id: "families-a-i",
 			title: "Feminine nouns in -α and -η",
 			rule: [
-				"A feminine noun in -α or -η changes its article for the Target and the Owner, but its ending only sometimes. For one, the Doer and the Target share a form, and the Owner adds -ς. The plural ends in -ες for the Doer and the Target alike.",
-				"The table shows η γυναίκα (woman) and η ζωή (life) in each job:",
-				JOB_DEFINITIONS,
+				"A feminine noun in -α or -η changes only its article for the Target: η ζωή, τη ζωή. The Owner of one adds -ς. Most have a plural in -ες, for the Doer and the Target alike.",
+				"The table shows η γυναίκα (woman) and η ζωή (life) in each form.",
 			],
 			table: {
 				columns: [
@@ -112,20 +112,14 @@ export const NOUNS_GUIDE: Guide = {
 			},
 			examples: [
 				{
-					greek: "Η ζωή είναι ωραία.",
-					english: "Life is beautiful.",
-					marks: [mark("Η ζωή", "nominative", "feminine")],
+					greek: "Η γυναίκα αγαπάει τη ζωή.",
+					english: "The woman loves life. (η ζωή becomes τη ζωή: only the article changes)",
+					marks: [mark("Η γυναίκα", "nominative", "feminine"), mark("τη ζωή", "accusative", "feminine")],
 				},
 				{
-					greek: "Αγαπάω τη ζωή.",
-					english: "I love life.",
-					marks: [mark("τη ζωή", "accusative", "feminine")],
-				},
-			],
-			details: [
-				{
-					label: "Plurals in -εις",
-					text: "A few feminines in -η take -εις in the plural instead of -ες.",
+					greek: "Η ζωή της γυναίκας είναι δύσκολη.",
+					english: "The woman's life is hard. (γυναίκα adds -ς)",
+					marks: [mark("Η ζωή", "nominative", "feminine"), mark("της γυναίκας", "genitive", "feminine")],
 				},
 			],
 			confuse: {
@@ -138,14 +132,13 @@ export const NOUNS_GUIDE: Guide = {
 			id: "families-o-i",
 			title: "Neuter nouns in -ο and -ι",
 			rule: [
-				"A neuter noun in -ο or -ι uses one form for the Doer and the Target, one and more than one alike.",
+				"A neuter noun in -ο or -ι has the same Doer and Target form, for one and for more than one. For the plural and the Owner:",
 				[
 					"Nouns in -ο swap it for -α in the plural.",
 					"Most nouns in -ι add -α.",
 					"The Owner of one ends in -ου.",
 				],
-				"The table shows το βιβλίο (book) and το παιδί (child) in each job:",
-				JOB_DEFINITIONS,
+				"The table shows το βιβλίο (book) and το παιδί (child) in each form.",
 			],
 			table: {
 				columns: [
@@ -169,9 +162,14 @@ export const NOUNS_GUIDE: Guide = {
 					marks: [mark("Το παιδί", "nominative", "neuter"), mark("ένα βιβλίο", "accusative", "neuter")],
 				},
 				{
-					greek: "Αγοράζω βιβλία για τα παιδιά.",
-					english: "I'm buying books for the children.",
-					marks: [mark("βιβλία", "accusative", "neuter", true), mark("τα παιδιά", "accusative", "neuter", true)],
+					greek: "Τα παιδιά διαβάζουν βιβλία.",
+					english: "The children read books. (the Doer and Target forms look the same, so ask: the children read what?)",
+					marks: [mark("Τα παιδιά", "nominative", "neuter", true), mark("βιβλία", "accusative", "neuter", true)],
+				},
+				{
+					greek: "Τα βιβλία του παιδιού είναι στο τραπέζι.",
+					english: "The child's books are on the table. (παιδί takes -ού for the Owner)",
+					marks: [mark("Τα βιβλία", "nominative", "neuter", true), mark("του παιδιού", "genitive", "neuter")],
 				},
 			],
 			drills: ["nominative-nouns", "nominal-all-nouns"],
@@ -181,8 +179,7 @@ export const NOUNS_GUIDE: Guide = {
 			title: "Neuter nouns in -μα",
 			rule: [
 				"A neuter noun in -μα keeps the -μα only for the Doer and the Target of one. Every other form adds -τ- before its ending.",
-				"The table shows το όνομα (name) in each job:",
-				JOB_DEFINITIONS,
+				"The table shows το όνομα (name) in each form.",
 			],
 			table: {
 				columns: [
@@ -198,14 +195,14 @@ export const NOUNS_GUIDE: Guide = {
 			},
 			examples: [
 				{
-					greek: "Τα μαθήματα αρχίζουν τον Σεπτέμβριο.",
-					english: "Lessons start in September.",
-					marks: [mark("Τα μαθήματα", "nominative", "neuter", true)],
+					greek: "Δε θυμάμαι τα ονόματα.",
+					english: "I can't remember the names. (-μα becomes -ματα)",
+					marks: [mark("τα ονόματα", "accusative", "neuter", true)],
 				},
 				{
-					greek: "Δεν θυμάμαι ονόματα.",
-					english: "I can't remember names.",
-					marks: [mark("ονόματα", "accusative", "neuter", true)],
+					greek: "Ξέρεις την ιστορία του ονόματος;",
+					english: "Do you know the story behind the name? (-μα becomes -ματος for the Owner)",
+					marks: [mark("του ονόματος", "genitive", "neuter")],
 				},
 			],
 			details: [

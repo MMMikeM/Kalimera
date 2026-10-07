@@ -133,6 +133,23 @@ describe("guides", () => {
 		});
 	});
 
+	// A gender tone claims the section is about that gender's nouns.
+	it("puts a section in a gender's colour only when every gender it marks is that one", () => {
+		const wrong = GUIDES.flatMap((g) =>
+			g.sections
+				.filter((s) => s.tone?.startsWith("gender-"))
+				.filter((s) => {
+					const marks = [
+						...sectionExamples(s).flatMap((e) => e.marks ?? []),
+						...sectionTables(s).flatMap((t) => t.rows.flat().flatMap((c) => (typeof c === "string" ? [] : (c.marks ?? [])))),
+					];
+					return marks.some((m) => m.gender && `gender-${m.gender}` !== s.tone);
+				})
+				.map((s) => `${g.slug}/${s.id}`),
+		);
+		expect(wrong).toEqual([]);
+	});
+
 	it("gives every table row one cell per column", () => {
 		const ragged = GUIDES.flatMap((g) =>
 			g.sections

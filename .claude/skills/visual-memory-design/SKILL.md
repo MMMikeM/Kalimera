@@ -95,7 +95,7 @@ Forbidden: a feminine-rose background behind a non-feminine example; a nominativ
 
 Also forbidden: grammar tokens on anything that makes no grammatical claim at all (navigation, buttons, links, empty states, toasts, spinners). Every appearance of a role colour rehearses its meaning; spending it on chrome dilutes the association the learner is building. Chrome uses the base palette (`cream`, `terracotta`, `ocean`, `olive` and the rest), which asserts nothing. CLAUDE.md states the same rule; if the two ever disagree, CLAUDE.md wins and this file is stale.
 
-Do not reason from hue: `ocean` and `case-nominative` sit near the same hue but are different tokens with different jobs. Context test for base-palette colours near Greek content: would the learner plausibly read the colour as encoding the grammatical value of that content? If yes, move it further away or go neutral stone. A CTA inside a coloured grammar card is the common collision; make it neutral.
+Do not reason from hue: `ocean` and `case-nominative` sit near the same hue but are different tokens with different jobs. Saturation, not hue, separates grammar colour from chrome: the gender marks are saturated and the base palette is used pale, so a pale `ocean`, `navy`, `sunset` or `slate` wash may sit beside the marks even where the hues are close (the user's ruling, October 2026). Keep chrome pale next to marks rather than steering it away by hue.
 
 ### Per-axis cap: roughly 4
 

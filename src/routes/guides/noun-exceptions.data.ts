@@ -14,11 +14,9 @@ export const NOUN_EXCEPTIONS_GUIDE: Guide = {
 			title: "Plurals with a new ending, like καφέδες and πόλεις",
 			rule: [
 				"A few nouns make their plural, the form for more than one, with an ending you wouldn't guess from the form for one.",
-				[
-					"Some add -δ- and a syllable. Most of these end in -άς, -ά, -ές, -ούς or -τζής.",
-					"A few feminines in -η take -εις instead of -ες.",
-				],
-				"The table shows the common ones.",
+				"Some add -δ- and a syllable: ο καφές, οι καφέδες. Most of these end in:",
+				["-άς", "-ά", "-ές", "-ούς", "-τζής"],
+				"The table shows the common ones. Feminines in -η that take -εις are below.",
 			],
 			table: {
 				columns: [
@@ -32,25 +30,46 @@ export const NOUN_EXCEPTIONS_GUIDE: Guide = {
 					[markedCell("ο μπαμπάς", "nominative", "masculine"), markedCell("οι μπαμπάδες", "nominative", "masculine", true), "dad"],
 					[markedCell("ο παππούς", "nominative", "masculine"), markedCell("οι παππούδες", "nominative", "masculine", true), "grandfather"],
 					[markedCell("ο ταξιτζής", "nominative", "masculine"), markedCell("οι ταξιτζήδες", "nominative", "masculine", true), "taxi driver"],
-					[markedCell("η πόλη", "nominative", "feminine"), markedCell("οι πόλεις", "nominative", "feminine", true), "city"],
 				],
 			},
 			examples: [
 				{
-					greek: "Δύο καφέδες, παρακαλώ.",
-					english: "Two coffees, please.",
-					marks: [mark("Δύο καφέδες", "accusative", "masculine", true)],
+					greek: "Θα πάρουμε δύο καφέδες, παρακαλώ.",
+					english: "We'll have two coffees, please.",
+					marks: [mark("δύο καφέδες", "accusative", "masculine", true)],
 				},
 				{
-					greek: "Η Αθήνα και η Θεσσαλονίκη είναι μεγάλες πόλεις.",
-					english: "Athens and Thessaloniki are big cities.",
-					marks: [mark("μεγάλες πόλεις", "nominative", "feminine", true)],
+					greek: "Οι γιαγιάδες κάθονται στην πλατεία.",
+					english: "The grandmothers are sitting in the square.",
+					marks: [mark("Οι γιαγιάδες", "nominative", "feminine", true)],
 				},
 			],
 			details: [
 				{
-					label: "Which -η nouns take -εις",
-					text: "Nothing in the ending tells you which feminines in -η take -εις: αγάπη gives αγάπες. Learn the plural with the noun.",
+					label: "Feminines in -η with a plural in -εις",
+					text: [
+						"Some feminines in -η take -εις in the plural instead of -ες: η πόλη, οι πόλεις.",
+						"Most nouns in -ση, -ξη and -ψη do this. Others in -η, such as η αγάπη, take -ες, so learn the plural with the noun.",
+					],
+					table: {
+						columns: [
+							{ label: "One", greek: true },
+							{ label: "More than one", greek: true },
+							{ label: "Meaning" },
+						],
+						rows: [
+							[markedCell("η πόλη", "nominative", "feminine"), markedCell("οι πόλεις", "nominative", "feminine", true), "city"],
+							[markedCell("η θέση", "nominative", "feminine"), markedCell("οι θέσεις", "nominative", "feminine", true), "seat, place"],
+							[markedCell("η λέξη", "nominative", "feminine"), markedCell("οι λέξεις", "nominative", "feminine", true), "word"],
+						],
+					},
+					examples: [
+						{
+							greek: "Η Αθήνα και η Θεσσαλονίκη είναι μεγάλες πόλεις.",
+							english: "Athens and Thessaloniki are big cities.",
+							marks: [mark("μεγάλες πόλεις", "nominative", "feminine", true)],
+						},
+					],
 				},
 			],
 			drills: [],
@@ -66,7 +85,7 @@ export const NOUN_EXCEPTIONS_GUIDE: Guide = {
 		{
 			id: "never-change",
 			title: "Nouns that never change",
-			rule: "Many words borrowed from other languages keep one form whatever their job in the sentence, one and more than one alike, and only the article changes: το πάρτι, τα πάρτι, του πάρτι. Most are neuter.",
+			rule: "Many words borrowed from other languages never change their ending. Only the article changes: το πάρτι, τα πάρτι, του πάρτι. Most are neuter.",
 			table: {
 				columns: [
 					{ label: "One", greek: true },
@@ -84,43 +103,38 @@ export const NOUN_EXCEPTIONS_GUIDE: Guide = {
 			},
 			examples: [
 				{
-					greek: "Έχω ραντεβού.",
-					english: "I have an appointment.",
-					marks: [mark("ραντεβού", "accusative", "neuter")],
+					greek: "Τα ραντεβού μου είναι αύριο.",
+					english: "My appointments are tomorrow. (τα changes; ραντεβού doesn't)",
+					marks: [mark("Τα ραντεβού", "nominative", "neuter", true), mark("μου", "genitive")],
 				},
 				{
-					greek: "Βγάζω φωτογραφίες και βίντεο.",
-					english: "I take photos and videos.",
-					marks: [mark("φωτογραφίες", "accusative", "feminine", true), mark("βίντεο", "accusative", "neuter", true)],
+					greek: "Η μουσική του πάρτι ήταν τέλεια.",
+					english: "The music at the party was great. (του changes; πάρτι doesn't)",
+					marks: [mark("του πάρτι", "genitive", "neuter")],
 				},
 			],
-			details: [
-				{
-					label: "Borrowed words that do change",
-					text: "Not every borrowed word works this way: ο καφές becomes οι καφέδες.",
-				},
-			],
+			confuse: {
+				text: "Not every borrowed word stays the same: ο καφές becomes οι καφέδες.",
+				section: "extra-syllable",
+			},
 			drills: [],
 			plannedDrills: [
 				{
 					id: "nouns-unchanging",
 					title: "Nouns that never change",
 					greek: "τα πάρτι · του σινεμά · τα βίντεο",
-					tests: "A card asks for a borrowed noun in a given job and number; right is the article changed and the noun left as it is.",
+					tests: "A card asks for a borrowed noun in a given form and number; right is the article changed and the noun left as it is.",
 				},
 			],
 		},
 		{
 			id: "plural-only",
 			title: "Nouns used in the plural",
-			rule: [
-				"A few things English names as one, Greek names as more than one, so the article and any adjective go plural too: καλοκαιρινές διακοπές, a summer holiday.",
-				"The table shows each in its plain form (the Doer form), the one in the dictionary, and as the Target, who or what the action is done to.",
-			],
+			rule: "A few things English names as one, Greek names as more than one, so the article and any adjective go plural too: καλοκαιρινές διακοπές, a summer holiday.",
 			table: {
 				columns: [
 					{ label: "Plain form", greek: true },
-					{ label: "Target", greek: true },
+					{ label: "Target form", greek: true },
 					{ label: "Meaning" },
 				],
 				rows: [
@@ -132,13 +146,13 @@ export const NOUN_EXCEPTIONS_GUIDE: Guide = {
 			examples: [
 				{
 					greek: "Κάνω διακοπές.",
-					english: "I'm on holiday.",
+					english: "I'm on holiday. (διακοπές is plural)",
 					marks: [mark("διακοπές", "accusative", "feminine", true)],
 				},
 				{
 					greek: "Κάνω τα ψώνια στο σούπερ μάρκετ.",
-					english: "I do the shopping at the supermarket.",
-					marks: [mark("τα ψώνια", "accusative", "neuter", true), mark("στο σούπερ μάρκετ", "accusative", "neuter")],
+					english: "I do the shopping at the supermarket. (τα ψώνια is plural)",
+					marks: [mark("τα ψώνια", "accusative", "neuter", true)],
 				},
 			],
 			details: [

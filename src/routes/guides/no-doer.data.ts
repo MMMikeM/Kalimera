@@ -7,14 +7,14 @@ export const NO_DOER_GUIDE: Guide = {
 	title: "Sentences without a doer",
 	greek: "Χωρίς υποκείμενο",
 	description: "There is, it's raining, you must",
-	idea: "Some Greek sentences have nobody doing anything: there is, it's raining, you must, it's hard. The verb stands alone in its he / she / it form and doesn't change for person. θα ήθελα, the polite I would like, sits here too: it does change for person, but like πρέπει it is a fixed frame that leads into a noun or into να and a verb.",
+	idea: "Some Greek sentences have no one doing anything: there is, it's raining, you must, it's hard. With no doer to match, the verb keeps its it form whoever is meant, or its they form for there are. θα ήθελα, I would like, sits here too as a fixed frame, though it does change for person.",
 	sections: [
 		{
 			id: "there-is",
 			title: "υπάρχει for there is and there are",
 			rule: [
 				"υπάρχει means there is and υπάρχουν means there are. The verb matches what exists: υπάρχει for one thing, υπάρχουν for more than one.",
-				"What exists stays in its plain form, the one in the dictionary (also the Doer form). Nothing is done to it, so it doesn't change.",
+				"What exists stays in its plain form, the one in the dictionary (also the Doer form). Nothing is done to it, so it never takes the Target form.",
 				"Put δεν in front for there isn't, and θα for there will be.",
 			],
 			table: {
@@ -34,22 +34,18 @@ export const NO_DOER_GUIDE: Guide = {
 					[cellWith("δεν υπάρχει βιβλιοθήκη", mark("βιβλιοθήκη", "nominative", "feminine")), "there's no library"],
 					[cellWith("θα υπάρχουν πολλά πάρκα", mark("πολλά πάρκα", "nominative", "neuter", true)), "there will be many parks"],
 					[cellWith("υπάρχουν Άγγλοι", mark("Άγγλοι", "nominative", "masculine", true)), "there are English people"],
-					[
-						{ text: "έχει Άγγλους", marks: [mark("Άγγλους", "accusative", "masculine", true)] },
-						"there are English people",
-					],
 				],
 			},
 			examples: [
 				{
-					greek: "Υπάρχει φαγητό πάνω στη φωτιά.",
-					english: "There is food on the fire.",
-					marks: [mark("φαγητό", "nominative", "neuter"), mark("στη φωτιά", "accusative", "feminine")],
+					greek: "Υπάρχει ένας φούρνος εδώ κοντά.",
+					english: "There's a bakery near here. (ένας, the plain form, not έναν)",
+					marks: [mark("ένας φούρνος", "nominative", "masculine")],
 				},
 				{
-					greek: "Θα υπάρχουν πολλά πάρκα στην πόλη μου.",
-					english: "There will be many parks in my city.",
-					marks: [mark("πολλά πάρκα", "nominative", "neuter", true), mark("στην πόλη", "accusative", "feminine")],
+					greek: "Το καλοκαίρι υπάρχουν πολλοί τουρίστες.",
+					english: "In summer there are lots of tourists. (πολλοί τουρίστες, not πολλούς τουρίστες)",
+					marks: [mark("πολλοί τουρίστες", "nominative", "masculine", true)],
 				},
 			],
 			details: [
@@ -62,8 +58,8 @@ export const NO_DOER_GUIDE: Guide = {
 					examples: [
 						{
 							greek: "Έχει Άγγλους στην Πάφο.",
-							english: "There are English people in Paphos.",
-							marks: [mark("Άγγλους", "accusative", "masculine", true), mark("στην Πάφο", "accusative", "feminine")],
+							english: "There are English people in Paphos. (υπάρχουν Άγγλοι, but έχει Άγγλους)",
+							marks: [mark("Άγγλους", "accusative", "masculine", true)],
 						},
 					],
 				},
@@ -84,9 +80,9 @@ export const NO_DOER_GUIDE: Guide = {
 			rule: [
 				"Greek weather sentences have no word for it: the verb stands alone in its he, she, it form. There are three ways to build one:",
 				[
-					"For heat and cold: κάνει with a noun.",
+					"For heat, cold and the weather in general: κάνει with a noun.",
 					"For rain and snow: a verb of their own.",
-					"Also for rain and snow: έχει with the noun, meaning there is.",
+					"For sun, rain and snow: έχει with the noun, meaning there is.",
 				],
 				"Word for word, κάνει is makes and έχει is has, so the noun after them is in the Target form, the form for what an action is done to.",
 			],
@@ -98,22 +94,24 @@ export const NO_DOER_GUIDE: Guide = {
 				rows: [
 					[cellWith("κάνει κρύο", mark("κρύο", "accusative", "neuter")), "it's cold"],
 					[cellWith("κάνει ζέστη", mark("ζέστη", "accusative", "feminine")), "it's hot"],
+					[cellWith("κάνει καλό καιρό", mark("καλό καιρό", "accusative", "masculine")), "the weather's good"],
 					["βρέχει", "it's raining"],
 					["χιονίζει", "it's snowing"],
+					[cellWith("έχει ήλιο", mark("ήλιο", "accusative", "masculine")), "it's sunny"],
 					[cellWith("έχει βροχή", mark("βροχή", "accusative", "feminine")), "there's rain"],
 				],
 			},
 			examples: [
 				{
-					greek: "Σήμερα κάνει κρύο.",
-					english: "It's cold today.",
-					marks: [mark("κρύο", "accusative", "neuter")],
+					greek: "Σήμερα κάνει καλό καιρό.",
+					english: "The weather's good today. (ο καιρός becomes καλό καιρό, the Target form)",
+					marks: [mark("καλό καιρό", "accusative", "masculine")],
 				},
 				{ greek: "Δεν βρέχει.", english: "It isn't raining." },
 				{
-					greek: "Δεν έχει βροχή.",
-					english: "There's no rain.",
-					marks: [mark("βροχή", "accusative", "feminine")],
+					greek: "Έχει ήλιο, αλλά κάνει κρύο.",
+					english: "It's sunny, but it's cold. (ο ήλιος becomes ήλιο)",
+					marks: [mark("ήλιο", "accusative", "masculine"), mark("κρύο", "accusative", "neuter")],
 				},
 			],
 			drills: [],
@@ -131,7 +129,7 @@ export const NO_DOER_GUIDE: Guide = {
 			title: "πρέπει να",
 			rule: [
 				"πρέπει να means must or have to. πρέπει never changes for person; the verb after να does.",
-				"For one action, use the short form, the one built on the simple past's stem (έφαγα, να φάω). For something ongoing or habitual, use the present.",
+				"Which form the verb takes after να is set out in The short form: future, να and commands.",
 			],
 			table: {
 				columns: [
@@ -185,19 +183,20 @@ export const NO_DOER_GUIDE: Guide = {
 			details: [
 				{
 					label: "Wishing for what isn't so",
-					text: [
-						"With να and a past form, θα ήθελα wishes for what isn't so.",
-						"After ήμουν, I was (a form of είμαι), the noun says what someone is. Nothing is done to it, so it stays in its plain form, the one in the dictionary (also the Doer form).",
-					],
+					text: "With να and a past form, θα ήθελα wishes for what isn't so.",
 					examples: [
 						{
 							greek: "Θα ήθελα να ήμουν αρχιτέκτονας.",
-							english: "I wish I were an architect.",
+							english: "I wish I were an architect. (αρχιτέκτονας keeps its plain form after ήμουν)",
 							marks: [mark("αρχιτέκτονας", "nominative", "masculine")],
 						},
 					],
 				},
 			],
+			confuse: {
+				text: "After είμαι, and so after ήμουν, a noun keeps its plain form: είμαι γιατρός.",
+				section: "roles/linking",
+			},
 			drills: [],
 			plannedDrills: [
 				{
@@ -233,9 +232,9 @@ export const NO_DOER_GUIDE: Guide = {
 					marks: [mark("δύσκολο", "nominative", "neuter")],
 				},
 				{
-					greek: "Είναι τρελό!",
-					english: "It's crazy!",
-					marks: [mark("τρελό", "nominative", "neuter")],
+					greek: "Δεν είναι εύκολο να μάθεις ελληνικά.",
+					english: "It isn't easy to learn Greek.",
+					marks: [mark("εύκολο", "nominative", "neuter")],
 				},
 			],
 			details: [

@@ -78,7 +78,7 @@ export interface GuideSection {
 	/** A look-alike that lives elsewhere: `"<section>"` in this guide or `"<guide>/<section>"`. */
 	confuse?: { text: GuideText; section: string };
 	/** Colour of the section's header. Omit it and the section takes the next colour in its guide's cycle. */
-	tone?: GuideTone;
+	tone?: SectionTone;
 	/** Drill ids from the practice catalogue; empty when no drill covers the section yet. */
 	drills: string[];
 	/** Practice this section needs that no drill covers yet. */
@@ -105,11 +105,18 @@ export interface GuideReference {
 }
 
 /**
- * Base-palette colour that identifies a guide. A guide that shows gender marks
- * avoids navy, sunset and slate, which sit close to the masculine, feminine and
- * neuter mark colours and would read as a gender next to them.
+ * Base-palette colour that identifies a guide. Any tone may sit beside the gender
+ * marks: the marks are saturated and the tones pale, so saturation keeps them
+ * apart, not hue.
  */
 export type GuideTone = ColorScheme;
+
+/**
+ * A section's colour: a guide tone, or a gender's pale scale. A gender tone claims
+ * the section is about that gender's nouns, so it is only for a section that
+ * teaches one gender, where it repeats the colour of the marks inside.
+ */
+export type SectionTone = GuideTone | `gender-${Gender}`;
 
 export interface Guide {
 	slug: string;
