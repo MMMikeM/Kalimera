@@ -10,63 +10,30 @@ export const GENDER_GUIDE: Guide = {
 	idea: "Every noun is masculine, feminine or neuter. The ending usually tells you which, and a few kinds of word follow their own rule.",
 	sections: [
 		{
-			id: "gender-endings",
-			title: "Gender from the ending",
+			id: "masculine-endings",
+			title: "Masculine: -ος, -ας, -ης, -ές",
 			tone: "honey",
 			rule: [
-				"Every Greek noun is masculine, feminine or neuter, and its article shows which: ο, η or το. The ending usually gives it away too.",
-				"A few everyday words break the pattern, so learn each noun with its article. The tables mark the common ones.",
+				"Every Greek noun is masculine, feminine or neuter, and its article shows which: ο, η or το. The ending usually gives it away too, but a few everyday words break the pattern, so learn each noun with its article.",
+				"Nouns ending in -ς are mostly masculine, and take ο.",
 			],
-			tables: [
-				{
-					caption: "Masculine, ο",
-					columns: [{ label: "Ending" }, { label: "Example", greek: true }],
-					rows: [
-						["-ος", markedCell("ο φίλος", "nominative", "masculine")],
-						["-ας", markedCell("ο πατέρας", "nominative", "masculine")],
-						["-ης", markedCell("ο μαθητής", "nominative", "masculine")],
-						["-ές", markedCell("ο καφές", "nominative", "masculine")],
-					],
-				},
-				{
-					caption: "Feminine, η",
-					columns: [{ label: "Ending" }, { label: "Example", greek: true }],
-					rows: [
-						["-α", markedCell("η μητέρα", "nominative", "feminine")],
-						["-η", markedCell("η πόλη", "nominative", "feminine")],
-						["-ος", markedCell("η Κύπρος", "nominative", "feminine", false, 0)],
-					],
-					notes: ["Some place names in -ος are feminine: η Κύπρος, η Αίγυπτος."],
-				},
-				{
-					caption: "Neuter, το",
-					columns: [{ label: "Ending" }, { label: "Example", greek: true }],
-					rows: [
-						["-ο", markedCell("το βιβλίο", "nominative", "neuter")],
-						["-ι", markedCell("το παιδί", "nominative", "neuter")],
-						["-μα", markedCell("το όνομα", "nominative", "neuter")],
-						["-ας", markedCell("το κρέας", "nominative", "neuter", false, 0)],
-					],
-					notes: ["A few words in -ας, -ος and -α are neuter: το κρέας, το λάθος, το γάλα."],
-				},
-			],
+			table: {
+				columns: [{ label: "Ending" }, { label: "Example", greek: true }],
+				rows: [
+					["-ος", markedCell("ο φίλος", "nominative", "masculine")],
+					["-ας", markedCell("ο πατέρας", "nominative", "masculine")],
+					["-ης", markedCell("ο μαθητής", "nominative", "masculine")],
+					["-ές", markedCell("ο καφές", "nominative", "masculine")],
+				],
+			},
 			examples: [
 				{
-					greek: "Το κρέας είναι νόστιμο.",
-					english: "The meat is tasty. (νόστιμο, not νόστιμος: κρέας is neuter)",
-					marks: [mark("Το κρέας", "nominative", "neuter"), mark("νόστιμο", "nominative", "neuter")],
-				},
-				{
-					greek: "Η Κύπρος είναι πολύ όμορφη.",
-					english: "Cyprus is very beautiful. (όμορφη, not όμορφος: Κύπρος is feminine)",
-					marks: [mark("Η Κύπρος", "nominative", "feminine"), mark("όμορφη", "nominative", "feminine")],
+					greek: "Ο καφές είναι ζεστός.",
+					english: "The coffee is hot. (ζεστός: καφές is masculine)",
+					marks: [mark("Ο καφές", "nominative", "masculine"), mark("ζεστός", "nominative", "masculine")],
 				},
 			],
 			details: [
-				{
-					label: "Women's names in -ώ",
-					text: "The -ο, -ι and -μα endings are neuter, apart from women's names in -ώ such as η Κλειώ, which are feminine.",
-				},
 				{
 					label: "ο καφές and το καφέ",
 					text: "ο καφές is coffee; το καφέ is the café.",
@@ -85,6 +52,54 @@ export const GENDER_GUIDE: Guide = {
 					tests: "Shows a noun without its article, mixing regular endings with exceptions such as Κύπρος and κρέας; the answer is ο, η or το.",
 				},
 			],
+		},
+		{
+			id: "feminine-endings",
+			title: "Feminine: -α, -η",
+			tone: "honey",
+			rule: "Nouns ending in -α or -η are mostly feminine, and take η.",
+			table: {
+				columns: [{ label: "Ending" }, { label: "Example", greek: true }],
+				rows: [
+					["-α", markedCell("η μητέρα", "nominative", "feminine")],
+					["-η", markedCell("η πόλη", "nominative", "feminine")],
+					["-ος", markedCell("η Κύπρος", "nominative", "feminine", false, 0)],
+					["-ώ", markedCell("η Κλειώ", "nominative", "feminine", false, 1)],
+				],
+				notes: ["Some place names in -ος are feminine, like η Αίγυπτος.", "Women's names in -ώ are feminine."],
+			},
+			examples: [
+				{
+					greek: "Η Κύπρος είναι πολύ όμορφη.",
+					english: "Cyprus is very beautiful. (όμορφη, not όμορφος: Κύπρος is feminine)",
+					marks: [mark("Η Κύπρος", "nominative", "feminine"), mark("όμορφη", "nominative", "feminine")],
+				},
+			],
+			drills: [],
+		},
+		{
+			id: "neuter-endings",
+			title: "Neuter: -ο, -ι, -μα",
+			tone: "honey",
+			rule: "Nouns ending in -ο, -ι or -μα are neuter, and take το.",
+			table: {
+				columns: [{ label: "Ending" }, { label: "Example", greek: true }],
+				rows: [
+					["-ο", markedCell("το βιβλίο", "nominative", "neuter")],
+					["-ι", markedCell("το παιδί", "nominative", "neuter")],
+					["-μα", markedCell("το όνομα", "nominative", "neuter")],
+					["-ας", markedCell("το κρέας", "nominative", "neuter", false, 0)],
+				],
+				notes: ["A few words in -ας, -ος and -α are neuter too: το λάθος, το γάλα."],
+			},
+			examples: [
+				{
+					greek: "Το κρέας είναι νόστιμο.",
+					english: "The meat is tasty. (νόστιμο, not νόστιμος: κρέας is neuter)",
+					marks: [mark("Το κρέας", "nominative", "neuter"), mark("νόστιμο", "nominative", "neuter")],
+				},
+			],
+			drills: [],
 		},
 		{
 			id: "gender-families",
