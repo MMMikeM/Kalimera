@@ -144,7 +144,7 @@ export const SCALES_GUIDE: Guide = {
 					"Beside an adjective or a verb, πολύ means very or a lot, and it never changes.",
 					"Before a noun, it is a different word, the adjective πολύς, a lot of or many. It matches the noun's gender and number, singular included.",
 				],
-				"The adjective's forms are πολύς, πολλή, πολύ, and in the plural πολλοί, πολλές, πολλά.",
+				"The adjective's forms are πολύς, πολλή, πολύ, and in the plural πολλοί (πολλούς as a Target), πολλές, πολλά.",
 			],
 			table: {
 				columns: [
@@ -157,6 +157,7 @@ export const SCALES_GUIDE: Guide = {
 					[markedCell("πολύ κόσμο", "accusative", "masculine"), "a lot of people"],
 					[markedCell("πολλή δουλειά", "accusative", "feminine"), "a lot of work"],
 					[markedCell("πολλοί άνθρωποι", "nominative", "masculine", true), "many people"],
+					[markedCell("πολλούς ανθρώπους", "accusative", "masculine", true), "many people (the Target form)"],
 					[markedCell("πολλές φορές", "accusative", "feminine", true), "many times"],
 					[markedCell("πολλά δέντρα", "nominative", "neuter", true), "many trees"],
 				],
