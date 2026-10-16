@@ -71,6 +71,21 @@ export const AGREEMENT_GUIDE: Guide = {
 						},
 					],
 				},
+				{
+					label: "Six forms, but not a verb's six",
+					text: "A verb has six forms too, but it changes for who does the action, as set out in Present endings in Verbs and the present. An adjective never changes for a person. καλός (good) and καλώ (I call) look alike, so keep their six apart:",
+					table: {
+						columns: [
+							{ label: "Changes for" },
+							{ label: "Six forms", greek: true },
+							{ label: "Meaning" },
+						],
+						rows: [
+							["gender and number", "καλός, καλή, καλό · καλοί, καλές, καλά", "good"],
+							["who does it", "καλώ, καλείς, καλεί · καλούμε, καλείτε, καλούν", "I call, you call…"],
+						],
+					},
+				},
 			],
 			drills: ["adjectives-agreement", "nominal-all-adjectives"],
 		},
