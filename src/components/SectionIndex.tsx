@@ -47,13 +47,13 @@ export const SectionIndex = ({
 									<span aria-hidden="true" className={cn("w-1.5 self-stretch rounded-full", topic.accentClass)} />
 								) : null}
 								<div className="min-w-0 flex-1">
-									<p className="flex flex-wrap items-baseline gap-x-3">
+									<p>
 										<GreekText size="2xl" className="group-hover:text-terracotta-text">
 											{topic.greek}
 										</GreekText>
-										<span className="text-stone-700">{topic.label}</span>
 									</p>
-									<p className="mt-0.5 text-sm text-muted-foreground">{topic.description}</p>
+									<p className="text-stone-800">{topic.label}</p>
+									<p className="mt-1.5 text-sm text-muted-foreground">{topic.description}</p>
 								</div>
 								<ChevronRight
 									size={18}
