@@ -19,7 +19,7 @@ import { VERBS_GUIDE } from "./verbs.data";
 export const GUIDE_GROUPS: { title: string; guides: Guide[] }[] = [
 	{
 		title: "Nouns and the words around them",
-		guides: [ROLES_GUIDE, NOUNS_GUIDE, GENDER_GUIDE, NOUN_EXCEPTIONS_GUIDE, OWNER_CALLING_GUIDE, AGREEMENT_GUIDE],
+		guides: [ROLES_GUIDE, GENDER_GUIDE, NOUNS_GUIDE, NOUN_EXCEPTIONS_GUIDE, AGREEMENT_GUIDE, OWNER_CALLING_GUIDE],
 	},
 	{ title: "Verbs", guides: [VERBS_GUIDE, PAST_GUIDE, FUTURE_COMMANDS_GUIDE] },
 	{ title: "Small words and whole sentences", guides: [LITTLE_WORDS_GUIDE, PLACE_GUIDE, SCALES_GUIDE, JOINING_GUIDE, NO_DOER_GUIDE] },

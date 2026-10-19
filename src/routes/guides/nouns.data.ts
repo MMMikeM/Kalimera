@@ -14,7 +14,7 @@ export const NOUNS_GUIDE: Guide = {
 			tone: "gender-masculine",
 			title: "Masculine nouns: -ος, -ας, -ης",
 			rule: [
-				"Nouns fall into families by gender and ending. Each family changes the plain form, the one in the dictionary, in its own way. What the forms are for is set out in Who does what.",
+				"Nouns fall into families by gender and ending. Each family changes the plain form, the one in the dictionary, in its own way. Telling a noun's gender is set out in A noun's gender, and what the forms are for in Who does what.",
 				"Masculine nouns end in -ος, -ας or -ης:",
 				[
 					"-ος changes its ending in every form, and its plural Target form, τους φίλους, differs from its plural Doer form, οι φίλοι",
