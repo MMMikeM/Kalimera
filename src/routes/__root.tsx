@@ -17,7 +17,7 @@ import { MobileHeader } from "@/components/MobileHeader";
 import { MobileNav } from "@/components/MobileNav";
 import { NotFound, RootError } from "@/components/StatusPage";
 import { themeInitScript } from "@/lib/theme";
-import { type RouterContext } from "@/router";
+import type { RouterContext } from "@/router";
 import type { AuthSession } from "@/server/auth/session";
 import { getServerAuthFn, logoutFn } from "@/server/fns/auth";
 
