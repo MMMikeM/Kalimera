@@ -168,6 +168,10 @@ export const VERBS_GUIDE: Guide = {
 					text: "Not every -ώ belongs here: μιλώ is a shorter way of saying μιλάω, and keeps the -άω endings, μιλάς and μιλάει.",
 				},
 			],
+			confuse: {
+				text: "καλεί (he calls) sounds just like καλή and καλοί, forms of the adjective καλός (good).",
+				section: "agreement/adjective-or-verb",
+			},
 			drills: ["verbs-conjugation-endings"],
 		},
 		{

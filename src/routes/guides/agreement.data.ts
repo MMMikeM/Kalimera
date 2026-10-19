@@ -71,23 +71,51 @@ export const AGREEMENT_GUIDE: Guide = {
 						},
 					],
 				},
-				{
-					label: "Six forms, but not a verb's six",
-					text: "A verb has six forms too, but it changes for who does the action, as set out in Present endings in Verbs and the present. An adjective never changes for a person. καλός (good) and καλώ (I call) look alike, so keep their six apart:",
-					table: {
-						columns: [
-							{ label: "Changes for" },
-							{ label: "Six forms", greek: true },
-							{ label: "Meaning" },
-						],
-						rows: [
-							["gender and number", "καλός, καλή, καλό · καλοί, καλές, καλά", "good"],
-							["who does it", "καλώ, καλείς, καλεί · καλούμε, καλείτε, καλούν", "I call, you call…"],
-						],
-					},
-				},
 			],
 			drills: ["adjectives-agreement", "nominal-all-adjectives"],
+		},
+		{
+			id: "adjective-or-verb",
+			title: "καλός or καλώ?",
+			tone: "slate",
+			rule: [
+				"καλός (good) and καλώ (I call) both have six forms, but they change for different things. The adjective changes for gender, and for one or more than one. The verb changes for who does it, like μπορώ in Verbs and the present.",
+				"Some of their forms sound the same, so on the page the spelling tells them apart, and out loud the sentence does:",
+				["καλή, καλοί and καλεί", "καλό and καλώ"],
+			],
+			table: {
+				columns: [
+					{ label: "Changes for" },
+					{ label: "One", greek: true },
+					{ label: "More than one", greek: true },
+				],
+				rows: [
+					["masculine", "καλός", "καλοί"],
+					["feminine", "καλή", "καλές"],
+					["neuter", "καλό", "καλά"],
+					["I · we", "καλώ", "καλούμε"],
+					["you · you all", "καλείς", "καλείτε"],
+					["he, she, it · they", "καλεί", "καλούν"],
+				],
+			},
+			examples: [
+				{
+					greek: "Η μέρα είναι καλή.",
+					english: "The day is good. (καλή describes η μέρα)",
+					marks: [mark("Η μέρα", "nominative", "feminine"), mark("καλή", "nominative", "feminine")],
+				},
+				{ greek: "Ποιος καλεί;", english: "Who's calling? (καλεί is what someone does, and sounds just like καλή)" },
+				{ greek: "Σας καλώ στο πάρτι μου.", english: "I'm inviting you to my party. (καλώ also means invite)" },
+			],
+			drills: [],
+			plannedDrills: [
+				{
+					id: "adjective-or-verb",
+					title: "καλός or καλώ",
+					greek: "καλή · καλεί · καλό · καλώ",
+					tests: "A card shows a sentence with a gap, such as Η μέρα είναι ___ or Ποιος ___;, and the forms that sound alike; the spelling the sentence needs counts as right.",
+				},
+			],
 		},
 		{
 			id: "adjective-jobs",
