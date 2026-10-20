@@ -64,15 +64,7 @@ export const NO_DOER_GUIDE: Guide = {
 					],
 				},
 			],
-			drills: [],
-			plannedDrills: [
-				{
-					id: "no-doer-there-is",
-					title: "υπάρχει or έχει",
-					greek: "υπάρχουν πολλά πάρκα · έχει Άγγλους",
-					tests: "Shows a there is or there are sentence in English and the verb to use; the answer matches the noun to it: υπάρχουν Άγγλοι with the plain form, έχει Άγγλους with the Target form.",
-				},
-			],
+			drills: ["no-doer-there-is"],
 		},
 		{
 			id: "weather",
@@ -114,15 +106,7 @@ export const NO_DOER_GUIDE: Guide = {
 					marks: [mark("ήλιο", "accusative", "masculine"), mark("κρύο", "accusative", "neuter")],
 				},
 			],
-			drills: [],
-			plannedDrills: [
-				{
-					id: "no-doer-weather",
-					title: "Weather with κάνει, βρέχει and έχει",
-					greek: "κάνει κρύο · βρέχει · έχει βροχή",
-					tests: "Shows the weather in English (it's cold); the answer is the Greek frame, κάνει κρύο.",
-				},
-			],
+			drills: ["no-doer-weather"],
 		},
 		{
 			id: "must",
@@ -197,15 +181,7 @@ export const NO_DOER_GUIDE: Guide = {
 				text: "After είμαι, and so after ήμουν, a noun keeps its plain form: είμαι γιατρός.",
 				section: "roles/linking",
 			},
-			drills: [],
-			plannedDrills: [
-				{
-					id: "no-doer-would-like",
-					title: "θα ήθελα",
-					greek: "θα ήθελα έναν καφέ · θα ήθελα να",
-					tests: "Shows a request in English (I'd like a coffee); the answer is θα ήθελα with the thing in the Target form: θα ήθελα έναν καφέ.",
-				},
-			],
+			drills: ["no-doer-would-like"],
 		},
 		{
 			id: "its-hard",
@@ -244,15 +220,7 @@ export const NO_DOER_GUIDE: Guide = {
 					examples: [{ greek: "Ήταν πολύ ωραία!", english: "It was very nice!" }],
 				},
 			],
-			drills: [],
-			plannedDrills: [
-				{
-					id: "no-doer-its-adjective",
-					title: "είναι δύσκολο να",
-					greek: "είναι δύσκολο · είναι τρελό · ήταν ωραία",
-					tests: "Shows a reaction in English (it's hard to find work); the answer is είναι with the -ο form of the adjective: είναι δύσκολο να βρίσκεις δουλειά.",
-				},
-			],
+			drills: ["no-doer-its-adjective"],
 		},
 	],
 	reference: [{ label: "Patterns", href: "/reference/patterns" }],

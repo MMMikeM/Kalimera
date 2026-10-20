@@ -184,15 +184,7 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 					],
 				},
 			],
-			drills: [],
-			plannedDrills: [
-				{
-					id: "pronouns-likes",
-					title: "μου αρέσει or μου αρέσουν",
-					greek: "μου αρέσει ο καφές · μου αρέσουν οι γάτες",
-					tests: "Shows who likes what in English (I like the cats); the answer uses the short word for the one who likes, puts the thing liked in the Doer form and matches the verb to it: μου αρέσουν οι γάτες.",
-				},
-			],
+			drills: ["pronouns-likes"],
 		},
 		{
 			id: "objects",
@@ -284,15 +276,7 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 					marks: [mark("Αυτή η τσάντα", "nominative", "feminine"), mark("δική", "nominative", "feminine"), mark("σου", "genitive")],
 				},
 			],
-			drills: [],
-			plannedDrills: [
-				{
-					id: "pronouns-own-alone",
-					title: "δικός μου",
-					greek: "ο δικός μου καφές · είναι δικό μου",
-					tests: "Shows the English (my own, mine); the answer is δικός in the gender of the thing owned, with the short word: η δική σου τσάντα.",
-				},
-			],
+			drills: ["pronouns-own-alone"],
 		},
 		{
 			id: "alone",
@@ -336,15 +320,7 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 					],
 				},
 			],
-			drills: [],
-			plannedDrills: [
-				{
-					id: "pronouns-alone",
-					title: "μόνος μου",
-					greek: "μόνος μου · μόνη της · μόνοι μας",
-					tests: "Shows the English and who is meant (by herself); the answer is μόνος in that person's gender and number, with the short word: μόνη της.",
-				},
-			],
+			drills: ["pronouns-alone"],
 		},
 		{
 			id: "long-forms",
@@ -446,15 +422,7 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 				text: "Before a verb the short form: με βλέπει, he sees me. After a preposition the long one: για μένα, for me.",
 				section: "objects",
 			},
-			drills: [],
-			plannedDrills: [
-				{
-					id: "pronouns-long-forms",
-					title: "Long forms after a preposition",
-					greek: "για μένα · με σένα · από αυτόν",
-					tests: "Shows a preposition and a person in English (for me); the answer is the preposition with the long form, για μένα, and για με counts as wrong.",
-				},
-			],
+			drills: ["pronouns-long-forms"],
 		},
 		{
 			id: "polite",
@@ -498,15 +466,7 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 				text: "Polite you and you all use the same verb and the same σας: Γεια σας greets one stranger or a group of friends.",
 				section: "forms",
 			},
-			drills: ["blocks-chunks"],
-			plannedDrills: [
-				{
-					id: "pronouns-polite-you",
-					title: "Polite you",
-					greek: "Θέλεις → Θέλετε · Γεια σου → Γεια σας",
-					tests: "Shows a friendly phrase such as Θέλεις κάτι; and asks for the polite form; the answer is Θέλετε κάτι;.",
-				},
-			],
+			drills: ["blocks-chunks", "pronouns-polite-you"],
 		},
 		{
 			id: "where-it-goes",
@@ -587,15 +547,7 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 					],
 				},
 			],
-			drills: ["pronouns-placement"],
-			plannedDrills: [
-				{
-					id: "pronouns-two-together",
-					title: "Two short words together",
-					greek: "μου το δίνει · του το δίνω · σου τα φέρνω",
-					tests: "Shows a sentence in English with a person and a thing (he gives it to me); the answer puts both short words before the verb, person first: μου το δίνει.",
-				},
-			],
+			drills: ["pronouns-placement", "pronouns-two-together"],
 		},
 	],
 	reference: [{ label: "Pronouns", href: "/reference/pronouns" }],

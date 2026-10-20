@@ -1,3 +1,58 @@
 import type { DrillEntry } from "@/constants/drills";
 
-export const LITTLE_WORDS_DRILLS: DrillEntry[] = [];
+export const LITTLE_WORDS_DRILLS: DrillEntry[] = [
+	{
+		id: "pronouns-likes",
+		to: "/practice/guides/little-words/likes",
+		title: "μου αρέσει or μου αρέσουν",
+		greek: "μου αρέσει ο καφές · μου αρέσουν οι γάτες",
+		minutes: 2,
+		category: "pronouns",
+		caseRole: null,
+	},
+	{
+		id: "pronouns-own-alone",
+		to: "/practice/guides/little-words/own",
+		title: "δικός μου",
+		greek: "ο δικός μου καφές · είναι δικό μου",
+		minutes: 2,
+		category: "pronouns",
+		caseRole: null,
+	},
+	{
+		id: "pronouns-alone",
+		to: "/practice/guides/little-words/alone",
+		title: "μόνος μου",
+		greek: "μόνος μου · μόνη της · μόνοι μας",
+		minutes: 2,
+		category: "pronouns",
+		caseRole: null,
+	},
+	{
+		id: "pronouns-long-forms",
+		to: "/practice/guides/little-words/long-forms",
+		title: "Long forms after a preposition",
+		greek: "για μένα · με σένα · από αυτόν",
+		minutes: 2,
+		category: "pronouns",
+		caseRole: null,
+	},
+	{
+		id: "pronouns-polite-you",
+		to: "/practice/guides/little-words/polite-you",
+		title: "Polite you",
+		greek: "Θέλεις → Θέλετε · Γεια σου → Γεια σας",
+		minutes: 2,
+		category: "phrases",
+		caseRole: null,
+	},
+	{
+		id: "pronouns-two-together",
+		to: "/practice/guides/little-words/two-together",
+		title: "Two short words together",
+		greek: "μου το δίνει · του το δίνω · σου τα φέρνω",
+		minutes: 2,
+		category: "pronouns",
+		caseRole: null,
+	},
+];
