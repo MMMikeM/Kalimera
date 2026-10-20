@@ -32,6 +32,7 @@ const ROWS: KeyRow[] = [
 			{ label: "masculine", mark: { case: "nominative", gender: "masculine", children: "ο" } },
 			{ label: "feminine", mark: { case: "nominative", gender: "feminine", children: "η" } },
 			{ label: "neuter", mark: { case: "nominative", gender: "neuter", children: "το" } },
+			{ label: "no gender", mark: { case: "genitive", children: "μου" } },
 		],
 	},
 ];
@@ -45,7 +46,7 @@ export const MarkKey = ({ panelClass }: { panelClass: string }) => (
 				<div key={row.axis}>
 					<dt className="mb-2 text-xs text-stone-600">{row.axis}</dt>
 					<dd>
-						<ul className="grid grid-cols-3 gap-3">
+						<ul className={cn("grid gap-3", row.entries.length > 3 ? "grid-cols-4" : "grid-cols-3")}>
 							{row.entries.map((entry) => (
 								<li key={entry.label}>
 									<GrammarMark {...entry.mark} size="lg" className="min-w-12" />
