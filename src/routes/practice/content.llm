@@ -7,7 +7,7 @@ Every route under `/practice` needs a session: `route.tsx` `beforeLoad` redirect
 ## Route Structure
 
 ```
-/practice                                        Landing: four group links
+/practice                                        Landing: recent-lesson drills, then five group links
 /practice/review                                 Drills due for review, by category
 /practice/cases                                  Case-system index (4 phases)
 /practice/cases/{nominative,accusative,genitive}/{article,noun,adjective,phrase}
@@ -23,6 +23,8 @@ Every route under `/practice` needs a session: `route.tsx` `beforeLoad` redirect
 /practice/blocks/{chunks,numbers,days-of-week,opposites}
 /practice/blocks/question-words                  Question-words index (4 phases)
 /practice/blocks/question-words/{basics,which-forms,which-phrase,how-many-forms,how-many-phrase,review}
+/practice/guides                                 Guide-drills index (one phase per guide)
+/practice/guides/<guide>/<drill>                 One drill per guide section
 ```
 
 Route segments use grammatical terms (`nominative`); drill titles and phase labels use the learner handles (Doer / Target / Owner).
@@ -30,16 +32,28 @@ Route segments use grammatical terms (`nominative`); drill titles and phase labe
 ## Landing Page
 
 <route path="/practice">
-<purpose>Hub: one link per drill group; no drills are listed here</purpose>
+<purpose>Hub: the drills for the latest lessons, then one link per drill group</purpose>
 <file>src/routes/practice/index.tsx</file>
 <displays>
+- "From your lessons": loader `getRecentLessonDrillsFn` (`src/server/fns/guides.ts`) reads the two latest lessons whose grammar notes point at a guide section with drills, and lists those drills under each lesson's date and topic.
 - A ruled list built from `SECTIONS`, each row a serif label plus a one-line thesis:
   - The case system → /practice/cases
   - Pronouns → /practice/pronouns
   - Verbs → /practice/verbs
   - Building blocks → /practice/blocks
+  - From the guides → /practice/guides
 </displays>
 </route>
+
+## Section: From the guides
+
+One drill per guide section, built from the section's `plannedDrills` stub. `GUIDE_DRILLS` (`guides/drills.data.ts`) keys each guide's `<guide>/drills.data.ts` by slug; the index labels phases with the guides' titles. Each drill is a route plus a `*.data.ts` exporting `ITEMS`, and `OPTIONS` for a pick-one drill. `guide-drills.test.ts` checks every item file and that each drill is linked from a section of its guide.
+
+<engine-notes>
+- `GuideDrill` (`guides/components/guide-drill.tsx`): typed answers, forward only. The grader compares sounds (η ι υ ει οι → i, ω ο → o) and forgives a leading article, so use it only where right and wrong answers sound different. Where the article is the point, the answer is the bare article.
+- `GuideChoiceDrill`: single-select on `reverseGreek` (a sentence with a `___` gap); `dimension` names the right option. For choices that sound alike (καλή / καλεί) or that typing cannot test (with or without an article).
+- `referenceHref` links back to `/guides/<guide>#<section>`.
+</engine-notes>
 
 <route path="/practice/review">
 <purpose>Drills whose rust score says they need attention</purpose>
