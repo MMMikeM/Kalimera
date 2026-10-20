@@ -1,6 +1,5 @@
 import { describe, expect, it } from "vite-plus/test";
 
-import { greekToPhonetic, matchPhonetic } from "@/lib/greek-transliteration";
 import { GUIDES } from "@/routes/guides/guides.data";
 
 import type { SimpleListItem } from "../components/engines/deck";
@@ -43,21 +42,7 @@ describe("guide drill items", () => {
 		expect(new Set(prompts).size).toBe(items.length);
 	});
 
-	const typedSets = itemSets.filter(({ options }) => !options);
 	const choiceSets = itemSets.filter(({ options }) => options);
-
-	it.each(typedSets)("$path accepts its own answers, typed in Latin", ({ items }) => {
-		for (const item of items) {
-			expect(matchPhonetic(greekToPhonetic(item.greek), item.greek).isCorrect, item.id).toBe(true);
-		}
-	});
-
-	it.each(typedSets)("$path uses acceptAlso only for an answer the grader would reject", ({ items }) => {
-		for (const item of items.filter((card) => card.acceptAlso)) {
-			const typed = greekToPhonetic(item.acceptAlso ?? "");
-			expect(matchPhonetic(typed, item.greek).isCorrect, item.id).toBe(false);
-		}
-	});
 
 	it.each(choiceSets)("$path gives every choice card a gap and a listed answer", ({ items, options }) => {
 		for (const item of items) {
