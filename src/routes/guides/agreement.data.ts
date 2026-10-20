@@ -107,15 +107,7 @@ export const AGREEMENT_GUIDE: Guide = {
 				{ greek: "Ποιος καλεί;", english: "Who's calling? (καλεί is what someone does, and sounds just like καλή)" },
 				{ greek: "Σας καλώ στο πάρτι μου.", english: "I'm inviting you to my party. (καλώ also means invite)" },
 			],
-			drills: [],
-			plannedDrills: [
-				{
-					id: "adjective-or-verb",
-					title: "καλός or καλώ",
-					greek: "καλή · καλεί · καλό · καλώ",
-					tests: "A card shows a sentence with a gap, such as Η μέρα είναι ___ or Ποιος ___;, and the forms that sound alike; the spelling the sentence needs counts as right.",
-				},
-			],
+			drills: ["adjective-or-verb"],
 		},
 		{
 			id: "adverbs",

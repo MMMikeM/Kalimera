@@ -19,6 +19,11 @@ const SECTIONS = [
 		label: "Building blocks",
 		thesis: "Survival phrases, numbers, days.",
 	},
+	{
+		href: "/practice/guides",
+		label: "From the guides",
+		thesis: "One drill per guide section: gender, place, comparing, joining ideas.",
+	},
 ];
 
 export const Route = createFileRoute("/practice/")({

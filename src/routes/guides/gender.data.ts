@@ -172,15 +172,7 @@ export const GENDER_GUIDE: Guide = {
 				text: "Words for people, jobs among them, often come in a masculine and feminine pair: ο δάσκαλος, η δασκάλα.",
 				section: "gender-pairs",
 			},
-			drills: [],
-			plannedDrills: [
-				{
-					id: "nouns-gender-from-ending",
-					title: "Gender from the word's group",
-					greek: "φαρμακείο · θέση · βιβλιοπωλείο",
-					tests: "Shows a noun without its article; the answer is ο, η or το.",
-				},
-			],
+			drills: ["nouns-gender-from-ending"],
 		},
 		{
 			id: "gender-pairs",
