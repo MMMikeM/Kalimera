@@ -43,15 +43,7 @@ export const GENDER_GUIDE: Guide = {
 				text: "ο φίλος and ο πατέρας are both masculine, but they come from different families: τους φίλους, τους πατέρες.",
 				section: "nouns/families",
 			},
-			drills: [],
-			plannedDrills: [
-				{
-					id: "nouns-gender-exceptions",
-					title: "Gender exceptions",
-					greek: "Κύπρος · λάθος · κρέας · γάλα",
-					tests: "Shows a noun without its article, mixing regular endings with exceptions such as Κύπρος and κρέας; the answer is ο, η or το.",
-				},
-			],
+			drills: ["nouns-gender-exceptions"],
 		},
 		{
 			id: "feminine-endings",
@@ -221,15 +213,7 @@ export const GENDER_GUIDE: Guide = {
 					],
 				},
 			],
-			drills: [],
-			plannedDrills: [
-				{
-					id: "nouns-gender-pairs",
-					title: "Masculine and feminine pairs",
-					greek: "θεία · γειτόνισσα · Ελληνίδα",
-					tests: "Shows a masculine word for a person, such as ο γείτονας; the answer is the feminine with its article, η γειτόνισσα.",
-				},
-			],
+			drills: ["nouns-gender-pairs"],
 		},
 		{
 			id: "small-big",
@@ -280,15 +264,7 @@ export const GENDER_GUIDE: Guide = {
 					text: "Not every word with these endings is a small or big form: η κιθάρα and ο δράκος are ordinary words.",
 				},
 			],
-			drills: [],
-			plannedDrills: [
-				{
-					id: "nouns-small-big",
-					title: "Small and big forms",
-					greek: "ελεφαντάκι · υπνάκος · φωνάρα",
-					tests: "Shows a noun and whether to make it small or big; the answer is the -άκι, -άκος or -άρα form with its article, such as το κρεβατάκι.",
-				},
-			],
+			drills: ["nouns-small-big"],
 		},
 	],
 	reference: [

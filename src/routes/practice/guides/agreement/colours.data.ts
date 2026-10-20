@@ -1,0 +1,26 @@
+import type { SimpleListItem } from "../../components/engines/deck";
+
+export const ITEMS: SimpleListItem[] = [
+	{ id: "kokkino-fakelo", context: "κόκκινος · τον φάκελο", label: "the red folder", greek: "κόκκινο" },
+	{ id: "mple-fakelo", context: "μπλε · τον φάκελο", label: "the blue folder", greek: "μπλε" },
+	{ id: "kokkinous-fakelous", context: "κόκκινος · τους φακέλους", label: "the red folders", greek: "κόκκινους" },
+	{ id: "mple-fakeloi", context: "μπλε · οι φάκελοι", label: "the blue folders", greek: "μπλε" },
+	{ id: "mavros-ouranos", context: "μαύρος · ο ουρανός", label: "the black sky", greek: "μαύρος" },
+	{ id: "mple-ouranos", context: "μπλε · ο ουρανός", label: "the blue sky", greek: "μπλε" },
+	{ id: "kafe-skylo", context: "καφέ · τον σκύλο", label: "the brown dog", greek: "καφέ" },
+	{ id: "kokkini-tsanta", context: "κόκκινος · η τσάντα", label: "the red bag", greek: "κόκκινη" },
+	{ id: "mavri-tsanta", context: "μαύρος · την τσάντα", label: "the black bag", greek: "μαύρη" },
+	{ id: "roz-tsanta", context: "ροζ · την τσάντα", label: "the pink bag", greek: "ροζ" },
+	{ id: "galazia-thalassa", context: "γαλάζιος · η θάλασσα", label: "the light blue sea", greek: "γαλάζια" },
+	{ id: "gkri-gata", context: "γκρι · τη γάτα", label: "the grey cat", greek: "γκρι" },
+	{ id: "portokali-blouza", context: "πορτοκαλί · την μπλούζα", label: "the orange top", greek: "πορτοκαλί" },
+	{ id: "prasines-portes", context: "πράσινος · τις πόρτες", label: "the green doors", greek: "πράσινες" },
+	{ id: "aspres-blouzes", context: "άσπρος · τις μπλούζες", label: "the white tops", greek: "άσπρες" },
+	{ id: "aspro-forema", context: "άσπρος · το φόρεμα", label: "the white dress", greek: "άσπρο" },
+	{ id: "kitrino-aftokinito", context: "κίτρινος · το αυτοκίνητο", label: "the yellow car", greek: "κίτρινο" },
+	{ id: "prasino-podilato", context: "πράσινος · το ποδήλατο", label: "the green bike", greek: "πράσινο" },
+	{ id: "gkri-foremata", context: "γκρι · τα φορέματα", label: "the grey dresses", greek: "γκρι" },
+	{ id: "mavra-papoutsia", context: "μαύρος · τα παπούτσια", label: "the black shoes", greek: "μαύρα" },
+	{ id: "kafe-papoutsia", context: "καφέ · τα παπούτσια", label: "the brown shoes", greek: "καφέ" },
+	{ id: "roz-louloudia", context: "ροζ · τα λουλούδια", label: "the pink flowers", greek: "ροζ" },
+];

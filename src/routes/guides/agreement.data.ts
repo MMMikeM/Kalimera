@@ -159,15 +159,7 @@ export const AGREEMENT_GUIDE: Guide = {
 				text: "πολύ, very or a lot, is the adverb from πολύς.",
 				section: "scales/poly-polla",
 			},
-			drills: [],
-			plannedDrills: [
-				{
-					id: "adjective-or-adverb",
-					title: "καλός or καλά",
-					greek: "καλός μάγειρας · μαγειρεύει καλά",
-					tests: "A card shows a sentence with a gap and an adjective such as καλός; the answer is the form that matches the noun, or the adverb when the gap says how something happens.",
-				},
-			],
+			drills: ["adjective-or-adverb"],
 		},
 		{
 			id: "adjective-jobs",
@@ -295,15 +287,7 @@ export const AGREEMENT_GUIDE: Guide = {
 					],
 				},
 			],
-			drills: [],
-			plannedDrills: [
-				{
-					id: "adjectives-feminine-shapes",
-					title: "Feminine -α and -ιά",
-					greek: "ωραία · παλιά · βαριά",
-					tests: "Shows a masculine adjective such as ωραίος or βαρύς beside a feminine noun; the answer is its feminine form, ωραία or βαριά.",
-				},
-			],
+			drills: ["adjectives-feminine-shapes"],
 		},
 		{
 			id: "colours",
@@ -349,15 +333,7 @@ export const AGREEMENT_GUIDE: Guide = {
 					marks: [mark("Οι μπλε φάκελοι", "nominative", "masculine", true)],
 				},
 			],
-			drills: [],
-			plannedDrills: [
-				{
-					id: "adjectives-colours",
-					title: "Colours with a noun",
-					greek: "τον κόκκινο φάκελο · τον μπλε φάκελο",
-					tests: "Shows a colour and a noun, such as κόκκινος with τον φάκελο; the answer is the colour in the noun's form, which for μπλε, ροζ, γκρι and καφέ is the colour unchanged.",
-				},
-			],
+			drills: ["adjectives-colours"],
 		},
 		{
 			id: "adjective-alone",
@@ -384,15 +360,7 @@ export const AGREEMENT_GUIDE: Guide = {
 					marks: [mark("το κόκκινο", "accusative", "neuter")],
 				},
 			],
-			drills: [],
-			plannedDrills: [
-				{
-					id: "adjectives-standing-alone",
-					title: "The red one",
-					greek: "τον κόκκινο · την κόκκινη · το κόκκινο",
-					tests: "Shows a noun such as η τσάντα and an adjective such as κόκκινος after θέλω; the answer is the article and adjective without the noun, as a Target: την κόκκινη.",
-				},
-			],
+			drills: ["adjectives-standing-alone"],
 		},
 		{
 			id: "describing-yourself",
@@ -442,15 +410,7 @@ export const AGREEMENT_GUIDE: Guide = {
 					marks: [mark("κουρασμένες", "nominative", "feminine", true)],
 				},
 			],
-			drills: [],
-			plannedDrills: [
-				{
-					id: "adjectives-describing-yourself",
-					title: "Describing yourself",
-					greek: "κουρασμένος · κουρασμένη · κουρασμένοι",
-					tests: "Shows a state and who is speaking (a man, a woman, a group); the answer is the -μένος word in that gender and number, such as κουρασμένη.",
-				},
-			],
+			drills: ["adjectives-describing-yourself"],
 		},
 		{
 			id: "numbers",
