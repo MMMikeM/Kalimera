@@ -72,15 +72,7 @@ export const NOUN_EXCEPTIONS_GUIDE: Guide = {
 					],
 				},
 			],
-			drills: [],
-			plannedDrills: [
-				{
-					id: "nouns-plural-extra-syllable",
-					title: "Plurals with a new ending",
-					greek: "καφέδες · γιαγιάδες · πόλεις",
-					tests: "A card shows a noun with its article in the one form, and the plural in its plain form, with its article, counts as right.",
-				},
-			],
+			drills: ["nouns-plural-extra-syllable"],
 		},
 		{
 			id: "never-change",
@@ -117,15 +109,7 @@ export const NOUN_EXCEPTIONS_GUIDE: Guide = {
 				text: "Not every borrowed word stays the same: ο καφές becomes οι καφέδες.",
 				section: "extra-syllable",
 			},
-			drills: [],
-			plannedDrills: [
-				{
-					id: "nouns-unchanging",
-					title: "Nouns that never change",
-					greek: "τα πάρτι · του σινεμά · τα βίντεο",
-					tests: "A card asks for a borrowed noun in a given form and number; right is the article changed and the noun left as it is.",
-				},
-			],
+			drills: ["nouns-unchanging"],
 		},
 		{
 			id: "plural-only",
@@ -161,15 +145,7 @@ export const NOUN_EXCEPTIONS_GUIDE: Guide = {
 					text: "η διακοπή does exist, but it means a break or an interruption.",
 				},
 			],
-			drills: [],
-			plannedDrills: [
-				{
-					id: "nouns-plural-only",
-					title: "Nouns used in the plural",
-					greek: "οι διακοπές · τα ψώνια · τα μεσάνυχτα",
-					tests: "A card shows the English (holidays, midnight) and the Greek noun with its plural article counts as right.",
-				},
-			],
+			drills: ["nouns-plural-only"],
 		},
 	],
 	reference: [

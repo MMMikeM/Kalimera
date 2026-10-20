@@ -135,15 +135,7 @@ export const OWNER_CALLING_GUIDE: Guide = {
 					marks: [mark("οδοντιάτρου", "genitive")],
 				},
 			],
-			drills: [],
-			plannedDrills: [
-				{
-					id: "nouns-owner-label",
-					title: "The Owner as a label",
-					greek: "τόπος κατοικίας · χρώμα ματιών · καταστήματα ρούχων",
-					tests: "A card shows a label with its second noun in the dictionary form, and the Owner form with no article counts as right.",
-				},
-			],
+			drills: ["nouns-owner-label"],
 		},
 		{
 			id: "calling",
@@ -201,15 +193,7 @@ export const OWNER_CALLING_GUIDE: Guide = {
 					],
 				},
 			],
-			drills: [],
-			plannedDrills: [
-				{
-					id: "nouns-calling",
-					title: "Calling someone",
-					greek: "Γιάννη! · πατέρα! · φίλε!",
-					tests: "A card shows a noun in its plain form with its article, and the calling form with no article counts as right.",
-				},
-			],
+			drills: ["nouns-calling"],
 		},
 	],
 	reference: [

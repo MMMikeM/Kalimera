@@ -70,15 +70,7 @@ export const PLACE_GUIDE: Guide = {
 				text: "από never joins onto the article: από τον, από την, από το.",
 				section: "position",
 			},
-			drills: [],
-			plannedDrills: [
-				{
-					id: "place-se-article",
-					title: "σε + the article",
-					greek: "στο · στη · στον · στους · σε μια",
-					tests: "Shows σε and a noun with its article; the answer is the joined form, such as στο σπίτι, or σε left whole before μια or no article.",
-				},
-			],
+			drills: ["place-se-article"],
 		},
 		{
 			id: "position",
@@ -140,15 +132,7 @@ export const PLACE_GUIDE: Guide = {
 					examples: [{ greek: "Πόσο απέχει από εδώ;", english: "How far is it from here?" }],
 				},
 			],
-			drills: [],
-			plannedDrills: [
-				{
-					id: "place-position",
-					title: "Next to, behind, far from",
-					greek: "δίπλα στο · πίσω από το · πάνω στο · κάτω από το",
-					tests: "Shows a position in English; the answer is the Greek phrase with σε or από and the article.",
-				},
-			],
+			drills: ["place-position"],
 		},
 		{
 			id: "purpose",
@@ -204,15 +188,7 @@ export const PLACE_GUIDE: Guide = {
 				text: "Before a verb, για να means to or in order to: για να μάθω ελληνικά, to learn Greek.",
 				section: "joining/purpose",
 			},
-			drills: [],
-			plannedDrills: [
-				{
-					id: "place-for-from-with",
-					title: "For, from, with",
-					greek: "για · από · με · για δύο χρόνια",
-					tests: "Shows an English sentence with one gap; the answer is για, από or με, with για also for a length of time.",
-				},
-			],
+			drills: ["place-for-from-with"],
 		},
 		{
 			id: "position-pairs",
@@ -248,15 +224,7 @@ export const PLACE_GUIDE: Guide = {
 				text: "Before a place, the same words take σε or από: μέσα στο σπίτι, έξω από το σπίτι.",
 				section: "position",
 			},
-			drills: [],
-			plannedDrills: [
-				{
-					id: "place-position-pairs",
-					title: "Inside and outside",
-					greek: "μέσα · έξω · αριστερά · δεξιά",
-					tests: "Shows a position word in Greek; the answer is its opposite, such as έξω for μέσα.",
-				},
-			],
+			drills: ["blocks-opposites"],
 		},
 		{
 			id: "without-until",
@@ -313,15 +281,7 @@ export const PLACE_GUIDE: Guide = {
 				text: "σαν says two things are alike; πιο … από says one is more.",
 				section: "scales/comparing",
 			},
-			drills: [],
-			plannedDrills: [
-				{
-					id: "place-without-until",
-					title: "Without, until, towards, like",
-					greek: "χωρίς ζάχαρη · μέχρι τις πέντε · προς τον σταθμό · σαν τον λύκο",
-					tests: "Shows an English phrase with without, until, towards, like or after; the answer is the Greek with χωρίς, μέχρι, προς, σαν or μετά από and the noun in the Target form.",
-				},
-			],
+			drills: ["place-without-until"],
 		},
 	],
 	reference: [{ label: "Prepositions", href: "/reference/prepositions" }],
