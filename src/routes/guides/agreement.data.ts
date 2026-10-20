@@ -118,6 +118,66 @@ export const AGREEMENT_GUIDE: Guide = {
 			],
 		},
 		{
+			id: "adverbs",
+			title: "καλός or καλά?",
+			tone: "navy",
+			rule: [
+				"An adjective describes a person or thing, and changes to match it. An adverb describes how something happens, such as well or quickly, and never changes. Most adverbs are made from an adjective:",
+				[
+					"most adjectives in -ος take -α, so the adverb looks like their neuter plural: καλός, καλά",
+					"adjectives in -ης take -ως: ακριβής, ακριβώς",
+				],
+			],
+			table: {
+				columns: [
+					{ label: "Adjective", greek: true },
+					{ label: "Adverb", greek: true },
+					{ label: "Meaning" },
+				],
+				rows: [
+					["καλός", "καλά", "well"],
+					["γρήγορος", "γρήγορα", "quickly"],
+					["ακριβός", "ακριβά", "expensively"],
+					["ακριβής", "ακριβώς", "exactly"],
+					["συνήθης", "συνήθως", "usually"],
+				],
+			},
+			examples: [
+				{
+					greek: "Ο Νίκος είναι καλός μάγειρας και μαγειρεύει καλά.",
+					english: "Nikos is a good cook and cooks well. (καλός matches μάγειρας; καλά says how he cooks)",
+					marks: [mark("καλός μάγειρας", "nominative", "masculine")],
+				},
+				{
+					greek: "Πώς είσαι; Είμαι καλά.",
+					english: "How are you? I'm well. (how you are takes the adverb, as in English)",
+				},
+			],
+			details: [
+				{
+					label: "ακριβά or ακριβώς",
+					text: "They differ only in the last vowel. ακριβά comes from ακριβός, expensive. ακριβώς comes from ακριβής, exact.",
+					examples: [
+						{ greek: "Αυτό το μαγαζί πουλάει ακριβά.", english: "This shop is expensive. (it sells expensively)" },
+						{ greek: "Το μάθημα αρχίζει στις έξι ακριβώς.", english: "The lesson starts at exactly six." },
+					],
+				},
+			],
+			confuse: {
+				text: "πολύ, very or a lot, is the adverb from πολύς.",
+				section: "scales/poly-polla",
+			},
+			drills: [],
+			plannedDrills: [
+				{
+					id: "adjective-or-adverb",
+					title: "καλός or καλά",
+					greek: "καλός μάγειρας · μαγειρεύει καλά",
+					tests: "A card shows a sentence with a gap and an adjective such as καλός; the answer is the form that matches the noun, or the adverb when the gap says how something happens.",
+				},
+			],
+		},
+		{
 			id: "adjective-jobs",
 			title: "Adjectives change with the job",
 			tone: "honey",

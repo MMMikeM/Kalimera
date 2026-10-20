@@ -171,7 +171,7 @@ export const LESSON_2026_10_02 = createLesson({
 				"Κάνει καλά τη δουλειά του. (τη δουλειά is the Target)",
 			],
 			explanation:
-				"After είναι nothing is done to the noun, so it stays in the plain form. After κάνει the job is what he does, so it takes the Target form. The linking verbs section could take this pair as its contrast example.",
+				"After είναι nothing is done to the noun, so it stays in the plain form. After κάνει the job is what he does, so it takes the Target form.",
 			section: "roles/linking",
 		},
 		{

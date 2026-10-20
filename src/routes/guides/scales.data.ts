@@ -154,6 +154,7 @@ export const SCALES_GUIDE: Guide = {
 				rows: [
 					["πολύ καλός", "very good"],
 					["δουλεύω πολύ", "I work a lot"],
+					[markedCell("ο πολύς χυμός", "nominative", "masculine"), "a lot of juice"],
 					[markedCell("πολύ κόσμο", "accusative", "masculine"), "a lot of people"],
 					[markedCell("πολλή δουλειά", "accusative", "feminine"), "a lot of work"],
 					[markedCell("πολλοί άνθρωποι", "nominative", "masculine", true), "many people"],

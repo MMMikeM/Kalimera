@@ -127,7 +127,7 @@ export const LESSON_2026_10_13 = createLesson({
 				"Μ' αρέσει πολύ να ταξιδεύω. (beside a verb: never changes)",
 			],
 			explanation:
-				"Before a noun, πολύς copies its gender and number: πολύς, πολλή, πολύ, πολλοί, πολλές, πολλά. One λ when -υ follows, λλ everywhere else. In the singular it goes with things you don't count, so not ο πολύς φίλος but πολλοί φίλοι. The section could take Ο πολύς χυμός δεν κάνει καλό as its masculine singular example, which it lacks.",
+				"Before a noun, πολύς copies its gender and number: πολύς, πολλή, πολύ, πολλοί, πολλές, πολλά. One λ when -υ follows, λλ everywhere else. In the singular it goes with things you don't count, so not ο πολύς φίλος but πολλοί φίλοι.",
 			section: "scales/poly-polla",
 		},
 		{
@@ -148,8 +148,8 @@ export const LESSON_2026_10_13 = createLesson({
 				"ακριβός = expensive · ακριβώς = exactly",
 			],
 			explanation:
-				"The adjective describes someone or something and changes for gender. The adverb describes how, and never changes; it usually looks like the neuter plural (καλά), and sometimes ends in -ως (ακριβώς). No guide teaches adverbs made from adjectives yet; an agreement section could.",
-			section: "word",
+				"The adjective describes someone or something and changes for gender. The adverb describes how, and never changes; it usually looks like the neuter plural (καλά), and sometimes ends in -ως (ακριβώς, which comes from ακριβής, exact, not from ακριβός).",
+			section: "agreement/adverbs",
 		},
 		{
 			pattern: "πρέπει and έπρεπε",
