@@ -95,15 +95,7 @@ export const JOINING_GUIDE: Guide = {
 					],
 				},
 			],
-			drills: [],
-			plannedDrills: [
-				{
-					id: "joining-if-then",
-					title: "If … then",
-					greek: "αν βρέχει · αν όχι, τότε",
-					tests: "Shows an English if-sentence; the answer is the Greek with αν opening the condition, τότε optional before the result.",
-				},
-			],
+			drills: ["joining-if-then"],
 		},
 		{
 			id: "thinking",
@@ -141,15 +133,7 @@ export const JOINING_GUIDE: Guide = {
 					],
 				},
 			],
-			drills: [],
-			plannedDrills: [
-				{
-					id: "joining-think-that",
-					title: "I think that…",
-					greek: "νομίζω ότι · πιστεύω ότι · ίσως · μήπως",
-					tests: "Shows an English sentence such as I think it's good, maybe tomorrow or do you happen to know?; the answer is the Greek with ότι after νομίζω or πιστεύω, ίσως in a statement, or μήπως in a question.",
-				},
-			],
+			drills: ["joining-think-that"],
 		},
 		{
 			id: "either-or",
@@ -178,15 +162,7 @@ export const JOINING_GUIDE: Guide = {
 					examples: [{ greek: "Θα έρθει η Μαρία ή η Ελένη;", english: "Will Maria or Eleni come?" }],
 				},
 			],
-			drills: [],
-			plannedDrills: [
-				{
-					id: "joining-either-or",
-					title: "Or, either … or",
-					greek: "καφέ ή τσάι · ή … ή",
-					tests: "Shows an English choice with or or either … or; the answer is the Greek with ή, accented, once or doubled.",
-				},
-			],
+			drills: ["joining-either-or"],
 		},
 		{
 			id: "before",
@@ -230,15 +206,7 @@ export const JOINING_GUIDE: Guide = {
 				text: "μετά από before a length of time means after: μετά από δύο χρόνια, after two years.",
 				section: "place/without-until",
 			},
-			drills: [],
-			plannedDrills: [
-				{
-					id: "joining-before-after",
-					title: "Before and after",
-					greek: "πριν πάω · πριν φάω · μετά το σχολείο",
-					tests: "Shows an English phrase with before or after; the answer is πριν with the short form before a verb, πριν από or μετά before a noun, and αφού with the short form for after before a verb.",
-				},
-			],
+			drills: ["joining-before-after"],
 		},
 		{
 			id: "which-how-many",
@@ -348,15 +316,7 @@ export const JOINING_GUIDE: Guide = {
 				text: "που links; πού, with the accent, asks where.",
 				section: "when-why",
 			},
-			drills: [],
-			plannedDrills: [
-				{
-					id: "joining-pou",
-					title: "που for that, who and which",
-					greek: "ο φίλος που · χαρούμενος που",
-					tests: "Shows two short English ideas joined by who, which or that; the answer is the Greek joined with που, unaccented.",
-				},
-			],
+			drills: ["joining-pou"],
 		},
 		{
 			id: "purpose",
@@ -396,15 +356,7 @@ export const JOINING_GUIDE: Guide = {
 				text: "για before a noun means for; για να needs a verb after it.",
 				section: "place/purpose",
 			},
-			drills: [],
-			plannedDrills: [
-				{
-					id: "joining-purpose",
-					title: "για να",
-					greek: "για να μάθω · για να μην κρυώνουμε",
-					tests: "Shows an English sentence with to, in order to or so that … not; the answer is the Greek with για να, or για να μην, before the verb.",
-				},
-			],
+			drills: ["joining-purpose"],
 		},
 		{
 			id: "but-so-also",
@@ -449,15 +401,7 @@ export const JOINING_GUIDE: Guide = {
 					examples: [{ greek: "Καλή σου μέρα! Επίσης!", english: "Have a good day! You too!" }],
 				},
 			],
-			drills: [],
-			plannedDrills: [
-				{
-					id: "joining-but-so-also",
-					title: "But, so, also",
-					greek: "αλλά · όμως · λοιπόν · επίσης",
-					tests: "Shows two short English ideas joined by but, so or also; the answer is the Greek with αλλά or όμως, λοιπόν or επίσης in its place.",
-				},
-			],
+			drills: ["joining-but-so-also"],
 		},
 	],
 	reference: [],

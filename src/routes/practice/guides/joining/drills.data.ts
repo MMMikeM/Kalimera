@@ -1,3 +1,67 @@
 import type { DrillEntry } from "@/constants/drills";
 
-export const JOINING_DRILLS: DrillEntry[] = [];
+export const JOINING_DRILLS: DrillEntry[] = [
+	{
+		id: "joining-if-then",
+		to: "/practice/guides/joining/if-then",
+		title: "If … then",
+		greek: "αν βρέχει · αν όχι, τότε",
+		minutes: 2,
+		category: "blocks",
+		caseRole: null,
+	},
+	{
+		id: "joining-think-that",
+		to: "/practice/guides/joining/think-that",
+		title: "I think that…",
+		greek: "νομίζω ότι · πιστεύω ότι · ίσως · μήπως",
+		minutes: 2,
+		category: "blocks",
+		caseRole: null,
+	},
+	{
+		id: "joining-either-or",
+		to: "/practice/guides/joining/either-or",
+		title: "Or, either … or",
+		greek: "καφέ ή τσάι · ή … ή",
+		minutes: 2,
+		category: "blocks",
+		caseRole: null,
+	},
+	{
+		id: "joining-before-after",
+		to: "/practice/guides/joining/before-after",
+		title: "Before and after",
+		greek: "πριν πάω · πριν φάω · μετά το σχολείο",
+		minutes: 2,
+		category: "blocks",
+		caseRole: null,
+	},
+	{
+		id: "joining-pou",
+		to: "/practice/guides/joining/pou",
+		title: "που for that, who and which",
+		greek: "ο φίλος που · χαρούμενος που",
+		minutes: 2,
+		category: "blocks",
+		caseRole: null,
+	},
+	{
+		id: "joining-purpose",
+		to: "/practice/guides/joining/purpose",
+		title: "για να",
+		greek: "για να μάθω · για να μην κρυώνουμε",
+		minutes: 2,
+		category: "blocks",
+		caseRole: null,
+	},
+	{
+		id: "joining-but-so-also",
+		to: "/practice/guides/joining/but-so-also",
+		title: "But, so, also",
+		greek: "αλλά · όμως · λοιπόν · επίσης",
+		minutes: 2,
+		category: "blocks",
+		caseRole: null,
+	},
+];

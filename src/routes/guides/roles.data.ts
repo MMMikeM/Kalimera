@@ -229,16 +229,7 @@ export const ROLES_GUIDE: Guide = {
 					],
 				},
 			],
-			drills: [],
-			plannedDrills: [
-				{
-					id: "articles-indefinite",
-					title: "ένας or έναν",
-					greek: "ένας σκύλος · έναν σκύλο · μια γάτα",
-					tests:
-						"A card shows a sentence with a gap before a noun, and the answer is ένας, έναν, μια or ένα, whichever the noun's gender and job need.",
-				},
-			],
+			drills: ["articles-indefinite"],
 		},
 		{
 			id: "plural",
@@ -419,16 +410,7 @@ export const ROLES_GUIDE: Guide = {
 				text: "A job after είμαι usually takes no article either: Ο Γιάννης είναι προγραμματιστής, Yannis is a programmer.",
 				section: "when-article",
 			},
-			drills: [],
-			plannedDrills: [
-				{
-					id: "roles-linking-plain",
-					title: "Plain form or Target form",
-					greek: "είμαι γιατρός · βλέπω τον γιατρό",
-					tests:
-						"A card shows βλέπω, είμαι or γίνομαι with a noun to fill in, and the answer is the noun in the Target form after βλέπω and in the plain form after είμαι or γίνομαι.",
-				},
-			],
+			drills: ["roles-linking-plain"],
 		},
 		{
 			id: "owner",
@@ -592,16 +574,7 @@ export const ROLES_GUIDE: Guide = {
 					],
 				},
 			],
-			drills: [],
-			plannedDrills: [
-				{
-					id: "articles-with-or-without",
-					title: "With or without the article",
-					greek: "η Ελλάδα · είμαι γιατρός · πάω σινεμά",
-					tests:
-						"A card shows an English phrase, and the Greek counts as right only with the article where Greek uses one and without it where Greek drops it.",
-				},
-			],
+			drills: ["articles-with-or-without"],
 		},
 	],
 	reference: [
