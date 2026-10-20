@@ -262,15 +262,7 @@ export const VERBS_GUIDE: Guide = {
 					examples: [{ greek: "Με τι ασχολείσαι;", english: "What do you do?" }],
 				},
 			],
-			drills: [],
-			plannedDrills: [
-				{
-					id: "verbs-amai-forms",
-					title: "-άμαι verbs",
-					greek: "θυμάμαι · θυμόμαστε · θα θυμηθώ",
-					tests: "A card names an -άμαι verb, a person and the present or simple future; the matching form, such as θυμόμαστε or θα θυμηθούμε, counts as right.",
-				},
-			],
+			drills: ["verbs-amai-forms"],
 		},
 	],
 	reference: [

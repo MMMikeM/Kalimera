@@ -1,0 +1,31 @@
+import type { SimpleListItem } from "../../components/engines/deck";
+
+/** The I form is the cue, so no card asks for it back. */
+export const ITEMS: SimpleListItem[] = [
+	{ id: "thymasai", context: "θυμάμαι", label: "you remember", greek: "θυμάσαι" },
+	{ id: "thymatai", context: "θυμάμαι", label: "he remembers", greek: "θυμάται" },
+	{ id: "thymomaste", context: "θυμάμαι", label: "we remember", greek: "θυμόμαστε" },
+	{ id: "thymaste", context: "θυμάμαι", label: "you all remember", greek: "θυμάστε" },
+	{ id: "thymountai", context: "θυμάμαι", label: "they remember", greek: "θυμούνται" },
+	{ id: "tha-thymitho", context: "θυμάμαι", label: "I will remember", greek: "θα θυμηθώ" },
+	{ id: "tha-thymitheis", context: "θυμάμαι", label: "you will remember", greek: "θα θυμηθείς" },
+	{ id: "tha-thymithoume", context: "θυμάμαι", label: "we will remember", greek: "θα θυμηθούμε" },
+	{ id: "tha-thymithoun", context: "θυμάμαι", label: "they will remember", greek: "θα θυμηθούν" },
+	{ id: "koimasai", context: "κοιμάμαι", label: "you sleep", greek: "κοιμάσαι" },
+	{ id: "koimatai", context: "κοιμάμαι", label: "she sleeps", greek: "κοιμάται" },
+	{ id: "koimomaste", context: "κοιμάμαι", label: "we sleep", greek: "κοιμόμαστε" },
+	{ id: "koimaste", context: "κοιμάμαι", label: "you all sleep", greek: "κοιμάστε" },
+	{ id: "koimountai", context: "κοιμάμαι", label: "they sleep", greek: "κοιμούνται" },
+	{ id: "tha-koimitho", context: "κοιμάμαι", label: "I will sleep", greek: "θα κοιμηθώ" },
+	{ id: "tha-koimithei", context: "κοιμάμαι", label: "he will sleep", greek: "θα κοιμηθεί" },
+	{ id: "tha-koimithoume", context: "κοιμάμαι", label: "we will sleep", greek: "θα κοιμηθούμε" },
+	{ id: "tha-koimitheite", context: "κοιμάμαι", label: "you all will sleep", greek: "θα κοιμηθείτε" },
+	{ id: "fovasai", context: "φοβάμαι", label: "you are afraid", greek: "φοβάσαι" },
+	{ id: "fovatai", context: "φοβάμαι", label: "he is afraid", greek: "φοβάται" },
+	{ id: "fovomaste", context: "φοβάμαι", label: "we are afraid", greek: "φοβόμαστε" },
+	{ id: "fovaste", context: "φοβάμαι", label: "you all are afraid", greek: "φοβάστε" },
+	{ id: "fovountai", context: "φοβάμαι", label: "they are afraid", greek: "φοβούνται" },
+	{ id: "tha-fovitho", context: "φοβάμαι", label: "I will be afraid", greek: "θα φοβηθώ" },
+	{ id: "tha-fovithei", context: "φοβάμαι", label: "she will be afraid", greek: "θα φοβηθεί" },
+	{ id: "tha-fovithoun", context: "φοβάμαι", label: "they will be afraid", greek: "θα φοβηθούν" },
+];

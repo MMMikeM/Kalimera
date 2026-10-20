@@ -225,15 +225,7 @@ export const FUTURE_COMMANDS_GUIDE: Guide = {
 					text: "φέρε is the regular one-off command, from θα φέρω; its ongoing form is φέρνε. κοίτα, from κοιτάζω, you learn as it is.",
 				},
 			],
-			drills: ["verbs-imperatives"],
-			plannedDrills: [
-				{
-					id: "verbs-imperative-aspect",
-					title: "One-off or ongoing command",
-					greek: "φάε · τρώγε · πες · λέγε",
-					tests: "A card shows an English command marked as one action or as a habit; the one-off form (φάε) or the ongoing form (τρώγε) to match counts as right.",
-				},
-			],
+			drills: ["verbs-imperatives", "verbs-imperative-aspect"],
 		},
 	],
 	reference: [

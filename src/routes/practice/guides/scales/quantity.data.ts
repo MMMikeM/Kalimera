@@ -1,0 +1,28 @@
+import type { SimpleListItem } from "../../components/engines/deck";
+
+export const ITEMS: SimpleListItem[] = [
+	{ id: "kanena-parko", context: "το πάρκο", label: "There isn't a single park.", greek: "Δεν υπάρχει κανένα πάρκο." },
+	{ id: "liga-parka", context: "το πάρκο", label: "There are few parks.", greek: "Υπάρχουν λίγα πάρκα." },
+	{ id: "kamia-trapeza", context: "η τράπεζα", label: "There isn't a single bank.", greek: "Δεν υπάρχει καμία τράπεζα.", acceptAlso: "Δεν υπάρχει καμιά τράπεζα." },
+	{ id: "katholou-trapezes", context: "η τράπεζα", label: "There aren't any banks at all.", greek: "Δεν υπάρχουν καθόλου τράπεζες." },
+	{ id: "ena-vivliopoleio", context: "το βιβλιοπωλείο", label: "There is a bookshop.", greek: "Υπάρχει ένα βιβλιοπωλείο." },
+	{ id: "merika-katastimata", context: "το κατάστημα", label: "There are some shops.", greek: "Υπάρχουν μερικά καταστήματα.", acceptAlso: "Υπάρχουν κάποια καταστήματα." },
+	{ id: "polla-estiatoria", context: "το εστιατόριο", label: "There are many restaurants.", greek: "Υπάρχουν πολλά εστιατόρια." },
+	{ id: "polloi-touristes", context: "ο τουρίστας", label: "There are many tourists.", greek: "Υπάρχουν πολλοί τουρίστες." },
+	{ id: "ligoi-touristes", context: "ο τουρίστας", label: "There are few tourists.", greek: "Υπάρχουν λίγοι τουρίστες." },
+	{ id: "kanenas-fournos", context: "ο φούρνος", label: "There isn't a single bakery.", greek: "Δεν υπάρχει κανένας φούρνος." },
+	{ id: "enas-fournos", context: "ο φούρνος", label: "There is a bakery.", greek: "Υπάρχει ένας φούρνος." },
+	{ id: "merikes-tavernes", context: "η ταβέρνα", label: "There are some tavernas.", greek: "Υπάρχουν μερικές ταβέρνες.", acceptAlso: "Υπάρχουν κάποιες ταβέρνες." },
+	{ id: "polles-tavernes", context: "η ταβέρνα", label: "There are many tavernas.", greek: "Υπάρχουν πολλές ταβέρνες." },
+	{ id: "mia-paralia", context: "η παραλία", label: "There is a beach.", greek: "Υπάρχει μία παραλία." },
+	{ id: "liges-paralies", context: "η παραλία", label: "There are few beaches.", greek: "Υπάρχουν λίγες παραλίες." },
+	{ id: "kanena-farmakeio", context: "το φαρμακείο", label: "There isn't a single chemist's.", greek: "Δεν υπάρχει κανένα φαρμακείο." },
+	{ id: "katholou-aftokinita", context: "το αυτοκίνητο", label: "There aren't any cars at all.", greek: "Δεν υπάρχουν καθόλου αυτοκίνητα." },
+	{ id: "kanenas-giatros", context: "ο γιατρός", label: "There isn't a single doctor.", greek: "Δεν υπάρχει κανένας γιατρός." },
+	{ id: "merikoi-giatroi", context: "ο γιατρός", label: "There are some doctors.", greek: "Υπάρχουν μερικοί γιατροί.", acceptAlso: "Υπάρχουν κάποιοι γιατροί." },
+	{ id: "polla-scholeia", context: "το σχολείο", label: "There are many schools.", greek: "Υπάρχουν πολλά σχολεία." },
+	{ id: "polles-ekklisies", context: "η εκκλησία", label: "There are many churches.", greek: "Υπάρχουν πολλές εκκλησίες." },
+	{ id: "ena-xenodocheio", context: "το ξενοδοχείο", label: "There is a hotel.", greek: "Υπάρχει ένα ξενοδοχείο." },
+	{ id: "liga-dentra", context: "το δέντρο", label: "There are few trees.", greek: "Υπάρχουν λίγα δέντρα." },
+	{ id: "kamia-kafeteria", context: "η καφετέρια", label: "There isn't a single café.", greek: "Δεν υπάρχει καμία καφετέρια.", acceptAlso: "Δεν υπάρχει καμιά καφετέρια." },
+];

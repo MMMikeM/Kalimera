@@ -62,15 +62,7 @@ export const SCALES_GUIDE: Guide = {
 				],
 				section: "joining/when-why",
 			},
-			drills: [],
-			plannedDrills: [
-				{
-					id: "scales-frequency",
-					title: "How often",
-					greek: "ποτέ · σχεδόν ποτέ · πότε πότε · συχνά · πάντα",
-					tests: "Shows a frequency word in English; the answer is the Greek rung, such as συνήθως for usually.",
-				},
-			],
+			drills: ["scales-frequency"],
 		},
 		{
 			id: "quantity",
@@ -125,15 +117,7 @@ export const SCALES_GUIDE: Guide = {
 				text: "After υπάρχει the noun keeps its plain form, the Doer form, because nothing is done to it: υπάρχουν πολλοί τουρίστες.",
 				section: "no-doer/there-is",
 			},
-			drills: [],
-			plannedDrills: [
-				{
-					id: "scales-quantity",
-					title: "There is none, some, many",
-					greek: "κανένα πάρκο · λίγα πάρκα · μερικά καταστήματα · πολλά εστιατόρια",
-					tests: "Shows a there is or there are sentence in English; the answer is the Greek with the quantity word matching the noun, such as δεν υπάρχει κανένα πάρκο.",
-				},
-			],
+			drills: ["scales-quantity"],
 		},
 		{
 			id: "poly-polla",
@@ -200,15 +184,7 @@ export const SCALES_GUIDE: Guide = {
 					text: "You will also hear πολύ δουλειά; πολλή is the standard form.",
 				},
 			],
-			drills: [],
-			plannedDrills: [
-				{
-					id: "scales-poly-polla",
-					title: "πολύ or πολλή, πολλά",
-					greek: "πολύ καλός · πολλή δουλειά · πολλά δέντρα",
-					tests: "Shows an English phrase such as a lot of work or very good; the answer is the Greek with πολύ unchanged before an adjective or verb and matching the noun before a noun.",
-				},
-			],
+			drills: ["scales-poly-polla"],
 		},
 		{
 			id: "negatives",
@@ -255,15 +231,7 @@ export const SCALES_GUIDE: Guide = {
 					],
 				},
 			],
-			drills: [],
-			plannedDrills: [
-				{
-					id: "scales-double-negative",
-					title: "Saying not twice",
-					greek: "δεν … τίποτα · δεν … πουθενά · ποτέ δεν",
-					tests: "Shows an English sentence with nothing, nowhere, no one or never; the answer is the Greek with δεν before the verb and the nothing-word, such as δεν πήγα πουθενά.",
-				},
-			],
+			drills: ["scales-double-negative"],
 		},
 		{
 			id: "not-words",
@@ -302,15 +270,7 @@ export const SCALES_GUIDE: Guide = {
 					text: "δεν and μην drop their -ν before some sounds, as την does: δε θέλω. The rule is set out in Who does what, under the article.",
 				},
 			],
-			drills: [],
-			plannedDrills: [
-				{
-					id: "scales-ochi-den",
-					title: "όχι or δεν?",
-					greek: "δεν το ξέρω · όχι πολύ καλά · όχι σήμερα",
-					tests: "Shows an English phrase with not; the answer is the Greek with δεν before the verb and its θα or object word, and όχι before an adverb, adjective or noun.",
-				},
-			],
+			drills: ["scales-ochi-den"],
 		},
 		{
 			id: "comparing",
@@ -387,15 +347,7 @@ export const SCALES_GUIDE: Guide = {
 				text: "For like rather than more than, use σαν: σαν τον λύκο, like the wolf.",
 				section: "place/without-until",
 			},
-			drills: [],
-			plannedDrills: [
-				{
-					id: "scales-comparing",
-					title: "Comparing with πιο … από",
-					greek: "πιο μεγάλος · πιο ήσυχος από · καλύτερος · ο πιο όμορφος",
-					tests: "Shows an English comparison such as quieter than or the most beautiful; the answer is the Greek with πιο before the adjective, από after it, and the article for the most, the adjective matching its noun.",
-				},
-			],
+			drills: ["scales-comparing"],
 		},
 		{
 			id: "some-every",
@@ -468,15 +420,7 @@ export const SCALES_GUIDE: Guide = {
 				text: "In a statement the none-words need δεν before the verb: κανένας δεν ήρθε.",
 				section: "negatives",
 			},
-			drills: [],
-			plannedDrills: [
-				{
-					id: "scales-some-every",
-					title: "Some, none, every",
-					greek: "κάτι · τίποτα · όλα · κάπου · πουθενά · παντού",
-					tests: "Shows an English word from the grid, such as nowhere or someone; the answer is the Greek word in that row and column.",
-				},
-			],
+			drills: ["scales-some-every"],
 		},
 		{
 			id: "all-whole",
@@ -516,15 +460,7 @@ export const SCALES_GUIDE: Guide = {
 				text: "όλη τη μέρα is all day; κάθε μέρα, with no article, is every day.",
 				section: "some-every",
 			},
-			drills: [],
-			plannedDrills: [
-				{
-					id: "scales-all-whole",
-					title: "όλος for all and the whole",
-					greek: "όλη τη μέρα · όλο το σπίτι · όλοι οι φίλοι",
-					tests: "Shows an English phrase with all or the whole; the answer is the Greek with όλος matching the noun, before its article.",
-				},
-			],
+			drills: ["scales-all-whole"],
 		},
 	],
 	reference: [{ label: "Adjectives", href: "/reference/adjectives" }],
