@@ -23,7 +23,7 @@ const PHASE_TINT: Record<string, string> = {
 	Review: "text-muted-foreground border-border",
 };
 
-const DrillList = ({ drills }: { drills: DrillLink[] }) => (
+export const DrillList = ({ drills }: { drills: DrillLink[] }) => (
 	<ul className="divide-y divide-border">
 		{drills.map(({ id, to, greek, title, minutes }) => (
 			<li key={id}>

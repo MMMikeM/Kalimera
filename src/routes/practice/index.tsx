@@ -2,6 +2,12 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 
+import { formatDayMonth, parsePlainDate } from "@/lib/time";
+import { getRecentLessonDrillsFn } from "@/server/fns/guides";
+
+import { DrillList } from "./components/drill-index";
+import { DRILL_REGISTRY } from "./drill-catalogue.data";
+
 const SECTIONS = [
 	{
 		href: "/practice/cases",
@@ -27,12 +33,27 @@ const SECTIONS = [
 ];
 
 export const Route = createFileRoute("/practice/")({
+	loader: () => getRecentLessonDrillsFn(),
 	component: PracticeIndex,
 });
 
 function PracticeIndex() {
+	const lessons = Route.useLoaderData();
 	return (
 		<div className="mx-auto max-w-2xl">
+			{lessons.length > 0 && (
+				<section className="mb-10">
+					<h2 className="text-sm font-semibold text-stone-600">From your lessons</h2>
+					{lessons.map((lesson) => (
+						<div key={`${lesson.date} ${lesson.topic}`} className="mt-4">
+							<p className="mb-1 text-xs text-muted-foreground">
+								{formatDayMonth(parsePlainDate(lesson.date))} · {lesson.topic}
+							</p>
+							<DrillList drills={lesson.drillIds.flatMap((id) => DRILL_REGISTRY[id] ?? [])} />
+						</div>
+					))}
+				</section>
+			)}
 			<ul className="divide-y divide-border">
 				{SECTIONS.map((s) => (
 					<li key={s.href}>
