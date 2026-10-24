@@ -66,16 +66,10 @@ export default defineConfig({
 	]),
 	run: {
 		tasks: {
-			verify: {
+			checks: {
 				command: ["vp lint", "ls-lint", "tsx scripts/lint-greek.ts", "vp test --run"],
 				// The typecheck script stays uncached: Vite Task cannot see which files tsgo reads, so it replays a stale pass.
 				dependsOn: ["typecheck"],
-			},
-			"db:setup": {
-				command: "vp run db:seed",
-				dependsOn: ["db:push"],
-				// Writes to production: a cache hit would replay the old log and write nothing.
-				cache: false,
 			},
 		},
 	},

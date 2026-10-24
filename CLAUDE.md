@@ -1,6 +1,6 @@
 ## Critical Rules
 
-**Scripts first.** Check the `package.json` scripts and the `run.tasks` in `vite.config.ts` before running any command. `pnpm vp run verify` runs every check (typecheck, lint, ls-lint, lint:greek, tests) and caches every step but typecheck, so rerunning it after a small change is cheap.
+**Scripts first.** Check the `package.json` scripts before running any command. `pnpm verify` runs every check (typecheck, lint, ls-lint, lint:greek, tests) and caches every step but typecheck, so rerunning it after a small change is cheap.
 
 **pnpm only.** Never `npm` / `npx` — use `pnpm` / `pnpm exec` / `pnpm dlx`.
 
@@ -20,7 +20,7 @@ pnpm db:push:local
 # Seeding and the app itself always hit Turso: src/server/db/index.ts uses the
 # HTTP @tursodatabase/serverless driver, which rejects `file:` URLs.
 
-# Push then seed, in that order (never cached): pnpm vp run db:setup
+# Push then seed: pnpm db:setup
 # Ad-hoc SQL against prod, in one transaction: pnpm db:sql path/to/file.sql
 ```
 

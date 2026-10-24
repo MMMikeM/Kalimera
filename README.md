@@ -58,7 +58,7 @@ There is no local Docker database.
 | ------------------------ | --------------------------------------------------------------- |
 | `pnpm db:push`           | Push schema **to production**                                   |
 | `pnpm db:seed`           | Seed **production** — idempotent additive upsert, never deletes |
-| `pnpm vp run db:setup`   | `db:push` then `db:seed`, never cached                          |
+| `pnpm db:setup`         | `db:push` then `db:seed`                                        |
 | `pnpm db:studio`         | Open Drizzle Studio against **production**                      |
 | `pnpm db:sql FILE.sql`   | Run a SQL file against **production** in one transaction        |
 | `pnpm db:push:local`     | Push schema to a local file DB (`local.db`), no Docker, no prod |
@@ -73,7 +73,7 @@ including the custom rules in `oxlint-plugins/`, live in `vite.config.ts`; tests
 read `vitest.config.ts`. `typecheck` (tsgo), knip, jscpd and ls-lint run on their own.
 
 ```bash
-pnpm vp run verify      # typecheck, lint, ls-lint, lint:greek, tests; all but typecheck cached
+pnpm verify             # typecheck, lint, ls-lint, lint:greek, tests; all but typecheck cached
 pnpm lint:unused        # knip
 pnpm duplicates:llm     # jscpd, LLM-readable output
 ```
