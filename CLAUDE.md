@@ -1,10 +1,10 @@
 ## Critical Rules
 
-**Makefile first.** Check Makefile before run any command.
+**Scripts first.** Check the `package.json` scripts and the `run.tasks` in `vite.config.ts` before running any command. `pnpm vp run verify` runs every check (typecheck, lint, ls-lint, lint:greek, tests) and caches every step but typecheck, so rerunning it after a small change is cheap.
 
 **pnpm only.** Never `npm` / `npx` — use `pnpm` / `pnpm exec` / `pnpm dlx`.
 
-**Database setup (this repo):** `.env` holds **production** Turso credentials (no separate `.env.prod` exists). The `db-*` Makefile targets wrap the commands below; there are no `prod-db-*` targets — they sourced a `.env.prod` that never existed and have been removed.
+**Database setup (this repo):** `.env` holds **production** Turso credentials (no separate `.env.prod` exists).
 
 ```bash
 # Production (Turso) — drizzle-kit auto-loads `.env`; these hit PROD
@@ -15,13 +15,13 @@ pnpm db:seed        # node --env-file=.env --import tsx src/scripts/seed.ts
 
 # Local schema only — a `file:` URL makes drizzle.config.ts drop the auth token,
 # so drizzle-kit uses the embedded @tursodatabase/database driver (no Docker)
-TURSO_DATABASE_URL=file:./local.db pnpm exec drizzle-kit push
+pnpm db:push:local
 
 # Seeding and the app itself always hit Turso: src/server/db/index.ts uses the
 # HTTP @tursodatabase/serverless driver, which rejects `file:` URLs.
 
-# Or via the Makefile: make db-push · db-seed · db-setup · db-studio · db-push-local
-# Ad-hoc SQL against prod, in one transaction: make sql path/to/file.sql
+# Push then seed, in that order (never cached): pnpm vp run db:setup
+# Ad-hoc SQL against prod, in one transaction: pnpm db:sql path/to/file.sql
 ```
 
 The seeders (vocab + verb conjugations) are **idempotent additive upserts**. Re-running against prod is safe — only adds/updates rows, never deletes.
@@ -40,7 +40,7 @@ The seeders (vocab + verb conjugations) are **idempotent additive upserts**. Re-
 
 ## Duplicate Detection (jscpd)
 
-`pnpm duplicates:llm` (or `make duplicates-llm`) — LLM-friendly output: runs jscpd then prints summary + clone list as `file:start-end <-> file:start-end` pairs (via `scripts/duplicates-summary.ts`). **Always use this**, never read `reports/jscpd/jscpd-report.json` raw (~200K). `duplicates:report` opens the HTML — human use only.
+`pnpm duplicates:llm` — LLM-friendly output: runs jscpd then prints summary + clone list as `file:start-end <-> file:start-end` pairs (via `scripts/duplicates-summary.ts`). **Always use this**, never read `reports/jscpd/jscpd-report.json` raw (~200K). `duplicates:report` opens the HTML — human use only.
 
 ---
 

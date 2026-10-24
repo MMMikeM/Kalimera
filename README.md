@@ -31,8 +31,8 @@ pnpm dev
 ```
 
 There is no local database. `.env` holds **production** Turso credentials and
-both the app and drizzle-kit load it directly, so `make db-push` and
-`make db-seed` act on production. Use `make db-push-local` if you only need to
+both the app and drizzle-kit load it directly, so `pnpm db:push` and
+`pnpm db:seed` act on production. Use `pnpm db:push:local` if you only need to
 try a schema change against a throwaway file DB.
 
 Seeding is an idempotent additive upsert — it adds and updates rows and never
@@ -48,21 +48,22 @@ There is no local Docker database.
 
 | Command        | Description                                              |
 | -------------- | -------------------------------------------------------- |
-| `make dev`     | Start the Vite dev server                                |
-| `make build`   | Build for production                                     |
-| `make preview` | Serve the built output (`node .output/server/index.mjs`) |
+| `pnpm dev`     | Start the Vite dev server                                |
+| `pnpm build`   | Build for production                                     |
+| `pnpm preview` | Serve the built output (`node .output/server/index.mjs`) |
 
 ### Database (Turso — production)
 
-| Command              | Description                                                     |
-| -------------------- | --------------------------------------------------------------- |
-| `make db-push`       | Push schema **to production**                                   |
-| `make db-seed`       | Seed **production** — idempotent additive upsert, never deletes |
-| `make db-setup`      | `db-push` then `db-seed`                                        |
-| `make db-studio`     | Open Drizzle Studio against **production**                      |
-| `make db-push-local` | Push schema to a local file DB (`local.db`), no Docker, no prod |
+| Command                  | Description                                                     |
+| ------------------------ | --------------------------------------------------------------- |
+| `pnpm db:push`           | Push schema **to production**                                   |
+| `pnpm db:seed`           | Seed **production** — idempotent additive upsert, never deletes |
+| `pnpm vp run db:setup`   | `db:push` then `db:seed`, never cached                          |
+| `pnpm db:studio`         | Open Drizzle Studio against **production**                      |
+| `pnpm db:sql FILE.sql`   | Run a SQL file against **production** in one transaction        |
+| `pnpm db:push:local`     | Push schema to a local file DB (`local.db`), no Docker, no prod |
 
-`pnpm db:seed` and `make db-seed` both load `.env` explicitly, so both hit **production**.
+`pnpm db:seed` loads `.env` explicitly, so it hits **production**.
 
 ### Code quality
 
@@ -72,7 +73,7 @@ including the custom rules in `oxlint-plugins/`, live in `vite.config.ts`; tests
 read `vitest.config.ts`. `typecheck` (tsgo), knip, jscpd and ls-lint run on their own.
 
 ```bash
-pnpm typecheck && pnpm lint && pnpm lint:ls && pnpm lint:greek && pnpm test --run
+pnpm vp run verify      # typecheck, lint, ls-lint, lint:greek, tests; all but typecheck cached
 pnpm lint:unused        # knip
 pnpm duplicates:llm     # jscpd, LLM-readable output
 ```

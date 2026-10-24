@@ -6,7 +6,7 @@ import { splitSql } from "./split-sql";
 
 const file = process.argv[2];
 if (!file) {
-	console.error("Usage: make sql <file.sql>");
+	console.error("Usage: pnpm db:sql <file.sql>");
 	process.exit(1);
 }
 

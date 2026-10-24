@@ -154,7 +154,7 @@ const [user] = await db.select().from(users).where(eq(users.id, userId)).limit(1
    const db = drizzle({ client, casing: "snake_case" });
    ```
 
-5. **For schema changes**, this repo pushes: `pnpm db:push` (drizzle-kit loads `.env`, which points at production Turso). `pnpm db:generate` and `pnpm db:migrate` exist for migration files. For a local schema only: `TURSO_DATABASE_URL=file:./local.db pnpm exec drizzle-kit push`, or `make db-push-local`.
+5. **For schema changes**, this repo pushes: `pnpm db:push` (drizzle-kit loads `.env`, which points at production Turso). `pnpm db:generate` and `pnpm db:migrate` exist for migration files. For a local schema only: `pnpm db:push:local`.
 
 6. **Schema changes hit production.** After modifying a `schema-*.ts` file, tell the user and let them run `pnpm db:push`; never push unprompted. pnpm only, never `npx`.
 
