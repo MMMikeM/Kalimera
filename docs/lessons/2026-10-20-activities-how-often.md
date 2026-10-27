@@ -1,6 +1,6 @@
 # Lesson, 20 Oct 2026: the role cards, and how often
 
-Cleaned from the video-call captions, which had mangled most of the Greek, so the Greek is rewritten in Greek script. **[?]** marks Greek reconstructed from context, and **[…]** marks a stretch that could not be recovered. Filler and the chat before and after the lesson are cut.
+Cleaned from the video-call captions, which had mangled most of the Greek, so the Greek is rewritten in Greek script. **[?]** marks Greek reconstructed from context, and **[…]** marks a stretch that could not be recovered. Filler and the chat before and after the lesson are cut. The exercise sentences follow the tutor's written notes.
 
 ---
 
@@ -58,7 +58,7 @@ Cleaned from the video-call captions, which had mangled most of the Greek, so th
 
 **Mike:** I didn't put an article in.
 
-*With a name, Greek uses the article: **η Γιάννα κάνει γιόγκα**.*
+*With a name, Greek uses the article: **κάθε Δευτέρα, Τετάρτη και Παρασκευή η Γιάννα κάνει γιόγκα**.*
 
 **18:04 · Twice a month**
 
@@ -66,7 +66,7 @@ Cleaned from the video-call captions, which had mangled most of the Greek, so th
 
 **Teacher:** No: two times per month, twice a month. For "times" we use **φορά**, and we add the number in front.
 
-**Mike:** That jogs my memory. So **δύο φορές τον μήνα** [?].
+**Mike:** That jogs my memory. So **δύο φορές κάθε μήνα**.
 
 **Teacher:** Yes.
 
@@ -76,7 +76,7 @@ Cleaned from the video-call captions, which had mangled most of the Greek, so th
 
 **20:08 · με τον παππού του**
 
-**Teacher:** Ο Νάθαν [?] plays… with his grandpa.
+**Teacher:** Ο Νέιθαν plays… with his grandpa.
 
 **Mike:** I'm trying to remember "play". You mentioned it earlier and I've already forgotten it.
 
@@ -90,23 +90,23 @@ Cleaned from the video-call captions, which had mangled most of the Greek, so th
 
 **Teacher:** Mhm. Από and σε, too.
 
-*In full: **ο Νάθαν παίζει βιντεοπαιχνίδια με τον παππού του** [?].*
+*In full: **ο Νέιθαν δύο φορές κάθε μήνα παίζει βιντεοπαιχνίδια με τον παππού του**.*
 
 **24:04 · Brushing teeth**
 
 **Mike:** Using the same pattern, what would "brush" be? I read it in a children's book, and there was both a verb and a noun.
 
-**Teacher:** Not "clean": we say "wash". **Πλένω τα δόντια μου**, I wash my teeth. The brush is **η βούρτσα** [?].
+**Teacher:** Not "clean": we say "wash". **Πλένω τα δόντια μου**, I wash my teeth. The brush is **η βούρτσα**, and **βουρτσίζω** is to brush.
 
 **Mike:** My brain keeps going to something else. So, με…
 
-**Teacher:** It's the same as before, but now it's not παππούς: it's feminine. **Με τη βούρτσα του** [?]. And the teeth are plural: **τα δόντια του**.
+**Teacher:** It's the same as before, but now it's not παππούς: it's feminine. **Με τη βούρτσα του**. And the teeth are plural: **τα δόντια του**.
 
 **Mike:** But where does **πλένει** go? That's the part I was focused on. I was trying to shoehorn it in at the end.
 
 **Teacher:** Check the notes. I wrote the whole sentence in the materials.
 
-**Mike:** Ah, it goes first. That changes a lot, and it feels so much simpler.
+**Mike:** Ah, it goes straight after κάθε μέρα: **ο Ντέιβιντ κάθε μέρα πλένει με τη βούρτσα του τα δόντια του**. That changes a lot, and it feels so much simpler.
 
 **Teacher:** Perfect. We'll continue the exercise next time.
 
@@ -117,8 +117,9 @@ Cleaned from the video-call captions, which had mangled most of the Greek, so th
 - ο ανιψιός · η ανιψιά — nephew · niece
 - Λέμε τα νέα της οικογένειάς μας. — We share our family news.
 - εκτός γάμου — outside marriage
-- Η Γιάννα κάνει γιόγκα. — Yianna does yoga. (a name takes the article)
+- Κάθε Δευτέρα, Τετάρτη και Παρασκευή η Γιάννα κάνει γιόγκα. — Yianna does yoga every Monday, Wednesday and Friday. (a name takes the article)
 - κάθε φορά · κάθε μέρα — every time · every day
-- δύο φορές τον μήνα — twice a month
-- Ο Νάθαν παίζει βιντεοπαιχνίδια με τον παππού του. — Nathan plays video games with his grandpa. (με takes the Target form)
+- δύο φορές κάθε μήνα · δύο φορές την εβδομάδα — twice a month · twice a week
+- Ο Νέιθαν δύο φορές κάθε μήνα παίζει βιντεοπαιχνίδια με τον παππού του. — Nathan plays video games with his grandpa twice a month. (με takes the Target form)
+- Ο Ντέιβιντ κάθε μέρα πλένει με τη βούρτσα του τα δόντια του. — David brushes his teeth with his toothbrush every day.
 - Πλένει τα δόντια του. — He brushes his teeth. (literally "washes")
