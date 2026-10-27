@@ -41,6 +41,12 @@ function LessonsLayout() {
 			) : (
 				<div className="grid gap-14 md:grid-cols-12 md:gap-10 lg:gap-14">
 					<div ref={sheetRef} className="min-w-0 scroll-mt-6 md:order-2 md:col-span-8">
+						<a
+							href="#all-lessons"
+							className="mb-6 inline-block text-sm text-ocean-text underline-offset-4 hover:underline md:hidden"
+						>
+							Jump to all lessons
+						</a>
 						<Outlet />
 					</div>
 					<LessonLedger lessons={lessons} openDate={openDate} className="min-w-0 md:order-1 md:col-span-4" />

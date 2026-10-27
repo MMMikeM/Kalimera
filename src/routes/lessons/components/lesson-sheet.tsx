@@ -18,6 +18,36 @@ const SheetSection = ({ id, title, children }: { id: string; title: string; chil
 	</section>
 );
 
+const GREEK = /[\u0370-\u03ff\u1f00-\u1fff]/;
+
+/**
+ * Note examples are written as "Θα γίνεις παππούς. (you'll be a grandfather)",
+ * "not: Αρέσει σου;" or "πολύ καλός (very good) - adverb". The English parts are
+ * gloss, so they are pulled out of the Greek and set small.
+ */
+const exampleParts = (example: string): { text: string; gloss: boolean }[] =>
+	example
+		.split(/(\([^()]*\)|^not:|\s[-–]\s[^()]*$)/)
+		.map((part) => part.trim())
+		.filter(Boolean)
+		.map((part) => ({ text: part.replace(/^[-–]\s*/, ""), gloss: !GREEK.test(part) }));
+
+const Example = ({ example }: { example: string }) => (
+	<li className="flex flex-wrap items-baseline gap-x-2">
+		{exampleParts(example).map((part, i) =>
+			part.gloss ? (
+				<span key={i} className="text-sm text-stone-600">
+					{part.text}
+				</span>
+			) : (
+				<GreekText key={i} size="lg">
+					{part.text}
+				</GreekText>
+			),
+		)}
+	</li>
+);
+
 const Note = ({ note }: { note: LessonNoteView }) => (
 	<li className="py-5 first:pt-0 last:pb-0">
 		<h4 className="font-semibold text-pretty text-stone-900">{note.pattern}</h4>
@@ -25,9 +55,7 @@ const Note = ({ note }: { note: LessonNoteView }) => (
 		{note.examples.length > 0 && (
 			<ul className="mt-3 space-y-1.5">
 				{note.examples.map((example) => (
-					<li key={example}>
-						<GreekText size="lg">{example}</GreekText>
-					</li>
+					<Example key={example} example={example} />
 				))}
 			</ul>
 		)}
@@ -72,7 +100,7 @@ const WordTable = ({ label, words }: { label: string; words: LessonWord[] }) =>
 
 const GenderKey = () => (
 	<div className="mb-6 text-sm text-stone-600">
-		<p>A noun&apos;s mark is coloured by its gender.</p>
+		<p>Nouns are shown in their dictionary form, the Doer form, so every mark has the Doer ends. Its colour is the gender.</p>
 		<ul className="mt-2 flex flex-wrap gap-x-6 gap-y-3">
 			{(["masculine", "feminine", "neuter"] as const).map((gender, i) => (
 				<li key={gender} className="flex items-start gap-2">

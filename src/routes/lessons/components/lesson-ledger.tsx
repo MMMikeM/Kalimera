@@ -13,9 +13,10 @@ const byYear = (lessons: LessonSummary[]) => {
 	return [...years.entries()];
 };
 
-const countLine = ({ wordCount, noteCount }: LessonSummary) =>
+const countLine = ({ wordCount, phraseCount, noteCount }: LessonSummary) =>
 	[
 		wordCount > 0 && `${wordCount} ${wordCount === 1 ? "word" : "words"}`,
+		phraseCount > 0 && `${phraseCount} ${phraseCount === 1 ? "phrase" : "phrases"}`,
 		noteCount > 0 && `${noteCount} ${noteCount === 1 ? "note" : "notes"}`,
 	]
 		.filter(Boolean)
@@ -31,7 +32,7 @@ interface LessonLedgerProps {
 export const LessonLedger = ({ lessons, openDate, className }: LessonLedgerProps) => {
 	const latest = lessons[0]?.date;
 	return (
-		<nav aria-label="All lessons" className={cn("space-y-8", className)}>
+		<nav id="all-lessons" aria-label="All lessons" className={cn("scroll-mt-6 space-y-8", className)}>
 			{byYear(lessons).map(([year, rows]) => (
 				<section key={year} aria-labelledby={`lessons-${year}`}>
 					<h2 id={`lessons-${year}`} className="mb-2 font-serif text-xl text-stone-900">

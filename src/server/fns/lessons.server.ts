@@ -33,6 +33,7 @@ export interface LessonSummary {
 	date: string;
 	topic: string;
 	wordCount: number;
+	phraseCount: number;
 	noteCount: number;
 }
 
@@ -70,14 +71,14 @@ const wordCount = (lesson: Lesson) =>
 	(lesson.nouns?.length ?? 0) +
 	(lesson.verbs?.length ?? 0) +
 	(lesson.adjectives?.length ?? 0) +
-	(lesson.adverbs?.length ?? 0) +
-	(lesson.phrases?.length ?? 0);
+	(lesson.adverbs?.length ?? 0);
 
 export const listLessons = (): LessonSummary[] =>
 	datedLessons().map(({ date, lesson }) => ({
 		date,
 		topic: topicOf(lesson),
 		wordCount: wordCount(lesson),
+		phraseCount: lesson.phrases?.length ?? 0,
 		noteCount: lesson.grammarNotes?.length ?? 0,
 	}));
 

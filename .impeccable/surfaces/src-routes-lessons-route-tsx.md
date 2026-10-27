@@ -17,7 +17,7 @@ Constraints: inherit the app's world (PRODUCT.md; no DESIGN.md yet). Greek throu
 
 THESIS: A teacher's lesson ledger beside the open notebook. Every lesson is one dated ruled row; the open lesson's sheet sits beside it, latest open by default. It refuses the course-dashboard card grid and the LMS module list with progress bars.
 
-OWN-WORLD: The app's cream ground and stone ink, serif headings, hairline-ruled rows like the guide tables. The ledger's selected row takes a terracotta rule on its leading edge; links to guide sections use ocean text. Nouns carry their gender mark; the homework block is the one tinted panel on the sheet.
+OWN-WORLD: The app's cream ground and stone ink, serif headings, hairline-ruled rows like the guide tables. The ledger's selected row takes a pale terracotta fill and a terracotta date (adapted from a leading-edge rule: the craft floor caps coloured side rules at 1px, too faint to mark the open row); links to guide sections use ocean text. Nouns carry their gender mark; the homework block is the one tinted panel on the sheet.
 
 STORY: Mike opens Lessons and the latest lesson is already open: homework first, then what was taught (each note links to its guide section), then the words and phrases, then the drills for those sections. Any older lesson is one row away.
 
