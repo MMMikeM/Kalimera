@@ -1991,4 +1991,60 @@ export const FULL_VERB_CONJUGATIONS: FullVerbSeed[] = [
 			},
 		],
 	},
+	{
+		lemma: "φτιάχνω",
+		english: "I make/fix",
+		cefrLevel: "A2",
+		conjugationFamily: "-ω",
+		conjugations: [
+			{
+				tense: "present",
+				forms: {
+					sg1: "φτιάχνω",
+					sg2: "φτιάχνεις",
+					sg3: "φτιάχνει",
+					pl1: "φτιάχνουμε",
+					pl2: "φτιάχνετε",
+					pl3: "φτιάχνουν",
+				},
+			},
+			{
+				tense: "aorist",
+				forms: {
+					sg1: "έφτιαξα",
+					sg2: "έφτιαξες",
+					sg3: "έφτιαξε",
+					pl1: "φτιάξαμε",
+					pl2: "φτιάξατε",
+					pl3: "έφτιαξαν",
+				},
+			},
+			{
+				tense: "past_continuous",
+				forms: {
+					sg1: "έφτιαχνα",
+					sg2: "έφτιαχνες",
+					sg3: "έφτιαχνε",
+					pl1: "φτιάχναμε",
+					pl2: "φτιάχνατε",
+					pl3: "έφτιαχναν",
+				},
+			},
+			{
+				tense: "future",
+				forms: {
+					sg1: "θα φτιάξω",
+					sg2: "θα φτιάξεις",
+					sg3: "θα φτιάξει",
+					pl1: "θα φτιάξουμε",
+					pl2: "θα φτιάξετε",
+					pl3: "θα φτιάξουν",
+				},
+			},
+		],
+		imperatives: {
+			imperfective: { singular: "φτιάχνε", plural: "φτιάχνετε" },
+			perfective: { singular: "φτιάξε", plural: "φτιάξτε" },
+		},
+	},
 ];

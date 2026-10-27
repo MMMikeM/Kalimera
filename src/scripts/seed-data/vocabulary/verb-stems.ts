@@ -311,7 +311,11 @@ export const VERB_STEMS: VerbStem[] = [
 		cefrLevel: "A2",
 	},
 	{ lemma: "ξοδεύω", aoristStem: "ξοδεψ", family: "-ω", english: "I spend", cefrLevel: "A2" },
-	// αγκαλιάζω, φτιάχνω, ταΐζω need hand-written entries: the generator counts
+	{ lemma: "καθαρίζω", aoristStem: "καθαρισ", family: "-ω", english: "I clean", cefrLevel: "A1" },
+	{ lemma: "ξεκινάω", aoristStem: "ξεκινησ", family: "-άω", english: "I start", cefrLevel: "A2" },
+	{ lemma: "πλένω", aoristStem: "πλυν", family: "-ω", english: "I wash", cefrLevel: "A1" },
+	{ lemma: "βουρτσίζω", aoristStem: "βουρτσισ", family: "-ω", english: "I brush", cefrLevel: "A2" },
+	// αγκαλιάζω and ταΐζω need hand-written entries, as φτιάχνω has: the generator counts
 	// -ιά- as two syllables and skips the diaeresis, giving αγκαλίασα for αγκάλιασα.
 	{ lemma: "ζητάω", aoristStem: "ζητησ", family: "-άω", english: "I ask for", cefrLevel: "A2" },
 	{
