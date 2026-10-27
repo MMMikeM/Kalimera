@@ -37,6 +37,11 @@ const DECLENSION_BY_LEMMA: Record<string, NounDeclensionPattern> = {
 	πίστη: "fem-i-archaic",
 };
 
+const PLURAL_CITATIONS = new Set(["διακοπές", "ρούχα", "ψώνια"]);
+
+/** Nouns cited in the plural, which take οι or τα rather than the singular article. */
+export const isPluralCitation = (lemma: string): boolean => PLURAL_CITATIONS.has(lemma);
+
 /** Indeclinable loanwords: every cell is the citation form. */
 const INDECLINABLE = new Set(["σπορ", "πικνίκ"]);
 

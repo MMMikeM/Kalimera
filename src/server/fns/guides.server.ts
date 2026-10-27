@@ -1,11 +1,6 @@
-import { GUIDES } from "@/routes/guides/guides.data";
-import type { GrammarNoteHome, Lesson } from "@/types/lesson-seed";
+import type { GrammarNoteHome } from "@/types/lesson-seed";
 
-// Only the dated lesson files: lessons/index.ts pulls in node:fs and the seed pipeline.
-const LESSON_MODULES = import.meta.glob<Record<string, Lesson>>(
-	"/src/scripts/seed-data/vocabulary/lessons/2*.ts",
-	{ eager: true },
-);
+import { datedLessons, guideSection } from "./lessons.server";
 
 interface LessonNote {
 	date: string;
@@ -13,20 +8,16 @@ interface LessonNote {
 	section: GrammarNoteHome;
 }
 
-const dateFromPath = (path: string): string => path.split("/").at(-1)?.slice(0, 10) ?? "";
-
 export const getLessonNotes = (): LessonNote[] =>
-	Object.entries(LESSON_MODULES).flatMap(([path, module]) =>
-		Object.values(module).flatMap((lesson) =>
-			(lesson.grammarNotes ?? []).map((note) => ({
-				date: dateFromPath(path),
-				topic: String(lesson.meta.topic ?? ""),
-				section: note.section,
-			})),
-		),
+	datedLessons().flatMap(({ date, lesson }) =>
+		(lesson.grammarNotes ?? []).map((note) => ({
+			date,
+			topic: String(lesson.meta.topic ?? ""),
+			section: note.section,
+		})),
 	);
 
-export const countLessons = (): number => Object.keys(LESSON_MODULES).length;
+export const countLessons = (): number => datedLessons().length;
 
 export interface LessonDrills {
 	date: string;
@@ -34,10 +25,7 @@ export interface LessonDrills {
 	drillIds: string[];
 }
 
-const sectionDrills = (home: GrammarNoteHome): string[] => {
-	const [slug, sectionId] = home.split("/");
-	return GUIDES.find((guide) => guide.slug === slug)?.sections.find((section) => section.id === sectionId)?.drills ?? [];
-};
+const sectionDrills = (home: GrammarNoteHome): string[] => guideSection(home)?.section.drills ?? [];
 
 /** The latest lessons whose notes point at a guide section with a drill, newest first. */
 export const getRecentLessonDrills = (count: number): LessonDrills[] => {

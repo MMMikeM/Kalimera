@@ -95,6 +95,12 @@ export const formatISO = (d: Temporal.PlainDate): string => d.toString();
 export const formatDayMonth = (d: Temporal.PlainDate): string =>
 	`${d.day} ${MONTH_SHORT[d.month - 1]}`;
 
+const WEEKDAY_LONG = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+
+/** "Friday 23 October 2026" */
+export const formatLongDate = (d: Temporal.PlainDate): string =>
+	`${WEEKDAY_LONG[d.dayOfWeek - 1]} ${d.day} ${MONTH_LONG[d.month - 1]} ${d.year}`;
+
 /** "January 2026" */
 export const formatMonthYear = (d: Temporal.PlainDate): string =>
 	`${MONTH_LONG[d.month - 1]} ${d.year}`;

@@ -1,5 +1,5 @@
 import { Link, getRouteApi, useRouterState } from "@tanstack/react-router";
-import { BookOpen, Compass, FileText, Home, Zap } from "lucide-react";
+import { BookOpen, Compass, FileText, Home, NotebookPen, Zap } from "lucide-react";
 
 const rootRoute = getRouteApi("__root__");
 
@@ -14,6 +14,9 @@ const navItems = (isAuthenticated: boolean) => [
 		icon: Zap,
 		sections: ["practice", "try"],
 	},
+	...(isAuthenticated
+		? [{ id: "lessons", label: "Lessons", path: "/lessons", icon: NotebookPen, sections: ["lessons"] }]
+		: []),
 	{ id: "learn", label: "Learn", path: "/learn", icon: BookOpen, sections: ["learn"] },
 	{ id: "guides", label: "Guides", path: "/guides", icon: Compass, sections: ["guides"] },
 	{ id: "reference", label: "Reference", path: "/reference", icon: FileText, sections: ["reference"] },
@@ -26,7 +29,7 @@ export function MobileNav() {
 	const { auth } = rootRoute.useRouteContext();
 
 	return (
-		<nav className="safe-area-pb fixed right-0 bottom-0 left-0 z-50 border-t border-stone-200 bg-cream/95 px-4 py-2 backdrop-blur-sm md:hidden">
+		<nav className="safe-area-pb fixed right-0 bottom-0 left-0 z-50 border-t border-stone-200 bg-cream/95 px-2 py-2 backdrop-blur-sm sm:px-4 md:hidden">
 			<div className="mx-auto flex max-w-md items-center justify-around">
 				{navItems(auth !== null).map((item) => {
 					const Icon = item.icon;
@@ -35,7 +38,7 @@ export function MobileNav() {
 						<Link
 							key={item.id}
 							to={item.path}
-							className={`flex flex-col items-center gap-1 rounded-xl px-4 py-2 transition-all ${
+							className={`flex flex-col items-center gap-1 rounded-xl px-2 py-2 transition-all sm:px-4 ${
 								isActive ? "bg-terracotta/10 text-terracotta-700 dark:text-terracotta-text" : "text-stone-600"
 							}`}
 						>
