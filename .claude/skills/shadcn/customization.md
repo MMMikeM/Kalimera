@@ -77,7 +77,7 @@ Or edit CSS variables directly in `src/index.css`.
 
 Add variables to the file at `tailwindCssFile` from `pnpm dlx shadcn@latest info` (`src/index.css` here). Never create a new CSS file for this.
 
-Check the base palette first: most needs are already met by `cream`, `terracotta`, `ocean`, `olive`, `honey`, `navy`, `slate`, `sunset` or `stone` (see `docs/design-guidelines.md`).
+Check the base palette first: most needs are already met by `cream`, `terracotta`, `ocean`, `olive`, `honey`, `navy`, `slate`, `sunset` or `stone` (see `DESIGN.md`).
 
 ```css
 /* 1. Define the light value in the @theme block of src/index.css. */

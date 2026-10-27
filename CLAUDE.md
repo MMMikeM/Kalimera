@@ -147,7 +147,7 @@ The `gender-*` scales stay, because the marks use them.
 
 What still holds, because it is accessibility rather than grammar:
 
-- Never put opacity on a `-text` token — it breaks AAA. `docs/design-guidelines.md` has the
+- Never put opacity on a `-text` token — it breaks AAA. `DESIGN.md` has the
   palette and contrast figures.
 - Feedback text uses `text-correct-text` / `text-incorrect-text`; the bare `correct` /
   `incorrect` tokens are for bars, borders and icons.

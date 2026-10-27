@@ -8,7 +8,7 @@
 	"tsconfig": "../../tsconfig.json",
 	"cssEntry": "styles.css",
 	"guidelinesGlob": [
-		"../../docs/design-guidelines.md"
+		"../../DESIGN.md"
 	],
 	"docsMap": {
 		"GreekText": "../../.design-sync/groups/greek.md",

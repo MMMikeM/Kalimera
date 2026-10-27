@@ -76,7 +76,7 @@ The λ (lambda) mark anchors the identity: spare, precise, unmistakably Greek.
 
 ## Visual System
 
-`DESIGN.md` records the visual system as it ships: palette and contrast, type ramp, layout, components, the grammar marks and the bans. `.impeccable/design.json` is its machine-readable sidecar, and `docs/design-guidelines.md` has the research and contrast figures behind it. This app is a PWA, and mobile is the primary delivery surface, not a fallback.
+`DESIGN.md` records the visual system as it ships: palette and contrast, type ramp, layout, components, the grammar marks and the bans. `.impeccable/design.json` is its machine-readable sidecar. This app is a PWA, and mobile is the primary delivery surface, not a fallback.
 
 ---
 

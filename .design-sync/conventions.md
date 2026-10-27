@@ -39,7 +39,7 @@ Keep colour quiet: tinted `-50` / `-100` panels, `-text` for accents, no gradien
 - Colour carries no grammar. The `case-*` schemes and `GreekText`'s case tones render no colour; for `TeachingCard`, `LookupCard` and `Callout` use the `neutral`, `decision`, `verb-active`, `verb-contracted`, `verb-deponent` or `gender-*` schemes.
 - Paradigms go in `GrammarTable` or `ParadigmTable`; the table is the lesson.
 
-Each component's `.prompt.md` has worked examples; `guidelines/design-guidelines.md` has the palette and contrast figures.
+Each component's `.prompt.md` has worked examples; `guidelines/DESIGN.md` has the palette and contrast figures.
 
 ## Example
 

@@ -191,15 +191,48 @@ A warm, low-chroma paper-and-ink base with Mediterranean accents used as washes,
 - **Hairline** (`border`, `stone-200`, `stone-300`): 1px rules between rows and around tables. The Lessons page draws its rules in the `border` token; guides, the section indexes and the footer use `stone-200`, with `stone-300` for table heads and section frames.
 - **Feedback** (`correct`, `incorrect` and their `-light` and `-text` steps): bars, borders and icons take the bare token, backgrounds the `-light` step, words the `-text` step.
 
+### Text contrast
+
+Each accent has two text shades. `-text` is dark enough to hold AAA on its own `-100` tint and on cream, which leaves little room for colour; use it for words on a tint. `-ink` is the lightest, most chromatic value that still holds 7:1 on cream and on its own `-50`; use it for the few coloured words set on the page, such as guide section numbers. In dark mode `-ink` takes the colour's dark `-text` value.
+
+| Token             | Light                  | On cream | On its tint |
+| ----------------- | ---------------------- | -------- | ----------- |
+| `terracotta-text` | `oklch(0.35 0.08 47)`  | 11:1     | 9.7:1       |
+| `sunset-text`     | `oklch(0.39 0.1 357)`  | 9.6:1    | 8.5:1       |
+| `olive-text`      | `oklch(0.31 0.05 131)` | 12:1+    | 12:1+       |
+| `ocean-text`      | `oklch(0.31 0.05 223)` | 11:1+    | 11:1+       |
+| `honey-text`      | `oklch(0.34 0.07 81)`  | 11:1+    | 11:1+       |
+| `navy-text`       | `oklch(0.27 0.04 252)` | 14:1     | 12:1        |
+| `slate-text`      | `oklch(0.28 0.03 183)` | 13:1     | 11:1        |
+
+| Token            | Light                  | Chroma vs `-text` |
+| ---------------- | ---------------------- | ----------------- |
+| `terracotta-ink` | `oklch(0.46 0.12 42)`  | 0.12 vs 0.08      |
+| `sunset-ink`     | `oklch(0.46 0.16 357)` | 0.16 vs 0.10      |
+| `olive-ink`      | `oklch(0.44 0.11 131)` | 0.11 vs 0.05      |
+| `ocean-ink`      | `oklch(0.44 0.07 224)` | 0.07 vs 0.05      |
+| `honey-ink`      | `oklch(0.45 0.08 82)`  | 0.08 vs 0.07      |
+| `navy-ink`       | `oklch(0.44 0.14 257)` | 0.14 vs 0.04      |
+| `slate-ink`      | `oklch(0.44 0.07 182)` | 0.07 vs 0.03      |
+
+For quieter neutral text, `stone-600` holds AAA on cream. `stone-500` is about 4.5:1: AA only, so not for reading text.
+
 ### Named Rules
 
 **The Gender-Only Rule.** Colour's one grammatical job is gender, and only on a grammar mark, using the gender's `-700` step. A mark with no gender is `stone-600` and claims none. A guide section that teaches one gender's nouns may take that gender's pale scale as its tone; nothing else in the interface colours grammar.
 
-**The Full-Strength Text Rule.** Words take a `-text` or `-ink` token at full opacity, never a base accent and never an opacity modifier (`text-honey-text/80` is banned). Opacity on a background is fine. For quieter text, step down the stone ramp instead.
+**The Full-Strength Text Rule.** Words take a `-text` or `-ink` token at full opacity, never a base accent and never an opacity modifier (`text-honey-text/80` is banned). The shades sit 1.5–7 points above 7:1, and `/80` takes roughly a fifth off the ratio, so even `/90` can drop a token below AAA. Tailwind v4 cannot disable the modifier; `rg "text-[a-z-]+-text/\d+" -g '*.tsx'` finds it. Opacity on a background is fine. For quieter text, step down the stone ramp instead.
 
 **The Saturation Rule.** Chrome and grammar colour are told apart by saturation, not hue. Chrome tints are pale (`-50` to `-200`); gender marks are saturated `-700`. A palette hue that sits near a gender hue is not off limits.
 
-**The Uncalibrated Ramps Rule.** Step numbers are not comparable across hues: `honey-100` is about four times the chroma of `ocean-100`. When tints sit side by side, match chroma and lightness, not step number.
+**The Uncalibrated Ramps Rule.** Step numbers are not comparable across hues: `honey-100` is about four times the chroma of `ocean-100`. When tints sit side by side, match chroma and lightness, not step number. At `-100`, ocean and olive are chroma 0.01 and read as grey, and `olive-200` (L 0.91) is lighter than `ocean-200` (L 0.87), so even that pair needs checking.
+
+| Token   | `-100`                 | `-200`                 |
+| ------- | ---------------------- | ---------------------- |
+| `ocean` | `oklch(0.94 0.01 225)` | `oklch(0.87 0.03 219)` |
+| `olive` | `oklch(0.94 0.01 132)` | `oklch(0.91 0.02 127)` |
+| `cream` | `oklch(0.94 0.01 82)`  | `oklch(0.88 0.03 75)`  |
+| `honey` | `oklch(0.94 0.04 94)`  | `oklch(0.88 0.07 92)`  |
 
 Legacy note: `case-*` classes (`bg-case-accusative-100`, `text-case-genitive-text`) still appear in pages built before the marks, but the case scales were removed, so they render no colour. They are not tokens.
 
@@ -300,10 +333,12 @@ Shown near the top of any guide that uses marks: a `-50` panel with a `-200` bor
 
 ### Grammar Mark (signature)
 A Greek phrase with a line beneath it, as one unbreakable inline block.
-- **End shape is the case:** `<->` Doer (nominative), `>-<` Target (accusative), `o-o` Owner (genitive), `!-!` Calling (vocative). The shapes are symmetric so they claim no direction of action.
+- **End shape is the case:** `<->` Doer (nominative), `>-<` Target (accusative), `o-o` Owner (genitive), `!-!` Calling (vocative). The shapes are symmetric so they claim no direction of action: case exists because word order does not decide who does what, and «Τον Γιάννη βλέπει η Μαρία» puts the Target first.
 - **Lines are the number:** one line for one, two for more than one.
 - **Colour is the gender:** the gender's `-700` step; with no gender the mark is `stone-600` and claims none.
-- **Rules:** mark the whole phrase, article included; show only the axes the page teaches; use marks only on nouns, articles, adjectives and pronouns; filled ends by default, outlined only for large display. The learner label ("Doer form, feminine, more than one") is announced to screen readers.
+- **Rules:** mark the whole phrase, article included, never a bare ending (one letter is too short to carry two end shapes); show only the axes the page teaches; use marks only on nouns, articles, adjectives and pronouns; a marked phrase never wraps, so a line break moves the phrase and its mark together; filled ends by default, outlined only for large display. The learner label ("Doer form, feminine, more than one") is announced to screen readers.
+- **Geometry:** see Shapes. The vocative's bar stops at the lower plural line and its dot hangs below the shared height.
+- **Checks:** `/specimens/grammar-mark` (dev only) shows every case, gender and number and the layouts that break marks; `e2e/grammar-mark.spec.ts` photographs it and checks no-wrap, width and symmetry; `grammar-mark-geometry.test.ts` checks the geometry.
 
 ### Verdict
 "Correct", "Incorrect" or "Time's up" at `text-sm` medium weight in `correct-text` or `incorrect-text`. No exclamation, no icon burst, no animation.
