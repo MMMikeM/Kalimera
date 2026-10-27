@@ -1,3 +1,23 @@
+# Kalimera
+
+A Greek study app for the week between tutoring lessons. The lesson is where Greek is met; the app is where it becomes automatic.
+
+## How it fits together
+
+1. **A weekly tutoring lesson.** The tutor's notes, and the transcript where there is one, become a lesson file (`src/scripts/seed-data/vocabulary/lessons/YYYY-MM-DD-topic.ts`): its words, phrases, homework and grammar notes. Cleaned transcripts live in `docs/lessons/`.
+2. **Each grammar note names the guide section that teaches it.** A lesson moment ("my daughter's son") lands on the pattern it belongs to (the Owner form), so the guide grows from what the lessons actually covered.
+3. **Each guide section ends in a drill.** The rule is read once, then practised under time pressure until it no longer needs thinking about.
+4. **The Lessons page brings it back.** Before the next lesson, or to relive one, a lesson's sheet shows what was taught, links each note to its guide, and lists the drills for it.
+
+## Surfaces
+
+- **Lessons** (signed in): every tutoring session, newest first, each as one sheet.
+- **Guides:** fourteen plain-English guides in three groups (nouns; verbs; small words and sentences), with grammar marks under the Greek and a drill per section.
+- **Practice:** timed production drills in five groups (cases, pronouns, verbs, blocks, guides), plus a review of drills gone rusty.
+- **Learn:** vocabulary by subject and conjugation family, conversations, phrases, and essentials (numbers, time, dates).
+- **Reference:** paradigm tables for looking a form up.
+- **Progress:** the streak calendar and accuracy trends, kept inside the app.
+
 ## Design Context
 
 ### Users
@@ -8,7 +28,7 @@
 
 **Context of use:** Daytime study sessions, relatively focused. Not a quick-glance app — users sit with it. Reading density is high; cognitive load management matters.
 
-**Job to be done:** Drill Greek grammar and vocabulary until responses become automatic. The interface should feel like practice, not like an app.
+**Job to be done:** Turn what each tutoring lesson covered into Greek that comes out automatically: understand the pattern, then drill it until the answer arrives without thought. Before a lesson, see what the last ones covered. The interface should feel like practice, not like an app.
 
 **Design implication of the metalanguage gap:** Lead every teaching surface with plain-English functional handles ("Doer", "Target", "Owner", "who's doing the action"). Greek grammar terms (Nominative, Accusative, Genitive) attach as labels bound to those handles — they are metadata, never the primary anchor. Drill prompts, reference cards, and error messages must all be legible to someone who cannot decode the word "accusative" on its own.
 
@@ -54,64 +74,13 @@ The λ (lambda) mark anchors the identity: spare, precise, unmistakably Greek.
 
 ---
 
-## Colour System
+## Visual System
 
-The values live in `src/index.css`, and `docs/design-guidelines.md` has the full tables and contrast figures; treat those two as the source of truth.
-
-### Grammar is marked, not coloured
-
-Case, number and gender are shown by `<GrammarMark>` (see `docs/design-guidelines.md`, "Grammar Marks"). Colour's only grammatical job is gender, on the mark itself. Everything else about colour is open for the redesign.
-
-The case scales are gone: pages built before the marks still name `case-*` classes, which render no colour until those pages are redesigned. The `gender-*` scales stay, because the marks use them. No lint or rule restricts where any colour may appear.
-
-### Base Palette
-
-`cream`, `terracotta`, `sunset`, `olive`, `ocean`, `honey`, `navy`, `slate` and `stone`, authored in `oklch()`, for navigation, chrome, buttons and grouping.
-
-### Text and Contrast
-
-- Text uses the `-text` tokens (`terracotta-text`, `ocean-text` and so on), never a base accent directly and never with an opacity modifier.
-- Feedback follows the same rule: `correct` / `incorrect` for bars, borders and icons, their `-light` tokens for backgrounds, and `correct-text` / `incorrect-text` for words. Hints use honey.
-- Primary buttons fill with `terracotta-600`, not the base `-500`: white on `-500` is 3.99:1, under AA.
-
-### Dark Mode
-
-Dark mode exists and is fully implemented. Light is the _designed-first_ experience; dark should maintain the same semantic meanings with adjusted values.
-
-The colour ramps are remapped under `:root.dark` in `src/index.css`, and the aliases built on them follow. Tints become dark tints, text shades become light text, and mid accents keep their value, so the terracotta primary button is the same colour in both themes. A grammar mark keeps its gender hue in either theme.
+`DESIGN.md` records the visual system as it ships: palette and contrast, type ramp, layout, components, the grammar marks and the bans. `.impeccable/design.json` is its machine-readable sidecar, and `docs/design-guidelines.md` has the research and contrast figures behind it. This app is a PWA, and mobile is the primary delivery surface, not a fallback.
 
 ---
 
-## Typography
-
-### Current Fonts
-
-```
---font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif
---font-sans:  "DM Sans", system-ui, -apple-system, sans-serif
-```
-
-**Important:** Both Cormorant Garamond and DM Sans are on the impeccable banned-reflex list. They are not wrong for this project — Cormorant Garamond in particular suits the university-press aesthetic — but they should be reconsidered whenever doing a deliberate typography pass. If suggesting replacements, target these qualities:
-
-- **Display/serif:** Old-style figures, generous x-height, optical size variation, feels like it belongs in a printed grammar textbook. Should render Greek polytonic characters gracefully if possible.
-- **Body/sans:** Neutral enough to step back from Greek content, high legibility at 1rem, not geometric (geometric reads as tech/startup, not scholarly).
-
-### Type Scale
-
-This is a product UI (fixed rem), not a marketing page (fluid clamp):
-
-| Role               | Size                             | Font  | Weight | Colour           |
-| ------------------ | -------------------------------- | ----- | ------ | ---------------- |
-| Page title (h1)    | 2.25rem, 3rem from `sm`          | Serif | 400    | `stone-900`      |
-| Section title (h2) | 1.5rem                           | Serif | 400    | `stone-900`      |
-| Subsection (h3)    | 1.25rem                          | Serif | 400    | `stone-900`      |
-| Body text          | 1rem                             | Sans  | 400    | Foreground       |
-| Greek content      | `<GreekText size>`, per call site | Sans  | 400    | Foreground       |
-| Labels / captions  | 0.875rem                         | Sans  | 400    | Muted foreground |
-
-Page titles use `PageHeading` (`src/components/PageHeading.tsx`); the landing hero, `/progress`, the sign-in pages, the noun subject pages and the drill header still set their own `h1`. Section headings come from `BandHeading` (`src/routes/reference/components/BandHeading.tsx`), `text-2xl` by default and `text-xl` at `size="md"`. The older `SectionHeading` is still used in a few reference sections and the verb detail page, and sets `font-bold text-navy-text`.
-
-### Greek Text Rules
+## Greek Text Rules
 
 Greek characters are visually denser than Latin. The `.greek-text` class applies:
 
@@ -121,22 +90,6 @@ Greek characters are visually denser than Latin. The `.greek-text` class applies
 It sets no font size: `<GreekText>` takes an explicit `size`, chosen per call site, with no automatic scale-up over Latin.
 
 Never apply `.greek-text` or `lang="el"` by hand. Render Greek through `<GreekText>` (all Greek script; it owns `lang="el"`, the class, size and tone), `<Pronunciation>` (the pronunciation gloss) or `<GreekGloss>` (the two paired). `pnpm lint:greek` enforces it.
-
----
-
-## Spatial System
-
-4pt base unit. Semantic token names preferred over Tailwind numeric shorthands in custom CSS:
-
-| Token (conceptual) | Value   | Tailwind approx   |
-| ------------------ | ------- | ----------------- |
-| Tight grouping     | 4px     | `gap-1`           |
-| Related items      | 8px     | `gap-2`           |
-| Component padding  | 12–16px | `p-3` / `p-4`     |
-| Section separation | 32–48px | `mt-8` / `mt-12`  |
-| Page section gap   | 48–64px | `py-12` / `py-16` |
-
-Paradigm table cells: `padding: 0.75rem 1rem` (12px vertical, 16px horizontal).
 
 ---
 
@@ -161,30 +114,6 @@ Paradigm table cells: `padding: 0.75rem 1rem` (12px vertical, 16px horizontal).
 - No exclamation marks in feedback — they feel performative
 - Sentences, not fragments, for explanatory text
 - Prefer active voice: "Add vocabulary" not "Vocabulary can be added"
-
----
-
-## Mobile & Responsive
-
-This is a PWA. Mobile is not a fallback — it is the primary delivery surface.
-
-**PWA shell:**
-
-```
-.app-shell   — position: fixed; inset: 0; overflow: hidden
-.app-main    — flex: 1; overflow-y: auto (scroll container)
-.safe-area-pb — padding-bottom: max(0.5rem, env(safe-area-inset-bottom))
-```
-
-**Paradigm tables on mobile:** Tables are the hardest surface to adapt. Options in priority order:
-
-1. Horizontal scroll within a `overflow-x: auto` container — preserve the full table, let users scroll
-2. Column collapsing — hide the least important column behind a toggle
-3. Never stack paradigm cells vertically — it destroys the pattern recognition that makes them useful
-
-**Tap targets:** Minimum 44×44px for all interactive elements (WCAG 2.5.5). Drill answer buttons should be generous — users tap quickly under time pressure.
-
-**Bottom navigation:** Fixed, above the safe area. Do not let content scroll behind it without adequate padding.
 
 ---
 

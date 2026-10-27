@@ -1,0 +1,780 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-27T12:33:49.769Z",
+  "title": "Design System: Kalimera",
+  "extensions": {
+    "colorMeta": {
+      "cream": {
+        "role": "neutral",
+        "displayName": "Cream Paper",
+        "canonical": "oklch(0.98 0 78)",
+        "tonalRamp": [
+          "oklch(0.26 0.03 39)",
+          "oklch(0.4 0.04 45)",
+          "oklch(0.45 0.05 45)",
+          "oklch(0.52 0.06 48)",
+          "oklch(0.59 0.07 52)",
+          "oklch(0.65 0.07 61)",
+          "oklch(0.71 0.06 66)",
+          "oklch(0.8 0.04 73)",
+          "oklch(0.88 0.03 75)",
+          "oklch(0.94 0.01 82)",
+          "oklch(0.98 0 78)"
+        ],
+        "usage": "Page ground under the whole shell."
+      },
+      "cream-dark": {
+        "role": "neutral",
+        "displayName": "Worn Cream",
+        "canonical": "oklch(0.94 0.01 82)",
+        "tonalRamp": [
+          "oklch(0.26 0.03 39)",
+          "oklch(0.4 0.04 45)",
+          "oklch(0.45 0.05 45)",
+          "oklch(0.52 0.06 48)",
+          "oklch(0.59 0.07 52)",
+          "oklch(0.65 0.07 61)",
+          "oklch(0.71 0.06 66)",
+          "oklch(0.8 0.04 73)",
+          "oklch(0.88 0.03 75)",
+          "oklch(0.94 0.01 82)",
+          "oklch(0.98 0 78)"
+        ],
+        "usage": "Secondary ground."
+      },
+      "foreground": {
+        "role": "neutral",
+        "displayName": "Body Ink",
+        "canonical": "oklch(0.22 0.01 56)",
+        "usage": "Default text colour."
+      },
+      "muted-foreground": {
+        "role": "neutral",
+        "displayName": "Gloss Stone",
+        "canonical": "oklch(0.44 0.01 74)",
+        "usage": "Dates, count lines, descriptions."
+      },
+      "card": {
+        "role": "neutral",
+        "displayName": "Card White",
+        "canonical": "oklch(1 0 90)",
+        "usage": "Button and popover surfaces."
+      },
+      "border": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "oklch(0.87 0 56)",
+        "usage": "1px rules on the Lessons page; the global default border."
+      },
+      "stone-200": {
+        "role": "neutral",
+        "displayName": "Hairline Stone",
+        "canonical": "oklch(92.3% 0.003 48.717)",
+        "tonalRamp": [
+          "oklch(14.7% 0.004 49.25)",
+          "oklch(21.6% 0.006 56.043)",
+          "oklch(26.8% 0.007 34.298)",
+          "oklch(37.4% 0.01 67.558)",
+          "oklch(44.4% 0.011 73.639)",
+          "oklch(55.3% 0.013 58.071)",
+          "oklch(70.9% 0.01 56.259)",
+          "oklch(86.9% 0.005 56.366)",
+          "oklch(92.3% 0.003 48.717)",
+          "oklch(97% 0.001 106.424)",
+          "oklch(98.5% 0.001 106.423)"
+        ],
+        "usage": "1px rules in guides, section indexes and the footer. Tailwind default value; remapped in dark mode."
+      },
+      "stone-300": {
+        "role": "neutral",
+        "displayName": "Frame Stone",
+        "canonical": "oklch(86.9% 0.005 56.366)",
+        "tonalRamp": [
+          "oklch(14.7% 0.004 49.25)",
+          "oklch(21.6% 0.006 56.043)",
+          "oklch(26.8% 0.007 34.298)",
+          "oklch(37.4% 0.01 67.558)",
+          "oklch(44.4% 0.011 73.639)",
+          "oklch(55.3% 0.013 58.071)",
+          "oklch(70.9% 0.01 56.259)",
+          "oklch(86.9% 0.005 56.366)",
+          "oklch(92.3% 0.003 48.717)",
+          "oklch(97% 0.001 106.424)",
+          "oklch(98.5% 0.001 106.423)"
+        ],
+        "usage": "Table heads, guide section frames, drill chip borders."
+      },
+      "stone-600": {
+        "role": "neutral",
+        "displayName": "Gloss Stone",
+        "canonical": "oklch(44.4% 0.011 73.639)",
+        "tonalRamp": [
+          "oklch(14.7% 0.004 49.25)",
+          "oklch(21.6% 0.006 56.043)",
+          "oklch(26.8% 0.007 34.298)",
+          "oklch(37.4% 0.01 67.558)",
+          "oklch(44.4% 0.011 73.639)",
+          "oklch(55.3% 0.013 58.071)",
+          "oklch(70.9% 0.01 56.259)",
+          "oklch(86.9% 0.005 56.366)",
+          "oklch(92.3% 0.003 48.717)",
+          "oklch(97% 0.001 106.424)",
+          "oklch(98.5% 0.001 106.423)"
+        ],
+        "usage": "English glosses, group labels, the neutral grammar mark."
+      },
+      "stone-700": {
+        "role": "neutral",
+        "displayName": "Reading Stone",
+        "canonical": "oklch(37.4% 0.01 67.558)",
+        "tonalRamp": [
+          "oklch(14.7% 0.004 49.25)",
+          "oklch(21.6% 0.006 56.043)",
+          "oklch(26.8% 0.007 34.298)",
+          "oklch(37.4% 0.01 67.558)",
+          "oklch(44.4% 0.011 73.639)",
+          "oklch(55.3% 0.013 58.071)",
+          "oklch(70.9% 0.01 56.259)",
+          "oklch(86.9% 0.005 56.366)",
+          "oklch(92.3% 0.003 48.717)",
+          "oklch(97% 0.001 106.424)",
+          "oklch(98.5% 0.001 106.423)"
+        ],
+        "usage": "Ledes and explanatory prose."
+      },
+      "stone-800": {
+        "role": "neutral",
+        "displayName": "Reading Stone Deep",
+        "canonical": "oklch(26.8% 0.007 34.298)",
+        "tonalRamp": [
+          "oklch(14.7% 0.004 49.25)",
+          "oklch(21.6% 0.006 56.043)",
+          "oklch(26.8% 0.007 34.298)",
+          "oklch(37.4% 0.01 67.558)",
+          "oklch(44.4% 0.011 73.639)",
+          "oklch(55.3% 0.013 58.071)",
+          "oklch(70.9% 0.01 56.259)",
+          "oklch(86.9% 0.005 56.366)",
+          "oklch(92.3% 0.003 48.717)",
+          "oklch(97% 0.001 106.424)",
+          "oklch(98.5% 0.001 106.423)"
+        ],
+        "usage": "Index labels, table text, active desktop tab fill."
+      },
+      "stone-900": {
+        "role": "neutral",
+        "displayName": "Stone Ink",
+        "canonical": "oklch(21.6% 0.006 56.043)",
+        "tonalRamp": [
+          "oklch(14.7% 0.004 49.25)",
+          "oklch(21.6% 0.006 56.043)",
+          "oklch(26.8% 0.007 34.298)",
+          "oklch(37.4% 0.01 67.558)",
+          "oklch(44.4% 0.011 73.639)",
+          "oklch(55.3% 0.013 58.071)",
+          "oklch(70.9% 0.01 56.259)",
+          "oklch(86.9% 0.005 56.366)",
+          "oklch(92.3% 0.003 48.717)",
+          "oklch(97% 0.001 106.424)",
+          "oklch(98.5% 0.001 106.423)"
+        ],
+        "usage": "Titles, headings, ledger topics."
+      },
+      "terracotta": {
+        "role": "primary",
+        "displayName": "Kiln Terracotta",
+        "canonical": "oklch(0.61 0.13 42)",
+        "tonalRamp": [
+          "oklch(0.25 0.05 29)",
+          "oklch(0.38 0.08 30)",
+          "oklch(0.43 0.09 30)",
+          "oklch(0.5 0.12 34)",
+          "oklch(0.58 0.13 37)",
+          "oklch(0.61 0.13 42)",
+          "oklch(0.7 0.1 47)",
+          "oklch(0.79 0.07 54)",
+          "oklch(0.88 0.04 60)",
+          "oklch(0.94 0.02 63)",
+          "oklch(0.98 0.01 49)"
+        ],
+        "usage": "Wordmark, ring, selected-row wash at 10%. Not for small text."
+      },
+      "terracotta-600": {
+        "role": "primary",
+        "displayName": "Kiln Terracotta Fill",
+        "canonical": "oklch(0.58 0.13 37)",
+        "tonalRamp": [
+          "oklch(0.25 0.05 29)",
+          "oklch(0.38 0.08 30)",
+          "oklch(0.43 0.09 30)",
+          "oklch(0.5 0.12 34)",
+          "oklch(0.58 0.13 37)",
+          "oklch(0.61 0.13 42)",
+          "oklch(0.7 0.1 47)",
+          "oklch(0.79 0.07 54)",
+          "oklch(0.88 0.04 60)",
+          "oklch(0.94 0.02 63)",
+          "oklch(0.98 0.01 49)"
+        ],
+        "usage": "Primary button fill (white on -500 is 3.99:1)."
+      },
+      "terracotta-700": {
+        "role": "primary",
+        "displayName": "Fired Terracotta",
+        "canonical": "oklch(0.5 0.12 34)",
+        "tonalRamp": [
+          "oklch(0.25 0.05 29)",
+          "oklch(0.38 0.08 30)",
+          "oklch(0.43 0.09 30)",
+          "oklch(0.5 0.12 34)",
+          "oklch(0.58 0.13 37)",
+          "oklch(0.61 0.13 42)",
+          "oklch(0.7 0.1 47)",
+          "oklch(0.79 0.07 54)",
+          "oklch(0.88 0.04 60)",
+          "oklch(0.94 0.02 63)",
+          "oklch(0.98 0.01 49)"
+        ],
+        "usage": "Primary button hover; active mobile tab text (light mode)."
+      },
+      "terracotta-text": {
+        "role": "primary",
+        "displayName": "Terracotta Text",
+        "canonical": "oklch(0.35 0.08 47)",
+        "usage": "Terracotta words on tints; the open ledger date.",
+        "dark": "oklch(0.82 0.09 47)"
+      },
+      "terracotta-ink": {
+        "role": "primary",
+        "displayName": "Terracotta Ink",
+        "canonical": "oklch(0.46 0.12 42)",
+        "usage": "Terracotta words set on the page."
+      },
+      "ocean-text": {
+        "role": "secondary",
+        "displayName": "Aegean Text",
+        "canonical": "oklch(0.31 0.05 223)",
+        "tonalRamp": [
+          "oklch(0.27 0.02 243)",
+          "oklch(0.36 0.03 238)",
+          "oklch(0.39 0.03 235)",
+          "oklch(0.43 0.04 234)",
+          "oklch(0.49 0.05 232)",
+          "oklch(0.56 0.06 224)",
+          "oklch(0.65 0.06 223)",
+          "oklch(0.77 0.04 219)",
+          "oklch(0.87 0.03 219)",
+          "oklch(0.94 0.01 225)",
+          "oklch(0.98 0.01 229)"
+        ],
+        "usage": "Cross-reference links (lesson note to guide section).",
+        "dark": "oklch(0.82 0.11 223)"
+      },
+      "ocean-ink": {
+        "role": "secondary",
+        "displayName": "Aegean Ink",
+        "canonical": "oklch(0.44 0.07 224)",
+        "tonalRamp": [
+          "oklch(0.27 0.02 243)",
+          "oklch(0.36 0.03 238)",
+          "oklch(0.39 0.03 235)",
+          "oklch(0.43 0.04 234)",
+          "oklch(0.49 0.05 232)",
+          "oklch(0.56 0.06 224)",
+          "oklch(0.65 0.06 223)",
+          "oklch(0.77 0.04 219)",
+          "oklch(0.87 0.03 219)",
+          "oklch(0.94 0.01 225)",
+          "oklch(0.98 0.01 229)"
+        ],
+        "usage": "Ocean section numbers on the page."
+      },
+      "olive-text": {
+        "role": "tertiary",
+        "displayName": "Olive Leaf Text",
+        "canonical": "oklch(0.31 0.05 131)",
+        "tonalRamp": [
+          "oklch(0.23 0.02 134)",
+          "oklch(0.34 0.02 132)",
+          "oklch(0.38 0.03 134)",
+          "oklch(0.43 0.04 133)",
+          "oklch(0.51 0.05 131)",
+          "oklch(0.6 0.06 131)",
+          "oklch(0.66 0.05 128)",
+          "oklch(0.83 0.03 126)",
+          "oklch(0.91 0.02 127)",
+          "oklch(0.94 0.01 132)",
+          "oklch(0.98 0.01 132)"
+        ],
+        "usage": "Words on olive tints."
+      },
+      "sunset-text": {
+        "role": "tertiary",
+        "displayName": "Dusty Rose Text",
+        "canonical": "oklch(0.39 0.1 357)",
+        "tonalRamp": [
+          "oklch(0.23 0.05 359)",
+          "oklch(0.34 0.07 355)",
+          "oklch(0.37 0.08 356)",
+          "oklch(0.42 0.1 357)",
+          "oklch(0.47 0.11 357)",
+          "oklch(0.53 0.12 356)",
+          "oklch(0.58 0.13 355)",
+          "oklch(0.81 0.08 1)",
+          "oklch(0.9 0.04 358)",
+          "oklch(0.94 0.01 357)",
+          "oklch(0.97 0.01 355)"
+        ],
+        "usage": "Words on sunset tints."
+      },
+      "navy-text": {
+        "role": "tertiary",
+        "displayName": "Scholar Navy Text",
+        "canonical": "oklch(0.27 0.04 252)",
+        "tonalRamp": [
+          "oklch(0.27 0.03 259)",
+          "oklch(0.34 0.04 257)",
+          "oklch(0.38 0.05 256)",
+          "oklch(0.44 0.07 257)",
+          "oklch(0.48 0.07 255)",
+          "oklch(0.56 0.08 254)",
+          "oklch(0.66 0.07 253)",
+          "oklch(0.79 0.05 254)",
+          "oklch(0.88 0.03 256)",
+          "oklch(0.94 0.01 251)",
+          "oklch(0.97 0.01 261)"
+        ],
+        "usage": "Words on navy tints."
+      },
+      "slate-text": {
+        "role": "tertiary",
+        "displayName": "Slate Text",
+        "canonical": "oklch(0.28 0.03 183)",
+        "tonalRamp": [
+          "oklch(0.22 0.01 196)",
+          "oklch(0.32 0.01 183)",
+          "oklch(0.35 0.02 185)",
+          "oklch(0.4 0.02 184)",
+          "oklch(0.46 0.03 186)",
+          "oklch(0.54 0.04 181)",
+          "oklch(0.58 0.03 183)",
+          "oklch(0.74 0.03 182)",
+          "oklch(0.84 0.02 180)",
+          "oklch(0.92 0.01 174)",
+          "oklch(0.98 0.01 177)"
+        ],
+        "usage": "Words on slate tints."
+      },
+      "honey-50": {
+        "role": "secondary",
+        "displayName": "Comb Honey Wash",
+        "canonical": "oklch(0.98 0.01 94)",
+        "tonalRamp": [
+          "oklch(0.26 0.05 43)",
+          "oklch(0.38 0.06 47)",
+          "oklch(0.42 0.08 52)",
+          "oklch(0.48 0.09 58)",
+          "oklch(0.58 0.11 67)",
+          "oklch(0.67 0.12 75)",
+          "oklch(0.76 0.12 82)",
+          "oklch(0.8 0.11 87)",
+          "oklch(0.88 0.07 92)",
+          "oklch(0.94 0.04 94)",
+          "oklch(0.98 0.01 94)"
+        ],
+        "usage": "Homework panel ground."
+      },
+      "honey-200": {
+        "role": "secondary",
+        "displayName": "Comb Honey Rule",
+        "canonical": "oklch(0.88 0.07 92)",
+        "tonalRamp": [
+          "oklch(0.26 0.05 43)",
+          "oklch(0.38 0.06 47)",
+          "oklch(0.42 0.08 52)",
+          "oklch(0.48 0.09 58)",
+          "oklch(0.58 0.11 67)",
+          "oklch(0.67 0.12 75)",
+          "oklch(0.76 0.12 82)",
+          "oklch(0.8 0.11 87)",
+          "oklch(0.88 0.07 92)",
+          "oklch(0.94 0.04 94)",
+          "oklch(0.98 0.01 94)"
+        ],
+        "usage": "Homework panel border."
+      },
+      "honey-text": {
+        "role": "secondary",
+        "displayName": "Comb Honey Text",
+        "canonical": "oklch(0.34 0.07 81)",
+        "tonalRamp": [
+          "oklch(0.26 0.05 43)",
+          "oklch(0.38 0.06 47)",
+          "oklch(0.42 0.08 52)",
+          "oklch(0.48 0.09 58)",
+          "oklch(0.58 0.11 67)",
+          "oklch(0.67 0.12 75)",
+          "oklch(0.76 0.12 82)",
+          "oklch(0.8 0.11 87)",
+          "oklch(0.88 0.07 92)",
+          "oklch(0.94 0.04 94)",
+          "oklch(0.98 0.01 94)"
+        ],
+        "usage": "Homework label; hint text."
+      },
+      "gender-masculine-700": {
+        "role": "tertiary",
+        "displayName": "Masculine Mark",
+        "canonical": "oklch(0.58 0.16 268)",
+        "tonalRamp": [
+          "oklch(0.38 0.09 268)",
+          "oklch(0.42 0.11 268)",
+          "oklch(0.48 0.13 268)",
+          "oklch(0.58 0.16 268)",
+          "oklch(0.82 0.09 268)",
+          "oklch(0.82 0.09 268)",
+          "oklch(0.82 0.09 268)",
+          "oklch(0.88 0.06 268)",
+          "oklch(0.91 0.04 268)",
+          "oklch(0.94 0.03 268)"
+        ],
+        "usage": "Grammar mark colour for masculine. Same value in dark mode. Steps -400, -500 and -600 share one value."
+      },
+      "gender-feminine-700": {
+        "role": "tertiary",
+        "displayName": "Feminine Mark",
+        "canonical": "oklch(0.59 0.16 2)",
+        "tonalRamp": [
+          "oklch(0.39 0.09 2)",
+          "oklch(0.43 0.11 2)",
+          "oklch(0.49 0.13 2)",
+          "oklch(0.59 0.16 2)",
+          "oklch(0.82 0.11 2)",
+          "oklch(0.82 0.11 2)",
+          "oklch(0.82 0.11 2)",
+          "oklch(0.89 0.06 2)",
+          "oklch(0.91 0.05 2)",
+          "oklch(0.94 0.03 2)"
+        ],
+        "usage": "Grammar mark colour for feminine. Same value in dark mode. Steps -400, -500 and -600 share one value."
+      },
+      "gender-neuter-700": {
+        "role": "tertiary",
+        "displayName": "Neuter Mark",
+        "canonical": "oklch(0.56 0.11 171)",
+        "tonalRamp": [
+          "oklch(0.37 0.07 171)",
+          "oklch(0.41 0.08 171)",
+          "oklch(0.47 0.09 171)",
+          "oklch(0.56 0.11 171)",
+          "oklch(0.82 0.16 171)",
+          "oklch(0.82 0.16 171)",
+          "oklch(0.82 0.15 171)",
+          "oklch(0.87 0.1 171)",
+          "oklch(0.9 0.08 171)",
+          "oklch(0.93 0.06 171)"
+        ],
+        "usage": "Grammar mark colour for neuter. Same value in dark mode. Steps -400, -500 and -600 share one value."
+      },
+      "gender-masculine-text": {
+        "role": "tertiary",
+        "displayName": "Masculine Text",
+        "canonical": "oklch(0.47 0.12 268)",
+        "usage": "Words on a masculine section tint."
+      },
+      "gender-feminine-text": {
+        "role": "tertiary",
+        "displayName": "Feminine Text",
+        "canonical": "oklch(0.49 0.18 2)",
+        "usage": "Words on a feminine section tint."
+      },
+      "gender-neuter-text": {
+        "role": "tertiary",
+        "displayName": "Neuter Text",
+        "canonical": "oklch(0.51 0.1 171)",
+        "usage": "Words on a neuter section tint."
+      },
+      "correct": {
+        "role": "feedback",
+        "displayName": "Correct",
+        "canonical": "oklch(0.63 0.17 149)",
+        "usage": "Bars, borders, icons only (3.1:1 as text)."
+      },
+      "correct-light": {
+        "role": "feedback",
+        "displayName": "Correct Wash",
+        "canonical": "oklch(0.96 0.04 157)",
+        "usage": "Correct background."
+      },
+      "correct-text": {
+        "role": "feedback",
+        "displayName": "Correct Text",
+        "canonical": "oklch(0.42 0.12 149)",
+        "usage": "Correct wording, 7.6:1 on cream."
+      },
+      "incorrect": {
+        "role": "feedback",
+        "displayName": "Incorrect",
+        "canonical": "oklch(0.58 0.21 27)",
+        "usage": "Bars, borders, icons only."
+      },
+      "incorrect-light": {
+        "role": "feedback",
+        "displayName": "Incorrect Wash",
+        "canonical": "oklch(0.94 0.03 18)",
+        "usage": "Incorrect background."
+      },
+      "incorrect-text": {
+        "role": "feedback",
+        "displayName": "Incorrect Text",
+        "canonical": "oklch(0.45 0.17 27)",
+        "usage": "Incorrect wording, 7.7:1 on cream."
+      },
+      "hint-light": {
+        "role": "feedback",
+        "displayName": "Hint Wash",
+        "canonical": "oklch(0.96 0.06 96)",
+        "usage": "Hint background."
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Every page h1 via PageHeading, below sm."
+      },
+      "display-sm-up": {
+        "displayName": "Display (sm and up)",
+        "purpose": "PageHeading from the sm breakpoint."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "The open lesson's topic; 2.25rem from sm."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Section headings: BandHeading, guide section bands, lesson sheet sections."
+      },
+      "title-sm": {
+        "displayName": "Title small",
+        "purpose": "Sub-bands, ledger year headings."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Prose, capped at 42rem (guides, ledes) or 65ch (lesson sheet)."
+      },
+      "greek": {
+        "displayName": "Greek (reading row)",
+        "purpose": "GreekText size lg in word tables, phrases, examples. Size is set per call site from xs to 8xl."
+      },
+      "greek-index": {
+        "displayName": "Greek (index lead)",
+        "purpose": "GreekText size 2xl leading a section-index row."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Sentence-case group labels above ruled lists and panels."
+      },
+      "caption": {
+        "displayName": "Caption",
+        "purpose": "Glosses, dates, count lines, column heads."
+      }
+    },
+    "shadows": [
+      {
+        "name": "button-rest",
+        "value": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+        "purpose": "Every Button and ButtonLink at rest (shadow-sm)."
+      },
+      {
+        "name": "button-lift",
+        "value": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+        "purpose": "Button hover (with a 2px rise) and active; search results and menus (shadow-md)."
+      }
+    ],
+    "motion": [
+      {
+        "name": "button-lift",
+        "value": "all 200ms",
+        "purpose": "Button hover: 2px rise and shadow growth."
+      },
+      {
+        "name": "theme-cross-fade",
+        "value": "250ms",
+        "purpose": "View-transition cross-fade when the theme changes."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px",
+        "note": "Display rises to 3rem; guide sections gain side borders and corners."
+      },
+      {
+        "name": "md",
+        "value": "768px",
+        "note": "Desktop header replaces mobile header and bottom nav; Lessons becomes ledger (4 cols) beside sheet (8 cols)."
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      }
+    ],
+    "darkMode": "Ramps remap under :root.dark: tints (-50 to -300) to L' = 1.2 - L, -text tokens to L 0.82, mid accents unchanged, cream page to L 0.19. Hue never changes.",
+    "grammarMark": {
+      "ends": {
+        "nominative": "<-> Doer",
+        "accusative": ">-< Target",
+        "genitive": "o-o Owner",
+        "vocative": "!-! Calling"
+      },
+      "number": "one line = one; two lines = more than one",
+      "colour": "gender -700 step from GENDER_MARK; no gender = stone-600, claims none",
+      "geometry": "end shapes 9px tall; min width 30px; inset 2px each side; half-pixel grid"
+    }
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The default Button and ButtonLink: terracotta-600 fill, white text, lifts on hover.",
+      "html": "<button class=\"ds-btn-primary\">Start drill</button>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:14px;font-family:var(--font-sans, 'DM Sans', system-ui, sans-serif);font-weight:500;font-size:1rem;padding:8px 16px;box-shadow:0 1px 3px 0 rgb(0 0 0 / 0.1),0 1px 2px -1px rgb(0 0 0 / 0.1);transition:all 200ms;cursor:pointer;border:none;background:var(--color-terracotta-600, oklch(0.58 0.13 37));color:#fff;}.ds-btn-primary:hover{transform:translateY(-2px);box-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1),0 2px 4px -2px rgb(0 0 0 / 0.1);background:var(--color-terracotta-700, oklch(0.5 0.12 34));}.ds-btn-primary:focus-visible{outline:none;box-shadow:0 0 0 2px #fff,0 0 0 4px var(--color-terracotta-400, oklch(0.7 0.1 47));}"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "White card surface with a stone-200 hairline.",
+      "html": "<button class=\"ds-btn-secondary\">Show answer</button>",
+      "css": ".ds-btn-secondary{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:14px;font-family:var(--font-sans, 'DM Sans', system-ui, sans-serif);font-weight:500;font-size:1rem;padding:8px 16px;box-shadow:0 1px 3px 0 rgb(0 0 0 / 0.1),0 1px 2px -1px rgb(0 0 0 / 0.1);transition:all 200ms;cursor:pointer;border:1px solid var(--color-stone-200, oklch(92.3% 0.003 48.717));background:var(--color-card, oklch(1 0 90));color:var(--color-stone-700, oklch(37.4% 0.01 67.558));}.ds-btn-secondary:hover{transform:translateY(-2px);box-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1),0 2px 4px -2px rgb(0 0 0 / 0.1);border-color:var(--color-stone-300, oklch(86.9% 0.005 56.366));}.ds-btn-secondary:focus-visible{outline:none;box-shadow:0 0 0 2px #fff,0 0 0 4px var(--color-terracotta-400, oklch(0.7 0.1 47));}"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "No fill, stone-700 text.",
+      "html": "<button class=\"ds-btn-ghost\">Skip</button>",
+      "css": ".ds-btn-ghost{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:14px;font-family:var(--font-sans, 'DM Sans', system-ui, sans-serif);font-weight:500;font-size:1rem;padding:8px 16px;box-shadow:0 1px 3px 0 rgb(0 0 0 / 0.1),0 1px 2px -1px rgb(0 0 0 / 0.1);transition:all 200ms;cursor:pointer;border:none;background:transparent;color:var(--color-stone-700, oklch(37.4% 0.01 67.558));}.ds-btn-ghost:hover{transform:translateY(-2px);box-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1),0 2px 4px -2px rgb(0 0 0 / 0.1);background:rgb(255 255 255 / 0.6);}.ds-btn-ghost:focus-visible{outline:none;box-shadow:0 0 0 2px #fff,0 0 0 4px var(--color-terracotta-400, oklch(0.7 0.1 47));}"
+    },
+    {
+      "name": "Grammar Mark",
+      "kind": "custom",
+      "description": "Signature: a Greek phrase with a line beneath; end shape is the case (here Doer <->), lines the number, colour the gender (here feminine -700). With no gender the mark is stone-600.",
+      "html": "<span class=\"ds-mark\"><span class=\"ds-mark-greek\" lang=\"el\">η γυναίκα</span><svg class=\"ds-mark-line\" viewBox=\"0 0 100 9\" preserveAspectRatio=\"none\" aria-hidden=\"true\"><line x1=\"6\" x2=\"94\" y1=\"4.5\" y2=\"4.5\" stroke=\"currentColor\" stroke-width=\"2\"/><polygon points=\"0,4.5 7,0 7,9\" fill=\"currentColor\"/><polygon points=\"100,4.5 93,0 93,9\" fill=\"currentColor\"/></svg></span> <span class=\"ds-mark ds-mark-neutral\"><span class=\"ds-mark-greek\" lang=\"el\">του</span><svg class=\"ds-mark-line\" viewBox=\"0 0 40 9\" aria-hidden=\"true\"><line x1=\"4.5\" x2=\"35.5\" y1=\"4.5\" y2=\"4.5\" stroke=\"currentColor\" stroke-width=\"2\"/><circle cx=\"4.5\" cy=\"4.5\" r=\"4.5\" fill=\"currentColor\"/><circle cx=\"35.5\" cy=\"4.5\" r=\"4.5\" fill=\"currentColor\"/></svg></span>",
+      "css": ".ds-mark{position:relative;display:inline-block;min-width:30px;padding-bottom:16px;text-align:center;white-space:nowrap;color:var(--color-gender-feminine-700, oklch(0.59 0.16 2));}.ds-mark-neutral{color:var(--color-stone-600, oklch(44.4% 0.011 73.639));}.ds-mark-greek{font-family:var(--font-sans, 'DM Sans', system-ui, sans-serif);font-size:1.125rem;line-height:1.625;letter-spacing:0.01em;color:var(--color-foreground, oklch(0.22 0.01 56));}.ds-mark-line{position:absolute;left:2px;right:2px;bottom:4px;height:9px;width:calc(100% - 4px);overflow:visible;}"
+    },
+    {
+      "name": "Ledger Row",
+      "kind": "custom",
+      "description": "A dated row in the lesson ledger; the open row takes a 10% terracotta wash and a semibold terracotta-text date.",
+      "html": "<ol class=\"ds-ledger\"><li><a class=\"ds-ledger-row ds-ledger-open\" href=\"#\" aria-current=\"page\"><span class=\"ds-ledger-date\">21 Oct</span><span class=\"ds-ledger-body\"><span class=\"ds-ledger-topic\">Future with θα and the -ούλα endings</span><span class=\"ds-ledger-count\">14 words · 3 phrases · 4 notes</span></span></a></li><li><a class=\"ds-ledger-row\" href=\"#\"><span class=\"ds-ledger-date\">14 Oct</span><span class=\"ds-ledger-body\"><span class=\"ds-ledger-topic\">Owner forms after εκτός</span><span class=\"ds-ledger-count\">9 words · 2 notes</span></span></a></li></ol>",
+      "css": ".ds-ledger{list-style:none;margin:0;padding:0;border-top:1px solid var(--color-border, oklch(0.87 0 56));border-bottom:1px solid var(--color-border, oklch(0.87 0 56));font-family:var(--font-sans, 'DM Sans', system-ui, sans-serif);}.ds-ledger li+li{border-top:1px solid var(--color-border, oklch(0.87 0 56));}.ds-ledger-row{display:flex;gap:16px;padding:12px 8px;text-decoration:none;transition:background-color 150ms;}.ds-ledger-row:hover{background:color-mix(in oklch, var(--color-foreground, oklch(0.22 0.01 56)) 5%, transparent);}.ds-ledger-row:focus-visible{outline:2px solid var(--color-terracotta-600, oklch(0.58 0.13 37));outline-offset:2px;}.ds-ledger-open,.ds-ledger-open:hover{background:color-mix(in oklch, var(--color-terracotta, oklch(0.61 0.13 42)) 10%, transparent);}.ds-ledger-date{width:56px;flex-shrink:0;font-size:0.875rem;font-variant-numeric:tabular-nums;color:var(--color-muted-foreground, oklch(0.44 0.01 74));}.ds-ledger-open .ds-ledger-date{font-weight:600;color:var(--color-terracotta-text, oklch(0.35 0.08 47));}.ds-ledger-body{flex:1;min-width:0;}.ds-ledger-topic{display:block;font-size:0.875rem;line-height:1.375;color:var(--color-stone-900, oklch(21.6% 0.006 56.043));}.ds-ledger-count{display:block;margin-top:2px;font-size:0.75rem;color:var(--color-muted-foreground, oklch(0.44 0.01 74));}"
+    },
+    {
+      "name": "Homework Panel",
+      "kind": "card",
+      "refersTo": "homework-panel",
+      "description": "The one tinted panel on a lesson sheet.",
+      "html": "<section class=\"ds-homework\"><h3 class=\"ds-homework-label\">Homework</h3><p class=\"ds-homework-body\">Prepare to describe your grandmother's house to Eleni, using the Owner forms from this lesson.</p></section>",
+      "css": ".ds-homework{border:1px solid var(--color-honey-200, oklch(0.88 0.07 92));background:var(--color-honey-50, oklch(0.98 0.01 94));border-radius:10px;padding:16px 20px;font-family:var(--font-sans, 'DM Sans', system-ui, sans-serif);}.ds-homework-label{margin:0;font-size:0.875rem;font-weight:600;color:var(--color-honey-text, oklch(0.34 0.07 81));}.ds-homework-body{margin:6px 0 0;max-width:65ch;line-height:1.625;color:var(--color-stone-800, oklch(26.8% 0.007 34.298));}"
+    },
+    {
+      "name": "Section Index Row",
+      "kind": "nav",
+      "description": "A Greek-first table-of-contents row for section landings; no cards, no tints.",
+      "html": "<ul class=\"ds-index\"><li><a class=\"ds-index-row\" href=\"#\"><span class=\"ds-index-text\"><span class=\"ds-index-greek\" lang=\"el\">Πτώσεις</span><span class=\"ds-index-label\">Cases</span><span class=\"ds-index-desc\">Why the ending of a word changes with its job.</span></span><svg class=\"ds-index-chev\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m9 18 6-6-6-6\"/></svg></a></li></ul>",
+      "css": ".ds-index{list-style:none;margin:0;padding:0;border-top:1px solid var(--color-stone-200, oklch(92.3% 0.003 48.717));border-bottom:1px solid var(--color-stone-200, oklch(92.3% 0.003 48.717));font-family:var(--font-sans, 'DM Sans', system-ui, sans-serif);}.ds-index-row{display:flex;align-items:center;gap:16px;min-height:44px;padding:16px 0;text-decoration:none;}.ds-index-text{flex:1;min-width:0;display:flex;flex-direction:column;}.ds-index-greek{font-size:1.5rem;line-height:1.625;letter-spacing:0.01em;color:var(--color-foreground, oklch(0.22 0.01 56));}.ds-index-row:hover .ds-index-greek{color:var(--color-terracotta-text, oklch(0.35 0.08 47));}.ds-index-label{color:var(--color-stone-800, oklch(26.8% 0.007 34.298));}.ds-index-desc{margin-top:6px;font-size:0.875rem;color:var(--color-muted-foreground, oklch(0.44 0.01 74));}.ds-index-chev{flex-shrink:0;color:var(--color-stone-500, oklch(55.3% 0.013 58.071));transition:transform 150ms;}.ds-index-row:hover .ds-index-chev{transform:translateX(2px);}.ds-index-row:focus-visible{outline:2px solid var(--color-ring, oklch(0.61 0.13 42));outline-offset:2px;}"
+    },
+    {
+      "name": "Guide Section",
+      "kind": "card",
+      "refersTo": "guide-section",
+      "description": "A framed guide section: a tone header band (here ocean -200 with a -300 rule), then the rule, a ruled table and practice links.",
+      "html": "<section class=\"ds-guide\"><header class=\"ds-guide-head\"><h2 class=\"ds-guide-title\"><span class=\"ds-guide-num\">2.</span>The Target form</h2></header><div class=\"ds-guide-body\"><p class=\"ds-guide-prose\">The thing a verb acts on takes the Target form. The article changes first.</p><a class=\"ds-drill\" href=\"#\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z\"/></svg>Target articles</a></div></section>",
+      "css": ".ds-guide{overflow:hidden;border:1px solid var(--color-stone-300, oklch(86.9% 0.005 56.366));border-radius:10px;background:var(--color-cream, oklch(0.98 0 78));font-family:var(--font-sans, 'DM Sans', system-ui, sans-serif);}.ds-guide-head{padding:12px 24px;background:var(--color-ocean-200, oklch(0.87 0.03 219));border-bottom:1px solid var(--color-ocean-300, oklch(0.77 0.04 219));}.ds-guide-title{margin:0;font-family:var(--font-serif, 'Cormorant Garamond', Georgia, serif);font-weight:400;font-size:1.5rem;color:var(--color-stone-900, oklch(21.6% 0.006 56.043));}.ds-guide-num{margin-right:8px;color:var(--color-ocean-text, oklch(0.31 0.05 223));}.ds-guide-body{padding:20px 24px;display:flex;flex-direction:column;gap:20px;align-items:flex-start;}.ds-guide-prose{margin:0;max-width:42rem;line-height:1.625;color:var(--color-stone-700, oklch(37.4% 0.01 67.558));}.ds-drill{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 12px;border:1px solid var(--color-stone-300, oklch(86.9% 0.005 56.366));border-radius:8px;font-size:0.875rem;color:var(--color-stone-800, oklch(26.8% 0.007 34.298));text-decoration:none;}.ds-drill:hover{border-color:var(--color-ocean-400, oklch(0.65 0.06 223));color:var(--color-ocean-text, oklch(0.31 0.05 223));}.ds-drill:focus-visible{outline:2px solid var(--color-ring, oklch(0.61 0.13 42));outline-offset:2px;}"
+    },
+    {
+      "name": "Mobile Nav",
+      "kind": "nav",
+      "description": "Fixed bottom bar above the safe area; the active tab takes a 10% terracotta wash and terracotta-700 text.",
+      "html": "<nav class=\"ds-mnav\"><a class=\"ds-mnav-tab ds-mnav-active\" href=\"#\"><svg width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 7v14\"/><path d=\"M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z\"/></svg><span>Learn</span></a><a class=\"ds-mnav-tab\" href=\"#\"><svg width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z\"/></svg><span>Practice</span></a></nav>",
+      "css": ".ds-mnav{display:flex;justify-content:space-around;align-items:center;padding:8px;padding-bottom:max(0.5rem, env(safe-area-inset-bottom));border-top:1px solid var(--color-stone-200, oklch(92.3% 0.003 48.717));background:color-mix(in oklch, var(--color-cream, oklch(0.98 0 78)) 95%, transparent);backdrop-filter:blur(4px);font-family:var(--font-sans, 'DM Sans', system-ui, sans-serif);}.ds-mnav-tab{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 16px;border-radius:14px;font-size:0.75rem;font-weight:500;color:var(--color-stone-600, oklch(44.4% 0.011 73.639));text-decoration:none;transition:all 150ms;}.ds-mnav-active{background:color-mix(in oklch, var(--color-terracotta, oklch(0.61 0.13 42)) 10%, transparent);color:var(--color-terracotta-700, oklch(0.5 0.12 34));}.ds-mnav-tab:focus-visible{outline:2px solid var(--color-ring, oklch(0.61 0.13 42));outline-offset:2px;}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The University Press Study Guide",
+    "overview": "Kalimera is set like a printed grammar from a 1970s university press, the copy that has been photocopied until the corners went soft. The ground is cream paper, the ink is warm stone, headings are a quiet serif, and almost everything is organised by hairline rules rather than by boxes. Greek is the largest, darkest thing on any row; English sits beneath or beside it, smaller and in a lighter stone. The density is that of a reference book read at a desk, not a phone app glanced at in a queue.\n\nThe system's one invention is the grammar mark. Case, number and gender are drawn as a short line under a Greek phrase: its end shapes name the case, a second line means more than one, and its colour (only ever on the mark) is the gender. Colour is otherwise free for chrome and grouping, chosen from a Mediterranean palette of terracotta, sunset, olive, ocean, honey, navy and slate authored in OKLCH, each with a dark `-text` shade for words on tints and a brighter `-ink` shade for the few coloured words set straight on the page.\n\nConfirmed rejections, from the product's brand commitments: no gamification (no XP, levels, leaderboards, confetti or score pops), no SaaS card grids or hero metrics, no gradients as decoration, no emoji in functional copy, no rounded icon above every heading.",
+    "keyCharacteristics": [
+      "Cream page, stone ink, serif headings at regular weight.",
+      "Ruled lists and tables (1px hairlines) instead of card grids.",
+      "Greek leads every row and is set larger than its English gloss.",
+      "Grammar is drawn by the mark; colour carries grammar only as gender, on the mark.",
+      "Contrast is held to AAA (7:1) for reading text in both themes.",
+      "Light theme is designed first; dark mode remaps the same ramps and keeps every hue."
+    ],
+    "rules": [
+      {
+        "name": "The Gender-Only Rule",
+        "section": "colors",
+        "body": "Colour's one grammatical job is gender, and only on a grammar mark, using the gender's -700 step. A mark with no gender is stone-600 and claims none. A guide section that teaches one gender's nouns may take that gender's pale scale as its tone; nothing else in the interface colours grammar."
+      },
+      {
+        "name": "The Full-Strength Text Rule",
+        "section": "colors",
+        "body": "Words take a -text or -ink token at full opacity, never a base accent and never an opacity modifier (text-honey-text/80 is banned). Opacity on a background is fine. For quieter text, step down the stone ramp instead."
+      },
+      {
+        "name": "The Saturation Rule",
+        "section": "colors",
+        "body": "Chrome and grammar colour are told apart by saturation, not hue. Chrome tints are pale (-50 to -200); gender marks are saturated -700. A palette hue that sits near a gender hue is not off limits."
+      },
+      {
+        "name": "The Uncalibrated Ramps Rule",
+        "section": "colors",
+        "body": "Step numbers are not comparable across hues: honey-100 is about four times the chroma of ocean-100. When tints sit side by side, match chroma and lightness, not step number."
+      },
+      {
+        "name": "The Greek-Leads Rule",
+        "section": "typography",
+        "body": "On any row that pairs Greek with English, the Greek is the larger, darker element and comes first; the English is text-sm in stone-600 or stone-700."
+      },
+      {
+        "name": "The Regular-Weight Serif Rule",
+        "section": "typography",
+        "body": "Serif headings are weight 400 in stone-900. Weight comes from size and space, not bold."
+      },
+      {
+        "name": "The No-Kicker Rule",
+        "section": "typography",
+        "body": "Nothing sits above a heading to announce it: no eyebrow, no small uppercase category line, no icon badge. A label belongs above a list or table, not above a title."
+      },
+      {
+        "name": "The Ruled-Not-Raised Rule",
+        "section": "elevation",
+        "body": "Lists, tables, the ledger and section indexes are separated by 1px rules, never by shadows or floating cards."
+      }
+    ],
+    "dos": [
+      "Do render every Greek string through `GreekText`, `Pronunciation`, `GreekGloss` or `GrammarMark`, with an explicit size chosen for the call site.",
+      "Do separate rows and groups with 1px hairlines (`border` or `stone-200`) and keep tables precise: aligned columns, 8px cell padding, horizontal scroll on phones rather than stacked cells.",
+      "Do set page titles with `PageHeading` and section headings in the serif at weight 400 in `stone-900`.",
+      "Do put words on a tint in that hue's `-text` shade and coloured words on the page in its `-ink` shade, both at full opacity.",
+      "Do fill primary buttons with `terracotta-600`, never the base step.",
+      "Do mark an open or selected row with a pale wash and a coloured, semibold label, as the lesson ledger does.",
+      "Do give neighbouring guide sections different tones, and check chroma, not step number, when tints sit side by side.",
+      "Do keep interactive targets at least 44px tall."
+    ],
+    "donts": [
+      "Don't put an opacity modifier on a `-text` token; it breaks AAA.",
+      "Don't set body text in a base accent (`text-terracotta`, `text-honey`); base accents are for bars, borders, icons and large display only.",
+      "Don't use colour for case or number; draw it with `GrammarMark`. Don't reach for `GreekText`'s gender or case tones or the `case-*` scheme classes in new work.",
+      "Don't draw a coloured side border or strip wider than 1px to mark a row, an example or a section.",
+      "Don't put a kicker or eyebrow above a heading.",
+      "Don't add streaks as a selling point, XP, levels, leaderboards, confetti, score pops or celebration animation.",
+      "Don't build card grids, hero metrics or decorative gradients.",
+      "Don't use coloured shadows or SVG grain textures.",
+      "Don't use emoji or exclamation marks in labels, feedback, empty states or errors."
+    ]
+  }
+}

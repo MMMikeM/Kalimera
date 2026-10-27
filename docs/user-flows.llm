@@ -13,12 +13,13 @@ kept in this file would drift from them.
 /login  /register          Sign in (password or passkey) · create account
 /try                       Anonymous drill, 8 prompts: 6 pronouns plus θέλω, έχω (conversion flow)
 
-/practice                  Drill browser, a four-row list of groups
+/practice                  Drill browser, a five-row list of groups
 /practice/cases            Case drills, sectioned Doer · Target · Owner · Review
 /practice/pronouns         Object forms, placement, possessives
 /practice/verbs            Present · Past · Future & Modal · Mixed tenses
 /practice/blocks           Survival phrases, numbers, days, opposites
 /practice/blocks/question-words   ποιος / πόσος agreement, own sub-index
+/practice/guides           One drill per guide section, grouped by guide
 /practice/review           Drills gone rusty, grouped by category
 
 /learn                     Learn landing (SectionIndex)
@@ -27,6 +28,9 @@ kept in this file would drift from them.
 /learn/nouns  /:subject    Noun browser by subject
 /learn/verbs  /:verbId     Verb browser · full conjugation detail
 /learn/essentials/:subtab  Numbers, colours, time, position, frequency
+
+/lessons                   The latest lesson's sheet, every lesson listed beside it
+/lessons/:date             One lesson's sheet, e.g. /lessons/2026-10-23
 
 /guides                    Guides landing (SectionIndex)
 /guides/:guide             One guide: sections that each end in a drill
@@ -57,6 +61,7 @@ catalogue entry:
 <file>src/routes/practice/pronouns/drills.data.ts</file>
 <file>src/routes/practice/blocks/drills.data.ts</file>
 <file>src/routes/practice/blocks/question-words/drills.data.ts</file>
+<file>src/routes/practice/guides/drills.data.ts — gathers each guide's own drills.data.ts</file>
 <derived>src/routes/practice/drill-catalogue.data.ts — the by-id lookup, flattened from the above</derived>
 <guard>src/routes/practice/drill-catalogue.test.ts — fails if a drill and the catalogue disagree</guard>
 </catalogue>
@@ -66,12 +71,12 @@ colour: `doer`/`target`/`owner` take the reserved case tokens, `mixed` and `null
 take the base palette and claim nothing.
 
 <route path="/practice">
-<purpose>Drill browser: a four-row list, one row per group</purpose>
+<purpose>Drill browser: a five-row list, one row per group</purpose>
 <file>src/routes/practice/index.tsx</file>
 <note>An auth guard on practice/route.tsx redirects logged-out visitors to /</note>
 </route>
 
-<route path="/practice/{cases,verbs,pronouns,blocks}">
+<route path="/practice/{cases,verbs,pronouns,blocks,guides}">
 <purpose>Per-group drill index</purpose>
 <file>src/routes/practice/&lt;group&gt;/index.tsx</file>
 <data-source>That group's drills.data.ts</data-source>
@@ -162,6 +167,21 @@ take the base palette and claim nothing.
 <purpose>Verb reference by tense band: present, past, past-continuous, future (Future &amp; να)</purpose>
 <file>src/routes/reference/verbs/$band.tsx</file>
 <note>/reference/verbs redirects to /reference/verbs/present; an unknown band is a 404</note>
+</route>
+
+### Lessons
+
+<route path="/lessons">
+<purpose>What each tutoring session covered. A ledger of every lesson, newest first and grouped by year (date, topic, word/phrase/note counts), beside the open lesson's sheet. The index shows the latest lesson</purpose>
+<file>src/routes/lessons/route.tsx (layout and ledger), index.tsx (latest sheet), components/</file>
+<data-source>The dated lesson files in src/scripts/seed-data/vocabulary/lessons/, read through import.meta.glob in src/server/fns/lessons.server.ts. No database read</data-source>
+<note>Signed in only. On mobile the sheet comes first, with a link down to the ledger</note>
+</route>
+
+<route path="/lessons/:date">
+<purpose>One lesson's sheet: topic, date and counts, homework, "What was taught" (each grammar note with its examples and a link to the guide section it belongs to), the words with grammar marks on the nouns, the phrases, and the drills for the guide sections it touched</purpose>
+<file>src/routes/lessons/$date.tsx, components/lesson-sheet.tsx</file>
+<note>An unknown date is a 404</note>
 </route>
 
 ### Guides
@@ -485,11 +505,11 @@ as passive data the user can glance at.</motivation-note>
 - Account icon → opens the account menu (Progress, About, Sign out); logged
   out, a "Sign in" link takes its place
 
-**Mobile bottom nav (5 items):**
+**Mobile bottom nav (6 items signed in, 5 logged out):**
 ```
-[🏠 Home] [⚡ Practice] [📖 Learn] [🧭 Guides] [📋 Reference]
+[🏠 Home] [⚡ Practice] [📓 Lessons] [📖 Learn] [🧭 Guides] [📋 Reference]
 ```
-- Logged out, the Practice tab goes to /try, since /practice needs an account
+- Logged out, the Practice tab goes to /try, since /practice needs an account, and Lessons is hidden
 
 This follows the Instagram/Duolingo pattern of minimal top bar + bottom nav.
 
@@ -598,11 +618,11 @@ search box between the logo and the links that shows results in a dropdown:
 
 **Authenticated:**
 ```
-[Kalimera]  [🔍 Search...]  [Practice ←CTA] [Learn] [Guides] [Reference] [theme] [Account ▾]
-                                                                          └── Progress
-                                                                              About
-                                                                              ────────
-                                                                              Sign out
+[Kalimera]  [🔍 Search...]  [Practice ←CTA] [Lessons] [Learn] [Guides] [Reference] [theme] [Account ▾]
+                                                                                    └── Progress
+                                                                                        About
+                                                                                        ────────
+                                                                                        Sign out
 ```
 
 **Unauthenticated:**
@@ -618,6 +638,7 @@ search box between the logo and the links that shows results in a dropdown:
 |-------|--------|---------|-------|
 | `/` | Home (bottom nav) | Logo tap | Dashboard/home |
 | `/practice` | Practice (bottom nav) | Practice (CTA) | Primary action (authenticated) |
+| `/lessons` | Lessons (bottom nav, signed in) | Lessons (signed in) | Latest lesson, every lesson listed |
 | `/learn` | Learn (bottom nav) | Learn | Landing page → subsections |
 | `/guides` | Guides (bottom nav) | Guides | Landing page → fourteen guides in three groups |
 | `/reference` | Reference (bottom nav) | Reference | Landing page → tabs |
