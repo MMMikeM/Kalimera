@@ -225,6 +225,7 @@ export const GENDER_GUIDE: Guide = {
 					"-άκι makes it small, and neuter whatever it was before.",
 					"-άκος makes it small, and keeps a masculine noun masculine.",
 					"-άρα makes it big, or stronger, and feminine whatever it was before.",
+					"-ούλα makes a feminine noun small, and keeps it feminine.",
 				],
 			],
 			table: {
@@ -237,6 +238,7 @@ export const GENDER_GUIDE: Guide = {
 					[markedCell("ο ελέφαντας", "nominative", "masculine"), markedCell("το ελεφαντάκι", "nominative", "neuter", false), "a little elephant"],
 					[markedCell("το κρεβάτι", "nominative", "neuter"), markedCell("το κρεβατάκι", "nominative", "neuter"), "a cot"],
 					[markedCell("ο ύπνος", "nominative", "masculine"), markedCell("ο υπνάκος", "nominative", "masculine"), "a nap"],
+					[markedCell("η γάτα", "nominative", "feminine"), markedCell("η γατούλα", "nominative", "feminine"), "a kitty"],
 					[markedCell("η φωνή", "nominative", "feminine"), markedCell("η φωνάρα", "nominative", "feminine"), "a big, loud voice"],
 					[markedCell("το ψώνιο", "nominative", "neuter"), markedCell("η ψωνάρα", "nominative", "feminine", false), "an egomaniac, full of themselves (slang)"],
 				],

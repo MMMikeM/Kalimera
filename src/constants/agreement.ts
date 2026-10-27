@@ -175,7 +175,7 @@ export const AGREEMENT_PARADIGMS: AgreementParadigm[] = [
 		title: "Masculine -ης words",
 		example: "μαθητής (student)",
 		frequency: "common",
-		tip: "Words in -τζής add a syllable in the plural instead: ταξιτζής → ταξιτζήδες",
+		tip: "Words in -τζής and -άρης add a syllable in the plural instead: ταξιτζής → ταξιτζήδες",
 		forms: [
 			{
 				case: "nom",

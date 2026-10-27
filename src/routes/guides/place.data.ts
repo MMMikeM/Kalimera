@@ -266,6 +266,30 @@ export const PLACE_GUIDE: Guide = {
 			],
 			details: [
 				{
+					label: "εκτός, outside or apart from",
+					text: [
+						"εκτός breaks the pattern: on its own it takes the Owner form, εκτός γάμου, outside marriage.",
+						"Before a person or thing with its article, say εκτός από, which takes the Target form like από.",
+					],
+					examples: [
+						{
+							greek: "Η κόρη μου έχει έναν γιο εκτός γάμου.",
+							english: "My daughter has a son outside marriage.",
+							marks: [
+								mark("Η κόρη", "nominative", "feminine"),
+								mark("μου", "genitive"),
+								mark("έναν γιο", "accusative", "masculine"),
+								mark("γάμου", "genitive", "masculine"),
+							],
+						},
+						{
+							greek: "Ήρθαν όλοι εκτός από τη Μαρία.",
+							english: "Everyone came apart from Maria.",
+							marks: [mark("τη Μαρία", "accusative", "feminine")],
+						},
+					],
+				},
+				{
 					label: "μετά από, after",
 					text: "Before a length of time, μετά από means after.",
 					examples: [

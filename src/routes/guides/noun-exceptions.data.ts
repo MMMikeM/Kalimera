@@ -15,7 +15,7 @@ export const NOUN_EXCEPTIONS_GUIDE: Guide = {
 			rule: [
 				"A few nouns make their plural, the form for more than one, with an ending you wouldn't guess from the form for one.",
 				"Some add -δ- and a syllable: ο καφές, οι καφέδες. Most of these end in:",
-				["-άς", "-ά", "-ές", "-ούς", "-τζής"],
+				["-άς", "-ά", "-ές", "-ούς", "-τζής", "-άρης, and a few others in -ης, such as ο τεμπέλης"],
 				"The table shows the common ones. Feminines in -η that take -εις are below.",
 			],
 			table: {
@@ -30,6 +30,7 @@ export const NOUN_EXCEPTIONS_GUIDE: Guide = {
 					[markedCell("ο μπαμπάς", "nominative", "masculine"), markedCell("οι μπαμπάδες", "nominative", "masculine", true), "dad"],
 					[markedCell("ο παππούς", "nominative", "masculine"), markedCell("οι παππούδες", "nominative", "masculine", true), "grandfather"],
 					[markedCell("ο ταξιτζής", "nominative", "masculine"), markedCell("οι ταξιτζήδες", "nominative", "masculine", true), "taxi driver"],
+					[markedCell("ο τεμπέλης", "nominative", "masculine"), markedCell("οι τεμπέληδες", "nominative", "masculine", true), "lazybones"],
 				],
 			},
 			examples: [
