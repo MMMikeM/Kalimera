@@ -73,11 +73,13 @@ const IRREGULAR_FORMS: Record<string, Partial<Record<CaseNumberKey, NominalFormC
 		accusative_plural: { form: "μαμάδες", article: "τις" },
 		genitive_plural: { form: "μαμάδων", article: "των" },
 	},
-	// Genitive-plural stress in -α feminines is lexical, not derivable. The
-	// paradigm takes the oxytone majority (γυναικών, θαλασσών, ωρών); these keep
-	// the stem stress instead.
-	ομάδα: { genitive_plural: { form: "ομάδων", article: "των" } },
+	// Genitive-plural stress in -α feminines is lexical outside the -άδα, -ίδα and
+	// -τητα suffixes the paradigm handles. It takes the oxytone majority (γυναικών,
+	// θαλασσών, ωρών); these keep the stem stress instead.
 	εικόνα: { genitive_plural: { form: "εικόνων", article: "των" } },
+	// The reverse in masc-as: most keep the stem stress (πατέρων), these move it.
+	μήνας: { genitive_plural: { form: "μηνών", article: "των" } },
+	άντρας: { genitive_plural: { form: "αντρών", article: "των" } },
 	// Imparisyllable masculines: a stressed -άς and the -τζής trade suffix add a
 	// syllable in the plural. Their singular is regular, so the pattern stays
 	// masc-as / masc-is and only the plural is written out.
@@ -90,6 +92,18 @@ const IRREGULAR_FORMS: Record<string, Partial<Record<CaseNumberKey, NominalFormC
 		nominative_plural: { form: "ταξιτζήδες", article: "οι" },
 		accusative_plural: { form: "ταξιτζήδες", article: "τους" },
 		genitive_plural: { form: "ταξιτζήδων", article: "των" },
+	},
+	// Unstressed -ης splits: εργάτης → εργάτες, but τεμπέλης → τεμπέληδες. The
+	// paradigm adds the syllable for the -άρης suffix only.
+	τεμπέλης: {
+		nominative_plural: { form: "τεμπέληδες", article: "οι" },
+		accusative_plural: { form: "τεμπέληδες", article: "τους" },
+		genitive_plural: { form: "τεμπέληδων", article: "των" },
+	},
+	μπαρμπέρης: {
+		nominative_plural: { form: "μπαρμπέρηδες", article: "οι" },
+		accusative_plural: { form: "μπαρμπέρηδες", article: "τους" },
+		genitive_plural: { form: "μπαρμπέρηδων", article: "των" },
 	},
 	// Imparisyllable -ούς: adds a syllable in the plural.
 	παππούς: {

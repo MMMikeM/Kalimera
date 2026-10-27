@@ -283,6 +283,55 @@ describe("genitive plural stress", () => {
 	])("%s takes the oxytone -ών", (lemma, expected) => {
 		expect(nouns(lemma, "fem-a").genitive_plural).toBe(expected);
 	});
+
+	it.each([
+		["εβδομάδα", "εβδομάδων"],
+		["ομάδα", "ομάδων"],
+		["λεμονάδα", "λεμονάδων"],
+		["ελπίδα", "ελπίδων"],
+		["σελίδα", "σελίδων"],
+	])("%s keeps the stem's stress: -άδα and -ίδα take -ων", (lemma, expected) => {
+		expect(nouns(lemma, "fem-a").genitive_plural).toBe(expected);
+	});
+
+	it.each([
+		["δραστηριότητα", "δραστηριοτήτων"],
+		["ταυτότητα", "ταυτοτήτων"],
+		["ταχύτητα", "ταχυτήτων"],
+	])("%s stresses the penult: -τητα takes -τήτων", (lemma, expected) => {
+		expect(nouns(lemma, "fem-a").genitive_plural).toBe(expected);
+	});
+});
+
+describe("masculine -ης with the stress on the stem", () => {
+	it.each([
+		["εργάτης", "εργάτη", "εργατών"],
+		["κλέφτης", "κλέφτη", "κλεφτών"],
+	])("%s keeps the stem's stress in the singular", (lemma, singular, genitivePlural) => {
+		expect(nouns(lemma, "masc-is")).toMatchObject({
+			accusative_singular: singular,
+			genitive_singular: singular,
+			genitive_plural: genitivePlural,
+		});
+	});
+
+	it.each([
+		["κλαψιάρης", "κλαψιάρηδες", "κλαψιάρηδων"],
+		["ζηλιάρης", "ζηλιάρηδες", "ζηλιάρηδων"],
+	])("%s adds a syllable in the plural: -άρης takes -ηδες", (lemma, plural, genitivePlural) => {
+		expect(nouns(lemma, "masc-is")).toMatchObject({
+			nominative_plural: plural,
+			accusative_plural: plural,
+			genitive_plural: genitivePlural,
+		});
+	});
+
+	it("μαθητής keeps its stress on the ending", () => {
+		expect(nouns("μαθητής", "masc-is")).toMatchObject({
+			genitive_singular: "μαθητή",
+			genitive_plural: "μαθητών",
+		});
+	});
 });
 
 describe("three-syllable rule", () => {

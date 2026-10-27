@@ -148,10 +148,19 @@ describe("lemmas no paradigm generates", () => {
 		});
 	});
 
+	it.each([
+		["μήνας", "μηνών"],
+		["άντρας", "αντρών"],
+	] as const)("moves %s's genitive plural stress to the ending", (lemma, genitive) => {
+		expect(formsOf(lemma, "masculine").genitive_plural).toBe(genitive);
+	});
+
 	// The masc-as and masc-is generators gave *οι μπαμπές and *οι ταξιτζές.
 	it.each([
 		["μπαμπάς", "μπαμπά", "μπαμπάδες", "μπαμπάδων"],
 		["ταξιτζής", "ταξιτζή", "ταξιτζήδες", "ταξιτζήδων"],
+		["τεμπέλης", "τεμπέλη", "τεμπέληδες", "τεμπέληδων"],
+		["μπαρμπέρης", "μπαρμπέρη", "μπαρμπέρηδες", "μπαρμπέρηδων"],
 	] as const)("adds the syllable back for imparisyllable %s", (lemma, singular, plural, genitive) => {
 		expect(formsOf(lemma, "masculine")).toMatchObject({
 			nominative_singular: lemma,

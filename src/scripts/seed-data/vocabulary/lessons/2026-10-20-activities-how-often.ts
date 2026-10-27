@@ -27,20 +27,8 @@ export const LESSON_2026_10_20 = createLesson({
 	],
 
 	nouns: [
-		{
-			lemma: "δραστηριότητα",
-			gender: "feminine",
-			english: "activity",
-			cefrLevel: "A2",
-			nominalForms: { genitive_plural: { form: "δραστηριοτήτων", article: "των" } },
-		},
-		{
-			lemma: "μήνας",
-			gender: "masculine",
-			english: "month",
-			cefrLevel: "A1",
-			nominalForms: { genitive_plural: { form: "μηνών", article: "των" } },
-		},
+		{ lemma: "δραστηριότητα", gender: "feminine", english: "activity", cefrLevel: "A2" },
+		{ lemma: "μήνας", gender: "masculine", english: "month", cefrLevel: "A1" },
 		{ lemma: "φορά", gender: "feminine", english: "time (instance)", cefrLevel: "A2" },
 		{ lemma: "παιχνίδι", gender: "neuter", english: "toy; game", cefrLevel: "A1" },
 		{ lemma: "βιντεοπαιχνίδι", gender: "neuter", english: "video game", cefrLevel: "A2" },

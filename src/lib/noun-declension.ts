@@ -178,6 +178,49 @@ const mapArticleForAccusative = (article: string, noun: string): string => {
 
 type ParadigmForms = (typeof AGREEMENT_PARADIGMS)[0]["forms"];
 
+/** fem-a suffixes whose genitive plural keeps the stem's stress: εβδομάδων, ελπίδων, ταυτοτήτων. */
+const FEM_A_UNSTRESSED_GENITIVE_PLURAL = /(άδα|ίδα|τητα)$/;
+
+/** The -άρης suffix adds a syllable in the plural: κλαψιάρης → κλαψιάρηδες. */
+const MASC_IS_ADDS_SYLLABLE = /άρης$/;
+const ADDED_SYLLABLE_ENDINGS: Partial<Record<Case, string>> = {
+	nominative: "-ηδες",
+	accusative: "-ηδες",
+	genitive: "-ηδων",
+};
+
+/**
+ * The paradigm's ending for one cell, with the corrections a stem-stressed lemma
+ * needs. masc-is is written for μαθητής, whose stress is on the ending, so a
+ * stem-stressed εργάτης keeps its own stress in the singular rather than moving
+ * it to -ή; its genitive plural still takes -ών.
+ */
+const endingFor = (
+	lemma: string,
+	pattern: NounDeclensionPattern,
+	grammaticalCase: Case,
+	number: GrammaticalNumber,
+	ending: string,
+): { ending: string; stressMovesToEnding: boolean } => {
+	const isGenitive = grammaticalCase === "genitive";
+	if (pattern === "masc-is" && number === "singular") {
+		return { ending, stressMovesToEnding: false };
+	}
+	const addedSyllable = ADDED_SYLLABLE_ENDINGS[grammaticalCase];
+	if (pattern === "masc-is" && addedSyllable && MASC_IS_ADDS_SYLLABLE.test(lemma)) {
+		return { ending: addedSyllable, stressMovesToEnding: false };
+	}
+	if (
+		pattern === "fem-a" &&
+		number === "plural" &&
+		isGenitive &&
+		FEM_A_UNSTRESSED_GENITIVE_PLURAL.test(lemma)
+	) {
+		return { ending: "-ων", stressMovesToEnding: false };
+	}
+	return { ending, stressMovesToEnding: isGenitive };
+};
+
 const _declineNounForms = (
 	lemma: string,
 	pattern: NounDeclensionPattern,
@@ -197,13 +240,14 @@ const _declineNounForms = (
 
 		if (!grammaticalCase) continue;
 
-		const noun = applyEnding(
-			stem,
-			form.ending,
-			grammaticalCase === "genitive",
-			form.stressOnStemFinal,
+		const { ending, stressMovesToEnding } = endingFor(
+			lemma,
 			pattern,
+			grammaticalCase,
+			number,
+			form.ending,
 		);
+		const noun = applyEnding(stem, ending, stressMovesToEnding, form.stressOnStemFinal, pattern);
 		const article = mapArticleForAccusative(form.article, noun);
 
 		forms.push({
