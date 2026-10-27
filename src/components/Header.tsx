@@ -31,12 +31,15 @@ const NAV_ITEMS_UNAUTH = [
 
 interface HeaderProps {
 	isAuthenticated: boolean;
+	showLessons: boolean;
 	currentSection?: string;
 	onLogout?: () => void;
 }
 
-export const Header = ({ isAuthenticated, currentSection = "", onLogout }: HeaderProps) => {
-	const navItems = isAuthenticated ? NAV_ITEMS_AUTH : NAV_ITEMS_UNAUTH;
+export const Header = ({ isAuthenticated, showLessons, currentSection = "", onLogout }: HeaderProps) => {
+	const navItems = isAuthenticated
+		? NAV_ITEMS_AUTH.filter((item) => showLessons || item.id !== "lessons")
+		: NAV_ITEMS_UNAUTH;
 	const [isSearchOpen, setIsSearchOpen] = useState(false);
 	const { searchTerm, setSearchTerm, results, isLoading } = useVocabularySearch({
 		enabled: isSearchOpen,

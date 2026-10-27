@@ -1,13 +1,16 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import type { ReactNode } from "react";
+import { cn } from "tailwind-variants";
 
 import { GrammarMark } from "@/components/GrammarMark";
 import { GreekText } from "@/components/GreekText";
 import { formatLongDate, parsePlainDate } from "@/lib/time";
+import { MarkedPhrase } from "@/routes/guides/components/marked-phrase";
 import { DrillList } from "@/routes/practice/components/drill-index";
 import { DRILL_REGISTRY } from "@/routes/practice/drill-catalogue.data";
 import type { LessonNoteView, LessonSheet as Sheet, LessonWord } from "@/server/fns/lessons.server";
+import type { NoteExample } from "@/types/lesson-seed";
 
 const SheetSection = ({ id, title, children }: { id: string; title: string; children: ReactNode }) => (
 	<section aria-labelledby={id} className="mt-12">
@@ -32,30 +35,42 @@ const exampleParts = (example: string): { text: string; gloss: boolean }[] =>
 		.filter(Boolean)
 		.map((part) => ({ text: part.replace(/^[-–]\s*/, ""), gloss: !GREEK.test(part) }));
 
-const Example = ({ example }: { example: string }) => (
-	<li className="flex flex-wrap items-baseline gap-x-2">
-		{exampleParts(example).map((part, i) =>
-			part.gloss ? (
-				<span key={i} className="text-sm text-stone-600">
-					{part.text}
-				</span>
-			) : (
-				<GreekText key={i} size="lg">
-					{part.text}
-				</GreekText>
-			),
-		)}
-	</li>
-);
+const Example = ({ example }: { example: NoteExample }) =>
+	typeof example === "string" ? (
+		<li className="flex flex-wrap items-baseline gap-x-2">
+			{exampleParts(example).map((part, i) =>
+				part.gloss ? (
+					<span key={i} className="text-sm text-stone-600">
+						{part.text}
+					</span>
+				) : (
+					<GreekText key={i} size="lg">
+						{part.text}
+					</GreekText>
+				),
+			)}
+		</li>
+	) : (
+		<li>
+			<p>
+				<MarkedPhrase text={example.greek} marks={example.marks} size="lg" />
+			</p>
+			<p className="mt-0.5 text-sm text-pretty text-stone-600">{example.english}</p>
+		</li>
+	);
+
+const exampleKey = (example: NoteExample) => (typeof example === "string" ? example : example.greek);
+
+const isMarked = (example: NoteExample) => typeof example !== "string" && (example.marks?.length ?? 0) > 0;
 
 const Note = ({ note }: { note: LessonNoteView }) => (
 	<li className="py-5 first:pt-0 last:pb-0">
 		<h4 className="font-semibold text-pretty text-stone-900">{note.pattern}</h4>
 		<p className="mt-1 max-w-prose leading-relaxed text-pretty text-stone-700">{note.explanation}</p>
 		{note.examples.length > 0 && (
-			<ul className="mt-3 space-y-1.5">
+			<ul className={cn("mt-3", note.examples.some(isMarked) ? "space-y-3" : "space-y-1.5")}>
 				{note.examples.map((example) => (
-					<Example key={example} example={example} />
+					<Example key={exampleKey(example)} example={example} />
 				))}
 			</ul>
 		)}

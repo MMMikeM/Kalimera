@@ -1,3 +1,4 @@
+import { mark } from "@/lib/guide-marks";
 import { createLesson } from "@/types/lesson-builder";
 
 export const LESSON_2026_10_06 = createLesson({
@@ -91,10 +92,10 @@ export const LESSON_2026_10_06 = createLesson({
 		{
 			pattern: "πολλή or πολύ before a noun",
 			examples: [
-				"Έχω πολλή δουλειά. (feminine)",
-				"πολύς κόσμος (masculine)",
-				"πολύ νερό (neuter)",
-				"Έχω πολλά πράγματα να κάνω. (neuter plural)",
+				{ greek: "Έχω πολλή δουλειά.", english: "I have a lot of work. (feminine)", marks: [mark("πολλή δουλειά", "accusative", "feminine")] },
+				{ greek: "πολύς κόσμος", english: "a lot of people (masculine)", marks: [mark("πολύς κόσμος", "nominative", "masculine")] },
+				{ greek: "πολύ νερό", english: "a lot of water (neuter)", marks: [mark("πολύ νερό", "nominative", "neuter")] },
+				{ greek: "Έχω πολλά πράγματα να κάνω.", english: "I have a lot of things to do. (neuter plural)", marks: [mark("πολλά πράγματα", "accusative", "neuter", true)] },
 			],
 			explanation:
 				"Before a noun, πολύς copies its gender and number. πολλή and πολύ sound the same, so only the spelling shows the feminine. You will see πολύ with a feminine noun too, but πολλή is the standard form.",
@@ -109,7 +110,7 @@ export const LESSON_2026_10_06 = createLesson({
 		},
 		{
 			pattern: "από + Target form",
-			examples: ["Έμαθα πολλά πράγματα από τους συμμαθητές μου.", "οι συμμαθητές → από τους συμμαθητές"],
+			examples: [{ greek: "Έμαθα πολλά πράγματα από τους συμμαθητές μου.", english: "I learnt a lot of things from my classmates.", marks: [mark("τους συμμαθητές", "accusative", "masculine", true)] }, { greek: "οι συμμαθητές → από τους συμμαθητές", english: "the classmates → from the classmates", marks: [mark("οι συμμαθητές", "nominative", "masculine", true), mark("τους συμμαθητές", "accusative", "masculine", true)] }],
 			explanation:
 				"After a preposition such as από, the noun takes the Target form. συμμαθητές is masculine plural, so the article is τους.",
 			section: "roles/target",

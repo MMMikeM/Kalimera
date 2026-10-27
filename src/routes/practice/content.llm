@@ -35,7 +35,7 @@ Route segments use grammatical terms (`nominative`); drill titles and phase labe
 <purpose>Hub: the drills for the latest lessons, then one link per drill group</purpose>
 <file>src/routes/practice/index.tsx</file>
 <displays>
-- "From your lessons": loader `getRecentLessonDrillsFn` (`src/server/fns/guides.ts`) reads the two latest lessons whose grammar notes point at a guide section with drills, and lists those drills under each lesson's date and topic.
+- "From your lessons": loader `getRecentLessonDrillsFn` (`src/server/fns/guides.ts`) reads the two latest lessons whose grammar notes point at a guide section with drills, and lists those drills under each lesson's date and topic. The owner's account only (`canSeeLessons`); anyone else gets an empty list.
 - A ruled list built from `SECTIONS`, each row a serif label plus a one-line thesis:
   - The case system → /practice/cases
   - Pronouns → /practice/pronouns

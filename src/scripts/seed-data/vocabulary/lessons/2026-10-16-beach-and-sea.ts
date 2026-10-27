@@ -1,3 +1,4 @@
+import { mark } from "@/lib/guide-marks";
 import { createLesson } from "@/types/lesson-builder";
 
 export const LESSON_2026_10_16 = createLesson({
@@ -58,14 +59,14 @@ export const LESSON_2026_10_16 = createLesson({
 	grammarNotes: [
 		{
 			pattern: "σε + article at the beach and in the sea",
-			examples: ["στην παραλία", "στην πισίνα", "στη θάλασσα", "στο πλοίο"],
+			examples: [{ greek: "στην παραλία", english: "at the beach", marks: [mark("στην παραλία", "accusative", "feminine")] }, { greek: "στην πισίνα", english: "in the pool", marks: [mark("στην πισίνα", "accusative", "feminine")] }, { greek: "στη θάλασσα", english: "in the sea", marks: [mark("στη θάλασσα", "accusative", "feminine")] }, { greek: "στο πλοίο", english: "on the ship", marks: [mark("στο πλοίο", "accusative", "neuter")] }],
 			explanation:
 				"σε joins the article as one word, and the noun takes the Target form. παραλία and πισίνα begin with π, so την keeps its ν; θάλασσα does not, so στη.",
 			section: "place/se-contractions",
 		},
 		{
 			pattern: "σαν: like",
-			examples: ["Η φώκια κολυμπάει σαν ψάρι.", "σαν τον καρχαρία"],
+			examples: ["Η φώκια κολυμπάει σαν ψάρι.", { greek: "σαν τον καρχαρία", english: "like the shark", marks: [mark("τον καρχαρία", "accusative", "masculine")] }],
 			explanation:
 				"σαν says one thing is like another. With an article, the noun after it takes the Target form, as after σε.",
 			section: "place/without-until",

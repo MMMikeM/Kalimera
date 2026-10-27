@@ -1,3 +1,4 @@
+import { mark } from "@/lib/guide-marks";
 import { createLesson } from "@/types/lesson-builder";
 
 export const LESSON_2026_10_20 = createLesson({
@@ -111,9 +112,9 @@ export const LESSON_2026_10_20 = createLesson({
 		{
 			pattern: "How many times: number + φορές + a time",
 			examples: [
-				"Ο Νέιθαν δύο φορές κάθε μήνα παίζει βιντεοπαιχνίδια.",
-				"δύο φορές την εβδομάδα (twice a week)",
-				"δύο φορές τον μήνα (twice a month)",
+				{ greek: "Ο Νέιθαν δύο φορές κάθε μήνα παίζει βιντεοπαιχνίδια.", english: "Nathan plays video games twice every month.", marks: [mark("κάθε μήνα", "accusative", "masculine")] },
+				{ greek: "δύο φορές την εβδομάδα", english: "twice a week", marks: [mark("την εβδομάδα", "accusative", "feminine")] },
+				{ greek: "δύο φορές τον μήνα", english: "twice a month", marks: [mark("τον μήνα", "accusative", "masculine")] },
 			],
 			explanation:
 				"For times, Greek counts φορές (η φορά, a time) and puts the number in front. The period that follows is a time, so it takes the Target form: την εβδομάδα, τον μήνα. κάθε μήνα says the same thing. The how-often phrase usually comes before the verb.",
@@ -121,13 +122,13 @@ export const LESSON_2026_10_20 = createLesson({
 		},
 		{
 			pattern: "A name takes the article",
-			examples: ["Η Γιάννα κάνει γιόγκα.", "Ο Νέιθαν παίζει βιντεοπαιχνίδια.", "Ο Ντέιβιντ πλένει τα δόντια του."],
+			examples: [{ greek: "Η Γιάννα κάνει γιόγκα.", english: "Gianna does yoga.", marks: [mark("Η Γιάννα", "nominative", "feminine")] }, { greek: "Ο Νέιθαν παίζει βιντεοπαιχνίδια.", english: "Nathan plays video games.", marks: [mark("Ο Νέιθαν", "nominative", "masculine")] }, { greek: "Ο Ντέιβιντ πλένει τα δόντια του.", english: "David brushes his teeth.", marks: [mark("Ο Ντέιβιντ", "nominative", "masculine")] }],
 			explanation: "When you talk about someone by name, Greek puts the article before it: η Γιάννα, not just Γιάννα.",
 			section: "roles/when-article",
 		},
 		{
 			pattern: "με + Target form",
-			examples: ["με τον παππού του (with his grandfather)", "με τη βούρτσα του (with his brush)"],
+			examples: [{ greek: "με τον παππού του", english: "with his grandfather", marks: [mark("τον παππού", "accusative", "masculine")] }, { greek: "με τη βούρτσα του", english: "with his brush", marks: [mark("τη βούρτσα", "accusative", "feminine")] }],
 			explanation:
 				"με, with, takes the Target form, like από and σε: ο παππούς becomes τον παππού, η βούρτσα becomes τη βούρτσα. Nothing is done to the grandfather; the form comes from the preposition.",
 			section: "roles/target",
@@ -141,7 +142,7 @@ export const LESSON_2026_10_20 = createLesson({
 		},
 		{
 			pattern: "ο ανιψιός, η ανιψιά",
-			examples: ["ο ανιψιός (nephew)", "η ανιψιά (niece)"],
+			examples: [{ greek: "ο ανιψιός", english: "nephew", marks: [mark("ο ανιψιός", "nominative", "masculine")] }, { greek: "η ανιψιά", english: "niece", marks: [mark("η ανιψιά", "nominative", "feminine")] }],
 			explanation: "A masculine and feminine pair: -ός becomes -ά.",
 			section: "gender/gender-pairs",
 		},

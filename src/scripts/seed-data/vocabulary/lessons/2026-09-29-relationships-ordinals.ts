@@ -1,3 +1,4 @@
+import { mark } from "@/lib/guide-marks";
 import { createLesson } from "@/types/lesson-builder";
 
 export const LESSON_2026_09_29 = createLesson({
@@ -122,9 +123,9 @@ export const LESSON_2026_09_29 = createLesson({
 		{
 			pattern: "Ordinals agree like adjectives",
 			examples: [
-				"ο πρώτος · η πρώτη · το πρώτο",
-				"στην πρώτη φωτογραφία (in the first photo)",
-				"ο όγδοος · η όγδοη · το όγδοο",
+				{ greek: "ο πρώτος · η πρώτη · το πρώτο", english: "the first", marks: [mark("ο πρώτος", "nominative", "masculine"), mark("η πρώτη", "nominative", "feminine"), mark("το πρώτο", "nominative", "neuter")] },
+				{ greek: "στην πρώτη φωτογραφία", english: "in the first photo", marks: [mark("στην πρώτη φωτογραφία", "accusative", "feminine")] },
+				{ greek: "ο όγδοος · η όγδοη · το όγδοο", english: "the eighth", marks: [mark("ο όγδοος", "nominative", "masculine"), mark("η όγδοη", "nominative", "feminine"), mark("το όγδοο", "nominative", "neuter")] },
 			],
 			explanation:
 				"πρώτος to ένατος take -ος/-η/-ο and match the noun they describe, just like καλός.",
@@ -132,7 +133,7 @@ export const LESSON_2026_09_29 = createLesson({
 		},
 		{
 			pattern: "σε + article with a photo or a number",
-			examples: ["στο νούμερο ένα", "στην πρώτη φωτογραφία", "στη δεύτερη φωτογραφία"],
+			examples: [{ greek: "στο νούμερο ένα", english: "at number one", marks: [mark("στο νούμερο", "accusative", "neuter")] }, { greek: "στην πρώτη φωτογραφία", english: "in the first photo", marks: [mark("στην πρώτη φωτογραφία", "accusative", "feminine")] }, { greek: "στη δεύτερη φωτογραφία", english: "in the second photo", marks: [mark("στη δεύτερη φωτογραφία", "accusative", "feminine")] }],
 			explanation:
 				"σε joins the article: στο νούμερο, στη φωτογραφία. Feminine στη keeps its -ν before π, so it is στην πρώτη but στη δεύτερη.",
 			section: "place/se-contractions",
@@ -140,9 +141,9 @@ export const LESSON_2026_09_29 = createLesson({
 		{
 			pattern: "Αυτοί or Αυτές?",
 			examples: [
-				"Αυτοί είναι φίλοι. (men, or a mixed group)",
-				"Αυτές είναι συμμαθήτριες. (women only)",
-				"Αυτοί είναι αδέλφια. (αυτοί follows the people, not the neuter noun)",
+				{ greek: "Αυτοί είναι φίλοι.", english: "They are friends. (men, or a mixed group)", marks: [mark("Αυτοί", "nominative", "masculine", true)] },
+				{ greek: "Αυτές είναι συμμαθήτριες.", english: "They are classmates. (women only)", marks: [mark("Αυτές", "nominative", "feminine", true)] },
+				{ greek: "Αυτοί είναι αδέλφια.", english: "They are siblings. (αυτοί follows the people, not the neuter noun)", marks: [mark("Αυτοί", "nominative", "masculine", true), mark("αδέλφια", "nominative", "neuter", true)] },
 			],
 			explanation:
 				"Αυτοί points at men or a mixed group, αυτές at women only. It follows the people you are pointing at, so αδέλφια takes αυτοί even though the noun is neuter.",

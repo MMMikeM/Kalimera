@@ -1,3 +1,4 @@
+import { mark } from "@/lib/guide-marks";
 import { createLesson } from "@/types/lesson-builder";
 
 export const LESSON_2026_10_23 = createLesson({
@@ -122,9 +123,9 @@ export const LESSON_2026_10_23 = createLesson({
 		{
 			pattern: "παντρεμένος agrees with who is married",
 			examples: [
-				"Ο γιος μου είναι παντρεμένος.",
-				"Η κόρη μου είναι παντρεμένη.",
-				"Τα παιδιά μου είναι παντρεμένα.",
+				{ greek: "Ο γιος μου είναι παντρεμένος.", english: "My son is married.", marks: [mark("Ο γιος", "nominative", "masculine"), mark("παντρεμένος", "nominative", "masculine")] },
+				{ greek: "Η κόρη μου είναι παντρεμένη.", english: "My daughter is married.", marks: [mark("Η κόρη", "nominative", "feminine"), mark("παντρεμένη", "nominative", "feminine")] },
+				{ greek: "Τα παιδιά μου είναι παντρεμένα.", english: "My children are married.", marks: [mark("Τα παιδιά", "nominative", "neuter", true), mark("παντρεμένα", "nominative", "neuter", true)] },
 			],
 			explanation:
 				"After είμαι, παντρεμένος copies the gender and number of the person described. τα παιδιά is neuter plural, so the ending is -α: παντρεμένα.",
@@ -132,14 +133,14 @@ export const LESSON_2026_10_23 = createLesson({
 		},
 		{
 			pattern: "εγγόνι, εγγονός, εγγονή",
-			examples: ["το εγγόνι · τα εγγόνια (grandchild)", "ο εγγονός (grandson)", "η εγγονή (granddaughter)"],
+			examples: [{ greek: "το εγγόνι · τα εγγόνια", english: "grandchild · grandchildren", marks: [mark("το εγγόνι", "nominative", "neuter"), mark("τα εγγόνια", "nominative", "neuter", true)] }, { greek: "ο εγγονός", english: "grandson", marks: [mark("ο εγγονός", "nominative", "masculine")] }, { greek: "η εγγονή", english: "granddaughter", marks: [mark("η εγγονή", "nominative", "feminine")] }],
 			explanation:
 				"ο εγγονός and η εγγονή are a masculine and feminine pair. το εγγόνι is neuter and covers either, like το παιδί: έχω δύο εγγόνια.",
 			section: "gender/gender-pairs",
 		},
 		{
 			pattern: "γίνομαι and είμαι + plain form",
-			examples: ["Θα γίνεις παππούς. (you're going to be a grandfather)", "Είσαι ήδη παππούς. (you're already a grandfather)"],
+			examples: [{ greek: "Θα γίνεις παππούς.", english: "You're going to be a grandfather.", marks: [mark("παππούς", "nominative", "masculine")] }, { greek: "Είσαι ήδη παππούς.", english: "You're already a grandfather.", marks: [mark("παππούς", "nominative", "masculine")] }],
 			explanation:
 				"γίνομαι, I become, links like είμαι, so παππούς keeps its plain form. θα γίνεις is its future: you'll become.",
 			section: "roles/linking",
@@ -152,27 +153,27 @@ export const LESSON_2026_10_23 = createLesson({
 		},
 		{
 			pattern: "My daughter's son: ο γιος της κόρης μου",
-			examples: ["ο γιος της κόρης μου (my daughter's son)", "η κόρη του γιου μου (my son's daughter)"],
+			examples: [{ greek: "ο γιος της κόρης μου", english: "my daughter's son", marks: [mark("ο γιος", "nominative", "masculine"), mark("της κόρης", "genitive", "feminine"), mark("μου", "genitive")] }, { greek: "η κόρη του γιου μου", english: "my son's daughter", marks: [mark("η κόρη", "nominative", "feminine"), mark("του γιου", "genitive", "masculine"), mark("μου", "genitive")] }],
 			explanation:
 				"The owner comes second, in the Owner form. Feminines add -ς: η κόρη → της κόρης. μου at the end belongs to κόρη.",
 			section: "owner-calling/owner",
 		},
 		{
 			pattern: "Second accent: της οικογένειάς μας",
-			examples: ["η οικογένεια → της οικογένειάς μας"],
+			examples: [{ greek: "η οικογένεια → της οικογένειάς μας", english: "the family → of our family", marks: [mark("η οικογένεια", "nominative", "feminine"), mark("της οικογένειάς", "genitive", "feminine"), mark("μας", "genitive")] }],
 			explanation:
 				"οικογένεια is stressed on its third-last syllable, so before μας it takes a second accent on its last syllable.",
 			section: "little-words/forms",
 		},
 		{
 			pattern: "μετά από χρόνια: after years",
-			examples: ["Συναντάω μια φίλη μετά από χρόνια."],
+			examples: [{ greek: "Συναντάω μια φίλη μετά από χρόνια.", english: "I'm meeting a friend after years.", marks: [mark("χρόνια", "accusative", "neuter", true)] }],
 			explanation: "Before a length of time, μετά από means after. χρόνια here is years.",
 			section: "place/without-until",
 		},
 		{
 			pattern: "εκτός + Owner form",
-			examples: ["εκτός γάμου (outside marriage)"],
+			examples: [{ greek: "εκτός γάμου", english: "outside marriage", marks: [mark("γάμου", "genitive", "masculine")] }],
 			explanation:
 				"εκτός, outside or except, takes the Owner form, with no article here: ο γάμος → εκτός γάμου. Most small words of place take the Target form instead.",
 			section: "word",

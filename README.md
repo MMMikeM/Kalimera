@@ -12,7 +12,7 @@ A Greek learning app for intermediate learners building procedural fluency — d
 - **Spaced repetition** — SRS-based vocabulary review with SM-2 scheduling
 - **Grammar guides** — plain-English guides to the patterns, with grammar marks under the Greek and a drill for each section
 - **Grammar reference** — paradigm tables for cases, pronouns, articles, verbs, nouns, adjectives, prepositions, and patterns
-- **Lessons** — what each tutoring session covered: homework, the grammar taught and where its guide is, the words and phrases, and the drills for it
+- **Lessons** (the owner's account only) — what each tutoring session covered: homework, the grammar taught and where its guide is, the words and phrases, and the drills for it
 - **Memory drills** — timed paradigm recall for forms that need to be automatic
 - **Vocabulary browser** — nouns by gender/category, verbs by conjugation family with full paradigm tables
 - **Progress tracking** — streak calendar, accuracy trends, mastered vocabulary count
@@ -114,7 +114,7 @@ docs/
 /practice/guides                  One drill per guide section
 /practice/review                  Drills gone rusty
 
-/lessons                          The latest lesson, with every lesson listed beside it
+/lessons                          The latest lesson, with every lesson listed beside it (owner only)
 /lessons/:date                    One lesson, e.g. /lessons/2026-10-23
 
 /guides                           Grammar guides index

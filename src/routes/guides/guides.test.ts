@@ -2,9 +2,22 @@ import { describe, expect, it } from "vite-plus/test";
 
 import { DRILL_REGISTRY } from "@/routes/practice/drill-catalogue.data";
 import { countLessons, getLessonNotes } from "@/server/fns/guides.server";
+import { datedLessons } from "@/server/fns/lessons.server";
 import type { GuideCell, GuideSection } from "@/types/guide";
 
 import { GUIDES, resolveSectionRef, sectionExamples, sectionTables } from "./guides.data";
+
+/** Marks whose text is missing from their Greek, which the renderer drops without a trace. */
+const lostMarks = (where: string, text: string, marks: { text: string }[] = []): string[] => {
+	const lost: string[] = [];
+	let cursor = 0;
+	for (const m of marks) {
+		const at = text.indexOf(m.text, cursor);
+		if (at === -1) lost.push(`${where}: "${m.text}" in "${text}"`);
+		else cursor = at + m.text.length;
+	}
+	return lost;
+};
 
 describe("guides", () => {
 	it("gives every guide and every section within it a unique id", () => {
@@ -51,14 +64,8 @@ describe("guides", () => {
 	// A mark whose text is missing from its Greek is dropped without a trace
 	it("finds every mark's text in its Greek, in order", () => {
 		const lost: string[] = [];
-		const check = (where: string, text: string, marks: { text: string }[] = []) => {
-			let cursor = 0;
-			for (const m of marks) {
-				const at = text.indexOf(m.text, cursor);
-				if (at === -1) lost.push(`${where}: "${m.text}" in "${text}"`);
-				else cursor = at + m.text.length;
-			}
-		};
+		const check = (where: string, text: string, marks?: { text: string }[]) =>
+			lost.push(...lostMarks(where, text, marks));
 		for (const g of GUIDES) {
 			for (const s of g.sections) {
 				for (const e of sectionExamples(s)) check(`${g.slug}/${s.id}`, e.greek, e.marks);
@@ -179,5 +186,17 @@ describe("lesson grammar notes", () => {
 			})
 			.map((note) => `${note.date}: ${note.section}`);
 		expect(homeless).toEqual([]);
+	});
+
+	it("finds every mark's text in its example, in order", () => {
+		const lost: string[] = [];
+		for (const { date, lesson } of datedLessons()) {
+			for (const note of lesson.grammarNotes ?? []) {
+				for (const example of note.examples) {
+					if (typeof example !== "string") lost.push(...lostMarks(date, example.greek, example.marks));
+				}
+			}
+		}
+		expect(lost).toEqual([]);
 	});
 });

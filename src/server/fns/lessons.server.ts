@@ -1,7 +1,7 @@
 import { getArticle, type Gender } from "@/lib/greek-grammar";
 import { findGuide } from "@/routes/guides/guides.data";
 import { isPluralCitation } from "@/scripts/seed-data/vocabulary/noun-seed-enrichment";
-import type { GrammarNoteHome, Lesson } from "@/types/lesson-seed";
+import type { GrammarNoteHome, Lesson, NoteExample } from "@/types/lesson-seed";
 
 // Only the dated lesson files: lessons/index.ts pulls in node:fs and the seed pipeline.
 const LESSON_MODULES = import.meta.glob<Record<string, Lesson>>(
@@ -47,7 +47,7 @@ export interface LessonWord {
 export interface LessonNoteView {
 	pattern: string;
 	explanation: string;
-	examples: string[];
+	examples: NoteExample[];
 	taughtIn?: { guideSlug: string; sectionId: string; guide: string; section: string };
 }
 

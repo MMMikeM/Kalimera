@@ -1,3 +1,4 @@
+import { mark } from "@/lib/guide-marks";
 import { createLesson } from "@/types/lesson-builder";
 
 export const LESSON_2026_10_13 = createLesson({
@@ -121,9 +122,9 @@ export const LESSON_2026_10_13 = createLesson({
 		{
 			pattern: "πολύς before a noun, πολύ beside a verb or adjective",
 			examples: [
-				"Ο πολύς χυμός δεν κάνει καλό. (masculine)",
-				"Σήμερα κάνει πολλή ζέστη. (feminine)",
-				"Ο Λουκάς πίνει πολύ γάλα. (neuter)",
+				{ greek: "Ο πολύς χυμός δεν κάνει καλό.", english: "Too much juice isn't good for you. (masculine)", marks: [mark("Ο πολύς χυμός", "nominative", "masculine")] },
+				{ greek: "Σήμερα κάνει πολλή ζέστη.", english: "It's very hot today. (feminine)", marks: [mark("πολλή ζέστη", "accusative", "feminine")] },
+				{ greek: "Ο Λουκάς πίνει πολύ γάλα.", english: "Loukas drinks a lot of milk. (neuter)", marks: [mark("πολύ γάλα", "accusative", "neuter")] },
 				"Μ' αρέσει πολύ να ταξιδεύω. (beside a verb: never changes)",
 			],
 			explanation:
@@ -133,8 +134,8 @@ export const LESSON_2026_10_13 = createLesson({
 		{
 			pattern: "Six nominative forms of an -ος adjective",
 			examples: [
-				"καλός, καλή, καλό · καλοί, καλές, καλά",
-				"ακριβός, ακριβή, ακριβό · ακριβοί, ακριβές, ακριβά",
+				{ greek: "καλός, καλή, καλό · καλοί, καλές, καλά", english: "good", marks: [mark("καλός", "nominative", "masculine"), mark("καλή", "nominative", "feminine"), mark("καλό", "nominative", "neuter"), mark("καλοί", "nominative", "masculine", true), mark("καλές", "nominative", "feminine", true), mark("καλά", "nominative", "neuter", true)] },
+				{ greek: "ακριβός, ακριβή, ακριβό · ακριβοί, ακριβές, ακριβά", english: "expensive", marks: [mark("ακριβός", "nominative", "masculine"), mark("ακριβή", "nominative", "feminine"), mark("ακριβό", "nominative", "neuter"), mark("ακριβοί", "nominative", "masculine", true), mark("ακριβές", "nominative", "feminine", true), mark("ακριβά", "nominative", "neuter", true)] },
 			],
 			explanation:
 				"Three for one (-ος, -η, -ο) and three for more than one (-οι, -ες, -α). The plural articles οι, οι, τα tell you which ending to reach for.",
@@ -143,7 +144,7 @@ export const LESSON_2026_10_13 = createLesson({
 		{
 			pattern: "Adjective or adverb: καλός or καλά, ακριβός or ακριβώς",
 			examples: [
-				"Είμαι καλός. (I'm a good person)",
+				{ greek: "Είμαι καλός.", english: "I'm a good person.", marks: [mark("καλός", "nominative", "masculine")] },
 				"Είμαι καλά. (I'm well)",
 				"ακριβός = expensive · ακριβώς = exactly",
 			],

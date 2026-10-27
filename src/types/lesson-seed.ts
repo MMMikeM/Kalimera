@@ -1,5 +1,6 @@
 import type { AdjectiveSeedInput } from "../scripts/seed-data/vocabulary/adjective-seed-enrichment";
 import type { NounSeedInput } from "../scripts/seed-data/vocabulary/noun-seed-enrichment";
+import type { GuideExample } from "./guide";
 import type { Phrase } from "./phrase";
 import type { FullVerbSeed, AdverbSeed } from "./seed";
 
@@ -15,9 +16,16 @@ import type { FullVerbSeed, AdverbSeed } from "./seed";
  */
 export type GrammarNoteHome = `${string}/${string}` | "word" | "essentials";
 
+/**
+ * A string is shown as written, its bracketed English set as a gloss. A
+ * `GuideExample` marks the forms under its Greek, like a guide example: mark the
+ * phrases the note is about, not every noun in the sentence.
+ */
+export type NoteExample = string | GuideExample;
+
 export type GrammarNote = {
 	pattern: string;
-	examples: string[];
+	examples: NoteExample[];
 	explanation: string;
 	section: GrammarNoteHome;
 };

@@ -2,6 +2,7 @@ import { Outlet, createFileRoute, redirect, useParams } from "@tanstack/react-ro
 import { useEffect, useRef } from "react";
 
 import { PageHeading } from "@/components/PageHeading";
+import { canSeeLessons } from "@/lib/lessons-access";
 import { pageTitle } from "@/lib/page-title";
 import { getLessonsFn } from "@/server/fns/lessons";
 
@@ -9,7 +10,7 @@ import { LessonLedger } from "./components/lesson-ledger";
 
 export const Route = createFileRoute("/lessons")({
 	beforeLoad: async ({ context }) => {
-		if (!context.auth?.userId) throw redirect({ to: "/" });
+		if (!canSeeLessons(context.auth)) throw redirect({ to: "/" });
 	},
 	loader: () => getLessonsFn(),
 	head: () => ({ meta: [{ title: pageTitle("Lessons") }] }),

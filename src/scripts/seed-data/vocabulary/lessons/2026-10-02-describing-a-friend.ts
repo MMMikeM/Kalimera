@@ -1,3 +1,4 @@
+import { mark } from "@/lib/guide-marks";
 import { createLesson } from "@/types/lesson-builder";
 
 export const LESSON_2026_10_02 = createLesson({
@@ -139,9 +140,9 @@ export const LESSON_2026_10_02 = createLesson({
 		{
 			pattern: "Three ways to give someone's name",
 			examples: [
-				"Ο φίλος μου είναι ο Καμ. (Doer form)",
-				"Το όνομα του φίλου μου είναι Καμ. (Owner form)",
-				"Τον λένε Καμ. (Target form: they call him Kam)",
+				{ greek: "Ο φίλος μου είναι ο Καμ.", english: "My friend is Kam. (Doer form)", marks: [mark("Ο φίλος", "nominative", "masculine"), mark("ο Καμ", "nominative", "masculine")] },
+				{ greek: "Το όνομα του φίλου μου είναι Καμ.", english: "My friend's name is Kam. (Owner form)", marks: [mark("του φίλου", "genitive", "masculine")] },
+				{ greek: "Τον λένε Καμ.", english: "They call him Kam. (Target form)", marks: [mark("Τον", "accusative", "masculine")] },
 			],
 			explanation:
 				"The same fact in three cases. τον λένε is the most natural: λένε, they call, takes a Target, so it is με λένε, σε λένε, τον λένε, τη λένε. A name keeps its article: ο Καμ, τον Καμ.",
@@ -149,7 +150,7 @@ export const LESSON_2026_10_02 = createLesson({
 		},
 		{
 			pattern: "Target noun first, repeated by τον",
-			examples: ["Τον φίλο μου τον λένε Καμ.", "Τη Μαρία τη λένε Μαρία."],
+			examples: [{ greek: "Τον φίλο μου τον λένε Καμ.", english: "My friend, they call him Kam.", marks: [mark("Τον φίλο", "accusative", "masculine"), mark("τον", "accusative", "masculine")] }, { greek: "Τη Μαρία τη λένε Μαρία.", english: "Maria, they call her Maria.", marks: [mark("Τη Μαρία", "accusative", "feminine"), mark("τη", "accusative", "feminine")] }],
 			explanation:
 				"When the Target noun comes first, the short word τον, τη, το repeats it before the verb.",
 			section: "little-words/where-it-goes",
@@ -167,8 +168,8 @@ export const LESSON_2026_10_02 = createLesson({
 		{
 			pattern: "The job after είναι, the job as a Target",
 			examples: [
-				"Η δουλειά του είναι ηλεκτρολόγος. (plain form on both sides)",
-				"Κάνει καλά τη δουλειά του. (τη δουλειά is the Target)",
+				{ greek: "Η δουλειά του είναι ηλεκτρολόγος.", english: "His job is electrician. (Doer form on both sides)", marks: [mark("Η δουλειά", "nominative", "feminine"), mark("ηλεκτρολόγος", "nominative", "masculine")] },
+				{ greek: "Κάνει καλά τη δουλειά του.", english: "He does his job well. (τη δουλειά is the Target)", marks: [mark("τη δουλειά", "accusative", "feminine")] },
 			],
 			explanation:
 				"After είναι nothing is done to the noun, so it stays in the plain form. After κάνει the job is what he does, so it takes the Target form.",
@@ -176,14 +177,14 @@ export const LESSON_2026_10_02 = createLesson({
 		},
 		{
 			pattern: "λένε + adjective in the Target form",
-			examples: ["Μας λένε όμορφους.", "Σας λένε ψηλούς."],
+			examples: [{ greek: "Μας λένε όμορφους.", english: "They call us beautiful.", marks: [mark("όμορφους", "accusative", "masculine", true)] }, { greek: "Σας λένε ψηλούς.", english: "They call you tall.", marks: [mark("ψηλούς", "accusative", "masculine", true)] }],
 			explanation:
 				"The adjective describes the Target pronoun, so it takes the Target form too: όμορφος → όμορφους.",
 			section: "agreement/adjective-jobs",
 		},
 		{
 			pattern: "από or σε, not both",
-			examples: ["Είμαι από τη Νότια Αφρική.", "Μένω στην Κύπρο.", "not: από στην Κύπρο"],
+			examples: [{ greek: "Είμαι από τη Νότια Αφρική.", english: "I'm from South Africa.", marks: [mark("τη Νότια Αφρική", "accusative", "feminine")] }, { greek: "Μένω στην Κύπρο.", english: "I live in Cyprus.", marks: [mark("στην Κύπρο", "accusative", "feminine")] }, "not: από στην Κύπρο"],
 			explanation:
 				"από gives where from, σε where you are. Use one before a place, never both together. Both take the Target form.",
 			section: "place/purpose",

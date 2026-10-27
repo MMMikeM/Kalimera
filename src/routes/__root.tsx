@@ -16,6 +16,7 @@ import { Header } from "@/components/Header";
 import { MobileHeader } from "@/components/MobileHeader";
 import { MobileNav } from "@/components/MobileNav";
 import { NotFound, RootError } from "@/components/StatusPage";
+import { canSeeLessons } from "@/lib/lessons-access";
 import { themeInitScript } from "@/lib/theme";
 import type { RouterContext } from "@/router";
 import type { AuthSession } from "@/server/auth/session";
@@ -112,6 +113,7 @@ function RootBody() {
 							<div className="hidden md:block">
 								<Header
 									isAuthenticated={isAuthenticated}
+									showLessons={canSeeLessons(auth)}
 									currentSection={currentSection}
 									onLogout={handleLogout}
 								/>

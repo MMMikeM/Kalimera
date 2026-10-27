@@ -175,11 +175,11 @@ take the base palette and claim nothing.
 <purpose>What each tutoring session covered. A ledger of every lesson, newest first and grouped by year (date, topic, word/phrase/note counts), beside the open lesson's sheet. The index shows the latest lesson</purpose>
 <file>src/routes/lessons/route.tsx (layout and ledger), index.tsx (latest sheet), components/</file>
 <data-source>The dated lesson files in src/scripts/seed-data/vocabulary/lessons/, read through import.meta.glob in src/server/fns/lessons.server.ts. No database read</data-source>
-<note>Signed in only. On mobile the sheet comes first, with a link down to the ledger</note>
+<note>The owner's account only (`canSeeLessons`, src/lib/lessons-access.ts): the route guard, both server functions and the Lessons tab all check it. On mobile the sheet comes first, with a link down to the ledger</note>
 </route>
 
 <route path="/lessons/:date">
-<purpose>One lesson's sheet: topic, date and counts, homework, "What was taught" (each grammar note with its examples and a link to the guide section it belongs to), the words with grammar marks on the nouns, the phrases, and the drills for the guide sections it touched</purpose>
+<purpose>One lesson's sheet: topic, date and counts, homework, "What was taught" (each grammar note with its examples, grammar marks under the forms where the example carries `marks`, and a link to the guide section it belongs to), the words with grammar marks on the nouns, the phrases, and the drills for the guide sections it touched</purpose>
 <file>src/routes/lessons/$date.tsx, components/lesson-sheet.tsx</file>
 <note>An unknown date is a 404</note>
 </route>
@@ -505,11 +505,11 @@ as passive data the user can glance at.</motivation-note>
 - Account icon → opens the account menu (Progress, About, Sign out); logged
   out, a "Sign in" link takes its place
 
-**Mobile bottom nav (6 items signed in, 5 logged out):**
+**Mobile bottom nav (6 items for the owner, 5 otherwise):**
 ```
 [🏠 Home] [⚡ Practice] [📓 Lessons] [📖 Learn] [🧭 Guides] [📋 Reference]
 ```
-- Logged out, the Practice tab goes to /try, since /practice needs an account, and Lessons is hidden
+- Logged out, the Practice tab goes to /try, since /practice needs an account. Lessons shows for the owner's account only
 
 This follows the Instagram/Duolingo pattern of minimal top bar + bottom nav.
 
@@ -638,7 +638,7 @@ search box between the logo and the links that shows results in a dropdown:
 |-------|--------|---------|-------|
 | `/` | Home (bottom nav) | Logo tap | Dashboard/home |
 | `/practice` | Practice (bottom nav) | Practice (CTA) | Primary action (authenticated) |
-| `/lessons` | Lessons (bottom nav, signed in) | Lessons (signed in) | Latest lesson, every lesson listed |
+| `/lessons` | Lessons (bottom nav, owner only) | Lessons (owner only) | Latest lesson, every lesson listed |
 | `/learn` | Learn (bottom nav) | Learn | Landing page → subsections |
 | `/guides` | Guides (bottom nav) | Guides | Landing page → fourteen guides in three groups |
 | `/reference` | Reference (bottom nav) | Reference | Landing page → tabs |

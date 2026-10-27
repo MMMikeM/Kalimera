@@ -41,19 +41,29 @@ $ARGUMENTS
    - Usually a new note belongs to a section that already exists: say which, and whether the guide should gain an example from it. If it fits nowhere, say so and propose a new section rather than forcing it
    - `pnpm test src/routes/guides` fails on a `section` that names no real section
 
-8. **Set `cefrLevel`** (`A1`–`C2`) on every verb, noun, adverb and adjective; the types require it. Phrases may omit it
+8. **Mark the forms in a note's examples** when the note teaches the form of a noun, article, adjective or pronoun (a Target after a preposition, an Owner, agreement, a gender pair). Write the example as `{ greek, english, marks }` with `mark()` from `@/lib/guide-marks`, as guide examples do:
+   ```typescript
+   { greek: "ο γιος της κόρης μου", english: "my daughter's son", marks: [mark("ο γιος", "nominative", "masculine"), mark("της κόρης", "genitive", "feminine"), mark("μου", "genitive")] }
+   ```
+   - Mark the phrases the note is about, article included, not every noun in the sentence. Give the gender on nouns, articles and adjectives; short pronouns (μου, μας) take none
+   - A contraction is marked whole: `mark("στην Κύπρο", "accusative", "feminine")`
+   - The Greek goes in `greek` alone; the translation and any teaching note go in `english`: `"I have a lot of work. (feminine)"`
+   - Leave an example a plain string when there is no form to show: verbs, adverbs, a "not:" counter-example, a list of words
+   - Each mark's text must appear in the Greek, in order; `pnpm test src/routes/guides` fails otherwise. A wrong mark teaches the wrong form, so check the case against the sentence, not the ending alone
 
-9. **Create the file** at: `src/scripts/seed-data/vocabulary/lessons/YYYY-MM-DD-topic-slug.ts`
-   - Import `createLesson` from `@/types/lesson-builder`
+9. **Set `cefrLevel`** (`A1`–`C2`) on every verb, noun, adverb and adjective; the types require it. Phrases may omit it
+
+10. **Create the file** at: `src/scripts/seed-data/vocabulary/lessons/YYYY-MM-DD-topic-slug.ts`
+   - Import `createLesson` from `@/types/lesson-builder`, and `mark` from `@/lib/guide-marks` when an example is marked
    - Export as `LESSON_YYYY_MM_DD = createLesson({ ... })`
 
-10. **Don't edit the index.** `src/scripts/seed-data/vocabulary/lessons/index.ts` discovers lessons itself:
+11. **Don't edit the index.** `src/scripts/seed-data/vocabulary/lessons/index.ts` discovers lessons itself:
     - It reads its own directory for files matching `^\d{4}-\d{2}-\d{2}.*\.ts$`, sorted by name
     - It takes the date from the first 10 characters of the filename and loads the export named `LESSON_` + that date with `-` replaced by `_`
     - So the filename date and the export name must agree (keep `meta.date` the same too). A mismatched export name loads as `undefined` and `pnpm db:seed` throws; `pnpm typecheck` does not catch it
     - `LESSONS` is keyed by date, so a second file with the same date replaces the first; one lesson file per date
 
-11. **Type-check** with `pnpm typecheck`, and run `pnpm test src/routes/guides`
+12. **Type-check** with `pnpm typecheck`, and run `pnpm test src/routes/guides`
 
 ## Reference format
 
