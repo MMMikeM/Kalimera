@@ -10,7 +10,9 @@ A Greek learning app for intermediate learners building procedural fluency — d
 
 - **Timed production drills** — type Greek under time pressure to build retrieval speed
 - **Spaced repetition** — SRS-based vocabulary review with SM-2 scheduling
+- **Grammar guides** — plain-English guides to the patterns, with grammar marks under the Greek and a drill for each section
 - **Grammar reference** — paradigm tables for cases, pronouns, articles, verbs, nouns, adjectives, prepositions, and patterns
+- **Lessons** — what each tutoring session covered: homework, the grammar taught and where its guide is, the words and phrases, and the drills for it
 - **Memory drills** — timed paradigm recall for forms that need to be automatic
 - **Vocabulary browser** — nouns by gender/category, verbs by conjugation family with full paradigm tables
 - **Progress tracking** — streak calendar, accuracy trends, mastered vocabulary count
@@ -87,8 +89,10 @@ src/
   routes/            # TanStack Router file-based routes
   server/db/         # Drizzle schema and queries
   scripts/           # Seed scripts
+  scripts/seed-data/vocabulary/lessons/  # One file per tutoring lesson, YYYY-MM-DD-topic.ts
 docs/
   user-flows.llm     # Route map, user journeys, data tables
+  lessons/           # Cleaned lesson transcripts
 ```
 
 **Path alias:** `@/` → `./src/`
@@ -101,13 +105,20 @@ docs/
 /                                 Dashboard
 /login  /register  /try           Auth, and the anonymous try-before-signup drill
 
-/practice                         Drill browser — a list of the four groups
+/practice                         Drill browser — a list of the five groups
 /practice/cases                   Doer · Target · Owner · Review
 /practice/pronouns                Object forms, placement, possessives
 /practice/verbs                   Present · Past · Future & Modal · Mixed tenses
 /practice/blocks                  Survival phrases, numbers, days, opposites
 /practice/blocks/question-words   ποιος / πόσος agreement
+/practice/guides                  One drill per guide section
 /practice/review                  Drills gone rusty
+
+/lessons                          The latest lesson, with every lesson listed beside it
+/lessons/:date                    One lesson, e.g. /lessons/2026-10-23
+
+/guides                           Grammar guides index
+/guides/:guide                    One guide, e.g. /guides/owner-calling
 
 /learn                            Content browser hub
 /learn/conversations/:tab         Themed dialogues
