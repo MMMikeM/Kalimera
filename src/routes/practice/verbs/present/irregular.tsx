@@ -6,7 +6,7 @@ import { PERSON_DIMENSION_OPTIONS } from "../../components/engines/drill-constan
 
 // Irregular present-tense verbs (excluding είμαι, which has its own drill).
 // These verbs break the regular -ω/-εις/-ει paradigm in stem or endings.
-// Forward: "I have" → type "echo" (matchPhonetic → έχω)
+// Forward: "έχω · have" + "I" → type "echo" (matchPhonetic → έχω)
 // Reverse: show "πάμε" → tap the person/number chip for "we"
 
 const PRONOUNS = {
@@ -22,18 +22,14 @@ type Person = keyof typeof PRONOUNS;
 
 interface VerbDef {
 	id: string;
-	lemma: string;
 	categoryLabel: string;
-	gloss: string; // verb meaning, e.g. "have"
 	forms: Record<Person, { greek: string }>;
 }
 
 const VERBS: VerbDef[] = [
 	{
 		id: "echo",
-		lemma: "έχω",
 		categoryLabel: "έχω · have",
-		gloss: "have",
 		forms: {
 			sg1: { greek: "έχω" },
 			sg2: { greek: "έχεις" },
@@ -45,9 +41,7 @@ const VERBS: VerbDef[] = [
 	},
 	{
 		id: "pao",
-		lemma: "πάω",
 		categoryLabel: "πάω · go",
-		gloss: "go",
 		forms: {
 			sg1: { greek: "πάω" },
 			sg2: { greek: "πας" },
@@ -59,9 +53,7 @@ const VERBS: VerbDef[] = [
 	},
 	{
 		id: "leo",
-		lemma: "λέω",
 		categoryLabel: "λέω · say",
-		gloss: "say",
 		forms: {
 			sg1: { greek: "λέω" },
 			sg2: { greek: "λες" },
@@ -73,9 +65,7 @@ const VERBS: VerbDef[] = [
 	},
 	{
 		id: "troo",
-		lemma: "τρώω",
 		categoryLabel: "τρώω · eat",
-		gloss: "eat",
 		forms: {
 			sg1: { greek: "τρώω" },
 			sg2: { greek: "τρως" },
@@ -87,9 +77,7 @@ const VERBS: VerbDef[] = [
 	},
 	{
 		id: "akouo",
-		lemma: "ακούω",
 		categoryLabel: "ακούω · hear",
-		gloss: "hear",
 		forms: {
 			sg1: { greek: "ακούω" },
 			sg2: { greek: "ακούς" },
@@ -110,10 +98,9 @@ const FORMS: SimpleListItem[] = VERBS.flatMap((v) =>
 		return {
 			id: `${v.id}-${p}`,
 			greek: f.greek,
-			english: `${pron.english} ${v.gloss}${p === "sg3" ? "s" : ""}`,
 			detail: pron.detail,
-			context: v.lemma,
-			label: f.greek,
+			context: v.categoryLabel,
+			label: pron.english,
 			category: v.id,
 			dimension: p,
 		};
@@ -134,7 +121,7 @@ function PresentIrregularDrill() {
 			backTo="/practice/verbs"
 			subtitle="30 forms / timed"
 			colorTheme="olive"
-			forwardDesc="English → Greek present form"
+			forwardDesc="Person + verb → present form"
 			reverseLabel="Greek → person"
 			reverseDesc="Present form → select person"
 			categories={CATEGORIES}
