@@ -363,7 +363,7 @@ export const ROLES_GUIDE: Guide = {
 			title: "Linking verbs: είμαι and γίνομαι",
 			rule: [
 				"είμαι (I am) and γίνομαι (I become) don't act on anything. They link a noun to what it is or becomes, like an equals sign: both sides are the same person or thing.",
-				"So there is no Target, and the noun after them keeps its plain form, the Doer form. Compare βλέπω, I see. I see who? The doctor, who gets seen, so γιατρός takes the Target form. I am what? has an answer too, a doctor, but the doctor is me, not something I act on.",
+				"So there is no Target, and the noun after them keeps its plain form, the Doer form. Compare βλέπω, I see: in I see the doctor, the doctor gets seen, so γιατρός takes the Target form. In I am a doctor, the doctor _is_ me, not someone I act on.",
 				"You will meet them as είναι, is (from είμαι), and, after να, γίνει, become (from γίνομαι).",
 			],
 			table: {
@@ -377,19 +377,19 @@ export const ROLES_GUIDE: Guide = {
 					[
 						cellWith("είμαι γιατρός", mark("γιατρός", "nominative", "masculine")),
 						"I am a doctor",
-						"Plain",
+						"Doer",
 					],
 					[
 						cellWith("γίνομαι γιατρός", mark("γιατρός", "nominative", "masculine")),
 						"I become a doctor",
-						"Plain",
+						"Doer",
 					],
 				],
 			},
 			examples: [
 				{
 					greek: "Ο Νίκος είναι ο γιατρός μας.",
-					english: "Nikos is our doctor. (both sides in the plain form)",
+					english: "Nikos is our doctor. (both sides in the plain form; ο, because he is one particular doctor)",
 					marks: [
 						mark("Ο Νίκος", "nominative", "masculine"),
 						mark("ο γιατρός", "nominative", "masculine"),
