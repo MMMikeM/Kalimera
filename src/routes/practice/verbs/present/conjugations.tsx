@@ -33,6 +33,7 @@ const ENDINGS: SimpleListItem[] = [
 	{
 		id: "g1p-sg1",
 		greek: "ω",
+		acceptAlso: "κάνω",
 		detail: PRONOUNS.sg1.grammatical,
 		context: G1_PRES,
 		label: PRONOUNS.sg1.pronoun,
@@ -41,6 +42,7 @@ const ENDINGS: SimpleListItem[] = [
 	{
 		id: "g1p-sg2",
 		greek: "εις",
+		acceptAlso: "κάνεις",
 		detail: PRONOUNS.sg2.grammatical,
 		context: G1_PRES,
 		label: PRONOUNS.sg2.pronoun,
@@ -49,6 +51,7 @@ const ENDINGS: SimpleListItem[] = [
 	{
 		id: "g1p-sg3",
 		greek: "ει",
+		acceptAlso: "κάνει",
 		detail: PRONOUNS.sg3.grammatical,
 		context: G1_PRES,
 		label: PRONOUNS.sg3.pronoun,
@@ -57,6 +60,7 @@ const ENDINGS: SimpleListItem[] = [
 	{
 		id: "g1p-pl1",
 		greek: "ουμε",
+		acceptAlso: "κάνουμε",
 		detail: PRONOUNS.pl1.grammatical,
 		context: G1_PRES,
 		label: PRONOUNS.pl1.pronoun,
@@ -65,6 +69,7 @@ const ENDINGS: SimpleListItem[] = [
 	{
 		id: "g1p-pl2",
 		greek: "ετε",
+		acceptAlso: "κάνετε",
 		detail: PRONOUNS.pl2.grammatical,
 		context: G1_PRES,
 		label: PRONOUNS.pl2.pronoun,
@@ -73,6 +78,7 @@ const ENDINGS: SimpleListItem[] = [
 	{
 		id: "g1p-pl3",
 		greek: "ουν",
+		acceptAlso: "κάνουν",
 		detail: PRONOUNS.pl3.grammatical,
 		context: G1_PRES,
 		label: PRONOUNS.pl3.pronoun,
@@ -83,6 +89,7 @@ const ENDINGS: SimpleListItem[] = [
 	{
 		id: "g2ap-sg1",
 		greek: "άω",
+		acceptAlso: "μιλάω",
 		detail: PRONOUNS.sg1.grammatical,
 		context: G2A_PRES,
 		label: PRONOUNS.sg1.pronoun,
@@ -91,6 +98,7 @@ const ENDINGS: SimpleListItem[] = [
 	{
 		id: "g2ap-sg2",
 		greek: "άς",
+		acceptAlso: "μιλάς",
 		detail: PRONOUNS.sg2.grammatical,
 		context: G2A_PRES,
 		label: PRONOUNS.sg2.pronoun,
@@ -99,6 +107,7 @@ const ENDINGS: SimpleListItem[] = [
 	{
 		id: "g2ap-sg3",
 		greek: "άει",
+		acceptAlso: "μιλάει",
 		detail: PRONOUNS.sg3.grammatical,
 		context: G2A_PRES,
 		label: PRONOUNS.sg3.pronoun,
@@ -107,6 +116,7 @@ const ENDINGS: SimpleListItem[] = [
 	{
 		id: "g2ap-pl1",
 		greek: "άμε",
+		acceptAlso: "μιλάμε",
 		detail: PRONOUNS.pl1.grammatical,
 		context: G2A_PRES,
 		label: PRONOUNS.pl1.pronoun,
@@ -115,6 +125,7 @@ const ENDINGS: SimpleListItem[] = [
 	{
 		id: "g2ap-pl2",
 		greek: "άτε",
+		acceptAlso: "μιλάτε",
 		detail: PRONOUNS.pl2.grammatical,
 		context: G2A_PRES,
 		label: PRONOUNS.pl2.pronoun,
@@ -123,6 +134,7 @@ const ENDINGS: SimpleListItem[] = [
 	{
 		id: "g2ap-pl3",
 		greek: "άνε",
+		acceptAlso: "μιλάνε",
 		detail: PRONOUNS.pl3.grammatical,
 		context: G2A_PRES,
 		label: PRONOUNS.pl3.pronoun,
@@ -133,6 +145,7 @@ const ENDINGS: SimpleListItem[] = [
 	{
 		id: "g2bp-sg1",
 		greek: "ώ",
+		acceptAlso: "μπορώ",
 		detail: PRONOUNS.sg1.grammatical,
 		context: G2B_PRES,
 		label: PRONOUNS.sg1.pronoun,
@@ -141,6 +154,7 @@ const ENDINGS: SimpleListItem[] = [
 	{
 		id: "g2bp-sg2",
 		greek: "είς",
+		acceptAlso: "μπορείς",
 		detail: PRONOUNS.sg2.grammatical,
 		context: G2B_PRES,
 		label: PRONOUNS.sg2.pronoun,
@@ -149,6 +163,7 @@ const ENDINGS: SimpleListItem[] = [
 	{
 		id: "g2bp-sg3",
 		greek: "εί",
+		acceptAlso: "μπορεί",
 		detail: PRONOUNS.sg3.grammatical,
 		context: G2B_PRES,
 		label: PRONOUNS.sg3.pronoun,
@@ -157,6 +172,7 @@ const ENDINGS: SimpleListItem[] = [
 	{
 		id: "g2bp-pl1",
 		greek: "ούμε",
+		acceptAlso: "μπορούμε",
 		detail: PRONOUNS.pl1.grammatical,
 		context: G2B_PRES,
 		label: PRONOUNS.pl1.pronoun,
@@ -165,6 +181,7 @@ const ENDINGS: SimpleListItem[] = [
 	{
 		id: "g2bp-pl2",
 		greek: "είτε",
+		acceptAlso: "μπορείτε",
 		detail: PRONOUNS.pl2.grammatical,
 		context: G2B_PRES,
 		label: PRONOUNS.pl2.pronoun,
@@ -173,6 +190,7 @@ const ENDINGS: SimpleListItem[] = [
 	{
 		id: "g2bp-pl3",
 		greek: "ούν",
+		acceptAlso: "μπορούν",
 		detail: PRONOUNS.pl3.grammatical,
 		context: G2B_PRES,
 		label: PRONOUNS.pl3.pronoun,
@@ -183,6 +201,7 @@ const ENDINGS: SimpleListItem[] = [
 	{
 		id: "depp-sg1",
 		greek: "ομαι",
+		acceptAlso: "έρχομαι",
 		detail: PRONOUNS.sg1.grammatical,
 		context: DEP_PRES,
 		label: PRONOUNS.sg1.pronoun,
@@ -191,6 +210,7 @@ const ENDINGS: SimpleListItem[] = [
 	{
 		id: "depp-sg2",
 		greek: "εσαι",
+		acceptAlso: "έρχεσαι",
 		detail: PRONOUNS.sg2.grammatical,
 		context: DEP_PRES,
 		label: PRONOUNS.sg2.pronoun,
@@ -199,6 +219,7 @@ const ENDINGS: SimpleListItem[] = [
 	{
 		id: "depp-sg3",
 		greek: "εται",
+		acceptAlso: "έρχεται",
 		detail: PRONOUNS.sg3.grammatical,
 		context: DEP_PRES,
 		label: PRONOUNS.sg3.pronoun,
@@ -207,6 +228,7 @@ const ENDINGS: SimpleListItem[] = [
 	{
 		id: "depp-pl1",
 		greek: "όμαστε",
+		acceptAlso: "ερχόμαστε",
 		detail: PRONOUNS.pl1.grammatical,
 		context: DEP_PRES,
 		label: PRONOUNS.pl1.pronoun,
@@ -215,6 +237,7 @@ const ENDINGS: SimpleListItem[] = [
 	{
 		id: "depp-pl2",
 		greek: "όσαστε",
+		acceptAlso: "ερχόσαστε",
 		detail: PRONOUNS.pl2.grammatical,
 		context: DEP_PRES,
 		label: PRONOUNS.pl2.pronoun,
@@ -223,6 +246,7 @@ const ENDINGS: SimpleListItem[] = [
 	{
 		id: "depp-pl3",
 		greek: "ονται",
+		acceptAlso: "έρχονται",
 		detail: PRONOUNS.pl3.grammatical,
 		context: DEP_PRES,
 		label: PRONOUNS.pl3.pronoun,
@@ -233,6 +257,7 @@ const ENDINGS: SimpleListItem[] = [
 	{
 		id: "aor-sg1",
 		greek: "α",
+		acceptAlso: "έκανα",
 		detail: PRONOUNS.sg1.grammatical,
 		context: AORIST,
 		label: PRONOUNS.sg1.pronoun,
@@ -241,6 +266,7 @@ const ENDINGS: SimpleListItem[] = [
 	{
 		id: "aor-sg2",
 		greek: "ες",
+		acceptAlso: "έκανες",
 		detail: PRONOUNS.sg2.grammatical,
 		context: AORIST,
 		label: PRONOUNS.sg2.pronoun,
@@ -249,6 +275,7 @@ const ENDINGS: SimpleListItem[] = [
 	{
 		id: "aor-sg3",
 		greek: "ε",
+		acceptAlso: "έκανε",
 		detail: PRONOUNS.sg3.grammatical,
 		context: AORIST,
 		label: PRONOUNS.sg3.pronoun,
@@ -257,6 +284,7 @@ const ENDINGS: SimpleListItem[] = [
 	{
 		id: "aor-pl1",
 		greek: "αμε",
+		acceptAlso: "κάναμε",
 		detail: PRONOUNS.pl1.grammatical,
 		context: AORIST,
 		label: PRONOUNS.pl1.pronoun,
@@ -265,6 +293,7 @@ const ENDINGS: SimpleListItem[] = [
 	{
 		id: "aor-pl2",
 		greek: "ατε",
+		acceptAlso: "κάνατε",
 		detail: PRONOUNS.pl2.grammatical,
 		context: AORIST,
 		label: PRONOUNS.pl2.pronoun,
@@ -273,6 +302,7 @@ const ENDINGS: SimpleListItem[] = [
 	{
 		id: "aor-pl3",
 		greek: "αν",
+		acceptAlso: "έκαναν",
 		detail: PRONOUNS.pl3.grammatical,
 		context: AORIST,
 		label: PRONOUNS.pl3.pronoun,
@@ -283,6 +313,7 @@ const ENDINGS: SimpleListItem[] = [
 	{
 		id: "g1i-sg1",
 		greek: "α",
+		acceptAlso: "έγραφα",
 		detail: PRONOUNS.sg1.grammatical,
 		context: G1_IMP,
 		label: PRONOUNS.sg1.pronoun,
@@ -291,6 +322,7 @@ const ENDINGS: SimpleListItem[] = [
 	{
 		id: "g1i-sg2",
 		greek: "ες",
+		acceptAlso: "έγραφες",
 		detail: PRONOUNS.sg2.grammatical,
 		context: G1_IMP,
 		label: PRONOUNS.sg2.pronoun,
@@ -299,6 +331,7 @@ const ENDINGS: SimpleListItem[] = [
 	{
 		id: "g1i-sg3",
 		greek: "ε",
+		acceptAlso: "έγραφε",
 		detail: PRONOUNS.sg3.grammatical,
 		context: G1_IMP,
 		label: PRONOUNS.sg3.pronoun,
@@ -307,6 +340,7 @@ const ENDINGS: SimpleListItem[] = [
 	{
 		id: "g1i-pl1",
 		greek: "αμε",
+		acceptAlso: "γράφαμε",
 		detail: PRONOUNS.pl1.grammatical,
 		context: G1_IMP,
 		label: PRONOUNS.pl1.pronoun,
@@ -315,6 +349,7 @@ const ENDINGS: SimpleListItem[] = [
 	{
 		id: "g1i-pl2",
 		greek: "ατε",
+		acceptAlso: "γράφατε",
 		detail: PRONOUNS.pl2.grammatical,
 		context: G1_IMP,
 		label: PRONOUNS.pl2.pronoun,
@@ -323,6 +358,7 @@ const ENDINGS: SimpleListItem[] = [
 	{
 		id: "g1i-pl3",
 		greek: "αν",
+		acceptAlso: "έγραφαν",
 		detail: PRONOUNS.pl3.grammatical,
 		context: G1_IMP,
 		label: PRONOUNS.pl3.pronoun,
@@ -333,6 +369,7 @@ const ENDINGS: SimpleListItem[] = [
 	{
 		id: "g2i-sg1",
 		greek: "ούσα",
+		acceptAlso: "μιλούσα",
 		detail: PRONOUNS.sg1.grammatical,
 		context: G2_IMP,
 		label: PRONOUNS.sg1.pronoun,
@@ -341,6 +378,7 @@ const ENDINGS: SimpleListItem[] = [
 	{
 		id: "g2i-sg2",
 		greek: "ούσες",
+		acceptAlso: "μιλούσες",
 		detail: PRONOUNS.sg2.grammatical,
 		context: G2_IMP,
 		label: PRONOUNS.sg2.pronoun,
@@ -349,6 +387,7 @@ const ENDINGS: SimpleListItem[] = [
 	{
 		id: "g2i-sg3",
 		greek: "ούσε",
+		acceptAlso: "μιλούσε",
 		detail: PRONOUNS.sg3.grammatical,
 		context: G2_IMP,
 		label: PRONOUNS.sg3.pronoun,
@@ -357,6 +396,7 @@ const ENDINGS: SimpleListItem[] = [
 	{
 		id: "g2i-pl1",
 		greek: "ούσαμε",
+		acceptAlso: "μιλούσαμε",
 		detail: PRONOUNS.pl1.grammatical,
 		context: G2_IMP,
 		label: PRONOUNS.pl1.pronoun,
@@ -365,6 +405,7 @@ const ENDINGS: SimpleListItem[] = [
 	{
 		id: "g2i-pl2",
 		greek: "ούσατε",
+		acceptAlso: "μιλούσατε",
 		detail: PRONOUNS.pl2.grammatical,
 		context: G2_IMP,
 		label: PRONOUNS.pl2.pronoun,
@@ -373,6 +414,7 @@ const ENDINGS: SimpleListItem[] = [
 	{
 		id: "g2i-pl3",
 		greek: "ούσαν",
+		acceptAlso: "μιλούσαν",
 		detail: PRONOUNS.pl3.grammatical,
 		context: G2_IMP,
 		label: PRONOUNS.pl3.pronoun,
