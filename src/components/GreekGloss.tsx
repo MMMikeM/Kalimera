@@ -18,6 +18,8 @@ interface GreekGlossProps {
 	/** Small uppercase eyebrow, e.g. "ending". */
 	label?: ReactNode;
 	className?: string;
+	/** Drawn in place of `greek`, e.g. to quiet a stem; the pronunciation still reads `greek`. */
+	children?: ReactNode;
 }
 
 const GLOSS_SIZE = {
@@ -33,12 +35,13 @@ export const GreekGloss: React.FC<GreekGlossProps> = ({
 	size = "base",
 	label,
 	className,
+	children,
 }) => (
 	<div className={`flex items-baseline gap-2 ${className ?? ""}`}>
 		{label && (
 			<span className="text-xs tracking-widest text-muted-foreground uppercase">{label}</span>
 		)}
-		<GreekText size={size}>{greek}</GreekText>
+		<GreekText size={size}>{children ?? greek}</GreekText>
 		<Pronunciation greek={greek} size={GLOSS_SIZE[size]} />
 	</div>
 );

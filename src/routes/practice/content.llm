@@ -118,7 +118,7 @@ FUTURE & MODAL   future/vocabulary* · future/formation · future/conjugation* �
 MIXED TENSES     ladder* · tense-recognition*
 ```
 
-`*` = DB-driven: loader calls `getVerbDrillQuestionsFn` (`src/server/fns/verbs.ts`, queries in `verbs.server.ts`) and renders `VocabDrillPage`. The vocabulary drills ask sg1 only; Which tense? reverses to a single-select on `TENSE_DIMENSION_OPTIONS`. Conjugation endings is one `DrillEntry` (`CONJUGATION_ENDINGS`) listed under both Present and Past. The rest are hand-curated item lists inside each route file.
+`*` = DB-driven: loader calls `getVerbDrillQuestionsFn` (`src/server/fns/verbs.ts`, queries in `verbs.server.ts`) and renders `VocabDrillPage`. The vocabulary drills ask sg1 only; Which tense? reverses to a single-select on `TENSE_DIMENSION_OPTIONS`. Conjugation endings is one `DrillEntry` (`CONJUGATION_ENDINGS`) listed under both Present and Past; its cards are built from stem/ending pairs in `present/conjugations.data.ts`, which shows the whole verb after each answer. The rest are hand-curated item lists inside each route file.
 
 ## Section: Building blocks
 
@@ -128,7 +128,7 @@ MIXED TENSES     ladder* · tense-recognition*
 
 <engine-notes>
 Files in `components/engines/`:
-- `drill.tsx`: `<Drill>`, the engine every drill uses. Props include `drillId`, `items`, `title` (omit it; the catalogue title is used), `colorTheme`, `defaultMode`, `reverse` (`self-assess` by default, `single-select`, `multi-select`), `forwardPrompt`, `configExtras`, `autoStart`, `sessionSize` (10 / 20 / 30, or an exact count such as /try's), `speed` (preselects a speed; the only way to set one when `autoStart` skips the config screen), `onComplete`, `summaryFooter`, plus `ConfigShell` copy props (`subtitle`, `forwardDesc`, `reverseDesc`, `categories`, `forwardOnly`, `referenceHref`, `backTo`).
+- `drill.tsx`: `<Drill>`, the engine every drill uses. Props include `drillId`, `items`, `title` (omit it; the catalogue title is used), `colorTheme`, `defaultMode`, `reverse` (`self-assess` by default, `single-select`, `multi-select`), `forwardPrompt`, `renderAnswer` (draws the answer on the feedback and summary screens in place of `greek`), `explainMiss` (a line under a wrong forward answer), `configExtras`, `autoStart`, `sessionSize` (10 / 20 / 30, or an exact count such as /try's), `speed` (preselects a speed; the only way to set one when `autoStart` skips the config screen), `onComplete`, `summaryFooter`, plus `ConfigShell` copy props (`subtitle`, `forwardDesc`, `reverseDesc`, `categories`, `forwardOnly`, `referenceHref`, `backTo`).
 - `vocab-drill.tsx`: `VocabDrillPage` maps server `DrillQuestion[]` to forms and renders `<Drill>` with `sessionSize={20}`.
 - `shells.tsx`: `ConfigShell` (filter, mode, card count, speed, Begin), `DrillShell` (top bar), `ForwardInput`, `FeedbackDisplay` and `ReverseFeedback` (both inside `FeedbackFrame`), `SummaryScreen`.
 - `drill-hooks.ts`: `useCountdown`, `useForwardKeyboard`, `useContinueKeyboard`, `useCardState`. `drill-store.ts`: zustand `useDrillStore` and `drillActions`.
@@ -138,7 +138,7 @@ Files in `components/engines/`:
 Behaviour:
 - Top bar (`DrillShell`): Exit link, the drill title as the page `h1`, "N of M". Bucket and "remediation ×N" chips show only for a logged-in user (`userId > 0`), so never on /try.
 - Timing: the learner's Fast 4 s / Medium 6 s (default) / Relaxed 8 s choice (`drill-speeds.ts`). In forward mode each extra word in the answer adds 35% (`scaleTimeLimitForPhrase`). A timeout records a miss.
-- Grading: `matchPhonetic` (`src/lib/greek-transliteration.ts`) against `greek`, then `acceptAlso`. It accepts the answer with or without a leading article and strips terminal `;` `?` `!` `.` on both sides.
+- Grading: `matchPhonetic` (`src/lib/greek-transliteration.ts`) against `greek`, then `acceptAlso` (one answer or a list). It accepts the answer with or without a leading article and strips terminal `;` `?` `!` `.` on both sides.
 - Keys: a blank Enter is ignored and records nothing. Enter or Space continues after any feedback; a correct answer also advances by itself after 1200 ms, a wrong one waits (or tap the feedback block). Keys pressed in another control (header search, a focused button or link) are left to that control; the answer input submits through its own form and still continues on Enter or Space.
 - Remediation: a missed card is re-inserted about five cards later, at most three times per word.
 - `SummaryScreen`: "N of M correct" as the `h1`, with accuracy and average time; "Missed this round" lists each missed word and what was typed; "Drill the N you missed" (a re-drill that records no attempts) then "Practice again". Focus moves to the first action button. `summaryFooter` renders below the actions. With `autoStart`, "Practice again" restarts at once instead of returning to config.

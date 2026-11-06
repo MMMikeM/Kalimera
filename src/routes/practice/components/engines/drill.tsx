@@ -21,12 +21,15 @@ import { type DimensionSpec, MultiSelectReverse } from "./reverse/multi-select";
 import { SelfAssessReverse } from "./reverse/self-assess";
 import { SingleSelectReverse } from "./reverse/single-select";
 import {
+	type AnswerRenderer,
 	ConfigShell,
 	DrillShell,
 	FeedbackDisplay,
 	ForwardInput,
+	type MissExplainer,
 	SummaryScreen,
 	type ConfigShellProps,
+	glossAnswer,
 } from "./shells";
 
 const rootRoute = getRouteApi("__root__");
@@ -119,6 +122,9 @@ export interface DrillProps<
 	defaultMode?: DrillMode;
 	reverse?: ReverseStrategy<K>;
 	forwardPrompt?: (form: T) => React.ReactNode;
+	/** Replaces the default, `greek` with its pronunciation. */
+	renderAnswer?: AnswerRenderer<T>;
+	explainMiss?: MissExplainer<T>;
 	configExtras?: React.ReactNode;
 	autoStart?: boolean;
 	/** One of the picker's sizes, or the exact count for a fixed set such as /try. */
@@ -133,7 +139,7 @@ export interface DrillProps<
 
 interface DrillInnerProps<K extends string, T extends DrillForm> extends Pick<
 	DrillProps<K, T>,
-	"reverse" | "forwardPrompt" | "configExtras" | "autoStart" | "summaryFooter"
+	"reverse" | "forwardPrompt" | "renderAnswer" | "explainMiss" | "configExtras" | "autoStart" | "summaryFooter"
 > {
 	/** Title and theme are already resolved by <Drill>, so the shells can rely on them. */
 	shell: ShellProps;
@@ -145,10 +151,15 @@ function DrillInner<K extends string, T extends DrillForm>({
 	theme,
 	reverse = { kind: "self-assess" },
 	forwardPrompt,
+	renderAnswer,
+	explainMiss,
 	configExtras,
 	autoStart,
 	summaryFooter,
 }: DrillInnerProps<K, T>) {
+	// The store holds DrillForm; T is only known to the caller.
+	const answerRenderer = (renderAnswer as AnswerRenderer | undefined) ?? glossAnswer;
+	const missExplainer = explainMiss as MissExplainer | undefined;
 	const phase = useDrillStore((s) => s.phase);
 	const mode = useDrillStore((s) => s.mode);
 	const cardIndex = useDrillStore((s) => s.cardIndex);
@@ -184,10 +195,9 @@ function DrillInner<K extends string, T extends DrillForm>({
 		const form = deck[cardIndex];
 		// A stray Enter must not record a miss in the learner's history; the timer ends an unanswered card.
 		if (!form || phase !== "active" || input.trim() === "") return;
-		const primary = matchPhonetic(input.trim(), form.greek).isCorrect;
-		const alternate =
-			!primary && form.acceptAlso ? matchPhonetic(input.trim(), form.acceptAlso).isCorrect : false;
-		drillActions.recordAttempt(primary || alternate, {
+		const accepted = [form.greek, ...[form.acceptAlso ?? []].flat()];
+		const isCorrect = accepted.some((answer) => matchPhonetic(input.trim(), answer).isCorrect);
+		drillActions.recordAttempt(isCorrect, {
 			prompt: form.label,
 			correctAnswer: form.greek,
 			userAnswer: input.trim(),
@@ -232,6 +242,7 @@ function DrillInner<K extends string, T extends DrillForm>({
 				backTo={shell.backTo}
 				onRepeat={autoStart ? startDrill : drillActions.resetToConfig}
 				footer={summaryFooter}
+				renderAnswer={answerRenderer}
 			/>
 		);
 	}
@@ -287,7 +298,7 @@ function DrillInner<K extends string, T extends DrillForm>({
 						)}
 					</div>
 					<ForwardInput inputRef={inputRef} onSubmit={handleForwardSubmit} />
-					<FeedbackDisplay />
+					<FeedbackDisplay renderAnswer={answerRenderer} explainMiss={missExplainer} />
 				</>
 			) : (
 				<>
@@ -320,6 +331,8 @@ export function Drill<K extends string = string, T extends DrillForm = DrillForm
 	onComplete,
 	reverse,
 	forwardPrompt,
+	renderAnswer,
+	explainMiss,
 	configExtras,
 	autoStart,
 	summaryFooter,
@@ -349,6 +362,8 @@ export function Drill<K extends string = string, T extends DrillForm = DrillForm
 			theme={themeFor(drillId, colorTheme)}
 			reverse={reverse}
 			forwardPrompt={forwardPrompt}
+			renderAnswer={renderAnswer}
+			explainMiss={explainMiss}
 			configExtras={configExtras}
 			autoStart={autoStart}
 			summaryFooter={summaryFooter}

@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Verdict } from "@/components/Verdict";
 
 import { SPEEDS } from "../drill-speeds";
-import { SESSION_SIZES } from "./deck";
+import { type Attempt, type DrillForm, SESSION_SIZES } from "./deck";
 import { drillActions, useDrillStore } from "./drill-store";
 
 // ─── SelectorButton ────────────────────────────────────────────────────────────
@@ -325,6 +325,21 @@ export const ForwardInput = ({
 
 // ─── FeedbackDisplay ───────────────────────────────────────────────────────────
 
+export type AnswerSize = "lg" | "2xl";
+
+/** Draws the right answer on the feedback screen and in the summary's list of misses. */
+export type AnswerRenderer<T extends DrillForm = DrillForm> = (
+	attempt: Attempt<T>,
+	size: AnswerSize,
+) => React.ReactNode;
+
+/** A line under a wrong forward answer saying what the learner gave instead. */
+export type MissExplainer<T extends DrillForm = DrillForm> = (attempt: Attempt<T>) => React.ReactNode;
+
+export const glossAnswer: AnswerRenderer = (attempt, size) => (
+	<GreekGloss greek={attempt.form.greek} size={size} />
+);
+
 const ContinueHint = () => (
 	<p className="mt-3 text-xs text-muted-foreground">
 		<span className="pointer-coarse:hidden">Press Enter or tap to continue</span>
@@ -361,14 +376,21 @@ const FeedbackFrame = ({ className, children }: { className: string; children: R
 	);
 };
 
-export const FeedbackDisplay = () => {
+export const FeedbackDisplay = ({
+	renderAnswer,
+	explainMiss,
+}: {
+	renderAnswer: AnswerRenderer;
+	explainMiss?: MissExplainer;
+}) => {
 	const lastAttempt = useDrillStore((s) => s.attempts.at(-1));
 	return (
 		<FeedbackFrame className="mt-5">
 			{lastAttempt && (
 				<>
 					<Verdict isCorrect={lastAttempt.isCorrect} timedOut={lastAttempt.timedOut} />
-					<GreekGloss greek={lastAttempt.form.greek} size="2xl" className="mt-1" />
+					<div className="mt-1">{renderAnswer(lastAttempt, "2xl")}</div>
+					{!lastAttempt.isCorrect && explainMiss?.(lastAttempt)}
 				</>
 			)}
 		</FeedbackFrame>
@@ -402,10 +424,12 @@ export const SummaryScreen = ({
 	backTo,
 	onRepeat,
 	footer,
+	renderAnswer,
 }: {
 	backTo?: string;
 	onRepeat: () => void;
 	footer?: React.ReactNode;
+	renderAnswer: AnswerRenderer;
 }) => {
 	const attempts = useDrillStore((s) => s.attempts);
 	const { retryMistakes } = drillActions;
@@ -451,7 +475,7 @@ export const SummaryScreen = ({
 						{mistakeEntries.map(({ attempt: a, count }) => (
 							<li key={a.form.id} className="rounded-lg border bg-card p-3">
 								<div className="flex flex-wrap items-baseline gap-x-2">
-									<GreekGloss greek={a.form.greek} size="lg" />
+									{renderAnswer(a, "lg")}
 									<span className="text-xs text-muted-foreground">{a.form.label}</span>
 								</div>
 								{a.userInput !== undefined && (

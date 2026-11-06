@@ -11,8 +11,8 @@ export interface DrillForm {
 	id: string;
 	greek: string;
 	label: string;
-	/** A second answer the forward grader also accepts, e.g. την alongside τη. Never shown. */
-	acceptAlso?: string;
+	/** Other answers the forward grader also accepts, e.g. την alongside τη. Never shown. */
+	acceptAlso?: string | readonly string[];
 	/** What reverse mode shows in place of `greek`, e.g. the noun without the article that gives its gender away. */
 	reverseGreek?: string;
 	/** The id of the correct option in a single-select reverse card, e.g. the gender. */

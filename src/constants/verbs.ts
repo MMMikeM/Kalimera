@@ -1,4 +1,4 @@
-interface VerbForm {
+export interface VerbForm {
 	stem: string;
 	ending: string;
 }
