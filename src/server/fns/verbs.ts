@@ -11,14 +11,14 @@ import {
 	getVerbConjugationQuestions,
 } from "./verbs.server";
 
-/** Conjugation drills differ only in tense, question id prefix and which persons they ask for. */
+/** Conjugation drills differ only in tense, question id prefix and kind. */
 const CONJUGATION_DRILLS = {
-	"verbs-present": { tense: "present", idPrefix: "db-verb-" },
-	"verbs-vocabulary-sg1": { tense: "present", idPrefix: "db-verb-sg1-", persons: ["sg1"] },
-	"verbs-aorist-conjugation": { tense: "aorist", idPrefix: "db-verb-aorist-" },
-	"verbs-aorist-sg1": { tense: "aorist", idPrefix: "db-verb-aor-sg1-", persons: ["sg1"] },
-	"verbs-future-conjugation": { tense: "future", idPrefix: "db-verb-future-" },
-	"verbs-future-sg1": { tense: "future", idPrefix: "db-verb-fut-sg1-", persons: ["sg1"] },
+	"verbs-present": { tense: "present", idPrefix: "db-verb-", kind: "conjugation" },
+	"verbs-vocabulary-sg1": { tense: "present", idPrefix: "db-verb-sg1-", kind: "vocabulary" },
+	"verbs-aorist-conjugation": { tense: "aorist", idPrefix: "db-verb-aorist-", kind: "conjugation" },
+	"verbs-aorist-sg1": { tense: "aorist", idPrefix: "db-verb-aor-sg1-", kind: "vocabulary" },
+	"verbs-future-conjugation": { tense: "future", idPrefix: "db-verb-future-", kind: "conjugation" },
+	"verbs-future-sg1": { tense: "future", idPrefix: "db-verb-fut-sg1-", kind: "vocabulary" },
 } as const satisfies Record<string, ConjugationDrill>;
 
 export const getVerbDrillQuestionsFn = createServerFn({ method: "GET" })

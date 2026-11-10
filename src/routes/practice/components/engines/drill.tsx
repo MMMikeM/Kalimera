@@ -120,6 +120,8 @@ export interface DrillProps<
 	items: T[];
 	colorTheme?: ColorTheme;
 	defaultMode?: DrillMode;
+	/** Preselects one of `categories`; without it the filter starts on All. */
+	defaultCategory?: string;
 	reverse?: ReverseStrategy<K>;
 	forwardPrompt?: (form: T) => React.ReactNode;
 	/** Replaces the default, `greek` with its pronunciation. */
@@ -326,6 +328,7 @@ export function Drill<K extends string = string, T extends DrillForm = DrillForm
 	items,
 	colorTheme = "terracotta",
 	defaultMode,
+	defaultCategory,
 	sessionSize,
 	speed,
 	onComplete,
@@ -349,6 +352,7 @@ export function Drill<K extends string = string, T extends DrillForm = DrillForm
 			userId: auth?.userId ?? 0,
 			sessionSize,
 			defaultMode,
+			defaultCategory,
 			speed,
 			onComplete,
 			sessionCallbacks: SESSION_CALLBACKS,

@@ -25,7 +25,6 @@ type SixForms = readonly [VerbForm, VerbForm, VerbForm, VerbForm, VerbForm, Verb
 interface Paradigm {
 	key: string;
 	context: string;
-	category: "present" | "past";
 	forms: SixForms;
 	alternatives?: Partial<Record<PersonNumber, VerbForm>>;
 }
@@ -35,12 +34,11 @@ const split = (stem: string, ending: string): VerbForm => ({ stem, ending });
 export const fullForm = ({ stem, ending }: VerbForm) => stem + ending;
 
 // Stems are written per form because the past moves the stress and drops the
-// augment: έ-κανα but κάναμε.
+// augment: έ-κανα but κάναμε. Listed in teaching order, which the filter follows.
 const PARADIGMS: Paradigm[] = [
 	{
 		key: "g1p",
 		context: "κάνω · present",
-		category: "present",
 		forms: [
 			split("κάν", "ω"),
 			split("κάν", "εις"),
@@ -53,7 +51,6 @@ const PARADIGMS: Paradigm[] = [
 	{
 		key: "g2ap",
 		context: "μιλάω · present",
-		category: "present",
 		forms: [
 			split("μιλ", "άω"),
 			split("μιλ", "άς"),
@@ -67,7 +64,6 @@ const PARADIGMS: Paradigm[] = [
 	{
 		key: "g2bp",
 		context: "μπορώ · present",
-		category: "present",
 		forms: [
 			split("μπορ", "ώ"),
 			split("μπορ", "είς"),
@@ -80,7 +76,6 @@ const PARADIGMS: Paradigm[] = [
 	{
 		key: "depp",
 		context: "έρχομαι · present",
-		category: "present",
 		forms: [
 			split("έρχ", "ομαι"),
 			split("έρχ", "εσαι"),
@@ -94,7 +89,6 @@ const PARADIGMS: Paradigm[] = [
 	{
 		key: "aor",
 		context: "κάνω · aorist",
-		category: "past",
 		forms: [
 			split("έκαν", "α"),
 			split("έκαν", "ες"),
@@ -107,7 +101,6 @@ const PARADIGMS: Paradigm[] = [
 	{
 		key: "g1i",
 		context: "γράφω · imperfect",
-		category: "past",
 		forms: [
 			split("έγραφ", "α"),
 			split("έγραφ", "ες"),
@@ -120,7 +113,6 @@ const PARADIGMS: Paradigm[] = [
 	{
 		key: "g2i",
 		context: "μιλάω · imperfect",
-		category: "past",
 		forms: [
 			split("μιλ", "ούσα"),
 			split("μιλ", "ούσες"),
@@ -145,7 +137,7 @@ export const ENDINGS: EndingItem[] = PARADIGMS.flatMap((paradigm) =>
 			detail: PRONOUNS[person].grammatical,
 			context: paradigm.context,
 			label: PRONOUNS[person].pronoun,
-			category: paradigm.category,
+			category: paradigm.key,
 			word,
 			alternative,
 		};
@@ -170,7 +162,13 @@ export const typedInstead = (item: EndingItem, input = ""): EndingItem | undefin
 	);
 };
 
-export const CATEGORIES = [
-	{ id: "present", label: "Present" },
-	{ id: "past", label: "Past" },
-];
+export const CATEGORIES = PARADIGMS.map(({ key, context }) => ({ id: key, label: context }));
+
+/** The six forms of one verb in table order, for showing the whole pattern before drilling it. */
+export const paradigmRows = (key: string) =>
+	ENDINGS.filter((item) => item.category === key).map(({ id, label, word, alternative }) => ({
+		id,
+		pronoun: label,
+		word,
+		alternative,
+	}));

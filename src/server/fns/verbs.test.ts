@@ -2,14 +2,13 @@ import { beforeEach, describe, expect, it, vi } from "vite-plus/test";
 
 import type { DrillBucket } from "@/lib/drill/types";
 import { typedEntries } from "@/lib/object";
-import type { PersonNumber } from "@/server/db/enums";
 import { getDrillVocabPool } from "@/server/db/queries/drill-pool";
 import {
 	type VerbWithConjugations,
 	getVerbsWithConjugationsForTense,
 } from "@/server/db/queries/vocabulary";
 
-import { getVerbConjugationQuestions } from "./verbs.server";
+import { type ConjugationDrill, getVerbConjugationQuestions } from "./verbs.server";
 
 // ─── Mocks (hoisted by Vitest — order relative to imports doesn't matter) ─────
 
@@ -35,12 +34,8 @@ const mockBuckets = (buckets: Partial<Record<DrillBucket, number[]>>) => {
 
 const mockPool = (ids: number[]) => mockBuckets({ new: ids });
 
-const ask = (limit: number, persons?: PersonNumber[]) =>
-	getVerbConjugationQuestions(1, "test-drill", limit, {
-		tense: "present",
-		idPrefix: "pfx-",
-		persons,
-	});
+const ask = (limit: number, kind: ConjugationDrill["kind"], tense: ConjugationDrill["tense"] = "present") =>
+	getVerbConjugationQuestions(1, "test-drill", limit, { tense, idPrefix: "pfx-", kind });
 
 const mockVerb = (
 	id: number,
@@ -76,57 +71,65 @@ const useFullPool = () => {
 describe("getVerbConjugationQuestions", () => {
 	beforeEach(() => vi.clearAllMocks());
 
-	describe("persons filter", () => {
-		it("when persons=['sg1'], only sg1 questions returned", async () => {
+	describe("kind", () => {
+		it("vocabulary asks only for the first person", async () => {
 			useFullPool();
-			const questions = await ask(30, ["sg1"]);
+			const questions = await ask(30, "vocabulary");
 			expect(questions).toHaveLength(30);
 			for (const q of questions) expect(q.id).toMatch(/-sg1$/);
 		});
 
-		it("'we want' / 'you all want' / 'they want' never appear in sg1 drill", async () => {
-			useFullPool();
-			const questions = await ask(30, ["sg1"]);
-			const prompts = questions.map((q) => q.prompt);
-			for (const prompt of prompts) {
-				expect(prompt).not.toMatch(/^we |^you all |^they /);
-			}
-		});
-
-		it("without persons filter, all 6 conjugations per verb returned", async () => {
-			useFullPool();
-			const questions = await ask(30);
-			expect(questions).toHaveLength(30 * 6);
+		it("conjugation asks for the five other persons of each verb", async () => {
+			mockBuckets({ inProgress: VERB_POOL_IDS });
+			vi.mocked(getVerbsWithConjugationsForTense).mockResolvedValue(VERB_POOL);
+			const questions = await ask(30, "conjugation");
+			expect(questions).toHaveLength(30 * 5);
+			for (const q of questions) expect(q.id).not.toMatch(/-sg1$/);
 		});
 	});
 
-	describe("English prompt construction", () => {
-		it("sg1 prompt uses full english translation", async () => {
+	describe("prompts", () => {
+		it("vocabulary prompts with the English meaning", async () => {
 			useFullPool();
-			const questions = await ask(30, ["sg1"]);
+			const questions = await ask(30, "vocabulary");
 			expect(questions[0]!.prompt).toBe("I verb1");
 		});
 
-		it("non-sg1 prompt uses person label + stem", async () => {
-			useFullPool();
-			const questions = await ask(30);
-			const pl1 = questions.find((q) => q.id === "pfx-1-pl1");
-			expect(pl1!.prompt).toBe("we verb1");
-		});
-
-		it("'I am' verb normalises 'are' for pl1, 'is' for sg3", async () => {
+		it("future vocabulary turns 'I am' into 'I will be'", async () => {
 			const pool = [...VERB_POOL];
-			pool[0] = mockVerb(1, "I am");
+			pool[0] = mockVerb(1, "I am tired");
 			mockPool(VERB_POOL_IDS);
 			vi.mocked(getVerbsWithConjugationsForTense).mockResolvedValue(pool);
 
-			const questions = await ask(30);
-			const byPerson = Object.fromEntries(
-				questions.filter((q) => q.vocabId === 1).map((q) => [q.id.split("-").at(-1), q.prompt]),
-			);
-			expect(byPerson["sg1"]).toBe("I am");
-			expect(byPerson["pl1"]).toBe("we are");
-			expect(byPerson["sg3"]).toBe("he/she is");
+			const questions = await ask(30, "vocabulary", "future");
+			expect(questions[0]!.prompt).toBe("I will be tired");
+		});
+
+		it("conjugation prompts with the Greek first person and the pronoun, never the English", async () => {
+			useFullPool();
+			const questions = await ask(30, "conjugation");
+			const pl2 = questions.find((q) => q.id === "pfx-1-pl2");
+			expect(pl2!.prompt).toBe("form-1-sg1 → you all");
+		});
+	});
+
+	describe("met verbs first", () => {
+		it("conjugation leaves out unmet verbs when met ones fill the pool", async () => {
+			mockBuckets({ inProgress: VERB_POOL_IDS.slice(0, 10), new: VERB_POOL_IDS.slice(10) });
+			vi.mocked(getVerbsWithConjugationsForTense).mockResolvedValue(VERB_POOL);
+
+			const questions = await ask(30, "conjugation");
+			expect(questions).toHaveLength(10 * 5);
+			for (const q of questions) expect(q.bucket).toBe("inProgress");
+		});
+
+		it("conjugation tops up with unmet verbs only as far as the limit", async () => {
+			mockBuckets({ inProgress: [1, 2], new: VERB_POOL_IDS.slice(2) });
+			vi.mocked(getVerbsWithConjugationsForTense).mockResolvedValue(VERB_POOL);
+
+			const questions = await ask(30, "conjugation");
+			expect(questions).toHaveLength(30);
+			expect(questions.filter((q) => q.bucket === "inProgress")).toHaveLength(10);
 		});
 	});
 
@@ -142,7 +145,7 @@ describe("getVerbConjugationQuestions", () => {
 			});
 			vi.mocked(getVerbsWithConjugationsForTense).mockResolvedValue(VERB_POOL);
 
-			const questions = await ask(30, ["sg1"]);
+			const questions = await ask(30, "vocabulary");
 			const buckets = Object.fromEntries(questions.map((q) => [q.vocabId, q.bucket]));
 			expect(buckets[1]).toBe("tier1");
 			expect(buckets[2]).toBe("tier2");
@@ -155,7 +158,7 @@ describe("getVerbConjugationQuestions", () => {
 			mockPool(VERB_POOL_IDS);
 			vi.mocked(getVerbsWithConjugationsForTense).mockResolvedValue(VERB_POOL);
 
-			const questions = await ask(30, ["sg1"]);
+			const questions = await ask(30, "vocabulary");
 			expect(questions).toHaveLength(30);
 			for (const q of questions) expect(q.bucket).toBe("new");
 		});
@@ -170,7 +173,7 @@ describe("getVerbConjugationQuestions", () => {
 			});
 			vi.mocked(getVerbsWithConjugationsForTense).mockResolvedValue(VERB_POOL);
 
-			const questions = await ask(30, ["sg1"]);
+			const questions = await ask(30, "vocabulary");
 			expect(questions).toHaveLength(30);
 			for (const q of questions) expect(q.bucket).toBe("inProgress");
 		});
@@ -188,7 +191,7 @@ describe("getVerbConjugationQuestions", () => {
 			});
 			vi.mocked(getVerbsWithConjugationsForTense).mockResolvedValue(VERB_POOL);
 
-			const questions = await ask(30, ["sg1"]);
+			const questions = await ask(30, "vocabulary");
 			expect(questions).toHaveLength(30);
 			const buckets = questions.map((q) => q.bucket);
 			expect(buckets.filter((b) => b === "tier1")).toHaveLength(10);
@@ -206,7 +209,7 @@ describe("getVerbConjugationQuestions", () => {
 			});
 			vi.mocked(getVerbsWithConjugationsForTense).mockResolvedValue([]);
 
-			await expect(ask(30, ["sg1"])).rejects.toThrow("Insufficient questions");
+			await expect(ask(30, "vocabulary")).rejects.toThrow("Insufficient questions");
 		});
 	});
 
@@ -219,14 +222,14 @@ describe("getVerbConjugationQuestions", () => {
 			]);
 
 			// limit=10, only 2 questions produced → throw
-			await expect(ask(10, ["sg1"])).rejects.toThrow("Insufficient questions");
+			await expect(ask(10, "vocabulary")).rejects.toThrow("Insufficient questions");
 		});
 
 		it("throws when pool empty", async () => {
 			mockPool([]);
 			vi.mocked(getVerbsWithConjugationsForTense).mockResolvedValue([]);
 
-			await expect(ask(10, ["sg1"])).rejects.toThrow("Insufficient questions");
+			await expect(ask(10, "vocabulary")).rejects.toThrow("Insufficient questions");
 		});
 
 		it("does not throw when questions === limit", async () => {
@@ -236,7 +239,7 @@ describe("getVerbConjugationQuestions", () => {
 				ids.map((id) => mockVerb(id, `I verb${id}`, ["sg1"])),
 			);
 
-			await expect(ask(10, ["sg1"])).resolves.toHaveLength(10);
+			await expect(ask(10, "vocabulary")).resolves.toHaveLength(10);
 		});
 	});
 });

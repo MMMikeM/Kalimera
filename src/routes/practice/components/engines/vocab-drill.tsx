@@ -5,6 +5,9 @@ import type { DrillQuestion } from "@/lib/drill/types";
 import type { DrillForm } from "./deck";
 import { Drill, type DrillProps } from "./drill";
 
+export const CONJUGATION_FORWARD_DESC = "First person → another person";
+export const CONJUGATION_REVERSE_DESC = "Greek → recall the person (self-assess)";
+
 type VocabDrillPageProps = Omit<DrillProps, "items" | "subtitle"> & {
 	questions: DrillQuestion[];
 	subtitle?: string;

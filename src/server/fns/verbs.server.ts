@@ -1,5 +1,4 @@
 import type { DrillQuestion } from "@/lib/drill/types";
-import type { PersonNumber } from "@/server/db/enums";
 import { getDrillVocabPool } from "@/server/db/queries/drill-pool";
 import {
 	getVerbsWithConjugationsForTense,
@@ -16,15 +15,6 @@ const PERSON_LABELS: Record<string, string> = {
 	pl1: "we",
 	pl2: "you all",
 	pl3: "they",
-};
-
-const FUTURE_LABELS: Record<string, string> = {
-	sg1: "I will",
-	sg2: "you will",
-	sg3: "he/she will",
-	pl1: "we will",
-	pl2: "you all will",
-	pl3: "they will",
 };
 
 /** Time words anchor each tense the way the lesson sheets do (χθες / σήμερα / αύριο). */
@@ -63,43 +53,48 @@ const sg1ByTense = (conjugations: Array<{ tense: string; person: string; form: s
 export interface ConjugationDrill {
 	tense: "present" | "aorist" | "past_continuous" | "future";
 	idPrefix: string;
-	persons?: readonly PersonNumber[];
+	/**
+	 * `vocabulary` asks for the first person from the English meaning. `conjugation`
+	 * shows the first person and asks for the other five, so a card tests the ending
+	 * alone and never whether the learner remembers the verb.
+	 */
+	kind: "vocabulary" | "conjugation";
 }
+
+const englishPrompt = (english: string, tense: ConjugationDrill["tense"]) =>
+	tense === "future" ? `I will ${english.replace(/^I /, "").replace(/^am\b/, "be")}` : english;
+
+/** Verbs the learner has met come first; unmet ones only top up a pool that would run short. */
+const preferMetVerbs = (questions: DrillQuestion[], limit: number) => {
+	const met = questions.filter((q) => q.bucket !== "new");
+	if (met.length >= limit) return met;
+	const unmet = questions.filter((q) => q.bucket === "new");
+	return [...met, ...unmet.slice(0, limit - met.length)];
+};
 
 export const getVerbConjugationQuestions = async (
 	userId: number,
 	drillId: string,
 	limit: number,
-	{ tense, idPrefix, persons }: ConjugationDrill,
+	{ tense, idPrefix, kind }: ConjugationDrill,
 ): Promise<DrillQuestion[]> => {
 	const { allIds, bucketMap } = await drawVerbPool(userId, drillId, limit);
 	const vocabRows = await getVerbsWithConjugationsForTense(allIds, tense);
 
-	const labels = tense === "future" ? FUTURE_LABELS : PERSON_LABELS;
 	const questions: DrillQuestion[] = [];
 	for (const vocab of vocabRows) {
-		const rawStem = vocab.englishTranslation.replace(/^I /, "");
-		const conjForms = persons
-			? vocab.verbConjugations.filter((c) => persons.includes(c.person))
-			: vocab.verbConjugations;
-		for (const conj of conjForms) {
-			const personLabel = labels[conj.person] ?? conj.person;
-			// "I am" / "I am X" verbs: stem starts with "am", which is not a valid
-			// English stem elsewhere. Normalise to "are" / "is", or "be" after "will".
-			const isAmStem = rawStem === "am" || rawStem.startsWith("am ");
-			const stem = isAmStem
-				? tense === "future"
-					? rawStem.replace(/^am/, "be")
-					: conj.person === "sg3"
-						? rawStem.replace(/^am/, "is")
-						: rawStem.replace(/^am/, "are")
-				: rawStem;
-			const prompt =
-				tense === "future"
-					? `${personLabel} ${stem}`
-					: conj.person === "sg1"
-						? vocab.englishTranslation
-						: `${personLabel} ${stem}`;
+		const firstPerson = vocab.verbConjugations.find((c) => c.person === "sg1");
+		if (!firstPerson) continue;
+		const cards =
+			kind === "vocabulary"
+				? [{ conj: firstPerson, prompt: englishPrompt(vocab.englishTranslation, tense) }]
+				: vocab.verbConjugations
+						.filter((c) => c.person !== "sg1")
+						.map((conj) => ({
+							conj,
+							prompt: `${firstPerson.form} → ${PERSON_LABELS[conj.person] ?? conj.person}`,
+						}));
+		for (const { conj, prompt } of cards) {
 			questions.push({
 				id: `${idPrefix}${vocab.id}-${conj.person}`,
 				prompt,
@@ -110,7 +105,7 @@ export const getVerbConjugationQuestions = async (
 		}
 	}
 
-	return assertEnough(questions, limit);
+	return assertEnough(kind === "conjugation" ? preferMetVerbs(questions, limit) : questions, limit);
 };
 
 /**

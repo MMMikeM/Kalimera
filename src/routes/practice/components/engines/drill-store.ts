@@ -48,6 +48,7 @@ export interface DrillStoreConfig {
 	userId: number;
 	sessionSize?: SessionSize | number;
 	defaultMode?: DrillMode;
+	defaultCategory?: string;
 	speed?: SpeedId;
 	onComplete?: (stats: SessionStats<DrillForm>) => void;
 	sessionCallbacks?: DrillSessionCallbacks;
@@ -132,13 +133,14 @@ const s = () => useDrillStore.getState();
 const set = useDrillStore.setState;
 
 export const drillActions: DrillActions = {
-	initialize: ({ sessionSize = 10, defaultMode = "forward", speed, ...config }) => {
+	initialize: ({ sessionSize = 10, defaultMode = "forward", defaultCategory, speed, ...config }) => {
 		const initial = useDrillStore.getInitialState();
 		set({
 			...initial,
 			...config,
 			sessionSize,
 			mode: defaultMode,
+			activeCategory: defaultCategory ?? null,
 			activeSpeedId: speed ?? initial.activeSpeedId,
 		});
 	},

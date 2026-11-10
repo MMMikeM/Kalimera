@@ -2,7 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { getVerbDrillQuestionsFn } from "@/server/fns/verbs";
 
-import { VocabDrillPage } from "../../components/engines/vocab-drill";
+import {
+	CONJUGATION_FORWARD_DESC,
+	CONJUGATION_REVERSE_DESC,
+	VocabDrillPage,
+} from "../../components/engines/vocab-drill";
 
 export const Route = createFileRoute("/practice/verbs/past/aorist-conjugation")({
 	loader: async () => {
@@ -23,6 +27,8 @@ function AoristConjugationDrill() {
 			drillId="verbs-aorist-conjugation"
 			backTo="/practice/verbs"
 			questions={questions}
+			forwardDesc={CONJUGATION_FORWARD_DESC}
+			reverseDesc={CONJUGATION_REVERSE_DESC}
 		/>
 	);
 }
