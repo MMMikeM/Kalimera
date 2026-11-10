@@ -14,19 +14,18 @@ pnpm add -D drizzle-kit@1.0.0-rc.4
 This is how `src/server/db/index.ts` builds the one shared client. App code never repeats it; it imports `db` or `inTransaction` from there.
 
 ```typescript
-import { connect } from "@tursodatabase/serverless";
 import { drizzle } from "drizzle-orm/tursodatabase-serverless";
 
+import { RetryingConnection } from "./connection";
 import { relations } from "./relations";
-import { withReadRetry } from "./retry";
 
-const client = connect({
+const config = {
 	url: required("TURSO_DATABASE_URL"),
 	defaultQueryTimeout: 30_000,
 	...(process.env.TURSO_AUTH_TOKEN ? { authToken: process.env.TURSO_AUTH_TOKEN } : {}),
-});
+};
 
-export const db = drizzle({ client: withReadRetry(client), relations });
+export const db = drizzle({ client: new RetryingConnection(config), relations });
 ```
 
 Pass `relations` (not `schema`) so the relational Query API is available. The serverless driver speaks HTTP and rejects `file:` URLs. drizzle-kit is the only thing that uses the local-file stack.

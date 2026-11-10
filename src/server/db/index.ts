@@ -1,10 +1,9 @@
 import "@tanstack/react-start/server-only";
 import { createServerOnlyFn } from "@tanstack/react-start";
-import { connect } from "@tursodatabase/serverless";
 import { drizzle } from "drizzle-orm/tursodatabase-serverless";
 
 import { relations } from "./relations";
-import { withReadRetry } from "./retry";
+import { OneTripConnection, RetryingConnection } from "./connection";
 
 const required = (name: string): string => {
 	const value = process.env[name];
@@ -12,15 +11,13 @@ const required = (name: string): string => {
 	return value;
 };
 
-const openConnection = createServerOnlyFn(() =>
-	connect({
-		url: required("TURSO_DATABASE_URL"),
-		defaultQueryTimeout: 30_000,
-		...(process.env.TURSO_AUTH_TOKEN ? { authToken: process.env.TURSO_AUTH_TOKEN } : {}),
-	}),
-);
+const connectionConfig = createServerOnlyFn(() => ({
+	url: required("TURSO_DATABASE_URL"),
+	defaultQueryTimeout: 30_000,
+	...(process.env.TURSO_AUTH_TOKEN ? { authToken: process.env.TURSO_AUTH_TOKEN } : {}),
+}));
 
-export const db = drizzle({ client: withReadRetry(openConnection()), relations });
+export const db = drizzle({ client: new RetryingConnection(connectionConfig()), relations });
 
 console.log("[db] connecting to", process.env.TURSO_DATABASE_URL);
 
@@ -29,11 +26,11 @@ export type DbTransaction = Parameters<Parameters<typeof db.transaction>[0]>[0];
 
 /**
  * Runs a transaction on a connection of its own, so statements from concurrent
- * requests sharing `db` can't land inside it. No read retry here: a retried read
+ * requests sharing `db` can't land inside it. No retry here: a retried statement
  * opens a fresh session, which would run outside the transaction it belongs to.
  */
 export const inTransaction = async <T>(run: (tx: DbTransaction) => Promise<T>) => {
-	const connection = drizzle({ client: openConnection(), relations });
+	const connection = drizzle({ client: new OneTripConnection(connectionConfig()), relations });
 	try {
 		return await connection.transaction(run);
 	} finally {

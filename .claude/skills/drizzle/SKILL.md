@@ -26,7 +26,7 @@ Before starting, read the reference docs in this skill directory:
 ```
 src/server/db/
   index.ts             ← server-only: shared `db`, `inTransaction`, `DbTransaction`
-  retry.ts             ← `withReadRetry`: retries a read once after a transport failure
+  connection.ts        ← `RetryingConnection` (shared `db`), `OneTripConnection` (transactions)
   schema.ts            ← Re-exports schema-auth.ts, schema-language.ts, schema-practice.ts
   columns.ts, enums.ts ← Shared column helpers and enums
   relations.ts         ← defineRelations
@@ -40,7 +40,8 @@ A lint rule in `vite.config.ts` allows importing `@/server/db` only from `src/se
 
 ## Connections
 
-- `db` is one shared connection for the whole process, wrapped in `withReadRetry`. Reads (`all`, `get`, `values`, `prepare`) are retried once when the failure is a transport one: a dead keep-alive socket, or a Turso session that expired while Fly had the machine suspended. Writes are never retried, because a write that failed in transit may still have landed.
+- `db` is one shared `RetryingConnection`. Retries are keyed on the SQL, because drizzle runs `INSERT … RETURNING` through the same `all()`/`get()` as reads. A `SELECT` retries once after a transport failure (a dead keep-alive socket after Fly resumes the machine) or an expired session. A write retries only when the server refused it for an expired session, which it does before running any of it; a write lost in transit may have landed, so it is never replayed.
+- Statements skip the driver's `describe` round trip, so each query costs one trip.
 - Every query has a 30 s default timeout (`defaultQueryTimeout`).
 - Transactions run through `inTransaction` on a connection of their own. See Transactions below.
 

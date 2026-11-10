@@ -6,7 +6,7 @@ Drizzle ORM + Turso (distributed SQLite) over the HTTP serverless driver. Every 
 
 ```
 index.ts        # server-only: shared `db`, `inTransaction`, `DbTransaction`
-retry.ts        # withReadRetry: one retry for reads that hit a transport failure
+connection.ts   # OneTripConnection, RetryingConnection: one round trip per statement, safe retries
 schema.ts       # Re-exports schema-{auth,language,practice}.ts
 relations.ts    # Drizzle relations for Query API
 queries/        # Query functions (import from here)
@@ -17,7 +17,11 @@ types.ts        # Derived types from schema
 
 ## Connections
 
-- `db` is one shared connection wrapped in `withReadRetry`. Reads retry once on a transport failure (a dead socket, or a Turso session that expired while Fly had the machine suspended). Writes never retry: one that failed in transit may still have landed.
+- `db` is one shared `RetryingConnection`. Retries are keyed on the SQL, not the method, because drizzle runs `INSERT … RETURNING` through the same `all()`/`get()` as reads:
+  - A `SELECT` retries once on a transport failure (a dead socket after Fly resumes the machine) or an expired session.
+  - A write retries only when the server refused it for an expired session, which it does before running any of it. A write lost in transit is never replayed: it may already have landed.
+- Statements skip the driver's `describe` round trip (`OneTripConnection.prepare`); drizzle never reads the column metadata it fetches.
+- `inTransaction` uses a `OneTripConnection` of its own, with no retry.
 - Queries time out after 30 s.
 - A missing `TURSO_DATABASE_URL` fails at startup with "TURSO_DATABASE_URL is not set". `TURSO_AUTH_TOKEN` is sent only when set.
 
