@@ -35,8 +35,8 @@ Route segments use grammatical terms (`nominative`); drill titles and phase labe
 <purpose>Hub: the drills for the latest lessons, then one link per drill group</purpose>
 <file>src/routes/practice/index.tsx</file>
 <displays>
-- "From your lessons": loader `getRecentLessonDrillsFn` (`src/server/fns/guides.ts`) reads the two latest lessons whose grammar notes point at a guide section with drills, and lists those drills under each lesson's date and topic. The owner's account only (`canSeeLessons`); anyone else gets an empty list.
-- A ruled list built from `SECTIONS`, each row a serif label plus a one-line thesis:
+- "From your lessons": loader `getRecentLessonDrillsFn` (`src/server/fns/guides.ts`) reads the two latest lessons whose grammar notes point at a guide section with drills. A drill appears once, under the newest lesson that uses it. Each lesson's drills sit under the group that owns them (`GROUP_DRILLS` in `drill-catalogue.data.ts`), in that group's order. The newest lesson is open; older ones fold into a `CollapsibleSection`. The owner's account only (`canSeeLessons`); anyone else gets an empty list.
+- "All drills": a ruled list built from `SECTIONS`, each row a serif label plus a one-line thesis:
   - The case system → /practice/cases
   - Pronouns → /practice/pronouns
   - Verbs → /practice/verbs
@@ -68,7 +68,7 @@ One drill per guide section, built from the section's `plannedDrills` stub. `GUI
 
 <source-of-truth>
 Each group owns its entries in `practice/<group>/drills.data.ts`: `cases` → `CASE_PHASES`, `verbs` → `VERB_PHASES`, `pronouns` → `PRONOUN_DRILLS`, `blocks` → `BLOCK_DRILLS` (plus `QUESTION_WORDS_LINK`, a link row that records nothing), `blocks/question-words` → `QUESTION_WORD_PHASES`.
-`drill-catalogue.data.ts` derives `DRILL_REGISTRY` (keyed by drill id) and `drillTitle(drillId)` from those lists; never author entries there. A `DrillEntry` (`src/constants/drills.ts`) has `id` (the `drillId` attempts are recorded under), `to`, `title`, `greek` sample, `minutes`, `category`, `caseRole`.
+`drill-catalogue.data.ts` derives `GROUP_DRILLS` (each group's drills in index order), `DRILL_REGISTRY` (keyed by drill id) and `drillTitle(drillId)` from those lists; never author entries there. A `DrillEntry` (`src/constants/drills.ts`) has `id` (the `drillId` attempts are recorded under), `to`, `title`, `greek` sample, `minutes`, `category`, `caseRole`.
 </source-of-truth>
 
 Group indexes render `DrillIndex` (`components/drill-index.tsx`) with `phases` or a flat `drills` list. Phase headers take `PHASE_TINT`: Doer / Target / Owner use the reserved case tokens via `SCHEME["case-nominative" | "case-accusative" | "case-genitive"]`; Review and every other phase (verb tenses, question-word phases) are muted neutral.

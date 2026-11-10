@@ -27,7 +27,10 @@ export interface LessonDrills {
 
 const sectionDrills = (home: GrammarNoteHome): string[] => guideSection(home)?.section.drills ?? [];
 
-/** The latest lessons whose notes point at a guide section with a drill, newest first. */
+/**
+ * The latest lessons whose notes point at a guide section with a drill, newest first.
+ * A drill appears once, under the newest lesson that uses it.
+ */
 export const getRecentLessonDrills = (count: number): LessonDrills[] => {
 	const lessons = new Map<string, LessonDrills>();
 	for (const note of getLessonNotes()) {
@@ -36,8 +39,14 @@ export const getRecentLessonDrills = (count: number): LessonDrills[] => {
 		for (const id of sectionDrills(note.section)) if (!lesson.drillIds.includes(id)) lesson.drillIds.push(id);
 		lessons.set(key, lesson);
 	}
+	const listed = new Set<string>();
 	return [...lessons.values()]
-		.filter((lesson) => lesson.drillIds.length > 0)
 		.sort((a, b) => b.date.localeCompare(a.date))
+		.map((lesson) => {
+			const drillIds = lesson.drillIds.filter((id) => !listed.has(id));
+			for (const id of drillIds) listed.add(id);
+			return { ...lesson, drillIds };
+		})
+		.filter((lesson) => lesson.drillIds.length > 0)
 		.slice(0, count);
 };

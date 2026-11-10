@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import type { ReactNode } from "react";
 
 import { BackLink } from "@/components/BackLink";
 import { GreekText } from "@/components/GreekText";
@@ -44,6 +45,22 @@ export const DrillList = ({ drills }: { drills: DrillLink[] }) => (
 	</ul>
 );
 
+export const PhaseHeading = ({
+	children,
+	as: Heading = "h4",
+	tint = "border-border text-muted-foreground",
+}: {
+	children: ReactNode;
+	as?: "h2" | "h4";
+	tint?: string;
+}) => (
+	<Heading
+		className={`mb-2 border-b pb-2 font-sans text-sm font-bold tracking-widest uppercase ${tint}`}
+	>
+		{children}
+	</Heading>
+);
+
 type DrillIndexProps = {
 	title: string;
 	subtitle?: string;
@@ -75,11 +92,7 @@ export function DrillIndex({
 					{drills && <DrillList drills={drills} />}
 					{phases?.map(({ phase, drills }) => (
 						<div key={phase}>
-							<h4
-								className={`mb-2 border-b pb-2 font-sans text-sm font-bold tracking-widest uppercase ${PHASE_TINT[phase] ?? "border-border text-muted-foreground"}`}
-							>
-								{phase}
-							</h4>
+							<PhaseHeading tint={PHASE_TINT[phase]}>{phase}</PhaseHeading>
 							<DrillList drills={drills} />
 						</div>
 					))}
