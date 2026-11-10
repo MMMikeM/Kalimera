@@ -29,14 +29,16 @@ const sectionDrills = (home: GrammarNoteHome): string[] => guideSection(home)?.s
 
 /**
  * The latest lessons whose notes point at a guide section with a drill, newest first.
- * A drill appears once, under the newest lesson that uses it.
+ * Each note contributes one drill, its section's first, and a drill appears once,
+ * under the newest lesson that uses it.
  */
 export const getRecentLessonDrills = (count: number): LessonDrills[] => {
 	const lessons = new Map<string, LessonDrills>();
 	for (const note of getLessonNotes()) {
 		const key = `${note.date} ${note.topic}`;
 		const lesson = lessons.get(key) ?? { date: note.date, topic: note.topic, drillIds: [] };
-		for (const id of sectionDrills(note.section)) if (!lesson.drillIds.includes(id)) lesson.drillIds.push(id);
+		const drillId = sectionDrills(note.section).find((id) => !lesson.drillIds.includes(id));
+		if (drillId) lesson.drillIds.push(drillId);
 		lessons.set(key, lesson);
 	}
 	const listed = new Set<string>();

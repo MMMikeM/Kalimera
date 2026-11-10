@@ -1,14 +1,16 @@
-import { getRouteApi } from "@tanstack/react-router";
+import { getRouteApi, useSearch } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 
 import { GreekText } from "@/components/GreekText";
 import { ROLE_SCHEME, SCHEME } from "@/constants/grammar-palette";
 import { matchPhonetic } from "@/lib/greek-transliteration";
-import { DRILL_REGISTRY, drillTitle } from "@/routes/practice/drill-catalogue.data";
+import { DRILL_REGISTRY, drillTitle, findStep } from "@/routes/practice/drill-catalogue.data";
 import { startSessionFn, recordAttemptFn, completeSessionFn } from "@/server/fns/srs";
+import { recordStepSessionFn } from "@/server/fns/steps";
 
 import type { SpeedId } from "../drill-speeds";
-import { type DrillForm, type DrillMode, type SessionSize } from "./deck";
+import { StepResult, type StepSessionResult } from "../step-result";
+import { type Attempt, type DrillForm, type DrillMode, type SessionSize } from "./deck";
 import { useContinueKeyboard, useCountdown, useForwardKeyboard } from "./drill-hooks";
 import {
 	type DrillSessionCallbacks,
@@ -323,7 +325,37 @@ function DrillInner<K extends string, T extends DrillForm>({
 
 // ─── Public <Drill> ────────────────────────────────────────────────────────────
 
-export function Drill<K extends string = string, T extends DrillForm = DrillForm>({
+/** Each item scored on its first showing; remediation repeats and deck padding don't count. */
+const firstTryScore = (attempts: readonly Attempt<DrillForm>[]) => {
+	const seen = new Set<string>();
+	let correct = 0;
+	for (const { form, isCorrect } of attempts) {
+		if (seen.has(form.id)) continue;
+		seen.add(form.id);
+		if (isCorrect) correct++;
+	}
+	return { correct, total: seen.size };
+};
+
+/**
+ * A drill opened with `?step=` runs as that path step. A whole-drill step also
+ * runs as one when opened without it, so a session counts wherever it starts.
+ */
+const useStep = (drillId: string) => {
+	const { step } = useSearch({ strict: false }) as { step?: string };
+	const found = findStep(step ?? drillId);
+	return found?.step.drill.id === drillId ? found : undefined;
+};
+
+export function Drill<K extends string = string, T extends DrillForm = DrillForm>(
+	props: DrillProps<K, T>,
+) {
+	const pathStep = useStep(props.drillId);
+	// Moving from one step to the next on the same route must start a fresh session.
+	return <DrillSession key={pathStep?.step.id ?? ""} {...props} pathStep={pathStep} />;
+}
+
+function DrillSession<K extends string = string, T extends DrillForm = DrillForm>({
 	drillId,
 	items,
 	colorTheme = "terracotta",
@@ -339,10 +371,20 @@ export function Drill<K extends string = string, T extends DrillForm = DrillForm
 	configExtras,
 	autoStart,
 	summaryFooter,
+	pathStep,
 	...shell
-}: DrillProps<K, T>) {
+}: DrillProps<K, T> & { pathStep: ReturnType<typeof findStep> }) {
 	const { auth } = rootRoute.useRouteContext();
-	const title = shell.title ?? drillTitle(drillId) ?? drillId;
+	const title = pathStep?.step.title ?? shell.title ?? drillTitle(drillId) ?? drillId;
+	const [stepResult, setStepResult] = useState<StepSessionResult>();
+
+	const recordStep = (stats: SessionStats<DrillForm>) => {
+		if (!pathStep || !auth?.userId || useDrillStore.getState().isReDrill) return;
+		const score = firstTryScore(stats.attempts);
+		recordStepSessionFn({ data: { stepId: pathStep.step.id, ...score } })
+			.then((result) => setStepResult({ ...result, score }))
+			.catch(() => {});
+	};
 
 	// Initialize store once per mount with this drill's config
 	useState(() => {
@@ -352,9 +394,12 @@ export function Drill<K extends string = string, T extends DrillForm = DrillForm
 			userId: auth?.userId ?? 0,
 			sessionSize,
 			defaultMode,
-			defaultCategory,
-			speed,
-			onComplete,
+			defaultCategory: pathStep?.step.category ?? defaultCategory,
+			speed: speed ?? (pathStep ? "relaxed" : undefined),
+			onComplete: (stats) => {
+				onComplete?.(stats);
+				recordStep(stats);
+			},
 			sessionCallbacks: SESSION_CALLBACKS,
 		};
 		drillActions.initialize(config);
@@ -362,7 +407,7 @@ export function Drill<K extends string = string, T extends DrillForm = DrillForm
 
 	return (
 		<DrillInner
-			shell={{ ...shell, title }}
+			shell={{ ...shell, title, hideOptions: !!pathStep }}
 			theme={themeFor(drillId, colorTheme)}
 			reverse={reverse}
 			forwardPrompt={forwardPrompt}
@@ -370,7 +415,16 @@ export function Drill<K extends string = string, T extends DrillForm = DrillForm
 			explainMiss={explainMiss}
 			configExtras={configExtras}
 			autoStart={autoStart}
-			summaryFooter={summaryFooter}
+			summaryFooter={
+				pathStep ? (
+					<>
+						<StepResult step={pathStep.step} path={pathStep.path} result={stepResult} />
+						{summaryFooter}
+					</>
+				) : (
+					summaryFooter
+				)
+			}
 		/>
 	);
 }

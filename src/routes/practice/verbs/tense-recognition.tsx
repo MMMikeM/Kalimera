@@ -25,6 +25,7 @@ function TenseRecognitionDrill() {
 		<VocabDrillPage
 			drillId="verbs-tense-recognition"
 			backTo="/practice/verbs"
+			defaultMode="reverse"
 			subtitle="σήμερα · χθες · αύριο / timed"
 			forwardDesc="English meaning + time word → Greek form"
 			reverseLabel="Greek → tense"

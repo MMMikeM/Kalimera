@@ -35,7 +35,8 @@ Route segments use grammatical terms (`nominative`); drill titles and phase labe
 <purpose>Hub: the drills for the latest lessons, then one link per drill group</purpose>
 <file>src/routes/practice/index.tsx</file>
 <displays>
-- "From your lessons": loader `getRecentLessonDrillsFn` (`src/server/fns/guides.ts`) reads the two latest lessons whose grammar notes point at a guide section with drills. A drill appears once, under the newest lesson that uses it. Each lesson's drills sit under the group that owns them (`GROUP_DRILLS` in `drill-catalogue.data.ts`), in that group's order. The newest lesson is open; older ones fold into a `CollapsibleSection`. The owner's account only (`canSeeLessons`); anyone else gets an empty list.
+- "Up next": one row, the step `pickNextStep` chooses on `VERB_PATH` (see Paths and steps).
+- "From your lessons": loader `getRecentLessonDrillsFn` (`src/server/fns/guides.ts`) reads the two latest lessons whose grammar notes point at a guide section with drills, one drill per note (its section's first). A drill appears once, under the newest lesson that uses it. Each lesson's drills sit under the group that owns them (`GROUP_DRILLS` in `drill-catalogue.data.ts`), in that group's order. The newest lesson is open; older ones fold into a ruled `<details>` row. The owner's account only (`canSeeLessons`); anyone else gets an empty list.
 - "All drills": a ruled list built from `SECTIONS`, each row a serif label plus a one-line thesis:
   - The case system → /practice/cases
   - Pronouns → /practice/pronouns
@@ -123,6 +124,15 @@ MIXED TENSES     ladder* · tense-recognition*
 ## Section: Building blocks
 
 `BLOCK_DRILLS` plus `QUESTION_WORDS_LINK`, a flat list on `blocks/index.tsx`: Survival phrases (`chunks`), Numbers, Days & time, Opposites, Question words. Opposites is DB-driven (`getOppositePairsFn`); the rest are hand-curated. Question words is a sub-group with its own index and six drills. Each has a `*.content.llm` beside its route.
+
+## Paths and steps
+
+The app picks what to practise next. `VERB_PATH` (`verbs/drills.data.ts`) is the Verbs phases in order, with Conjugation endings expanded into one step per verb (`<drill id>:<category>`). `findStep` (`drill-catalogue.data.ts`) looks a step up across paths.
+
+- A drill runs as a step when opened with `?step=` (validated on `practice/route.tsx`), or when its own id is a step. Then `<Drill>` hides the config options (`hideOptions`), presets the step's category and Relaxed speed, and on completion calls `recordStepSessionFn` (`src/server/fns/steps.ts`) with the first-try score. The re-drill of misses records nothing.
+- Rules live in `src/lib/step-progress.ts`: 90% on first tries passes; passes on two different days tick a step off; ticked steps come back for brush-ups after 3, 7, 14, then 30 days; failing one un-ticks the step. State is the `step_progress` table.
+- `pickNextStep`: a due brush-up first, else the first step not ticked and not already passed today.
+- `/practice` shows one Up next row (`UpNext`, `components/path.tsx`); `/practice/verbs` lists the path with each step's status (`pathPhases`). The summary screen says what the session counted for and links the next step (`StepResult`).
 
 ## Drill engine
 

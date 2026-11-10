@@ -116,3 +116,18 @@ export const drillProgress = sqliteTable(
 		index("idx_drill_progress_review").on(t.userId, t.drillId, t.nextReviewAt),
 	],
 );
+
+/** A step on a practice path. Rules in `src/lib/step-progress.ts`. */
+export const stepProgress = sqliteTable(
+	"step_progress",
+	{
+		userId: cascadeFk("user_id", () => users.id),
+		stepId: string("step_id"),
+		passedDays: integer("passed_days").notNull().default(0),
+		lastPassedOn: nullableString("last_passed_on"), // YYYY-MM-DD UTC
+		tickedAt: nullableTimestamp("ticked_at"),
+		brushUps: integer("brush_ups").notNull().default(0),
+		nextBrushUpAt: nullableTimestamp("next_brush_up_at"),
+	},
+	(t) => [primaryKey({ columns: [t.userId, t.stepId] })],
+);

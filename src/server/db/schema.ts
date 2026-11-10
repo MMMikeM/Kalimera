@@ -24,6 +24,7 @@ export {
 	userProgress,
 	drillDailyResults,
 	drillProgress,
+	stepProgress,
 	vocabProgress,
 } from "./schema-practice";
 

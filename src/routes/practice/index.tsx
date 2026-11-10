@@ -1,13 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronDown } from "lucide-react";
 
-import { CollapsibleSection } from "@/components/CollapsibleSection";
 import { formatDayMonth, parsePlainDate } from "@/lib/time";
 import { getRecentLessonDrillsFn } from "@/server/fns/guides";
+import { listStepProgressFn } from "@/server/fns/steps";
 
 import { DrillList, PhaseHeading } from "./components/drill-index";
+import { UpNext } from "./components/path";
 import { type DrillGroup, GROUP_DRILLS } from "./drill-catalogue.data";
+import { VERB_PATH } from "./verbs/drills.data";
 
 const SECTIONS: Array<{ group: DrillGroup; href: string; label: string; thesis: string }> = [
 	{
@@ -43,7 +45,13 @@ const SECTIONS: Array<{ group: DrillGroup; href: string; label: string; thesis: 
 ];
 
 export const Route = createFileRoute("/practice/")({
-	loader: () => getRecentLessonDrillsFn(),
+	loader: async () => {
+		const [lessons, stepProgress] = await Promise.all([
+			getRecentLessonDrillsFn(),
+			listStepProgressFn(),
+		]);
+		return { lessons, stepProgress };
+	},
 	component: PracticeIndex,
 });
 
@@ -79,22 +87,32 @@ const FromYourLessons = ({ lessons }: { lessons: LessonDrills[] }) => {
 			</header>
 			<LessonDrillGroups drillIds={latest.drillIds} />
 			{earlier.map((lesson) => (
-				<CollapsibleSection
-					key={`${lesson.date} ${lesson.topic}`}
-					title={`${lessonDate(lesson)} · ${lesson.topic}`}
-					className="mt-8"
-				>
+				<details key={`${lesson.date} ${lesson.topic}`} className="group mt-8 border-t border-border">
+					<summary className="flex min-h-11 cursor-pointer list-none items-baseline justify-between gap-4 py-3 [&::-webkit-details-marker]:hidden">
+						<span>
+							<span className="text-xs text-muted-foreground">{lessonDate(lesson)}</span>{" "}
+							<span className="font-medium text-foreground">{lesson.topic}</span>
+						</span>
+						<ChevronDown
+							size={16}
+							className="shrink-0 text-muted-foreground group-open:rotate-180"
+						/>
+					</summary>
 					<LessonDrillGroups drillIds={lesson.drillIds} />
-				</CollapsibleSection>
+				</details>
 			))}
 		</section>
 	);
 };
 
 function PracticeIndex() {
-	const lessons = Route.useLoaderData();
+	const { lessons, stepProgress } = Route.useLoaderData();
 	return (
 		<div className="mx-auto max-w-2xl">
+			<section className="mb-12">
+				<PhaseHeading as="h2">Up next</PhaseHeading>
+				<UpNext name="Verbs" path={VERB_PATH} rows={stepProgress} />
+			</section>
 			<FromYourLessons lessons={lessons} />
 			<section>
 				<PhaseHeading as="h2">All drills</PhaseHeading>

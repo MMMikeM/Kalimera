@@ -59,6 +59,8 @@ export interface ConfigShellProps {
 	referenceLabel?: string;
 	backTo?: string;
 	categories?: Array<{ id: string; label: string }>;
+	/** A path step: the app has chosen the cards, mode and speed, so only Begin remains. */
+	hideOptions?: boolean;
 	selectorBg: string;
 	selectorText: string;
 	children: React.ReactNode;
@@ -76,6 +78,7 @@ export const ConfigShell = ({
 	referenceLabel,
 	backTo,
 	categories,
+	hideOptions,
 	selectorBg,
 	selectorText,
 	children,
@@ -107,7 +110,7 @@ export const ConfigShell = ({
 
 			{children}
 
-			{categories && (
+			{categories && !hideOptions && (
 				<fieldset className="mb-8">
 					<legend className="mb-3 text-xs tracking-widest text-muted-foreground uppercase">
 						Filter
@@ -136,7 +139,7 @@ export const ConfigShell = ({
 				</fieldset>
 			)}
 
-			{!forwardOnly && (
+			{!forwardOnly && !hideOptions && (
 				<fieldset className="mb-8">
 					<legend className="mb-3 text-xs tracking-widest text-muted-foreground uppercase">
 						Mode
@@ -170,6 +173,8 @@ export const ConfigShell = ({
 				</fieldset>
 			)}
 
+			{!hideOptions && (
+			<>
 			<fieldset className="mb-8">
 				<legend className="mb-3 text-xs tracking-widest text-muted-foreground uppercase">
 					Cards
@@ -210,6 +215,8 @@ export const ConfigShell = ({
 					))}
 				</div>
 			</fieldset>
+			</>
+			)}
 
 			<Button onClick={startDrill} className="w-full">
 				Begin

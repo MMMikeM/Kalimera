@@ -29,6 +29,17 @@ export interface DrillEntry {
 	caseRole: CaseRole;
 }
 
+/** One step on a practice path: a whole drill, or one filter category of it. */
+export interface PathStep {
+	/** The drill id, or `<drill id>:<category>`; progress is recorded under it. */
+	id: string;
+	drill: DrillEntry;
+	title: string;
+	greek: string;
+	category?: string;
+	phase: string;
+}
+
 /** A drill list broken into labelled sections on its index page. */
 export interface DrillPhase {
 	phase: string;

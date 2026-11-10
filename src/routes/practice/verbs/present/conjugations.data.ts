@@ -25,6 +25,7 @@ type SixForms = readonly [VerbForm, VerbForm, VerbForm, VerbForm, VerbForm, Verb
 interface Paradigm {
 	key: string;
 	context: string;
+	tense: "present" | "past";
 	forms: SixForms;
 	alternatives?: Partial<Record<PersonNumber, VerbForm>>;
 }
@@ -39,6 +40,7 @@ const PARADIGMS: Paradigm[] = [
 	{
 		key: "g1p",
 		context: "κάνω · present",
+		tense: "present",
 		forms: [
 			split("κάν", "ω"),
 			split("κάν", "εις"),
@@ -51,6 +53,7 @@ const PARADIGMS: Paradigm[] = [
 	{
 		key: "g2ap",
 		context: "μιλάω · present",
+		tense: "present",
 		forms: [
 			split("μιλ", "άω"),
 			split("μιλ", "άς"),
@@ -64,6 +67,7 @@ const PARADIGMS: Paradigm[] = [
 	{
 		key: "g2bp",
 		context: "μπορώ · present",
+		tense: "present",
 		forms: [
 			split("μπορ", "ώ"),
 			split("μπορ", "είς"),
@@ -76,6 +80,7 @@ const PARADIGMS: Paradigm[] = [
 	{
 		key: "depp",
 		context: "έρχομαι · present",
+		tense: "present",
 		forms: [
 			split("έρχ", "ομαι"),
 			split("έρχ", "εσαι"),
@@ -89,6 +94,7 @@ const PARADIGMS: Paradigm[] = [
 	{
 		key: "aor",
 		context: "κάνω · aorist",
+		tense: "past",
 		forms: [
 			split("έκαν", "α"),
 			split("έκαν", "ες"),
@@ -101,6 +107,7 @@ const PARADIGMS: Paradigm[] = [
 	{
 		key: "g1i",
 		context: "γράφω · imperfect",
+		tense: "past",
 		forms: [
 			split("έγραφ", "α"),
 			split("έγραφ", "ες"),
@@ -113,6 +120,7 @@ const PARADIGMS: Paradigm[] = [
 	{
 		key: "g2i",
 		context: "μιλάω · imperfect",
+		tense: "past",
 		forms: [
 			split("μιλ", "ούσα"),
 			split("μιλ", "ούσες"),
@@ -162,7 +170,12 @@ export const typedInstead = (item: EndingItem, input = ""): EndingItem | undefin
 	);
 };
 
-export const CATEGORIES = PARADIGMS.map(({ key, context }) => ({ id: key, label: context }));
+export const CATEGORIES = PARADIGMS.map(({ key, context, tense, forms }) => ({
+	id: key,
+	label: context,
+	tense,
+	sample: forms.slice(0, 4).map(fullForm).join(" · "),
+}));
 
 /** The six forms of one verb in table order, for showing the whole pattern before drilling it. */
 export const paradigmRows = (key: string) =>

@@ -14,6 +14,10 @@ export interface DrillLink {
 	title: string;
 	greek: string;
 	minutes: number;
+	/** Opens the drill as this path step. */
+	step?: string;
+	/** Where the learner stands on this step, shown beside the time. */
+	status?: string;
 }
 
 /** Doer/Target/Owner name a case role; Review mixes them and claims none. */
@@ -26,10 +30,11 @@ const PHASE_TINT: Record<string, string> = {
 
 export const DrillList = ({ drills }: { drills: DrillLink[] }) => (
 	<ul className="divide-y divide-border">
-		{drills.map(({ id, to, greek, title, minutes }) => (
+		{drills.map(({ id, to, greek, title, minutes, step, status }) => (
 			<li key={id}>
 				<Link
 					to={to}
+					search={step ? { step } : undefined}
 					className="flex items-baseline justify-between gap-3 py-3 transition-colors hover:bg-foreground/5"
 				>
 					<div className="min-w-0 flex-1">
@@ -38,7 +43,10 @@ export const DrillList = ({ drills }: { drills: DrillLink[] }) => (
 							{greek}
 						</GreekText>
 					</div>
-					<span className="shrink-0 text-xs text-muted-foreground tabular-nums">{minutes} min</span>
+					<span className="shrink-0 text-xs text-muted-foreground tabular-nums">
+						{status && <span className="mr-3 font-medium text-foreground">{status}</span>}
+						{minutes} min
+					</span>
 				</Link>
 			</li>
 		))}
