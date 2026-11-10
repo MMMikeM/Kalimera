@@ -6,7 +6,6 @@ import {
 	useRouter,
 	useRouterState,
 } from "@tanstack/react-router";
-import { TanStackRouterDevtoolsInProd } from "@tanstack/react-router-devtools";
 /// <reference types="vite/client" />
 import type { ReactNode } from "react";
 import { useRegisterSW } from "virtual:pwa-register/react";
@@ -55,13 +54,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 		],
 	}),
 	shellComponent: RootDocument,
-	component: () => (
-		<>
-			<TanStackRouterDevtoolsInProd />
-
-			<RootBody />
-		</>
-	),
+	component: () => <RootBody />,
 	errorComponent: RootError,
 	notFoundComponent: NotFound,
 });

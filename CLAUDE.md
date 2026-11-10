@@ -67,8 +67,6 @@ Default **page routes**: a file route with a `loader` and a component. Mutations
 
 **Colocate data with its owner** — don't create a central registry file that combines unrelated data from multiple modules. Each route/component owns its own data; a combined view (e.g. `practice/drill-catalogue.data.ts`) is derived from the owners, not the primary source. A god file that knows about cases, pronouns, verbs, AND blocks is the wrong abstraction.
 
-**Router devtools ship to production on purpose** (`TanStackRouterDevtoolsInProd` in `__root.tsx`). Don't remove, gate or flag the badge.
-
 ---
 
 ## LLM Context Files
