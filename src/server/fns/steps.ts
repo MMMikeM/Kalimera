@@ -5,7 +5,8 @@ import { NEW_STEP, applySession, isUnlocked } from "@/lib/step-progress";
 import { nowInstant } from "@/lib/time";
 import { requireAuth } from "@/server/auth/session";
 import { findStep } from "@/routes/practice/drill-catalogue.data";
-import { findVerbSet, scoredItems } from "@/routes/practice/verbs/sets.data";
+import { unitStageSize } from "@/lib/units";
+import { UNITS, findUnit } from "@/routes/practice/path/units.data";
 import { listStepProgress, saveStepState } from "@/server/db/queries/step-progress";
 
 export const listStepProgressFn = createServerFn({ method: "GET" }).handler(async () => {
@@ -33,9 +34,10 @@ export const recordStepSessionFn = createServerFn({ method: "POST" })
 		if (!previous.tickedAt && !isUnlocked(step, progress, now)) {
 			throw new Error(`Step is locked: ${stepId}`);
 		}
-		const set = step.set && findVerbSet(step.set.id);
-		if (set && total !== scoredItems(set, step.set!.stage)) {
-			throw new Error(`Expected ${scoredItems(set, step.set!.stage)} items for ${stepId}, got ${total}`);
+		const unit = step.unit && findUnit(step.unit.id);
+		const expected = unit && unitStageSize(UNITS, unit.index, step.unit!.stage);
+		if (expected !== undefined && total !== expected) {
+			throw new Error(`Expected ${expected} items for ${stepId}, got ${total}`);
 		}
 		const { state, outcome } = applySession(previous, { correct, total }, now, step);
 		if (state === previous) return { outcome, progress: rows };

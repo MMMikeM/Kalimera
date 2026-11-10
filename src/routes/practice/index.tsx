@@ -9,7 +9,7 @@ import { listStepProgressFn } from "@/server/fns/steps";
 import { DrillList, PhaseHeading } from "./components/drill-index";
 import { UpNext } from "./components/path";
 import { type DrillGroup, GROUP_DRILLS } from "./drill-catalogue.data";
-import { VERB_PATH } from "./verbs/drills.data";
+import { UNIT_PATH } from "./path/units.data";
 
 const SECTIONS: Array<{ group: DrillGroup; href: string; label: string; thesis: string }> = [
 	{
@@ -111,7 +111,13 @@ function PracticeIndex() {
 		<div className="mx-auto max-w-2xl">
 			<section className="mb-12">
 				<PhaseHeading as="h2">Up next</PhaseHeading>
-				<UpNext name="Verbs" path={VERB_PATH} rows={stepProgress} />
+				<UpNext name="Your path" path={UNIT_PATH} rows={stepProgress} />
+				<Link
+					to="/practice/path"
+					className="inline-flex min-h-11 items-center text-sm font-medium text-navy-text underline-offset-2 hover:underline"
+				>
+					See the whole path →
+				</Link>
 			</section>
 			<FromYourLessons lessons={lessons} />
 			<section>

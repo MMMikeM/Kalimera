@@ -414,7 +414,7 @@ function DrillSession<K extends string = string, T extends DrillForm = DrillForm
 			userId: auth?.userId ?? 0,
 			sessionSize,
 			defaultMode,
-			defaultCategory: pathStep?.step.category ?? defaultCategory,
+			defaultCategory,
 			speed: speed ?? (pathStep ? stepSpeed(pathStep.step) : undefined),
 			deckOrder,
 			onComplete: (stats) => {

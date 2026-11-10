@@ -1,15 +1,12 @@
-import type { DrillEntry, DrillPhase, PathStep } from "@/constants/drills";
+import type { DrillEntry, DrillPhase } from "@/constants/drills";
 
-import { CATEGORIES as ENDINGS_VERBS } from "./present/conjugations.data";
-import { VERB_SETS, verbSetSteps } from "./sets.data";
 
 /**
  * Conjugation endings sit in both the Present and the Past section: the same
  * drill, reached from either tense. Defined once and referenced twice, so the
  * two listings cannot drift apart.
  */
-/** Free practice over the whole verb pool. The path teaches verbs in sets instead (`sets.data.ts`). */
-export const VERB_VOCABULARY: DrillEntry = {
+const VERB_VOCABULARY: DrillEntry = {
 	id: "verbs-vocabulary-sg1",
 	to: "/practice/verbs/present/vocabulary",
 	title: "Verb vocabulary · present",
@@ -33,6 +30,7 @@ export const VERB_PHASES: DrillPhase[] = [
 	{
 		phase: "Present",
 		drills: [
+			VERB_VOCABULARY,
 			CONJUGATION_ENDINGS,
 			{
 				id: "verbs-present-irregular",
@@ -205,25 +203,4 @@ export const VERB_PHASES: DrillPhase[] = [
 			},
 		],
 	},
-];
-
-const ENDINGS_TENSE: Record<string, "present" | "past"> = { Present: "present", Past: "past" };
-
-/** Conjugation endings is one step per verb, so each pattern is learnt before the next. */
-const stepsFor = (drill: DrillEntry, phase: string): PathStep[] =>
-	drill === CONJUGATION_ENDINGS
-		? ENDINGS_VERBS.filter((verb) => verb.tense === ENDINGS_TENSE[phase]).map((verb) => ({
-				id: `${drill.id}:${verb.id}`,
-				drill,
-				title: `Endings: ${verb.label}`,
-				greek: verb.sample,
-				category: verb.id,
-				phase,
-			}))
-		: [{ id: drill.id, drill, title: drill.title, greek: drill.greek, phase }];
-
-/** The verbs in the order to learn them: words in sets, then the Verbs index phases, one step at a time. */
-export const VERB_PATH: PathStep[] = [
-	...verbSetSteps(VERB_SETS, "Words"),
-	...VERB_PHASES.flatMap(({ phase, drills }) => drills.flatMap((drill) => stepsFor(drill, phase))),
 ];

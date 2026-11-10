@@ -48,7 +48,7 @@ export const StepResult = ({
 	const nextStep = next && path.find((s) => s.id === next.stepId);
 	return (
 		<div className="mt-8 border-t border-border pt-6">
-			{step.set?.stage !== "meet" && (
+			{step.unit?.stage !== "meet" && (
 				<p className="mb-1 text-sm text-muted-foreground tabular-nums">
 					{result.score.correct} of {result.score.total} right first time. A pass needs{" "}
 					{passMark(result.score.total)} of {result.score.total}.

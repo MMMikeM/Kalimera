@@ -8,6 +8,8 @@ Every route under `/practice` needs a session: `route.tsx` `beforeLoad` redirect
 
 ```
 /practice                                        Landing: recent-lesson drills, then five group links
+/practice/path                                   The units, each stage with its status (The path: units)
+/practice/path/stage?step=…                      One stage of a unit
 /practice/review                                 Drills due for review, by category
 /practice/cases                                  Case-system index (4 phases)
 /practice/cases/{nominative,accusative,genitive}/{article,noun,adjective,phrase}
@@ -15,7 +17,6 @@ Every route under `/practice` needs a session: `route.tsx` `beforeLoad` redirect
 /practice/pronouns                               Pronoun index (flat list)
 /practice/pronouns/{object,placement,possessives,possessive-vs-article}
 /practice/verbs                                  Verb index (4 phases)
-/practice/verbs/sets?step=…                     One stage of a verb set (Paths and steps)
 /practice/verbs/present/{vocabulary,conjugations,irregular,eimai,full}
 /practice/verbs/past/{aorist-vocabulary,aorist-stems,aorist-formation,imperfect-stative,aorist-conjugation}
 /practice/verbs/future/{vocabulary,formation,conjugation}
@@ -36,7 +37,7 @@ Route segments use grammatical terms (`nominative`); drill titles and phase labe
 <purpose>Hub: the drills for the latest lessons, then one link per drill group</purpose>
 <file>src/routes/practice/index.tsx</file>
 <displays>
-- "Up next": one row, the step `pickNextStep` chooses on `VERB_PATH` (see Paths and steps).
+- "Up next": one row, the step `pickNextStep` chooses on `UNIT_PATH`, and a link to the whole path (see The path: units).
 - "From your lessons": loader `getRecentLessonDrillsFn` (`src/server/fns/guides.ts`) reads the two latest lessons whose grammar notes point at a guide section with drills, one drill per note (its section's first). A drill appears once, under the newest lesson that uses it. Each lesson's drills sit under the group that owns them (`GROUP_DRILLS` in `drill-catalogue.data.ts`), in that group's order. The newest lesson is open; older ones fold into a ruled `<details>` row. The owner's account only (`canSeeLessons`); anyone else gets an empty list.
 - "All drills": a ruled list built from `SECTIONS`, each row a serif label plus a one-line thesis:
   - The case system → /practice/cases
@@ -114,12 +115,10 @@ REVIEW   All articles        18 forms, multi-select reverse (gender, number, cas
 `VERB_PHASES`, four phases on `verbs/index.tsx` (route segments shown):
 
 ```
-WORDS            sets (the verb sets' stages, see Paths and steps)
-PRESENT          present/conjugations · present/irregular · present/eimai · present/full*
+PRESENT          present/vocabulary* · present/conjugations · present/irregular · present/eimai · present/full*
 PAST             past/aorist-vocabulary* · past/aorist-stems · past/aorist-formation · present/conjugations · past/imperfect-stative · past/aorist-conjugation*
 FUTURE & MODAL   future/vocabulary* · future/formation · future/conjugation* · modal-constructions · imperatives
 MIXED TENSES     ladder* · tense-recognition*
-FREE PRACTICE    present/vocabulary*
 ```
 
 `*` = DB-driven: loader calls `getVerbDrillQuestionsFn` (`src/server/fns/verbs.ts`, queries in `verbs.server.ts`) and renders `VocabDrillPage`. The vocabulary drills (`kind: "vocabulary"`) ask sg1 from the English. The Full conjugations drills (`kind: "conjugation"`) prompt `γράφω → you all` and ask the other five persons, so a card tests the ending and not the verb; they draw verbs the learner has met first and top up with unmet ones only when the pool runs short. Which tense? reverses to a single-select on `TENSE_DIMENSION_OPTIONS`. Conjugation endings is one `DrillEntry` (`CONJUGATION_ENDINGS`) listed under both Present and Past; its cards are built from stem/ending pairs in `present/conjugations.data.ts`, which shows the whole verb after each answer. Each verb and tense is its own filter category, preselected to the first (κάνω · present) so a session drills one pattern; the config screen shows the chosen verb's six forms (`configExtras`) before the session starts. The rest are hand-curated item lists inside each route file.
@@ -128,21 +127,26 @@ FREE PRACTICE    present/vocabulary*
 
 `BLOCK_DRILLS` plus `QUESTION_WORDS_LINK`, a flat list on `blocks/index.tsx`: Survival phrases (`chunks`), Numbers, Days & time, Opposites, Question words. Opposites is DB-driven (`getOppositePairsFn`); the rest are hand-curated. Question words is a sub-group with its own index and six drills. Each has a `*.content.llm` beside its route.
 
-## Paths and steps
+## The path: units
 
-The app picks what to practise next. `VERB_PATH` (`verbs/drills.data.ts`) starts with verb sets, then the Verbs phases in order, with Conjugation endings expanded into one step per verb (`<drill id>:<category>`). `findStep` (`drill-catalogue.data.ts`) looks a step up across paths.
+The app picks what to practise next from one path of units (`path/units.data.ts`). A unit is up to six words grouped by meaning (nouns written with their article), the one pattern it introduces, and 6–8 sentences built only from its own and earlier units' words. Patterns (`path/patterns.data.ts`) have plain-English names, a one-line rule, marked breaks with reasons, and a guide section: "I, you, he/she", "What the action touches", "Saying no". The builders that turn a unit into items, and count them, are `src/lib/units.ts`; `getUnitStageFn` (`src/server/fns/units.ts`) reads the words' forms with `getUnitWords`.
 
-- **Verb sets** (`verbs/sets.data.ts`): `VERB_SETS` holds five verbs per set, grouped by meaning, each with an example sentence. Meanings come from the vocabulary table. `verbSetSteps` gives each set four steps (`verbs-set:<set>:<stage>`), all run by `/practice/verbs/sets?step=`:
-  - meet: `MeetSet` (`components/meet-set.tsx`), every verb with gloss, meaning and example, three cards to a screen, nothing asked
-  - recognise: Greek → pick the meaning from the set's five (single-select), untimed
-  - recall: English → type the Greek, untimed, with "Show me" (a miss)
-  - recall-timed: the same at Relaxed
-  Sessions are 10 cards, each verb once before any repeat (`deckOrder="each-first"`), scored on the five first tries. Only recall-timed records attempts (under `verbs-vocabulary-sg1`); the other stages pass `recordAttempts={false}`, so learning a set never feeds SRS. The free "Verb vocabulary · present" drill is listed under Free practice on `/practice/verbs` and is not a step.
-- A drill runs as a step when opened with `?step=` (validated on `practice/route.tsx`) on the step's own route, or when its own id is a step. Then `<Drill>` hides the config options (`hideOptions`), presets the step's category and speed (`stepSpeed`: untimed for a gate, Relaxed otherwise), and on completion calls `recordStepSessionFn` (`src/server/fns/steps.ts`) with the first-try score. The re-drill of misses records nothing.
-- Rules live in `src/lib/step-progress.ts`: 90% on first tries passes; passes on two different days tick a step off; ticked steps come back for brush-ups after 3, 7, 14, then 30 days; failing one un-ticks the step. A `gate` step (meet, recognise, recall) ticks on its first pass, never un-ticks and has no brush-ups. State is the `step_progress` table.
-- `requires` lists steps that must be ticked first; `heldUntilNextDay` also waits a day after they were ticked (recall-timed). A set's meet requires the previous set's recall and the timed recall of the set two back, so at most two sets are half-learnt. A locked step is listed without a link, its route redirects to `/practice/verbs`, and `recordStepSessionFn` rejects it, as it rejects a set session whose total isn't the set's size.
-- `pickNextStep`: a due brush-up first, else the first unlocked step not ticked and not already passed today.
-- `/practice` shows one Up next row (`UpNext`, `components/path.tsx`); `/practice/verbs` lists the path with each step's status (`pathPhases`). The summary screen says what the session counted for and links the next step (`StepResult`).
+Each unit has six steps (`unit:<unit id>:<stage>`), all run by `/practice/path/stage?step=`:
+
+```
+DAY 1   meet        MeetWords: three words to a screen, nothing asked                gate
+        recognise   Greek → pick the meaning (single-select), untimed                gate
+        recall      English → type the Greek, untimed, "Show me"                     gate
+DAY 2   pattern     PatternIntro tables first, then every pattern so far on          gate, a night after recall
+                    this unit's words (πάω → you; Φέρνω ___ the coffee; I don't know)
+        sentences   English, with the Greek words given in alphabetical order        gate
+DAY 3+  check       words, forms and sentences, typed at Relaxed                     2 passing days, brush-ups, a night after sentences
+```
+
+- Only the check records attempts, under `units-check` (its `DrillEntry` is in `GROUP_DRILLS.units`); the gates pass `recordAttempts={false}`. Sessions use `deckOrder="each-first"`, so every item gets a first try, and are scored on first tries. `recordStepSessionFn` rejects a total other than `unitStageSize`.
+- Rules live in `src/lib/step-progress.ts`: 90% on first tries passes; a gate ticks on its first pass, never un-ticks and has no brush-ups; other steps tick after passes on two days and come back after 3, 7, 14, then 30 days, and un-tick if a brush-up fails. `requires` lists steps that must be ticked first; `heldUntilNextDay` also waits a night. A unit's meet requires the previous unit's recall and the check of the unit two back, so at most two units are open. A locked step is listed without a link, its route redirects to `/practice/path`, and `recordStepSessionFn` rejects it.
+- `pickNextStep`: a due brush-up first, else the first unlocked step not ticked and not already passed today. `/practice` shows it as Up next (`UpNext`) with a link to `/practice/path`, which lists every unit's steps with their status (`pathPhases`). A drill opened with `?step=` on its step's own route hides its options, uses `stepSpeed` (untimed for a gate, Relaxed otherwise) and ends with `StepResult`.
+- Every other drill is free practice: the group indexes and "From your lessons" are unchanged.
 
 ## Drill engine
 

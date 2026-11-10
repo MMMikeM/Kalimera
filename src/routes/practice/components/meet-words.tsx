@@ -6,10 +6,9 @@ import { GreekText } from "@/components/GreekText";
 import { Pronunciation } from "@/components/Pronunciation";
 import { Button } from "@/components/ui/button";
 import type { PathStep } from "@/constants/drills";
-import type { DrillQuestion } from "@/lib/drill/types";
+import type { UnitItem, UnitWord } from "@/lib/units";
 import { recordStepSessionFn } from "@/server/fns/steps";
 
-import type { VerbSet } from "../verbs/sets.data";
 import { StepResult, type StepSessionResult } from "./step-result";
 
 const rootRoute = getRouteApi("__root__");
@@ -18,46 +17,46 @@ const rootRoute = getRouteApi("__root__");
 const CARDS_PER_PAGE = 3;
 
 const MeetCard = ({
-	verb,
+	word,
 	meaning,
 }: {
-	verb: VerbSet["verbs"][number];
+	word: UnitWord;
 	meaning: string;
 }) => (
 	<li className="rounded-lg border border-stone-300 bg-card px-5 py-4">
 		<GreekText as="p" size="3xl" weight="semibold">
-			{verb.greek}
+			{word.greek}
 		</GreekText>
-		<Pronunciation greek={verb.greek} className="mt-1 block" />
+		<Pronunciation greek={word.greek} className="mt-1 block" />
 		<p className="mt-2 text-lg text-foreground">{meaning}</p>
 		<div className="mt-3 border-t border-border pt-3">
-			<GreekText as="p">{verb.example.greek}</GreekText>
-			<p className="text-sm text-muted-foreground">{verb.example.english}</p>
+			<GreekText as="p">{word.example.greek}</GreekText>
+			<p className="text-sm text-muted-foreground">{word.example.english}</p>
 		</div>
 	</li>
 );
 
 /**
- * A set's first showing: every word with its meaning and an example, nothing
+ * A unit's first showing: every word with its meaning and an example, nothing
  * asked. Looking through it is the whole step.
  */
-export const MeetSet = ({
+export const MeetWords = ({
 	step,
 	path,
-	set,
-	questions,
+	words,
+	items,
 }: {
 	step: PathStep;
 	path: readonly PathStep[];
-	set: VerbSet;
-	questions: readonly DrillQuestion[];
+	words: readonly UnitWord[];
+	items: readonly UnitItem[];
 }) => {
 	const { auth } = rootRoute.useRouteContext();
 	const [page, setPage] = useState(0);
 	const [result, setResult] = useState<StepSessionResult>();
-	const meanings = new Map(questions.map((q) => [q.dimension, q.prompt]));
-	const pages = Math.ceil(set.verbs.length / CARDS_PER_PAGE);
-	const verbs = set.verbs.slice(page * CARDS_PER_PAGE, (page + 1) * CARDS_PER_PAGE);
+	const meanings = new Map(items.map((item) => [item.dimension, item.label]));
+	const pages = Math.ceil(words.length / CARDS_PER_PAGE);
+	const shown = words.slice(page * CARDS_PER_PAGE, (page + 1) * CARDS_PER_PAGE);
 	const lastPage = page === pages - 1;
 
 	const finish = () => {
@@ -71,15 +70,15 @@ export const MeetSet = ({
 	return (
 		<div className="mx-auto flex w-full max-w-sm flex-col gap-6 px-6 pb-6">
 			<div className="flex items-center justify-between gap-4">
-				<BackLink to="/practice/verbs">Exit</BackLink>
+				<BackLink to="/practice/path">Exit</BackLink>
 				<h1 className="min-w-0 truncate text-sm text-muted-foreground">{step.title}</h1>
 				<span className="shrink-0 text-sm text-muted-foreground tabular-nums">
 					{page + 1} of {pages}
 				</span>
 			</div>
 			<ul className="flex flex-col gap-4">
-				{verbs.map((verb) => (
-					<MeetCard key={verb.greek} verb={verb} meaning={meanings.get(verb.greek) ?? ""} />
+				{shown.map((word) => (
+					<MeetCard key={word.greek} word={word} meaning={meanings.get(word.greek) ?? ""} />
 				))}
 			</ul>
 			{result ? (

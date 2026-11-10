@@ -79,16 +79,20 @@ export const getVerbsWithConjugationsForTense = async (
 	});
 };
 
-/** Named verbs with their present first person, in no particular order. */
-export const getVerbsByGreek = async (greek: string[]) => {
+/** A unit's words: a verb's present I / you / he-she, a noun's singular forms with article. */
+export const getUnitWords = async (greek: string[]) => {
 	if (greek.length === 0) return [];
 	return await db.query.vocabulary.findMany({
-		where: { greekText: { in: greek }, wordType: "verb" },
+		where: { greekText: { in: greek } },
 		columns: { id: true, greekText: true, englishTranslation: true },
 		with: {
 			verbConjugations: {
-				where: { tense: "present", person: "sg1" },
-				columns: { form: true },
+				where: { tense: "present", person: { in: ["sg1", "sg2", "sg3"] } },
+				columns: { person: true, form: true },
+			},
+			nominalForms: {
+				where: { number: "singular", grammaticalCase: { in: ["nominative", "accusative"] } },
+				columns: { grammaticalCase: true, form: true, article: true },
 			},
 		},
 	});

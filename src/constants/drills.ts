@@ -1,5 +1,6 @@
 import type { CaseRoleName } from "@/constants/grammar-palette";
 import type { StepRule } from "@/lib/step-progress";
+import type { UnitStage } from "@/lib/units";
 import type { FileRoutesByTo } from "@/routeTree.gen";
 
 export type DrillCategory =
@@ -30,19 +31,15 @@ export interface DrillEntry {
 	caseRole: CaseRole;
 }
 
-/** The stages a set of words goes through, from first sight to timed recall. */
-export type SetStage = "meet" | "recognise" | "recall" | "recall-timed";
-
-/** One step on a practice path: a whole drill, one filter category of it, or one stage of a set. */
+/** One step on a practice path: one stage of a unit. */
 export interface PathStep extends StepRule {
-	/** The drill id, `<drill id>:<category>` or `<set id>:<stage>`; progress is recorded under it. */
+	/** `unit:<unit id>:<stage>`; progress is recorded under it. */
 	id: string;
 	drill: DrillEntry;
 	title: string;
 	greek: string;
-	category?: string;
 	phase: string;
-	set?: { id: string; stage: SetStage };
+	unit?: { id: string; stage: UnitStage };
 }
 
 /** A drill list broken into labelled sections on its index page. */

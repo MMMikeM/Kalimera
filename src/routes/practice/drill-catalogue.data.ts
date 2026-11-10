@@ -5,7 +5,8 @@ import { QUESTION_WORD_PHASES } from "./blocks/question-words/drills.data";
 import { CASE_PHASES } from "./cases/drills.data";
 import { GUIDE_DRILLS } from "./guides/drills.data";
 import { PRONOUN_DRILLS } from "./pronouns/drills.data";
-import { VERB_PATH, VERB_PHASES, VERB_VOCABULARY } from "./verbs/drills.data";
+import { UNIT_CHECK, UNIT_PATH } from "./path/units.data";
+import { VERB_PHASES } from "./verbs/drills.data";
 
 const uniqueById = (drills: DrillEntry[]) =>
 	drills.filter((drill, i) => drills.findIndex((other) => other.id === drill.id) === i);
@@ -14,7 +15,8 @@ const uniqueById = (drills: DrillEntry[]) =>
 export const GROUP_DRILLS = {
 	cases: uniqueById(CASE_PHASES.flatMap((p) => p.drills)),
 	pronouns: PRONOUN_DRILLS,
-	verbs: uniqueById([...VERB_PHASES.flatMap((p) => p.drills), VERB_VOCABULARY]),
+	verbs: uniqueById(VERB_PHASES.flatMap((p) => p.drills)),
+	units: [UNIT_CHECK],
 	blocks: [...BLOCK_DRILLS, ...QUESTION_WORD_PHASES.flatMap((p) => p.drills)],
 	guides: Object.values(GUIDE_DRILLS).flat(),
 } satisfies Record<string, DrillEntry[]>;
@@ -34,7 +36,7 @@ export const DRILL_REGISTRY: Record<string, DrillEntry> = Object.fromEntries(
 /** The drill's one name, for the screen that runs it. */
 export const drillTitle = (drillId: string): string | undefined => DRILL_REGISTRY[drillId]?.title;
 
-const PATHS: readonly PathStep[][] = [VERB_PATH];
+const PATHS: readonly PathStep[][] = [UNIT_PATH];
 
 /** The step with this id and the path it belongs to. */
 export const findStep = (stepId: string) => {
