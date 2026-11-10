@@ -5,7 +5,7 @@ import { QUESTION_WORD_PHASES } from "./blocks/question-words/drills.data";
 import { CASE_PHASES } from "./cases/drills.data";
 import { GUIDE_DRILLS } from "./guides/drills.data";
 import { PRONOUN_DRILLS } from "./pronouns/drills.data";
-import { VERB_PATH, VERB_PHASES } from "./verbs/drills.data";
+import { VERB_PATH, VERB_PHASES, VERB_VOCABULARY } from "./verbs/drills.data";
 
 const uniqueById = (drills: DrillEntry[]) =>
 	drills.filter((drill, i) => drills.findIndex((other) => other.id === drill.id) === i);
@@ -14,7 +14,7 @@ const uniqueById = (drills: DrillEntry[]) =>
 export const GROUP_DRILLS = {
 	cases: uniqueById(CASE_PHASES.flatMap((p) => p.drills)),
 	pronouns: PRONOUN_DRILLS,
-	verbs: uniqueById(VERB_PHASES.flatMap((p) => p.drills)),
+	verbs: uniqueById([...VERB_PHASES.flatMap((p) => p.drills), VERB_VOCABULARY]),
 	blocks: [...BLOCK_DRILLS, ...QUESTION_WORD_PHASES.flatMap((p) => p.drills)],
 	guides: Object.values(GUIDE_DRILLS).flat(),
 } satisfies Record<string, DrillEntry[]>;

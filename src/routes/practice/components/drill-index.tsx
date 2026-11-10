@@ -18,6 +18,8 @@ export interface DrillLink {
 	step?: string;
 	/** Where the learner stands on this step, shown beside the time. */
 	status?: string;
+	/** A step whose earlier steps aren't done yet: listed, not opened. */
+	locked?: boolean;
 }
 
 /** Doer/Target/Owner name a case role; Review mixes them and claims none. */
@@ -30,26 +32,43 @@ const PHASE_TINT: Record<string, string> = {
 
 export const DrillList = ({ drills }: { drills: DrillLink[] }) => (
 	<ul className="divide-y divide-border">
-		{drills.map(({ id, to, greek, title, minutes, step, status }) => (
-			<li key={id}>
-				<Link
-					to={to}
-					search={step ? { step } : undefined}
-					className="flex items-baseline justify-between gap-3 py-3 transition-colors hover:bg-foreground/5"
-				>
+		{drills.map(({ id, to, greek, title, minutes, step, status, locked }) => {
+			const row = (
+				<>
 					<div className="min-w-0 flex-1">
-						<div className="mb-0.5 text-sm font-medium text-foreground">{title}</div>
+						<div
+							className={`mb-0.5 text-sm font-medium ${locked ? "text-muted-foreground" : "text-foreground"}`}
+						>
+							{title}
+						</div>
 						<GreekText as="p" tone="muted" className="truncate">
 							{greek}
 						</GreekText>
 					</div>
 					<span className="shrink-0 text-xs text-muted-foreground tabular-nums">
-						{status && <span className="mr-3 font-medium text-foreground">{status}</span>}
+						{status && (
+							<span className={`mr-3 font-medium ${locked ? "" : "text-foreground"}`}>{status}</span>
+						)}
 						{minutes} min
 					</span>
-				</Link>
-			</li>
-		))}
+				</>
+			);
+			return (
+				<li key={id}>
+					{locked ? (
+						<div className="flex items-baseline justify-between gap-3 py-3">{row}</div>
+					) : (
+						<Link
+							to={to}
+							search={step ? { step } : undefined}
+							className="flex items-baseline justify-between gap-3 py-3 transition-colors hover:bg-foreground/5"
+						>
+							{row}
+						</Link>
+					)}
+				</li>
+			);
+		})}
 	</ul>
 );
 

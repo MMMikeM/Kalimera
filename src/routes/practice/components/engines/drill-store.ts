@@ -2,8 +2,10 @@ import { create } from "zustand";
 
 import { SPEEDMAP, scaleTimeLimitForPhrase, type SpeedId } from "../drill-speeds";
 import {
+	buildEachFirstDeck,
 	buildWeightedDeck,
 	type Attempt,
+	type DeckOrder,
 	type DrillForm,
 	type DrillMode,
 	type Phase,
@@ -50,6 +52,7 @@ export interface DrillStoreConfig {
 	defaultMode?: DrillMode;
 	defaultCategory?: string;
 	speed?: SpeedId;
+	deckOrder?: DeckOrder;
 	onComplete?: (stats: SessionStats<DrillForm>) => void;
 	sessionCallbacks?: DrillSessionCallbacks;
 }
@@ -65,7 +68,10 @@ interface DrillState {
 
 	phase: Phase;
 	mode: DrillMode;
+	/** The cap on this run's cards: the chosen size, or the number of misses in a re-drill. */
 	sessionSize: 10 | 20 | 30 | number;
+	chosenSessionSize: 10 | 20 | 30 | number;
+	deckOrder: DeckOrder;
 	activeCategory: string | null;
 	activeSpeedId: SpeedId;
 
@@ -96,6 +102,8 @@ export const useDrillStore = create<DrillState>()(() => ({
 	phase: "config",
 	mode: "forward",
 	sessionSize: 10,
+	chosenSessionSize: 10,
+	deckOrder: "weighted",
 	activeCategory: null,
 	activeSpeedId: "medium",
 
@@ -115,7 +123,8 @@ export const useDrillStore = create<DrillState>()(() => ({
 
 type DrillActions = {
 	initialize: (config: DrillStoreConfig) => void;
-	getEffectiveTimeLimit: () => number;
+	/** `null` when the speed is untimed. */
+	getEffectiveTimeLimit: () => number | null;
 	setMode: (mode: DrillMode) => void;
 	setSessionSize: (sessionSize: SessionSize | number) => void;
 	setActiveCategory: (activeCategory: string | null) => void;
@@ -133,12 +142,21 @@ const s = () => useDrillStore.getState();
 const set = useDrillStore.setState;
 
 export const drillActions: DrillActions = {
-	initialize: ({ sessionSize = 10, defaultMode = "forward", defaultCategory, speed, ...config }) => {
+	initialize: ({
+		sessionSize = 10,
+		defaultMode = "forward",
+		defaultCategory,
+		speed,
+		deckOrder = "weighted",
+		...config
+	}) => {
 		const initial = useDrillStore.getInitialState();
 		set({
 			...initial,
 			...config,
 			sessionSize,
+			chosenSessionSize: sessionSize,
+			deckOrder,
 			mode: defaultMode,
 			activeCategory: defaultCategory ?? null,
 			activeSpeedId: speed ?? initial.activeSpeedId,
@@ -148,29 +166,30 @@ export const drillActions: DrillActions = {
 		const { activeSpeedId, mode, deck, cardIndex } = s();
 		const base = SPEEDMAP[activeSpeedId].timeLimit;
 		const greek = deck[cardIndex]?.greek;
-		if (mode !== "forward" || !greek) return base;
+		if (base === null || mode !== "forward" || !greek) return base;
 		return scaleTimeLimitForPhrase(base, greek);
 	},
 	setMode: (mode) => set({ mode }),
-	setSessionSize: (sessionSize) => set({ sessionSize }),
+	setSessionSize: (sessionSize) => set({ sessionSize, chosenSessionSize: sessionSize }),
 	setActiveCategory: (activeCategory) => set({ activeCategory }),
 	setActiveSpeedId: (activeSpeedId) => set({ activeSpeedId }),
 	setInput: (input) => set({ input }),
 	startDrill: () => {
-		const { items, activeCategory, sessionSize, userId, sessionCallbacks } = s();
+		const { items, activeCategory, chosenSessionSize: sessionSize, deckOrder, userId, sessionCallbacks } = s();
 		const source = activeCategory
 			? items.filter((i) => (i as DrillForm & { category?: string }).category === activeCategory)
 			: items;
 		const uniquePoolSize = new Set(source.map((f) => f.id)).size;
 		let deck: DrillForm[];
 		try {
-			deck = buildWeightedDeck(source, sessionSize);
+			deck = deckOrder === "each-first" ? buildEachFirstDeck(source, sessionSize) : buildWeightedDeck(source, sessionSize);
 		} catch {
 			set({ phase: "error" });
 			return;
 		}
 		set({
 			deck,
+			sessionSize,
 			cardIndex: 0,
 			input: "",
 			attempts: [],
@@ -209,7 +228,7 @@ export const drillActions: DrillActions = {
 		const currentForm = deck[cardIndex];
 		if (!currentForm) return;
 		const timeTaken = timedOut
-			? drillActions.getEffectiveTimeLimit()
+			? (drillActions.getEffectiveTimeLimit() ?? 0)
 			: performance.now() - cardStartedAt;
 		const attempt: Attempt<DrillForm> = {
 			form: currentForm,
@@ -295,6 +314,7 @@ export const drillActions: DrillActions = {
 	resetToConfig: () =>
 		set({
 			phase: "config",
+			sessionSize: s().chosenSessionSize,
 			deck: [],
 			cardIndex: 0,
 			input: "",

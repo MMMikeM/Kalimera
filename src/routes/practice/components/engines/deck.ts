@@ -2,6 +2,8 @@ import type { DrillBucket } from "@/lib/drill/types";
 import { shuffle } from "@/lib/shuffle";
 
 export type DrillMode = "forward" | "reverse";
+/** `weighted` interleaves SRS buckets; `each-first` shows every item once before any repeats. */
+export type DeckOrder = "weighted" | "each-first";
 export type Phase = "config" | "active" | "feedback" | "complete" | "error";
 
 export const SESSION_SIZES = [10, 20, 30] as const;
@@ -108,5 +110,22 @@ export const buildWeightedDeck = (forms: DrillForm[], size: SessionSize | number
 		}
 	}
 
+	return deck;
+};
+
+/**
+ * Every item once, then again in a fresh order, until the deck is full. Each
+ * item's first showing comes before any repeat or re-inserted miss, so a
+ * session always scores every item.
+ */
+export const buildEachFirstDeck = (forms: DrillForm[], size: number): DrillForm[] => {
+	if (forms.length === 0) throw new Error("Pool is empty");
+	const deck: DrillForm[] = [];
+	while (deck.length < size) {
+		let round = shuffle(forms);
+		// No card twice in a row across the seam between rounds
+		if (forms.length > 1 && round[0]?.id === deck.at(-1)?.id) round = [...round.slice(1), round[0]!];
+		deck.push(...round.slice(0, size - deck.length));
+	}
 	return deck;
 };

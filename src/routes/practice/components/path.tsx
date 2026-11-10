@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 
 import { GreekText } from "@/components/GreekText";
 import type { PathStep } from "@/constants/drills";
-import { type StepStatus, pickNextStep, stepStatus } from "@/lib/step-progress";
+import { type StepStatus, isUnlocked, pickNextStep, stepStatus } from "@/lib/step-progress";
 import { nowInstant } from "@/lib/time";
 import type { StepProgressRow } from "@/server/db/queries/step-progress";
 
@@ -20,13 +20,11 @@ const STATUS_LABEL: Record<StepStatus, string | undefined> = {
 export const pathPhases = (path: readonly PathStep[], rows: readonly StepProgressRow[]) => {
 	const now = nowInstant();
 	const progress = progressMap(rows);
-	const next = pickNextStep(
-		path.map((s) => s.id),
-		progress,
-		now,
-	);
+	const next = pickNextStep(path, progress, now);
 	const phases: Array<{ phase: string; drills: DrillLink[] }> = [];
 	for (const step of path) {
+		const state = progress.get(step.id);
+		const locked = !state?.tickedAt && !isUnlocked(step, progress, now);
 		const link: DrillLink = {
 			id: step.id,
 			to: step.drill.to,
@@ -34,7 +32,13 @@ export const pathPhases = (path: readonly PathStep[], rows: readonly StepProgres
 			greek: step.greek,
 			minutes: step.drill.minutes,
 			step: step.id,
-			status: step.id === next?.stepId ? "Next" : STATUS_LABEL[stepStatus(progress.get(step.id), now)],
+			status:
+				step.id === next?.stepId
+					? "Next"
+					: locked
+						? "Locked"
+						: STATUS_LABEL[stepStatus(state, now)],
+			locked,
 		};
 		const phase = phases.at(-1);
 		if (phase?.phase === step.phase) phase.drills.push(link);
@@ -62,11 +66,7 @@ export const UpNext = ({
 }) => {
 	const now = nowInstant();
 	const progress = progressMap(rows);
-	const next = pickNextStep(
-		path.map((s) => s.id),
-		progress,
-		now,
-	);
+	const next = pickNextStep(path, progress, now);
 	const ticked = path.filter((s) => progress.get(s.id)?.tickedAt).length;
 	const step = next && path.find((s) => s.id === next.stepId);
 	const tally = `${name} · ${ticked} of ${path.length} ticked off`;

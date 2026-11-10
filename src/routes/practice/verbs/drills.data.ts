@@ -1,12 +1,24 @@
 import type { DrillEntry, DrillPhase, PathStep } from "@/constants/drills";
 
 import { CATEGORIES as ENDINGS_VERBS } from "./present/conjugations.data";
+import { VERB_SETS, verbSetSteps } from "./sets.data";
 
 /**
  * Conjugation endings sit in both the Present and the Past section: the same
  * drill, reached from either tense. Defined once and referenced twice, so the
  * two listings cannot drift apart.
  */
+/** Free practice over the whole verb pool. The path teaches verbs in sets instead (`sets.data.ts`). */
+export const VERB_VOCABULARY: DrillEntry = {
+	id: "verbs-vocabulary-sg1",
+	to: "/practice/verbs/present/vocabulary",
+	title: "Verb vocabulary · present",
+	greek: "γράφω · τρώω · μιλάω · θέλω",
+	minutes: 2,
+	category: "verbs",
+	caseRole: null,
+};
+
 const CONJUGATION_ENDINGS: DrillEntry = {
 	id: "verbs-conjugation-endings",
 	to: "/practice/verbs/present/conjugations",
@@ -21,15 +33,6 @@ export const VERB_PHASES: DrillPhase[] = [
 	{
 		phase: "Present",
 		drills: [
-			{
-				id: "verbs-vocabulary-sg1",
-				to: "/practice/verbs/present/vocabulary",
-				title: "Verb vocabulary · present",
-				greek: "γράφω · τρώω · μιλάω · θέλω",
-				minutes: 2,
-				category: "verbs",
-				caseRole: null,
-			},
 			CONJUGATION_ENDINGS,
 			{
 				id: "verbs-present-irregular",
@@ -219,7 +222,8 @@ const stepsFor = (drill: DrillEntry, phase: string): PathStep[] =>
 			}))
 		: [{ id: drill.id, drill, title: drill.title, greek: drill.greek, phase }];
 
-/** The verbs in the order to learn them: the Verbs index phases, one step at a time. */
-export const VERB_PATH: PathStep[] = VERB_PHASES.flatMap(({ phase, drills }) =>
-	drills.flatMap((drill) => stepsFor(drill, phase)),
-);
+/** The verbs in the order to learn them: words in sets, then the Verbs index phases, one step at a time. */
+export const VERB_PATH: PathStep[] = [
+	...verbSetSteps(VERB_SETS, "Words"),
+	...VERB_PHASES.flatMap(({ phase, drills }) => drills.flatMap((drill) => stepsFor(drill, phase))),
+];

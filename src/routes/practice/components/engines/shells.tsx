@@ -235,7 +235,8 @@ export const DrillShell = ({
 	children,
 }: {
 	title: string;
-	progress: number;
+	/** Time left on the card, or null when the card is untimed. */
+	progress: number | null;
 	barColor: string;
 	backTo?: string;
 	children: React.ReactNode;
@@ -256,7 +257,7 @@ export const DrillShell = ({
 				<div className="h-1 overflow-hidden rounded-full bg-stone-200">
 					<div
 						className={`h-full transition-colors duration-200 ${barColor}`}
-						style={{ width: `${progress * 100}%` }}
+						style={{ width: `${(progress ?? 0) * 100}%` }}
 					/>
 				</div>
 			</div>
@@ -292,9 +293,12 @@ export const DrillShell = ({
 export const ForwardInput = ({
 	inputRef,
 	onSubmit,
+	onShowAnswer,
 }: {
 	inputRef: React.RefObject<HTMLInputElement | null>;
 	onSubmit: () => void;
+	/** An untimed card has no timeout to end it, so the learner can ask for the answer. */
+	onShowAnswer?: () => void;
 }) => {
 	const input = useDrillStore((s) => s.input);
 	const phase = useDrillStore((s) => s.phase);
@@ -324,7 +328,18 @@ export const ForwardInput = ({
 				className={`w-full border-b-2 border-stone-200 bg-transparent pb-2 text-3xl text-foreground caret-terracotta transition-colors outline-none placeholder:text-stone-500 focus:border-terracotta [&::-webkit-search-cancel-button]:hidden ${phase !== "active" ? "text-muted-foreground" : ""}`}
 			/>
 			{phase === "active" && (
-				<p className="mt-2 text-xs text-muted-foreground pointer-coarse:hidden">Enter to check</p>
+				<div className="mt-2 flex items-center justify-between gap-4">
+					<p className="text-xs text-muted-foreground pointer-coarse:hidden">Enter to check</p>
+					{onShowAnswer && (
+						<button
+							type="button"
+							onClick={onShowAnswer}
+							className="ml-auto min-h-11 text-sm font-medium text-navy-text underline-offset-2 hover:underline"
+						>
+							Show me
+						</button>
+					)}
+				</div>
 			)}
 		</form>
 	);

@@ -48,24 +48,76 @@ describe("applySession", () => {
 		expect(applySession(slipped.state, PASS, day(5)).outcome).toBe("already-passed-today");
 		expect(applySession(slipped.state, PASS, day(6)).outcome).toBe("ticked");
 	});
+
+	it("ticks a gate for good on its first pass, with no brush-up", () => {
+		const gate = { gate: true };
+		expect(applySession(NEW_STEP, FAIL, day(1), gate).outcome).toBe("below-pass");
+		const passed = applySession(NEW_STEP, PASS, day(1), gate);
+		expect(passed.outcome).toBe("gate-passed");
+		expect(passed.state.nextBrushUpAt).toBeNull();
+		const replayed = applySession(passed.state, FAIL, day(9), gate);
+		expect(replayed).toEqual({ state: passed.state, outcome: "already-ticked" });
+	});
 });
 
 describe("pickNextStep", () => {
-	const ids = ["a", "b", "c"];
+	const steps = [{ id: "a" }, { id: "b" }, { id: "c" }];
 
 	it("starts at the first step", () => {
-		expect(pickNextStep(ids, new Map(), day(1))).toEqual({ stepId: "a", status: "new" });
+		expect(pickNextStep(steps, new Map(), day(1))).toEqual({ stepId: "a", status: "new" });
 	});
 
 	it("moves past a step already passed today, and comes back to it tomorrow", () => {
 		const progress = new Map([["a", run([[day(1), PASS]]).state]]);
-		expect(pickNextStep(ids, progress, day(1))?.stepId).toBe("b");
-		expect(pickNextStep(ids, progress, day(2))).toEqual({ stepId: "a", status: "passed-once" });
+		expect(pickNextStep(steps, progress, day(1))?.stepId).toBe("b");
+		expect(pickNextStep(steps, progress, day(2))).toEqual({ stepId: "a", status: "passed-once" });
 	});
 
 	it("puts a due brush-up before the current step", () => {
 		const progress = new Map([["b", run([[day(1), PASS], [day(2), PASS]]).state]]);
-		expect(pickNextStep(ids, progress, day(3))?.stepId).toBe("a");
-		expect(pickNextStep(ids, progress, day(5))).toEqual({ stepId: "b", status: "brush-up-due" });
+		expect(pickNextStep(steps, progress, day(3))?.stepId).toBe("a");
+		expect(pickNextStep(steps, progress, day(5))).toEqual({ stepId: "b", status: "brush-up-due" });
+	});
+});
+
+describe("pickNextStep with locked steps", () => {
+	const gate = (at: Temporal.Instant) => applySession(NEW_STEP, PASS, at, { gate: true }).state;
+	const set = (n: number) => [
+		{ id: `meet${n}`, gate: true, requires: n > 1 ? [`recall${n - 1}`] : [] },
+		{ id: `recall${n}`, gate: true, requires: [`meet${n}`] },
+		{ id: `timed${n}`, requires: [`recall${n}`], heldUntilNextDay: true },
+	];
+	const withCap = (n: number) =>
+		set(n).map((s, i) => (i === 0 && n > 2 ? { ...s, requires: [...s.requires!, `timed${n - 2}`] } : s));
+	const path = [...withCap(1), ...withCap(2), ...withCap(3)];
+
+	it("holds a stage back until the one before it is ticked", () => {
+		expect(pickNextStep(path, new Map(), day(1))?.stepId).toBe("meet1");
+		const progress = new Map([["meet1", gate(day(1))]]);
+		expect(pickNextStep(path, progress, day(1))?.stepId).toBe("recall1");
+	});
+
+	it("holds the timed stage until the day after recall ticked, and starts the next set meanwhile", () => {
+		const progress = new Map([
+			["meet1", gate(day(1))],
+			["recall1", gate(day(1))],
+		]);
+		expect(pickNextStep(path, progress, day(1))?.stepId).toBe("meet2");
+		expect(pickNextStep(path, progress, day(2))?.stepId).toBe("timed1");
+	});
+
+	it("keeps at most two sets half-learnt", () => {
+		const progress = new Map(
+			["meet1", "recall1", "meet2", "recall2"].map((id) => [id, gate(day(1))] as const),
+		);
+		const timedPassedOnce = new Map([
+			...progress,
+			["timed1", run([[day(2), PASS]]).state],
+			["timed2", run([[day(2), PASS]]).state],
+		]);
+		expect(pickNextStep(path, timedPassedOnce, day(2))).toBeUndefined();
+		const timed1Ticked = new Map([...timedPassedOnce, ["timed1", run([[day(2), PASS], [day(3), PASS]]).state]]);
+		expect(pickNextStep(path, timed1Ticked, day(3))?.stepId).toBe("timed2");
+		expect(pickNextStep(path, new Map([...timed1Ticked, ["timed2", run([[day(3), PASS]]).state]]), day(3))?.stepId).toBe("meet3");
 	});
 });

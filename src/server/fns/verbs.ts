@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
 import { typedKeys } from "@/lib/object";
+import { findVerbSet } from "@/routes/practice/verbs/sets.data";
 import { requireAuth } from "@/server/auth/session";
 
 import type { ConjugationDrill } from "./verbs.server";
@@ -9,6 +10,7 @@ import {
 	getTenseLadderQuestions,
 	getTenseRecognitionQuestions,
 	getVerbConjugationQuestions,
+	getVerbSetQuestions,
 } from "./verbs.server";
 
 /** Conjugation drills differ only in tense, question id prefix and kind. */
@@ -42,4 +44,13 @@ export const getVerbDrillQuestionsFn = createServerFn({ method: "GET" })
 			default:
 				return getVerbConjugationQuestions(userId, drillId, limit, CONJUGATION_DRILLS[drillId]);
 		}
+	});
+
+export const getVerbSetQuestionsFn = createServerFn({ method: "GET" })
+	.validator(z.object({ setId: z.string() }))
+	.handler(async ({ data: { setId } }) => {
+		await requireAuth();
+		const set = findVerbSet(setId);
+		if (!set) throw new Error(`Unknown verb set: ${setId}`);
+		return await getVerbSetQuestions(set);
 	});

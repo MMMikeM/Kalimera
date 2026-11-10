@@ -28,7 +28,12 @@ export const useCardState = <T>(initial: T) => {
 	return [value, setValue] as const;
 };
 
-export const useCountdown = (durationMs: number, isRunning: boolean, onTimeout: () => void) => {
+/** `progress` is null with no time limit: nothing counts down and nothing times out. */
+export const useCountdown = (
+	durationMs: number | null,
+	isRunning: boolean,
+	onTimeout: () => void,
+) => {
 	const [progress, setProgress] = useState(1);
 	const rafRef = useRef<number | null>(null);
 	const startRef = useRef<number>(0);
@@ -38,7 +43,7 @@ export const useCountdown = (durationMs: number, isRunning: boolean, onTimeout: 
 	}, [onTimeout]);
 
 	useEffect(() => {
-		if (!isRunning) {
+		if (!isRunning || durationMs === null) {
 			if (rafRef.current) {
 				cancelAnimationFrame(rafRef.current);
 				rafRef.current = null;
@@ -47,6 +52,7 @@ export const useCountdown = (durationMs: number, isRunning: boolean, onTimeout: 
 		}
 		startRef.current = performance.now();
 		const tick = (now: number) => {
+			if (durationMs === null) return;
 			const rem = Math.max(0, 1 - (now - startRef.current) / durationMs);
 			setProgress(rem);
 			if (rem > 0) {
@@ -61,7 +67,7 @@ export const useCountdown = (durationMs: number, isRunning: boolean, onTimeout: 
 		};
 	}, [isRunning, durationMs]);
 
-	return { progress };
+	return { progress: durationMs === null ? null : progress };
 };
 
 const CONTROL_TAGS = new Set(["INPUT", "TEXTAREA", "SELECT", "BUTTON", "A"]);

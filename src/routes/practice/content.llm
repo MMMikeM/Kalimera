@@ -15,6 +15,7 @@ Every route under `/practice` needs a session: `route.tsx` `beforeLoad` redirect
 /practice/pronouns                               Pronoun index (flat list)
 /practice/pronouns/{object,placement,possessives,possessive-vs-article}
 /practice/verbs                                  Verb index (4 phases)
+/practice/verbs/sets?step=…                     One stage of a verb set (Paths and steps)
 /practice/verbs/present/{vocabulary,conjugations,irregular,eimai,full}
 /practice/verbs/past/{aorist-vocabulary,aorist-stems,aorist-formation,imperfect-stative,aorist-conjugation}
 /practice/verbs/future/{vocabulary,formation,conjugation}
@@ -113,10 +114,12 @@ REVIEW   All articles        18 forms, multi-select reverse (gender, number, cas
 `VERB_PHASES`, four phases on `verbs/index.tsx` (route segments shown):
 
 ```
-PRESENT          present/vocabulary* · present/conjugations · present/irregular · present/eimai · present/full*
+WORDS            sets (the verb sets' stages, see Paths and steps)
+PRESENT          present/conjugations · present/irregular · present/eimai · present/full*
 PAST             past/aorist-vocabulary* · past/aorist-stems · past/aorist-formation · present/conjugations · past/imperfect-stative · past/aorist-conjugation*
 FUTURE & MODAL   future/vocabulary* · future/formation · future/conjugation* · modal-constructions · imperatives
 MIXED TENSES     ladder* · tense-recognition*
+FREE PRACTICE    present/vocabulary*
 ```
 
 `*` = DB-driven: loader calls `getVerbDrillQuestionsFn` (`src/server/fns/verbs.ts`, queries in `verbs.server.ts`) and renders `VocabDrillPage`. The vocabulary drills (`kind: "vocabulary"`) ask sg1 from the English. The Full conjugations drills (`kind: "conjugation"`) prompt `γράφω → you all` and ask the other five persons, so a card tests the ending and not the verb; they draw verbs the learner has met first and top up with unmet ones only when the pool runs short. Which tense? reverses to a single-select on `TENSE_DIMENSION_OPTIONS`. Conjugation endings is one `DrillEntry` (`CONJUGATION_ENDINGS`) listed under both Present and Past; its cards are built from stem/ending pairs in `present/conjugations.data.ts`, which shows the whole verb after each answer. Each verb and tense is its own filter category, preselected to the first (κάνω · present) so a session drills one pattern; the config screen shows the chosen verb's six forms (`configExtras`) before the session starts. The rest are hand-curated item lists inside each route file.
@@ -127,11 +130,18 @@ MIXED TENSES     ladder* · tense-recognition*
 
 ## Paths and steps
 
-The app picks what to practise next. `VERB_PATH` (`verbs/drills.data.ts`) is the Verbs phases in order, with Conjugation endings expanded into one step per verb (`<drill id>:<category>`). `findStep` (`drill-catalogue.data.ts`) looks a step up across paths.
+The app picks what to practise next. `VERB_PATH` (`verbs/drills.data.ts`) starts with verb sets, then the Verbs phases in order, with Conjugation endings expanded into one step per verb (`<drill id>:<category>`). `findStep` (`drill-catalogue.data.ts`) looks a step up across paths.
 
-- A drill runs as a step when opened with `?step=` (validated on `practice/route.tsx`), or when its own id is a step. Then `<Drill>` hides the config options (`hideOptions`), presets the step's category and Relaxed speed, and on completion calls `recordStepSessionFn` (`src/server/fns/steps.ts`) with the first-try score. The re-drill of misses records nothing.
-- Rules live in `src/lib/step-progress.ts`: 90% on first tries passes; passes on two different days tick a step off; ticked steps come back for brush-ups after 3, 7, 14, then 30 days; failing one un-ticks the step. State is the `step_progress` table.
-- `pickNextStep`: a due brush-up first, else the first step not ticked and not already passed today.
+- **Verb sets** (`verbs/sets.data.ts`): `VERB_SETS` holds five verbs per set, grouped by meaning, each with an example sentence. Meanings come from the vocabulary table. `verbSetSteps` gives each set four steps (`verbs-set:<set>:<stage>`), all run by `/practice/verbs/sets?step=`:
+  - meet: `MeetSet` (`components/meet-set.tsx`), every verb with gloss, meaning and example, three cards to a screen, nothing asked
+  - recognise: Greek → pick the meaning from the set's five (single-select), untimed
+  - recall: English → type the Greek, untimed, with "Show me" (a miss)
+  - recall-timed: the same at Relaxed
+  Sessions are 10 cards, each verb once before any repeat (`deckOrder="each-first"`), scored on the five first tries. Only recall-timed records attempts (under `verbs-vocabulary-sg1`); the other stages pass `recordAttempts={false}`, so learning a set never feeds SRS. The free "Verb vocabulary · present" drill is listed under Free practice on `/practice/verbs` and is not a step.
+- A drill runs as a step when opened with `?step=` (validated on `practice/route.tsx`) on the step's own route, or when its own id is a step. Then `<Drill>` hides the config options (`hideOptions`), presets the step's category and speed (`stepSpeed`: untimed for a gate, Relaxed otherwise), and on completion calls `recordStepSessionFn` (`src/server/fns/steps.ts`) with the first-try score. The re-drill of misses records nothing.
+- Rules live in `src/lib/step-progress.ts`: 90% on first tries passes; passes on two different days tick a step off; ticked steps come back for brush-ups after 3, 7, 14, then 30 days; failing one un-ticks the step. A `gate` step (meet, recognise, recall) ticks on its first pass, never un-ticks and has no brush-ups. State is the `step_progress` table.
+- `requires` lists steps that must be ticked first; `heldUntilNextDay` also waits a day after they were ticked (recall-timed). A set's meet requires the previous set's recall and the timed recall of the set two back, so at most two sets are half-learnt. A locked step is listed without a link, its route redirects to `/practice/verbs`, and `recordStepSessionFn` rejects it, as it rejects a set session whose total isn't the set's size.
+- `pickNextStep`: a due brush-up first, else the first unlocked step not ticked and not already passed today.
 - `/practice` shows one Up next row (`UpNext`, `components/path.tsx`); `/practice/verbs` lists the path with each step's status (`pathPhases`). The summary screen says what the session counted for and links the next step (`StepResult`).
 
 ## Drill engine
@@ -147,7 +157,8 @@ Files in `components/engines/`:
 
 Behaviour:
 - Top bar (`DrillShell`): Exit link, the drill title as the page `h1`, "N of M". Bucket and "remediation ×N" chips show only for a logged-in user (`userId > 0`), so never on /try.
-- Timing: the learner's Fast 4 s / Medium 6 s (default) / Relaxed 8 s choice (`drill-speeds.ts`). In forward mode each extra word in the answer adds 35% (`scaleTimeLimitForPhrase`). A timeout records a miss.
+- Timing: the learner's Fast 4 s / Medium 6 s (default) / Relaxed 8 s choice (`drill-speeds.ts`). In forward mode each extra word in the answer adds 35% (`scaleTimeLimitForPhrase`). A timeout records a miss. `untimed` is for path gates only and is not in the picker: no countdown, the bar stays empty, and a forward card offers "Show me", which records a miss.
+- Session size: a re-drill of misses caps the run at their number; Practice again and the config screen go back to the chosen size (`chosenSessionSize`).
 - Grading: `matchPhonetic` (`src/lib/greek-transliteration.ts`) against `greek`, then `acceptAlso` (one answer or a list). It accepts the answer with or without a leading article and strips terminal `;` `?` `!` `.` on both sides.
 - Keys: a blank Enter is ignored and records nothing. Enter or Space continues after any feedback; a correct answer also advances by itself after 1200 ms, a wrong one waits (or tap the feedback block). Keys pressed in another control (header search, a focused button or link) are left to that control; the answer input submits through its own form and still continues on Enter or Space.
 - Remediation: a missed card is re-inserted about five cards later, at most three times per word.

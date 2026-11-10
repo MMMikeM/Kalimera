@@ -79,6 +79,21 @@ export const getVerbsWithConjugationsForTense = async (
 	});
 };
 
+/** Named verbs with their present first person, in no particular order. */
+export const getVerbsByGreek = async (greek: string[]) => {
+	if (greek.length === 0) return [];
+	return await db.query.vocabulary.findMany({
+		where: { greekText: { in: greek }, wordType: "verb" },
+		columns: { id: true, greekText: true, englishTranslation: true },
+		with: {
+			verbConjugations: {
+				where: { tense: "present", person: "sg1" },
+				columns: { form: true },
+			},
+		},
+	});
+};
+
 export const getVerbsWithConjugationsForTenses = async (
 	vocabIds: number[],
 	tenses: Array<"present" | "aorist" | "past_continuous" | "future">,

@@ -1,6 +1,8 @@
 import type { DrillQuestion } from "@/lib/drill/types";
 import { getDrillVocabPool } from "@/server/db/queries/drill-pool";
+import type { VerbSet } from "@/routes/practice/verbs/sets.data";
 import {
+	getVerbsByGreek,
 	getVerbsWithConjugationsForTense,
 	getVerbsWithConjugationsForTenses,
 } from "@/server/db/queries/vocabulary";
@@ -178,4 +180,28 @@ export const getTenseRecognitionQuestions = async (
 	}
 
 	return assertEnough(questions, limit);
+};
+
+/**
+ * One card per verb in a set: its meaning, asking for the present first person.
+ * Ids match the vocabulary drill's, since the timed stage records under that drill.
+ */
+export const getVerbSetQuestions = async (set: VerbSet): Promise<DrillQuestion[]> => {
+	const rows = await getVerbsByGreek(set.verbs.map((v) => v.greek));
+	const byGreek = new Map(rows.map((row) => [row.greekText, row]));
+	const questions = set.verbs.flatMap(({ greek }) => {
+		const vocab = byGreek.get(greek);
+		const sg1 = vocab?.verbConjugations[0];
+		if (!vocab || !sg1) return [];
+		return [
+			{
+				id: `db-verb-sg1-${vocab.id}-sg1`,
+				prompt: vocab.englishTranslation,
+				correctGreek: sg1.form,
+				vocabId: vocab.id,
+				dimension: greek,
+			},
+		];
+	});
+	return assertEnough(questions, set.verbs.length);
 };

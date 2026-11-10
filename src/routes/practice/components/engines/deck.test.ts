@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vite-plus/test";
 
-import { buildWeightedDeck } from "./deck";
+import { buildEachFirstDeck, buildWeightedDeck } from "./deck";
 import type { DrillForm } from "./deck";
 
 const form = (id: string, bucket: DrillForm["bucket"] = "new"): DrillForm => ({
@@ -115,6 +115,20 @@ describe("small pool behaviour", () => {
 		const deck = buildWeightedDeck(forms, 10);
 		for (const f of forms) {
 			expect(ids(deck)).toContain(f.id);
+		}
+	});
+});
+
+describe("each-first deck", () => {
+	const forms = ["a", "b", "c", "d", "e"].map((id) => form(id));
+
+	it("shows every item once before any repeats", () => {
+		for (let run = 0; run < 20; run++) {
+			const deck = buildEachFirstDeck(forms, 10);
+			expect(deck).toHaveLength(10);
+			expect(uniqueIds(deck.slice(0, 5)).sort()).toEqual(["a", "b", "c", "d", "e"]);
+			expect(uniqueIds(deck.slice(5)).sort()).toEqual(["a", "b", "c", "d", "e"]);
+			expect(deck[5]!.id).not.toBe(deck[4]!.id);
 		}
 	});
 });

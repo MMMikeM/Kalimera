@@ -19,9 +19,6 @@ export const listStepProgress = async (userId: number) =>
 
 export type StepProgressRow = Awaited<ReturnType<typeof listStepProgress>>[number];
 
-export const getStepState = async (userId: number, stepId: string) =>
-	await db.query.stepProgress.findFirst({ where: { userId, stepId }, columns: STATE_COLUMNS });
-
 export const saveStepState = async (userId: number, stepId: string, state: StepState) => {
 	await db
 		.insert(stepProgress)

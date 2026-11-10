@@ -1,4 +1,4 @@
-import { getRouteApi, useSearch } from "@tanstack/react-router";
+import { getRouteApi, useLocation, useSearch } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 
 import { GreekText } from "@/components/GreekText";
@@ -8,9 +8,9 @@ import { DRILL_REGISTRY, drillTitle, findStep } from "@/routes/practice/drill-ca
 import { startSessionFn, recordAttemptFn, completeSessionFn } from "@/server/fns/srs";
 import { recordStepSessionFn } from "@/server/fns/steps";
 
-import type { SpeedId } from "../drill-speeds";
+import { type SpeedId, stepSpeed } from "../drill-speeds";
 import { StepResult, type StepSessionResult } from "../step-result";
-import { type Attempt, type DrillForm, type DrillMode, type SessionSize } from "./deck";
+import { type Attempt, type DeckOrder, type DrillForm, type DrillMode, type SessionSize } from "./deck";
 import { useContinueKeyboard, useCountdown, useForwardKeyboard } from "./drill-hooks";
 import {
 	type DrillSessionCallbacks,
@@ -135,6 +135,9 @@ export interface DrillProps<
 	sessionSize?: SessionSize | number;
 	/** Preselects the speed; a drill that skips its config screen has no other way to set it. */
 	speed?: SpeedId;
+	deckOrder?: DeckOrder;
+	/** False keeps the session out of the learner's SRS history; it is still scored as a step. */
+	recordAttempts?: boolean;
 	onComplete?: (stats: SessionStats<DrillForm>) => void;
 	summaryFooter?: React.ReactNode;
 }
@@ -206,6 +209,13 @@ function DrillInner<K extends string, T extends DrillForm>({
 			correctAnswer: form.greek,
 			userAnswer: input.trim(),
 		});
+	};
+
+	const showAnswer = () => {
+		const { deck, cardIndex, phase } = useDrillStore.getState();
+		const form = deck[cardIndex];
+		if (!form || phase !== "active") return;
+		drillActions.recordAttempt(false, { prompt: form.label, correctAnswer: form.greek, userAnswer: "" });
 	};
 
 	const handleTimeout = () => {
@@ -301,7 +311,11 @@ function DrillInner<K extends string, T extends DrillForm>({
 							)
 						)}
 					</div>
-					<ForwardInput inputRef={inputRef} onSubmit={handleForwardSubmit} />
+					<ForwardInput
+						inputRef={inputRef}
+						onSubmit={handleForwardSubmit}
+						onShowAnswer={effectiveTimeLimit === null ? showAnswer : undefined}
+					/>
 					<FeedbackDisplay renderAnswer={answerRenderer} explainMiss={missExplainer} />
 				</>
 			) : (
@@ -343,8 +357,10 @@ const firstTryScore = (attempts: readonly Attempt<DrillForm>[]) => {
  */
 const useStep = (drillId: string) => {
 	const { step } = useSearch({ strict: false }) as { step?: string };
+	const pathname = useLocation({ select: (location) => location.pathname });
 	const found = findStep(step ?? drillId);
-	return found?.step.drill.id === drillId ? found : undefined;
+	// Two routes can record under one drill id; a step runs only on its own route.
+	return found?.step.drill.id === drillId && found.step.drill.to === pathname ? found : undefined;
 };
 
 export function Drill<K extends string = string, T extends DrillForm = DrillForm>(
@@ -363,6 +379,8 @@ function DrillSession<K extends string = string, T extends DrillForm = DrillForm
 	defaultCategory,
 	sessionSize,
 	speed,
+	deckOrder,
+	recordAttempts = true,
 	onComplete,
 	reverse,
 	forwardPrompt,
@@ -379,6 +397,8 @@ function DrillSession<K extends string = string, T extends DrillForm = DrillForm
 	const [stepResult, setStepResult] = useState<StepSessionResult>();
 
 	const recordStep = (stats: SessionStats<DrillForm>) => {
+		// The last round's result must not show under this round's score while this one saves.
+		setStepResult(undefined);
 		if (!pathStep || !auth?.userId || useDrillStore.getState().isReDrill) return;
 		const score = firstTryScore(stats.attempts);
 		recordStepSessionFn({ data: { stepId: pathStep.step.id, ...score } })
@@ -395,12 +415,13 @@ function DrillSession<K extends string = string, T extends DrillForm = DrillForm
 			sessionSize,
 			defaultMode,
 			defaultCategory: pathStep?.step.category ?? defaultCategory,
-			speed: speed ?? (pathStep ? "relaxed" : undefined),
+			speed: speed ?? (pathStep ? stepSpeed(pathStep.step) : undefined),
+			deckOrder,
 			onComplete: (stats) => {
 				onComplete?.(stats);
 				recordStep(stats);
 			},
-			sessionCallbacks: SESSION_CALLBACKS,
+			sessionCallbacks: recordAttempts ? SESSION_CALLBACKS : undefined,
 		};
 		drillActions.initialize(config);
 	});

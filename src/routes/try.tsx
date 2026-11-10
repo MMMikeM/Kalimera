@@ -43,7 +43,7 @@ const TRY_ITEMS: SimpleListItem[] = TRY_QUESTIONS.map((q) => ({
 	...(q.acceptAlso && { acceptAlso: q.acceptAlso }),
 }));
 
-const TRY_SPEED: SpeedId = "medium";
+const TRY_SPEED = "medium" satisfies SpeedId;
 const TRY_SECONDS = SPEEDMAP[TRY_SPEED].timeLimit / 1000;
 
 const TryDrillIntro = ({ onStart }: { onStart: () => void }) => (

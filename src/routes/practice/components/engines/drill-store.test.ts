@@ -282,3 +282,27 @@ describe("remediation", () => {
 		expect(deckIds().filter((id) => id === "a")).toHaveLength(3);
 	});
 });
+
+describe("session size after a re-drill", () => {
+	it("goes back to the chosen size, so a re-drill's few cards never count as a whole session", () => {
+		setup(10);
+		drillActions.recordAttempt(false, log(0));
+		const mistakes = useDrillStore.getState().attempts;
+		drillActions.retryMistakes(mistakes);
+		expect(useDrillStore.getState().sessionSize).toBe(1);
+
+		drillActions.resetToConfig();
+		expect(useDrillStore.getState().sessionSize).toBe(10);
+		drillActions.retryMistakes(mistakes);
+		drillActions.startDrill();
+		expect(useDrillStore.getState().deck).toHaveLength(10);
+	});
+});
+
+describe("an untimed speed", () => {
+	it("has no time limit, so nothing times out", () => {
+		drillActions.initialize({ drillId: "t", items: [form("a")], userId: 0, speed: "untimed" });
+		drillActions.startDrill();
+		expect(drillActions.getEffectiveTimeLimit()).toBeNull();
+	});
+});
