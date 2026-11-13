@@ -4,6 +4,7 @@ import type React from "react";
 import { useState } from "react";
 import { cn } from "tailwind-variants";
 
+import { ArrowLink } from "@/components/ArrowLink";
 import { BackLink } from "@/components/BackLink";
 import { TabHero } from "@/components/TabHero";
 import { fetchVerbParadigms, fetchVerbsForInventory } from "@/server/db/queries/vocabulary";
@@ -13,7 +14,7 @@ import {
 	type Paradigm,
 	RulesSection,
 	classifyVerbs,
-} from "./verbs/components/verb-inventory";
+} from "./components/verb-inventory";
 
 const verbsLoader = createServerFn().handler(async () => {
 	const inventory = classifyVerbs(await fetchVerbsForInventory());
@@ -33,7 +34,7 @@ const verbsLoader = createServerFn().handler(async () => {
 	return { inventory, paradigms };
 });
 
-export const Route = createFileRoute("/learn/verbs")({
+export const Route = createFileRoute("/learn/verbs/")({
 	loader: () => verbsLoader(),
 	component: VerbsPage,
 });
@@ -80,6 +81,10 @@ function VerbsPage() {
 			<TabHero title="Verbs" greekPhrase="είδα, ήπια, πήγα" colorScheme="olive">
 				Which verbs you have to memorise, and which come free with a rule.
 			</TabHero>
+
+			<ArrowLink to="/learn/tables/verbs/$band" params={{ band: "present" }}>
+				Every form, by family
+			</ArrowLink>
 
 			<InventoryTabs irregularCount={irregularCount} active={tab} onChange={setTab} />
 

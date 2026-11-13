@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, notFound } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
@@ -10,6 +10,7 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { StemInsight } from "@/components/StemInsight";
 import { TenseNavigator } from "@/components/TenseNavigator";
 import { Badge } from "@/components/ui/badge";
+import { pageTitle } from "@/lib/page-title";
 import type { VerbConjugationGraphRow } from "@/server/db/queries/vocabulary";
 import { fetchVerbWithConjugationRelations } from "@/server/db/queries/vocabulary";
 
@@ -98,21 +99,17 @@ const verbDetailLoader = createServerFn()
 	.validator(z.object({ verbId: z.string() }))
 	.handler(async ({ data }) => {
 		const verbId = Number(data.verbId);
-
-		if (Number.isNaN(verbId)) {
-			throw new Response("Invalid verb ID", { status: 400 });
-		}
-
-		const row = await fetchVerbWithConjugationRelations(verbId);
-		if (!row) {
-			throw new Response("Verb not found", { status: 404 });
-		}
-
-		return { verb: verbDetailFromGraph(row) };
+		const row = Number.isInteger(verbId) ? await fetchVerbWithConjugationRelations(verbId) : undefined;
+		return row ? { verb: verbDetailFromGraph(row) } : null;
 	});
 
 export const Route = createFileRoute("/learn/verbs/$verbId")({
-	loader: ({ params }) => verbDetailLoader({ data: { verbId: params.verbId } }),
+	loader: async ({ params }) => {
+		const found = await verbDetailLoader({ data: { verbId: params.verbId } });
+		if (!found) throw notFound();
+		return found;
+	},
+	head: ({ loaderData }) => ({ meta: [{ title: pageTitle(loaderData?.verb.greekText ?? "Verb") }] }),
 	component: VerbDetailPage,
 });
 
@@ -161,7 +158,7 @@ function VerbDetailPage() {
 						)}
 						{isSuppletive && (
 							<Badge variant="warning" size="md">
-								Suppletive
+								Changes its stem
 							</Badge>
 						)}
 					</div>
@@ -187,8 +184,8 @@ function VerbDetailPage() {
 			{hasConjugations && (
 				<section>
 					<SectionHeading
-						title="Conjugations"
-						subtitle="All tense paradigms for this verb"
+						title="Every form"
+						subtitle="Each tense, person by person"
 						level="h3"
 					/>
 					<TenseNavigator
@@ -215,7 +212,7 @@ function VerbDetailPage() {
 
 			{!hasConjugations && !hasImperatives && (
 				<Card variant="bordered" padding="lg" className="bg-stone-50 text-center">
-					<p className="text-stone-600">No conjugation data available for this verb yet.</p>
+					<p className="text-stone-600">No forms for this verb yet.</p>
 				</Card>
 			)}
 		</div>

@@ -66,7 +66,7 @@ export const ImperativeTable = ({ imperatives, className }: ImperativeTableProps
 					{hasImperfective && (
 						<tr className="bg-ocean-50/30">
 							<td className="border border-stone-200 bg-ocean-50 p-3">
-								<AspectLabel aspect="Imperfective" description="Ongoing action" />
+								<AspectLabel aspect="Ongoing" description="keep doing it" />
 							</td>
 							<FormCell form={imperatives.imperfective?.singular} />
 							<FormCell form={imperatives.imperfective?.plural} />
@@ -75,7 +75,7 @@ export const ImperativeTable = ({ imperatives, className }: ImperativeTableProps
 					{hasPerfective && (
 						<tr className="bg-terracotta-50/30">
 							<td className="border border-stone-200 bg-terracotta-50 p-3">
-								<AspectLabel aspect="Perfective" description="Single action" />
+								<AspectLabel aspect="One action" description="do it once" />
 							</td>
 							<FormCell form={imperatives.perfective?.singular} />
 							<FormCell form={imperatives.perfective?.plural} />
@@ -85,8 +85,8 @@ export const ImperativeTable = ({ imperatives, className }: ImperativeTableProps
 			</table>
 
 			<div className="rounded border border-stone-200 bg-stone-50 p-2 text-xs text-stone-500">
-				<strong>Aspect distinction:</strong> Use imperfective for ongoing/repeated actions ("keep
-				doing this"), perfective for single/completed actions ("do this once").
+				Commands make the same choice as θα and να: the short form for one action, the present
+				for something ongoing.
 			</div>
 		</div>
 	);

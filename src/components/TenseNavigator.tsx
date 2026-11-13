@@ -9,7 +9,7 @@ const TENSE_CONFIG: Record<
 	{ greek: string; english: string; colorScheme: TenseColorScheme }
 > = {
 	present: { greek: "Ενεστώτας", english: "Present", colorScheme: "ocean" },
-	aorist: { greek: "Αόριστος", english: "Aorist", colorScheme: "terracotta" },
+	aorist: { greek: "Αόριστος", english: "Simple past", colorScheme: "terracotta" },
 	future: { greek: "Μέλλοντας", english: "Future", colorScheme: "olive" },
 	past_continuous: {
 		greek: "Παρατατικός",
