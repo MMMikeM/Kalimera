@@ -11,6 +11,7 @@ node_modules
 *.local
 
 # Output
+dist
 .output
 
 
