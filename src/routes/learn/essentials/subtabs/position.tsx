@@ -4,6 +4,7 @@ import { GreekText } from "@/components/GreekText";
 
 import type { EssentialsLoaderData } from "../$subtab";
 import { ExampleList } from "./example-list";
+import { GuideLink } from "./guide-link";
 
 interface Props {
 	data: EssentialsLoaderData;
@@ -159,41 +160,7 @@ export function PositionSubtab({ data }: Props) {
 			>
 				<ExampleList examples={RELATIVE_POSITION_EXAMPLES} />
 
-				<div className="mx-3 mt-3 rounded-lg border border-olive-200 bg-olive-100 p-2.5">
-					<p className="mb-2 text-sm font-medium text-olive-text">Preposition patterns</p>
-					<div className="space-y-1.5 text-sm">
-						<div>
-							<GreekText tone="accent" size="lg">
-								μπροστά / πίσω / μακριά
-							</GreekText>
-							<span className="ml-2 text-xs text-stone-500">+ από</span>
-						</div>
-						<div>
-							<GreekText tone="accent" size="lg">
-								κοντά / μέσα
-							</GreekText>
-							<span className="ml-2 text-xs text-stone-500">+ σε</span>
-						</div>
-						<div>
-							<GreekText tone="accent" size="lg">
-								ανάμεσα
-							</GreekText>
-							<span className="ml-2 text-xs text-stone-500">+ σε</span>
-						</div>
-						<div>
-							<GreekText tone="accent" size="lg">
-								απέναντι
-							</GreekText>
-							<span className="ml-2 text-xs text-stone-500">+ από</span>
-						</div>
-					</div>
-					<p className="mt-2 border-t border-olive-200/50 pt-1.5 text-xs text-stone-500">
-						<GreekText tone="default" size="base" className="text-stone-700">
-							κοντά στο
-						</GreekText>{" "}
-						= κοντά + σε + το (contracted)
-					</p>
-				</div>
+				<GuideLink to="position" />
 			</ContentSection>
 		</div>
 	);

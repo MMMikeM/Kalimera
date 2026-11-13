@@ -4,6 +4,7 @@ import { GreekText } from "@/components/GreekText";
 
 import type { EssentialsLoaderData } from "../$subtab";
 import { ExampleList } from "./example-list";
+import { GuideLink } from "./guide-link";
 
 interface Props {
 	data: EssentialsLoaderData;
@@ -189,70 +190,7 @@ export function ColoursSubtab({ data }: Props) {
 			<ContentSection title="Usage" subtitle="Colours in sentences" colorScheme="terracotta">
 				<ExampleList examples={USAGE_EXAMPLES} />
 
-				<div className="mx-3 mt-3 rounded-lg border border-terracotta-200 bg-terracotta-100 p-2.5">
-					<p className="mb-2 text-sm font-medium text-terracotta-text">Colour agreement</p>
-					<div className="space-y-1.5 text-sm">
-						<p className="text-stone-600">
-							Most colours are <strong>indeclinable</strong> — they don't change form:
-						</p>
-						<div className="space-y-1 pl-2">
-							<div>
-								<GreekText tone="accent" size="lg">
-									μπλε, μωβ, ροζ, γκρι, καφέ, πορτοκαλί, μπεζ, ασημί
-								</GreekText>
-							</div>
-						</div>
-					</div>
-					<div className="mt-2 space-y-1.5 border-t border-terracotta-200/50 pt-2 text-sm">
-						<p className="text-stone-600">
-							Some colours <strong>do decline</strong> like adjectives:
-						</p>
-						<div className="space-y-1 pl-2">
-							<div>
-								<GreekText tone="accent" size="lg">
-									άσπρος, -η, -ο
-								</GreekText>
-								<span className="ml-2 text-xs text-stone-500">(white)</span>
-							</div>
-							<div>
-								<GreekText tone="accent" size="lg">
-									μαύρος, -η, -ο
-								</GreekText>
-								<span className="ml-2 text-xs text-stone-500">(black)</span>
-							</div>
-							<div>
-								<GreekText tone="accent" size="lg">
-									κόκκινος, -η, -ο
-								</GreekText>
-								<span className="ml-2 text-xs text-stone-500">(red)</span>
-							</div>
-							<div>
-								<GreekText tone="accent" size="lg">
-									πράσινος, -η, -ο
-								</GreekText>
-								<span className="ml-2 text-xs text-stone-500">(green)</span>
-							</div>
-							<div>
-								<GreekText tone="accent" size="lg">
-									κίτρινος, -η, -ο
-								</GreekText>
-								<span className="ml-2 text-xs text-stone-500">(yellow)</span>
-							</div>
-							<div>
-								<GreekText tone="accent" size="lg">
-									γαλάζιος, -α, -ο
-								</GreekText>
-								<span className="ml-2 text-xs text-stone-500">(sky blue)</span>
-							</div>
-							<div>
-								<GreekText tone="accent" size="lg">
-									χρυσός, -ή, -ό
-								</GreekText>
-								<span className="ml-2 text-xs text-stone-500">(gold/golden)</span>
-							</div>
-						</div>
-					</div>
-				</div>
+				<GuideLink to="colours" />
 			</ContentSection>
 		</div>
 	);

@@ -8,11 +8,11 @@ Common expressions organised by communicative function.
 /learn/phrases/:tab
 ```
 
-Tabs: survival, responses, requests, opinions, connectors, time
+Tabs: survival, responses, requests, opinions, connectors. /learn/phrases/time redirects to /learn/essentials/time.
 
 `/learn/phrases` and any unknown `:tab` redirect to `/learn/phrases/survival`.
 
-Note: "patterns" tab (μου αρέσει, με λένε) has moved to /reference/patterns
+Note: μου αρέσει and με λένε are taught in the little-words guide (/guides/little-words).
 
 ## Data Source
 
@@ -102,26 +102,7 @@ Conversational fillers: well, you know, I mean.
 </section>
 </tab>
 
-## Tab: time
-
-<tab id="time" route="/learn/phrases/time">
-<purpose>Telling time</purpose>
-<hero greek="Τι ώρα είναι;" title="Telling time">
-How to ask and tell time in Greek: essential patterns for scheduling and understanding when things happen.
-</hero>
-
-<section name="Telling Time" tag="time-telling" layout="time">
-<categories>
-- basic: Hour structure (Είναι + time, Η ώρα είναι + time)
-- fractions: Minutes and quarter/half expressions
-- at-times: "At" times using στις
-</categories>
-<pattern>Είναι + time / Η ώρα είναι + time</pattern>
-</section>
-</tab>
-
 Note: Days and months are in /learn/essentials/time. Question words are drilled at /practice/blocks/question-words.
-Note: Patterns (μου αρέσει, με λένε) have moved to /reference/patterns.
 
 ## Tag to Section Mapping
 
@@ -137,10 +118,10 @@ command            → requests     → Commands
 opinions           → opinions     → Opinions & Feelings
 discourse-markers  → connectors   → Discourse Markers
 discourse-filler   → connectors   → Fillers & Connectors
-time-telling       → time         → Telling Time
+time-telling       → (Essentials → Time, not a phrases tab)
 ```
 
-Note: likes-singular, likes-plural, name-construction tags → now in /reference/patterns
+Note: likes-singular, likes-plural and name-construction tags are no longer shown on a Learn page.
 
 ## Content Guidelines
 

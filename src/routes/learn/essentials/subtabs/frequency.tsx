@@ -1,12 +1,10 @@
-import { Lightbulb } from "lucide-react";
-
 import { BackLink } from "@/components/BackLink";
 import { ContentSection } from "@/components/ContentSection";
 import { GreekText } from "@/components/GreekText";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 
 import type { EssentialsLoaderData } from "../$subtab";
 import { ExampleList } from "./example-list";
+import { GuideLink } from "./guide-link";
 
 interface Props {
 	data: EssentialsLoaderData;
@@ -89,108 +87,7 @@ export function FrequencySubtab({ data }: Props) {
 						);
 					})}
 				</div>
-			</ContentSection>
-
-			{/* Accent Warning */}
-			<ContentSection title="Watch the Accent" subtitle="ποτέ vs πότε" colorScheme="honey">
-				<Alert variant="warning" className="mx-3 mt-3 mb-2">
-					<Lightbulb size={16} />
-					<AlertDescription>The accent changes meaning completely!</AlertDescription>
-				</Alert>
-
-				<div className="divide-y divide-stone-200/60">
-					<div className="px-3 py-2.5">
-						<GreekText tone="accent" size="lg">
-							ποτ<span className="font-bold text-honey-600">έ</span>
-						</GreekText>
-						<div className="text-xs text-stone-500">never (accent on ε)</div>
-					</div>
-					<div className="px-3 py-2.5">
-						<GreekText tone="accent" size="lg">
-							π<span className="font-bold text-honey-600">ό</span>τε
-						</GreekText>
-						<div className="text-xs text-stone-500">when? (accent on ο)</div>
-					</div>
-				</div>
-
-				<div className="mx-3 mt-3 rounded-lg border border-honey-200 bg-honey-100 p-2.5">
-					<p className="mb-2 text-sm font-medium text-honey-text">Grammar pattern</p>
-					<div className="space-y-1.5 text-sm">
-						<div>
-							<GreekText tone="accent" size="lg">
-								ποτέ δεν + verb
-							</GreekText>
-							<span className="ml-2 text-xs text-stone-500">= never do X</span>
-						</div>
-						<div>
-							<GreekText tone="accent" size="lg">
-								Ποτέ δεν τρώω κρέας.
-							</GreekText>
-							<div className="text-xs text-stone-500">I never eat meat.</div>
-						</div>
-					</div>
-				</div>
-			</ContentSection>
-
-			{/* Which "Sometimes"? Decision Guide */}
-			<ContentSection
-				title="Which 'Sometimes'?"
-				subtitle="Choosing the right word"
-				colorScheme="ocean"
-			>
-				<div className="space-y-3 px-3 pt-3 pb-1">
-					<div>
-						<GreekText tone="accent" size="lg" className="font-semibold">
-							καμιά φορά
-						</GreekText>
-						<p className="mt-0.5 text-xs text-stone-500">Once in a while, unexpectedly</p>
-						<div className="mt-1">
-							<GreekText tone="accent" size="sm">
-								Καμιά φορά τρώω γλυκά.
-							</GreekText>
-							<span className="ml-2 text-xs text-stone-400">I eat sweets once in a while.</span>
-						</div>
-					</div>
-
-					<div>
-						<GreekText tone="accent" size="lg" className="font-semibold">
-							μερικές φορές
-						</GreekText>
-						<p className="mt-0.5 text-xs text-stone-500">Several times, countable occurrences</p>
-						<div className="mt-1">
-							<GreekText tone="accent" size="sm">
-								Έχω πάει μερικές φορές.
-							</GreekText>
-							<span className="ml-2 text-xs text-stone-400">I've been several times.</span>
-						</div>
-					</div>
-
-					<div>
-						<GreekText tone="accent" size="lg" className="font-semibold">
-							πότε πότε
-						</GreekText>
-						<p className="mt-0.5 text-xs text-stone-500">Now and then, neutral/standard</p>
-						<div className="mt-1">
-							<GreekText tone="accent" size="sm">
-								Πότε πότε πάω γυμναστήριο.
-							</GreekText>
-							<span className="ml-2 text-xs text-stone-400">I go to the gym now and then.</span>
-						</div>
-					</div>
-
-					<div>
-						<GreekText tone="accent" size="lg" className="font-semibold">
-							κάπου κάπου
-						</GreekText>
-						<p className="mt-0.5 text-xs text-stone-500">Here and there, casual/colloquial</p>
-						<div className="mt-1">
-							<GreekText tone="accent" size="sm">
-								Κάπου κάπου βλέπω ταινίες.
-							</GreekText>
-							<span className="ml-2 text-xs text-stone-400">I watch films here and there.</span>
-						</div>
-					</div>
-				</div>
+				<GuideLink to="frequency" />
 			</ContentSection>
 
 			{/* Usage Examples */}

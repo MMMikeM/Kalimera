@@ -4,7 +4,10 @@ import { GreekText } from "@/components/GreekText";
 import { genderScheme } from "@/constants/grammar-palette";
 import { type Gender, getArticle } from "@/lib/greek-grammar";
 
+import { TimeTellingSection } from "../../phrases/components/time-telling-section";
+import type { PhraseItem } from "../../phrases/components/shared";
 import type { EssentialsLoaderData } from "../$subtab";
+import { GuideLink } from "./guide-link";
 
 /**
  * The article is derived from the noun's gender rather than baked into
@@ -42,6 +45,7 @@ const CalendarName = ({
 
 interface Props {
 	data: EssentialsLoaderData;
+	timeTelling: PhraseItem[];
 }
 
 const TIME_ORDER = ["morning", "midday", "afternoon", "evening", "night"];
@@ -63,7 +67,7 @@ const MONTH_ORDER = [
 	"december",
 ];
 
-export function TimeSubtab({ data }: Props) {
+export function TimeSubtab({ data, timeTelling }: Props) {
 	const sortedTimes = [...data.timesOfDay].sort((a, b) => {
 		const aOrder = TIME_ORDER.indexOf(a.englishTranslation.toLowerCase());
 		const bOrder = TIME_ORDER.indexOf(b.englishTranslation.toLowerCase());
@@ -149,39 +153,7 @@ export function TimeSubtab({ data }: Props) {
 							/>
 						))}
 					</div>
-					<div className="mx-3 mt-3 rounded-lg border border-ocean-200 bg-ocean-100 p-2.5">
-						<p className="mb-2 text-sm font-medium text-ocean-text">Days use feminine accusative</p>
-						<div className="space-y-2 text-sm">
-							<div>
-								<GreekText tone="accent" size="lg">
-									<span className="font-semibold">την</span> Τρίτη
-								</GreekText>
-								<div className="text-xs text-stone-500">on Tuesday (specific)</div>
-							</div>
-							<div>
-								<GreekText tone="accent" size="lg">
-									κάθε Τρίτη
-								</GreekText>
-								<div className="text-xs text-stone-500">every Tuesday (no article)</div>
-							</div>
-							<div>
-								<GreekText tone="accent" size="lg">
-									<span className="font-semibold">την</span> περασμένη Τρίτη
-								</GreekText>
-								<div className="text-xs text-stone-500">last Tuesday</div>
-							</div>
-							<p className="border-t border-ocean-200/50 pt-1.5 text-xs text-stone-500">
-								<GreekText tone="accent" size="lg" className="text-stone-700">
-									την
-								</GreekText>{" "}
-								= accusative of{" "}
-								<GreekText tone="accent" size="lg" className="text-stone-700">
-									η
-								</GreekText>{" "}
-								(fem.)
-							</p>
-						</div>
-					</div>
+					<GuideLink to="time" />
 				</ContentSection>
 			)}
 
@@ -202,43 +174,11 @@ export function TimeSubtab({ data }: Props) {
 							/>
 						))}
 					</div>
-					<div className="mx-3 mt-3 rounded-lg border border-olive-200 bg-olive-100 p-2.5">
-						<p className="mb-2 text-sm font-medium text-olive-text">
-							Months use masculine accusative
-						</p>
-						<div className="space-y-2 text-sm">
-							<div>
-								<GreekText tone="accent" size="lg">
-									<span className="font-semibold">τον</span> Ιούλιο
-								</GreekText>
-								<div className="text-xs text-stone-500">in July</div>
-							</div>
-							<div>
-								<GreekText tone="accent" size="lg">
-									<span className="font-semibold">τον</span> περασμένο Μάρτιο
-								</GreekText>
-								<div className="text-xs text-stone-500">last March</div>
-							</div>
-							<div>
-								<GreekText tone="accent" size="lg">
-									<span className="font-semibold">τον</span> επόμενο μήνα
-								</GreekText>
-								<div className="text-xs text-stone-500">next month</div>
-							</div>
-							<p className="border-t border-olive-200/50 pt-1.5 text-xs text-stone-500">
-								<GreekText tone="accent" size="lg" className="text-stone-700">
-									τον
-								</GreekText>{" "}
-								= accusative of{" "}
-								<GreekText tone="accent" size="lg" className="text-stone-700">
-									ο
-								</GreekText>{" "}
-								(masc.)
-							</p>
-						</div>
-					</div>
+					<GuideLink to="time" />
 				</ContentSection>
 			)}
+
+			<TimeTellingSection items={timeTelling} />
 		</div>
 	);
 }

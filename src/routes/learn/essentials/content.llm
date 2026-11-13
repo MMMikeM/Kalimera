@@ -66,14 +66,11 @@ Examples: τριάντα δύο (32), πενήντα πέντε (55), ενενή
 
 <section name="Usage" colorScheme="terracotta">
 Context examples:
-- Telling Time: στις τρεις, στις δέκα και μισή (note: στις = at, feminine accusative)
+- Telling Time: a link to the time subtab, which holds the clock-time phrases
 - Money & Quantities: πέντε ευρώ, δύο κιλά, τρία μπουκάλια νερό
 - Talking About Age: είμαι τριάντα δύο χρονών, πόσων χρονών είσαι;
 
-Gender agreement callout: 1, 3, 4 change form by gender.
-Grid showing ένας/μία/ένα, τρεις/τρεις/τρία, τέσσερις/τέσσερις/τέσσερα,
-then ένας καφές, μία μπύρα, ένα νερό.
-Note: Numbers 2 and 5+ don't change for gender.
+Guide link: "How these change: Numbers that agree →" (/guides/agreement#numbers).
 </section>
 </subtab>
 
@@ -115,13 +112,7 @@ Describing where things are:
 - ανάμεσα στα δέντρα (between the trees)
 - απέναντι από την εκκλησία (across from the church)
 
-Preposition patterns:
-- μπροστά / πίσω / μακριά + από
-- κοντά / μέσα + σε
-- ανάμεσα + σε
-- απέναντι + από
-
-Note: κοντά στο = κοντά + σε + το (contracted).
+Guide link: "How these change: Next to, behind, far from →" (/guides/place#position).
 </section>
 </subtab>
 
@@ -145,23 +136,19 @@ derived from the noun's gender (`getArticle` + `genderScheme`), then the Greek.
 The article is not stored in `greek_text`; the chip is what shows Σάββατο as
 the one neuter day.
 
-Grammar callout: Days use feminine accusative.
-- την Τρίτη (on Tuesday - specific)
-- κάθε Τρίτη (every Tuesday - no article)
-- την περασμένη Τρίτη (last Tuesday)
-
-Note: την = accusative of η (feminine).
+Guide link: "How these change: The Target form: objects, times, prepositions →" (/guides/roles#target).
 </section>
 
 <section name="Months of the Year" colorScheme="olive" tag="months">
 January through December in order, as `CalendarName` rows with a gender article chip.
 
-Grammar callout: Months use masculine accusative.
-- τον Ιούλιο (in July)
-- τον περασμένο Μάρτιο (last March)
-- τον επόμενο μήνα (next month)
+Guide link: the same Target-form link as Days.
+</section>
 
-Note: τον = accusative of ο (masculine).
+<section name="Telling Time" tag="time-telling">
+Clock-time phrases, moved here from /learn/phrases/time (which now redirects). Rendered by
+`TimeTellingSection` from the phrases rows tagged `time-telling`, loaded only for this subtab.
+Categories: basic (Είναι + time), fractions (and a quarter, half), at-times (στις).
 </section>
 </subtab>
 
@@ -178,24 +165,7 @@ Visual spectrum from ποτέ (0%) to πάντα (100%):
 Each adverb shown with progress bar indicating approximate frequency.
 </section>
 
-<section name="Watch the Accent" colorScheme="honey">
-Critical distinction:
-- ποτέ (accent on ε) = never
-- πότε (accent on ο) = when?
-
-Grammar pattern: ποτέ δεν + verb = never do X.
-Example: Ποτέ δεν τρώω κρέας. (I never eat meat.)
-</section>
-
-<section name="Which 'Sometimes'?" colorScheme="ocean">
-Decision guide for the four "sometimes" options:
-- καμιά φορά - Once in a while, unexpectedly
-- μερικές φορές - Several times, countable occurrences
-- πότε πότε - Now and then, neutral/standard
-- κάπου κάπου - Here and there, casual/colloquial
-
-Each with example sentence.
-</section>
+Guide link at the end of the list: "How these change: How often, from ποτέ to πάντα →" (/guides/scales#frequency).
 
 <section name="Usage" colorScheme="terracotta">
 Example sentences showing word order.
@@ -241,19 +211,7 @@ Sentence examples:
 - το μπλε αυτοκίνητο (the blue car)
 - τα πράσινα μάτια (the green eyes)
 
-Agreement callout - two categories:
-
-Indeclinable (don't change form):
-μπλε, μωβ, ροζ, γκρι, καφέ, πορτοκαλί, μπεζ, ασημί
-
-Declinable (change like adjectives):
-- άσπρος, -η, -ο (white)
-- μαύρος, -η, -ο (black)
-- κόκκινος, -η, -ο (red)
-- πράσινος, -η, -ο (green)
-- κίτρινος, -η, -ο (yellow)
-- γαλάζιος, -α, -ο (sky blue)
-- χρυσός, -ή, -ό (gold/golden)
+Guide link: "How these change: Colours that never change →" (/guides/agreement#colours).
 </section>
 </subtab>
 
@@ -291,4 +249,4 @@ When adding essentials vocabulary:
 - [x] Frequency spectrum shows visual progression
 - [x] Colours include swatches for visual reference
 - [x] Grammar notes explain case usage (accusative for days/months)
-- [x] Agreement patterns documented (declinable vs indeclinable)
+- [x] Agreement rules link to the guides rather than restating them

@@ -10,19 +10,15 @@ import type { NavTab } from "@/components/NavTabs";
 import { TabHero } from "@/components/TabHero";
 import type { Vocabulary } from "@/server/db/types";
 
-import { TimeTellingSection } from "./time-telling-section";
 
 export type PhraseItem = Vocabulary;
 
-type PhraseSectionConfig =
-	| {
-			tag: string;
-			title: string;
-			colorScheme: ContentColorScheme;
-			alwaysShow?: boolean;
-			layout?: "list";
-	  }
-	| { tag: string; layout: "time" };
+interface PhraseSectionConfig {
+	tag: string;
+	title: string;
+	colorScheme: ContentColorScheme;
+	alwaysShow?: boolean;
+}
 
 export interface PhraseTabConfig {
 	label: string;
@@ -95,18 +91,14 @@ export const PhraseTabContent = ({
 			{config.hero.body}
 		</TabHero>
 
-		{config.sections.map((section) =>
-			section.layout === "time" ? (
-				<TimeTellingSection key={section.tag} items={phrases[section.tag] ?? []} />
-			) : (
-				<PhraseList
-					key={section.tag}
-					title={section.title}
-					colorScheme={section.colorScheme}
-					phrases={phrases[section.tag] ?? []}
-					alwaysShow={section.alwaysShow}
-				/>
-			),
-		)}
+		{config.sections.map((section) => (
+			<PhraseList
+				key={section.tag}
+				title={section.title}
+				colorScheme={section.colorScheme}
+				phrases={phrases[section.tag] ?? []}
+				alwaysShow={section.alwaysShow}
+			/>
+		))}
 	</div>
 );

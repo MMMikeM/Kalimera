@@ -1,6 +1,6 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
-import { Clock, Hand, Heart, Link2, MessageCircle, Sparkles } from "lucide-react";
+import { Hand, Heart, Link2, MessageCircle, Sparkles } from "lucide-react";
 import { z } from "zod";
 
 import { BackLink } from "@/components/BackLink";
@@ -10,7 +10,7 @@ import { getVocabBySlug } from "@/server/db/queries/vocabulary";
 import { groupVocabByTag } from "../../components/vocab-by-tag";
 import { type PhraseTabConfig, PhraseTabContent } from "./components/shared";
 
-const VALID_TABS = ["survival", "responses", "requests", "opinions", "connectors", "time"] as const;
+const VALID_TABS = ["survival", "responses", "requests", "opinions", "connectors"] as const;
 type PhraseTabId = (typeof VALID_TABS)[number];
 
 const PHRASE_TABS: Record<PhraseTabId, PhraseTabConfig> = {
@@ -88,18 +88,6 @@ const PHRASE_TABS: Record<PhraseTabId, PhraseTabConfig> = {
 			{ tag: "discourse-filler", title: "Fillers & Connectors", colorScheme: "ocean" },
 		],
 	},
-	time: {
-		label: "Time",
-		Icon: Clock,
-		navColor: "ocean",
-		hero: {
-			title: "Telling time",
-			greekPhrase: "Τι ώρα είναι;",
-			colorScheme: "ocean",
-			body: "How to ask and tell time in Greek — essential patterns for scheduling and understanding when things happen.",
-		},
-		sections: [{ tag: "time-telling", layout: "time" }],
-	},
 };
 
 const NAV_TABS = VALID_TABS.map((id) => {
@@ -118,6 +106,7 @@ const loadPhrases = createServerFn()
 
 export const Route = createFileRoute("/learn/phrases/$tab")({
 	beforeLoad: ({ params }) => {
+		if (params.tab === "time") throw redirect({ to: "/learn/essentials/$subtab", params: { subtab: "time" } });
 		const tab = VALID_TABS.find((t) => t === params.tab);
 		if (!tab) throw redirect({ to: "/learn/phrases/$tab", params: { tab: "survival" } });
 		return { tab };

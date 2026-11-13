@@ -3,6 +3,7 @@ import { ContentSection } from "@/components/ContentSection";
 import { GreekText } from "@/components/GreekText";
 
 import type { EssentialsLoaderData } from "../$subtab";
+import { ArrowLink, GuideLink } from "./guide-link";
 
 interface Props {
 	data: EssentialsLoaderData;
@@ -200,32 +201,9 @@ export function NumbersSubtab({ data }: Props) {
 			{/* Usage Examples */}
 			<ContentSection title="Usage" subtitle="Numbers in context" colorScheme="terracotta">
 				<div className="space-y-4 px-3 pt-3 pb-1">
-					{/* Telling Time */}
-					<div>
-						<p className="mb-2 text-xs font-medium tracking-wide text-terracotta-text uppercase">
-							Telling Time
-						</p>
-						<div className="space-y-2">
-							<div>
-								<GreekText tone="accent" size="lg">
-									στις τρεις
-								</GreekText>
-								<div className="text-xs text-stone-500">at three o'clock</div>
-							</div>
-							<div>
-								<GreekText tone="accent" size="lg">
-									στις δέκα και μισή
-								</GreekText>
-								<div className="text-xs text-stone-500">at half past ten</div>
-							</div>
-						</div>
-						<p className="mt-1.5 border-t border-terracotta-200/50 pt-1.5 text-xs text-stone-500">
-							<GreekText tone="default" size="base" className="text-stone-700">
-								στις
-							</GreekText>{" "}
-							= at (uses feminine accusative)
-						</p>
-					</div>
+					<ArrowLink to="/learn/essentials/$subtab" params={{ subtab: "time" }}>
+						Telling the time: Essentials, Time
+					</ArrowLink>
 
 					{/* Money & Quantities */}
 					<div>
@@ -276,96 +254,7 @@ export function NumbersSubtab({ data }: Props) {
 					</div>
 				</div>
 
-				{/* Gender Agreement Warning */}
-				<div className="mx-3 mt-3 mb-2 rounded-lg border border-terracotta-200 bg-terracotta-100 p-2.5">
-					<p className="mb-2 text-sm font-medium text-terracotta-text">
-						Gender Agreement: 1, 3, 4 change form
-					</p>
-
-					{/* Gender grid */}
-					<div className="mb-3 grid grid-cols-4 gap-1 text-sm">
-						<div className="text-xs text-stone-500" />
-						<div className="text-center text-xs text-stone-500">masc.</div>
-						<div className="text-center text-xs text-stone-500">fem.</div>
-						<div className="text-center text-xs text-stone-500">neut.</div>
-
-						<div className="text-xs font-medium text-stone-600">1</div>
-						<div className="text-center">
-							<GreekText tone="default" size="sm">
-								ένας
-							</GreekText>
-						</div>
-						<div className="text-center">
-							<GreekText tone="default" size="sm">
-								μία
-							</GreekText>
-						</div>
-						<div className="text-center">
-							<GreekText tone="default" size="sm">
-								ένα
-							</GreekText>
-						</div>
-
-						<div className="text-xs font-medium text-stone-600">3</div>
-						<div className="text-center">
-							<GreekText tone="default" size="sm">
-								τρεις
-							</GreekText>
-						</div>
-						<div className="text-center">
-							<GreekText tone="default" size="sm">
-								τρεις
-							</GreekText>
-						</div>
-						<div className="text-center">
-							<GreekText tone="default" size="sm">
-								τρία
-							</GreekText>
-						</div>
-
-						<div className="text-xs font-medium text-stone-600">4</div>
-						<div className="text-center">
-							<GreekText tone="default" size="sm">
-								τέσσερις
-							</GreekText>
-						</div>
-						<div className="text-center">
-							<GreekText tone="default" size="sm">
-								τέσσερις
-							</GreekText>
-						</div>
-						<div className="text-center">
-							<GreekText tone="default" size="sm">
-								τέσσερα
-							</GreekText>
-						</div>
-					</div>
-
-					<div className="space-y-1.5 text-sm">
-						<div>
-							<GreekText tone="accent" size="lg">
-								ένας καφές
-							</GreekText>
-							<span className="ml-2 text-xs text-stone-500">(one coffee, masc.)</span>
-						</div>
-						<div>
-							<GreekText tone="accent" size="lg">
-								μία μπύρα
-							</GreekText>
-							<span className="ml-2 text-xs text-stone-500">(one beer, fem.)</span>
-						</div>
-						<div>
-							<GreekText tone="accent" size="lg">
-								ένα νερό
-							</GreekText>
-							<span className="ml-2 text-xs text-stone-500">(one water, neut.)</span>
-						</div>
-					</div>
-
-					<p className="mt-2 border-t border-terracotta-200/50 pt-1.5 text-xs text-stone-500">
-						Numbers 2 and 5+ don't change for gender
-					</p>
-				</div>
+				<GuideLink to="numbers" />
 			</ContentSection>
 		</div>
 	);

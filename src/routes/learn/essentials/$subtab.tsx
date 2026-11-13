@@ -14,6 +14,11 @@ import { TimeSubtab } from "./subtabs/time";
 const VALID_SUBTABS = ["numbers", "position", "time", "frequency", "colours"] as const;
 type SubtabId = (typeof VALID_SUBTABS)[number];
 
+const loadTimeTelling = createServerFn().handler(async () => {
+	const phrases = groupVocabByTag(await getVocabBySlug("phrases", ["phrase"]));
+	return phrases["time-telling"] ?? [];
+});
+
 const loader = createServerFn().handler(async () => {
 	const reference = groupVocabByTag(
 		await getVocabBySlug("reference", ["noun", "adverb", "adjective"]),
@@ -48,14 +53,17 @@ export const Route = createFileRoute("/learn/essentials/$subtab")({
 			throw notFound();
 		}
 
-		const essentialsData = await loader();
-		return { subtab: subtab as SubtabId, essentialsData };
+		const [essentialsData, timeTelling] = await Promise.all([
+			loader(),
+			subtab === "time" ? loadTimeTelling() : [],
+		]);
+		return { subtab: subtab as SubtabId, essentialsData, timeTelling };
 	},
 	component: EssentialsSubtab,
 });
 
 function EssentialsSubtab() {
-	const { subtab, essentialsData: data } = Route.useLoaderData();
+	const { subtab, essentialsData: data, timeTelling } = Route.useLoaderData();
 
 	switch (subtab) {
 		case "numbers":
@@ -63,7 +71,7 @@ function EssentialsSubtab() {
 		case "position":
 			return <PositionSubtab data={data} />;
 		case "time":
-			return <TimeSubtab data={data} />;
+			return <TimeSubtab data={data} timeTelling={timeTelling} />;
 		case "frequency":
 			return <FrequencySubtab data={data} />;
 		case "colours":
