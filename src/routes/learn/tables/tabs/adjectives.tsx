@@ -1,8 +1,9 @@
 import { ProseWithGreek } from "@/components/ProseWithGreek";
 import { declineAdjective } from "@/lib/adjective-declension";
+import { GuideTable } from "@/routes/guides/components/guide-table";
 import type { AdjectiveDeclensionPattern } from "@/server/db/enums";
 
-import { GenderCaseTable } from "../components/gender-case-table";
+import { genderCaseTable } from "../components/gender-case-table";
 import { LookupPage, LookupSection } from "../components/lookup-section";
 import { type GuideSectionRef, TAUGHT_IN } from "../taught-in.data";
 
@@ -17,14 +18,18 @@ export function AdjectivesTab() {
 		<LookupPage title="Adjectives">
 			{PATTERNS.map(({ lemma, pattern, title, taughtIn }) => {
 				const forms = declineAdjective(lemma, pattern);
+				const table = genderCaseTable(
+					(number, grammaticalCase, gender) =>
+						forms.find((f) => f.number === number && f.case === grammaticalCase && f.gender === gender)?.form,
+				);
 				return (
-					<LookupSection key={pattern} title={<ProseWithGreek text={`${title}: ${lemma}`} />} taughtIn={[taughtIn]}>
-						<GenderCaseTable
-							form={(number, grammaticalCase, gender) =>
-								forms.find((f) => f.number === number && f.case === grammaticalCase && f.gender === gender)
-									?.form ?? "—"
-							}
-						/>
+					<LookupSection
+						key={pattern}
+						title={<ProseWithGreek text={`${title}: ${lemma}`} />}
+						tone="honey"
+						taughtIn={[taughtIn]}
+					>
+						<GuideTable table={table} />
 					</LookupSection>
 				);
 			})}

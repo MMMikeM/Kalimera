@@ -1,47 +1,29 @@
-import { GrammarTable, type ColumnDef, type RowDef, CASE_ROW_DEFS } from "@/components/GrammarTable";
-import { GreekText } from "@/components/GreekText";
-import {
-	type Gender,
-	type GrammaticalNumber,
-	genders,
-	type NominalCase,
-	grammaticalNumbers,
-} from "@/server/db/enums";
+import { markedCell } from "@/lib/guide-marks";
+import { type Gender, type GrammaticalNumber, type NominalCase, genders, grammaticalNumbers } from "@/server/db/enums";
+import type { GuideTable as GuideTableData } from "@/types/guide";
 
-const CASE_KEYS: Record<string, NominalCase> = {
-	nom: "nominative",
-	acc: "accusative",
-	gen: "genitive",
+export const CASE_ORDER: readonly NominalCase[] = ["nominative", "accusative", "genitive"];
+
+/** The guides' row labels: one Doer, Target, Owner, then several. */
+export const CASE_LABEL: Record<GrammaticalNumber, Record<NominalCase, string>> = {
+	singular: { nominative: "Doer", accusative: "Target", genitive: "Owner" },
+	plural: { nominative: "Doers", accusative: "Targets", genitive: "Owners" },
 };
 
-const GENDER_COLUMNS: ColumnDef[] = genders.map((gender) => ({
-	key: gender,
-	label: gender.charAt(0).toUpperCase() + gender.slice(1),
-}));
+const capitalise = (word: string) => word.charAt(0).toUpperCase() + word.slice(1);
 
-export const CASE_ROWS: RowDef[] = CASE_ROW_DEFS.map(({ scheme: _scheme, ...row }) => row);
-
-export const NUMBER_LABEL: Record<GrammaticalNumber, string> = { singular: "Singular", plural: "Plural" };
-
-/** Doer, Target and Owner down the side, gender across the top, singular above plural. */
-export const GenderCaseTable = ({
-	form,
-}: {
-	form: (number: GrammaticalNumber, grammaticalCase: NominalCase, gender: Gender) => string;
-}) => (
-	<GrammarTable
-		columns={GENDER_COLUMNS}
-		rowHeaderLabel="Job"
-		groups={grammaticalNumbers.map((number) => ({
-			label: NUMBER_LABEL[number],
-			rows: CASE_ROWS,
-			cells: CASE_ROWS.map((row) =>
-				genders.map((gender) => (
-					<GreekText key={gender} size="base" weight="medium">
-						{form(number, CASE_KEYS[row.key]!, gender)}
-					</GreekText>
-				)),
-			),
-		}))}
-	/>
-);
+/** Doer, Target and Owner down the side, gender across the top, singular above plural; every form marked. */
+export const genderCaseTable = (
+	form: (number: GrammaticalNumber, grammaticalCase: NominalCase, gender: Gender) => string | undefined,
+): GuideTableData => ({
+	columns: [{ label: "Form" }, ...genders.map((gender) => ({ label: capitalise(gender), greek: true }))],
+	rows: grammaticalNumbers.flatMap((number) =>
+		CASE_ORDER.map((grammaticalCase) => [
+			CASE_LABEL[number][grammaticalCase],
+			...genders.map((gender) => {
+				const text = form(number, grammaticalCase, gender);
+				return text ? markedCell(text, grammaticalCase, gender, number === "plural") : "—";
+			}),
+		]),
+	),
+});

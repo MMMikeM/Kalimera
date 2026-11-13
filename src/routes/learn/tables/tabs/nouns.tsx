@@ -1,8 +1,8 @@
-import { GrammarTable, type ColumnDef, type RowGroup } from "@/components/GrammarTable";
-import { GreekText } from "@/components/GreekText";
 import { AGREEMENT_PARADIGMS, type AgreementParadigm } from "@/constants/agreement";
 import { stripTonos } from "@/lib/greek-letters";
+import { markedCell } from "@/lib/guide-marks";
 import { declineNoun } from "@/lib/noun-declension";
+import { GuideTable } from "@/routes/guides/components/guide-table";
 import {
 	type Gender,
 	type GrammaticalNumber,
@@ -10,9 +10,10 @@ import {
 	type NounDeclensionPattern,
 	nounDeclensionPatterns,
 } from "@/server/db/enums";
+import type { GuideTable as GuideTableData } from "@/types/guide";
 
 import type { NounsData } from "../$tab";
-import { CASE_ROWS, NUMBER_LABEL } from "../components/gender-case-table";
+import { CASE_LABEL, CASE_ORDER } from "../components/gender-case-table";
 import { LookupPage, LookupSection } from "../components/lookup-section";
 import { type GuideSectionRef, TAUGHT_IN } from "../taught-in.data";
 
@@ -27,40 +28,6 @@ const formFor = (paradigm: AgreementParadigm, number: GrammaticalNumber, caseKey
 
 /** `example` reads "φίλος (friend)"; tables want the word alone. */
 const lemmaOf = (paradigm: AgreementParadigm) => paradigm.example.split(" (")[0] ?? paradigm.example;
-
-/**
- * Article, stem and ending. A phone has no room for several columns of full forms,
- * so below `sm` the cell falls back to the ending alone and the column header
- * supplies the word. Endings are stored without the stress their word may carry
- * (μαθητής against -ης), so the split is by length, which a precomposed tonos leaves
- * unchanged.
- */
-const NounForm = ({
-	paradigm,
-	number,
-	caseKey,
-}: {
-	paradigm: AgreementParadigm;
-	number: GrammaticalNumber;
-	caseKey: string;
-}) => {
-	const form = formFor(paradigm, number, caseKey);
-	if (!form) return <span className="text-stone-300">—</span>;
-
-	const [article = "", ...rest] = form.full.split(" ");
-	const word = rest.join(" ");
-	const stem = word.slice(0, word.length - form.ending.replace(/^-/, "").length);
-
-	return (
-		<GreekText size="sm">
-			<span className="hidden sm:inline">
-				{article} {stem}
-			</span>
-			<span className="sm:hidden">-</span>
-			{word.slice(stem.length)}
-		</GreekText>
-	);
-};
 
 /** An example has to actually show the ending it illustrates. Pluralia tantum are
  * assigned a pattern for declension purposes but do not demonstrate it — λεφτά is
@@ -96,7 +63,7 @@ const followsPattern = (
 	}
 };
 
-const EXAMPLES_SHOWN = 3;
+const EXAMPLES_SHOWN = 2;
 
 /** Real corpus nouns for a pattern, falling back to the paradigm's own word —
  * masc-es and fem-psi have a single noun each, and archaic patterns may have none. */
@@ -108,58 +75,33 @@ const examplesFor = (data: NounsData | null, paradigm: AgreementParadigm): strin
 	return examples.length > 0 ? examples : [lemmaOf(paradigm)];
 };
 
+const CASE_KEY = { nominative: "nom", accusative: "acc", genitive: "gen" } as const;
+
 /** Singular above plural in one table, so a column reads straight down from φίλος to
  * φίλοι. Side by side puts them at different x and turns the derivation into a
  * cross-table saccade. */
-const NounTable = ({ paradigms, data }: { paradigms: AgreementParadigm[]; data: NounsData | null }) => {
-	const columns: ColumnDef[] = paradigms.map((p) => ({
-		key: p.id,
-		label: (
-			<>
-				<GreekText size="xs" weight="semibold" className="sm:text-sm">
-					{lemmaOf(p)}
-				</GreekText>
-				<GreekText size="xs" className="block font-normal">
-					{p.pattern}
-				</GreekText>
-			</>
+const nounTable = (paradigms: AgreementParadigm[], gender: Gender, data: NounsData | null): GuideTableData => ({
+	columns: [{ label: "Form" }, ...paradigms.map((p) => ({ label: `${lemmaOf(p)} ${p.pattern}`, greek: true }))],
+	rows: [
+		...grammaticalNumbers.flatMap((number) =>
+			CASE_ORDER.map((grammaticalCase) => [
+				CASE_LABEL[number][grammaticalCase],
+				...paradigms.map((p) => {
+					const form = formFor(p, number, CASE_KEY[grammaticalCase as keyof typeof CASE_KEY]);
+					return form ? markedCell(form.full, grammaticalCase, gender, number === "plural") : "—";
+				}),
+			]),
 		),
-	}));
-
-	const groups: RowGroup[] = [
-		...grammaticalNumbers.map((number) => ({
-			label: NUMBER_LABEL[number],
-			rows: CASE_ROWS,
-			cells: CASE_ROWS.map((row) =>
-				paradigms.map((p) => <NounForm key={p.id} paradigm={p} number={number} caseKey={row.key} />),
-			),
-		})),
-		{
-			label: "Words that follow it",
-			rows: [{ key: "examples", label: "Examples" }],
-			cells: [
-				paradigms.map((p) => (
-					<GreekText key={p.id} size="sm" className="block">
-						{examplesFor(data, p).map((lemma) => (
-							<span key={lemma} className="block">
-								{lemma}
-							</span>
-						))}
-					</GreekText>
-				)),
-			],
-		},
-	];
-
-	return <GrammarTable className="sm:table-fixed" columns={columns} groups={groups} rowHeaderLabel="Job" />;
-};
+		["Examples", ...paradigms.map((p) => examplesFor(data, p).join(", "))],
+	],
+});
 
 export function NounsTab({ data = null }: { data?: NounsData | null }) {
 	return (
 		<LookupPage title="Nouns">
 			{GENDER_SECTIONS.map(({ gender, title, taughtIn }) => (
-				<LookupSection key={gender} title={title} taughtIn={[taughtIn]}>
-					<NounTable paradigms={AGREEMENT_PARADIGMS.filter((p) => p.gender === gender)} data={data} />
+				<LookupSection key={gender} title={title} tone={`gender-${gender}`} taughtIn={[taughtIn]}>
+					<GuideTable table={nounTable(AGREEMENT_PARADIGMS.filter((p) => p.gender === gender), gender, data)} />
 				</LookupSection>
 			))}
 		</LookupPage>

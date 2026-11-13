@@ -240,6 +240,7 @@ export const VerbBandTables: React.FC<{ band: VerbBandId; verbs: VerbTableVerb[]
 			const rows = byLemma(verbs, spec.lemmas);
 			return (
 				<LookupSection
+					tone="ocean"
 					key={`${spec.taughtIn.section}:${spec.title}`}
 					title={<ProseWithGreek text={spec.title} />}
 					taughtIn={[spec.taughtIn]}
