@@ -3,20 +3,29 @@ import { type WordType } from "../schema";
 
 export const fetchVocabularyRowsForSearch = async () => {
 	return await db.query.vocabulary.findMany({
-		where: { wordType: { ne: "phrase" } },
+		columns: {
+			id: true,
+			greekText: true,
+			englishTranslation: true,
+			wordType: true,
+			frequencyRank: true,
+		},
 		with: {
 			nounDetails: { columns: { gender: true } },
-			verbDetails: true,
+			verbConjugations: { columns: { tense: true, person: true, form: true } },
+			verbImperatives: { columns: { aspect: true, number: true, form: true } },
+			nominalForms: {
+				columns: { grammaticalCase: true, number: true, form: true, article: true },
+			},
 			vocabularyTags: {
-				with: { tag: true },
+				columns: {},
+				with: { tag: { columns: { slug: true, section: true, sectionDisplayOrder: true } } },
 			},
 		},
 	});
 };
 
-export type VocabularySearchGraphRow = Awaited<
-	ReturnType<typeof fetchVocabularyRowsForSearch>
->[number];
+export type SearchVocabularyRow = Awaited<ReturnType<typeof fetchVocabularyRowsForSearch>>[number];
 
 type VocabSection = "nouns" | "verbs" | "phrases" | "reference";
 

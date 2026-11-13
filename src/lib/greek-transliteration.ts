@@ -203,6 +203,24 @@ const canonicalFixedPoint = (text: string): string => {
 	return current;
 };
 
+/**
+ * A key under which Greek script and any greeklish spelling of it collide, for
+ * the header search. Matching only: it is lossy (δ and θ, η and ι and υ all
+ * collapse), so never render it or grade an answer against it.
+ *
+ * @example
+ * searchKey("ευχαριστώ") === searchKey("efxaristw") // true
+ */
+export const searchKey = (text: string): string =>
+	canonicalFixedPoint(
+		greekToPhonetic(
+			text
+				.toLowerCase()
+				.replace(/[;\u037e?!.,]/g, "")
+				.trim(),
+		),
+	);
+
 const phoneticEquals = (user: string, correct: string): boolean => {
 	const u = stripTerminalPunctuation(user);
 	const c = stripTerminalPunctuation(correct);

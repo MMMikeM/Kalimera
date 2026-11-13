@@ -24,7 +24,7 @@ const answerInput = (page: Page) => page.getByLabel("Your answer, in Latin lette
 
 test("Enter in the header search leaves the drill alone", async ({ page }) => {
 	await startTryDrill(page);
-	await page.getByPlaceholder("Search Greek, English, or tags...").fill("me");
+	await page.getByPlaceholder("Search Greek, greeklish or English").filter({ visible: true }).fill("me");
 	await page.keyboard.press("Enter");
 	await page.waitForTimeout(300);
 	await expect(page.getByText("Incorrect")).toHaveCount(0);

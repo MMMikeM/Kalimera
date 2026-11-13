@@ -1,23 +1,12 @@
-import { Search, Sparkles } from "lucide-react";
-import { type ReactNode, useEffect, useRef, useState } from "react";
+import { type ReactNode, useState } from "react";
 
-import { GreekText } from "@/components/GreekText";
-import { SearchInput } from "@/components/SearchInput";
-import { SearchLoading, SearchResults } from "@/components/SearchResults";
+import { SearchPanel } from "@/components/SearchPanel";
 import {
 	Popover,
 	PopoverContent,
 	PopoverPositioner,
 	PopoverTrigger,
 } from "@/components/ui/popover";
-import { useVocabularySearch } from "@/lib/use-vocabulary-search";
-
-const QUICK_SEARCHES = [
-	{ greek: "θελω", english: "I want" },
-	{ greek: "ειμαι", english: "I am" },
-	{ greek: "εχω", english: "I have" },
-	{ greek: "μου", english: "my/me" },
-] as const;
 
 interface GlobalSearchProps {
 	/** Render prop for custom trigger - receives isActive state */
@@ -41,83 +30,10 @@ export const GlobalSearch = ({ children }: GlobalSearchProps) => {
 				{children({ isActive: isOpen })}
 			</PopoverTrigger>
 			<PopoverPositioner align="end" sideOffset={8}>
-				<PopoverContent className="flex max-h-page w-popover-clamp flex-col overflow-hidden rounded-xl border-stone-200 bg-cream p-0 shadow-lg">
-					<SearchContent />
+				<PopoverContent className="w-popover-clamp rounded-xl border-stone-200 bg-cream p-3 shadow-lg data-[closed]:animate-none data-[open]:animate-none">
+					<SearchPanel variant="inline" focusOnMount onActivate={() => setIsOpen(false)} />
 				</PopoverContent>
 			</PopoverPositioner>
 		</Popover>
 	);
 };
-
-const SearchContent = () => {
-	const { searchTerm, setSearchTerm, results, isLoading } = useVocabularySearch({ enabled: true });
-	const inputRef = useRef<HTMLInputElement>(null);
-
-	useEffect(() => {
-		const timer = setTimeout(() => inputRef.current?.focus(), 50);
-		return () => clearTimeout(timer);
-	}, []);
-
-	const handleQuickSearch = (term: string) => {
-		setSearchTerm(term);
-		inputRef.current?.focus();
-	};
-
-	const showEmptyState = !searchTerm && results.length === 0;
-
-	return (
-		<div className="flex h-full flex-col">
-			<div className="bg-cream-100/50 p-3">
-				<SearchInput
-					ref={inputRef}
-					placeholder="Search Greek, English, or tags..."
-					value={searchTerm}
-					onChange={(e) => setSearchTerm(e.target.value)}
-					onClear={() => setSearchTerm("")}
-					size="sm"
-					icon={<Search size={16} />}
-				/>
-			</div>
-			<div className="max-h-page min-h-0 flex-1 overflow-y-auto bg-cream-dark p-3">
-				{isLoading ? (
-					<SearchLoading />
-				) : showEmptyState ? (
-					<SearchEmptyState onQuickSearch={handleQuickSearch} />
-				) : (
-					<SearchResults results={results} searchTerm={searchTerm} compact />
-				)}
-			</div>
-		</div>
-	);
-};
-
-interface SearchEmptyStateProps {
-	onQuickSearch: (term: string) => void;
-}
-
-const SearchEmptyState = ({ onQuickSearch }: SearchEmptyStateProps) => (
-	<div className="py-4">
-		<div className="mb-4 flex items-center justify-center gap-2 text-stone-400">
-			<Sparkles size={16} className="text-honey-400" />
-			<span className="text-sm">Try searching for</span>
-		</div>
-		<div className="grid grid-cols-2 gap-2">
-			{QUICK_SEARCHES.map((item) => (
-				<button
-					key={item.greek}
-					type="button"
-					onClick={() => onQuickSearch(item.greek)}
-					className="flex min-h-13 flex-col items-start rounded-lg border border-stone-200 bg-cream-50 p-3 text-left transition-colors hover:border-terracotta-300 hover:bg-cream-100"
-				>
-					<GreekText weight="medium" tone="inherit" className="text-stone-900">
-						{item.greek}
-					</GreekText>
-					<span className="text-xs text-stone-500">{item.english}</span>
-				</button>
-			))}
-		</div>
-		<p className="mt-4 text-center text-xs text-stone-400">
-			Search by Greek, English, or tags like "food" or "travel"
-		</p>
-	</div>
-);

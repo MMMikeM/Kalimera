@@ -1,118 +1,133 @@
-import { Loader2, SearchX } from "lucide-react";
+import { Link } from "@tanstack/react-router";
+import { ChevronRight } from "lucide-react";
+import { Fragment, type ReactNode } from "react";
 import { cn } from "tailwind-variants";
 
 import { GreekText } from "@/components/GreekText";
-import { formatNounWithArticle } from "@/lib/greek-grammar";
-import type { VocabularySearchGraphRow } from "@/server/db/queries/vocabulary";
+import { Pronunciation } from "@/components/Pronunciation";
+import type { SearchHit, SearchLink, SearchResult } from "@/lib/search-types";
 
-import { Badge } from "./ui/badge";
-
-interface SearchResultsProps {
-	results: VocabularySearchGraphRow[];
-	searchTerm: string;
-	compact?: boolean;
+interface ResultGroup {
+	id: "words" | "phrases";
+	label: string;
+	hits: SearchHit[];
 }
 
-const displayGreek = (result: VocabularySearchGraphRow): string => {
-	if (result.wordType === "noun" && result.nounDetails?.gender) {
-		return formatNounWithArticle(result.greekText, result.nounDetails.gender);
-	}
-	return result.greekText;
-};
+/** Words always come before phrases; a group with no hits is left out. */
+export const toGroups = (result: SearchResult): ResultGroup[] =>
+	(
+		[
+			{ id: "words", label: "Words", hits: result.words },
+			{ id: "phrases", label: "Phrases", hits: result.phrases },
+		] satisfies ResultGroup[]
+	).filter((group) => group.hits.length > 0);
 
-export const SearchLoading = () => (
-	<output className="flex justify-center py-6">
-		<Loader2 size={18} className="text-muted-foreground motion-safe:animate-spin" aria-hidden="true" />
-		<span className="sr-only">Searching</span>
-	</output>
+/** A TanStack link for a row that has a page, otherwise undefined so the row stays plain. */
+export const linkRender = (link: SearchLink | undefined) =>
+	link ? <Link {...link} /> : undefined;
+
+export const rowClassName =
+	"flex min-h-11 w-full items-center gap-2 rounded-lg px-3 py-2 text-left outline-none data-[highlighted]:bg-stone-100 focus-visible:bg-stone-100";
+
+const Dot = () => (
+	<span aria-hidden="true" className="px-1.5 text-stone-400">
+		·
+	</span>
 );
 
-export const SearchResults = ({ results, searchTerm, compact = false }: SearchResultsProps) => {
-	if (searchTerm && results.length === 0) {
-		return (
-			<div className="flex flex-col items-center py-8 text-muted-foreground">
-				<SearchX size={24} className="mb-2" aria-hidden="true" />
-				<p className="text-sm">No results for "{searchTerm}"</p>
-				<p className="mt-1 text-xs">Try a different spelling or search term</p>
-			</div>
-		);
-	}
+const Quiet = ({ children }: { children: ReactNode }) => (
+	<span className="block truncate text-xs text-muted-foreground">{children}</span>
+);
 
-	if (results.length === 0) {
-		return null;
-	}
+interface HitContentProps {
+	hit: SearchHit;
+	/** The one row the eye lands on: the first of the first group. */
+	focal?: boolean;
+}
 
-	if (compact) {
-		return (
-			<div className="divide-y divide-stone-100">
-				{results.map((result) => (
-					<div
-						key={result.id}
-						className="flex items-center gap-2 rounded px-1 py-2 transition-colors hover:bg-stone-50"
-					>
-						<GreekText tone="accent" size="sm" className="max-w-44 truncate font-medium">
-							{displayGreek(result)}
-						</GreekText>
-						<span className="text-stone-300">—</span>
-						<span className="flex-1 truncate text-sm text-stone-600">
-							{result.englishTranslation}
-						</span>
-						<span className="shrink-0 text-xs text-stone-400">{result.wordType}</span>
-					</div>
-				))}
-			</div>
-		);
-	}
+/** One bounded line: Greek, how to say it, what it means. Extra facts sit quietly beneath. */
+export const HitContent = ({ hit, focal = false }: HitContentProps) => {
+	const { entry, matchedForm } = hit;
+	const parts = (["past", "future"] as const).flatMap((tense) => {
+		const form = entry.principalParts?.[tense];
+		return form ? [{ tense, form }] : [];
+	});
 
 	return (
-		<div className="space-y-2">
-			{results.map((result) => {
-				const tagNames = result.vocabularyTags
-					.map((vt) => vt.tag?.name)
-					.filter(Boolean) as string[];
-				const family = result.verbDetails?.conjugationFamily;
-				const bgClass = cn(
-					result.wordType === "verb" && "bg-ocean-50",
-					result.wordType === "noun" && "bg-olive-50",
-					result.wordType === "phrase" && "bg-terracotta-50",
-					result.wordType === "adverb" && "bg-honey-50",
-					!result.wordType && "bg-stone-50",
-				);
-
-				return (
-					<div key={result.id} className={cn("rounded-lg p-4", bgClass)}>
-						<div className="flex items-start justify-between gap-3">
-							<div className="min-w-0 flex-1">
-								<GreekText tone="accent" size="xl" className="mb-1 block text-2xl font-medium">
-									{displayGreek(result)}
-								</GreekText>
-								<p className="text-stone-600">{result.englishTranslation}</p>
-							</div>
-							<div className="flex flex-shrink-0 flex-wrap justify-end gap-1.5">
-								{result.wordType && (
-									<Badge variant="default" size="md">
-										{result.wordType}
-									</Badge>
-								)}
-								{family && (
-									<Badge variant="primary" size="md">
-										{family}
-									</Badge>
-								)}
-							</div>
-						</div>
-						{tagNames.length > 0 && (
-							<div className="mt-2 flex flex-wrap gap-1">
-								{tagNames.map((tag) => (
-									<Badge key={tag} variant="secondary" size="sm">
-										{tag}
-									</Badge>
-								))}
-							</div>
+		<>
+			<span className="min-w-0 flex-1">
+				<span className="flex min-w-0 flex-wrap items-baseline gap-x-2">
+					<GreekText
+						size={focal ? "xl" : "base"}
+						tone={focal ? "accent" : "default"}
+						weight="medium"
+						className="max-w-full truncate"
+					>
+						{entry.greek}
+					</GreekText>
+					<Pronunciation greek={entry.greek} size="xs" className="max-w-full truncate" />
+					<span
+						className={cn(
+							"min-w-[4ch] truncate text-stone-700",
+							entry.kind === "phrase" ? "max-w-full basis-full" : "flex-1",
+							focal ? "text-base" : "text-sm",
 						)}
-					</div>
-				);
-			})}
-		</div>
+					>
+						{entry.english}
+					</span>
+				</span>
+				{matchedForm && (
+					<Quiet>
+						<GreekText size="inherit" tone="inherit">
+							{matchedForm.greek}
+						</GreekText>{" "}
+						— {matchedForm.note}
+						<Dot />
+						from <GreekText size="inherit" tone="inherit">{entry.greek}</GreekText>
+					</Quiet>
+				)}
+				{parts.length > 0 && (
+					<Quiet>
+						{parts.map(({ tense, form }, index) => (
+							<Fragment key={tense}>
+								{index > 0 && <Dot />}
+								{tense}{" "}
+								<GreekText size="inherit" tone="inherit">
+									{form}
+								</GreekText>
+							</Fragment>
+						))}
+					</Quiet>
+				)}
+			</span>
+			{entry.link && (
+				<ChevronRight size={14} aria-hidden="true" className="shrink-0 text-stone-400" />
+			)}
+		</>
 	);
 };
+
+/** A result row outside the autocomplete, as on the /search page. */
+export const HitRow = ({ hit, focal }: HitContentProps) => {
+	const content = <HitContent hit={hit} focal={focal} />;
+	const { link } = hit.entry;
+	return link ? (
+		<Link {...link} className={cn(rowClassName, "hover:bg-stone-100")}>
+			{content}
+		</Link>
+	) : (
+		<div className={rowClassName}>{content}</div>
+	);
+};
+
+export const CorrectedNote = ({ corrected, className }: { corrected: string; className?: string }) => (
+	<p className={cn("text-muted-foreground", className)}>
+		Showing results for <span className="font-medium text-stone-800">{corrected}</span>
+	</p>
+);
+
+export const NoResults = ({ query, className }: { query: string; className?: string }) => (
+	<p className={cn("text-muted-foreground", className)}>
+		Nothing for “{query}”. Try the Greek, or fewer letters.
+	</p>
+);

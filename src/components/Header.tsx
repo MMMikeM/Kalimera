@@ -1,8 +1,7 @@
 import { Link } from "@tanstack/react-router";
-import { BarChart3, ChevronDown, Info, LogOut, Search } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { BarChart3, ChevronDown, Info, LogOut } from "lucide-react";
 
-import { SearchLoading, SearchResults } from "@/components/SearchResults";
+import { SearchPanel } from "@/components/SearchPanel";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { ButtonLink } from "@/components/ui/button";
 import {
@@ -13,7 +12,6 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useVocabularySearch } from "@/lib/use-vocabulary-search";
 
 const NAV_ITEMS_AUTH = [
 	{ id: "practice", label: "Practice", path: "/practice", primary: true },
@@ -40,25 +38,6 @@ export const Header = ({ isAuthenticated, showLessons, currentSection = "", onLo
 	const navItems = isAuthenticated
 		? NAV_ITEMS_AUTH.filter((item) => showLessons || item.id !== "lessons")
 		: NAV_ITEMS_UNAUTH;
-	const [isSearchOpen, setIsSearchOpen] = useState(false);
-	const { searchTerm, setSearchTerm, results, isLoading } = useVocabularySearch({
-		enabled: isSearchOpen,
-	});
-	const inputRef = useRef<HTMLInputElement>(null);
-
-	useEffect(() => {
-		if (isSearchOpen && inputRef.current) {
-			inputRef.current.focus();
-		}
-	}, [isSearchOpen]);
-
-	const handleSearchFocus = () => {
-		setIsSearchOpen(true);
-	};
-
-	const handleSearchBlur = () => {
-		setTimeout(() => setIsSearchOpen(false), 150);
-	};
 
 	return (
 		<header className="pt-8 pb-6">
@@ -67,32 +46,8 @@ export const Header = ({ isAuthenticated, showLessons, currentSection = "", onLo
 					<span className="font-serif text-2xl text-terracotta">Kalimera</span>
 				</Link>
 
-				{/* Desktop search - Gmail style centered */}
 				<div className="mx-4 hidden max-w-md flex-1 md:block">
-					<div className="relative">
-						<Search className="absolute top-1/2 left-3 -translate-y-1/2 text-stone-400" size={18} />
-						<input
-							ref={inputRef}
-							type="text"
-							placeholder="Search Greek, English, or tags..."
-							value={searchTerm}
-							onChange={(e) => setSearchTerm(e.target.value)}
-							onFocus={handleSearchFocus}
-							onBlur={handleSearchBlur}
-							className="w-full rounded-full border border-transparent bg-stone-100 py-2 pr-4 pl-10 text-sm transition-all placeholder:text-stone-500 focus:border-stone-300 focus:bg-card focus:ring-2 focus:ring-terracotta-300 focus:outline-none"
-						/>
-						{isSearchOpen && searchTerm.length > 0 && (
-							<div className="absolute top-full right-0 left-0 z-50 mt-2 max-h-page overflow-hidden rounded-md border bg-popover p-0 text-popover-foreground shadow-md">
-								<div className="max-h-page overflow-y-auto p-3">
-									{isLoading ? (
-										<SearchLoading />
-									) : (
-										<SearchResults results={results} searchTerm={searchTerm} compact />
-									)}
-								</div>
-							</div>
-						)}
-					</div>
+					<SearchPanel variant="dropdown" />
 				</div>
 
 				{/* Desktop navigation */}

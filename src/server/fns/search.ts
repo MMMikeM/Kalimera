@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 
-import { fetchVocabularyRowsForSearch } from "@/server/db/queries/vocabulary";
+import { getSearchWire } from "./search.server";
 
 export const getSearchVocabularyFn = createServerFn({ method: "GET" }).handler(() =>
-	fetchVocabularyRowsForSearch(),
+	getSearchWire(),
 );

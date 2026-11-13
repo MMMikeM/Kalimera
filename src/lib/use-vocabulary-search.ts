@@ -1,40 +1,37 @@
-import { createFuzzySearch } from "ekrina";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
-import { vocabularySearchFields } from "@/lib/vocabulary-search-fields";
-import type { VocabularySearchGraphRow } from "@/server/db/queries/vocabulary";
+import { NO_RESULT, type SearchIndex, buildSearchIndex } from "@/lib/search-index";
+import type { SearchResult } from "@/lib/search-types";
 import { getSearchVocabularyFn } from "@/server/fns/search";
 
-const EMPTY_VOCABULARY: VocabularySearchGraphRow[] = [];
+let loaded: SearchIndex | undefined;
+let loading: Promise<SearchIndex> | undefined;
+
+const loadIndex = () => {
+	loading ??= getSearchVocabularyFn()
+		.then((wire) => (loaded = buildSearchIndex(wire)))
+		.catch((error: unknown) => {
+			loading = undefined;
+			throw error;
+		});
+	return loading;
+};
 
 interface UseVocabularySearchOptions {
 	enabled?: boolean;
 }
 
-export const useVocabularySearch = (options: UseVocabularySearchOptions = {}) => {
-	const { enabled = true } = options;
-	// null until the first fetch settles; loading is derived from that, not tracked separately.
-	const [loaded, setLoaded] = useState<VocabularySearchGraphRow[] | null>(null);
-	const [searchTerm, setSearchTerm] = useState("");
+/** Fetches the vocabulary once per page session, builds the index once, and searches it. */
+export const useVocabularySearch = (
+	query: string,
+	{ enabled = true }: UseVocabularySearchOptions = {},
+): SearchResult => {
+	const [index, setIndex] = useState(loaded);
 
 	useEffect(() => {
-		if (!enabled || loaded !== null) return;
-		getSearchVocabularyFn()
-			.then((v) => setLoaded(v ?? EMPTY_VOCABULARY))
-			.catch(() => setLoaded(EMPTY_VOCABULARY));
-	}, [enabled, loaded]);
+		if (!enabled || index) return;
+		loadIndex().then(setIndex, () => undefined);
+	}, [enabled, index]);
 
-	const vocabulary = loaded ?? EMPTY_VOCABULARY;
-	const isLoading = enabled && loaded === null;
-
-	const fuzzySearch = createFuzzySearch(vocabulary, vocabularySearchFields);
-
-	const results =
-		searchTerm.length === 0
-			? []
-			: fuzzySearch(searchTerm)
-					.sort((a, b) => a.score - b.score)
-					.map((result) => result.item);
-
-	return { searchTerm, setSearchTerm, results, isLoading, vocabulary };
+	return useMemo(() => index?.search(query) ?? NO_RESULT, [index, query]);
 };

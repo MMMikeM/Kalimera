@@ -1,114 +1,119 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { createFuzzySearch } from "ekrina";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Search } from "lucide-react";
 import { useState } from "react";
-import { cn } from "tailwind-variants";
+import { z } from "zod";
 
-import { GreekText } from "@/components/GreekText";
+import { PageHeading } from "@/components/PageHeading";
+import { SEARCH_HINT, SEARCH_PLACEHOLDER } from "@/components/SearchPanel";
+import { useVocabularySearch } from "@/lib/use-vocabulary-search";
+import { CorrectedNote, HitRow, NoResults, toGroups } from "@/components/SearchResults";
 import { SearchInput } from "@/components/SearchInput";
-import { TabHero } from "@/components/TabHero";
-import { Badge } from "@/components/ui/badge";
-import { vocabularySearchFields } from "@/lib/vocabulary-search-fields";
-import { getSearchVocabularyFn } from "@/server/fns/search";
+import { ButtonLink } from "@/components/ui/button";
+
+const PAGE_SIZE = 10;
+/** A disabled link has no `:disabled` state, so the button's own disabled styles never apply. */
+const pagerDisabled = "aria-disabled:pointer-events-none aria-disabled:opacity-50";
 
 export const Route = createFileRoute("/search")({
-	loader: () => getSearchVocabularyFn().then((vocabulary) => ({ vocabulary })),
+	validateSearch: z.object({
+		q: z.string().catch("").default(""),
+		page: z.number().int().min(1).catch(1).default(1),
+	}),
 	component: SearchRoute,
 });
 
 function SearchRoute() {
-	const { vocabulary: allWords } = Route.useLoaderData();
+	const { q, page } = Route.useSearch();
+	const navigate = useNavigate({ from: Route.fullPath });
+	const [draft, setDraft] = useState(q);
+	// The header dropdown can change q while this page stays mounted.
+	const [seenQ, setSeenQ] = useState(q);
+	if (q !== seenQ) {
+		setSeenQ(q);
+		setDraft(q);
+	}
+	const result = useVocabularySearch(q, { enabled: true });
+	const searching = q.trim().length > 0;
 
-	const [searchTerm, setSearchTerm] = useState("");
+	const rows = toGroups(result).flatMap((group) => group.hits.map((hit) => ({ group, hit })));
+	const pageCount = Math.max(1, Math.ceil(rows.length / PAGE_SIZE));
+	const current = Math.min(page, pageCount);
+	const visible = rows.slice((current - 1) * PAGE_SIZE, current * PAGE_SIZE);
 
-	const fuzzySearch = createFuzzySearch(allWords, vocabularySearchFields);
-
-	const searchResults =
-		searchTerm.length === 0 ? [] : fuzzySearch(searchTerm).map((result) => result.item);
+	const setQuery = (nextQ: string) => {
+		setDraft(nextQ);
+		navigate({ search: { q: nextQ, page: 1 }, replace: true });
+	};
 
 	return (
-		<div className="space-y-6">
-			<TabHero
-				title="Quick Lookup"
-				greekPhrase="Ψάξε!"
-				colorScheme="ocean"
-				icon={<Search size={18} />}
-			>
-				Search Greek or English words from your vocabulary. Find what you need fast — type in either
-				language to find matches.
-			</TabHero>
+		<div className="mx-auto max-w-2xl space-y-6">
+			<PageHeading title="Search" />
 
 			<SearchInput
-				placeholder="Search Greek, English, or tags..."
-				value={searchTerm}
-				onChange={(e) => setSearchTerm(e.target.value)}
-				onClear={() => setSearchTerm("")}
+				placeholder={SEARCH_PLACEHOLDER}
+				aria-label="Search"
+				value={draft}
+				onChange={(e) => setQuery(e.target.value)}
+				onClear={() => setQuery("")}
+				icon={<Search />}
 				autoFocus
 			/>
 
-			{searchResults.length > 0 && (
-				<div className="space-y-2">
-					<h4 className="font-bold" aria-live="polite">
-						Search Results ({searchResults.length}):
-					</h4>
-					{searchResults.map((result) => {
-						const tagNames = result.vocabularyTags
-							.map((vt) => vt.tag?.name)
-							.filter(Boolean) as string[];
-						const family = result.verbDetails?.conjugationFamily;
-						// Word-type visual differentiation with coloured left borders
-						const borderClass = cn(
-							"border-l-4",
-							result.wordType === "verb" && "border-ocean-500",
-							result.wordType === "noun" && "border-olive-500",
-							result.wordType === "phrase" && "border-terracotta-500",
-							result.wordType === "adverb" && "border-honey-500",
-							!result.wordType && "border-stone-300",
-						);
+			{!searching && <p className="text-sm text-muted-foreground">{SEARCH_HINT}</p>}
 
-						return (
-							<div key={result.id} className={cn("p-4 bg-stone-50 rounded-lg", borderClass)}>
-								<div className="flex items-start justify-between gap-4">
-									<div className="min-w-0 flex-1">
-										{/* Greek text prominently displayed */}
-										<GreekText tone="accent" size="xl" className="mb-1 block text-2xl font-medium">
-											{result.greekText}
-										</GreekText>
-										<p className="text-stone-600">{result.englishTranslation}</p>
-									</div>
-									<div className="flex flex-shrink-0 flex-wrap justify-end gap-2">
-										{result.wordType && <Badge variant="default">{result.wordType}</Badge>}
-										{family && <Badge variant="primary">{family}</Badge>}
-									</div>
-								</div>
-								{tagNames.length > 0 && (
-									<div className="mt-3 flex flex-wrap gap-1">
-										{tagNames.map((tag) => (
-											<Badge key={tag} variant="secondary" size="sm">
-												{tag}
-											</Badge>
-										))}
-									</div>
-								)}
-							</div>
-						);
-					})}
+			{searching && result.corrected && (
+				<CorrectedNote corrected={result.corrected} className="text-sm" />
+			)}
+
+			{searching && rows.length === 0 && <NoResults query={q.trim()} className="py-6" />}
+
+			{visible.length > 0 && (
+				<div aria-live="polite">
+					<p className="sr-only">
+						{rows.length} results, page {current} of {pageCount}
+					</p>
+					{visible.map(({ group, hit }, index) => (
+						<section key={hit.entry.id} className="pt-2">
+							{group !== visible[index - 1]?.group && (
+								<h2 className="px-3 pb-0.5 text-xs font-medium text-muted-foreground">
+									{group.label}
+								</h2>
+							)}
+							<HitRow hit={hit} focal={current === 1 && index === 0} />
+						</section>
+					))}
 				</div>
 			)}
 
-			{searchTerm && searchResults.length === 0 && (
-				<div className="py-8 text-center text-stone-600">No results found for "{searchTerm}"</div>
+			{pageCount > 1 && (
+				<nav aria-label="Pages" className="flex items-center justify-between">
+					<ButtonLink
+						to="/search"
+						search={{ q, page: current - 1 }}
+						replace
+						variant="ghost"
+						size="sm"
+						disabled={current <= 1}
+						className={pagerDisabled}
+					>
+						Previous
+					</ButtonLink>
+					<span className="text-sm text-muted-foreground">
+						{current} of {pageCount}
+					</span>
+					<ButtonLink
+						to="/search"
+						search={{ q, page: current + 1 }}
+						replace
+						variant="ghost"
+						size="sm"
+						disabled={current >= pageCount}
+						className={pagerDisabled}
+					>
+						Next
+					</ButtonLink>
+				</nav>
 			)}
-
-			<div className="rounded-lg bg-stone-50 p-4">
-				<h4 className="mb-2 font-bold">Search Tips</h4>
-				<ul className="space-y-1 text-sm text-stone-700">
-					<li>• Type in Greek or English to find matches</li>
-					<li>• Fuzzy matching finds close matches even with typos</li>
-					<li>• Results are ranked by relevance (best matches first)</li>
-					<li>• Search by tag name (e.g., "Summer" or "Frequency")</li>
-				</ul>
-			</div>
 		</div>
 	);
 }
