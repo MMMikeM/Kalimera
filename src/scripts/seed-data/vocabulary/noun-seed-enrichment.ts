@@ -43,7 +43,22 @@ const PLURAL_CITATIONS = new Set(["διακοπές", "ρούχα", "ψώνια"
 export const isPluralCitation = (lemma: string): boolean => PLURAL_CITATIONS.has(lemma);
 
 /** Indeclinable loanwords: every cell is the citation form. */
-const INDECLINABLE = new Set(["σπορ", "πικνίκ"]);
+const INDECLINABLE = new Set([
+	"σπορ",
+	"πικνίκ",
+	"μπαρ",
+	"σκι",
+	"σινεμά",
+	"μίνι μάρκετ",
+	"ταξί",
+	"τρόλεϊ",
+	"κάρυ",
+	"ραντεβού",
+	"πάρτι",
+	"χόμπι",
+	"μαγιό",
+	"γκαλερί",
+]);
 
 /**
  * Lemmas whose forms no paradigm generates. Kept central rather than at the seed
@@ -54,6 +69,7 @@ const INDECLINABLE = new Set(["σπορ", "πικνίκ"]);
 const IRREGULAR_FORMS: Record<string, Partial<Record<CaseNumberKey, NominalFormCellSeed>>> = {
 	// -τ- stems: no paradigm covers a class of one.
 	φως: {
+		accusative_singular: { form: "φως", article: "το" },
 		genitive_singular: { form: "φωτός", article: "του" },
 		nominative_plural: { form: "φώτα", article: "τα" },
 		accusative_plural: { form: "φώτα", article: "τα" },
@@ -66,6 +82,41 @@ const IRREGULAR_FORMS: Record<string, Partial<Record<CaseNumberKey, NominalFormC
 		nominative_plural: { form: "περιβάλλοντα", article: "τα" },
 		accusative_plural: { form: "περιβάλλοντα", article: "τα" },
 		genitive_plural: { form: "περιβαλλόντων", article: "των" },
+	},
+	// The generator rebuilds these from a stem the noun does not have: *γάλο, *βράδι, *ρολοιού.
+	γάλα: {
+		accusative_singular: { form: "γάλα", article: "το" },
+		genitive_singular: { form: "γάλακτος", article: "του" },
+		nominative_plural: { form: "γάλατα", article: "τα" },
+		accusative_plural: { form: "γάλατα", article: "τα" },
+		genitive_plural: { form: "γαλάτων", article: "των" },
+	},
+	βράδυ: { accusative_singular: { form: "βράδυ", article: "το" } },
+	ρολόι: {
+		genitive_singular: { form: "ρολογιού", article: "του" },
+		nominative_plural: { form: "ρολόγια", article: "τα" },
+		accusative_plural: { form: "ρολόγια", article: "τα" },
+		genitive_plural: { form: "ρολογιών", article: "των" },
+	},
+	// Two-word lemmas: the generator declines the whole phrase as one noun.
+	"παιδικός σταθμός": {
+		accusative_singular: { form: "παιδικό σταθμό", article: "τον" },
+		genitive_singular: { form: "παιδικού σταθμού", article: "του" },
+		nominative_plural: { form: "παιδικοί σταθμοί", article: "οι" },
+		accusative_plural: { form: "παιδικούς σταθμούς", article: "τους" },
+		genitive_plural: { form: "παιδικών σταθμών", article: "των" },
+	},
+	"ουράνιο τόξο": {
+		genitive_singular: { form: "ουράνιου τόξου", article: "του" },
+		nominative_plural: { form: "ουράνια τόξα", article: "τα" },
+		accusative_plural: { form: "ουράνια τόξα", article: "τα" },
+		genitive_plural: { form: "ουράνιων τόξων", article: "των" },
+	},
+	// Cited in the plural, so the -ες ending must not be added to a form that already has it.
+	διακοπές: {
+		nominative_plural: { form: "διακοπές", article: "οι" },
+		accusative_plural: { form: "διακοπές", article: "τις" },
+		genitive_plural: { form: "διακοπών", article: "των" },
 	},
 	// Imparisyllable feminines: -ά nouns add a syllable rather than taking -ες.
 	γιαγιά: {
@@ -121,21 +172,21 @@ const IRREGULAR_FORMS: Record<string, Partial<Record<CaseNumberKey, NominalFormC
 };
 
 /** Vocative is omitted throughout the seed, matching `declineToFormsSeed`. */
-const NEUTER_ARTICLES: Partial<Record<CaseNumberKey, string>> = {
-	nominative_singular: "το",
-	accusative_singular: "το",
-	genitive_singular: "του",
-	nominative_plural: "τα",
-	accusative_plural: "τα",
-	genitive_plural: "των",
-};
+const SEEDED_CASES: readonly Case[] = ["nominative", "accusative", "genitive"];
+const SEEDED_NUMBERS: readonly GrammaticalNumber[] = ["singular", "plural"];
 
 const irregularFormsFor = (
 	lemma: string,
+	gender: Gender,
 ): Partial<Record<CaseNumberKey, NominalFormCellSeed>> | undefined => {
 	if (!INDECLINABLE.has(lemma)) return IRREGULAR_FORMS[lemma];
 	return Object.fromEntries(
-		Object.entries(NEUTER_ARTICLES).map(([key, article]) => [key, { form: lemma, article }]),
+		SEEDED_CASES.flatMap((grammaticalCase) =>
+			SEEDED_NUMBERS.map((number) => [
+				`${grammaticalCase}_${number}`,
+				{ form: lemma, article: getArticle(gender, number, grammaticalCase) },
+			]),
+		),
 	) as Partial<Record<CaseNumberKey, NominalFormCellSeed>>;
 };
 
@@ -250,7 +301,7 @@ export function enrichNoun(input: NounSeedInput): NounSeed {
 		}
 	}
 
-	const irregular = irregularFormsFor(input.lemma);
+	const irregular = irregularFormsFor(input.lemma, input.gender);
 	const merged: NounNominalFormsSeed = {
 		...base,
 		...declined,
