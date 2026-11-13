@@ -37,10 +37,27 @@ const DECLENSION_BY_LEMMA: Record<string, NounDeclensionPattern> = {
 	πίστη: "fem-i-archaic",
 };
 
-const PLURAL_CITATIONS = new Set(["διακοπές", "ρούχα", "ψώνια"]);
+/** Nouns cited in the plural, with their Owner plural. They have no singular to seed. */
+const PLURAL_CITATIONS: Record<string, string> = {
+	διακοπές: "διακοπών",
+	ρούχα: "ρούχων",
+	ψώνια: "ψωνιών",
+	λεφτά: "λεφτών",
+	λαχανικά: "λαχανικών",
+	χαιρετίσματα: "χαιρετισμάτων",
+	σκουπίδια: "σκουπιδιών",
+	μεσάνυχτα: "μεσανύχτων",
+	αδέλφια: "αδελφιών",
+};
 
 /** Nouns cited in the plural, which take οι or τα rather than the singular article. */
-export const isPluralCitation = (lemma: string): boolean => PLURAL_CITATIONS.has(lemma);
+export const isPluralCitation = (lemma: string): boolean => Object.hasOwn(PLURAL_CITATIONS, lemma);
+
+const pluralCitationForms = (lemma: string, gender: Gender, ownerPlural: string): NounNominalFormsSeed => ({
+	nominative_plural: { form: lemma, article: getArticle(gender, "plural", "nominative") },
+	accusative_plural: { form: lemma, article: getArticle(gender, "plural", "accusative") },
+	genitive_plural: { form: ownerPlural, article: getArticle(gender, "plural", "genitive") },
+});
 
 /** Indeclinable loanwords: every cell is the citation form. */
 const INDECLINABLE = new Set([
@@ -111,12 +128,6 @@ const IRREGULAR_FORMS: Record<string, Partial<Record<CaseNumberKey, NominalFormC
 		nominative_plural: { form: "ουράνια τόξα", article: "τα" },
 		accusative_plural: { form: "ουράνια τόξα", article: "τα" },
 		genitive_plural: { form: "ουράνιων τόξων", article: "των" },
-	},
-	// Cited in the plural, so the -ες ending must not be added to a form that already has it.
-	διακοπές: {
-		nominative_plural: { form: "διακοπές", article: "οι" },
-		accusative_plural: { form: "διακοπές", article: "τις" },
-		genitive_plural: { form: "διακοπών", article: "των" },
 	},
 	// Imparisyllable feminines: -ά nouns add a syllable rather than taking -ες.
 	γιαγιά: {
@@ -279,6 +290,18 @@ export function enrichNoun(input: NounSeedInput): NounSeed {
 		input.gender,
 		input.english,
 	);
+	const ownerPlural = PLURAL_CITATIONS[input.lemma];
+	if (ownerPlural) {
+		return {
+			lemma: input.lemma,
+			gender: input.gender,
+			english: input.english,
+			cefrLevel: input.cefrLevel,
+			declensionPattern: pattern,
+			nominalForms: pluralCitationForms(input.lemma, input.gender, ownerPlural),
+			...(input.metadata !== undefined && { metadata: input.metadata }),
+		};
+	}
 	const base = baselineNounForms(input.lemma, input.gender);
 	let declined: NounNominalFormsSeed;
 	try {

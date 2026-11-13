@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vite-plus/test";
 
-import { enrichNoun, inferDeclensionPattern } from "./noun-seed-enrichment";
+import { enrichNoun, inferDeclensionPattern, isPluralCitation } from "./noun-seed-enrichment";
 import { NOUNS } from "./nouns";
 
 const allNouns = Object.values(NOUNS).flat();
@@ -30,8 +30,9 @@ describe("seeded noun forms", () => {
 		expect(bad).toEqual([]);
 	});
 
-	it("fills all six case/number cells", () => {
+	it("fills all six case/number cells, except for nouns that have no singular", () => {
 		const incomplete = allNouns
+			.filter((noun) => !isPluralCitation(noun.lemma))
 			.filter(
 				(noun) =>
 					!(
@@ -169,6 +170,14 @@ describe("lemmas no paradigm generates", () => {
 			nominative_plural: plural,
 			accusative_plural: plural,
 			genitive_plural: genitive,
+		});
+	});
+
+	it("seeds no singular for a noun cited in the plural", () => {
+		expect(formsOf("ψώνια", "neuter")).toEqual({
+			nominative_plural: "ψώνια",
+			accusative_plural: "ψώνια",
+			genitive_plural: "ψωνιών",
 		});
 	});
 });
