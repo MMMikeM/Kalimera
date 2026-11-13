@@ -96,8 +96,8 @@ export const NotFound = () => (
 		actions={
 			<>
 				<ButtonLink to="/">Go home</ButtonLink>
-				<ButtonLink to="/reference" variant="secondary">
-					Browse the reference
+				<ButtonLink to="/learn" variant="secondary">
+					Browse Learn
 				</ButtonLink>
 			</>
 		}

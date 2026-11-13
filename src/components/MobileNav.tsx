@@ -1,5 +1,5 @@
 import { Link, getRouteApi, useRouterState } from "@tanstack/react-router";
-import { BookOpen, Compass, FileText, Home, NotebookPen, Zap } from "lucide-react";
+import { BookOpen, Compass, Home, NotebookPen, Zap } from "lucide-react";
 
 import { canSeeLessons } from "@/lib/lessons-access";
 import type { AuthSession } from "@/server/auth/session";
@@ -22,7 +22,6 @@ const navItems = (auth: AuthSession | null) => [
 		: []),
 	{ id: "learn", label: "Learn", path: "/learn", icon: BookOpen, sections: ["learn"] },
 	{ id: "guides", label: "Guides", path: "/guides", icon: Compass, sections: ["guides"] },
-	{ id: "reference", label: "Reference", path: "/reference", icon: FileText, sections: ["reference"] },
 ];
 
 export function MobileNav() {

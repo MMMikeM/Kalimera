@@ -550,5 +550,5 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 			drills: ["pronouns-placement", "pronouns-two-together"],
 		},
 	],
-	reference: [{ label: "Pronouns", href: "/reference/pronouns" }],
+	reference: [{ label: "Pronouns", href: "/learn/tables/pronouns" }],
 };

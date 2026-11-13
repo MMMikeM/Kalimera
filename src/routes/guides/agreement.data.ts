@@ -549,7 +549,7 @@ export const AGREEMENT_GUIDE: Guide = {
 		},
 	],
 	reference: [
-		{ label: "Adjectives", href: "/reference/adjectives" },
-		{ label: "Nouns", href: "/reference/nouns" },
+		{ label: "Adjectives", href: "/learn/tables/adjectives" },
+		{ label: "Nouns", href: "/learn/tables/nouns" },
 	],
 };

@@ -47,6 +47,13 @@ const groups: IndexGroup[] = [
 				description: "Numbers, colours, time, position",
 				href: "/learn/essentials",
 			},
+			{
+				id: "tables",
+				label: "Tables",
+				greek: "Πίνακες",
+				description: "Every form of the articles, nouns, pronouns, adjectives and verbs",
+				href: "/learn/tables/articles",
+			},
 		],
 	},
 ];

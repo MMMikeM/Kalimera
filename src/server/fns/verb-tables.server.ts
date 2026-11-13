@@ -3,7 +3,8 @@ import { getVerbsByLemmaWithConjugations } from "@/server/db/queries/vocabulary"
 
 type Paradigm = Partial<Record<VerbTense, Partial<Record<PersonNumber, string>>>>;
 
-export interface ReferenceVerb {
+export interface VerbTableVerb {
+	id: number;
 	lemma: string;
 	english: string;
 	forms: Paradigm;
@@ -19,10 +20,11 @@ const toParadigm = (
 	return forms;
 };
 
-export const getReferenceVerbs = async (lemmas: string[]): Promise<ReferenceVerb[]> => {
+export const getVerbTables = async (lemmas: string[]): Promise<VerbTableVerb[]> => {
 	const verbs = await getVerbsByLemmaWithConjugations(lemmas);
 
 	return verbs.map((verb) => ({
+		id: verb.id,
 		lemma: verb.greekText,
 		english: verb.englishTranslation,
 		forms: toParadigm(verb.verbConjugations),

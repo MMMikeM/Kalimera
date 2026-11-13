@@ -378,7 +378,7 @@ function RootDocument({ children }: { children: ReactNode }) {
 }
 ```
 
-Errors and 404s in child routes render **inside** the app shell: `src/router.tsx` sets `defaultErrorComponent: RouteError` and `defaultNotFoundComponent: NotFound`, so the header and navigation keep working. For a param that doesn't name a real page, `throw notFound()` from the loader rather than rendering a fallback (see `src/routes/reference/$tab.tsx`):
+Errors and 404s in child routes render **inside** the app shell: `src/router.tsx` sets `defaultErrorComponent: RouteError` and `defaultNotFoundComponent: NotFound`, so the header and navigation keep working. For a param that doesn't name a real page, `throw notFound()` from the loader rather than rendering a fallback (see `src/routes/learn/tables/$tab.tsx`):
 
 ```tsx
 loader: async ({ params: { tab } }) => {

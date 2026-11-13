@@ -578,7 +578,7 @@ export const ROLES_GUIDE: Guide = {
 		},
 	],
 	reference: [
-		{ label: "Articles", href: "/reference/articles" },
-		{ label: "Nouns", href: "/reference/nouns" },
+		{ label: "Articles", href: "/learn/tables/articles" },
+		{ label: "Nouns", href: "/learn/tables/nouns" },
 	],
 };

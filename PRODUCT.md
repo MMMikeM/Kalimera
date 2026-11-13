@@ -14,8 +14,7 @@ A Greek study app for the week between tutoring lessons. The lesson is where Gre
 - **Lessons** (the owner's account only): every tutoring session, newest first, each as one sheet.
 - **Guides:** fourteen plain-English guides in three groups (nouns; verbs; small words and sentences), with grammar marks under the Greek and a drill per section.
 - **Practice:** timed production drills in five groups (cases, pronouns, verbs, blocks, guides), plus a review of drills gone rusty.
-- **Learn:** vocabulary by subject and conjugation family, conversations, phrases, and essentials (numbers, time, dates).
-- **Reference:** paradigm tables for looking a form up.
+- **Learn:** everything you look up: vocabulary by subject and conjugation family, conversations, phrases, essentials (numbers, time, dates), and Tables, the paradigm tables for looking a form up.
 - **Progress:** the streak calendar and accuracy trends, kept inside the app.
 
 ## Design Context

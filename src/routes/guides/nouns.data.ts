@@ -166,7 +166,7 @@ export const NOUNS_GUIDE: Guide = {
 		},
 	],
 	reference: [
-		{ label: "Every noun pattern", href: "/reference/nouns" },
-		{ label: "Articles", href: "/reference/articles" },
+		{ label: "Every noun pattern", href: "/learn/tables/nouns" },
+		{ label: "Articles", href: "/learn/tables/articles" },
 	],
 };

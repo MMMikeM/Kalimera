@@ -115,6 +115,7 @@ const NavTabs = ({ tabs, activeTab, buildUrl }: NavTabsProps) => {
 							<Link
 								key={tab.id}
 								to={buildUrl(tab.id)}
+								activeOptions={{ exact: true }}
 								className={`${trigger()} ${triggerStateVariants({ active: isActive, color })}`}
 							>
 								<div className="flex h-4 items-center justify-center">{tab.icon}</div>

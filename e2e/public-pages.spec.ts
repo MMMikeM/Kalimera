@@ -57,10 +57,18 @@ test("an unknown page is a 404 inside the app shell", async ({ page }) => {
 	const response = await page.goto("/no-such-page");
 	expect(response?.status()).toBe(404);
 	await expect(page.getByRole("heading", { level: 1, name: "There's no page here." })).toBeVisible();
-	await expect(page.getByRole("link", { name: "Reference" }).first()).toBeVisible();
+	await expect(page.getByRole("link", { name: "Browse Learn" })).toBeVisible();
 });
 
-test("an unknown reference tab is a 404", async ({ page }) => {
-	const response = await page.goto("/reference/no-such-tab");
-	expect(response?.status()).toBe(404);
+test("an old /reference address moves permanently to its new home", async ({ request }) => {
+	const response = await request.get("/reference/nouns", { maxRedirects: 0 });
+	expect(response.status()).toBe(301);
+	expect(response.headers().location).toContain("/learn/tables/nouns");
 });
+
+for (const path of ["/reference/no-such-tab", "/learn/tables/no-such-tab", "/learn/verbs/abc"]) {
+	test(`${path} is a 404`, async ({ page }) => {
+		const response = await page.goto(path);
+		expect(response?.status()).toBe(404);
+	});
+}

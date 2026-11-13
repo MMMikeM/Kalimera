@@ -3,7 +3,8 @@ import { declineAdjective } from "@/lib/adjective-declension";
 import type { AdjectiveDeclensionPattern } from "@/server/db/enums";
 
 import { GenderCaseTable } from "../components/gender-case-table";
-import { type GuideSectionRef, LookupPage, LookupSection, TAUGHT_IN } from "../components/lookup-section";
+import { LookupPage, LookupSection } from "../components/lookup-section";
+import { type GuideSectionRef, TAUGHT_IN } from "../taught-in.data";
 
 const PATTERNS = [
 	{ lemma: "καλός", pattern: "os-i-o", title: "-ος, -η, -ο", taughtIn: TAUGHT_IN.adjectives },

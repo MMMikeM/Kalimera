@@ -11,9 +11,10 @@ Browse Greek content organised by topic: conversations, phrases, nouns, verbs, a
 /learn/nouns                  Everyday nouns, one card per subject
 /learn/nouns/:subject         Nouns in one subject, filterable by CEFR level
 /learn/verbs                  Verb inventory: irregulars to memorise vs verbs that follow the rules
-/learn/verbs/:verbId          Full verb conjugation detail
+/learn/verbs/:verbId          One verb's every form
 /learn/essentials             Essentials landing (SectionIndex)
 /learn/essentials/:subtab     Building blocks (numbers, colours, etc.)
+/learn/tables/:tab            Lookup tables (see tables/content.llm)
 ```
 
 ## Landing Page
@@ -31,6 +32,7 @@ Browse Greek content organised by topic: conversations, phrases, nouns, verbs, a
     - Ουσιαστικά / Nouns: "Objects, people, places — with gender" (links to /learn/nouns)
     - Ρήματα / Verbs: "The irregulars, then the verbs that follow the rules" (links to /learn/verbs)
     - Βασικά / Essentials: "Numbers, colours, time, position" (links to /learn/essentials)
+    - Πίνακες / Tables: "Every form of the articles, nouns, pronouns, adjectives and verbs" (links to /learn/tables/articles)
 </displays>
 <note>
 No cards, icons or tints. The group headings are plain stone text: a coloured slab beside the Doer and Owner colours would read as a grammatical claim (see the `SectionIndex` docblock).
@@ -43,9 +45,10 @@ See individual content files for detailed documentation:
 - `conversations/content.llm` - Themed dialogues
 - `phrases/content.llm` - Common expressions
 - `essentials/content.llm` - Numbers, colours, time, position, frequency
+- `tables/content.llm` - Lookup tables (was Reference); /learn/nouns and /learn/verbs link to them with "Every form, by family"
 
 Nouns and verbs have no content file:
-- `/learn/nouns` (`nouns/index.tsx`): `TabHero` "Everyday nouns"; one card per subject with its word count and three sample lemmas. Subjects come from `groupNounsBySubject` (`src/lib/noun-browser-groups.ts`) over `getNounsWithFormsAndSubjects()`.
+- `/learn/nouns` (`nouns/index.tsx`): `TabHero` "Everyday nouns", then an "Every form, by family" link to /learn/tables/nouns; one card per subject with its word count and three sample lemmas. Subjects come from `groupNounsBySubject` (`src/lib/noun-browser-groups.ts`) over `getNounsWithFormsAndSubjects()`.
 - `/learn/nouns/$subject` (`nouns/$subject.tsx`): subject title, CEFR level toggles, nouns in subgroups via `NounList` (`learn/components/noun-list.tsx`). For an unknown subject the loader throws `notFound()`.
-- `/learn/verbs` (`verbs.tsx`): `TabHero` "Verbs" with two tabs, "Irregulars (N)" (`MemoriseSection`) and "Follow the rules" (`RulesSection`), both from `verbs/components/verb-inventory.tsx`.
-- `/learn/verbs/$verbId` (`verbs/$verbId.tsx`): one verb's paradigms through `TenseNavigator`.
+- `/learn/verbs` (`verbs/index.tsx`): `TabHero` "Verbs", an "Every form, by family" link to /learn/tables/verbs/present, then two tabs, "Irregulars (N)" (`MemoriseSection`) and "Follow the rules" (`RulesSection`), both from `verbs/components/verb-inventory.tsx`.
+- `/learn/verbs/$verbId` (`verbs/$verbId.tsx`): one verb's forms through `TenseNavigator` ("Every form") and `ImperativeTable`, in plain words (one action / ongoing, simple past). A non-numeric or unknown id is a 404 (`notFound()`). Reached from search and from verb names in Learn → Tables.

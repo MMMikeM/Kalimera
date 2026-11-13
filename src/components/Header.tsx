@@ -18,13 +18,11 @@ const NAV_ITEMS_AUTH = [
 	{ id: "lessons", label: "Lessons", path: "/lessons" },
 	{ id: "learn", label: "Learn", path: "/learn" },
 	{ id: "guides", label: "Guides", path: "/guides" },
-	{ id: "reference", label: "Reference", path: "/reference" },
 ];
 
 const NAV_ITEMS_UNAUTH = [
 	{ id: "learn", label: "Learn", path: "/learn" },
 	{ id: "guides", label: "Guides", path: "/guides" },
-	{ id: "reference", label: "Reference", path: "/reference" },
 ];
 
 interface HeaderProps {

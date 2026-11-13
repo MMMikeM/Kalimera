@@ -129,6 +129,6 @@ export interface Guide {
 	sections: GuideSection[];
 	/** What the column colours mean on this guide, shown near the top. */
 	key?: { label: string; tone: GuideTone }[];
-	/** Full paradigm tables that still live on the reference pages. */
+	/** Links to the lookup tables in Learn → Tables that show this guide's forms in full. */
 	reference: GuideReference[];
 }

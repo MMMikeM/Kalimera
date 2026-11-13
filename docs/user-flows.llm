@@ -35,9 +35,9 @@ kept in this file would drift from them.
 
 /guides                    Guides landing (SectionIndex)
 /guides/:guide             One guide: sections that each end in a drill
-/reference                 Reference landing (SectionIndex)
-/reference/:tab            Lookup tables: pronouns, articles, nouns, adjectives
-/reference/verbs  /:band   Verb reference, by tense band
+/learn/tables/:tab         Lookup tables: articles, nouns, pronouns, adjectives
+/learn/tables/verbs/:band  Verb tables, by tense band
+/reference/*               Old addresses: 301 to Learn → Tables or a guide
 
 /search?q=&page=           Every search result, paged by 10
 /progress                  Analytics (streak calendar, accuracy trends)
@@ -134,10 +134,10 @@ take the base palette and claim nothing.
 <note>The only drill with no catalogue entry; it passes its own title to &lt;Drill&gt;</note>
 </route>
 
-### Learn and reference
+### Learn
 
 <route path="/learn">
-<purpose>SectionIndex into conversations, phrases, nouns, verbs, essentials: a ruled, Greek-first list with no icons or tints. /reference and /learn/essentials use the same component.</purpose>
+<purpose>Everything you look up. SectionIndex into conversations, phrases, nouns, verbs, essentials and tables: a ruled, Greek-first list with no icons or tints. /learn/essentials uses the same component.</purpose>
 <file>src/routes/learn/index.tsx</file>
 </route>
 
@@ -153,21 +153,25 @@ take the base palette and claim nothing.
 </route>
 
 <route path="/learn/nouns/:subject  ·  /learn/verbs/:verbId">
-<purpose>Noun browser by subject · full verb conjugation detail</purpose>
+<purpose>Noun browser by subject · one verb's every form. /learn/nouns and /learn/verbs each link to their tables ("Every form, by family"); verb names in the tables link to the verb's page.</purpose>
 <file>src/routes/learn/nouns/$subject.tsx · src/routes/learn/verbs/$verbId.tsx</file>
 <data-source>DB: noun-browser and verb queries</data-source>
 </route>
 
-<route path="/reference/:tab">
-<purpose>Tables for looking a form up: pronouns, articles, nouns, adjectives. No teaching: each table links to the guide section that teaches it. The guides are the only place a rule is explained.</purpose>
-<file>src/routes/reference/$tab.tsx, tables in reference/tabs/ and reference/components/lookup-section.tsx</file>
-<note>/reference/cases, /prepositions and /patterns redirect to the roles, place and little-words guides</note>
+<route path="/learn/tables/:tab">
+<purpose>Tables for looking a form up: articles, nouns, pronouns, adjectives. No teaching: each table links to the guide section that teaches it. The guides are the only place a rule is explained.</purpose>
+<file>src/routes/learn/tables/$tab.tsx, tables in learn/tables/tabs/; content.llm beside it</file>
 </route>
 
-<route path="/reference/verbs/:band">
-<purpose>Verb tables by tense band: present, past, past-continuous, future. Forms come from the DB (getReferenceVerbsFn), for named example verbs per table.</purpose>
-<file>src/routes/reference/verbs/$band.tsx</file>
-<note>/reference/verbs redirects to /reference/verbs/present; an unknown band is a 404</note>
+<route path="/learn/tables/verbs/:band">
+<purpose>Verb tables by tense band: present, past, past-continuous, future. Forms come from the DB (getVerbTablesFn), for named example verbs per table.</purpose>
+<file>src/routes/learn/tables/verbs/$band.tsx</file>
+<note>/learn/tables/verbs redirects to /present; an unknown band is a 404</note>
+</route>
+
+<route path="/reference/*">
+<purpose>Old addresses. One table (reference/redirects.data.ts) sends each with a 301 to Learn → Tables, or to the roles, place and little-words guides for the old cases, prepositions and patterns tabs. Anything else is a 404.</purpose>
+<file>src/routes/reference/$.tsx and index.tsx</file>
 </route>
 
 ### Lessons
@@ -197,7 +201,7 @@ take the base palette and claim nothing.
 <file>src/routes/guides/$guide.tsx, components in guides/components/</file>
 <data-source>Each guide owns src/routes/guides/&lt;slug&gt;.data.ts; guides.data.ts only orders them. Greek phrases carry `marks`, drawn with &lt;GrammarMark&gt;</data-source>
 <guard>src/routes/guides/guides.test.ts fails on an unknown drill id, a broken don't-confuse link, a mark whose text is missing from its Greek, a lesson note whose `section` names no real section, a planned drill whose id a real drill already has, a repeated detail label, an unpaired emphasis marker, a table row with the wrong number of cells, or a table note that is missing, unused or one of more than three in a table</guard>
-<note>Public, like /reference. Drill links go to /register for a logged-out reader. An unknown guide is a 404. How to write a guide: src/routes/guides/CLAUDE.md</note>
+<note>Public, like /learn. Drill links go to /register for a logged-out reader. An unknown guide is a 404. How to write a guide: src/routes/guides/CLAUDE.md</note>
 </route>
 
 ### Utility
@@ -212,7 +216,7 @@ take the base palette and claim nothing.
 src/components/StatusPage.tsx, wired as the router defaults in src/router.tsx and on
 the root route in src/routes/__root.tsx.
 
-- An unknown page, an unknown /reference tab or an unknown verb band renders
+- An unknown page, an unknown table tab, an unknown verb band or verb id renders
   NotFound ("There's no page here.") inside the app shell, with a 404 status.
 - A page that fails to load renders RouteError ("Couldn't load this page.", with
   Try again and Go home) inside the shell, so the header and navigation still work.
@@ -491,7 +495,7 @@ as passive data the user can glance at.</motivation-note>
 
 **Desktop (header):**
 ```
-[Kalimera]  [🔍 Search...]  [Practice] [Learn] [Guides] [Reference] [theme] [Account ▾]
+[Kalimera]  [🔍 Search...]  [Practice] [Learn] [Guides] [theme] [Account ▾]
 ```
 
 ### Mobile Navigation (Implemented)
@@ -506,9 +510,9 @@ as passive data the user can glance at.</motivation-note>
 - Account icon → opens the account menu (Progress, About, Sign out); logged
   out, a "Sign in" link takes its place
 
-**Mobile bottom nav (6 items for the owner, 5 otherwise):**
+**Mobile bottom nav (5 items for the owner, 4 otherwise):**
 ```
-[🏠 Home] [⚡ Practice] [📓 Lessons] [📖 Learn] [🧭 Guides] [📋 Reference]
+[🏠 Home] [⚡ Practice] [📓 Lessons] [📖 Learn] [🧭 Guides]
 ```
 - Logged out, the Practice tab goes to /try, since /practice needs an account. Lessons shows for the owner's account only
 
@@ -602,7 +606,7 @@ Swipe down anywhere → Search overlay
 **Current mobile nav (implemented):**
 ```
 Top bar:    [Kalimera]      [🔍] [theme] [👤]
-Bottom nav: [🏠 Home] [⚡ Practice] [📖 Learn] [🧭 Guides] [📋 Reference]
+Bottom nav: [🏠 Home] [⚡ Practice] [📖 Learn] [🧭 Guides]
 ```
 
 - Search icon in header opens a search popover
@@ -619,7 +623,7 @@ search box between the logo and the links that shows results in a dropdown:
 
 **Authenticated:**
 ```
-[Kalimera]  [🔍 Search...]  [Practice ←CTA] [Lessons] [Learn] [Guides] [Reference] [theme] [Account ▾]
+[Kalimera]  [🔍 Search...]  [Practice ←CTA] [Lessons] [Learn] [Guides] [theme] [Account ▾]
                                                                                     └── Progress
                                                                                         About
                                                                                         ────────
@@ -628,7 +632,7 @@ search box between the logo and the links that shows results in a dropdown:
 
 **Unauthenticated:**
 ```
-[Kalimera]  [🔍 Search...]  [Learn] [Guides] [Reference] [theme] [Sign in] [Try a drill ←CTA]
+[Kalimera]  [🔍 Search...]  [Learn] [Guides] [theme] [Sign in] [Try a drill ←CTA]
 ```
 
 "Try a drill" is hidden while on /try.
@@ -642,7 +646,7 @@ search box between the logo and the links that shows results in a dropdown:
 | `/lessons` | Lessons (bottom nav, owner only) | Lessons (owner only) | Latest lesson, every lesson listed |
 | `/learn` | Learn (bottom nav) | Learn | Landing page → subsections |
 | `/guides` | Guides (bottom nav) | Guides | Landing page → fourteen guides in three groups |
-| `/reference` | Reference (bottom nav) | Reference | Landing page → tabs |
+| `/learn/tables` | Learn → Tables | Learn → Tables | Lookup tables; /reference/* redirects here |
 | `/search` | "More" in search | "More" in search | Every result for a query, paged |
 | `/progress` | Account menu | Account menu | Analytics (authenticated) |
 | `/support` | Account menu | Account menu | About page |

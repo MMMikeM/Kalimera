@@ -270,6 +270,6 @@ export const GENDER_GUIDE: Guide = {
 		},
 	],
 	reference: [
-		{ label: "Every noun pattern", href: "/reference/nouns" },
+		{ label: "Every noun pattern", href: "/learn/tables/nouns" },
 	],
 };

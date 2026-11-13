@@ -1,7 +1,7 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/reference/verbs/")({
+export const Route = createFileRoute("/learn/tables/verbs/")({
 	beforeLoad: () => {
-		throw redirect({ to: "/reference/verbs/$band", params: { band: "present" } });
+		throw redirect({ to: "/learn/tables/verbs/$band", params: { band: "present" } });
 	},
 });

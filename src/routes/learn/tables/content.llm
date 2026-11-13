@@ -1,24 +1,22 @@
-# Reference Section Content
+# Learn → Tables
 
-Tables for looking a form up. Reference teaches nothing: every rule is explained in a guide (`src/routes/guides/`), and each table here links to the guide section that teaches it. Public: no auth guard.
+Tables for looking a form up. Nothing here teaches: every rule is explained in a guide (`src/routes/guides/`), and each table links to the guide section that teaches it. Public: no auth guard. This was the Reference section until it folded into Learn.
 
 ## Route Structure
 
 ```
-/reference                    Landing page (SectionIndex)
-/reference/:tab               $tab.tsx: pronouns, articles, nouns, adjectives
-/reference/verbs              verbs/route.tsx layout (own route family, not a :tab)
-/reference/verbs/             redirects to /reference/verbs/present
-/reference/verbs/:band        present, past, past-continuous, future
+/learn/tables/:tab            $tab.tsx: articles, nouns, pronouns, adjectives
+/learn/tables/verbs           verbs/route.tsx layout (own route family, not a :tab)
+/learn/tables/verbs/          redirects to /learn/tables/verbs/present
+/learn/tables/verbs/:band     present, past, past-continuous, future
+/reference/*                  old addresses: src/routes/reference/$.tsx redirects each (301)
+                              through REFERENCE_REDIRECTS (reference/redirects.data.ts)
 ```
 
 - `$tab.tsx` checks `VALID_TABS`; any other `:tab` throws `notFound()` (404).
-- `MOVED_TO_GUIDES` in `$tab.tsx` redirects the tabs whose teaching moved into guides, so old links keep working:
-  - /reference/cases → /guides/roles
-  - /reference/prepositions → /guides/place
-  - /reference/patterns → /guides/little-words#likes
-- `head` sets the document title from the tab's `REFERENCE_TABS` label; a verb band's title is "Verbs: <band label>".
-- Every tab and band renders `ReferenceNav` (a `NavTabs` bar over `REFERENCE_TABS`) above its content.
+- `head` sets the document title from the tab's `TABLES_TABS` label; a verb band's title is "Verbs: <band label>".
+- Every tab and band renders a `BackLink` to /learn, then `TablesNav` (a `NavTabs` bar over `TABLES_TABS`), above its content.
+- `src/routes/route-paths.test.ts` checks that every redirect target and every guide's table link is a real route.
 
 ## Page shape
 
@@ -28,44 +26,31 @@ Every tab and verb band has the same shape, from `components/lookup-section.tsx`
 - One `LookupSection` per table, in a fixed order: an `h2`, a `GrammarTable` of `GreekText` cells with no case colours, and "Taught in: <guide section title> →" links.
 - Nothing else: no hero, teaching cards, quizzes, mistakes or next-step cards.
 
-`TAUGHT_IN` in `lookup-section.tsx` holds every guide section a table links to, with its title copied from the guide, so the pages never import the guide data. `src/routes/guides/guide-forms.test.ts` checks each entry against the guide's real section id and title.
-
-## Landing Page
-
-<route path="/reference">
-<file>src/routes/reference/index.tsx</file>
-<displays>
-- `SectionIndex`: title "Reference", lede "Grammar patterns and paradigms"
-- Ruled rows, Greek name first:
-  - The case system: Αντωνυμίες / Pronouns
-  - Words that agree: Άρθρα / Articles, Ουσιαστικά / Nouns, Επίθετα / Adjectives
-  - Building sentences: Ρήματα / Verbs ("Every tense, by verb family")
-</displays>
-</route>
+`TAUGHT_IN` in `taught-in.data.ts` holds every guide section a table links to, with its title copied from the guide, so the pages never import the guide data. `src/routes/guides/guide-forms.test.ts` checks each entry against the guide's real section id and title.
 
 ## Tabs
 
-<tab route="/reference/pronouns" file="tabs/pronouns.tsx">
+<tab route="/learn/tables/pronouns" file="tabs/pronouns.tsx">
 One table, "Every pronoun form", from `constants/pronouns.ts` (nothing generates pronouns). Links to little-words: forms, objects, long forms.
 </tab>
 
-<tab route="/reference/articles" file="tabs/nouns-articles.tsx">
+<tab route="/learn/tables/articles" file="tabs/articles.tsx">
 One table, "The article, every form", rendered from `getArticle` (`src/lib/greek-grammar.ts`) through `gender-case-table.tsx`. Links to roles: articles, plural.
 </tab>
 
-<tab route="/reference/nouns" file="tabs/nouns.tsx">
-One table per gender, from `AGREEMENT_PARADIGMS` (`constants/agreement.ts`, the same source as `declineNoun`), each pattern with example words from the DB (`getNounsForParadigmReference`, loaded by `$tab.tsx`). Links to the nouns guide's family sections.
+<tab route="/learn/tables/nouns" file="tabs/nouns.tsx">
+One table per gender, from `AGREEMENT_PARADIGMS` (`constants/agreement.ts`, the same source as `declineNoun`), each pattern with example words from the DB (`getNounsForPatternTables`, loaded by `$tab.tsx`). Links to the nouns guide's family sections.
 </tab>
 
-<tab route="/reference/adjectives" file="tabs/adjectives.tsx">
+<tab route="/learn/tables/adjectives" file="tabs/adjectives.tsx">
 Three tables from `declineAdjective` (`src/lib/adjective-declension.ts`): καλός (-ος, -η, -ο), ωραίος (-ος, -α, -ο), βαρύς (-ύς, -ιά, -ύ). Links to the agreement guide.
 </tab>
 
 ## Verb bands
 
-<route path="/reference/verbs/:band">
-<file>src/routes/reference/verbs/$band.tsx; tables in components/verbs-section.tsx</file>
-<data-source>DB: `getReferenceVerbsFn` (`src/server/fns/reference-verbs.ts`) loads every tense of the band's example verbs (`bandLemmas`).</data-source>
+<route path="/learn/tables/verbs/:band">
+<file>src/routes/learn/tables/verbs/$band.tsx; tables in components/verb-tables.tsx</file>
+<data-source>DB: `getVerbTablesFn` (`src/server/fns/verb-tables.ts`) loads every tense of the band's example verbs (`bandLemmas`), with their ids. Each verb's name, in a column header or a stem-table row, links to /learn/verbs/:verbId.</data-source>
 <displays>
 `BAND_TABLES` lists each band's tables, their example verbs and the guide section each links to. The families follow the verbs guide:
 

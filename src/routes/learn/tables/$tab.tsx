@@ -1,18 +1,19 @@
-import { createFileRoute, notFound, redirect } from "@tanstack/react-router";
+import { createFileRoute, notFound } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 
+import { BackLink } from "@/components/BackLink";
 import { groupNounsByPattern } from "@/lib/noun-paradigm-groups";
 import { pageTitle } from "@/lib/page-title";
-import { getNounsForParadigmReference } from "@/server/db/queries/noun-paradigms";
+import { getNounsForPatternTables } from "@/server/db/queries/noun-paradigms";
 
-import { REFERENCE_TABS, ReferenceNav } from "./components/reference-nav";
+import { TABLES_TABS, TablesNav } from "./components/tables-nav";
 import { AdjectivesTab } from "./tabs/adjectives";
-import { ArticlesTab } from "./tabs/nouns-articles";
+import { ArticlesTab } from "./tabs/articles";
 import { NounsTab } from "./tabs/nouns";
 import { PronounsTab } from "./tabs/pronouns";
 
 const loadNouns = createServerFn().handler(async () => ({
-	byPattern: groupNounsByPattern(await getNounsForParadigmReference()),
+	byPattern: groupNounsByPattern(await getNounsForPatternTables()),
 }));
 
 export type NounsData = Awaited<ReturnType<typeof loadNouns>>;
@@ -20,19 +21,8 @@ export type NounsData = Awaited<ReturnType<typeof loadNouns>>;
 const VALID_TABS = ["pronouns", "articles", "nouns", "adjectives"] as const;
 type TabId = (typeof VALID_TABS)[number];
 
-/** Tabs whose tables went to the guides; the old links keep working. */
-const MOVED_TO_GUIDES = {
-	cases: { guide: "roles" },
-	prepositions: { guide: "place" },
-	patterns: { guide: "little-words", hash: "likes" },
-} as const;
-
-export const Route = createFileRoute("/reference/$tab")({
+export const Route = createFileRoute("/learn/tables/$tab")({
 	loader: async ({ params: { tab } }) => {
-		if (Object.hasOwn(MOVED_TO_GUIDES, tab)) {
-			const { guide, ...rest } = MOVED_TO_GUIDES[tab as keyof typeof MOVED_TO_GUIDES];
-			throw redirect({ to: "/guides/$guide", params: { guide }, ...rest });
-		}
 		if (!VALID_TABS.includes(tab as TabId)) throw notFound();
 
 		const nouns = tab === "nouns" ? await loadNouns() : null;
@@ -41,7 +31,7 @@ export const Route = createFileRoute("/reference/$tab")({
 	},
 	head: ({ params }) => ({
 		meta: [
-			{ title: pageTitle(REFERENCE_TABS.find((t) => t.id === params.tab)?.label ?? "Reference") },
+			{ title: pageTitle(TABLES_TABS.find((t) => t.id === params.tab)?.label ?? "Tables") },
 		],
 	}),
 	component: TabRoute,
@@ -67,7 +57,8 @@ function TabRoute() {
 
 	return (
 		<div className="space-y-4">
-			<ReferenceNav activeTab={tab} />
+			<BackLink to="/learn">Learn</BackLink>
+			<TablesNav activeTab={tab} />
 			{renderTab()}
 		</div>
 	);

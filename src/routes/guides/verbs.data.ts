@@ -266,9 +266,9 @@ export const VERBS_GUIDE: Guide = {
 		},
 	],
 	reference: [
-		{ label: "Present", href: "/reference/verbs/present" },
-		{ label: "Past", href: "/reference/verbs/past" },
-		{ label: "Past continuous", href: "/reference/verbs/past-continuous" },
-		{ label: "Future", href: "/reference/verbs/future" },
+		{ label: "Present", href: "/learn/tables/verbs/present" },
+		{ label: "Past", href: "/learn/tables/verbs/past" },
+		{ label: "Past continuous", href: "/learn/tables/verbs/past-continuous" },
+		{ label: "Future", href: "/learn/tables/verbs/future" },
 	],
 };

@@ -3,7 +3,9 @@ import { ContentSection } from "@/components/ContentSection";
 import { GreekText } from "@/components/GreekText";
 
 import type { EssentialsLoaderData } from "../$subtab";
-import { ArrowLink, GuideLink } from "./guide-link";
+import { ArrowLink } from "@/components/ArrowLink";
+
+import { GuideLink } from "./guide-link";
 
 interface Props {
 	data: EssentialsLoaderData;

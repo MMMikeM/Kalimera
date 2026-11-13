@@ -11,7 +11,7 @@ A Greek learning app for intermediate learners building procedural fluency — d
 - **Timed production drills** — type Greek under time pressure to build retrieval speed
 - **Spaced repetition** — SRS-based vocabulary review with SM-2 scheduling
 - **Grammar guides** — plain-English guides to the patterns, with grammar marks under the Greek and a drill for each section
-- **Grammar reference** — paradigm tables for cases, pronouns, articles, verbs, nouns, adjectives, prepositions, and patterns
+- **Tables** — lookup tables for articles, nouns, pronouns, adjectives and verbs, each linked to the guide that teaches it
 - **Lessons** (the owner's account only) — what each tutoring session covered: homework, the grammar taught and where its guide is, the words and phrases, and the drills for it
 - **Memory drills** — timed paradigm recall for forms that need to be automatic
 - **Vocabulary browser** — nouns by gender/category, verbs by conjugation family with full paradigm tables
@@ -126,10 +126,10 @@ docs/
 /learn/nouns  /:subject           Noun browser
 /learn/verbs  /:verbId            Verb browser and conjugation detail
 /learn/essentials/:subtab         Numbers, colours, time, position, frequency
+/learn/tables/:tab                articles · nouns · pronouns · adjectives
+/learn/tables/verbs/:band         Verbs, by tense: present · past · past continuous · future
 
-/reference                        Grammar reference hub
-/reference/:tab                   cases · pronouns · articles · nouns · adjectives · prepositions · patterns
-/reference/verbs  /:band          Verbs, by tense: present · past · continuous past · future
+/reference/*                      Old addresses, redirected (301) to Learn → Tables and the guides
 
 /search  /progress  /support      Search · analytics · about
 ```

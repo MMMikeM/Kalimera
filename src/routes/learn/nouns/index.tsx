@@ -2,6 +2,7 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { ChevronRight, Package } from "lucide-react";
 
+import { ArrowLink } from "@/components/ArrowLink";
 import { BackLink } from "@/components/BackLink";
 import { Card } from "@/components/Card";
 import { GreekText } from "@/components/GreekText";
@@ -41,6 +42,10 @@ function NounSubjectsPage() {
 			>
 				{total} words, grouped by subject. Pick a subject, then tap any word to see how it changes.
 			</TabHero>
+
+			<ArrowLink to="/learn/tables/$tab" params={{ tab: "nouns" }}>
+				Every form, by family
+			</ArrowLink>
 
 			<div className="grid gap-3 sm:grid-cols-2">
 				{subjects.map((subject) => (

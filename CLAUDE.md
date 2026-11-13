@@ -34,7 +34,7 @@ The seeders (vocab + verb conjugations) are **idempotent additive upserts**. Re-
 
 ## Screenshots
 
-`pnpm screenshots` (desktop 1280×720) or `pnpm screenshots --mobile` (375×812) — Playwright script at `screenshots/capture.ts`. Requires dev server running; `BASE_URL` env overrides `http://localhost:5173`. Logs in via `screenshots/login.ts`, captures ~40 fixed routes as full-page PNGs to `screenshots/desktop/` or `screenshots/mobile/`. Add `--route /reference/nouns` to capture one page. It unpins `.app-shell` before each shot, since the fixed shell otherwise clips full-page captures to the viewport.
+`pnpm screenshots` (desktop 1280×720) or `pnpm screenshots --mobile` (375×812) — Playwright script at `screenshots/capture.ts`. Requires dev server running; `BASE_URL` env overrides `http://localhost:5173`. Logs in via `screenshots/login.ts`, captures ~40 fixed routes as full-page PNGs to `screenshots/desktop/` or `screenshots/mobile/`. Add `--route /learn/tables/nouns` to capture one page. It unpins `.app-shell` before each shot, since the fixed shell otherwise clips full-page captures to the viewport.
 
 ---
 
@@ -76,7 +76,7 @@ Default **page routes**: a file route with a `loader` and a component. Mutations
 | File                                         | Purpose                                                |
 | -------------------------------------------- | ------------------------------------------------------ |
 | `docs/user-flows.llm`                        | Route map, user journeys, data tables — **read first** |
-| `src/routes/reference/content.llm`           | Reference tables, tabs and verb bands                  |
+| `src/routes/learn/tables/content.llm`        | Learn → Tables: tabs, verb bands, old /reference paths |
 | `src/routes/learn/content.llm`               | Learn index                                            |
 | `src/routes/learn/phrases/content.llm`       | Phrase tabs                                            |
 | `src/routes/learn/conversations/content.llm` | Conversation tabs                                      |

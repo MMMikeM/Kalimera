@@ -19,7 +19,7 @@ import {
 } from "@/server/db/enums";
 import type { GuideCell, GuideTable } from "@/types/guide";
 
-import { TAUGHT_IN } from "../reference/components/lookup-section";
+import { TAUGHT_IN } from "../learn/tables/taught-in.data";
 import { findGuide, resolveSectionRef } from "./guides.data";
 
 /** Where a guide table lives: a section's own table, or the table of one of its details. */

@@ -1,12 +1,14 @@
+import { Link } from "@tanstack/react-router";
 import type React from "react";
 
 import { type ColumnDef, GrammarTable, type RowDef } from "@/components/GrammarTable";
 import { GreekText } from "@/components/GreekText";
 import { ProseWithGreek } from "@/components/ProseWithGreek";
 import type { PersonNumber, VerbTense } from "@/server/db/enums";
-import type { ReferenceVerb } from "@/server/fns/reference-verbs";
+import type { VerbTableVerb } from "@/server/fns/verb-tables";
 
-import { type GuideSectionRef, LookupPage, LookupSection, TAUGHT_IN } from "./lookup-section";
+import { type GuideSectionRef, TAUGHT_IN } from "../taught-in.data";
+import { LookupPage, LookupSection } from "./lookup-section";
 
 interface ParadigmTable {
 	kind: "paradigm";
@@ -175,19 +177,29 @@ const Form: React.FC<{ children: string | undefined }> = ({ children }) => (
 	<GreekText size="sm" className="whitespace-nowrap">{children ?? "–"}</GreekText>
 );
 
-const verbHeading = (verb: ReferenceVerb): ColumnDef => ({
+const VerbLink: React.FC<{ verb: VerbTableVerb; className?: string }> = ({ verb, className }) => (
+	<Link
+		to="/learn/verbs/$verbId"
+		params={{ verbId: String(verb.id) }}
+		className="underline-offset-4 hover:underline"
+	>
+		<GreekText size="sm" className={className}>
+			{verb.lemma}
+		</GreekText>
+	</Link>
+);
+
+const verbHeading = (verb: VerbTableVerb): ColumnDef => ({
 	key: verb.lemma,
 	label: (
 		<span className="block">
-			<GreekText size="sm" className="font-semibold text-stone-800">
-				{verb.lemma}
-			</GreekText>
+			<VerbLink verb={verb} className="font-semibold text-stone-800" />
 			<span className="block text-xs font-normal text-stone-500">{verb.english}</span>
 		</span>
 	),
 });
 
-const ParadigmGrid: React.FC<{ verbs: ReferenceVerb[]; tense: VerbTense }> = ({ verbs, tense }) => (
+const ParadigmGrid: React.FC<{ verbs: VerbTableVerb[]; tense: VerbTense }> = ({ verbs, tense }) => (
 	<GrammarTable
 		columns={verbs.map(verbHeading)}
 		rows={PERSON_ROWS}
@@ -197,7 +209,7 @@ const ParadigmGrid: React.FC<{ verbs: ReferenceVerb[]; tense: VerbTense }> = ({ 
 	/>
 );
 
-const StemGrid: React.FC<{ verbs: ReferenceVerb[] }> = ({ verbs }) => (
+const StemGrid: React.FC<{ verbs: VerbTableVerb[] }> = ({ verbs }) => (
 	<GrammarTable
 		columns={[
 			{ key: "past", label: "Simple past (I)" },
@@ -205,7 +217,7 @@ const StemGrid: React.FC<{ verbs: ReferenceVerb[] }> = ({ verbs }) => (
 		]}
 		rows={verbs.map((verb) => ({
 			key: verb.lemma,
-			label: <GreekText size="sm">{verb.lemma}</GreekText>,
+			label: <VerbLink verb={verb} />,
 		}))}
 		cells={verbs.map((verb) => [
 			<Form key="past">{verb.forms.aorist?.sg1}</Form>,
@@ -216,10 +228,10 @@ const StemGrid: React.FC<{ verbs: ReferenceVerb[] }> = ({ verbs }) => (
 	/>
 );
 
-const byLemma = (verbs: ReferenceVerb[], lemmas: string[]) =>
+const byLemma = (verbs: VerbTableVerb[], lemmas: string[]) =>
 	lemmas.flatMap((lemma) => verbs.filter((verb) => verb.lemma === lemma));
 
-export const VerbBandTables: React.FC<{ band: VerbBandId; verbs: ReferenceVerb[] }> = ({
+export const VerbBandTables: React.FC<{ band: VerbBandId; verbs: VerbTableVerb[] }> = ({
 	band,
 	verbs,
 }) => (

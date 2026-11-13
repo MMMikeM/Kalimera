@@ -13,7 +13,8 @@ import {
 
 import type { NounsData } from "../$tab";
 import { CASE_ROWS, NUMBER_LABEL } from "../components/gender-case-table";
-import { type GuideSectionRef, LookupPage, LookupSection, TAUGHT_IN } from "../components/lookup-section";
+import { LookupPage, LookupSection } from "../components/lookup-section";
+import { type GuideSectionRef, TAUGHT_IN } from "../taught-in.data";
 
 const GENDER_SECTIONS = [
 	{ gender: "masculine", title: "Masculine nouns", taughtIn: TAUGHT_IN.masculineNouns },

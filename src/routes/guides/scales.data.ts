@@ -463,5 +463,5 @@ export const SCALES_GUIDE: Guide = {
 			drills: ["scales-all-whole"],
 		},
 	],
-	reference: [{ label: "Adjectives", href: "/reference/adjectives" }],
+	reference: [{ label: "Adjectives", href: "/learn/tables/adjectives" }],
 };

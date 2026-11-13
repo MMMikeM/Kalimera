@@ -1,15 +1,18 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 
-import { ReferenceNav } from "../components/reference-nav";
+import { BackLink } from "@/components/BackLink";
 
-export const Route = createFileRoute("/reference/verbs")({
+import { TablesNav } from "../components/tables-nav";
+
+export const Route = createFileRoute("/learn/tables/verbs")({
 	component: VerbsLayout,
 });
 
 function VerbsLayout() {
 	return (
 		<div className="space-y-4">
-			<ReferenceNav activeTab="verbs" />
+			<BackLink to="/learn">Learn</BackLink>
+			<TablesNav activeTab="verbs" />
 			<Outlet />
 		</div>
 	);

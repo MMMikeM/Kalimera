@@ -10,7 +10,8 @@ import {
 import { grammaticalNumbers, type GrammaticalNumber } from "@/server/db/enums";
 
 import { NUMBER_LABEL } from "../components/gender-case-table";
-import { LookupPage, LookupSection, TAUGHT_IN } from "../components/lookup-section";
+import { LookupPage, LookupSection } from "../components/lookup-section";
+import { TAUGHT_IN } from "../taught-in.data";
 
 interface PronounColumn extends ColumnDef {
 	paradigm: PronounParadigm[];

@@ -1,12 +1,12 @@
 import { db } from "../index";
 
 /**
- * Every noun with its declension pattern and stored forms, for the public nouns
- * reference. Deliberately takes no `userId`: `/reference` is not auth-gated, and
+ * Every noun with its declension pattern and stored forms, for the public noun
+ * tables. Deliberately takes no `userId`: `/learn/tables` is not auth-gated, and
  * the drill-side readers (`getDrillVocabPool`) both require a user and throw on
- * an empty result, which is correct for a drill and fatal for a reference page.
+ * an empty result, which is correct for a drill and fatal for a public page.
  */
-export const getNounsForParadigmReference = async () =>
+export const getNounsForPatternTables = async () =>
 	await db.query.vocabulary.findMany({
 		where: { wordType: "noun" },
 		columns: {

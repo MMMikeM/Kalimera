@@ -248,7 +248,7 @@ Dark mode remaps every ramp under `:root.dark`: tints become dark tints, text sh
 ### Hierarchy
 - **Display** (400, 2.25rem rising to 3rem from `sm`, leading 1.25, balanced): every page's `h1`, through `PageHeading`, in `stone-900`. Its lede sits beneath at body size in `stone-700`, capped at 42rem.
 - **Headline** (400, 1.875rem rising to 2.25rem, leading 1.25): the open lesson's topic at the top of its sheet.
-- **Title** (400, 1.5rem): section headings, in serif. `BandHeading` on reference pages, numbered guide section bands, lesson sheet sections ("What was taught", "Words").
+- **Title** (400, 1.5rem): section headings, in serif. table headings in Learn → Tables, numbered guide section bands, lesson sheet sections ("What was taught", "Words").
 - **Title small** (400, 1.25rem): sub-bands, the ledger's year headings, "Full tables".
 - **Body** (400, 1rem, leading 1.625): prose, capped at 42rem on guides and page ledes (`max-w-2xl`) and at 65ch on the lesson sheet (`max-w-prose`).
 - **Greek** (400, 1.125rem in reading rows, leading 1.625, +0.01em tracking): always through `GreekText`, which owns `lang="el"` and the size. Sizes run `xs` to `8xl` and are chosen per call site: `lg` in word tables, phrases and examples, `2xl` leading a section-index row, `base` in paradigm cells, `inherit` inside sentences and headings. Greek is never scaled by a multiplier over Latin.
@@ -271,7 +271,7 @@ Rhythm runs on a 4px base. Rows inside a ruled list are 12px apart top and botto
 
 **Ledger and sheet.** The Lessons page is a 12-column grid from `md`: the ledger takes 4 columns on the left and the open lesson's sheet 8 on the right, 40–56px apart. On phones the sheet leads and the ledger follows below it, reached by a "Jump to all lessons" link. Picking a row scrolls the sheet into view because the router cannot reset `.app-main`.
 
-**Index, not grid.** Section landings (`/learn`, `/reference`, `/guides`) are a ruled table of contents: one full-width row per section, Greek first at `2xl`, English label, a one-line description, a chevron. No card grids.
+**Index, not grid.** Section landings (`/learn`, `/guides`) are a ruled table of contents: one full-width row per section, Greek first at `2xl`, English label, a one-line description, a chevron. No card grids.
 
 **Guide sections.** Each guide section is a framed block: a tone header band, then the rule, table, examples, details and practice links stacked 20px apart. On phones the frame runs edge to edge (`-mx-6`) and its tables scroll horizontally; paradigm cells never stack.
 
