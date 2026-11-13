@@ -56,4 +56,13 @@ export const TAUGHT_IN = {
 		section: "keep-shape",
 		title: "Verbs with no separate short form",
 	},
+	commands: { guide: "future-commands", section: "commands", title: "Commands" },
+	commandAspect: { guide: "future-commands", section: "command-aspect", title: "One-off and ongoing commands" },
+	articleIndefinite: { guide: "roles", section: "a-an", title: "The article ένας, μια, ένα" },
+	poly: { guide: "scales", section: "poly-polla", title: "πολύ or πολλά?" },
+	extraSyllable: {
+		guide: "noun-exceptions",
+		section: "extra-syllable",
+		title: "Plurals with a new ending, like καφέδες and πόλεις",
+	},
 } as const satisfies Record<string, GuideSectionRef>;

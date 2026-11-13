@@ -156,6 +156,9 @@ export const getVerbsByLemmaWithConjugations = async (lemmas: string[]) => {
 	return await db.query.vocabulary.findMany({
 		where: { greekText: { in: lemmas }, wordType: "verb" },
 		columns: { id: true, greekText: true, englishTranslation: true },
-		with: { verbConjugations: { columns: { tense: true, person: true, form: true } } },
+		with: {
+			verbConjugations: { columns: { tense: true, person: true, form: true } },
+			verbImperatives: { columns: { aspect: true, number: true, form: true } },
+		},
 	});
 };

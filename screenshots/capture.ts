@@ -43,7 +43,7 @@ const ALL_PAGES = [
 
 	// Learn → Tables
 	...tabs("/learn/tables", ["articles", "nouns", "pronouns", "adjectives"]),
-	...tabs("/learn/tables/verbs", ["present", "past", "past-continuous", "future"]),
+	...tabs("/learn/tables/verbs", ["present", "past", "past-continuous", "future", "commands"]),
 ];
 
 // `--route /learn/tables/nouns` captures just that page instead of the full set.

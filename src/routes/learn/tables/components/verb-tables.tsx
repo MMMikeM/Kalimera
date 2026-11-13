@@ -25,13 +25,22 @@ interface StemTable {
 	lemmas: string[];
 }
 
-type TableSpec = ParadigmTable | StemTable;
+interface CommandTable {
+	kind: "commands";
+	title: string;
+	taughtIn: GuideSectionRef;
+	aspect: "perfective" | "imperfective";
+	lemmas: string[];
+}
+
+type TableSpec = ParadigmTable | StemTable | CommandTable;
 
 export const VERB_BANDS = [
 	{ id: "present", label: "Present" },
 	{ id: "past", label: "Simple past" },
 	{ id: "past-continuous", label: "Past continuous" },
 	{ id: "future", label: "Future" },
+	{ id: "commands", label: "Commands" },
 ] as const;
 
 export type VerbBandId = (typeof VERB_BANDS)[number]["id"];
@@ -57,11 +66,6 @@ const BAND_TABLES: Record<VerbBandId, TableSpec[]> = {
 			"πάω",
 			"τρώω",
 		]),
-		paradigm("More verbs with the πάω and τρώω endings", TAUGHT_IN.presentEndings, "present", [
-			"λέω",
-			"ακούω",
-			"κλαίω",
-		]),
 		paradigm("Verbs in a stressed -ώ", TAUGHT_IN.oVerbs, "present", ["μπορώ", "οδηγώ", "τηλεφωνώ"]),
 		paradigm("Verbs in -μαι", TAUGHT_IN.maiVerbs, "present", ["σκέφτομαι", "κάθομαι", "έρχομαι"]),
 		paradigm("Verbs in -άμαι", TAUGHT_IN.amaiVerbs, "present", ["θυμάμαι", "κοιμάμαι"]),
@@ -73,7 +77,7 @@ const BAND_TABLES: Record<VerbBandId, TableSpec[]> = {
 			kind: "stems",
 			title: "Simple past stems with σ, ψ and ξ",
 			taughtIn: TAUGHT_IN.pastStem,
-			lemmas: ["ακούω", "μιλάω", "διαβάζω", "παίζω", "σπουδάζω", "δουλεύω", "γράφω"],
+			lemmas: ["ακούω", "διαβάζω", "πληρώνω", "γράφω", "παίζω", "τρέχω", "ανοίγω", "τηλεφωνώ"],
 		},
 		paradigm("Past of their own: going in, out and learning", TAUGHT_IN.pastOwn, "aorist", [
 			"μπαίνω",
@@ -101,10 +105,8 @@ const BAND_TABLES: Record<VerbBandId, TableSpec[]> = {
 	],
 	"past-continuous": [
 		paradigm("Present stem and the past endings", TAUGHT_IN.ongoingPast, "past_continuous", [
-			"σπουδάζω",
-			"παίζω",
-			"δουλεύω",
 			"γράφω",
+			"δουλεύω",
 		]),
 		paradigm("Verbs in -άω and -ώ", TAUGHT_IN.ongoingPast, "past_continuous", [
 			"μιλάω",
@@ -116,7 +118,7 @@ const BAND_TABLES: Record<VerbBandId, TableSpec[]> = {
 			"λέω",
 			"ακούω",
 		]),
-		paradigm("Verbs with a past of their own", TAUGHT_IN.ongoingPast, "past_continuous", [
+		paradigm("Verbs with a simple past of their own", TAUGHT_IN.ongoingPast, "past_continuous", [
 			"πάω",
 			"έχω",
 			"βλέπω",
@@ -157,6 +159,29 @@ const BAND_TABLES: Record<VerbBandId, TableSpec[]> = {
 			"είμαι",
 		]),
 		paradigm("Verbs in -μαι", TAUGHT_IN.maiVerbs, "future", MAI_VERBS),
+	],
+	commands: [
+		{
+			kind: "commands",
+			title: "Commands from the short form",
+			taughtIn: TAUGHT_IN.commands,
+			aspect: "perfective",
+			lemmas: ["γράφω", "ακούω", "μιλάω", "ανοίγω", "κλείνω", "περιμένω"],
+		},
+		{
+			kind: "commands",
+			title: "Commands of their own",
+			taughtIn: TAUGHT_IN.commands,
+			aspect: "perfective",
+			lemmas: ["έρχομαι", "λέω", "τρώω", "πίνω", "βλέπω", "παίρνω", "φέρνω", "δίνω", "πάω", "κάθομαι"],
+		},
+		{
+			kind: "commands",
+			title: "Ongoing commands",
+			taughtIn: TAUGHT_IN.commandAspect,
+			aspect: "imperfective",
+			lemmas: ["γράφω", "μιλάω", "τρώω", "πίνω"],
+		},
 	],
 };
 
@@ -228,6 +253,27 @@ const StemGrid: React.FC<{ verbs: VerbTableVerb[] }> = ({ verbs }) => (
 	/>
 );
 
+const CommandGrid: React.FC<{ verbs: VerbTableVerb[]; aspect: "perfective" | "imperfective" }> = ({
+	verbs,
+	aspect,
+}) => (
+	<GrammarTable
+		columns={[
+			{ key: "singular", label: "One person" },
+			{ key: "plural", label: "Several, or polite" },
+			{ key: "meaning", label: "Meaning" },
+		]}
+		rows={verbs.map((verb) => ({ key: verb.lemma, label: <VerbLink verb={verb} /> }))}
+		cells={verbs.map((verb) => [
+			<Form key="singular">{verb.commands[aspect]?.singular}</Form>,
+			<Form key="plural">{verb.commands[aspect]?.plural}</Form>,
+			<span key="meaning" className="text-sm text-stone-600">
+				{verb.english.replace(/^I /, "")}
+			</span>,
+		])}
+	/>
+);
+
 const byLemma = (verbs: VerbTableVerb[], lemmas: string[]) =>
 	lemmas.flatMap((lemma) => verbs.filter((verb) => verb.lemma === lemma));
 
@@ -247,6 +293,8 @@ export const VerbBandTables: React.FC<{ band: VerbBandId; verbs: VerbTableVerb[]
 				>
 					{spec.kind === "stems" ? (
 						<StemGrid verbs={rows} />
+					) : spec.kind === "commands" ? (
+						<CommandGrid verbs={rows} aspect={spec.aspect} />
 					) : (
 						<ParadigmGrid verbs={rows} tense={spec.tense} />
 					)}

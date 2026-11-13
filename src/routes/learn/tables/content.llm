@@ -8,7 +8,7 @@ Tables for looking a form up. Nothing here teaches: every rule is explained in a
 /learn/tables/:tab            $tab.tsx: articles, nouns, pronouns, adjectives
 /learn/tables/verbs           verbs/route.tsx layout (own route family, not a :tab)
 /learn/tables/verbs/          redirects to /learn/tables/verbs/present
-/learn/tables/verbs/:band     present, past, past-continuous, future
+/learn/tables/verbs/:band     present, past, past-continuous, future, commands
 /reference/*                  old addresses: src/routes/reference/$.tsx redirects each (301)
                               through REFERENCE_REDIRECTS (reference/redirects.data.ts)
 ```
@@ -35,15 +35,15 @@ One table, "Every pronoun form", from `constants/pronouns.ts` (nothing generates
 </tab>
 
 <tab route="/learn/tables/articles" file="tabs/articles.tsx">
-One table, "The article, every form", rendered from `getArticle` (`src/lib/greek-grammar.ts`) through `gender-case-table.tsx`. Links to roles: articles, plural.
+Two tables through `genderCaseTable` (`gender-case-table.tsx`), every form marked: "The article, every form" from `getArticle` (`src/lib/greek-grammar.ts`), linking to roles: articles, plural; and "a, an: ένας, μια, ένα" (singular only; ένας has no plural), linking to roles: a-an.
 </tab>
 
 <tab route="/learn/tables/nouns" file="tabs/nouns.tsx">
-One table per gender, from `AGREEMENT_PARADIGMS` (`constants/agreement.ts`, the same source as `declineNoun`), each pattern with example words from the DB (`getNounsForPatternTables`, loaded by `$tab.tsx`). Links to the nouns guide's family sections.
+One table per gender, from `AGREEMENT_PARADIGMS` (`constants/agreement.ts`, the same source as `declineNoun`), header in the gender's pale tone, each pattern with example words from the DB (`getNounsForPatternTables`, loaded by `$tab.tsx`). `GENDER_SECTIONS` picks the columns: masculine -ος, -ας, -ης; feminine -α, -η, -ση (whose column lists απόδειξη, άποψη and πόλη as examples, since -ξη, -ψη and archaic -η decline the same); neuter -ο, -ι, -μα, -ος. Then "Plurals that add a syllable" (καφές, μπαμπάς, παππούς, γιαγιά) from `enrichNoun`, the seed's generator, linking to noun-exceptions: extra-syllable.
 </tab>
 
 <tab route="/learn/tables/adjectives" file="tabs/adjectives.tsx">
-Three tables from `declineAdjective` (`src/lib/adjective-declension.ts`): καλός (-ος, -η, -ο), ωραίος (-ος, -α, -ο), βαρύς (-ύς, -ιά, -ύ). Links to the agreement guide.
+Three tables from `declineAdjective` (`src/lib/adjective-declension.ts`): καλός (-ος, -η, -ο), ωραίος (-ος, -α, -ο), βαρύς (-ύς, -ιά, -ύ), linking to the agreement guide. Then πολύς, hand-written in the tab because it is irregular, without its rare Owner singular, linking to scales: poly-polla.
 </tab>
 
 ## Verb bands
@@ -54,10 +54,11 @@ Three tables from `declineAdjective` (`src/lib/adjective-declension.ts`): καλ
 <displays>
 `BAND_TABLES` lists each band's tables, their example verbs and the guide section each links to. The families follow the verbs guide:
 
-- present: γράφω, μιλάω and the πάω set; πάω and τρώω endings; stressed -ώ; -μαι; -άμαι; είμαι
-- past: simple past endings; stems with σ, ψ and ξ; four groups with a past of their own; -μαι; είμαι
-- past continuous: regular; -άω and -ώ; verbs that add γ; own-past verbs; -μαι; είμαι
+- present: γράφω, μιλάω and the πάω set; stressed -ώ; -μαι; -άμαι; είμαι
+- past: simple past endings (δουλεύω, γράφω, μιλάω); stems with σ, ψ and ξ for eight other verbs; four groups with a past of their own; -μαι; είμαι
+- past continuous: regular (γράφω, δουλεύω); -άω and -ώ; verbs that add γ; verbs with a simple past of their own; -μαι; είμαι
 - future: θα and the short form; three sets of own short forms; two tables with no separate short form; -μαι
+- commands (from `verb_imperatives`): from the short form; commands of their own (έλα, πες, φάε, πιες, δες…); ongoing commands. Rows are verbs, columns one person and several or polite
 </displays>
 <note>`src/routes/guides/guide-verb-forms.test.ts` checks the guides' verb tables against `generateConjugations`.</note>
 </route>

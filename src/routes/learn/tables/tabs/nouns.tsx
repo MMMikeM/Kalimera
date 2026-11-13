@@ -2,6 +2,7 @@ import { AGREEMENT_PARADIGMS, type AgreementParadigm } from "@/constants/agreeme
 import { stripTonos } from "@/lib/greek-letters";
 import { markedCell } from "@/lib/guide-marks";
 import { declineNoun } from "@/lib/noun-declension";
+import { enrichNoun } from "@/scripts/seed-data/vocabulary/noun-seed-enrichment";
 import { GuideTable } from "@/routes/guides/components/guide-table";
 import {
 	type Gender,
@@ -17,11 +18,41 @@ import { CASE_LABEL, CASE_ORDER } from "../components/gender-case-table";
 import { LookupPage, LookupSection } from "../components/lookup-section";
 import { type GuideSectionRef, TAUGHT_IN } from "../taught-in.data";
 
+/**
+ * The patterns each gender's table shows. καφές moves to the table of plurals that
+ * add a syllable, and -ξη, -ψη and archaic -η decline exactly like -ση, so they
+ * share its column as examples (`SAME_ENDINGS`).
+ */
 const GENDER_SECTIONS = [
-	{ gender: "masculine", title: "Masculine nouns", taughtIn: TAUGHT_IN.masculineNouns },
-	{ gender: "feminine", title: "Feminine nouns", taughtIn: TAUGHT_IN.feminineNouns },
-	{ gender: "neuter", title: "Neuter nouns", taughtIn: TAUGHT_IN.neuterNouns },
-] as const satisfies { gender: Gender; title: string; taughtIn: GuideSectionRef }[];
+	{
+		gender: "masculine",
+		title: "Masculine nouns",
+		patterns: ["masc-os", "masc-as", "masc-is"],
+		taughtIn: [TAUGHT_IN.masculineNouns],
+	},
+	{
+		gender: "feminine",
+		title: "Feminine nouns",
+		patterns: ["fem-a", "fem-i", "fem-si"],
+		taughtIn: [TAUGHT_IN.feminineNouns, TAUGHT_IN.extraSyllable],
+	},
+	{
+		gender: "neuter",
+		title: "Neuter nouns",
+		patterns: ["neut-o", "neut-i", "neut-ma", "neut-os"],
+		taughtIn: [TAUGHT_IN.neuterNouns],
+	},
+] as const satisfies { gender: Gender; title: string; patterns: string[]; taughtIn: GuideSectionRef[] }[];
+
+const SAME_ENDINGS: Partial<Record<string, string[]>> = { "fem-si": ["fem-ksi", "fem-psi", "fem-i-archaic"] };
+
+/** Plurals that add a syllable, all common family and café words, from the same generator the seed uses. */
+const EXTRA_SYLLABLE: { lemma: string; gender: Gender }[] = [
+	{ lemma: "καφές", gender: "masculine" },
+	{ lemma: "μπαμπάς", gender: "masculine" },
+	{ lemma: "παππούς", gender: "masculine" },
+	{ lemma: "γιαγιά", gender: "feminine" },
+];
 
 const formFor = (paradigm: AgreementParadigm, number: GrammaticalNumber, caseKey: string) =>
 	(number === "singular" ? paradigm.forms : paradigm.pluralForms).find((f) => f.case === caseKey);
@@ -92,18 +123,55 @@ const nounTable = (paradigms: AgreementParadigm[], gender: Gender, data: NounsDa
 				}),
 			]),
 		),
-		["Examples", ...paradigms.map((p) => examplesFor(data, p).join(", "))],
+		["Examples", ...paradigms.map((p) => examplesOf(data, p).join(", "))],
 	],
 });
+
+const examplesOf = (data: NounsData | null, paradigm: AgreementParadigm): string[] => {
+	const siblings = SAME_ENDINGS[paradigm.id];
+	if (!siblings) return examplesFor(data, paradigm);
+	return AGREEMENT_PARADIGMS.filter((p) => siblings.includes(p.id)).map(lemmaOf);
+};
+
+const extraSyllableTable = (): GuideTableData => {
+	const nouns = EXTRA_SYLLABLE.map(({ lemma, gender }) => ({
+		lemma,
+		gender,
+		forms: enrichNoun({ lemma, gender, english: "", cefrLevel: "A1" }).nominalForms,
+	}));
+	return {
+		columns: [{ label: "Form" }, ...nouns.map(({ lemma }) => ({ label: lemma, greek: true }))],
+		rows: grammaticalNumbers.flatMap((number) =>
+			CASE_ORDER.map((grammaticalCase) => [
+				CASE_LABEL[number][grammaticalCase],
+				...nouns.map(({ forms, gender }) => {
+					const cell = forms[`${grammaticalCase}_${number}` as keyof typeof forms];
+					return cell
+						? markedCell(`${cell.article ?? ""} ${cell.form}`.trim(), grammaticalCase, gender, number === "plural")
+						: "—";
+				}),
+			]),
+		),
+	};
+};
 
 export function NounsTab({ data = null }: { data?: NounsData | null }) {
 	return (
 		<LookupPage title="Nouns">
-			{GENDER_SECTIONS.map(({ gender, title, taughtIn }) => (
-				<LookupSection key={gender} title={title} tone={`gender-${gender}`} taughtIn={[taughtIn]}>
-					<GuideTable table={nounTable(AGREEMENT_PARADIGMS.filter((p) => p.gender === gender), gender, data)} />
+			{GENDER_SECTIONS.map(({ gender, title, patterns, taughtIn }) => (
+				<LookupSection key={gender} title={title} tone={`gender-${gender}`} taughtIn={taughtIn}>
+					<GuideTable
+						table={nounTable(
+							AGREEMENT_PARADIGMS.filter((p) => (patterns as readonly string[]).includes(p.id)),
+							gender,
+							data,
+						)}
+					/>
 				</LookupSection>
 			))}
+			<LookupSection title="Plurals that add a syllable" tone="olive" taughtIn={[TAUGHT_IN.extraSyllable]}>
+				<GuideTable table={extraSyllableTable()} />
+			</LookupSection>
 		</LookupPage>
 	);
 }
