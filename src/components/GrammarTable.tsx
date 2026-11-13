@@ -25,7 +25,7 @@ export interface RowGroup {
 }
 
 /** A header cell over adjacent columns that share a value, e.g. one gender over two patterns. */
-export interface ColumnGroup {
+interface ColumnGroup {
 	key: string;
 	label: React.ReactNode;
 	span: number;

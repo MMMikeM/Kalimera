@@ -49,7 +49,7 @@ The seeders (vocab + verb conjugations) are **idempotent additive upserts**. Re-
 - Self-documenting; comments only for non-obvious logic
 - Queen's English (colour, favourite)
 - Read loader data with `Route.useLoaderData()`; it is typed from the loader
-- Reuse the shared components before writing new UI (`src/components/README.md`): `ButtonLink` for navigation that looks like a button, `BackLink`, `PageHeading`, `StatusPage`, `Verdict`, `MarkedGreek`, `SectionIndex`
+- Reuse the shared components before writing new UI (`src/components/README.md`): `ButtonLink` for navigation that looks like a button, `BackLink`, `PageHeading`, `StatusPage`, `Verdict`, `SectionIndex`
 - Path alias: `@/` → `./src/`
 - The Vite plugin regenerates `src/routeTree.gen.ts`; there is no separate typegen script
 

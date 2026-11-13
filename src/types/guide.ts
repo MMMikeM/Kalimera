@@ -24,7 +24,7 @@ export interface GuideMark {
  */
 export type GuideCell = string | { text: string; marks?: GuideMark[]; note?: number };
 
-export interface GuideColumn {
+interface GuideColumn {
 	label: string;
 	greek?: boolean;
 	/** Colours the header and the column's forms; the guide's `key` says what it means. */
@@ -56,7 +56,7 @@ export type GuideText = string | (string | string[])[];
  * An exception, extension or side rule, kept apart from the section's core rule
  * so the rule stays readable on its own. Its examples illustrate it alone.
  */
-export interface GuideDetail {
+interface GuideDetail {
 	label: string;
 	text: GuideText;
 	table?: GuideTable;
@@ -99,7 +99,7 @@ export interface PlannedDrill {
 	tests: string;
 }
 
-export interface GuideReference {
+interface GuideReference {
 	label: string;
 	href: string;
 }

@@ -49,9 +49,9 @@ const brushUpAfter = (brushUps: number, now: Temporal.Instant) => {
 /** The fewest right first time that pass a session of `total` items. */
 export const passMark = (total: number) => Math.ceil((total * PASS_PERCENT) / 100);
 
-export const isPass = ({ correct, total }: SessionScore) => total > 0 && correct >= passMark(total);
+const isPass = ({ correct, total }: SessionScore) => total > 0 && correct >= passMark(total);
 
-export const isBrushUpDue = (state: StepState, now: Temporal.Instant) =>
+const isBrushUpDue = (state: StepState, now: Temporal.Instant) =>
 	state.tickedAt !== null &&
 	state.nextBrushUpAt !== null &&
 	Temporal.Instant.compare(fromISOString(state.nextBrushUpAt), now) <= 0;

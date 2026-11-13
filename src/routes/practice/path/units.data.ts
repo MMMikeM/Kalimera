@@ -112,7 +112,7 @@ const stepId = (unit: Unit, stage: UnitStage) => `unit:${unit.id}:${stage}`;
  * Each unit's stages in order. A unit opens once the one before it has been
  * typed correctly, and never while two units are still short of their check.
  */
-export const unitSteps = (units: readonly Unit[]): PathStep[] =>
+const unitSteps = (units: readonly Unit[]): PathStep[] =>
 	units.flatMap((unit, n) => {
 		const previous = units[n - 1];
 		const twoBack = units[n - 2];

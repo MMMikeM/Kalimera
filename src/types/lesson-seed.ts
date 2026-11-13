@@ -23,7 +23,7 @@ export type GrammarNoteHome = `${string}/${string}` | "word" | "essentials";
  */
 export type NoteExample = string | GuideExample;
 
-export type GrammarNote = {
+type GrammarNote = {
 	pattern: string;
 	examples: NoteExample[];
 	explanation: string;

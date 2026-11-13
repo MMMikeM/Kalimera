@@ -114,9 +114,14 @@ const NounTable = ({ paradigms, data }: { paradigms: AgreementParadigm[]; data: 
 	const columns: ColumnDef[] = paradigms.map((p) => ({
 		key: p.id,
 		label: (
-			<GreekText size="xs" weight="semibold" className="sm:text-sm">
-				{p.pattern}
-			</GreekText>
+			<>
+				<GreekText size="xs" weight="semibold" className="sm:text-sm">
+					{lemmaOf(p)}
+				</GreekText>
+				<GreekText size="xs" className="block font-normal">
+					{p.pattern}
+				</GreekText>
+			</>
 		),
 	}));
 

@@ -76,13 +76,3 @@ export const getArticleForWord = (
 	const article = getArticle(gender, number, grammaticalCase);
 	return article === "την" && !retainsNu(word) ? "τη" : article;
 };
-
-export const formatNounWithArticle = (
-	lemma: string,
-	gender: Gender,
-	number: GrammaticalNumber = "singular",
-	grammaticalCase: Case = "nominative",
-): string => {
-	const article = getArticle(gender, number, grammaticalCase);
-	return article ? `${article} ${lemma}` : lemma;
-};

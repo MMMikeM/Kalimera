@@ -3,7 +3,7 @@
 
 import type { Gender } from "@/server/db/enums";
 
-export type Case = "nom" | "acc" | "gen" | "voc";
+type Case = "nom" | "acc" | "gen" | "voc";
 
 interface AgreementPattern {
 	case: Case;

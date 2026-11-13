@@ -29,7 +29,7 @@ const MOVED_TO_GUIDES = {
 
 export const Route = createFileRoute("/reference/$tab")({
 	loader: async ({ params: { tab } }) => {
-		if (tab in MOVED_TO_GUIDES) {
+		if (Object.hasOwn(MOVED_TO_GUIDES, tab)) {
 			const { guide, ...rest } = MOVED_TO_GUIDES[tab as keyof typeof MOVED_TO_GUIDES];
 			throw redirect({ to: "/guides/$guide", params: { guide }, ...rest });
 		}

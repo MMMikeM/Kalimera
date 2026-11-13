@@ -15,7 +15,7 @@ export interface UnitWord {
 	example: { greek: string; english: string };
 }
 
-export interface UnitSentence {
+interface UnitSentence {
 	english: string;
 	greek: string;
 	acceptAlso?: string[];

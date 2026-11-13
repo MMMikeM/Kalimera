@@ -1,5 +1,5 @@
-import { type PersonNumber, type VerbTense, verbTenses } from "@/server/db/enums";
-import { getUnitWords, getVerbsWithConjugationsForTenses } from "@/server/db/queries/vocabulary";
+import type { PersonNumber, VerbTense } from "@/server/db/enums";
+import { getVerbsByLemmaWithConjugations } from "@/server/db/queries/vocabulary";
 
 type Paradigm = Partial<Record<VerbTense, Partial<Record<PersonNumber, string>>>>;
 
@@ -20,16 +20,11 @@ const toParadigm = (
 };
 
 export const getReferenceVerbs = async (lemmas: string[]): Promise<ReferenceVerb[]> => {
-	const words = await getUnitWords(lemmas);
-	const verbs = await getVerbsWithConjugationsForTenses(
-		words.map((word) => word.id),
-		[...verbTenses],
-	);
-	const formsById = new Map(verbs.map((verb) => [verb.id, toParadigm(verb.verbConjugations)]));
+	const verbs = await getVerbsByLemmaWithConjugations(lemmas);
 
-	return words.map((word) => ({
-		lemma: word.greekText,
-		english: word.englishTranslation,
-		forms: formsById.get(word.id) ?? {},
+	return verbs.map((verb) => ({
+		lemma: verb.greekText,
+		english: verb.englishTranslation,
+		forms: toParadigm(verb.verbConjugations),
 	}));
 };

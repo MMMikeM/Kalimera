@@ -3,7 +3,6 @@
 ## Structure
 
 - **`/components/*.tsx`** - Custom components (tailwind-variants)
-- **`/components/cards/*.tsx`** - Card shells: `TeachingCard`, `LookupCard`, `Callout`, `NextStepCard`, `NavigatorCard`
 - **`/components/ui/*.tsx`** - ShadCN components, restyled onto `tailwind-variants`
 
 ## Custom Components
@@ -13,7 +12,6 @@ Built with `tailwind-variants`. Direct imports only — no barrel file:
 ```typescript
 import { GreekText } from "@/components/GreekText";
 import { Card } from "@/components/Card";
-import { TeachingCard } from "@/components/cards/TeachingCard";
 ```
 
 ## Reach for these first
@@ -21,12 +19,11 @@ import { TeachingCard } from "@/components/cards/TeachingCard";
 | Need | Component | Rule |
 | --- | --- | --- |
 | Greek on screen | `GreekText`, `Pronunciation`, `GreekGloss` | Never render Greek or a transliteration any other way (`pnpm lint:greek`) |
-| A phrase where only some words carry a case | `MarkedGreek` | Only the `marked` words take the case tone; the rest stays neutral |
 | Case, number or gender of a Greek phrase | `GrammarMark` | Shape is the case, two lines is plural, colour is gender; mark the whole phrase and only the axes the page teaches |
 | A button | `Button` (`ui/button`) | Defaults to `primary`; pass `variant` for anything else |
 | Navigation that looks like a button | `ButtonLink` (`ui/button`) | Never nest a `<Button>` in a `<Link>` |
 | A back link | `BackLink` | Label it with where it goes ("Learn", "Exit"), never the current page |
-| A page title and lede | `PageHeading` | Every page's `h1`; `ReferenceHero` builds on it |
+| A page title and lede | `PageHeading` | Every page's `h1` |
 | A section heading on a reference page | `BandHeading` | `h2` by default, `h3` for a sub-band; no kicker above it |
 | An index of sections | `SectionIndex` | Greek-first ruled list, no icons or tints |
 | Error, 404 or failed load | `StatusPage` (`RouteError`, `RootError`, `NotFound`) | Registered on the router; you rarely render them yourself |
