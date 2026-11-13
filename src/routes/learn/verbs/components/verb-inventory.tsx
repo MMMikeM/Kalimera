@@ -305,7 +305,12 @@ export const RulesSection: React.FC<{ verbs: ClassifiedVerb[] }> = ({ verbs }) =
 			<div className="px-1">
 				<p className="text-sm text-stone-600">
 					Nothing to memorise per verb — read the ending, apply the rule.{" "}
-					<Link to="/reference/verbs/$band" params={{ band: "past" }} className="underline">
+					<Link
+						to="/guides/$guide"
+						params={{ guide: "past" }}
+						hash="past-shapes"
+						className="underline"
+					>
 						The rules are here
 					</Link>
 					.

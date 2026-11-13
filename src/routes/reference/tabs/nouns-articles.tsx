@@ -1,21 +1,17 @@
-import { PracticeCTA } from "@/components/PracticeCta";
-import { ReferenceHero } from "@/components/ReferenceHero";
+import { getArticle } from "@/lib/greek-grammar";
 
-import { ArticlesSection } from "../components/articles-section";
+import { GenderCaseTable } from "../components/gender-case-table";
+import { LookupPage, LookupSection, TAUGHT_IN } from "../components/lookup-section";
 
 export function ArticlesTab() {
 	return (
-		<div className="space-y-10">
-			<ReferenceHero
-				title="Six forms. The hard part is knowing when."
-				thesis="Reading Greek, the article hands you the noun's gender and case for free. The trouble starts when you write, because Greek wants an article in places English flatly refuses one."
-			/>
-			<ArticlesSection />
-			<PracticeCTA
-				title="Practice articles"
-				description="Timed retrieval drills on the article forms."
-				topic="articles"
-			/>
-		</div>
+		<LookupPage title="Articles">
+			<LookupSection
+				title="The article, every form"
+				taughtIn={[TAUGHT_IN.article, TAUGHT_IN.articlePlural]}
+			>
+				<GenderCaseTable form={(number, grammaticalCase, gender) => getArticle(gender, number, grammaticalCase)} />
+			</LookupSection>
+		</LookupPage>
 	);
 }

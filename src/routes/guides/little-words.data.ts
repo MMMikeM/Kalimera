@@ -243,7 +243,7 @@ export const LITTLE_WORDS_GUIDE: Guide = {
 				},
 			],
 			confuse: {
-				text: "τον, την, το, τους, τις and τα are also the article. Before a verb they mean him, her, it or them: τον βλέπω, I see him. Before a noun they mean the: τον φίλο.",
+				text: "τον, την, το, τους, τις and τα are also the article. Before a verb they mean him, her, it or them: τον βλέπω, I see him. Before a noun they mean the: τον φίλο. του and της are the article too: before a noun they mean of the (του φίλου), and before a verb they mean to him or to her (του μιλάω).",
 				section: "roles/articles",
 			},
 			drills: ["pronouns-object", "pronouns-placement"],

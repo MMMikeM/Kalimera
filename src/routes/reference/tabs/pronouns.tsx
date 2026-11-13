@@ -1,24 +1,65 @@
-import { PracticeCTA } from "@/components/PracticeCta";
-import { ReferenceHero } from "@/components/ReferenceHero";
+import { GrammarTable, type ColumnDef, type RowDef } from "@/components/GrammarTable";
+import { GreekText } from "@/components/GreekText";
+import {
+	EMPHATIC_PRONOUNS,
+	OBJECT_PRONOUNS,
+	POSSESSIVE_PRONOUNS,
+	type PronounParadigm,
+	SUBJECT_PRONOUNS,
+} from "@/constants/pronouns";
+import { grammaticalNumbers, type GrammaticalNumber } from "@/server/db/enums";
 
-import { PronounsSection } from "../components/pronouns-section";
+import { NUMBER_LABEL } from "../components/gender-case-table";
+import { LookupPage, LookupSection, TAUGHT_IN } from "../components/lookup-section";
+
+interface PronounColumn extends ColumnDef {
+	paradigm: PronounParadigm[];
+}
+
+const COLUMNS: PronounColumn[] = [
+	{ key: "doer", label: "Doer", paradigm: SUBJECT_PRONOUNS },
+	{ key: "target-short", label: "Target, short", paradigm: OBJECT_PRONOUNS },
+	{ key: "owner", label: "Owner", paradigm: POSSESSIVE_PRONOUNS },
+	{ key: "target-long", label: "Target, long", paradigm: EMPHATIC_PRONOUNS },
+];
+
+const THIRD_PERSON_GENDER: Record<string, string> = {
+	"3rd m": "masculine",
+	"3rd f": "feminine",
+	"3rd n": "neuter",
+};
+
+/** Plural "they" is one English word for three Greek rows, so those carry their gender beneath. */
+const personRows = (number: GrammaticalNumber): RowDef[] =>
+	SUBJECT_PRONOUNS.map((row) => ({
+		key: row.person,
+		label: row[number].english,
+		sublabel: number === "plural" ? THIRD_PERSON_GENDER[row.person] : undefined,
+	}));
 
 export function PronounsTab() {
 	return (
-		<div className="space-y-10">
-			<ReferenceHero
-				title="Every “me” has its own word."
-				thesis="English uses one “me” for three jobs. Greek gives each job its own word, and each word a fixed place in the sentence. Get the word and the place right, and the rest is a lookup."
-			/>
-
-			<PronounsSection />
-
-			<PracticeCTA
-				title="Practice pronouns"
-				description="Forms, possessives, and where short pronouns sit in real sentences."
-				topic="pronouns"
-				ctaLabel="Open pronoun drills"
-			/>
-		</div>
+		<LookupPage title="Pronouns">
+			<LookupSection
+				title="Every pronoun form"
+				taughtIn={[TAUGHT_IN.pronounForms, TAUGHT_IN.pronounObjects, TAUGHT_IN.pronounLong]}
+			>
+				<GrammarTable
+					columns={COLUMNS}
+					rowHeaderLabel="Person"
+					groups={grammaticalNumbers.map((number) => ({
+						label: NUMBER_LABEL[number],
+						rows: personRows(number),
+						cells: SUBJECT_PRONOUNS.map((_, index) =>
+							COLUMNS.map((column) => (
+								<GreekText key={column.key} size="base" weight="medium">
+									{column.paradigm[index]?.[number].greek ?? "—"}
+								</GreekText>
+							)),
+						),
+					}))}
+				/>
+			</LookupSection>
+		</LookupPage>
 	);
 }

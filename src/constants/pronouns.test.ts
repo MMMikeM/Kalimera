@@ -4,17 +4,8 @@ import {
 	EMPHATIC_PRONOUNS,
 	OBJECT_PRONOUNS,
 	POSSESSIVE_PRONOUNS,
-	PRONOUN_JOBS,
 	SUBJECT_PRONOUNS,
 } from "./pronouns";
-
-describe("pronoun examples", () => {
-	const examples = PRONOUN_JOBS.flatMap((job) => job.examples);
-
-	it.each(examples)("marks words that occur in $greek", ({ greek, marked }) => {
-		expect(greek).toContain(marked);
-	});
-});
 
 describe("pronoun paradigms", () => {
 	// The reference page lays all four side by side and reads them row by row.

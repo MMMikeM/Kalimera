@@ -1,5 +1,3 @@
-import type { CaseName } from "./recognition";
-
 // Form structure with optional shortened/variant form
 interface PronounForm {
 	greek: string;
@@ -131,78 +129,4 @@ export const EMPHATIC_PRONOUNS: PronounParadigm[] = [
 		singular: { greek: "αυτό", english: "it" },
 		plural: { greek: "αυτά", english: "them" },
 	},
-];
-
-/** An example whose `marked` words carry the case colour; the rest stays neutral. */
-interface MarkedExample {
-	greek: string;
-	marked: string;
-	english: string;
-}
-
-export interface PronounJob {
-	greek: string;
-	caseName: CaseName;
-	/** The learner handle, plus short or long where two forms share a case. */
-	handle: string;
-	job: string;
-	examples: MarkedExample[];
-}
-
-// English "me" does three jobs; Greek gives each its own word. μου is the one that
-// surprises: it covers "to me" as well as "my".
-export const PRONOUN_JOBS: PronounJob[] = [
-	{
-		greek: "με",
-		caseName: "Accusative",
-		handle: "Target · short",
-		job: "The action lands on me. It sits right before the verb.",
-		examples: [{ greek: "με βλέπει", marked: "με", english: "he sees me" }],
-	},
-	{
-		greek: "μου",
-		caseName: "Genitive",
-		handle: "Owner",
-		job: "“My”, and also “to me”. After a noun it owns; before a verb it receives.",
-		examples: [
-			{ greek: "το σπίτι μου", marked: "μου", english: "my house" },
-			{ greek: "μου λέει", marked: "μου", english: "he tells me" },
-		],
-	},
-	{
-		greek: "εμένα",
-		caseName: "Accusative",
-		handle: "Target · long",
-		job: "After a preposition, or when “me” carries the stress.",
-		examples: [{ greek: "για εμένα", marked: "εμένα", english: "for me" }],
-	},
-];
-
-// Common phrases using pronouns - for family context
-export const PRONOUN_PHRASES = [
-	{ greek: "πες μου", english: "tell me", category: "requests" },
-	{ greek: "δώσε μου", english: "give me", category: "requests" },
-	{ greek: "περίμενέ με", english: "wait for me", category: "requests" },
-	{ greek: "βοήθησέ με", english: "help me", category: "requests" },
-	{ greek: "άκουσέ με", english: "listen to me", category: "requests" },
-	{ greek: "μ' αρέσει", english: "I like it", category: "opinions" },
-	{ greek: "δε μ' αρέσει", english: "I don't like it", category: "opinions" },
-	{ greek: "μου φαίνεται", english: "it seems to me", category: "opinions" },
-	{
-		greek: "τι σου φαίνεται;",
-		english: "what do you think?",
-		category: "questions",
-	},
-	{
-		greek: "πώς σε λένε;",
-		english: "what's your name?",
-		category: "questions",
-	},
-	{
-		greek: "με λένε...",
-		english: "my name is... (they call me)",
-		category: "answers",
-	},
-	{ greek: "σ' αγαπώ", english: "I love you", category: "family" },
-	{ greek: "μου λείπεις", english: "I miss you", category: "family" },
 ];

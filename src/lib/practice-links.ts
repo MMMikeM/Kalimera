@@ -1,9 +1,8 @@
 /**
  * Where a reference tab's "practice this" link should point.
  *
- * Only topics with a drill of their own appear here; prepositions has a
- * reference tab but no drill, so it falls through to the practice index rather
- * than to a route that does not exist.
+ * Only topics with a drill of their own appear here; any other topic falls
+ * through to the practice index rather than to a route that does not exist.
  */
 export const DRILL_BY_TOPIC: Record<string, string> = {
 	nouns: "/practice/cases/review/nouns",
@@ -12,7 +11,6 @@ export const DRILL_BY_TOPIC: Record<string, string> = {
 	phrases: "/practice/cases/review/phrases",
 	pronouns: "/practice/pronouns",
 	verbs: "/practice/verbs",
-	cases: "/practice/cases",
 };
 
 /**

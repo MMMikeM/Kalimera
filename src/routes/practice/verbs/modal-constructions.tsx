@@ -313,8 +313,8 @@ function ModalConstructionsDrill() {
 			forwardDesc="English → modal + να + verb"
 			reverseDesc="Greek → English (self-assess)"
 			categories={CATEGORIES}
-			referenceHref="/reference/verbs#na-constructions"
-			referenceLabel="Reference: modal verbs →"
+			referenceHref="/guides/future-commands#short-form"
+			referenceLabel="Guide: the short form after να →"
 		/>
 	);
 }

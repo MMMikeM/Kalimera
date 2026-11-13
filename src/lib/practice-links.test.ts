@@ -21,9 +21,8 @@ describe("drillHrefForTopic", () => {
 		},
 	);
 
-	// Prepositions have a reference tab but no drill of their own.
 	it("falls back to the practice index for a topic with no drill", () => {
-		expect(drillHrefForTopic("prepositions", true)).toBe("/practice");
+		expect(drillHrefForTopic("unmapped-topic", true)).toBe("/practice");
 		expect(drillHrefForTopic(undefined, true)).toBe("/practice");
 	});
 

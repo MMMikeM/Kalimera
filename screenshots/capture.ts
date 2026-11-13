@@ -38,25 +38,16 @@ const ALL_PAGES = [
 		"requests",
 		"opinions",
 		"connectors",
-		"time",
 	]),
 	...tabs("/learn/essentials", ["numbers", "position", "time", "frequency", "colours"]),
 
 	// Reference
 	{ route: "/reference", name: "reference/index" },
-	...tabs("/reference", [
-		"cases",
-		"pronouns",
-		"articles",
-		"nouns",
-		"adjectives",
-		"prepositions",
-		"patterns",
-	]),
+	...tabs("/reference", ["pronouns", "articles", "nouns", "adjectives"]),
 	...tabs("/reference/verbs", ["present", "past", "past-continuous", "future"]),
 ];
 
-// `--route /reference/cases` captures just that page instead of the full set.
+// `--route /reference/nouns` captures just that page instead of the full set.
 const routeArg = process.argv[process.argv.indexOf("--route") + 1];
 const PAGES =
 	process.argv.includes("--route") && routeArg

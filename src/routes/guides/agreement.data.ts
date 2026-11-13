@@ -71,6 +71,22 @@ export const AGREEMENT_GUIDE: Guide = {
 						},
 					],
 				},
+				{
+					label: "Where the adjective goes",
+					text: "An adjective usually comes before its noun, between the article and the noun: ο καλός φίλος, not ο φίλος καλός. After είμαι it comes last: η πόλη είναι μεγάλη.",
+					examples: [
+						{
+							greek: "Η μεγάλη πόλη είναι εδώ.",
+							english: "The big city is here. (adjective before the noun)",
+							marks: [mark("Η μεγάλη πόλη", "nominative", "feminine")],
+						},
+						{
+							greek: "Η πόλη είναι μεγάλη.",
+							english: "The city is big. (after είμαι the adjective comes last)",
+							marks: [mark("Η πόλη", "nominative", "feminine"), mark("μεγάλη", "nominative", "feminine")],
+						},
+					],
+				},
 			],
 			drills: ["adjectives-agreement", "nominal-all-adjectives"],
 		},

@@ -8,13 +8,6 @@ const groups: IndexGroup[] = [
 		title: "The case system",
 		topics: [
 			{
-				id: "cases",
-				label: "Cases",
-				greek: "Πτώσεις",
-				description: "What each ending is for",
-				href: "/reference/cases",
-			},
-			{
 				id: "pronouns",
 				label: "Pronouns",
 				greek: "Αντωνυμίες",
@@ -53,25 +46,11 @@ const groups: IndexGroup[] = [
 		title: "Building sentences",
 		topics: [
 			{
-				id: "prepositions",
-				label: "Prepositions",
-				greek: "Προθέσεις",
-				description: "Little words, big relationships",
-				href: "/reference/prepositions",
-			},
-			{
 				id: "verbs",
 				label: "Verbs",
 				greek: "Ρήματα",
-				description: "Three patterns, thousands of verbs",
+				description: "Every tense, by verb family",
 				href: "/reference/verbs",
-			},
-			{
-				id: "patterns",
-				label: "Patterns",
-				greek: "Δομές",
-				description: "Constructions that don't translate",
-				href: "/reference/patterns",
 			},
 		],
 	},

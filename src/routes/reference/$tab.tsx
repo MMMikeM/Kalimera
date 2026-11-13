@@ -1,46 +1,15 @@
-import { createFileRoute, notFound } from "@tanstack/react-router";
+import { createFileRoute, notFound, redirect } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 
 import { groupNounsByPattern } from "@/lib/noun-paradigm-groups";
 import { pageTitle } from "@/lib/page-title";
 import { getNounsForParadigmReference } from "@/server/db/queries/noun-paradigms";
-import { getVocabBySlug } from "@/server/db/queries/vocabulary";
-import type { Vocabulary } from "@/server/db/types";
 
-import { groupVocabByTag } from "../components/vocab-by-tag";
 import { REFERENCE_TABS, ReferenceNav } from "./components/reference-nav";
 import { AdjectivesTab } from "./tabs/adjectives";
-import { CasesTab } from "./tabs/cases";
-import { NounsTab } from "./tabs/nouns";
 import { ArticlesTab } from "./tabs/nouns-articles";
-import { PatternsTab } from "./tabs/patterns";
-import { PrepositionsTab } from "./tabs/prepositions";
+import { NounsTab } from "./tabs/nouns";
 import { PronounsTab } from "./tabs/pronouns";
-
-export type PatternItem = Vocabulary;
-
-/** Likes items are phrases tagged in the verbs section; "verb" alone nulls them. */
-export const PATTERN_VERB_WORD_TYPES = ["verb", "phrase"] as const;
-
-const loadPatterns = createServerFn().handler(async () => {
-	const [phraseTags, verbTags] = await Promise.all([
-		getVocabBySlug("phrases", ["phrase"]),
-		getVocabBySlug("verbs", [...PATTERN_VERB_WORD_TYPES]),
-	]);
-
-	const phrases = groupVocabByTag(phraseTags);
-	const verbs = groupVocabByTag(verbTags);
-
-	return {
-		likesConstruction: {
-			singular: verbs["likes-singular"] ?? [],
-			plural: verbs["likes-plural"] ?? [],
-		},
-		nameConstruction: phrases["name-construction"] ?? [],
-	};
-});
-
-export type PatternsData = Awaited<ReturnType<typeof loadPatterns>>;
 
 const loadNouns = createServerFn().handler(async () => ({
 	byPattern: groupNounsByPattern(await getNounsForParadigmReference()),
@@ -48,26 +17,27 @@ const loadNouns = createServerFn().handler(async () => ({
 
 export type NounsData = Awaited<ReturnType<typeof loadNouns>>;
 
-const VALID_TABS = [
-	"cases",
-	"pronouns",
-	"articles",
-	"nouns",
-	"adjectives",
-	"prepositions",
-	"patterns",
-] as const;
+const VALID_TABS = ["pronouns", "articles", "nouns", "adjectives"] as const;
 type TabId = (typeof VALID_TABS)[number];
+
+/** Tabs whose tables went to the guides; the old links keep working. */
+const MOVED_TO_GUIDES = {
+	cases: { guide: "roles" },
+	prepositions: { guide: "place" },
+	patterns: { guide: "little-words", hash: "likes" },
+} as const;
 
 export const Route = createFileRoute("/reference/$tab")({
 	loader: async ({ params: { tab } }) => {
+		if (tab in MOVED_TO_GUIDES) {
+			const { guide, ...rest } = MOVED_TO_GUIDES[tab as keyof typeof MOVED_TO_GUIDES];
+			throw redirect({ to: "/guides/$guide", params: { guide }, ...rest });
+		}
 		if (!VALID_TABS.includes(tab as TabId)) throw notFound();
 
-		// Each DB-backed tab loads only its own data.
-		const patterns = tab === "patterns" ? await loadPatterns() : null;
 		const nouns = tab === "nouns" ? await loadNouns() : null;
 
-		return { tab: tab as TabId, patterns, nouns };
+		return { tab: tab as TabId, nouns };
 	},
 	head: ({ params }) => ({
 		meta: [
@@ -78,12 +48,10 @@ export const Route = createFileRoute("/reference/$tab")({
 });
 
 function TabRoute() {
-	const { tab, patterns, nouns } = Route.useLoaderData();
+	const { tab, nouns } = Route.useLoaderData();
 
 	const renderTab = () => {
 		switch (tab) {
-			case "cases":
-				return <CasesTab />;
 			case "pronouns":
 				return <PronounsTab />;
 			case "articles":
@@ -92,10 +60,6 @@ function TabRoute() {
 				return <NounsTab data={nouns} />;
 			case "adjectives":
 				return <AdjectivesTab />;
-			case "prepositions":
-				return <PrepositionsTab />;
-			case "patterns":
-				return patterns ? <PatternsTab data={patterns} /> : null;
 			default:
 				return null;
 		}

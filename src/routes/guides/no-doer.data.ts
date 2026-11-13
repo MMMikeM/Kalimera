@@ -223,5 +223,5 @@ export const NO_DOER_GUIDE: Guide = {
 			drills: ["no-doer-its-adjective"],
 		},
 	],
-	reference: [{ label: "Patterns", href: "/reference/patterns" }],
+	reference: [],
 };

@@ -18,8 +18,8 @@ function CliticPlacementDrill() {
 			forwardDesc="The words are given — only the order is yours"
 			forwardOnly
 			categories={PLACEMENT_CATEGORIES}
-			referenceHref="/reference/pronouns#clitic-placement"
-			referenceLabel="Reference: pronoun placement →"
+			referenceHref="/guides/little-words#where-it-goes"
+			referenceLabel="Guide: where the little word goes →"
 		/>
 	);
 }

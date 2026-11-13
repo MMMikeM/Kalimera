@@ -36,10 +36,10 @@ kept in this file would drift from them.
 /guides                    Guides landing (SectionIndex)
 /guides/:guide             One guide: sections that each end in a drill
 /reference                 Reference landing (SectionIndex)
-/reference/:tab            Grammar reference by topic
+/reference/:tab            Lookup tables: pronouns, articles, nouns, adjectives
 /reference/verbs  /:band   Verb reference, by tense band
 
-/search                    Vocabulary search
+/search?q=&page=           Every search result, paged by 10
 /progress                  Analytics (streak calendar, accuracy trends)
 /support                   About page
 
@@ -148,7 +148,7 @@ take the base palette and claim nothing.
 </route>
 
 <route path="/learn/essentials/:subtab">
-<purpose>Numbers, colours, time, position, frequency</purpose>
+<purpose>Numbers, colours, time, position, frequency: word lists. Where a list needs a rule, one line links to the guide section that teaches it. Time also holds the clock-time phrases (tag time-telling); /learn/phrases/time redirects there.</purpose>
 <file>src/routes/learn/essentials/$subtab.tsx with subtabs/ beneath it</file>
 </route>
 
@@ -159,13 +159,13 @@ take the base palette and claim nothing.
 </route>
 
 <route path="/reference/:tab">
-<purpose>Grammar reference by topic</purpose>
-<file>src/routes/reference/$tab.tsx, sections in reference/components/</file>
-<content>Each tab's *.content.llm carries the grammar copy</content>
+<purpose>Tables for looking a form up: pronouns, articles, nouns, adjectives. No teaching: each table links to the guide section that teaches it. The guides are the only place a rule is explained.</purpose>
+<file>src/routes/reference/$tab.tsx, tables in reference/tabs/ and reference/components/lookup-section.tsx</file>
+<note>/reference/cases, /prepositions and /patterns redirect to the roles, place and little-words guides</note>
 </route>
 
 <route path="/reference/verbs/:band">
-<purpose>Verb reference by tense band: present, past, past-continuous, future (Future &amp; να)</purpose>
+<purpose>Verb tables by tense band: present, past, past-continuous, future. Forms come from the DB (getReferenceVerbsFn), for named example verbs per table.</purpose>
 <file>src/routes/reference/verbs/$band.tsx</file>
 <note>/reference/verbs redirects to /reference/verbs/present; an unknown band is a 404</note>
 </route>
@@ -202,7 +202,7 @@ take the base palette and claim nothing.
 
 ### Utility
 
-<route path="/search">Vocabulary search — src/routes/search.tsx</route>
+<route path="/search">Every result for ?q=, paged by 10, reached from "More" in the header search — src/routes/search.tsx</route>
 <route path="/progress">Streak calendar and accuracy trends — src/routes/progress.tsx</route>
 <route path="/support">About — src/routes/support.tsx</route>
 <route path="/api/errors">POST-only client error log, which the error pages report to: src/routes/api/errors.ts</route>
@@ -501,7 +501,7 @@ as passive data the user can glance at.</motivation-note>
 [Kalimera]            [🔍] [theme] [👤]
 ```
 - Logo → Home
-- Search icon → opens a search popover with results inline
+- Search icon → opens the search panel (SearchPanel): Words then Phrases, 3 each with "More"; recent searches when empty
 - Theme toggle
 - Account icon → opens the account menu (Progress, About, Sign out); logged
   out, a "Sign in" link takes its place
@@ -643,7 +643,7 @@ search box between the logo and the links that shows results in a dropdown:
 | `/learn` | Learn (bottom nav) | Learn | Landing page → subsections |
 | `/guides` | Guides (bottom nav) | Guides | Landing page → fourteen guides in three groups |
 | `/reference` | Reference (bottom nav) | Reference | Landing page → tabs |
-| `/search` | Not linked | Not linked | Vocabulary search page; both header searches show results inline instead |
+| `/search` | "More" in search | "More" in search | Every result for a query, paged |
 | `/progress` | Account menu | Account menu | Analytics (authenticated) |
 | `/support` | Account menu | Account menu | About page |
 | `/try` | Practice (bottom nav, unauth) | Try a drill (unauth) | Conversion CTA |

@@ -1,21 +1,32 @@
-import { PracticeCTA } from "@/components/PracticeCta";
-import { ReferenceHero } from "@/components/ReferenceHero";
+import { ProseWithGreek } from "@/components/ProseWithGreek";
+import { declineAdjective } from "@/lib/adjective-declension";
+import type { AdjectiveDeclensionPattern } from "@/server/db/enums";
 
-import { AdjectivesSection } from "../components/adjectives-section";
+import { GenderCaseTable } from "../components/gender-case-table";
+import { type GuideSectionRef, LookupPage, LookupSection, TAUGHT_IN } from "../components/lookup-section";
+
+const PATTERNS = [
+	{ lemma: "καλός", pattern: "os-i-o", title: "-ος, -η, -ο", taughtIn: TAUGHT_IN.adjectives },
+	{ lemma: "ωραίος", pattern: "os-ia-o", title: "-ος, -α, -ο", taughtIn: TAUGHT_IN.adjectiveShapes },
+	{ lemma: "βαρύς", pattern: "us-ia-u", title: "-ύς, -ιά, -ύ", taughtIn: TAUGHT_IN.adjectiveShapes },
+] as const satisfies { lemma: string; pattern: AdjectiveDeclensionPattern; title: string; taughtIn: GuideSectionRef }[];
 
 export function AdjectivesTab() {
 	return (
-		<div className="space-y-10">
-			<ReferenceHero
-				title="The noun's grammar, copied."
-				thesis="Adjectives match their noun in gender, case, and number. You're not learning new rules — you're reusing noun and article patterns."
-			/>
-			<AdjectivesSection />
-			<PracticeCTA
-				title="Practice adjectives"
-				description="Build fluency with timed retrieval drills on Greek adjectives."
-				topic="adjectives"
-			/>
-		</div>
+		<LookupPage title="Adjectives">
+			{PATTERNS.map(({ lemma, pattern, title, taughtIn }) => {
+				const forms = declineAdjective(lemma, pattern);
+				return (
+					<LookupSection key={pattern} title={<ProseWithGreek text={`${title}: ${lemma}`} />} taughtIn={[taughtIn]}>
+						<GenderCaseTable
+							form={(number, grammaticalCase, gender) =>
+								forms.find((f) => f.number === number && f.case === grammaticalCase && f.gender === gender)
+									?.form ?? "—"
+							}
+						/>
+					</LookupSection>
+				);
+			})}
+		</LookupPage>
 	);
 }

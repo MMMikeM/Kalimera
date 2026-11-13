@@ -308,5 +308,5 @@ export const PLACE_GUIDE: Guide = {
 			drills: ["place-without-until"],
 		},
 	],
-	reference: [{ label: "Prepositions", href: "/reference/prepositions" }],
+	reference: [],
 };
