@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Search } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { z } from "zod";
 
 import { PageHeading } from "@/components/PageHeading";
@@ -11,6 +11,7 @@ import { SearchInput } from "@/components/SearchInput";
 import { ButtonLink } from "@/components/ui/button";
 
 const PAGE_SIZE = 10;
+const NAVIGATE_DEBOUNCE_MS = 200;
 /** A disabled link has no `:disabled` state, so the button's own disabled styles never apply. */
 const pagerDisabled = "aria-disabled:pointer-events-none aria-disabled:opacity-50";
 
@@ -26,13 +27,17 @@ function SearchRoute() {
 	const { q, page } = Route.useSearch();
 	const navigate = useNavigate({ from: Route.fullPath });
 	const [draft, setDraft] = useState(q);
-	// The header dropdown can change q while this page stays mounted.
+	const [typing, setTyping] = useState(false);
+	const navigateTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
+	// The header dropdown can change q while this page stays mounted. Typing here
+	// owns the draft, because a navigation that lands late would otherwise overwrite it.
 	const [seenQ, setSeenQ] = useState(q);
 	if (q !== seenQ) {
 		setSeenQ(q);
-		setDraft(q);
+		if (!typing) setDraft(q);
 	}
-	const result = useVocabularySearch(q, { enabled: true });
+	useEffect(() => () => clearTimeout(navigateTimer.current), []);
+	const { result, loading } = useVocabularySearch(q, { enabled: true });
 	const searching = q.trim().length > 0;
 
 	const rows = toGroups(result).flatMap((group) => group.hits.map((hit) => ({ group, hit })));
@@ -40,9 +45,12 @@ function SearchRoute() {
 	const current = Math.min(page, pageCount);
 	const visible = rows.slice((current - 1) * PAGE_SIZE, current * PAGE_SIZE);
 
-	const setQuery = (nextQ: string) => {
+	const setQuery = (nextQ: string, { immediately = false } = {}) => {
 		setDraft(nextQ);
-		navigate({ search: { q: nextQ, page: 1 }, replace: true });
+		clearTimeout(navigateTimer.current);
+		const go = () => navigate({ search: { q: nextQ, page: 1 }, replace: true });
+		if (immediately) go();
+		else navigateTimer.current = setTimeout(go, NAVIGATE_DEBOUNCE_MS);
 	};
 
 	return (
@@ -54,7 +62,9 @@ function SearchRoute() {
 				aria-label="Search"
 				value={draft}
 				onChange={(e) => setQuery(e.target.value)}
-				onClear={() => setQuery("")}
+				onClear={() => setQuery("", { immediately: true })}
+				onFocus={() => setTyping(true)}
+				onBlur={() => setTyping(false)}
 				icon={<Search />}
 				autoFocus
 			/>
@@ -65,7 +75,9 @@ function SearchRoute() {
 				<CorrectedNote corrected={result.corrected} className="text-sm" />
 			)}
 
-			{searching && rows.length === 0 && <NoResults query={q.trim()} className="py-6" />}
+			{loading && <p className="py-6 text-sm text-muted-foreground">Loading…</p>}
+
+			{searching && !loading && rows.length === 0 && <NoResults query={q.trim()} className="py-6" />}
 
 			{visible.length > 0 && (
 				<div aria-live="polite">

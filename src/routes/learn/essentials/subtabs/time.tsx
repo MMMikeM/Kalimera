@@ -4,7 +4,7 @@ import { GreekText } from "@/components/GreekText";
 import { genderScheme } from "@/constants/grammar-palette";
 import { type Gender, getArticle } from "@/lib/greek-grammar";
 
-import { TimeTellingSection } from "../../phrases/components/time-telling-section";
+import { TimeTellingSection } from "./time-telling-section";
 import type { PhraseItem } from "../../phrases/components/shared";
 import type { EssentialsLoaderData } from "../$subtab";
 import { GuideLink } from "./guide-link";

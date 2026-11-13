@@ -150,3 +150,12 @@ export const fetchVerbParadigms = async (vocabIds: number[]) => {
 		},
 	});
 };
+
+export const getVerbsByLemmaWithConjugations = async (lemmas: string[]) => {
+	if (lemmas.length === 0) return [];
+	return await db.query.vocabulary.findMany({
+		where: { greekText: { in: lemmas } },
+		columns: { greekText: true, englishTranslation: true },
+		with: { verbConjugations: { columns: { tense: true, person: true, form: true } } },
+	});
+};

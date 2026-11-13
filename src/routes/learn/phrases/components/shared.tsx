@@ -10,15 +10,10 @@ import type { NavTab } from "@/components/NavTabs";
 import { TabHero } from "@/components/TabHero";
 import type { Vocabulary } from "@/server/db/types";
 
+import type { PhraseSection } from "../phrase-tabs.data";
+
 
 export type PhraseItem = Vocabulary;
-
-interface PhraseSectionConfig {
-	tag: string;
-	title: string;
-	colorScheme: ContentColorScheme;
-	alwaysShow?: boolean;
-}
 
 export interface PhraseTabConfig {
 	label: string;
@@ -30,7 +25,7 @@ export interface PhraseTabConfig {
 		colorScheme: "ocean" | "terracotta" | "olive" | "honey";
 		body: string;
 	};
-	sections: PhraseSectionConfig[];
+	sections: readonly PhraseSection[];
 }
 
 const textColors: Record<ContentColorScheme, string> = {

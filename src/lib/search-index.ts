@@ -76,7 +76,10 @@ const BE: Record<string, string> = {
 	pl3: "are",
 };
 
+const MODALS = new Set(["can", "must", "will", "may", "should", "shall", "might"]);
+
 const thirdPerson = (verb: string) => {
+	if (MODALS.has(verb)) return verb;
 	if (verb === "have") return "has";
 	if (/(?:s|sh|ch|x|z|o)$/.test(verb)) return `${verb}es`;
 	if (/[^aeiou]y$/.test(verb)) return `${verb.slice(0, -1)}ies`;
@@ -116,6 +119,7 @@ const noteFor = (slot: string, english: string) => {
 	return second === "p" ? `${roles}, several` : roles;
 };
 
+const ELISION = /['\u2019\u02bc]\s*/;
 const GREEK_SCRIPT = /[Ͱ-Ͽἀ-῿]/;
 const QUESTION_MARKS = /[;;?]/g;
 
@@ -174,15 +178,34 @@ const group = (hits: Hit[]): SearchResult => {
 
 export const NO_RESULT: SearchResult = { words: [], phrases: [] };
 
-const typoFix = (results: FuzzyResult<Key>[]): SearchResult => {
-	const fixed = results.flatMap((r) => r.fields).find((f) => f?.tier === "corrected")?.corrected;
-	if (!fixed) return NO_RESULT;
-	const hits = results.filter((r) => r.fields.some((f) => f?.corrected === fixed)).map(toHit);
-	return { corrected: fixed, ...group(hits) };
+interface Correction {
+	fixed: string;
+	score: number;
+	results: FuzzyResult<Key>[];
+}
+
+const correctionOf = (results: FuzzyResult<Key>[]): Correction | undefined => {
+	const field = results.flatMap((r) => r.fields).find((f) => f?.tier === "corrected");
+	return field?.corrected === undefined
+		? undefined
+		: {
+				fixed: field.corrected,
+				score: field.score,
+				results: results.filter((r) => r.fields.some((f) => f?.corrected === field.corrected)),
+			};
 };
 
-const literalOrTypoFix = (literal: Hit[], results: FuzzyResult<Key>[]) =>
-	literal.length > 0 ? group(literal) : typoFix(results);
+const typoFix = (correction: Correction | undefined, label?: (hits: Hit[]) => string | undefined) => {
+	if (!correction) return NO_RESULT;
+	const hits = correction.results.map(toHit);
+	return { corrected: label?.(hits) ?? correction.fixed, ...group(hits) };
+};
+
+/** A greeklish key corrects to a spelling nobody typed, so the learner is shown the Greek word instead. */
+const asGreek = (hits: Hit[]) => {
+	const key = hits[0]?.key;
+	return key && (key.form?.greek ?? key.item.entry.greek);
+};
 
 export interface SearchIndex {
 	search: (query: string) => SearchResult;
@@ -206,15 +229,27 @@ export const buildSearchIndex = (wire: readonly SearchWireItem[]): SearchIndex =
 			rank: w.rank ?? Infinity,
 			typeOrder: TYPE_ORDER[w.type] ?? 5,
 		};
-		const seen = new Set<string>();
+		const seen = new Map<string, Key[]>();
 		const addGreek = (text: string, form?: Key["form"]) => {
 			const texts = w.type === "noun" ? [text, stripArticle(text)] : [text];
 			for (const t of texts) {
-				if (seen.has(t)) continue;
-				seen.add(t);
+				const existing = seen.get(t);
+				if (existing) {
+					// Stripped of its article, one form can fill several slots (πατέρα is Target and Owner).
+					const [first] = existing;
+					if (first?.form && form && !first.form.slot.split("+").includes(form.slot)) {
+						const merged = { greek: t, slot: `${first.form.slot}+${form.slot}` };
+						for (const key of existing) key.form = merged;
+					}
+					continue;
+				}
 				const key = { item, text: t, form };
+				const greeklish = [{ ...key, text: searchKey(t) }];
+				// "μ' αρέσει" is typed both "m aresei" and "maresei".
+				if (ELISION.test(t)) greeklish.push({ ...key, text: searchKey(t.replace(ELISION, "")) });
+				seen.set(t, [key, ...greeklish]);
 				greekKeys.push(key);
-				greeklishKeys.push({ ...key, text: searchKey(t) });
+				greeklishKeys.push(...greeklish);
 			}
 		};
 		addGreek(w.greek);
@@ -233,17 +268,24 @@ export const buildSearchIndex = (wire: readonly SearchWireItem[]): SearchIndex =
 			if (GREEK_SCRIPT.test(query)) {
 				const greek = query.replace(QUESTION_MARKS, "");
 				const results = searchGreek(greek);
-				return literalOrTypoFix(hitsUnder(results, maxScoreFor(greek)), results);
+				const literal = hitsUnder(results, maxScoreFor(greek));
+				return literal.length > 0 ? group(literal) : typoFix(correctionOf(results));
 			}
 			const typed = searchKey(query);
+			const greeklishResults = searchGreeklish(typed);
 			const greeklish = hitsUnder(
-				searchGreeklish(typed),
+				greeklishResults,
 				typed.length >= GREEKLISH_PREFIX_FROM ? SCORES.PREFIX : SCORES.NORMALISED_EXACT,
 			);
 			const english = stripQueryLead(query);
 			const englishResults = searchEnglish(english);
 			const literal = [...greeklish, ...hitsUnder(englishResults, maxScoreFor(english))];
-			return literalOrTypoFix(literal, englishResults);
+			if (literal.length > 0) return group(literal);
+			const asGreeklish = correctionOf(greeklishResults);
+			const asEnglish = correctionOf(englishResults);
+			return asGreeklish && (!asEnglish || asGreeklish.score <= asEnglish.score)
+				? typoFix(asGreeklish, asGreek)
+				: typoFix(asEnglish);
 		},
 	};
 };

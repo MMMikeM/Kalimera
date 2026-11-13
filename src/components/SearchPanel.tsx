@@ -16,7 +16,7 @@ import type { SearchHit, SearchResult } from "@/lib/search-types";
 import { useVocabularySearch } from "@/lib/use-vocabulary-search";
 
 export const SEARCH_PLACEHOLDER = "Search Greek, greeklish or English";
-export const SEARCH_HINT = "Type Greek or greeklish: fernw, τι κάνεις, the key";
+export const SEARCH_HINT = "Type Greek or greeklish: fernw, πας, the key";
 
 const ROWS_PER_GROUP = 3;
 const RECENT_KEY = "kalimera:recent-searches";
@@ -91,7 +91,7 @@ export const SearchPanel = ({ variant, focusOnMount, onActivate, className }: Se
 	const [open, setOpen] = useState(false);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const { terms, remember } = useRecentSearches();
-	const result = useVocabularySearch(query, { enabled: inline || open });
+	const { result, loading } = useVocabularySearch(query, { enabled: inline || open });
 	const trimmed = query.trim();
 	const searching = trimmed.length > 0;
 	const groups = buildGroups(searching, result, terms);
@@ -141,7 +141,7 @@ export const SearchPanel = ({ variant, focusOnMount, onActivate, className }: Se
 										value={item}
 										className={rowClassName}
 										render={linkRender(item.entry.link)}
-										onClick={item.entry.link ? activate : undefined}
+										onClick={item.entry.link ? activate : () => remember(query)}
 									>
 										<HitContent hit={item} focal={item === groups[0]?.items[0]} />
 									</Autocomplete.Item>
@@ -161,7 +161,10 @@ export const SearchPanel = ({ variant, focusOnMount, onActivate, className }: Se
 					</Autocomplete.Group>
 				)}
 			</Autocomplete.List>
-			{searching && found === 0 && (
+			{loading && (
+				<p className="px-4 py-6 text-center text-sm text-muted-foreground">Loading…</p>
+			)}
+			{searching && !loading && found === 0 && (
 				<NoResults query={trimmed} className="px-4 py-6 text-center text-sm" />
 			)}
 			{!searching && <p className="px-4 pt-2 pb-3 text-xs text-muted-foreground">{SEARCH_HINT}</p>}
@@ -180,7 +183,8 @@ export const SearchPanel = ({ variant, focusOnMount, onActivate, className }: Se
 			inline={inline}
 			openOnInputClick
 			onOpenChange={(next, details) => {
-				if (!next && details.reason === "item-press" && !searching) return;
+				// Rows that open a page close the panel through `activate`; the rest must leave it open.
+				if (!next && details.reason === "item-press") return;
 				setOpen(next);
 			}}
 			itemToStringValue={(item: PanelItem) => (typeof item === "string" ? item : item.entry.greek)}

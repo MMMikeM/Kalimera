@@ -3,7 +3,7 @@ import { cn } from "tailwind-variants";
 import { ContentSection, TwoColumnList } from "@/components/ContentSection";
 import { GreekText } from "@/components/GreekText";
 
-import type { PhraseItem } from "./shared";
+import type { PhraseItem } from "../../phrases/components/shared";
 
 type TimeListItem = {
 	id: string | number;

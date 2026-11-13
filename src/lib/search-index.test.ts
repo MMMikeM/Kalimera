@@ -70,6 +70,22 @@ describe("what a hit says about why it matched", () => {
 		});
 	});
 
+	it("says he/she can for a modal, not cans", () => {
+		expect(index.search("μπορεί").words[0]?.matchedForm?.note).toBe("he/she can");
+	});
+
+	it("merges the notes when a bare form fills two slots", () => {
+		expect(index.search("πατέρα").words[0]?.matchedForm).toEqual({
+			greek: "πατέρα",
+			note: "Target or Owner",
+		});
+	});
+
+	it("finds a word through its elision however the apostrophe was typed", () => {
+		expect(firstGreek("m aresei")).toBe("Μ' αρέσει πολύ να ταξιδεύω.");
+		expect(firstGreek("maresei")).toBe("Μ' αρέσει πολύ να ταξιδεύω.");
+	});
+
 	it("says nothing when the dictionary word itself matched", () => {
 		expect(index.search("fernw").words[0]?.matchedForm).toBeUndefined();
 	});
@@ -98,6 +114,12 @@ describe("typo correction", () => {
 
 	it("reports the query it searched when nothing matched", () => {
 		expect(index.search("brought").corrected).toBeDefined();
+	});
+
+	it("corrects a greeklish typo to the Greek word, never to English", () => {
+		const result = index.search("thewl");
+		expect(result.corrected).toBe("θέλω");
+		expect(result.words[0]?.entry.greek).toBe("θέλω");
 	});
 
 	it("returns nothing for a single character", () => {

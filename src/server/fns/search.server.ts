@@ -1,6 +1,9 @@
 import { getArticle } from "@/lib/greek-grammar";
+import { isPublicRow } from "@/lib/search-visibility";
 import type { SearchWireItem } from "@/lib/search-index";
 import type { SearchLink } from "@/lib/search-types";
+import { PHRASE_TAB_SECTIONS } from "@/routes/learn/phrases/phrase-tabs.data";
+import { isPluralCitation } from "@/scripts/seed-data/vocabulary/noun-seed-enrichment";
 import { fetchVocabularyRowsForSearch, type SearchVocabularyRow } from "@/server/db/queries/vocabulary";
 
 const TENSE_CODE: Record<string, string> = {
@@ -13,21 +16,13 @@ const TENSE_ORDER = Object.keys(TENSE_CODE);
 
 const phrasesTab = (tab: string): SearchLink => ({ to: "/learn/phrases/$tab", params: { tab } });
 
-/**
- * Learn phrases tab for each phrase tag, mirroring PHRASE_TABS in
- * routes/learn/phrases/$tab.tsx. Tags that no tab lists have no entry, so
- * their phrases get no link. `time-telling` lives under Essentials now.
- */
 const PHRASE_TAG_LINK: Record<string, SearchLink> = {
-	essential: phrasesTab("survival"),
-	survival: phrasesTab("survival"),
-	responses: phrasesTab("responses"),
-	"social-phrase": phrasesTab("responses"),
-	request: phrasesTab("requests"),
-	command: phrasesTab("requests"),
-	opinions: phrasesTab("opinions"),
-	"discourse-markers": phrasesTab("connectors"),
-	"discourse-filler": phrasesTab("connectors"),
+	...Object.fromEntries(
+		Object.entries(PHRASE_TAB_SECTIONS).flatMap(([tab, sections]) =>
+			sections.map(({ tag }) => [tag, phrasesTab(tab)]),
+		),
+	),
+	// Time-telling moved from the phrases tabs to Essentials.
 	"time-telling": { to: "/learn/essentials/$subtab", params: { subtab: "time" } },
 };
 
@@ -80,14 +75,12 @@ const nounShape = (row: SearchVocabularyRow) => {
 		row.nominalForms.find((f) => f.grammaticalCase === grammaticalCase && f.number === number);
 	const singular = cell("nominative", "singular");
 	const plural = cell("nominative", "plural");
-	const genitive = cell("genitive", "singular");
 
 	// Nouns cited in the plural (ψώνια) carry invented singular cells in the table; they must not be searchable.
-	const pluralOnly =
-		singular && plural && singular.form === plural.form && genitive && genitive.form !== singular.form;
+	const pluralOnly = isPluralCitation(row.greekText);
 	const gender = row.nounDetails?.gender;
 	const article = pluralOnly
-		? plural.article
+		? plural?.article
 		: singular
 			? singular.article
 			: gender && getArticle(gender, "singular", "nominative");
@@ -136,5 +129,7 @@ const toWireItem = (row: SearchVocabularyRow): SearchWireItem => {
 	return { ...base, greek: row.greekText };
 };
 
-export const getSearchWire = async (): Promise<SearchWireItem[]> =>
-	(await fetchVocabularyRowsForSearch()).map(toWireItem);
+export const getSearchWire = async (includeLessons: boolean): Promise<SearchWireItem[]> =>
+	(await fetchVocabularyRowsForSearch())
+		.filter((row) => includeLessons || isPublicRow(row))
+		.map(toWireItem);

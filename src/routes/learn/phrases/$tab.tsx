@@ -9,6 +9,7 @@ import { getVocabBySlug } from "@/server/db/queries/vocabulary";
 
 import { groupVocabByTag } from "../../components/vocab-by-tag";
 import { type PhraseTabConfig, PhraseTabContent } from "./components/shared";
+import { PHRASE_TAB_SECTIONS } from "./phrase-tabs.data";
 
 const VALID_TABS = ["survival", "responses", "requests", "opinions", "connectors"] as const;
 type PhraseTabId = (typeof VALID_TABS)[number];
@@ -24,10 +25,7 @@ const PHRASE_TABS: Record<PhraseTabId, PhraseTabConfig> = {
 			colorScheme: "honey",
 			body: `These phrases will get you through most situations. Practice them until they're automatic — when someone says "Γεια σας", your response should be instant.`,
 		},
-		sections: [
-			{ tag: "essential", title: "Essential Greetings", colorScheme: "honey", alwaysShow: true },
-			{ tag: "survival", title: "Survival Phrases", colorScheme: "terracotta" },
-		],
+		sections: PHRASE_TAB_SECTIONS.survival,
 	},
 	responses: {
 		label: "Responses",
@@ -39,10 +37,7 @@ const PHRASE_TABS: Record<PhraseTabId, PhraseTabConfig> = {
 			colorScheme: "terracotta",
 			body: "Quick responses that show you're following along. These short phrases buy you time while you process and keep the conversation natural.",
 		},
-		sections: [
-			{ tag: "responses", title: "Common Responses", colorScheme: "terracotta", alwaysShow: true },
-			{ tag: "social-phrase", title: "Social Phrases", colorScheme: "olive" },
-		],
+		sections: PHRASE_TAB_SECTIONS.responses,
 	},
 	requests: {
 		label: "Requests",
@@ -54,10 +49,7 @@ const PHRASE_TABS: Record<PhraseTabId, PhraseTabConfig> = {
 			colorScheme: "olive",
 			body: `Adding "παρακαλώ" (please) to any request makes it more polite. Greeks appreciate the effort — politeness goes a long way!`,
 		},
-		sections: [
-			{ tag: "request", title: "Polite Requests", colorScheme: "terracotta" },
-			{ tag: "command", title: "Commands", colorScheme: "olive" },
-		],
+		sections: PHRASE_TAB_SECTIONS.requests,
 	},
 	opinions: {
 		label: "Opinions",
@@ -69,9 +61,7 @@ const PHRASE_TABS: Record<PhraseTabId, PhraseTabConfig> = {
 			colorScheme: "terracotta",
 			body: `Move past "yes" and "no" into real conversation. These phrases let you agree, disagree, and share what you actually think.`,
 		},
-		sections: [
-			{ tag: "opinions", title: "Opinions & Feelings", colorScheme: "olive", alwaysShow: true },
-		],
+		sections: PHRASE_TAB_SECTIONS.opinions,
 	},
 	connectors: {
 		label: "Connectors",
@@ -83,10 +73,7 @@ const PHRASE_TABS: Record<PhraseTabId, PhraseTabConfig> = {
 			colorScheme: "ocean",
 			body: "Greeks use connectors constantly — mastering them will make your Greek sound much more fluent. These small words hold conversations together.",
 		},
-		sections: [
-			{ tag: "discourse-markers", title: "Discourse Markers", colorScheme: "olive" },
-			{ tag: "discourse-filler", title: "Fillers & Connectors", colorScheme: "ocean" },
-		],
+		sections: PHRASE_TAB_SECTIONS.connectors,
 	},
 };
 

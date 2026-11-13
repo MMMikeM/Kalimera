@@ -216,7 +216,7 @@ export const searchKey = (text: string): string =>
 		greekToPhonetic(
 			text
 				.toLowerCase()
-				.replace(/[;\u037e?!.,]/g, "")
+				.replace(/[;\u037e?!.,'\u2019\u02bc]/g, "")
 				.trim(),
 		),
 	);

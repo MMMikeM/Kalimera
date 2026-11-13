@@ -3,14 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { cn } from "tailwind-variants";
 
 import { ProseWithGreek } from "@/components/ProseWithGreek";
-
-const GUIDE_SECTIONS = {
-	colours: { guide: "agreement", section: "colours", title: "Colours that never change" },
-	numbers: { guide: "agreement", section: "numbers", title: "Numbers that agree" },
-	time: { guide: "roles", section: "target", title: "The Target form: objects, times, prepositions" },
-	position: { guide: "place", section: "position", title: "Next to, behind, far from" },
-	frequency: { guide: "scales", section: "frequency", title: "How often, from ποτέ to πάντα" },
-} as const;
+import { TAUGHT_IN } from "@/routes/reference/components/lookup-section";
 
 const ArrowAnchor = ({ className, children, ...props }: React.ComponentPropsWithRef<"a">) => (
 	<a
@@ -27,8 +20,8 @@ const ArrowAnchor = ({ className, children, ...props }: React.ComponentPropsWith
 
 export const ArrowLink = createLink(ArrowAnchor);
 
-export function GuideLink({ to }: { to: keyof typeof GUIDE_SECTIONS }) {
-	const { guide, section, title } = GUIDE_SECTIONS[to];
+export function GuideLink({ to }: { to: keyof typeof TAUGHT_IN }) {
+	const { guide, section, title } = TAUGHT_IN[to];
 	return (
 		<ArrowLink to="/guides/$guide" params={{ guide }} hash={section} className="mx-3">
 			<span>
